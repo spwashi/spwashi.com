@@ -90,7 +90,7 @@
   @site_semantics: ~"../conventions/site-semantics.spw"
   @cognitive_surface: ~"./cognitive-surface.spw"
   @wonder_doctrine: ~"./wonder-doctrine.spw"
-  @cinematic_plan: ~"../../.agents/plans/cinematic-handles/cinematic-handles.spw"
+  @cinematic_plan: ~"../../.agents/plans/archive/cinematic-handles/cinematic-handles.spw"
   @circuits_plan: ~"../../.agents/plans/interaction-grammar/interaction-grammar.spw"
   @nav_plan: ~"../../.agents/plans/cognitive-navigation/cognitive-navigation.spw"
   @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"

@@ -236,10 +236,10 @@ export const PLAN_REFINEMENTS = {
     },
     refinement: {
       tone: 'Performance engineer who keeps the console — measure before claiming.',
-      accuracy: 'Kernel extraction and batching wins landed; IMMEDIATE count still high per skill-induction.',
-      direction: 'Default new modules VISIBLE/IDLE unless justified; profile one cold route.',
+      accuracy: 'Kernel extraction and batching wins landed; IMMEDIATE count still high per skill-induction. CSS flourish now idle-loads beside JS idle mounts.',
+      direction: 'Default new modules VISIBLE/IDLE unless justified; profile one cold route. Do not reorder @layer to win a JS demotion.',
       inspiration: 'Fast return visits should feel remembered, not re-downloaded.',
-      alignment: 'agentic-dev-contracts, javascript-module-census, commit-skill-induction',
+      alignment: 'public-entrance-runtime-payload, core-css-spend-cut, agentic-dev-contracts',
     },
   },
   'css-architecture-readability': {
@@ -254,6 +254,20 @@ export const PLAN_REFINEMENTS = {
       direction: 'When touching ornament or wonder, make child and sibling combinators the readable sentence. Evict metaphysical-paper only if first paint still holds.',
       inspiration: 'Future editors read CSS as curriculum, not archaeology.',
       alignment: 'canonical CSS rail — core-css-spend-cut, stylesheet-ecology, css-instruction',
+    },
+  },
+  'css-state-legibility': {
+    conceptual: {
+      thesis: 'Shared layers own idle, hover, focus, and pressed. Route layers provide palette. Kinship is the combinator.',
+      concepts: ['state-contract', 'aria-pressed', 'handle-ownership', 'combinator-kinship'],
+      surfaces: ['public/css/handles/', 'public/css/shell/', 'public/css/routes/surfaces/'],
+    },
+    refinement: {
+      tone: 'State as readable sentence — who is idle, who is pressed, who is kin.',
+      accuracy: 'The contract is live; listed filenames in PLAN.md are historical (spw-handles.css era).',
+      direction: 'Project one handle state through current handles/ + ARIA before adding route overrides.',
+      inspiration: 'A stylesheet should explain where a button’s pressed look comes from.',
+      alignment: 'css-architecture-readability, semantic-classname-layers, core-css-spend-cut',
     },
   },
   'core-css-spend-cut': {
@@ -284,10 +298,10 @@ export const PLAN_REFINEMENTS = {
     },
     refinement: {
       tone: 'Motion designer restraint — feel intent, not spectacle.',
-      accuracy: 'Tokens and wonder memory exist; full personality audit checklist is open.',
-      direction: 'Audit one operator family timing end-to-end before new animation surfaces.',
+      accuracy: 'Tokens and wonder memory exist; wonder and ornament now idle-load. Full personality audit checklist is open.',
+      direction: 'Audit one operator family timing end-to-end on a surface that already holds. Motion spend that can arrive late belongs in flourish delivery.',
       inspiration: 'Operators should feel like instruments with temperament.',
-      alignment: 'relational-attention-media, settings-theme-packs',
+      alignment: 'core-css-spend-cut, css-architecture-readability, relational-attention-media',
     },
   },
   'midjourney-design-concepts': {

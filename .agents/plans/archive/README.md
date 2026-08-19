@@ -21,6 +21,9 @@ Archived plan folders (moved here in ref-safe passes):
 
 - `spw-css-architecture/` - Landed 2026-07-02: the modular `public/css/` tree, layer-order kernel in `style-core.css`, and operator/brace handle contracts realize this plan's end state.
 - `css-semantic-modules/` - Landed 2026-07-02: the file-split architecture is the tree's reality; the `src/styles/entries/` pipeline owns its first proofs, and further conversions are per-touch decisions.
+- `css-progressive-ornaments/` - Archived 2026-08-18: absorbed by `css-architecture-readability`; live ornament delivery is `core-css-spend-cut`.
+- `cinematic-handles/` - Archived 2026-08-18: merged into `color-motion`.
+- `css-maintainability-refactor/` - Archived 2026-08-18: merged into `css-architecture-readability`.
 
 Maintenance sweeps:
 

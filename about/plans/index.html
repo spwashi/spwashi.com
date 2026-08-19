@@ -96,6 +96,8 @@
                     <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/floating-chrome-stack/FIX.md">floating-chrome-stack</a>
                     <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/semantic-copy-depth/PLAN.md">semantic-copy-depth</a>
                     <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/modular-experience-slices/PLAN.md">modular-experience-slices</a>
+                    <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/css-architecture-readability/PLAN.md">css-architecture-readability</a>
+                    <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/core-css-spend-cut/PLAN.md">core-css-spend-cut</a>
                     <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/site-starter-component-kit/PLAN.md">site-starter-component-kit</a>
                     <a class="spec-pill" href="#plan-buckets">plan-buckets</a>
                 </div>
@@ -133,7 +135,7 @@
                     <li><a href="#operator-semantics">Operator Semantics & Lore</a> — meaning, symmetry, priming, public operator pages.</li>
                     <li><a href="#interaction-patterns">Interaction Patterns & Circuits</a> — familiarity, timing, navigation, touch, cinematic pacing.</li>
                     <li><a href="#platform-horizons">Platform Horizons & Features</a> — assets, mobile runtime, settings, RPG tools, pretext lab.</li>
-                    <li><a href="#supporting-plans">Supporting Plans</a> — media publishing, screenshot semantics, ornaments, SVG, PWA.</li>
+                    <li><a href="#supporting-plans">Supporting Plans</a> — media publishing, screenshot semantics, CSS delivery, SVG, PWA.</li>
                     <li><a href="#plan-relationships">Plan Relationships</a> — what depends on what, and what enables later work.</li>
                 </ul>
             </nav>
@@ -191,13 +193,13 @@
                             <span class="plan-status" data-status="active">active</span>
                         </div>
                         <p class="plan-thesis">
-                            Shared layer ownership, responsive containment, floating chrome, gesture state, and component anatomy work.
+                            Shared layer ownership, first-paint delivery, readable kinship in selectors, floating chrome, and gesture state. <code>@layer</code> is cascade priority, not a load schedule.
                         </p>
                         <div class="plan-verb-strip" aria-label="Owner tracks">
                             <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/css-architecture-readability/PLAN.md">css-readability</a>
+                            <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/core-css-spend-cut/PLAN.md">spend-cut</a>
                             <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/css-state-legibility/PLAN.md">state-legibility</a>
                             <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/floating-chrome-stack/FIX.md">floating-chrome</a>
-                            <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/gesture-aria-hygiene/FIX.md">gesture-aria</a>
                         </div>
                     </article>
 
@@ -211,13 +213,13 @@
                             <span class="plan-status" data-status="active">active</span>
                         </div>
                         <p class="plan-thesis">
-                            Module boot posture, load instrumentation, route/runtime manifests, typed affordances, and falsifiable checks.
+                            Module boot posture, first-paint payload, load instrumentation, and falsifiable checks. CSS delivery and JS mount are sibling schedules.
                         </p>
                         <div class="plan-verb-strip" aria-label="Owner tracks">
                             <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/runtime-bootstrap-performance/PLAN.md">runtime-bootstrap</a>
+                            <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/public-entrance-runtime-payload/PLAN.md">public-entrance</a>
                             <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/runtime-load-instrumentation/PLAN.md">load-instrumentation</a>
                             <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/runtime-module-fluency/PLAN.md">module-fluency</a>
-                            <a class="spec-pill" href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/site-source-layout/PLAN.md">source-layout</a>
                         </div>
                     </article>
 
@@ -533,7 +535,7 @@
                         </div>
 
                         <div class="plan-links">
-                            <a href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/cinematic-handles/PLAN.md" class="spw-chip" data-spw-handle="true" target="_blank" rel="noopener noreferrer" data-spw-operator="potential" data-spw-action="explore">~source_reference</a>
+                            <a href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/archive/cinematic-handles/PLAN.md" class="spw-chip" data-spw-handle="true" target="_blank" rel="noopener noreferrer" data-spw-operator="potential" data-spw-action="explore">~source_reference</a>
                             <a href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/color-motion/PLAN.md" class="spw-chip" data-spw-handle="true" target="_blank" rel="noopener noreferrer" data-spw-operator="potential" data-spw-action="explore">~active_owner</a>
                         </div>
                     </article>
@@ -851,16 +853,42 @@
                         </div>
                     </article>
 
+                    <article class="plan-card" data-plan-id="css-architecture-readability" data-plan-verbs="refine map teach" data-plan-stage="active">
+                        <div class="plan-header">
+                            <h3>CSS Architecture Readability</h3>
+                            <span class="plan-status" data-status="active">active owner</span>
+                        </div>
+                        <p class="plan-thesis">Canonical CSS rail. Files are instructional. <code>@layer</code> decides which rule wins. Delivery — what file arrives, and when — is a request schedule. Child, next sibling, and <code>:has()</code> are the readable kinship.</p>
+                        <div class="plan-verb-strip"><span class="spec-pill">refine</span><span class="spec-pill">map</span><span class="spec-pill">teach</span></div>
+                        <div class="plan-links">
+                            <a href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/css-architecture-readability/PLAN.md" class="spw-chip" data-spw-handle="true" target="_blank" rel="noopener noreferrer" data-spw-operator="potential" data-spw-action="explore">~full_plan</a>
+                            <a href="/design/experiments/css/" class="spw-chip" data-spw-handle="true" data-spw-operator="wonder" data-spw-action="inspect">? css lab</a>
+                        </div>
+                    </article>
+
+                    <article class="plan-card" data-plan-id="core-css-spend-cut" data-plan-verbs="refine measure" data-plan-stage="active">
+                        <div class="plan-header">
+                            <h3>Core CSS Spend-Cut</h3>
+                            <span class="plan-status" data-status="active">first cut landed</span>
+                        </div>
+                        <p class="plan-thesis">First paint ships structure. Grain, cinematic, wonder, and ornament idle-load. Core 1779→1623 KiB. Late restyle may only add atmosphere. Next eviction: metaphysical-paper, if the page still holds.</p>
+                        <div class="plan-verb-strip"><span class="spec-pill">refine</span><span class="spec-pill">measure</span></div>
+                        <div class="plan-links">
+                            <a href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/core-css-spend-cut/PLAN.md" class="spw-chip" data-spw-handle="true" target="_blank" rel="noopener noreferrer" data-spw-operator="potential" data-spw-action="explore">~full_plan</a>
+                            <a href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/css-architecture-readability/PLAN.md" class="spw-chip" data-spw-handle="true" target="_blank" rel="noopener noreferrer" data-spw-operator="potential" data-spw-action="explore">~active_owner</a>
+                        </div>
+                    </article>
+
                     <article class="plan-card" data-plan-id="css-progressive-ornaments" data-plan-verbs="stage integrate" data-plan-stage="implemented">
                         <div class="plan-header">
                             <h3>CSS Progressive Ornaments</h3>
                             <span class="plan-status" data-status="implemented">implemented reference</span>
                         </div>
-                        <p class="plan-thesis">Implemented enhancement reference; route new work through CSS Architecture Readability and the live ornament contract.</p>
+                        <p class="plan-thesis">Absorbed into CSS Architecture Readability. Live delivery work is the spend-cut: ornament still exists, it just arrives after the page already holds.</p>
                         <div class="plan-verb-strip"><span class="spec-pill">stage</span><span class="spec-pill">integrate</span></div>
                         <div class="plan-links">
-                            <a href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/css-progressive-ornaments/PLAN.md" class="spw-chip" data-spw-handle="true" target="_blank" rel="noopener noreferrer" data-spw-operator="potential" data-spw-action="explore">~source_reference</a>
-                            <a href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/css-architecture-readability/PLAN.md" class="spw-chip" data-spw-handle="true" target="_blank" rel="noopener noreferrer" data-spw-operator="potential" data-spw-action="explore">~active_owner</a>
+                            <a href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/archive/css-progressive-ornaments/PLAN.md" class="spw-chip" data-spw-handle="true" target="_blank" rel="noopener noreferrer" data-spw-operator="potential" data-spw-action="explore">~source_reference</a>
+                            <a href="https://github.com/spwashi/spwashi.com/blob/main/.agents/plans/core-css-spend-cut/PLAN.md" class="spw-chip" data-spw-handle="true" target="_blank" rel="noopener noreferrer" data-spw-operator="potential" data-spw-action="explore">~spend_cut</a>
                         </div>
                     </article>
 
@@ -952,6 +980,11 @@
                     <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_about_about_plans__panel_12">
                         <h3>Runtime adaptation</h3>
                         <p><strong>Mobile Runtime Foundation</strong>, <strong>Runtime Settings</strong>, and <strong>PWA Experience</strong> support portability and usable continuity.</p>
+                    </article>
+
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_about_about_plans__panel_cascade_delivery">
+                        <h3>Cascade is not delivery</h3>
+                        <p><strong>CSS Architecture Readability</strong> owns literate CSS. <strong>Core CSS Spend-Cut</strong> owns first-paint delivery. <strong>Public Entrance</strong> and <strong>Runtime Bootstrap</strong> are the JS-side siblings. Reordering <code>@layer</code> does not shrink the bundle.</p>
                     </article>
 
                     <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_about_about_plans__panel_13">

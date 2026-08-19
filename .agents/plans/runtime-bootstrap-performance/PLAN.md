@@ -22,6 +22,8 @@ Cache strata to keep distinct:
 
 Optimization rule: a patch should say which cache stratum it improves, what should remain volatile, and how a visitor or editor can inspect the result. Do not persist a state only because it is convenient. Do persist or precompute when it improves return-visit continuity, route comprehension, or editor auditability.
 
+CSS delivery is a sibling schedule, not a JS mount gate. Flourish sheets idle-load after interactive (`core-css-spend-cut`). Public first-paint HTML work lives in `public-entrance-runtime-payload`. Do not reorder CSS `@layer` to win a JS demotion.
+
 Metacognitive utility: the runtime should help a reader notice how the page became meaningful. A fast page that explains its hydration, route posture, and local memory is stronger proof than a fast page that hides all structure.
 
 ## Current Baseline
@@ -67,7 +69,7 @@ No new framework or heavy client dependencies are involved. The site remains han
 **Later / supporting (Phase 3+):**
 - Shared attention / region observer primitives (possible new small module under `runtime/` or augmentation of `attention-architecture.js` + `frame-metrics.js`).
 
-2026-08-18 continuation: `observeIntersections()` in `runtime-helpers.js` is the shared IO lane. `contextual-ui` and `bare-spw-markup` moved to `VISIBLE`. `site.js` lazy-binds composition/gesture inspect APIs. Spatial-gravity and interaction-progression CSS are deferred. Scene-bed CSS moved onto play/rpg-wednesday/topics route bundles. Core CSS 1839→1777 KiB; immediate catalog 8→6.
+2026-08-18 continuation: `observeIntersections()` in `runtime-helpers.js` is the shared IO lane. `contextual-ui` and `bare-spw-markup` moved to `VISIBLE`. `site.js` lazy-binds composition/gesture inspect APIs. Spatial-gravity and interaction-progression CSS are deferred. Scene-bed CSS moved onto play/rpg-wednesday/topics route bundles. Core CSS 1839→1777 KiB on this pass; immediate catalog 8→6. Flourish idle-load (`core-css-spend-cut`) later took core to 1623 KiB.
 - Optional "module budget" or cost hint in the existing runtime policy / discovery surfaces (purely additive, using the already-rich instrumentation).
 
 **Out of scope for the initial plan:**

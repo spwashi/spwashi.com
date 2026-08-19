@@ -1,10 +1,15 @@
 # Plan: css-state-legibility
 
+Historical filenames below (`spw-handles.css`, `home-surface.css`, `spw-shell.css`, `spw-chrome.css`) predate the layered tree. Current owners: `public/css/handles/`, `public/css/shell/`, `public/css/routes/surfaces/`.
+
 Make shared CSS communicate application state and design logic through stable ownership boundaries instead of route-local overrides that only work accidentally in the cascade.
 
 ## Goal
 
 Stateful controls should read clearly in the stylesheet: shared layers own idle, hover, focus, and pressed behavior; route layers provide palette and intent through variables; shell layout owns page gutters exactly once. The result should be easier to read for both humans and agents because the CSS explains where state comes from and which layer is responsible for it.
+
+## Alignment
+Owner rail: `css-architecture-readability`. Class is one noun (`semantic-classname-layers`). Kinship is the combinator. File paths below are historical; current owners live under `public/css/handles/`, `public/css/shell/`, and `public/css/routes/surfaces/`. Do not treat cascade layer as a load schedule.
 
 ## Scope
 

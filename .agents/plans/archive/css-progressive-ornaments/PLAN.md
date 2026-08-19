@@ -1,5 +1,7 @@
 # Plan: css-progressive-ornaments
 
+Archived 2026-08-18. Absorbed by `css-architecture-readability` (2026-07-12). Live delivery of ornament is `core-css-spend-cut`: tokens in core, spend idle-loads. Source reference only.
+
 Refactor the site's CSS into explicit layers while preparing a progressive-enhancement surface for seasonal features and ornaments.
 
 ## Goal

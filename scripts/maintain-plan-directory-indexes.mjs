@@ -124,7 +124,6 @@ const BUCKETS = {
     'homonym-renaming',
   ]),
   css_layout_interaction: new Set([
-    'css-maintainability-refactor',
     'css-state-legibility',
     'component-box-model-responsive-audit',
     'card-grid-density-audit',

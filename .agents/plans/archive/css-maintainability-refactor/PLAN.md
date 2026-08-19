@@ -1,5 +1,7 @@
 # CSS Maintainability Refactor
 
+Archived 2026-08-18. Merged into `css-architecture-readability`. Brittleness queue lives on the CSS rail.
+
 ## Public Goal
 
 Reduce CSS brittleness in the highest-leverage shared contracts so route work can compose from explicit structure instead of relying on inferred DOM shape or over-broad semantic selectors.

@@ -8,14 +8,14 @@
 #:operation #!prime
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "archive"
+fixity = "cold"
 
 intent: .{
  goal = `The desired end state is a motion system where every transition has a name derived from the site's own vocabulary, every reveal has a quality that matches its semantic role, and every motion has a reduced-motion safe contract. Instead of anonymous milliseconds and bezier curves, transitions carry names like "boon-settle," "pivot-arc," or "threshold-cross" — names that connect motion to meaning and make timing decisions auditable, not incidental. The wider aim includes layers and lighting as an attention model: depth should feel like depth (not just z-index), and surfaces should carry ambient lighting states that shift as attention moves. Together these give the site a cinematic quality — the sense that spatial and temporal transitions are authored rather than defaulted. The taste note is earned motion + semantic depth: every animation should be the right animation for that semantic state, authored from the site's own grammar rather than borrowed from a design trend.`
  owner = `cinematic-handles`
  kind = `plan`
- bucket = `merged`
+ bucket = `archive`
  artifact_shape = `PLAN.md | wip.spw | cinematic-handles.spw | index.spw`
 }[reg=facet]
 

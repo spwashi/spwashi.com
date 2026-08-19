@@ -1,5 +1,7 @@
 # Plan: cinematic-handles
 
+Archived 2026-08-18. Merged into `color-motion`. Research on semantic timing only.
+
 Develop a vocabulary of named timing and motion handles — transition shapes and quality constants that give the site's reveals, pivots, and responses a cinematic sensibility grounded in its own semantic grammar.
 
 ## Goal

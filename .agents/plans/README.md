@@ -62,7 +62,7 @@ folder moves**, so direct citations stay valid. Full ledger: `archive/2026-07-12
   `grep -rl 'disposition = \`merge\`' .agents/plans --include=index.spw`.
 - **Consolidation hotspots:** `chrome-navigation-wonder` absorbed 5 shell/menu plans;
   `style-image-cohesion` + `topic-photo-svg-pass` absorbed the loose image passes;
-  `css-architecture-readability` absorbed `css-maintainability-refactor`;
+  `css-architecture-readability` absorbed `css-maintainability-refactor` (archived 2026-08-18);
   `runtime-settings` absorbed the settings-discoverability/low-friction passes.
 - **Do not regenerate:** `maintain-plan-directory-indexes.mjs` is guarded (`guardReviewedPlanTree`)
   while review markers exist — `--force-generated` would destroy these authored verdicts. Edit by hand.
@@ -74,7 +74,7 @@ The active tree is large enough that directory names alone are not a usable inte
 Use virtual buckets before physical moves:
 
 - Semantic rails and editor operations: `model-guided-refinement/`, `daily-kernel-development/`, `modular-experience-slices/`, `spw-surface-normalization/`, `agent-optimization/`, `agentic-dev-contracts/`. Use `agentic-dev-contracts/` for generated route/runtime facts, future plan/skill indexes, validation posture memos, and other invalidatable agent-development caches.
-- CSS, layout, and interaction: `css-maintainability-refactor/`, `css-state-legibility/`, `component-box-model-responsive-audit/`, `card-grid-density-audit/`, `floating-chrome-stack/`, `gesture-aria-hygiene/`, `attention-shell-contrast/`.
+- CSS, layout, and interaction: `css-architecture-readability/`, `core-css-spend-cut/`, `css-state-legibility/`, `component-box-model-responsive-audit/`, `card-grid-density-audit/`, `floating-chrome-stack/`, `gesture-aria-hygiene/`, `attention-shell-contrast/`.
 - Runtime, JS, and validation: `runtime-bootstrap-performance/`, `runtime-load-instrumentation/`, `runtime-module-fluency/`, `js-surface-ecology/`, `js-taxonomy-cleanup/`, `site-source-layout/`, `typescript-integration/`. Use this bucket for cold/warm load posture, cache strata, module mount cost, and metacognitive inspection utility.
 - Media, image, and sensory material: `style-image-cohesion/`, `midjourney-design-concepts/`, `relational-attention-media/`, `site-color-tuning/`, `theme-palette-marketability/`.
 - Public route, proof, and genre systems: `design-hub/`, `webpage-trope-vocabulary/`, `professional-skill-development-worldbuilding/`, `rpg-portal-fantasy/`, `expressive-layout-tropes-fidget-manuscript/`.

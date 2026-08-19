@@ -274,5 +274,5 @@
   @style_development: ~"./style-development.spw"
   @operator_semantics: ~"./operator-semantics.spw"
   @site_semantics: ~"./site-semantics.spw"
-  @cinematic_handles_plan: ~"../../.agents/plans/cinematic-handles/PLAN.md"
+  @cinematic_handles_plan: ~"../../.agents/plans/archive/cinematic-handles/PLAN.md"
 }

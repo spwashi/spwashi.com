@@ -389,7 +389,7 @@ High-value targets:
 
 - `.frame-card`
 - `.frame-panel`
-- `.site-frame`
+- `.spw-frame`
 - `.mode-panel`
 - `.media-card`
 - `.operator-card`
@@ -551,7 +551,7 @@ Files to inspect:
 - `public/css/routes/surfaces/settings-forms.css`
 - `public/css/routes/website-surface.css`
 - `public/css/effects/material.css`
-- `public/css/effects/wonder.css`
+- `public/css/effects/wonder.css` (idle-loads with flourish-pack; tokens in `flourish-defaults.css`)
 - `public/css/ornament/canvas-accents.css`
 
 Changes:

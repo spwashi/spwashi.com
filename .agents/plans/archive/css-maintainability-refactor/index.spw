@@ -8,14 +8,14 @@
 #:operation #!prime
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "archive"
+fixity = "cold"
 
 intent: .{
  goal = `Reduce CSS brittleness in the highest-leverage shared contracts so route work can compose from explicit structure instead of relying on inferred DOM shape or over-broad semantic selectors.`
  owner = `css-maintainability-refactor`
  kind = `plan`
- bucket = `css_layout_interaction`
+ bucket = `archive`
  artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 

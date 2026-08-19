@@ -12,9 +12,9 @@ Primary source of truth:
 
 - `public/css/tokens/core.css` owns primitive colors, operator colors, material aliases, timing durations, easing curves, dark mode, theme packs, contrast, and reduced-motion tokens.
 - `public/css/effects/material.css` owns material lift, hover/focus/active depth, and component surface transitions.
-- `public/css/effects/wonder.css` owns delight, charge, resonance, and ambient semantic effects.
+- `public/css/effects/wonder.css` owns delight, charge, resonance, and ambient semantic effects. It now idle-loads with the flourish pack; tokens stay in `flourish-defaults.css`.
 - `public/css/handles/operators.css` owns operator chips, sigils, compact handles, pressed states, and graspable affordances.
-- `public/css/ornament/ornament.css` owns decorative/semi-semantic rails, seams, ribbons, and staged ornament.
+- `public/css/ornament/ornament.css` owns decorative/semi-semantic rails, seams, ribbons, and staged ornament. Same delivery: atmosphere after first paint. Sibling/child combinators are the readable grammar.
 - Route files such as `home.css` and `settings.css` bias local identity and should consume shared tokens rather than redefine interaction systems.
 
 Existing timing scale:
@@ -66,6 +66,7 @@ Known issue pattern:
 - Do not make dark mode the default visual direction.
 - Do not tune every route in one patch.
 - Do not use animation for information that must remain accessible without motion.
+- Do not treat `@layer` as a load schedule. Motion spend that can arrive late belongs in flourish delivery, not a later cascade layer.
 
 ## Token Hierarchy
 
