@@ -135,7 +135,7 @@ brand_expression_pathways: .{
   ][reg=set]
   to = `visible palette accent colors site-wide — the most personal brand expression surface`
   brand_stake = `When brace-pivots bypasses the manager, palette resonance does not flow through the canonical channel. The brand expression surface the user is engaging with only partially updates.`
-  current_risk = `brace-pivots.js writes localStorage('spw-site-settings') directly and emits a partial settings:changed payload.`
+  current_risk = `brace-pivots.js now goes through saveSiteSettings. Remaining seam is settings:changed payload shape, not a second storage writer.`
  }[reg=facet]
  wonder_memory_channel = .{
   from = `user settings (wonder memory strength and reach)`

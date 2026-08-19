@@ -39,8 +39,9 @@ canonical_invariants: #[
 drift_points: .{
  brace_pivots_bypass_manager = .{
   path = @brace_pivots
-  behavior = `Reads and writes localStorage(spw-site-settings) directly, then emits settings:changed with { key, value }.`
-  consequence = `Skips normalization, skips derived modifier application, and violates the full-object event contract assumed elsewhere.`
+  status = landed
+  behavior = `Uses saveSiteSettings. Direct localStorage writes for this module are closed.`
+  consequence = `Keep watching payload shape on settings:changed; do not re-open a second storage writer.`
  }[reg=facet]
  apply_without_cleanup = .{
   path = @settings

@@ -66,6 +66,8 @@ No new framework or heavy client dependencies are involved. The site remains han
 
 **Later / supporting (Phase 3+):**
 - Shared attention / region observer primitives (possible new small module under `runtime/` or augmentation of `attention-architecture.js` + `frame-metrics.js`).
+
+2026-08-18 continuation: `observeIntersections()` in `runtime-helpers.js` is the shared IO lane. `contextual-ui` and `bare-spw-markup` moved to `VISIBLE`. `site.js` lazy-binds composition/gesture inspect APIs. Spatial-gravity and interaction-progression CSS are deferred. Scene-bed CSS moved onto play/rpg-wednesday/topics route bundles. Core CSS 1839→1777 KiB; immediate catalog 8→6.
 - Optional "module budget" or cost hint in the existing runtime policy / discovery surfaces (purely additive, using the already-rich instrumentation).
 
 **Out of scope for the initial plan:**

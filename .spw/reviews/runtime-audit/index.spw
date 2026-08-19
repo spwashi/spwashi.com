@@ -49,13 +49,15 @@ dispatch: .{
 
 finding_index: .{
  high = #[
-  #settings_cleanup_contract,
-  #role_drift_between_layers
+  #settings_cleanup_contract
  ][reg=set]
  medium = #[
-  #stale_region_profiles,
+  #stale_region_profiles
+ ][reg=set]
+ landed_2026_08 = #[
   #brace_pivots_bypass_manager,
-  #contextual_ui_not_reinit_safe
+  #contextual_ui_not_reinit_safe,
+  #role_drift_between_layers
  ][reg=set]
  brand = #[
   #ontology_breaks_visual_grammar,
@@ -72,7 +74,7 @@ topic_summary: .{
  composition_ownership = `Leaky rules come from unclear ownership boundaries between page truth, feature identity, slot anatomy, and out-of-flow geometry roles.`
  seams = `The handoff points between authored HTML, metadata normalization, region profiling, component semantics, and contextual UI are real but under-specified.`
  lifecycles = `The runtime exposes a clean boot/destroy story, but some modules only partially obey that contract.`
- settings_state = `The settings manager is close to canonical, but at least one module still bypasses it and one event contract is shape-fragile.`
+ settings_state = `The settings manager is canonical for persist/apply. brace-pivots now uses saveSiteSettings; remaining risk is payload-shape drift, not a second storage writer.`
 }[reg=facet]
 
 editor_prompts: #[

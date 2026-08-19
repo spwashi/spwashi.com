@@ -4,11 +4,11 @@
 
 | # | File | Test/Error | Class | Priority |
 |---|---|---|---|---|
-| 1 | `public/css/spw-handles.css` | Shared mode-switch buttons keep inactive chips too faint and the selected state too close to surrounding surface tones on mobile. | ui-visual | P1 |
-| 2 | `public/css/spw-chrome.css` | The mobile `menu` toggle inherits similarly weak contrast, so the control reads more like ambient chrome than a primary interaction target. | ui-visual | P1 |
-| 3 | `public/css/spw-shell.css` | `main[data-spw-layout="reading"]` is wired through a selector that cannot match, so the documented `<main>` opt-in path is broken. | regression | P1 |
-| 4 | `public/css/spw-shell.css` | `main[data-spw-layout="split"]` does not receive the same child-placement rules as the body-level split layout, leaving the contract incomplete. | regression | P2 |
-| 5 | `public/css/spw-chrome.css` | The sticky header always reserves a seam row and row-gap even when no semantic seam is present, creating dead space above the sigil/menu row on narrow screens. | ui-visual | P1 |
+| 1 | `public/css/handles/operators/` + `shell/chrome/` | Shared mode-switch buttons keep inactive chips too faint and the selected state too close to surrounding surface tones on mobile. | ui-visual | P1 |
+| 2 | `public/css/shell/chrome/` | The mobile `menu` toggle inherits similarly weak contrast, so the control reads more like ambient chrome than a primary interaction target. | ui-visual | P1 |
+| 3 | `public/css/shell/layout.css` | `main[data-spw-layout="reading"]` is now matched alongside `body`; keep this file as the layout owner. | regression | landed |
+| 4 | `public/css/shell/layout.css` | `main[data-spw-layout="split"]` now receives the same child-placement rules as the body-level split layout. | regression | landed |
+| 5 | `public/css/shell/chrome/` | The sticky header always reserves a seam row and row-gap even when no semantic seam is present, creating dead space above the sigil/menu row on narrow screens. | ui-visual | P1 |
 
 ## Diagnosis
 
