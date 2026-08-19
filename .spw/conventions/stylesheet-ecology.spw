@@ -41,9 +41,18 @@ fixity = "tending"
 
 ^"linguistic_register"{
   claim: "CSS here is written as language, not as configuration. Selectors are phrases; a rule cluster is a paragraph; the file is an essay about one surface."
-  nesting: "Nesting groups what belongs together and should be used where a cluster is genuinely about one subject. Currently 10 of 155 files nest — the mechanism is available and mostly unused, so most clusters are held together by adjacency and a comment rather than by structure."
+  kinship: "The sentence is the combinator. `>` names a child, `+` the next sibling, ` ` a descendant, `:has()` a parent that knows what it holds. That is the worldbuilding. A banner that restates a 'law' is not."
+  nesting: "Nest a family when the subject is one kinship — a sequence and its next siblings, a ladder and its children — so the reader meets the relationship as structure, not as a repeated parent prefix."
   pseudo_selectors: "`:where()` for zero-specificity defaults so packs and handles can override without an arms race; `:has()` where a parent's dressing genuinely depends on its contents (@arrival_electrostatics and paper-motif both rely on this). Specificity is a cost, not a tool."
   naming: "Class names describe the thing, `data-spw-*` describes its state. When a class encodes state it has taken a job that belongs to an attribute — see @attribute_governance."
+}
+
+^"cascade_vs_delivery"{
+  claim: "@layer decides which rule wins. It does not decide which file is requested, when it is requested, or how it is cached."
+  refuse: "Do not treat the cascade layer list as a load-optimization technique. That misconception keeps spend in core because 'it already lives in effects/ornament'."
+  delivery: "Core vs deferred is a request schedule. Flourish spend (wonder, grain, cinematic, ornament) stays in the same layers and arrives through effects/flourish-pack.css after interactive."
+  late_link: "A late <link> that omits the layer list is unlayered and beats the stack. flourish-pack restates the geology so idle arrival is restyle, not a cascade coup."
+  visitor: "The schedule is for the person, not the cascade. First paint is already a complete page. Idle flourish may only make that page more itself. A shift that hides or shoves what they already read will make them angry."
 }
 
 ^"progressive_enhancement"{
@@ -58,7 +67,7 @@ fixity = "tending"
     `ornament/ornament.css 47KB`
   ][reg=set]
   rule: "A sheet belongs in core only if a first paint without it is wrong rather than merely plainer. Ornament, wonder, cinematic and metaphysical-paper dress surfaces that are already legible; they are enhancement by their own descriptions and arrive as if they were structure."
-  precedent: "themes/packs.css was pulled from core for exactly this reason and is appended on demand by theme-pack-loader.js. That move is the template; it has not been repeated."
+  precedent: "themes/packs.css was pulled from core for exactly this reason and is appended on demand. Flourish spend now follows the same delivery cut: tokens stay in core, spend sheets idle-load through flourish-pack.css."
 }
 
 ^"theme_reach"{

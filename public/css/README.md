@@ -1,6 +1,6 @@
 # CSS Tree
 
-`style.css` is the public stylesheet entrypoint and owns cascade layer order. Route HTML should link either `style.css` or a concrete layer file; root-level compatibility wrappers are no longer part of the source layout.
+`style.css` is the public stylesheet entrypoint and owns cascade layer order. Route HTML should link either `style.css` or a concrete layer file; root-level compatibility wrappers are no longer part of the source layout. Cascade layers decide which rule wins; they do not decide which file is requested or when.
 
 `compose.css` is the portable composition entrypoint. It exposes tokens, typography, grammar, components, handles, and light effects without the full site shell, route surfaces, or ornament layer.
 

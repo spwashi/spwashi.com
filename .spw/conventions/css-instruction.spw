@@ -27,6 +27,7 @@
     "5. responsive/reduced-motion policy"
   ]
   selector_rule: "Prefer semantic scope -> component noun -> slot/state. Avoid long child-order selectors unless the child order is itself the contract."
+  combinator_literature: "The readable physics lives in the selectors. `>` is a child. `+` is the next sibling. `:has()` is a parent that knows what it holds. An observant reader should hear kinship, not only a patch recipe. Banner comments are not the worldbuilding."
   comment_rule: "Comments should be concise and scannable; prefer one-line guardrails near semantic boundaries."
 }
 
@@ -113,6 +114,21 @@
   proof_surface = "Spacing, state clarity, and route consistency are part of the proof. A fundable demo should show that the system can absorb more ambition without collapsing into overlap, hidden state, or route-specific hacks."
   restraint = "Do not add marketing spectacle to compensate for weak state communication. Improve hierarchy, affordances, copy density, and proof links first."
   audience = "A supporter, collaborator, or future maintainer should be able to infer that interactions were designed, tested, and can be extended."
+}
+
+^"cascade_vs_delivery"{
+  claim: "@layer is cascade geology — which rule wins — not a load, cache, or request schedule."
+  misconception: "Treating cascade layers as a load-optimization technique. Reordering the layer list does not shrink core.css and does not delay a download."
+  delivery: "What file arrives, when, and how it is cached lives in style-core, route/behavior bundles, and deferred-styles.js. That schedule is orthogonal to layer order."
+  late_link: "A stylesheet appended after paint must restate the same @layer list and import each file into its owner layer. Unlayered rules beat every layer."
+  keep: "Add imports inside the existing owner layer. Do not move a file to a later layer to 'make it load later'."
+}
+
+^"late_restyle"{
+  claim: "A late stylesheet may only add atmosphere to a surface that already held."
+  hook: "First paint must already be worth staying for: a named person, a next action, readable structure, fast enough to trust."
+  angry: "Hiding, moving, or resizing something the visitor already read — navigation restyle, measure change, type jump, content vanishing."
+  prettier: "Deferred spend may only make an existing element more aesthetically pleasing. It may not invent a new layout."
 }
 
 ^"import_manifest"{

@@ -129,7 +129,7 @@ This site uses a layered CSS architecture and an ES module JavaScript system bui
 ```text
 reset -> tokens -> shell -> typography -> grammar -> components -> systems -> routes -> handles -> effects -> ornament
 ```
-New styles override lower layers. Add to `ornament` only if you need to override everything else.
+New styles override lower layers. Add to `ornament` only if you need to override everything else. These layers are cascade priority (which rules win), not a load, cache, or request schedule. Delivery — what file arrives, and when — lives in `style-core`, route/behavior bundles, and `deferred-styles.js`.
 
 ### Key files to edit for common tasks
 
