@@ -22,3 +22,6 @@ A stranger can read “I'm Spwashi. I build software and make art,” pick one d
 
 ## Landed 2026-08-18
 Core CSS 1839→1777 KiB. Immediate catalog 8→6. Shared public nav. `/now/` dated. Home first screen thinned. Fonts local.
+
+## Continuation
+The next first-paint cut is `core-css-spend-cut/` (flourish idle-load; core 1779→1623 KiB). Same rule: do not reorder `@layer` to win a demotion. Owner rail: `css-architecture-readability`.

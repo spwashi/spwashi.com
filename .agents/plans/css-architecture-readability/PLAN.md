@@ -31,7 +31,8 @@ Known constraints:
 - When a selector changes interaction behavior, record the behavior contract near the selector or in the relevant `.spw` surface.
 - Prefer literate clusters over clever compression: nearby code should explain what can be changed safely and what is a shared contract.
 - Use file splits to improve reading order, not just file size.
-- Treat CSS as a documentation layer for authored HTML: selectors should make the page structure easier to understand, not hide the meaning behind clever styling.
+- Treat CSS as a documentation layer for authored HTML: selectors should make the page structure easier to understand, not hide the meaning behind clever styling. Child (`>`), next sibling (`+`), and `:has()` are the readable kinship. Banner comments are not a substitute.
+- `@layer` is cascade priority, not a load or cache schedule. First-paint spend is a delivery question — see `core-css-spend-cut/PLAN.md` and `.spw/conventions/stylesheet-ecology.spw`.
 - Treat Spw sigils in HTML as learnability surfaces, not just decoration. When a chip or handle combines a sigil with plain text, the CSS and markup should keep the action auditable by label, operator, destination, and state.
 - Use reference-card attributes when a design surface needs later auditability: `data-spw-attention`, `data-spw-behavior`, `data-spw-reference-seed`, and `data-spw-assignment`.
 - Treat `data-spw-operator` (and the growing set of operator projections in `.spw/conventions/operator-site-projection.spw`) as first-class semantic hooks. Operator chips are not merely decorative; their selectors, states, and resonance behavior must remain traceable and consistent across layers. New operators (`!`, `*`, `&`, `.`) introduce additional styling contracts that should be centralized in operators.css rather than duplicated in route surfaces. See operator-site-projection.spw for the current site_role, selector, and claim expectations per operator.
@@ -108,7 +109,7 @@ Intern-sized examples:
 
 ## Out Of Scope
 
-- Do not change the cascade layer order in `public/css/style.css`.
+- Do not change the cascade layer order in `public/css/style.css`. Do not move a file to a later layer to “make it load later.”
 - Do not convert `data-spw-composition-flow` into global layout behavior yet.
 - Do not rename or move CSS files without updating `style.css` imports in the same patch.
 - Do not introduce a framework, runtime dependency, or client-side CSS-in-JS system.

@@ -3,6 +3,8 @@
 ## Public Goal
 A reader (and the runtime) can tell a frame, a chip, and a note by `data-spw-*` and ARIA; class names stay as one noun each. Load and navigation read as the same story CSS already has tokens for.
 
+Class is the noun. Kinship is the combinator (`>`, `+`, `:has()`). That readable physics lives in `css-instruction` (`combinator_literature`) and the CSS rail, not in a parallel classname plan.
+
 ## Non-Goals & Boundaries
 - Do not reorder CSS layers.
 - Do not invent new `data-spw-*` families.

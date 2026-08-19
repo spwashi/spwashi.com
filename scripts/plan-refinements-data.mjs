@@ -244,16 +244,36 @@ export const PLAN_REFINEMENTS = {
   },
   'css-architecture-readability': {
     conceptual: {
-      thesis: 'CSS files are instructional artifacts — scope, owner, debug hooks before rules.',
-      concepts: ['layer-order', 'debug-owner', 'literate-css', 'resonant-pause', 'ux-traceability'],
-      surfaces: ['public/css/', 'AGENTS.md CSS layer table', '.spw/conventions/css-instruction.spw'],
+      thesis: 'CSS files are instructional artifacts — scope, owner, debug hooks before rules. Cascade is priority; delivery is a request schedule; kinship is the combinators.',
+      concepts: ['layer-order', 'debug-owner', 'literate-css', 'cascade-vs-delivery', 'combinator-kinship', 'ux-traceability'],
+      surfaces: ['public/css/', 'AGENTS.md CSS layer table', '.spw/conventions/css-instruction.spw', '.spw/conventions/stylesheet-ecology.spw'],
     },
     refinement: {
       tone: 'Teacher at the whiteboard — name why a rule lives where it does.',
-      accuracy: 'Layered tree and bundles landed; per-file instructional headers are uneven.',
-      direction: 'Add debug-owner + scope header to one high-churn route CSS file as template.',
+      accuracy: 'Layered tree and scoped bundles landed. Flourish spend now idle-loads; @layer is named as cascade, not load.',
+      direction: 'When touching ornament or wonder, make child and sibling combinators the readable sentence. Evict metaphysical-paper only if first paint still holds.',
       inspiration: 'Future editors read CSS as curriculum, not archaeology.',
-      alignment: 'canonical track — start here for CSS ambiguity',
+      alignment: 'canonical CSS rail — core-css-spend-cut, stylesheet-ecology, css-instruction',
+    },
+  },
+  'core-css-spend-cut': {
+    conceptual: {
+      thesis: 'First paint ships structure. Atmosphere idle-loads in the same cascade layers. Selectors name kinship; @layer does not schedule requests.',
+      concepts: ['flourish-defaults', 'flourish-pack', 'late-restyle', 'cascade-vs-delivery', 'combinator-kinship'],
+      surfaces: [
+        'public/css/tokens/flourish-defaults.css',
+        'public/css/effects/flourish-pack.css',
+        'public/js/kernel/deferred-styles.js',
+        '.spw/conventions/css-instruction.spw',
+        '.spw/conventions/stylesheet-ecology.spw',
+      ],
+    },
+    refinement: {
+      tone: 'Mechanic, not showrunner — name what arrives and which combinators may speak.',
+      accuracy: 'First cut landed. Core 1779 to 1623 KiB. Grain, cinematic, wonder, and ornament idle-load. Inspect overlays left runtime-states.',
+      direction: 'Evict metaphysical-paper.css if first paint still holds. Combinator literature is practice, not a new plan.',
+      inspiration: 'A visitor never watches the page shove what they already read; a reader hears kinship in the selectors.',
+      alignment: 'css-architecture-readability, public-entrance-runtime-payload, stylesheet-ecology, css-instruction',
     },
   },
   'color-motion': {

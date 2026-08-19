@@ -3,8 +3,8 @@
 # A stylesheet is a standalone document, not a fragment of a bundle. It should
 # be readable, disposable, and probeable on its own — and it should say what it
 # senses. This names the practice the tree already follows, measures where it
-# lapses, and states the one place the ecology genuinely fails: everything
-# arrives at once.
+# lapses, and states the remaining failure: the trunk still arrives at once.
+# Flourish spend now idle-loads; cascade is not that schedule.
 
 #>stylesheet_ecology
 #:convention #!css #!architecture #!progressive-enhancement
@@ -22,6 +22,10 @@
 @breakpoints: ~"../../scripts/normalize-breakpoints.mjs"
 @image_theming: ~"../../public/css/systems/image-theming.css"
 @paper_motif: ~"../../public/css/systems/paper-motif.css"
+@css_architecture: ~"../../.agents/plans/css-architecture-readability/PLAN.md"
+@core_css_spend_cut: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
+@flourish_pack: ~"../../public/css/effects/flourish-pack.css"
+@public_entrance: ~"../../.agents/plans/public-entrance-runtime-payload/PLAN.md"
 
 operation = "align"
 fixity = "tending"
@@ -57,17 +61,16 @@ fixity = "tending"
 
 ^"progressive_enhancement"{
   claim: "This is where the ecology actually fails, and no amount of file hygiene fixes it."
-  measured: "core.css is 1614KB and every visitor downloads it on every route. @payload_report states the finding plainly: 'Core dominates (~1.5 MiB). Route scoping mainly drops other-route CSS (~0.4-0.6 MiB).' Route scoping trims the tail; the trunk is untouched."
+  measured: "core.css is 1623 KiB after the flourish eviction (soft budget 1638). Every visitor still downloads it on every route. @payload_report: 'Core dominates (~1.5 MiB). Route scoping mainly drops other-route CSS (~0.4-0.6 MiB).' Route scoping trims the tail; the trunk is the remaining work."
   weight: #[
-    `tokens/core.css 79KB`,
-    `grammar/syntax.css 77KB`,
-    `shell/chrome/navigation.css 60KB`,
-    `components/runtime-states.css 56KB`,
-    `shell/chrome/adaptive.css 51KB`,
-    `ornament/ornament.css 47KB`
+    `tokens/core.css ~86KB`,
+    `grammar/syntax.css ~83KB`,
+    `shell/chrome/navigation.css ~61KB`,
+    `components/runtime-states.css (inspect overlays extracted)`,
+    `shell/chrome/adaptive.css ~53KB`
   ][reg=set]
-  rule: "A sheet belongs in core only if a first paint without it is wrong rather than merely plainer. Ornament, wonder, cinematic and metaphysical-paper dress surfaces that are already legible; they are enhancement by their own descriptions and arrive as if they were structure."
-  precedent: "themes/packs.css was pulled from core for exactly this reason and is appended on demand. Flourish spend now follows the same delivery cut: tokens stay in core, spend sheets idle-load through flourish-pack.css."
+  rule: "A sheet belongs in core only if a first paint without it is wrong rather than merely plainer. Ornament, wonder, and cinematic now idle-load. Metaphysical-paper still dresses a surface that is already legible."
+  precedent: "themes/packs.css then flourish-pack.css: tokens stay in core; spend sheets append on demand through deferred-styles.js."
 }
 
 ^"theme_reach"{
@@ -109,5 +112,14 @@ fixity = "tending"
 
 ^"validation"{
   probe: `npm run css:payload && node scripts/normalize-breakpoints.mjs`
-  next: "Evict one enhancement sheet from core following the packs.css precedent, and measure. One eviction with a number beats a plan for six."
+  next: "Evict metaphysical-paper.css if first paint still holds, and measure. Combinator literature is practice when touching ornament or wonder."
+}
+
+^"dispatch"{
+  css_instruction = @css_instruction
+  css_architecture = @css_architecture
+  spend_cut = @core_css_spend_cut
+  flourish_pack = @flourish_pack
+  public_entrance = @public_entrance
+  payload_report = @payload_report
 }

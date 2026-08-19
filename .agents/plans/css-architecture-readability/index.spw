@@ -28,28 +28,46 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `CSS files are instructional artifacts — scope, owner, debug hooks before rules.`
+ thesis = `CSS files are instructional artifacts — scope, owner, debug hooks before rules. Cascade is priority; delivery is a request schedule; kinship is the combinators.`
  concepts = #[
   `layer-order`,
   `debug-owner`,
   `literate-css`,
-  `resonant-pause`,
+  `cascade-vs-delivery`,
+  `combinator-kinship`,
   `ux-traceability`,
  ][reg=set]
  surfaces = #[
   `public/css/`,
   `AGENTS.md CSS layer table`,
   `.spw/conventions/css-instruction.spw`,
+  `.spw/conventions/stylesheet-ecology.spw`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
 
 ^"plan_refinement"{
  tone = `Teacher at the whiteboard — name why a rule lives where it does.`
- accuracy = `Layered tree and bundles landed; per-file instructional headers are uneven.`
- direction = `Add debug-owner + scope header to one high-churn route CSS file as template.`
+ accuracy = `Layered tree and scoped bundles landed. Flourish spend now idle-loads; @layer is named as cascade, not load.`
+ direction = `When touching ornament or wonder, make child and sibling combinators the readable sentence. Evict metaphysical-paper only if first paint still holds.`
  inspiration = `Future editors read CSS as curriculum, not archaeology.`
- alignment = `canonical track — start here for CSS ambiguity`
+ alignment = `canonical CSS rail — core-css-spend-cut, stylesheet-ecology, css-instruction`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `css-architecture-readability`
+ related_plans = #[
+  `core-css-spend-cut`,
+  `public-entrance-runtime-payload`,
+  `semantic-classname-layers`,
+ ][reg=set]
+ public_surface = `/about/plans/`
+}[reg=facet]
+
+^"research_bridge"{
+ convention = `.spw/conventions/css-instruction.spw#cascade_vs_delivery`
+ ecology = `.spw/conventions/stylesheet-ecology.spw`
+ audit = `.spw/audits/progressive-css-module-scopes-2026-07`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
@@ -61,6 +79,9 @@ intent: .{
 @operator_site_projection: ~"../../../.spw/conventions/operator-site-projection.spw"
 @debug_css: ~"../../../public/css/effects/debug.css.map"
 @readme: ~"../../../public/css/README.md"
+@stylesheet_ecology: ~"../../../.spw/conventions/stylesheet-ecology.spw"
+@css_instruction: ~"../../../.spw/conventions/css-instruction.spw"
+@core_css_spend_cut: ~"../core-css-spend-cut/PLAN.md"
 @home: ~"../../../public/css/routes/surfaces/home.css"
 @settings: ~"../../../public/css/routes/surfaces/settings.css"
 @settings_forms: ~"../../../public/css/routes/surfaces/settings-forms.css"
@@ -72,6 +93,9 @@ dispatch: .{
  operator_site_projection = @operator_site_projection
  debug_css = @debug_css
  readme = @readme
+ stylesheet_ecology = @stylesheet_ecology
+ css_instruction = @css_instruction
+ core_css_spend_cut = @core_css_spend_cut
  home = @home
  settings = @settings
  settings_forms = @settings_forms

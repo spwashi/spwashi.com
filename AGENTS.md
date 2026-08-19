@@ -32,6 +32,8 @@ AGENTS is the always-on gate. Open the matching plan or contract instead of inve
 |---|---|
 | commit / history wording | `.agents/plans/history-reflow/PLAN.md` plus one full recent commit body (`git log -1 --format=%B`) |
 | multi-route / shared layer | `.agents/plans/<slug>/` |
+| CSS first-paint spend or `@layer` vs load | `.agents/plans/core-css-spend-cut/PLAN.md` plus `.spw/conventions/css-instruction.spw` and `stylesheet-ecology.spw` |
+| literate CSS / selector kinship | `.agents/plans/css-architecture-readability/PLAN.md` |
 | agent / editor environment | `.agents/plans/agent-optimization/PLAN.md` and `spw-plan-maintenance` |
 | PWA / service worker | `.agents/plans/pwa-experience/` plus `npm run check:pwa` |
 | page-copy / pretext measure | `.spw/conventions/copy-flow.spw` plus `npm run audit:copy` |

@@ -159,4 +159,8 @@
   @css_source_plan: ~"../../.agents/plans/archive/css-semantic-modules/PLAN.md"
   @style_development: ~"./style-development.spw"
   @site_semantics: ~"./site-semantics.spw"
+  @stylesheet_ecology: ~"./stylesheet-ecology.spw"
+  @css_architecture: ~"../../.agents/plans/css-architecture-readability/PLAN.md"
+  @core_css_spend_cut: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
+  @flourish_pack: ~"../../public/css/effects/flourish-pack.css"
 }
