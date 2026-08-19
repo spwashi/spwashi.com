@@ -100,8 +100,8 @@
   border-color: color-mix(in srgb, var(--spw-palette-probe-1) 34%, var(--spw-shell-line, var(--line)));
 }
 
-:where(.palette-probe-actions[role="toolbar"] .operator-chip:focus-visible),
-:where(.vibe-widget-actions[role="toolbar"] .operator-chip:focus-visible) {
+:where(.palette-probe-actions[role="toolbar"] .spw-chip:focus-visible),
+:where(.vibe-widget-actions[role="toolbar"] .spw-chip:focus-visible) {
   outline: 2px solid color-mix(in srgb, var(--spw-palette-probe-1) 52%, transparent);
   outline-offset: 2px;
 }

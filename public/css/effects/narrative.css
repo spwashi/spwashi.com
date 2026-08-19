@@ -213,7 +213,7 @@ html[data-spw-narrative-mode="on"] :where([data-spw-narrative-copy])::selection 
   letter-spacing: -0.01em;
 }
 
-.drawer-header .operator-chip {
+.drawer-header .spw-chip {
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.05em;

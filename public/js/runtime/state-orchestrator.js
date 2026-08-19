@@ -41,7 +41,7 @@ export function pulseState(el, state, duration = 600) {
 export function focusFrame(el, scope = 'main') {
   if (!el) return;
   const parent = el.closest(scope) || document.body;
-  const siblings = parent.querySelectorAll('.site-frame, [data-spw-kind="surface"]');
+  const siblings = parent.querySelectorAll('.spw-frame, [data-spw-kind="frame"], [data-spw-kind="surface"]');
 
   siblings.forEach((sibling) => {
     if (sibling === el) {
@@ -64,7 +64,7 @@ export const orchestrator = Object.freeze({
 
 export function bindGlobalInteractions() {
   document.addEventListener('click', (event) => {
-    const frame = event.target.closest('.site-frame');
+    const frame = event.target.closest('.spw-frame, [data-spw-kind="frame"]');
     if (frame && !frame.matches('[data-state~="active"]')) {
       focusFrame(frame);
       pulseState(frame, 'arrival', 420);

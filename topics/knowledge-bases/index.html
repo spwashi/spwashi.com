@@ -51,28 +51,28 @@
     ></spw-site-header>
 
     <main id="main-content" tabindex="-1" aria-labelledby="knowledge-bases-title">
-        <section class="site-frame site-hero" id="knowledge-bases-hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
-            <div class="frame-topline">
+        <section class="spw-frame" id="knowledge-bases-hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+            <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#knowledge-bases-hero">#&gt;knowledge_bases</a>
                 <span class="frame-kind">topic hub</span>
             </div>
             <h1 id="knowledge-bases-title">Knowledge Bases</h1>
             <p>This hub is for tools and methods that treat notes as working memory rather than as a single final document. The useful distinction is not just "editor" versus "not editor." It is whether the system supports retrieval, cross-reference, staged drafting, and long-lived accumulation in a way that changes how you think and write.</p>
             <p><a href="/topics/software/spw/">Spw</a> is the knowledge base I actually keep: readable source, named stems, and routes that project the same notes into HTML. Other local-first writing tools exist; they are neighbors, not the substrate this site is built from.</p>
-            <p class="frame-note">This site is itself a public knowledge surface: routes carry <code>data-spw-*</code> semantics, the runtime can snapshot <span class="spw-topic" data-spw-topic="topical-payloads">topical payloads</span> for handoff, and Spw stays readable beside HTML. Compare private notes with how <a href="/about/website/">this field guide</a> exposes inspectable contracts.</p>
+            <p data-spw-textual-role="note">This site is itself a public knowledge surface: routes carry <code>data-spw-*</code> semantics, the runtime can snapshot <span class="spw-topic" data-spw-topic="topical-payloads">topical payloads</span> for handoff, and Spw stays readable beside HTML. Compare private notes with how <a href="/about/website/">this field guide</a> exposes inspectable contracts.</p>
             <nav class="frame-operators" aria-label="Knowledge base topic routes">
-                <a class="operator-chip" href="#knowledge-base-value" data-spw-operator="frame" data-spw-action="address">#&gt;value_model</a>
-                <a class="operator-chip" href="#spw-as-knowledge-base" data-spw-operator="frame" data-spw-action="address">#&gt;spw_as_kb</a>
-                <a class="operator-chip" href="#dregg-contribution" data-spw-operator="potential" data-spw-action="explore">~dregg_tracks</a>
-                <a class="operator-chip" href="/topics/knowledge-bases/markdown/" data-spw-operator="potential" data-spw-action="explore">~markdown_knowledge_bases</a>
-                <a class="operator-chip" href="/topics/software/text-editing/" data-spw-operator="potential" data-spw-action="explore">~text_editing</a>
-                <a class="operator-chip" href="/topics/software/#curricular-codebase" data-spw-operator="potential" data-spw-action="explore">~curricular_codebase</a>
-                <a class="operator-chip" href="/services/systems/#curricularize" data-spw-operator="perspective" data-spw-action="enter">@systems_offer</a>
+                <a class="spw-chip" data-spw-handle="true" href="#knowledge-base-value" data-spw-operator="frame" data-spw-action="address">#&gt;value_model</a>
+                <a class="spw-chip" data-spw-handle="true" href="#spw-as-knowledge-base" data-spw-operator="frame" data-spw-action="address">#&gt;spw_as_kb</a>
+                <a class="spw-chip" data-spw-handle="true" href="#dregg-contribution" data-spw-operator="potential" data-spw-action="explore">~dregg_tracks</a>
+                <a class="spw-chip" data-spw-handle="true" href="/topics/knowledge-bases/markdown/" data-spw-operator="potential" data-spw-action="explore">~markdown_knowledge_bases</a>
+                <a class="spw-chip" data-spw-handle="true" href="/topics/software/text-editing/" data-spw-operator="potential" data-spw-action="explore">~text_editing</a>
+                <a class="spw-chip" data-spw-handle="true" href="/topics/software/#curricular-codebase" data-spw-operator="potential" data-spw-action="explore">~curricular_codebase</a>
+                <a class="spw-chip" data-spw-handle="true" href="/services/systems/#curricularize" data-spw-operator="perspective" data-spw-action="enter">@systems_offer</a>
             </nav>
         </section>
 
-        <section class="site-frame" id="knowledge-base-value" data-spw-kind="frame" data-spw-role="register">
-            <div class="frame-topline">
+        <section class="spw-frame" id="knowledge-base-value" data-spw-kind="frame" data-spw-role="register">
+            <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#knowledge-base-value">^value_model</a>
                 <span class="frame-kind">knowledge base value</span>
             </div>
@@ -94,8 +94,8 @@
             </div>
         </section>
 
-        <section class="site-frame" id="knowledge-base-questions" data-spw-kind="frame" data-spw-role="register">
-            <div class="frame-topline">
+        <section class="spw-frame" id="knowledge-base-questions" data-spw-kind="frame" data-spw-role="register">
+            <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#knowledge-base-questions">?utility</a>
                 <span class="frame-kind">why this matters here</span>
             </div>
@@ -117,8 +117,8 @@
             </div>
         </section>
 
-        <section class="site-frame" id="spw-as-knowledge-base" data-spw-kind="frame" data-spw-role="register">
-            <div class="frame-topline">
+        <section class="spw-frame" id="spw-as-knowledge-base" data-spw-kind="frame" data-spw-role="register">
+            <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#spw-as-knowledge-base">#&gt;spw_as_kb</a>
                 <span class="frame-kind">working memory</span>
             </div>
@@ -142,8 +142,8 @@
             </div>
         </section>
 
-        <section class="site-frame" id="dregg-contribution" data-spw-kind="frame" data-spw-role="reference">
-            <div class="frame-topline">
+        <section class="spw-frame" id="dregg-contribution" data-spw-kind="frame" data-spw-role="reference">
+            <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#dregg-contribution">~dregg_tracks</a>
                 <span class="frame-kind">contribution guide</span>
             </div>
@@ -167,11 +167,11 @@
                     <p>Procedural sprites stay seed-derived. Hand or Midjourney stills are a new layer: 128×128 board slots, transparent backgrounds, navy palette, one asset per PR. Brand and token art can land immediately; in-game <code>art:</code> handles are designed and not yet wired. Do not block a file on the wiring.</p>
                 </div>
             </div>
-            <p class="frame-note">If a later reader only needs one next action: open the spec, pick Track B if you write, Track A if you draw systems, or the assets guide if you have a still. The <a href="/about/domains/lore.land/">lore.land</a> surface is where long-form narrative from those scenes can become public without pretending the vault and the game are the same room.</p>
+            <p data-spw-textual-role="note">If a later reader only needs one next action: open the spec, pick Track B if you write, Track A if you draw systems, or the assets guide if you have a still. The <a href="/about/domains/lore.land/">lore.land</a> surface is where long-form narrative from those scenes can become public without pretending the vault and the game are the same room.</p>
         </section>
 
-        <section class="site-frame" id="spween-scene" data-spw-kind="frame" data-spw-role="reference">
-            <div class="frame-topline">
+        <section class="spw-frame" id="spween-scene" data-spw-kind="frame" data-spw-role="reference">
+            <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#spween-scene" data-spw-operator="scene">(spween_scene</a>
                 <span class="frame-kind">cheat-sheet</span>
             </div>
@@ -213,14 +213,14 @@ The vault door hangs open.
                 </article>
             </div>
             <nav class="frame-operators" aria-label="Spween next">
-                <a class="operator-chip" href="#dregg-contribution" data-spw-operator="potential">~dregg_tracks</a>
-                <a class="operator-chip" href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" data-spw-operator="potential">~content_spec</a>
-                <a class="operator-chip" href="/about/domains/lore.land/" data-spw-operator="concept-edge">&gt;lore.land</a>
+                <a class="spw-chip" data-spw-handle="true" href="#dregg-contribution" data-spw-operator="potential">~dregg_tracks</a>
+                <a class="spw-chip" data-spw-handle="true" href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" data-spw-operator="potential">~content_spec</a>
+                <a class="spw-chip" data-spw-handle="true" href="/about/domains/lore.land/" data-spw-operator="concept-edge">&gt;lore.land</a>
             </nav>
         </section>
 
-        <section class="site-frame" id="knowledge-base-references" data-spw-kind="frame" data-spw-role="reference">
-            <div class="frame-topline">
+        <section class="spw-frame" id="knowledge-base-references" data-spw-kind="frame" data-spw-role="reference">
+            <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#knowledge-base-references">~refs</a>
                 <span class="frame-kind">starting references</span>
             </div>
@@ -245,23 +245,23 @@ The vault door hangs open.
             </div>
         </section>
 
-        <section class="site-frame" id="knowledge-base-related-routes" data-spw-kind="frame" data-spw-role="register">
-            <div class="frame-topline">
+        <section class="spw-frame" id="knowledge-base-related-routes" data-spw-kind="frame" data-spw-role="register">
+            <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#knowledge-base-related-routes">~next</a>
                 <span class="frame-kind">adjacent routes</span>
             </div>
             <h2>Related routes</h2>
             <div class="operator-row">
-                <a class="operator-chip" data-spw-operator="frame" href="/topics/knowledge-bases/markdown/" data-spw-action="address">#&gt;markdown_knowledge_bases</a>
-                <a class="operator-chip" data-spw-operator="frame" href="/topics/software/text-editing/" data-spw-action="address">#&gt;text_editing</a>
-                <a class="operator-chip" data-spw-operator="frame" href="/topics/software/text-editing/note-taking/" data-spw-action="address">#&gt;note_taking_history</a>
-                <a class="operator-chip" data-spw-operator="frame" href="/topics/software/text-editing/history/" data-spw-action="address">#&gt;text_editor_history</a>
-                <a class="operator-chip" data-spw-operator="frame" href="/topics/software/#curricular-codebase" data-spw-action="address">#&gt;curricular_codebase</a>
-                <a class="operator-chip" data-spw-operator="frame" href="/services/systems/#curricularize" data-spw-action="address">#&gt;systems_offer</a>
-                <a class="operator-chip" data-spw-operator="frame" href="/topics/software/spw/" data-spw-action="address">#&gt;spw_operator_atlas</a>
-                <a class="operator-chip" data-spw-operator="frame" href="#dregg-contribution" data-spw-action="address">#&gt;dregg_tracks</a>
-                <a class="operator-chip" data-spw-operator="scene" href="#spween-scene" data-spw-action="address">(spween_scene</a>
-                <a class="operator-chip" data-spw-operator="potential" href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" data-spw-action="explore">~content_spec</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="/topics/knowledge-bases/markdown/" data-spw-action="address">#&gt;markdown_knowledge_bases</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="/topics/software/text-editing/" data-spw-action="address">#&gt;text_editing</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="/topics/software/text-editing/note-taking/" data-spw-action="address">#&gt;note_taking_history</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="/topics/software/text-editing/history/" data-spw-action="address">#&gt;text_editor_history</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="/topics/software/#curricular-codebase" data-spw-action="address">#&gt;curricular_codebase</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="/services/systems/#curricularize" data-spw-action="address">#&gt;systems_offer</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="/topics/software/spw/" data-spw-action="address">#&gt;spw_operator_atlas</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="#dregg-contribution" data-spw-action="address">#&gt;dregg_tracks</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="scene" href="#spween-scene" data-spw-action="address">(spween_scene</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="potential" href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" data-spw-action="explore">~content_spec</a>
             </div>
         </section>
     </main>

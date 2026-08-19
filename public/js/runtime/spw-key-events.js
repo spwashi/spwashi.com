@@ -15,7 +15,7 @@ const SCENE_HOST_SELECTOR = [
   '[data-spw-scene-interpret]',
   '[data-spw-prompt-host]',
   '.spw-scene-bed[data-spw-scene-posture]',
-  '.site-frame[data-spw-promptability="visible"]',
+  '.spw-frame[data-spw-promptability="visible"]',
 ].join(', ');
 
 const KEY_NAV_SELECTOR = [
@@ -88,7 +88,7 @@ function collectSceneLanes(host) {
 function buildScenePacket(host) {
   if (!(host instanceof HTMLElement)) return null;
 
-  const frame = host.closest('.site-frame');
+  const frame = host.closest('.spw-frame, [data-spw-kind="frame"]');
   const source = { surface: host, frame: frame || undefined };
   let spwContext = '';
   let wonderPrompt = '';
@@ -512,7 +512,7 @@ function resolveBindingId(key, target) {
 
 function collectNavigableOperators() {
   const elements = Array.from(document.querySelectorAll(
-    'a.operator-chip[href], [data-spw-operator], a.spw-topic, span.spw-topic[tabindex], [data-spw-guide-badge]'
+    'a.spw-chip[href], [data-spw-operator], a.spw-topic, span.spw-topic[tabindex], [data-spw-guide-badge]'
   )).filter((el) => {
     if (el.closest('[hidden]')) return false;
     return el.offsetWidth > 0 && el.offsetHeight > 0;
@@ -550,7 +550,7 @@ function traverseOperators(direction = 1) {
 }
 
 function collectNavigableFrames() {
-  return Array.from(document.querySelectorAll('.spw-frame, .site-frame')).filter((el) => {
+  return Array.from(document.querySelectorAll('.spw-frame, [data-spw-kind="frame"]')).filter((el) => {
     if (el.closest('[hidden]')) return false;
     return el.offsetWidth > 0 && el.offsetHeight > 0;
   });
@@ -594,9 +594,9 @@ function traverseFrames(direction = 1) {
 }
 
 function cycleActiveFrameMode(direction = 1) {
-  const activeFrame = document.activeElement?.closest?.('.spw-frame, .site-frame')
-    || document.querySelector('.spw-frame:hover, .site-frame:hover')
-    || document.querySelector('.spw-frame, .site-frame');
+  const activeFrame = document.activeElement?.closest?.('.spw-frame, [data-spw-kind="frame"]')
+    || document.querySelector('.spw-frame:hover, [data-spw-kind="frame"]:hover')
+    || document.querySelector('.spw-frame, [data-spw-kind="frame"]');
   if (!activeFrame) return false;
 
   const modeButtons = Array.from(activeFrame.querySelectorAll('.mode-switch button, [data-set-mode]'));
@@ -644,7 +644,7 @@ function cycleSemanticDensity(direction = 1) {
 function tunePhaseByIndex(index) {
   if (index < 0 || index >= PHASE_TIERS.length) return false;
   const phase = PHASE_TIERS[index];
-  const active = document.activeElement?.closest('.spw-frame, .site-frame, [data-spw-feature]') || document.documentElement;
+  const active = document.activeElement?.closest('.spw-frame, [data-spw-kind="frame"], [data-spw-feature]') || document.documentElement;
   writeDatasetValue(active, 'spwPhase', phase, {
     source: 'spw-key-events',
     reason: 'tune-phase-by-index',
@@ -654,7 +654,7 @@ function tunePhaseByIndex(index) {
 }
 
 function dialTangibilityDelta(delta) {
-  const active = document.activeElement?.closest('.spw-frame, .site-frame, [data-spw-feature]') || document.documentElement;
+  const active = document.activeElement?.closest('.spw-frame, [data-spw-kind="frame"], [data-spw-feature]') || document.documentElement;
   const current = parseFloat(active.dataset.spwTangibility || active.style.getPropertyValue('--spw-tangibility') || '0.5');
   const next = Math.max(0.05, Math.min(1.0, Math.round((current + delta) * 100) / 100));
   writeDatasetValue(active, 'spwTangibility', next.toFixed(2), {
@@ -668,7 +668,7 @@ function dialTangibilityDelta(delta) {
 
 function groundCurrentOperator() {
   const active = document.activeElement;
-  const target = active?.closest?.('[data-spw-operator], .operator-chip, [data-spw-resonance-key]') || potentiatedElement;
+  const target = active?.closest?.('[data-spw-operator], .spw-chip, [data-spw-resonance-key]') || potentiatedElement;
   if (!target) return false;
 
   const op = target.getAttribute('data-spw-operator') || target.getAttribute('data-spw-resonance-key') || '';

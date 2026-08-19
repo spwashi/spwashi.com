@@ -332,9 +332,9 @@ a {
 article a,
 .frame-panel a,
 .inline-note a,
-.site-lede a,
-.page-lede a,
-.frame-note a {
+[data-spw-textual-role="lede"] a,
+[data-spw-textual-role="lede"] a,
+[data-spw-textual-role="note"] a {
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
@@ -346,8 +346,8 @@ article a,
 article a:hover,
 .frame-panel a:hover,
 .inline-note a:hover,
-.page-lede a:hover,
-.frame-note a:hover {
+[data-spw-textual-role="lede"] a:hover,
+[data-spw-textual-role="note"] a:hover {
   text-decoration-color: var(--active-op-color, #008080);
   color: var(--active-op-color, #008080);
 }
@@ -482,7 +482,7 @@ code {
   aside,
   nav,
   figure,
-  .site-frame,
+  .spw-frame,
   .frame-grid,
   .frame-panel,
   .frame-card,
@@ -500,7 +500,7 @@ code {
 }
 
 /* Common interactive regions should allow vertical scroll gestures */
-:where(main, article, section, aside, .site-frame, .mode-panel, .plan-card) {
+:where(main, article, section, aside, .spw-frame, .mode-panel, .plan-card) {
   touch-action: pan-y;
 }
 
@@ -508,7 +508,7 @@ code {
 :where(
   .frame-sigil,
   .frame-card-sigil,
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .plan-status,
   .syntax-token,

@@ -1,7 +1,7 @@
 import { emitSpwAction } from '/public/js/kernel/shared.js';
 
 const TARGET_SELECTOR = [
-    '.site-frame[data-spw-form="brace"]',
+    '.spw-frame[data-spw-form="brace"], [data-spw-kind="frame"][data-spw-form="brace"]',
     '.frame-card[data-spw-form="brace"]:not(a)',
     '.frame-panel[data-spw-form="brace"]',
     '.software-card[data-spw-form="brace"]:not(a)',
@@ -13,7 +13,7 @@ const TARGET_SELECTOR = [
 function activateFrame(target, source = 'brace-edge') {
     const frame = target.classList.contains('site-frame')
         ? target
-        : target.closest('.site-frame');
+        : target.closest('.spw-frame, [data-spw-kind="frame"]');
     window.spwInterface?.activateFrame?.(frame || target, { source, force: true });
 }
 
@@ -78,7 +78,7 @@ function projectToPrimaryLink(target) {
 function projectToNextFrame(target) {
     const frame = target.classList.contains('site-frame')
         ? target
-        : target.closest('.site-frame');
+        : target.closest('.spw-frame, [data-spw-kind="frame"]');
     let next = frame?.nextElementSibling || null;
     while (next && !next.classList.contains('site-frame')) {
         next = next.nextElementSibling;

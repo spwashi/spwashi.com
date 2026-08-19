@@ -28,7 +28,7 @@ html[data-spw-layout-tuner="newspaper"] main > article {
   gap: var(--page-section-gap);
 }
 
-html[data-spw-layout-tuner="newspaper"] :where(p, li, .frame-note, .frame-copy) {
+html[data-spw-layout-tuner="newspaper"] :where(p, li, [data-spw-textual-role="note"], .frame-copy) {
   font-size: clamp(0.94rem, 0.9rem + 0.08vw, 1.02rem);
   line-height: var(--site-line-height, 1.52);
   hyphens: auto;
@@ -50,8 +50,8 @@ html[data-spw-layout-tuner="newspaper"] :where(h3) {
  */
 @media (min-width: 64rem) {
   html[data-spw-layout-tuner="newspaper"] :where(
-    .site-frame[data-spw-region="read"] > .frame-body,
-    .site-frame[data-spw-region-role="reading"] > .frame-body,
+    .spw-frame[data-spw-region="read"] > .frame-body,
+    .spw-frame[data-spw-region-role="reading"] > .frame-body,
     .spw-narration,
     [data-spw-textual-role="narration"]
   ) {
@@ -61,7 +61,7 @@ html[data-spw-layout-tuner="newspaper"] :where(h3) {
     column-fill: auto;
   }
 
-  html[data-spw-layout-tuner="newspaper"] :where(.frame-body, .frame-copy) > :is(h2, h3, figure, .frame-grid, .site-frame, pre, blockquote) {
+  html[data-spw-layout-tuner="newspaper"] :where(.frame-body, .frame-copy) > :is(h2, h3, figure, .frame-grid, .spw-frame, pre, blockquote) {
     break-inside: avoid;
     column-span: all;
   }
@@ -71,7 +71,7 @@ html[data-spw-layout-tuner="newspaper"] :where(h3) {
     gap: 0.52rem;
   }
 
-  html[data-spw-layout-tuner="newspaper"] :where(.frame-card, .site-frame) {
+  html[data-spw-layout-tuner="newspaper"] :where(.frame-card, .spw-frame) {
     --component-pad: 0.68rem;
     --component-gap-tight: 0.34rem;
   }
@@ -83,22 +83,22 @@ html[data-spw-layout-flow="vertical-ribbon"] main > article {
 }
 
 @media (max-width: 48rem) {
-  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.site-frame, section.site-frame) {
+  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.spw-frame, section.spw-frame) {
     --spw-mobile-rhythm: stack;
   }
 
-  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.site-frame, section.site-frame):nth-child(3n + 1) {
+  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.spw-frame, section.spw-frame):nth-child(3n + 1) {
     --spw-mobile-rhythm: full-bleed;
     margin-inline: calc(var(--page-gutter-inline, 1rem) * -0.42);
     border-radius: 0;
     border-inline: none;
   }
 
-  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.site-frame, section.site-frame):nth-child(3n + 2) {
+  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.spw-frame, section.spw-frame):nth-child(3n + 2) {
     --spw-mobile-rhythm: inset;
   }
 
-  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.site-frame, section.site-frame):nth-child(3n) {
+  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.spw-frame, section.spw-frame):nth-child(3n) {
     --spw-mobile-rhythm: ribbon;
     padding-block: 0.35rem;
     border: none;
@@ -106,7 +106,7 @@ html[data-spw-layout-flow="vertical-ribbon"] main > article {
     box-shadow: none;
   }
 
-  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.site-frame, section.site-frame):nth-child(3n)::before {
+  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.spw-frame, section.spw-frame):nth-child(3n)::before {
     opacity: 0.28;
   }
 
@@ -122,7 +122,7 @@ html[data-spw-layout-flow="vertical-ribbon"] main > article {
 
 /* Attention architecture: active section emphasis */
 html[data-spw-page-section-phase="settled"] :where(
-  .site-frame[data-spw-section-state="active"],
+  .spw-frame[data-spw-section-state="active"],
   section[data-spw-section-state="active"]
 ) {
   border-color: color-mix(in srgb, var(--active-op-color) 22%, var(--line, transparent));
@@ -132,7 +132,7 @@ html[data-spw-page-section-phase="settled"] :where(
 }
 
 html[data-spw-page-section-phase="traveling"] :where(
-  .site-frame[data-spw-section-state="active"],
+  .spw-frame[data-spw-section-state="active"],
   section[data-spw-section-state="active"]
 ) {
   box-shadow:
@@ -158,7 +158,7 @@ html[data-spw-reading-groove="on"][data-spw-layout-flow="vertical-ribbon"] :wher
 
 @media (prefers-reduced-motion: reduce) {
   html[data-spw-page-section-phase="traveling"] :where(
-    .site-frame[data-spw-section-state="active"],
+    .spw-frame[data-spw-section-state="active"],
     section[data-spw-section-state="active"]
   ) {
     transition: none;

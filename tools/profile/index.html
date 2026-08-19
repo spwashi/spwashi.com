@@ -50,7 +50,7 @@
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_tools_tools_profile__main_surface" data-spw-wonder="comparison locality consequence" id="main-content" tabindex="-1" aria-labelledby="profile-title">
         <article>
 
-            <section class="site-frame site-hero" id="profile-builder-frame"
+            <section class="spw-frame" data-spw-region-role="entry-spine" id="profile-builder-frame"
                 aria-labelledby="profile-title"
                 aria-describedby="profile-lede profile-privacy-note"
                 data-spw-role="context"
@@ -59,7 +59,7 @@
                 data-spw-operator="object" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="workshop" data-spw-locality="high" data-spw-consequence="memory" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_tools_tools_profile__profile_builder_frame" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/"
                 data-spw-region-purpose="public-spine"
                 data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#profile-builder-frame">^"profile_builder"</a>
                     <div class="spec-strip">
                         <span class="spec-pill" data-cluster="tool">local-only</span>
@@ -68,9 +68,9 @@
                     </div>
                 </div>
                 <h1 id="profile-title">Profile Builder</h1>
-                <p id="profile-lede" class="site-lede">Describe what you do in a form that travels.</p>
+                <p id="profile-lede" data-spw-textual-role="lede">Describe what you do in a form that travels.</p>
                 <p>This tool is for engineers, collaborators, and peers who need to articulate their work quickly and clearly. Fill in the fields, get a card, copy the JSON, or screenshot the result.</p>
-                <p id="profile-privacy-note" class="frame-note">Everything stays in this browser. Nothing is sent anywhere.</p>
+                <p id="profile-privacy-note" data-spw-textual-role="note">Everything stays in this browser. Nothing is sent anywhere.</p>
                 <div class="spw-reason-strip" aria-label="Profile builder reasons" data-spw-feature="profile-builder-reasons">
                     <div>
                         <strong>This tool exists because</strong>
@@ -86,23 +86,23 @@
                     </div>
                 </div>
                 <nav class="frame-operators" aria-label="Profile builder sections" data-spw-feature="profile-builder-routes">
-                    <a class="operator-chip" href="#builder-form" data-spw-operator="integration" data-spw-action="publish">^fill_in</a>
-                    <a class="operator-chip" href="#builder-preview" data-spw-operator="potential" data-spw-action="explore">~preview</a>
-                    <a class="operator-chip" href="#import-export" data-spw-operator="perspective">@import_export</a>
-                    <a class="operator-chip" href="/tools/character-sheet/" data-spw-operator="perspective" data-spw-action="enter">@character_sheet</a>
-                    <a class="operator-chip" href="/tools/midjourney/" data-spw-operator="potential" data-spw-action="explore">~midjourney_bench</a>
-                    <a class="operator-chip" href="/tools/" data-spw-operator="integration" data-spw-action="publish">^tools_index</a>
-                    <a class="operator-chip" href="/services/" data-spw-operator="perspective" data-spw-action="enter">@services</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#builder-form" data-spw-operator="integration" data-spw-action="publish">^fill_in</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#builder-preview" data-spw-operator="potential" data-spw-action="explore">~preview</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#import-export" data-spw-operator="perspective">@import_export</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/tools/character-sheet/" data-spw-operator="perspective" data-spw-action="enter">@character_sheet</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/tools/midjourney/" data-spw-operator="potential" data-spw-action="explore">~midjourney_bench</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/tools/" data-spw-operator="integration" data-spw-action="publish">^tools_index</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/services/" data-spw-operator="perspective" data-spw-action="enter">@services</a>
                 </nav>
             </section>
 
             <!-- Builder: form + live preview -->
-            <section class="site-frame" id="builder-form"
+            <section class="spw-frame" id="builder-form"
                 aria-labelledby="builder-form-title"
                 data-spw-role="vessel"
                 data-spw-form="brace"
                 data-spw-meaning="profile wizard — form fields that drive live card preview" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__builder_form" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#builder-form">^"build"</a>
                     <h2 id="builder-form-title">Build your profile card</h2>
                 </header>
@@ -170,7 +170,7 @@
                         <!-- Badges -->
                         <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_profile__panel_2">
                             <h3>Skills &amp; Context</h3>
-                            <p class="frame-note">Comma-separated. Each entry becomes a badge.</p>
+                            <p data-spw-textual-role="note">Comma-separated. Each entry becomes a badge.</p>
                             <div class="badge-input-row">
                                 <input id="badge-input" type="text" placeholder="React, TypeScript, …" spellcheck="false"/>
                                 <select id="badge-cluster">
@@ -264,16 +264,16 @@
             </section>
 
             <!-- Import / Export -->
-            <section class="site-frame" id="import-export"
+            <section class="spw-frame" id="import-export"
                 aria-labelledby="import-export-title"
                 data-spw-role="vessel"
                 data-spw-form="square"
                 data-spw-meaning="JSON import — paste a saved profile to restore it" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__import_export" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#import-export">@"import"</a>
                     <h2 id="import-export-title">Import or restore JSON</h2>
                 </header>
-                <p class="inline-note">Paste a previously exported profile JSON to restore it. The card format is stable — a JSON exported today will still work here later.</p>
+                <p data-spw-textual-role="note">Paste a previously exported profile JSON to restore it. The card format is stable — a JSON exported today will still work here later.</p>
                 <div class="profile-field">
                     <textarea id="json-import-area" rows="6" placeholder='{"header":{"name":"..."},...}'></textarea>
                 </div>
@@ -283,16 +283,16 @@
             </section>
 
             <!-- Schema reference -->
-            <section class="site-frame" id="schema-reference"
+            <section class="spw-frame" id="schema-reference"
                 aria-labelledby="schema-reference-title"
                 data-spw-role="reference"
                 data-spw-form="square"
                 data-spw-meaning="profile card JSON schema reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__schema_reference" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#schema-reference">~"schema"</a>
                     <h2 id="schema-reference-title">Schema reference</h2>
                 </header>
-                <p class="inline-note">The profile card is driven by a plain JSON object. Any page that imports the <code>renderProfileCard</code> function can render one. The format is intentionally stable.</p>
+                <p data-spw-textual-role="note">The profile card is driven by a plain JSON object. Any page that imports the <code>renderProfileCard</code> function can render one. The format is intentionally stable.</p>
                 <pre class="spw-codeblock" data-spw-form="brace"><code>{
   "header": {
     "name":    "your name",

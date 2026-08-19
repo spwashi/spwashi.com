@@ -163,7 +163,7 @@
   [data-spw-affordance],
   [data-spw-groundable="true"],
   .spw-delimiter,
-  .operator-chip,
+  .spw-chip,
   .syntax-token,
   .spec-pill,
   .frame-sigil,
@@ -183,7 +183,7 @@
 }
 
 :where(html[data-spw-physics="puppet"]) :where(
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .frame-sigil,
   .frame-card-sigil,
@@ -198,7 +198,7 @@
 :where(html[data-spw-physics="screenshot"]) :where(
   [data-spw-kind],
   [data-spw-role],
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .spw-component-tag,
   .spw-guide-chip,
@@ -210,7 +210,7 @@
 
 :where(
   [data-spw-form]:not([data-spw-charge]):not(:hover),
-  .operator-chip:not([data-spw-charge]):not(:hover),
+  .spw-chip:not([data-spw-charge]):not(:hover),
   .syntax-token:not([data-spw-charge]):not(:hover),
   .spec-pill:not([data-spw-charge]):not(:hover),
   .frame-sigil:not([data-spw-charge]):not(:hover)
@@ -275,7 +275,7 @@
 
 :where(
   [data-spw-form][data-spw-charge],
-  .operator-chip[data-spw-charge],
+  .spw-chip[data-spw-charge],
   .syntax-token[data-spw-charge],
   .spec-pill[data-spw-charge],
   .frame-sigil[data-spw-charge],
@@ -485,7 +485,7 @@
   filter: none;
 }
 
-:where(.frame-card[data-spw-grounded="true"], .frame-panel[data-spw-grounded="true"], .software-card[data-spw-grounded="true"], .site-frame[data-spw-grounded="true"]) {
+:where(.frame-card[data-spw-grounded="true"], .frame-panel[data-spw-grounded="true"], .software-card[data-spw-grounded="true"], .spw-frame[data-spw-grounded="true"]) {
   opacity: 1;
   text-decoration: none;
 }
@@ -656,7 +656,7 @@
 
 :where(
   button, [role="button"], [role="tab"], [data-spw-operator], [data-spw-wall],
-  [data-spw-handle], [data-touch-ui], .operator-chip, .spec-pill, .mode-switch,
+  [data-spw-handle], [data-touch-ui], .spw-chip, .spec-pill, .mode-switch,
   .frame-sigil, .frame-card-sigil, .spw-objective-wall, .spw-subjective-wall,
   .spw-boon-wall, .spw-bane-wall
 ) {
@@ -668,7 +668,7 @@
 
 :where(
   p, li, pre, code, blockquote, [data-copyable], [data-readable],
-  .frame-panel p, .frame-card span, .inline-note, .frame-note
+  .frame-panel p, .frame-card span, .inline-note, [data-spw-textual-role="note"]
 ) {
   -webkit-user-select: text;
   user-select: text;
@@ -699,7 +699,7 @@
   :where(
     [data-spw-form], [data-spw-charge], [data-spw-handle="true"],
     [data-spw-affordance], [data-spw-groundable="true"], .spw-delimiter,
-    .operator-chip, .syntax-token, .spec-pill, .frame-sigil, .frame-card-sigil,
+    .spw-chip, .syntax-token, .spec-pill, .frame-sigil, .frame-card-sigil,
     .cinematic-host, .spw-svg-surface, .spw-svg-flow--animated, .op-node circle,
     .op-node text, .spw-parallel-shimmer, [data-spw-parallel="active"],
     [data-spw-resonance="high"], [data-spw-resonance="medium"], .spw-pop-snap, .copy-status

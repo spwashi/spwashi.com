@@ -185,7 +185,7 @@ body[data-spw-surface="about"] {
    2. Generic frame tuning
    ========================================================================== */
 
-[data-spw-surface="about"] :is(.spw-frame, .site-frame) {
+[data-spw-surface="about"] :is(.spw-frame, .spw-frame) {
   border-color: color-mix(in srgb, var(--about-line) 96%, transparent);
   border-radius: var(--about-panel-radius);
   background:
@@ -197,7 +197,7 @@ body[data-spw-surface="about"] {
   color: var(--about-ink);
 }
 
-[data-spw-surface="about"] :is(.spw-frame, .site-frame):is(:hover, :focus-within) {
+[data-spw-surface="about"] :is(.spw-frame, .spw-frame):is(:hover, :focus-within) {
   border-color: color-mix(in srgb, var(--about-accent) 18%, var(--about-line));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.46),
@@ -208,7 +208,7 @@ body[data-spw-surface="about"] {
   color: color-mix(in srgb, var(--about-ink-soft) 90%, var(--about-accent));
 }
 
-[data-spw-surface="about"] .frame-note,
+[data-spw-surface="about"] [data-spw-textual-role="note"],
 [data-spw-surface="about"] .inline-note {
   color: var(--about-ink-soft);
 }
@@ -266,8 +266,8 @@ body[data-spw-surface="about"] {
   text-wrap: balance;
 }
 
-[data-spw-surface="about"] #about-orientation-note.page-lede,
-[data-spw-surface="about"] #about-frame .page-lede {
+[data-spw-surface="about"] #about-orientation-note[data-spw-textual-role="lede"],
+[data-spw-surface="about"] #about-frame [data-spw-textual-role="lede"] {
   max-width: 60ch;
   color: color-mix(in srgb, var(--about-ink-soft) 92%, var(--about-accent));
   font-size: clamp(1.02rem, 1.1rem + 0.2vw, 1.14rem);
@@ -349,25 +349,25 @@ body[data-spw-surface="about"] {
       margin-bottom: clamp(0.35rem, 1vw, 0.7rem);
     }
 
-    [data-spw-surface="about"] #about-frame > .page-kicker,
+    [data-spw-surface="about"] #about-frame > [data-spw-textual-role="kicker"],
     [data-spw-surface="about"] #about-frame > #about-title,
-    [data-spw-surface="about"] #about-frame > .page-lede {
+    [data-spw-surface="about"] #about-frame > [data-spw-textual-role="lede"] {
       grid-column: 1;
     }
 
-    [data-spw-surface="about"] #about-frame > p:not(.page-kicker):not(.page-lede) {
+    [data-spw-surface="about"] #about-frame > p:not([data-spw-textual-role="kicker"]):not([data-spw-textual-role="lede"]) {
       grid-column: 2;
       max-inline-size: var(--measure-panel);
       margin-block: 0;
     }
 
-    [data-spw-surface="about"] #about-frame > p:not(.page-kicker):not(.page-lede) + p:not(.page-kicker):not(.page-lede) {
+    [data-spw-surface="about"] #about-frame > p:not([data-spw-textual-role="kicker"]):not([data-spw-textual-role="lede"]) + p:not([data-spw-textual-role="kicker"]):not([data-spw-textual-role="lede"]) {
       margin-top: 0.8rem;
     }
   }
 }
 
-[data-spw-surface="about"] #about-frame a:not(.operator-chip):not(.frame-sigil) {
+[data-spw-surface="about"] #about-frame a:not(.spw-chip):not(.frame-sigil) {
   color: color-mix(in srgb, var(--about-accent) 84%, var(--about-ink));
 }
 
@@ -456,14 +456,14 @@ body[data-spw-surface="about"] {
    6. Links and operator chips
    ========================================================================== */
 
-[data-spw-surface="about"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil):not(.syntax-token) {
+[data-spw-surface="about"] a:not(.frame-card):not(.spw-chip):not(.frame-sigil):not(.syntax-token) {
   color: color-mix(in srgb, var(--about-accent) 86%, var(--about-ink));
   text-decoration-color: color-mix(in srgb, var(--about-accent) 28%, transparent);
   text-underline-offset: 0.16em;
 }
 
-[data-spw-surface="about"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil):not(.syntax-token):hover,
-[data-spw-surface="about"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil):not(.syntax-token):focus-visible {
+[data-spw-surface="about"] a:not(.frame-card):not(.spw-chip):not(.frame-sigil):not(.syntax-token):hover,
+[data-spw-surface="about"] a:not(.frame-card):not(.spw-chip):not(.frame-sigil):not(.syntax-token):focus-visible {
   color: color-mix(in srgb, var(--about-accent-2) 82%, var(--about-accent));
   text-decoration-color: currentColor;
   outline: none;
@@ -473,7 +473,7 @@ body[data-spw-surface="about"] {
   gap: 0.5rem 0.6rem;
 }
 
-[data-spw-surface="about"] .operator-chip {
+[data-spw-surface="about"] .spw-chip {
   border-radius: 999px;
   background:
     linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
@@ -485,8 +485,8 @@ body[data-spw-surface="about"] {
     0 1px 3px rgba(35, 22, 16, 0.04);
 }
 
-[data-spw-surface="about"] .operator-chip:hover,
-[data-spw-surface="about"] .operator-chip:focus-visible {
+[data-spw-surface="about"] .spw-chip:hover,
+[data-spw-surface="about"] .spw-chip:focus-visible {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.22), transparent 62%),
     color-mix(in srgb, var(--about-accent) 11%, transparent);
@@ -781,10 +781,10 @@ body[data-spw-surface="about"] {
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  [data-spw-surface="about"] .site-frame,
+  [data-spw-surface="about"] .spw-frame,
   [data-spw-surface="about"] .frame-panel,
   [data-spw-surface="about"] .about-story-map__item,
-  [data-spw-surface="about"] .operator-chip {
+  [data-spw-surface="about"] .spw-chip {
     transition: none !important;
     animation: none !important;
     transform: none !important;

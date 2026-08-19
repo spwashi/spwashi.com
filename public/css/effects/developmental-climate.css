@@ -293,7 +293,7 @@ body {
 }
 
 /* Subtle structural cues only */
-:where(.site-frame) {
+:where(.spw-frame) {
   background-image: var(--climate-seam);
   border-inline-start: var(--climate-seam-width) solid var(--climate-frame-left-rail);
   transition:
@@ -380,14 +380,14 @@ body {
    ========================================================================== */
 
 :where(
-  .site-frame, .frame-panel, .frame-card, .media-card,
+  .spw-frame, .frame-panel, .frame-card, .media-card,
   .media-focus-card, .operator-card, .mode-panel, .vibe-widget, .settings-fieldset
 ) {
   --climate-local-gap: calc(var(--component-gap, 0.9rem) * var(--climate-gap-scale));
   --climate-local-pad: calc(var(--component-pad, 0.9rem) * var(--climate-pad-scale));
 }
 
-:where(.site-frame) {
+:where(.spw-frame) {
   gap: var(--climate-local-gap, 1rem);
 }
 
@@ -459,20 +459,20 @@ body {
    ========================================================================== */
 
 :where(
-  .site-frame, .frame-card, .media-card, .media-focus-card, .operator-card,
-  .frame-panel, .mode-panel, .spec-pill, .operator-chip, .frame-sigil,
+  .spw-frame, .frame-card, .media-card, .media-focus-card, .operator-card,
+  .frame-panel, .mode-panel, .spec-pill, .spw-chip, .frame-sigil,
   .syntax-token, .spw-delimiter
 )[data-spw-selection="focused"] {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--climate-accent) 16%, transparent);
 }
 
 :where(
-  .site-frame, .frame-card, .media-card, .media-focus-card, .operator-card,
-  .frame-panel, .mode-panel, .spec-pill, .operator-chip, .frame-sigil
+  .spw-frame, .frame-card, .media-card, .media-focus-card, .operator-card,
+  .frame-panel, .mode-panel, .spec-pill, .spw-chip, .frame-sigil
 )[data-spw-selection="active"],
 :where(
-  .site-frame, .frame-card, .media-card, .media-focus-card, .operator-card,
-  .frame-panel, .mode-panel, .spec-pill, .operator-chip, .frame-sigil
+  .spw-frame, .frame-card, .media-card, .media-focus-card, .operator-card,
+  .frame-panel, .mode-panel, .spec-pill, .spw-chip, .frame-sigil
 )[data-spw-selection="selected"] {
   border-color: var(--climate-accent-line-strong);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--climate-accent) 22%, transparent),
@@ -641,7 +641,7 @@ body {
 }
 
 :where(html:is([data-spw-developmental-indicators="off"], [data-spw-phase-indicators="off"]))
-:where(.site-frame) {
+:where(.spw-frame) {
   background-image: none;
   border-inline-start-color: transparent;
 }

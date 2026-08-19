@@ -34,7 +34,7 @@
 
 <main id="main-content" tabindex="-1" aria-labelledby="composition-title">
     <article
-        class="site-frame"
+        class="spw-frame"
         id="composition-bundles"
         data-spw-kind="frame"
         data-spw-role="reference"
@@ -44,7 +44,7 @@
         data-spw-composition-flow="stack"
         data-spw-inspect-mode-group="composition-lens"
     >
-        <div class="frame-topline composition-topline">
+        <div class="frame-topline composition-topline" data-spw-slot="header">
             <div class="composition-topline__meta">
                 <a class="frame-sigil" href="#composition-bundles">#&gt;composition_bundles</a>
                 <div class="spec-strip">
@@ -88,7 +88,7 @@
             </section>
 
             <div class="composition-hero__title">
-                <p class="page-kicker">Design / Composition / Reuse</p>
+                <p data-spw-textual-role="kicker">Design / Composition / Reuse</p>
                 <h1 id="composition-title">Standalone bundles should teach composition, theming, and browser behavior without carrying the whole site.</h1>
             </div>
         </div>
@@ -152,9 +152,9 @@
             data-spw-wonder="orchestration presence theatrics"
             id="partial-theatrics-lab"
         >
-            <p class="page-kicker">Specimen · feature partial theatrics</p>
+            <p data-spw-textual-role="kicker">Specimen · feature partial theatrics</p>
             <h2 id="partial-lab-title">Tune presence, schedule, and theatrics in situ</h2>
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 This route already declares <code>feature-discovery</code> on the body.
                 Clusters with <code>data-spw-feature</code> get field-guide ornaments when that module mounts.
                 Enhancement climate (live) changes how loud those ornaments feel;
@@ -179,15 +179,15 @@
                     <div data-spw-query-composer-fields class="spw-query-composer__fields"></div>
                     <code class="spw-query-composer__preview" data-spw-query-composer-preview>…</code>
                     <div class="spw-query-composer__actions vibe-widget-actions" data-spw-query-composer-actions>
-                        <button type="button" class="operator-chip" data-spw-query-composer-copy data-spw-operator="potential">~copy_link</button>
-                        <button type="button" class="operator-chip" data-spw-query-composer-apply data-spw-operator="potential">!apply[setup]</button>
-                        <button type="button" class="operator-chip" data-spw-query-composer-cauldron data-spw-operator="potential" data-spw-action="explore">~offer_to_cauldron</button>
+                        <button type="button" class="spw-chip" data-spw-handle="true" data-spw-query-composer-copy data-spw-operator="potential">~copy_link</button>
+                        <button type="button" class="spw-chip" data-spw-handle="true" data-spw-query-composer-apply data-spw-operator="potential">!apply[setup]</button>
+                        <button type="button" class="spw-chip" data-spw-handle="true" data-spw-query-composer-cauldron data-spw-operator="potential" data-spw-action="explore">~offer_to_cauldron</button>
                     </div>
                 </section>
                 <div class="vibe-widget-actions" role="group" aria-label="Enhancement climate">
-                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:minimal" data-spw-operator="potential" data-spw-action="explore">~minimal_theatrics</button>
-                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:balanced" data-spw-operator="potential" data-spw-action="explore">~balanced</button>
-                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:rich" data-spw-operator="potential" data-spw-action="explore">~rich_theatrics</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="enhancementLevel:minimal" data-spw-operator="potential" data-spw-action="explore">~minimal_theatrics</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="enhancementLevel:balanced" data-spw-operator="potential" data-spw-action="explore">~balanced</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="enhancementLevel:rich" data-spw-operator="potential" data-spw-action="explore">~rich_theatrics</button>
                 </div>
                 <div class="vibe-widget-meta">
                     <span class="spec-pill">enhancement: <span data-settings-state="enhancementLevel">minimal</span></span>
@@ -201,8 +201,8 @@
                     data-site-feature-lab-toggles
                 ></div>
                 <div class="vibe-widget-actions">
-                    <button class="operator-chip" type="button" data-site-feature-lab-clear data-spw-operator="potential">!clear[session_lab_reload]</button>
-                    <a class="operator-chip" href="/settings/#partial-theatrics-lab" data-spw-operator="potential" data-spw-action="explore">~full_lab_on_settings</a>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-feature-lab-clear data-spw-operator="potential">!clear[session_lab_reload]</button>
+                    <a class="spw-chip" data-spw-handle="true" href="/settings/#partial-theatrics-lab" data-spw-operator="potential" data-spw-action="explore">~full_lab_on_settings</a>
                 </div>
             </div>
         </section>
@@ -216,7 +216,7 @@
                 keep its own layout.
             </p>
             <pre><code>&lt;link rel="stylesheet" href="/public/css/compose.css"&gt;</code></pre>
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 Direct file: <a href="/public/css/compose.css">compose.css</a>
             </p>
         </section>
@@ -234,7 +234,7 @@
   createLoopRecord,
   getPaletteResonanceSwatches
 } from '/public/js/compose.js';</code></pre>
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 Direct file: <a href="/public/js/compose.js">compose.js</a>
             </p>
         </section>
@@ -247,7 +247,7 @@
                 Spwashi-specific surfaces that should stay behind by default.
             </p>
             <pre><code>npm run starter:inventory -- --check</code></pre>
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 Start with the inventory, then choose one component specimen from <a href="/design/components/">the component glossary</a>.
             </p>
         </section>
@@ -282,17 +282,17 @@
                         <i class="spw-compare__tick" data-spw-place="low"></i>
                         <i class="spw-compare__tick" data-spw-place="high"></i>
                     </span>
-                    <a class="operator-chip spw-compare__pole" href="/topics/software/spw/#concept-form-lab" data-spw-place="low" data-spw-measure-kind="objective" data-spw-operator="value">*0.3Wh</a>
+                    <a class="spw-chip spw-compare__pole" data-spw-handle="true" href="/topics/software/spw/#concept-form-lab" data-spw-place="low" data-spw-measure-kind="objective" data-spw-operator="value">*0.3Wh</a>
                     <span class="spw-compare__diff" data-spw-operator="potential">~</span>
-                    <a class="operator-chip spw-compare__pole" href="/topics/software/spw/#concept-form-lab" data-spw-place="high" data-spw-measure-kind="objective" data-spw-operator="value">*fleet</a>
+                    <a class="spw-chip spw-compare__pole" data-spw-handle="true" href="/topics/software/spw/#concept-form-lab" data-spw-place="high" data-spw-measure-kind="objective" data-spw-operator="value">*fleet</a>
                 </span>
             </p>
             <pre><code>&lt;span class="spw-compare" data-spw-compare="energy" data-spw-compare-kind="hybrid" data-spw-register="attention"&gt;
-  &lt;a class="operator-chip" data-spw-place="low" data-spw-measure-kind="objective" data-spw-operator="value"&gt;*0.3Wh&lt;/a&gt;
+  &lt;a class="spw-chip" data-spw-handle="true" data-spw-place="low" data-spw-measure-kind="objective" data-spw-operator="value"&gt;*0.3Wh&lt;/a&gt;
   &lt;span data-spw-operator="potential"&gt;~&lt;/span&gt;
-  &lt;a class="operator-chip" data-spw-place="high" data-spw-measure-kind="objective" data-spw-operator="value"&gt;*fleet&lt;/a&gt;
+  &lt;a class="spw-chip" data-spw-handle="true" data-spw-place="high" data-spw-measure-kind="objective" data-spw-operator="value"&gt;*fleet&lt;/a&gt;
 &lt;/span&gt;</code></pre>
-            <p class="frame-note">Contract: <code>.spw/conventions/comparison-differentials.spw</code>. Atlas specimen: <a href="/topics/software/spw/#compare-differentials">concept-form lab</a>.</p>
+            <p data-spw-textual-role="note">Contract: <code>.spw/conventions/comparison-differentials.spw</code>. Atlas specimen: <a href="/topics/software/spw/#compare-differentials">concept-form lab</a>.</p>
         </section>
 
         <section class="frame-panel" aria-labelledby="console-instrumentation-title" data-spw-kind="panel" data-spw-role="instrumentation">
@@ -333,7 +333,7 @@ spwCompose.inspect('[data-spw-kind="card"]');</code></pre>
                 CSS rule bench to see selector scope, cascade layer, and box model as visible state. Then move to the
                 SVG lab to see how the same variables become paths, nodes, labels, and screenshot-ready diagrams.
             </p>
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 Start here: <a href="/design/experiments/css/#css-rule-bench">CSS rule bench</a>,
                 <a href="/design/experiments/css/#css-variable-lab">CSS variable lab</a>,
                 <a href="/design/experiments/svg/#svg-tunability-contract">SVG tunability</a>.
@@ -425,13 +425,13 @@ const record = createLoopRecord('preview', 'operator');</code></pre>
                             <p class="spatial-gravity-status"><span data-spw-pack-readout>resize to see the variant</span></p>
                         </div>
                         <div class="pack-card__actions" data-spw-pack-region="actions" data-spw-slot="actions">
-                            <a class="operator-chip" href="#literate-extension-title" data-spw-operator="frame">#&gt;inspect_contract</a>
-                            <a class="operator-chip" href="/design/components/" data-spw-operator="potential" data-spw-action="explore">~components</a>
+                            <a class="spw-chip" data-spw-handle="true" href="#literate-extension-title" data-spw-operator="frame">#&gt;inspect_contract</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/design/components/" data-spw-operator="potential" data-spw-action="explore">~components</a>
                         </div>
                     </div>
                 </article>
             </div>
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 <strong>Slot report:</strong> this compact specimen maps figure → media, body → body, and actions → actions.
                 Header and footer are intentionally absent rather than silently inferred.
             </p>

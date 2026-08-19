@@ -42,15 +42,15 @@
     ></spw-site-header>
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="play" data-spw-seed="page_play_play_rpg_wednesday_sessions__main_surface" data-spw-wonder="memory consequence resonance" id="main-content" tabindex="-1" aria-labelledby="sessions-title">
         <article>
-            <section class="site-frame site-hero" id="session-log" data-spw-kind="frame" data-spw-role="orientation" data-spw-context="play" data-spw-wonder="memory consequence resonance" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="encounter" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_play_play_rpg_wednesday_sessions__session_log" data-spw-context-relevance="rpg wednesday sessions local gameplay kit log session" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/|/play/rpg-wednesday/" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+            <section class="spw-frame" data-spw-region-role="entry-spine" id="session-log" data-spw-kind="frame" data-spw-role="orientation" data-spw-context="play" data-spw-wonder="memory consequence resonance" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="encounter" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_play_play_rpg_wednesday_sessions__session_log" data-spw-context-relevance="rpg wednesday sessions local gameplay kit log session" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/|/play/rpg-wednesday/" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#session-log">^"session_log"{</a>
                     <span class="domain-kicker">event log · dated</span>
                 </div>
                 <h1 id="sessions-title">Sessions</h1>
                 <p class="spw-playable-hook">A session page should be short enough to write after play, but structured enough to feed the rest of the campaign record.</p>
                 <p>This is the dated source of truth for RPG Wednesday. The campaign has been developing for more than a year, and the log should stay terse enough to write after play and explicit enough to reuse later. Each session belongs at <code>/play/rpg-wednesday/sessions/YYYY-MM-DD/</code>, newest first, so arcs, world notes, and cast references can grow from actual play, including whatever the table learns about Mr. BoonWAP, Slibbon Bap, Mr. BaneWAP, WAPboy, Honk Bazongas, Gravy Davis, and the quinary five.</p>
-                <p class="frame-note">Tomorrow's table date is <strong>May 27, 2026</strong>: one day after the B-cycle release close on May 26 and one day after the TikTok group chat reached a 200-day streak. Treat the note as a cycle reflection first, then as a production spark: what did the cycle close, what did the streak prove, and what artifact should survive the night?</p>
+                <p data-spw-textual-role="note">Tomorrow's table date is <strong>May 27, 2026</strong>: one day after the B-cycle release close on May 26 and one day after the TikTok group chat reached a 200-day streak. Treat the note as a cycle reflection first, then as a production spark: what did the cycle close, what did the streak prove, and what artifact should survive the night?</p>
                 <div class="spw-reason-strip" aria-label="Session log reasons">
                     <div>
                         <strong>This surface exists because</strong>
@@ -66,22 +66,22 @@
                     </div>
                 </div>
                 <nav class="frame-operators" aria-label="RPG Wednesday routes">
-                    <a class="operator-chip" href="/play/" data-spw-operator="potential">~play</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="frame" data-spw-action="address">#&gt;rpg_wednesday</a>
-                    <a class="operator-chip" aria-current="page" href="/play/rpg-wednesday/sessions/" data-spw-operator="integration" data-spw-action="publish">^sessions</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/world/" data-spw-operator="integration" data-spw-action="publish">^world</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/cast/" data-spw-operator="action" data-spw-action="explore">!cast</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/arcs/" data-spw-operator="wonder" data-spw-action="inspect">? [arcs]</a>
-                    <a class="operator-chip" href="#local-gameplay-kit" data-spw-operator="perspective" data-spw-action="enter">@local_kit</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/" data-spw-operator="potential">~play</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/" data-spw-operator="frame" data-spw-action="address">#&gt;rpg_wednesday</a>
+                    <a class="spw-chip" data-spw-handle="true" aria-current="page" href="/play/rpg-wednesday/sessions/" data-spw-operator="integration" data-spw-action="publish">^sessions</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/world/" data-spw-operator="integration" data-spw-action="publish">^world</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/cast/" data-spw-operator="action" data-spw-action="explore">!cast</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/arcs/" data-spw-operator="wonder" data-spw-action="inspect">? [arcs]</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#local-gameplay-kit" data-spw-operator="perspective" data-spw-action="enter">@local_kit</a>
                 </nav>
             </section>
 
-            <section class="site-frame rpg-gameplay-kit" id="local-gameplay-kit" data-rpg-gameplay-kit data-spw-role="local-register" data-spw-meaning="private gameplay state" data-spw-kind="frame" data-spw-context="play" data-spw-wonder="memory consequence resonance" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="encounter" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_play_play_rpg_wednesday_sessions__local_gameplay_kit" data-spw-context-relevance="rpg wednesday sessions local gameplay kit log session" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/|/play/rpg-wednesday/">
-                <header class="frame-heading">
+            <section class="spw-frame rpg-gameplay-kit" id="local-gameplay-kit" data-rpg-gameplay-kit data-spw-role="local-register" data-spw-meaning="private gameplay state" data-spw-kind="frame" data-spw-context="play" data-spw-wonder="memory consequence resonance" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="encounter" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_play_play_rpg_wednesday_sessions__local_gameplay_kit" data-spw-context-relevance="rpg wednesday sessions local gameplay kit log session" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/|/play/rpg-wednesday/">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#local-gameplay-kit">@local_gameplay_kit</a>
                     <h2>Local Gameplay Kit</h2>
                 </header>
-                <p class="inline-note">Enable JavaScript to use private localStorage tools for scene state, initiative, clocks, scratch notes, character beats, canon candidates, and session recap seeds. The static campaign routes remain available either way.</p>
+                <p data-spw-textual-role="note">Enable JavaScript to use private localStorage tools for scene state, initiative, clocks, scratch notes, character beats, canon candidates, and session recap seeds. The static campaign routes remain available either way.</p>
                 <div class="spw-reason-strip" aria-label="Session note lanes">
                     <p><strong>Scratch during play.</strong> Keep timing, rulings, images, and table jokes rough while the scene is still moving.</p>
                     <p><strong>Promote the return path.</strong> Recap seeds should name the beat someone needs in order to re-enter the next session quickly.</p>
@@ -89,12 +89,12 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="session-entries" data-spw-kind="frame" data-spw-role="reference" data-spw-context="play" data-spw-wonder="memory consequence resonance" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="encounter" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_play_play_rpg_wednesday_sessions__session_entries" data-spw-context-relevance="rpg wednesday sessions local gameplay kit log session" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/|/play/rpg-wednesday/">
-                <header class="frame-heading">
+            <section class="spw-frame" id="session-entries" data-spw-kind="frame" data-spw-role="reference" data-spw-context="play" data-spw-wonder="memory consequence resonance" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="encounter" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_play_play_rpg_wednesday_sessions__session_entries" data-spw-context-relevance="rpg wednesday sessions local gameplay kit log session" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/|/play/rpg-wednesday/">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#session-entries">@sessions</a>
                     <h2>Log</h2>
                 </header>
-                <p class="inline-note">The log starts with a release-day seed and grows forward from there. On the 13th and 26th, add a folder at <code>sessions/YYYY-MM-DD/index.html</code> and link it here. The A cycle closes on the 13th; the B cycle closes on the 26th. Wednesday sessions can then reflect on what the cycle closed and convert one streak, image, card, or prompt into playable material. The route shape is documented more deeply in <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>.</p>
+                <p data-spw-textual-role="note">The log starts with a release-day seed and grows forward from there. On the 13th and 26th, add a folder at <code>sessions/YYYY-MM-DD/index.html</code> and link it here. The A cycle closes on the 13th; the B cycle closes on the 26th. Wednesday sessions can then reflect on what the cycle closed and convert one streak, image, card, or prompt into playable material. The route shape is documented more deeply in <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>.</p>
                 <div class="frame-grid" id="session-list">
                     <a class="frame-card" href="/play/rpg-wednesday/sessions/2026-05-13/" data-spw-kind="card" data-spw-role="routing" data-spw-context="routing" data-spw-category-family="portal" data-spw-promptability="latent" data-spw-collectability="high" data-spw-locality="medium" data-spw-consequence="entry" data-spw-seed="page_play_play_rpg_wednesday_sessions__card_2026_05_13">
                         <span class="frame-card-sigil">@2026-05-13</span>
@@ -120,12 +120,12 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="session-format" data-spw-kind="frame" data-spw-role="reference" data-spw-context="play" data-spw-wonder="memory consequence resonance" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="encounter" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_play_play_rpg_wednesday_sessions__session_format" data-spw-context-relevance="rpg wednesday sessions local gameplay kit log session" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/|/play/rpg-wednesday/">
-                <header class="frame-heading">
+            <section class="spw-frame" id="session-format" data-spw-kind="frame" data-spw-role="reference" data-spw-context="play" data-spw-wonder="memory consequence resonance" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="encounter" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_play_play_rpg_wednesday_sessions__session_format" data-spw-context-relevance="rpg wednesday sessions local gameplay kit log session" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/|/play/rpg-wednesday/">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#session-format">?["session_format"]</a>
                     <h2>Session Format</h2>
                 </header>
-                <p class="inline-note">A session page should be short enough to write after play, but structured enough to feed the rest of the campaign record. It should also be easy to quote, screenshot, and promote into related surfaces later.</p>
+                <p data-spw-textual-role="note">A session page should be short enough to write after play, but structured enough to feed the rest of the campaign record. It should also be easy to quote, screenshot, and promote into related surfaces later.</p>
                 <ul class="syntax-list">
                     <li>
                         <span class="syntax-token">@date</span>
@@ -174,8 +174,8 @@
                 </ul>
             </section>
 
-            <section class="site-frame" id="session-routes" data-spw-kind="frame" data-spw-role="routing" data-spw-context="routing" data-spw-wonder="memory consequence resonance" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_play_play_rpg_wednesday_sessions__session_routes" data-spw-context-relevance="rpg wednesday sessions local gameplay kit log session" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/|/play/rpg-wednesday/">
-                <header class="frame-heading">
+            <section class="spw-frame" id="session-routes" data-spw-kind="frame" data-spw-role="routing" data-spw-context="routing" data-spw-wonder="memory consequence resonance" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_play_play_rpg_wednesday_sessions__session_routes" data-spw-context-relevance="rpg wednesday sessions local gameplay kit log session" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/|/play/rpg-wednesday/">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#session-routes">~"related_surfaces"</a>
                     <h2>Related Surfaces</h2>
                 </header>

@@ -12,8 +12,11 @@
 import { detectOperator } from '/public/js/kernel/operator-detection.js';
 
 export const CORE_COMPONENT_SELECTORS = Object.freeze([
-  '.site-frame',
+  '.spw-frame',
+  '[data-spw-kind="frame"]',
+  '.spw-panel',
   '.frame-panel',
+  '.spw-card',
   '.frame-card',
   '.media-card',
   '.media-focus-card',
@@ -60,6 +63,9 @@ export const SEMANTIC_ATTRIBUTE_SELECTORS = Object.freeze([
 ]);
 
 export const OPERATOR_SIGNAL_SELECTORS = Object.freeze([
+  '[data-spw-operator]',
+  '[data-spw-handle]',
+  '.spw-chip',
   '.frame-sigil',
   '.frame-card-sigil',
   '.frame-panel-sigil',
@@ -109,7 +115,7 @@ export const HOOK_REGION_SELECTOR = [
 ].join(', ');
 
 export const REGION_SELECTORS = Object.freeze([
-  '.site-frame',
+  '.spw-frame',
   '[data-spw-kind="frame"]',
   '[data-spw-kind="panel"]',
   '[data-spw-kind="card"]',
@@ -136,7 +142,8 @@ export const COMPONENT_SELECTORS = Object.freeze([
 ]);
 
 export const MODULE_SELECTORS = Object.freeze([
-  '.site-frame',
+  '.spw-frame',
+  '[data-spw-kind="frame"]',
   '.frame-panel',
   '.frame-card',
   '.software-card',
@@ -146,7 +153,8 @@ export const MODULE_SELECTORS = Object.freeze([
 ]);
 
 export const SEMANTIC_CHROME_SELECTORS = Object.freeze([
-  '.site-frame',
+  '.spw-frame',
+  '[data-spw-kind="frame"]',
   '.frame-panel',
   '.frame-card',
   '.mode-panel',
@@ -161,8 +169,10 @@ export const MODULE_SELECTOR = MODULE_SELECTORS.join(', ');
 export const REGION_SELECTOR = REGION_SELECTORS.join(', ');
 export const SEMANTIC_CHROME_SELECTOR = SEMANTIC_CHROME_SELECTORS.join(', ');
 
-export const FRAME_SELECTOR = '.site-frame, [data-spw-kind="frame"]';
-export const REGION_HOST_SELECTOR = '.site-frame, .frame-panel, .frame-card, [data-spw-kind], [data-spw-role]';
+export const FRAME_SELECTOR = '.spw-frame, [data-spw-kind="frame"]';
+export const REGION_HOST_SELECTOR = '.spw-frame, [data-spw-kind="frame"], .spw-panel, .frame-panel, .spw-card, .frame-card, [data-spw-kind], [data-spw-role]';
+export const ENTRY_SPINE_SELECTOR = '[data-spw-region-role="entry-spine"]';
+export const CHIP_SELECTOR = '[data-spw-operator], .spw-chip, .operator-chip, .frame-sigil';
 
 export const ANNOTATION_LAYER_REGION_SELECTORS = Object.freeze([
   'main [data-spw-kind]',

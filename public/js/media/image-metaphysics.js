@@ -313,7 +313,7 @@ function getSemanticContext(host) {
 
 function getProminence(host) {
     if (host.dataset.spwImageProminence) return host.dataset.spwImageProminence;
-    if (host.closest('.site-hero')) return 'hero';
+    if (host.closest('[data-spw-region-role="entry-spine"], .site-hero')) return 'hero';
     if (host.matches('.topic-photo-card, .image-study, .domain-visual')) return 'feature';
     return 'study';
 }

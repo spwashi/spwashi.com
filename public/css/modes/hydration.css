@@ -48,3 +48,45 @@ html[data-spw-hydration-pass="semantic"] :where([data-spw-sigil-role="grammar"],
     color var(--spw-component-arrival-transition, 140ms var(--ease-settle)),
     opacity var(--spw-component-arrival-transition, 140ms var(--ease-settle));
 }
+
+/* Visit story: hydration is authored presence; page-state is the visit;
+   runtime-stage is the instrument. One presence token, three speakers. */
+html[data-spw-page-state="booting"],
+html[data-spw-runtime-stage="boot"] {
+  --spw-lifecycle-presence: 0.4;
+}
+
+html[data-spw-page-state="interactive"] {
+  --spw-lifecycle-presence: 0.76;
+}
+
+html[data-spw-page-state="hydrated"] {
+  --spw-lifecycle-presence: 0.9;
+}
+
+html[data-spw-page-state="region-enhanced"],
+html[data-spw-page-state="enhanced"],
+html[data-spw-runtime-stage="ready"] {
+  --spw-lifecycle-presence: 1;
+}
+
+html[data-spw-page-state="booting"] :where([data-spw-operator], .spw-chip) {
+  --handle-arrival-opacity: 0.68;
+}
+
+html[data-spw-page-state="interactive"] :where([data-spw-operator], .spw-chip),
+html[data-spw-page-state="hydrated"] :where([data-spw-operator], .spw-chip) {
+  --handle-arrival-opacity: 1;
+}
+
+html[data-spw-page-arrival="entering"] :where(.spw-frame, [data-spw-kind="frame"]) {
+  --frame-arrival-opacity: var(--spw-lifecycle-presence, 1);
+}
+
+.site-header a[aria-current="page"] {
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--active-op-color, currentColor) 55%, transparent);
+}
+
+body[aria-busy="true"] {
+  cursor: progress;
+}

@@ -49,8 +49,8 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>
-            <section class="site-frame site-hero" data-spw-role="orientation" data-spw-kind="frame" id="state-affordance" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+            <section class="spw-frame" data-spw-role="orientation" data-spw-kind="frame" id="state-affordance" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="/design/">#>design</a>
                     <div class="spec-strip">
                         <span class="spec-pill">interaction language</span>
@@ -61,13 +61,13 @@
                 <p class="spec-kicker">Component Options / Activity</p>
                 <h1>State & Affordance</h1>
 
-                <p class="site-lede">
+                <p data-spw-textual-role="lede">
                     Affordance attributes declare what a component invites you to do with it, before you commit to doing it. The attribute is read across the runtime &mdash; haptics, brace gestures, the region rail, and the cauldron all consult it &mdash; but only one value currently changes behavior on its own.
                 </p>
             </section>
 
-            <section class="site-frame" id="the-field" data-spw-kind="frame" data-spw-role="reference">
-                <header class="frame-heading">
+            <section class="spw-frame" id="the-field" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#the-field">^"the_field"</a>
                     <h2>Affordance is a force on the presence field</h2>
                 </header>
@@ -91,13 +91,13 @@
                     </article>
                 </div>
 
-                <p class="frame-note">
+                <p data-spw-textual-role="note">
                     This panel carries <code>data-spw-affordance="tune"</code> &mdash; the strongest request in the vocabulary. The panels in the next section each carry their own value, so the section below is not an illustration of the scale. It is the scale.
                 </p>
             </section>
 
-            <section class="site-frame" id="vocabulary" data-spw-kind="frame" data-spw-role="reference">
-                <header class="frame-heading">
+            <section class="spw-frame" id="vocabulary" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#vocabulary">~"affordance_vocabulary"</a>
                     <h2>The twelve values in use</h2>
                 </header>
@@ -156,8 +156,8 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="multi-value" data-spw-kind="frame" data-spw-role="reference">
-                <header class="frame-heading">
+            <section class="spw-frame" id="multi-value" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#multi-value">!"multi_value"</a>
                     <h2>Affordance stacks</h2>
                 </header>
@@ -165,22 +165,22 @@
                     The attribute is space-separated, not single-valued. <code>navigation-spells.js</code> assigns <code>navigate ground replay</code> as a three-part default, and <code>brace-gestures.js</code> trims and splits whatever it finds. A component that both reads and rewards can say so:
                 </p>
                 <p><code>&lt;article data-spw-affordance="read reward"&gt;</code></p>
-                <p class="frame-note">
+                <p data-spw-textual-role="note">
                     Because only <code>tune</code> is matched exactly by <code>page-region-rail.js</code>, a stacked value containing <code>tune</code> alongside others will <em>not</em> register as tunable on the region rail. If a component needs the rail, <code>tune</code> must stand alone. That asymmetry is a real edge in the current implementation, not a convention.
                 </p>
             </section>
 
-            <section class="site-frame" id="neighbors" data-spw-kind="frame" data-spw-role="reference">
-                <header class="frame-heading">
+            <section class="spw-frame" id="neighbors" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#neighbors">#&gt;"neighbors"</a>
                     <h2>Nearby surfaces</h2>
                 </header>
                 <nav class="frame-operators" aria-label="Related design routes">
-                    <a class="operator-chip" href="/design/catalog/#attr-data-spw-affordance" data-spw-operator="wonder" data-spw-action="inspect">?affordance_in_catalog</a>
-                    <a class="operator-chip" href="/design/slots/" data-spw-operator="potential" data-spw-action="explore">~universal_slots</a>
-                    <a class="operator-chip" href="/design/density/" data-spw-operator="potential" data-spw-action="explore">~density_measure</a>
-                    <a class="operator-chip" href="/design/materials/" data-spw-operator="potential" data-spw-action="explore">~metamaterials</a>
-                    <a class="operator-chip" href="/design/interaction-design/" data-spw-operator="potential" data-spw-action="explore">~interaction_design</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/catalog/#attr-data-spw-affordance" data-spw-operator="wonder" data-spw-action="inspect">?affordance_in_catalog</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/slots/" data-spw-operator="potential" data-spw-action="explore">~universal_slots</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/density/" data-spw-operator="potential" data-spw-action="explore">~density_measure</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/materials/" data-spw-operator="potential" data-spw-action="explore">~metamaterials</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/interaction-design/" data-spw-operator="potential" data-spw-action="explore">~interaction_design</a>
                 </nav>
             </section>
         </article>

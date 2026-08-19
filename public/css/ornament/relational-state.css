@@ -6,7 +6,7 @@
    ========================================================================== */
 
 /* 1. Attentional Cueing (Environmental Dimming) — dim, don't mute. */
-:where(main:has(.site-frame[data-spw-attention="focused"])) .site-frame[data-spw-attention="dimmed"] {
+:where(main:has(.spw-frame[data-spw-attention="focused"])) .spw-frame[data-spw-attention="dimmed"] {
   opacity: 0.62;
   filter: grayscale(0.18) contrast(0.96);
   transition:
@@ -15,14 +15,14 @@
   pointer-events: none; /* Soft lockout to encourage focus */
 }
 
-:where(main:has(.site-frame[data-spw-attention="focused"])) .site-frame[data-spw-attention="dimmed"]:hover {
+:where(main:has(.spw-frame[data-spw-attention="focused"])) .spw-frame[data-spw-attention="dimmed"]:hover {
   opacity: 0.84;
   filter: grayscale(0.08) contrast(0.98);
   pointer-events: auto;
 }
 
 /* 2. Arrival Pulse — single soft ring, no scale bounce. */
-:where(.site-frame[data-state~="arrival"]) {
+:where(.spw-frame[data-state~="arrival"]) {
   animation: spw-arrival-flare var(--duration-deliberate, 360ms) var(--ease-settle, ease) both;
 }
 
@@ -41,7 +41,7 @@
 }
 
 /* 3. Relational Resonance (Cross-Component Glow) */
-:where(.site-frame[data-state~="active"]:has([data-state~="resolved"])) {
+:where(.spw-frame[data-state~="active"]:has([data-state~="resolved"])) {
   --active-op-color: var(--teal);
   border-color: color-mix(in srgb, var(--active-op-color) 42%, transparent);
   box-shadow: var(--glow-soft);

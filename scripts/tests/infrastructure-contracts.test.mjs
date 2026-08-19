@@ -333,7 +333,7 @@ test('shared partials operator chips align data-spw-operator attributes and sigi
   const footerHtml = await readFile(path.join(ROOT, '_partials/site-footer.html'), 'utf8');
 
   for (const html of [cauldronHtml, footerHtml]) {
-    const chipMatches = html.matchAll(/class="[^"]*operator-chip[^"]*"[^>]*data-spw-operator="([^"]+)"[^>]*>([^<]+)</g);
+    const chipMatches = html.matchAll(/class="[^"]*spw-chip[^"]*"[^>]*data-spw-operator="([^"]+)"[^>]*>([^<]+)</g);
     for (const [, opAttr, label] of chipMatches) {
       const definition = getOperatorDefinition(opAttr);
       assert.ok(definition, `Unknown operator type alias: ${opAttr}`);

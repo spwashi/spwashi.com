@@ -20,7 +20,7 @@
 }
 
 :where(
-  .operator-chip[aria-current="page"],
+  .spw-chip[aria-current="page"],
   [data-spw-selection="active"],
   [data-spw-selection="selected"]
 ) {
@@ -550,14 +550,14 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   animation: spw-lens-commit-pulse 520ms var(--handle-ease, ease-out);
 }
 
-:where(.site-frame[data-spw-lens-mode]) > :where(.frame-topline, .frame-heading) {
+:where(.spw-frame[data-spw-lens-mode]) > :where(.frame-topline, .frame-heading) {
   border-color: color-mix(in srgb, var(--spw-lens-cascade-color) 20%, var(--line, rgba(14, 18, 20, 0.14)) 80%);
   box-shadow:
     inset 0 -1px 0 color-mix(in srgb, var(--spw-lens-cascade-color) 18%, transparent),
     var(--spw-local-shadow, none);
 }
 
-:where(.site-frame[data-spw-lens-state="changed"]) > :where(.frame-topline, .frame-heading) {
+:where(.spw-frame[data-spw-lens-state="changed"]) > :where(.frame-topline, .frame-heading) {
   transition:
     border-color var(--handle-duration-base, 180ms) var(--handle-ease, ease),
     box-shadow var(--handle-duration-base, 180ms) var(--handle-ease, ease);
@@ -693,7 +693,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 [data-spw-vocabulary-term],
 [data-spw-semantic-expression],
 .inline-note code,
-.frame-note code {
+[data-spw-textual-role="note"] code {
   transition: color var(--duration-fast), background var(--duration-fast), box-shadow var(--duration-fast);
   cursor: help;
 }
@@ -701,7 +701,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 [data-spw-vocabulary-term]:is(:hover, :focus-visible),
 [data-spw-semantic-expression]:is(:hover, :focus-visible),
 .inline-note code:is(:hover, :focus-visible),
-.frame-note code:is(:hover, :focus-visible) {
+[data-spw-textual-role="note"] code:is(:hover, :focus-visible) {
   color: var(--active-op-color);
   background: color-mix(in srgb, var(--active-op-color) 8%, transparent);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color) 25%, transparent);

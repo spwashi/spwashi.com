@@ -36,13 +36,13 @@
   }
 
   /* Links and chips */
-  & a:not(.frame-card, .operator-chip, .frame-sigil, .syntax-token) {
+  & a:not(.frame-card, .spw-chip, .frame-sigil, .syntax-token) {
     color: color-mix(in srgb, var(--plans-accent) 86%, var(--plans-ink));
     text-decoration-color: color-mix(in srgb, var(--plans-accent) 28%, transparent);
     text-underline-offset: 0.16em;
   }
 
-  & a:not(.frame-card, .operator-chip, .frame-sigil, .syntax-token):is(:hover, :focus-visible) {
+  & a:not(.frame-card, .spw-chip, .frame-sigil, .syntax-token):is(:hover, :focus-visible) {
     color: color-mix(in srgb, var(--plans-accent-2) 82%, var(--plans-accent));
     text-decoration-color: currentColor;
     outline: none;
@@ -52,7 +52,7 @@
     gap: 0.5rem 0.6rem;
   }
 
-  & .operator-chip {
+  & .spw-chip {
     border-radius: 999px;
     background: color-mix(in srgb, var(--plans-surface-strong) 94%, var(--plans-accent) 6%);
     border-color: color-mix(in srgb, var(--plans-accent) 18%, transparent);
@@ -62,7 +62,7 @@
       0 1px 3px rgba(35, 22, 16, 0.04);
   }
 
-  & .operator-chip:is(:hover, :focus-visible) {
+  & .spw-chip:is(:hover, :focus-visible) {
     background: color-mix(in srgb, var(--plans-surface-strong) 90%, var(--plans-accent) 10%);
     border-color: color-mix(in srgb, var(--plans-accent) 28%, transparent);
     color: var(--plans-ink);

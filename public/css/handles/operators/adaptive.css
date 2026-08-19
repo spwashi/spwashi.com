@@ -35,7 +35,7 @@
 }
 
 @media (max-width: 600px) {
-  .operator-chip {
+  .spw-chip {
     min-height: var(--spw-control-min-height, 2.02rem);
     padding: var(--spw-control-padding-block, 0.2rem) var(--spw-control-padding-inline, 0.6rem);
   }
@@ -118,7 +118,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   :where(
-    .operator-chip,
+    .spw-chip,
     .syntax-token,
     .spec-pill,
     .badge,

@@ -157,7 +157,7 @@ body[data-spw-surface="contact"] {
    2. Generic frame tuning
    ========================================================================== */
 
-[data-spw-surface="contact"] .site-frame {
+[data-spw-surface="contact"] .spw-frame {
   border-color: color-mix(in srgb, var(--contact-line) 96%, transparent);
   border-radius: var(--contact-panel-radius);
   background:
@@ -169,7 +169,7 @@ body[data-spw-surface="contact"] {
   color: var(--contact-ink);
 }
 
-[data-spw-surface="contact"] .site-frame:is(:hover, :focus-within) {
+[data-spw-surface="contact"] .spw-frame:is(:hover, :focus-within) {
   border-color: color-mix(in srgb, var(--contact-accent) 18%, var(--contact-line));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.46),
@@ -180,7 +180,7 @@ body[data-spw-surface="contact"] {
   color: color-mix(in srgb, var(--contact-ink-soft) 90%, var(--contact-accent));
 }
 
-[data-spw-surface="contact"] .frame-note,
+[data-spw-surface="contact"] [data-spw-textual-role="note"],
 [data-spw-surface="contact"] .inline-note {
   color: var(--contact-ink-soft);
 }
@@ -227,7 +227,7 @@ body[data-spw-surface="contact"] {
   text-wrap: balance;
 }
 
-[data-spw-surface="contact"] #contact-frame .page-kicker {
+[data-spw-surface="contact"] #contact-frame [data-spw-textual-role="kicker"] {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.24), transparent 62%),
     color-mix(in srgb, var(--contact-surface-strong) 92%, transparent);
@@ -235,7 +235,7 @@ body[data-spw-surface="contact"] {
   color: var(--contact-ink-soft);
 }
 
-[data-spw-surface="contact"] #contact-frame .page-lede {
+[data-spw-surface="contact"] #contact-frame [data-spw-textual-role="lede"] {
   max-width: 58ch;
   color: color-mix(in srgb, var(--contact-ink-soft) 92%, var(--contact-accent));
 }
@@ -252,7 +252,7 @@ body[data-spw-surface="contact"] {
   gap: 0.5rem 0.6rem;
 }
 
-[data-spw-surface="contact"] .operator-chip {
+[data-spw-surface="contact"] .spw-chip {
   border-radius: 999px;
   background:
     linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
@@ -264,8 +264,8 @@ body[data-spw-surface="contact"] {
     0 1px 3px rgba(35, 22, 16, 0.04);
 }
 
-[data-spw-surface="contact"] .operator-chip:hover,
-[data-spw-surface="contact"] .operator-chip:focus-visible {
+[data-spw-surface="contact"] .spw-chip:hover,
+[data-spw-surface="contact"] .spw-chip:focus-visible {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.22), transparent 62%),
     color-mix(in srgb, var(--contact-accent) 11%, transparent);
@@ -424,14 +424,14 @@ body[data-spw-surface="contact"] {
   color: var(--contact-ink);
 }
 
-[data-spw-surface="contact"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil) {
+[data-spw-surface="contact"] a:not(.frame-card):not(.spw-chip):not(.frame-sigil) {
   color: color-mix(in srgb, var(--contact-accent) 86%, var(--contact-ink));
   text-decoration-color: color-mix(in srgb, var(--contact-accent) 28%, transparent);
   text-underline-offset: 0.16em;
 }
 
-[data-spw-surface="contact"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil):hover,
-[data-spw-surface="contact"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil):focus-visible {
+[data-spw-surface="contact"] a:not(.frame-card):not(.spw-chip):not(.frame-sigil):hover,
+[data-spw-surface="contact"] a:not(.frame-card):not(.spw-chip):not(.frame-sigil):focus-visible {
   color: color-mix(in srgb, var(--contact-accent-2) 82%, var(--contact-accent));
   text-decoration-color: currentColor;
   outline: none;
@@ -465,10 +465,10 @@ body[data-spw-surface="contact"] {
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  [data-spw-surface="contact"] .site-frame,
+  [data-spw-surface="contact"] .spw-frame,
   [data-spw-surface="contact"] .frame-card,
   [data-spw-surface="contact"] .frame-panel,
-  [data-spw-surface="contact"] .operator-chip {
+  [data-spw-surface="contact"] .spw-chip {
     transition: none !important;
     animation: none !important;
     transform: none !important;

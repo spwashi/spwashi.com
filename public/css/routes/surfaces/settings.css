@@ -69,14 +69,14 @@
    2. Base Frame Modifications
    ========================================================================== */
 
-:where(body[data-spw-surface="settings"] .site-frame) {
+:where(body[data-spw-surface="settings"] .spw-frame) {
   padding: var(--settings-pad-block) var(--settings-pad-inline);
   background: var(--settings-panel-bg);
   border: 1px solid var(--line-strong, rgba(0, 128, 128, 0.34));
   box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
 }
 
-:where(body[data-spw-surface="settings"] .site-frame[data-state~="active"]) {
+:where(body[data-spw-surface="settings"] .spw-frame[data-state~="active"]) {
   box-shadow: 
     0 0 0 2px color-mix(in srgb, var(--settings-accent) 20%, transparent), 
     var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));

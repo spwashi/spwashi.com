@@ -523,7 +523,7 @@
   opacity: 0.88;
 }
 
-.site-footer__cauldron[data-spw-cauldron-state~="phase:empty"] .site-footer__cauldron-actions .operator-chip:not([data-spw-cauldron-action="clear"]) {
+.site-footer__cauldron[data-spw-cauldron-state~="phase:empty"] .site-footer__cauldron-actions .spw-chip:not([data-spw-cauldron-action="clear"]) {
   opacity: 0.42;
 }
 
@@ -834,7 +834,7 @@ a.cauldron-ingredient-meta.cauldron-deep-link:focus-visible {
   background: color-mix(in srgb, var(--danger, #9d2f2f) 12%, transparent);
 }
 
-/* Consistent disabled state for cauldron controls (mix/clear use .operator-chip) */
+/* Consistent disabled state for cauldron controls (mix/clear use .spw-chip) */
 .site-footer__cauldron button[disabled],
 .site-footer__cauldron [data-spw-cauldron-action][disabled] {
   opacity: 0.45;
@@ -855,7 +855,7 @@ a.cauldron-ingredient-meta.cauldron-deep-link:focus-visible {
   gap: 0.25rem;
   margin-top: 0.35rem;
 }
-.site-footer__cauldron-actions .operator-chip {
+.site-footer__cauldron-actions .spw-chip {
   flex: 1 1 calc(50% - 0.125rem);
   min-height: 2.1rem;
   padding: 0.28rem 0.55rem;
@@ -869,7 +869,7 @@ a.cauldron-ingredient-meta.cauldron-deep-link:focus-visible {
   transition: transform 80ms, background 80ms, border-color 80ms, color 80ms;
 }
 
-.site-footer__cauldron-actions .operator-chip[data-spw-action-tier="primary"] {
+.site-footer__cauldron-actions .spw-chip[data-spw-action-tier="primary"] {
   flex-basis: 100%;
   justify-content: center;
   font-weight: 800;
@@ -877,37 +877,37 @@ a.cauldron-ingredient-meta.cauldron-deep-link:focus-visible {
   border-color: color-mix(in srgb, var(--component-accent, #2a6b6b) 34%, transparent);
 }
 
-.site-footer__cauldron-actions .operator-chip[data-spw-action-tier="cleanup"] {
+.site-footer__cauldron-actions .spw-chip[data-spw-action-tier="cleanup"] {
   flex-grow: 0;
   opacity: 0.72;
 }
 
-.site-footer__cauldron-actions .operator-chip[data-spw-action-tier="output"] {
+.site-footer__cauldron-actions .spw-chip[data-spw-action-tier="output"] {
   border-style: dashed;
   border-color: color-mix(in srgb, var(--op-object-color, #c48a28) 30%, transparent);
 }
 
-.site-footer__cauldron[data-spw-cauldron-state~="phase:empty"] .operator-chip[data-spw-action-tier="primary"],
-.site-footer__cauldron[data-spw-cauldron-state~="phase:primed"] .operator-chip[data-spw-action-tier="primary"] {
+.site-footer__cauldron[data-spw-cauldron-state~="phase:empty"] .spw-chip[data-spw-action-tier="primary"],
+.site-footer__cauldron[data-spw-cauldron-state~="phase:primed"] .spw-chip[data-spw-action-tier="primary"] {
   background: color-mix(in srgb, var(--surface-strong, #f8f5f0) 97%, transparent);
   border-color: color-mix(in srgb, var(--line, rgba(0,0,0,0.1)) 42%, transparent);
   color: color-mix(in srgb, var(--ink-soft, #555) 68%, transparent);
 }
-.site-footer__cauldron-actions .operator-chip:hover:not(:disabled),
-.site-footer__cauldron-actions .operator-chip:focus-visible:not(:disabled) {
+.site-footer__cauldron-actions .spw-chip:hover:not(:disabled),
+.site-footer__cauldron-actions .spw-chip:focus-visible:not(:disabled) {
   background: color-mix(in srgb, var(--surface-strong, #f8f5f0) 90%, var(--component-accent, #2a6b6b) 10%);
   border-color: color-mix(in srgb, var(--component-accent, #2a6b6b) 25%, transparent);
   color: var(--ink, #111);
   transform: translateY(-1px);
 }
 
-.site-footer__cauldron[data-spw-cauldron-state~="phase:primed"] .operator-chip[data-spw-action-tier="primary"]:not(:disabled),
-.site-footer__cauldron[data-spw-cauldron-discoverability="compose-next"] .operator-chip[data-spw-cauldron-action="mix"]:not(:disabled) {
+.site-footer__cauldron[data-spw-cauldron-state~="phase:primed"] .spw-chip[data-spw-action-tier="primary"]:not(:disabled),
+.site-footer__cauldron[data-spw-cauldron-discoverability="compose-next"] .spw-chip[data-spw-cauldron-action="mix"]:not(:disabled) {
   border-color: color-mix(in srgb, var(--component-accent, #2a6b6b) 38%, transparent);
   color: color-mix(in srgb, var(--ink, #111) 78%, var(--component-accent, #2a6b6b) 22%);
 }
 @media (min-width: 40rem) {
-  .site-footer__cauldron-actions .operator-chip {
+  .site-footer__cauldron-actions .spw-chip {
     flex: 0 1 auto;
     min-width: 7.5rem;
   }
@@ -1157,7 +1157,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   .spw-nav-toggle,
   .cauldron-ingredient,
   .cauldron-ingredient-remove,
-  .site-footer__cauldron-actions .operator-chip {
+  .site-footer__cauldron-actions .spw-chip {
     min-height: var(--touch-target-min);
   }
 

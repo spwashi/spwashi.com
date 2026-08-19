@@ -524,7 +524,7 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
   }
 }
 
-:where(main .site-frame[data-spw-region-preview="true"]) {
+:where(main .spw-frame[data-spw-region-preview="true"]) {
   outline: 2px dashed color-mix(in srgb, var(--op-frame-color, #178282) 48%, transparent);
   outline-offset: 4px;
 }
@@ -611,11 +611,11 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
     text-overflow: ellipsis;
   }
 
-  :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.operator-chip) {
+  :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
     gap: 0.42rem;
   }
 
-  :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.operator-chip)::before {
+  :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
     content: attr(data-spw-nav-prefix);
     display: inline-flex;
     align-items: center;
@@ -655,11 +655,11 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
     text-overflow: ellipsis;
   }
 
-  :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.operator-chip) {
+  :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
     gap: 0.42rem;
   }
 
-  :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.operator-chip)::before {
+  :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
     content: attr(data-spw-nav-prefix);
     display: inline-flex;
     align-items: center;

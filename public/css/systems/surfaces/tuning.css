@@ -113,7 +113,7 @@
   min-inline-size: 0;
 }
 
-:where(:is(.vibe-widget, .wonder-memory, .palette-probe)-actions :is(.operator-chip, .spec-pill)[data-site-setting-active="true"],
+:where(:is(.vibe-widget, .wonder-memory, .palette-probe)-actions :is(.spw-chip, .spec-pill)[data-site-setting-active="true"],
        :is(.vibe-widget, .palette-probe)-actions [data-spw-palette-probe-active="true"]) {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.18), transparent 64%),
@@ -167,7 +167,7 @@
     );
 }
 
-:where(.wonder-memory-actions .operator-chip[data-site-setting-active="true"]) {
+:where(.wonder-memory-actions .spw-chip[data-site-setting-active="true"]) {
   color: var(--wonder-accent-color, var(--active-op-color, #008080));
 }
 
@@ -180,7 +180,7 @@
   flex-wrap: wrap;
 }
 
-:where(:is(.vibe-widget, .wonder-memory, .palette-probe)-actions .operator-chip, .market-card .operator-chip) {
+:where(:is(.vibe-widget, .wonder-memory, .palette-probe)-actions .spw-chip, .market-card .spw-chip) {
   justify-content: center;
 }
 
@@ -445,7 +445,7 @@
   align-items: center;
 }
 
-:where(.vibe-widget--compact .operator-chip) {
+:where(.vibe-widget--compact .spw-chip) {
   font-size: 0.8rem;
   padding: 0.18rem 0.55rem;
   min-height: 1.6rem; /* comfortable touch target while staying compact */
@@ -455,7 +455,7 @@
    Uses the live resonance probe colors so it feels connected to the current
    paletteResonance setting. Wins over generic pressed states in most contexts. */
 :where(.vibe-widget--compact)
-  :is(.operator-chip, .spec-pill)[data-site-setting-active="true"] {
+  :is(.spw-chip, .spec-pill)[data-site-setting-active="true"] {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.22), transparent 70%),
     color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 18%, var(--surface-strong, rgba(255,255,255,0.96)));
@@ -480,8 +480,8 @@
   }
 }
 
-:where(.vibe-widget--compact .operator-chip[data-site-setting-active="true"]::after,
-       .tuning-strip .operator-chip[data-site-setting-active="true"]::after) {
+:where(.vibe-widget--compact .spw-chip[data-site-setting-active="true"]::after,
+       .tuning-strip .spw-chip[data-site-setting-active="true"]::after) {
   content: "";
   display: inline-block;
   width: 0.38em;
@@ -495,7 +495,7 @@
 
 /* Broad fallback: give every standalone data-site-setting-set operator-chip the strong resonance-colored active treatment.
    This improves visual clarity everywhere with zero markup changes (addresses scattered active styling across surfaces). */
-:where(.operator-chip[data-site-setting-active="true"]:not(.tuning-strip *):not(.vibe-widget--compact *)) {
+:where(.spw-chip[data-site-setting-active="true"]:not(.tuning-strip *):not(.vibe-widget--compact *)) {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.18), transparent 68%),
     color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 14%, var(--surface-strong, rgba(255,255,255,0.94)));
@@ -512,7 +512,7 @@
     --tuning-strip-gap: 0.32rem;
   }
 
-  :where(.vibe-widget--compact .operator-chip) {
+  :where(.vibe-widget--compact .spw-chip) {
     font-size: 0.78rem;
     padding: 0.16rem 0.48rem;
   }

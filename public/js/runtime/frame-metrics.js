@@ -132,7 +132,7 @@ export async function initFrameMetrics(ctx, root) {
         return cleanupCurrent || (() => {});
     }
 
-    const frames = Array.from(root.querySelectorAll('.site-frame'));
+    const frames = Array.from(root.querySelectorAll('.spw-frame, [data-spw-kind="frame"]'));
     if (!frames.length) return () => {};
 
     initialized = true;

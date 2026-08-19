@@ -788,7 +788,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   touch-action: pan-y;
 }
 
-:where([data-spw-operator], .operator-chip, .frame-sigil, .frame-card-sigil) {
+:where([data-spw-operator], .spw-chip, .frame-sigil, .frame-card-sigil) {
   /* Debug / inspection */
   --spw-debug-layer-owner: "handles";
   --spw-debug-layer-color: #1d57a3;
@@ -852,21 +852,21 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
      (authorMode/climate changes, frame activation, motif application).
    - Ties into expressive layout tropes: these states are now more observable
      and less likely to produce surprising layout shifts. */
-:where(.site-frame, [data-spw-feature*="measure"], .math-interactive-lab)
+:where(.spw-frame, [data-spw-feature*="measure"], .math-interactive-lab)
   [data-spw-measure-kind]:is(:focus-visible, :focus-within) {
   outline: 2px solid color-mix(in srgb, var(--measure-tint, var(--op-probe-color)) 45%, transparent);
   outline-offset: 2px;
   border-color: var(--measure-tint, currentColor);
 }
 
-:where(.site-frame[data-spw-active="true"], .site-frame[data-spw-attention="focused"])
+:where(.spw-frame[data-spw-active="true"], .spw-frame[data-spw-attention="focused"])
   [data-spw-measure-kind] {
   /* Gentle common-fate lift during frame phases without causing extra wrap */
   transform: translateY(-0.5px);
   transition: transform var(--duration-fast, 140ms) var(--ease-settle, ease);
 }
 
-:where(.site-frame, .proof-capture, .boundary-test-form)
+:where(.spw-frame, .proof-capture, .boundary-test-form)
   [data-spw-measure-kind="subjective"] {
   /* Extra wrapping protection for long practitioner reflections in manuscript contexts */
   overflow-wrap: anywhere;
@@ -875,7 +875,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
 }
 
 @media (max-width: 48rem) {
-  :where(.site-frame, .math-interactive-lab)
+  :where(.spw-frame, .math-interactive-lab)
     [data-spw-measure-kind] {
     /* Tighter intermediate-width wrapping guard for measurement phases */
     max-inline-size: calc(100% - 0.5rem);

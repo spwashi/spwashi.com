@@ -151,12 +151,12 @@ html[data-spw-developmental-climate="offer"] {
 /* ==========================================================================
    4. Scope-local grain controls (prevents leakage between nested surfaces)
    ========================================================================== */
-:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
   .payment-card, .seed-card, .profile-card, .svc-wrapper,
-  .operator-chip, .spec-pill, .badge, .tag, .pill) {
+  .spw-chip, .spec-pill, .badge, .tag, .pill) {
   --grain-scope-opacity-multiplier: 1;
   --grain-scope-scale-multiplier: 1;
   --grain-scope-contrast-multiplier: 1;
@@ -205,7 +205,7 @@ body::after {
 /* ==========================================================================
    6. Grain-bearing surfaces (texture + shading/glow layers)
    ========================================================================== */
-:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
@@ -218,7 +218,7 @@ body::after {
   position: fixed;
 }
 
-:where(.operator-chip, .spec-pill, .badge, .tag, .pill) {
+:where(.spw-chip, .spec-pill, .badge, .tag, .pill) {
   position: relative;
   isolation: isolate;
   --grain-scope-opacity-multiplier: 0.8;
@@ -227,13 +227,13 @@ body::after {
 }
 
 /* Shared pseudo-element scaffolding */
-:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
   .payment-card, .seed-card, .profile-card, .svc-wrapper,
-  .operator-chip, .spec-pill, .badge, .tag, .pill)::before,
-:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+  .spw-chip, .spec-pill, .badge, .tag, .pill)::before,
+:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
@@ -246,18 +246,18 @@ body::after {
   z-index: var(--spw-local-layer-substrate, 0);
 }
 
-:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
   .payment-card, .seed-card, .profile-card, .svc-wrapper,
-  .operator-chip, .spec-pill, .badge, .tag, .pill)> :not([data-spw-overlay]) {
+  .spw-chip, .spec-pill, .badge, .tag, .pill)> :not([data-spw-overlay]) {
   position: relative;
   z-index: var(--spw-local-layer-content, 1);
 }
 
 /* Surface grain layer */
-:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
@@ -273,7 +273,7 @@ body::after {
 }
 
 /* Panel shading / glow / bloom (artist + JS friendly) */
-:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
@@ -289,7 +289,7 @@ body::after {
 }
 
 /* Handle grain (chips, pills, badges – quietest layer) */
-:where(.operator-chip, .spec-pill, .badge, .tag, .pill)::before {
+:where(.spw-chip, .spec-pill, .badge, .tag, .pill)::before {
   opacity: clamp(0,
       calc(var(--grain-handle-opacity) * var(--grain-scope-opacity-multiplier) + (var(--grain-memory-bias) * 0.06)),
       0.055);
@@ -300,7 +300,7 @@ body::after {
   filter: contrast(calc(var(--grain-handle-contrast) * var(--grain-scope-contrast-multiplier)));
 }
 
-:where(.operator-chip, .spec-pill, .badge, .tag, .pill)::after {
+:where(.spw-chip, .spec-pill, .badge, .tag, .pill)::after {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 50%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.22),
@@ -596,7 +596,7 @@ html[data-spw-high-contrast="on"] {
   box-shadow: var(--grain-panel-inset-highlight), var(--grain-panel-shadow-local);
 }
 
-:where(.operator-chip[data-spw-gesture], .spec-pill[data-spw-gesture], .badge[data-spw-gesture], .tag[data-spw-gesture], .pill[data-spw-gesture])::before {
+:where(.spw-chip[data-spw-gesture], .spec-pill[data-spw-gesture], .badge[data-spw-gesture], .tag[data-spw-gesture], .pill[data-spw-gesture])::before {
   opacity: calc(var(--grain-handle-opacity)*0.78);
 }
 
@@ -606,17 +606,17 @@ html[data-spw-high-contrast="on"] {
     background-image: none;
   }
 
-  :where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+  :where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
     .software-card, .operator-card, .media-card, .media-focus-card,
     .pretext-surface, .settings-category, .settings-fieldset,
     .domain-visual, .spw-console, .spw-nav-panel,
     .payment-card, .seed-card, .profile-card, .svc-wrapper,
-    .operator-chip, .spec-pill, .badge, .tag, .pill,
+    .spw-chip, .spec-pill, .badge, .tag, .pill,
     .grain-panel, .grain-type-panel, .grain-backplate)::before {
     opacity: 0.006;
   }
 
-  :where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+  :where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
     .software-card, .operator-card, .media-card, .media-focus-card,
     .pretext-surface, .settings-category, .settings-fieldset,
     .domain-visual, .spw-console, .spw-nav-panel,

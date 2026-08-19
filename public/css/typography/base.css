@@ -12,7 +12,7 @@
    ========================================================================== */
 
 /* Establish vertical rhythm for standard prose content */
-:where(.prose, article, .frame-copy, .frame-note) {
+:where(.prose, article, .frame-copy, [data-spw-textual-role="note"]) {
   --flow-space: var(--spw-flow-space, var(--space-md, 1rem));
 }
 
@@ -136,7 +136,7 @@
 /* Title stack: kicker/subtitle should hug the heading above content. */
 :where(
   .spec-kicker + :is(h1, h2, h3),
-  .page-kicker + :is(h1, h2, h3),
+  [data-spw-textual-role="kicker"] + :is(h1, h2, h3),
   .section-kicker + :is(h1, h2, h3),
   .hero-kicker + :is(h1, h2, h3),
   h1 + h2,
@@ -149,7 +149,7 @@
 }
 
 /* Ledes / Opening Statements */
-:where(.site-lede, .page-lede, .frame-lede, .plan-thesis) {
+:where([data-spw-textual-role="lede"], .plan-thesis) {
   font-size: clamp(1.12rem, 1.04rem + 0.22vw, 1.28rem);
   line-height: 1.56;
   letter-spacing: -0.012em;
@@ -204,7 +204,7 @@
 /* Tighter run-in from heading into following paragraph in prose stacks. */
 :where(.prose, article, .frame-copy) :where(
   :is(h1, h2, h3, h4) + p,
-  :is(h1, h2, h3, h4) + :is(.site-lede, .page-lede)
+  :is(h1, h2, h3, h4) + :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"])
 ) {
   margin-block-start: calc(var(--flow-space, 1rem) * 0.55);
 }
@@ -232,7 +232,7 @@
   overflow-wrap: break-word;
 }
 
-:where(.frame-note, .inline-note) {
+:where([data-spw-textual-role="note"], .inline-note) {
   max-inline-size: min(100%, var(--measure-panel, 52ch));
 }
 
@@ -250,12 +250,12 @@
 
 :where(
   article :is(p, li, blockquote, pre, code, kbd, samp),
-  .site-lede,
-  .page-lede,
+  [data-spw-textual-role="lede"],
+  [data-spw-textual-role="lede"],
   :is(.frame-panel, .frame-details) p,
   .frame-panel li,
   .inline-note,
-  .frame-note,
+  [data-spw-textual-role="note"],
   .plan-thesis,
   .plan-wonder p,
   .plan-considerations li,
@@ -349,7 +349,7 @@
     color-mix(in oklab, var(--ink, #161c1d) 82%, var(--active-op-color, #008080) 18%);
 }
 
-:where(p, li, blockquote, dd, figcaption, .frame-copy, .site-lede, .page-lede, .frame-note) a:not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button) {
+:where(p, li, blockquote, dd, figcaption, .frame-copy, [data-spw-textual-role="lede"], [data-spw-textual-role="lede"], [data-spw-textual-role="note"]) a:not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button) {
   color: color-mix(in srgb, var(--ink-strong, #090b0c) 84%, var(--active-op-color, var(--teal, #008080)) 16%);
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
@@ -363,17 +363,17 @@
     background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
-:where(p, li, blockquote, dd, figcaption, .frame-copy, .site-lede, .page-lede, .frame-note) a:not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button):is(:hover, :focus-visible) {
+:where(p, li, blockquote, dd, figcaption, .frame-copy, [data-spw-textual-role="lede"], [data-spw-textual-role="lede"], [data-spw-textual-role="note"]) a:not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button):is(:hover, :focus-visible) {
   color: var(--active-op-color, var(--teal, #008080));
   text-decoration-color: var(--active-op-color, var(--teal, #008080));
   text-decoration-thickness: 2px;
 }
 
-:where(a:visited):not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.header-sigil) {
+:where(a:visited):not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.header-sigil) {
   color: var(--spw-link-visited-color);
 }
 
-:where(a[data-spw-grounded='true']):not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.header-sigil) {
+:where(a[data-spw-grounded='true']):not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.header-sigil) {
   color: var(--spw-link-grounded-color);
 }
 
@@ -385,7 +385,7 @@
    operator glyph sequences (#>, ->, =>, etc.); "zero" keeps 0 legible.    */
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .syntax-token,
   .spec-pill,
   .badge,
@@ -443,13 +443,13 @@
 }
 
 /* Disable size surge for structural framing logic to prevent layout shift */
-:where(.site-frame [data-spw-operator]) {
+:where(.spw-frame [data-spw-operator]) {
   --type-size-surge: 0;
 }
 
 /* Apply minimal size surge directly to specific inline token handles */
 :where(
-  .operator-chip[data-spw-operator],
+  .spw-chip[data-spw-operator],
   .spec-pill[data-spw-operator],
   .badge[data-spw-operator],
   .syntax-token[data-spw-operator]

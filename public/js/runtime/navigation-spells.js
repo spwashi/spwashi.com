@@ -19,7 +19,8 @@ const TOKEN_SELECTOR = [
   '.card-sub-links a[href]',
   '.frame-operators a[href]',
   '.spw-route-menu-link[href]',
-  '.operator-chip[href]',
+  '.spw-chip[href]',
+  '[data-spw-operator][href]',
   '.frame-sigil[href]',
   '.syntax-token[href]',
 ].join(', ');

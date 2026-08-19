@@ -53,7 +53,7 @@ export const COMPONENT_FIXTURES = Object.freeze([
   {
     id: 'operator-chip',
     label: 'Operator chip',
-    selector: '#component-anatomy-slots .operator-chip',
+    selector: '#component-anatomy-slots .spw-chip',
     regionSelector: '#component-anatomy-slots',
     specimenRoute: '/design/components/#component-anatomy-slots',
     cssOwner: 'public/css/handles/operators/sigils-and-chips.css',

@@ -53,7 +53,7 @@
    ========================================================================== */
 
 :where(
-  .site-frame,
+  .spw-frame,
   .frame-card,
   .media-card,
   .operator-card,
@@ -155,7 +155,7 @@
   color: var(--material-ink-matte-strong, var(--ink-on-matte-strong, var(--material-ink-matte)));
 }
 
-:where([data-spw-metamaterial="matte"]) :where(p, li, dd, figcaption, .frame-note, .spec-kicker) {
+:where([data-spw-metamaterial="matte"]) :where(p, li, dd, figcaption, [data-spw-textual-role="note"], .spec-kicker) {
   color: var(--material-ink-matte-soft);
 }
 
@@ -173,7 +173,7 @@
   color: var(--material-ink-contrast);
 }
 
-:where([data-spw-metamaterial="contrast"]) :where(p, li, dd, figcaption, .frame-note, .spec-kicker) {
+:where([data-spw-metamaterial="contrast"]) :where(p, li, dd, figcaption, [data-spw-textual-role="note"], .spec-kicker) {
   color: color-mix(in oklab, var(--material-ink-contrast) 82%, var(--material-prime-color) 18%);
 }
 
@@ -249,10 +249,10 @@
    This makes matte a reliable clear-contrast page posture when chosen in settings
    without forcing every child to carry the attr. Used by design hub experiments and
    any route that wants the safeguard for its primary reading surfaces. */
-:where(body[data-spw-base-metamaterial="matte"]) :where(.site-frame, .frame-card, .frame-panel, .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
+:where(body[data-spw-base-metamaterial="matte"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
   /* Inherit the matte projection; explicit metamaterial on a child can still override. */
 }
-:where(body[data-spw-base-metamaterial="matte"][data-spw-high-contrast="on"]) :where(.site-frame, .frame-card, .frame-panel, .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
+:where(body[data-spw-base-metamaterial="matte"][data-spw-high-contrast="on"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
   /* When matte + high-contrast, force the strongest clear ink for the treatment. */
   color: var(--material-ink-matte-strong);
 }
@@ -304,7 +304,7 @@
 @supports selector(:has(*)) {
   :where(
     .frame-card:has(img, video, canvas, .frame-card-media):not([data-spw-overlay]),
-    .site-frame:has(img, video, canvas):not([data-spw-overlay])
+    .spw-frame:has(img, video, canvas):not([data-spw-overlay])
   )::after {
     content: "";
     position: absolute;
@@ -335,7 +335,7 @@
 }
 
 /* Inspection Posture: Structural lucidity & luminous hairline edges */
-:where(html[data-spw-interaction-context="inspecting"]) :where(.site-frame, .frame-card, .frame-panel, .mode-panel) {
+:where(html[data-spw-interaction-context="inspecting"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel) {
   --material-local-border-color: color-mix(in oklab, var(--active-op-color, #008080) 38%, var(--line-strong));
   box-shadow:
     inset 0 0 0 1px color-mix(in oklab, var(--active-op-color, #008080) 14%, transparent),
@@ -356,7 +356,7 @@
 }
 
 /* Atmospheric Lighting: Ambient top-down specular highlight */
-:where(.site-frame, .frame-card, .mode-panel, .operator-card) {
+:where(.spw-frame, .frame-card, .mode-panel, .operator-card) {
   background-image:
     radial-gradient(
       ellipse 80% 50% at 50% 0%,
@@ -370,7 +370,7 @@
     );
 }
 
-html[data-spw-color-mode="dark"] :where(.site-frame, .frame-card, .mode-panel, .operator-card) {
+html[data-spw-color-mode="dark"] :where(.spw-frame, .frame-card, .mode-panel, .operator-card) {
   background-image:
     radial-gradient(
       ellipse 80% 50% at 50% 0%,

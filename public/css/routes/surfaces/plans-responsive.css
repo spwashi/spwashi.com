@@ -47,10 +47,10 @@
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  [data-spw-surface="plans"] .site-frame,
+  [data-spw-surface="plans"] .spw-frame,
   [data-spw-surface="plans"] .plan-card,
   [data-spw-surface="plans"] .frame-panel,
-  [data-spw-surface="plans"] .operator-chip {
+  [data-spw-surface="plans"] .spw-chip {
     transition: none !important;
     animation: none !important;
     transform: none !important;

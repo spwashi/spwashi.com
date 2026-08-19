@@ -42,7 +42,7 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_tools_tools_midjourney__main_surface" data-spw-wonder="projection resonance locality" id="main-content" tabindex="-1" aria-labelledby="midjourney-title">
         <article>
-            <section class="site-frame site-hero" id="midjourney-bench"
+            <section class="spw-frame" data-spw-region-role="entry-spine" id="midjourney-bench"
                 data-spw-role="context"
                 data-spw-form="brace"
                 data-spw-meaning="midjourney bench for experiments, references, and collaborator-aware image planning"
@@ -53,7 +53,7 @@
                 data-spw-copy-purpose="storyboard-handoff"
                 data-spw-region-purpose="public-spine"
                 data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#midjourney-bench">~"midjourney_bench"</a>
                     <div class="spec-strip">
                         <span class="spec-pill" data-cluster="tool">v8.2 default</span>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <h1 id="midjourney-title">Midjourney Bench</h1>
-                <p class="site-lede" data-spw-narrative-copy="bench-hook" data-spw-copy-label="Bench hook">This is a depiction bench, not a replacement studio. Packets let a table see a concept tonight. The same packet is what you hand an illustrator when you can afford one.</p>
+                <p data-spw-textual-role="lede" data-spw-narrative-copy="bench-hook" data-spw-copy-label="Bench hook">This is a depiction bench, not a replacement studio. Packets let a table see a concept tonight. The same packet is what you hand an illustrator when you can afford one.</p>
                 <p data-spw-narrative-copy="reference-pool" data-spw-copy-label="Reference pool" data-spw-copy-purpose="asset-discipline">Use the kept images in <code>/public/images/</code> as the reference pool. Ignore everything that has not earned a stable home yet. Style refs should tell you about material and atmosphere. Identity refs should stabilize a character or recurring figure. Omni refs should help multiple scenes share one canon without making every prompt start from zero.</p>
                 <div class="spw-reason-strip" aria-label="Midjourney usage proof and calls to action" data-spw-feature="midjourney-usage-proof">
                     <div data-spw-semantic-expression="midjourney[usage]{practice.volume}">
@@ -80,15 +80,15 @@
                     </div>
                 </div>
 
-                <p class="frame-note" data-spw-intent="daily-to-vision">Ordinary days and journal entries are the richest soil. A single observation — the way light hit the steam on a window at 7:14 a.m., the exact quality of tiredness after a long conversation, the small ritual that made a Tuesday feel like itself — can become the seed for a prompt packet. That packet grows into an image that can live in the Library as a new ward, a character’s private vision, a motif for the town, or a scene the table can step into. The Midjourney bench is the place those daily fragments are tended into visual canon.</p>
+                <p data-spw-textual-role="note" data-spw-intent="daily-to-vision">Ordinary days and journal entries are the richest soil. A single observation — the way light hit the steam on a window at 7:14 a.m., the exact quality of tiredness after a long conversation, the small ritual that made a Tuesday feel like itself — can become the seed for a prompt packet. That packet grows into an image that can live in the Library as a new ward, a character’s private vision, a motif for the town, or a scene the table can step into. The Midjourney bench is the place those daily fragments are tended into visual canon.</p>
 
-                <div id="pending-vision-seed" class="frame-note" hidden data-spw-feature="pending-vision-from-cauldron">
+                <div id="pending-vision-seed" data-spw-textual-role="note" hidden data-spw-feature="pending-vision-from-cauldron">
                     <strong>Pending Daily Vision Seed from the cauldron</strong>
                     <p data-pending-vision-expr></p>
-                    <button type="button" class="operator-chip" id="use-pending-vision" data-spw-operator="potential" data-spw-action="explore">~use_as_prompt_packet</button>
-                    <button type="button" class="operator-chip" id="dismiss-pending-vision" data-spw-operator="potential" data-spw-action="explore">~dismiss</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" id="use-pending-vision" data-spw-operator="potential" data-spw-action="explore">~use_as_prompt_packet</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" id="dismiss-pending-vision" data-spw-operator="potential" data-spw-action="explore">~dismiss</button>
                 </div>
-                <p class="frame-note" data-spw-attention="try" data-spw-behavior="ground" data-spw-concept="sensory-prompt-axis" data-spw-domain="prompting" data-spw-grounding="material-light-owner" data-spw-recognition="prompt-has-a-test-surface" data-spw-operation="ground-image-idea" data-spw-failure-mode="mood-without-owner" data-spw-adjacent="style-reference shotboard palette-seed" data-spw-contrast="generic-aesthetic-prompt" data-spw-practice="/design/palettes/ /design/components/" data-spw-proficiency="intermediate">
+                <p data-spw-textual-role="note" data-spw-attention="try" data-spw-behavior="ground" data-spw-concept="sensory-prompt-axis" data-spw-domain="prompting" data-spw-grounding="material-light-owner" data-spw-recognition="prompt-has-a-test-surface" data-spw-operation="ground-image-idea" data-spw-failure-mode="mood-without-owner" data-spw-adjacent="style-reference shotboard palette-seed" data-spw-contrast="generic-aesthetic-prompt" data-spw-practice="/design/palettes/ /design/components/" data-spw-proficiency="intermediate">
                     A useful prompt packet names the subject, material behavior, light cue, grounding point, and
                     guardrail. “Translucent rice paper” is not just mood if the card also says where text must remain
                     readable and which component or scene should test the surface.
@@ -101,7 +101,7 @@
                 <p>As of August 12, 2026, Midjourney V8.2 is the default model. The nearby shelf still includes ChatGPT Images, Gemini, Adobe Firefly, and Ideogram. Write the packet so it can travel; then season it with <code>--v 8.2</code> when the job is a character concept or a table artifact.</p>
                 <p data-spw-narrative-copy="storyboard-collaboration" data-spw-copy-label="Storyboard collaboration" data-spw-copy-purpose="artist-handoff">This route is also where storyboarding and collaboration can stay legible. Treat copy as a panel sketch before it becomes an image: subject, camera distance, lighting, caption job, change budget, and what the scene must still mean after an artist improves it. When Raven of the Broken Biscuits starts drawing for the animated series work, that art should live in clearly credited collaborator buckets and route surfaces instead of blending into your own studies.</p>
 
-                <p class="frame-note" data-spw-intent="producer-director-guidance">
+                <p data-spw-textual-role="note" data-spw-intent="producer-director-guidance">
                     <strong>For producers and directors developing a visual style:</strong> Start with rendered cards from the <a href="/tools/character-sheet/">character sheet builder</a> or <a href="/tools/profile/">profile tool</a>. Their tropes, badges, and sections become stable identity packets. Combine them with style refs (material + light + palette) and omni refs (world rules) here. Use the design palettes and slots pages to tune the underlying component language so the same atmosphere holds across stills, motion tests, and UI. Query parameters on this bench and the character tools let you share exact higher-order style combinations (card state + palette + image memory) with your art team.
                 </p>
                 <figure class="image-study topic-photo-card" data-spw-image-prominence="feature" data-spw-image-shape="landscape" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#154a52, #b7834f, #d8d3c8, #406173" data-spw-accent-anchor="midjourney bench shelf counter culture" data-spw-accent-operator="ref">
@@ -112,32 +112,32 @@
                     </figcaption>
                 </figure>
                 <nav class="frame-operators" aria-label="Midjourney bench routes">
-                    <a class="operator-chip" href="#v82-workbench" data-spw-operator="frame" data-spw-action="address">#&gt;v8_2</a>
-                    <a class="operator-chip" href="#sticker-imagine" data-spw-operator="concept-edge" data-spw-action="show">$sticker&gt;$scene</a>
-                    <a class="operator-chip" href="#prompt-mining-loop" data-spw-operator="potential" data-spw-action="mine" data-spw-target="prompt-loop">~mine_prompt_loop</a>
-                    <a class="operator-chip" href="#image-resource-utility" data-spw-operator="integration" data-spw-action="manage" data-spw-target="image-resources">^manage_image_resources</a>
-                    <a class="operator-chip" href="#reference-packets" data-spw-operator="integration" data-spw-action="publish" data-spw-target="reference-packets">^reference_packets</a>
-                    <a class="operator-chip" href="#route-grammar" data-spw-operator="vibration" data-spw-action="anchor" data-spw-target="route-grammar"># route grammar</a>
-                    <a class="operator-chip" href="#collaboration-notes" data-spw-operator="potential" data-spw-action="explore" data-spw-target="collaboration-notes">~collaboration_notes</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/#image-publishing-loop" data-spw-operator="integration" data-spw-action="publish" data-spw-target="session-images">^in_sessions</a>
-                    <a class="operator-chip" href="/tools/character-sheet/" data-spw-operator="integration" data-spw-action="publish">^character_sheet</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="potential" data-spw-action="explore">~rpg_wednesday</a>
-                    <a class="operator-chip" href="/design/?spw_prompt_open=1&spw_prompt_host=promptability-studio&spw_prompt_target=image_prompt&spw_prompt_generator=chatgpt-images&spw_prompt_focus=library-built%20town%20with%20intergenerational%20harmony#promptability-studio" data-spw-operator="wonder" data-spw-action="inspect">? library study</a>
-                    <a class="operator-chip" href="/design/experiments/svg/" data-spw-operator="potential" data-spw-action="explore">~svg_cleanup</a>
-                    <a class="operator-chip" href="/design/website/" data-spw-operator="potential" data-spw-action="explore">~website_design</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#v82-workbench" data-spw-operator="frame" data-spw-action="address">#&gt;v8_2</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#sticker-imagine" data-spw-operator="concept-edge" data-spw-action="show">$sticker&gt;$scene</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#prompt-mining-loop" data-spw-operator="potential" data-spw-action="mine" data-spw-target="prompt-loop">~mine_prompt_loop</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#image-resource-utility" data-spw-operator="integration" data-spw-action="manage" data-spw-target="image-resources">^manage_image_resources</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#reference-packets" data-spw-operator="integration" data-spw-action="publish" data-spw-target="reference-packets">^reference_packets</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#route-grammar" data-spw-operator="vibration" data-spw-action="anchor" data-spw-target="route-grammar"># route grammar</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#collaboration-notes" data-spw-operator="potential" data-spw-action="explore" data-spw-target="collaboration-notes">~collaboration_notes</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/#image-publishing-loop" data-spw-operator="integration" data-spw-action="publish" data-spw-target="session-images">^in_sessions</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/tools/character-sheet/" data-spw-operator="integration" data-spw-action="publish">^character_sheet</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/" data-spw-operator="potential" data-spw-action="explore">~rpg_wednesday</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/?spw_prompt_open=1&spw_prompt_host=promptability-studio&spw_prompt_target=image_prompt&spw_prompt_generator=chatgpt-images&spw_prompt_focus=library-built%20town%20with%20intergenerational%20harmony#promptability-studio" data-spw-operator="wonder" data-spw-action="inspect">? library study</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/" data-spw-operator="potential" data-spw-action="explore">~svg_cleanup</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/website/" data-spw-operator="potential" data-spw-action="explore">~website_design</a>
                 </nav>
             </section>
 
-            <section class="site-frame" id="v82-workbench"
+            <section class="spw-frame" id="v82-workbench"
                 data-spw-role="practice"
                 data-spw-form="brace"
                 data-spw-meaning="Midjourney V8.2 as a character-concept and artifact-development bench"
                 data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection resonance locality" data-spw-affordance="practice" data-spw-liminality="threshold" data-spw-category-family="workshop" data-spw-locality="high" data-spw-consequence="artifact" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_tools_tools_midjourney__v82_workbench" data-spw-context-relevance="midjourney v8.2 character concept artifact personalization">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#v82-workbench">#&gt;v8_2_workbench</a>
                     <h2>V8.2 for Characters and Artifacts</h2>
                 </header>
-                <p class="inline-note">V8.2 became the default on July 24, 2026. Midjourney framed it as an aesthetics, image-quality, and personalization pass: bolder, cleaner, less accidental mud, and better at reading a rated taste profile. That is useful here when the job is a face, a prop, a ward, or a piece of table kit — not a generic mood board.</p>
+                <p data-spw-textual-role="note">V8.2 became the default on July 24, 2026. Midjourney framed it as an aesthetics, image-quality, and personalization pass: bolder, cleaner, less accidental mud, and better at reading a rated taste profile. That is useful here when the job is a face, a prop, a ward, or a piece of table kit — not a generic mood board.</p>
                 <p>Pin the version with <code>--v 8.2</code> when a packet must stay comparable across a week. Use identity packets and character references for people. Use style refs for material behavior. Use omni refs when a family of scenes has to share one world light. Personalization is worth the ratings if you already have a large profile; V8.2’s pool for building those profiles is larger than the previous default.</p>
                 <div class="frame-grid">
                     <article class="frame-card" data-spw-kind="card" data-spw-role="practice">
@@ -170,28 +170,28 @@
                         <span>A grounded V8.2 character study: clothing logic, silhouette, and craft context preserved so the identity can be handed off to an illustrator or reused in prompt packets.</span>
                     </figcaption>
                 </figure>
-                <p class="frame-note">Official notes: <a href="https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version" rel="noopener">version parameter</a> and the <a href="https://www.midjourney.com/updates/version-8-2" rel="noopener">V8.2 announcement</a>. Character and omni references still exist on the V8 line; omni currently falls back through V7 under the hood. HD, pan, and edit tools have their own cost and fallback rules — do not assume a character study stays 2K after a crop.</p>
+                <p data-spw-textual-role="note">Official notes: <a href="https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version" rel="noopener">version parameter</a> and the <a href="https://www.midjourney.com/updates/version-8-2" rel="noopener">V8.2 announcement</a>. Character and omni references still exist on the V8 line; omni currently falls back through V7 under the hood. HD, pan, and edit tools have their own cost and fallback rules — do not assume a character study stays 2K after a crop.</p>
                 <nav class="frame-operators" aria-label="V8.2 workbench routes">
-                    <a class="operator-chip" href="/play/rpg-wednesday/character/" data-spw-operator="perspective">@character_lab</a>
-                    <a class="operator-chip" href="/tools/character-sheet/" data-spw-operator="integration">^character_sheet</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/#image-publishing-loop" data-spw-operator="integration">^session_images</a>
-                    <a class="operator-chip" href="#reference-packets" data-spw-operator="integration">^reference_packets</a>
-                    <a class="operator-chip" href="#sticker-imagine" data-spw-operator="concept-edge">$sticker&gt;$scene</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/character/" data-spw-operator="perspective">@character_lab</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/tools/character-sheet/" data-spw-operator="integration">^character_sheet</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/#image-publishing-loop" data-spw-operator="integration">^session_images</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#reference-packets" data-spw-operator="integration">^reference_packets</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#sticker-imagine" data-spw-operator="concept-edge">$sticker&gt;$scene</a>
                 </nav>
             </section>
 
-            <section class="site-frame" id="sticker-imagine"
+            <section class="spw-frame" id="sticker-imagine"
                 data-spw-role="practice"
                 data-spw-kind="frame"
                 data-spw-context="analysis"
                 data-spw-wonder="projection locality resonance"
                 data-spw-affordance="practice"
                 data-spw-seed="page_tools_tools_midjourney__sticker_imagine">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#sticker-imagine">$sticker&gt;$scene</a>
                     <h2>Handles, stickers, then scenes</h2>
                 </header>
-                <p class="inline-note">The prompt packet is usually more useful than the still. The still is often a sticker in a group chat. Grok Imagine is one renderer that can project that sticker into a scene — another <code>&gt;</code>, not a promotion to canon.</p>
+                <p data-spw-textual-role="note">The prompt packet is usually more useful than the still. The still is often a sticker in a group chat. Grok Imagine is one renderer that can project that sticker into a scene — another <code>&gt;</code>, not a promotion to canon.</p>
                 <div class="frame-grid">
                     <article class="frame-card">
                         <span class="frame-card-sigil">~handle</span>
@@ -211,16 +211,16 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="prompt-mining-loop"
+            <section class="spw-frame" id="prompt-mining-loop"
                 data-spw-role="workflow"
                 data-spw-form="brace"
                 data-spw-meaning="site reading loop for extracting Midjourney prompt handles from route copy, components, and RPG memory"
                 data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection substrate memory" data-spw-affordance="read" data-spw-liminality="threshold" data-spw-category-family="workflow" data-spw-locality="high" data-spw-consequence="practice" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_tools_tools_midjourney__prompt_mining_loop" data-spw-context-relevance="midjourney prompt mining substrates memory addresses rpg publishing">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#prompt-mining-loop">~"prompt_mining_loop"</a>
                     <h2>Prompt Mining Loop</h2>
                 </header>
-                <p class="inline-note">The reason to read through Spwashi for prompts is that routes name different dimensions of conception. A software paragraph may give memory policy. A recipe may give phase change. A session may give social pressure. A CSS note may give the surface rule that keeps text readable after the image arrives.</p>
+                <p data-spw-textual-role="note">The reason to read through Spwashi for prompts is that routes name different dimensions of conception. A software paragraph may give memory policy. A recipe may give phase change. A session may give social pressure. A CSS note may give the surface rule that keeps text readable after the image arrives.</p>
                 <div class="frame-grid">
                     <article class="frame-card" data-spw-kind="card" data-spw-role="prompt-axis" data-spw-semantic-expression="prompt-axis[substrate]{receive.sustain.mutate}">
                         <span class="frame-card-sigil">$substrate</span>
@@ -244,23 +244,23 @@
                     </article>
                 </div>
                 <nav class="frame-operators" aria-label="Prompt mining actions">
-                    <a class="operator-chip" href="/play/rpg-wednesday/#image-publishing-loop" data-spw-operator="integration">^a_favorite_image</a>
-                    <a class="operator-chip" href="/cards/" data-spw-operator="integration" data-spw-action="publish">^keep_a_proof_card</a>
-                    <a class="operator-chip" href="/topics/software/browser/#web-platform-apis" data-spw-operator="wonder">? browser substrates</a>
-                    <a class="operator-chip" href="/topics/math/complexity/#parser-budgets" data-spw-operator="normalize" data-spw-action="measure">%memory_cost</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/#image-publishing-loop" data-spw-operator="integration">^a_favorite_image</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/cards/" data-spw-operator="integration" data-spw-action="publish">^keep_a_proof_card</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/browser/#web-platform-apis" data-spw-operator="wonder">? browser substrates</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/math/complexity/#parser-budgets" data-spw-operator="normalize" data-spw-action="measure">%memory_cost</a>
                 </nav>
             </section>
 
-            <section class="site-frame" id="image-resource-utility"
+            <section class="spw-frame" id="image-resource-utility"
                 data-spw-role="utility"
                 data-spw-form="brace"
                 data-spw-meaning="local image resource manifest for finding, referencing, and swapping tracked visual concepts"
                 data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection locality architecture" data-spw-affordance="manage" data-spw-liminality="threshold" data-spw-category-family="tool" data-spw-locality="high" data-spw-consequence="swap" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_tools_tools_midjourney__image_resource_utility" data-spw-context-relevance="image resources manifest concept swap route visual canon">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#image-resource-utility">^"image_resource_utility"</a>
                     <h2>Image Resource Utility</h2>
                 </header>
-                <p class="inline-note">A lightweight local utility now scans tracked public images and writes a concept-aware manifest. Use it before swapping a page image so the replacement has a stable path, inferred concepts, role, format, and a swap hint.</p>
+                <p data-spw-textual-role="note">A lightweight local utility now scans tracked public images and writes a concept-aware manifest. Use it before swapping a page image so the replacement has a stable path, inferred concepts, role, format, and a swap hint.</p>
                 <div class="frame-grid">
                     <article class="frame-card" data-spw-kind="card" data-spw-role="command" data-spw-semantic-expression="image-resource[manifest]{scan.classify.write}">
                         <span class="frame-card-sigil">$manifest</span>
@@ -293,19 +293,19 @@
                     </figcaption>
                 </figure>
                 <nav class="frame-operators" aria-label="Image resource utility links">
-                    <a class="operator-chip" href="/public/data/image-resources.json" data-spw-operator="potential" data-spw-action="explore">~manifest_json</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="value" data-spw-action="materialize">*rpg_wednesday</a>
-                    <a class="operator-chip" href="/topics/site-design/" data-spw-operator="frame" data-spw-action="address">#&gt;site_design</a>
-                    <a class="operator-chip" href="/cards/" data-spw-operator="integration">^proof_cards</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/public/data/image-resources.json" data-spw-operator="potential" data-spw-action="explore">~manifest_json</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/" data-spw-operator="value" data-spw-action="materialize">*rpg_wednesday</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/site-design/" data-spw-operator="frame" data-spw-action="address">#&gt;site_design</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/cards/" data-spw-operator="integration">^proof_cards</a>
                 </nav>
             </section>
 
-            <section class="site-frame" id="reference-packets"
+            <section class="spw-frame" id="reference-packets"
                 data-spw-role="reference"
                 data-spw-form="square"
                 data-spw-meaning="reference packet types for image generation and visual canon maintenance"
                 data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection resonance locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_midjourney__reference_packets" data-spw-context-relevance="midjourney style refs omni references image experiments collaboration" data-spw-related-routes="/|/tools/|/tools/character-sheet/|/play/rpg-wednesday/|/topics/site-design/">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#reference-packets">^"reference_packets"</a>
                     <h2>Reference Packets</h2>
                 </header>
@@ -340,7 +340,7 @@
                         <span class="frame-card-sigil">^daily_vision_seed</span>
                         <strong>Daily Vision Seeds</strong>
                         <span>A real observation or journal line becomes the soil. Map it through a garden seed or operator, write the prompt packet, grow the image, then plant the result in the Library as a usable artifact (a new ward for Grounding Rod, a private vision for a character, a motif the table can discover later).</span>
-                        <span class="frame-note">Example: Tuesday steam on the window at 7:14 a.m. → ^memory seed + ~resonance operator → prompt packet with rice-paper light and quiet domestic scale → generated image becomes “the Quiet Window” card that appears in the scrying bowl during a session.</span>
+                        <span data-spw-textual-role="note">Example: Tuesday steam on the window at 7:14 a.m. → ^memory seed + ~resonance operator → prompt packet with rice-paper light and quiet domestic scale → generated image becomes “the Quiet Window” card that appears in the scrying bowl during a session.</span>
                     </article>
 
                     <details class="spw-inline-disclosure spw-garden-tended"
@@ -363,12 +363,12 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="route-grammar"
+            <section class="spw-frame" id="route-grammar"
                 data-spw-role="reference"
                 data-spw-form="square"
                 data-spw-meaning="suggested route grammar for reference pages and image experiments"
                 data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection resonance locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_midjourney__route_grammar" data-spw-context-relevance="midjourney style refs omni references image experiments collaboration" data-spw-related-routes="/|/tools/character-sheet/|/play/rpg-wednesday/">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#route-grammar">@"route_grammar"</a>
                     <h2>Route Grammar</h2>
                 </header>
@@ -390,15 +390,15 @@
                         <span>Storyboard sequences, animated-series blocking, and frame-to-frame continuity experiments.</span>
                     </li>
                 </ul>
-                <p class="frame-note">Each page can carry kept images, short prompt notes, failures worth remembering, and what the experiment clarified. The point is accumulation, not one-off prompt spectacle.</p>
+                <p data-spw-textual-role="note">Each page can carry kept images, short prompt notes, failures worth remembering, and what the experiment clarified. The point is accumulation, not one-off prompt spectacle.</p>
             </section>
 
-            <section class="site-frame" id="collaboration-notes"
+            <section class="spw-frame" id="collaboration-notes"
                 data-spw-role="reference"
                 data-spw-form="square"
                 data-spw-meaning="collaboration notes for credited art, canon maintenance, and shared production rhythm"
                 data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection resonance locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_midjourney__collaboration_notes" data-spw-context-relevance="midjourney style refs omni references image experiments collaboration" data-spw-related-routes="/|/tools/character-sheet/|/play/rpg-wednesday/|/services/">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#collaboration-notes">~"collaboration"</a>
                     <h2>Collaboration Notes</h2>
                 </header>
@@ -481,7 +481,7 @@
     note.innerHTML = `
       <strong>Style packet from rendered card</strong>
       <p style="font-family:monospace; font-size:0.85em; white-space:pre-wrap;">${decodeURIComponent(packet)}</p>
-      <button type="button" class="operator-chip" data-action="copy-packet" data-spw-operator="potential">~copy_full_packet</button>
+      <button type="button" class="spw-chip" data-spw-handle="true" data-action="copy-packet" data-spw-operator="potential">~copy_full_packet</button>
     `;
     packetsSection.insertBefore(note, packetsSection.firstElementChild?.nextSibling || null);
 

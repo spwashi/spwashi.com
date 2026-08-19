@@ -2,7 +2,7 @@
 /**
  * Region hygiene check for public route HTML.
  *
- * Every `.site-frame` / article.site-frame should carry:
+ * Every `.spw-frame` / [data-spw-kind=frame] should carry:
  *   - id (for page-region-rail + section-handle)
  *   - data-spw-kind
  *   - data-spw-role
@@ -66,12 +66,12 @@ function analyze(filePath) {
   while ((match = re.exec(html))) {
     const attrs = match[2];
     const classes = classList(attrs);
-    if (!/\bsite-frame\b/.test(classes)) continue;
+    if (!/\bspw-frame\b/.test(classes) && !/\bdata-spw-kind="frame"/.test(attrs)) continue;
     frames += 1;
 
     const id = attr(attrs, 'id') || '(no-id)';
     if (!hasAttr(attrs, 'id')) {
-      issues.push({ id, code: 'missing-id', detail: 'site-frame needs an id for region rail / section handle' });
+      issues.push({ id, code: 'missing-id', detail: 'spw-frame needs an id for region rail / section handle' });
     }
     if (!hasAttr(attrs, 'data-spw-kind')) {
       issues.push({ id, code: 'missing-kind', detail: 'expected data-spw-kind (usually frame)' });
@@ -81,7 +81,7 @@ function analyze(filePath) {
     }
 
     const isEntrySpine =
-      /\bsite-hero\b/.test(classes)
+      attr(attrs, 'data-spw-region-role') === 'entry-spine'
       || (attr(attrs, 'data-spw-liminality') === 'entry'
         && attr(attrs, 'data-spw-composition-stability') === 'anchored');
 

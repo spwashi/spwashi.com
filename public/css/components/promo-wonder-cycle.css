@@ -4,7 +4,7 @@
    Reusable promo / wonder cycle component styles.
    ========================================================================== */
 
-:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle).site-frame {
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle).spw-frame {
   position: relative;
   isolation: isolate;
   display: grid;

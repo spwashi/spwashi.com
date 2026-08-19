@@ -157,7 +157,7 @@
   max-width: 100%;
 }
 
-:where(body[data-spw-surface="blog"]) :is(.frame-note, .blog-transition) {
+:where(body[data-spw-surface="blog"]) :is([data-spw-textual-role="note"], .blog-transition) {
   max-width: var(--blog-measure);
 }
 

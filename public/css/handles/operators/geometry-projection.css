@@ -122,7 +122,7 @@
 }
 
 :where(html[data-spw-loading-ecology-twinkle="true"]:not([data-spw-reduce-motion="on"])) :where(
-  .operator-chip,
+  .spw-chip,
   .syntax-token,
   [data-spw-operator],
   [data-spw-interaction-contract]
@@ -136,7 +136,7 @@
 
 :where(html[data-spw-loading-ecology-phase="measuring"]) :where(
   [data-spw-interaction-contract],
-  .operator-chip[href]
+  .spw-chip[href]
 ) {
   --spw-geometry-stability: calc(0.6 + (var(--spw-loading-ecology-surface, 0) * 0.12));
 }
@@ -149,7 +149,7 @@
   .frame-card-sigil,
   .frame-panel-sigil,
   .syntax-token,
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .header-sigil,
   .site-footer__brand
@@ -190,7 +190,7 @@
   .frame-card-sigil,
   .frame-panel-sigil,
   .syntax-token,
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .header-sigil,
   .site-footer__brand
@@ -301,7 +301,7 @@
 
 :where(
   .frame-sigil[data-spw-address-role="identifier"],
-  .operator-chip[data-spw-address-role="identifier"],
+  .spw-chip[data-spw-address-role="identifier"],
   [data-spw-sigil-role="grammar"][data-spw-address-role="identifier"]
 ) {
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);

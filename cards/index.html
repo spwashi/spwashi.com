@@ -44,7 +44,7 @@
 <main id="main-content" tabindex="-1" aria-labelledby="cards-title" data-spw-kind="surface" data-spw-role="reference" data-spw-context="reference" data-spw-wonder="locality provenance consequence" data-spw-seed="page_cards_local_proof__main_surface">
     <article>
         <div data-spw-cluster="cards-orientation">
-        <section class="site-frame site-hero" id="local-proof-cards" aria-labelledby="cards-title" aria-describedby="cards-description" data-spw-frame="hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-form="brace" data-spw-context="reference" data-spw-wonder="locality provenance consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-region="hook"
+        <section class="spw-frame" data-spw-region-role="entry-spine" id="local-proof-cards" aria-labelledby="cards-title" aria-describedby="cards-description" data-spw-frame="hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-form="brace" data-spw-context="reference" data-spw-wonder="locality provenance consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-region="hook"
         data-spw-semantic-expression="cards[hook]{proof}<register>" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="model" data-spw-promptability="visible" data-spw-collectability="index" data-spw-feature="local-proof-card-entry" data-spw-attentional-weight="1.25" data-spw-gradient-boundary="hard" data-spw-composition-stability="anchored" data-spw-context-relevance="local proof cards screenshot records asks offers pledges consensus membership references" data-spw-related-routes="/now/|/membership/|/coordination/|/research/|/services/#ask-card" data-spw-seed="page_cards_local_proof__hero" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
             <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#local-proof-cards">^local_proof_cards</a>
@@ -55,9 +55,9 @@
                     <span class="spec-pill">versionable</span>
                 </div>
             </div>
-            <p class="page-kicker">records people can point at</p>
+            <p data-spw-textual-role="kicker">records people can point at</p>
             <h1 id="cards-title">Local Proof Cards</h1>
-            <p id="cards-description" class="page-lede">Screenshot-native records for asks, offers, pledges, references, and decisions.</p>
+            <p id="cards-description" data-spw-textual-role="lede">Screenshot-native records for asks, offers, pledges, references, and decisions.</p>
             <p>A Local Proof Card is a small, readable record you can keep. It can describe what someone needs, what someone offers, what a group agreed to, what a project is asking for, or what insight should be remembered. It is also a way to catch the work while it is still becoming itself.</p>
             <p>The card stays useful as a screenshot, a copied seed, a link, or a later archived record. No wallet required. No platform lock-in required. The first version is local, readable, and shareable. The screenshot matters because it freezes a state without pretending the process is over.</p>
             <div class="spw-reason-strip" aria-label="Proof card reasons" data-spw-feature="proof-card-reasons" data-spw-box-model="reason-strip" data-spw-composition-flow="grid">
@@ -89,16 +89,16 @@
                 </ul>
             </aside>
             <nav class="frame-operators" aria-label="Local Proof Card actions">
-                <a class="operator-chip" href="#card-types" data-spw-operator="integration" data-spw-action="publish">^card_types</a>
-                <a class="operator-chip" href="#safety" data-spw-operator="wonder" data-spw-action="inspect">? safety</a>
-                <a class="operator-chip" href="#consensus" data-spw-operator="frame" data-spw-action="address">#&gt;consensus</a>
-                <a class="operator-chip" href="/services/#ask-card" data-spw-operator="action">!make[ask]</a>
-                <a class="operator-chip" href="/now/" data-spw-operator="substrate" data-spw-action="support">$current_sprint</a>
+                <a class="spw-chip" data-spw-handle="true" href="#card-types" data-spw-operator="integration" data-spw-action="publish">^card_types</a>
+                <a class="spw-chip" data-spw-handle="true" href="#safety" data-spw-operator="wonder" data-spw-action="inspect">? safety</a>
+                <a class="spw-chip" data-spw-handle="true" href="#consensus" data-spw-operator="frame" data-spw-action="address">#&gt;consensus</a>
+                <a class="spw-chip" data-spw-handle="true" href="/services/#ask-card" data-spw-operator="action">!make[ask]</a>
+                <a class="spw-chip" data-spw-handle="true" href="/now/" data-spw-operator="substrate" data-spw-action="support">$current_sprint</a>
             </nav>
         </section>
         </div>
 
-        <section class="site-frame" id="card-types" aria-labelledby="card-types-title" data-spw-kind="frame" data-spw-role="register" data-spw-form="brace" data-spw-liminality="deep" data-spw-region="cluster">
+        <section class="spw-frame" id="card-types" aria-labelledby="card-types-title" data-spw-kind="frame" data-spw-role="register" data-spw-form="brace" data-spw-liminality="deep" data-spw-region="cluster">
             <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#card-types" data-spw-operator="integration">^card_types</a>
                 <h2 id="card-types-title">Card Types</h2>
@@ -116,11 +116,11 @@
                     </header>
                     <div class="spw-card__body" data-spw-slot="body">
                         <p>We need $___ by ___ for ___.</p>
-                        <p class="frame-note">A concrete request with measurable terms and clear accountability.</p>
+                        <p data-spw-textual-role="note">A concrete request with measurable terms and clear accountability.</p>
                     </div>
                     <footer class="spw-card__footer" data-spw-slot="footer">
                         <span>#&gt;specimen.ask</span>
-                        <a class="operator-chip" href="/services/#ask-card" data-spw-operator="action">!make[ask]</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/services/#ask-card" data-spw-operator="action">!make[ask]</a>
                     </footer>
                 </article>
 
@@ -131,11 +131,11 @@
                     </header>
                     <div class="spw-card__body" data-spw-slot="body">
                         <p>I can provide ___ for ___.</p>
-                        <p class="frame-note">A visible capacity or skill ready for collaboration without platform lock-in.</p>
+                        <p data-spw-textual-role="note">A visible capacity or skill ready for collaboration without platform lock-in.</p>
                     </div>
                     <footer class="spw-card__footer" data-spw-slot="footer">
                         <span>#&gt;specimen.offer</span>
-                        <a class="operator-chip" href="/services/" data-spw-operator="potential">~propose</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/services/" data-spw-operator="potential">~propose</a>
                     </footer>
                 </article>
 
@@ -146,11 +146,11 @@
                     </header>
                     <div class="spw-card__body" data-spw-slot="body">
                         <p>I intend to support ___ with ___.</p>
-                        <p class="frame-note">A public intention honoring recurring continuity or financial backing.</p>
+                        <p data-spw-textual-role="note">A public intention honoring recurring continuity or financial backing.</p>
                     </div>
                     <footer class="spw-card__footer" data-spw-slot="footer">
                         <span>#&gt;specimen.pledge</span>
-                        <a class="operator-chip" href="/membership/" data-spw-operator="value">*support</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/membership/" data-spw-operator="value">*support</a>
                     </footer>
                 </article>
 
@@ -161,11 +161,11 @@
                     </header>
                     <div class="spw-card__body" data-spw-slot="body">
                         <p>This is what the group currently agrees to.</p>
-                        <p class="frame-note">A shared coordinate preventing conversational drift and forgotten agreements.</p>
+                        <p data-spw-textual-role="note">A shared coordinate preventing conversational drift and forgotten agreements.</p>
                     </div>
                     <footer class="spw-card__footer" data-spw-slot="footer">
                         <span>#&gt;specimen.consensus</span>
-                        <a class="operator-chip" href="#consensus" data-spw-operator="frame">#&gt;flow</a>
+                        <a class="spw-chip" data-spw-handle="true" href="#consensus" data-spw-operator="frame">#&gt;flow</a>
                     </footer>
                 </article>
 
@@ -176,11 +176,11 @@
                     </header>
                     <div class="spw-card__body" data-spw-slot="body">
                         <p>This insight, source, or decision should be easy to cite later.</p>
-                        <p class="frame-note">A stable anchor for research notes, math proof cards, and architecture records.</p>
+                        <p data-spw-textual-role="note">A stable anchor for research notes, math proof cards, and architecture records.</p>
                     </div>
                     <footer class="spw-card__footer" data-spw-slot="footer">
                         <span>#&gt;specimen.reference</span>
-                        <a class="operator-chip" href="/research/" data-spw-operator="integration">^cite</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/research/" data-spw-operator="integration">^cite</a>
                     </footer>
                 </article>
 
@@ -191,27 +191,27 @@
                     </header>
                     <div class="spw-card__body" data-spw-slot="body">
                         <p>This person joins as observer, supporter, contributor, or collaborator.</p>
-                        <p class="frame-note">A role handle connecting human practice with the garden and studio ecology.</p>
+                        <p data-spw-textual-role="note">A role handle connecting human practice with the garden and studio ecology.</p>
                     </div>
                     <footer class="spw-card__footer" data-spw-slot="footer">
                         <span>#&gt;specimen.membership</span>
-                        <a class="operator-chip" href="/membership/" data-spw-operator="perspective">@join</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/membership/" data-spw-operator="perspective">@join</a>
                     </footer>
                 </article>
             </div>
         </section>
 
-        <section class="site-frame" id="definition" aria-labelledby="definition-title" data-spw-kind="frame" data-spw-role="definition" data-spw-form="brace" data-spw-liminality="threshold" data-spw-region="read">
-            <header class="frame-heading">
+        <section class="spw-frame" id="definition" aria-labelledby="definition-title" data-spw-kind="frame" data-spw-role="definition" data-spw-form="brace" data-spw-liminality="threshold" data-spw-region="read">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#definition" data-spw-operator="wonder">?definition</a>
                 <h2 id="definition-title">What A Card Does</h2>
             </header>
             <p>A card makes a claim. A screenshot preserves it. A URL or seed lets someone revisit it. A later version can supersede it. Between those states is where a lot of useful understanding happens.</p>
-            <p class="frame-note">These are NFT-like in the narrow sense that each card is a distinct object with its own context. They are not speculative assets. They are local records first.</p>
+            <p data-spw-textual-role="note">These are NFT-like in the narrow sense that each card is a distinct object with its own context. They are not speculative assets. They are local records first.</p>
         </section>
 
-        <section class="site-frame" id="safety" aria-labelledby="safety-title" data-spw-kind="frame" data-spw-role="safety" data-spw-form="brace" data-spw-liminality="projected" data-spw-region="read">
-            <header class="frame-heading">
+        <section class="spw-frame" id="safety" aria-labelledby="safety-title" data-spw-kind="frame" data-spw-role="safety" data-spw-form="brace" data-spw-liminality="projected" data-spw-region="read">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#safety">?safety</a>
                 <h2 id="safety-title">Keep The Record Honest</h2>
             </header>
@@ -219,12 +219,12 @@
             <p><strong>If a card changes, make a new version. Do not silently overwrite the record.</strong></p>
         </section>
 
-        <section class="site-frame" id="consensus" aria-labelledby="consensus-title" data-spw-kind="frame" data-spw-role="coordination" data-spw-form="circle" data-spw-liminality="settled" data-spw-region="hub">
-            <header class="frame-heading">
+        <section class="spw-frame" id="consensus" aria-labelledby="consensus-title" data-spw-kind="frame" data-spw-role="coordination" data-spw-form="circle" data-spw-liminality="settled" data-spw-region="hub">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#consensus">#&gt;consensus_flow</a>
                 <h2 id="consensus-title">Screenshot To Consensus</h2>
             </header>
-            <p class="inline-note">Consensus does not mean everyone agrees forever. It means the group has a visible reference point for what is being proposed, supported, questioned, blocked, revised, or archived.</p>
+            <p data-spw-textual-role="note">Consensus does not mean everyone agrees forever. It means the group has a visible reference point for what is being proposed, supported, questioned, blocked, revised, or archived.</p>
             <div class="frame-grid frame-grid--dense">
                 <article class="frame-panel"><h3>Draft</h3><p>A proposal exists. No agreement yet.</p></article>
                 <article class="frame-panel"><h3>Supported</h3><p>Enough people support moving forward.</p></article>
@@ -233,7 +233,7 @@
                 <article class="frame-panel"><h3>Revised</h3><p>A new version replaces the old one.</p></article>
                 <article class="frame-panel"><h3>Archived</h3><p>No longer active, but preserved.</p></article>
             </div>
-            <p class="frame-note">Screenshot the card before the conversation spreads out. The card gives the group one thing to point at.</p>
+            <p data-spw-textual-role="note">Screenshot the card before the conversation spreads out. The card gives the group one thing to point at.</p>
         </section>
 
         <aside class="spw-route-bridge" aria-labelledby="cards-routes-title">

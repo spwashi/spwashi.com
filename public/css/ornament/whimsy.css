@@ -29,7 +29,7 @@
    1. Sigils & Operators
    ========================================================================== */
 
-:where(.frame-sigil, [data-spw-operator], .operator-chip) {
+:where(.frame-sigil, [data-spw-operator], .spw-chip) {
     position: relative;
     transition:
         color var(--spw-fold-duration) var(--spw-fold-ease),
@@ -51,14 +51,14 @@
    2. Frames
    ========================================================================== */
 
-:where(.site-frame) {
+:where(.spw-frame) {
     position: relative;
     transition:
         border-color var(--spw-fold-duration) var(--spw-fold-ease),
         background-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-:where(.site-frame:hover) {
+:where(.spw-frame:hover) {
     border-color: var(--spw-paper-focus);
 }
 
@@ -78,7 +78,7 @@
     transition: border-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-:where(.site-frame:hover .frame-heading::after) {
+:where(.spw-frame:hover .frame-heading::after) {
     border-color: var(--active-op-border, rgba(0, 128, 128, 0.34));
 }
 
@@ -112,7 +112,7 @@
    4. Buttons & Chips
    ========================================================================== */
 
-:where(.operator-chip, button, input[type="button"], input[type="submit"]) {
+:where(.spw-chip, button, input[type="button"], input[type="submit"]) {
     border-radius: var(--spw-paper-corner);
     transition:
         background-color var(--spw-fold-duration) var(--spw-fold-ease),
@@ -120,11 +120,11 @@
         color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-:where(.operator-chip::before, button::before) {
+:where(.spw-chip::before, button::before) {
     content: none;
 }
 
-:where(.operator-chip:hover, button:hover,
+:where(.spw-chip:hover, button:hover,
        input[type="button"]:hover, input[type="submit"]:hover) {
     border-color: var(--active-op-border, rgba(0, 128, 128, 0.34));
     background:
@@ -136,7 +136,7 @@
     color: var(--ink-strong, var(--ink, #161c1d));
 }
 
-:where(button:active, .operator-chip:active) {
+:where(button:active, .spw-chip:active) {
     border-color: var(--active-op-color, #008080);
 }
 
@@ -145,7 +145,7 @@
 :where(
     body[data-spw-surface="tools-spw-parser"] .literal-parser-samples button,
     body[data-spw-surface="tools-spw-parser"] .literal-parser-file-action,
-    body[data-spw-surface="tools-spw-parser"] .literal-parser-actions .operator-chip
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-actions .spw-chip
 ) {
     background: #15302d;
     color: #e7f5ef;
@@ -156,8 +156,8 @@
     body[data-spw-surface="tools-spw-parser"] .literal-parser-samples button:focus-visible,
     body[data-spw-surface="tools-spw-parser"] .literal-parser-file-action:hover,
     body[data-spw-surface="tools-spw-parser"] .literal-parser-file-action:focus-within,
-    body[data-spw-surface="tools-spw-parser"] .literal-parser-actions .operator-chip:hover,
-    body[data-spw-surface="tools-spw-parser"] .literal-parser-actions .operator-chip:focus-visible
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-actions .spw-chip:hover,
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-actions .spw-chip:focus-visible
 ) {
     border-color: #7dd1c2;
     background: #234842;
@@ -166,12 +166,12 @@
 
 :where(
     body[data-spw-surface="tools-spw-parser"] .literal-parser-editor h3,
-    body[data-spw-surface="tools-spw-parser"] .literal-parser-editor .frame-note
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-editor [data-spw-textual-role="note"]
 ) {
     color: #122420;
 }
 
-:where(body[data-spw-surface="tools-spw-parser"] .literal-parser-editor .frame-note) {
+:where(body[data-spw-surface="tools-spw-parser"] .literal-parser-editor [data-spw-textual-role="note"]) {
     background: #f7f3ec;
 }
 
@@ -232,7 +232,7 @@
 /* A swipe in flight (topic-discovery.js marks the rail) acknowledges itself the
    same way hover does — the rail is awake and listening, not silently absorbing. */
 :where(.spec-strip[data-spw-gesture="swipe"] .spec-pill,
-       .frame-operators[data-spw-gesture="swipe"] .operator-chip) {
+       .frame-operators[data-spw-gesture="swipe"] .spw-chip) {
     border-color: var(--token-border-strong, rgba(0, 128, 128, 0.8));
     color: var(--ink-strong, var(--ink, #161c1d));
 }
@@ -259,7 +259,7 @@
     color: var(--ink-strong, var(--ink, #161c1d));
 }
 
-:where(html[data-spw-color-mode="dark"]) :where(.operator-chip:hover, button:hover,
+:where(html[data-spw-color-mode="dark"]) :where(.spw-chip:hover, button:hover,
        input[type="button"]:hover, input[type="submit"]:hover),
 :where(html[data-spw-color-mode="dark"]) :where(.spec-strip:hover .spec-pill),
 :where(html[data-spw-color-mode="dark"]) :where(label.settings-option:hover, .settings-option:hover) {
@@ -273,7 +273,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    :where(html[data-spw-color-mode="auto"]) :where(.operator-chip:hover, button:hover,
+    :where(html[data-spw-color-mode="auto"]) :where(.spw-chip:hover, button:hover,
            input[type="button"]:hover, input[type="submit"]:hover),
     :where(html[data-spw-color-mode="auto"]) :where(.spec-strip:hover .spec-pill),
     :where(html[data-spw-color-mode="auto"]) :where(label.settings-option:hover, .settings-option:hover) {
@@ -382,7 +382,7 @@
 }
 
 @media (max-width: 48rem) {
-    :where(button, .operator-chip, label) {
+    :where(button, .spw-chip, label) {
         min-height: var(--touch-target-min, 2.75rem);
         display: flex;
         align-items: center;

@@ -49,8 +49,8 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>
-            <section class="site-frame site-hero" data-spw-role="orientation" data-spw-kind="frame" id="universal-slots" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+            <section class="spw-frame" data-spw-role="orientation" data-spw-kind="frame" id="universal-slots" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="/design/">#>design</a>
                     <div class="spec-strip">
                         <span class="spec-pill">component anatomy</span>
@@ -61,11 +61,11 @@
                 <p class="spec-kicker">Component Options / Dom Structure</p>
                 <h1>Universal Slots</h1>
 
-                <p class="site-lede">
+                <p data-spw-textual-role="lede">
                     Most pieces of UI in Spwashi are a variation of the <code>.frame-card</code> or <code>.frame-panel</code> structure. Instead of authoring arbitrary wrappers, we use a predictable slot anatomy.
                 </p>
 
-                <p class="frame-note">
+                <p data-spw-textual-role="note">
                     <strong>For producers and directors tuning visual style:</strong> The same slot contract used in rendered character/profile cards (header → meta → body → figure → actions → footer) is the grammar you tune in <a href="/design/palettes/">palettes</a>, <a href="/design/components/">components</a>, and <a href="/design/materials/">materials</a>. When a card from the character builder is used as a style packet in the Midjourney bench, its rendered slots become the testable surface for material, light, and rhythm decisions. This is the ergonomic loop: edit card → see rendered output → tune slots/palettes → send packet → iterate images with coherence.
                 </p>
 

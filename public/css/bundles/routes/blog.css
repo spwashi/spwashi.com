@@ -160,7 +160,7 @@
   max-width: 100%;
 }
 
-:where(body[data-spw-surface="blog"]) :is(.frame-note, .blog-transition) {
+:where(body[data-spw-surface="blog"]) :is([data-spw-textual-role="note"], .blog-transition) {
   max-width: var(--blog-measure);
 }
 
@@ -202,7 +202,7 @@
    3. Brace perspective frames
    ========================================================================== */
 
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame) {
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame) {
   --blog-frame-objective-opacity: 0.22;
   --blog-frame-subjective-opacity: 0.18;
 
@@ -219,8 +219,8 @@
     transform var(--blog-transition-ui);
 }
 
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame)::before,
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame)::after {
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame)::before,
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame)::after {
   position: absolute;
   font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   font-size: 0.88rem;
@@ -229,7 +229,7 @@
   transition: opacity var(--blog-transition-ui);
 }
 
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame)::before {
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame)::before {
   content: "{";
   top: 0.55rem;
   left: 0.65rem;
@@ -237,7 +237,7 @@
   opacity: var(--blog-frame-objective-opacity);
 }
 
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame)::after {
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame)::after {
   content: "}";
   right: 0.65rem;
   bottom: 0.5rem;
@@ -245,21 +245,21 @@
   opacity: var(--blog-frame-subjective-opacity);
 }
 
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame):hover::before {
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame):hover::before {
   opacity: max(var(--blog-frame-objective-opacity), 0.34);
 }
 
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame):hover::after {
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame):hover::after {
   opacity: max(var(--blog-frame-subjective-opacity), 0.34);
 }
 
 :where(body[data-spw-surface="blog"]) :is(
   .spw-frame[data-state~="active"],
-  .site-frame[data-state~="active"],
+  .spw-frame[data-state~="active"],
   .spw-frame:focus-within,
-  .site-frame:focus-within,
+  .spw-frame:focus-within,
   .spw-frame:target,
-  .site-frame:target
+  .spw-frame:target
 ) {
   --blog-frame-objective-opacity: 0.48;
   --blog-frame-subjective-opacity: 0.48;
@@ -271,27 +271,27 @@
 }
 
 /* Perspective Routing */
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame):is([data-spw-liminality="threshold"], [data-wonder-level="w0"]) {
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame):is([data-spw-liminality="threshold"], [data-wonder-level="w0"]) {
   --blog-frame-objective-opacity: 0.16;
   --blog-frame-subjective-opacity: 0.16;
 }
 
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame):is([data-spw-perspective="objective"], [data-wonder-level="w1"]) {
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame):is([data-spw-perspective="objective"], [data-wonder-level="w1"]) {
   --blog-frame-objective-opacity: 0.36;
   --blog-frame-subjective-opacity: 0.18;
 }
 
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame)[data-wonder-level="w2"] {
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame)[data-wonder-level="w2"] {
   --blog-frame-objective-opacity: 0.32;
   --blog-frame-subjective-opacity: 0.22;
 }
 
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame):is([data-spw-perspective="balanced"], [data-wonder-level="w3"]) {
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame):is([data-spw-perspective="balanced"], [data-wonder-level="w3"]) {
   --blog-frame-objective-opacity: 0.28;
   --blog-frame-subjective-opacity: 0.28;
 }
 
-:where(body[data-spw-surface="blog"]) :is(.spw-frame, .site-frame):is([data-spw-perspective="subjective"], [data-wonder-level="w5"]) {
+:where(body[data-spw-surface="blog"]) :is(.spw-frame, .spw-frame):is([data-spw-perspective="subjective"], [data-wonder-level="w5"]) {
   --blog-frame-objective-opacity: 0.22;
   --blog-frame-subjective-opacity: 0.38;
 }
@@ -345,14 +345,14 @@
   border-left: 2px solid var(--blog-line);
 }
 
-:where(body[data-spw-surface="blog"]) :is(.frame-note a, .blog-transition a) {
+:where(body[data-spw-surface="blog"]) :is([data-spw-textual-role="note"] a, .blog-transition a) {
   color: var(--blog-accent);
   text-decoration: none;
   border-bottom: 1px solid var(--blog-line);
   transition: border-color var(--blog-transition-fast);
 }
 
-:where(body[data-spw-surface="blog"]) :is(.frame-note a:hover, .blog-transition a:hover) {
+:where(body[data-spw-surface="blog"]) :is([data-spw-textual-role="note"] a:hover, .blog-transition a:hover) {
   border-color: var(--blog-accent);
 }
 
@@ -794,7 +794,7 @@
    ========================================================================== */
 
 :where(html[data-spw-reduce-motion="on"] body[data-spw-surface="blog"]) :is(
-  .site-frame,
+  .spw-frame,
   .mode-switch button,
   [data-mode-group][data-set-mode],
   [data-spw-flow="pretext"],

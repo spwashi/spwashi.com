@@ -47,8 +47,8 @@
 
     <main id="main-content" tabindex="-1" aria-labelledby="folios-title" data-spw-kind="surface" data-spw-role="reference" data-spw-context="reference" data-spw-wonder="artifact memory community skill" data-spw-seed="page_design_folios__main">
         <article>
-            <section class="site-frame site-hero" id="folios-hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+            <section class="spw-frame" id="folios-hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#folios-hero">#>folio_archive</a>
                     <div class="spec-strip">
                         <span class="spec-pill">laminated art</span>
@@ -59,7 +59,7 @@
                 </div>
                 <p class="spec-kicker">Design / Folio Archive</p>
                 <h1 id="folios-title">Folio Archive</h1>
-                <p class="page-lede">
+                <p data-spw-textual-role="lede">
                     Laminated folios are durable art artifacts that preserve visual decisions, practice history, and community context.
                 </p>
                 <p>
@@ -73,7 +73,7 @@
                     <span class="spec-pill">Next stops: Cards / Curriculum / Services</span>
                 </div>
 
-                <details class="spw-chrome-help frame-note" data-spw-wonder-entry="passive-curiosity">
+                <details class="spw-chrome-help" data-spw-textual-role="note" data-spw-wonder-entry="passive-curiosity">
                     <summary>How this route works</summary>
                     <p>
                         This route reads folios as artifacts. Use the page map to move, living terms to gather useful handles, and adjacent routes to turn a study into a card, curriculum note, service reference, or design pattern.
@@ -81,18 +81,18 @@
                 </details>
 
                 <nav class="frame-operators" aria-label="On this page">
-                    <a class="operator-chip" href="/design/" data-spw-operator="frame" data-spw-action="address">#&gt;design_hub</a>
-                    <a class="operator-chip" href="#how-to-read" data-spw-operator="integration" data-spw-action="publish">^how_to_read_a_folio</a>
-                    <a class="operator-chip" href="#processing-loop" data-spw-operator="potential" data-spw-action="explore">~processing_loop</a>
-                    <a class="operator-chip" href="#seed-studies" data-spw-operator="integration" data-spw-action="publish">^seed_studies</a>
-                    <a class="operator-chip" href="#training-value" data-spw-operator="vibration" data-spw-action="anchor"># training value</a>
-                    <a class="operator-chip" href="#community-value" data-spw-operator="potential" data-spw-action="explore">~community_value</a>
-                    <a class="operator-chip" href="#adjacent-routes" data-spw-operator="value" data-spw-action="materialize">*adjacent_routes</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/" data-spw-operator="frame" data-spw-action="address">#&gt;design_hub</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#how-to-read" data-spw-operator="integration" data-spw-action="publish">^how_to_read_a_folio</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#processing-loop" data-spw-operator="potential" data-spw-action="explore">~processing_loop</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#seed-studies" data-spw-operator="integration" data-spw-action="publish">^seed_studies</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#training-value" data-spw-operator="vibration" data-spw-action="anchor"># training value</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#community-value" data-spw-operator="potential" data-spw-action="explore">~community_value</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#adjacent-routes" data-spw-operator="value" data-spw-action="materialize">*adjacent_routes</a>
                 </nav>
             </section>
 
-            <section class="site-frame" id="how-to-read" data-spw-kind="frame" data-spw-role="reference">
-                <header class="frame-heading">
+            <section class="spw-frame" id="how-to-read" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#how-to-read">?how_to_read</a>
                     <h2>How to Read a Folio</h2>
                 </header>
@@ -119,8 +119,8 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="processing-loop" data-spw-kind="frame" data-spw-role="reference">
-                <header class="frame-heading">
+            <section class="spw-frame" id="processing-loop" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#processing-loop">~processing_loop</a>
                     <h2>Folio Processing Loop</h2>
                 </header>
@@ -155,8 +155,8 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="seed-studies" data-spw-kind="frame" data-spw-role="register">
-                <header class="frame-heading">
+            <section class="spw-frame" id="seed-studies" data-spw-kind="frame" data-spw-role="register">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#seed-studies">^seed_studies</a>
                     <h2>Seed Studies for the Folio Archive</h2>
                 </header>
@@ -200,7 +200,7 @@
                                 <dd>Seed specimen for testing how dimensional paper studies become design-system references.</dd>
                             </div>
                         </dl>
-                        <p class="frame-note">Next action: Convert into a portfolio reference or layout prompt.</p>
+                        <p data-spw-textual-role="note">Next action: Convert into a portfolio reference or layout prompt.</p>
                     </article>
 
                     <article class="frame-panel folio-card" data-spw-kind="card" data-spw-role="folio-study" data-spw-discipline="visual-art product-design" data-spw-skill="information-architecture artifact-critique" data-spw-output="folio-note" data-spw-evidence="photo description" data-spw-artifact-state="seed-study">
@@ -239,7 +239,7 @@
                                 <dd>Seed specimen for connecting organic form, layout rhythm, and future curriculum notes.</dd>
                             </div>
                         </dl>
-                        <p class="frame-note">Next action: Document organic-scaling formulas in CSS layout notes.</p>
+                        <p data-spw-textual-role="note">Next action: Document organic-scaling formulas in CSS layout notes.</p>
                     </article>
 
                     <article class="frame-panel folio-card" data-spw-kind="card" data-spw-role="folio-study" data-spw-discipline="visual-art product-design software-engineering" data-spw-skill="composition artifact-critique" data-spw-output="folio-note" data-spw-evidence="photo description" data-spw-artifact-state="seed-study">
@@ -278,13 +278,13 @@
                                 <dd>Seed specimen for translating perspective studies into rendering and SVG experiments.</dd>
                             </div>
                         </dl>
-                        <p class="frame-note">Next action: Promote the spatial coordinate system into SVG experiments.</p>
+                        <p data-spw-textual-role="note">Next action: Promote the spatial coordinate system into SVG experiments.</p>
                     </article>
                 </div>
             </section>
 
-            <section class="site-frame" id="training-value" data-spw-kind="frame" data-spw-role="reference">
-                <header class="frame-heading">
+            <section class="spw-frame" id="training-value" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#training-value">#training_value</a>
                     <h2>Training Value</h2>
                 </header>
@@ -293,8 +293,8 @@
                 </p>
             </section>
 
-            <section class="site-frame" id="community-value" data-spw-kind="frame" data-spw-role="reference">
-                <header class="frame-heading">
+            <section class="spw-frame" id="community-value" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#community-value">~community_value</a>
                     <h2>Community and Brand Value</h2>
                 </header>
@@ -306,7 +306,7 @@
                 </p>
             </section>
 
-            <section class="site-frame" id="adjacent-routes" data-spw-kind="frame" data-spw-role="routing">
+            <section class="spw-frame" id="adjacent-routes" data-spw-kind="frame" data-spw-role="routing">
                 <aside class="spw-route-bridge" aria-labelledby="folios-adjacent-title">
                     <header>
                         <h3 id="folios-adjacent-title">Next stops</h3>

@@ -38,7 +38,7 @@
 :where(
   [data-spw-density="dense"],
   [data-spw-component-density="dense"],
-  html[data-spw-component-density="dense"] :where(.site-frame, .frame-panel, .frame-card)
+  html[data-spw-component-density="dense"] :where(.spw-frame, .frame-panel, .frame-card)
 ) {
   --component-pad: var(--pack-tier-compact-pad);
   --component-gap: var(--pack-tier-compact-gap);
@@ -60,7 +60,7 @@
   [data-spw-density="soft"],
   [data-spw-density="roomy"],
   [data-spw-component-density="roomy"],
-  html[data-spw-component-density="roomy"] :where(.site-frame, .frame-panel, .frame-card)
+  html[data-spw-component-density="roomy"] :where(.spw-frame, .frame-panel, .frame-card)
 ) {
   --component-pad: var(--pack-tier-roomy-pad);
   --component-gap: var(--pack-tier-roomy-gap);
@@ -78,7 +78,7 @@
   );
 }
 
-:where(.site-frame, .frame-panel, .frame-card, .frame-body) {
+:where(.spw-frame, .frame-panel, .frame-card, .frame-body) {
   --spw-flow-space: var(--pack-tier-balanced-flow);
   --component-pad: var(--spw-pack-pad-active, var(--pack-tier-balanced-pad));
   --component-gap: var(--spw-pack-gap-active, var(--pack-tier-balanced-gap));
@@ -114,7 +114,7 @@
    Typography surfaces (measure + rhythm)
    -------------------------------------------------------------------------- */
 
-:where(.frame-note, .inline-note, .settings-note, .settings-start-note) {
+:where([data-spw-textual-role="note"], .inline-note, .settings-note, .settings-start-note) {
   font-size: var(--text-size-sm, 0.88rem);
   line-height: var(--site-line-height-tight, 1.4);
   max-inline-size: min(100%, var(--pack-tier-balanced-measure));
@@ -123,7 +123,7 @@
   color: color-mix(in srgb, var(--ink, #161c1d) 78%, transparent);
 }
 
-:where(.spec-kicker, .page-kicker, .vibe-widget-kicker) {
+:where(.spec-kicker, [data-spw-textual-role="kicker"], .vibe-widget-kicker) {
   font-size: var(--text-size-label, 0.74rem);
   letter-spacing: var(--tracking-spec, 0.06em);
   line-height: var(--site-line-height-tight, 1.35);

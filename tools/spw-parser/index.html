@@ -58,7 +58,7 @@
         data-spw-context="analysis"
         data-spw-seed="page_tools_spw_parser__main">
         <article>
-            <section class="site-frame site-hero" id="parser-proof"
+            <section class="spw-frame" data-spw-region-role="entry-spine" id="parser-proof"
                 data-spw-kind="frame"
                 data-spw-role="orientation"
                 data-spw-form="brace"
@@ -75,7 +75,7 @@
                 data-spw-semantic-expression="proof[parser]{source.tokens.ast.diagnostics}"
                 data-spw-region-purpose="public-spine"
                 data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#literal-parser">#&gt;literal_parser</a>
                     <div class="spec-strip">
                         <span class="spec-pill" data-cluster="tool">real parser</span>
@@ -84,17 +84,17 @@
                     </div>
                 </div>
                 <h1 id="parser-title">Literal Spw Parser</h1>
-                <p class="site-lede">This is the parser, running in your browser. Change the source and watch Spw become tokens, an abstract syntax tree, diagnostics, and an exact reconstruction.</p>
+                <p data-spw-textual-role="lede">This is the parser, running in your browser. Change the source and watch Spw become tokens, an abstract syntax tree, diagnostics, and an exact reconstruction.</p>
                 <p>This tool ships the portable parser kernel from <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>. The public page does not imitate a parse or infer braces with display-only rules: the same parser package used by the CLI and language tooling produces the result below. Use it as a garden bed for combinatorics the site is still tending — <code>&lt;beans&gt;</code>, <code>beans.&lt;</code>, <code>&lt;beans&gt;#</code> — so parser demand comes from public specimens, not private theory.</p>
                 <nav class="frame-operators" aria-label="Parser proof routes">
-                    <a class="operator-chip" href="#literal-parser" data-spw-operator="perspective" data-spw-action="enter">@parse_source</a>
-                    <a class="operator-chip" href="#proof-output" data-spw-operator="action">!inspect[ast]</a>
-                    <a class="operator-chip" href="#app-loading" data-spw-operator="frame">#&gt;load_in_app</a>
-                    <a class="operator-chip" href="https://github.com/spwashi/spw-workbench/tree/main/packages/spw-seed/src/parser" data-spw-operator="potential" data-spw-action="explore">~parser_source</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#literal-parser" data-spw-operator="perspective" data-spw-action="enter">@parse_source</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#proof-output" data-spw-operator="action">!inspect[ast]</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#app-loading" data-spw-operator="frame">#&gt;load_in_app</a>
+                    <a class="spw-chip" data-spw-handle="true" href="https://github.com/spwashi/spw-workbench/tree/main/packages/spw-seed/src/parser" data-spw-operator="potential" data-spw-action="explore">~parser_source</a>
                 </nav>
             </section>
 
-            <section class="site-frame literal-parser" id="literal-parser"
+            <section class="spw-frame literal-parser" id="literal-parser"
                 data-parser-tool
                 data-spw-feature="spw-literal-parser"
                 data-spw-kind="frame"
@@ -111,11 +111,11 @@
                 data-spw-collectability="high"
                 data-spw-seed="page_tools_spw_parser__tool"
                 data-spw-semantic-expression="literal_parser[source]{tokens.ast.diagnostics.reconstruction}">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#literal-parser">@parse</a>
                     <div>
                         <h2>Source → evidence</h2>
-                        <p class="frame-note">Parser build: <strong data-parser-provenance>spw-workbench</strong></p>
+                        <p data-spw-textual-role="note">Parser build: <strong data-parser-provenance>spw-workbench</strong></p>
                     </div>
                 </header>
 
@@ -145,7 +145,7 @@
   proof = #[tokens, ast, diagnostics]
   ~&lt;authority&gt;"spw-workbench"
 }</textarea>
-                        <p class="frame-note" id="parser-live-status" data-parser-status aria-live="polite">Waiting for the parser.</p>
+                        <p data-spw-textual-role="note" id="parser-live-status" data-parser-status aria-live="polite">Waiting for the parser.</p>
                     </section>
 
                     <aside class="literal-parser-metrics" aria-label="Parse proof">
@@ -177,13 +177,13 @@
                 </div>
 
                 <div class="literal-parser-actions" id="app-loading">
-                    <a class="operator-chip" href="/tools/spw-parser/#literal-parser" data-parser-app-link data-spw-operator="action">!load[source_into_app]</a>
-                    <button class="operator-chip" type="button" data-parser-install data-spw-operator="potential" data-spw-action="explore">~install_spw_app</button>
+                    <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/#literal-parser" data-parser-app-link data-spw-operator="action">!load[source_into_app]</a>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-parser-install data-spw-operator="potential" data-spw-action="explore">~install_spw_app</button>
                     <p>The first action creates an app-safe URL containing this exact source. The installed Spw app opens that URL at this parser; registered <code>.spw</code> files can open here directly on supporting systems.</p>
                 </div>
 
                 <noscript>
-                    <p class="inline-note">JavaScript is required to run the parser. The source remains readable without it.</p>
+                    <p data-spw-textual-role="note">JavaScript is required to run the parser. The source remains readable without it.</p>
                 </noscript>
 
                 <div class="literal-parser-output" id="proof-output">
@@ -202,7 +202,7 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="what-this-proves"
+            <section class="spw-frame" id="what-this-proves"
                 data-spw-kind="frame"
                 data-spw-role="reference"
                 data-spw-form="brace"
@@ -217,7 +217,7 @@
                 data-spw-collectability="medium"
                 data-spw-seed="page_tools_spw_parser__claims"
                 data-spw-semantic-expression="proof[boundary]{works.claims.not_claimed}">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#what-this-proves">^proof_boundary</a>
                     <h2>What this proves</h2>
                 </header>

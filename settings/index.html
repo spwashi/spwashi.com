@@ -56,7 +56,7 @@
 >
     <article>
         <section
-            class="spw-frame spw-hero site-frame site-hero"
+            class="spw-frame" data-spw-kind="frame" data-spw-region-role="entry-spine"
             id="settings-surface"
             data-spw-feature="settings-workbench-entry"
             data-spw-form="brace"
@@ -128,7 +128,7 @@
                 data-spw-semantic-expression="settings[tune]{vocabulary.presentation-content}"
             >
                 <p class="vibe-widget-kicker">Tuning vocabulary</p>
-                <p class="frame-note">
+                <p data-spw-textual-role="note">
                     The site is material you can tune. The words stay put, but light, density, contrast, and rhythm change how they meet you. Think like a baker or potter for a minute: the same substrate behaves differently when moisture, pressure, timing, grain, or tool marks change. A button is still a button. It just may arrive wearing better shoes.
                 </p>
                 <div class="spw-tuning-vocabulary__grid">
@@ -215,20 +215,20 @@
                 class="settings-hero-actions"
                 data-spw-feature="settings-section-index"
             >
-                <a class="operator-chip" href="#presets" data-spw-operator="frame" data-spw-action="address">#&gt;presets</a>
-                <a class="operator-chip" href="#reader-builder-modes" data-spw-operator="frame" data-spw-action="address">#&gt;viewing_modes</a>
-                <a class="operator-chip" href="#author-workflow-settings" data-spw-operator="frame" data-spw-action="address">#&gt;workflow</a>
-                <a class="operator-chip" href="#climate-settings" data-spw-operator="frame" data-spw-action="address">#&gt;climate</a>
-                <a class="operator-chip" href="#attention-posture-settings" data-spw-operator="frame" data-spw-action="address">#&gt;attention_posture</a>
-                <a class="operator-chip" href="#runtime-preferences" data-spw-operator="frame" data-spw-action="address">#&gt;preferences</a>
-                <a class="operator-chip" href="#applied-state" data-spw-operator="frame" data-spw-action="address">#&gt;runtime_state</a>
-                <a class="operator-chip" href="#feature-scopes" data-spw-operator="frame" data-spw-action="address">#&gt;feature_scopes</a>
-                <a class="operator-chip" href="#partial-theatrics-lab" data-spw-operator="frame" data-spw-action="address">#&gt;partial_lab</a>
-                <a class="operator-chip" href="#designer-conversation-settings" data-spw-operator="frame" data-spw-action="address">#&gt;designer_conversation</a>
-                <a class="operator-chip" href="#settings-notes" data-spw-operator="frame" data-spw-action="address">#&gt;notes_resets</a>
-                <a class="operator-chip" href="#stored-data" data-spw-operator="frame" data-spw-action="address">#&gt;saved_data</a>
-                <a class="operator-chip" href="/privacy/" data-spw-operator="potential" data-spw-action="explore">~privacy_local_state</a>
-                <a class="operator-chip" href="#runtime-map" data-spw-operator="frame" data-spw-action="address">#&gt;runtime_map</a>
+                <a class="spw-chip" data-spw-handle="true" href="#presets" data-spw-operator="frame" data-spw-action="address">#&gt;presets</a>
+                <a class="spw-chip" data-spw-handle="true" href="#reader-builder-modes" data-spw-operator="frame" data-spw-action="address">#&gt;viewing_modes</a>
+                <a class="spw-chip" data-spw-handle="true" href="#author-workflow-settings" data-spw-operator="frame" data-spw-action="address">#&gt;workflow</a>
+                <a class="spw-chip" data-spw-handle="true" href="#climate-settings" data-spw-operator="frame" data-spw-action="address">#&gt;climate</a>
+                <a class="spw-chip" data-spw-handle="true" href="#attention-posture-settings" data-spw-operator="frame" data-spw-action="address">#&gt;attention_posture</a>
+                <a class="spw-chip" data-spw-handle="true" href="#runtime-preferences" data-spw-operator="frame" data-spw-action="address">#&gt;preferences</a>
+                <a class="spw-chip" data-spw-handle="true" href="#applied-state" data-spw-operator="frame" data-spw-action="address">#&gt;runtime_state</a>
+                <a class="spw-chip" data-spw-handle="true" href="#feature-scopes" data-spw-operator="frame" data-spw-action="address">#&gt;feature_scopes</a>
+                <a class="spw-chip" data-spw-handle="true" href="#partial-theatrics-lab" data-spw-operator="frame" data-spw-action="address">#&gt;partial_lab</a>
+                <a class="spw-chip" data-spw-handle="true" href="#designer-conversation-settings" data-spw-operator="frame" data-spw-action="address">#&gt;designer_conversation</a>
+                <a class="spw-chip" data-spw-handle="true" href="#settings-notes" data-spw-operator="frame" data-spw-action="address">#&gt;notes_resets</a>
+                <a class="spw-chip" data-spw-handle="true" href="#stored-data" data-spw-operator="frame" data-spw-action="address">#&gt;saved_data</a>
+                <a class="spw-chip" data-spw-handle="true" href="/privacy/" data-spw-operator="potential" data-spw-action="explore">~privacy_local_state</a>
+                <a class="spw-chip" data-spw-handle="true" href="#runtime-map" data-spw-operator="frame" data-spw-action="address">#&gt;runtime_map</a>
             </nav>
             <div class="spw-reason-strip" aria-label="Settings reasons">
                 <div>
@@ -247,7 +247,7 @@
         </section>
 
         <section
-            class="site-frame"
+            class="spw-frame"
             data-site-settings-scope
             data-spw-affordance="tune"
             data-spw-category-family="register"
@@ -264,12 +264,12 @@
             data-spw-wonder="comparison constraint locality"
             id="presets"
         >
-            <header class="frame-heading">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#presets">^"quick_start"{</a>
                 <h2>Quick Start</h2>
             </header>
 
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 These are the fastest useful controls. Choose a preset for an immediate baseline, then set author workflow,
                 climate, reading comfort, or appearance before opening the deeper registers below.
             </p>
@@ -320,10 +320,10 @@
                         <strong>Lab</strong> pushes further for screenshots, QA, and comparison.
                     </p>
                     <div aria-label="Audience and inspection modes" class="vibe-widget-actions" role="group">
-                        <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm" data-spw-operator="wonder" data-spw-action="inspect">? Reader view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=layout-shift&amp;log-level=debug&amp;physics=calm&amp;module-audit=on" data-spw-operator="wonder" data-spw-action="inspect">? Builder view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;module-audit=on&amp;module-visuals=on" data-spw-operator="wonder" data-spw-action="inspect">? Inspector view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction&amp;module-audit=on&amp;module-visuals=on&amp;runtime-timing=eager" data-spw-operator="wonder" data-spw-action="inspect">? Lab view</a>
+                        <a class="spw-chip" data-spw-handle="true" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm" data-spw-operator="wonder" data-spw-action="inspect">? Reader view</a>
+                        <a class="spw-chip" data-spw-handle="true" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=layout-shift&amp;log-level=debug&amp;physics=calm&amp;module-audit=on" data-spw-operator="wonder" data-spw-action="inspect">? Builder view</a>
+                        <a class="spw-chip" data-spw-handle="true" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;module-audit=on&amp;module-visuals=on" data-spw-operator="wonder" data-spw-action="inspect">? Inspector view</a>
+                        <a class="spw-chip" data-spw-handle="true" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction&amp;module-audit=on&amp;module-visuals=on&amp;runtime-timing=eager" data-spw-operator="wonder" data-spw-action="inspect">? Lab view</a>
                     </div>
                 </article>
 
@@ -337,11 +337,11 @@
                         task; climate describes the attention posture around that task.
                     </p>
                     <div aria-label="Author workflow variants" class="vibe-widget-actions" role="group">
-                        <button class="operator-chip" data-site-setting-set="authorMode:draft" type="button" data-spw-operator="potential" data-spw-action="explore">~draft</button>
-                        <button class="operator-chip" data-site-setting-set="authorMode:revise" type="button" data-spw-operator="potential" data-spw-action="explore">~revise</button>
-                        <button class="operator-chip" data-site-setting-set="authorMode:polish" type="button" data-spw-operator="potential" data-spw-action="explore">~polish</button>
-                        <button class="operator-chip" data-site-setting-set="authorMode:publish" type="button" data-spw-operator="potential">!publish</button>
-                        <button class="operator-chip" data-site-setting-set="authorMode:archive" type="button" data-spw-operator="potential" data-spw-action="explore">~archive</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="authorMode:draft" type="button" data-spw-operator="potential" data-spw-action="explore">~draft</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="authorMode:revise" type="button" data-spw-operator="potential" data-spw-action="explore">~revise</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="authorMode:polish" type="button" data-spw-operator="potential" data-spw-action="explore">~polish</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="authorMode:publish" type="button" data-spw-operator="potential">!publish</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="authorMode:archive" type="button" data-spw-operator="potential" data-spw-action="explore">~archive</button>
                     </div>
                     <div class="vibe-widget-meta">
               <span class="spec-pill">author mode:
@@ -361,9 +361,9 @@
                         Each is a ready-to-cast bundle — tap one and it can be primed directly into your cauldron or saved as a personal spell for later resonance.
                     </p>
                     <div aria-label="Author writing recipes" class="vibe-widget-actions" role="group">
-                        <button class="operator-chip" data-site-settings-recipe="draft" type="button" data-spw-operator="potential" data-spw-action="explore">~draft_comfortably</button>
-                        <button class="operator-chip" data-site-settings-recipe="revise" type="button" data-spw-operator="potential" data-spw-action="explore">~revise_with_annotations</button>
-                        <button class="operator-chip" data-site-settings-recipe="publish" type="button" data-spw-operator="potential" data-spw-action="explore">!prepare[for_readers]</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="draft" type="button" data-spw-operator="potential" data-spw-action="explore">~draft_comfortably</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="revise" type="button" data-spw-operator="potential" data-spw-action="explore">~revise_with_annotations</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="publish" type="button" data-spw-operator="potential" data-spw-action="explore">!prepare[for_readers]</button>
                     </div>
                 </article>
 
@@ -379,18 +379,18 @@
                         Turn developmental indicators on when you want to see the shift happen on the page.
                     </p>
                     <div aria-label="Metacognitive stances" class="vibe-widget-actions" role="group">
-                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:witness;developmentalIndicators:on;operationalVisibility:off" type="button" data-spw-operator="potential" data-spw-action="explore">~witness</button>
-                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:composer;developmentalIndicators:on;operationalVisibility:on;processAttention:compose" type="button" data-spw-operator="potential" data-spw-action="explore">~composer</button>
-                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:explorer;developmentalIndicators:on;wonderMemory:sitewide;processAttention:scan" type="button" data-spw-operator="potential" data-spw-action="explore">~explorer</button>
-                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:integrator;developmentalIndicators:on;relationalVisualization:on;processAttention:trace" type="button" data-spw-operator="potential" data-spw-action="explore">~integrator</button>
-                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:overflow;developmentalIndicators:on;semanticDensity:rich;operationalVisibility:on;overflowMode:generous" type="button" data-spw-operator="potential" data-spw-action="explore">~overflow</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="metacognitiveStance:witness;developmentalIndicators:on;operationalVisibility:off" type="button" data-spw-operator="potential" data-spw-action="explore">~witness</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="metacognitiveStance:composer;developmentalIndicators:on;operationalVisibility:on;processAttention:compose" type="button" data-spw-operator="potential" data-spw-action="explore">~composer</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="metacognitiveStance:explorer;developmentalIndicators:on;wonderMemory:sitewide;processAttention:scan" type="button" data-spw-operator="potential" data-spw-action="explore">~explorer</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="metacognitiveStance:integrator;developmentalIndicators:on;relationalVisualization:on;processAttention:trace" type="button" data-spw-operator="potential" data-spw-action="explore">~integrator</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="metacognitiveStance:overflow;developmentalIndicators:on;semanticDensity:rich;operationalVisibility:on;overflowMode:generous" type="button" data-spw-operator="potential" data-spw-action="explore">~overflow</button>
                     </div>
                     <div class="vibe-widget-meta">
                         <span class="spec-pill" data-spw-vocabulary-term data-spw-operator="meta">Current stance:
                             <span class="vibe-widget-state" data-settings-state="metacognitiveStance">witness</span>
                         </span>
-                        <a class="operator-chip" href="#climate-settings" data-spw-operator="potential" data-spw-action="explore">~state_links</a>
-                        <a class="operator-chip" href="/play/rpg-wednesday/#story-trope-forge" data-spw-operator="wonder" data-spw-action="inspect">? story posture</a>
+                        <a class="spw-chip" data-spw-handle="true" href="#climate-settings" data-spw-operator="potential" data-spw-action="explore">~state_links</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/#story-trope-forge" data-spw-operator="wonder" data-spw-action="inspect">? story posture</a>
                     </div>
                 </article>
 
@@ -405,11 +405,11 @@
                         be prefetched, cached, or deferred for the current connection and offline posture.
                     </p>
                     <div aria-label="Load timing postures" class="vibe-widget-actions" role="group">
-                        <a class="operator-chip" href="?runtime-timing=normal" data-spw-operator="wonder" data-spw-action="inspect">? Normal load</a>
-                        <a class="operator-chip" href="?runtime-timing=eager&amp;module-visuals=on" data-spw-operator="wonder" data-spw-action="inspect">? Eager + visuals</a>
-                        <a class="operator-chip" href="?runtime-timing=quiet" data-spw-operator="wonder" data-spw-action="inspect">? Quiet / calm load</a>
-                        <a class="operator-chip" href="?runtime-timing=defer" data-spw-operator="wonder">? Defer non-critical</a>
-                        <a class="operator-chip" href="?view=inspect&amp;meaning=inspect&amp;module-audit=on&amp;module-visuals=on" data-site-settings-query-mode="inspect" data-spw-operator="wonder">? Inspect current load</a>
+                        <a class="spw-chip" data-spw-handle="true" href="?runtime-timing=normal" data-spw-operator="wonder" data-spw-action="inspect">? Normal load</a>
+                        <a class="spw-chip" data-spw-handle="true" href="?runtime-timing=eager&amp;module-visuals=on" data-spw-operator="wonder" data-spw-action="inspect">? Eager + visuals</a>
+                        <a class="spw-chip" data-spw-handle="true" href="?runtime-timing=quiet" data-spw-operator="wonder" data-spw-action="inspect">? Quiet / calm load</a>
+                        <a class="spw-chip" data-spw-handle="true" href="?runtime-timing=defer" data-spw-operator="wonder">? Defer non-critical</a>
+                        <a class="spw-chip" data-spw-handle="true" href="?view=inspect&amp;meaning=inspect&amp;module-audit=on&amp;module-visuals=on" data-site-settings-query-mode="inspect" data-spw-operator="wonder">? Inspect current load</a>
                     </div>
                     <div class="vibe-widget-meta">
                         <span class="spec-pill">Try <code>window.__SPW_SITE__.discoverRuntimeLoad()</code> in console</span>
@@ -518,12 +518,12 @@
                         Use these when the site feels too loud, too dense, too difficult to read, or too opaque to inspect.
                     </p>
                     <div aria-label="Common settings fixes" class="vibe-widget-actions" role="group">
-                        <button class="operator-chip" data-site-settings-recipe="calm" type="button" data-spw-operator="potential" data-spw-action="explore">~calm_the_site</button>
-                        <button class="operator-chip" data-site-settings-recipe="readable" type="button" data-spw-operator="potential">!make[reading_easier]</button>
-                        <button class="operator-chip" data-site-settings-recipe="accessible" type="button" data-spw-operator="potential" data-spw-action="explore">!reduce[friction]</button>
-                        <button class="operator-chip" data-site-settings-recipe="expressive" type="button" data-spw-operator="potential">!make[it_expressive]</button>
-                        <button class="operator-chip" data-site-settings-recipe="focus" type="button" data-spw-operator="potential" data-spw-action="explore">~focus_the_page</button>
-                        <button class="operator-chip" data-site-settings-recipe="developer" type="button" data-spw-operator="potential">~system_inspection</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="calm" type="button" data-spw-operator="potential" data-spw-action="explore">~calm_the_site</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="readable" type="button" data-spw-operator="potential">!make[reading_easier]</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="accessible" type="button" data-spw-operator="potential" data-spw-action="explore">!reduce[friction]</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="expressive" type="button" data-spw-operator="potential">!make[it_expressive]</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="focus" type="button" data-spw-operator="potential" data-spw-action="explore">~focus_the_page</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="developer" type="button" data-spw-operator="potential">~system_inspection</button>
                     </div>
                 </article>
 
@@ -582,7 +582,7 @@
         </section>
 
         <section
-            class="site-frame"
+            class="spw-frame" data-spw-kind="frame"
             data-spw-affordance="read"
             data-spw-category-family="register"
             data-spw-collectability="medium"
@@ -603,12 +603,12 @@
             data-spw-wonder="comparison constraint locality"
             id="runtime-preferences"
         >
-            <header class="frame-heading">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#runtime-preferences">^"runtime_preferences"{</a>
                 <h2>Tune the Site</h2>
             </header>
 
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 Use this register when the quick-start cards are not enough. The categories move from writing task and
                 attention posture into appearance, reading comfort, accessibility, semantic detail, and diagnostics.
                 Many pages also carry compact contextual versions of these controls placed directly next to the content they affect (see design/components and topics pages for live specimens).
@@ -726,7 +726,7 @@
             <form class="settings-form" data-site-settings-form data-spw-box-model="settings-instrument" data-spw-composition-flow="stack" data-spw-feature="settings-runtime-form">
                 <details class="settings-category" data-spw-box-model="settings-fold" id="author-workflow-settings" open>
                     <summary class="settings-category-header">Author Workflow</summary>
-                    <p class="frame-note">
+                    <p data-spw-textual-role="note">
                         Author workflow answers: what is the writer doing? It changes author-facing tokens such as annotation
                         strength, margin presence, thread density, draft privacy, and publication readiness. It should not replace
                         developmental climate.
@@ -780,9 +780,9 @@
                         <fieldset class="settings-fieldset">
                             <legend>Task bundles</legend>
                             <div class="vibe-widget-actions" role="group" aria-label="Author workflow recipes">
-                                <button class="operator-chip" data-site-settings-recipe="draft" type="button" data-spw-operator="potential" data-spw-action="explore">~draft_comfortably</button>
-                                <button class="operator-chip" data-site-settings-recipe="revise" type="button" data-spw-operator="potential" data-spw-action="explore">~revise_with_annotations</button>
-                                <button class="operator-chip" data-site-settings-recipe="publish" type="button" data-spw-operator="potential" data-spw-action="explore">!prepare[for_readers]</button>
+                                <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="draft" type="button" data-spw-operator="potential" data-spw-action="explore">~draft_comfortably</button>
+                                <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="revise" type="button" data-spw-operator="potential" data-spw-action="explore">~revise_with_annotations</button>
+                                <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="publish" type="button" data-spw-operator="potential" data-spw-action="explore">!prepare[for_readers]</button>
                             </div>
                             <p class="settings-option-hint">
                                 These apply multiple settings at once while keeping the full form editable.
@@ -793,10 +793,10 @@
 
                 <details class="settings-category" data-spw-box-model="settings-fold" id="climate-settings">
                     <summary class="settings-category-header">Developmental Climate</summary>
-                    <p class="frame-note">
+                    <p data-spw-textual-role="note">
                         Developmental climate answers: what kind of attention is this surface inviting? It should behave like
                         editorial weather: hints, seams, annotations, connections, and offering cues rather than a full-page theme.
-                        Curriculum surfaces (see <a class="operator-chip" href="/curriculum/" data-spw-operator="frame" data-spw-action="address">#&gt;curriculum</a>) use climate + Learning Mode presets as first-class equity buffers (vocabulary density, grain, spacing, visual richness) so the same economic-analogy modules work for K-12 visual learners through corporate risk framing.
+                        Curriculum surfaces (see <a class="spw-chip" data-spw-handle="true" href="/curriculum/" data-spw-operator="frame" data-spw-action="address">#&gt;curriculum</a>) use climate + Learning Mode presets as first-class equity buffers (vocabulary density, grain, spacing, visual richness) so the same economic-analogy modules work for K-12 visual learners through corporate risk framing.
                     </p>
 
                     <div class="settings-grid">
@@ -921,14 +921,14 @@
                                     <span>Surface measure kinds, active operator projections, and primeable handles more visibly across the site.</span>
                   </span>
                             </label>
-                            <p class="settings-option-hint">This is a progressive layer — the contracts (see <a class="operator-chip" href="/curriculum/" data-spw-operator="frame" data-spw-action="address">#&gt;curriculum</a> and the operator atlas) work either way.</p>
+                            <p class="settings-option-hint">This is a progressive layer — the contracts (see <a class="spw-chip" data-spw-handle="true" href="/curriculum/" data-spw-operator="frame" data-spw-action="address">#&gt;curriculum</a> and the operator atlas) work either way.</p>
                         </fieldset>
                     </div>
                 </details>
 
                 <details class="settings-category" data-spw-box-model="settings-fold" id="attention-posture-settings" open>
                     <summary class="settings-category-header">Attention Posture</summary>
-                    <p class="frame-note">
+                    <p data-spw-textual-role="note">
                         Attention posture answers: what relation is being stabilized? These dimensions make meditation practical
                         without making the site clinical: self relation, local context, and global horizon become settings that
                         media surfaces can read, copy, and reuse.
@@ -987,8 +987,8 @@
                                 storyboard, lyric, curriculum, and visual work.
                             </p>
                             <div class="vibe-widget-actions" role="group" aria-label="Attention posture presets">
-                                <button class="operator-chip" data-preset="contemplative-hearth" type="button" data-spw-operator="potential" data-spw-action="explore">~contemplative_hearth</button>
-                                <a class="operator-chip" href="/play/#media-cauldron" data-spw-operator="potential" data-spw-action="explore">~media_cauldron</a>
+                                <button class="spw-chip" data-spw-handle="true" data-preset="contemplative-hearth" type="button" data-spw-operator="potential" data-spw-action="explore">~contemplative_hearth</button>
+                                <a class="spw-chip" data-spw-handle="true" href="/play/#media-cauldron" data-spw-operator="potential" data-spw-action="explore">~media_cauldron</a>
                             </div>
                         </fieldset>
                     </div>
@@ -1095,7 +1095,7 @@
                     <strong>Situate</strong>
                     <span>Ink follows the charged viewpoint and the page operator. The unmarked bias.</span>
                   </span>
-                                <a class="operator-chip" href="/design/palettes/#spectral-resonance-mapping" data-spw-operator="frame" style="margin-left:0.4rem; font-size:0.75rem;" data-spw-action="address">#&gt;semantics</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/palettes/#spectral-resonance-mapping" data-spw-operator="frame" style="margin-left:0.4rem; font-size:0.75rem;" data-spw-action="address">#&gt;semantics</a>
                             </label>
                             <label class="settings-option">
                                 <input name="paletteResonance" type="radio" value="hand" />
@@ -1103,7 +1103,7 @@
                     <strong>Hand</strong>
                     <span>Warm material bias — amber, pragma, brass. How a made thing answers color.</span>
                   </span>
-                                <a class="operator-chip" href="/design/palettes/#spectral-resonance-mapping" data-spw-operator="frame" style="margin-left:0.4rem; font-size:0.75rem;" data-spw-action="address">#&gt;semantics</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/palettes/#spectral-resonance-mapping" data-spw-operator="frame" style="margin-left:0.4rem; font-size:0.75rem;" data-spw-action="address">#&gt;semantics</a>
                             </label>
                             <label class="settings-option">
                                 <input name="paletteResonance" type="radio" value="lattice" />
@@ -1111,7 +1111,7 @@
                     <strong>Lattice</strong>
                     <span>Cool structural bias — teal, reference, topic. How a system answers color.</span>
                   </span>
-                                <a class="operator-chip" href="/design/palettes/#spectral-resonance-mapping" data-spw-operator="frame" style="margin-left:0.4rem; font-size:0.75rem;" data-spw-action="address">#&gt;semantics</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/palettes/#spectral-resonance-mapping" data-spw-operator="frame" style="margin-left:0.4rem; font-size:0.75rem;" data-spw-action="address">#&gt;semantics</a>
                             </label>
                             <label class="settings-option">
                                 <input name="paletteResonance" type="radio" value="inquiry" />
@@ -1119,7 +1119,7 @@
                     <strong>Inquiry</strong>
                     <span>Asking violet bias — probe, topic, relation. How a question answers color.</span>
                   </span>
-                                <a class="operator-chip" href="/design/palettes/#spectral-resonance-mapping" data-spw-operator="frame" style="margin-left:0.4rem; font-size:0.75rem;" data-spw-action="address">#&gt;semantics</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/palettes/#spectral-resonance-mapping" data-spw-operator="frame" style="margin-left:0.4rem; font-size:0.75rem;" data-spw-action="address">#&gt;semantics</a>
                             </label>
                         </fieldset>
 
@@ -1224,7 +1224,7 @@
 
                 <details class="settings-category" data-spw-box-model="settings-fold" id="interface-physics-settings">
                     <summary class="settings-category-header">Interface Physics</summary>
-                    <p class="frame-note">
+                    <p data-spw-textual-role="note">
                         Tune structural attributes for components across the site: material, affordance, contour, stroke, density,
                         field resonance, and motion intensity.
                     </p>
@@ -1262,7 +1262,7 @@
                             </label>
                         </fieldset>
 
-                        <p class="frame-note">
+                        <p data-spw-textual-role="note">
                           Compare live in the <a href="/design/#material-contrast-bench" data-spw-interaction="tap-hold">design hub material bench</a> (global apply supported).
                         </p>
 
@@ -1406,7 +1406,7 @@
 
                         <fieldset class="settings-fieldset">
                             <legend>Layout tuner</legend>
-                            <p class="frame-note">Sets page width and grid breathing room. Saved settings sync back to readable query keys such as <code>layout</code> and <code>component-density</code> when you share a link.</p>
+                            <p data-spw-textual-role="note">Sets page width and grid breathing room. Saved settings sync back to readable query keys such as <code>layout</code> and <code>component-density</code> when you share a link.</p>
                             <label class="settings-option">
                                 <input checked name="layoutTuner" type="radio" value="reading" />
                                 <span class="settings-option-copy"><strong>Reading</strong><span>Use a restrained measure for prose and documentation.</span></span>
@@ -1465,7 +1465,7 @@
 
                 <details class="settings-category" data-spw-box-model="settings-fold" id="pedagogical-flavor-settings">
                     <summary class="settings-category-header">Pedagogical Flavor</summary>
-                    <p class="frame-note">
+                    <p data-spw-textual-role="note">
                         A pedagogical flavor is the metaphor family that helps concepts become memorable across routes.
                         Culinary is the current strong flavor because recipes, mise en place, reduction, sauce, soup,
                         appetizers, bread, pastry, fermentation, and service make software and RPG concepts easier to hold.
@@ -1515,10 +1515,10 @@
                         </dl>
                     </div>
                     <div class="vibe-widget-actions" role="group" aria-label="Pedagogical flavor tuning links">
-                        <button class="operator-chip" data-site-setting-set="semanticDensity:minimal" type="button" data-spw-operator="potential" data-spw-action="explore">~quiet_vocabulary</button>
-                        <button class="operator-chip" data-site-setting-set="semanticDensity:rich" type="button" data-spw-operator="potential">~reveal_vocabulary</button>
-                        <button class="operator-chip" data-site-setting-set="fieldResonance:choral" type="button" data-spw-operator="potential" data-spw-action="explore">~echo_related_terms</button>
-                        <button class="operator-chip" data-site-setting-set="paletteResonance:hand" type="button" data-spw-operator="potential" data-spw-action="explore">~hand_palette</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="semanticDensity:minimal" type="button" data-spw-operator="potential" data-spw-action="explore">~quiet_vocabulary</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="semanticDensity:rich" type="button" data-spw-operator="potential">~reveal_vocabulary</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="fieldResonance:choral" type="button" data-spw-operator="potential" data-spw-action="explore">~echo_related_terms</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="paletteResonance:hand" type="button" data-spw-operator="potential" data-spw-action="explore">~hand_palette</button>
                     </div>
                 </details>
 
@@ -1554,12 +1554,12 @@
                                     <span class="settings-option-copy"><strong>120%</strong></span>
                                 </label>
                             </div>
-                            <p class="frame-note">Normalization: scale × preset multiplier (small=0.93, normal=1, large=1.12) sets --site-root-font-size. The measurement preview below updates from the same root tokens designers inspect on <a href="/design/#conversation-canvas">/design/</a>.</p>
+                            <p data-spw-textual-role="note">Normalization: scale × preset multiplier (small=0.93, normal=1, large=1.12) sets --site-root-font-size. The measurement preview below updates from the same root tokens designers inspect on <a href="/design/#conversation-canvas">/design/</a>.</p>
                         </fieldset>
 
                         <fieldset class="settings-fieldset settings-fieldset--wide" id="typography-measurement-preview" data-spw-feature="typography-measurement-preview" data-spw-box-model="control-card" data-spw-typography-measure-width="360">
                             <legend>Measurement preview</legend>
-                            <p class="frame-note">Objective typography telemetry for designer conversation: line count, projected height, and wrap volatility at a chosen measure. Subjective taste still lives in presets and climate — this panel only reports what Pretext can honestly compute.</p>
+                            <p data-spw-textual-role="note">Objective typography telemetry for designer conversation: line count, projected height, and wrap volatility at a chosen measure. Subjective taste still lives in presets and climate — this panel only reports what Pretext can honestly compute.</p>
 
                             <div class="settings-measure-preview" data-spw-measure-kind="objective" data-spw-measure-source="settings-typography-preview">
                                 <label class="settings-measure-preview__width" for="typography-measure-width">
@@ -1579,10 +1579,10 @@
                             </div>
 
                             <div class="vibe-widget-actions" role="group" aria-label="Designer conversation links">
-                                <a class="operator-chip" href="/design/#conversation-canvas" data-spw-operator="frame" data-spw-action="address">#&gt;conversation_canvas</a>
-                                <a class="operator-chip" href="/design/components/" data-spw-operator="integration" data-spw-action="publish">^component_specimens</a>
-                                <a class="operator-chip" href="/design/catalog/" data-spw-operator="wonder" data-spw-action="inspect">? design catalog</a>
-                                <a class="operator-chip" href="/topics/software/pretext/" data-spw-operator="potential" data-spw-action="explore">~pretext_lab</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/#conversation-canvas" data-spw-operator="frame" data-spw-action="address">#&gt;conversation_canvas</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/components/" data-spw-operator="integration" data-spw-action="publish">^component_specimens</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/catalog/" data-spw-operator="wonder" data-spw-action="inspect">? design catalog</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/topics/software/pretext/" data-spw-operator="potential" data-spw-action="explore">~pretext_lab</a>
                             </div>
                         </fieldset>
 
@@ -1716,7 +1716,7 @@
                     <div class="settings-grid">
                         <fieldset class="settings-fieldset settings-fieldset--wide">
                             <legend>Conversation canvas</legend>
-                            <p class="frame-note">
+                            <p data-spw-textual-role="note">
                                 Spwashi is a demo of a conversation between author, designer, and runtime — a public worktable where specimens, tokens, measurements, and taste notes share one route. Specimens stay in HTML; tokens stay in CSS; measurements stay objective; taste stays subjective.
                             </p>
                             <ul class="settings-conversation-primitives">
@@ -1730,27 +1730,27 @@
                         <fieldset class="settings-fieldset">
                             <legend>Handoff surfaces</legend>
                             <div class="vibe-widget-actions" role="group" aria-label="Designer handoff routes">
-                                <a class="operator-chip" href="/design/#conversation-canvas" data-spw-operator="frame" data-spw-action="address">#&gt;design_canvas</a>
-                                <a class="operator-chip" href="/design/#component-ecology-specimens" data-spw-operator="potential" data-spw-action="explore">~living_specimen</a>
-                                <a class="operator-chip" href="/design/components/#specimen-builder-rail" data-spw-operator="perspective" data-spw-action="enter">@specimen_builders</a>
-                                <a class="operator-chip" href="/design/#rendering-contexts" data-spw-operator="integration" data-spw-action="publish">^rendering_contexts</a>
-                                <a class="operator-chip" href="/topics/software/pretext/" data-spw-operator="wonder" data-spw-action="inspect">? pretext field lab</a>
-                                <a class="operator-chip" href="/settings/#runtime-diagnostics-settings" data-spw-operator="potential" data-spw-action="explore">~runtime_diagnostics</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/#conversation-canvas" data-spw-operator="frame" data-spw-action="address">#&gt;design_canvas</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/#component-ecology-specimens" data-spw-operator="potential" data-spw-action="explore">~living_specimen</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/components/#specimen-builder-rail" data-spw-operator="perspective" data-spw-action="enter">@specimen_builders</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/#rendering-contexts" data-spw-operator="integration" data-spw-action="publish">^rendering_contexts</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/topics/software/pretext/" data-spw-operator="wonder" data-spw-action="inspect">? pretext field lab</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/settings/#runtime-diagnostics-settings" data-spw-operator="potential" data-spw-action="explore">~runtime_diagnostics</a>
                             </div>
-                            <p class="frame-note">Turn on <strong>spec pills</strong> or <strong>debug seams</strong> in runtime diagnostics when you want frame metrics and inspector overlays during a review session.</p>
+                            <p data-spw-textual-role="note">Turn on <strong>spec pills</strong> or <strong>debug seams</strong> in runtime diagnostics when you want frame metrics and inspector overlays during a review session.</p>
                         </fieldset>
 
                         <fieldset class="settings-fieldset settings-fieldset--wide" data-spw-semantic-expression="settings[specimen]{posture.deep-link}">
                             <legend>Living specimen postures</legend>
-                            <p class="frame-note">
+                            <p data-spw-textual-role="note">
                                 These links open the Design page with a specific component specimen state. Use them when a setting
                                 conversation needs an object on the table: calm stacked reading, social split drafting, or inspectable atlas state.
                             </p>
                             <div class="vibe-widget-actions" role="group" aria-label="Living component specimen posture links">
-                                <a class="operator-chip" href="/design/?componentSpecimen=calm:soft:rest:stack#component-ecology-specimens" data-spw-operator="wonder" data-spw-action="inspect">? calm soft stack</a>
-                                <a class="operator-chip" href="/design/?componentSpecimen=social:ledger:draft:split#component-ecology-specimens" data-spw-operator="wonder" data-spw-action="inspect">? social ledger split</a>
-                                <a class="operator-chip" href="/design/?componentSpecimen=inspect:signal:collected:atlas#component-ecology-specimens" data-spw-operator="wonder">? signal atlas</a>
-                                <a class="operator-chip" href="/design/components/#specimen-builder-rail" data-spw-operator="potential">~choose_builder</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/?componentSpecimen=calm:soft:rest:stack#component-ecology-specimens" data-spw-operator="wonder" data-spw-action="inspect">? calm soft stack</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/?componentSpecimen=social:ledger:draft:split#component-ecology-specimens" data-spw-operator="wonder" data-spw-action="inspect">? social ledger split</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/?componentSpecimen=inspect:signal:collected:atlas#component-ecology-specimens" data-spw-operator="wonder">? signal atlas</a>
+                                <a class="spw-chip" data-spw-handle="true" href="/design/components/#specimen-builder-rail" data-spw-operator="potential">~choose_builder</a>
                             </div>
                         </fieldset>
                     </div>
@@ -1971,7 +1971,7 @@
 
                 <details class="settings-category" data-spw-box-model="settings-fold" id="semantic-settings">
                     <summary class="settings-category-header">Semantic Detail</summary>
-                    <p class="frame-note">
+                    <p data-spw-textual-role="note">
                         Tune how much the site explains itself: density, operator presentation, metadata, handles, relation,
                         nesting, copy depth, and whether recent wonder stays local or keeps echoing through nearby surfaces.
                     </p>
@@ -2246,11 +2246,11 @@
 
                 <details class="settings-category" data-spw-box-model="settings-fold" id="runtime-diagnostics-settings" data-spw-page-hook="runtime-diagnostics" data-spw-page-hook-label="Runtime diagnostics">
                     <summary class="settings-category-header">Internal Runtime / Bus</summary>
-                    <p class="frame-note">
+                    <p data-spw-textual-role="note">
                         Power-user diagnostics for runtime coordination. Reader-facing defaults stay on native CSS flow and
                         sizing; these controls only change how much measured runtime state is surfaced for inspection.
                     </p>
-                    <p class="frame-note">
+                    <p data-spw-textual-role="note">
                         The same model is also available in the browser console through
                         <code>window.spwCompose.controls.pageState</code>,
                         <code>window.spwCompose.controls.frameState</code>, and
@@ -2349,15 +2349,15 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                 </details>
 
                 <div class="settings-actions" data-spw-feature="settings-form-actions">
-                    <button class="operator-chip" type="submit" data-spw-operator="perspective" data-spw-action="enter">!save[settings]</button>
-                    <button class="operator-chip" data-site-settings-reset type="button" data-spw-operator="action">!reset[authored_defaults]</button>
+                    <button class="spw-chip" data-spw-handle="true" type="submit" data-spw-operator="perspective" data-spw-action="enter">!save[settings]</button>
+                    <button class="spw-chip" data-spw-handle="true" data-site-settings-reset type="button" data-spw-operator="action">!reset[authored_defaults]</button>
                     <span aria-live="polite" class="settings-status" data-site-settings-status role="status"></span>
                 </div>
             </form>
         </section>
 
         <section
-            class="site-frame"
+            class="spw-frame"
             data-spw-affordance="read"
             data-spw-category-family="register"
             data-spw-collectability="medium"
@@ -2374,12 +2374,12 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             data-spw-wonder="comparison constraint locality"
             id="applied-state"
         >
-            <header class="frame-heading">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#applied-state">&gt;"applied_state"</a>
                 <h2>Current Runtime State</h2>
             </header>
 
-            <p class="frame-note" data-spw-copy-lens="default" data-spw-copy-label="default">
+            <p data-spw-textual-role="note" data-spw-copy-lens="default" data-spw-copy-label="default">
                 A readable local summary of what the site is currently expressing in this browser.
             </p>
             <p data-spw-copy-depth="entry" data-spw-copy-label="entry">
@@ -2597,9 +2597,9 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     <div data-spw-query-composer-fields class="spw-query-composer__fields"></div>
                     <code class="spw-query-composer__preview settings-query-preview" data-spw-query-composer-preview>…</code>
                     <div class="spw-query-composer__actions vibe-widget-actions" data-spw-query-composer-actions>
-                        <button type="button" class="operator-chip" data-spw-query-composer-copy data-spw-operator="potential">~copy_link</button>
-                        <button type="button" class="operator-chip" data-spw-query-composer-apply data-spw-operator="potential">!apply[setup]</button>
-                        <button type="button" class="operator-chip" data-spw-query-composer-cauldron data-spw-operator="potential" data-spw-action="explore">~offer_to_cauldron</button>
+                        <button type="button" class="spw-chip" data-spw-handle="true" data-spw-query-composer-copy data-spw-operator="potential">~copy_link</button>
+                        <button type="button" class="spw-chip" data-spw-handle="true" data-spw-query-composer-apply data-spw-operator="potential">!apply[setup]</button>
+                        <button type="button" class="spw-chip" data-spw-handle="true" data-spw-query-composer-cauldron data-spw-operator="potential" data-spw-action="explore">~offer_to_cauldron</button>
                     </div>
                 </section>
 
@@ -2614,9 +2614,9 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                             Does not unload modules.
                         </p>
                         <div class="vibe-widget-actions" role="group" aria-label="Enhancement level">
-                            <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:minimal" data-spw-operator="mode">[ Minimal</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:balanced" data-spw-operator="mode">[ Balanced</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:rich" data-spw-operator="mode">[ Rich</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="enhancementLevel:minimal" data-spw-operator="mode">[ Minimal</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="enhancementLevel:balanced" data-spw-operator="mode">[ Balanced</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="enhancementLevel:rich" data-spw-operator="mode">[ Rich</button>
                         </div>
                         <div class="vibe-widget-meta">
                             <span class="spec-pill">enhancement: <span data-settings-state="enhancementLevel">minimal</span></span>
@@ -2633,10 +2633,10 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                             Use these when a reflow feels like a lump — it should feel like a phase.
                         </p>
                         <div class="vibe-widget-actions" role="group" aria-label="Orchestration recipes">
-                            <a class="operator-chip" href="?module-visuals=on&amp;module-audit=on&amp;view=inspect&amp;meaning=inspect" data-spw-operator="wonder" data-spw-action="inspect">? Show mounts</a>
-                            <a class="operator-chip" href="?module-visuals=on&amp;module-delay=450&amp;runtime-timing=eager&amp;view=inspect" data-spw-operator="wonder" data-spw-action="inspect">? Slow mounts</a>
-                            <a class="operator-chip" href="?module-visuals=on&amp;module-only=feature-discovery,loading-ecology,module-effects&amp;view=inspect" data-spw-operator="wonder" data-spw-action="inspect">? Only discovery path</a>
-                            <a class="operator-chip" href="?" data-spw-operator="action">!clear[query]</a>
+                            <a class="spw-chip" data-spw-handle="true" href="?module-visuals=on&amp;module-audit=on&amp;view=inspect&amp;meaning=inspect" data-spw-operator="wonder" data-spw-action="inspect">? Show mounts</a>
+                            <a class="spw-chip" data-spw-handle="true" href="?module-visuals=on&amp;module-delay=450&amp;runtime-timing=eager&amp;view=inspect" data-spw-operator="wonder" data-spw-action="inspect">? Slow mounts</a>
+                            <a class="spw-chip" data-spw-handle="true" href="?module-visuals=on&amp;module-only=feature-discovery,loading-ecology,module-effects&amp;view=inspect" data-spw-operator="wonder" data-spw-action="inspect">? Only discovery path</a>
+                            <a class="spw-chip" data-spw-handle="true" href="?" data-spw-operator="action">!clear[query]</a>
                         </div>
                     </article>
 
@@ -2653,7 +2653,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                             <span class="spec-pill">status: <span data-site-feature-lab-status>authored body features</span></span>
                             <span class="spec-pill">ops: <code data-site-feature-lab-ops>none</code></span>
                         </div>
-                        <p class="frame-note">
+                        <p data-spw-textual-role="note">
                             Authored: <code data-site-feature-lab-authored>…</code><br>
                             Active: <code data-site-feature-lab-active>…</code>
                         </p>
@@ -2664,7 +2664,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                             data-site-feature-lab-toggles
                         ></div>
                         <div class="vibe-widget-actions">
-                            <button class="operator-chip" type="button" data-site-feature-lab-clear data-spw-operator="action">!clear[session_lab_reload]</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-feature-lab-clear data-spw-operator="action">!clear[session_lab_reload]</button>
                         </div>
                     </article>
                 </div>
@@ -2672,7 +2672,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
         </section>
 
         <section
-            class="site-frame"
+            class="spw-frame"
             data-spw-affordance="read"
             data-spw-category-family="register"
             data-spw-collectability="medium"
@@ -2689,12 +2689,12 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             data-spw-wonder="comparison constraint locality"
             id="settings-notes"
         >
-            <header class="frame-heading">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#settings-notes">~"settings_notes"</a>
                 <h2>Local Notes + Reset Paths</h2>
             </header>
 
-            <p class="frame-note settings-section-lead" data-spw-interaction="tap-hold">
+            <p class="settings-section-lead" data-spw-textual-role="note" data-spw-interaction="tap-hold">
                 This section is the practical cleanup shelf for both active learners (who want to save notes, inspect state, and restore precise bundles) and playful wanderers (who want a single "reset to calm" without fear). Save local notes, understand reset granularity, and choose the lightest touch that matches your curiosity level.
             </p>
 
@@ -2729,9 +2729,9 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                         ></textarea>
                         <input data-local-note-context type="hidden" value="settings" />
                         <div class="settings-note-form__actions">
-                            <button class="operator-chip" type="submit" data-spw-operator="perspective" data-spw-action="enter">!save[note]</button>
-                            <button class="operator-chip" data-local-note-draft-clear type="button" data-spw-operator="action">!clear[draft]</button>
-                            <button class="operator-chip" data-local-notes-clear type="button" data-spw-operator="potential">!clear[all]</button>
+                            <button class="spw-chip" data-spw-handle="true" type="submit" data-spw-operator="perspective" data-spw-action="enter">!save[note]</button>
+                            <button class="spw-chip" data-spw-handle="true" data-local-note-draft-clear type="button" data-spw-operator="action">!clear[draft]</button>
+                            <button class="spw-chip" data-spw-handle="true" data-local-notes-clear type="button" data-spw-operator="potential">!clear[all]</button>
                         </div>
                         <p aria-live="polite" class="settings-status" data-local-note-status role="status"></p>
                     </form>
@@ -2742,7 +2742,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                         <p>Latest save: <span data-local-note-latest-time>not saved yet</span></p>
                     </div>
 
-                    <p class="frame-note" data-local-notes-empty>
+                    <p data-spw-textual-role="note" data-local-notes-empty>
                         No local notes yet. The footer quick-capture seam and this register write to the same local shelf.
                     </p>
 
@@ -2771,7 +2771,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
         </section>
 
         <section
-            class="site-frame"
+            class="spw-frame"
             data-spw-affordance="inspect"
             data-spw-category-family="register"
             data-spw-collectability="medium"
@@ -2787,12 +2787,12 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             data-spw-wonder="comparison constraint locality"
             id="stored-data"
         >
-            <header class="frame-heading">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#stored-data">~"stored_data"</a>
                 <h2>Saved Data + App Status</h2>
             </header>
 
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 These readouts describe what this browser is doing locally. Cache, connection, and service worker state also
                 influence how aggressively the runtime prefetches modules or calms enhancement when a visit is offline or constrained.
             </p>
@@ -2812,9 +2812,9 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     <p class="settings-panel-kicker">Inspect next</p>
                     <h3>Follow the local-state trail</h3>
                     <div class="settings-storage-actions">
-                        <a class="operator-chip" href="#settings-notes" data-spw-operator="frame" data-spw-action="address">#&gt;notes_reset_paths</a>
-                        <a class="operator-chip" href="/privacy/" data-spw-operator="potential" data-spw-action="explore">~privacy_surface</a>
-                        <a class="operator-chip" href="#runtime-map" data-spw-operator="frame" data-spw-action="address">#&gt;runtime_map</a>
+                        <a class="spw-chip" data-spw-handle="true" href="#settings-notes" data-spw-operator="frame" data-spw-action="address">#&gt;notes_reset_paths</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/privacy/" data-spw-operator="potential" data-spw-action="explore">~privacy_surface</a>
+                        <a class="spw-chip" data-spw-handle="true" href="#runtime-map" data-spw-operator="frame" data-spw-action="address">#&gt;runtime_map</a>
                     </div>
                 </article>
             </div>
@@ -2872,7 +2872,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
         </section>
 
         <section
-            class="site-frame"
+            class="spw-frame"
             data-spw-affordance="inspect"
             data-spw-category-family="map"
             data-spw-collectability="medium"
@@ -2889,12 +2889,12 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             data-spw-wonder="comparison constraint locality"
             id="runtime-map"
         >
-            <header class="frame-heading">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#runtime-map">^"runtime_map"{</a>
                 <h2>Runtime Map</h2>
             </header>
 
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 Settings are not isolated form fields. They flow into datasets, CSS variables, event bus diagnostics, and
                 progressively enhanced modules. Module readiness, cauldron phases, and cadence discovery follow the same
                 rule: explicit state first, visual response second.
@@ -2959,25 +2959,25 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                         readable surface, inspectable structure, or a console story you can follow.
                     </p>
                     <div class="settings-query-actions" role="group" aria-label="Query recipes">
-                        <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm" data-spw-operator="wonder" data-spw-action="inspect">? Reader view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=layout-shift&amp;log-level=debug&amp;physics=calm&amp;module-audit=on" data-spw-operator="wonder" data-spw-action="inspect">? Builder view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;module-audit=on&amp;module-visuals=on" data-spw-operator="wonder" data-spw-action="inspect">? Inspector view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction&amp;module-audit=on&amp;module-visuals=on&amp;runtime-timing=eager" data-spw-operator="wonder" data-spw-action="inspect">? Lab view</a>
+                        <a class="spw-chip" data-spw-handle="true" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm" data-spw-operator="wonder" data-spw-action="inspect">? Reader view</a>
+                        <a class="spw-chip" data-spw-handle="true" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=layout-shift&amp;log-level=debug&amp;physics=calm&amp;module-audit=on" data-spw-operator="wonder" data-spw-action="inspect">? Builder view</a>
+                        <a class="spw-chip" data-spw-handle="true" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;module-audit=on&amp;module-visuals=on" data-spw-operator="wonder" data-spw-action="inspect">? Inspector view</a>
+                        <a class="spw-chip" data-spw-handle="true" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction&amp;module-audit=on&amp;module-visuals=on&amp;runtime-timing=eager" data-spw-operator="wonder" data-spw-action="inspect">? Lab view</a>
                     </div>
                     <p class="settings-query-preview-copy">
                         Current query:
                         <code class="settings-query-preview" data-site-settings-query-preview data-spw-handle="query-preview" data-spw-page-hook-label="Current query">?view=inspect&meaning=inspect&debug=css,layout&diagnostics=basic&log=site-settings,layout-shift&log-level=debug&module-audit=on&module-visuals=on</code>
                     </p>
                     <div class="settings-query-footer">
-                        <button class="operator-chip" data-site-settings-query-copy="inspect" data-spw-handle="query-copy" data-spw-page-hook-label="Copy inspect query" type="button" data-spw-operator="potential">~copy_inspect_query</button>
-                        <button class="operator-chip" data-site-settings-query-copy="share" data-spw-handle="query-share" data-spw-page-hook-label="Copy settings share link" type="button" data-spw-operator="potential">~copy_settings_link</button>
+                        <button class="spw-chip" data-site-settings-query-copy="inspect" data-spw-handle="query-copy" data-spw-page-hook-label="Copy inspect query" type="button" data-spw-operator="potential">~copy_inspect_query</button>
+                        <button class="spw-chip" data-site-settings-query-copy="share" data-spw-handle="query-share" data-spw-page-hook-label="Copy settings share link" type="button" data-spw-operator="potential">~copy_settings_link</button>
                     </div>
                 </article>
             </div>
         </section>
 
         <section
-            class="site-frame"
+            class="spw-frame"
             data-spw-affordance="inspect"
             data-spw-category-family="reference"
             data-spw-collectability="medium"
@@ -2994,12 +2994,12 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             data-spw-wonder="comparison constraint locality"
             id="token-navigator"
         >
-            <header class="frame-heading">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#token-navigator">^"token_navigator"{</a>
                 <h2>CSS Token Navigator</h2>
             </header>
 
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 The settings model ultimately spends values through token families. These cards are a local index for the main
                 runtime token groups.
             </p>
@@ -3015,8 +3015,8 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                         <li><code>--climate-connection-strength</code></li>
                         <li><code>--climate-publication-strength</code></li>
                     </ul>
-                    <a class="operator-chip" href="#author-workflow-settings" data-spw-operator="perspective" data-spw-action="enter">@author_controls</a>
-                    <a class="operator-chip" href="#climate-settings" data-spw-operator="wonder" data-spw-action="inspect">? climate controls</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#author-workflow-settings" data-spw-operator="perspective" data-spw-action="enter">@author_controls</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#climate-settings" data-spw-operator="wonder" data-spw-action="inspect">? climate controls</a>
                 </article>
 
                 <article class="settings-nav-card" data-spw-box-model="token-card">
@@ -3027,7 +3027,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                         <li><code>--site-line-height</code></li>
                         <li><code>--site-mono-font</code></li>
                     </ul>
-                    <a class="operator-chip" href="#typography-settings" data-spw-operator="integration" data-spw-action="publish">^typography_controls</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#typography-settings" data-spw-operator="integration" data-spw-action="publish">^typography_controls</a>
                 </article>
 
                 <article class="settings-nav-card" data-spw-box-model="token-card">
@@ -3039,7 +3039,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                         <li><code>--duration-base</code></li>
                         <li><code>--duration-slow</code></li>
                     </ul>
-                    <a class="operator-chip" href="#accessibility-settings" data-spw-operator="potential" data-spw-action="explore">~motion_controls</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#accessibility-settings" data-spw-operator="potential" data-spw-action="explore">~motion_controls</a>
                 </article>
 
                 <article class="settings-nav-card" data-spw-box-model="token-card">
@@ -3052,7 +3052,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                         <li><code>--spw-operator-saturation-factor</code></li>
                         <li><code>--spw-wonder-memory-strength</code></li>
                     </ul>
-                    <a class="operator-chip" href="#semantic-settings" data-spw-operator="wonder" data-spw-action="inspect">? semantic controls</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#semantic-settings" data-spw-operator="wonder" data-spw-action="inspect">? semantic controls</a>
                 </article>
 
                 <article class="settings-nav-card" data-spw-box-model="token-card">
@@ -3064,13 +3064,13 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                         <li><code>--shape-surface</code></li>
                         <li><code>--line-mid</code></li>
                     </ul>
-                    <a class="operator-chip" href="#interface-physics-settings" data-spw-operator="perspective" data-spw-action="enter">@material_controls</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#interface-physics-settings" data-spw-operator="perspective" data-spw-action="enter">@material_controls</a>
                 </article>
             </div>
         </section>
 
         <section
-            class="site-frame"
+            class="spw-frame"
             data-spw-affordance="inspect"
             data-spw-category-family="specimen"
             data-spw-collectability="medium"
@@ -3087,12 +3087,12 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             data-spw-wonder="comparison constraint locality"
             id="data-structures"
         >
-            <header class="frame-heading">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#data-structures">^"data_structures"{</a>
                 <h2>Underlying Data Structures</h2>
             </header>
 
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 The page is backed by registries and derived structures, not isolated form fields.
             </p>
 
@@ -3101,19 +3101,19 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     <p class="eyebrow">Configuration links</p>
                     <h3 class="spw-settings-cluster__title">Share a layout and tuning setup in one link.</h3>
                     <p class="spw-settings-cluster__copy">When your controls drift from defaults, the address bar can carry that difference forward in plain words — for example <code>?layout=wide&amp;explore-posture=workshop&amp;component-density=dense</code>. These shortcuts are teaching lenses, not separate themes: named ways to show spacing, contrast, module behavior, and region framing during QA or walkthroughs.</p>
-                    <p class="frame-note" style="margin-top:0.4rem;">
+                    <p data-spw-textual-role="note" style="margin-top:0.4rem;">
                         State lives in localStorage; the surface uses progressive enhancement, CSS custom properties, and inspectable modules rather than a client framework. Customize the shortcuts below when you need a project-specific lens.
                     </p>
                 </header>
                 <div class="spw-settings-cluster__actions" id="config-shortcuts" role="group" aria-label="Configuration links">
-                    <a class="operator-chip" href="?view=readable&amp;meaning=readable&amp;interaction=calm&amp;lighting=balanced" data-spw-operator="wonder" data-spw-action="inspect">? Readable</a>
-                    <a class="operator-chip" href="?view=inspect&amp;meaning=inspect&amp;module-audit=on&amp;module-visuals=on&amp;layout=wide&amp;lighting=guarded" data-spw-operator="wonder">? Inspect layout</a>
-                    <a class="operator-chip" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;layout=atlas&amp;lighting=guarded" data-spw-operator="wonder" data-spw-action="inspect">? QA atlas</a>
-                    <a class="operator-chip" href="?view=readable&amp;meaning=rich&amp;flavor=culinary&amp;palette=craft" data-spw-operator="wonder" data-spw-action="inspect">? Culinary lens</a>
-                    <a class="operator-chip" href="?semanticDensity=rich&amp;cognitiveHandles=on&amp;showSemanticMetadata=on&amp;interaction=responsive&amp;fieldResonance=field" data-spw-operator="wonder" data-spw-action="inspect">? Region menu</a>
-                    <a class="operator-chip" href="?semanticDensity=rich&amp;cognitiveHandles=on&amp;showSemanticMetadata=on&amp;interaction=expressive&amp;fieldResonance=choral&amp;operatorHighlighting=on" data-spw-operator="wonder" data-spw-action="inspect">? Ornament valve</a>
+                    <a class="spw-chip" data-spw-handle="true" href="?view=readable&amp;meaning=readable&amp;interaction=calm&amp;lighting=balanced" data-spw-operator="wonder" data-spw-action="inspect">? Readable</a>
+                    <a class="spw-chip" data-spw-handle="true" href="?view=inspect&amp;meaning=inspect&amp;module-audit=on&amp;module-visuals=on&amp;layout=wide&amp;lighting=guarded" data-spw-operator="wonder">? Inspect layout</a>
+                    <a class="spw-chip" data-spw-handle="true" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;layout=atlas&amp;lighting=guarded" data-spw-operator="wonder" data-spw-action="inspect">? QA atlas</a>
+                    <a class="spw-chip" data-spw-handle="true" href="?view=readable&amp;meaning=rich&amp;flavor=culinary&amp;palette=craft" data-spw-operator="wonder" data-spw-action="inspect">? Culinary lens</a>
+                    <a class="spw-chip" data-spw-handle="true" href="?semanticDensity=rich&amp;cognitiveHandles=on&amp;showSemanticMetadata=on&amp;interaction=responsive&amp;fieldResonance=field" data-spw-operator="wonder" data-spw-action="inspect">? Region menu</a>
+                    <a class="spw-chip" data-spw-handle="true" href="?semanticDensity=rich&amp;cognitiveHandles=on&amp;showSemanticMetadata=on&amp;interaction=expressive&amp;fieldResonance=choral&amp;operatorHighlighting=on" data-spw-operator="wonder" data-spw-action="inspect">? Ornament valve</a>
                 </div>
-                <button type="button" class="operator-chip" id="customize-shortcuts" data-spw-feature="custom-shortcuts" data-spw-operator="potential" data-spw-action="explore">~customize_shortcuts</button>
+                <button type="button" class="spw-chip" data-spw-handle="true" id="customize-shortcuts" data-spw-feature="custom-shortcuts" data-spw-operator="potential" data-spw-action="explore">~customize_shortcuts</button>
                 <span class="spw-settings-cluster__note" style="font-size:0.68rem; opacity:0.8; display:block; margin-top:0.2rem;">
                   Menu chrome: <code>data-spw-shell-menu-presentation</code> or <code>?shellMenuPresentation=modal</code> (adaptive | modal | drawer). Modal uses layer dimmer + overlay nav (no content push). Experimental; see shell-disclosure + chrome.css.
                 </span>
@@ -3270,7 +3270,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
         </section>
 
         <section
-            class="site-frame"
+            class="spw-frame"
             data-spw-affordance="read"
             data-spw-category-family="register"
             data-spw-collectability="medium"
@@ -3287,24 +3287,24 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             data-spw-wonder="comparison constraint locality"
             id="curriculum-control"
         >
-            <header class="frame-heading">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#curriculum-control">@curriculum_control</a>
                 <h2>Curriculum Management</h2>
             </header>
 
-            <p class="inline-note">
+            <p data-spw-textual-role="note">
                 Manage your Consideration Register. You can save your current progress as a checkpoint or reset the substrate
                 to its default un-popped state.
             </p>
 
             <div class="button-group">
-                <button class="operator-chip" id="btn-save-checkpoint" type="button" data-spw-operator="substrate" data-spw-action="save"><span class="log-op">$</span>save_checkpoint</button>
-                <button class="operator-chip" id="btn-reset-haptics" type="button" data-spw-operator="action" data-spw-action="reset"><span class="log-op">!</span>reset_curriculum</button>
+                <button class="spw-chip" data-spw-handle="true" id="btn-save-checkpoint" type="button" data-spw-operator="substrate" data-spw-action="save"><span class="log-op">$</span>save_checkpoint</button>
+                <button class="spw-chip" data-spw-handle="true" id="btn-reset-haptics" type="button" data-spw-operator="action" data-spw-action="reset"><span class="log-op">!</span>reset_curriculum</button>
             </div>
         </section>
 
         <section
-            class="site-frame"
+            class="spw-frame"
             data-spw-affordance="read"
             data-spw-category-family="register"
             data-spw-collectability="medium"
@@ -3321,12 +3321,12 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             data-spw-wonder="comparison constraint locality"
             id="spell-board"
         >
-            <header class="frame-heading">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#spell-board">@spell_board</a>
                 <h2>Spell Board</h2>
             </header>
 
-            <p class="inline-note">Gathered curriculum ingredients appear here as a technical spell.</p>
+            <p data-spw-textual-role="note">Gathered curriculum ingredients appear here as a technical spell.</p>
             <div class="spw-reason-strip" aria-label="Spell gesture seeds">
                 <div>
                     <strong>Charge preview</strong>
@@ -3341,7 +3341,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     <p><code>@gesture_settle { cue: "Escape" return: "focused prose" }</code></p>
                 </div>
             </div>
-            <p class="frame-note">
+            <p data-spw-textual-role="note">
                 If you are imagining RPG Wednesday enchantments, think of these as three small spell families:
                 <strong>charge</strong> to inspect a sigil without commitment, <strong>project</strong> to open the
                 brace or region menu on purpose, and <strong>settle</strong> to close the layer cleanly and keep the
@@ -3371,7 +3371,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
         </script>
 
         <section
-            class="site-frame"
+            class="spw-frame"
             data-spw-affordance="read"
             data-spw-category-family="register"
             data-spw-collectability="medium"
@@ -3388,12 +3388,12 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             data-spw-wonder="comparison constraint locality"
             id="cognitive-trace"
         >
-            <header class="frame-heading">
+            <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#cognitive-trace">$cognitive_trace</a>
                 <h2>Cognitive Web Trace</h2>
             </header>
 
-            <p class="inline-note">
+            <p data-spw-textual-role="note">
                 A transparent interpretation of your technical resonance. As you develop care and focus through the technical
                 substrate, your subjective frame settles into this operable spell.
             </p>
@@ -3406,7 +3406,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
         </section>
 
         <section
-            class="site-frame"
+            class="spw-frame"
             data-spw-affordance="tune"
             data-spw-category-family="register"
             data-spw-collectability="medium"
@@ -3428,7 +3428,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                 <h2>Support Card Payment Options</h2>
             </header>
 
-            <p class="inline-note">
+            <p data-spw-textual-role="note">
                 Choose which payment methods appear on the support card. One must always remain active.
             </p>
 

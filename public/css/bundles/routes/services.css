@@ -754,7 +754,7 @@
       gap: clamp(1rem, 2vw, 1.4rem);
     }
 
-    & article > .site-frame {
+    & article > .spw-frame {
       overflow: clip;
       border-color: var(--services-line);
       background: var(--services-paper);
@@ -790,7 +790,7 @@
         max-width: min(50rem, 100%);
       }
 
-      & .site-lede {
+      & [data-spw-textual-role="lede"] {
         color: color-mix(in srgb, var(--ink, #1f2423) 88%, var(--services-accent-cool));
       }
 

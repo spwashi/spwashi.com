@@ -61,7 +61,7 @@ html[data-spw-page-section-phase="idle"] {
   --spw-arrival-vertical: 0;
 }
 
-:where(.site-frame[data-spw-region-state="settling"], .site-frame[data-spw-region-state="enhanced"]) {
+:where(.spw-frame[data-spw-region-state="settling"], .spw-frame[data-spw-region-state="enhanced"]) {
   --spw-lifecycle-presence: min(var(--spw-lifecycle-presence, 1), 0.78);
 }
 

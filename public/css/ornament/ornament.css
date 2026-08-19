@@ -755,7 +755,7 @@
   align-self: center;
 }
 
-:where(.site-frame, .frame-panel, .frame-card, .mode-panel) > .spw-ornament-kicker:first-child {
+:where(.spw-frame, .frame-panel, .frame-card, .mode-panel) > .spw-ornament-kicker:first-child {
   margin-top: -0.1rem;
 }
 
@@ -1253,8 +1253,8 @@
    authority on primary layout, which this file's own contract forbids. */
 
 /* Topics register: keep brace grammar at the card edge instead of as a layout rail. */
-body[data-spw-surface="topics"] #topics-register.site-frame[data-spw-form="brace"]::before,
-body[data-spw-surface="topics"] #topics-register.site-frame:has(> :where(.frame-topline, .frame-heading) > .spw-delimiter)::after {
+body[data-spw-surface="topics"] #topics-register.spw-frame[data-spw-form="brace"]::before,
+body[data-spw-surface="topics"] #topics-register.spw-frame:has(> :where(.frame-topline, .frame-heading) > .spw-delimiter)::after {
   content: "";
   position: absolute;
   pointer-events: none;
@@ -1280,23 +1280,23 @@ body[data-spw-surface="topics"] #topics-register.site-frame:has(> :where(.frame-
   filter: none;
 }
 
-body[data-spw-surface="topics"] #topics-register.site-frame[data-spw-form="brace"]::before {
+body[data-spw-surface="topics"] #topics-register.spw-frame[data-spw-form="brace"]::before {
   top: 0.72rem;
   left: 0.72rem;
 }
 
-body[data-spw-surface="topics"] #topics-register.site-frame:has(> :where(.frame-topline, .frame-heading) > .spw-delimiter)::after {
+body[data-spw-surface="topics"] #topics-register.spw-frame:has(> :where(.frame-topline, .frame-heading) > .spw-delimiter)::after {
   bottom: 0.72rem;
   left: 0.72rem;
 }
 
-body[data-spw-surface="topics"] #topics-register.site-frame > :where(.frame-topline, .frame-heading):has(> .spw-delimiter) {
+body[data-spw-surface="topics"] #topics-register.spw-frame > :where(.frame-topline, .frame-heading):has(> .spw-delimiter) {
   position: relative;
   align-items: center;
   padding-inline-start: clamp(1.15rem, 2vw, 1.55rem);
 }
 
-body[data-spw-surface="topics"] #topics-register.site-frame > :where(.frame-topline, .frame-heading) > .spw-delimiter {
+body[data-spw-surface="topics"] #topics-register.spw-frame > :where(.frame-topline, .frame-heading) > .spw-delimiter {
   position: absolute;
   inset-block-start: 50%;
   inset-inline-start: 0;
@@ -1329,57 +1329,57 @@ body[data-spw-surface="topics"] #topics-register .frame-topline .spec-pill {
 
 /* Compact reading clarity: avoid glow + screen overlays reading as a blur scrim. */
 @media (max-width: 45rem) {
-  html[data-spw-scroll-cadence="on"] main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state]::before {
+  html[data-spw-scroll-cadence="on"] main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state]::before {
     opacity: 0.16;
     filter: none;
     mix-blend-mode: normal;
   }
 
-  html[data-spw-scroll-cadence="on"] main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state="active"]
-    :where(.page-lede, .frame-note, .inline-note) {
+  html[data-spw-scroll-cadence="on"] main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]
+    :where([data-spw-textual-role="lede"], [data-spw-textual-role="note"], .inline-note) {
     opacity: 1;
     text-shadow: none;
   }
 
-  html[data-spw-scroll-cadence="on"] main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state="active"]
-    :where(.frame-note, .inline-note) {
+  html[data-spw-scroll-cadence="on"] main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]
+    :where([data-spw-textual-role="note"], .inline-note) {
     color: color-mix(in srgb, var(--ink, #eae4dc) 78%, var(--ink-muted, #c5bcb1) 22%);
   }
 
-  body[data-spw-surface="topics"] :is(main > section.site-frame, article > section.site-frame)::before {
+  body[data-spw-surface="topics"] :is(main > section.spw-frame, article > section.spw-frame)::before {
     opacity: 0.16;
     filter: none;
     mix-blend-mode: normal;
   }
 
-  body[data-spw-surface="topics"] :is(main > section.site-frame, article > section.site-frame) {
+  body[data-spw-surface="topics"] :is(main > section.spw-frame, article > section.spw-frame) {
     background: var(--topics-paper, var(--surface-strong, rgba(255, 255, 255, 0.94)));
   }
 
-  body[data-spw-surface="topics"] :is(main > section.site-frame, article > section.site-frame)::after {
+  body[data-spw-surface="topics"] :is(main > section.spw-frame, article > section.spw-frame)::after {
     background: none;
     opacity: 0;
   }
 
-  body[data-spw-surface="topics"] :is(main > section.site-frame, article > section.site-frame) .spec-strip {
+  body[data-spw-surface="topics"] :is(main > section.spw-frame, article > section.spw-frame) .spec-strip {
     display: none;
   }
 
-  body[data-spw-surface="topics"] :is(main > section.site-frame, article > section.site-frame)
-    :where(.page-lede, .frame-note, .inline-note) {
+  body[data-spw-surface="topics"] :is(main > section.spw-frame, article > section.spw-frame)
+    :where([data-spw-textual-role="lede"], [data-spw-textual-role="note"], .inline-note) {
     opacity: 1;
     transform: none;
     letter-spacing: 0;
     text-shadow: none;
   }
 
-  body[data-spw-surface="topics"] :is(main > section.site-frame, article > section.site-frame)
+  body[data-spw-surface="topics"] :is(main > section.spw-frame, article > section.spw-frame)
     :where(.frame-sigil, h1, h2, h3) {
     transform: none;
   }
 
-  body[data-spw-surface="topics"] :is(main > section.site-frame, article > section.site-frame)
-    :where(.frame-note, .inline-note) {
+  body[data-spw-surface="topics"] :is(main > section.spw-frame, article > section.spw-frame)
+    :where([data-spw-textual-role="note"], .inline-note) {
     color: color-mix(in srgb, var(--ink, #eae4dc) 78%, var(--ink-muted, #c5bcb1) 22%);
   }
 
@@ -1396,7 +1396,7 @@ body[data-spw-surface="topics"] #topics-register .frame-topline .spec-pill {
     scrollbar-width: thin;
   }
 
-  body[data-spw-surface="topics"] #topics-register .frame-operators > .operator-chip {
+  body[data-spw-surface="topics"] #topics-register .frame-operators > .spw-chip {
     flex: 0 0 auto;
     max-inline-size: min(78vw, 22rem);
     min-block-size: 2.05rem;
@@ -1413,7 +1413,7 @@ body[data-spw-surface="topics"] #topics-register .frame-topline .spec-pill {
    reached. Stamping it on 153 routes would be the wrong repair — the position
    it describes is already unambiguous in the markup.
 
-   135 of 153 routes open with `.site-frame` inside `<main>`. First is arrival,
+   135 of 153 routes open with `.spw-frame` inside `<main>`. First is arrival,
    last is departure, everything between is the body of the visit. That is the
    same entry → ground → exit reading, available structurally, with no attribute
    to author and no JavaScript to mount.
@@ -1422,14 +1422,14 @@ body[data-spw-surface="topics"] #topics-register .frame-topline .spec-pill {
    only fill in where nothing was said.
    -------------------------------------------------------------------------- */
 
-main > :where(.site-frame, .spw-frame):first-of-type:not([data-spw-stage]) {
+main > :where(.spw-frame, .spw-frame):first-of-type:not([data-spw-stage]) {
   --ornament-stage-opacity: var(--ornament-stage-entry-opacity);
 }
 
-main > :where(.site-frame, .spw-frame):not(:first-of-type):not(:last-of-type):not([data-spw-stage]) {
+main > :where(.spw-frame, .spw-frame):not(:first-of-type):not(:last-of-type):not([data-spw-stage]) {
   --ornament-stage-opacity: var(--ornament-stage-ground-opacity);
 }
 
-main > :where(.site-frame, .spw-frame):last-of-type:not(:first-of-type):not([data-spw-stage]) {
+main > :where(.spw-frame, .spw-frame):last-of-type:not(:first-of-type):not([data-spw-stage]) {
   --ornament-stage-opacity: var(--ornament-stage-exit-opacity);
 }

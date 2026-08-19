@@ -1,7 +1,7 @@
 import { normalizeQuerySearch } from './query-composer.js';
 
 const DEFAULT_NAMESPACE = 'spw';
-const DEFAULT_TARGET_SELECTOR = '[data-spw-kind], [data-spw-role], [data-spw-feature], [data-spw-module], .site-frame, .frame-panel, .frame-card';
+const DEFAULT_TARGET_SELECTOR = '[data-spw-kind], [data-spw-role], [data-spw-feature], [data-spw-module], .spw-frame, .frame-panel, .frame-card';
 const SPW_DATASET_PREFIX = 'spw';
 const TUNING_PREFIX = 'spwTune';
 const QUERY_PREFIXES = Object.freeze({

@@ -72,14 +72,14 @@
    2. Base Frame Modifications
    ========================================================================== */
 
-:where(body[data-spw-surface="settings"] .site-frame) {
+:where(body[data-spw-surface="settings"] .spw-frame) {
   padding: var(--settings-pad-block) var(--settings-pad-inline);
   background: var(--settings-panel-bg);
   border: 1px solid var(--line-strong, rgba(0, 128, 128, 0.34));
   box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
 }
 
-:where(body[data-spw-surface="settings"] .site-frame[data-state~="active"]) {
+:where(body[data-spw-surface="settings"] .spw-frame[data-state~="active"]) {
   box-shadow:
     0 0 0 2px color-mix(in srgb, var(--settings-accent) 20%, transparent),
     var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
@@ -498,7 +498,7 @@
   row-gap: 0.6rem;
 }
 
-:where(body[data-spw-surface="settings"] .settings-hero-actions .operator-chip) {
+:where(body[data-spw-surface="settings"] .settings-hero-actions .spw-chip) {
   min-height: 2.35rem;
 }
 
@@ -1099,7 +1099,7 @@
   margin: 0.5rem 0 0.8rem;
 }
 
-:where(body[data-spw-surface="settings"] .settings-nav-card .operator-chip) {
+:where(body[data-spw-surface="settings"] .settings-nav-card .spw-chip) {
   margin-top: auto;
 }
 }
@@ -1161,7 +1161,7 @@
       grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
     }
 
-    & .site-frame {
+    & .spw-frame {
       --settings-pad-inline: 0.9rem;
       --settings-pad-block: 1rem;
     }

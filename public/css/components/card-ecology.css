@@ -138,9 +138,9 @@
   /* Shaded embedded: not page primary actions, but controls of the local surface (like paint mixing nook). */
 }
 :where(.spw-nook > button,
-       .spw-nook > .operator-chip,
+       .spw-nook > .spw-chip,
        [data-spw-region-role="nook"] > button,
-       [data-spw-region-role="nook"] > .operator-chip) {
+       [data-spw-region-role="nook"] > .spw-chip) {
   font-size: 0.76rem;
   padding: 0.12rem 0.42rem;
   min-height: 1.7rem;
@@ -216,11 +216,11 @@
    or "activated" glow for topical composition awareness + site layout (hubs vs paths). Ties to state traversability,
    charge/discharge general, modes (skim/activate), semantic density. */
 :where(ul, ol, .frame-operators, .topic-list, section[data-spw-kind="frame"])[data-spw-selection="active"],
-:where(li, .operator-chip, .frame-card)[data-spw-charge="full"] {
+:where(li, .spw-chip, .frame-card)[data-spw-charge="full"] {
   /* discharged or activated state visual */
   transition: filter 200ms, opacity 200ms;
 }
-:where(li, .operator-chip, .frame-card)[data-spw-gesture="discharged"],
+:where(li, .spw-chip, .frame-card)[data-spw-gesture="discharged"],
 :where(ul, section)[data-spw-charge="0"] {
   opacity: 0.7;
   filter: saturate(0.6);

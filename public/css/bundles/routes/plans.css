@@ -193,7 +193,7 @@ body[data-spw-surface="plans"] {
    2. Generic frame tuning
    ========================================================================== */
 
-[data-spw-surface="plans"] .site-frame {
+[data-spw-surface="plans"] .spw-frame {
   border-color: color-mix(in srgb, var(--plans-line) 96%, transparent);
   border-radius: var(--plans-panel-radius);
   background:
@@ -205,7 +205,7 @@ body[data-spw-surface="plans"] {
   color: var(--plans-ink);
 }
 
-[data-spw-surface="plans"] .site-frame:is(:hover, :focus-within) {
+[data-spw-surface="plans"] .spw-frame:is(:hover, :focus-within) {
   border-color: color-mix(in srgb, var(--plans-accent) 18%, var(--plans-line));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.46),
@@ -216,7 +216,7 @@ body[data-spw-surface="plans"] {
   color: color-mix(in srgb, var(--plans-ink-soft) 90%, var(--plans-accent));
 }
 
-[data-spw-surface="plans"] .frame-note,
+[data-spw-surface="plans"] [data-spw-textual-role="note"],
 [data-spw-surface="plans"] .inline-note {
   color: var(--plans-ink-soft);
 }
@@ -268,7 +268,7 @@ body[data-spw-surface="plans"] {
   text-wrap: balance;
 }
 
-[data-spw-surface="plans"] #plans-surface .page-lede {
+[data-spw-surface="plans"] #plans-surface [data-spw-textual-role="lede"] {
   max-width: 60ch;
   color: color-mix(in srgb, var(--plans-ink-soft) 92%, var(--plans-accent));
 }
@@ -619,13 +619,13 @@ body[data-spw-surface="plans"] {
   }
 
   /* Links and chips */
-  & a:not(.frame-card, .operator-chip, .frame-sigil, .syntax-token) {
+  & a:not(.frame-card, .spw-chip, .frame-sigil, .syntax-token) {
     color: color-mix(in srgb, var(--plans-accent) 86%, var(--plans-ink));
     text-decoration-color: color-mix(in srgb, var(--plans-accent) 28%, transparent);
     text-underline-offset: 0.16em;
   }
 
-  & a:not(.frame-card, .operator-chip, .frame-sigil, .syntax-token):is(:hover, :focus-visible) {
+  & a:not(.frame-card, .spw-chip, .frame-sigil, .syntax-token):is(:hover, :focus-visible) {
     color: color-mix(in srgb, var(--plans-accent-2) 82%, var(--plans-accent));
     text-decoration-color: currentColor;
     outline: none;
@@ -635,7 +635,7 @@ body[data-spw-surface="plans"] {
     gap: 0.5rem 0.6rem;
   }
 
-  & .operator-chip {
+  & .spw-chip {
     border-radius: 999px;
     background: color-mix(in srgb, var(--plans-surface-strong) 94%, var(--plans-accent) 6%);
     border-color: color-mix(in srgb, var(--plans-accent) 18%, transparent);
@@ -645,7 +645,7 @@ body[data-spw-surface="plans"] {
       0 1px 3px rgba(35, 22, 16, 0.04);
   }
 
-  & .operator-chip:is(:hover, :focus-visible) {
+  & .spw-chip:is(:hover, :focus-visible) {
     background: color-mix(in srgb, var(--plans-surface-strong) 90%, var(--plans-accent) 10%);
     border-color: color-mix(in srgb, var(--plans-accent) 28%, transparent);
     color: var(--plans-ink);
@@ -725,10 +725,10 @@ body[data-spw-surface="plans"] {
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  [data-spw-surface="plans"] .site-frame,
+  [data-spw-surface="plans"] .spw-frame,
   [data-spw-surface="plans"] .plan-card,
   [data-spw-surface="plans"] .frame-panel,
-  [data-spw-surface="plans"] .operator-chip {
+  [data-spw-surface="plans"] .spw-chip {
     transition: none !important;
     animation: none !important;
     transform: none !important;

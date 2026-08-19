@@ -11,7 +11,7 @@
 }
 
 :where(html[data-spw-condense-tier="brief"]) :where(
-  .frame-note,
+  [data-spw-textual-role="note"],
   .spw-card-reason,
   .hook-sub,
   details.spw-card-reason
@@ -60,7 +60,7 @@
     line-height: 1.45;
   }
 
-  :where(main, article, .site-frame, section[data-spw-cluster]) {
+  :where(main, article, .spw-frame, section[data-spw-cluster]) {
     break-inside: avoid-page;
     page-break-inside: avoid;
     box-shadow: none !important;
@@ -79,7 +79,7 @@
     color: #222 !important;
   }
 
-  :where(html[data-spw-condense-tier="brief"]) :where(.frame-note, details, .hook-sub) {
+  :where(html[data-spw-condense-tier="brief"]) :where([data-spw-textual-role="note"], details, .hook-sub) {
     display: none !important;
   }
 
@@ -96,7 +96,7 @@
     font-family: var(--site-mono-font, monospace);
   }
 
-  :where(.operator-chip, .spec-pill, code) {
+  :where(.spw-chip, .spec-pill, code) {
     border: 1px solid #bbb !important;
     background: #f4f4f4 !important;
     color: #111 !important;

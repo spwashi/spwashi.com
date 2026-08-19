@@ -92,7 +92,7 @@
     ></spw-site-header>
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_software_schedulers__main_surface" data-spw-wonder="comparison constraint locality" id="main-content" tabindex="-1" aria-labelledby="schedulers-title">
         <article>
-            <section class="site-frame site-hero" id="schedulers-hero" data-spw-role="orientation" data-spw-liminality="entry" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_schedulers__schedulers_hero" data-spw-context-relevance="schedulers orchestrating time cooperative multitasking priority queues concurrency" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+            <section class="spw-frame" data-spw-region-role="entry-spine" id="schedulers-hero" data-spw-role="orientation" data-spw-liminality="entry" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_schedulers__schedulers_hero" data-spw-context-relevance="schedulers orchestrating time cooperative multitasking priority queues concurrency" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="scheduler-lens" data-mode-panel="orientation" data-spw-role="orientation">
                         <figure class="frame-panel">
@@ -101,7 +101,7 @@
                         <p>How we orchestrate time determines how readable a system feels once it starts to move. Schedulers manage the 'tick' of the machine, ensuring that priority tasks and cooperative background work stay in balance.</p>
                     </section>
                 </div>
-                <div class="frame-topline">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#schedulers-hero">#&gt;task_scheduling_systems</a>
                     <div class="spec-strip">
                         <span class="spec-pill">priority queues</span>
@@ -113,10 +113,10 @@
                 <h1 id="schedulers-title">Orchestrating Time and Priority</h1>
                 <p>In a single-threaded runtime, the <strong>Scheduler</strong> is the sovereign that decides what lives and what waits. This surface explores the mechanics of <span class="spw-delimiter spw-delimiter--paren" data-spw-form="circle">(</span>cooperative multitasking<span class="spw-delimiter spw-delimiter--paren" data-spw-form="circle">)</span>: yielding to the main thread, managing <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>priority levels<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span>, and protecting the user experience from <span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&lt;</span>long-task starvation<span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&gt;</span>.</p>
                 <nav class="frame-operators" aria-label="Topic nav">
-                    <a class="operator-chip" href="#task-priority" data-spw-operator="frame" data-spw-action="address">#&gt;task_priority</a>
-                    <a class="operator-chip" href="#cooperative-yielding" data-spw-operator="frame" data-spw-action="address">#&gt;cooperative_yielding</a>
-                    <a class="operator-chip" href="#abort-mechanics" data-spw-operator="frame" data-spw-action="address">#&gt;abort_mechanics</a>
-                    <a class="operator-chip" href="/topics/software/">← software</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#task-priority" data-spw-operator="frame" data-spw-action="address">#&gt;task_priority</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#cooperative-yielding" data-spw-operator="frame" data-spw-action="address">#&gt;cooperative_yielding</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#abort-mechanics" data-spw-operator="frame" data-spw-action="address">#&gt;abort_mechanics</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/">← software</a>
                 </nav>
 
                 <figure
@@ -135,8 +135,8 @@
                 </figure>
             </section>
 
-            <section class="site-frame" id="task-priority" data-spw-role="reference" data-spw-meaning="task priority management" data-spw-form="square" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_schedulers__task_priority" data-spw-context-relevance="schedulers orchestrating time cooperative multitasking priority queues concurrency" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
-                <div class="frame-topline">
+            <section class="spw-frame" id="task-priority" data-spw-role="reference" data-spw-meaning="task priority management" data-spw-form="square" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_schedulers__task_priority" data-spw-context-relevance="schedulers orchestrating time cooperative multitasking priority queues concurrency" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#task-priority">^"priority_logic"{</a>
                     <div class="spec-strip">
                         <span class="spec-pill">user-blocking</span>
@@ -145,7 +145,7 @@
                     </div>
                 </div>
                 <h2>Task Priority Queues</h2>
-                <p class="inline-note">Not all tasks are created equal. A click response must beat a background analytics ping. The Prioritized Task Scheduling API gives us formal handles to signal intent to the browser's event loop.</p>
+                <p data-spw-textual-role="note">Not all tasks are created equal. A click response must beat a background analytics ping. The Prioritized Task Scheduling API gives us formal handles to signal intent to the browser's event loop.</p>
 
                 <svg class="spw-svg-surface cinematic-host" data-spw-svg-persona="learner implementer reviewer rendering-model" viewBox="0 0 640 180" role="img" aria-labelledby="sched-title" xmlns="http://www.w3.org/2000/svg">
                     <title id="sched-title">Task Priority Flow</title>
@@ -234,8 +234,8 @@
                 <a href="#scientific-resonance" class="chain-node">Lattice Dynamics</a>
             </div>
 
-            <section class="site-frame" id="cooperative-yielding" data-spw-role="reference" data-spw-meaning="cooperative concurrency" data-spw-form="circle" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_schedulers__cooperative_yielding" data-spw-context-relevance="schedulers orchestrating time cooperative multitasking priority queues concurrency" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
-                <div class="frame-topline">
+            <section class="spw-frame" id="cooperative-yielding" data-spw-role="reference" data-spw-meaning="cooperative concurrency" data-spw-form="circle" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_schedulers__cooperative_yielding" data-spw-context-relevance="schedulers orchestrating time cooperative multitasking priority queues concurrency" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#cooperative-yielding">~[cooperative_yielding]</a>
                     <div class="spec-strip">
                         <span class="spec-pill">idle callback</span>
@@ -244,7 +244,7 @@
                     </div>
                 </div>
                 <h2>Cooperative Multitasking</h2>
-                <p class="inline-note">Long tasks are the death of responsiveness. By yielding control back to the event loop, we allow the browser to process high-priority inputs and rendering before resuming our work.</p>
+                <p data-spw-textual-role="note">Long tasks are the death of responsiveness. By yielding control back to the event loop, we allow the browser to process high-priority inputs and rendering before resuming our work.</p>
 
                 <div class="ref-grid">
                     <div class="ref-card" data-spw-form="square">
@@ -276,12 +276,12 @@
                     </div>
                 </div>
             </section>
-            <section class="site-frame" id="staff-considerations" data-spw-role="reference" data-spw-meaning="architectural deep-dive" data-spw-form="square" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_schedulers__staff_considerations" data-spw-context-relevance="schedulers orchestrating time cooperative multitasking priority queues concurrency" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
-                <header class="frame-heading">
+            <section class="spw-frame" id="staff-considerations" data-spw-role="reference" data-spw-meaning="architectural deep-dive" data-spw-form="square" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_schedulers__staff_considerations" data-spw-context-relevance="schedulers orchestrating time cooperative multitasking priority queues concurrency" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#staff-considerations">$["staff_considerations"]</a>
                     <h2>Staff Engineering Deep-Dive</h2>
                 </header>
-                <p class="inline-note">For principal leads: how we model time determines the durability of the publishing pipeline. Consider these architectural constraints when leading a team towards modern production.</p>
+                <p data-spw-textual-role="note">For principal leads: how we model time determines the durability of the publishing pipeline. Consider these architectural constraints when leading a team towards modern production.</p>
                 <div class="frame-grid">
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_schedulers__panel_1">
                         <h3>Cooperative Multitasking</h3>
@@ -298,12 +298,12 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="scientific-resonance" data-spw-role="reference" data-spw-meaning="molecular resonance and rhythm" data-spw-form="brace" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_schedulers__scientific_resonance" data-spw-context-relevance="schedulers orchestrating time cooperative multitasking priority queues concurrency" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
-                <header class="frame-heading">
+            <section class="spw-frame" id="scientific-resonance" data-spw-role="reference" data-spw-meaning="molecular resonance and rhythm" data-spw-form="brace" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_schedulers__scientific_resonance" data-spw-context-relevance="schedulers orchestrating time cooperative multitasking priority queues concurrency" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#scientific-resonance">$["resonance"]</a>
                     <h2>Scientific Resonance: Lattice Dynamics</h2>
                 </header>
-                <p class="inline-note">Research Primer: How does clock-speed synchronicity translate into the 'Rhythmic Coherence' of a collaborative publishing pipeline?</p>
+                <p data-spw-textual-role="note">Research Primer: How does clock-speed synchronicity translate into the 'Rhythmic Coherence' of a collaborative publishing pipeline?</p>
                 <div class="frame-grid">
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_schedulers__panel_4">
                         <h3>Molecular Schedulers</h3>

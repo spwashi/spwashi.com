@@ -462,20 +462,20 @@
    Useful when pretext lives inside richer semantic frames.
    ========================================================================== */
 
-:where(.site-frame[data-spw-role="probe"] [data-spw-flow="pretext"]) {
+:where(.spw-frame[data-spw-role="probe"] [data-spw-flow="pretext"]) {
   --pretext-rail-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 26%, transparent);
   --pretext-edge-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 72%, var(--ink-soft, rgba(14,18,20,0.68)));
 }
 
-:where(.site-frame[data-spw-role="reference"] [data-spw-flow="pretext"]) {
+:where(.spw-frame[data-spw-role="reference"] [data-spw-flow="pretext"]) {
   --pretext-rail-color: color-mix(in srgb, var(--op-ref-color, #1d57a3) 20%, transparent);
 }
 
-:where(.site-frame[data-spw-role="schema"] [data-spw-flow="pretext"]) {
+:where(.spw-frame[data-spw-role="schema"] [data-spw-flow="pretext"]) {
   --pretext-rail-color: color-mix(in srgb, var(--op-binding-color, #8f401f) 20%, transparent);
 }
 
-:where(.site-frame[data-spw-role="surface"] [data-spw-flow="pretext"]) {
+:where(.spw-frame[data-spw-role="surface"] [data-spw-flow="pretext"]) {
   --pretext-rail-color: color-mix(in srgb, var(--op-surface-color, #178282) 22%, transparent);
 }
 

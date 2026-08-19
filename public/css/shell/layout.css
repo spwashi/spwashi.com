@@ -576,7 +576,7 @@ main :where(article > h1:first-child, section > h1:first-child) {
 
 /* Kicker → title → lede should read as one intro unit, not three stacks. */
 main :where(
-  .page-kicker + :is(h1, h2),
+  [data-spw-textual-role="kicker"] + :is(h1, h2),
   .section-kicker + :is(h1, h2),
   .spec-kicker + :is(h1, h2)
 ) {
@@ -584,8 +584,8 @@ main :where(
 }
 
 main :where(
-  h1 + :is(.page-lede, .site-lede, .hero-lede, .shell-lede),
-  h2 + :is(.page-lede, .site-lede, .hero-lede, .shell-lede)
+  h1 + :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"], [data-spw-textual-role="lede"], .shell-lede),
+  h2 + :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"], [data-spw-textual-role="lede"], .shell-lede)
 ) {
   margin-block-start: var(--space-2xs, 0.25rem);
 }
@@ -602,7 +602,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 .page-intro,
 .page-hero,
 .shell-hero,
-.site-hero {
+[data-spw-region-role="entry-spine"] {
   position: relative;
   display: grid;
   gap: clamp(0.85rem, 1.8vw, 1.2rem);
@@ -622,18 +622,18 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 .page-intro > :first-child,
 .page-hero > :first-child,
 .shell-hero > :first-child,
-.site-hero > :first-child {
+[data-spw-region-role="entry-spine"] > :first-child {
   margin-top: 0;
 }
 
 .page-intro > :last-child,
 .page-hero > :last-child,
 .shell-hero > :last-child,
-.site-hero > :last-child {
+[data-spw-region-role="entry-spine"] > :last-child {
   margin-bottom: 0;
 }
 
-.page-kicker,
+[data-spw-textual-role="kicker"],
 .hero-kicker,
 .section-kicker {
   display: inline-flex;
@@ -662,8 +662,8 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
    than per-route so About/Topics/Design/Services/Play inherit one treatment
    instead of five near-copies. Routes can still override — shell loads before
    routes. */
-.page-lede,
-.hero-lede,
+[data-spw-textual-role="lede"],
+[data-spw-textual-role="lede"],
 .shell-lede {
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, transparent);
   font-family: var(--site-editorial-font, "Newsreader", Georgia, serif);
@@ -1139,7 +1139,7 @@ figure.generic-figure,
   .page-intro,
   .page-hero,
   .shell-hero,
-  .site-hero {
+  [data-spw-region-role="entry-spine"] {
     /* Stay on the shared hero pad token — do not invent a second gutter. */
     padding-inline: var(--shell-hero-pad-inline);
   }
@@ -1197,7 +1197,7 @@ figure.generic-figure,
     --spw-component-pad: 0.62rem;
   }
 
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .meta-chip,
   .info-chip {

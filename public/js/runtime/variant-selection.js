@@ -10,7 +10,7 @@ import { parseModularQuery } from '/public/js/kernel/query-composer.js';
 import { queryParamsToSettingsPartial } from '/public/js/kernel/settings-query-parity.js';
 import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
 
-const VARIANT_CONTAINER_SELECTOR = '.site-frame, .frame-card, [data-spw-feature]';
+const VARIANT_CONTAINER_SELECTOR = '.spw-frame, [data-spw-kind="frame"], .spw-card, .frame-card, [data-spw-feature]';
 const MODE_BUTTON_SELECTOR = '.mode-switch [data-set-mode]';
 const VARIANT_EVENT = 'spw:variant-selected';
 

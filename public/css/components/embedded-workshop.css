@@ -4,7 +4,7 @@
    Compact route-embedded tuning frames (exported from home climate-tuning).
    ========================================================================== */
 
-:where(.spw-embedded-workshop.site-frame) {
+:where(.spw-embedded-workshop.spw-frame) {
   margin-block: var(--flow-section-gap, clamp(1.4rem, 3vw, 2.6rem));
   border-color: color-mix(in srgb, var(--active-op-color, #008080) 18%, var(--line, rgba(14, 18, 20, 0.14)) 82%);
   background:
@@ -28,7 +28,7 @@
   gap: 0.34rem;
 }
 
-:where(.spw-embedded-workshop .frame-note) {
+:where(.spw-embedded-workshop [data-spw-textual-role="note"]) {
   max-inline-size: 62ch;
 }
 
@@ -37,7 +37,7 @@
     gap: 0.34rem;
   }
 
-  :where(.spw-embedded-workshop .operator-chip) {
+  :where(.spw-embedded-workshop .spw-chip) {
     font-size: 0.72rem;
   }
 }
@@ -164,7 +164,7 @@
   top: 1rem;
 }
 
-:where(.specimen-preview-card.site-frame) {
+:where(.specimen-preview-card.spw-frame) {
   margin: 0;
   padding: 1rem;
   border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 28%, var(--line, rgba(14, 18, 20, 0.15)));

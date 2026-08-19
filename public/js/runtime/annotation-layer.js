@@ -13,7 +13,7 @@ const HANDLE_SELECTOR = '[data-spw-annotation-handle], [data-spw-header-annotati
    container (.site-frame, .frame-card, etc.) so memory + annotation create
    observable resonance across the container topology. This turns passive
    reading surfaces into active wonder participants. */
-const COGNITIVE_CONTAINER_SELECTOR = '.site-frame, .frame-card, .mode-panel, [data-spw-form="brace"]';
+const COGNITIVE_CONTAINER_SELECTOR = '.spw-frame, [data-spw-kind="frame"], .spw-card, .frame-card, .spw-panel, .mode-panel, [data-spw-form="brace"]';
 const ACTIVE_SECTION_EVENT = 'spw:section-locomotion-state';
 const ANNOTATION_EVENT = 'spw:annotation-layer-state';
 const HOLD_MS = 420;

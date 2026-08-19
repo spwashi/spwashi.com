@@ -181,7 +181,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   gap: clamp(1rem, 2.2vw, 1.5rem);
 }
 
-:where(body[data-spw-surface="website"] article > .site-frame) {
+:where(body[data-spw-surface="website"] article > .spw-frame) {
   position: relative;
   overflow: clip;
   border-color: var(--website-line);
@@ -189,12 +189,12 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   box-shadow: var(--website-shadow);
 }
 
-:where(body[data-spw-surface="website"] article > .site-frame:hover) {
+:where(body[data-spw-surface="website"] article > .spw-frame:hover) {
   box-shadow: var(--website-shadow-active);
 }
 
 /* subtle topographic wash */
-:where(body[data-spw-surface="website"] article > .site-frame)::before {
+:where(body[data-spw-surface="website"] article > .spw-frame)::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -253,40 +253,40 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
    3. Section identity by category family
    ========================================================================== */
 
-:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="nook"]) {
+:where(body[data-spw-surface="website"] .spw-frame[data-spw-category-family="nook"]) {
   --family-accent: color-mix(in srgb, var(--website-accent) 74%, var(--amber, #c58b2a) 26%);
 }
 
-:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="register"]) {
+:where(body[data-spw-surface="website"] .spw-frame[data-spw-category-family="register"]) {
   --family-accent: color-mix(in srgb, var(--op-ref-color, #1d57a3) 62%, var(--website-accent) 38%);
 }
 
-:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="portal"]) {
+:where(body[data-spw-surface="website"] .spw-frame[data-spw-category-family="portal"]) {
   --family-accent: color-mix(in srgb, var(--op-probe-color, #4a2180) 54%, var(--website-accent) 46%);
 }
 
-:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="specimen"]) {
+:where(body[data-spw-surface="website"] .spw-frame[data-spw-category-family="specimen"]) {
   --family-accent: color-mix(in srgb, var(--op-object-color, #2f5d8d) 56%, var(--website-accent) 44%);
 }
 
-:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="workshop"]) {
+:where(body[data-spw-surface="website"] .spw-frame[data-spw-category-family="workshop"]) {
   --family-accent: color-mix(in srgb, var(--op-binding-color, #8f401f) 58%, var(--website-accent) 42%);
 }
 
-:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="theatre"]) {
+:where(body[data-spw-surface="website"] .spw-frame[data-spw-category-family="theatre"]) {
   --family-accent: color-mix(in srgb, var(--op-surface-color, #178282) 58%, var(--website-accent) 42%);
 }
 
-:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="archive"]) {
+:where(body[data-spw-surface="website"] .spw-frame[data-spw-category-family="archive"]) {
   --family-accent: color-mix(in srgb, var(--op-meta-color, #324a85) 56%, var(--website-accent) 44%);
 }
 
-:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family]) {
+:where(body[data-spw-surface="website"] .spw-frame[data-spw-category-family]) {
   border-left-width: 2px;
   border-left-color: color-mix(in srgb, var(--family-accent, var(--website-accent)) 34%, transparent);
 }
 
-:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family] .frame-heading h2) {
+:where(body[data-spw-surface="website"] .spw-frame[data-spw-category-family] .frame-heading h2) {
   text-wrap: balance;
 }
 
@@ -518,12 +518,12 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   gap: 0.42rem;
 }
 
-:where(body[data-spw-surface="website"] .operator-chip) {
+:where(body[data-spw-surface="website"] .spw-chip) {
   border-color: color-mix(in srgb, var(--website-accent) 18%, transparent);
   background: var(--website-chip-bg);
 }
 
-:where(body[data-spw-surface="website"] .operator-chip:hover) {
+:where(body[data-spw-surface="website"] .spw-chip:hover) {
   border-color: color-mix(in srgb, var(--website-accent) 30%, transparent);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--website-accent) 10%, transparent);
 }
@@ -563,7 +563,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
 }
 
 @media (max-width: 40rem) {
-  :where(body[data-spw-surface="website"] article > .site-frame) {
+  :where(body[data-spw-surface="website"] article > .spw-frame) {
     box-shadow:
       0 6px 14px rgba(0, 0, 0, 0.05),
       0 1px 4px rgba(0, 0, 0, 0.03);
@@ -580,11 +580,11 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
 
 @media (prefers-reduced-motion: reduce) {
   :where(
-    body[data-spw-surface="website"] article > .site-frame,
+    body[data-spw-surface="website"] article > .spw-frame,
     body[data-spw-surface="website"] .media-card,
     body[data-spw-surface="website"] .media-focus-card,
     body[data-spw-surface="website"] #promptability-register .frame-card,
-    body[data-spw-surface="website"] .operator-chip
+    body[data-spw-surface="website"] .spw-chip
   ) {
     transition: none !important;
     transform: none !important;
@@ -599,7 +599,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
    stage geometry: topline rows, hero packing, copy auto-fit.
    ========================================================================== */
 
-:where(body[data-spw-page-role="composition-reference"] #composition-bundles.site-frame) {
+:where(body[data-spw-page-role="composition-reference"] #composition-bundles.spw-frame) {
   /* Keep the default flex stage — do NOT use display:grid here.
      Box-model annotates computed display onto data-spw-composition-flow; grid
      on a stage was activating multi-column auto-fit packing of children. */
@@ -717,7 +717,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   align-content: start;
 }
 
-:where(body[data-spw-page-role="composition-reference"] .composition-hero__title > .page-kicker) {
+:where(body[data-spw-page-role="composition-reference"] .composition-hero__title > [data-spw-textual-role="kicker"]) {
   display: inline-flex;
   width: fit-content;
   max-inline-size: 100%;

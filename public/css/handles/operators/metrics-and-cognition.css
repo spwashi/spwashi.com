@@ -29,7 +29,7 @@
     color var(--handle-duration-fast) var(--handle-ease);
 }
 
-:where([data-spw-features~="metrics"] .site-frame[data-state~="active"] .frame-metrics-bar,
+:where([data-spw-features~="metrics"] .spw-frame[data-state~="active"] .frame-metrics-bar,
        [data-spw-features~="metrics"] .frame-metrics-bar:hover) {
   opacity: 1;
 }
@@ -61,7 +61,7 @@
 
 /* Guiding should only style component-family containers, not arbitrary nodes. */
 :where(
-  .site-frame,
+  .spw-frame,
   .frame-panel,
   .frame-card,
   .software-card,
@@ -79,7 +79,7 @@
 
 /* Guided threshold states should read as an earned seam, not a generic highlight. */
 :where(
-  .site-frame,
+  .spw-frame,
   .frame-panel,
   .frame-card,
   .software-card,
@@ -90,7 +90,7 @@
 }
 
 html[data-spw-show-semantic-metadata="on"] :where(
-  .site-frame,
+  .spw-frame,
   .frame-panel,
   .frame-card,
   .software-card,
@@ -98,7 +98,7 @@ html[data-spw-show-semantic-metadata="on"] :where(
   .mode-panel
 )[data-spw-guided="true"] > .spw-component-guides,
 html[data-spw-show-semantic-metadata="on"] :where(
-  .site-frame,
+  .spw-frame,
   .frame-panel,
   .frame-card,
   .software-card,
@@ -113,7 +113,7 @@ html[data-spw-cognitive-handles="off"] :is(.spw-smart-console-host, .cognitive-s
 }
 
 html[data-spw-cognitive-handles="off"] :where(
-  .site-frame,
+  .spw-frame,
   .frame-panel,
   .frame-card,
   .software-card,

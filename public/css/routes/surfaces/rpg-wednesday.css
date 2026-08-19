@@ -46,7 +46,7 @@
   gap: clamp(1rem, 2vw, 1.4rem);
 }
 
-:where(body[data-spw-surface="rpg-wednesday"] .site-frame) {
+:where(body[data-spw-surface="rpg-wednesday"] .spw-frame) {
   overflow: clip;
   border-color: var(--rpg-line);
   background: var(--rpg-paper);
@@ -85,14 +85,14 @@
     linear-gradient(135deg, rgba(93, 147, 103, 0.06), transparent 58%);
 }
 
-:where(body[data-spw-surface="rpg-wednesday"] .site-hero) {
+:where(body[data-spw-surface="rpg-wednesday"] [data-spw-region-role="entry-spine"]) {
   background:
     radial-gradient(circle at 86% 20%, rgba(176, 106, 91, 0.12), transparent 22%),
     radial-gradient(circle at 18% 10%, rgba(93, 147, 103, 0.08), transparent 24%),
     var(--rpg-paper);
 }
 
-:where(body[data-spw-surface="rpg-wednesday"] .site-hero > :where(
+:where(body[data-spw-surface="rpg-wednesday"] [data-spw-region-role="entry-spine"] > :where(
   .spec-kicker,
   h1,
   .rpg-quick-actions,
@@ -272,7 +272,7 @@
   gap: 0.38rem;
 }
 
-:where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget :is(.spec-pill, .operator-chip)) {
+:where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget :is(.spec-pill, .spw-chip)) {
   min-block-size: 1.7rem;
   max-inline-size: 100%;
   padding: 0.18rem 0.52rem;
@@ -288,7 +288,7 @@
   color: color-mix(in srgb, var(--ink, #111) 86%, var(--rpg-accent) 14%);
 }
 
-:where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget .operator-chip) {
+:where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget .spw-chip) {
   flex: 0 1 auto;
   justify-content: flex-start;
   overflow-wrap: anywhere;

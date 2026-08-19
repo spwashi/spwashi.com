@@ -316,7 +316,7 @@
 }
 
 /* Floating Chrome & Session Accumulation State */
-:where(html:has(.spw-state-inspector__panel:not([hidden]))) :where([data-container-type], .site-frame) {
+:where(html:has(.spw-state-inspector__panel:not([hidden]))) :where([data-container-type], .spw-frame) {
     --charge-accent: var(--op-frame-color, #008080);
     outline-color: color-mix(in srgb, var(--active-op-color, #008080) 22%, transparent);
 }

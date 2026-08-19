@@ -27,20 +27,20 @@
  * Reader (default) = first paint. Inspect/editor may show prefixes.
  */
 :where(body[data-spw-display-layer="reader"])
-  :where(.site-header nav a, body > header nav a):not(.operator-chip) {
+  :where(.site-header nav a, body > header nav a):not(.spw-chip) {
   color: var(--ink, #14181a);
 }
 
 :where(body[data-spw-display-layer="reader"])
   :where(.site-header, body > header)[data-spw-nav-visual="authored"]
-  nav a:not(.operator-chip)[data-spw-nav-tokenized="true"] {
+  nav a:not(.spw-chip)[data-spw-nav-tokenized="true"] {
   gap: var(--spw-shell-link-gap, 0.38rem);
 }
 
 :where(body[data-spw-display-layer="reader"])
-  :where(.site-header nav a, body > header nav a):not(.operator-chip)[data-spw-nav-tokenized="true"]::before,
+  :where(.site-header nav a, body > header nav a):not(.spw-chip)[data-spw-nav-tokenized="true"]::before,
 :where(body[data-spw-display-layer="reader"])
-  :where(.site-header nav a, body > header nav a):not(.operator-chip)[data-spw-nav-tokenized="true"]::after {
+  :where(.site-header nav a, body > header nav a):not(.spw-chip)[data-spw-nav-tokenized="true"]::after {
   content: none !important;
   display: none !important;
 }
@@ -68,7 +68,7 @@
   display: none !important;
 }
 
-:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .site-header nav a:not(.operator-chip)[data-spw-nav-tokenized="true"]::before {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .site-header nav a:not(.spw-chip)[data-spw-nav-tokenized="true"]::before {
   display: inline-flex;
 }
 
@@ -79,7 +79,7 @@
   html[data-spw-explore-posture="reading"]
 ) :where(body[data-spw-display-layer="reader"])
   :where(
-    .operator-chip[data-spw-audience~="expert"]:not([data-spw-audience~="reader"]),
+    .spw-chip[data-spw-audience~="expert"]:not([data-spw-audience~="reader"]),
     [data-spw-audience~="expert"][data-spw-promptability="latent"]:not([data-spw-audience~="reader"])
   ) {
   display: none;

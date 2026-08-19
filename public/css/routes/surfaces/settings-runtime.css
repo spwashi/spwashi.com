@@ -117,6 +117,6 @@
   margin: 0.5rem 0 0.8rem;
 }
 
-:where(body[data-spw-surface="settings"] .settings-nav-card .operator-chip) {
+:where(body[data-spw-surface="settings"] .settings-nav-card .spw-chip) {
   margin-top: auto;
 }

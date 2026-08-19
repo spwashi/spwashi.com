@@ -273,7 +273,7 @@ html[data-spw-theme-pack="banked-ember"] :where([data-spw-harmony="editorial"]) 
    drinks light (seam stays at --line); as the field rises the crack warms
    toward gold, and the hidden blue only surfaces at full charge — the
    "sudden angle reveals hidden blues and purples" behavior. */
-html[data-spw-theme-pack="banked-ember"] :where(.site-frame, .frame-card, .frame-panel) {
+html[data-spw-theme-pack="banked-ember"] :where(.spw-frame, .frame-card, .frame-panel) {
   --site-frame-seam-color: color-mix(
     in oklab,
     var(--ember-base-seam),
@@ -313,7 +313,7 @@ html[data-spw-color-mode="light"][data-spw-theme-pack="glass-console"] :where([d
 }
 
 /* Glass console: smooth glass panels that respond to interaction charge by becoming more opaque and reflective. */
-html[data-spw-theme-pack="glass-console"] :where(.site-frame, .frame-card, .frame-panel) {
+html[data-spw-theme-pack="glass-console"] :where(.spw-frame, .frame-card, .frame-panel) {
   --material-blur: calc(var(--glass-base-blur) + (var(--spw-charge-field, 0) * 8px));
   --surface-glass: color-mix(
     in oklab,
@@ -343,7 +343,7 @@ html[data-spw-theme-pack="copper-brace"] :where([data-spw-harmony="responsive"],
 }
 
 /* Copper brace: oxidized metal that heats up under interaction charge, burning away the patina to reveal bright copper. */
-html[data-spw-theme-pack="copper-brace"] :where(.site-frame, .frame-card, .frame-panel) {
+html[data-spw-theme-pack="copper-brace"] :where(.spw-frame, .frame-card, .frame-panel) {
   --component-accent: color-mix(
     in oklab,
     var(--copper-base-accent) calc(100% - (var(--spw-charge-field, 0) * 80%)),
@@ -373,7 +373,7 @@ html[data-spw-theme-pack="electric-studio"] :where([data-spw-harmony="editorial"
 }
 
 /* Electric studio: neon tubes that spark and intensify when charged. */
-html[data-spw-theme-pack="electric-studio"] :where(.site-frame, .frame-card, .frame-panel) {
+html[data-spw-theme-pack="electric-studio"] :where(.spw-frame, .frame-card, .frame-panel) {
   --site-frame-seam-color: color-mix(
     in oklab,
     var(--electric-base-seam),
@@ -403,7 +403,7 @@ html[data-spw-theme-pack="ritual-vellum"] :where([data-spw-harmony="structured"]
 }
 
 /* Ritual vellum: ancient paper where the page warms and the ink rises as it is touched. */
-html[data-spw-theme-pack="ritual-vellum"] :where(.site-frame, .frame-card, .frame-panel) {
+html[data-spw-theme-pack="ritual-vellum"] :where(.spw-frame, .frame-card, .frame-panel) {
   --bg-field: color-mix(
     in oklab,
     var(--ritual-base-field),
@@ -429,7 +429,7 @@ html[data-spw-theme-pack="neutral-paper"] :where([data-spw-harmony="structured"]
 }
 
 /* Neutral paper: subtle elevation lift that stays clean and documentary. */
-html[data-spw-theme-pack="neutral-paper"] :where(.site-frame, .frame-card, .frame-panel) {
+html[data-spw-theme-pack="neutral-paper"] :where(.spw-frame, .frame-card, .frame-panel) {
   --card-shadow: 0 calc(1px + var(--spw-charge-field, 0) * 3px) calc(3px + var(--spw-charge-field, 0) * 10px) color-mix(in oklab, var(--paper-base-shadow), var(--teal) calc(var(--spw-charge-field, 0) * 6%));
 }
 
@@ -442,7 +442,7 @@ html[data-spw-theme-pack="oxide-ledger"] :where([data-spw-harmony="editorial"]) 
 }
 
 /* Oxide ledger: austere matte material that subtly depresses or highlights without deep glow. */
-html[data-spw-theme-pack="oxide-ledger"] :where(.site-frame, .frame-card, .frame-panel) {
+html[data-spw-theme-pack="oxide-ledger"] :where(.spw-frame, .frame-card, .frame-panel) {
   --card-shadow: 0 calc(1px + var(--spw-charge-field, 0) * 2px) calc(4px + var(--spw-charge-field, 0) * 8px) color-mix(in oklab, var(--oxide-base-shadow), var(--teal) calc(var(--spw-charge-field, 0) * 12%));
   --site-frame-seam-color: color-mix(
     in oklab,

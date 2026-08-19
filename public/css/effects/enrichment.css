@@ -102,9 +102,9 @@
      * physical press feedback instead.
      */
     :where(
-        .frame-card:active, 
-        .operator-chip:active, 
-        .spec-pill:active, 
+        .frame-card:active,
+        .spw-chip:active,
+        .spec-pill:active,
         button:active
     ) {
         transform: scale(calc(1 - (0.008 * var(--spw-interaction-scale, 1))));

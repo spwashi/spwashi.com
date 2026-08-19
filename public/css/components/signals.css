@@ -128,12 +128,12 @@
   --spw-site-rhythm-tempo: min(var(--spw-site-rhythm-tempo, 1), 0.88);
 }
 
-:where(html[data-spw-page-arrival="settled"]) :where(.site-frame[data-state~="active"]) {
+:where(html[data-spw-page-arrival="settled"]) :where(.spw-frame[data-state~="active"]) {
   --site-frame-seam-color: color-mix(in srgb, var(--component-accent) 28%, transparent);
 }
 
 :where(html[data-spw-page-arrival="settled"]) :where(
-  .operator-chip,
+  .spw-chip,
   .frame-sigil,
   .mode-switch .frame-sigil,
   .spw-nav-toggle,
@@ -172,48 +172,48 @@
 :where(
   html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]),
   html[data-spw-page-settling="true"]
-) :where(main > .site-frame, main > article > .site-frame) {
+) :where(main > .spw-frame, main > article > .spw-frame) {
   transition:
     opacity var(--component-transition-arrival),
     transform var(--component-transition-arrival);
 }
 
-:where(html[data-spw-page-arrival-step="1"]) :where(main > .site-frame, main > article > .site-frame):not(:target):not(:focus-within) {
+:where(html[data-spw-page-arrival-step="1"]) :where(main > .spw-frame, main > article > .spw-frame):not(:target):not(:focus-within) {
   --frame-arrival-offset: var(--spw-settle-offset-start, 2px);
   --frame-arrival-opacity: var(--spw-settle-opacity-start, 0.96);
 }
 
-:where(html[data-spw-page-arrival-step="2"]) :where(main > .site-frame, main > article > .site-frame):not(:target):not(:focus-within) {
+:where(html[data-spw-page-arrival-step="2"]) :where(main > .spw-frame, main > article > .spw-frame):not(:target):not(:focus-within) {
   --frame-arrival-offset: var(--spw-settle-offset-mid, 1px);
   --frame-arrival-opacity: var(--spw-settle-opacity-mid, 0.985);
 }
 
-:where(html[data-spw-page-arrival-step="3"]) :where(main > .site-frame, main > article > .site-frame):not(:target):not(:focus-within) {
+:where(html[data-spw-page-arrival-step="3"]) :where(main > .spw-frame, main > article > .spw-frame):not(:target):not(:focus-within) {
   --frame-arrival-offset: var(--spw-settle-offset-end, 0.25px);
   --frame-arrival-opacity: var(--spw-settle-opacity-end, 0.995);
 }
 
-:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(1) {
+:where(html[data-spw-page-settling="true"]) main > :where(.spw-frame, article > .spw-frame):nth-child(1) {
   transition-delay: 0ms;
 }
 
-:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(2) {
+:where(html[data-spw-page-settling="true"]) main > :where(.spw-frame, article > .spw-frame):nth-child(2) {
   transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * (1 - var(--spw-layout-cascade-hold, 0)));
 }
 
-:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(3) {
+:where(html[data-spw-page-settling="true"]) main > :where(.spw-frame, article > .spw-frame):nth-child(3) {
   transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 2 * (1 - var(--spw-layout-cascade-hold, 0)));
 }
 
-:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(4) {
+:where(html[data-spw-page-settling="true"]) main > :where(.spw-frame, article > .spw-frame):nth-child(4) {
   transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 3 * (1 - var(--spw-layout-cascade-hold, 0)));
 }
 
-:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(5) {
+:where(html[data-spw-page-settling="true"]) main > :where(.spw-frame, article > .spw-frame):nth-child(5) {
   transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 4 * (1 - var(--spw-layout-cascade-hold, 0)));
 }
 
-:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(6) {
+:where(html[data-spw-page-settling="true"]) main > :where(.spw-frame, article > .spw-frame):nth-child(6) {
   transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 5 * (1 - var(--spw-layout-cascade-hold, 0)));
 }
 
@@ -425,7 +425,7 @@
 
 :where(
   [data-spw-arc],
-  .operator-chip,
+  .spw-chip,
   .frame-sigil,
   .spw-nav-toggle,
   .site-header nav a,

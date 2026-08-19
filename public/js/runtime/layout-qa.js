@@ -169,7 +169,7 @@ export function snapshotPacking(root = document, options = {}) {
   }
 
   // Sample structural overflow on main frames (cheap; capped)
-  const frameSample = Array.from(root.querySelectorAll?.('main .site-frame, main [data-spw-kind="frame"]') || []).slice(0, 24);
+  const frameSample = Array.from(root.querySelectorAll?.('main .spw-frame, main [data-spw-kind="frame"]') || []).slice(0, 24);
   const overflowingFrames = frameSample.filter(isOverflowing).map((el) => ({
     id: el.id || null,
     kind: el.dataset?.spwKind || el.getAttribute('data-spw-kind') || 'frame',

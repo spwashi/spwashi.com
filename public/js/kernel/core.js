@@ -18,7 +18,8 @@ import { groundElement } from '/public/js/interface/haptics.js';
 import { createSpwLogger, markInstrumented } from '/public/js/kernel/instrumentation.js';
 
 const KNOWLEDGE_TARGET_SELECTOR = [
-    '.operator-chip',
+    '.spw-chip',
+    '[data-spw-operator]',
     '.syntax-token',
     '.frame-sigil',
     '.spec-pill',

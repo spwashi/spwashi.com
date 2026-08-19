@@ -64,12 +64,12 @@
    ========================================================================== */
 
 :where(
-  .site-frame,
+  .spw-frame,
   .frame-panel,
   .frame-card,
   .mode-panel,
   .software-card,
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .spw-topic,
   [data-spw-topic],
@@ -101,7 +101,7 @@
    flourish resonance (--spw-resonance / data-spw-resonance-probe) does not
    dirty large layout subtrees (coordinate_parity with operators + attention). */
 :where(
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .spw-topic,
   [data-spw-topic],
@@ -187,7 +187,7 @@ html[data-spw-reduce-motion="on"] :where([data-spw-operator], [data-spw-sigil]) 
 }
 
 :where(
-  .operator-chip.spw-delight,
+  .spw-chip.spw-delight,
   .spec-pill.spw-delight,
   .spw-topic.spw-delight,
   [data-spw-topic].spw-delight,
@@ -198,7 +198,7 @@ html[data-spw-reduce-motion="on"] :where([data-spw-operator], [data-spw-sigil]) 
 }
 
 :where(
-  .site-frame[data-spw-delight="settled"],
+  .spw-frame[data-spw-delight="settled"],
   .frame-panel[data-spw-delight="settled"],
   .frame-card[data-spw-delight="settled"],
   .mode-panel[data-spw-delight="settled"]
@@ -238,7 +238,7 @@ html[data-spw-reduce-motion="on"] :where([data-spw-operator], [data-spw-sigil]) 
 }
 
 :where(
-  .site-frame[data-spw-wonder-state="resonant"],
+  .spw-frame[data-spw-wonder-state="resonant"],
   .frame-panel[data-spw-wonder-state="resonant"],
   .frame-card[data-spw-wonder-state="resonant"],
   .mode-panel[data-spw-wonder-state="resonant"],
@@ -335,7 +335,7 @@ html[data-spw-interaction-wonder="architecture"] {
   main [data-spw-component-kind],
   main [data-spw-accent-concept],
   main [data-spw-visual-cues],
-  .operator-chip,
+  .spw-chip,
   .frame-sigil,
   .spw-component-tag,
   .spw-guide-chip
@@ -354,7 +354,7 @@ html[data-spw-interaction-wonder="architecture"] {
   main [data-spw-component-kind],
   main [data-spw-accent-concept],
   main [data-spw-visual-cues],
-  .operator-chip,
+  .spw-chip,
   .frame-sigil,
   .spw-component-tag,
   .spw-guide-chip
@@ -383,8 +383,8 @@ html[data-spw-interaction-wonder="architecture"] {
 :where(html[data-spw-concept-relation="curiosity"]) :where(
   main [data-spw-accent-concept],
   main [data-spw-visual-cues],
-  .operator-chip[data-spw-operator="probe"],
-  .operator-chip[data-spw-operator="wonder"]
+  .spw-chip[data-spw-operator="probe"],
+  .spw-chip[data-spw-operator="wonder"]
 ) {
   --spw-reward-color: var(--spw-curiosity-color);
   box-shadow:
@@ -396,8 +396,8 @@ html[data-spw-interaction-wonder="architecture"] {
 :where(html[data-spw-concept-relation="relationship"]) :where(
   main [data-spw-related-routes],
   main [data-spw-feature],
-  .operator-chip[data-spw-operator="ref"],
-  .operator-chip[data-spw-operator="route"]
+  .spw-chip[data-spw-operator="ref"],
+  .spw-chip[data-spw-operator="route"]
 ) {
   --spw-reward-color: var(--spw-relationship-color);
   box-shadow:
@@ -409,9 +409,9 @@ html[data-spw-interaction-wonder="architecture"] {
 :where(html[data-spw-concept-relation="architecture"]) :where(
   main [data-spw-region-role],
   main [data-spw-component-kind],
-  .operator-chip[data-spw-operator="frame"],
-  .operator-chip[data-spw-operator="address"],
-  .operator-chip[data-spw-operator="object"]
+  .spw-chip[data-spw-operator="frame"],
+  .spw-chip[data-spw-operator="address"],
+  .spw-chip[data-spw-operator="object"]
 ) {
   --spw-reward-color: var(--spw-architecture-color);
   box-shadow:
@@ -457,56 +457,56 @@ html[data-spw-interaction-wonder="architecture"] {
    operator families.
    ========================================================================== */
 
-:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="probe"], [data-spw-operator="wonder"]):is(:hover, :focus-visible) {
+:where(.spw-chip, [data-spw-operator]):is([data-spw-operator="probe"], [data-spw-operator="wonder"]):is(:hover, :focus-visible) {
   transform: translateY(-1.5px);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--op-probe-color) 38%, transparent),
     var(--op-probe-glow);
 }
 
-:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="integration"], [data-spw-operator="object"]):is(:hover, :focus-visible) {
+:where(.spw-chip, [data-spw-operator]):is([data-spw-operator="integration"], [data-spw-operator="object"]):is(:hover, :focus-visible) {
   transform: translateY(-1.5px) scale(1.015);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--op-object-color) 38%, transparent),
     var(--op-object-glow);
 }
 
-:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="potential"], [data-spw-operator="ref"]):is(:hover, :focus-visible) {
+:where(.spw-chip, [data-spw-operator]):is([data-spw-operator="potential"], [data-spw-operator="ref"]):is(:hover, :focus-visible) {
   transform: translateY(-1px);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--op-ref-color) 38%, transparent),
     var(--op-ref-glow);
 }
 
-:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="perspective"], [data-spw-operator="action"], [data-spw-operator="commit"]):is(:hover, :focus-visible) {
+:where(.spw-chip, [data-spw-operator]):is([data-spw-operator="perspective"], [data-spw-operator="action"], [data-spw-operator="commit"]):is(:hover, :focus-visible) {
   transform: translateY(-1px);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--op-action-color) 42%, transparent),
     var(--op-action-glow);
 }
 
-:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="concept"], [data-spw-operator="concept-edge"], [data-spw-operator="topic"]):is(:hover, :focus-visible) {
+:where(.spw-chip, [data-spw-operator]):is([data-spw-operator="concept"], [data-spw-operator="concept-edge"], [data-spw-operator="topic"]):is(:hover, :focus-visible) {
   transform: translateY(-1px);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--op-topic-color) 38%, transparent),
     var(--op-topic-glow);
 }
 
-:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="substrate"], [data-spw-operator="meta"]):is(:hover, :focus-visible) {
+:where(.spw-chip, [data-spw-operator]):is([data-spw-operator="substrate"], [data-spw-operator="meta"]):is(:hover, :focus-visible) {
   transform: translateY(-0.5px);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--op-substrate-color) 34%, transparent),
     var(--op-substrate-glow);
 }
 
-:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="ground"], [data-spw-operator="baseline"]):is(:hover, :focus-visible) {
+:where(.spw-chip, [data-spw-operator]):is([data-spw-operator="ground"], [data-spw-operator="baseline"]):is(:hover, :focus-visible) {
   transform: translateY(0);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--op-baseline-color) 30%, transparent),
     var(--op-baseline-glow);
 }
 
-:where(.operator-chip, [data-spw-operator]):active {
+:where(.spw-chip, [data-spw-operator]):active {
   transform: scale(0.975);
   transition-duration: var(--duration-instant, 60ms);
 }
@@ -519,7 +519,7 @@ html[data-spw-interaction-wonder="architecture"] {
    ========================================================================== */
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .spw-topic,
   [data-spw-topic],
@@ -536,7 +536,7 @@ html[data-spw-interaction-wonder="architecture"] {
 }
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .spw-topic,
   [data-spw-topic],
@@ -555,7 +555,7 @@ html[data-spw-interaction-wonder="architecture"] {
 }
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .spw-topic,
   [data-spw-topic],
@@ -575,7 +575,7 @@ html[data-spw-interaction-wonder="architecture"] {
 }
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .spw-topic,
   [data-spw-topic],
@@ -618,7 +618,7 @@ html[data-spw-interaction-wonder="architecture"] {
 }
 
 :where(
-  .site-frame[data-spw-charge="sustained"],
+  .spw-frame[data-spw-charge="sustained"],
   .frame-panel[data-spw-charge="sustained"],
   .frame-card[data-spw-charge="sustained"],
   .mode-panel[data-spw-charge="sustained"]
@@ -733,7 +733,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   border-color: var(--teal-soft, #1a9999) !important;
 }
 
-[data-spw-persona="viewer"] :where(.site-frame, .frame-panel, .frame-card)[data-spw-wonder-state="resonant"] {
+[data-spw-persona="viewer"] :where(.spw-frame, .frame-panel, .frame-card)[data-spw-wonder-state="resonant"] {
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 18%, transparent),
     0 0 14px color-mix(in srgb, var(--wonder-accent-color) 10%, transparent);
@@ -744,7 +744,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   letter-spacing: 0.05em;
 }
 
-[data-spw-persona="doodler"] :where(.operator-chip, .spw-topic, [data-spw-topic])[data-spw-wonder-state="accented"] {
+[data-spw-persona="doodler"] :where(.spw-chip, .spw-topic, [data-spw-topic])[data-spw-wonder-state="accented"] {
   transform: rotate(-1deg);
 }
 
@@ -1017,7 +1017,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
 }
 
 [data-spw-semantics="unlocked"] :where(
-  .site-frame,
+  .spw-frame,
   .frame-panel,
   .frame-card,
   .mode-panel,
@@ -1260,13 +1260,13 @@ html[data-spw-resonance-probe="surface"] :where([data-spw-operator="surface"]:no
   --spw-resonance: calc(var(--attention-field-radius, 0.4) * var(--attention-field-decay, 0.65) + 0.25);
 }
 
-html[data-spw-resonance-probe="frame"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="frame"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="object"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="object"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="probe"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="probe"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="ref"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="ref"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="action"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="action"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="stream"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="stream"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="surface"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="surface"]:not(:hover):not(:focus-visible) {
+html[data-spw-resonance-probe="frame"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="frame"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="object"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="object"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="probe"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="probe"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="ref"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="ref"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="action"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="action"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="stream"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="stream"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="surface"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="surface"]:not(:hover):not(:focus-visible) {
   border-color: color-mix(
     in srgb,
     var(--spw-operator-color, var(--active-op-color, var(--teal))) 28%,
@@ -1361,7 +1361,7 @@ html[data-spw-transit-momentum="active"] :where([data-spw-form="brace"], .mode-s
 }
 
 /* Attenuation for out-of-lens background elements within an inspected frame */
-:where(.site-frame:has(.mode-switch [aria-pressed="true"])) :where([data-mode-panel]:not([data-spw-lens-active="true"]):not(:target)) {
+:where(.spw-frame:has(.mode-switch [aria-pressed="true"])) :where([data-mode-panel]:not([data-spw-lens-active="true"]):not(:target)) {
   --spw-lens-relevance: 0.25;
 }
 

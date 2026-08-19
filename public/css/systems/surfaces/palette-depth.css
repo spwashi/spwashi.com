@@ -78,7 +78,7 @@ html[data-spw-cauldron-phase="membrane"] {
 }
 
 /* Regional Activation Atmosphere */
-:where(section[data-spw-region], [data-spw-kind="region"], .site-frame):is(:focus-within, [data-state~="active"], [data-spw-active="true"]) {
+:where(section[data-spw-region], [data-spw-kind="region"], .spw-frame):is(:focus-within, [data-state~="active"], [data-spw-active="true"]) {
   background-image: radial-gradient(
     circle at var(--mouse-x, 50%) var(--mouse-y, 30%),
     color-mix(in srgb, var(--spw-spell-perceptual-tint, var(--active-op-color)) calc(9% * var(--spw-regional-lighting-bias, 1)), transparent) 0%,
@@ -389,7 +389,7 @@ body[data-spw-micro-world="true"]::before {
 }
 
 /* Monolith rim highlights for frames and cards from 1-2rem perspective */
-:where(.site-frame, .frame-card, .software-card, .topic-photo-card, .media-card, .specimen-index-card) {
+:where(.spw-frame, .frame-card, .software-card, .topic-photo-card, .media-card, .specimen-index-card) {
   box-shadow:
     var(--spw-monolith-rim-light),
     var(--material-local-shadow, var(--shadow-base, 0 4px 12px rgba(0, 0, 0, 0.06))),
@@ -397,14 +397,14 @@ body[data-spw-micro-world="true"]::before {
 }
 
 /* Horizon Variants */
-:where([data-spw-horizon="monolith"], body[data-spw-horizon="monolith"] .site-frame) {
+:where([data-spw-horizon="monolith"], body[data-spw-horizon="monolith"] .spw-frame) {
   --spw-monolith-rim-light: inset 0 1.5px 0 color-mix(in oklab, #fff 52%, transparent);
   box-shadow:
     var(--spw-monolith-rim-light),
     0 12px 32px color-mix(in oklab, var(--active-op-color, #008080) 12%, transparent);
 }
 
-:where([data-spw-horizon="caustics"], body[data-spw-horizon="caustics"] .site-frame) {
+:where([data-spw-horizon="caustics"], body[data-spw-horizon="caustics"] .spw-frame) {
   --spw-monolith-rim-light: inset 0 1px 0 color-mix(in oklab, var(--spw-palette-probe-1, #008080) 36%, transparent);
   box-shadow:
     var(--spw-monolith-rim-light),

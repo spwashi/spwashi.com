@@ -163,11 +163,11 @@
         <article>
 
             <!-- ── Hero ── -->
-            <section class="site-frame site-hero" id="browser-ts-ref"
+            <section class="spw-frame" data-spw-region-role="entry-spine" id="browser-ts-ref"
                      data-spw-role="orientation" data-spw-liminality="entry" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_browser__browser_ts_ref" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/"
                      data-spw-region-purpose="public-spine"
                      data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#browser-ts-ref">#&gt;browser_ts_reference</a>
                     <div class="spec-strip">
                         <span class="spec-pill">browser internals</span>
@@ -179,13 +179,13 @@
                 <h1 id="browser-title">Browser Fundamentals + TypeScript</h1>
                 <p>Conceptual breadth at staff depth. Event loop priority, render pipeline cost, Web Platform APIs, the TypeScript type lattice, and advanced type patterns. SVG diagrams for memory; MDN and W3C links for precision.</p>
                 <nav class="frame-operators" aria-label="Section quick-nav">
-                    <a class="operator-chip" href="#event-loop" data-spw-operator="frame" data-spw-action="address">#&gt;event_loop</a>
-                    <a class="operator-chip" href="#render-pipeline" data-spw-operator="frame" data-spw-action="address">#&gt;render_pipeline</a>
-                    <a class="operator-chip" href="#web-platform-apis" data-spw-operator="frame" data-spw-action="address">#&gt;platform_apis</a>
-                    <a class="operator-chip" href="#browser-security" data-spw-operator="frame" data-spw-action="address">#&gt;security_model</a>
-                    <a class="operator-chip" href="#typescript-types" data-spw-operator="frame" data-spw-action="address">#&gt;ts_type_system</a>
-                    <a class="operator-chip" href="#typescript-advanced" data-spw-operator="frame" data-spw-action="address">#&gt;advanced_patterns</a>
-                    <a class="operator-chip" href="/topics/software/">← software</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#event-loop" data-spw-operator="frame" data-spw-action="address">#&gt;event_loop</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#render-pipeline" data-spw-operator="frame" data-spw-action="address">#&gt;render_pipeline</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#web-platform-apis" data-spw-operator="frame" data-spw-action="address">#&gt;platform_apis</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#browser-security" data-spw-operator="frame" data-spw-action="address">#&gt;security_model</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#typescript-types" data-spw-operator="frame" data-spw-action="address">#&gt;ts_type_system</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#typescript-advanced" data-spw-operator="frame" data-spw-action="address">#&gt;advanced_patterns</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/">← software</a>
                 </nav>
                 <ul class="topic-index" aria-label="Topic index">
                     <li><a href="#event-loop">
@@ -222,9 +222,9 @@
             </section>
 
             <!-- ── Event Loop ── -->
-            <section class="site-frame" id="event-loop"
+            <section class="spw-frame" id="event-loop"
                      data-spw-role="reference" data-spw-meaning="js event loop" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__event_loop" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
-                <div class="frame-topline">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#event-loop">~[event_loop]</a>
                     <div class="spec-strip">
                         <span class="spec-pill">single-threaded</span>
@@ -233,7 +233,7 @@
                     </div>
                 </div>
                 <h2>JavaScript Event Loop</h2>
-                <p class="inline-note">JS is single-threaded with a host-managed concurrency model. I/O and timers are offloaded to Web APIs; callbacks are enqueued when ready. The loop's priority ordering is what makes async code predictable.</p>
+                <p data-spw-textual-role="note">JS is single-threaded with a host-managed concurrency model. I/O and timers are offloaded to Web APIs; callbacks are enqueued when ready. The loop's priority ordering is what makes async code predictable.</p>
 
                 <!--
                     Execution order:
@@ -424,9 +424,9 @@
             </section>
 
             <!-- ── Render Pipeline ── -->
-            <section class="site-frame" id="render-pipeline"
+            <section class="spw-frame" id="render-pipeline"
                      data-spw-role="reference" data-spw-meaning="browser render pipeline" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__render_pipeline" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
-                <div class="frame-topline">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#render-pipeline">*[render_pipeline]</a>
                     <div class="spec-strip">
                         <span class="spec-pill">layout</span>
@@ -436,7 +436,7 @@
                     </div>
                 </div>
                 <h2>Browser Render Pipeline</h2>
-                <p class="inline-note">Which pipeline stages a CSS property triggers determines its cost. Properties like <code>transform</code> and <code>opacity</code> on composited layers skip layout and paint entirely — the GPU reassembles pre-rasterized layers. Properties like <code>width</code> invalidate all stages.</p>
+                <p data-spw-textual-role="note">Which pipeline stages a CSS property triggers determines its cost. Properties like <code>transform</code> and <code>opacity</code> on composited layers skip layout and paint entirely — the GPU reassembles pre-rasterized layers. Properties like <code>width</code> invalidate all stages.</p>
 
                 <svg class="diagram" data-spw-svg-persona="learner frontend-engineer performance-reviewer rendering-model" viewBox="0 0 640 140"
                      role="img" aria-labelledby="rp-title" aria-describedby="rp-desc"
@@ -597,9 +597,9 @@
             </section>
 
             <!-- ── Web Platform APIs ── -->
-            <section class="site-frame" id="web-platform-apis"
+            <section class="spw-frame" id="web-platform-apis"
                      data-spw-role="reference" data-spw-meaning="web platform API survey" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__web_platform_apis" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
-                <div class="frame-topline">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#web-platform-apis">@[web_platform]</a>
                     <div class="spec-strip">
                         <span class="spec-pill">network</span>
@@ -695,9 +695,9 @@
             </section>
 
             <!-- ── Security Model ── -->
-            <section class="site-frame" id="browser-security"
+            <section class="spw-frame" id="browser-security"
                      data-spw-role="reference" data-spw-meaning="browser security model" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__browser_security" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
-                <div class="frame-topline">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#browser-security">![browser_security]</a>
                     <div class="spec-strip">
                         <span class="spec-pill">SOP</span>
@@ -812,9 +812,9 @@
             </section>
 
             <!-- ── TypeScript Type System ── -->
-            <section class="site-frame" id="typescript-types"
+            <section class="spw-frame" id="typescript-types"
                      data-spw-role="reference" data-spw-meaning="typescript type system" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__typescript_types" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
-                <div class="frame-topline">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#typescript-types">$[ts_type_system]</a>
                     <div class="spec-strip">
                         <span class="spec-pill">structural typing</span>
@@ -824,7 +824,7 @@
                     </div>
                 </div>
                 <h2>TypeScript Type System</h2>
-                <p class="inline-note">TypeScript uses <em>structural</em> (duck) typing — compatibility is determined by shape, not identity. The type system forms a lattice: <code>unknown</code> is the top type (all values are assignable to it); <code>never</code> is the bottom type (no value inhabits it). <code>any</code> escapes the lattice entirely.</p>
+                <p data-spw-textual-role="note">TypeScript uses <em>structural</em> (duck) typing — compatibility is determined by shape, not identity. The type system forms a lattice: <code>unknown</code> is the top type (all values are assignable to it); <code>never</code> is the bottom type (no value inhabits it). <code>any</code> escapes the lattice entirely.</p>
 
                 <!-- Type Lattice SVG -->
                 <svg class="diagram" data-spw-svg-persona="learner library-author reviewer rendering-model" viewBox="0 0 560 200"
@@ -1029,9 +1029,9 @@
             </section>
 
             <!-- ── TypeScript Advanced Patterns ── -->
-            <section class="site-frame" id="typescript-advanced"
+            <section class="spw-frame" id="typescript-advanced"
                      data-spw-role="reference" data-spw-meaning="typescript advanced type patterns" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__typescript_advanced" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
-                <div class="frame-topline">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#typescript-advanced">^[ts_advanced]</a>
                     <div class="spec-strip">
                         <span class="spec-pill">generics</span>
@@ -1102,21 +1102,21 @@
             </section>
 
             <!-- ── Route footer ── -->
-            <section class="site-frame" id="ref-routes"
+            <section class="spw-frame" id="ref-routes"
                      data-spw-role="route" data-spw-liminality="settled" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__ref_routes" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#ref-routes">@"routes"</a>
                 </header>
                 <nav class="frame-operators" aria-label="Reference surface routes">
-                    <a class="operator-chip" href="#browser-ts-ref" data-spw-operator="frame" data-spw-action="address">#&gt;top</a>
-                    <a class="operator-chip" href="#event-loop" data-spw-operator="frame" data-spw-action="address">#&gt;event_loop</a>
-                    <a class="operator-chip" href="#render-pipeline" data-spw-operator="frame" data-spw-action="address">#&gt;render_pipeline</a>
-                    <a class="operator-chip" href="#web-platform-apis" data-spw-operator="frame" data-spw-action="address">#&gt;platform_apis</a>
-                    <a class="operator-chip" href="#browser-security" data-spw-operator="frame" data-spw-action="address">#&gt;security_model</a>
-                    <a class="operator-chip" href="#typescript-types" data-spw-operator="frame" data-spw-action="address">#&gt;ts_type_system</a>
-                    <a class="operator-chip" href="#typescript-advanced" data-spw-operator="frame" data-spw-action="address">#&gt;advanced_patterns</a>
-                    <a class="operator-chip" href="/topics/software/">← software surface</a>
-                    <a class="operator-chip" href="/blog/">← blog</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#browser-ts-ref" data-spw-operator="frame" data-spw-action="address">#&gt;top</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#event-loop" data-spw-operator="frame" data-spw-action="address">#&gt;event_loop</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#render-pipeline" data-spw-operator="frame" data-spw-action="address">#&gt;render_pipeline</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#web-platform-apis" data-spw-operator="frame" data-spw-action="address">#&gt;platform_apis</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#browser-security" data-spw-operator="frame" data-spw-action="address">#&gt;security_model</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#typescript-types" data-spw-operator="frame" data-spw-action="address">#&gt;ts_type_system</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#typescript-advanced" data-spw-operator="frame" data-spw-action="address">#&gt;advanced_patterns</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/">← software surface</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/blog/">← blog</a>
                 </nav>
             </section>
 

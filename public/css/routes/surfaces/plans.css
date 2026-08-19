@@ -190,7 +190,7 @@ body[data-spw-surface="plans"] {
    2. Generic frame tuning
    ========================================================================== */
 
-[data-spw-surface="plans"] .site-frame {
+[data-spw-surface="plans"] .spw-frame {
   border-color: color-mix(in srgb, var(--plans-line) 96%, transparent);
   border-radius: var(--plans-panel-radius);
   background:
@@ -202,7 +202,7 @@ body[data-spw-surface="plans"] {
   color: var(--plans-ink);
 }
 
-[data-spw-surface="plans"] .site-frame:is(:hover, :focus-within) {
+[data-spw-surface="plans"] .spw-frame:is(:hover, :focus-within) {
   border-color: color-mix(in srgb, var(--plans-accent) 18%, var(--plans-line));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.46),
@@ -213,7 +213,7 @@ body[data-spw-surface="plans"] {
   color: color-mix(in srgb, var(--plans-ink-soft) 90%, var(--plans-accent));
 }
 
-[data-spw-surface="plans"] .frame-note,
+[data-spw-surface="plans"] [data-spw-textual-role="note"],
 [data-spw-surface="plans"] .inline-note {
   color: var(--plans-ink-soft);
 }
@@ -265,7 +265,7 @@ body[data-spw-surface="plans"] {
   text-wrap: balance;
 }
 
-[data-spw-surface="plans"] #plans-surface .page-lede {
+[data-spw-surface="plans"] #plans-surface [data-spw-textual-role="lede"] {
   max-width: 60ch;
   color: color-mix(in srgb, var(--plans-ink-soft) 92%, var(--plans-accent));
 }

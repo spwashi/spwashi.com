@@ -32,8 +32,8 @@
 ></spw-site-header>
 
 <main id="main-content" tabindex="-1" aria-labelledby="runtime-lab-title">
-    <article class="site-frame" id="runtime-lab" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis" data-spw-wonder="browser runtime configurability console puppetry performance svg" data-spw-inspect="runtime_lab">
-        <div class="frame-topline">
+    <article class="spw-frame" id="runtime-lab" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis" data-spw-wonder="browser runtime configurability console puppetry performance svg" data-spw-inspect="runtime_lab">
+        <div class="frame-topline" data-spw-slot="header">
             <a class="frame-sigil" href="#runtime-lab">#&gt;runtime_lab</a>
             <div class="spec-strip">
                 <span class="spec-pill">query tuning</span>
@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <p class="page-kicker">Design / Runtime / Browser Behavior</p>
+        <p data-spw-textual-role="kicker">Design / Runtime / Browser Behavior</p>
         <h1 id="runtime-lab-title">Runtime behavior should be inspectable before it becomes configurable.</h1>
 
         <p>
@@ -66,7 +66,7 @@
             <pre><code>__SPW_SITE__.timings().summary
 // bootToReady, immediateCore, nonCoreCatalog, immediateNonCore</code></pre>
             <p>
-                <a class="operator-chip" href="/design/runtime/?log=spw-runtime&amp;log-level=debug#load-locality" data-spw-operator="wonder">? log the boot sequence</a>
+                <a class="spw-chip" data-spw-handle="true" href="/design/runtime/?log=spw-runtime&amp;log-level=debug#load-locality" data-spw-operator="wonder">? log the boot sequence</a>
             </p>
         </section>
 
@@ -86,7 +86,7 @@ puppet.reflow('#runtime-lab', 'interaction', { scope: 'stage' });</code></pre>
         <section class="frame-panel" id="svg-art-runtime" aria-labelledby="svg-art-runtime-title" data-spw-kind="panel" data-spw-role="future-surface" data-spw-wonder="svg art performance">
             <h2 id="svg-art-runtime-title">SVG art as a controllable surface</h2>
             <p>SVG belongs in this model because it can be semantic markup, visual art, and a live puppet surface at the same time. Hosts can expose named palettes, brand color overrides, pointer modes, and repaint cost so screenshots remain interpretable by people and image models.</p>
-            <p class="frame-note">Newer power-user surfaces (observation beats and Screenshot QA Mode via <code>?qa=screenshot-qa</code>) extend this legibility: short rhythmic capture windows pair what the page looks like with where the reader is, when the capture happened, and which semantic handles were active. Keyboard <kbd>s</kbd> or a long-press in QA mode can turn that moment into a cauldron ingredient for later comparison.</p>
+            <p data-spw-textual-role="note">Newer power-user surfaces (observation beats and Screenshot QA Mode via <code>?qa=screenshot-qa</code>) extend this legibility: short rhythmic capture windows pair what the page looks like with where the reader is, when the capture happened, and which semantic handles were active. Keyboard <kbd>s</kbd> or a long-press in QA mode can turn that moment into a cauldron ingredient for later comparison.</p>
             <pre><code>import {
   applySvgQueryTunability,
   SPW_SVG_PALETTES
@@ -94,19 +94,19 @@ puppet.reflow('#runtime-lab', 'interaction', { scope: 'stage' });</code></pre>
 
 applySvgQueryTunability(document);
 console.table(SPW_SVG_PALETTES);</code></pre>
-            <p><a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=signal&amp;spw-svg-pointer=field&amp;spw-reflow=theme#svg-brand-screenshot" data-spw-operator="wonder">? open tuned SVG lab</a></p>
+            <p><a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-palette=signal&amp;spw-svg-pointer=field&amp;spw-reflow=theme#svg-brand-screenshot" data-spw-operator="wonder">? open tuned SVG lab</a></p>
         </section>
 
         <section class="frame-panel" id="query-controls" aria-labelledby="query-controls-title" data-spw-kind="panel" data-spw-role="query-contract">
             <h2 id="query-controls-title">Query tuning links</h2>
             <p>These links keep behavior visible in the URL so a tester, teammate, or language model can see the configuration without opening storage. The short aliases are meant to be typed from memory; the longer <code>spw-*</code> names remain available for forks that want stricter namespacing. The same presets are also exposed at <code>spwCompose.queryPresets</code> and <code>window.spwDebugPresets</code>.</p>
             <nav class="frame-operators" aria-label="Runtime query examples">
-                <a class="operator-chip" href="/design/runtime/?palette=craft&view=readable&spw-color-active-op=%23008080&spw-var-shape-component=8px&reflow=density#query-controls" data-spw-operator="integration" data-spw-action="publish">^craft_readable</a>
-                <a class="operator-chip" href="/design/runtime/?view=inspect&debug=layout&reflow=layout#query-controls" data-spw-operator="vibration"># inspect layout</a>
-                <a class="operator-chip" href="/design/runtime/?interaction=puppet&log=attention-architecture,spw-compose&log-level=debug&reflow=interaction#console-contract" data-spw-operator="perspective" data-spw-action="enter">@puppet_logging</a>
-                <a class="operator-chip" href="/design/runtime/?view=screenshot&interaction=screenshot&palette=software&reflow=theme#query-controls" data-spw-operator="binding" data-spw-action="configure">=screenshot_pass</a>
-                <a class="operator-chip" href="/design/runtime/?spw-var-material-blur=18px&spw-reflow=theme#reflow-contract" data-spw-operator="potential" data-spw-action="explore">~blur_disposition</a>
-                <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=warm-offer&amp;spw-svg-stroke=1.35&amp;spw-svg-space=1rem&amp;spw-svg-pointer=trace#svg-brand-screenshot" data-spw-operator="integration" data-spw-action="publish">^svg_palette_qa</a>
+                <a class="spw-chip" data-spw-handle="true" href="/design/runtime/?palette=craft&view=readable&spw-color-active-op=%23008080&spw-var-shape-component=8px&reflow=density#query-controls" data-spw-operator="integration" data-spw-action="publish">^craft_readable</a>
+                <a class="spw-chip" data-spw-handle="true" href="/design/runtime/?view=inspect&debug=layout&reflow=layout#query-controls" data-spw-operator="vibration"># inspect layout</a>
+                <a class="spw-chip" data-spw-handle="true" href="/design/runtime/?interaction=puppet&log=attention-architecture,spw-compose&log-level=debug&reflow=interaction#console-contract" data-spw-operator="perspective" data-spw-action="enter">@puppet_logging</a>
+                <a class="spw-chip" data-spw-handle="true" href="/design/runtime/?view=screenshot&interaction=screenshot&palette=software&reflow=theme#query-controls" data-spw-operator="binding" data-spw-action="configure">=screenshot_pass</a>
+                <a class="spw-chip" data-spw-handle="true" href="/design/runtime/?spw-var-material-blur=18px&spw-reflow=theme#reflow-contract" data-spw-operator="potential" data-spw-action="explore">~blur_disposition</a>
+                <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-palette=warm-offer&amp;spw-svg-stroke=1.35&amp;spw-svg-space=1rem&amp;spw-svg-pointer=trace#svg-brand-screenshot" data-spw-operator="integration" data-spw-action="publish">^svg_palette_qa</a>
             </nav>
         </section>
 
@@ -117,22 +117,22 @@ console.table(SPW_SVG_PALETTES);</code></pre>
                 <article class="frame-panel">
                     <h3>Viewing</h3>
                     <p>Use <code>?view=quiet</code>, <code>?view=readable</code>, <code>?view=inspect</code>, or <code>?view=screenshot</code> when the question is how much meaning should stay visible.</p>
-                    <p><a class="operator-chip" href="/design/runtime/?view=inspect#debug-presets" data-spw-operator="wonder">? open inspect view</a></p>
+                    <p><a class="spw-chip" data-spw-handle="true" href="/design/runtime/?view=inspect#debug-presets" data-spw-operator="wonder">? open inspect view</a></p>
                 </article>
                 <article class="frame-panel">
                     <h3>Interaction</h3>
                     <p>Use <code>?interaction=calm</code>, <code>?interaction=tactile</code>, <code>?interaction=puppet</code>, or <code>?interaction=screenshot</code> when the question is how physically responsive a surface should feel.</p>
-                    <p><a class="operator-chip" href="/design/runtime/?interaction=puppet#debug-presets" data-spw-operator="wonder">? open puppet interaction</a></p>
+                    <p><a class="spw-chip" data-spw-handle="true" href="/design/runtime/?interaction=puppet#debug-presets" data-spw-operator="wonder">? open puppet interaction</a></p>
                 </article>
                 <article class="frame-panel">
                     <h3>Debug</h3>
                     <p>Use <code>?debug=css</code> for structure tags, <code>?debug=layout</code> for ownership overlays, and comma-join them when the question is where a rule belongs.</p>
-                    <p><a class="operator-chip" href="/design/runtime/?debug=css,layout#debug-presets" data-spw-operator="wonder">? open layout debug</a></p>
+                    <p><a class="spw-chip" data-spw-handle="true" href="/design/runtime/?debug=css,layout#debug-presets" data-spw-operator="wonder">? open layout debug</a></p>
                 </article>
                 <article class="frame-panel">
                     <h3>Bundle handoff</h3>
                     <p>The same query contract travels with the portable bundles, so vendors or teammates can read the URL, inspect the DOM, and know which runtime posture they are seeing.</p>
-                    <p><a class="operator-chip" href="/design/composition/#css-svg-learning-title" data-spw-operator="potential">~bundle_docs</a></p>
+                    <p><a class="spw-chip" data-spw-handle="true" href="/design/composition/#css-svg-learning-title" data-spw-operator="potential">~bundle_docs</a></p>
                 </article>
             </div>
         </section>
@@ -141,20 +141,20 @@ console.table(SPW_SVG_PALETTES);</code></pre>
             <h2 id="memory-garden-mirror-title">Memory garden mirror</h2>
             <p>The cauldron and spell systems expose live lifecycle phases and gardening affordances. Root data attributes (<code>data-spw-cauldron-phase</code>, <code>data-spw-cauldron-count</code>, per-ingredient <code>data-spw-ingredient-phase</code>) plus bus events make the current "garden" of semantic memory observable and lightly tunable in any surface that loads the composition runtime.</p>
 
-            <div class="frame-note" data-spw-cauldron-mirror>
+            <div data-spw-textual-role="note" data-spw-cauldron-mirror>
                 <strong>Live state (when active):</strong>
                 <span data-spw-mirror-label="phase">phase</span>
                 <span data-spw-mirror-label="count">count</span>
                 <span data-spw-mirror-label="operators">operators</span>
             </div>
             <div class="frame-operators" aria-label="Memory garden actions">
-                <button class="operator-chip" type="button" data-spw-cauldron-action="nourish" data-spw-groundable="false" data-spw-operator="potential" data-spw-action="explore">~nourish_latest</button>
-                <button class="operator-chip" type="button" data-spw-cauldron-action="plant" data-spw-groundable="false" data-spw-operator="integration">^plant_mix</button>
-                <button class="operator-chip" type="button" data-spw-cauldron-action="prune" data-spw-groundable="false" data-spw-operator="action">!prune[stale]</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="nourish" data-spw-groundable="false" data-spw-operator="potential" data-spw-action="explore">~nourish_latest</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="plant" data-spw-groundable="false" data-spw-operator="integration">^plant_mix</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="prune" data-spw-groundable="false" data-spw-operator="action">!prune[stale]</button>
             </div>
 
-            <p class="inline-note">Inline tuning: the same <code>[data-spw-cauldron-action="prune|nourish|plant|mix|clear"]</code> buttons that appear in the footer work anywhere. They respect the current garden phase and keep capturedAt / origin context for reflective learning.</p>
-            <p>The same memory garden and <span class="spw-living-term" data-spw-living-term data-spw-concept="brace-physics" tabindex="0">brace physics</span> that appear in the public <a href="/play/rpg-wednesday/library/#garden">Library</a> are observable and tunable here. The <a class="operator-chip" href="/design/composition/" data-spw-operator="potential" data-spw-action="explore">~full_composition_cauldron_docs</a> live alongside the gentler garden introduction for visitors coming from the fantasy surfaces.</p>
+            <p data-spw-textual-role="note">Inline tuning: the same <code>[data-spw-cauldron-action="prune|nourish|plant|mix|clear"]</code> buttons that appear in the footer work anywhere. They respect the current garden phase and keep capturedAt / origin context for reflective learning.</p>
+            <p>The same memory garden and <span class="spw-living-term" data-spw-living-term data-spw-concept="brace-physics" tabindex="0">brace physics</span> that appear in the public <a href="/play/rpg-wednesday/library/#garden">Library</a> are observable and tunable here. The <a class="spw-chip" data-spw-handle="true" href="/design/composition/" data-spw-operator="potential" data-spw-action="explore">~full_composition_cauldron_docs</a> live alongside the gentler garden introduction for visitors coming from the fantasy surfaces.</p>
         </section>
 
         <section
@@ -250,7 +250,7 @@ logger.trace('after query disposition', '#runtime-lab');</code></pre>
             <p>The module loader now exposes what it can know before a module mounts: route and selector eligibility, effective timing, inferred module URLs, cache presence, connection posture, and whether a conservative prefetch hint was issued.</p>
             <pre><code>spwCompose.controls.modules.discovery()
 window.__SPW_SITE__.discoverRuntimeResources()</code></pre>
-            <p class="frame-note">Prefetch is intentionally selective. It is skipped for offline, data-saver, quiet, and manual postures. Cached/offline state appears as document-level tokens so CSS can calm rendering rather than pretending every context has the same bandwidth.</p>
+            <p data-spw-textual-role="note">Prefetch is intentionally selective. It is skipped for offline, data-saver, quiet, and manual postures. Cached/offline state appears as document-level tokens so CSS can calm rendering rather than pretending every context has the same bandwidth.</p>
         </section>
     </article>
 </main>

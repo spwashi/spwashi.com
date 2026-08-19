@@ -104,7 +104,7 @@
   .compare-card,
   .spec-column,
   .ref-card
-) :is(p, li, .frame-note, .frame-copy, .media-card-summary, .media-focus-card > p, .media-focus-copy) {
+) :is(p, li, [data-spw-textual-role="note"], .frame-copy, .media-card-summary, .media-focus-card > p, .media-focus-copy) {
   color: var(--component-text-soft);
 }
 
@@ -243,7 +243,7 @@
   margin: 0;
 }
 
-:where(.media-focus-card .operator-chip) {
+:where(.media-focus-card .spw-chip) {
   justify-self: start;
 }
 
@@ -260,7 +260,7 @@
   .spec-column,
   .ref-card
 ) > :last-child:is(
-  .operator-chip,
+  .spw-chip,
   .media-card-cta,
   .frame-operators,
   .plan-links,

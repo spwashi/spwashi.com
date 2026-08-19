@@ -155,7 +155,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   letter-spacing: 0.01em;
 }
 
-:where(body[data-spw-page-seed^="page_design_"]) .sync-specimen .frame-note {
+:where(body[data-spw-page-seed^="page_design_"]) .sync-specimen [data-spw-textual-role="note"] {
   font-size: 0.72rem;
   line-height: 1.35;
   color: var(--design-surface-ink-mid);
@@ -171,7 +171,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   border-radius: calc(var(--shape-surface, 10px) - 2px);
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.site-frame) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-frame) {
   position: relative;
   overflow: clip;
   border: 1px solid color-mix(in srgb, var(--design-surface-line) 90%, transparent);
@@ -184,22 +184,22 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
     inset 0 1px 0 rgba(255, 255, 255, 0.42);
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.site-hero) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where([data-spw-region-role="entry-spine"]) {
   background:
     radial-gradient(circle at 14% 0%, color-mix(in srgb, var(--design-surface-accent) 14%, transparent), transparent 36%),
     linear-gradient(180deg, color-mix(in srgb, var(--design-surface-base-strong) 98%, transparent), color-mix(in srgb, var(--design-surface-panel-strong) 96%, transparent));
 }
 
-:where(body[data-spw-page-seed^="page_design_"]) :where(.site-frame) .frame-grid--dense,
-:where(body[data-spw-page-seed^="page_design_"]) :where(.site-frame) .panel-grid {
+:where(body[data-spw-page-seed^="page_design_"]) :where(.spw-frame) .frame-grid--dense,
+:where(body[data-spw-page-seed^="page_design_"]) :where(.spw-frame) .panel-grid {
   gap: 0.6rem;
 }
 
-:where(body[data-spw-page-seed^="page_design_"]) :where(.site-frame) .frame-panel {
+:where(body[data-spw-page-seed^="page_design_"]) :where(.spw-frame) .frame-panel {
   padding: 0.65rem 0.8rem;
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.site-frame h1) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-frame h1) {
   max-inline-size: 18ch;
 }
 
@@ -207,7 +207,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   gap: 0.5rem 0.55rem;
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.frame-operators > .operator-chip) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.frame-operators > .spw-chip) {
   border-color: color-mix(in srgb, var(--design-surface-accent-strong) 52%, var(--design-surface-line) 48%);
   background:
     linear-gradient(180deg,
@@ -219,7 +219,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
     inset 0 1px 0 rgba(255, 255, 255, 0.48);
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.frame-operators > .operator-chip:is(:hover, :focus-visible)) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.frame-operators > .spw-chip:is(:hover, :focus-visible)) {
   border-color: color-mix(in srgb, var(--design-surface-accent-strong) 70%, var(--design-surface-line) 30%);
   background:
     linear-gradient(180deg,
@@ -255,7 +255,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   color: var(--design-surface-ink-soft);
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-settings-cluster__actions .operator-chip) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-settings-cluster__actions .spw-chip) {
   border-color: color-mix(in srgb, var(--design-surface-accent) 42%, var(--design-surface-line) 58%);
   background:
     linear-gradient(180deg,
@@ -264,7 +264,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   color: var(--design-surface-ink);
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-settings-cluster__actions .operator-chip:is(:hover, :focus-visible)) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-settings-cluster__actions .spw-chip:is(:hover, :focus-visible)) {
   border-color: color-mix(in srgb, var(--design-surface-accent-strong) 60%, var(--design-surface-line) 40%);
   background:
     linear-gradient(180deg,
@@ -273,23 +273,23 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   color: var(--design-surface-ink);
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(article > .site-frame) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(article > .spw-frame) {
   color: var(--design-surface-ink);
 }
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(
-  article > .site-frame :is(p, li, figcaption, .frame-note, .spec-kicker, .spec-pill)
+  article > .spw-frame :is(p, li, figcaption, [data-spw-textual-role="note"], .spec-kicker, .spec-pill)
 ) {
   color: var(--design-surface-ink-soft);
 }
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(
-  article > .site-frame :is(h1, h2, h3, h4, strong)
+  article > .spw-frame :is(h1, h2, h3, h4, strong)
 ) {
   color: var(--design-surface-ink);
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(article > .site-frame a:not(.operator-chip)) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(article > .spw-frame a:not(.spw-chip)) {
   color: var(--design-surface-link);
 }
 
@@ -421,7 +421,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   gap: 0.45rem;
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-controls .operator-chip[aria-pressed="true"]) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-controls .spw-chip[aria-pressed="true"]) {
   --operator-chip-active-border-intent: color-mix(in srgb, var(--design-surface-accent-strong) 70%, var(--design-surface-line) 30%);
   --operator-chip-active-bg-intent: color-mix(in srgb, var(--design-surface-accent) 16%, var(--design-surface-matte-strong));
   --operator-chip-active-ink-intent: var(--design-surface-ink);
@@ -701,12 +701,12 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   gap: 0.35rem;
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-control-row .operator-chip) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-control-row .spw-chip) {
   min-block-size: 1.82rem;
   font-size: 0.74rem;
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-control-row .operator-chip[aria-pressed="true"]) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-control-row .spw-chip[aria-pressed="true"]) {
   --operator-chip-active-border-intent: color-mix(in srgb, var(--design-ecology-accent) 66%, var(--design-surface-line) 34%);
   --operator-chip-active-bg-intent: color-mix(in srgb, var(--design-ecology-accent) 18%, var(--design-surface-matte-strong));
   --operator-chip-active-shadow-intent:
@@ -868,7 +868,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   gap: 0.4rem;
 }
 
-:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-actions .operator-chip) {
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-actions .spw-chip) {
   min-block-size: 1.85rem;
   border-color: color-mix(in srgb, var(--design-ecology-accent) 24%, var(--design-surface-line) 76%);
   background: color-mix(in srgb, var(--design-ecology-accent) 8%, var(--design-surface-base-strong));

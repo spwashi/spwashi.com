@@ -227,14 +227,14 @@
   align-items: center;
 }
 
-:where(.tuning-strip > .operator-chip) {
+:where(.tuning-strip > .spw-chip) {
   min-height: 1.6rem;
   padding: 0.18rem 0.55rem;
   font-size: 0.8rem;
 }
 
 :where(.tuning-strip)
-  :is(.operator-chip, .spec-pill)[data-site-setting-active="true"] {
+  :is(.spw-chip, .spec-pill)[data-site-setting-active="true"] {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.22), transparent 70%),
     color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 18%, var(--surface-strong, rgba(255,255,255,0.96)));
@@ -247,7 +247,7 @@
   transform: translateY(-0.5px);
 }
 
-:where(.tuning-strip .operator-chip[data-site-setting-active="true"]::after) {
+:where(.tuning-strip .spw-chip[data-site-setting-active="true"]::after) {
   content: "";
   display: inline-block;
   width: 0.35em;
@@ -264,7 +264,7 @@
     --tuning-strip-gap: 0.32rem;
   }
 
-  :where(.tuning-strip > .operator-chip) {
+  :where(.tuning-strip > .spw-chip) {
     padding: 0.16rem 0.48rem;
     font-size: 0.78rem;
   }

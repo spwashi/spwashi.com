@@ -236,7 +236,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   gap: 0.3rem 0.35rem;
 }
 
-.site-footer__settings-actions .operator-chip {
+.site-footer__settings-actions .spw-chip {
   display: inline-flex;
   align-items: center;
   min-height: 1.85rem;
@@ -265,7 +265,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   align-items: stretch;
 }
 
-.site-footer__note-row .operator-chip {
+.site-footer__note-row .spw-chip {
   min-height: 2.2rem;
 }
 

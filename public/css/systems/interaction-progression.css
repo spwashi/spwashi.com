@@ -218,7 +218,7 @@
   :where(
     [data-spw-interaction-contract]:active,
     [data-spw-gesture-contract]:active,
-    .operator-chip:active
+    .spw-chip:active
   ) {
     --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.42);
     transform: scale(0.992);
@@ -296,7 +296,7 @@
 }
 
 :where(html[data-spw-freshness-pulse] :where(
-  .operator-chip,
+  .spw-chip,
   [data-spw-operator],
   [data-spw-interaction-contract],
   [data-spw-gesture-contract],
@@ -309,7 +309,7 @@
     transform var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease);
 }
 
-:where(html[data-spw-freshness-pulse="beat-prime"] :where(.operator-chip, [data-spw-operator])) {
+:where(html[data-spw-freshness-pulse="beat-prime"] :where(.spw-chip, [data-spw-operator])) {
   box-shadow:
     var(--spw-local-shadow, none),
     0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color)) calc(14% + (var(--spw-freshness-weight, 0.62) * 10%)), transparent);

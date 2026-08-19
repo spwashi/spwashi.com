@@ -43,8 +43,8 @@
     ></spw-site-header>
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_software_renderers__main_surface" data-spw-wonder="comparison constraint locality" id="main-content" tabindex="-1" aria-labelledby="renderers-title">
         <article>
-            <section class="site-frame site-hero" id="renderers-hero" data-spw-role="orientation" data-spw-liminality="entry" data-spw-accent="flow" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_renderers__renderers_hero" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+            <section class="spw-frame" data-spw-region-role="entry-spine" id="renderers-hero" data-spw-role="orientation" data-spw-liminality="entry" data-spw-accent="flow" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_renderers__renderers_hero" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#renderers-hero">#&gt;rendering_engines</a>
                     <div class="spec-strip">
                         <span class="spec-pill">geometry</span>
@@ -56,15 +56,15 @@
                 <h1 id="renderers-title">The Geometry of Light and Type</h1>
                 <p>Graphics rendering is the transformation of <span class="spw-delimiter spw-delimiter--angle">&lt;</span>abstract signals<span class="spw-delimiter spw-delimiter--angle">&gt;</span> into <span class="spw-delimiter spw-delimiter--circle">(</span>perceptual photons<span class="spw-delimiter spw-delimiter--circle">)</span>. This hub explores the math behind rasterization, the <span class="spw-delimiter spw-delimiter--square">[</span>registry of GPU pipelines<span class="spw-delimiter spw-delimiter--square">]</span>, and the complex linguistics of text shaping.</p>
                 <nav class="frame-operators" aria-label="Topic nav">
-                    <a class="operator-chip" href="#gpu-pipeline" data-spw-operator="frame" data-spw-action="address">#&gt;gpu_pipeline</a>
-                    <a class="operator-chip" href="#text-shaping" data-spw-operator="frame" data-spw-action="address">#&gt;text_shaping</a>
-                    <a class="operator-chip" href="#rasterization" data-spw-operator="frame" data-spw-action="address">#&gt;rasterization</a>
-                    <a class="operator-chip" href="/topics/software/">← software</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#gpu-pipeline" data-spw-operator="frame" data-spw-action="address">#&gt;gpu_pipeline</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#text-shaping" data-spw-operator="frame" data-spw-action="address">#&gt;text_shaping</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#rasterization" data-spw-operator="frame" data-spw-action="address">#&gt;rasterization</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/">← software</a>
                 </nav>
             </section>
 
-            <section class="site-frame" id="canvas-math" data-spw-role="reference" data-spw-meaning="2d coordinate systems" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_renderers__canvas_math" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
-                <div class="frame-topline">
+            <section class="spw-frame" id="canvas-math" data-spw-role="reference" data-spw-meaning="2d coordinate systems" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_renderers__canvas_math" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#canvas-math">^"canvas_coordinate_systems"{</a>
                     <div class="spec-strip">
                         <span class="spec-pill">affine transforms</span>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <h2>2D Primitives and Matrix Math</h2>
-                <p class="inline-note">Every visual mark on the web starts with coordinates. Understanding how the browser transforms point <code>(x, y)</code> into a screen position requires a descent into matrix multiplication and the geometry of vector paths.</p>
+                <p data-spw-textual-role="note">Every visual mark on the web starts with coordinates. Understanding how the browser transforms point <code>(x, y)</code> into a screen position requires a descent into matrix multiplication and the geometry of vector paths.</p>
 
                 <svg class="spw-svg-surface cinematic-host" data-spw-svg-persona="learner implementer reviewer rendering-model" viewBox="0 0 640 180" role="img" aria-labelledby="matrix-title" xmlns="http://www.w3.org/2000/svg">
                     <title id="matrix-title">Matrix Transformation Pipeline</title>
@@ -152,8 +152,8 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="text-shaping" data-spw-role="reference" data-spw-meaning="font rendering logic" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_renderers__text_shaping" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
-                <div class="frame-topline">
+            <section class="spw-frame" id="text-shaping" data-spw-role="reference" data-spw-meaning="font rendering logic" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_renderers__text_shaping" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#text-shaping">*"text_shaping_engine"</a>
                     <div class="spec-strip">
                         <span class="spec-pill">harfbuzz</span>
@@ -162,7 +162,7 @@
                     </div>
                 </div>
                 <h2>Text Shaping and Type Systems</h2>
-                <p class="inline-note">Type is more than a list of glyphs. Text shaping converts a sequence of characters into a sequence of glyphs with precise optical positions, handling ligatures, kerning, and script-specific reordering.</p>
+                <p data-spw-textual-role="note">Type is more than a list of glyphs. Text shaping converts a sequence of characters into a sequence of glyphs with precise optical positions, handling ligatures, kerning, and script-specific reordering.</p>
 
                 <div class="frame-grid ref-grid" data-spw-density="soft">
                     <article class="frame-panel ref-card">
@@ -178,12 +178,12 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="structural-forms" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_renderers__structural_forms" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
-                <header class="frame-heading">
+            <section class="spw-frame" id="structural-forms" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_renderers__structural_forms" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#structural-forms">~[structural_forms]</a>
                     <h2>Semantic Delimiters</h2>
                 </header>
-                <p class="inline-note">Beyond the brace, Spw uses circles, angles, and squares to differentiate between relationships, projections, and collections.</p>
+                <p data-spw-textual-role="note">Beyond the brace, Spw uses circles, angles, and squares to differentiate between relationships, projections, and collections.</p>
                 <div class="spec-grid" data-spw-density="dense">
                     <div class="frame-panel" data-spw-form="angle" data-spw-selection="navigation" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_renderers__panel_1">
                         <h3>Angle &lt;&gt;</h3>
@@ -200,8 +200,8 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="gpu-pipeline" data-spw-role="schema" data-spw-meaning="hardware rendering abstraction" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="specimen" data-spw-locality="medium" data-spw-consequence="model" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_renderers__gpu_pipeline" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
-                <div class="frame-topline">
+            <section class="spw-frame" id="gpu-pipeline" data-spw-role="schema" data-spw-meaning="hardware rendering abstraction" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="specimen" data-spw-locality="medium" data-spw-consequence="model" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_renderers__gpu_pipeline" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#gpu-pipeline">@[gpu_raster_pipeline]</a>
                     <div class="spec-strip">
                         <span class="spec-pill">webgpu</span>
@@ -210,7 +210,7 @@
                     </div>
                 </div>
                 <h2>GPU Accelerated Pipelines</h2>
-                <p class="inline-note">Modern renderers offload rasterization to the GPU. This is a leap from CPU-bound scan-line algorithms to massively parallel fragment shaders. The "cinematic" feel of the modern web is often a function of how effectively we use the graphics pipeline without clogging the memory bus.</p>
+                <p data-spw-textual-role="note">Modern renderers offload rasterization to the GPU. This is a leap from CPU-bound scan-line algorithms to massively parallel fragment shaders. The "cinematic" feel of the modern web is often a function of how effectively we use the graphics pipeline without clogging the memory bus.</p>
 
                 <div class="frame-grid ref-grid" data-spw-density="soft">
                     <article class="frame-panel ref-card" id="rasterization">

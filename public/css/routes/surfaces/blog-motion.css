@@ -7,7 +7,7 @@
    ========================================================================== */
 
 :where(html[data-spw-reduce-motion="on"] body[data-spw-surface="blog"]) :is(
-  .site-frame,
+  .spw-frame,
   .mode-switch button,
   [data-mode-group][data-set-mode],
   [data-spw-flow="pretext"],

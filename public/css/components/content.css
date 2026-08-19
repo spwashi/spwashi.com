@@ -174,7 +174,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
    --------------------------------------------------------------------------
    Cluster A: packing grids (auto-fit) for content clusters only.
    Cluster B: stack as single-column grid for non-stage hosts.
-   Cluster C: stages (.site-frame / panels) force flex column — never masonry.
+   Cluster C: stages (.spw-frame / panels) force flex column — never masonry.
    Never apply multi-column auto-fit to stages: box-model may mirror computed
    display onto data-spw-composition-flow, and a stage that is only
    `display:grid` for vertical stacking must not pack its children.
@@ -185,7 +185,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 :where(
   [data-spw-composition-flow="grid"]:not(
     :is(
-      .site-frame,
+      .spw-frame,
       .frame-panel,
       .mode-panel,
       [data-spw-kind="frame"],
@@ -230,7 +230,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 :where(
   [data-spw-composition-flow="stack"]:not(
     :is(
-      .site-frame,
+      .spw-frame,
       .frame-panel,
       .mode-panel,
       [data-spw-kind="frame"],
@@ -252,12 +252,12 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 /* Cluster C — stages stay single-column flex even if display:grid is used for gap.
    Missing flow is treated as stack so a late JS write of the attribute does not reflow. */
 :where(
-  .site-frame:not([data-spw-composition-flow]),
+  .spw-frame:not([data-spw-composition-flow]),
   .frame-panel:not([data-spw-composition-flow]),
   .mode-panel:not([data-spw-composition-flow]),
   [data-spw-kind="frame"]:not([data-spw-composition-flow]),
   [data-spw-box-model="stage"]:not([data-spw-composition-flow]),
-  .site-frame[data-spw-composition-flow="stack"],
+  .spw-frame[data-spw-composition-flow="stack"],
   .frame-panel[data-spw-composition-flow="stack"],
   .mode-panel[data-spw-composition-flow="stack"],
   [data-spw-kind="frame"][data-spw-composition-flow="stack"],
@@ -432,7 +432,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   .ref-card,
   .frame-panel,
   .mode-panel,
-  .site-frame
+  .spw-frame
 ) :is(code, kbd, samp) {
   max-inline-size: 100%;
   overflow-wrap: anywhere;
@@ -450,7 +450,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   .ref-card,
   .frame-panel,
   .mode-panel,
-  .site-frame
+  .spw-frame
 ) :is(pre, .frame-code-enrichment, .demo-code-output) {
   max-inline-size: 100%;
   min-inline-size: 0;
@@ -750,7 +750,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
    20. Chips, badges, metadata
    ========================================================================== */
 
-:where(.operator-chip, .spec-pill, .spw-component-tag, .media-card-tag, .plan-status) {
+:where(.spw-chip, .spec-pill, .spw-component-tag, .media-card-tag, .plan-status) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -779,7 +779,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   box-shadow var(--component-transition-fast);
 }
 
-:where(.operator-chip:is(:hover, :focus-visible), a.spec-pill:is(:hover, :focus-visible)) {
+:where(.spw-chip:is(:hover, :focus-visible), a.spec-pill:is(:hover, :focus-visible)) {
   border-color: color-mix(in srgb, var(--component-accent) 34%, transparent);
   background: color-mix(in srgb, var(--component-accent) 11%, var(--component-surface-strong));
   color: color-mix(in srgb, var(--component-accent) 84%, var(--ink, currentColor));
@@ -787,7 +787,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   text-decoration: none;
 }
 
-:where(.operator-chip[aria-pressed="true"], .operator-chip[data-site-setting-active="true"]) {
+:where(.spw-chip[aria-pressed="true"], .spw-chip[data-site-setting-active="true"]) {
   --operator-chip-active-border-intent: color-mix(in srgb, var(--component-accent) 44%, transparent);
   --operator-chip-active-bg-intent: color-mix(in srgb, var(--component-accent) 14%, var(--component-surface-strong));
   --operator-chip-active-shadow-intent: 0 0 0 1px color-mix(in srgb, var(--component-accent) 16%, transparent);
@@ -819,7 +819,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
    21. Notes, prose helpers, lists
    ========================================================================== */
 
-:where(.frame-note, .inline-note, .settings-note, .settings-start-note) {
+:where([data-spw-textual-role="note"], .inline-note, .settings-note, .settings-start-note) {
   max-inline-size: var(--component-measure);
   color: var(--ink-mid, rgba(14, 18, 20, 0.68));
   line-height: 1.58;

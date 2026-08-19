@@ -18,7 +18,7 @@
 
 /* Handle gateway: add only things visitors can grasp or scan. */
 :where(
-  .operator-chip,
+  .spw-chip,
   .syntax-token,
   .spec-pill,
   .badge,
@@ -72,7 +72,7 @@
 }
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .syntax-token,
   .spec-pill,
   .badge,
@@ -104,7 +104,7 @@
 }
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .syntax-token,
   .spec-pill,
   .badge,
@@ -129,7 +129,7 @@
 }
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .syntax-token,
   .frame-sigil,
   .frame-card-sigil
@@ -148,7 +148,7 @@
   .syntax-token,
   .spw-delimiter,
   :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
-):not(.operator-chip):not(.frame-sigil):not(.spec-pill):not(.spw-component-tag):not(.spw-guide-chip) {
+):not(.spw-chip):not(.frame-sigil):not(.spec-pill):not(.spw-component-tag):not(.spw-guide-chip) {
   min-height: auto;
   padding-inline: var(--handle-pad-inline-inline);
   padding-block: var(--handle-pad-block-inline);
@@ -239,7 +239,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.spw-component-meta) {
 /* Extra breathing room for component tags and dense control groups when inside
    inspector / read-mode panels (addresses clipping and over-packing visible in
    the custom left sidebar in the reference screenshot). */
-:where(.spw-state-inspector, [data-spw-state-inspector], .read-inspect-panel, .kernel-inspector) :where(.spw-component-meta, .spw-component-tag, .spec-pill, .operator-chip) {
+:where(.spw-state-inspector, [data-spw-state-inspector], .read-inspect-panel, .kernel-inspector) :where(.spw-component-meta, .spw-component-tag, .spec-pill, .spw-chip) {
   gap: var(--handle-gap, 0.38rem);
 }
 

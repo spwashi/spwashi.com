@@ -34,8 +34,8 @@
 
     <main id="main-content" tabindex="-1" aria-labelledby="interaction-design-title">
         <article>
-            <section class="site-frame site-hero" id="interaction-design-hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+            <section class="spw-frame" id="interaction-design-hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#interaction-design-hero">?["interaction_design"]</a>
                     <div class="spec-strip">
                         <span class="spec-pill">affordances</span>
@@ -49,15 +49,15 @@
                 <p>Good interaction design reduces ambiguity. A control should say what it is, what state it is in, what will happen next, and how to recover if the user changes their mind.</p>
                 <p>This page is also a specimen of its own subject. The sigils beside each heading are live handles — hold one, or right-click it, to open a menu that inspects the region it names, marks it, or traces others like it. Press <kbd>g</kbd> to open the surface map of every frame and route, <kbd>[</kbd> and <kbd>]</kbd> to step between frames, or <kbd>/</kbd> to filter them. The behavior described here is the behavior you are already using to read it.</p>
                 <nav class="frame-operators" aria-label="Interaction design routes">
-                    <a class="operator-chip" href="/design/website/" data-spw-operator="potential" data-spw-action="explore">~website</a>
-                    <a class="operator-chip" href="/design/accessibility/" data-spw-operator="potential" data-spw-action="explore">~accessibility</a>
-                    <a class="operator-chip" href="/about/website/#interaction-register" data-spw-operator="potential" data-spw-action="explore">~website_interaction_register</a>
-                    <a class="operator-chip" href="/topics/software/browser/" data-spw-operator="potential" data-spw-action="explore">~browser_typescript</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/website/" data-spw-operator="potential" data-spw-action="explore">~website</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/accessibility/" data-spw-operator="potential" data-spw-action="explore">~accessibility</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/about/website/#interaction-register" data-spw-operator="potential" data-spw-action="explore">~website_interaction_register</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/browser/" data-spw-operator="potential" data-spw-action="explore">~browser_typescript</a>
                 </nav>
             </section>
 
-            <section class="site-frame" id="interaction-questions" data-spw-kind="frame" data-spw-role="reference">
-                <header class="frame-heading">
+            <section class="spw-frame" id="interaction-questions" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#interaction-questions">~"interaction_questions"</a>
                     <h2>What this page should help answer</h2>
                 </header>
@@ -69,8 +69,8 @@
                 </ul>
             </section>
 
-            <section class="site-frame" id="working-principles" data-spw-kind="frame" data-spw-role="reference">
-                <header class="frame-heading">
+            <section class="spw-frame" id="working-principles" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#working-principles">^"working_principles"</a>
                     <h2>Working principles</h2>
                 </header>
@@ -94,8 +94,8 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="reference-points" data-spw-kind="frame" data-spw-role="reference">
-                <header class="frame-heading">
+            <section class="spw-frame" id="reference-points" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#reference-points">~"reference_points"</a>
                     <h2>Reference points</h2>
                 </header>
@@ -207,7 +207,7 @@
                 }
             </style>
             <section
-                class="site-frame lens-specimen"
+                class="spw-frame lens-specimen"
                 id="content-dimensionality"
                 data-spw-kind="frame"
                 data-spw-role="reference"
@@ -215,11 +215,11 @@
                 data-spw-inspect-mode-group="dimensionality"
                 data-spw-wonder="resonance projection texture"
             >
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#content-dimensionality">?["content_dimensionality"]</a>
                     <h2>One interaction, four lenses</h2>
                 </header>
-                <p class="frame-note">
+                <p data-spw-textual-role="note">
                     The same interaction — a press-and-hold on a sigil — read through shifting dimensions.
                     Switch lenses with the chips below, or manipulate this frame's own sigil (above, beside the
                     heading): click it to advance a lens, shift-click to step back. The content does not change;
@@ -227,10 +227,10 @@
                 </p>
 
                 <div class="mode-switch lens-switch" role="group" aria-label="Dimensional lenses">
-                    <button type="button" class="operator-chip lens-switch__btn" data-mode-group="dimensionality" data-set-mode="surface" data-spw-operator="mode" aria-pressed="true">[ surface ]</button>
-                    <button type="button" class="operator-chip lens-switch__btn" data-mode-group="dimensionality" data-set-mode="structure" data-spw-operator="mode" aria-pressed="false">[ structure ]</button>
-                    <button type="button" class="operator-chip lens-switch__btn" data-mode-group="dimensionality" data-set-mode="resonance" data-spw-operator="mode" aria-pressed="false">[ resonance ]</button>
-                    <button type="button" class="operator-chip lens-switch__btn" data-mode-group="dimensionality" data-set-mode="dimension" data-spw-operator="mode" aria-pressed="false">[ dimension ]</button>
+                    <button type="button" class="spw-chip lens-switch__btn" data-spw-handle="true" data-mode-group="dimensionality" data-set-mode="surface" data-spw-operator="mode" aria-pressed="true">[ surface ]</button>
+                    <button type="button" class="spw-chip lens-switch__btn" data-spw-handle="true" data-mode-group="dimensionality" data-set-mode="structure" data-spw-operator="mode" aria-pressed="false">[ structure ]</button>
+                    <button type="button" class="spw-chip lens-switch__btn" data-spw-handle="true" data-mode-group="dimensionality" data-set-mode="resonance" data-spw-operator="mode" aria-pressed="false">[ resonance ]</button>
+                    <button type="button" class="spw-chip lens-switch__btn" data-spw-handle="true" data-mode-group="dimensionality" data-set-mode="dimension" data-spw-operator="mode" aria-pressed="false">[ dimension ]</button>
                 </div>
 
                 <div class="lens-stage" data-spw-lens-stage>

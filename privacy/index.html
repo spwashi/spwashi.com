@@ -40,7 +40,7 @@
 ></spw-site-header>
 
 <main id="main-content" tabindex="-1" aria-labelledby="privacy-title">
-    <article class="site-frame site-hero" id="privacy-overview" aria-labelledby="privacy-title" aria-describedby="privacy-lede" data-spw-frame="hero" data-spw-kind="frame" data-spw-role="privacy-register" data-spw-context="reference" data-spw-wonder="locality consent inspectability" data-spw-feature="privacy-register-entry" data-spw-attentional-weight="1.15" data-spw-gradient-boundary="hard" data-spw-composition-stability="anchored" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+    <article class="spw-frame" id="privacy-overview" aria-labelledby="privacy-title" aria-describedby="privacy-lede" data-spw-frame="hero" data-spw-kind="frame" data-spw-role="privacy-register" data-spw-context="reference" data-spw-wonder="locality consent inspectability" data-spw-feature="privacy-register-entry" data-spw-attentional-weight="1.15" data-spw-gradient-boundary="hard" data-spw-composition-stability="anchored" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
         <div class="frame-topline" data-spw-slot="header">
             <a class="frame-sigil" href="#privacy-overview">#&gt;privacy</a>
             <div class="spec-strip">
@@ -50,9 +50,9 @@
             </div>
         </div>
 
-        <p class="page-kicker">Privacy / Liminality / Integrity</p>
+        <p data-spw-textual-role="kicker">Privacy / Liminality / Integrity</p>
         <h1 id="privacy-title">Privacy here is a threshold, not a posture.</h1>
-        <p id="privacy-lede" class="page-lede">
+        <p id="privacy-lede" data-spw-textual-role="lede">
             Most of what this site remembers sits in a liminal place: not yet public, not yet gone. Settings, notes, visits, and drafts stay in this browser so a return can continue. That is ordinary human continuity. It is not a claim that every surface needs the same walls.
         </p>
         <p>
@@ -73,17 +73,17 @@
             </div>
         </div>
         <nav class="frame-operators" aria-label="Privacy shortcuts">
-            <a class="operator-chip" href="#integrity-scopes" data-spw-operator="potential" data-spw-action="explore">~integrity_scopes</a>
-            <a class="operator-chip" href="#analytics-posture" data-spw-operator="wonder" data-spw-action="inspect">? analytics</a>
-            <a class="operator-chip" href="#local-state" data-spw-operator="integration" data-spw-action="publish">^local_state</a>
-            <a class="operator-chip" href="#reset-paths" data-spw-operator="action">!reset[paths]</a>
-            <a class="operator-chip" href="/settings/#stored-data" data-spw-operator="perspective" data-spw-action="enter">@saved_data</a>
-            <a class="operator-chip" href="/design/runtime/" data-spw-operator="potential" data-spw-action="explore">~runtime_lab</a>
+            <a class="spw-chip" data-spw-handle="true" href="#integrity-scopes" data-spw-operator="potential" data-spw-action="explore">~integrity_scopes</a>
+            <a class="spw-chip" data-spw-handle="true" href="#analytics-posture" data-spw-operator="wonder" data-spw-action="inspect">? analytics</a>
+            <a class="spw-chip" data-spw-handle="true" href="#local-state" data-spw-operator="integration" data-spw-action="publish">^local_state</a>
+            <a class="spw-chip" data-spw-handle="true" href="#reset-paths" data-spw-operator="action">!reset[paths]</a>
+            <a class="spw-chip" data-spw-handle="true" href="/settings/#stored-data" data-spw-operator="perspective" data-spw-action="enter">@saved_data</a>
+            <a class="spw-chip" data-spw-handle="true" href="/design/runtime/" data-spw-operator="potential" data-spw-action="explore">~runtime_lab</a>
         </nav>
     </article>
 
-    <section class="site-frame" id="analytics-posture" aria-labelledby="analytics-posture-title" data-spw-kind="frame" data-spw-role="analytics-policy" data-spw-feature="privacy-analytics-posture">
-        <header class="frame-heading">
+    <section class="spw-frame" id="analytics-posture" aria-labelledby="analytics-posture-title" data-spw-kind="frame" data-spw-role="analytics-policy" data-spw-feature="privacy-analytics-posture">
+        <header class="frame-heading" data-spw-slot="header">
             <a class="frame-sigil" href="#analytics-posture">?"analytics_posture"</a>
             <h2 id="analytics-posture-title">Analytics posture</h2>
         </header>
@@ -96,8 +96,8 @@
 &lt;/spw-page&gt;</code></pre>
     </section>
 
-    <section class="site-frame" id="local-state" aria-labelledby="local-state-title" data-spw-kind="frame" data-spw-role="local-state-inventory" data-spw-feature="privacy-local-state-inventory">
-        <header class="frame-heading">
+    <section class="spw-frame" id="local-state" aria-labelledby="local-state-title" data-spw-kind="frame" data-spw-role="local-state-inventory" data-spw-feature="privacy-local-state-inventory">
+        <header class="frame-heading" data-spw-slot="header">
             <a class="frame-sigil" href="#local-state">^"local_state"</a>
             <h2 id="local-state-title">Local state inventory</h2>
         </header>
@@ -136,8 +136,8 @@
         </div>
     </section>
 
-    <section class="site-frame" id="reset-paths" aria-labelledby="reset-paths-title" data-spw-kind="frame" data-spw-role="reset-guide" data-spw-feature="privacy-reset-paths">
-        <header class="frame-heading">
+    <section class="spw-frame" id="reset-paths" aria-labelledby="reset-paths-title" data-spw-kind="frame" data-spw-role="reset-guide" data-spw-feature="privacy-reset-paths">
+        <header class="frame-heading" data-spw-slot="header">
             <a class="frame-sigil" href="#reset-paths">!"reset_paths"</a>
             <h2 id="reset-paths-title">Reset paths</h2>
         </header>
@@ -147,17 +147,17 @@
             <li>Use <a href="/settings/#stored-data">saved data and app status</a> to inspect service worker and cache state.</li>
             <li>Use browser storage tools when you want to clear every local trace for this origin.</li>
         </ul>
-        <p class="frame-note">
+        <p data-spw-textual-role="note">
             Sensitive working surfaces should say when something stays local and when it is about to leave. That is enough for most visits. Client work may need a smaller surface than the public site: do not paste names, drafts, or artifacts into a tool just because the tool is convenient.
         </p>
     </section>
 
-    <section class="site-frame" id="integrity-scopes" aria-labelledby="integrity-scopes-title" data-spw-kind="frame" data-spw-role="orientation" data-spw-liminality="threshold">
-        <header class="frame-heading">
+    <section class="spw-frame" id="integrity-scopes" aria-labelledby="integrity-scopes-title" data-spw-kind="frame" data-spw-role="orientation" data-spw-liminality="threshold">
+        <header class="frame-heading" data-spw-slot="header">
             <a class="frame-sigil" href="#integrity-scopes">~"integrity_scopes"</a>
             <h2 id="integrity-scopes-title">Integrity has a scope</h2>
         </header>
-        <p class="inline-note">The same person can need different walls in the same week. Name the threshold before you treat every note as a secret or every page as a vault.</p>
+        <p data-spw-textual-role="note">The same person can need different walls in the same week. Name the threshold before you treat every note as a secret or every page as a vault.</p>
         <div class="frame-grid">
             <article class="frame-panel">
                 <h3>A visit</h3>

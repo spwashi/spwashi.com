@@ -41,7 +41,7 @@
   row-gap: 0.6rem;
 }
 
-:where(body[data-spw-surface="settings"] .settings-hero-actions .operator-chip) {
+:where(body[data-spw-surface="settings"] .settings-hero-actions .spw-chip) {
   min-height: 2.35rem;
 }
 

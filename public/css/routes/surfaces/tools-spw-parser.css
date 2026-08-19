@@ -55,7 +55,7 @@
       font: 0.78rem/1.3 var(--font-mono, monospace);
     }
 
-    & .site-hero .spec-pill {
+    & [data-spw-region-role="entry-spine"] .spec-pill {
       color: #122420;
     }
 
@@ -141,7 +141,7 @@
       box-shadow: inset 0 0 0 2px var(--op-frame-color, #1a9999);
     }
 
-    & .literal-parser-editor > .frame-note {
+    & .literal-parser-editor > [data-spw-textual-role="note"] {
       min-height: 1.3em;
       margin: 0;
       padding: 0.7rem 1rem;
@@ -203,7 +203,7 @@
       font-size: 0.88rem;
     }
 
-    & .literal-parser-actions .operator-chip {
+    & .literal-parser-actions .spw-chip {
       appearance: none;
       cursor: pointer;
       font: inherit;

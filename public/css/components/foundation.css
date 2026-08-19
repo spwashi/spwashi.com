@@ -120,7 +120,7 @@
 :where(
   [data-spw-component-kind]:not(.site-header),
   [data-spw-kind]:not(.site-header),
-  .site-frame,
+  .spw-frame,
   .frame-card,
   .media-card,
   .media-focus-card,
@@ -164,7 +164,7 @@
 :where(
   [data-spw-component-kind]:not(body):not(main):not(.site-header),
   [data-spw-kind]:not(body):not(main):not(.site-header),
-  .site-frame,
+  .spw-frame,
   .frame-card,
   .media-card,
   .media-focus-card,
@@ -189,21 +189,21 @@
   container-type: inline-size;
 }
 
-:where(.frame-card, .operator-chip) {
+:where(.frame-card, .spw-chip) {
   transition:
     transform 80ms var(--ease-settle, ease),
     box-shadow var(--component-transition-fast, 120ms ease),
     border-color var(--component-transition-fast, 120ms ease);
 }
 
-:where(.frame-card, .operator-chip):active {
+:where(.frame-card, .spw-chip):active {
   transform: scale(0.984);
 }
 
 /* Region flow utilities: opt in when a region or component needs explicit
    containment behavior rather than inheriting the route default. */
 :where(
-  .site-frame,
+  .spw-frame,
   .frame-card,
   .media-card,
   .media-focus-card,
@@ -229,7 +229,7 @@
 }
 
 :where(
-  .site-frame,
+  .spw-frame,
   .frame-card,
   .media-card,
   .media-focus-card,
@@ -383,8 +383,8 @@
 }
 
 :where(main) > :where([data-spw-cluster]) + :where([data-spw-cluster]),
-:where(main) > :where([data-spw-cluster]) + :where(.site-frame),
-:where(main) > :where(.site-frame) + :where([data-spw-cluster]) {
+:where(main) > :where([data-spw-cluster]) + :where(.spw-frame),
+:where(main) > :where(.spw-frame) + :where([data-spw-cluster]) {
   margin-block-start: var(--page-section-gap-tight);
 }
 
@@ -521,7 +521,7 @@
 :where(
   [data-spw-component-kind]:not(.site-header) > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
   [data-spw-kind]:not(.site-header) > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .site-frame > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .spw-frame > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
   .frame-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
   .media-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
   .media-focus-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
@@ -554,7 +554,7 @@
    an explicit stretch, prose slots collapse to min-content and render as a
    vertical ribbon of words. */
 :where(
-  .site-frame,
+  .spw-frame,
   .frame-panel,
   .frame-card,
   .media-card,
@@ -583,7 +583,7 @@
   min-width: 0;
 }
 
-:where(.frame-topline) {
+:where(.frame-topline, .spw-frame > [data-spw-slot="header"], [data-spw-kind="frame"] > [data-spw-slot="header"]) {
   align-items: center;
   min-height: var(--component-header-min-height);
   margin-bottom: 0;
@@ -596,7 +596,7 @@
     box-shadow var(--spw-component-settle-transition, 220ms var(--ease-settle, ease));
 }
 
-:where(.site-frame[data-state~="active"] .frame-topline) {
+:where(.spw-frame[data-state~="active"] .frame-topline) {
   border-bottom-color: color-mix(in srgb, var(--component-accent) 32%, transparent);
 }
 
@@ -712,7 +712,7 @@
 }
 
 :where([data-spw-empty="true"], [data-spw-component-state="empty"], [data-spw-component-state="default"], [data-spw-lifecycle="empty"], [data-spw-lifecycle="default"])
-  :where(.frame-sigil, .spw-component-tag, .spw-guide-chip, .operator-chip[data-spw-nav-tokenized]) {
+  :where(.frame-sigil, .spw-component-tag, .spw-guide-chip, .spw-chip[data-spw-nav-tokenized]) {
   opacity: calc(0.42 + (var(--spw-pre-state-visibility, 0.34) * 0.28));
 }
 
@@ -831,7 +831,7 @@
 }
 
 :where(html[data-spw-module-visuals="on"]) :where(
-  [data-spw-module-evaluates~="semantics"] .operator-chip,
+  [data-spw-module-evaluates~="semantics"] .spw-chip,
   [data-spw-module-evaluates~="semantics"] .frame-sigil,
   [data-spw-module-evaluates~="semantics"] .frame-card-sigil,
   [data-spw-module-evaluates~="semantics"] .spec-pill
@@ -1211,14 +1211,14 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   margin-block: calc(var(--local-bleed-offset) * -1);
 }
 
-:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:first-child,
-:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:first-child {
+:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:first-child,
+:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:first-child {
   border-start-start-radius: inherit;
   border-start-end-radius: inherit;
 }
 
-:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:last-child,
-:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:last-child {
+:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:last-child,
+:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:last-child {
   border-end-start-radius: inherit;
   border-end-end-radius: inherit;
 }

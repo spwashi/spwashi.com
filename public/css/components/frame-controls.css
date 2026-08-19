@@ -29,7 +29,7 @@
 }
 
 /* Form axis — brace/block/angle grammar swaps on the frame container */
-:where(.site-frame[data-spw-form-options], .frame-card[data-spw-form-options]) {
+:where(.spw-frame[data-spw-form-options], .frame-card[data-spw-form-options]) {
   --spw-control-axis: form;
   --spw-control-axis-color: var(--op-object-color, #a67c00);
 }
@@ -37,14 +37,14 @@
 :where(
   html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
-) :where(.site-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header)) {
+) :where(.spw-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header)) {
   box-shadow: inset 3px 0 0 color-mix(in srgb, var(--spw-control-axis-color) 42%, transparent);
 }
 
 :where(
   html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
-) :where(.site-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header))::after {
+) :where(.spw-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header))::after {
   content: "form";
   display: inline-flex;
   align-items: center;

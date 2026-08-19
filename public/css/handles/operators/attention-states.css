@@ -20,7 +20,7 @@
   .tag,
   .pill,
   .spw-delimiter,
-  .operator-chip,
+  .spw-chip,
   [data-spw-handle="true"],
   :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
 ):is(:hover, :focus-visible) {
@@ -35,7 +35,7 @@
 }
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .badge,
   .tag,
@@ -60,7 +60,7 @@
 }
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .badge,
   .tag,
@@ -88,7 +88,7 @@
   html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]),
   html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"])
 ) :where(
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .badge,
   .tag,
@@ -102,7 +102,7 @@
 }
 
 :where(html[data-spw-page-arrival-step="1"]) :where(
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .badge,
   .tag,
@@ -117,7 +117,7 @@
 }
 
 :where(html[data-spw-page-arrival-step="2"]) :where(
-  .operator-chip,
+  .spw-chip,
   .spec-pill,
   .badge,
   .tag,
@@ -165,7 +165,7 @@
   .syntax-token,
   .spw-delimiter,
   :where(span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
-):not(.operator-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip) {
+):not(.spw-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip) {
   text-decoration-line: underline;
   text-decoration-color: color-mix(in srgb, currentColor 28%, transparent);
   text-decoration-thickness: var(--handle-underline-thickness);
@@ -177,14 +177,14 @@
   .syntax-token,
   .spw-delimiter,
   :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
-):not(.operator-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip):is(:hover, :focus-visible) {
+):not(.spw-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip):is(:hover, :focus-visible) {
   text-decoration-color: color-mix(in srgb, currentColor 62%, transparent);
 }
 
 /* ARIA + navigation-spells hygiene: directional affordance for destination semantics on key link families.
    projection (cross-route) gets a distinct forward-leaning treatment; scope/settle stay more contained. */
 :where(
-  .operator-chip,
+  .spw-chip,
   .header-sigil,
   .frame-operators a,
   .site-header nav a,
@@ -196,7 +196,7 @@
 }
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .header-sigil,
   .frame-operators a,
   .site-header nav a,
@@ -207,7 +207,7 @@
 }
 
 :where(
-  .operator-chip,
+  .spw-chip,
   .header-sigil,
   .frame-operators a,
   .site-header nav a,
@@ -251,21 +251,21 @@
    page does not move under a reader.
    ========================================================================== */
 
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='potential']:not(.operator-chip):not(.frame-sigil) {
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='potential']:not(.spw-chip):not(.frame-sigil) {
   text-decoration-style: dotted;
 }
 
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='wonder']:not(.operator-chip):not(.frame-sigil),
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='probe']:not(.operator-chip):not(.frame-sigil) {
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='wonder']:not(.spw-chip):not(.frame-sigil),
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='probe']:not(.spw-chip):not(.frame-sigil) {
   text-decoration-style: dashed;
 }
 
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='action']:not(.operator-chip):not(.frame-sigil) {
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='action']:not(.spw-chip):not(.frame-sigil) {
   text-decoration-style: solid;
   text-decoration-color: color-mix(in srgb, var(--active-op-color, currentColor) 48%, transparent);
 }
 
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='integration']:not(.operator-chip):not(.frame-sigil) {
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='integration']:not(.spw-chip):not(.frame-sigil) {
   text-decoration-style: double;
 }
 
@@ -274,7 +274,7 @@
   [data-spw-operator='frame'],
   [data-spw-operator='address'],
   [data-spw-operator='value']
-):not(.operator-chip):not(.frame-sigil) {
+):not(.spw-chip):not(.frame-sigil) {
   text-decoration-style: solid;
   text-decoration-color: color-mix(in srgb, currentColor 18%, transparent);
 }

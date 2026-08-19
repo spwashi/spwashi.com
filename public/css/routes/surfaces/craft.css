@@ -180,7 +180,7 @@ body[data-spw-surface="craft"] {
   color: var(--ink);
 }
 
-[data-spw-surface="craft"] .site-frame {
+[data-spw-surface="craft"] .spw-frame {
   border-color: color-mix(in srgb, var(--craft-fold-edge) 24%, transparent);
   border-radius: 12px;
   background:
@@ -192,7 +192,7 @@ body[data-spw-surface="craft"] {
 }
 
 [data-spw-surface="craft"] .frame-card,
-[data-spw-surface="craft"] .operator-chip {
+[data-spw-surface="craft"] .spw-chip {
   border-radius: 10px;
 }
 
@@ -201,19 +201,19 @@ body[data-spw-surface="craft"] {
   align-items: baseline;
 }
 
-[data-spw-surface="craft"] .frame-note,
+[data-spw-surface="craft"] [data-spw-textual-role="note"],
 [data-spw-surface="craft"] .inline-note {
   color: var(--ink-soft);
 }
 
-[data-spw-surface="craft"] a:not(.operator-chip):not(.frame-sigil):not(.frame-card):not(.craft-file-card) {
+[data-spw-surface="craft"] a:not(.spw-chip):not(.frame-sigil):not(.frame-card):not(.craft-file-card) {
   color: var(--craft-accent);
   text-decoration-color: color-mix(in srgb, var(--craft-accent) 30%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.16em;
 }
 
-[data-spw-surface="craft"] a:not(.operator-chip):not(.frame-sigil):not(.frame-card):not(.craft-file-card):hover {
+[data-spw-surface="craft"] a:not(.spw-chip):not(.frame-sigil):not(.frame-card):not(.craft-file-card):hover {
   color: color-mix(in srgb, var(--craft-accent) 82%, var(--craft-ink-blue));
   text-decoration-color: currentColor;
 }

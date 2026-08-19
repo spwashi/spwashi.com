@@ -13,7 +13,7 @@
    See .spw/conventions/projection-attenuation.spw
    ========================================================================== */
 
-:where(.site-frame, .frame-card, .frame-panel, [data-spw-form="brace"]) {
+:where(.spw-frame, .frame-card, .frame-panel, [data-spw-form="brace"]) {
   --spw-wonder-hold: 1;
   --spw-slot-attenuate: 1;
   --spw-projected-field: calc(
@@ -27,23 +27,23 @@
 }
 
 /* Region material — how long wonder stays once it arrives. */
-:where(.site-frame[data-spw-region="hook"], .site-frame[data-spw-region-role="entry-spine"]) {
+:where(.spw-frame[data-spw-region="hook"], .spw-frame[data-spw-region-role="entry-spine"]) {
   --spw-wonder-hold: 1.15;
 }
 
-:where(.site-frame[data-spw-region="hub"], .site-frame[data-spw-region="wide"]) {
+:where(.spw-frame[data-spw-region="hub"], .spw-frame[data-spw-region="wide"]) {
   --spw-wonder-hold: 1;
 }
 
-:where(.site-frame[data-spw-region="cluster"]) {
+:where(.spw-frame[data-spw-region="cluster"]) {
   --spw-wonder-hold: 0.85;
 }
 
-:where(.site-frame[data-spw-region="path"]) {
+:where(.spw-frame[data-spw-region="path"]) {
   --spw-wonder-hold: 0.72;
 }
 
-:where(.site-frame[data-spw-region="read"], .site-frame[data-spw-region-role="reading"]) {
+:where(.spw-frame[data-spw-region="read"], .spw-frame[data-spw-region-role="reading"]) {
   --spw-wonder-hold: 0.55;
 }
 
@@ -84,7 +84,7 @@
   );
 }
 
-:where(.site-frame, .frame-card, .frame-panel) {
+:where(.spw-frame, .frame-card, .frame-panel) {
   transition:
     border-color var(--spw-projected-echo, 480ms) var(--ease-settle, ease),
     box-shadow var(--spw-projected-echo, 480ms) var(--ease-settle, ease),
@@ -92,14 +92,14 @@
 }
 
 /* Clustered salience: kin in the same region share the projected field. */
-:where(.site-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"], [data-spw-charge="preview"]))) {
+:where(.spw-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"], [data-spw-charge="preview"]))) {
   --spw-field-intensity: max(var(--spw-field-intensity, 0), 0.42);
 }
 
 :where(
-  .site-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"]))
+  .spw-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"]))
   [data-spw-operator],
-  .site-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"]))
+  .spw-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"]))
   [data-spw-motif]
 ) {
   --spw-resonance: max(var(--spw-resonance, 0), calc(var(--spw-projected-field, 0.42) * 0.8));
@@ -107,11 +107,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(.site-frame, .frame-card, .frame-panel) {
+  :where(.spw-frame, .frame-card, .frame-panel) {
     --spw-projected-echo: 1ms;
   }
 }
 
-html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel) {
+html[data-spw-high-contrast="on"] :where(.spw-frame, .frame-card, .frame-panel) {
   --spw-wonder-hold: 0.2;
 }

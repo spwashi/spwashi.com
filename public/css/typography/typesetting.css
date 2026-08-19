@@ -186,7 +186,7 @@
 
 :where(
   html[data-spw-reading-groove="on"] main :is(article, > section) :is(
-    p, li, blockquote, figcaption, .inline-note, .frame-note, h2, h3
+    p, li, blockquote, figcaption, .inline-note, [data-spw-textual-role="note"], h2, h3
   )
 ) {
   transition:

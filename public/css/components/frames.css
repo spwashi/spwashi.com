@@ -1,14 +1,15 @@
 /* ==========================================================================
    components/frames.css
    --------------------------------------------------------------------------
-   Site-frame structure, frame stance, hero thresholds, and metamaterial selectors.
+   spw-frame structure, frame stance, entry-spine thresholds, and metamaterial selectors.
+   Contract: class=spw-frame + data-spw-kind=frame. Entry spines use data-spw-region-role.
    ========================================================================== */
 
 /* ==========================================================================
    12. Site frame
    ========================================================================== */
 
-:where(.spw-frame, .site-frame) {
+:where(.spw-frame, [data-spw-kind="frame"]) {
   --surface-gap: var(--spw-surface-gap, clamp(0.72rem, 1.55cqi, 1.14rem));
   --surface-padding: var(--spw-surface-padding, clamp(0.88rem, 1.85cqi, 1.28rem));
   --site-frame-seam-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
@@ -55,22 +56,22 @@
    excluded so it always renders eagerly; the `auto` intrinsic size remembers a
    frame's real height after first render, so scroll position stays stable.
    In-page anchor navigation and find-in-page still force these to render. */
-:where(.spw-frame:not(.site-hero):not(.spw-hero), .site-frame:not(.site-hero):not(.spw-hero)) {
+:where(.spw-frame:not([data-spw-region-role="entry-spine"]), [data-spw-kind="frame"]:not([data-spw-region-role="entry-spine"])) {
   content-visibility: auto;
   contain-intrinsic-size: auto 16rem;
 }
 
 /* Broadsheet pairing: a 480px reserved height stretched the neighbor
    into an empty card. Sit by content; remember a shorter estimate. */
-:where(body[data-spw-layout="newspaper"] :is(.spw-frame, .site-frame):not(.site-hero):not(.spw-hero)) {
+:where(body[data-spw-layout="newspaper"] :is(.spw-frame, [data-spw-kind="frame"]):not([data-spw-region-role="entry-spine"])) {
   contain-intrinsic-size: auto 12rem;
 }
 
-html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
+html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   background: var(--component-surface-strong, var(--surface-strong, #fff));
 }
 
-:where(.spw-frame, .site-frame)::before {
+:where(.spw-frame, [data-spw-kind="frame"])::before {
   content: "";
   position: absolute;
   inset: 1rem var(--surface-padding) auto var(--surface-padding);
@@ -84,8 +85,8 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   opacity: 0.92;
 }
 
-:where(.spw-frame[data-state~="active"], .site-frame[data-state~="active"]),
-:where(.spw-frame[data-spw-active="true"], .site-frame[data-spw-active="true"]) {
+:where(.spw-frame[data-state~="active"], .spw-frame[data-state~="active"]),
+:where(.spw-frame[data-spw-active="true"], .spw-frame[data-spw-active="true"]) {
   border-color: var(--line-strong, color-mix(in srgb, var(--component-accent) 34%, transparent));
   background: var(--component-surface-strong);
   box-shadow:
@@ -104,12 +105,12 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
      rather than remaining passive.
    - Performance-minded: uses existing data attrs and :has() where already supported; no new
      heavy selectors or forced reflows. */
-:where(.site-frame[data-spw-memory-managed="true"],
-       .site-frame[data-spw-annotation-scope]) {
+:where(.spw-frame[data-spw-memory-managed="true"],
+       .spw-frame[data-spw-annotation-scope]) {
   --cognitive-container-tint: color-mix(in srgb, var(--component-accent) 8%, transparent);
 }
 
-:where(.site-frame[data-spw-memory-managed="true"])::before {
+:where(.spw-frame[data-spw-memory-managed="true"])::before {
   background: linear-gradient(
     90deg,
     var(--cognitive-container-tint) 0 clamp(3.5rem, 12vw, 4.5rem),
@@ -120,17 +121,17 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
 /* Meaning and design depth attributes — portable signals for screenshots,
    AI interpretation, catalog, and authorial intent layering.
    These turn a static frame into a medium with observable depth. */
-:where(.site-frame[data-spw-meaning-depth="light"]) {
+:where(.spw-frame[data-spw-meaning-depth="light"]) {
   --meaning-contrast: 0.6;
   --meaning-density: 0.4;
 }
 
-:where(.site-frame[data-spw-meaning-depth="rich"]) {
+:where(.spw-frame[data-spw-meaning-depth="rich"]) {
   --meaning-contrast: 1.15;
   --meaning-density: 0.85;
 }
 
-:where(.site-frame[data-spw-design-interpretation]) {
+:where(.spw-frame[data-spw-design-interpretation]) {
   /* Subtle visual cue that this container carries explicit design/semantic intent */
   box-shadow: var(--component-frame-shadow),
     0 0 0 1px color-mix(in srgb, var(--component-accent) 12%, transparent);
@@ -138,13 +139,13 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
 
 /* Inline interaction affordance in header/seam area when memory or annotation is active
    (encourages engagement without dedicated panels — reduces dead space). */
-:where(.site-frame[data-spw-memory-managed="true"] .frame-heading,
-       .site-frame[data-spw-annotation-scope] .frame-heading) {
+:where(.spw-frame[data-spw-memory-managed="true"] .frame-heading,
+       .spw-frame[data-spw-annotation-scope] .frame-heading) {
   position: relative;
 }
 
-:where(.site-frame[data-spw-memory-managed="true"] .frame-heading)::after,
-:where(.site-frame[data-spw-annotation-scope] .frame-heading)::after {
+:where(.spw-frame[data-spw-memory-managed="true"] .frame-heading)::after,
+:where(.spw-frame[data-spw-annotation-scope] .frame-heading)::after {
   content: "";
   position: absolute;
   right: 0;
@@ -162,43 +163,43 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
    When a frame carries memory/annotation state (active wonder), tighten rhythm
    slightly to reduce dead space while preserving readability. Prevents overflow
    bugs in dense inline + annotated content. Performance-friendly (no layout thrash). */
-:where(.site-frame[data-spw-memory-managed="true"],
-       .site-frame[data-spw-annotation-scope]) {
+:where(.spw-frame[data-spw-memory-managed="true"],
+       .spw-frame[data-spw-annotation-scope]) {
   --surface-gap: calc(var(--spw-surface-gap, 1rem) * 0.92);
   --surface-padding: calc(var(--spw-surface-padding, 1.2rem) * 0.95);
 }
 
-:where(.site-frame[data-spw-memory-managed="true"] p,
-       .site-frame[data-spw-annotation-scope] p,
-       .site-frame[data-spw-memory-managed="true"] li,
-       .site-frame[data-spw-annotation-scope] li) {
+:where(.spw-frame[data-spw-memory-managed="true"] p,
+       .spw-frame[data-spw-annotation-scope] p,
+       .spw-frame[data-spw-memory-managed="true"] li,
+       .spw-frame[data-spw-annotation-scope] li) {
   max-inline-size: 68ch; /* slightly tighter for resonant reading */
   overflow-wrap: break-word;
 }
 
-:where(.spw-frame, .site-frame) h1 {
+:where(.spw-frame, [data-spw-kind="frame"]) h1 {
   font-size: clamp(1.55rem, 1.2rem + 2cqi, 2.2rem);
   font-weight: 700;
   line-height: 1.16;
   letter-spacing: -0.02em;
 }
 
-:where(.spw-frame, .site-frame) h2 {
+:where(.spw-frame, [data-spw-kind="frame"]) h2 {
   font-size: clamp(1.1rem, 0.9rem + 1.1cqi, 1.45rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
-:where(.spw-frame, .site-frame) h3 {
+:where(.spw-frame, [data-spw-kind="frame"]) h3 {
   font-size: clamp(0.92rem, 0.85rem + 0.5cqi, 1.05rem);
   font-weight: 600;
   line-height: 1.28;
   letter-spacing: -0.005em;
 }
 
-.site-lede,
-.page-lede {
+[data-spw-textual-role="lede"],
+[data-spw-textual-role="lede"] {
   font-size: clamp(1rem, 0.88rem + 0.7cqi, 1.2rem);
   font-weight: 500;
   line-height: 1.58;
@@ -208,23 +209,23 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   color: color-mix(in srgb, var(--ink, #161c1d) 86%, transparent);
 }
 
-:where(:is(.spw-frame, .site-frame) > p:not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker)) {
+:where(:is(.spw-frame, .spw-frame) > p:not([data-spw-textual-role="note"]):not(.inline-note):not([data-spw-textual-role="lede"]):not([data-spw-textual-role="lede"]):not(.spec-kicker):not([data-spw-textual-role="kicker"])) {
   max-inline-size: min(66ch, 100%);
   text-wrap: pretty;
   overflow-wrap: break-word;
 }
 
 :where(
-  :is(.spw-frame, .site-frame) > .frame-heading + p,
-  :is(.spw-frame, .site-frame) > header.frame-heading + p,
-  :is(.spw-frame, .site-frame) > h1 + p,
-  :is(.spw-frame, .site-frame) > h2 + p,
-  :is(.spw-frame, .site-frame) > h3 + p,
-  :is(.spw-frame, .site-frame) > .spec-kicker + h1 + p,
-  :is(.spw-frame, .site-frame) > .spec-kicker + h2 + p,
-  :is(.spw-frame, .site-frame) > .frame-topline + .spec-kicker + h1 + p,
-  :is(.spw-frame, .site-frame) > .frame-topline + .spec-kicker + h2 + p
-):not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker) {
+  :is(.spw-frame, .spw-frame) > .frame-heading + p,
+  :is(.spw-frame, .spw-frame) > header.frame-heading + p,
+  :is(.spw-frame, .spw-frame) > h1 + p,
+  :is(.spw-frame, .spw-frame) > h2 + p,
+  :is(.spw-frame, .spw-frame) > h3 + p,
+  :is(.spw-frame, .spw-frame) > .spec-kicker + h1 + p,
+  :is(.spw-frame, .spw-frame) > .spec-kicker + h2 + p,
+  :is(.spw-frame, .spw-frame) > .frame-topline + .spec-kicker + h1 + p,
+  :is(.spw-frame, .spw-frame) > .frame-topline + .spec-kicker + h2 + p
+):not([data-spw-textual-role="note"]):not(.inline-note):not([data-spw-textual-role="lede"]):not([data-spw-textual-role="lede"]):not(.spec-kicker):not([data-spw-textual-role="kicker"]) {
   font-size: clamp(1.01rem, 0.96rem + 0.34cqi, 1.12rem);
   font-weight: 500;
   line-height: 1.62;
@@ -270,15 +271,15 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
 }
 
 /* Title → first body paragraph: keep the lede glued to the heading. */
-:where(.site-frame > :is(h1, h2, h3, .site-lede, .page-lede) + p) {
+:where(.spw-frame > :is(h1, h2, h3, [data-spw-textual-role="lede"], [data-spw-textual-role="lede"]) + p) {
   margin-block-start: 0;
 }
 
-:where(.site-frame > :is(.spec-kicker, .page-kicker) + :is(h1, h2, h3)) {
+:where(.spw-frame > :is(.spec-kicker, [data-spw-textual-role="kicker"]) + :is(h1, h2, h3)) {
   margin-block-start: 0;
 }
 
-:where(.site-frame > :is(h1, h2) + :is(.site-lede, .page-lede)) {
+:where(.spw-frame > :is(h1, h2) + :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"])) {
   margin-block-start: var(--space-3xs, 0.125rem);
 }
 
@@ -294,28 +295,28 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   min-block-size: 1.5rem;
 }
 
-:where(.site-frame) > [data-spw-slot="header"] { order: -2; }
-:where(.site-frame) > [data-spw-slot="meta"] { order: -1; }
-:where(.site-frame) > [data-spw-slot="body"] { order: 0; }
-:where(.site-frame) > [data-spw-slot="figure"] { order: 1; }
-:where(.site-frame) > [data-spw-slot="actions"] { order: 2; }
-:where(.site-frame) > [data-spw-slot="footer"] { order: 3; }
+:where(.spw-frame) > [data-spw-slot="header"] { order: -2; }
+:where(.spw-frame) > [data-spw-slot="meta"] { order: -1; }
+:where(.spw-frame) > [data-spw-slot="body"] { order: 0; }
+:where(.spw-frame) > [data-spw-slot="figure"] { order: 1; }
+:where(.spw-frame) > [data-spw-slot="actions"] { order: 2; }
+:where(.spw-frame) > [data-spw-slot="footer"] { order: 3; }
 :where(.frame-topline, .frame-heading, [data-spw-slot="header"]) > [data-spw-slot="meta"] { margin-left: auto; }
 
 /* Slot interaction */
-:where(.site-frame[data-spw-active="true"]) [data-spw-slot="header"] {
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="header"] {
   transform: translateY(-1px);
 }
 
-:where(.site-frame[data-spw-active="true"]) [data-spw-slot="actions"] {
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="actions"] {
   transform: translateY(1px);
 }
 
-:where(.site-frame[data-spw-attention="ambient"]) [data-spw-slot="body"] {
+:where(.spw-frame[data-spw-attention="ambient"]) [data-spw-slot="body"] {
   opacity: 0.92;
 }
 
-:where(.site-frame[data-spw-attention="focused"]) [data-spw-slot="body"] {
+:where(.spw-frame[data-spw-attention="focused"]) [data-spw-slot="body"] {
   opacity: 1;
 }
 
@@ -325,7 +326,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   100% { box-shadow: var(--component-frame-shadow-active); filter: brightness(1); }
 }
 
-:where(.site-frame[data-spw-active="true"]) {
+:where(.spw-frame[data-spw-active="true"]) {
   animation: frame-bloom var(--component-transition-deliberate) ease-out forwards;
 }
 
@@ -334,21 +335,21 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   to { opacity: 1; transform: translateY(0); }
 }
 
-:where(.site-frame[data-spw-active="true"]) [data-spw-slot] {
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot] {
   animation: frame-slot-reveal var(--component-transition-deliberate) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-:where(.site-frame[data-spw-active="true"]) [data-spw-slot="header"] { animation-delay: 40ms; }
-:where(.site-frame[data-spw-active="true"]) [data-spw-slot="body"] { animation-delay: 120ms; }
-:where(.site-frame[data-spw-active="true"]) [data-spw-slot="figure"] { animation-delay: 240ms; }
-:where(.site-frame[data-spw-active="true"]) [data-spw-slot="actions"] { animation-delay: 360ms; }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="header"] { animation-delay: 40ms; }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="body"] { animation-delay: 120ms; }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="figure"] { animation-delay: 240ms; }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="actions"] { animation-delay: 360ms; }
 
 
 /* ==========================================================================
    13. Role-based frame stance
    ========================================================================== */
 
-:where(.site-frame[data-spw-role="probe"]) {
+:where(.spw-frame[data-spw-role="probe"]) {
   background: linear-gradient(
       180deg,
       color-mix(in srgb, var(--op-probe-bg-soft, var(--component-accent-soft)) 50%, transparent),
@@ -357,7 +358,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   var(--component-surface);
 }
 
-:where(.site-frame[data-spw-role="surface"]) {
+:where(.spw-frame[data-spw-role="surface"]) {
   background: linear-gradient(
       0deg,
       color-mix(in srgb, var(--op-surface-bg-soft, var(--component-accent-soft)) 40%, transparent),
@@ -366,7 +367,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   var(--component-surface);
 }
 
-:where(.site-frame[data-spw-role="reference"]) {
+:where(.spw-frame[data-spw-role="reference"]) {
   border-left-width: 2px;
   border-left-color: var(--op-ref-border, color-mix(in srgb, var(--component-accent) 22%, transparent));
   --component-measure: 74ch;
@@ -379,11 +380,11 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
     );
 }
 
-:where(.site-frame[data-spw-role="reference"] p) {
+:where(.spw-frame[data-spw-role="reference"] p) {
   line-height: 1.65;
 }
 
-:where(.site-frame[data-spw-role="status"]) {
+:where(.spw-frame[data-spw-role="status"]) {
   background: linear-gradient(
       90deg,
       color-mix(in srgb, var(--component-accent) 10%, transparent),
@@ -392,7 +393,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   var(--component-surface);
 }
 
-:where(.site-frame[data-spw-role="routing"]) {
+:where(.spw-frame[data-spw-role="routing"]) {
   border-style: solid;
   border-color: color-mix(in srgb, var(--component-accent) 24%, var(--line, transparent));
   background:
@@ -410,7 +411,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   --surface-gap: clamp(0.95rem, 1.9cqi, 1.32rem);
 }
 
-:where(:is(.spw-frame, .site-frame)[data-spw-role="schema"]) {
+:where(:is(.spw-frame, .spw-frame)[data-spw-role="schema"]) {
   background: linear-gradient(
       180deg,
       color-mix(in srgb, var(--component-accent) 6%, transparent),
@@ -420,7 +421,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   --surface-gap: clamp(0.82rem, 1.6cqi, 1.08rem);
 }
 
-:where(:is(.spw-frame, .site-frame)[data-spw-role="gallery"]) {
+:where(:is(.spw-frame, .spw-frame)[data-spw-role="gallery"]) {
   background: radial-gradient(
       circle at top left,
       color-mix(in srgb, var(--component-accent) 8%, transparent),
@@ -429,7 +430,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   var(--component-surface);
 }
 
-:where(:is(.spw-frame, .site-frame)[data-spw-role="broadcast"]) {
+:where(:is(.spw-frame, .spw-frame)[data-spw-role="broadcast"]) {
   background: linear-gradient(
       90deg,
       color-mix(in srgb, var(--component-accent) 10%, transparent),
@@ -443,40 +444,40 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
    14. Hero + heading thresholds
    ========================================================================== */
 
-:where(.spw-hero, .site-hero) {
+:where([data-spw-region-role="entry-spine"], [data-spw-region-role="entry-spine"]) {
   gap: var(--spw-hero-gap, clamp(1.1rem, 2cqi, 1.5rem));
 }
 
-:where(.site-hero--split-figure, .spw-hero--split-figure) > :where([data-spw-slot="header"], [data-spw-slot="body"], [data-spw-slot="figure"], [data-spw-slot="actions"]) {
+:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > :where([data-spw-slot="header"], [data-spw-slot="body"], [data-spw-slot="figure"], [data-spw-slot="actions"]) {
   min-width: 0;
 }
 
-:where(.site-hero--split-figure, .spw-hero--split-figure) {
+:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) {
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
   align-content: start;
 }
 
-:where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="body"] {
+:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="body"] {
   display: grid;
   gap: var(--spw-surface-gap, var(--space-md, 1rem));
   align-content: start;
 }
 
-:where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="figure"] {
+:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="figure"] {
   align-self: start;
 }
 
 @supports (container-type: inline-size) {
   /* The nearest inline-size container may be the shell or a nested frame. */
   @container (min-width: 60rem) {
-    :where(.site-hero--split-figure, .spw-hero--split-figure) {
+    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       gap: var(--gap-inline-flow, var(--space-xs, 0.5rem)) var(--gap-block-flow, var(--space-lg, 1.5rem));
     }
 
-    :where(.site-hero--split-figure, .spw-hero--split-figure) > canvas {
+    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > canvas {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -484,23 +485,23 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
       pointer-events: none;
     }
 
-    :where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="header"] {
+    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="header"] {
       grid-column: 1 / -1;
       grid-row: 1;
     }
 
-    :where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="body"] {
+    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="body"] {
       grid-column: 1 / span 6;
       grid-row: 2;
     }
 
-    :where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="figure"] {
+    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="figure"] {
       grid-column: 8 / -1;
       grid-row: 2;
       width: 100%;
     }
 
-    :where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="actions"] {
+    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="actions"] {
       grid-column: 1 / span 7;
       grid-row: 3;
     }
@@ -514,18 +515,18 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
    Explicit author values win; the rules below are additive and safe.
    ========================================================================== */
 
-:where(:is(.spw-frame, .site-frame)[data-spw-size-context="narrow-hero"],
-       :is(.spw-frame, .site-frame)[data-spw-size-context="narrow-panel"]) {
+:where(:is(.spw-frame, .spw-frame)[data-spw-size-context="narrow-hero"],
+       :is(.spw-frame, .spw-frame)[data-spw-size-context="narrow-panel"]) {
   --surface-padding: clamp(0.7rem, 2.2cqi, 1.05rem);
   --surface-gap: clamp(0.7rem, 1.6cqi, 0.95rem);
 }
 
-:where(:is(.spw-frame, .site-frame)[data-spw-content-tone="dense"],
-       :is(.spw-frame, .site-frame)[data-spw-content-tone="operator-heavy"]) {
+:where(:is(.spw-frame, .spw-frame)[data-spw-content-tone="dense"],
+       :is(.spw-frame, .spw-frame)[data-spw-content-tone="operator-heavy"]) {
   --surface-gap: calc(var(--surface-gap, 1rem) * 0.82);
 }
 
-:where(.site-frame[data-spw-content-tone="light"]) {
+:where(.spw-frame[data-spw-content-tone="light"]) {
   --surface-gap: calc(var(--surface-gap, 1rem) * 1.15);
 }
 
@@ -614,8 +615,8 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
 :where(
   .frame-body > [data-spw-kind="hook"]:first-child,
   .frame-body > [data-spw-component-kind="hook"]:first-child,
-  .site-frame > [data-spw-kind="hook"]:first-child,
-  .site-frame > [data-spw-component-kind="hook"]:first-child
+  .spw-frame > [data-spw-kind="hook"]:first-child,
+  .spw-frame > [data-spw-component-kind="hook"]:first-child
 ) {
   margin-block-end: var(--component-gap-tight, 0.55rem);
 }
@@ -623,8 +624,8 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
 :where(
   .frame-body [data-spw-kind="hook"],
   .frame-body [data-spw-component-kind="hook"],
-  .site-frame [data-spw-kind="hook"]:not(.site-frame),
-  .site-frame [data-spw-component-kind="hook"]:not(.site-frame)
+  .spw-frame [data-spw-kind="hook"]:not(.spw-frame),
+  .spw-frame [data-spw-component-kind="hook"]:not(.spw-frame)
 ) {
   scroll-margin-top: calc(var(--header-height, 4rem) + 0.75rem);
 }
@@ -653,8 +654,8 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
 
 /* Text fit inside hooks: ensure body paragraphs and direct content wrap well in narrow viewports or grid columns */
 :where([data-spw-kind="hook"], [data-spw-component-kind="hook"]) > p,
-:where([data-spw-kind="hook"], [data-spw-component-kind="hook"]) .frame-note,
-:where([data-spw-kind="hook"], [data-spw-component-kind="hook"]) .page-lede {
+:where([data-spw-kind="hook"], [data-spw-component-kind="hook"]) [data-spw-textual-role="note"],
+:where([data-spw-kind="hook"], [data-spw-component-kind="hook"]) [data-spw-textual-role="lede"] {
   text-wrap: pretty;
   max-inline-size: 62ch;
 }

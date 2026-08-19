@@ -195,25 +195,25 @@
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--component-accent, var(--active-op-color, var(--teal))) 18%);
 }
 
-.site-footer__cauldron-actions .operator-chip:active:not(:disabled) {
+.site-footer__cauldron-actions .spw-chip:active:not(:disabled) {
   transform: translateY(1px) scale(0.985);
 }
 
-.site-footer__cauldron-actions .operator-chip[data-spw-cauldron-action-state] {
+.site-footer__cauldron-actions .spw-chip[data-spw-cauldron-action-state] {
   border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 42%, transparent);
   background: color-mix(in srgb, var(--surface-strong, #fff) 78%, var(--component-accent, var(--active-op-color, var(--teal))) 22%);
 }
 
-.site-footer__cauldron-actions .operator-chip[data-spw-cauldron-action-state="cast"] {
+.site-footer__cauldron-actions .spw-chip[data-spw-cauldron-action-state="cast"] {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 18%, transparent);
 }
 
-.site-footer__cauldron-actions .operator-chip[data-spw-cauldron-action-state="plant"] {
+.site-footer__cauldron-actions .spw-chip[data-spw-cauldron-action-state="plant"] {
   border-style: solid;
   border-color: color-mix(in srgb, var(--op-object-color, #c48a28) 42%, transparent);
 }
 
-.site-footer__cauldron-actions .operator-chip:disabled {
+.site-footer__cauldron-actions .spw-chip:disabled {
   transform: none;
   cursor: not-allowed;
 }

@@ -76,7 +76,7 @@
   html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
-  .site-frame [data-spw-slot],
+  .spw-frame [data-spw-slot],
   .frame-card [data-spw-slot],
   .vibe-widget [data-spw-slot]
 ) {
@@ -87,7 +87,7 @@
   html[data-spw-cognitive-handles="on"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
-  .site-frame [data-spw-slot]:not([data-spw-slot=""]),
+  .spw-frame [data-spw-slot]:not([data-spw-slot=""]),
   .frame-card [data-spw-slot]:not([data-spw-slot=""]),
   .vibe-widget [data-spw-slot]:not([data-spw-slot=""])
 ) {
@@ -133,7 +133,7 @@
   html[data-spw-cognitive-handles="on"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
-  .site-frame[data-spw-anatomy-stack="true"],
+  .spw-frame[data-spw-anatomy-stack="true"],
   .frame-card[data-spw-anatomy-stack="true"],
   .vibe-widget[data-spw-anatomy-stack="true"]
 ) {

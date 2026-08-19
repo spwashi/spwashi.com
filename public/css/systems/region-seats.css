@@ -7,7 +7,7 @@
    See .spw/caches/css-combinatorics.spw
    ========================================================================== */
 
-:where(main > .site-frame[data-spw-region], main > .site-frame[data-spw-region-role]) {
+:where(main > .spw-frame[data-spw-region], main > .spw-frame[data-spw-region-role]) {
   --spw-region-wash: 0%;
   --spw-region-seam: 16%;
   --spw-region-track: 16rem;
@@ -17,36 +17,36 @@
 }
 
 :where(
-  .site-frame[data-spw-region="hook"],
-  .site-frame[data-spw-region="hero"],
-  .site-frame[data-spw-region-role="entry-spine"]
+  .spw-frame[data-spw-region="hook"],
+  .spw-frame[data-spw-region="hero"],
+  .spw-frame[data-spw-region-role="entry-spine"]
 ) {
   --spw-region-wash: 5%;
   --spw-region-seam: 26%;
 }
 
-:where(.site-frame[data-spw-region="hub"]) {
+:where(.spw-frame[data-spw-region="hub"]) {
   --spw-region-wash: 4%;
   --spw-region-seam: 20%;
 }
 
-:where(.site-frame[data-spw-region="cluster"]) {
+:where(.spw-frame[data-spw-region="cluster"]) {
   --spw-region-wash: 3%;
   --spw-region-seam: 14%;
   border-style: dashed;
 }
 
-:where(.site-frame[data-spw-region="path"]) {
+:where(.spw-frame[data-spw-region="path"]) {
   --spw-region-wash: 2%;
   --spw-region-seam: 18%;
 }
 
-:where(.site-frame[data-spw-region="read"], .site-frame[data-spw-region-role="reading"]) {
+:where(.spw-frame[data-spw-region="read"], .spw-frame[data-spw-region-role="reading"]) {
   --spw-region-wash: 0%;
   --spw-region-seam: 12%;
 }
 
-:where(.site-frame[data-spw-region], .site-frame[data-spw-region-role="entry-spine"]) {
+:where(.spw-frame[data-spw-region], .spw-frame[data-spw-region-role="entry-spine"]) {
   background:
     linear-gradient(
       180deg,
@@ -82,13 +82,13 @@
   --spw-family-accent: var(--op-probe-color, #4a2180);
 }
 
-:where(body[data-spw-page-family]) .site-frame[data-spw-region],
-:where(body[data-spw-page-family]) .site-frame[data-spw-region-role="entry-spine"] {
+:where(body[data-spw-page-family]) .spw-frame[data-spw-region],
+:where(body[data-spw-page-family]) .spw-frame[data-spw-region-role="entry-spine"] {
   --component-accent: var(--spw-family-accent, var(--component-accent));
 }
 
 /* wide is a hub alias — home and hubs authored it before seats were named. */
-:where(.site-frame[data-spw-region="wide"]) {
+:where(.spw-frame[data-spw-region="wide"]) {
   --spw-region-wash: 4%;
   --spw-region-seam: 20%;
 }
@@ -98,15 +98,15 @@
  * Dual-read: first paint. html[data-spw-layout-reason] is a receipt.
  * Copy flow is authored in HTML; these rules only fit it.
  */
-:where(main > .site-frame[data-spw-region="hub"], main > .site-frame[data-spw-region="wide"]) {
+:where(main > .spw-frame[data-spw-region="hub"], main > .spw-frame[data-spw-region="wide"]) {
   container-name: spw-region spw-hub;
 }
 
-:where(main > .site-frame[data-spw-region="path"]) {
+:where(main > .spw-frame[data-spw-region="path"]) {
   container-name: spw-region spw-path;
 }
 
-:where(main > .site-frame[data-spw-region="read"], main > .site-frame[data-spw-region-role="reading"]) {
+:where(main > .spw-frame[data-spw-region="read"], main > .spw-frame[data-spw-region-role="reading"]) {
   container-name: spw-region spw-read;
 }
 
@@ -133,9 +133,9 @@
 
 /* Lede / orientation: one breath. Do not columnize a greeting. */
 :where(
-  .site-frame[data-spw-region] :is(.page-lede, .site-lede, .entrance-lede),
-  .site-frame[data-spw-region-role="entry-spine"] :is(.page-lede, .site-lede),
-  .site-frame[data-spw-region="hero"] :is(.page-lede, .site-lede)
+  .spw-frame[data-spw-region] :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"], .entrance-lede),
+  .spw-frame[data-spw-region-role="entry-spine"] :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"]),
+  .spw-frame[data-spw-region="hero"] :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"])
 ) {
   max-inline-size: var(--spw-region-prose);
 }
@@ -161,10 +161,10 @@
 
 /* Cluster: fill the seat with cards. */
 :where(
-  .site-frame[data-spw-region="cluster"] .frame-grid,
-  .site-frame[data-spw-region="cluster"] .frame-grid--dense,
-  .site-frame[data-spw-region="cluster"] .semantic-contract-grid,
-  .site-frame[data-spw-region="cluster"] .living-concepts-grid
+  .spw-frame[data-spw-region="cluster"] .frame-grid,
+  .spw-frame[data-spw-region="cluster"] .frame-grid--dense,
+  .spw-frame[data-spw-region="cluster"] .semantic-contract-grid,
+  .spw-frame[data-spw-region="cluster"] .living-concepts-grid
 ) {
   --spw-grid-min-base: var(--spw-region-track);
   align-items: start;
@@ -181,10 +181,10 @@
   }
 
   :where(.frame-body > :is(
-    .page-lede,
-    .site-lede,
+    [data-spw-textual-role="lede"],
+    [data-spw-textual-role="lede"],
     .inline-note,
-    .frame-note,
+    [data-spw-textual-role="note"],
     .spw-route-bridge,
     .frame-grid,
     .frame-grid--dense,
@@ -207,8 +207,8 @@
 
 /* Read: prose measure; a second column only when 2×32ch fits. */
 :where(
-  .site-frame[data-spw-region="read"] .frame-body > :is(p, .frame-note, .inline-note),
-  .site-frame[data-spw-region-role="reading"] .frame-body > :is(p, .frame-note, .inline-note)
+  .spw-frame[data-spw-region="read"] .frame-body > :is(p, [data-spw-textual-role="note"], .inline-note),
+  .spw-frame[data-spw-region-role="reading"] .frame-body > :is(p, [data-spw-textual-role="note"], .inline-note)
 ) {
   max-inline-size: var(--spw-region-prose);
 }
@@ -227,7 +227,7 @@
 }
 
 /* Companion asides sit; they do not become a second essay. */
-:where(.site-frame[data-spw-region] aside, .site-frame[data-spw-region] .spw-route-bridge) {
+:where(.spw-frame[data-spw-region] aside, .spw-frame[data-spw-region] .spw-route-bridge) {
   max-inline-size: min(100%, 72ch);
 }
 
@@ -248,10 +248,10 @@
   }
 
   :where(
-    body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main > .site-hero,
-    body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main > .site-hero,
-    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main > .site-hero,
-    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-atlas"] main > .site-hero,
+    body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-atlas"] main > [data-spw-region-role="entry-spine"],
     body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main > [data-spw-region-role="entry-spine"],
     body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main > [data-spw-region-role="entry-spine"],
     body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main > [data-spw-region-role="entry-spine"],
@@ -264,26 +264,26 @@
   }
 }
 
-html[data-spw-high-contrast="on"] :where(.site-frame[data-spw-region], .site-frame[data-spw-region-role="entry-spine"]) {
+html[data-spw-high-contrast="on"] :where(.spw-frame[data-spw-region], .spw-frame[data-spw-region-role="entry-spine"]) {
   --spw-region-wash: 0%;
 }
 
 /* Kin echo: the active region's similar / contrast / resonate neighbors. */
-:where(main .site-frame[data-spw-region-relation~="similar"]) {
+:where(main .spw-frame[data-spw-region-relation~="similar"]) {
   --spw-region-seam: 22%;
 }
 
-:where(main .site-frame[data-spw-region-relation~="contrast"]) {
+:where(main .spw-frame[data-spw-region-relation~="contrast"]) {
   --spw-region-wash: 6%;
   border-style: dotted;
 }
 
-:where(main .site-frame[data-spw-region-relation~="resonate"]) {
+:where(main .spw-frame[data-spw-region-relation~="resonate"]) {
   --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(.site-frame[data-spw-region], .site-frame[data-spw-region-role]) {
+  :where(.spw-frame[data-spw-region], .spw-frame[data-spw-region-role]) {
     transition: none;
   }
 }
