@@ -614,6 +614,16 @@
   --site-mono-font: var(--font-family-mono);
   --site-sans-font: var(--font-family-sans);
   --site-display-font: var(--font-family-display);
+  --site-editorial-font: "Newsreader", var(--font-family-manuscript), Georgia, serif;
+
+  /* Interaction-progression defaults. Phase rules load later; these stay in core
+     so first paint has the token names even before the deferred sheet arrives. */
+  --spw-microinteraction-pulse-scale: 1;
+  --spw-microinteraction-pulse-duration: 280ms;
+  --spw-microinteraction-pulse-intensity: 1;
+  --spw-layout-selection-duration: var(--spw-microinteraction-pulse-duration, 280ms);
+  --spw-variant-selection-duration: var(--spw-microinteraction-pulse-duration, 280ms);
+  --spw-interaction-phase-weight: 0;
 
   /* Prose measure ladder (ch) — line length, not page frame */
   --measure-compact: 32ch;

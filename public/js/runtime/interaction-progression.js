@@ -16,6 +16,7 @@ import {
   strongestPhase,
 } from './interaction-vocabulary.js';
 import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
+import { ensureInteractionProgressionStyles } from '../kernel/deferred-styles.js';
 
 const PHASE_EVENT = 'spw:interaction-phase';
 const SWIPE_DELTA_PX = 28;
@@ -102,6 +103,7 @@ function bumpPhase(html, candidate, detail = {}) {
 export function initInteractionProgression(root = document) {
   if (initialized) return () => {};
   initialized = true;
+  ensureInteractionProgressionStyles();
 
   const html = document.documentElement;
   if (!html) return () => {};

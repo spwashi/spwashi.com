@@ -745,7 +745,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'contextual-ui',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     costClass: COST_CLASS.DEMAND_COUPLED,
     selector: 'main, .site-header',
     rootMode: 'single',
@@ -758,7 +758,7 @@ export const ENHANCEMENT_DEFS = [
       'html:inspect:data-spw-layout-reason',
     ],
     evaluates: 'route discovery contextual navigation inferred modules',
-    timingArc: 'immediate-context',
+    timingArc: 'visible-context',
     effectScope: 'header-dom route-menu nav-fit',
     visual: 'annotate',
     // route-discovery body token is presence storytelling; module stays selector-gated
@@ -1298,7 +1298,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'bare-spw-markup',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     costClass: COST_CLASS.DEMAND_COUPLED,
     selector: '[data-spw-bare-spw="enhance"], .site-footer__summary, [data-spw-material-context~="mutable-markup"]',
     rootMode: 'single',
@@ -1310,7 +1310,7 @@ export const ENHANCEMENT_DEFS = [
       'structural:data-spw-perspective',
     ],
     evaluates: 'bare Spw prose expression geometry delimiter and inline operator discoverability',
-    timingArc: 'immediate-markup',
+    timingArc: 'visible-markup',
     effectScope: 'element-state',
     load: () => import('../semantic/bare-spw-markup.js'),
   },

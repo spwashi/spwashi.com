@@ -21,6 +21,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { observeIntersections } from '/public/js/runtime/runtime-helpers.js';
 import {
   writeDatasetValues,
   writeStyleValue,
@@ -197,18 +198,14 @@ export function initPositioningOrchestration(ctx) {
   const root = (ctx && ctx.root) || document;
 
   // Setup IntersectionObserver for visibility gating
-  if (typeof IntersectionObserver !== 'undefined') {
-    intersectionObserver = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          visibleElements.add(entry.target);
-        } else {
-          visibleElements.delete(entry.target);
-        }
-      }
+  intersectionObserver = observeIntersections({
+    rootMargin: '120px 0px 120px 0px',
+    callback(entry) {
+      if (entry.isIntersecting) visibleElements.add(entry.target);
+      else visibleElements.delete(entry.target);
       requestPositioningPass();
-    }, { rootMargin: '120px 0px 120px 0px' });
-  }
+    },
+  });
 
   // Setup ResizeObserver for element container resizing
   if (typeof ResizeObserver !== 'undefined') {

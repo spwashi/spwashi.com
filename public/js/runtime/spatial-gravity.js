@@ -41,6 +41,8 @@
 
 import { writeDatasetValues, removeDatasetValues, writeStyleValue } from '../kernel/dom-contracts.js';
 import { createSpwLogger, markInstrumented } from '../kernel/instrumentation.js';
+import { ensureSpatialGravityStyles } from '../kernel/deferred-styles.js';
+import { observeIntersections } from './runtime-helpers.js';
 
 const GRAVITY_SELECTOR = '[data-spw-gravity]';
 
@@ -365,22 +367,21 @@ const scheduleMeasure = () => {
 
 const ensureIntersectionObserver = () => {
   if (intersectionObserver || typeof IntersectionObserver !== 'function') return intersectionObserver;
-  intersectionObserver = new IntersectionObserver((entries) => {
-    let needsMeasure = false;
-    entries.forEach((entry) => {
+  intersectionObserver = observeIntersections({
+    rootMargin: '20% 0px',
+    callback(entry) {
       if (entry.isIntersecting) {
         onScreen.add(entry.target);
-        needsMeasure = true;
-      } else {
-        onScreen.delete(entry.target);
-        elementState.delete(entry.target);
-        if (entry.target.dataset.spwYielded) {
-          removeDatasetValues(entry.target, ['spwYielded', 'spwYieldReason']);
-        }
+        scheduleMeasure();
+        return;
       }
-    });
-    if (needsMeasure) scheduleMeasure();
-  }, { rootMargin: '20% 0px' });
+      onScreen.delete(entry.target);
+      elementState.delete(entry.target);
+      if (entry.target.dataset.spwYielded) {
+        removeDatasetValues(entry.target, ['spwYielded', 'spwYieldReason']);
+      }
+    },
+  });
   return intersectionObserver;
 };
 
@@ -508,6 +509,7 @@ const trackElement = (el) => {
 };
 
 export function initSpwSpatialGravity(ctx, root, options = {}) {
+  ensureSpatialGravityStyles();
   if (!(root instanceof Node)) {
     root = document;
   }

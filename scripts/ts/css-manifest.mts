@@ -92,6 +92,8 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
   play: [
     '/public/css/routes/surfaces/play.css',
     '/public/css/components/spw-hero-kinetic-stage.css',
+    '/public/css/systems/film-scene-composition.css',
+    '/public/css/systems/scene-interaction.css',
   ],
   privacy: [],
   recipes: ['/public/css/routes/surfaces/recipes.css'],
@@ -99,6 +101,8 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
   'rpg-wednesday': [
     '/public/css/routes/surfaces/play.css',
     '/public/css/routes/surfaces/rpg-wednesday.css',
+    '/public/css/systems/film-scene-composition.css',
+    '/public/css/systems/scene-interaction.css',
   ],
   services: [
     '/public/css/components/cards/seed-card.css',
@@ -119,7 +123,11 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/routes/surfaces/settings-runtime.css',
     '/public/css/routes/surfaces/settings-cues.css',
   ],
-  topics: ['/public/css/routes/surfaces/topics.css'],
+  topics: [
+    '/public/css/routes/surfaces/topics.css',
+    '/public/css/systems/film-scene-composition.css',
+    '/public/css/systems/scene-interaction.css',
+  ],
   town: [],
   tools: [],
   'tools-budgeting': ['/public/css/routes/surfaces/tools-budgeting-surface.css'],

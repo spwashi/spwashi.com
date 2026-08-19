@@ -19,6 +19,19 @@ export const SPW_ROLE_INFERENCE_CONTRACT = Object.freeze({
     'control',
     'orientation',
   ]),
+  componentRoles: Object.freeze([
+    'routing',
+    'schema',
+    'reference',
+    'control',
+    'orientation',
+    'artifact',
+    'registry',
+    'status',
+    'probe',
+    'surface',
+    'telemetry',
+  ]),
   portableUse:
     'Import this module when multiple runtime layers need the same region role vocabulary.',
   regionSelectors: Object.freeze({
@@ -48,6 +61,60 @@ export function collectAnnotationRegions(root = document) {
 
 export function inferRegionKind(el) {
   return inferTopographyKind(el, 'component');
+}
+
+function normalizeRoleToken(value = '') {
+  return String(value || '').trim().toLowerCase().replace(/\s+/g, '-');
+}
+
+function humanizeRoleHaystack(value = '') {
+  return String(value || '').toLowerCase();
+}
+
+/**
+ * Component-level role used by semantics and chrome coloring.
+ * Region-level inference stays on the five portable roles; this adds
+ * artifact / probe / status when the element's kind actually needs them.
+ */
+export function inferComponentRole(el, kind = inferRegionKind(el)) {
+  if (el.dataset.spwRole) return normalizeRoleToken(el.dataset.spwRole);
+
+  const haystack = humanizeRoleHaystack([
+    el.id,
+    el.getAttribute('role'),
+    el.dataset.spwMeaning,
+    el.dataset.spwInspect,
+    el.querySelector?.('h1,h2,h3,h4,strong')?.textContent || '',
+  ].filter(Boolean).join(' '));
+
+  if (kind === 'main') return 'orientation';
+  if (kind === 'nav') return 'routing';
+  if (kind === 'aside') return 'reference';
+  if (kind === 'figure') return 'artifact';
+  if (el.classList.contains('site-hero')) return 'orientation';
+
+  if (/register|registry|bookmarks/.test(haystack)) return 'registry';
+  if (/index|routes|surfaces|navigation|nav/.test(haystack)) return 'routing';
+  if (/settings|controls|preferences|runtime preferences/.test(haystack)) return 'control';
+  if (/syntax|grammar|structure|schema|map|data structures/.test(haystack)) return 'schema';
+  if (/status|current|applied state/.test(haystack)) return 'status';
+  if (/probe|lab|observatory|question/.test(haystack)) return 'probe';
+
+  if (kind === 'hook') {
+    const hookRole = normalizeRoleToken(el.dataset.spwRole || '');
+    if (hookRole === 'call' || hookRole === 'invocation') return 'orientation';
+    if (hookRole === 'gate') return 'routing';
+    return 'probe';
+  }
+
+  if (kind === 'frame') return 'orientation';
+  if (kind === 'panel') return 'reference';
+  if (kind === 'card') return 'artifact';
+  if (kind === 'lens') return 'control';
+  if (kind === 'surface') return 'surface';
+  if (kind === 'metric') return 'telemetry';
+
+  return inferRegionRole(el);
 }
 
 export function inferRegionRole(el) {

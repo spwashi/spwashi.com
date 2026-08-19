@@ -72,6 +72,8 @@ const ROUTE_BUNDLE_ONLY_CSS = new Set([
 const DEFERRED_RUNTIME_CSS = new Set([
   '/public/css/themes/packs.css',
   '/public/css/effects/debug.css',
+  '/public/css/systems/spatial-gravity.css',
+  '/public/css/systems/interaction-progression.css',
 ]);
 
 type CssImport = {
@@ -242,6 +244,9 @@ export async function collectCssContractReport(): Promise<CssContractReport> {
   const knownReferences = new Set<string>([...importedFiles, ...linkedFiles]);
   knownReferences.add('/public/css/style.css');
   knownReferences.add('/public/css/style-core.css');
+  for (const href of DEFERRED_RUNTIME_CSS) {
+    knownReferences.add(href);
+  }
   for (const target of listBundleTargets()) {
     knownReferences.add(target.href);
   }

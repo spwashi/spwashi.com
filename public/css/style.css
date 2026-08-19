@@ -11,6 +11,8 @@
 
 @import url('/public/css/systems/pretext-physics.css') layer(systems);
 @import url('/public/css/systems/feature-discovery.css') layer(systems);
+@import url('/public/css/systems/film-scene-composition.css') layer(systems);
+@import url('/public/css/systems/scene-interaction.css') layer(systems);
 @import url('/public/css/systems/svg-surfaces.css') layer(systems);
 @import url('/public/css/systems/svg-personas.css') layer(systems);
 @import url('/public/css/systems/surfaces/rpg.css') layer(systems);

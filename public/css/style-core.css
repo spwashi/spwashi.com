@@ -1,16 +1,7 @@
 @layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
 
-/* JetBrains Mono — site body font.
-   Weights: 300 thin, 400 regular, 500 medium, 600 semi-bold, 700 bold.
-   Italic 400 for oblique operator typography (probe, ref, meta operators).
-   display=swap prevents FOIT while the font loads. */
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap");
-
-/* Newsreader — optical sizing variable serif for editorial typesetting and "wonder modes".
-   Weights 200..800, Optical Sizing opsz 6..72pt */
-@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap");
-
 @import url('/public/css/reset/base.css') layer(reset);
+@import url('/public/css/tokens/fonts.css') layer(tokens);
 @import url('/public/css/tokens/core.css') layer(tokens);
 @import url('/public/css/tokens/dimensions.css') layer(tokens);
 
@@ -62,15 +53,11 @@
 @import url('/public/css/systems/image-theming.css') layer(systems);
 @import url('/public/css/systems/paper-motif.css') layer(systems);
 @import url('/public/css/systems/component-biome.css') layer(systems);
-@import url('/public/css/systems/interaction-progression.css') layer(systems);
 @import url('/public/css/systems/scroll-gesture.css') layer(systems);
-@import url('/public/css/systems/spatial-gravity.css') layer(systems);
 @import url('/public/css/systems/component-packing.css') layer(systems);
 @import url('/public/css/systems/print-precipitation.css') layer(systems);
 @import url('/public/css/systems/layout-postures.css') layer(systems);
 @import url('/public/css/systems/effect-interpretation.css') layer(systems);
-@import url('/public/css/systems/film-scene-composition.css') layer(systems);
-@import url('/public/css/systems/scene-interaction.css') layer(systems);
 @import url('/public/css/systems/substrate-ecology.css') layer(systems);
 @import url('/public/css/systems/registers.css') layer(systems);
 @import url('/public/css/systems/comparison.css') layer(systems);

@@ -1,6 +1,8 @@
 import { REGION_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { registerDomSyncTask } from '/public/js/runtime/dom-sync-hub.js';
+import { collectRegions as collectRoleRegions } from '/public/js/semantic/role-inference.js';
+import { observeIntersections } from '/public/js/runtime/runtime-helpers.js';
 import {
   classifyRegionRelation,
   kinIds,
@@ -108,10 +110,9 @@ function collectRegions(root = document) {
   const main = root.querySelector('main');
   if (!main) return [];
 
-  const nodes = [...main.querySelectorAll(REGION_SELECTOR)]
-    .filter((node) => node instanceof HTMLElement)
+  const nodes = collectRoleRegions(main)
+    .filter((node) => node.id)
     .filter((node) => {
-      if (!node.id) return false;
       const nested = node.parentElement?.closest(REGION_SELECTOR);
       return !(nested instanceof HTMLElement && main.contains(nested));
     });
@@ -258,34 +259,37 @@ function bindActiveRegion(regions, rail) {
 
   const links = [...rail.querySelectorAll('.spw-page-region-rail__link')];
 
-  const observer = new IntersectionObserver((entries) => {
-    const visible = entries
-      .filter((entry) => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-    if (!visible.length) return;
-
-    const id = visible[0].target.id;
-    const activeRegion = regions.find((r) => r.id === id);
-
-    links.forEach((link) => {
-      link.dataset.spwRegionActive = link.getAttribute('href') === `#${id}` ? 'true' : 'false';
-    });
-
-    if (activeRegion) {
-      writeDatasetValues(document.documentElement, {
-        spwActiveRegion: id,
-        spwActiveRegionSeat: activeRegion.seat || null,
-        spwActiveRegionOperator: activeRegion.operator || null,
-        spwActiveRegionConsequence: activeRegion.consequence || null,
-        spwActiveRegionWonder: activeRegion.wonder || null,
-      });
-      writeActiveKin(activeRegion, regions, links);
-    }
-  }, {
+  const visibleEntries = new Map();
+  const observer = observeIntersections({
     root: null,
     rootMargin: '-20% 0px -55% 0px',
     threshold: [0, 0.12, 0.35, 0.6],
+    callback(entry) {
+      if (entry.isIntersecting) visibleEntries.set(entry.target, entry);
+      else visibleEntries.delete(entry.target);
+
+      const visible = [...visibleEntries.values()]
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+      if (!visible.length) return;
+
+      const id = visible[0].target.id;
+      const activeRegion = regions.find((r) => r.id === id);
+
+      links.forEach((link) => {
+        link.dataset.spwRegionActive = link.getAttribute('href') === `#${id}` ? 'true' : 'false';
+      });
+
+      if (activeRegion) {
+        writeDatasetValues(document.documentElement, {
+          spwActiveRegion: id,
+          spwActiveRegionSeat: activeRegion.seat || null,
+          spwActiveRegionOperator: activeRegion.operator || null,
+          spwActiveRegionConsequence: activeRegion.consequence || null,
+          spwActiveRegionWonder: activeRegion.wonder || null,
+        });
+        writeActiveKin(activeRegion, regions, links);
+      }
+    },
   });
 
   regions.forEach((region) => {

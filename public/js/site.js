@@ -48,11 +48,6 @@ import {
   SPW_PAGE_HOOK_CONTRACT,
 } from './runtime/page-hooks.js';
 import {
-  annotateCompositionBoxes,
-  snapshotCompositionBox,
-  snapshotCompositionBoxes,
-} from './runtime/composition-box-model.js';
-import {
   applyDebugQaPostureToRoot,
   describeDebugQaPosture,
   hasDebugOrQAMode as hasDebugOrQAModeFromPosture,
@@ -61,7 +56,6 @@ import {
   SPW_DEBUG_QA_CONTRACT,
   SPW_DEBUG_QA_PRESETS,
 } from './runtime/debug-qa-posture.js';
-import { describeSpwExpression } from './semantic/spw-expression-geometry.js';
 import {
   cancelIdle,
   createRegistry,
@@ -91,23 +85,24 @@ import {
   summarizeModuleCatalogOptimization,
 } from './runtime/module-catalog-normalize.js';
 import {
-  collectRelatedRouteSamples,
-  describeComponentSample,
-  describeCurrentPageSample,
-  describeGestureContract,
-  describeGestureTarget,
-  GESTURE_SPELL_SEEDS,
-  normalizeRoutePath,
-  snapshotFeatureClusters,
-  snapshotGestureTargets,
-} from './runtime/gesture-contract.js';
-import {
   clearPageCascadeTiming,
   primeRegions,
   refreshRegionProfiles,
 } from './runtime/region-profiler.js';
 import { createModuleLoader } from './runtime/module-loader.js';
 import { describePageCategory, readPageCategory } from './runtime/page-category.js';
+
+function loadCompositionBox() {
+  return import('./runtime/composition-box-model.js');
+}
+
+function loadGestureContract() {
+  return import('./runtime/gesture-contract.js');
+}
+
+function loadExpressionGeometry() {
+  return import('./semantic/spw-expression-geometry.js');
+}
 /**
  * site.js
  * --------------------------------------------------------------------------
@@ -205,11 +200,11 @@ let SITE_SURFACE = BODY?.dataset?.spwSurface || 'default';
 let runtimeCtx = null;
 
 function describeCurrentPageSampleForSite(root = document) {
-  return describeCurrentPageSample(root, SITE_SURFACE);
+  return loadGestureContract().then((m) => m.describeCurrentPageSample(root, SITE_SURFACE));
 }
 
 function describeComponentSampleForSite(target) {
-  return describeComponentSample(target, SITE_SURFACE);
+  return loadGestureContract().then((m) => m.describeComponentSample(target, SITE_SURFACE));
 }
 
 // Runtime load instrumentation (Performance API + structured lifecycle logging)
@@ -743,8 +738,8 @@ function snapshotProjectionEquations() {
     .map((entry) => entry.expression)
     .filter(Boolean);
 
-  return expressions.map((expression) => {
-    const described = describeSpwExpression(expression);
+  return loadExpressionGeometry().then((geometry) => expressions.map((expression) => {
+    const described = geometry.describeSpwExpression(expression);
     const match = expression.match(/^([^\[\{\(]+)(?:\[([^\]]+)\])?(?:\{([^}]+)\})?(?:\(([^)]+)\))?/);
     return {
       expression,
@@ -758,7 +753,7 @@ function snapshotProjectionEquations() {
       formSignature: described.formSignature,
       wake: described.wake,
     };
-  });
+  }));
 }
 
 function normalizeWhitespace(value = '') {
@@ -947,26 +942,26 @@ async function bootSite() {
         list: (root = document) => snapshotDeepLinks(root),
       },
       composition: {
-        annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),
-        inspect: (target, options = {}) => snapshotCompositionBox(target, options),
-        snapshot: (root = document, options = {}) => snapshotCompositionBoxes(root, options),
+        annotate: (root = document, options = {}) => loadCompositionBox().then((m) => m.annotateCompositionBoxes(root, options)),
+        inspect: (target, options = {}) => loadCompositionBox().then((m) => m.snapshotCompositionBox(target, options)),
+        snapshot: (root = document, options = {}) => loadCompositionBox().then((m) => m.snapshotCompositionBoxes(root, options)),
       },
       featureClusters: {
         inspect: (target) => describeFeatureClusterElement(target),
-        list: (root = document) => snapshotFeatureClusters(root),
+        list: (root = document) => loadGestureContract().then((m) => m.snapshotFeatureClusters(root)),
         contract: FEATURE_CLUSTER_CONTRACT,
       },
       gestures: {
-        contract: describeGestureContract,
-        inspect: (target) => describeGestureTarget(target),
-        list: (root = document) => snapshotGestureTargets(root),
-        seeds: () => GESTURE_SPELL_SEEDS.slice(),
+        contract: () => loadGestureContract().then((m) => m.describeGestureContract()),
+        inspect: (target) => loadGestureContract().then((m) => m.describeGestureTarget(target)),
+        list: (root = document) => loadGestureContract().then((m) => m.snapshotGestureTargets(root)),
+        seeds: () => loadGestureContract().then((m) => m.GESTURE_SPELL_SEEDS.slice()),
       },
       routes: {
         current: () => describeCurrentPageSampleForSite(document),
-        list: (root = document) => collectRelatedRouteSamples(root),
-        open: (pathname = '') => {
-          const href = normalizeRoutePath(pathname);
+        list: (root = document) => loadGestureContract().then((m) => m.collectRelatedRouteSamples(root)),
+        open: async (pathname = '') => {
+          const href = (await loadGestureContract()).normalizeRoutePath(pathname);
           if (!href) return '';
           window.location.assign(href);
           return href;
@@ -1121,9 +1116,9 @@ window.__SPW_SITE__ = {
   discoverQuery: () => snapshotSpwQueryState(HTML),
   discoverDeepLinks: (root = document) => snapshotDeepLinks(root),
   composition: {
-    annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),
-    inspect: (target, options = {}) => snapshotCompositionBox(target, options),
-    snapshot: (root = document, options = {}) => snapshotCompositionBoxes(root, options),
+    annotate: (root = document, options = {}) => loadCompositionBox().then((m) => m.annotateCompositionBoxes(root, options)),
+    inspect: (target, options = {}) => loadCompositionBox().then((m) => m.snapshotCompositionBox(target, options)),
+    snapshot: (root = document, options = {}) => loadCompositionBox().then((m) => m.snapshotCompositionBoxes(root, options)),
   },
   /**
    * Layout / packing / reflow / page-sizing QA for humans + agents.
@@ -1187,14 +1182,14 @@ window.__SPW_SITE__ = {
   },
   featureClusters: {
     inspect: (target) => describeFeatureClusterElement(target),
-    list: (root = document) => snapshotFeatureClusters(root),
+    list: (root = document) => loadGestureContract().then((m) => m.snapshotFeatureClusters(root)),
     contract: FEATURE_CLUSTER_CONTRACT,
   },
   gestures: {
-    contract: describeGestureContract,
-    inspect: (target) => describeGestureTarget(target),
-    list: (root = document) => snapshotGestureTargets(root),
-    seeds: () => GESTURE_SPELL_SEEDS.slice(),
+    contract: () => loadGestureContract().then((m) => m.describeGestureContract()),
+    inspect: (target) => loadGestureContract().then((m) => m.describeGestureTarget(target)),
+    list: (root = document) => loadGestureContract().then((m) => m.snapshotGestureTargets(root)),
+    seeds: () => loadGestureContract().then((m) => m.GESTURE_SPELL_SEEDS.slice()),
   },
   beats: {
     snapshot: () => {
@@ -1217,9 +1212,9 @@ window.__SPW_SITE__ = {
   },
   routes: {
     current: () => describeCurrentPageSampleForSite(document),
-    list: (root = document) => collectRelatedRouteSamples(root),
-    open: (pathname = '') => {
-      const href = normalizeRoutePath(pathname);
+    list: (root = document) => loadGestureContract().then((m) => m.collectRelatedRouteSamples(root)),
+    open: async (pathname = '') => {
+      const href = (await loadGestureContract()).normalizeRoutePath(pathname);
       if (!href) return '';
       window.location.assign(href);
       return href;
@@ -1250,8 +1245,8 @@ window.__SPW_SITE__ = {
 if (window.spwRuntimeAudit) {
   window.spwRuntimeAudit = Object.freeze({
     ...window.spwRuntimeAudit,
-    gestures: (root = document) => snapshotGestureTargets(root),
-    gestureContract: describeGestureContract,
+    gestures: (root = document) => loadGestureContract().then((m) => m.snapshotGestureTargets(root)),
+    gestureContract: () => loadGestureContract().then((m) => m.describeGestureContract()),
   });
 }
 

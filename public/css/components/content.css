@@ -249,8 +249,14 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   grid-template-columns: minmax(0, 1fr);
 }
 
-/* Cluster C — stages stay single-column flex even if display:grid is used for gap. */
+/* Cluster C — stages stay single-column flex even if display:grid is used for gap.
+   Missing flow is treated as stack so a late JS write of the attribute does not reflow. */
 :where(
+  .site-frame:not([data-spw-composition-flow]),
+  .frame-panel:not([data-spw-composition-flow]),
+  .mode-panel:not([data-spw-composition-flow]),
+  [data-spw-kind="frame"]:not([data-spw-composition-flow]),
+  [data-spw-box-model="stage"]:not([data-spw-composition-flow]),
   .site-frame[data-spw-composition-flow="stack"],
   .frame-panel[data-spw-composition-flow="stack"],
   .mode-panel[data-spw-composition-flow="stack"],

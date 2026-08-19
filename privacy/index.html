@@ -130,8 +130,8 @@
             </article>
             <article class="frame-panel">
                 <h3>Web fonts</h3>
-                <p>On an online visit, the core stylesheet may request JetBrains Mono and Newsreader from Google Fonts. That font request leaves this browser; offline visits fall back to locally available system fonts.</p>
-                <code>fonts.googleapis.com</code>
+                <p>JetBrains Mono and Newsreader load from this site under <code>/public/fonts/</code>. No font request leaves the browser for a third-party host. Offline visits use the cached local faces, then system fonts if those files are missing.</p>
+                <code>/public/fonts/</code>
             </article>
         </div>
     </section>

@@ -88,3 +88,20 @@ export function ensureDebugStyles(active) {
   if (!on) return LOADED.has('spw-debug-styles');
   return ensureDeferredStyles('spw-debug-styles', '/public/css/effects/debug.css');
 }
+
+/**
+ * Spatial gravity (systems/spatial-gravity.css). Rules are gated on
+ * [data-spw-gravity]; absence is inert until the SETTLED module measures.
+ */
+export function ensureSpatialGravityStyles() {
+  return ensureDeferredStyles('spw-spatial-gravity-styles', '/public/css/systems/spatial-gravity.css');
+}
+
+/**
+ * Interaction phase pulses (systems/interaction-progression.css). Tokens live
+ * in tokens/core.css; these rules only apply after the VISIBLE module writes
+ * data-spw-interaction-phase.
+ */
+export function ensureInteractionProgressionStyles() {
+  return ensureDeferredStyles('spw-interaction-progression-styles', '/public/css/systems/interaction-progression.css');
+}

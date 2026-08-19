@@ -53,6 +53,7 @@ import {
   deriveSemanticBraceExpression,
 } from '/public/js/semantic/semantic-braces.js';
 import { describeRelationship } from '/public/js/semantic/component-relationships.js';
+import { inferComponentRole } from '/public/js/semantic/role-inference.js';
 
 const DEFAULT_SELECTOR = COMPONENT_SELECTOR;
 
@@ -133,45 +134,7 @@ function getKind(el) {
 }
 
 function inferRole(el, kind) {
-  if (el.dataset.spwRole) return normalizeToken(el.dataset.spwRole);
-
-  const haystack = humanizeToken([
-    el.id,
-    el.getAttribute('role'),
-    el.dataset.spwMeaning,
-    el.dataset.spwInspect,
-    getHeading(el),
-    el.textContent?.slice(0, 220) || ''
-  ].filter(Boolean).join(' '));
-
-  if (kind === 'main') return 'orientation';
-  if (kind === 'nav') return 'routing';
-  if (kind === 'aside') return 'reference';
-  if (kind === 'figure') return 'artifact';
-  if (el.classList.contains('site-hero')) return 'orientation';
-
-  if (/register|registry|bookmarks/.test(haystack)) return 'registry';
-  if (/index|routes|surfaces|navigation|nav/.test(haystack)) return 'routing';
-  if (/settings|controls|preferences|runtime preferences/.test(haystack)) return 'control';
-  if (/syntax|grammar|structure|schema|map|data structures/.test(haystack)) return 'schema';
-  if (/status|current|applied state/.test(haystack)) return 'status';
-  if (/probe|lab|observatory|question/.test(haystack)) return 'probe';
-
-  if (kind === 'hook') {
-    const hookRole = normalizeToken(el.dataset.spwRole || '');
-    if (hookRole === 'call' || hookRole === 'invocation') return 'orientation';
-    if (hookRole === 'gate') return 'routing';
-    return 'probe';
-  }
-
-  if (kind === 'frame') return 'orientation';
-  if (kind === 'panel') return 'reference';
-  if (kind === 'card') return 'artifact';
-  if (kind === 'lens') return 'control';
-  if (kind === 'surface') return 'surface';
-  if (kind === 'metric') return 'telemetry';
-
-  return 'reference';
+  return inferComponentRole(el, kind);
 }
 
 function inferMeaning(el, kind) {

@@ -76,6 +76,86 @@ export function cancelIdle(handle) {
   window.clearTimeout(handle);
 }
 
+const SHARED_INTERSECTION_LANES = new Map();
+
+function intersectionLaneKey(options = {}) {
+  const threshold = Array.isArray(options.threshold)
+    ? options.threshold.join(',')
+    : String(options.threshold ?? 0);
+  return [
+    options.root ? 'custom-root' : 'viewport',
+    options.rootMargin || '0px',
+    threshold,
+  ].join('|');
+}
+
+/**
+ * One IntersectionObserver per (root, rootMargin, threshold) lane.
+ * Callers keep their own callbacks; the observer instance is shared so later
+ * modules do not add another viewport watcher for the same geometry.
+ */
+export function observeIntersections(options = {}) {
+  const { callback, ...ioOptions } = options;
+  if (typeof IntersectionObserver !== 'function') {
+    return {
+      observe() {},
+      unobserve() {},
+      disconnect() {},
+    };
+  }
+
+  const key = intersectionLaneKey(ioOptions);
+  let lane = SHARED_INTERSECTION_LANES.get(key);
+  if (!lane) {
+    const listeners = new Map();
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const cbs = listeners.get(entry.target);
+        if (!cbs) continue;
+        for (const cb of cbs) cb(entry);
+      }
+    }, ioOptions);
+    lane = { observer, listeners, users: 0 };
+    SHARED_INTERSECTION_LANES.set(key, lane);
+  }
+
+  lane.users += 1;
+  const owned = new Set();
+  const handle = {
+    observe(el) {
+      if (!(el instanceof Element) || owned.has(el)) return;
+      let cbs = lane.listeners.get(el);
+      if (!cbs) {
+        cbs = new Set();
+        lane.listeners.set(el, cbs);
+        lane.observer.observe(el);
+      }
+      if (typeof callback === 'function') cbs.add(callback);
+      owned.add(el);
+    },
+    unobserve(el) {
+      if (!owned.has(el)) return;
+      owned.delete(el);
+      const cbs = lane.listeners.get(el);
+      if (!cbs) return;
+      if (typeof callback === 'function') cbs.delete(callback);
+      if (!cbs.size) {
+        lane.listeners.delete(el);
+        lane.observer.unobserve(el);
+      }
+    },
+    disconnect() {
+      for (const el of [...owned]) handle.unobserve(el);
+      lane.users -= 1;
+      if (lane.users <= 0) {
+        lane.observer.disconnect();
+        SHARED_INTERSECTION_LANES.delete(key);
+      }
+    },
+  };
+  return handle;
+}
+
 export function whenDocumentReady() {
   if (document.readyState === 'loading') {
     return new Promise((resolve) => {

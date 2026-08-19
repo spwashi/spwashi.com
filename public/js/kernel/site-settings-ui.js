@@ -948,11 +948,11 @@ const syncDeviationReadouts = (root = document, settings = getSiteSettings()) =>
   });
 };
 
-const syncPersistenceReadouts = (root = document) => {
-  const registries = buildPersistenceRegistries().map((registry) => ({
+const syncPersistenceReadouts = async (root = document) => {
+  const registries = await Promise.all(buildPersistenceRegistries().map(async (registry) => ({
     ...registry,
-    snapshot: registry.read(),
-  }));
+    snapshot: await registry.read(),
+  })));
   const active = registries.filter((registry) => registry.snapshot.count > 0);
   const totalItems = registries.reduce((sum, registry) => sum + registry.snapshot.count, 0);
   const latest = formatStorageTimestamp(getLatestTimestamp(registries, (registry) => registry.snapshot.latest));
@@ -1064,7 +1064,7 @@ const bindPersistenceControls = (root = document) => {
   };
 
   const registryMap = new Map(buildPersistenceRegistries().map((registry) => [registry.id, registry]));
-  const sync = () => syncPersistenceReadouts(root);
+  const sync = () => { void syncPersistenceReadouts(root); };
   const persistenceKeys = new Set([
     SITE_SETTINGS_KEY,
     getPinStorageKey(),
@@ -1081,8 +1081,7 @@ const bindPersistenceControls = (root = document) => {
     const id = target.getAttribute('data-site-persistence-reset');
     const registry = id ? registryMap.get(id) : null;
     if (!registry) return;
-    registry.clear();
-    sync();
+    void Promise.resolve(registry.clear()).then(() => sync());
   };
 
   const handleStorage = (event) => {

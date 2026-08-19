@@ -39,11 +39,6 @@ import {
   normalizePaletteResonance
 } from '/public/js/interface/palette-resonance.js';
 import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/runtime-environment.js';
-import {
-  clearPins,
-  getPinStorageKey,
-  readPins,
-} from '/public/js/runtime/pin-registry.js';
 
 import {
   AUTHOR_WORKFLOW_TOKEN_VALUE,
@@ -380,6 +375,14 @@ const clearVisitedImageState = () => {
   });
 };
 
+let pinRegistryApi = null;
+const loadPinRegistry = () => {
+  if (!pinRegistryApi) {
+    pinRegistryApi = import('/public/js/runtime/pin-registry.js');
+  }
+  return pinRegistryApi;
+};
+
 const clearCurrentPinState = () => {
   document.querySelectorAll('[data-spw-pinned], [data-spw-latched]').forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
@@ -467,8 +470,10 @@ const buildPersistenceRegistries = () => ([
     description: 'Frames and sigils remembered through brace pinning and bookmark surfaces.',
     scope: 'route-aware memory register',
     source: 'brace gestures and bookmark register',
-    storageKey: getPinStorageKey(),
-    read() {
+    storageKey: 'spw-pins',
+    async read() {
+      const { getPinStorageKey, readPins } = await loadPinRegistry();
+      this.storageKey = getPinStorageKey();
       const pins = Object.values(readPins());
       return {
         count: pins.length,
@@ -478,7 +483,8 @@ const buildPersistenceRegistries = () => ([
           : 'No pinned frames',
       };
     },
-    clear() {
+    async clear() {
+      const { clearPins } = await loadPinRegistry();
       clearPins();
       clearCurrentPinState();
     },
@@ -1222,10 +1228,9 @@ const applySiteSettings = (settings) => {
       bus.emit('spw:palette-state', { flavor, motif, themePack: applied?.themePack, colorMode: applied?.colorMode });
     }
 
-    // Spell/cauldron chainability: surface setting changes as primable, chainable expressions.
-    // This turns the settings workbench into a source of spells — a cluster or recipe can be
-    // directly primed into cauldron or composed into a personal replayable spell.
-    if (typeof bus !== 'undefined' && bus?.emit) {
+      // Spell/cauldron chainability waits for idle so first-paint apply stays dataset-only.
+    const emitSpellOffers = () => {
+      if (typeof bus === 'undefined' || !bus?.emit) return;
       const spellPayload = {
         source: 'settings',
         type: 'settings-bundle',
@@ -1237,7 +1242,9 @@ const applySiteSettings = (settings) => {
       };
       bus.emit('spell:primed', spellPayload);
       bus.emit('cauldron:offer', { type: 'settings-state', payload: spellPayload });
-    }
+    };
+    if (typeof requestIdleCallback === 'function') requestIdleCallback(emitSpellOffers, { timeout: 1200 });
+    else window.setTimeout(emitSpellOffers, 0);
   } catch (e) {
     if (isLocalDev()) {
       console.debug('[site-settings] progressive bus emit skipped (early/edge state)', e);

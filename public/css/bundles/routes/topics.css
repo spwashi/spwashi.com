@@ -1469,3 +1469,257 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
   }
 }
 }
+
+/* /public/css/systems/film-scene-composition.css */
+@layer routes {
+/* ==========================================================================
+   film-scene-composition.css
+   Practice-bed staging for film scene composition with culinary metaphor lanes.
+   ========================================================================== */
+
+:where(.spw-scene-bed) {
+  display: grid;
+  gap: calc(0.85rem * var(--spw-medium-layout-gap-scale, 1));
+}
+
+:where(.spw-scene-bed__stage) {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  min-block-size: 11rem;
+  padding: 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--line, transparent) 82%, transparent);
+  border-radius: var(--component-radius, 12px);
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--active-op-color, var(--teal, #008080)) 8%),
+      color-mix(in srgb, var(--surface-strong, #fff) 98%, var(--ink, #111) 2%)
+    );
+  overflow: hidden;
+}
+
+:where(.spw-scene-bed__lane) {
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+  padding: var(--spw-medium-lane-pad, 0.55rem);
+  min-block-size: var(--spw-medium-touch-min, 2.75rem);
+  border-radius: var(--component-radius-tight, 8px);
+  border: 1px dashed color-mix(in srgb, var(--line, transparent) 70%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, transparent);
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.4;
+}
+
+:where(.spw-scene-bed__lane strong) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.68rem);
+  letter-spacing: 0.03em;
+  text-transform: lowercase;
+}
+
+:where(.spw-scene-bed__lane[data-spw-scene-lane="focus"]) {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+}
+
+:where(.spw-culinary-ref-grid) {
+  display: grid;
+  gap: 0.55rem;
+}
+
+@media (min-width: 48rem) {
+  :where(.spw-culinary-ref-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+:where(.spw-culinary-ref) {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.62rem 0.72rem;
+  border-radius: var(--component-radius-tight, 8px);
+  border: 1px solid color-mix(in srgb, var(--line, transparent) 78%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--ink, #111) 6%);
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.45;
+}
+
+:where(.spw-culinary-ref__kitchen) {
+  color: color-mix(in srgb, var(--op-object-color, #c68a22) 72%, var(--ink, currentColor) 28%);
+  font-weight: 650;
+}
+
+:where(.spw-culinary-ref__film) {
+  color: color-mix(in srgb, var(--op-frame-color, #1a9999) 72%, var(--ink, currentColor) 28%);
+  font-weight: 650;
+}
+
+:where(.spw-scene-bed[data-spw-scene-posture="mise"] .spw-scene-bed__stage) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #c68a22) 14%, transparent);
+}
+
+:where(.spw-scene-bed[data-spw-scene-posture="reduction"] .spw-scene-bed__stage) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-stream-color, #2a8c76) 18%, transparent);
+}
+
+:where(.spw-scene-bed[data-spw-scene-posture="ferment"] .spw-scene-bed__stage) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-probe-color, #6a3fb8) 16%, transparent);
+}
+
+:where(html[data-spw-reduce-motion="on"]) :where(.spw-scene-bed__stage) {
+  transition: none;
+}
+}
+
+/* /public/css/systems/scene-interaction.css */
+@layer routes {
+/* ==========================================================================
+   scene-interaction.css
+   --------------------------------------------------------------------------
+   Interactive scene beds: lane focus, image coupling, local memory strip.
+   ========================================================================== */
+
+:root {
+  --spw-scene-lane-active-strength: 0;
+  --spw-scene-image-coupling: var(--spw-medium-scene-coupling, 0.42);
+}
+
+:where(.spw-scene-bed[data-spw-scene-interactive]) {
+  --spw-scene-lane-active-strength: 0.55;
+}
+
+:where(.spw-scene-bed__layout) {
+  display: grid;
+  gap: calc(0.85rem * var(--spw-medium-layout-gap-scale, 1));
+}
+
+@media (min-width: 52rem) {
+  :where(.spw-scene-bed__layout:has(.spw-scene-bed__figure)) {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: start;
+  }
+
+  :where(.spw-scene-bed__layout:has(.spw-scene-bed__figure)) .spw-scene-bed__stage {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  :where(.spw-scene-bed__layout:has(.spw-scene-bed__figure)) .spw-scene-memory {
+    grid-column: 1;
+  }
+}
+
+:where(.spw-scene-bed__figure) {
+  margin: 0;
+}
+
+:where(.spw-scene-bed__figure[data-spw-scene-image-active="off"]) {
+  opacity: 0.72;
+  filter: saturate(0.88);
+}
+
+:where(.spw-scene-bed__figure[data-spw-scene-image-active="on"]) {
+  opacity: 1;
+  --spw-image-interaction-scale: 1.02;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-image-lens-accent, var(--active-op-color, #008080)) 24%, transparent),
+    0 14px 28px color-mix(in srgb, var(--shadow, #000) 8%, transparent);
+}
+
+:where(.spw-scene-bed__lane) {
+  cursor: pointer;
+  min-block-size: var(--spw-medium-touch-min, 2.75rem);
+  padding: var(--spw-medium-lane-pad, 0.55rem);
+  transition:
+    border-color var(--spw-wonder-duration-base, 200ms) var(--spw-wonder-ease-settle, ease),
+    background-color var(--spw-wonder-duration-base, 200ms) var(--spw-wonder-ease-settle, ease),
+    transform var(--spw-wonder-duration-fast, 120ms) var(--spw-wonder-ease-settle, ease),
+    box-shadow var(--spw-wonder-duration-base, 200ms) var(--spw-wonder-ease-settle, ease);
+}
+
+:where(.spw-scene-bed__lane:hover, .spw-scene-bed__lane:focus-visible) {
+  border-color: color-mix(
+    in srgb,
+    var(--active-op-color, #008080) calc(28% + (var(--spw-medium-accent-weight, 1) * 6%)),
+    transparent
+  );
+}
+
+:where(html[data-spw-hover-mode="hover"]) :where(.spw-scene-bed__lane:hover, .spw-scene-bed__lane:focus-visible) {
+  transform: translateY(calc(var(--spw-medium-hover-lift, 1px) * -1));
+}
+
+:where(.spw-scene-bed__lane[data-spw-scene-lane-active="true"]) {
+  border-style: solid;
+  border-color: color-mix(
+    in srgb,
+    var(--active-op-color, #008080) calc(34% + (var(--spw-scene-lane-active-strength) * 22%)),
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--surface-strong, #fff) 72%,
+    var(--active-op-color, #008080) 28%
+  );
+  box-shadow:
+    inset 3px 0 0 color-mix(in srgb, var(--op-probe-color, #6a3fb8) 55%, transparent),
+    0 8px 18px color-mix(in srgb, var(--shadow, #000) 5%, transparent);
+}
+
+:where(.spw-scene-bed__lane[data-spw-scene-lane-active="true"] strong) {
+  color: color-mix(in srgb, var(--active-op-color, #008080) 78%, var(--ink, currentColor) 22%);
+}
+
+:where(.spw-scene-memory) {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0.5rem 0.62rem;
+  border-radius: var(--component-radius-tight, 8px);
+  border: 1px dashed color-mix(in srgb, var(--line, transparent) 72%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--active-op-color, #008080) 6%);
+  font-size: var(--text-size-2xs, 0.68rem);
+  line-height: 1.45;
+}
+
+:where(.spw-scene-memory__label) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: color-mix(in srgb, var(--ink-soft, currentColor) 72%, transparent);
+}
+
+:where(.spw-scene-memory code) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  color: color-mix(in srgb, var(--op-ref-color, #1d57a3) 70%, var(--ink, currentColor) 30%);
+}
+
+:where([data-spw-scene-local-state="active"] .spw-scene-bed__figure[data-spw-scene-image-active="on"]) {
+  animation: spw-scene-image-couple var(--spw-wonder-duration-deliberate, 420ms) var(--spw-wonder-ease-settle, ease) both;
+}
+
+@keyframes spw-scene-image-couple {
+  from {
+    opacity: 0.7;
+    transform: translateY(6px) scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-scene-bed__lane),
+  :where(.spw-scene-bed__figure[data-spw-scene-image-active="on"]) {
+    transition: none;
+    animation: none;
+    transform: none;
+  }
+}
+}
