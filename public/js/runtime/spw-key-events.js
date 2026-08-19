@@ -16,6 +16,7 @@ import { bus } from '/public/js/kernel/bus.js';
 import { writeDatasetValue, writeStyleValue } from '/public/js/kernel/dom-contracts.js';
 import { isInputFocused } from '/public/js/kernel/shared.js';
 import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
+import { composeModeSeatExpression } from '/public/js/semantic/spw-compose.js';
 import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
 
 const SCENE_HOST_SELECTOR = [
@@ -641,14 +642,24 @@ function writeInteractionContext(context, host) {
   }
 }
 
-function composeModeExpression(switchEl) {
-  const authored = switchEl?.dataset?.spwSemanticExpression || '';
-  if (authored) return authored;
-  const variants = readModeButtons(switchEl)
-    .map((button) => button.getAttribute('data-set-mode'))
-    .filter(Boolean);
-  const body = variants.length ? variants.join('.') : 'open.sit';
-  return `lens[mode]{${body}}`;
+function subjectFromExpression(expression = '') {
+  return String(expression).trim().match(/^([A-Za-z_][\w-]*)/)?.[1] || '';
+}
+
+function writeLiveModeExpression(switchEl) {
+  if (!(switchEl instanceof HTMLElement)) return '';
+  const pressed = readModeButtons(switchEl)
+    .find((button) => button.getAttribute('aria-pressed') === 'true');
+  const seat = pressed?.getAttribute('data-set-mode') || 'mode';
+  const subject = subjectFromExpression(switchEl.dataset.spwSemanticExpression)
+    || switchEl.closest('.spw-frame, [data-spw-kind="frame"]')?.id
+    || 'lens';
+  const expression = composeModeSeatExpression({ subject, seat });
+  writeDatasetValue(switchEl, 'spwSemanticExpression', expression, {
+    source: 'spw-key-events',
+    reason: 'mode-seat-live',
+  });
+  return expression;
 }
 
 function ensureWrapExpression(element, expression) {
@@ -681,7 +692,7 @@ function openModeSeat() {
     switchEl.setAttribute('data-spw-operator', 'mode');
   }
   switchEl.setAttribute('aria-expanded', 'true');
-  ensureWrapExpression(switchEl, composeModeExpression(switchEl));
+  writeLiveModeExpression(switchEl);
   writeInteractionContext('inspecting', switchEl);
 
   const pressed = buttons.find((button) => button.getAttribute('aria-pressed') === 'true') || buttons[0];
@@ -710,6 +721,7 @@ function closeModeSeat({ commit = true, switchEl = readOpenModeSwitch() } = {}) 
   const focused = buttons.find((button) => button === document.activeElement);
   const pressed = buttons.find((button) => button.getAttribute('aria-pressed') === 'true');
   if (commit && focused && focused !== pressed) focused.click();
+  writeLiveModeExpression(switchEl);
 
   writeDatasetValue(switchEl, 'spwModeSeat', null, {
     source: 'spw-key-events',

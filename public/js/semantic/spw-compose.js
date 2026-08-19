@@ -86,6 +86,16 @@ export function composeExpression({ sigil = '', subject = '', frame = [], body =
 }
 
 /**
+ * A mode-switch names the seat in [ ] and the interaction queue in { }.
+ * Variants are siblings, not a dotted path. Do not join them with `.`.
+ */
+export function composeModeSeatExpression({ subject = 'lens', seat = 'mode' } = {}) {
+  const nucleus = String(subject || 'lens').trim() || 'lens';
+  const mode = String(seat || 'mode').trim() || 'mode';
+  return `${nucleus}[${mode}]{open.sit}`;
+}
+
+/**
  * Render the surface form.
  *
  * `axes` is an object of axis name to value; each becomes a `#:name #!value`

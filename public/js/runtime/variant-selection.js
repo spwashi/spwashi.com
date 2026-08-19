@@ -8,6 +8,7 @@
 import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
 import { parseModularQuery } from '/public/js/kernel/query-composer.js';
 import { queryParamsToSettingsPartial } from '/public/js/kernel/settings-query-parity.js';
+import { composeModeSeatExpression } from '/public/js/semantic/spw-compose.js';
 import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
 
 const VARIANT_CONTAINER_SELECTOR = '.spw-frame, [data-spw-kind="frame"], .spw-card, .frame-card, [data-spw-feature]';
@@ -153,6 +154,18 @@ function syncModeSwitch(group, mode, root, source = 'mode') {
   return buildVariantEdge(previous, mode);
 }
 
+function subjectFromExpression(expression = '') {
+  return String(expression).trim().match(/^([A-Za-z_][\w-]*)/)?.[1] || '';
+}
+
+function writeLiveModeExpression(switchEl, seat) {
+  if (!(switchEl instanceof HTMLElement) || !seat) return;
+  const subject = subjectFromExpression(switchEl.dataset.spwSemanticExpression)
+    || switchEl.closest('.spw-frame, [data-spw-kind="frame"]')?.id
+    || 'lens';
+  switchEl.dataset.spwSemanticExpression = composeModeSeatExpression({ subject, seat });
+}
+
 function bindModeSwitches(root, controller) {
   root.querySelectorAll(MODE_BUTTON_SELECTOR).forEach((button) => {
     if (!(button instanceof HTMLElement)) return;
@@ -166,6 +179,7 @@ function bindModeSwitches(root, controller) {
       if (!group || !mode) return;
       clearGroupVariantMarks(root, group);
       const edge = syncModeSwitch(group, mode, root, 'mode-switch');
+      writeLiveModeExpression(button.closest('.mode-switch'), mode);
       const html = root.documentElement || document.documentElement;
       pulseRootSelection(html, 'mode-switch', mode);
       emitVariantSelected({
