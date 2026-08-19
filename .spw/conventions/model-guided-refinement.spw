@@ -131,6 +131,11 @@
     good_routes = #[`/design/`, `/design/palettes/`, `/about/website/`, `/topics/craft/`, `/contact/`][reg=set]
     reason_to_extend = "The site exposes material systems and named visual contracts that can become commissions, editions, references, or shared studio language."
   }[reg=facet]
+  supporter_register = .{
+    values = #[`handle`, `notice`, `direction`, `coherence`, `commission`, `support`][reg=set]
+    good_routes = #[`/topics/software/spw/`, `/now/`, `/tools/midjourney/`, `/services/`, `/cards/`][reg=set]
+    reason_to_extend = "Copy names what a software-adjacent supporter of the arts might notice. Attention architecture and material models circulate that notice. Midjourney renders keep one world across rooms."
+  }[reg=facet]
   implementation_rule = "Before editing promo copy or visual marketing surfaces, name audience, offer, proof, resonance, extension, and next_action. If one is missing, fill the contract before polishing words."
   anti_pattern = "Generic creative marketing that says artists are welcome but gives them no motif, surface, proof, or way to extend the work."
 }

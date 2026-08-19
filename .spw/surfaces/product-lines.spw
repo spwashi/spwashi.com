@@ -256,6 +256,11 @@ creative_marketing_engine: .{
   language = #[`substrate`, `palette`, `composition`, `texture`, `figure-ground`, `edition`, `studio`][reg=set]
   expansion_prime = `Treat design palettes, grain, cards, image sidecars, and product-line editions as a studio system that can support commissions and collectible variants.`
  }[reg=facet]
+ patron_path = .{
+  doorways = #[operator_atlas, now, midjourney_bench, services][reg=set]
+  language = #[`handle`, `notice`, `direction`, `coherence`, `commission`, `support`][reg=set]
+  expansion_prime = `Copy names what a software-adjacent supporter of the arts might notice. Attention architecture and material models circulate that notice. Midjourney renders keep the world coherent across rooms.`
+ }[reg=facet]
  audit_rule = `Before adding or rewriting a promo/wonder card, answer the six card_shape fields and compare at least one musician path and one visual artist path when the card claims to serve creative practitioners.`
  semantic_capacity_rule = `If a marketing idea is promising but not ready for copy or runtime, cache it using semantic-capacity.spw instead of expanding the feed immediately.`
 }[reg=facet]

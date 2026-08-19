@@ -1,0 +1,41 @@
+# Home notice circulation
+#
+# Cached 2026-08-18 from public-spine copy direction.
+# Copy names what might be noticed; attention architecture and materials
+# carry that notice between rooms. That circulation is the site's
+# attention economy — not a catalog of rooms.
+
+#>home_notice_circulation
+#:cache #!copy #!attention #!material #!home
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@product_lines: ~"../../../.spw/surfaces/product-lines.spw"
+@marketing: ~"../../../.spw/conventions/model-guided-refinement.spw"
+@attention_field: ~"../../../.spw/conventions/attention-field.spw"
+@ornament_contract: ~"../../../.spw/conventions/ornament-contract.spw"
+@circuit_components: ~"../../../.spw/conventions/circuit-components.spw"
+@home: ~"../../../index.html"
+@midjourney: ~"../../../tools/midjourney/index.html"
+
+operation = "cache"
+fixity = "tending"
+
+^"insight"{
+  id = "home-notice-circulation"
+  claim = "Home copy should describe what a visitor might notice. Attention architecture and material models should support that noticing so it can travel between rooms. That circulation is the attention economy of this site."
+  audience = "business-minded, software-adjacent supporters of the arts"
+  offer = "Spw interaction semantics, the public direction of the projects, and the coherence Midjourney renders give a shared world"
+  proof = #[
+    `/topics/software/spw/ for handle behavior`,
+    `/now/ for live direction`,
+    `/tools/midjourney/ as depiction bench, not replacement studio`,
+    `operator resonance and section-handle as attention architecture`,
+    `glass frame / matte panel / image study as material models`
+  ][reg=set]
+  copy_rule = "Name a notice before naming an inventory. Public copy may say echo, hold, travel, glass, matte, render. It should not require ohms, field equations, or 'attention economy'."
+  circulation = "A sentence points at a handle, a matching operator glows, a material stays in its job, a render keeps the world from drifting, and the visitor can change rooms without resetting."
+  refuse = "Do not thin the home lede into four artifact nouns. Do not lead with inspectable-catalog voice. Do not treat Midjourney as the painting."
+  next_action = "Keep the home lede dense and observational; send supporters to Spw, Now, the depiction bench, or services."
+}[reg=facet]

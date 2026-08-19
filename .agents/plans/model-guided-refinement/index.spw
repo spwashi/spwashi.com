@@ -61,6 +61,7 @@ intent: .{
 @rpg_analog_worldbuilding_cache: ~"./rpg-analog-worldbuilding-cache.spw"
 @rpg_note_interaction_cache: ~"./rpg-note-interaction-cache.spw"
 @voice_flow_cache: ~"./voice-flow-cache.spw"
+@home_notice_circulation: ~"./caches/home-notice-circulation.spw"
 @semantic_capacity: ~"../../../.spw/conventions/semantic-capacity.spw"
 @daily_kernel: ~"../../../.spw/conventions/daily-kernel.spw"
 @site: ~"../../../.spw/site.spw"
@@ -77,6 +78,7 @@ dispatch: .{
  rpg_analog_worldbuilding_cache = @rpg_analog_worldbuilding_cache
  rpg_note_interaction_cache = @rpg_note_interaction_cache
  voice_flow_cache = @voice_flow_cache
+ home_notice_circulation = @home_notice_circulation
  semantic_capacity = @semantic_capacity
  daily_kernel = @daily_kernel
  site = @site
