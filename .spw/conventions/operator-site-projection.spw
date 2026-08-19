@@ -103,6 +103,7 @@
     runtime_events: #[`mode:seat-open`, `mode:seat-close`, `spw:mode-change`][reg=set]
     validation: `[ opens alternatives without committing; ] sits; digits pick an index while the seat is open`
     failure_mode: `square brackets used as prev/next arrows or as a second frame stepper`
+    wrap_job: `sit a lens to change display`
   }[reg=facet]
 
   direction: .{
@@ -116,6 +117,7 @@
     runtime_events: #[`spw:frame-change`, `spw:attention-shifted`][reg=set]
     validation: `{ } move between frames and set interaction-context to browsing`
     failure_mode: `{ } and [ ] doing the same step`
+    wrap_job: `travel a frame to navigate or scan`
   }[reg=facet]
 
   scene: .{
@@ -129,6 +131,7 @@
     runtime_events: #[`spw:scene-enter`, `spw:scene-exit`][reg=set]
     validation: `( enters the nearest authored scene host; ) leaves; context becomes comparing then reading`
     failure_mode: `first prompt-host on the page instead of the focused frame's scene`
+    wrap_job: `enter a scene to learn more`
   }[reg=facet]
 
   measure: .{
@@ -186,6 +189,16 @@
   action_claim: "An action/perspective switch (@ or !) is useful only if it changes the visible layout state, ARIA indicators, or setting variables."
   potential_claim: "A potential reference (~) is useful only if its link can be resolved to a valid route, pinned working set, or restored session."
   measure_claim: "A measurement (%) is useful only if it specifies measure kind (objective, subjective, or hybrid), source element or claim, metric count/value, and unit or scale."
+  wrap_job_claim: "A wrap job is useful only if sitting changes a visible lens, traveling moves to another frame, entering reveals more of the current room, or the probe link can be followed."
+}
+
+^"wrap_jobs"{
+  definition: "Public-spine hooks may host a wrap-jobs cluster so the wraps are scannable handles, not only keyboard chords."
+  feature: `data-spw-feature="wrap-jobs"`
+  actions: #[`sit`, `travel`, `enter`, `inspect`][reg=set]
+  no_js: "Each job is an ordinary hash or route link."
+  live: "Sitting rewrites [seat]; traveling rewrites {next-frame}."
+  handle: "The section handle overlays wrap scan while interaction-context is inspecting, browsing, or comparing."
 }
 
 ^"phase_behavior_mapping"{
