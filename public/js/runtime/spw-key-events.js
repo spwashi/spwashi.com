@@ -3,6 +3,13 @@
  * ---------------------------------------------------------------------------
  * Spw-backed keyboard events: potentiation (thread without collapse) and
  * actualization (commit into scene contexts other models can interpret).
+ *
+ * Wrap physics (do not interchange these as prev/next):
+ *   [ / ]  mode seat — open the option-set, then sit in a variant
+ *   { / }  direction — travel between frames
+ *   ( / )  scene — enter or leave a staged host
+ *   .      ground the current operator
+ *   ~      hold a path without collapsing it
  */
 
 import { bus } from '/public/js/kernel/bus.js';
@@ -593,30 +600,136 @@ function traverseFrames(direction = 1) {
   return false;
 }
 
-function cycleActiveFrameMode(direction = 1) {
-  const activeFrame = document.activeElement?.closest?.('.spw-frame, [data-spw-kind="frame"]')
-    || document.querySelector('.spw-frame:hover, [data-spw-kind="frame"]:hover')
-    || document.querySelector('.spw-frame, [data-spw-kind="frame"]');
-  if (!activeFrame) return false;
+function readModeButtons(switchEl) {
+  if (!(switchEl instanceof HTMLElement)) return [];
+  return Array.from(switchEl.querySelectorAll('[data-set-mode]')).filter((button) => (
+    button instanceof HTMLElement && button.offsetWidth > 0 && button.offsetHeight > 0
+  ));
+}
 
-  const modeButtons = Array.from(activeFrame.querySelectorAll('.mode-switch button, [data-set-mode]'));
-  if (modeButtons.length <= 1) return false;
+function hasLocalKeyScope(target) {
+  return Boolean(target?.closest?.('[data-spw-key-scope="local"], .rpg-asset-card'));
+}
 
-  const activeIndex = modeButtons.findIndex((btn) => btn.getAttribute('aria-pressed') === 'true');
-  let nextIndex = 0;
-  if (activeIndex >= 0) {
-    nextIndex = (activeIndex + direction + modeButtons.length) % modeButtons.length;
-  } else {
-    nextIndex = direction > 0 ? 0 : modeButtons.length - 1;
+function resolveModeSwitch() {
+  const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  if (active?.closest?.('.mode-switch')) return active.closest('.mode-switch');
+  const frame = active?.closest?.('.spw-frame, [data-spw-kind="frame"]')
+    || document.querySelector('.spw-frame:hover, [data-spw-kind="frame"]:hover');
+  return frame?.querySelector?.('.mode-switch')
+    || document.querySelector('.mode-switch[data-spw-mode-seat="open"]')
+    || document.querySelector('.mode-switch');
+}
+
+function readOpenModeSwitch() {
+  return document.querySelector('.mode-switch[data-spw-mode-seat="open"]');
+}
+
+function openModeSeat() {
+  const switchEl = resolveModeSwitch();
+  const buttons = readModeButtons(switchEl);
+  if (buttons.length < 2) return false;
+
+  document.querySelectorAll('.mode-switch[data-spw-mode-seat="open"]').forEach((node) => {
+    if (node !== switchEl) closeModeSeat({ commit: false, switchEl: node });
+  });
+
+  writeDatasetValue(switchEl, 'spwModeSeat', 'open', {
+    source: 'spw-key-events',
+    reason: 'mode-seat-open',
+  });
+  if (!switchEl.getAttribute('data-spw-operator')) {
+    switchEl.setAttribute('data-spw-operator', 'mode');
+  }
+  switchEl.setAttribute('aria-expanded', 'true');
+
+  const pressed = buttons.find((button) => button.getAttribute('aria-pressed') === 'true') || buttons[0];
+  pressed.focus({ preventScroll: true });
+
+  const record = {
+    phase: 'select',
+    key: '[',
+    binding: 'mode-seat-open',
+    group: pressed.getAttribute('data-mode-group') || '',
+    variant: pressed.getAttribute('data-set-mode') || '',
+    input: 'keyboard',
+  };
+  lastEventRecord = record;
+  bus.emit('mode:seat-open', record);
+  return true;
+}
+
+function closeModeSeat({ commit = true, switchEl = readOpenModeSwitch() } = {}) {
+  if (!(switchEl instanceof HTMLElement) || switchEl.dataset.spwModeSeat !== 'open') return false;
+
+  const buttons = readModeButtons(switchEl);
+  const focused = buttons.find((button) => button === document.activeElement);
+  const pressed = buttons.find((button) => button.getAttribute('aria-pressed') === 'true');
+  if (commit && focused && focused !== pressed) focused.click();
+
+  writeDatasetValue(switchEl, 'spwModeSeat', null, {
+    source: 'spw-key-events',
+    reason: 'mode-seat-close',
+  });
+  switchEl.setAttribute('aria-expanded', 'false');
+
+  const frame = switchEl.closest('.spw-frame, [data-spw-kind="frame"]');
+  const returnTarget = frame?.querySelector('.hook-sub a.spw-chip, .hook-invitation a, a.frame-sigil') || frame;
+  if (returnTarget instanceof HTMLElement && returnTarget !== document.activeElement) {
+    if (!returnTarget.hasAttribute('tabindex') && returnTarget.tagName !== 'A' && returnTarget.tagName !== 'BUTTON') {
+      returnTarget.setAttribute('tabindex', '-1');
+    }
+    returnTarget.focus({ preventScroll: true });
   }
 
-  const nextBtn = modeButtons[nextIndex];
-  if (nextBtn instanceof HTMLElement) {
-    nextBtn.click();
-    nextBtn.focus();
-    return true;
-  }
-  return false;
+  const record = {
+    phase: 'select',
+    key: ']',
+    binding: commit ? 'mode-seat-commit' : 'mode-seat-release',
+    group: (focused || pressed)?.getAttribute('data-mode-group') || '',
+    variant: (focused || pressed)?.getAttribute('data-set-mode') || '',
+    input: 'keyboard',
+  };
+  lastEventRecord = record;
+  bus.emit('mode:seat-close', record);
+  return true;
+}
+
+function stepModeSeat(direction = 1) {
+  const switchEl = readOpenModeSwitch();
+  const buttons = readModeButtons(switchEl);
+  if (buttons.length < 2) return false;
+  const currentIndex = buttons.indexOf(document.activeElement);
+  const nextIndex = ((currentIndex >= 0 ? currentIndex : 0) + direction + buttons.length) % buttons.length;
+  buttons[nextIndex].focus({ preventScroll: true });
+  return true;
+}
+
+function selectModeSeatIndex(index) {
+  const switchEl = readOpenModeSwitch();
+  const buttons = readModeButtons(switchEl);
+  if (index < 0 || index >= buttons.length) return false;
+  buttons[index].focus({ preventScroll: true });
+  return true;
+}
+
+function holdCurrentOperator() {
+  const active = document.activeElement;
+  const target = active?.closest?.('[data-spw-operator], .spw-chip, [data-spw-resonance-key]') || potentiatedElement;
+  if (!(target instanceof HTMLElement)) return false;
+  potentiateTarget(target, {
+    key: '~',
+    binding: 'potential-hold',
+    input: 'keyboard',
+  });
+  return true;
+}
+
+function enterNearestScene() {
+  const host = resolveSceneHost(document.activeElement)
+    || document.querySelector(SCENE_HOST_SELECTOR);
+  if (!(host instanceof HTMLElement)) return false;
+  return Boolean(enterScene(host, { key: '(', binding: 'scene-enter', input: 'keyboard' }));
 }
 
 const DENSITY_TIERS = Object.freeze(['minimal', 'normal', 'rich']);
@@ -707,6 +820,11 @@ function onKeyDown(event) {
   const target = event.target instanceof HTMLElement ? event.target : null;
 
   if (EXIT_KEYS.has(event.key)) {
+    if (readOpenModeSwitch()) {
+      event.preventDefault();
+      closeModeSeat({ commit: false });
+      return;
+    }
     if (sceneStack.length || revealPhase !== 'idle') {
       event.preventDefault();
       if (sceneStack.length) {
@@ -728,8 +846,41 @@ function onKeyDown(event) {
     return;
   }
 
-  // Handle Spw-native navigation, mode switches, and verbosity when not editing text
+  // Each wrap and operator has its own physics. Do not treat brace pairs as
+  // interchangeable prev/next steppers.
   if (!inInput) {
+    if (!hasLocalKeyScope(target) && event.key === '[') {
+      if (openModeSeat()) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (!hasLocalKeyScope(target) && event.key === ']') {
+      if (closeModeSeat({ commit: true })) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (readOpenModeSwitch()) {
+      if (event.key === 'j' || event.key === 'ArrowRight') {
+        if (stepModeSeat(1)) {
+          event.preventDefault();
+          return;
+        }
+      }
+      if (event.key === 'k' || event.key === 'ArrowLeft') {
+        if (stepModeSeat(-1)) {
+          event.preventDefault();
+          return;
+        }
+      }
+      if (event.key >= '1' && event.key <= '9') {
+        if (selectModeSeatIndex(parseInt(event.key, 10) - 1)) {
+          event.preventDefault();
+          return;
+        }
+      }
+    }
     if (event.key === 'v') {
       if (cycleSemanticDensity(1)) {
         event.preventDefault();
@@ -785,20 +936,27 @@ function onKeyDown(event) {
         return;
       }
     }
-    if (event.key === '[') {
-      if (cycleActiveFrameMode(-1)) {
+    if (event.key === '(') {
+      if (enterNearestScene()) {
         event.preventDefault();
         return;
       }
     }
-    if (event.key === ']') {
-      if (cycleActiveFrameMode(1)) {
+    if (event.key === ')') {
+      if (sceneStack.length) {
         event.preventDefault();
+        exitScene({ key: ')', binding: 'scene-exit' });
         return;
       }
     }
-    if (event.key === '.' || event.key === '~') {
+    if (event.key === '.') {
       if (groundCurrentOperator()) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key === '~') {
+      if (holdCurrentOperator()) {
         event.preventDefault();
         return;
       }
@@ -890,6 +1048,9 @@ function publishApi() {
     serialize: () => serializeKeyEventsToSpw(getKeyEventSnapshot()),
     enterScene: (host) => enterScene(host, { input: 'api', binding: 'scene-enter' }),
     exitScene: () => exitScene({ input: 'api', binding: 'scene-exit' }),
+    openModeSeat,
+    closeModeSeat,
+    stepModeSeat,
     clearPotentiation: () => clearPotentiation({ reason: 'api' }),
   };
   window.__SPW_KEY_EVENTS__ = api;
@@ -939,6 +1100,8 @@ export function initSpwKeyEvents(root = document) {
     delete window.spwKeyEvents;
   };
 }
+
+export { openModeSeat, closeModeSeat, stepModeSeat, selectModeSeatIndex };
 
 export const spwModule = {
   updates: ['attr:data-spw-key-active'],

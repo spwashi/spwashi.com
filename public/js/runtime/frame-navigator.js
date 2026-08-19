@@ -4,9 +4,11 @@
  * JetBrains-inspired surface map / tool window for navigating frames and routes.
  * Keyboard spells (global, non-input context):
  *   g          → toggle surface map
- *   [ / ]      → previous / next frame
+ *   { / }      → previous / next frame (direction wrap)
  *   /          → open + focus filter
  *   Escape     → close
+ *
+ * [ / ] open and close a mode seat. That physics lives in spw-key-events.js.
  *
  * Fully backward-compatible — call `initFrameNavigator()` exactly as before.
  * All original behavior, DOM structure, CSS classes, data attributes, and emitted
@@ -344,6 +346,7 @@ class SpwFrameNavigator {
 
         // Global keyboard spells
         window.addEventListener('keydown', (e) => {
+            if (e.defaultPrevented) return;
             if (isInputFocused()) return;
 
             if (e.key === 'g' && !e.ctrlKey && !e.metaKey && !isNavigatorHidden()) {
@@ -351,12 +354,12 @@ class SpwFrameNavigator {
                 this.toggle();
                 return;
             }
-            if (e.key === '}' || (e.key === ']' && !document.activeElement?.closest?.('.spw-frame, .site-frame')?.querySelector('.mode-switch'))) {
+            if (e.key === '}') {
                 e.preventDefault();
                 this.navigateFrames(1);
                 return;
             }
-            if (e.key === '{' || (e.key === '[' && !document.activeElement?.closest?.('.spw-frame, .site-frame')?.querySelector('.mode-switch'))) {
+            if (e.key === '{') {
                 e.preventDefault();
                 this.navigateFrames(-1);
                 return;
