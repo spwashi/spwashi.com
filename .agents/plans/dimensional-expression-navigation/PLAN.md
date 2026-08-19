@@ -2,7 +2,7 @@
 
 ## Status
 
-Implemented locally 2026-08-17 and refined with pack-local alignment, named dimensional edges, balanced five-item remainder packing, and edge-aware variant events. This is a bounded extension of `content-responsive-layout` and the closed `semantic-navigation-geometry` work, not a replacement for either. Source, generated bundles/manifests, language ecology, runtime contracts, local checks, and measured device postures are recorded beside the slice.
+Implemented locally 2026-08-17 and refined through 2026-08-19 with pack-local alignment, named dimensional edges, balanced five-item remainder packing, edge-aware variant events, and shared vertical/horizontal anatomy between the route navigator and expression HUD. This is a bounded extension of `content-responsive-layout` and the closed `semantic-navigation-geometry` work, not a replacement for either. Source, generated bundles/manifests, language ecology, runtime contracts, local checks, and measured device postures are recorded beside the slice.
 
 ## Public goal
 
@@ -42,6 +42,7 @@ Text geometry may prove 0D–2D. The interface must present 3D and 4D as host/ru
 6. Opt the route component into the existing pack-local mirror, align its 26rem/44rem arrangement edges with the shared stack/split/feature bands, and keep CSS—not the mirrored attribute—as geometry authority.
 7. Pack five cards as `2 + 2 + 1`, then `3 + 2`, then `5` as component width grows; each row spends the full available measure.
 8. Make variant-selection events report their previous and selected endpoints as an inspectable edge while keeping authored defaults local to each group.
+9. Align each dimensional card as `order + role / explanation / source + edge`; spend existing fluid pack tokens for sizing and spacing, and mirror the same distribution in the expression HUD without adding attributes.
 
 ## Boundaries
 

@@ -86,6 +86,16 @@ expression = semantics[align]{name.attribute.expression}<corpus>
   probe = `engagement-features.test.mjs exercises endpoint precedence and edge labeling.`
 }
 
+^"dimensional_anatomy_alignment_2026_08_19"{
+  operation = "align"
+  fixity = "tending"
+  stable = `0D handle → 1D vector → 2D form → 3D field → 4D path; direct → bound → situate → replay → return.`
+  repair = `Route cards and the expression HUD align order with role, flexible explanation beneath, and source with named edge at the foot.`
+  sizing = `Existing --spw-card-pad and --spw-card-rhythm tokens replace local spacing literals where the two projections share anatomy.`
+  naming = `No data-spw stem, parser claim, operator alias, or dimensional role changed.`
+  owner = `@expression_consequence + ../slices/dimensional-expression-navigation/index.spw`
+}
+
 #>wonder_semantics_rigor_1
 ?["Does part-kinship carry meaning, or only vocabulary?"]{
   #:depth #!mathematical ~#lens(inductance)

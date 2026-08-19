@@ -85,6 +85,23 @@ fixity = "tending"
   owner = ".agents/plans/dimensional-expression-navigation/PLAN.md + .spw/slices/dimensional-expression-navigation/index.spw"
 }
 
+^"alignment_content_fit_2026_08_19"{
+  operation = "align"
+  fixity = "tending"
+  routes = #[`/`, `/settings/`, `/topics/software/pretext/`][reg=set]
+  measured: #[
+    .{ viewport = `320x760`; route = `/`; finding = `home frame 283px client / 649px scroll: narrow topline flex row plus implicit min-content hero-copy track` },
+    .{ viewport = `320x760`; route = `/settings/`; finding = `four fieldsets exceeded their boxes by 11–82px: implicit grid tracks and fieldset content-box sizing` },
+    .{ viewport = `320x760`; route = `/topics/software/pretext/`; finding = `Pretext frame 271px client / 422px scroll: full-width mode switch shrank into the occupied sigil row` }
+  ][reg=set]
+  alignment = "Full-width topline children no longer shrink into occupied flex rows; one-column content grids explicitly use minmax(0, 1fr); settings fieldsets and Pretext preview own their box sizing and tracks."
+  pinch = "Authored pan-y regions now preserve pinch-zoom; the optional text-scale gesture still flows through canonical settings."
+  runtime = "Composition annotations refresh on settings changes, frame metrics cache typography and measured insets, and the existing fit reporter mounts at idle only for newspaper layout or layout-debug posture."
+  dimensional = "At 320px the 0D–4D navigator remains a contained horizontal snap rail: order + role share the first band, explanation and source occupy the body, and each transition edge finishes the card. Geometry tests preserve the authored 0D–2D / contextual 3D–4D boundary."
+  verified = "At 320px: home frame 283/283, hero and topline 254/254; all 75 settings fieldsets 0px max overflow; Pretext lab 271/271 and topline 250/250. At 768px the same probes remain contained; at 1280px the home frame and hero remain exact-fit, and the settings surface is visually aligned."
+  owner = ".agents/plans/alignment-content-fit/PLAN.md"
+}
+
 #>wonder_ui_containment_1
 ?["Can containment be proven by anything other than looking?"]{
   #:depth #!experiential ~#lens(evidence)

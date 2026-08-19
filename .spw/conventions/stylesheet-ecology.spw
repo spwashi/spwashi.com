@@ -84,6 +84,7 @@ fixity = "tending"
 
 ^"breakpoints"{
   ladder: "Rungs are canonical only where usage already clustered — see @breakpoints. 58 distinct thresholds became 32 by snapping drift (719/720/721, 979/980/981, 760 beside 768 beside 48rem) with no move beyond 5%."
+  latest: "2026-08-19 alignment follow-up snapped the remaining 36rem layout thresholds (component container and section-context media query) to the established 35rem rung; the dry probe is clean again."
   units: "rem, so a reader's text-size preference moves the layout with them. px media queries ignore it."
   posture: "155 of 189 queries were `max-width`. Desktop-first means mobile is whatever survives subtraction, which is why it reads as unfinished. New work states `min-width`."
   open: "Collapsing 16 rungs to a handful of semantic tiers moves layout and wants eyes on real pages. Not a codemod."

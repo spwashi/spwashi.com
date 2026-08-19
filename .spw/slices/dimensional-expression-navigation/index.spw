@@ -55,6 +55,14 @@ responsive_contract: .{
  containment = `Every grid/flex descendant owns min-inline-size: 0; long labels wrap; HUD geometry clamps to the visual viewport and can scroll internally.`
 }[reg=facet]
 
+anatomy_contract: .{
+  vertical = `Each stop reads in three bands: order + role, explanation, then source + named edge. The explanation absorbs variable copy height so the evidence row stays aligned.`
+  horizontal = `Order and role share the heading axis; source and edge share the consequence axis. The edge stays at the inline end without forcing source text outside its box.`
+  sizing = `Card padding and rhythm spend the existing --spw-card-pad / --spw-card-rhythm fluid tokens; touch height remains at least 2.75rem in the HUD.`
+  distribution = `Narrow stays a contained rail; medium remains 2 + 2 + 1, then 3 + 2; wide remains five equal seats. DOM order stays 0D → 4D.`
+  naming = `No new attribute family: 0D handle, 1D vector, 2D form, 3D field, and 4D path retain stable meaning.`
+}[reg=facet]
+
 ownership: .{
  html = `topics/software/index.html owns the durable no-JS navigation sequence and copy.`
  css = `topics.css owns the single-consumer navigator so it stays out of the shared bundle; interactive-expression.css owns cross-route HUD containment.`

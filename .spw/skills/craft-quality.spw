@@ -84,3 +84,24 @@ fixity = "tending"
   probe: `npm run css:payload && node scripts/check-site.mjs`
   falsification: "A number in measured_2026_08_13 does not reproduce from its stated probe."
 }
+
+^"brochure_region_alignment_2026_08_19"{
+  #:operation #!align
+  #:fixity #!tending
+  focus = "shared edge / local fingerprint"
+  primary_element = "air"
+  owner = "route CSS"
+  baseline: .{
+    home = "1211px content width at a 1280px viewport; masthead and atlas regions already share x=31–1242"
+    about = "generic broadsheet split the identity cluster into a 594px column, so the wide hero composition could not breathe"
+    services = "all offer, terms, proof, and support frames occupied the full 1211px track, producing a long single-column brochure"
+  }[reg=facet]
+  alignment_rule = "the shell owns the public gutter; clusters own internal tracks; seams may be flush while cards retain material insets"
+  route_fingerprints: .{
+    home = "masthead / atlas"
+    about = "identity band / operating memo"
+    services = "studio threshold / brochure matrix"
+  }[reg=facet]
+  constraint = "keep specialist route silhouettes intact and add no shared-core CSS while the core payload is near budget"
+  probe = `npm run css:payload && node scripts/normalize-breakpoints.mjs && node scripts/check-site.mjs && git diff --check`
+}[reg=facet]
