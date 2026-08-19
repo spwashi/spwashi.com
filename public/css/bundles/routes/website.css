@@ -518,7 +518,15 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
    ========================================================================== */
 
 :where(body[data-spw-surface="website"] .frame-operators) {
-  gap: 0.42rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem 0.5rem;
+}
+
+:where(body[data-spw-surface="website"] #website-field-guide [data-spw-textual-role="lede"] .spw-chip) {
+  display: inline-flex;
+  vertical-align: baseline;
+  margin-inline: 0.1em;
 }
 
 :where(body[data-spw-surface="website"] .spw-chip) {

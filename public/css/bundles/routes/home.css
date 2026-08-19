@@ -329,12 +329,12 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 /* Inherits the editorial serif from shell/layout.css's shared [data-spw-textual-role="lede"] —
    only the home-specific measure and optical sizing are set here. */
 :where([data-spw-feature="home-kernel-entry"] [data-spw-textual-role="lede"]) {
-  max-inline-size: var(--home-measure);
+  max-inline-size: var(--home-measure-wide);
   margin: 0;
   color: color-mix(in srgb, var(--ink, #1b1f23) 90%, transparent);
   font-size: clamp(1.12rem, 1rem + 0.6vw, 1.34rem);
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.58;
   text-wrap: pretty;
 }
 
@@ -414,6 +414,12 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
 :where([data-spw-feature="home-kernel-entry"] .home-hero-copy > .home-tagline) {
   margin-block-start: calc(var(--home-gap-lg) * -0.2);
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-hero-copy > [data-spw-textual-role="lede"] a) {
+  text-underline-offset: 0.14em;
+  text-decoration-thickness: from-font;
+  text-decoration-skip-ink: auto;
 }
 
 :where([data-spw-feature="home-kernel-entry"] .home-hero-copy > [data-spw-textual-role="lede"]) {
