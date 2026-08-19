@@ -72,6 +72,7 @@
                     data-spw-kind="hook"
                     data-spw-role="call"
                     data-spw-liminality="entry"
+                    data-spw-scene-interpret="play-hook"
                     data-spw-slot="body"
                     aria-label="Play entry hook"
                 >
@@ -86,7 +87,7 @@
                             </p>
                         </section>
                         <section class="mode-panel" data-mode-group="play-lens" data-mode-panel="memory" data-spw-role="schema" data-spw-kind="lens" hidden>
-                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="play[memory]{recap.cast.sediment}">
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="play[memory]{recap}">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="session-memory" tabindex="0">*memory</span>: Durable session logs, recurring character pressure, and lore canon.
                             </p>
                             <p class="hook-sub">
@@ -95,7 +96,7 @@
                             </p>
                         </section>
                         <section class="mode-panel" data-mode-group="play-lens" data-mode-panel="making" data-spw-role="projection" data-spw-kind="lens" hidden>
-                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="play[making]{card.prompt.tool}">
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="play[making]{tool}">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="table-making" tabindex="0">^making</span>: The live tabletop as a studio for character sheets, cards, and prompts.
                             </p>
                             <p class="hook-sub">
@@ -104,7 +105,7 @@
                             </p>
                         </section>
                         <section class="mode-panel" data-mode-group="play-lens" data-mode-panel="table" data-spw-role="scenario" data-spw-kind="lens" hidden>
-                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="play[table]{consequence.risk.recovery}">
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="play[table]{stakes}">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="table-rhythm" tabindex="0">@table</span>: Shared table space, shared laughter, and real stakes without homework.
                             </p>
                             <p class="hook-sub">
@@ -113,9 +114,12 @@
                             </p>
                         </section>
                     </div>
-                    <p class="hook-invitation">
-                        Open a play lens with <kbd>[</kbd>. Sit with <kbd>]</kbd>. Enter the table with <kbd>(</kbd>.
-                    </p>
+                    <nav class="hook-invitation wrap-jobs" aria-label="Spw wrap jobs" data-spw-feature="wrap-jobs" data-spw-semantic-expression="play[wrap]{rail}">
+                        <a class="operator-chip" href="#play-surface" data-spw-operator="mode" data-spw-action="sit" data-spw-semantic-expression="play[play]{open.sit}<display>" aria-label="Sit a lens to change what this room shows"><span data-spw-copy-depth="entry">change view</span><span data-spw-copy-depth="normal">[play] sit lens</span><span data-spw-copy-depth="technical">play[play]{open.sit}&lt;display&gt;</span></a>
+                        <a class="operator-chip" href="#play-reentry" data-spw-operator="direction" data-spw-action="travel" data-spw-semantic-expression="rooms{travel}<navigate>" aria-label="Move to the next frame on this page"><span data-spw-copy-depth="entry">next room</span><span data-spw-copy-depth="normal">{rooms} next frame</span><span data-spw-copy-depth="technical">rooms{travel}&lt;navigate&gt;</span></a>
+                        <a class="operator-chip" href="#play-hook" data-spw-operator="scene" data-spw-action="enter" data-spw-semantic-expression="(look){stage}<learn>" aria-label="Look closer at this room"><span data-spw-copy-depth="entry">look closer</span><span data-spw-copy-depth="normal">(look) learn more</span><span data-spw-copy-depth="technical">(look{stage}&lt;learn&gt;</span></a>
+                        <a class="operator-chip" href="/topics/search/?q=%5Bplay%5D" data-spw-operator="wonder" data-spw-action="inspect" data-spw-semantic-expression="?play{kin}<learn>" aria-label="Search expressions that sit in [play]"><span data-spw-copy-depth="entry">find related</span><span data-spw-copy-depth="normal">?[play]</span><span data-spw-copy-depth="technical">?play{kin}&lt;learn&gt;</span></a>
+                    </nav>
                 </section>
                 <ul class="spw-copy-motif-strip" aria-label="Play copy motifs" data-spw-box-model="motif-strip" data-spw-composition-flow="inline-wrap">
                     <li>session</li>

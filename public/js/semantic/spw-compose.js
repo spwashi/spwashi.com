@@ -95,6 +95,108 @@ export function composeModeSeatExpression({ subject = 'lens', seat = 'mode' } = 
   return `${nucleus}[${mode}]{open.sit}`;
 }
 
+/** One job per wrap. `{ }` holds a path of one ground, never sibling verbs. */
+export const WRAP_JOBS = Object.freeze({
+  mode: Object.freeze({ wrap: 'mode', job: 'display', verb: 'sit', body: 'open.sit' }),
+  direction: Object.freeze({ wrap: 'direction', job: 'navigate', verb: 'travel', body: 'travel' }),
+  scene: Object.freeze({ wrap: 'scene', job: 'learn', verb: 'enter', body: 'stage' }),
+  wonder: Object.freeze({ wrap: 'wonder', job: 'learn', verb: 'inspect', body: 'kin' }),
+});
+
+export function composeWrapJobExpression({
+  wrap = 'mode',
+  subject = 'page',
+  seat = '',
+  job = '',
+} = {}) {
+  const spec = WRAP_JOBS[wrap] || WRAP_JOBS.mode;
+  const projection = String(job || spec.job).trim() || spec.job;
+  if (wrap === 'mode') {
+    return `${composeModeSeatExpression({ subject, seat: seat || 'mode' })}<${projection}>`;
+  }
+  if (wrap === 'direction') {
+    return composeExpression({
+      subject: subject || 'rooms',
+      body: spec.body.split('.'),
+      projection,
+    });
+  }
+  if (wrap === 'scene') {
+    return composeExpression({
+      sigil: '(',
+      subject: subject || 'look',
+      body: spec.body.split('.'),
+      projection,
+    });
+  }
+  return composeExpression({
+    sigil: '?',
+    subject: subject || 'spw',
+    body: spec.body.split('.'),
+    projection,
+  });
+}
+
+export function formatWrapJobChip({ wrap = 'mode', seat = 'mode', nextLabel = 'rooms' } = {}) {
+  return formatWrapJobVariants({ wrap, seat, nextLabel }).normal;
+}
+
+export function formatWrapJobVariants({
+  wrap = 'mode',
+  seat = 'mode',
+  nextLabel = 'rooms',
+  subject = 'page',
+} = {}) {
+  const mode = String(seat || 'mode').trim() || 'mode';
+  const handle = String(nextLabel || 'rooms').trim().replace(/^#>/, '') || 'rooms';
+  const expression = composeWrapJobExpression({ wrap, subject, seat: mode, job: WRAP_JOBS[wrap]?.job });
+  if (wrap === 'mode') {
+    return {
+      entry: 'change view',
+      normal: `[${mode}] sit lens`,
+      technical: expression,
+    };
+  }
+  if (wrap === 'direction') {
+    return {
+      entry: 'next room',
+      normal: `{${handle}} next frame`,
+      technical: expression,
+    };
+  }
+  if (wrap === 'scene') {
+    return {
+      entry: 'look closer',
+      normal: '(look) learn more',
+      technical: expression,
+    };
+  }
+  return {
+    entry: 'find related',
+    normal: `?[${mode}]`,
+    technical: expression,
+  };
+}
+
+export function describeWrapScan({
+  context = 'reading',
+  seat = 'mode',
+  nextLabel = '',
+  token = '#>',
+  label = 'section',
+} = {}) {
+  if (context === 'inspecting') {
+    return { token: `[${String(seat || 'mode').trim() || 'mode'}]`, label: 'sit lens' };
+  }
+  if (context === 'browsing') {
+    return { token: '{ }', label: String(nextLabel || 'next frame').trim() || 'next frame' };
+  }
+  if (context === 'comparing') {
+    return { token: '(look)', label: 'learn more' };
+  }
+  return { token, label };
+}
+
 /**
  * Render the surface form.
  *

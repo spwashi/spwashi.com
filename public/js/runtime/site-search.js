@@ -22,6 +22,7 @@ import {
   syncFloatingChromeState,
 } from '/public/js/kernel/dom-contracts.js';
 import { emitSpwAction, isInputFocused } from '/public/js/kernel/shared.js';
+import { bestExpressionMatch, parseExpressionQuery } from '/public/js/semantic/expression-query.js';
 import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
 
 const INDEX_HREF = '/public/data/site-search-index.json';
@@ -36,6 +37,7 @@ const FACETS = Object.freeze([
   { id: 'operators', label: 'Operators' },
   { id: 'places', label: 'Places' },
   { id: 'labs', label: 'Labs' },
+  { id: 'expressions', label: 'Expressions' },
 ]);
 
 /** Longer prefixes first so `#>` wins over `#`. Matches operator-detection.js. */
@@ -107,11 +109,13 @@ function passesFacet(entry, facet) {
   if (facet === 'operators') return entry.kind === 'operator' || Boolean(entry.operatorSlug);
   if (facet === 'places') return entry.kind === 'place' || entry.kind === 'atlas';
   if (facet === 'labs') return entry.kind === 'lab' || entry.kind === 'play';
+  if (facet === 'expressions') return Array.isArray(entry.expressions) && entry.expressions.length > 0;
   return true;
 }
 
-function scoreEntry(entry, tokens, sigilHints) {
+function scoreEntry(entry, tokens, sigilHints, query = '') {
   let score = 0;
+  let matchedExpression = '';
   const title = String(entry.title || '').toLowerCase();
   const route = String(entry.route || '').toLowerCase();
   const haystack = String(entry.haystack || '').toLowerCase();
@@ -157,7 +161,17 @@ function scoreEntry(entry, tokens, sigilHints) {
 
   if (entry.pageRole === 'topic-register' || entry.pageFamily === 'field-guide') score += 1;
   if (entry.kind === 'operator') score += 1;
-  return score;
+
+  const queryShape = parseExpressionQuery(query);
+  if (queryShape.wrapped || queryShape.subject || queryShape.freeTokens.length) {
+    const best = bestExpressionMatch(entry.expressions || [], queryShape);
+    if (best?.hits) {
+      score += Math.min(48, best.hits * 8);
+      matchedExpression = best.expression;
+    }
+  }
+
+  return { score, matchedExpression };
 }
 
 function rankEntries(query, facet = activeFacet) {
@@ -166,12 +180,15 @@ function rankEntries(query, facet = activeFacet) {
   const pool = entries.filter((entry) => passesFacet(entry, facet));
 
   if (!tokens.length && !sigilHints.length) {
-    const seed = pool.slice(0, facet === 'operators' ? 20 : 14);
-    return seed.map((entry) => ({ entry, score: 0 }));
+    const seed = pool.slice(0, facet === 'operators' || facet === 'expressions' ? 20 : 14);
+    return seed.map((entry) => ({ entry, score: 0, matchedExpression: '' }));
   }
 
   return pool
-    .map((entry) => ({ entry, score: scoreEntry(entry, tokens, sigilHints) }))
+    .map((entry) => {
+      const scored = scoreEntry(entry, tokens, sigilHints, query);
+      return { entry, score: scored.score, matchedExpression: scored.matchedExpression };
+    })
     .filter((row) => row.score > 0)
     .sort((a, b) => b.score - a.score || a.entry.route.localeCompare(b.entry.route))
     .slice(0, MAX_RESULTS);
@@ -233,7 +250,7 @@ function ensureDialog() {
   input = document.createElement('input');
   input.className = 'spw-site-search__input';
   input.type = 'search';
-  input.placeholder = 'Routes, nest, sigil (#> ? ^ ~ ! & {)…';
+  input.placeholder = 'Route, wrap, or fragment ([reading] home{ open)…';
   input.setAttribute('aria-label', 'Search the site');
   input.setAttribute('aria-controls', 'spw-site-search-list');
   input.setAttribute('aria-autocomplete', 'list');
@@ -285,6 +302,7 @@ function ensureDialog() {
   footer.innerHTML = [
     '<span class="spw-spell">⌘K</span> open',
     '<span class="spw-spell">esc</span> close',
+    '<span class="spw-spell">[ { &lt;</span> expression',
     '<span class="spw-spell">? ^ ~</span> geometry',
     '<a href="/topics/search/">field guide</a>',
     '<a href="/topics/software/spw/">operator atlas</a>',
@@ -345,15 +363,18 @@ function geometryMeta(entry) {
   ].filter(Boolean).join(' · ');
 }
 
-function appendResult(container, entry, index) {
+function appendResult(container, entry, index, matchedExpression = '') {
   const item = document.createElement('div');
   item.className = 'spw-site-search__item';
   item.setAttribute('role', 'option');
   item.id = `spw-site-search-option-${index}`;
 
+  const hostId = matchedExpression && entry.expressionHosts
+    ? entry.expressionHosts[matchedExpression]
+    : '';
   const link = document.createElement('a');
   link.className = 'spw-site-search__result';
-  link.href = entry.route;
+  link.href = hostId ? `${entry.route}#${hostId}` : entry.route;
   link.dataset.index = String(index);
   if (entry.motion) link.dataset.spwMotion = entry.motion;
   if (entry.geometry) link.dataset.spwGeometry = entry.geometry;
@@ -391,6 +412,17 @@ function appendResult(container, entry, index) {
 
   link.append(titleRow, meta);
   item.appendChild(link);
+
+  if (matchedExpression) {
+    const expressionBtn = document.createElement('button');
+    expressionBtn.type = 'button';
+    expressionBtn.className = 'spw-site-search__expression';
+    expressionBtn.dataset.expression = matchedExpression;
+    expressionBtn.setAttribute('aria-label', `Refine search to ${matchedExpression}`);
+    expressionBtn.textContent = matchedExpression;
+    item.appendChild(expressionBtn);
+  }
+
   container.appendChild(item);
 }
 
@@ -405,7 +437,7 @@ function renderResults() {
     status.textContent = filterText.trim()
       ? `No routes match “${filterText.trim()}”.`
       : entries.length
-        ? `${entries.length} routes indexed. Try a nest (topics), kind (operators), or sigil (? ^ ~).`
+        ? `${entries.length} routes indexed. Try a nest (topics), wrap ([reading]), or sigil (? ^ ~).`
         : 'Search index unavailable.';
     return;
   }
@@ -435,14 +467,14 @@ function renderResults() {
       group.appendChild(heading);
 
       rows.forEach((row) => {
-        appendResult(group, row.entry, index);
+        appendResult(group, row.entry, index, row.matchedExpression);
         index += 1;
       });
       list.appendChild(group);
     });
   } else {
     ranked.forEach((row) => {
-      appendResult(list, row.entry, index);
+      appendResult(list, row.entry, index, row.matchedExpression);
       index += 1;
     });
   }
@@ -507,6 +539,18 @@ function handleListKeydown(event) {
 }
 
 function handleListClick(event) {
+  const expressionBtn = event.target?.closest?.('button.spw-site-search__expression');
+  if (expressionBtn instanceof HTMLButtonElement) {
+    event.preventDefault();
+    const nextQuery = expressionBtn.dataset.expression || '';
+    if (!nextQuery || !input) return;
+    filterText = nextQuery;
+    input.value = nextQuery;
+    renderResults();
+    input.focus();
+    emitSpwAction('@search.refine', `Expression ${nextQuery}`);
+    return;
+  }
   const link = event.target?.closest?.('a.spw-site-search__result');
   if (!(link instanceof HTMLAnchorElement)) return;
   emitSpwAction('@search.navigate', `Open ${link.getAttribute('href')}`);
@@ -628,6 +672,7 @@ function hydrateHost(host) {
     results.innerHTML = [
       '<p class="frame-note">',
       'Structured search: facets for nested places, operators, and labs. ',
+      'Wrap fragments like <code>[reading]</code>, <code>home[</code>, or <code>{open</code> match authored expressions. ',
       'Sigils like <code>?[</code>, <code>#&gt;</code>, <code>^</code>, <code>~</code> boost geometry. ',
       'Press <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd> anywhere.',
       '</p>',

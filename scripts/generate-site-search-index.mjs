@@ -91,6 +91,27 @@ function harvestRouteHandles(html = '') {
     handles: [...handles].slice(0, 48),
     operators: [...operators],
     operatorCounts,
+    ...harvestRouteExpressions(html),
+  };
+}
+
+function harvestRouteExpressions(html = '') {
+  const expressions = [];
+  const expressionHosts = {};
+  const pattern = /<([a-zA-Z][\w-]*)([^>]*\bdata-spw-semantic-expression=["']([^"']+)["'][^>]*)>/g;
+  let match;
+  while ((match = pattern.exec(html))) {
+    const value = decodeHtmlEntities(match[3]).trim().slice(0, 120);
+    if (!value) continue;
+    if (!expressions.includes(value)) expressions.push(value);
+    if (!expressionHosts[value]) {
+      const id = (match[2].match(/\bid=["']([^"']+)["']/) || [])[1] || '';
+      if (id) expressionHosts[value] = id;
+    }
+  }
+  return {
+    expressions: expressions.slice(0, 80),
+    expressionHosts,
   };
 }
 
@@ -301,6 +322,7 @@ function buildSearchEntry(routeRecord, harvested = { handles: [], operators: [] 
     geometry.brace,
     harvested.handles.join(' '),
     harvested.operators.join(' '),
+    (harvested.expressions || []).join(' '),
     features.join(' '),
     relatedRoutes.join(' '),
   ]
@@ -333,6 +355,8 @@ function buildSearchEntry(routeRecord, harvested = { handles: [], operators: [] 
     geometrySource,
     handles: harvested.handles,
     operators: harvested.operators,
+    expressions: harvested.expressions || [],
+    expressionHosts: harvested.expressionHosts || {},
     brace: geometry.brace,
     haystack,
   };
@@ -342,13 +366,13 @@ export async function generateSiteSearchIndex() {
   const manifest = await buildRouteRuntimeManifest();
   const routes = [];
   for (const record of manifest.routes || []) {
-    let harvested = { handles: [], operators: [] };
+    let harvested = { handles: [], operators: [], expressions: [], expressionHosts: {} };
     if (record.file) {
       try {
         const html = await fs.readFile(path.join(ROOT, record.file), 'utf8');
         harvested = harvestRouteHandles(html);
       } catch {
-        harvested = { handles: [], operators: [] };
+        harvested = { handles: [], operators: [], expressions: [], expressionHosts: {} };
       }
     }
     const entry = buildSearchEntry(record, harvested);

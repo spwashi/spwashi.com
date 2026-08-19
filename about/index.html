@@ -88,7 +88,7 @@
         data-spw-region="hook"
         data-spw-region-purpose="public-spine"
         data-spw-region-role="entry-spine"
-        data-spw-semantic-expression="about[hook]{kernel.lattice}<hospitality>"
+        data-spw-semantic-expression="about[hook]{orient}<hospitality>"
         data-spw-form="brace"
         data-spw-climate="studio"
         data-spw-phase="ground"
@@ -96,7 +96,7 @@
         data-spw-coherence="0.90"
         data-spw-fixity="stable"
         data-spw-biome="sanctuary"
-        data-spw-definition="#>about_frame[reading]{kernel.lattice.hospitality} #:fixity #!stable"
+        data-spw-definition="#>about_frame[reading]{orient} #:fixity #!stable"
         data-spw-genome="brace:objective|sigil:#&gt;about_frame|climate:studio|mode:reading|wonder:orientation"
         data-spw-feature="about-identity-entry"
         data-spw-wonder="orientation consequence resonance"
@@ -155,6 +155,7 @@
                 data-spw-role="call"
                 data-spw-hook-variant="wonder"
                 data-spw-operator="probe"
+                data-spw-scene-interpret="about-hook"
                 data-spw-wonder="orientation consequence resonance"
                 data-spw-liminality="entry"
                 data-spw-consequence="framing"
@@ -164,7 +165,7 @@
             >
                 <div class="mode-panels" data-spw-feature="about-perspective-panels">
                     <section class="mode-panel" data-mode-group="about-lens" data-mode-panel="reading" data-spw-role="orientation" data-spw-kind="lens">
-                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[reading]{person.narrative.return}">
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[reading]{person}">
                             The kernel is small and stable: <span class="spw-living-term" data-spw-living-term data-spw-concept="creator-identity" tabindex="0">I build software and make art</span>. The lattice is everything I keep learning to carry around that sentence.
                         </p>
                         <p class="hook-sub">
@@ -173,7 +174,7 @@
                         </p>
                     </section>
                     <section class="mode-panel" data-mode-group="about-lens" data-mode-panel="kernel" data-spw-role="schema" data-spw-kind="lens" hidden>
-                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[kernel]{identity.invariants.cognition}">
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[kernel]{identity}">
                             <span class="spw-living-term" data-spw-living-term data-spw-concept="kernel" tabindex="0">^kernel</span>: The unchanging identity and metacognitive compass holding all practice together.
                         </p>
                         <p class="hook-sub">
@@ -182,7 +183,7 @@
                         </p>
                     </section>
                     <section class="mode-panel" data-mode-group="about-lens" data-mode-panel="lattice" data-spw-role="projection" data-spw-kind="lens" hidden>
-                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[lattice]{medium.crossing.proofs}">
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[lattice]{crossing}">
                             <span class="spw-living-term" data-spw-living-term data-spw-concept="lattice" tabindex="0">~lattice</span>: Medium crossings that turn one concept into code, print, lore, and physical artifacts.
                         </p>
                         <p class="hook-sub">
@@ -191,7 +192,7 @@
                         </p>
                     </section>
                     <section class="mode-panel" data-mode-group="about-lens" data-mode-panel="hospitality" data-spw-role="scenario" data-spw-kind="lens" hidden>
-                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[hospitality]{community.venue.repair}">
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[hospitality]{venue}">
                             <span class="spw-living-term" data-spw-living-term data-spw-concept="hospitality" tabindex="0">@hospitality</span>: A physical horizon where delicious recipes, venue service, and learning meet.
                         </p>
                         <p class="hook-sub">
@@ -200,9 +201,12 @@
                         </p>
                     </section>
                 </div>
-                <p class="hook-invitation">
-                    Stay in this room, or take the first chip in the lens. <kbd>[</kbd> opens the lens. <kbd>]</kbd> sits in it.
-                </p>
+                <nav class="hook-invitation wrap-jobs" aria-label="Spw wrap jobs" data-spw-feature="wrap-jobs" data-spw-semantic-expression="about[wrap]{rail}">
+                    <a class="operator-chip" href="#about-frame" data-spw-operator="mode" data-spw-action="sit" data-spw-semantic-expression="about[reading]{open.sit}<display>" aria-label="Sit a lens to change what this room shows"><span data-spw-copy-depth="entry">change view</span><span data-spw-copy-depth="normal">[reading] sit lens</span><span data-spw-copy-depth="technical">about[reading]{open.sit}&lt;display&gt;</span></a>
+                    <a class="operator-chip" href="#about-index" data-spw-operator="direction" data-spw-action="travel" data-spw-semantic-expression="rooms{travel}<navigate>" aria-label="Move to the next frame on this page"><span data-spw-copy-depth="entry">next room</span><span data-spw-copy-depth="normal">{rooms} next frame</span><span data-spw-copy-depth="technical">rooms{travel}&lt;navigate&gt;</span></a>
+                    <a class="operator-chip" href="#about-orientation-note" data-spw-operator="scene" data-spw-action="enter" data-spw-semantic-expression="(look){stage}<learn>" aria-label="Look closer at this room"><span data-spw-copy-depth="entry">look closer</span><span data-spw-copy-depth="normal">(look) learn more</span><span data-spw-copy-depth="technical">(look{stage}&lt;learn&gt;</span></a>
+                    <a class="operator-chip" href="/topics/search/?q=%5Breading%5D" data-spw-operator="wonder" data-spw-action="inspect" data-spw-semantic-expression="?reading{kin}<learn>" aria-label="Search expressions that sit in [reading]"><span data-spw-copy-depth="entry">find related</span><span data-spw-copy-depth="normal">?[reading]</span><span data-spw-copy-depth="technical">?reading{kin}&lt;learn&gt;</span></a>
+                </nav>
             </section>
 
             <p data-spw-textual-role="kicker" data-spw-semantic-expression="kernel[about]{orient}">
@@ -240,7 +244,7 @@
                 Useful language should still feel warm and usable.
             </p>
 
-            <aside class="about-story-map" id="about-story-map" data-spw-kind="map" data-spw-role="orientation" data-spw-semantic-expression="narrative[topography]{skim.return.material.absurd}">
+            <aside class="about-story-map" id="about-story-map" data-spw-kind="map" data-spw-role="orientation" data-spw-semantic-expression="narrative[topography]{skim}">
                 <div class="about-story-map__item" data-spw-story-terrain="kernel">
                     <span class="about-story-map__cue">kernel</span>
                     <strong>Begin with the person.</strong>

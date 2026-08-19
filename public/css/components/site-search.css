@@ -217,6 +217,25 @@
   overflow-wrap: anywhere;
 }
 
+.spw-site-search__expression {
+  display: inline-flex;
+  margin: 0.08rem 0.55rem 0.35rem;
+  padding: 0.12rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--op-probe-color, #6a3fb8) 28%, transparent);
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--op-probe-color, #6a3fb8) 12%);
+  color: color-mix(in srgb, var(--ink, #111) 78%, var(--op-probe-color, #6a3fb8) 22%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  line-height: 1.3;
+  cursor: pointer;
+}
+
+.spw-site-search__expression:is(:hover, :focus-visible) {
+  outline: none;
+  border-color: color-mix(in srgb, var(--op-probe-color, #6a3fb8) 48%, transparent);
+}
+
 .spw-site-search__footer {
   display: flex;
   flex-wrap: wrap;

@@ -115,6 +115,7 @@
                 data-spw-kind="hook"
                 data-spw-role="call"
                 data-spw-liminality="entry"
+                data-spw-scene-interpret="recipe-hook"
                 aria-label="Recipe entry hook"
             >
                 <div class="mode-panels" data-spw-feature="recipe-perspective-panels">
@@ -158,9 +159,12 @@
                         </p>
                     </section>
                 </div>
-                <p class="hook-invitation">
-                    Open a culinary lens with <kbd>[</kbd>. Sit with <kbd>]</kbd>.
-                </p>
+                <nav class="hook-invitation wrap-jobs" aria-label="Spw wrap jobs" data-spw-feature="wrap-jobs" data-spw-semantic-expression="recipe[wrap]{rail}">
+                    <a class="operator-chip" href="#recipe-field" data-spw-operator="mode" data-spw-action="sit" data-spw-semantic-expression="recipe[cook]{open.sit}<display>" aria-label="Sit a lens to change what this room shows"><span data-spw-copy-depth="entry">change view</span><span data-spw-copy-depth="normal">[cook] sit lens</span><span data-spw-copy-depth="technical">recipe[cook]{open.sit}&lt;display&gt;</span></a>
+                    <a class="operator-chip" href="#recipes-index" data-spw-operator="direction" data-spw-action="travel" data-spw-semantic-expression="rooms{travel}<navigate>" aria-label="Move to the next frame on this page"><span data-spw-copy-depth="entry">next room</span><span data-spw-copy-depth="normal">{rooms} next frame</span><span data-spw-copy-depth="technical">rooms{travel}&lt;navigate&gt;</span></a>
+                    <a class="operator-chip" href="#recipe-field-note" data-spw-operator="scene" data-spw-action="enter" data-spw-semantic-expression="(look){stage}<learn>" aria-label="Look closer at this room"><span data-spw-copy-depth="entry">look closer</span><span data-spw-copy-depth="normal">(look) learn more</span><span data-spw-copy-depth="technical">(look{stage}&lt;learn&gt;</span></a>
+                    <a class="operator-chip" href="/topics/search/?q=%5Bcook%5D" data-spw-operator="wonder" data-spw-action="inspect" data-spw-semantic-expression="?cook{kin}<learn>" aria-label="Search expressions that sit in [cook]"><span data-spw-copy-depth="entry">find related</span><span data-spw-copy-depth="normal">?[cook]</span><span data-spw-copy-depth="technical">?cook{kin}&lt;learn&gt;</span></a>
+                </nav>
             </div>
             <ul class="spw-copy-motif-strip" aria-label="Recipes copy motifs" data-spw-box-model="motif-strip" data-spw-composition-flow="inline-wrap">
                 <li>mise en place</li>

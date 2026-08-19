@@ -16,7 +16,11 @@ import { bus } from '/public/js/kernel/bus.js';
 import { writeDatasetValue, writeStyleValue } from '/public/js/kernel/dom-contracts.js';
 import { isInputFocused } from '/public/js/kernel/shared.js';
 import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
-import { composeModeSeatExpression } from '/public/js/semantic/spw-compose.js';
+import {
+  composeModeSeatExpression,
+  composeWrapJobExpression,
+  formatWrapJobVariants,
+} from '/public/js/semantic/spw-compose.js';
 import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
 
 const SCENE_HOST_SELECTOR = [
@@ -588,18 +592,24 @@ function traverseFrames(direction = 1) {
 
   const nextFrame = frames[nextIndex];
   if (nextFrame instanceof HTMLElement) {
-    writeInteractionContext('browsing', nextFrame);
-    nextFrame.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    const focusTarget = nextFrame.querySelector('a.frame-sigil, h1, h2, [data-spw-operator]') || nextFrame;
-    if (focusTarget instanceof HTMLElement) {
-      if (!focusTarget.hasAttribute('tabindex') && focusTarget.tagName !== 'A' && focusTarget.tagName !== 'BUTTON') {
-        focusTarget.setAttribute('tabindex', '-1');
-      }
-      focusTarget.focus({ preventScroll: true });
-    }
+    focusFrame(nextFrame);
+    syncWrapJobLabels();
     return true;
   }
   return false;
+}
+
+function focusFrame(frame) {
+  if (!(frame instanceof HTMLElement)) return;
+  writeInteractionContext('browsing', frame);
+  frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const focusTarget = frame.querySelector('a.frame-sigil, h1, h2, [data-spw-operator]') || frame;
+  if (focusTarget instanceof HTMLElement) {
+    if (!focusTarget.hasAttribute('tabindex') && focusTarget.tagName !== 'A' && focusTarget.tagName !== 'BUTTON') {
+      focusTarget.setAttribute('tabindex', '-1');
+    }
+    focusTarget.focus({ preventScroll: true });
+  }
 }
 
 function readModeButtons(switchEl) {
@@ -659,7 +669,202 @@ function writeLiveModeExpression(switchEl) {
     source: 'spw-key-events',
     reason: 'mode-seat-live',
   });
+  syncWrapJobLabels();
   return expression;
+}
+
+function shortFrameLabel(frame) {
+  if (!(frame instanceof HTMLElement)) return 'rooms';
+  const sigil = frame.querySelector('.frame-sigil, a.frame-sigil')?.textContent || '';
+  const handle = sigil.replace(/^#>\s*/, '').trim() || frame.id || 'rooms';
+  return handle.slice(0, 18) || 'rooms';
+}
+
+function readNextFrameLabel() {
+  return shortFrameLabel(readNextFrame());
+}
+
+function writeWrapJobCopy(jobEl, wrap, { subject, seat, nextLabel } = {}) {
+  if (!(jobEl instanceof HTMLElement)) return;
+  const variants = formatWrapJobVariants({ wrap, subject, seat, nextLabel });
+  const expression = composeWrapJobExpression({
+    wrap,
+    subject,
+    seat,
+    job: wrap === 'mode' ? 'display' : wrap === 'direction' ? 'navigate' : 'learn',
+  });
+  const entry = jobEl.querySelector('[data-spw-copy-depth="entry"]');
+  const normal = jobEl.querySelector('[data-spw-copy-depth="normal"]');
+  const technical = jobEl.querySelector('[data-spw-copy-depth="technical"]');
+  if (entry || normal || technical) {
+    if (entry) entry.textContent = variants.entry;
+    if (normal) normal.textContent = variants.normal;
+    if (technical) technical.textContent = variants.technical;
+  } else {
+    jobEl.textContent = variants.normal;
+  }
+  writeDatasetValue(jobEl, 'spwSemanticExpression', expression, {
+    source: 'spw-key-events',
+    reason: 'wrap-job-live',
+  });
+  if (wrap === 'direction') {
+    const next = readNextFrame();
+    if (next?.id) {
+      jobEl.setAttribute('href', `#${next.id}`);
+      jobEl.setAttribute('aria-label', `Move to ${shortFrameLabel(next)}`);
+    }
+  }
+  if (wrap === 'wonder' || jobEl.dataset.spwAction === 'inspect') {
+    const query = `[${seat || 'mode'}]`;
+    jobEl.setAttribute('href', `/topics/search/?q=${encodeURIComponent(query)}`);
+    jobEl.setAttribute('aria-label', `Search expressions that sit in ${query}`);
+  }
+}
+
+function readNextFrame() {
+  const frames = collectNavigableFrames();
+  if (!frames.length) return null;
+  const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  const current = active?.closest?.('.spw-frame, [data-spw-kind="frame"]');
+  const currentIndex = frames.indexOf(current);
+  return frames[(currentIndex >= 0 ? currentIndex + 1 : 0) % frames.length] || null;
+}
+
+function syncWrapJobLabels() {
+  const switchEl = resolveModeSwitch();
+  const pressed = readModeButtons(switchEl)
+    .find((button) => button.getAttribute('aria-pressed') === 'true');
+  const seat = pressed?.getAttribute('data-set-mode') || 'mode';
+  const nextLabel = readNextFrameLabel();
+
+  document.querySelectorAll('[data-spw-feature="wrap-jobs"]').forEach((nav) => {
+    if (!(nav instanceof HTMLElement)) return;
+    const subject = subjectFromExpression(nav.dataset.spwSemanticExpression)
+      || subjectFromExpression(switchEl?.dataset?.spwSemanticExpression)
+      || 'page';
+    const modeJob = nav.querySelector('[data-spw-operator="mode"]');
+    if (modeJob instanceof HTMLElement) {
+      writeWrapJobCopy(modeJob, 'mode', { subject, seat, nextLabel });
+    }
+    const directionJob = nav.querySelector('[data-spw-operator="direction"]');
+    if (directionJob instanceof HTMLElement) {
+      writeWrapJobCopy(directionJob, 'direction', { subject: nextLabel || 'rooms', seat, nextLabel });
+    }
+    const sceneJob = nav.querySelector('[data-spw-operator="scene"]');
+    if (sceneJob instanceof HTMLElement) {
+      writeWrapJobCopy(sceneJob, 'scene', { subject: 'look', seat, nextLabel });
+    }
+    const inspectJob = nav.querySelector('[data-spw-action="inspect"], [data-spw-operator="wonder"]');
+    if (inspectJob instanceof HTMLElement) {
+      writeWrapJobCopy(inspectJob, 'wonder', { subject, seat, nextLabel });
+    }
+  });
+}
+
+function onWrapJobActivate(event) {
+  const job = event.target?.closest?.('[data-spw-feature="wrap-jobs"] [data-spw-operator]');
+  if (!(job instanceof HTMLElement)) return;
+  if (hasLocalKeyScope(job)) return;
+
+  const operator = job.dataset.spwOperator || '';
+  const action = job.dataset.spwAction || '';
+
+  if (operator === 'mode' || action === 'sit') {
+    const open = readOpenModeSwitch();
+    const handled = open ? closeModeSeat({ commit: true }) : openModeSeat();
+    if (handled) event.preventDefault();
+    markWrapJobCurrent(job);
+    return;
+  }
+  if (operator === 'direction' || action === 'travel') {
+    const href = job.getAttribute('href') || '';
+    const hashId = href.startsWith('#') ? href.slice(1) : '';
+    const hashed = hashId ? document.getElementById(hashId) : null;
+    if (hashed instanceof HTMLElement) {
+      event.preventDefault();
+      focusFrame(hashed);
+      markWrapJobCurrent(job);
+      syncWrapJobLabels();
+      return;
+    }
+    if (traverseFrames(1)) event.preventDefault();
+    markWrapJobCurrent(job);
+    syncWrapJobLabels();
+    return;
+  }
+  if (operator === 'scene' || action === 'enter') {
+    if (enterNearestScene()) event.preventDefault();
+    markWrapJobCurrent(job);
+    return;
+  }
+  if (action === 'inspect' || operator === 'wonder') {
+    const href = job.getAttribute('href') || '';
+    if (href.includes('/topics/search/') && window.spwSearch?.open) {
+      event.preventDefault();
+      const query = new URL(href, window.location.origin).searchParams.get('q') || `[${readCurrentWrapSeat()}]`;
+      window.spwSearch.open({ query, facet: 'expressions', source: 'wrap-job' });
+      markWrapJobCurrent(job);
+    }
+  }
+}
+
+function markWrapJobCurrent(jobEl) {
+  const nav = jobEl?.closest?.('[data-spw-feature="wrap-jobs"]');
+  if (!(nav instanceof HTMLElement)) return;
+  nav.querySelectorAll('[aria-current]').forEach((node) => node.removeAttribute('aria-current'));
+  jobEl.setAttribute('aria-current', 'true');
+}
+
+function readCurrentWrapSeat() {
+  const switchEl = resolveModeSwitch();
+  const pressed = readModeButtons(switchEl)
+    .find((button) => button.getAttribute('aria-pressed') === 'true');
+  return pressed?.getAttribute('data-set-mode') || 'mode';
+}
+
+function enhanceWrapTeachingInvitations() {
+  document.querySelectorAll('p.hook-invitation').forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    if (node.closest('[data-spw-feature="wrap-jobs"]')) return;
+    if (!node.querySelector('kbd') || !/\[/.test(node.textContent || '')) return;
+    const frame = node.closest('.spw-frame, [data-spw-kind="frame"]');
+    const switchEl = frame?.querySelector?.('.mode-switch') || document.querySelector('.mode-switch');
+    if (!(switchEl instanceof HTMLElement)) return;
+
+    const subject = subjectFromExpression(switchEl.dataset.spwSemanticExpression)
+      || frame?.id
+      || 'page';
+    const seat = readModeButtons(switchEl)
+      .find((button) => button.getAttribute('aria-pressed') === 'true')
+      ?.getAttribute('data-set-mode') || 'mode';
+    const nextFrame = frame?.nextElementSibling?.id
+      || collectNavigableFrames()[1]?.id
+      || '';
+    const nav = document.createElement('nav');
+    nav.className = 'hook-invitation wrap-jobs';
+    nav.setAttribute('aria-label', 'Spw wrap jobs');
+    nav.dataset.spwFeature = 'wrap-jobs';
+    nav.dataset.spwSemanticExpression = `${subject}[wrap]{rail}`;
+    nav.innerHTML = [
+      wrapJobAnchor('mode', 'sit', `#${frame?.id || ''}`, subject, seat),
+      wrapJobAnchor('direction', 'travel', `#${nextFrame}`, nextFrame || 'rooms', seat),
+      wrapJobAnchor('scene', 'enter', `#${frame?.id || ''}`, 'look', seat),
+      wrapJobAnchor('wonder', 'inspect', `/topics/search/?q=${encodeURIComponent(`[${seat}]`)}`, subject, seat),
+    ].join('');
+    node.replaceWith(nav);
+  });
+}
+
+function wrapJobAnchor(wrap, action, href, subject, seat) {
+  const variants = formatWrapJobVariants({ wrap, subject, seat, nextLabel: subject });
+  const operator = wrap === 'wonder' ? 'wonder' : wrap;
+  return [
+    `<a class="operator-chip" href="${href || '#'}" data-spw-operator="${operator}" data-spw-action="${action}">`,
+    `<span data-spw-copy-depth="entry">${variants.entry}</span>`,
+    `<span data-spw-copy-depth="normal">${variants.normal}</span>`,
+    `<span data-spw-copy-depth="technical">${variants.technical}</span>`,
+    '</a>',
+  ].join('');
 }
 
 function ensureWrapExpression(element, expression) {
@@ -796,7 +1001,7 @@ function resolveContextSceneHost() {
 function enterNearestScene() {
   const host = resolveContextSceneHost();
   if (!(host instanceof HTMLElement)) return false;
-  ensureWrapExpression(host, host.dataset.spwSemanticExpression || 'scene[host]{enter.leave}');
+  ensureWrapExpression(host, host.dataset.spwSemanticExpression || 'scene[host]{stage}');
   writeInteractionContext('comparing', host);
   return Boolean(enterScene(host, { key: '(', binding: 'scene-enter', input: 'keyboard' }));
 }
@@ -1124,9 +1329,12 @@ function publishApi() {
     serialize: () => serializeKeyEventsToSpw(getKeyEventSnapshot()),
     enterScene: (host) => enterScene(host, { input: 'api', binding: 'scene-enter' }),
     exitScene: () => exitScene({ input: 'api', binding: 'scene-exit' }),
+    enterNearestScene,
+    traverseFrames,
     openModeSeat,
     closeModeSeat,
     stepModeSeat,
+    syncWrapJobLabels,
     clearPotentiation: () => clearPotentiation({ reason: 'api' }),
   };
   window.__SPW_KEY_EVENTS__ = api;
@@ -1147,7 +1355,11 @@ export function initSpwKeyEvents(root = document) {
   if (root) {
     root.addEventListener('focusin', onFocusIn, true);
     root.addEventListener('keydown', onKeyDown, true);
+    root.addEventListener('click', onWrapJobActivate);
   }
+  document.addEventListener('spw:variant-selected', syncWrapJobLabels);
+  enhanceWrapTeachingInvitations();
+  syncWrapJobLabels();
 
   return () => {
     initialized = false;
@@ -1155,7 +1367,9 @@ export function initSpwKeyEvents(root = document) {
     if (root) {
       root.removeEventListener('focusin', onFocusIn, true);
       root.removeEventListener('keydown', onKeyDown, true);
+      root.removeEventListener('click', onWrapJobActivate);
     }
+    document.removeEventListener('spw:variant-selected', syncWrapJobLabels);
     while (sceneStack.length) {
       const exited = sceneStack.pop();
       const host = exited?.id ? document.getElementById(exited.id) : null;
@@ -1177,7 +1391,15 @@ export function initSpwKeyEvents(root = document) {
   };
 }
 
-export { openModeSeat, closeModeSeat, stepModeSeat, selectModeSeatIndex };
+export {
+  openModeSeat,
+  closeModeSeat,
+  stepModeSeat,
+  selectModeSeatIndex,
+  traverseFrames,
+  enterNearestScene,
+  syncWrapJobLabels,
+};
 
 export const spwModule = {
   updates: ['attr:data-spw-key-active'],

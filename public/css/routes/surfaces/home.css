@@ -502,12 +502,20 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 }
 
 :where([data-spw-feature="home-kernel-entry"] .hook-call .hook-sub),
-:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation) {
+:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation:not([data-spw-feature="wrap-jobs"])) {
   display: none;
 }
 
+:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"]) {
+  display: flex;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .hook-call[data-spw-scene-state="entered"] .hook-sub) {
+  display: block;
+}
+
 :where(html[data-spw-semantic-density="rich"] [data-spw-feature="home-kernel-entry"] .hook-call .hook-sub),
-:where(html[data-spw-semantic-density="rich"] [data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation) {
+:where(html[data-spw-semantic-density="rich"] [data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation:not([data-spw-feature="wrap-jobs"])) {
   display: block;
 }
 

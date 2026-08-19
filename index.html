@@ -143,7 +143,7 @@
                 <p class="home-hero-note" data-spw-textual-role="note">
                     If you already know the pressure, pick that room. <a href="/topics/">Topics</a> sorts the rest. <a href="/now/">Now</a> is open this week.
                 </p>
-                <p class="home-live-note" data-spw-textual-role="note" data-spw-semantic-expression="live[production]{chapters.table.collaborators}<public>">
+                <p class="home-live-note" data-spw-textual-role="note" data-spw-semantic-expression="live[production]{sprint}<public>">
                     Current work runs in public. <a href="/now/">Now</a> tracks what is open. <a href="/play/rpg-wednesday/">RPG Wednesday</a> runs live. <a href="/about/domains/lore.land/">lore.land</a> is the book being built in the open.
                 </p>
 
@@ -153,6 +153,7 @@
                     data-spw-role="invocation"
                     data-spw-hook-variant="wonder"
                     data-spw-operator="probe"
+                    data-spw-scene-interpret="home-hook"
                     data-spw-wonder="orientation locality consequence"
                     data-spw-liminality="entry"
                     data-spw-consequence="framing"
@@ -163,7 +164,7 @@
                 >
                     <div class="mode-panels" data-spw-feature="home-perspective-panels">
                         <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="reading" data-spw-role="orientation" data-spw-kind="lens">
-                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[reading]{author.craft.return}<entry>">
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[reading]{craft}<entry>">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="reading" tabindex="0" title="tap: inspect • hold to prime">.reading</span>: Personal study routes, creator records, and craft traditions worth revisiting.
                             </p>
                             <p class="hook-sub">
@@ -172,7 +173,7 @@
                             </p>
                         </section>
                         <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="systems" data-spw-role="schema" data-spw-kind="lens" hidden>
-                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[systems]{ast.parser.invariants}<inspect>">
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[systems]{parser}<inspect>">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="systems" tabindex="0" title="tap: inspect • hold to prime">^systems</span>: Plain-text Spw grammar, compiler passes, and interactive workbench specimens.
                             </p>
                             <p class="hook-sub">
@@ -181,7 +182,7 @@
                             </p>
                         </section>
                         <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="play" data-spw-role="scenario" data-spw-kind="lens" hidden>
-                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[play]{table.session.character}<session>">
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[play]{table}<session>">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="play" tabindex="0" title="tap: inspect • hold to prime">~play</span>: RPG Wednesday weekly sessions, character sheets, and collaborative world lore.
                             </p>
                             <p class="hook-sub">
@@ -190,7 +191,7 @@
                             </p>
                         </section>
                         <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="studio" data-spw-role="projection" data-spw-kind="lens" hidden>
-                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[studio]{systems.commissions.proof}<offer>">
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[studio]{commission}<offer>">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="studio" tabindex="0" title="tap: inspect • hold to prime">@studio</span>: Systems, commissions, and public proofs.
                             </p>
                             <p class="hook-sub">
@@ -199,9 +200,12 @@
                             </p>
                         </section>
                     </div>
-                    <p class="hook-invitation">
-                        Open the lens with <kbd>[</kbd>. Sit with <kbd>]</kbd>. <kbd>{</kbd> / <kbd>}</kbd> moves to another frame.
-                    </p>
+                    <nav class="hook-invitation wrap-jobs" aria-label="Spw wrap jobs" data-spw-feature="wrap-jobs" data-spw-semantic-expression="home[wrap]{rail}">
+                        <a class="operator-chip" href="#home-frame" data-spw-operator="mode" data-spw-action="sit" data-spw-semantic-expression="home[reading]{open.sit}<display>" aria-label="Sit a lens to change what this room shows"><span data-spw-copy-depth="entry">change view</span><span data-spw-copy-depth="normal">[reading] sit lens</span><span data-spw-copy-depth="technical">home[reading]{open.sit}&lt;display&gt;</span></a>
+                        <a class="operator-chip" href="#choose-your-entrance" data-spw-operator="direction" data-spw-action="travel" data-spw-semantic-expression="rooms{travel}<navigate>" aria-label="Move to the next frame on this page"><span data-spw-copy-depth="entry">next room</span><span data-spw-copy-depth="normal">{rooms} next frame</span><span data-spw-copy-depth="technical">rooms{travel}&lt;navigate&gt;</span></a>
+                        <a class="operator-chip" href="#home-reason-why" data-spw-operator="scene" data-spw-action="enter" data-spw-semantic-expression="(look){stage}<learn>" aria-label="Look closer at this room"><span data-spw-copy-depth="entry">look closer</span><span data-spw-copy-depth="normal">(look) learn more</span><span data-spw-copy-depth="technical">(look{stage}&lt;learn&gt;</span></a>
+                        <a class="operator-chip" href="/topics/search/?q=%5Breading%5D" data-spw-operator="wonder" data-spw-action="inspect" data-spw-semantic-expression="?reading{kin}<learn>" aria-label="Search expressions that sit in [reading]"><span data-spw-copy-depth="entry">find related</span><span data-spw-copy-depth="normal">?[reading]</span><span data-spw-copy-depth="technical">?reading{kin}&lt;learn&gt;</span></a>
+                    </nav>
                 </div>
 
 
@@ -214,18 +218,18 @@
                 </ul>
 
                 <div class="spw-reason-strip" role="list" aria-label="Home page reasons" data-spw-role="schema" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-attention="scan" data-spw-behavior="invite">
-                    <div id="home-reason-why" data-spw-form="brace" data-spw-semantic-expression="home[why]{notice.circulate.material}">
+                    <div id="home-reason-why" data-spw-form="brace" data-spw-semantic-expression="home[why]{notice}">
                         <strong>Why this home page exists</strong>
                         <p>The sentences name what you might notice. The page then helps that notice travel: matching handles echo, glass and matte stay in their jobs, and the Midjourney renders keep one world across a folio, a card, and a session. <a href="/topics/">Topics</a> names the rooms. <a href="/settings/">Settings</a> names the variables.</p>
                     </div>
-                    <div id="home-reason-readers" data-spw-form="brace" data-spw-semantic-expression="home[reader]{patron.software.art}">
+                    <div id="home-reason-readers" data-spw-form="brace" data-spw-semantic-expression="home[reader]{patron}">
                         <strong>Primary readers</strong>
                         <p>Business-minded, software-adjacent supporters of the arts — producers, commissioners, working engineers, and patrons who want the handles to mean something and the pictures to stay in one world. <a href="/about/">About</a> is context. <a href="/services/">Services</a> is a conversation.</p>
                     </div>
-                    <div id="home-reason-takeaway" data-spw-form="brace" data-spw-semantic-expression="home[takeaway]{handle.direction.coherence}">
+                    <div id="home-reason-takeaway" data-spw-form="brace" data-spw-semantic-expression="home[takeaway]{handle}">
                         <strong>Concrete things you can leave with</strong>
                         <p>A feel for how <a href="/topics/software/spw/">Spw</a> behaves, a current map of the work, and a visual canon you can carry: <a href="/cards/">proof cards</a>, <a href="/design/folios/">folio</a> studies, prompt packets from the <a href="/tools/midjourney/">depiction bench</a>, session traces from <a href="/play/rpg-wednesday/">RPG Wednesday</a>.</p>
-                        <p data-spw-semantic-expression="prompt[example]{prime.handle}">Example: hold any living term on this page to prime it as a working handle. Matching operators on the page should echo that hold.</p>
+                        <p data-spw-semantic-expression="prompt[example]{prime}">Example: hold any living term on this page to prime it as a working handle. Matching operators on the page should echo that hold.</p>
                     </div>
                 </div>
 
@@ -235,7 +239,7 @@
                         The site helps me practice through recipes, components, spells, study plans, and session notes — then share what is worth reusing. The current metaphor is a cookbook with engineering notes in the margins. The test: can a pattern be read, reused, revised, and served to someone else without losing its source?
                     </p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text"
-                       data-spw-semantic-expression="adult[study]{stay.sharp.return}">
+                       data-spw-semantic-expression="adult[study]{practice}">
                         The site is built for adults still learning in the middle of ordinary life: parents keeping their minds warm, engineers who want theory without losing craft, people who need humor, fantasy, and nourishment to stay in practice.
                     </p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text">
@@ -261,15 +265,15 @@
                         Entry can be through soup, wings, appetizers, bread, pastry, a component, a <a href="/play/rpg-wednesday/cast/" data-spw-operator="stream">character</a>, a <a href="/design/experiments/css/" data-spw-operator="object">CSS state</a>, or a trade ingredient — the underlying move is the same. Stock becomes context. <a href="/recipes/reduction/" data-spw-operator="action">Reduction</a> becomes compression. <a href="/recipes/mise-en-place/" data-spw-operator="route">Mise en place</a> becomes dependency clarity. Service becomes a room-reading skill. A session becomes a test kitchen for lore.
                     </p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text"
-                       data-spw-semantic-expression="technique[list]{shop.remember.scene}">
+                       data-spw-semantic-expression="technique[list]{inventory}">
                         Culinary techniques ask for inventory. When a page says bloom, temper, deglaze, or reduce, it can also suggest a shopping list, a memory character, and a scene. A cook learns what to buy. A software engineer learns what operation is running. An RPG table gets a mnemonic creature that makes the concept stick.
                     </p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text"
-                       data-spw-semantic-expression="handle[field-guide]{clear.without.widget}">
+                       data-spw-semantic-expression="handle[field-guide]{mark}">
                         The interface should feel like a marked-up field guide, not a pile of controls. Links still navigate. Buttons still announce themselves to assistive technology. But the visible language can call them handles, lenses, provisions, route clues, and pantry notes — so the page feels like somewhere to mosey through, not operate.
                     </p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text"
-                       data-spw-semantic-expression="notice[circulate]{handle.material.render}">
+                       data-spw-semantic-expression="notice[circulate]{handle}">
                         Copy should say what you might notice before it says what the site contains. Attention architecture then lets a handle echo; glass, matte, and image stay in distinct jobs; <a href="/tools/midjourney/" data-spw-operator="potential">Midjourney renders</a> keep the world from drifting. That is how attention circulates here instead of resetting on every room.
                     </p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text">

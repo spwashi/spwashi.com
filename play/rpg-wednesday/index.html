@@ -62,7 +62,12 @@
                 </div>
                 <p class="spec-kicker">Play Surface · Recurring Session</p>
                 <h1 id="rpg-wednesday-title">RPG Wednesday</h1>
-                <p class="hook-invitation">Open the lens with <kbd>[</kbd>. Sit with <kbd>]</kbd>. Enter the table with <kbd>(</kbd>. Leave with <kbd>)</kbd>.</p>
+                <nav class="hook-invitation wrap-jobs" aria-label="Spw wrap jobs" data-spw-feature="wrap-jobs" data-spw-semantic-expression="rpg[wrap]{rail}">
+                    <a class="operator-chip" href="#rpg-wednesday" data-spw-operator="mode" data-spw-action="sit" data-spw-semantic-expression="rpg[orientation]{open.sit}<display>" aria-label="Sit a lens to change what this room shows"><span data-spw-copy-depth="entry">change view</span><span data-spw-copy-depth="normal">[orientation] sit lens</span><span data-spw-copy-depth="technical">rpg[orientation]{open.sit}&lt;display&gt;</span></a>
+                    <a class="operator-chip" href="#local-gameplay-kit" data-spw-operator="direction" data-spw-action="travel" data-spw-semantic-expression="rooms{travel}<navigate>" aria-label="Move to the next frame on this page"><span data-spw-copy-depth="entry">next room</span><span data-spw-copy-depth="normal">{rooms} next frame</span><span data-spw-copy-depth="technical">rooms{travel}&lt;navigate&gt;</span></a>
+                    <a class="operator-chip" href="#rpg-wednesday" data-spw-operator="scene" data-spw-action="enter" data-spw-semantic-expression="(look){stage}<learn>" aria-label="Enter the table scene"><span data-spw-copy-depth="entry">look closer</span><span data-spw-copy-depth="normal">(look) learn more</span><span data-spw-copy-depth="technical">(look{stage}&lt;learn&gt;</span></a>
+                    <a class="operator-chip" href="/topics/search/?q=%5Borientation%5D" data-spw-operator="wonder" data-spw-action="inspect" data-spw-semantic-expression="?orientation{kin}<learn>" aria-label="Search expressions that sit in [orientation]"><span data-spw-copy-depth="entry">find related</span><span data-spw-copy-depth="normal">?[orientation]</span><span data-spw-copy-depth="technical">?orientation{kin}&lt;learn&gt;</span></a>
+                </nav>
                 <nav class="rpg-quick-actions" aria-label="RPG Wednesday primary actions" data-spw-feature="rpg-session-actions">
                     <a class="rpg-quick-action" href="#local-gameplay-kit" data-spw-concept="table-kit" data-spw-domain="play" data-spw-grounding="tonight-brief" data-spw-attention="try" data-spw-behavior="open">
                         <span class="frame-card-sigil">@local_kit</span>

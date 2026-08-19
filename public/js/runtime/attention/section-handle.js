@@ -5,6 +5,7 @@ import {
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import { computeLocomotionFieldBalance } from '/public/js/interface/wonder-memory.js';
 import { describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
+import { describeWrapScan } from '/public/js/semantic/spw-compose.js';
 import { kinIds, nextKinRelation, pickRegionKin } from '/public/js/runtime/region-kin.js';
 import {
   AUTO_HANDLE_MIN_SECTIONS,
@@ -112,6 +113,22 @@ function getSectionDirection(currentIndex) {
   return 'steady';
 }
 
+function readCurrentModeSeat() {
+  const pressed = document.querySelector('.mode-switch [data-set-mode][aria-pressed="true"]');
+  return pressed?.getAttribute('data-set-mode') || 'mode';
+}
+
+function resolveHandleScan(info) {
+  const context = document.documentElement?.dataset?.spwInteractionContext || 'reading';
+  return describeWrapScan({
+    context,
+    seat: readCurrentModeSeat(),
+    nextLabel: info?.nextLabel || '',
+    token: info?.token || '#>',
+    label: info?.label || 'section',
+  });
+}
+
 function syncHandleContent(parts, info, activeIndex, sectionCount) {
   const {
     opNode,
@@ -127,10 +144,12 @@ function syncHandleContent(parts, info, activeIndex, sectionCount) {
     cauldronCount,
   } = parts;
 
-  if (opNode) opNode.textContent = info.token || '#>';
-  if (labelNode) labelNode.textContent = info.label || 'section';
-  if (currentToken) currentToken.textContent = info.token || '#>';
-  if (currentLabel) currentLabel.textContent = info.label || 'section';
+  const scan = resolveHandleScan(info);
+
+  if (opNode) opNode.textContent = scan.token || '#>';
+  if (labelNode) labelNode.textContent = scan.label || 'section';
+  if (currentToken) currentToken.textContent = scan.token || '#>';
+  if (currentLabel) currentLabel.textContent = scan.label || 'section';
   if (currentForm instanceof HTMLElement) {
     currentForm.textContent = info.syntaxWake || '';
     currentForm.title = info.syntaxDescription
@@ -1140,6 +1159,17 @@ function createSectionHandleController({
   shell.addEventListener('pointerdown', handleShellPointerDown);
   shell.addEventListener('pointerup', handleShellPointerUp);
   refs.currentLink?.addEventListener('click', handleCurrentClick);
+  const onWrapContext = () => runUpdate('wrap-context');
+  document.addEventListener('spw:mode-change', onWrapContext);
+  document.addEventListener('spw:scene-enter', onWrapContext);
+  document.addEventListener('spw:scene-exit', onWrapContext);
+  document.addEventListener('spw:variant-selected', onWrapContext);
+  const contextObserver = new MutationObserver(onWrapContext);
+  contextObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-spw-interaction-context'],
+  });
+
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onResize, { passive: true });
   window.addEventListener('orientationchange', onResize);
@@ -1159,6 +1189,11 @@ function createSectionHandleController({
     refs.currentLink?.removeEventListener('click', handleCurrentClick);
     window.clearTimeout(holdTimer);
     clearRegionPreview();
+    document.removeEventListener('spw:mode-change', onWrapContext);
+    document.removeEventListener('spw:scene-enter', onWrapContext);
+    document.removeEventListener('spw:scene-exit', onWrapContext);
+    document.removeEventListener('spw:variant-selected', onWrapContext);
+    contextObserver.disconnect();
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onResize);
     window.removeEventListener('orientationchange', onResize);

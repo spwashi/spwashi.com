@@ -20,4 +20,5 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/module-timing-contract.test.mjs',
   'scripts/tests/template-migration.test.mjs',
   'scripts/tests/spw-key-wrap-physics.test.mjs',
+  'scripts/tests/expression-query.test.mjs',
 ]);

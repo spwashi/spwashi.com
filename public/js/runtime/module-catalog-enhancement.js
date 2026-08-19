@@ -1106,7 +1106,7 @@ export const ENHANCEMENT_DEFS = [
       'flourish:data-spw-reveal-frame',
       'structural:data-spw-key-events-ready',
     ],
-    evaluates: 'keyboard scene-enter scene-exit reveal-framing wonder-block-staging LM-interpretable context stack',
+    evaluates: 'keyboard scene-enter scene-exit reveal-framing wonder-block-staging wrap-jobs sit-travel-enter LM-interpretable context stack',
     timingArc: 'visible-keyboard',
     effectScope: 'root-state listeners bus',
     load: () => import('./spw-key-events.js'),
