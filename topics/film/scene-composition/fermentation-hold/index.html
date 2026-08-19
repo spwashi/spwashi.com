@@ -31,18 +31,19 @@
 <main id="main-content" tabindex="-1" aria-labelledby="ferment-bed-title">
     <section class="spw-frame" id="fermentation-hold-bed" data-spw-kind="frame" data-spw-feature="scene-composition-bed" data-spw-semantic-expression="scene[ferment]{hold.release}" data-spw-scene-interpret="film-ferment" data-spw-prompt-host data-spw-prompt-title="fermentation_hold_bed" data-spw-prompt-teaser="Reveal a fermentation hold packet: quiet pressure, stillness lanes, and the turn another model should time." data-spw-role="lab">
         <div class="frame-topline" data-spw-slot="header">
-            <a class="frame-sigil" href="/topics/film/scene-composition/">(fermentation_hold_bed</a>
+            <a class="frame-sigil" href="/topics/film/scene-composition/" data-spw-operator="scene">(fermentation_hold_bed)</a>
             <span class="spec-pill">test page</span>
         </div>
         <h1 id="ferment-bed-title">Fermentation hold bed</h1>
         <p data-spw-textual-role="note">Kitchen reference: <a href="/recipes/fermentation/">fermentation</a> — living culture under quiet pressure. Film translation: hold on a scene longer than comfort so the viewer's model can update. The <a href="/topics/math/numerical-methods/#numerical-stepping-lab">numerical stepping lab</a> uses the same yeast metaphor for step-size stability.</p>
         <div class="frame-topline" data-spw-slot="header">
-            <div class="mode-switch" role="group" aria-label="Fermentation phase">
+            <div class="mode-switch" role="group" aria-label="Fermentation phase" data-spw-operator="mode">
                 <button class="frame-sigil" type="button" data-mode-group="ferment-scene" data-set-mode="bubble" aria-pressed="true" data-spw-operator="probe">?bubble</button>
                 <button class="frame-sigil" type="button" data-mode-group="ferment-scene" data-set-mode="quiet" aria-pressed="false" data-spw-operator="ground">.quiet</button>
                 <button class="frame-sigil" type="button" data-mode-group="ferment-scene" data-set-mode="release" aria-pressed="false" data-spw-operator="integrate">^release</button>
             </div>
         </div>
+        <p class="hook-invitation">Open a posture with <kbd>[</kbd>. Sit with <kbd>]</kbd>. Enter the bed with <kbd>(</kbd>. Leave with <kbd>)</kbd>.</p>
         <section class="mode-panel spw-scene-bed" data-mode-group="ferment-scene" data-mode-panel="bubble" data-spw-scene-posture="ferment" data-spw-scene-interactive data-spw-gesture-contract="tap:prime hold:inspect">
             <p><strong>Bubble phase.</strong> Visible micro-motion — overlays twitch, captions breathe. Select lanes; hold the image to inspect pressure under the surface.</p>
             <div class="spw-scene-bed__layout">

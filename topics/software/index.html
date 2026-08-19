@@ -739,7 +739,7 @@
                 <header class="frame-topline" data-spw-slot="header">
                     <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
                     <a class="frame-sigil" href="#spw-syntax-surface" data-spw-operator="address">#&gt;spw_syntax_surface</a>
-                    <div class="mode-switch" role="group" aria-label="Syntax lens">
+                    <div class="mode-switch" role="group" aria-label="Syntax lens" data-spw-operator="mode">
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="source" aria-pressed="true" data-spw-operator="select">.source</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="syntax" aria-pressed="false" data-spw-operator="select">^syntax</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="surface" aria-pressed="false" data-spw-operator="select">&gt;surface</button>
@@ -774,6 +774,7 @@
                             <p>This is the connective idea I want to test inside text-editing applications broadly, including <a href="/topics/knowledge-bases/markdown/" data-spw-operator="route">Obsidian</a>: plain-text files can gain navigable semantics for editors, LSP clients, plugins, and learning surfaces while remaining human-readable.</p>
                         </section>
                     </div>
+                    <p class="hook-invitation">Open a syntax lens with <kbd>[</kbd>. Sit with <kbd>]</kbd>.</p>
                 </div>
 
                 <footer class="frame-actions" data-spw-slot="actions">
@@ -976,7 +977,7 @@ Files should remain legible.
                 <header class="frame-topline" data-spw-slot="header">
                     <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
                     <a class="frame-sigil" href="#spw-grammar-surface" data-spw-operator="address">#&gt;spw_grammar_surface</a>
-                    <div class="mode-switch" role="group" aria-label="Grammar lens">
+                    <div class="mode-switch" role="group" aria-label="Grammar lens" data-spw-operator="mode">
                         <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="operators" aria-pressed="true" data-spw-operator="select">.operators</button>
                         <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="principles" aria-pressed="false" data-spw-operator="select">^principles</button>
                         <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="workbench" aria-pressed="false" data-spw-operator="select">~workbench</button>
@@ -988,6 +989,7 @@ Files should remain legible.
 
                 <div class="frame-body" data-spw-slot="body">
                     <h2>Grammar as Interface</h2>
+                    <p class="hook-invitation">Open a grammar lens with <kbd>[</kbd>. Sit with <kbd>]</kbd>. The table below is the option-set.</p>
                     <p data-spw-textual-role="note" data-spw-copy-depth="normal">Spw prefixes are not decoration. The parser and runtime detect a type from the sigil. Original names, intermediate names, and those runtime types have been variably useful and sometimes disagree — that disagreement shows up in design reviews, tests, and leftover route slugs. Teach the sigil and the current type. Do not treat an old slug as a public alias.</p>
 
                 <div class="mode-panels">
@@ -1049,6 +1051,18 @@ Files should remain legible.
                                 <tr>
                                     <td><a class="frame-sigil" href="/topics/software/spw/operators/surface/" data-spw-operator="concept-edge" data-spw-form="angle">&gt;surface</a></td>
                                     <td><strong>concept-edge</strong> — project the same structure onto another room</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="mode">[mode]</span></td>
+                                    <td><strong>mode</strong> — open an option-set with <kbd>[</kbd>, keep alternatives visible, sit with <kbd>]</kbd>. Not prev/next.</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="direction">{direction}</span></td>
+                                    <td><strong>direction</strong> — travel between frames with <kbd>{</kbd> / <kbd>}</kbd></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="scene">(scene)</span></td>
+                                    <td><strong>scene</strong> — enter a staged host with <kbd>(</kbd>, leave with <kbd>)</kbd></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1122,7 +1136,8 @@ Files should remain legible.
 
                 <div class="frame-body" data-spw-slot="body">
                     <p data-spw-textual-role="note" data-spw-copy-depth="normal">This is the smallest useful demonstration: one authored unit can move between source, syntax, and rendered surface.</p>
-                    <div class="demo-controls mode-switch" role="group" aria-label="Interactive codeblock views" data-spw-slot="actions">
+                    <p class="hook-invitation">Open a projection with <kbd>[</kbd>. Sit with <kbd>]</kbd>.</p>
+                    <div class="demo-controls mode-switch" role="group" aria-label="Interactive codeblock views" data-spw-slot="actions" data-spw-operator="mode">
                         <button class="frame-sigil" type="button" data-mode-group="syntax-demo" data-set-mode="markdown" aria-pressed="true" data-spw-operator="select">.source</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-demo" data-set-mode="spw" aria-pressed="false" data-spw-operator="select">^syntax</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-demo" data-set-mode="surface" aria-pressed="false" data-spw-operator="select">&gt;surface</button>

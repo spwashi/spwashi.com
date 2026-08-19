@@ -31,20 +31,21 @@
 <main id="main-content" tabindex="-1" aria-labelledby="mise-bed-title">
     <section class="spw-frame" id="mise-en-scene-bed" data-spw-kind="frame" data-spw-feature="scene-composition-bed" data-spw-semantic-expression="scene[mise]{prep.before.fire}" data-spw-scene-interpret="film-mise" data-spw-prompt-host data-spw-prompt-title="mise_en_scene_bed" data-spw-prompt-teaser="Reveal a mise en scène bed packet: prep lanes, subject/tools/threshold zones, and camera handoff for another model to interpret." data-spw-role="lab">
         <div class="frame-topline" data-spw-slot="header">
-            <a class="frame-sigil" href="/topics/film/scene-composition/">(mise_en_scene_bed</a>
+            <a class="frame-sigil" href="/topics/film/scene-composition/" data-spw-operator="scene">(mise_en_scene_bed)</a>
             <span class="spec-pill">test page</span>
         </div>
         <h1 id="mise-bed-title">Mise en scène bed</h1>
         <p data-spw-textual-role="note">Kitchen reference: <a href="/recipes/mise-en-place/">mise en place</a> — everything in its place before the fire. Film translation: every actor, prop, and light source should earn its position before you ask the viewer to feel something.</p>
         <div class="frame-topline" data-spw-slot="header">
-            <div class="mode-switch" role="group" aria-label="Mise en scène posture">
+            <div class="mode-switch" role="group" aria-label="Mise en scène posture" data-spw-operator="mode">
                 <button class="frame-sigil" type="button" data-mode-group="mise-scene" data-set-mode="prep" aria-pressed="true" data-spw-operator="ground">.prep</button>
                 <button class="frame-sigil" type="button" data-mode-group="mise-scene" data-set-mode="pass" aria-pressed="false" data-spw-operator="stream">*pass</button>
                 <button class="frame-sigil" type="button" data-mode-group="mise-scene" data-set-mode="camera" aria-pressed="false" data-spw-operator="frame">#&gt;camera</button>
             </div>
         </div>
+        <p class="hook-invitation">Open a posture with <kbd>[</kbd>. Sit with <kbd>]</kbd>. Enter the bed with <kbd>(</kbd>. Leave with <kbd>)</kbd>.</p>
         <section class="mode-panel spw-scene-bed" data-mode-group="mise-scene" data-mode-panel="prep" data-spw-scene-posture="mise" data-spw-scene-interactive data-spw-gesture-contract="tap:prime hold:inspect">
-            <p><strong>Prep lane.</strong> Counter layout: subject left, tool right, threshold at back wall. Click a lane or use arrow keys; swipe the image to cycle lens. State saves locally.</p>
+            <p><strong>Prep lane.</strong> Counter layout: subject left, tool right, threshold at back wall. Click a lane or use arrow keys; swipe the image to change a cue. <kbd>[</kbd> / <kbd>]</kbd> change posture, not the frame.</p>
             <div class="spw-scene-bed__layout">
                 <figure class="image-study spw-scene-bed__figure" data-spw-image-prominence="feature" data-spw-image-shape="landscape" data-spw-accent="resonance" data-spw-accent-palette="warm" data-spw-accent-operator="probe" data-spw-scene-lane-bind="subject" data-spw-image-lens-cues="probe,frame,surface">
                     <img src="/public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-display.webp" alt="Knife rhythm lattice on a prep surface — tools and zones arranged before the beat begins." loading="lazy" decoding="async" width="960" height="640">
