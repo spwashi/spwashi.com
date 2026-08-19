@@ -1,0 +1,15 @@
+#!/bin/sh
+# Fast staged-file gate. The deploy job runs check:local; pre-push does that.
+set -eu
+
+if [ "${SKIP_GIT_HOOKS:-}" = "1" ]; then
+  exit 0
+fi
+
+git diff --cached --check
+
+staged=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(js|mjs|cjs|ts|mts)$' || true)
+if [ -n "$staged" ]; then
+  # shellcheck disable=SC2086
+  node --check $staged
+fi

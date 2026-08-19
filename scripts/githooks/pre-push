@@ -1,0 +1,9 @@
+#!/bin/sh
+# Same gate as .github/workflows/deploy.yml: npm run check:local
+set -eu
+
+if [ "${SKIP_GIT_HOOKS:-}" = "1" ]; then
+  exit 0
+fi
+
+npm run check:local

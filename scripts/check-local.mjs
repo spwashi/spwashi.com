@@ -26,23 +26,7 @@ const VALIDATORS = [
   { label: 'check-observation-locality', script: 'scripts/check-observation-locality.mjs' },
   {
     label: 'test:modules',
-    script: null,
-    args: [
-      '--import', './scripts/tests/setup-dom-globals.mjs',
-      '--import', './scripts/tests/register-public-imports.mjs',
-      '--test',
-      'scripts/tests/engagement-features.test.mjs',
-      'scripts/tests/component-fixtures.test.mjs',
-      'scripts/tests/css-bundle-filter.test.mjs',
-      'scripts/tests/infrastructure-contracts.test.mjs',
-      'scripts/tests/chrome-headless-harness.test.mjs',
-      'scripts/tests/page-copy-audit.test.mjs',
-      'scripts/tests/region-kin.test.mjs',
-      'scripts/tests/spw-expression-geometry.test.mjs',
-      'scripts/tests/spw-literal-parser-tool.test.mjs',
-      'scripts/tests/module-timing-contract.test.mjs',
-      'scripts/tests/template-migration.test.mjs',
-    ],
+    script: 'scripts/run-module-tests.mjs',
   },
 ];
 

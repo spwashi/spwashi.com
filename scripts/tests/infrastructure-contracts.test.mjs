@@ -136,17 +136,17 @@ test('composite build pipelines compile each TypeScript project once', async () 
 test('check:local module tests match the test:modules script', async () => {
   const packageJson = JSON.parse(await readFile(path.join(ROOT, 'package.json'), 'utf8'));
   const checkLocalSource = await readFile(path.join(ROOT, 'scripts/check-local.mjs'), 'utf8');
+  const { MODULE_TEST_FILES } = await import('../module-tests.mjs');
 
-  // The orchestrator inlines the module test list; keep it identical to
-  // `test:modules:run` so both entry points cover the same suites.
-  const scriptSuites = [...packageJson.scripts['test:modules:run'].matchAll(/scripts\/tests\/[\w.-]+\.test\.mjs/g)]
-    .map((match) => match[0])
-    .sort();
-  const orchestratorSuites = [...checkLocalSource.matchAll(/scripts\/tests\/[\w.-]+\.test\.mjs/g)]
-    .map((match) => match[0])
-    .sort();
-
-  assert.deepEqual(orchestratorSuites, scriptSuites);
+  assert.equal(packageJson.scripts['test:modules:run'], 'node scripts/run-module-tests.mjs');
+  assert.ok(
+    checkLocalSource.includes('scripts/run-module-tests.mjs'),
+    'check-local.mjs should run the shared module-test runner',
+  );
+  assert.ok(
+    MODULE_TEST_FILES.includes('scripts/tests/spw-key-wrap-physics.test.mjs'),
+    'module test list should include wrap-physics',
+  );
 });
 
 test('mounted workbench CLI scripts keep consumer-relative doctor/roots paths', async () => {
