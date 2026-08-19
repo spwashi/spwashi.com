@@ -41,15 +41,15 @@ fixity = "tending"
 
 ^"rederived_surface_primitives"{
   primitives = #[
-    .{ name = `spw-frame`, role = `Top-level section/hero container`, container = `container: spw-frame / inline-size` },
-    .{ name = `spw-card`, role = `Discrete item/grid tile`, container = `container: spw-card / inline-size; subgrid span 4` },
-    .{ name = `spw-panel`, role = `Matte/flat informational callout`, container = `box-model inset` },
-    .{ name = `spw-prose`, role = `Manuscript reading flow`, measure = `capped line-measure min(100%, 65ch)` },
-    .{ name = `spw-grid`, role = `Subgrid-coordinated card matrix`, tracks = `auto auto 1fr auto` },
-    .{ name = `spw-cluster`, role = `Flex-wrap inline token group`, gap = `tight block + breathing inline` }
+    .{ name = `spw-frame`, role = `Top-level section/hero container`, contract = `class=spw-frame + data-spw-kind=frame`, container = `container: spw-frame / inline-size` },
+    .{ name = `spw-card`, role = `Discrete item/grid tile`, contract = `class=spw-card + data-spw-kind=card` },
+    .{ name = `spw-panel`, role = `Matte/flat informational callout`, contract = `class=spw-panel + data-spw-kind=panel` },
+    .{ name = `spw-chip`, role = `Operator handle (address or portable link)`, contract = `a|button[data-spw-operator]; header slot = address, actions slot = chip` },
+    .{ name = `spw-prose`, role = `Manuscript reading flow`, contract = `data-spw-textual-role=lede|note|kicker|tagline` }
   ][reg=set]
-  slot_anatomy = #[`header`, `media`, `body`, `actions`][reg=set]
+  slot_anatomy = #[`header`, `meta`, `body`, `figure`, `actions`, `footer`][reg=set]
   named_containers = #[`spw-shell (main)`, `spw-frame (section)`, `spw-card (article)`][reg=set]
+  retired = #[`site-frame`, `site-hero`, `page-lede`, `frame-note as required class`][reg=set]
 }[reg=facet]
 
 ^"taxonomic_dimensions"{

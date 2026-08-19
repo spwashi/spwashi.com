@@ -38,6 +38,15 @@
   state_truth: "Runtime state belongs in existing data-spw-* families before new names are introduced."
 }
 
+^"projection_layers"{
+  claim: "Class, data-spw, and ARIA are three projections of one object, not three naming systems."
+  class_noun: "One structural noun per object: spw-frame, spw-card, spw-panel, spw-chip. No parallel site-* / frame-* / spw-* triples."
+  data_grammar: "data-spw-kind, data-spw-role, data-spw-slot, data-spw-operator, data-spw-textual-role, data-spw-region-role carry meaning CSS and JS share."
+  aria_speech: "aria-current, aria-pressed, aria-expanded, aria-busy, aria-live speak the same state to people. Do not invent a class for a state ARIA already names."
+  load_story: "html[data-spw-hydration] is authored presence. html[data-spw-page-state] is the visit. html[data-spw-runtime-stage] is the instrument. CSS should spend --spw-lifecycle-presence across those three, not a fourth class."
+  do_not: "Do not keep site-frame, site-hero, or page-lede as required selectors once the attribute is authored."
+}
+
 ^"debug_contract"{
   global_toggle: "html[data-spw-debug-mode=\"on\"] enables inspection-forward CSS projected from public/js/kernel/site-settings.js."
   local_toggle: "[data-spw-debug~=\"css\"] opts a subtree into CSS structure overlays without changing settings."
