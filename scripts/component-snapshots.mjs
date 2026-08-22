@@ -16,7 +16,7 @@
  */
 
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import process from 'node:process';
@@ -77,6 +77,8 @@ function parseArgs(argv) {
     ids: null,
     json: false,
     keep: false,
+    prune: false,
+    retain: 12,
     lenses: [],
     noComponents: false,
     out: path.join(ROOT, 'design/components/captures'),
@@ -108,6 +110,9 @@ function parseArgs(argv) {
     else if (arg === '--precipitate') options.precipitate = true;
     else if (arg === '--changed') options.changed = true;
     else if (arg === '--keep') options.keep = true;
+    else if (arg === '--prune') options.prune = true;
+    else if (arg === '--retain' && argv[i + 1]) options.retain = Number(argv[++i]) || 12;
+    else if (arg.startsWith('--retain=')) options.retain = Number(arg.slice(9)) || 12;
     else if (arg === '--quick') options.quick = true;
     else if (arg === '--base' && argv[i + 1]) options.base = argv[++i];
     else if (arg.startsWith('--base=')) options.base = arg.slice(7);
@@ -229,6 +234,8 @@ Options:
   --precipitate      PNG lock + precipitate.json (implies --social)
   --changed          Only jobs whose source files changed (implies --keep)
   --keep             Do not wipe the pack; skip unchanged fingerprints
+  --prune            Drop oldest dated archive packs; keep --retain (default 12). Alone: prune without capturing.
+  --retain N         How many dated packs to keep with --prune
   --dry-plan         Print navigation groups, no Chrome
   --quick            region+component, phone+desktop, jpeg
   --format jpeg|png  Review default jpeg; precipitate forces png
@@ -257,8 +264,8 @@ function gitChangedFiles() {
 async function screenshotBuffer(session, { format = 'png', quality = 70, clip = null } = {}) {
   const params = {
     format,
-    fromSurface: false,
-    captureBeyondViewport: false,
+    fromSurface: true,
+    captureBeyondViewport: Boolean(clip),
   };
   if (format === 'jpeg') params.quality = quality;
   if (clip) {
@@ -274,7 +281,7 @@ async function screenshotBuffer(session, { format = 'png', quality = 70, clip = 
     const { data } = await session.send('Page.captureScreenshot', params, 10000);
     if (data) return Buffer.from(data, 'base64');
   } catch {
-    // labeled fallback below
+    // Older Chrome without fromSurface — capture the default compositor.
   }
   const { data } = await session.send('Page.captureScreenshot', {
     format,
@@ -326,7 +333,6 @@ async function measureSelector(session, selector) {
 
 function clipForBox(box, viewport, padding, aspect) {
   const cropped = cropToAspect(box, aspect || 'fit', padding);
-  const dpr = viewport?.deviceScaleFactor || 1;
   const vpW = viewport?.width || 1440;
   const vpH = viewport?.height || 900;
   const viewportX = Math.max(0, Math.floor(cropped.viewportX ?? 0));
@@ -336,7 +342,7 @@ function clipForBox(box, viewport, padding, aspect) {
     y: viewportY,
     width: Math.max(2, Math.min(vpW - viewportX, Math.ceil(cropped.width))),
     height: Math.max(2, Math.min(vpH - viewportY, Math.ceil(cropped.height))),
-    scale: dpr,
+    scale: 1,
     aspect: cropped.aspect,
     ratioLabel: cropped.ratioLabel,
     coordinateSpace: 'viewport',
@@ -355,6 +361,22 @@ function galleryHtml(manifest) {
       </figcaption>
     </figure>`).join('\n');
 
+  const errorCards = (manifest.errorArtifacts || []).map((e) => {
+    const isImage = /\.(png|jpe?g|webp)$/i.test(e.file || '');
+    const media = isImage
+      ? `<img src="${e.file}" alt="${e.kind} ${e.id || ''}" loading="lazy"/>`
+      : `<pre>${String(e.message || e.kind).replace(/</g, '&lt;')}</pre>`;
+    return `
+    <figure class="card card--error" data-error="${e.kind}">
+      ${media}
+      <figcaption>
+        <strong>${e.kind}</strong> · ${e.id || ''} · ${e.viewport || ''} · ${e.flow || ''}
+        <br/><code>${e.file}</code>
+        ${e.twin ? `<br/><span class="meta">twin of ${e.twin}</span>` : ''}
+      </figcaption>
+    </figure>`;
+  }).join('\n');
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -370,8 +392,11 @@ function galleryHtml(manifest) {
     .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
     .card { margin: 0; background: #fff; border: 1px solid #ddd4c4; border-radius: 0.5rem; overflow: hidden; }
     .card img { display: block; width: 100%; height: auto; background: #eee; }
+    .card--error { border-color: #c47a3a; }
+    .card--error pre { margin: 0; padding: 0.75rem; font-size: 0.75rem; white-space: pre-wrap; background: #f3ece3; }
     figcaption { padding: 0.65rem 0.75rem 0.85rem; font-size: 0.82rem; line-height: 1.35; }
     code { font-size: 0.75rem; color: #444; }
+    .errors { margin-top: 2rem; }
     .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0 1rem; }
     .filters button { border: 1px solid #ccc; background: #fff; border-radius: 999px; padding: 0.25rem 0.7rem; cursor: pointer; }
     .filters button[aria-pressed="true"] { background: #1a9999; color: #fff; border-color: #1a9999; }
@@ -382,6 +407,7 @@ function galleryHtml(manifest) {
     <h1>Visual capture pack</h1>
     <p class="meta">Generated ${manifest.at || ''} · ${manifest.captures?.length || 0} stills · qa device-reasons + social content-fit cards</p>
     <p class="meta">QA answers “does it pack?” Social precipitates answer “is this combination worth posting?” Pixels stay gitignored.</p>
+    <p class="meta"><a href="${manifest.archiveIndex || 'archive/index.html'}">Dated archive</a> — named <code>archive/YYYY-MM-DD_HHmmss/</code>. Errors keep their prefix: <code>blank--</code>, <code>collision--</code>, <code>failed--</code>.</p>
     <div class="filters" role="group" aria-label="Filter stills">
       <button type="button" data-filter="all" aria-pressed="true">all</button>
       <button type="button" data-filter="qa">qa</button>
@@ -392,7 +418,8 @@ function galleryHtml(manifest) {
       <button type="button" data-filter="square">square</button>
     </div>
   </header>
-  <div class="grid" id="grid">${cards}</div>
+  <div class="grid" id="grid">${cards || '<p class="meta">No stills in this pack.</p>'}</div>
+  ${errorCards ? `<section class="errors"><h2>Errors</h2><p class="meta">Named glitches. Keep them; they diagnose later stills.</p><div class="grid">${errorCards}</div></section>` : ''}
   <script>
     document.querySelectorAll('.filters button').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -400,6 +427,7 @@ function galleryHtml(manifest) {
         const f = btn.dataset.filter;
         document.querySelectorAll('.card').forEach((card) => {
           card.hidden = f !== 'all'
+            && !card.dataset.error
             && card.dataset.track !== f
             && card.dataset.flow !== f
             && card.dataset.aspect !== f;
@@ -409,6 +437,177 @@ function galleryHtml(manifest) {
   </script>
 </body>
 </html>`;
+}
+
+function formatArchiveStamp(date = new Date()) {
+  const pad = (value) => String(value).padStart(2, '0');
+  return [
+    date.getFullYear(),
+    pad(date.getMonth() + 1),
+    pad(date.getDate()),
+  ].join('-') + '_' + [
+    pad(date.getHours()),
+    pad(date.getMinutes()),
+    pad(date.getSeconds()),
+  ].join('');
+}
+
+/** Full-page gray stills compressed to ~25KB. Real home pages were 500KB+. */
+function isBlankStill(buffer, job) {
+  const bytes = buffer?.length || 0;
+  if (job.flow === 'page' && bytes < 48000) return true;
+  if (job.flow === 'region' && bytes < 40000) return true;
+  if ((job.flow === 'component' || job.flow === 'template') && bytes < 500) return true;
+  return false;
+}
+
+function errorArtifactRel(kind, job, ext = null) {
+  const base = path.basename(job.file || `${job.id}--${job.viewportId}--${job.flow}.jpg`);
+  const named = ext ? base.replace(/\.[^.]+$/, ext) : base;
+  return `captures/${kind}--${named}`;
+}
+
+async function writeErrorArtifact(outDir, kind, job, { buffer, message, twin } = {}) {
+  const rel = buffer ? errorArtifactRel(kind, job) : errorArtifactRel(kind, job, '.txt');
+  const abs = path.join(outDir, rel);
+  await mkdir(path.dirname(abs), { recursive: true });
+  if (buffer) await writeFile(abs, buffer);
+  else {
+    await writeFile(
+      abs,
+      [`${kind}`, `${job.id} ${job.viewportId} ${job.flow}`, message || '', twin ? `twin ${twin}` : '']
+        .filter(Boolean)
+        .join('\n') + '\n',
+      'utf8',
+    );
+  }
+  return {
+    kind,
+    file: rel,
+    message: message || kind,
+    twin: twin || null,
+    id: job.id,
+    fixtureId: job.fixtureId,
+    viewport: job.viewportId,
+    flow: job.flow,
+  };
+}
+
+async function pruneArchivePacks(outDir, retain = 12) {
+  const root = path.join(outDir, 'archive');
+  let stamps = [];
+  try {
+    stamps = (await readdir(root, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory() && /^\d{4}-\d{2}-\d{2}_/.test(entry.name))
+      .map((entry) => entry.name)
+      .sort()
+      .reverse();
+  } catch {
+    return [];
+  }
+  const dropped = stamps.slice(Math.max(0, retain));
+  for (const stamp of dropped) {
+    await rm(path.join(root, stamp), { recursive: true, force: true });
+  }
+  if (dropped.length) await writeArchiveIndex(outDir);
+  return dropped;
+}
+
+function isPruneOnly(options) {
+  return Boolean(
+    options.prune
+    && !options.ecology
+    && !options.social
+    && !options.precipitate
+    && !options.changed
+    && !options.dryPlan
+    && !options.ids
+    && !options.tokens.length,
+  );
+}
+
+async function archiveKeptPack(outDir, manifest, kept, errorArtifacts = []) {
+  if (!kept.length && !errorArtifacts.length) return null;
+  const stamp = formatArchiveStamp();
+  const dir = path.join(outDir, 'archive', stamp);
+  await mkdir(path.join(dir, 'captures'), { recursive: true });
+  for (const still of [...kept, ...errorArtifacts]) {
+    if (!still.file) continue;
+    const from = path.join(outDir, still.file);
+    const to = path.join(dir, still.file);
+    try {
+      await copyFile(from, to);
+    } catch {
+      // Missing file is itself a glitch; do not fail the pack.
+    }
+  }
+  const pack = {
+    ...manifest,
+    archive: stamp,
+    captures: kept,
+    errorArtifacts,
+    counts: {
+      ...manifest.counts,
+      captures: kept.length,
+      errors: errorArtifacts.length,
+      archived: kept.length + errorArtifacts.length,
+    },
+  };
+  await writeFile(path.join(dir, 'pack.json'), `${JSON.stringify(pack, null, 2)}\n`);
+  await writeFile(path.join(dir, 'index.html'), galleryHtml({
+    ...pack,
+    archiveIndex: '../index.html',
+  }));
+  await writeArchiveIndex(outDir);
+  return stamp;
+}
+
+async function writeArchiveIndex(outDir) {
+  const root = path.join(outDir, 'archive');
+  await mkdir(root, { recursive: true });
+  let stamps = [];
+  try {
+    stamps = (await readdir(root, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory() && /^\d{4}-\d{2}-\d{2}_/.test(entry.name))
+      .map((entry) => entry.name)
+      .sort()
+      .reverse();
+  } catch {
+    stamps = [];
+  }
+  const rows = [];
+  for (const stamp of stamps) {
+    let count = '';
+    try {
+      const pack = JSON.parse(await readFile(path.join(root, stamp, 'pack.json'), 'utf8'));
+      const errors = pack.errorArtifacts?.length || 0;
+      count = `${pack.captures?.length || 0} stills${errors ? ` · ${errors} errors` : ''}`;
+    } catch {
+      count = 'pack';
+    }
+    rows.push(`<li><a href="./${stamp}/index.html"><code>${stamp}</code></a> · ${count}</li>`);
+  }
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Visual capture archive</title>
+  <style>
+    :root { font-family: ui-sans-serif, system-ui, sans-serif; color: #1a1a1a; background: #f7f4ee; }
+    body { margin: 0; padding: 1.5rem; max-width: 44rem; }
+    a { color: #176; }
+    code { font-size: 0.92em; }
+  </style>
+</head>
+<body>
+  <h1>Visual capture archive</h1>
+  <p>Local, gitignored, dated packs. Errors keep their names. Latest: <a href="../index.html">current pack</a>.</p>
+  <ol reversed>${rows.join('\n') || '<li>No dated packs yet. Run <code>npm run visual:capture</code>.</li>'}</ol>
+</body>
+</html>
+`;
+  await writeFile(path.join(root, 'index.html'), html);
 }
 
 async function readPriorManifest(outDir) {
@@ -517,6 +716,14 @@ async function main() {
     process.exit(0);
   }
 
+  if (isPruneOnly(options)) {
+    const dropped = await pruneArchivePacks(options.out, options.retain);
+    process.stdout.write(
+      `[visual:prune] dropped ${dropped.length} pack${dropped.length === 1 ? '' : 's'} · retain ${options.retain}\n`,
+    );
+    return 0;
+  }
+
   if (typeof WebSocket === 'undefined') {
     console.error('[visual:capture] Node 22+ WebSocket required');
     process.exit(2);
@@ -606,6 +813,7 @@ async function main() {
 
   const captures = [];
   const errors = [];
+  const errorArtifacts = [];
   const snippetCache = new Map();
   const captureHashes = new Map();
 
@@ -661,10 +869,28 @@ async function main() {
               snippetCache,
             });
             const abs = path.join(options.out, job.file);
+            if (isBlankStill(shot.buffer, job)) {
+              const artifact = await writeErrorArtifact(options.out, 'blank', job, {
+                buffer: shot.buffer,
+                message: `Blank: ${job.file} (${shot.buffer.length}B)`,
+              });
+              errorArtifacts.push(artifact);
+              errors.push(artifact.message);
+              process.stderr.write(`  ! blank ${artifact.file} (${shot.buffer.length}B)\n`);
+              continue;
+            }
             await mkdir(path.dirname(abs), { recursive: true });
             await writeFile(abs, shot.buffer);
             if (captureHashes.has(shot.sha256)) {
-              errors.push(`Collision: ${job.file} identical to ${captureHashes.get(shot.sha256)}`);
+              const twin = captureHashes.get(shot.sha256);
+              const artifact = await writeErrorArtifact(options.out, 'collision', job, {
+                buffer: shot.buffer,
+                message: `Collision: ${job.file} identical to ${twin}`,
+                twin,
+              });
+              errorArtifacts.push(artifact);
+              errors.push(artifact.message);
+              process.stderr.write(`  ! collision ${artifact.file} twin of ${twin}\n`);
             }
             captureHashes.set(shot.sha256, job.file);
             captures.push({
@@ -707,7 +933,12 @@ async function main() {
             });
             process.stderr.write(`  ${job.track} ${job.id} ${job.aspect || job.viewportId} ${job.flow} ${shot.ms}ms -> ${job.file}\n`);
           } catch (err) {
-            errors.push(`${job.id}@${job.viewportId}/${job.aspect || 'qa'} ${job.flow}: ${err.message}`);
+            const artifact = await writeErrorArtifact(options.out, 'failed', job, {
+              message: `${job.id}@${job.viewportId}/${job.aspect || 'qa'} ${job.flow}: ${err.message}`,
+            });
+            errorArtifacts.push(artifact);
+            errors.push(artifact.message);
+            process.stderr.write(`  ! failed ${artifact.file}\n`);
           }
         }
       }
@@ -733,9 +964,10 @@ async function main() {
       skipped,
       captures,
       errors,
+      errorArtifacts,
       counts: {
         captures: captures.length,
-        errors: errors.length,
+        errors: errorArtifacts.length,
         skipped,
         byTrack: {
           qa: captures.filter((c) => c.track === 'qa').length,
@@ -746,12 +978,23 @@ async function main() {
 
     await writeFile(path.join(options.out, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
     await writeFile(path.join(options.out, 'index.html'), galleryHtml(manifest));
+    const archiveStamp = await archiveKeptPack(options.out, manifest, captures, errorArtifacts);
+    if (archiveStamp) {
+      process.stderr.write(`[visual:capture] archived archive/${archiveStamp}\n`);
+    }
+    if (options.prune) {
+      const dropped = await pruneArchivePacks(options.out, options.retain);
+      if (dropped.length) {
+        process.stderr.write(`[visual:capture] pruned ${dropped.length} older archive pack${dropped.length === 1 ? '' : 's'}\n`);
+      }
+    }
     await writeFile(
       path.join(options.out, 'pipeline.json'),
       `${JSON.stringify({
         kind: 'visual-capture-pipeline-pointer',
         at: manifest.at,
         gallery: 'index.html',
+        archive: 'archive/',
         manifest: 'manifest.json',
         precipitate: 'precipitate.json',
         review: 'review.json',

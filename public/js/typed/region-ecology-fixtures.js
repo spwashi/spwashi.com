@@ -74,6 +74,30 @@ export const REGION_ECOLOGY_FIXTURES = Object.freeze([
         captureValue: 'Kitchen entry spine. Mise and timing as a still.',
         wonder: 'A square card of mise is more honest than a full-page kitchen screenshot.',
     },
+    {
+        id: 'join-specimens',
+        label: 'Workshop join specimens',
+        seat: 'cluster',
+        selector: '#join-crawl',
+        specimenRoute: '/topics/software/spw/#join-crawl',
+        cssOwner: 'public/css/systems/expression-resonance.css',
+        layoutScenarios: ['pocket', 'fold', 'desktop'],
+        socialAspects: ['fit', 'landscape'],
+        captureValue: 'Four join kinds with living terms emphasized — a still of the plate is the lesson.',
+        wonder: 'Cullet, mill, scrap should photograph as marks, not as plain prose.',
+    },
+    {
+        id: 'boonhonk-theme-chips',
+        label: 'Boonhonk theme chips',
+        seat: 'cluster',
+        selector: '#boonhonk-register',
+        specimenRoute: '/about/#boonhonk-register',
+        cssOwner: 'public/css/systems/expression-resonance.css',
+        layoutScenarios: ['pocket', 'fold', 'desktop'],
+        socialAspects: ['fit', 'og'],
+        captureValue: 'Linked chip rail as a theme. Breadth is the row, not a paragraph.',
+        wonder: 'A still of four chips should name recovered gold, mill, crew record, and quest without a mascot.',
+    },
 ]);
 export function getRegionEcologyFixture(id) {
     return REGION_ECOLOGY_FIXTURES.find((fixture) => fixture.id === id);

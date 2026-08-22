@@ -47,6 +47,16 @@
   pretext = `@copy_flow measure is the unique card's width. Do not invent a second crop physics. Live pretext-physics stays lab-only.`
 }[reg=facet]
 
+^"local_archive"{
+  claim = `Stills are copied into a dated local pack so a review can return to what was seen — including named glitches.`
+  path = `design/components/captures/archive/YYYY-MM-DD_HHmmss/`
+  names = `captures/{fixture}--{viewport}--{flow}.{png|jpg} — same convention as the current pack`
+  errors = `blank--, collision--, failed-- prefixes. The error name is the artifact. Keep glitches; they diagnose later stills.`
+  gallery = `design/components/captures/index.html (latest) and archive/index.html (dated packs). Errors get their own section.`
+  prune = `npm run visual:prune keeps --retain dated packs (default 12). Compost, not a landfill.`
+  refuse = `Do not commit the packs. Pixels stay gitignored. Do not drop a blank without naming it.`
+}[reg=facet]
+
 ^"review_loop"{
   steps = #[`capture`, `gallery + review.json hints`, `smallest honest patch`, `npm run visual:review (--changed --keep)`, `precipitate lock`][reg=set]
   skip = `--keep skips unchanged fingerprints. Do not recapture the whole ecology to review one card.`
@@ -66,8 +76,8 @@
   mosey = `Visible copy. Notice the size. No glossary required.`
   search = `Haystack words on the specimen route + a components facet.`
   agent = `Recapture contract: id, flow, selector, size reason.`
-  llm = `Editor-side prompt to restage the still. Optional SpaceXAI later. Never a public chat client.`
-  refuse = `Do not add a visitor chatbot. Do not require an API key to mosey.`
+  llm = `Editor-side prompt to restage the still. Optional model assistance later. Never a public chat client.`
+  refuse = `Do not require authentication or remote services to inspect specimens.`
 }[reg=facet]
 
 ^"visibility_lenses"{
