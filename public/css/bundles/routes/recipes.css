@@ -386,4 +386,25 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr));
   }
 }
+
+:where(body[data-spw-surface="recipes"] #plants-and-sorcery) {
+  margin-block-start: clamp(0.75rem, 2vw, 1.15rem);
+}
+
+:where(body[data-spw-surface="recipes"] #plants-and-sorcery h3) {
+  font-size: 1.02rem;
+  margin-block-end: 0.35rem;
+}
+
+:where(body[data-spw-surface="recipes"] #grower-start .frame-details) {
+  margin-block-start: clamp(0.65rem, 1.6vw, 1rem);
+}
+
+:where(body[data-spw-surface="recipes"] #grower-start .frame-details + .frame-details) {
+  margin-block-start: 0.45rem;
+}
+
+:where(body[data-spw-surface="recipes"] #grower-start .frame-details summary) {
+  cursor: pointer;
+}
 }
