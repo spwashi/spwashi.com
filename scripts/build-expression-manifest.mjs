@@ -5,12 +5,12 @@
  * the runtime has never known anything about them beyond the string. They are
  * valid Spw — `npm run spw:integrity` confirms all 441 parse into a container
  * sequence — but valid and inert, because the parser lives in the workbench and
- * the workbench is not shipped to the browser.
+ * the workbench parser is not on the critical path.
  *
- * So the parse happens here, at build time, and the browser receives the result.
- * That is the progressive-enhancement bargain: the page works with none of this,
- * the manifest arrives later and gives authored expressions consequences.
- * Nothing at runtime parses anything.
+ * So the parse for kinship happens here, at build time, and the browser
+ * receives the result. The page works with none of this. A runtime parser is
+ * still available on demand (`__SPW_SITE__.parser.parse`) so rival readings
+ * can be checked against the kernel without making every page wait for it.
  *
  * What a parse yields, and why it is more than the string:
  *
@@ -54,12 +54,13 @@
 import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readBodyJoins, readJoinChain } from '../public/js/semantic/expression-query.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'public/js/generated/spw-expressions.js');
 
 const SKIP = new Set([
-  'node_modules', 'dist', 'dist-vite', '.git', '.spw', '.agents',
+  'node_modules', 'dist', 'dist-vite', '.git', '.spw', '.agents', '.references', '.tmp',
   'coverage', 'tmp', 'scripts', 'src',
 ]);
 
@@ -91,13 +92,19 @@ async function collectRoutes(dir = ROOT, out = []) {
  * them off the source keeps the manifest small enough to ship.
  */
 function readShape(expression) {
+  const chain = readJoinChain(expression);
   const match = expression.match(/^([^[{<]+)(?:\[([^\]]*)\])?(?:\{([^}]*)\})?(?:<([^>]*)>)?/);
-  if (!match) return { subject: expression, mode: '', parts: [], projection: '' };
+  if (!match) {
+    return { subject: expression, mode: '', parts: chain.parts, projection: '', join: chain.kind };
+  }
+  const body = readBodyJoins(match[3] || '');
+  const parts = chain.kind === 'crawl' || chain.kind === 'project' ? chain.parts : body.parts;
   return {
     subject: (match[1] || '').trim(),
     mode: (match[2] || '').trim(),
-    parts: (match[3] || '').split(/[.~]/).map((part) => part.trim()).filter(Boolean),
+    parts,
     projection: (match[4] || '').trim(),
+    join: chain.kind === 'none' ? body.kind : chain.kind,
   };
 }
 

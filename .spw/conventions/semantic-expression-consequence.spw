@@ -27,13 +27,14 @@ fixity = "experimental"
 
 ^"thesis"{
   claim: "`data-spw-semantic-expression` is authored on 441 distinct elements and was read by nothing. The grammar was real — all 441 parse into a container sequence — but a declaration no runtime consults is decoration with good manners."
-  bargain: "The parser lives in the workbench and is not shipped to browsers, so the parse happens at build time and the browser receives structure. The page is complete without any of it; that is what makes this progressive enhancement rather than a dependency."
-  refuse: "Do not parse Spw in the browser. If the runtime needs structure, the build owes it a manifest."
+  bargain: "Kinship reads a build-time manifest so the page is complete without a parser. The workbench parser is still available on demand through the runtime (`__SPW_SITE__.parser.parse`) so a reading can be challenged against the kernel. Idle hydration may honor an authored crawl or punctuated common/project; it must not infer crawl from a dotted list."
+  refuse: "Do not parse on the critical path. Do not use parseExpression() for identifier-led noun forms. If kinship needs structure, the build owes it a manifest."
 }
 
 ^"kinship"{
   claim: "Two expressions are kin when they share a subject, a mode, or a body part. That relation is @electrostatic_affordances' inductance made literal — 'kin of the same terminal share momentum' — and it is dense enough to spend: 205 distinct subjects, 292 modes, 501 parts, and 423 of 441 expressions having at least one kin."
   authored_not_inferred: "The relation comes from what an author wrote, not from similarity scoring. This is the whole reason it can be trusted: touching an element lights the elements a person decided were related."
+  living_terms: "A living term whose data-spw-concept matches a subject, mode, or part on this page joins the same field. The concept was authored; the coupling is not inferred from the visible word."
   ordering: "Subject binds tightest, then mode, then part. Sharing what a thing *is* is a stronger tie than sharing one of its components."
   singleton_rule: "A token only one expression carries is a name, not kinship. Singletons are dropped so the index holds only edges that can fire."
 }
@@ -60,12 +61,14 @@ fixity = "experimental"
 ^"authoring_rule"{
   write: #[
     `data-spw-semantic-expression on elements whose relation to other elements is worth carrying`,
-    `subject[mode]{parts} — the site's own copy grammar, and a real container sequence`
+    `subject[mode]{parts} — the site's own copy grammar, and a real container sequence`,
+    `data-spw-concept on living terms when that name should couple to expressions`
   ][reg=set]
   runtime_writes: #[
     `data-spw-expression-kin = subject | mode | part`,
     `data-spw-expression-resonating on the source`,
     `data-spw-expression-salience = 0..4 (residue)`,
+    `data-spw-join = crawl (authored) | common | ordinal | project (from punctuation)`,
     `--spw-expression-resonance`
   ][reg=set]
   do_not_author: #[

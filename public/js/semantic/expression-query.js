@@ -1,10 +1,25 @@
 /**
- * Partial expression search — match a typed fragment against authored shapes.
+ * Partial expression search and join reading.
  *
- * The browser never parses Spw. It matches slots the build already named:
- * subject, [mode], {parts}, <projection>. Unclosed fragments count:
- * `home[` is a subject plus an open mode slot; `{open` is a part prefix.
+ * Search matches slots the build already named: subject, [mode], {parts},
+ * <projection>. Unclosed fragments count: `home[` is a subject plus an open
+ * mode slot; `{open` is a part prefix. Join reading tells `.` `,` `;` and `~>`
+ * apart so a dotted list is not treated as a brace crawl.
+ *
+ * The workbench parser is available through `__SPW_SITE__.parser.parse` — this
+ * module does not load it. Kinship and search stay on authored slots.
  */
+
+export const JOIN_KINDS = Object.freeze({
+  none: 'none',
+  list: 'list',
+  common: 'common',
+  ordinal: 'ordinal',
+  project: 'project',
+  crawl: 'crawl',
+});
+
+const BRACED_CRAWL = /^(?:\{[^{}]+\}\s*\.\s*)+\{[^{}]+\}$/;
 
 function trim(value = '') {
   return String(value || '').trim();
@@ -34,9 +49,8 @@ export function parseExpressionQuery(query = '') {
   const body = captureGroup(raw, '{', '}');
   const projection = captureGroup(raw, '<', '>');
   const subject = raw.match(/^([A-Za-z_][\w-]*)/)?.[1] || '';
-  const parts = body.value
-    ? body.value.split(/[.~]/).map((part) => part.trim()).filter(Boolean)
-    : [];
+  const join = body.value ? readBodyJoins(body.value) : { kind: JOIN_KINDS.none, parts: [] };
+  const parts = join.parts;
   const wrapped = mode.present || body.present || projection.present;
   const freeTokens = wrapped
     ? []
@@ -52,6 +66,7 @@ export function parseExpressionQuery(query = '') {
     mode: mode.value,
     hasModeSlot: mode.present,
     parts,
+    join: join.kind,
     hasBodySlot: body.present,
     projection: projection.value,
     hasProjectionSlot: projection.present,
@@ -93,14 +108,68 @@ export function scoreExpressionShape(shape = {}, queryShape = {}) {
   return hits;
 }
 
+export function readBodyJoins(body = '') {
+  const raw = trim(body);
+  if (!raw) return { kind: JOIN_KINDS.none, parts: [] };
+  if (raw.includes('~>')) {
+    return { kind: JOIN_KINDS.project, parts: raw.split(/\s*~>\s*/).map(trim).filter(Boolean) };
+  }
+  if (raw.includes(';')) {
+    return { kind: JOIN_KINDS.ordinal, parts: raw.split(';').map(trim).filter(Boolean) };
+  }
+  if (raw.includes(',')) {
+    return { kind: JOIN_KINDS.common, parts: raw.split(',').map(trim).filter(Boolean) };
+  }
+  if (raw.includes('.')) {
+    return { kind: JOIN_KINDS.list, parts: raw.split('.').map(trim).filter(Boolean) };
+  }
+  return { kind: JOIN_KINDS.none, parts: [raw] };
+}
+
+/**
+ * Read join chains that are not one dotted identifier inside a brace.
+ *
+ * `{mill}.{laminate}.{cure}` is a crawl: each unit is a complete practice.
+ * `scrap ~> mill ~> temper` is potential then concept-edge — a path, not nested-about.
+ * `{cullet,grog,fiber}` is common. `{mill.laminate.cure}` is a list: the lexer may
+ * swallow the dots as one identifier; that is not cure-about-laminate-about-mill.
+ */
+export function readJoinChain(source = '') {
+  const raw = trim(source);
+  if (!raw) return { kind: JOIN_KINDS.none, parts: [], raw };
+  const compact = raw.replace(/\s+/g, '');
+  if (BRACED_CRAWL.test(compact)) {
+    const parts = [...raw.matchAll(/\{([^{}]+)\}/g)].map((match) => trim(match[1])).filter(Boolean);
+    return { kind: JOIN_KINDS.crawl, parts, raw };
+  }
+  if (raw.includes('~>') && !raw.includes('{')) {
+    return { kind: JOIN_KINDS.project, parts: raw.split(/\s*~>\s*/).map(trim).filter(Boolean), raw };
+  }
+  const body = captureGroup(raw, '{', '}');
+  if (body.present) {
+    const inner = readBodyJoins(body.value);
+    return { ...inner, raw };
+  }
+  return { ...readBodyJoins(raw), raw };
+}
+
 export function shapeFromExpression(expression = '') {
-  const match = String(expression || '').match(/^([^[{<]+)(?:\[([^\]]*)\])?(?:\{([^}]*)\})?(?:<([^>]*)>)?/);
-  if (!match) return { subject: trim(expression), mode: '', parts: [], projection: '' };
+  const raw = String(expression || '').trim();
+  const chain = readJoinChain(raw);
+  const match = raw.match(/^([^[{<]+)(?:\[([^\]]*)\])?(?:\{([^}]*)\})?(?:<([^>]*)>)?/);
+  if (!match) {
+    return { subject: trim(raw), mode: '', parts: chain.parts, projection: '', join: chain.kind };
+  }
+  const body = readBodyJoins(match[3] || '');
+  const parts = chain.kind === JOIN_KINDS.crawl || chain.kind === JOIN_KINDS.project
+    ? chain.parts
+    : body.parts;
   return {
     subject: trim(match[1]),
     mode: trim(match[2]),
-    parts: String(match[3] || '').split(/[.~]/).map((part) => part.trim()).filter(Boolean),
+    parts,
     projection: trim(match[4]),
+    join: chain.kind === JOIN_KINDS.none ? body.kind : chain.kind,
   };
 }
 

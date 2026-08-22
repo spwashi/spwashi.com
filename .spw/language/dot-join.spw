@@ -1,7 +1,7 @@
 # Joins
 #
-# Direction of Spw: the dot crawls the brace gradient.
-# Comma and semicolon are considered; disjunction is an open need.
+# Direction of Spw: the crawl is between complete braces, not a dotted list
+# inside one brace. Comma is common; semicolon is ordinal; ~> is a path.
 # operation: prime | fixity: tending
 
 #>dot_join
@@ -15,38 +15,51 @@
 @cauldron: ~"../conventions/cauldron-dynamics.spw"
 @quest: ~"../../about/domains/spw.quest/index.html"
 @atlas: ~"../../topics/software/spw/index.html"
+@parser: ~"../../public/js/semantic/spw-runtime-parser.js"
+@sidecar: ~"../conventions/sidecar-references.spw"
 
 operation = "prime"
 fixity = "tending"
 
 ^"thesis"{
-  claim = `Do not deviate far from the dot as a crawl along the brace gradient. Opening { leans objective; closing } leans subjective. Dots are waypoints on that walk.`
-  example = `cauldron[garden]{sow.tend.harvest} — sow nearer the open bed; harvest nearer what you take. Same mark as member access: a crawl into a local field.`
-  house = `Direction notes that are still coming live on @quest, with texture.website as the neighboring material surface.`
+  claim = `Do not deviate far from the dot as a crawl along the brace gradient — but the crawl is between complete practices, not a list of names inside one brace. Opening { leans objective; closing } leans subjective.`
+  refuse = `There is nothing that is cure about laminate about mill. A dotted list is not nested-about, and it is not a linear memory walk across a substrate.`
+  house = `This site is a proof of concept while workbench updates. Rival readings can be checked here against the runtime parser, against material vessels, and against sidecar curriculum in neighboring repos.`
+}[reg=facet]
+
+^"forms"{
+  list = `{mill.laminate.cure} — teaching list. The lexer may swallow the dots as one identifier. Semantically incoherent as crawl.`
+  crawl = `{mill}.{laminate}.{cure} — more meaning. Each unit is a complete workshop practice. Dots walk the brace gradient between practices.`
+  project = `scrap ~> mill ~> temper — potential then concept-edge. Reclaimed stock holds a path that projects without collapsing, and without claiming nested-about.`
+  common = `{cullet,grog,fiber} — comma holds feedstocks together. Reclaimed glass, crushed clay, plant fiber. Not a crawl.`
+  garden = `cauldron[garden]{sow.tend.harvest} — live garden vessel, a list string. Keep it on the bed; do not reuse it as the join lesson.`
+  kitchen = `{soak,cook,serve} — recipes practice; common, not crawl.`
+  ordinal = `semicolon — order you can count without walking objective-to-subjective.`
+  disjunction = `An "or" is a real need. Not having one is not a virtue. | was a thought, not a landing.`
+}[reg=facet]
+
+^"lexer_gap"{
+  observation = `parse() tokenizes mill.laminate.cure inside a body as one IDENTIFIER. Comma splits. {mill}.{laminate}.{cure} is three bodies joined by OPERATOR ".".`
+  consequence = `The site join reader is a challenge to that kernel reading until workbench absorbs or refuses it.`
+  check = `__SPW_SITE__.parser.parse('{mill}.{laminate}.{cure}') and .join('{mill.laminate.cure}')`
 }[reg=facet]
 
 ^"considered_punctuation"{
-  dot = `Crawl / walk. Gradient between brace meanings. Keep this as the default join inside {practice}.`
-  comma = `Common operator — co-held, together, without claiming the crawl. A and B, not A then B toward the close.`
-  semicolon = `Ordinal operator — order that is not the brace-gradient crawl. A sequence you can count without walking objective-to-subjective.`
-  disjunction = `An "or" is a real need. Not having one is not a virtue. | was a thought, not a landing. Do not pretend the language is complete without a way to hold alternatives.`
-  status = `Dot is in live expressions. Comma and semicolon are direction, not yet public parser law. Specimens belong on @quest and the operator atlas before they bind the workbench.`
-}[reg=facet]
-
-^"seats"{
-  member = `name.field — walk down into the local field.`
-  practice = `{sow.tend.harvest} — crawl from setup toward outcome inside one practice.`
-  body = `{intake.digestion.return} — metabolism along the same gradient.`
-  mix = `boon.bane.bone — voices on one crawl until a common or ordinal mark earns its own seat.`
+  dot = `Crawl only when it joins complete braces. Inside one brace, a dotted list is not the crawl.`
+  comma = `Common operator — co-held, together, without claiming the crawl.`
+  semicolon = `Ordinal operator — countable order that is not the brace-gradient crawl.`
+  tilde_edge = `~> is ~ (hold a path) then > (project onto another surface). Not a blend.`
+  status = `Dot, comma, and ~> have live specimens on @atlas and @quest. Semicolon and or remain direction.`
 }[reg=facet]
 
 ^"hypermedia"{
-  intuition = `A readable crawl is how a page teaches sequence without a tutorial.`
-  math_ux = `Distinction is a compare (two placements + ~). Alternatives still want an or. Do not collapse compare, crawl, common, and ordinal into one ornament.`
-  progressive = `The string is complete without JS. Hydration may light kinship or sit a vessel; it is not required to read the crawl.`
+  intuition = `A readable join is how a page teaches sequence, company, or path without a tutorial.`
+  challenge = `Use this site to develop and challenge interpretations across interaction (cauldron, resonance, compare) and material (vessels, brace color, texture.website).`
+  progressive = `The string is complete without JS. Hydration may mark authored crawl or punctuated common/project; it must not infer crawl from a dotted list.`
 }[reg=facet]
 
 validation: #[
   `rg 'dot_join' .spw/language/index.spw`,
-  `rg 'sow.tend.harvest' _partials/site-footer.html public/js/interface/cauldron/contract.js`,
+  `rg 'readJoinChain' public/js/semantic/expression-query.js`,
+  `rg '__SPW_SITE__\\.parser' public/js/site.js`,
 ][reg=set]

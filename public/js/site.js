@@ -1128,6 +1128,17 @@ window.__SPW_SITE__ = {
     snapshot: (root = document, options = {}) => loadCompositionBox().then((m) => m.snapshotCompositionBoxes(root, options)),
   },
   /**
+   * Workbench parser plus site join reading. Lazy — boot does not load it.
+   * parse(source) uses parse(), not parseExpression(). join(source) is the
+   * site-owned reading of `.` `,` `;` `~>` and `{mill}.{laminate}.{cure}`.
+   */
+  parser: {
+    parse: (source, options) => import('./semantic/spw-runtime-parser.js').then((m) => m.parseSpw(source, options)),
+    join: (source) => import('./semantic/expression-query.js').then((m) => m.readJoinChain(source)),
+    build: () => import('./semantic/spw-workbench-parser.js').then((m) => m.SPW_PARSER_BUILD),
+    contract: () => import('./semantic/spw-runtime-parser.js').then((m) => m.SPW_RUNTIME_PARSER_CONTRACT),
+  },
+  /**
    * Layout / packing / reflow / page-sizing QA for humans + agents.
    * Lazy-loads layout-qa.js. Prefer ?debug=layout for full CLS history.
    */

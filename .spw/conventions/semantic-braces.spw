@@ -18,7 +18,7 @@
 
 ^"operator_physics"{
   brackets: "[] separate discoverable variants and support resonance across sibling forms."
-  braces: "{} attach behavior, direction, or action to the root without changing the root. Opening leans objective; closing leans subjective. Dots crawl that gradient — see language/dot-join.spw. Comma (common) and semicolon (ordinal) are considered; an or is still an open need."
+  braces: "{} attach behavior, direction, or action to the root without changing the root. Opening leans objective; closing leans subjective. Crawl is between complete practices ({mill}.{laminate}.{cure}), not a dotted list inside one brace. Comma is common; ~> is a path; an or is still an open need. See language/dot-join.spw."
   parens: "() stage scenes and performative contexts."
   angles: "<> carry lenses, conduits, or interpretive filters; in authored HTML, prefer data attributes or escaped text so markup stays valid."
   discoverability: "A reader should be able to jump from one instance to another by shared root, then narrow by variant or behavior."

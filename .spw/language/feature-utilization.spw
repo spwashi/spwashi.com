@@ -28,6 +28,8 @@
 @literal_parser_tool: ~"../../tools/spw-parser/index.html"
 @literal_parser_runtime: ~"../../public/js/modules/tools/spw-literal-parser.js"
 @literal_parser_bundle: ~"../../public/js/semantic/spw-workbench-parser.js"
+@runtime_parser: ~"../../public/js/semantic/spw-runtime-parser.js"
+@dot_join: ~"./dot-join.spw"
 @cognitive_navigation: ~"../conventions/cognitive-navigation.spw"
 @semantic_navigation_plan: ~"../../.agents/plans/semantic-navigation-geometry/PLAN.md"
 @site_feature_utilization: ~"../conventions/feature-utilization.spw"

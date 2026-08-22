@@ -82,7 +82,8 @@ reading_order: ?<
 }[reg=facet]
 
 invariants: #[
-  `Site language artifacts propose; workbench canon proves.`,
+  `This site is a source and proof of concept while workbench updates; workbench remains the parser kernel.`,
+  `Rival join readings are checked here (list vs crawl vs project vs common) before they freeze as law.`,
   `v0.4 pillars stay inspectable before the submodule pin moves.`,
   `Promote landed grammar into workbench docs/specs and lib/spw-v0.4.0/.`,
   `Language feature utilization stays dual-tracked from body[data-spw-features] packs.`,

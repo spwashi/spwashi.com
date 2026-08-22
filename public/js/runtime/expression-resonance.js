@@ -1,12 +1,11 @@
 /**
  * Expression resonance — authored Spw with consequences.
  *
- * 441 `data-spw-semantic-expression` values are declared across the routes and
- * until now every one was inert: valid Spw that no runtime had ever read as
- * anything but a string. scripts/build-expression-manifest.mjs parses them with
- * the workbench parser at build time, so this module receives structure without
- * shipping a parser or doing any parsing itself. region-kin.js reads the same
- * subject stems for #resonate jumps; it does not remount this module.
+ * Authored `data-spw-semantic-expression` values were inert until the
+ * build-time manifest. This module still does not parse: it reads structure
+ * the build already named. The workbench parser is available on demand through
+ * `__SPW_SITE__.parser.parse` for challenging a reading — not for kinship.
+ * region-kin.js reads the same subject stems for #resonate jumps.
  *
  * The consequence is inductance, which @electrostatic_affordances already
  * names: "Cluster + :has([data-spw-operator=X]). Kin of the same terminal share
@@ -47,6 +46,10 @@ const ATTR = Object.freeze({
   source: 'data-spw-expression-resonating',
   salience: 'data-spw-expression-salience',
   resonance: '--spw-expression-resonance',
+  join: 'data-spw-join',
+  crawlOpen: 'data-spw-crawl-open',
+  crawlClose: 'data-spw-crawl-close',
+  crawlPole: 'data-spw-crawl-pole',
 });
 
 /** Dwell past this reads as an encounter rather than a glance. */
@@ -57,10 +60,28 @@ const SALIENCE_BANDS = [0, 2, 5, 12, 30];
 let manifest = null;
 let kinIndex = null;
 let elementsByExpression = null;
+let livingByConcept = null;
 let salience = null;
 let lit = [];
 let dwellTimer = null;
 let cleanup = null;
+
+const LIVING_SELECTOR = '[data-spw-living-term][data-spw-concept], .spw-living-term[data-spw-concept]';
+
+function kinStrength(relation) {
+  return relation === 'subject' ? 1 : relation === 'mode' ? 0.7 : 0.45;
+}
+
+function shapeTokens(shape) {
+  if (!shape) return [];
+  const tokens = [];
+  if (shape.subject) tokens.push({ token: shape.subject, relation: 'subject' });
+  if (shape.mode) tokens.push({ token: shape.mode, relation: 'mode' });
+  for (const part of shape.parts || []) {
+    if (part) tokens.push({ token: part, relation: 'part' });
+  }
+  return tokens;
+}
 
 function readSalience() {
   if (salience) return salience;
@@ -116,6 +137,37 @@ function indexElements(root = document) {
   return map;
 }
 
+/** Living terms whose concept was authored — they join the field by that name. */
+function indexLivingConcepts(root = document) {
+  const map = new Map();
+  for (const node of root.querySelectorAll(LIVING_SELECTOR)) {
+    const concept = node.getAttribute('data-spw-concept');
+    if (!concept) continue;
+    if (!map.has(concept)) map.set(concept, []);
+    map.get(concept).push(node);
+  }
+  return map;
+}
+
+function lightNode(node, relation, token, poles = {}) {
+  if (!node) return;
+  node.setAttribute(ATTR.kin, relation);
+  node.style.setProperty('--spw-expression-resonance', String(kinStrength(relation)));
+  if (relation === 'part' && token) {
+    if (token === poles.openPart) node.setAttribute(ATTR.crawlPole, 'open');
+    else if (token === poles.closePart) node.setAttribute(ATTR.crawlPole, 'close');
+  }
+  lit.push(node);
+}
+
+function lightLiving(token, relation, poles = {}, except = null) {
+  if (!token || !livingByConcept) return;
+  for (const node of livingByConcept.get(token) || []) {
+    if (node === except) continue;
+    lightNode(node, relation, token, poles);
+  }
+}
+
 /** Kin of an expression, with the token that relates them. */
 export function kinOf(expression) {
   const shape = manifest?.[expression];
@@ -141,6 +193,7 @@ export function kinOf(expression) {
 function clearResonance() {
   for (const node of lit) {
     node.removeAttribute(ATTR.kin);
+    node.removeAttribute(ATTR.crawlPole);
     node.style.removeProperty('--spw-expression-resonance');
   }
   lit = [];
@@ -155,22 +208,40 @@ function clearResonance() {
  */
 function resonate(expression, sourceNode) {
   clearResonance();
-  const kin = kinOf(expression);
-  if (!kin.length) return 0;
+  const shape = manifest?.[expression];
+  if (!shape) return 0;
 
   sourceNode?.setAttribute(ATTR.source, 'source');
+  const sourceJoin = sourceNode?.getAttribute?.(ATTR.join)
+    || sourceNode?.closest?.(`[${ATTR.join}]`)?.getAttribute(ATTR.join);
+  const sourceParts = shape.parts || [];
+  const poles = {
+    openPart: sourceJoin === 'crawl' ? (sourceParts[0] || '') : '',
+    closePart: sourceJoin === 'crawl' && sourceParts.length > 1 ? sourceParts[sourceParts.length - 1] : '',
+  };
 
-  for (const { expression: other, relation } of kin) {
+  for (const { expression: other, relation, token } of kinOf(expression)) {
     for (const node of elementsByExpression.get(other) || []) {
-      node.setAttribute(ATTR.kin, relation);
-      // Subject kinship reads strongest, part kinship faintest — the same
-      // ordering kinOf resolves in, made visible rather than merely internal.
-      const strength = relation === 'subject' ? 1 : relation === 'mode' ? 0.7 : 0.45;
-      // Literal so the custom property stays greppable from CSS and visible to
-      // the runtime contract checker.
-      node.style.setProperty('--spw-expression-resonance', String(strength));
-      lit.push(node);
+      lightNode(node, relation, token, poles);
     }
+  }
+  for (const { token, relation } of shapeTokens(shape)) {
+    lightLiving(token, relation, poles, sourceNode);
+  }
+  return lit.length;
+}
+
+/** A living term joins the field by its authored concept name. */
+function resonateConcept(concept, sourceNode) {
+  clearResonance();
+  if (!concept) return 0;
+  sourceNode?.setAttribute(ATTR.source, 'source');
+  lightLiving(concept, 'part', {}, sourceNode);
+  for (const [expression, nodes] of elementsByExpression || []) {
+    const shape = manifest?.[expression];
+    const hit = shapeTokens(shape).find((entry) => entry.token === concept);
+    if (!hit) continue;
+    for (const node of nodes) lightNode(node, hit.relation, concept);
   }
   return lit.length;
 }
@@ -193,6 +264,20 @@ function depositSalience(expression) {
     // Storage is optional; losing it costs warmth, not correctness.
   }
   paintSalience(expression);
+  paintLivingSalience();
+}
+
+function depositConcept(concept) {
+  if (!concept) return;
+  const store = readSalience();
+  store[concept] = (store[concept] || 0) + 1;
+  try {
+    writeJson(STORAGE_KEY, store);
+  } catch {
+    // Storage is optional; losing it costs warmth, not correctness.
+  }
+  paintLivingSalience();
+  for (const expression of elementsByExpression?.keys() || []) paintSalience(expression);
 }
 
 /**
@@ -260,7 +345,44 @@ export function depositGathered(items = [], weight = GATHER_WEIGHT) {
     // Storage optional; a lost deposit costs warmth, not correctness.
   }
   for (const expression of elementsByExpression?.keys() || []) paintSalience(expression);
+  paintLivingSalience();
   return banked;
+}
+
+/**
+ * Honor authored crawl; mark common / ordinal / project from punctuation.
+ * Never infer crawl from a dotted list — that list is not cure-about-laminate.
+ */
+function paintJoin(expression) {
+  const shape = manifest?.[expression];
+  const parts = shape?.parts || [];
+  const kind = shape?.join;
+  for (const node of elementsByExpression.get(expression) || []) {
+    const authored = node.getAttribute(ATTR.join);
+    if (authored === 'crawl') {
+      if (parts.length >= 2) {
+        node.setAttribute(ATTR.crawlOpen, parts[0]);
+        node.setAttribute(ATTR.crawlClose, parts[parts.length - 1]);
+      }
+      continue;
+    }
+    if (authored) continue;
+    if (kind === 'common' || kind === 'ordinal' || kind === 'project') {
+      node.setAttribute(ATTR.join, kind);
+    }
+  }
+}
+
+/** Project accumulated warmth onto living terms whose concept was travelled. */
+function paintLivingSalience() {
+  if (!livingByConcept) return;
+  for (const [concept, nodes] of livingByConcept) {
+    const band = salienceBand(concept);
+    for (const node of nodes) {
+      if (band > 0) node.setAttribute(ATTR.salience, String(band));
+      else node.removeAttribute(ATTR.salience);
+    }
+  }
 }
 
 /** Project accumulated warmth onto the elements carrying a token. */
@@ -300,21 +422,33 @@ export async function initExpressionResonance(ctx = {}) {
   const entries = Object.entries(manifest);
   kinIndex = buildKinIndex(entries);
   elementsByExpression = indexElements();
-  if (!elementsByExpression.size) return () => {};
+  livingByConcept = indexLivingConcepts();
+  if (!elementsByExpression.size && !livingByConcept.size) return () => {};
 
-  // Paint whatever warmth this reader has already accumulated, before any
-  // interaction — returning to a page you have travelled should look travelled.
-  for (const expression of elementsByExpression.keys()) paintSalience(expression);
+  // One pass: warmth from prior visits; join marks only when authored or punctuated.
+  for (const expression of elementsByExpression.keys()) {
+    paintSalience(expression);
+    paintJoin(expression);
+  }
+  paintLivingSalience();
 
   const onEnter = (event) => {
     const host = event.target?.closest?.(`[${ATTR.expression}]`);
-    if (!host) return;
-    const expression = host.getAttribute(ATTR.expression);
-    if (!expression) return;
-
-    resonate(expression, host);
+    if (host) {
+      const expression = host.getAttribute(ATTR.expression);
+      if (!expression) return;
+      resonate(expression, host);
+      clearTimeout(dwellTimer);
+      dwellTimer = setTimeout(() => depositSalience(expression), ENCOUNTER_MS);
+      return;
+    }
+    const living = event.target?.closest?.(LIVING_SELECTOR);
+    if (!living) return;
+    const concept = living.getAttribute('data-spw-concept');
+    if (!concept) return;
+    resonateConcept(concept, living);
     clearTimeout(dwellTimer);
-    dwellTimer = setTimeout(() => depositSalience(expression), ENCOUNTER_MS);
+    dwellTimer = setTimeout(() => depositConcept(concept), ENCOUNTER_MS);
   };
 
   const onLeave = () => {
@@ -364,6 +498,7 @@ export function describeExpressionField() {
     expressions: Object.keys(manifest).length,
     onThisPage: elementsByExpression?.size || 0,
     kinTokens: kinIndex?.size || 0,
+    livingConcepts: livingByConcept?.size || 0,
     salience: readSalience(),
   };
 }
@@ -373,16 +508,18 @@ export const EXPRESSION_RESONANCE_CONTRACT = Object.freeze({
   storageKey: STORAGE_KEY,
   encounterMs: ENCOUNTER_MS,
   salienceBands: SALIENCE_BANDS,
-  rule: 'hover previews kinship (pulse); dwell banks salience (residue); never the reverse',
+  rule: 'hover previews kinship (pulse); dwell banks salience (residue); never the reverse. Living terms join the field by authored data-spw-concept. Crawl is authored, never inferred from a dotted list. Parser lives at `__SPW_SITE__.parser.parse`.',
 });
 
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'expression-resonance',
   mount: (ctx) => initExpressionResonance(ctx),
-  describes: 'expression[kin]{subject.mode.part}<resonance>',
+  describes: 'expression[kin]{subject.mode.part}<resonance.join>',
   updates: [
     'flourish:data-spw-expression-kin',
     'flourish:data-spw-expression-resonating',
+    'flourish:data-spw-join',
+    'flourish:data-spw-crawl-pole',
     'residue:data-spw-expression-salience',
     'measure:--spw-expression-resonance',
   ],

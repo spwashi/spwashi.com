@@ -711,10 +711,12 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IDLE,
     selector: '[data-spw-semantic-expression]',
     rootMode: 'single',
-    describes: 'expression[kin]{subject.mode.part}<resonance>',
+    describes: 'expression[kin]{subject.mode.part}<resonance.join>',
     updates: [
       'flourish:data-spw-expression-kin',
       'flourish:data-spw-expression-resonating',
+      'flourish:data-spw-join',
+      'flourish:data-spw-crawl-pole',
       'residue:data-spw-expression-salience',
       'measure:--spw-expression-resonance',
     ],

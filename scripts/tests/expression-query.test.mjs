@@ -4,6 +4,7 @@ import test from 'node:test';
 import {
   bestExpressionMatch,
   parseExpressionQuery,
+  readJoinChain,
   scoreExpressionShape,
 } from '../../public/js/semantic/expression-query.js';
 import { formatWrapJobVariants } from '../../public/js/semantic/spw-compose.js';
@@ -45,6 +46,43 @@ test('best match returns the strongest authored expression', () => {
   assert.equal(bestExpressionMatch(expressions, '[reading]').expression, 'home[reading]{open.sit}<display>');
   assert.equal(bestExpressionMatch(expressions, '{travel}').expression, 'rooms{travel}<navigate>');
   assert.equal(bestExpressionMatch(expressions, 'zzz'), null);
+});
+
+test('runtime parser uses parse() and reports join kind', async () => {
+  const { parseSpw } = await import('../../public/js/semantic/spw-runtime-parser.js');
+  const crawl = parseSpw('{mill}.{laminate}.{cure}');
+  assert.equal(crawl.entry, 'parse');
+  assert.equal(crawl.join.kind, 'crawl');
+  assert.deepEqual(crawl.join.parts, ['mill', 'laminate', 'cure']);
+  assert.equal(crawl.output.success, true);
+  const list = parseSpw('board[workshop]{mill.laminate.cure}');
+  assert.equal(list.join.kind, 'list');
+  assert.equal(list.output.success, true);
+});
+
+test('join chains tell list, crawl, common, and project apart', () => {
+  assert.deepEqual(readJoinChain('{mill.laminate.cure}'), {
+    kind: 'list',
+    parts: ['mill', 'laminate', 'cure'],
+    raw: '{mill.laminate.cure}',
+  });
+  assert.deepEqual(readJoinChain('{mill}.{laminate}.{cure}'), {
+    kind: 'crawl',
+    parts: ['mill', 'laminate', 'cure'],
+    raw: '{mill}.{laminate}.{cure}',
+  });
+  assert.deepEqual(readJoinChain('{cullet,grog,fiber}'), {
+    kind: 'common',
+    parts: ['cullet', 'grog', 'fiber'],
+    raw: '{cullet,grog,fiber}',
+  });
+  assert.deepEqual(readJoinChain('scrap ~> mill ~> temper'), {
+    kind: 'project',
+    parts: ['scrap', 'mill', 'temper'],
+    raw: 'scrap ~> mill ~> temper',
+  });
+  assert.equal(parseExpressionQuery('{open.sit}').join, 'list');
+  assert.deepEqual(parseExpressionQuery('{soak,cook,serve}').parts, ['soak', 'cook', 'serve']);
 });
 
 test('wrap-job copy variants stay exclusive by depth', () => {
