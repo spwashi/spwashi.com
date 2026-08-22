@@ -16,6 +16,13 @@
   container-name: spw-region;
 }
 
+/* Cluster desks wrap inner frames, so hero-split and pack-span must query
+   the desk, not wait for main > .spw-frame. */
+:where(main [data-spw-cluster]) {
+  container-type: inline-size;
+  container-name: spw-region;
+}
+
 :where(
   .spw-frame[data-spw-region="hook"],
   .spw-frame[data-spw-region="hero"],

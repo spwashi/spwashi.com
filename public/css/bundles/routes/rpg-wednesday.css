@@ -1356,7 +1356,9 @@
 /* Nested campaign frames are not main > .spw-frame. */
 :where(
   body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk,
-  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit
+  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit,
+  body[data-spw-surface="rpg-wednesday"] #weekly-affairs,
+  body[data-spw-surface="rpg-wednesday"] #seasonal-ecology
 ) {
   container-type: inline-size;
   container-name: spw-region;
@@ -1364,7 +1366,9 @@
 
 :where(
   body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk .frame-grid,
-  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-grid
+  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-grid,
+  body[data-spw-surface="rpg-wednesday"] #weekly-affairs .frame-grid,
+  body[data-spw-surface="rpg-wednesday"] #seasonal-ecology .frame-grid
 ) {
   align-items: stretch;
   gap: clamp(0.65rem, 1.4cqi, 1.05rem);
@@ -1372,7 +1376,9 @@
 
 :where(
   body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk .frame-panel,
-  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-panel
+  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-panel,
+  body[data-spw-surface="rpg-wednesday"] #weekly-affairs .frame-panel,
+  body[data-spw-surface="rpg-wednesday"] #seasonal-ecology .frame-panel
 ) {
   min-width: 0;
 }
@@ -1387,7 +1393,9 @@
 @container spw-region (max-width: 36rem) {
   :where(
     body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk .frame-grid,
-    body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-grid
+    body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-grid,
+    body[data-spw-surface="rpg-wednesday"] #weekly-affairs .frame-grid,
+    body[data-spw-surface="rpg-wednesday"] #seasonal-ecology .frame-grid
   ) {
     grid-template-columns: 1fr;
   }
@@ -1396,7 +1404,9 @@
 @container spw-region (min-width: 40rem) {
   :where(
     body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk .frame-grid,
-    body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-grid
+    body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-grid,
+    body[data-spw-surface="rpg-wednesday"] #weekly-affairs .frame-grid,
+    body[data-spw-surface="rpg-wednesday"] #seasonal-ecology .frame-grid
   ) {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr));
   }
@@ -1421,11 +1431,11 @@
     --spw-main-padding-inline: 0.8rem;
   }
 
-  :where(body[data-spw-surface="rpg-wednesday"] .frame-grid) {
+  :where(body[data-spw-surface="rpg-wednesday"] .spw-frame:not([data-spw-region="cluster"]) .frame-grid) {
     grid-template-columns: 1fr;
   }
 
-  :where(body[data-spw-surface="rpg-wednesday"] .frame-grid > *) {
+  :where(body[data-spw-surface="rpg-wednesday"] .spw-frame:not([data-spw-region="cluster"]) .frame-grid > *) {
     grid-column: auto;
   }
 
@@ -1435,6 +1445,12 @@
 
   :where(body[data-spw-surface="rpg-wednesday"] .rpg-quick-actions) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 36rem) {
+    :where(body[data-spw-surface="rpg-wednesday"] .rpg-quick-actions) {
+      grid-template-columns: 1fr;
+    }
   }
 
   :where(body[data-spw-surface="rpg-wednesday"] #rpgw-character .frame-grid) {
