@@ -1,0 +1,40 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "recovered-gold-voyager"
+  description: "A faceless gold traveler descending into a deserted bowl. Gold as recovered material, not costume glitter. Situating image for the 2024–2028 mix window."
+  visual_qualities: "gold, sequin-skin, stadium-dark, descending, faceless, recovered"
+}
+
+^"thematic_mapping"{
+  operator: "potential"
+  valence: "boon"
+  spirit_phase: "threshold"
+  liminality: "projected"
+  source: "Grok Imagine"
+  role: "situating-study"
+  context: "boonhonk 2024–2028 window, scrap ~> mill ~> temper"
+}
+
+^"usage"{
+  surface: "renders"
+  role: "archived-source"
+  dimensions: { width: 1280, height: 720 }
+  formats_available: ["jpg"]
+  alt_text: "A faceless gold-clad figure descending on wires into a dark empty stadium bowl, sequins catching hard light."
+}
+
+^"optimization"{
+  generated_on: "2026-08-22"
+  source: "Grok Imagine"
+  notes: "Render study, not extracted. Do not promote to illustrations until a second consumer besides the cache exists. No performer likeness."
+}
+
+^"discovery"{
+  tags: ["imagine", "gold", "voyager", "boonhonk", "recovered-material"]
+  spirit_name: "recovered-gold-voyager"
+  status: "archived-source"
+  related_images: ["crew-gold-record", "upcycled-gold-feedstock"]
+  notes: "Not a replica of the Paris 2024 ceremony costume. Faceless on purpose."
+}

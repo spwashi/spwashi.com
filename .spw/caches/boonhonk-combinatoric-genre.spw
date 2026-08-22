@@ -24,6 +24,7 @@
 @software_path: ~"../../topics/software/index.html#dimensional-expression-path"
 @mixer: ~"../../public/js/modules/widgets/boonhonk-mixer.js"
 @kernel: ~"../../.agents/plans/daily-kernel-development/boonhonk-dimensional-flow-2026-08-21.spw"
+@voyager_window: ~"./golden-voyager-window.spw"
 
 operation = "prime"
 fixity = "tending"
@@ -106,9 +107,17 @@ fixity = "tending"
   disco = .{
     practice = `Occasion and fashion linguistics`
     dress = `Silhouette, palette, public signal. A night you dress for.`
+    recovered = `Upcycled gold is dress and material, not nostalgia glitter.`
     cite = @fashion
     not = `Nostalgia glitter or a costume party`
   }[reg=facet]
+}[reg=facet]
+
+^"window"{
+  cite = @voyager_window
+  already = `After the 2024 Games, before 2028: a mix still had to name its own thread.`
+  image = `Recovered gold. A record made to be found. Arrival without collapsing the field.`
+  refuse = `Do not name the ceremony figure, the dancer, or the costume designer on public HTML.`
 }[reg=facet]
 
 ^"harmony"{

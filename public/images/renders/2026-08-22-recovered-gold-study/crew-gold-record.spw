@@ -1,0 +1,40 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "crew-gold-record"
+  description: "A gold disc compiled for whoever finds it. Grooves as shared memory. The cohesion image: a crew message, not a solo portfolio."
+  visual_qualities: "disc, grooves, gold plate, spotlight, no people, tactile"
+}
+
+^"thematic_mapping"{
+  operator: "stream"
+  valence: "honk"
+  spirit_phase: "memory"
+  liminality: "projected"
+  source: "Grok Imagine"
+  role: "situating-study"
+  context: "Dregg sidecar as crew curriculum, capture archive, expression manifest"
+}
+
+^"usage"{
+  surface: "renders"
+  role: "archived-source"
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["jpg"]
+  alt_text: "A gold phonograph disc in dark space, grooves catching one warm spotlight, scuffed as if many hands assembled it."
+}
+
+^"optimization"{
+  generated_on: "2026-08-22"
+  source: "Grok Imagine"
+  notes: "Render study. Kinship is the Voyager Golden Record as a public physics, not a NASA logo lockup."
+}
+
+^"discovery"{
+  tags: ["imagine", "gold", "record", "cohesion", "honk"]
+  spirit_name: "crew-gold-record"
+  status: "archived-source"
+  related_images: ["recovered-gold-voyager", "upcycled-gold-feedstock"]
+  notes: "Use when talking about group behavior: same seed, same scene, same table version."
+}

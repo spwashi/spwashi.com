@@ -1,0 +1,40 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "upcycled-gold-feedstock"
+  description: "Gold sequins, cullet, and grog on a workshop bench. Feedstock held in common, not a crawl. Solarpunk mill toward a gold cloth."
+  visual_qualities: "macro, grit, sequin, glass, clay, shop-lamp, no people"
+}
+
+^"thematic_mapping"{
+  operator: "integration"
+  valence: "bone"
+  spirit_phase: "practice"
+  liminality: "grounded"
+  source: "Grok Imagine"
+  role: "material-study"
+  context: "bin[feedstock]{cullet,grog,fiber}, mill.laminate.cure teaching set"
+}
+
+^"usage"{
+  surface: "renders"
+  role: "archived-source"
+  dimensions: { width: 1248, height: 832 }
+  formats_available: ["jpg"]
+  alt_text: "Macro of gold sequins, crushed glass, and clay grog mixed on a dark workshop bench under a warm lamp."
+}
+
+^"optimization"{
+  generated_on: "2026-08-22"
+  source: "Grok Imagine"
+  notes: "Render study. Common join, not crawl. Do not caption as harvest-from-tend-from-sow."
+}
+
+^"discovery"{
+  tags: ["imagine", "gold", "cullet", "grog", "solarpunk", "workshop"]
+  spirit_name: "upcycled-gold-feedstock"
+  status: "archived-source"
+  related_images: ["recovered-gold-voyager", "crew-gold-record"]
+  notes: "Materials seat for the workshop teaching set on /topics/software/spw/."
+}

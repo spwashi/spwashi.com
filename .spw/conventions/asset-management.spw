@@ -5,8 +5,9 @@
   ~#note: "Standard workflow for adding and managing semantic image assets across the site"
 
   intake: {
-    source: "Midjourney renders, illustrations, screenshots, motifs"
+    source: "Midjourney renders, Grok Imagine stills, illustrations, screenshots, motifs"
     destination: "public/images/renders/{date}-{purpose}/ for archiving; public/images/assets/{surface}/ for deployment"
+    imagine: "An Imagine still is an image asset: spirit name, sidecar .spw, register in assets.spw. Do not leave it as anonymous chat fodder."
   }
 
   naming: {

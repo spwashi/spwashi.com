@@ -25,6 +25,7 @@
 @structure_ecology_2026_08: ~"./structure-ecology-2026-08.spw"
 @component_llm_intelligence_2026_08: ~"./component-llm-intelligence-2026-08.spw"
 @situation_print_set_2026_08: ~"./situation-print-set-2026-08.spw"
+@golden_voyager_window: ~"./golden-voyager-window.spw"
 
 operation = "align"
 fixity = "tending"
@@ -44,6 +45,7 @@ fixity = "tending"
   structure_ecology_2026_08 = @structure_ecology_2026_08
   component_llm_intelligence_2026_08 = @component_llm_intelligence_2026_08
   situation_print_set_2026_08 = @situation_print_set_2026_08
+  golden_voyager_window = @golden_voyager_window
 }[reg=facet]
 
 ^"cache_rules"{

@@ -84,6 +84,14 @@
           note: "Commissioned as a design reference, not decoration — and it changed the code. arrival-electrostatics.css drew a ring with a soft bloom until this showed the boundary is one hard side, the charge is grain concentrating toward it, and the nucleus is about one percent of the frame." },
         { spirit_name: "boonhonk-attentional-fluid", variants: ["archive", "thumb", "display", "hero"], formats: ["avif", "webp"],
           note: "Preferred. Flat contour-bounded teal fields with warm gold nuclei inside rings and vertical threads between them — attention moving through fields separated by walls, with no glow spill. Closest reference the site has to arrival-electrostatics: a bounded ring with a warm centre rather than a bloom. Extracted to assets/illustrations with a .spw sidecar." }
+      ]},
+      { date: "2026-08-22", name: "recovered-gold-study", status: "archived-source", images: 3, content: [
+        { spirit_name: "recovered-gold-voyager", variants: ["source"], formats: ["jpg"],
+          note: "Grok Imagine. Faceless gold traveler descending into a deserted bowl. Situating image for the 2024–2028 mix window. Not a ceremony-costume replica and not a performer likeness. Cache: .spw/caches/golden-voyager-window.spw." },
+        { spirit_name: "crew-gold-record", variants: ["source"], formats: ["jpg"],
+          note: "Grok Imagine. A gold disc compiled for whoever finds it. Cohesion image: sidecar curriculum, capture archive, shared seed." },
+        { spirit_name: "upcycled-gold-feedstock", variants: ["source"], formats: ["jpg"],
+          note: "Grok Imagine. Sequins, cullet, and grog on a bench. Common join, not crawl. Workshop teaching set kinship." }
       ]}
     ]
   }

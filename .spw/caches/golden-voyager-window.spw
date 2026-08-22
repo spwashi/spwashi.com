@@ -1,0 +1,70 @@
+# Golden Voyager window
+#
+# Situating image for the already-authored 2024–2028 mix window.
+# Cache, not a public mascot. Imagine study is a named asset, not a replica.
+
+#>golden_voyager_window
+#:cache #!genre #!materials #!cohesion #!boonhonk
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@capacity: ~"../conventions/semantic-capacity.spw"
+@boonhonk: ~"./boonhonk-combinatoric-genre.spw"
+@dregg: ~"../conventions/dregg-lineage.spw"
+@assets: ~"../assets.spw"
+@study: ~"../../public/images/renders/2026-08-22-recovered-gold-study/"
+@register: ~"../../about/index.html#boonhonk-register"
+
+operation = "cache"
+fixity = "experimental"
+
+^"insight"{
+  id = "golden-voyager-window"
+  operation = "cache"
+  fixity = "experimental"
+  source = `chat 2026-08-22 — Paris 2024 closing; Golden Voyager named after the Voyager Golden Record; costume from upcycled gold`
+  claim = `The 2024–2028 window already on the boonhonk register has a situating image: recovered gold, a traveler who arrives without collapsing the field, and a record compiled for whoever finds it.`
+  evidence = #[
+    `@register lede: After the 2024 Games, before 2028`,
+    `IOC/Jolly: interstellar voyager in a deserted world; name from the 1977 Golden Record`,
+    `Germanier costume: upcycled textiles, gold beads and sequins diverted from landfill`,
+    `@study recovered-gold-voyager, crew-gold-record, upcycled-gold-feedstock`
+  ][reg=set]
+  pattern_consideration = #[
+    `@boonhonk disco: dress, not nostalgia glitter`,
+    `dot-join project: scrap ~> mill ~> temper`,
+    `Dregg sidecar as notes a crew can hold beside code`
+  ][reg=set]
+  expansion_prime = `Keep public speech at recovered gold and a record made to be found. Theme with linked chips, not a mascot. Living terms emphasize the still.`
+  validation = `rg '2024 Games' about/index.html; test -f public/images/renders/2026-08-22-recovered-gold-study/recovered-gold-voyager.spw`
+  do_not_promote_until = `A public sentence that earns gold-as-material without becoming a mascot, and a second consumer besides the register lede.`
+}[reg=facet]
+
+^"kinships"{
+  record = `A crew-compiled message for whoever finds it. Same shape as sidecar curriculum, a named capture pack, an expression manifest.`
+  gold = `Upcycled sequin and bead is mill/laminate/cure physics, not disco costume glitter.`
+  voyager = `Arrival without nested-about. scrap ~> mill ~> temper: a path that projects, then excavates vestiges.`
+  honk = `Broadcast / public relay — the record is a honk meant to outlive the room.`
+  bone = `What persists after the games disappear.`
+  breaking = `Body in a cipher. Do not name the dancer.`
+}[reg=facet]
+
+^"public_speech"{
+  already = `After the 2024 Games, before 2028: a window when a mix still had to name its own thread.`
+  may_add = `Gold as recovered material. A record made to be found.`
+  refuse = #[
+    `Golden Voyager, Cadre, Jolly, Germanier, Cruise, Eilish on public HTML`,
+    `Imagine replica of the ceremony costume as a mascot`,
+    `conspiracy readings of the closing`,
+    `a likeness of the performer`
+  ][reg=set]
+}[reg=facet]
+
+^"imagine_study"{
+  source = `Grok Imagine, 2026-08-22`
+  seat = @study
+  spirits = #[`recovered-gold-voyager` ; `crew-gold-record` ; `upcycled-gold-feedstock`][reg=set]
+  status = `archived-source — documented as a render study, not extracted to a live illustration yet`
+  refuse = `Do not treat an Imagine still as anonymous chat fodder. Name it, sidecar it, register it in @assets.`
+}[reg=facet]
