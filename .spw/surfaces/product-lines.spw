@@ -249,7 +249,7 @@ creative_marketing_engine: .{
  musician_path = .{
   doorways = #[operator_atlas, play_sessions, recipes][reg=set]
   language = #[`rhythm`, `motif`, `loop`, `score`, `timbre`, `session`, `cadence`][reg=set]
-  expansion_prime = `Treat promo/wonder cadence, operator voices, runtime timing, and cauldron mixing as a score that a musician can read, perform, or remix.`
+  expansion_prime = `Treat promo/wonder cadence, operator voices, runtime timing, cauldron mixing, and boonhonk mixes as a score. Jazz is flow over that form. Hip-hop pillars stay practices (DJ, MC, writing, breaking). Funk is instrumentation. Disco is fashion-linguistic occasion.`
  }[reg=facet]
  visual_artist_path = .{
   doorways = #[seed_cards, domain_cards, operator_atlas][reg=set]

@@ -1,0 +1,144 @@
+# Boonhonk Combinatoric Genre
+#
+# Mix-counting is a porch. Public development is dimensional travel
+# and musical occasion. Do not mention retired domain names.
+
+#>boonhonk_combinatoric_genre
+#:cache #!genre #!combinatorics #!boonhonk #!dimensions #!rhythm
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@capacity: ~"../conventions/semantic-capacity.spw"
+@domains: ~"../domains.spw"
+@ascent: ~"../conventions/dimensional-ascent-script-patterns.spw"
+@expression: ~"../conventions/semantic-expression-consequence.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@musical: ~"../reviews/runtime-audit/selector-timing-chunking-musical-ontology.spw"
+@fashion: ~"../audits/appendices/fashion-history-500y.spw"
+@dimensional_nav: ~"../../.agents/plans/dimensional-expression-navigation/PLAN.md"
+@register: ~"../../about/index.html#boonhonk-register"
+@rpg: ~"../../play/rpg-wednesday/index.html#rpgw-boonhonk"
+@fit: ~"../../play/rpg-wednesday/library/index.html#boonhonk-fit"
+@combinatorics: ~"../../topics/math/combinatorics/index.html"
+@software_path: ~"../../topics/software/index.html#dimensional-expression-path"
+@mixer: ~"../../public/js/modules/widgets/boonhonk-mixer.js"
+@kernel: ~"../../.agents/plans/daily-kernel-development/boonhonk-dimensional-flow-2026-08-21.spw"
+
+operation = "prime"
+fixity = "tending"
+
+^"insight"{
+  id = "boonhonk-combinatoric-genre"
+  operation = "prime"
+  fixity = "tending"
+  source = `2026-08-21 public-genre development, loosened from pair-ceiling`
+  claim = `Boonhonk is a combinatoric genre of five transforms. A pair is a readable start, not a ceiling. The mix travels the dimensional path. Musical occasions (jazz, hip-hop, funk, disco) are practices, not costumes.`
+  evidence = #[
+    `@register lede, mix grid, occasions`,
+    `@rpg name-drift + pantry`,
+    `@fit pair-as-porch`,
+    `@mixer continuous 5-weight field`,
+    `@ascent d0-d4 ladder`,
+    `@dimensional_nav handle → vector → form → field → path`
+  ][reg=set]
+}[reg=facet]
+
+^"transforms"{
+  set = #[`boon` ; `bane` ; `bone` ; `bonk` ; `honk`][reg=set]
+  jobs = .{
+    boon = `arrival, benefit, invitation`
+    bane = `cost, limit, useful constraint`
+    bone = `scaffold, chassis, persistence`
+    bonk = `collision, event, experiment`
+    honk = `signal, broadcast, public relay`
+  }[reg=facet]
+}[reg=facet]
+
+^"count"{
+  porch = `5 unary + 20 ordered pairs = 25 if you want a pair to count`
+  job = `A small countable example for @combinatorics. Not the house.`
+  mixer = `Continuous 5-simplex weights are equally valid. Discrete names are for calling a beat out loud.`
+  refuse = `Do not treat 25 as a legal maximum. Ensemble, sequence, and dimensional travel are in-genre.`
+}[reg=facet]
+
+^"play_rule"{
+  pair = `A readable start: one primary, optional secondary.`
+  ensemble = `More than two transforms may share a beat when the scene can still name them.`
+  sequence = `A mix may travel time: bone, then boon, then honk is locomotion, not a rule-break.`
+  names = `BoonWAP, BaneWAP, Honk Bazongas are already mixes. A new combination is a genre beat.`
+  expressions = `Authored data-spw-semantic-expression hosts are production handles: grab a loop, precipitate a rhythm, replay it. Kinship is authored, never inferred (@expression).`
+  refuse = `Do not stand up another land to hold a mix. Do not mention lost domains. boon.land and bane.land stay skeletons. Do not costume hip-hop, jazz, funk, or disco as flavor adjectives.`
+}[reg=facet]
+
+^"dimensional_travel"{
+  cite = @ascent
+  nav = @dimensional_nav
+  d0_handle = `Name the mix. An expression root or #>address is a production handle.`
+  d1_vector = `A transform is a directed force. Operator chips carry polarity.`
+  d2_form = `Wraps hold the mix: [mode] {practice} (scene).`
+  d3_field = `Jazz flow and expression kinship live here — continuation, not a new rule.`
+  d4_path = `Precipitated rhythm: replayable spell, session beat, production cue.`
+  rule = `Text proves 0D–2D. Field and path are host/runtime projections. Do not pretend they were parsed from the string.`
+}[reg=facet]
+
+^"occasions"{
+  jazz = .{
+    practice = `Flow as continuation of form`
+    form = `The five transforms are the head. UX sit / travel / look / kin are the changes.`
+    specimen = `Gravy Davis — jazz as aftermath-flow past a held spill`
+    not = `Smooth copy. Background saxophone.`
+  }[reg=facet]
+  hip_hop = .{
+    practice = `Four pillars, earnest`
+    dj = `Select, cut, loop, mix — mixer and expressions as handles`
+    mc = `Voice, bar, name — copy and name drift`
+    writing = `Public mark — chips, sigils, visual linguistics`
+    breaking = `Body in a cipher — wrap jobs, dimensional locomotion`
+    not = `A look, a font, or a borrowed slang coat`
+  }[reg=facet]
+  funk = .{
+    practice = `Instrumentation`
+    groove = `How instruments talk. Mixer, operator voices, cauldron as band.`
+    cite = @musical
+    not = `The word funky as a synonym for playful`
+  }[reg=facet]
+  disco = .{
+    practice = `Occasion and fashion linguistics`
+    dress = `Silhouette, palette, public signal. A night you dress for.`
+    cite = @fashion
+    not = `Nostalgia glitter or a costume party`
+  }[reg=facet]
+}[reg=facet]
+
+^"harmony"{
+  indexed = `Pair-count, dimensional travel, musical occasions, mixer field — named.`
+  structured = `Dimensional travel seats the mix. Pair-count is a porch (compare). Occasions are practices (flavor with earnest jobs). Mixer is instrument.`
+  responsive = `Math question → porch count. Production question → expression handle. Flow question → jazz. Craft question → hip-hop pillar. Band question → funk. Occasion/dress question → disco.`
+}[reg=facet]
+
+^"ecology"{
+  seat = `cluster for the mix pantry; path for dimensional travel; route-bridge is the networked guild`
+  ruderal = `transform cards, occasion cards, quick-actions`
+  networked = `.spw-route-bridge relatives on about, RPG, library, software, play`
+  nested_container = `#boonhonk-register, #rpgw-boonhonk, #boonhonk-fit are not main > .spw-frame — they author container-name: spw-region`
+  refuse = `More chip rows. Empty wrappers. A seventh region seat.`
+}[reg=facet]
+
+^"surfaces"{
+  register = @register
+  table = @rpg
+  fit = @fit
+  math = @combinatorics
+  dimensional_path = @software_path
+  instrument = @mixer
+  musician_path = @product_lines
+  kernel = @kernel
+  held_realms = `about/domains/boon.land/ and about/domains/bane.land/ — no expansion this pass`
+}[reg=facet]
+
+validation: #[
+  `rg -n 'porch|dimensional|jazz|hip-hop|funk|disco' about/index.html play/rpg-wednesday/index.html .spw/caches/boonhonk-combinatoric-genre.spw`,
+  `rg 'bonk\\.land|honk\\.land' --glob '!**/node_modules/**' --glob '!**/.spw/_workbench/**'`,
+  `git diff --check -- about/index.html play/rpg-wednesday/index.html play/rpg-wednesday/library/index.html play/rpg-wednesday/character/index.html topics/math/combinatorics/index.html index.html`
+][reg=set]
