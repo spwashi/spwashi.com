@@ -1,0 +1,21 @@
+{
+  "directory": ".references",
+  "note": "Local clones of neighboring repos so sidecar .spw curriculum can be crawled locally.",
+  "remotes": [
+    {
+      "id": "dregg",
+      "url": "https://github.com/emberian/dregg.git",
+      "why": "Dregg kernel. Crawl for any sidecar .spw beside the executor."
+    },
+    {
+      "id": "dragons-clutch",
+      "url": "https://github.com/emberian/dragons-clutch.git",
+      "why": "Sidecar curriculum: https://github.com/emberian/dragons-clutch/tree/main/.spw — canon, index, mount, workspace. Spw beside the code, not the Descent grammar."
+    },
+    {
+      "id": "lore.land",
+      "url": "https://github.com/lore-land/lore.land.git",
+      "why": "Neighboring long-form surface. Public companion to this site's lore.land domain page."
+    }
+  ]
+}

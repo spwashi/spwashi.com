@@ -62,6 +62,7 @@
     "ecology:strict": "node scripts/spw-ecology-inventory.mjs --strict",
     "ecology:language": "node scripts/spw-language-ecology.mjs",
     "ecology:language:json": "node scripts/spw-language-ecology.mjs --json",
+    "refs:sync": "node scripts/sync-reference-clones.mjs",
     "spw": "npm --prefix .spw/_workbench run spw --",
     "spw:doctor": "npm --prefix .spw/_workbench run spw -- doctor ../..",
     "spw:roots": "npm --prefix .spw/_workbench run spw -- roots ../..",

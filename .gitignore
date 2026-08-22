@@ -18,6 +18,12 @@ design/components/captures/
 # Caches index r2: machine-readable inventories are stdout, not committed files.
 .spw/gen/
 
+# Neighboring checkouts for crawl (Dregg sidecar curriculum, lore.land).
+# Catalog and README stay tracked; clones and crawl output do not.
+.references/*
+!.references/README.md
+!.references/catalog.json
+
 # Midjourney session exports — unpack into public/images/renders/<date>-<study>/ and
 # register the study in .spw/assets.spw; the zip itself is not an asset.
 midjourney_session*.zip

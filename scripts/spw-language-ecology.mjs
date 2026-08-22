@@ -42,7 +42,7 @@ async function walkFiles(dir, predicate, acc = []) {
     return acc;
   }
   for (const entry of entries) {
-    if (entry.name === 'node_modules' || entry.name === '.git' || entry.name === 'dist' || entry.name === 'dist-vite') continue;
+    if (entry.name === 'node_modules' || entry.name === '.git' || entry.name === 'dist' || entry.name === 'dist-vite' || entry.name === '.references') continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       if (entry.name === '_workbench' && dir.endsWith('.spw')) continue;

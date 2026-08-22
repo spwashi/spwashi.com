@@ -7,6 +7,7 @@ export const EXCLUDED_TOP_LEVEL = new Set([
     '.git',
     '.github',
     '.idea',
+    '.references',
     '00.unsorted',
     '_partials',
     'dist',

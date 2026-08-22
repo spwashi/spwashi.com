@@ -1,0 +1,38 @@
+# Sidecar References
+#
+# Neighboring checkouts (Dregg curriculum, lore.land) live gitignored under
+# .references/ for local reference and crawling.
+
+#>sidecar_references
+#:convention #!references #!curriculum #!dregg
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@dregg_lineage: ~"./dregg-lineage.spw"
+@dot_join: ~"../language/dot-join.spw"
+@catalog: ~"../../.references/catalog.json"
+@sync: ~"../../scripts/sync-reference-clones.mjs"
+@clutch: ~"https://github.com/emberian/dragons-clutch/tree/main/.spw"
+
+operation = "prime"
+fixity = "tending"
+
+^"thesis"{
+  claim = `Some neighboring repos keep .spw as sidecar curriculum — teaching notes beside the code, not the host grammar.`
+  clutch = `emberian/dragons-clutch/.spw is the live proof: canon, index, mount, workspace. Consumer-owned tree; workbench is mounted infrastructure.`
+  refuse = `Do not treat Dregg .scene / Descent grammar as Spw.`
+  crew = `Clones are for crawl and shared learning, not solo contribution theater.`
+}[reg=facet]
+
+^"seats"{
+  working_tree = `spwashi.com — this checkout. Proof of concept for workbench updates; runtime parser lives here.`
+  sidecar = `Dregg repos such as dragons-clutch — .spw curriculum beside the project.`
+  neighbor = `lore.land — long-form surface, cloned for crawl, not rewritten here.`
+}[reg=facet]
+
+validation: #[
+  `test -f .references/catalog.json`,
+  `rg 'dragons-clutch' .references/catalog.json`,
+  `test -f .references/README.md`,
+][reg=set]

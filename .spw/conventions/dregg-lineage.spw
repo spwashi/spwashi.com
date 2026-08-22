@@ -21,6 +21,8 @@
 @registers: ~"./cauldron-registers.spw"
 @material_projection: ~"./material-projection.spw"
 @measurement: ~"./measurement-contract.spw"
+@sidecar: ~"./sidecar-references.spw"
+@clutch: ~"https://github.com/emberian/dragons-clutch/tree/main/.spw"
 
 operation = "prime"
 fixity = "experimental"
@@ -82,7 +84,21 @@ expression = lineage[dregg]{determinism.verification.hypermedia}<topics>
     why = `computational physics and game engines sit behind the specs, which is why their determinism language is precise rather than decorative`
     ours = @world_physics
   }[reg=facet]
+
+  sidecar_curriculum: .{
+    why = `some Dregg repos keep .spw beside the code as teaching notes — dragons-clutch/.spw is the live tree: canon, index, mount, workspace`
+    ours = `this site is a consumer and a proof of concept, not a clone of that tree`
+    refuse = `do not treat Descent .scene as Spw`
+  }[reg=facet]
 }
+
+^"crew_cohesion"{
+  claim = `Learnability here is group behavior: a crew can share the same spec, seed, scene, and table version, and a stranger can re-run it.`
+  memable = `Track A / B / C, sidecar, lore.land — named chips a group can call out loud.`
+  record = `A record compiled for whoever finds it, not a solo contribution theater.`
+  refuse = `Do not edit cloned .references/dregg or dragons-clutch. Do not speak for Dregg.`
+  public = `/topics/knowledge-bases/#dregg-contribution`
+}[reg=facet]
 
 #>wonder_dregg_lineage_1
 ?["Does a seed on this site render the same surface twice?"]{
