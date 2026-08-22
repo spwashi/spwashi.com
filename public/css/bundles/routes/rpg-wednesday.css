@@ -1353,6 +1353,55 @@
   border-left: 3px solid color-mix(in srgb, var(--rpg-bench-brass) 62%, transparent);
 }
 
+/* Nested campaign frames are not main > .spw-frame. */
+:where(
+  body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk,
+  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit
+) {
+  container-type: inline-size;
+  container-name: spw-region;
+}
+
+:where(
+  body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk .frame-grid,
+  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-grid
+) {
+  align-items: stretch;
+  gap: clamp(0.65rem, 1.4cqi, 1.05rem);
+}
+
+:where(
+  body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk .frame-panel,
+  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-panel
+) {
+  min-width: 0;
+}
+
+:where(
+  body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk .spw-route-bridge,
+  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .spw-route-bridge
+) {
+  margin-block-start: 1rem;
+}
+
+@container spw-region (max-width: 36rem) {
+  :where(
+    body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk .frame-grid,
+    body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-grid
+  ) {
+    grid-template-columns: 1fr;
+  }
+}
+
+@container spw-region (min-width: 40rem) {
+  :where(
+    body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk .frame-grid,
+    body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-grid
+  ) {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :where(body[data-spw-surface="rpg-wednesday"] :is(
     .rpg-language-evolution__stage,
