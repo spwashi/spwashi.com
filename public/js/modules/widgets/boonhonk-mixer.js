@@ -351,7 +351,11 @@ class BoonhonkMixer {
         this.operatorRow = document.createElement('div');
         this.operatorRow.className = 'bhm-operator-row';
 
-        el.append(this.colorPreview, this.statePill, formula, this.operatorRow);
+        this.expressionEl = document.createElement('code');
+        this.expressionEl.className = 'bhm-expression';
+        this.expressionEl.dataset.spwSemanticExpression = 'boonhonk[ensemble]{boon.bane.bone.bonk.honk}';
+
+        el.append(this.colorPreview, this.statePill, formula, this.operatorRow, this.expressionEl);
 
         return {
             el,
@@ -359,6 +363,7 @@ class BoonhonkMixer {
             statePill: this.statePill,
             formulaLines: { hue: hueLine, sat: satLine, light: lightLine },
             operatorRow: this.operatorRow,
+            expressionEl: this.expressionEl,
         };
     }
 
@@ -502,6 +507,24 @@ class BoonhonkMixer {
             this.operatorRow.appendChild(chip);
             this.operatorChips.set(op.id, chip);
         });
+
+        this.updateEnsembleExpression();
+    }
+
+    updateEnsembleExpression() {
+        if (!this.expressionEl) return;
+        const threaded = OPERATORS
+            .map((op) => [op.id, this.weights[op.id] ?? 0])
+            .filter(([, weight]) => weight > 0.05)
+            .sort((a, b) => b[1] - a[1])
+            .map(([id]) => id);
+        const body = threaded.length ? threaded.join('.') : 'bone';
+        const expr = `boonhonk[ensemble]{${body}}`;
+        this.expressionEl.textContent = expr;
+        this.expressionEl.dataset.spwSemanticExpression = expr;
+        if (this.container) {
+            this.container.dataset.spwSemanticExpression = expr;
+        }
     }
 
     createValueSpan(text) {
