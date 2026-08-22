@@ -22,6 +22,7 @@
 @precipitate_2026_08_14: ~"./precipitate-2026-08-14.spw"  # probe output lifted into corpus; deltas accrue per run
 @region_ecology_materials: ~"./region-ecology-materials.spw"
 @boonhonk_combinatoric_genre: ~"./boonhonk-combinatoric-genre.spw"
+@structure_ecology_2026_08: ~"./structure-ecology-2026-08.spw"
 
 operation = "align"
 fixity = "tending"
@@ -38,6 +39,7 @@ fixity = "tending"
   precipitate_2026_08_14 = @precipitate_2026_08_14
   region_ecology_materials = @region_ecology_materials
   boonhonk_combinatoric_genre = @boonhonk_combinatoric_genre
+  structure_ecology_2026_08 = @structure_ecology_2026_08
 }[reg=facet]
 
 ^"cache_rules"{

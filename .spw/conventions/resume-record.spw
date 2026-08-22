@@ -1,0 +1,50 @@
+# Resume Record
+#
+# The site illustrates the résumé. These records are handles into that fact,
+# not a second ontology and not the substrate under every component.
+
+#>resume_record
+#:convention #!resume #!specimen #!flocculation
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@audience_onboarding: ~"../../.agents/plans/audience-onboarding-copy/PLAN.md"
+@component_region: ~"./component-region-personality.spw"
+@expression_consequence: ~"./semantic-expression-consequence.spw"
+@cauldron: ~"./cauldron-dynamics.spw"
+@attribute_governance: ~"./data-spw-attribute-governance.spw"
+@page_region: ~"../slices/page-region-discoverability/index.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"thesis"{
+  site = "The public tree is the résumé. A visitor already walking rooms, components, and regions is reading it."
+  record = "A resume-record is a small walkable specimen: year, practice, or mix. It uses data-spw-feature=resume-record on an existing panel or list item."
+  not_substrate = "Resume-record is not the seed for every component. Shared abstractions (income, skill, expectation, practice) may appear in many families."
+  no_competition = "Do not rank this family against seed-cards, living terms, scene beds, or the cauldron. Ontologies should not compete while they are being refined."
+  flocculation = "Spw may cluster related handles when they share a seed or an authored expression. That is inductance (kinship), not a merge. Runtime lights kin on the page; chips carry the visitor to the other room."
+}[reg=facet]
+
+^"authoring"{
+  host = "article.frame-panel or li inside a data-spw-feature=resume-record cluster"
+  required = #[`data-spw-seed`, `data-spw-semantic-expression`][reg=set]
+  kinship = "Reuse subjects, modes, or parts already on the page (career, software, language, year) so expression-resonance has edges to fire. Do not mint a private vocabulary that cannot kin."
+  scene = "Optional data-spw-scene-interpret when the record is a midprocess situation, not a concept dump."
+  living = "Living terms may prime the cauldron. Do not wrap every noun."
+  refuse_attr = "Do not invent data-spw-resume. Feature, seed, expression, and scene already name the job."
+  identity = "Situated work (ACT-SO, a named project) may appear. Do not add Blackness to keywords, topic slugs, seed names, or mix axes. Algorithmic representation should not flatten a person into a category."
+}[reg=facet]
+
+^"axes"{
+  year = "income · skill · expectation — a triple, not a salary brag"
+  practice = "software · learning · illustration · design · oration · organization"
+  mix = "A year-shape is 3×3×3 if you want the count. The ledger on /tools/budgeting/ is for the mix you are in."
+  benches = "Tools are practice benches, not a layoff kit. Parser = software/language-sync. Year mix = organization. Midjourney = illustration. Character sheet = oration/film/play. Profile = the six doors as a traveling card."
+}[reg=facet]
+
+validation: #[
+  `rg 'data-spw-feature="resume-record"' about/index.html tools/budgeting/index.html`
+  `rg 'data-spw-resume' --glob '*.html'  # must stay empty`
+][reg=set]

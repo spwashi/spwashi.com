@@ -90,6 +90,7 @@
 @workbench_mounted_docs: ~"../_workbench/docs/runtime/md/mounted-workbench.md"
 @component_taxonomy: ~"./component-taxonomy.spw"
 @component_region_personality: ~"./component-region-personality.spw"
+@resume_record: ~"./resume-record.spw"
 @spw_architecture_ecology: ~"./spw-architecture-ecology.spw"
 @relational_design_graph: ~"../graph.spw"
 @spw_architecture_ecology_plan: ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"

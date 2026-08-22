@@ -39,8 +39,8 @@ fixity = "tending"
   `semantic-copy-depth — copy-depth ladder and display rules`
   `component-region-personality — referentiality, templates, voice surgery, copy-units`
  ][reg=set]
- satellite_plans: #[`hook-region-anatomy`, `audience-onboarding-copy`, `copy-localization`][reg=set]
- conventions: #[`living-medium-copy`, `copy-localization`, `coloring-depth`, `component-region-personality`, `metaphor-dimensional-lexicon`][reg=set]
+ satellite_plans: #[`hook-region-anatomy`, `audience-onboarding-copy`, `copy-localization`, `resume-record`][reg=set]
+ conventions: #[`living-medium-copy`, `copy-localization`, `coloring-depth`, `component-region-personality`, `metaphor-dimensional-lexicon`, `resume-record`][reg=set]
  audits: #[`internal-external-vocabulary-clusters-2026-07`, `vocabulary-metaphor-growth-synthesis-2026-07`, `metaphor-primitive-research-branching-2026-07`][reg=set]
  register_disambiguation: `expressive_registers "register" = depth/valence channel; product-lines audience_register = offer taxonomy; viewing_reason = cross-media lens/persona axis — see @metaphor_dimensional_lexicon lexicon_registers.viewing_reason`
  conflict_rule: "Public route copy contracts beat plan prose; data-spw-copy-unit ids beat raw English strings."
@@ -53,7 +53,7 @@ fixity = "tending"
   label = "Empty data-spw-topic beds get kebab text via node scripts/tend-spw-embeddings.mjs --apply. Do not invent slugs that disagree with visible words."
   prune = "Do not wrap every noun. Do not stamp data-spw-form on every site-frame. Living terms inspect; topics jump conceptually."
   compost = "Remove marks that no longer change navigation, parse demand, or reader literacy."
-  harvest = "Open combinatorics go to /topics/software/spw/#concept-form-lab and /tools/spw-parser/?spw_sample=beans."
+  harvest = "Open combinatorics go to /topics/software/spw/#concept-form-lab and /tools/spw-parser/?spw_sample=beans. Practice, language-sync, film, and year-mix specimens: ?spw_sample=practices|sync|film|year."
   seats = "<stem> conceptual · [stem] variant · {stem} practice · (stem) scene · postfix pairs stay hypotheses"
   soil_harvest = "Beans open soil work, companion planting, and two microbial stories (rhizobia vs PNSB). Keep those as facts on /recipes/#soil-companions — not as a reason to blend kitchen, parser, and garden into one metaphor."
   dregg_harvest = "Current attention: Dregg.Net. Cite the existing author spec (docs/CONTENT-AND-ASSET-SPEC.md) and art guide (docs/CONTRIBUTING-ASSETS.md). Public home: /topics/knowledge-bases/#dregg-contribution. Do not invent a parallel contribution taxonomy."
@@ -63,7 +63,7 @@ fixity = "tending"
   stance = "Assume a busy reader arrived for this page's subject. Lead with what they can use, observe, or decide."
   knowledge_base = "Each public page should function as a knowledge base for its domain: definitions, mechanisms, sources, next practice. Marks and forms are handles, not the content."
   mindfulness = "Name what the reader already knows how to do, then add one distinction that changes the next action. Do not ask them to imagine a blend in order to earn the fact."
-  refuse = "Recursive pleas for phantom metaphor-blends: combinatoric genre sales, atlas-tending hypotheses on non-language pages, and 'wrap this staple so the parser can grow' as a substitute for soil, recipe, or nutrition knowledge."
+  refuse = "Recursive pleas for phantom metaphor-blends: combinatoric genre sales, atlas-tending hypotheses on non-language pages, and 'wrap this staple so the parser can grow' as a substitute for soil, recipe, or nutrition knowledge. Chat is thinking, not copy: do not paste shop talk, domain-wait notes, or 'not a metaphor' watermarks onto a reader surface. The author reviews diffs on a tall monitor, not every route. Stay off ChatGPT's accepted AI pacing: balanced triples, soothing hedges, 'it's not X, it's Y'. Public sentences should be authored, even when a model helped write them. Racial identity may be authored as situated fact. Do not represent Blackness as keywords, JSON-LD categories, data-spw-topic slugs, prompt filler, diversity chips, or inferred tags. Prefer a named program or project over demographic metadata. Search and runtime should not over-weight identity tokens relative to the work. School names and district-budget compares stay off unless the author writes them. Give space the way The Adult Learning Lab treats people in language and learning work: other people's names, interiors, and relationship texture are not public copy. Initials only when the author says so. Do not reconstruct a private life from PII the page does not need. Do not scrape a partner's portfolio onto the résumé. Unpaid credits for other people's named projects stay off. Family business names, partner names, and identifiable film titles stay off unless the author writes them. Name skills and years; do not name the unpaid project or the company that would identify the family. Do not identify the author as “a man.” Man can be named as a perception, and as a performance they do not mind. Do not spend “I am nonbinary” as a badge for a conversation that has not been given room. Do not pin gender copy to a partner or a dated relationship. Gender reflection stays off the public years until the author writes a sentence that keeps distance."
 }[reg=facet]
 
 ^"owner_claim"{

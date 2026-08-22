@@ -1,0 +1,31 @@
+# Structure ecology cache — 2026-08-22
+#
+# Operation: audit. Skills doors on About should attach to public rooms
+# without making resume-record the substrate of every component.
+
+#>structure_ecology_2026_08
+#:cache #!ecology #!structure
+#:operation #!audit
+#:fixity #!tending
+
+@resume_record: ~"../conventions/resume-record.spw"
+@copy_ecology: ~"../conventions/copy-ecology.spw"
+@recursive: ~"../conventions/recursive-improvement.spw"
+
+operation = "audit"
+fixity = "tending"
+
+^"claim"{
+  site = "The public tree is the résumé. About years/practices are handles."
+  not_substrate = "Leaves keep their own families (scene beds, seed-cards, tools). They attach by related-routes, chips, and authored expression kinship — not by becoming resume-records."
+  privatize = "Family business names, partner names, unpaid film titles stay off public HTML."
+  trajectory = "Film leaves bind to 2027 /about/#about-years. Software tools bind to parser and workbench. Budgeting year-mix counts income×skill×expectation without identifiers."
+}[reg=facet]
+
+^"patched"{
+  about = "years as skills/now dl; six practice doors; current-direction strip"
+  film_leaves = "editing, shot-language, voice, storyboard, release-rhythm: skill/now + expression matching hub cards"
+  home = "related-routes include /about/ and /topics/film/"
+  tools = "hub as practice benches; parser samples practices/sync/film/year; profile away from layoff wizard; character sheet as play/film/oration; budgeting H1 year mix; midjourney illustration door"
+  tools_audit = "year-mix :has CSS was missing (radios could not light specimens); stacked at 52rem; parser sample buttons 2.75rem on coarse; character route_family left apprenticeship; tools practice doors keep seeds without resume-record class; duplicate @services chip removed"
+}[reg=facet]

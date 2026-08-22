@@ -27,6 +27,7 @@ Make the home, about, services, topics, and tools surfaces read like a credible 
 - Frame the site as a place to join work, explore tools, and find neighboring topics.
 - Include a light ramp for college-freshman curiosity without talking down to the reader.
 - Preserve the site’s professional register and avoid generic “for everyone” language.
+- The site is the résumé. `/about/#about-years` and `/about/#career-register` host walkable year and practice records; they do not replace other component families. See `.agents/plans/resume-record/PLAN.md`.
 
 ## Validation
 
