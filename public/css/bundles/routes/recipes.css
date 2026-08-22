@@ -343,4 +343,47 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
   background: var(--recipes-panel-warm);
   border-color: color-mix(in srgb, var(--recipes-ember) 22%, var(--recipes-line));
 }
+
+/* Nested cluster is not main > .spw-frame, so it needs its own inline-size
+   container for pack-span and region-track to follow the seat, not the viewport. */
+:where(body[data-spw-surface="recipes"] #chicagoland-season) {
+  container-type: inline-size;
+  container-name: spw-region;
+}
+
+:where(body[data-spw-surface="recipes"] #chicagoland-season .frame-grid) {
+  align-items: stretch;
+  gap: clamp(0.65rem, 1.4cqi, 1.05rem);
+}
+
+:where(body[data-spw-surface="recipes"] #chicagoland-season .frame-panel) {
+  background: var(--recipes-panel);
+  min-width: 0;
+}
+
+:where(body[data-spw-surface="recipes"] #chicagoland-season .frame-panel[data-spw-pack-span="full"]) {
+  background: var(--recipes-panel-warm);
+}
+
+:where(body[data-spw-surface="recipes"] #chicagoland-season .frame-operators) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.4rem, 1cqi, 0.65rem);
+}
+
+@container spw-region (max-width: 36rem) {
+  :where(body[data-spw-surface="recipes"] #chicagoland-season .frame-grid) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(body[data-spw-surface="recipes"] #chicagoland-season .frame-panel[data-spw-pack-span="full"]) {
+    grid-column: 1;
+  }
+}
+
+@container spw-region (min-width: 40rem) {
+  :where(body[data-spw-surface="recipes"] #chicagoland-season .frame-grid) {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr));
+  }
+}
 }
