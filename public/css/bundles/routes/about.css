@@ -334,6 +334,100 @@ body[data-spw-surface="about"] {
   color: color-mix(in srgb, var(--about-ink) 92%, var(--about-accent-2));
 }
 
+[data-spw-surface="about"] .about-years {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  margin-block: 1rem 1.15rem;
+  padding: 0;
+  list-style: none;
+  touch-action: pan-y pinch-zoom;
+}
+
+[data-spw-surface="about"] .about-years > .resume-record {
+  display: grid;
+  gap: 0.4rem;
+  min-inline-size: 0;
+  margin: 0;
+}
+
+[data-spw-surface="about"] .about-years header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+}
+
+[data-spw-surface="about"] .about-years time {
+  font-family: var(--grammar-mono-font, var(--site-mono-font, monospace));
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--about-accent) 78%, var(--about-ink));
+}
+
+[data-spw-surface="about"] .about-years dl {
+  display: grid;
+  gap: 0.32rem;
+  margin: 0;
+}
+
+[data-spw-surface="about"] .about-years dl > div {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, 1fr);
+  gap: 0.45rem;
+  align-items: baseline;
+}
+
+[data-spw-surface="about"] .about-years dt {
+  margin: 0;
+  color: var(--about-ink-mid);
+  font-family: var(--grammar-mono-font, var(--site-mono-font, monospace));
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+[data-spw-surface="about"] .about-years dd {
+  margin: 0;
+}
+
+[data-spw-surface="about"] .about-years footer,
+[data-spw-surface="about"] .resume-record footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+[data-spw-surface="about"] .spw-reason-strip {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  margin-block: 0.4rem 1.15rem;
+}
+
+@media (orientation: landscape) and (max-height: 40rem) {
+  [data-spw-surface="about"] .about-years {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 40rem) {
+  [data-spw-surface="about"] .about-years {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  [data-spw-surface="about"] .spw-reason-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Pinch text scaling changes packing as well as glyph size. The wider record
+   measure lets the intrinsic grid shed a column before copy feels pinched. */
+:where(html[data-spw-font-size-scale="110"], html[data-spw-font-size-scale="120"])
+  [data-spw-surface="about"] .about-years {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
 [data-spw-surface="about"] .about-story-map {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr));
@@ -419,13 +513,15 @@ body[data-spw-surface="about"] {
     }
 
     [data-spw-surface="about"] #about-frame > .frame-body > #about-hook,
+    [data-spw-surface="about"] #about-frame > .frame-body > .about-years,
+    [data-spw-surface="about"] #about-frame > .frame-body > .spw-reason-strip,
     [data-spw-surface="about"] #about-frame > .frame-body > .about-story-map,
     [data-spw-surface="about"] #about-frame > .frame-body > #about-origin-question,
     [data-spw-surface="about"] #about-frame > .frame-body > .image-study {
       grid-column: 1 / -1;
     }
 
-    [data-spw-surface="about"] #about-frame > .frame-body > :is(.about-story-map, #about-origin-question) {
+    [data-spw-surface="about"] #about-frame > .frame-body > :is(.about-years, .spw-reason-strip, .about-story-map, #about-origin-question) {
       inline-size: 100%;
       max-inline-size: none;
     }

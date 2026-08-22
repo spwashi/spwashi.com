@@ -19,7 +19,7 @@
     route_family="kernel portrait semantic lattice"
     layout="newspaper"
     features="operators navigator console route-discovery svg-surfaces"
-    related_routes="/|/now/|/cards/|/membership/|/coordination/|/research/|/about/plans/|/about/website/|/topics/craft/|/topics/search/|/topics/software/|/topics/software/spw/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/curriculum/|/blog/|/tools/|/services/|/settings/|https://spw.quest|https://texture.website|https://trope.wiki"
+    related_routes="/|/now/|/cards/|/membership/|/coordination/|/research/|/about/plans/|/about/website/|/topics/craft/|/topics/search/|/topics/software/|/topics/software/spw/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/curriculum/|/blog/|/tools/|/tools/budgeting/|/tools/spw-parser/|/design/folios/|/services/|/settings/|https://spw.quest|https://texture.website|https://trope.wiki"
     stylesheet_mode="scoped"
     horizon="ambient"
     micro_world="true"
@@ -44,7 +44,7 @@
     data-spw-page-modes="reading compare navigate contact inspect collect project"
     data-spw-page-seed=".spw/about-kernel" data-spw-page-role="kernel-identity-register"
     data-spw-layout="newspaper"
-    data-spw-related-routes="/|/now/|/cards/|/membership/|/coordination/|/research/|/about/plans/|/about/website/|/topics/craft/|/topics/search/|/topics/software/|/topics/software/spw/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/curriculum/|/blog/|/tools/|/services/|/settings/|https://spw.quest|https://texture.website|https://trope.wiki"
+    data-spw-related-routes="/|/now/|/cards/|/membership/|/coordination/|/research/|/about/plans/|/about/website/|/topics/craft/|/topics/search/|/topics/software/|/topics/software/spw/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/curriculum/|/blog/|/tools/|/tools/budgeting/|/tools/spw-parser/|/design/folios/|/services/|/settings/|https://spw.quest|https://texture.website|https://trope.wiki"
     data-spw-kernel="small-stable"
     data-spw-lattice="large-semantic"
     data-spw-projection="modular"
@@ -221,28 +221,83 @@
             </p>
 
             <p>
-                The site is a record of how I practice. I am trying to learn how I learn, then share enough of that process to find what is useful to others. That is why the site moves between software, art, writing, visual systems, notes, food, and public experiments instead of pretending those are separate lives.
+                The site is also the résumé: the years, the work, and the ways one practice keeps changing another.
+                Read it straight through, or follow a thread into the room where the work lives.
             </p>
 
-            <p>
-                A lot of the language behind that started in college, where I began building my own vocabulary
-                for metacognition instead of borrowing one complete vocabulary from a single discipline. The
-                <a href="#about-origin-question" data-spw-operator="ref">origin story</a> is further down this page.
-            </p>
+            <ol class="about-years" id="about-years" aria-label="Selected years and turns in the work" data-spw-feature="resume-record" data-spw-region="path">
+                <li class="frame-panel resume-record" data-spw-seed="resume.year.speech" data-spw-semantic-expression="practice[oration]{comedy}">
+                    <header data-spw-slot="header"><time>High school</time><strong>Comedy, PLTW, ACT-SO</strong></header>
+                    <dl>
+                        <div><dt>skills</dt><dd><span class="spw-living-term" data-spw-living-term data-spw-concept="oration" tabindex="0">Original Comedy</span>, directing a genre-bending play, <abbr title="Project Lead The Way">PLTW</abbr>, an <abbr title="Afro-Academic, Cultural, Technological and Scientific Olympics">ACT-SO</abbr> windmill-blade study</dd></div>
+                        <div><dt>now</dt><dd>pacing, public voice, and a movie clock</dd></div>
+                    </dl>
+                    <footer data-spw-slot="actions">
+                        <a class="spw-chip" data-spw-handle="true" href="#resume-practices" data-spw-operator="perspective" data-spw-action="enter">@oration</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/topics/film/" data-spw-operator="stream">*film</a>
+                    </footer>
+                </li>
+                <li class="frame-panel resume-record" data-spw-seed="resume.year.business-software" data-spw-semantic-expression="practice[software]{business}">
+                    <header data-spw-slot="header"><time datetime="2013">Since 2013</time><strong>Business software</strong></header>
+                    <dl>
+                        <div><dt>skills</dt><dd>invoicing, CRM, websites, events, payments</dd></div>
+                        <div><dt>now</dt><dd>shipping readable systems, not only the first invoice</dd></div>
+                    </dl>
+                    <footer data-spw-slot="actions">
+                        <a class="spw-chip" data-spw-handle="true" href="/topics/software/" data-spw-operator="route">&lt;software</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/services/" data-spw-operator="action">!services</a>
+                    </footer>
+                </li>
+                <li class="frame-panel resume-record" data-spw-seed="resume.year.2014" data-spw-semantic-expression="practice[learning]{language}">
+                    <header data-spw-slot="header"><time datetime="2014/2017">2014–2017</time><strong>UIUC</strong></header>
+                    <dl>
+                        <div><dt>skills</dt><dd>electrical engineering start, <a href="https://tall.beckman.illinois.edu/">The Adult Learning Lab</a>, <em>learning from text</em>, a vocabulary for metacognition</dd></div>
+                        <div><dt>now</dt><dd>curriculum, parser, and language that can be inspected</dd></div>
+                    </dl>
+                    <footer data-spw-slot="actions">
+                        <a class="spw-chip" data-spw-handle="true" href="#about-origin-question" data-spw-operator="ref">~origin</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/curriculum/" data-spw-operator="frame">#&gt;curriculum</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/" data-spw-operator="wonder">? parser</a>
+                    </footer>
+                </li>
+                <li class="frame-panel resume-record" data-spw-seed="resume.year.jobs" data-spw-semantic-expression="practice[software]{frontend}">
+                    <header data-spw-slot="header"><time>Later</time><strong>Software jobs</strong></header>
+                    <dl>
+                        <div><dt>skills</dt><dd>frontend systems, design systems, HTML/CSS architecture, interface language</dd></div>
+                        <div><dt>now</dt><dd>the public site as a working proof, not a salary ladder</dd></div>
+                    </dl>
+                    <footer data-spw-slot="actions">
+                        <a class="spw-chip" data-spw-handle="true" href="/about/website/" data-spw-operator="address">#&gt;website</a>
+                        <a class="spw-chip" data-spw-handle="true" href="#current-direction" data-spw-operator="potential">~trajectory</a>
+                    </footer>
+                </li>
+                <li class="frame-panel resume-record" data-spw-seed="resume.year.2027" data-spw-semantic-expression="practice[film]{release}">
+                    <header data-spw-slot="header"><time datetime="2027">2027</time><strong>A movie</strong></header>
+                    <dl>
+                        <div><dt>skills</dt><dd>shot language, release rhythm, sites and production surfaces</dd></div>
+                        <div><dt>now</dt><dd>the production clock; the <a href="/topics/film/" data-spw-operator="stream">film hub</a> is the public path</dd></div>
+                    </dl>
+                    <footer data-spw-slot="actions">
+                        <a class="spw-chip" data-spw-handle="true" href="/topics/film/" data-spw-operator="stream">*film</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/now/" data-spw-operator="ground">.now</a>
+                    </footer>
+                </li>
+            </ol>
 
-            <p>
-                I want the site to have rhythm instead of inventory. Each page needs a clear line, a return, a few
-                recurring motifs, and one good reason to move into a related route. Screenshots, cards, and midprocess
-                states matter because they show the work while it is still becoming itself, before the varnish dries and
-                the little hat falls off.
-            </p>
-
-            <p>
-                The community goal is not only expression. It is education, stabilization, and play in the same ecosystem:
-                pages that teach without flattening, cards that help a person regain footing, and playful structures that
-                keep experimentation attached to consequence. I want the serious parts to stay alive without sounding dead.
-                Useful language should still feel warm and usable.
-            </p>
+            <div class="spw-reason-strip" aria-label="How this page can be used">
+                <div data-spw-emphasis="primary">
+                    <strong>Rhythm, not inventory</strong>
+                    <p>Each page needs a clear line, a return, a few motifs, and one reason to move. Screenshots and midprocess states show the work while it is still becoming itself.</p>
+                </div>
+                <div data-spw-emphasis="secondary">
+                    <strong>Education, stabilization, play</strong>
+                    <p>Pages that teach without flattening. Cards that help a person regain footing. Play that keeps experiment attached to consequence.</p>
+                </div>
+                <div data-spw-emphasis="tertiary">
+                    <strong>Follow a thread</strong>
+                    <p>Start with a year, a practice, or the current direction. The links carry those questions into budgeting, software, and play.</p>
+                </div>
+            </div>
 
             <aside class="about-story-map" id="about-story-map" data-spw-kind="map" data-spw-role="orientation" data-spw-semantic-expression="narrative[topography]{skim}">
                 <div class="about-story-map__item" data-spw-story-terrain="kernel">
@@ -305,7 +360,7 @@
             </p>
 
             <p id="about-origin-question">
-                The question that still structures the work formed while I was moving through questions about environments that help people stay with difficult things. At UIUC I spent time in an adult learning lab and a course called <em>learning from text</em>. I founded Student Body for Meaningful Education to treat motivation as a design problem. The through-line was already there: how do you build language and structure that lets attention compound across time, people, and disciplines instead of resetting every time context changes?
+                The question that still structures the work formed while I was moving through questions about environments that help people stay with difficult things. At UIUC (2014–2017) I spent time in <a href="https://tall.beckman.illinois.edu/">The Adult Learning Lab</a> and a course called <em>learning from text</em>. I founded Student Body for Meaningful Education to treat motivation as a design problem. The through-line was already there: how do you build language and structure that lets attention compound across time, people, and disciplines instead of resetting every time context changes?
 
                 That same question is now public and active on the site as <a class="spw-chip" data-spw-handle="true" href="/curriculum/" data-spw-operator="frame" data-spw-action="address">#&gt;curriculum</a> — a living learning surface that teaches technical fundamentals through bounded economic analogies (memory as household liquidity, scheduling as institutional governance, matching as markets). Every analogy is followed by a mandatory boundary test. All artifacts and progress are local-first and exportable. Developmental climate settings function as the equity buffers the pedagogy requires. The curriculum is both a practical resource and a demonstration of the site's own recursive practice: notice, name, fold, note, return.
             </p>
@@ -382,7 +437,8 @@
                 <li><a href="#attention-register" data-spw-operator="address">Attention Register</a> — what attention becomes when practiced.</li>
                 <li><a href="#kernel-lattice-register" data-spw-operator="integrate">Kernel/Lattice Register</a> — the current architecture of Spwashi work.</li>
                 <li><a href="#portable-seed-register" data-spw-operator="address">Portable Seed Register</a> — how .spw packages, prompts, routes, and print materiality travel.</li>
-                <li><a href="#career-register" data-spw-operator="address">Career and Practice</a> — background, dropout context, and how I work.</li>
+                <li><a href="#about-years" data-spw-operator="ref">Years</a> — speech, PLTW, ACT-SO, 2014, later jobs, college language. Handles, not the whole résumé.</li>
+                <li><a href="#career-register" data-spw-operator="address">Career and Practice</a> — six doors (software, learning, illustration, design, oration, organization), then dropout context and how I work.</li>
                 <li><a href="#systems-register" data-spw-operator="integrate">Systems Register</a> — what I build and why.</li>
                 <li><a href="#typography-register" data-spw-operator="integrate">Typography Register</a> — how display, body, mono, and operator language divide labor on the site.</li>
                 <li><a href="#website-register" data-spw-operator="surface">Website Register</a> — how this site functions as practice.</li>
@@ -421,6 +477,61 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
+            <p data-spw-textual-role="note">
+                Six practices. Each one is a skill door into work that is already public. The <a href="#about-years" data-spw-operator="ref">years</a> are the timing; these rooms are the trajectory.
+            </p>
+            <div class="frame-grid" data-spw-feature="resume-record" id="resume-practices" data-spw-region="cluster">
+                <article class="frame-panel resume-record" data-spw-emphasis="primary" data-spw-seed="resume.practice.software" data-spw-semantic-expression="practice[software]{engineering}">
+                    <h3>Software Engineering</h3>
+                    <p>Frontend, design systems, HTML/CSS architecture, parser-driven tools. Invoicing, CRM, sites, events, payments since 2013. Sites and production surfaces for independent film.</p>
+                    <footer data-spw-slot="actions">
+                        <a class="spw-chip" href="/topics/software/" data-spw-operator="route">&lt;software</a>
+                        <a class="spw-chip" href="/tools/spw-parser/" data-spw-operator="wonder">? parser</a>
+                        <a class="spw-chip" href="https://github.com/spwashi/spw-workbench" data-spw-operator="integrate">^workbench</a>
+                    </footer>
+                </article>
+                <article class="frame-panel resume-record" data-spw-seed="resume.practice.learning" data-spw-semantic-expression="practice[learning]{sciences}">
+                    <h3>Learning Sciences</h3>
+                    <p><a href="https://tall.beckman.illinois.edu/">The Adult Learning Lab</a>, <em>learning from text</em>, Student Body for Meaningful Education. Motivation as a design problem.</p>
+                    <footer data-spw-slot="actions">
+                        <a class="spw-chip" href="/curriculum/" data-spw-operator="frame">#&gt;curriculum</a>
+                        <a class="spw-chip" href="#about-origin-question" data-spw-operator="ref">~origin</a>
+                    </footer>
+                </article>
+                <article class="frame-panel resume-record" data-spw-seed="resume.practice.illustration" data-spw-semantic-expression="practice[illustration]{folios}">
+                    <h3>Illustration</h3>
+                    <p>Characters, depiction studies, SVG. Conference art in 2023. Images that travel with the software.</p>
+                    <footer data-spw-slot="actions">
+                        <a class="spw-chip" href="/design/folios/" data-spw-operator="concept-edge">&gt;folios</a>
+                        <a class="spw-chip" href="/tools/midjourney/" data-spw-operator="wonder">? depiction</a>
+                    </footer>
+                </article>
+                <article class="frame-panel resume-record" data-spw-seed="resume.practice.design" data-spw-semantic-expression="practice[design]{components}">
+                    <h3>Design</h3>
+                    <p>Components, regions, material surfaces. Structure that stays coherent when the medium changes.</p>
+                    <footer data-spw-slot="actions">
+                        <a class="spw-chip" href="/design/" data-spw-operator="address">#&gt;design</a>
+                        <a class="spw-chip" href="/about/website/" data-spw-operator="address">#&gt;website</a>
+                    </footer>
+                </article>
+                <article class="frame-panel resume-record" data-spw-seed="resume.practice.oration" data-spw-semantic-expression="practice[oration]{comedy}">
+                    <h3>Oration</h3>
+                    <p>Original Comedy, four years. A genre-bending play I directed. Technical work that can be read aloud.</p>
+                    <footer data-spw-slot="actions">
+                        <a class="spw-chip" href="/topics/film/" data-spw-operator="stream">*film</a>
+                        <a class="spw-chip" href="/topics/film/voice/" data-spw-operator="wonder">? voice</a>
+                    </footer>
+                </article>
+                <article class="frame-panel resume-record" data-spw-emphasis="secondary" data-spw-seed="resume.practice.organization" data-spw-semantic-expression="practice[organization]{creative}">
+                    <h3>Creative Organization</h3>
+                    <p>Sprints, ledgers, cauldron intake, publishing rhythm. Skill as a quantity you can plan with.</p>
+                    <footer data-spw-slot="actions">
+                        <a class="spw-chip" href="/now/" data-spw-operator="ground">.now</a>
+                        <a class="spw-chip" href="/tools/budgeting/#year-mix" data-spw-operator="potential">~year_mix</a>
+                        <a class="spw-chip" href="/play/#media-cauldron" data-spw-operator="action">! cauldron</a>
+                    </footer>
+                </article>
+            </div>
             <div class="frame-grid">
                 <article class="frame-panel" data-spw-kind="card" data-spw-role="reference" data-spw-context="reading"
                          data-spw-category-family="specimen" data-spw-promptability="ambient"
@@ -469,10 +580,11 @@
                     <h3>Language as synchronization</h3>
                     <p>
                         A lot of my motivation is simple: people often have real experiences without concrete language for
-                        them yet. I designed Spw because I wanted ideas to synchronize more reliably across cultures,
-                        collaborators, and tools. I do not think the value of that work is limited to one anticipated
-                        audience. The aim is to build better naming, clearer structure, and more surfaces where a thought
-                        can test whether it is becoming shareable.
+                        them yet. I designed Spw, in part, to synchronize understanding about God, and in part to see the
+                        shape of ideas more clearly. I cared so much because my father and I had different spiritual
+                        upbringings. The same grammar has to work across cultures, collaborators, and tools. I do not think
+                        the value of that work is limited to one anticipated audience. The aim is to build better naming,
+                        clearer structure, and more surfaces where a thought can test whether it is becoming shareable.
                     </p>
                     <p data-spw-textual-role="note">That is part of why linguistics, interface language, and operator grammar keep
                         showing up here. They are not side interests. They are part of the bridge, and sometimes that bridge
@@ -771,9 +883,7 @@
                         pressure.</p>
                     <h3>Display type announces conviction. Body type carries thought. Mono marks structure. Operators bend
                         grammar sideways.</h3>
-                    <p>I want the site to feel authored by a person, not default-styled into safety. That means hierarchy
-                        should reveal intent quickly, annotation should stay useful instead of noisy, and the smaller voices
-                        should support the main sentence instead of apologizing for it.</p>
+                    <p>I want the site to feel authored by a person, not default-styled into safety. Hierarchy should reveal intent quickly. Annotation should stay useful. Smaller voices support the main sentence.</p>
 
                     <dl class="context-readout" aria-label="Current typography context" data-spw-role="schema">
                         <div>
@@ -968,7 +1078,7 @@
 
         <div class="frame-body" data-spw-slot="body">
             <p data-spw-textual-role="note" data-spw-copy-depth="normal">
-                Boonhonk is a combinatoric genre: five transforms — boon, bane, bone, bonk, honk — that recombine. The work is the mix, not a map of extra lands.
+                Boonhonk is five transforms — boon, bane, bone, bonk, honk — that recombine. A mix is a scene you can play.
             </p>
 
             <figure
@@ -1045,7 +1155,7 @@
                 </div>
                 <figcaption>
                     <strong>Boonhonk as a field</strong>
-                    <span>Five transforms, one field. Learn the states together so a mix can travel instead of collapsing into a slogan.</span>
+                    <span>Five transforms, one field. Learn them together so a mix can recombine.</span>
                 </figcaption>
             </figure>
 
@@ -1065,7 +1175,7 @@
                 data-spw-seed="page_about_about__boonhonk_mixer">
                 <h3>Combinatoric Wonder</h3>
                 <p>
-                    The mixer is a continuous field: hover or focus a node, then step weights. Funk lives here — instrumentation, how the voices talk. Discrete names are for calling a beat out loud.
+                    Hover or focus a node, then step weights. The five settle into one surface. Discrete names are for calling a beat out loud.
                 </p>
             </div>
 
@@ -1110,11 +1220,11 @@
                 <article class="frame-panel" data-spw-pack-span="full" data-spw-semantic-expression="boonhonk[genre]{travel}">
                     <p class="spec-kicker">Combinatoric genre</p>
                     <h3>How a mix travels</h3>
-                    <p>A pair is a readable start, not a ceiling. 5 unary plus 20 ordered pairs is 25 if you want that count. Sequence and ensemble stay in-genre. Handle names the mix; vector, form, field, and path carry it. boon.land and bane.land can wait.</p>
+                    <p>Start with one transform, or a pair. Count if you want: 5 alone, 20 ordered pairs. A longer mix is a sequence of beats. Names on RPG Wednesday already do this: BoonWAP, Honk Bazongas.</p>
                 </article>
                 <article class="frame-panel" data-spw-semantic-expression="boon[honk]{invite}">
                     <h3>boon + honk</h3>
-                    <p>Generous broadcast. An invitation that can be heard across the room without turning into a slogan.</p>
+                    <p>Generous broadcast. An invitation that can be heard across the room.</p>
                 </article>
                 <article class="frame-panel" data-spw-semantic-expression="bane[bone]{limit}">
                     <h3>bane + bone</h3>
@@ -1126,33 +1236,15 @@
                 </article>
                 <article class="frame-panel" data-spw-semantic-expression="boon[bane]{cost}">
                     <h3>boon + bane</h3>
-                    <p>Arrival with a cost. Not XOR. The gift and the limit share the same beat.</p>
+                    <p>Arrival with a cost. The gift and the limit share the same beat.</p>
                 </article>
                 <article class="frame-panel" data-spw-semantic-expression="honk[bonk]{signal}">
                     <h3>honk + bonk</h3>
                     <p>A signal that collides. Comedy that teaches a rule the table can reuse.</p>
                 </article>
             </div>
-            <div class="frame-grid" data-spw-composition-flow="grid" data-spw-pack="fill">
-                <article class="frame-panel" data-spw-semantic-expression="jazz[flow]{continue.form}">
-                    <h3>Jazz</h3>
-                    <p>Flow as continuation of form. The five transforms are the head. Sit, travel, look, kin are the changes. Improvisation is allowed; the form stays named.</p>
-                </article>
-                <article class="frame-panel" data-spw-semantic-expression="hiphop[pillars]{dj.mc.writing.breaking}">
-                    <h3>Hip-hop</h3>
-                    <p>Four pillars, earnest. DJ: select, cut, loop. MC: voice, bar, name. Writing: public mark. Breaking: body in a cipher. Crafts, not a look.</p>
-                </article>
-                <article class="frame-panel" data-spw-semantic-expression="funk[band]{instrument}">
-                    <h3>Funk</h3>
-                    <p>Instrumentation. Groove is how the voices talk — mixer, operator chips, cauldron as band, not a synonym for playful.</p>
-                </article>
-                <article class="frame-panel" data-spw-semantic-expression="disco[occasion]{fashion.linguistics}">
-                    <h3>Disco</h3>
-                    <p>Occasion and fashion linguistics. Silhouette, palette, public signal. A night you dress for, not nostalgia glitter.</p>
-                </article>
-            </div>
             <p data-spw-textual-role="note" data-spw-copy-depth="normal">
-                On the RPG Wednesday surface the same mixes become operational names: Mr. BoonWAP, Mr. BaneWAP, WAPboy, Gravy Davis, Honk Bazongas. The name is an MC handle and a production cue.
+                RPG Wednesday plays the same mixes as names: Mr. BoonWAP, Mr. BaneWAP, WAPboy, Gravy Davis, Honk Bazongas.
             </p>
             <aside class="spw-route-bridge" aria-labelledby="boonhonk-relatives-title" data-spw-box-model="route-bridge" data-spw-composition-flow="stack">
                 <header>
@@ -1160,8 +1252,8 @@
                     <p>Count, travel, play, then fit.</p>
                 </header>
                 <ul class="spw-route-bridge__links" data-spw-box-model="route-choice-field" data-spw-composition-flow="grid" data-spw-pack="fill">
-                    <li><a href="/topics/math/combinatorics/"><strong>Combinatorics</strong><span>Count the porch: five unary plus twenty ordered pairs.</span></a></li>
-                    <li><a href="/topics/software/#dimensional-expression-path"><strong>Dimensional path</strong><span>Handle, vector, form, field, replay — the same mix as locomotion.</span></a></li>
+                    <li><a href="/topics/math/combinatorics/"><strong>Combinatorics</strong><span>5 unary, 20 ordered pairs if you want the count.</span></a></li>
+                    <li><a href="/topics/software/#dimensional-expression-path"><strong>Dimensional path</strong><span>Handle, vector, form, field, replay.</span></a></li>
                     <li><a href="/play/rpg-wednesday/#rpgw-boonhonk"><strong>Table genre</strong><span>Play the mix as a name, a pantry, and a Wednesday beat.</span></a></li>
                     <li><a href="/play/rpg-wednesday/library/#boonhonk-fit"><strong>Library fit</strong><span>Five questions for a profile; a pair to start a scene.</span></a></li>
                 </ul>
@@ -1266,6 +1358,23 @@
 
         <div class="frame-body" data-spw-slot="body">
             <p data-spw-semantic-expression="trajectory[practical]{integration}">
+                If the wider tools feel noisy, start with a page you can read, or a room you can scroll.
+            </p>
+            <div class="spw-reason-strip" aria-label="Current trajectory">
+                <div data-spw-emphasis="primary">
+                    <strong>Movie, 2027</strong>
+                    <p>Scheduled. <a href="/topics/film/" data-spw-operator="stream">Film</a> is the public craft path. Oration and production surfaces feed it.</p>
+                </div>
+                <div data-spw-emphasis="secondary">
+                    <strong>Workbench + site</strong>
+                    <p><a href="https://github.com/spwashi/spw-workbench" data-spw-operator="integrate">spw-workbench</a> as kernel. This site as the lattice you can inspect. Business-software skills from 2013 still ship here.</p>
+                </div>
+                <div data-spw-emphasis="tertiary">
+                    <strong>Learning in public</strong>
+                    <p><a href="/curriculum/" data-spw-operator="frame">Curriculum</a> from TALL and language work. <a href="/now/" data-spw-operator="ground">Now</a> is the sprint clock.</p>
+                </div>
+            </div>
+            <p data-spw-semantic-expression="trajectory[practical]{integration}">
                 The current direction is practical: make <a
                 href="https://github.com/spwashi/spw-workbench" data-spw-operator="integrate">spw-workbench</a> the small stable kernel, let the public
                 website demonstrate the semantic lattice, and use adjacent surfaces like <a href="https://texture.website" data-spw-operator="surface">texture.website</a>,
@@ -1313,13 +1422,13 @@
             </p>
 
             <p data-spw-semantic-expression="direction[personal]{discipline}">
-                Part of that direction is personal. After being fired from a Site Stabilization Team in 2022 and then losing
-                insurance, income, and housing, I have less patience for an engineering culture that talks about care while
-                neglecting the actual machinery people depend on. I want tools, documentation, pricing surfaces, public
-                notes, experiments, publishing systems, and eventually hospitality structures that carry meaning forward
-                with more discipline and more humanity. I also want the surrounding surfaces to feel more like art without
-                giving up their usefulness. Or said more directly: I want the systems to work, and I want them to feel like
-                somebody cared while making them. Function, feeling, follow-through. Not just output. Not just polish.
+                Part of that direction is personal. After a Site Stabilization Team in 2022, I lost insurance, income, and
+                housing. Professional spaces often credit academic expertise only after a performance of mainstream
+                alignment. I do not treat “the system did it” as a complete answer. Naming only what a system does can
+                thicken an organization until accountability dissolves. I have less patience for an engineering culture
+                that talks about care while neglecting the machinery people depend on. I want tools, documentation,
+                pricing, public notes, and publishing systems that carry meaning with more discipline and more humanity.
+                I want the systems to work, and I want them to feel like somebody cared while making them.
             </p>
 
             <p data-spw-semantic-expression="discipline[website]{tangible}">
