@@ -621,10 +621,42 @@ body[data-spw-surface="about"] {
    ========================================================================== */
 
 [data-spw-surface="about"] #boonhonk-register {
+  /* Nested in data-spw-cluster, so it is not main > .spw-frame. */
+  container-type: inline-size;
+  container-name: spw-region;
   background:
     radial-gradient(circle at top left, color-mix(in srgb, var(--about-accent-3-soft) 88%, transparent), transparent 34%),
     linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 42%, transparent), transparent 18%),
     var(--about-surface);
+}
+
+[data-spw-surface="about"] #boonhonk-register .frame-grid {
+  align-items: stretch;
+  gap: clamp(0.65rem, 1.4cqi, 1.05rem);
+}
+
+[data-spw-surface="about"] #boonhonk-register .frame-panel {
+  min-width: 0;
+}
+
+[data-spw-surface="about"] #boonhonk-register .spw-route-bridge {
+  margin-block-start: 1rem;
+}
+
+@container spw-region (max-width: 36rem) {
+  [data-spw-surface="about"] #boonhonk-register .frame-grid {
+    grid-template-columns: 1fr;
+  }
+
+  [data-spw-surface="about"] #boonhonk-register .frame-panel[data-spw-pack-span="full"] {
+    grid-column: 1;
+  }
+}
+
+@container spw-region (min-width: 40rem) {
+  [data-spw-surface="about"] #boonhonk-register .frame-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr));
+  }
 }
 
 [data-spw-surface="about"] #boonhonk-register .boonhonk-mixer-panel {
