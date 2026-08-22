@@ -37,7 +37,7 @@ date = "2026-08-21"
   intensity = "quiet"
   semantic_operation = "cache"
   target = "relationship with a plant grower who sells PNSB; existing /recipes/#soil-companions facts"
-  claim = "A live grower who sells purple non-sulfur bacteria is a weekly connection, not a metaphor upgrade. PNSB already has a public bed. The CSS decomposer guild may compare to nutrient return; it must not claim to be PNSB."
+  claim = "A live grower who sells purple non-sulfur bacteria is a real collaborator connection. PNSB already has a public bed on recipes. The CSS decomposer guild may compare to nutrient return; it must not claim to be PNSB."
   output = "leaflet"
   validation = "rg pnsb recipes/index.html topics/nutrition/index.html .spw/conventions/copy-ecology.spw; no new public name or shop URL"
   do_not_touch = #[
@@ -82,7 +82,7 @@ date = "2026-08-21"
   photon = `The honest particle next to this craft. Canopy light is CSS position; PNSB light is PAR. See @models.`
   rhizobia = `Legume partnership. Not PNSB. Already named on the soil frame.`
   css_decomposer = `Unused landing rails that should return: copy-depth=rich, later frame, or delete.`
-  refuse = `Do not write PNSB as a data-spw-guild. Do not put their culture in a fermentation jar, a parser, or a region seat.`
+  refuse = `Do not write PNSB as a data-spw-guild or conflate bacterial cultures with UI region seats.`
 }
 
 ^"grower_register"{

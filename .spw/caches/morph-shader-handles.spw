@@ -20,7 +20,7 @@ fixity = "experimental"
 
 ^"claim"{
   text: "A morph is a comparison played through time. Spw is useful when it names the poles, the mix, the register, and the commit — not when it owns the GPU."
-  refuse: "Do not ship a browser Stable Diffusion. Do not replace dual-read HTML with a canvas that cannot name its endpoints. Accents and SVG filters stay ornament unless a handle makes the transform inspectable."
+  refuse: "Do not replace dual-read HTML with un-inspectable canvas renders. Accents and SVG filters stay ornament unless a handle makes the transform inspectable."
 }
 
 ^"sd_morph_as_spw"{

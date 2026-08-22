@@ -53,7 +53,7 @@ expression = skill[surface]{contents.reference.facet}<extend>
   purpose: "Hold what would drown skill.spw: worked examples with their numbers, findings that shaped a refuse rule, the case that made an extension seam necessary."
   when: "A skill earns an appendix once a hand-authored facet needs more than two sentences to defend. Before that, the facet is the right size."
   form: "Same anchor family — #>skill_<id>_appendix — so citations resolve and spw:integrity walks it."
-  refuse: "Do not open an appendix to park material nobody has used. An empty appendix is a zombie meta-artifact; the tree already forbids those."
+  refuse: "Do not open an appendix to park unused material; keep appendices purposeful and backed by active usage."
 }
 
 ^"rigor"{
