@@ -1,0 +1,18 @@
+#!/bin/sh
+# Seal capture stills into archive/images/<commit>/. No-op when WIP is empty.
+set -eu
+
+if [ "${SKIP_GIT_HOOKS:-}" = "1" ]; then
+  exit 0
+fi
+
+wip="design/components/captures/archive/images/_wip"
+if [ ! -d "$wip" ]; then
+  exit 0
+fi
+n=$(find "$wip" -maxdepth 1 -type f ! -name '*.json' ! -name '.DS_Store' 2>/dev/null | wc -l | tr -d ' ')
+if [ "$n" = "0" ]; then
+  exit 0
+fi
+
+node scripts/seal-capture-archive.mjs || true

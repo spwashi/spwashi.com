@@ -16,7 +16,7 @@
  */
 
 import { createHash } from 'node:crypto';
-import { copyFile, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import process from 'node:process';
@@ -32,7 +32,6 @@ import {
   SOCIAL_ASPECTS,
   VISIBILITY_LENSES,
   sha8,
-  cropToAspect,
   shouldSkipJob,
   fingerprintJob,
   socialViewport,
@@ -44,7 +43,17 @@ import {
   parseSpwCaptureTokens,
   formatCapturePlanSpw,
   estimatePlanCost,
+  clipForBox,
+  clipSpaceForJob,
+  isMissedSpecimen,
 } from './lib/visual-capture-plan.mjs';
+import {
+  archiveKeptPack,
+  writeArchiveIndex,
+  pruneArchivePacks,
+  sealWipToCommit,
+  isArchiveOnly,
+} from './lib/visual-capture-archive.mjs';
 import {
   CdpSession,
   applyViewport,
@@ -78,6 +87,8 @@ function parseArgs(argv) {
     json: false,
     keep: false,
     prune: false,
+    index: false,
+    seal: false,
     retain: 12,
     lenses: [],
     noComponents: false,
@@ -111,6 +122,8 @@ function parseArgs(argv) {
     else if (arg === '--changed') options.changed = true;
     else if (arg === '--keep') options.keep = true;
     else if (arg === '--prune') options.prune = true;
+    else if (arg === '--index') options.index = true;
+    else if (arg === '--seal') options.seal = true;
     else if (arg === '--retain' && argv[i + 1]) options.retain = Number(argv[++i]) || 12;
     else if (arg.startsWith('--retain=')) options.retain = Number(arg.slice(9)) || 12;
     else if (arg === '--quick') options.quick = true;
@@ -235,12 +248,17 @@ Options:
   --changed          Only jobs whose source files changed (implies --keep)
   --keep             Do not wipe the pack; skip unchanged fingerprints
   --prune            Drop oldest dated archive packs; keep --retain (default 12). Alone: prune without capturing.
+  --index            Rebuild archive/index.html from dated stills. No Chrome.
+  --seal             Move archive/images/_wip into archive/images/<commit>/. No Chrome.
   --retain N         How many dated packs to keep with --prune
   --dry-plan         Print navigation groups, no Chrome
   --quick            region+component, phone+desktop, jpeg
   --format jpeg|png  Review default jpeg; precipitate forces png
   --settle-ms N      Default 2500
   --json
+
+Clips: region/component use the element's document box (beyond the viewport).
+Retries keep the clip. Header-only hits are miss--, not specimen stills.
 `);
 }
 
@@ -262,32 +280,41 @@ function gitChangedFiles() {
 }
 
 async function screenshotBuffer(session, { format = 'png', quality = 70, clip = null } = {}) {
-  const params = {
-    format,
-    fromSurface: true,
-    captureBeyondViewport: Boolean(clip),
-  };
-  if (format === 'jpeg') params.quality = quality;
-  if (clip) {
-    params.clip = {
+  const cssClip = clip
+    ? {
       x: Math.max(0, clip.x),
       y: Math.max(0, clip.y),
       width: Math.max(2, clip.width),
       height: Math.max(2, clip.height),
       scale: clip.scale || 1,
-    };
+    }
+    : null;
+  const beyond = Boolean(clip?.captureBeyondViewport);
+  const attempts = cssClip
+    ? [
+      { format, fromSurface: true, captureBeyondViewport: beyond, clip: cssClip },
+      { format, fromSurface: true, captureBeyondViewport: !beyond, clip: cssClip },
+      { format, fromSurface: false, captureBeyondViewport: beyond, clip: cssClip },
+    ]
+    : [
+      { format, fromSurface: true, captureBeyondViewport: false },
+      { format, fromSurface: false, captureBeyondViewport: false },
+    ];
+  let lastErr = null;
+  for (let i = 0; i < attempts.length; i += 1) {
+    const params = { ...attempts[i] };
+    if (format === 'jpeg') params.quality = quality;
+    try {
+      const { data } = await session.send('Page.captureScreenshot', params, 12000);
+      if (data) {
+        if (i > 0) process.stderr.write(`  ~ capture retry ${i} clip=${Boolean(params.clip)}\n`);
+        return Buffer.from(data, 'base64');
+      }
+    } catch (err) {
+      lastErr = err;
+    }
   }
-  try {
-    const { data } = await session.send('Page.captureScreenshot', params, 10000);
-    if (data) return Buffer.from(data, 'base64');
-  } catch {
-    // Older Chrome without fromSurface — capture the default compositor.
-  }
-  const { data } = await session.send('Page.captureScreenshot', {
-    format,
-    ...(format === 'jpeg' ? { quality } : {}),
-  }, 10000);
-  return Buffer.from(data, 'base64');
+  throw lastErr || new Error('captureScreenshot failed');
 }
 
 async function measureSelector(session, selector) {
@@ -295,17 +322,26 @@ async function measureSelector(session, selector) {
     expression: `(async () => {
       const el = document.querySelector(${JSON.stringify(selector)});
       if (!el) return null;
-      el.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'nearest' });
+      const html = document.documentElement;
+      const body = document.body;
+      if (html) html.setAttribute('data-spw-capture-mode', 'screenshot');
+      if (body) body.setAttribute('data-spw-capture-mode', 'screenshot');
+      try { el.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'nearest' }); }
+      catch { el.scrollIntoView(true); }
       await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       const r = el.getBoundingClientRect();
       const ds = el.dataset || {};
       return {
+        found: true,
         x: r.left + window.scrollX,
         y: r.top + window.scrollY,
         viewportX: r.left,
         viewportY: r.top,
         width: r.width,
         height: r.height,
+        scrollX: window.scrollX,
+        scrollY: window.scrollY,
+        inView: r.bottom > 0 && r.top < (window.innerHeight || 1),
         semantics: {
           kind: ds.spwKind || el.getAttribute('data-spw-kind') || null,
           role: ds.spwRole || el.getAttribute('data-spw-role') || null,
@@ -331,24 +367,6 @@ async function measureSelector(session, selector) {
   return result?.value || null;
 }
 
-function clipForBox(box, viewport, padding, aspect) {
-  const cropped = cropToAspect(box, aspect || 'fit', padding);
-  const vpW = viewport?.width || 1440;
-  const vpH = viewport?.height || 900;
-  const viewportX = Math.max(0, Math.floor(cropped.viewportX ?? 0));
-  const viewportY = Math.max(0, Math.floor(cropped.viewportY ?? 0));
-  return {
-    x: viewportX,
-    y: viewportY,
-    width: Math.max(2, Math.min(vpW - viewportX, Math.ceil(cropped.width))),
-    height: Math.max(2, Math.min(vpH - viewportY, Math.ceil(cropped.height))),
-    scale: 1,
-    aspect: cropped.aspect,
-    ratioLabel: cropped.ratioLabel,
-    coordinateSpace: 'viewport',
-  };
-}
-
 function galleryHtml(manifest) {
   const cards = (manifest.captures || []).map((c) => `
     <figure class="card" data-flow="${c.flow}" data-track="${c.track || 'qa'}" data-aspect="${c.aspect || 'qa'}" data-fixture="${c.fixtureId || c.id || ''}">
@@ -357,7 +375,9 @@ function galleryHtml(manifest) {
         <strong>${c.fixtureId || c.id}</strong> · ${c.track || 'qa'} · ${c.flow} · ${c.aspect || c.viewport || ''}
         <br/><span class="meta">${c.wonder || c.label || ''}</span>
         ${c.ratioLabel ? `<br/><code>${c.ratioLabel}</code>` : ''}
+        ${c.clip?.coordinateSpace ? `<br/><code>${c.clip.coordinateSpace} ${Math.round(c.clip.x)},${Math.round(c.clip.y)} ${Math.round(c.clip.width)}×${Math.round(c.clip.height)}</code>` : ''}
         ${c.media ? `<br/><code>${c.media}</code>` : ''}
+        ${c.textPreview ? `<br/><span class="meta">${String(c.textPreview).replace(/</g, '&lt;').slice(0, 160)}</span>` : ''}
       </figcaption>
     </figure>`).join('\n');
 
@@ -391,7 +411,7 @@ function galleryHtml(manifest) {
     .meta { color: #555; font-size: 0.9rem; }
     .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
     .card { margin: 0; background: #fff; border: 1px solid #ddd4c4; border-radius: 0.5rem; overflow: hidden; }
-    .card img { display: block; width: 100%; height: auto; background: #eee; }
+    .card img { display: block; width: 100%; max-height: 14rem; height: auto; object-fit: contain; background: #eee; }
     .card--error { border-color: #c47a3a; }
     .card--error pre { margin: 0; padding: 0.75rem; font-size: 0.75rem; white-space: pre-wrap; background: #f3ece3; }
     figcaption { padding: 0.65rem 0.75rem 0.85rem; font-size: 0.82rem; line-height: 1.35; }
@@ -407,7 +427,7 @@ function galleryHtml(manifest) {
     <h1>Visual capture pack</h1>
     <p class="meta">Generated ${manifest.at || ''} · ${manifest.captures?.length || 0} stills · qa device-reasons + social content-fit cards</p>
     <p class="meta">QA answers “does it pack?” Social precipitates answer “is this combination worth posting?” Pixels stay gitignored.</p>
-    <p class="meta"><a href="${manifest.archiveIndex || 'archive/index.html'}">Dated archive</a> — named <code>archive/YYYY-MM-DD_HHmmss/</code>. Errors keep their prefix: <code>blank--</code>, <code>collision--</code>, <code>failed--</code>.</p>
+    <p class="meta"><a href="${manifest.archiveIndex || 'archive/index.html'}">Archive skim</a> — <code>archive/images/&lt;commit&gt;/</code>. Errors keep <code>blank--</code>, <code>collision--</code>, <code>failed--</code>, <code>miss--</code>.</p>
     <div class="filters" role="group" aria-label="Filter stills">
       <button type="button" data-filter="all" aria-pressed="true">all</button>
       <button type="button" data-filter="qa">qa</button>
@@ -439,24 +459,13 @@ function galleryHtml(manifest) {
 </html>`;
 }
 
-function formatArchiveStamp(date = new Date()) {
-  const pad = (value) => String(value).padStart(2, '0');
-  return [
-    date.getFullYear(),
-    pad(date.getMonth() + 1),
-    pad(date.getDate()),
-  ].join('-') + '_' + [
-    pad(date.getHours()),
-    pad(date.getMinutes()),
-    pad(date.getSeconds()),
-  ].join('');
-}
-
-/** Full-page gray stills compressed to ~25KB. Real home pages were 500KB+. */
-function isBlankStill(buffer, job) {
+/** Compositor blanks compress hard. A small real clip can be well under 40KB. */
+function isBlankStill(buffer, job, clip = null) {
   const bytes = buffer?.length || 0;
+  const pixels = Math.max(0, (clip?.width || 0) * (clip?.height || 0));
+  if (bytes < 800) return true;
   if (job.flow === 'page' && bytes < 48000) return true;
-  if (job.flow === 'region' && bytes < 40000) return true;
+  if (pixels > 10000 && bytes / pixels < 0.025 && bytes < 25000) return true;
   if ((job.flow === 'component' || job.flow === 'template') && bytes < 500) return true;
   return false;
 }
@@ -491,123 +500,6 @@ async function writeErrorArtifact(outDir, kind, job, { buffer, message, twin } =
     viewport: job.viewportId,
     flow: job.flow,
   };
-}
-
-async function pruneArchivePacks(outDir, retain = 12) {
-  const root = path.join(outDir, 'archive');
-  let stamps = [];
-  try {
-    stamps = (await readdir(root, { withFileTypes: true }))
-      .filter((entry) => entry.isDirectory() && /^\d{4}-\d{2}-\d{2}_/.test(entry.name))
-      .map((entry) => entry.name)
-      .sort()
-      .reverse();
-  } catch {
-    return [];
-  }
-  const dropped = stamps.slice(Math.max(0, retain));
-  for (const stamp of dropped) {
-    await rm(path.join(root, stamp), { recursive: true, force: true });
-  }
-  if (dropped.length) await writeArchiveIndex(outDir);
-  return dropped;
-}
-
-function isPruneOnly(options) {
-  return Boolean(
-    options.prune
-    && !options.ecology
-    && !options.social
-    && !options.precipitate
-    && !options.changed
-    && !options.dryPlan
-    && !options.ids
-    && !options.tokens.length,
-  );
-}
-
-async function archiveKeptPack(outDir, manifest, kept, errorArtifacts = []) {
-  if (!kept.length && !errorArtifacts.length) return null;
-  const stamp = formatArchiveStamp();
-  const dir = path.join(outDir, 'archive', stamp);
-  await mkdir(path.join(dir, 'captures'), { recursive: true });
-  for (const still of [...kept, ...errorArtifacts]) {
-    if (!still.file) continue;
-    const from = path.join(outDir, still.file);
-    const to = path.join(dir, still.file);
-    try {
-      await copyFile(from, to);
-    } catch {
-      // Missing file is itself a glitch; do not fail the pack.
-    }
-  }
-  const pack = {
-    ...manifest,
-    archive: stamp,
-    captures: kept,
-    errorArtifacts,
-    counts: {
-      ...manifest.counts,
-      captures: kept.length,
-      errors: errorArtifacts.length,
-      archived: kept.length + errorArtifacts.length,
-    },
-  };
-  await writeFile(path.join(dir, 'pack.json'), `${JSON.stringify(pack, null, 2)}\n`);
-  await writeFile(path.join(dir, 'index.html'), galleryHtml({
-    ...pack,
-    archiveIndex: '../index.html',
-  }));
-  await writeArchiveIndex(outDir);
-  return stamp;
-}
-
-async function writeArchiveIndex(outDir) {
-  const root = path.join(outDir, 'archive');
-  await mkdir(root, { recursive: true });
-  let stamps = [];
-  try {
-    stamps = (await readdir(root, { withFileTypes: true }))
-      .filter((entry) => entry.isDirectory() && /^\d{4}-\d{2}-\d{2}_/.test(entry.name))
-      .map((entry) => entry.name)
-      .sort()
-      .reverse();
-  } catch {
-    stamps = [];
-  }
-  const rows = [];
-  for (const stamp of stamps) {
-    let count = '';
-    try {
-      const pack = JSON.parse(await readFile(path.join(root, stamp, 'pack.json'), 'utf8'));
-      const errors = pack.errorArtifacts?.length || 0;
-      count = `${pack.captures?.length || 0} stills${errors ? ` · ${errors} errors` : ''}`;
-    } catch {
-      count = 'pack';
-    }
-    rows.push(`<li><a href="./${stamp}/index.html"><code>${stamp}</code></a> · ${count}</li>`);
-  }
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Visual capture archive</title>
-  <style>
-    :root { font-family: ui-sans-serif, system-ui, sans-serif; color: #1a1a1a; background: #f7f4ee; }
-    body { margin: 0; padding: 1.5rem; max-width: 44rem; }
-    a { color: #176; }
-    code { font-size: 0.92em; }
-  </style>
-</head>
-<body>
-  <h1>Visual capture archive</h1>
-  <p>Local, gitignored, dated packs. Errors keep their names. Latest: <a href="../index.html">current pack</a>.</p>
-  <ol reversed>${rows.join('\n') || '<li>No dated packs yet. Run <code>npm run visual:capture</code>.</li>'}</ol>
-</body>
-</html>
-`;
-  await writeFile(path.join(root, 'index.html'), html);
 }
 
 async function readPriorManifest(outDir) {
@@ -689,7 +581,8 @@ async function captureJob(session, job, {
   if (job.flow === 'page' || !box) {
     buffer = await screenshotBuffer(session, { format, quality });
   } else {
-    clip = clipForBox(box, viewport, padding, job.aspect || 'fit');
+    const space = clipSpaceForJob(job) || 'document';
+    clip = clipForBox(box, viewport, padding, job.aspect || 'fit', { space });
     buffer = await screenshotBuffer(session, { format, quality, clip });
   }
   const sha256 = createHash('sha256').update(buffer).digest('hex');
@@ -716,11 +609,21 @@ async function main() {
     process.exit(0);
   }
 
-  if (isPruneOnly(options)) {
-    const dropped = await pruneArchivePacks(options.out, options.retain);
-    process.stdout.write(
-      `[visual:prune] dropped ${dropped.length} pack${dropped.length === 1 ? '' : 's'} · retain ${options.retain}\n`,
-    );
+  if (isArchiveOnly(options)) {
+    if (options.seal) {
+      const sealed = await sealWipToCommit(options.out);
+      process.stdout.write(
+        `[visual:seal] ${sealed.sealed} file${sealed.sealed === 1 ? '' : 's'} → ${sealed.cluster || 'nothing'}\n`,
+      );
+    }
+    if (options.prune) {
+      const dropped = await pruneArchivePacks(options.out, options.retain);
+      process.stdout.write(
+        `[visual:prune] dropped ${dropped.length} cluster${dropped.length === 1 ? '' : 's'} · retain ${options.retain}\n`,
+      );
+    }
+    await writeArchiveIndex(options.out);
+    process.stdout.write(`[visual:archive] skim ${path.join(options.out, 'archive', 'index.html')}\n`);
     return 0;
   }
 
@@ -869,7 +772,7 @@ async function main() {
               snippetCache,
             });
             const abs = path.join(options.out, job.file);
-            if (isBlankStill(shot.buffer, job)) {
+            if (isBlankStill(shot.buffer, job, shot.clip)) {
               const artifact = await writeErrorArtifact(options.out, 'blank', job, {
                 buffer: shot.buffer,
                 message: `Blank: ${job.file} (${shot.buffer.length}B)`,
@@ -877,6 +780,16 @@ async function main() {
               errorArtifacts.push(artifact);
               errors.push(artifact.message);
               process.stderr.write(`  ! blank ${artifact.file} (${shot.buffer.length}B)\n`);
+              continue;
+            }
+            if (isMissedSpecimen(job, shot.box)) {
+              const artifact = await writeErrorArtifact(options.out, 'miss', job, {
+                buffer: shot.buffer,
+                message: `Miss: ${job.file} clipped shell chrome instead of ${job.selector}`,
+              });
+              errorArtifacts.push(artifact);
+              errors.push(artifact.message);
+              process.stderr.write(`  ! miss ${artifact.file}\n`);
               continue;
             }
             await mkdir(path.dirname(abs), { recursive: true });

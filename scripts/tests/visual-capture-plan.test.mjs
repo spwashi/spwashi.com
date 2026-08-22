@@ -26,6 +26,10 @@ import {
   estimatePlanCost,
   assetKindFor,
   formatCapturePlanSpw,
+  clipForBox,
+  clipSpaceForJob,
+  looksLikeShellChrome,
+  isMissedSpecimen,
 } from '../lib/visual-capture-plan.mjs';
 import { VIEWPORTS } from '../lib/chrome-headless-harness.mjs';
 
@@ -231,4 +235,38 @@ test('navigation groups keep template cards off the specimen tab', () => {
     ids: ['operator-chip'],
   });
   assert.ok(groups.every((group) => group.canvas === 'card'));
+});
+
+test('document clips use page coordinates and are not clamped to the viewport', () => {
+  const box = {
+    x: 24,
+    y: 2400,
+    width: 360,
+    height: 1200,
+    viewportX: 24,
+    viewportY: 80,
+  };
+  const documentClip = clipForBox(box, phone, 20, 'fit', { space: 'document' });
+  assert.equal(documentClip.coordinateSpace, 'document');
+  assert.equal(documentClip.captureBeyondViewport, true);
+  assert.equal(documentClip.y, 2380);
+  assert.equal(documentClip.height, 1240);
+  const viewportClip = clipForBox(box, phone, 20, 'fit', { space: 'viewport' });
+  assert.equal(viewportClip.coordinateSpace, 'viewport');
+  assert.equal(viewportClip.captureBeyondViewport, false);
+  assert.ok(viewportClip.height <= phone.height);
+});
+
+test('a header-only preview is a miss for a region, not a specimen', () => {
+  assert.equal(clipSpaceForJob({ flow: 'region' }), 'document');
+  assert.equal(looksLikeShellChrome('#>SPWASHI ROUTES ABOUT'), true);
+  assert.equal(looksLikeShellChrome('Joins you can challenge. Cullet, grog, and fiber.'), false);
+  assert.equal(isMissedSpecimen(
+    { flow: 'region', selector: '#join-crawl' },
+    { text: '#>SPWASHI  ROUTES  plain text operators' },
+  ), true);
+  assert.equal(isMissedSpecimen(
+    { flow: 'page' },
+    { text: '#>SPWASHI ROUTES' },
+  ), false);
 });

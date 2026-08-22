@@ -90,7 +90,7 @@ export const REGION_ECOLOGY_FIXTURES = Object.freeze([
         id: 'boonhonk-theme-chips',
         label: 'Boonhonk theme chips',
         seat: 'cluster',
-        selector: '#boonhonk-register',
+        selector: '#boonhonk-window-theme',
         specimenRoute: '/about/#boonhonk-register',
         cssOwner: 'public/css/systems/expression-resonance.css',
         layoutScenarios: ['pocket', 'fold', 'desktop'],

@@ -49,9 +49,11 @@
 
 ^"local_archive"{
   claim = `Stills are copied into a dated local pack so a review can return to what was seen — including named glitches.`
-  path = `design/components/captures/archive/YYYY-MM-DD_HHmmss/`
-  names = `captures/{fixture}--{viewport}--{flow}.{png|jpg} — same convention as the current pack`
-  errors = `blank--, collision--, failed-- prefixes. The error name is the artifact. Keep glitches; they diagnose later stills.`
+  path = `design/components/captures/archive/images/`
+  names = `images/_wip/{stamp}--{fixture}--{viewport}--{flow} until commit; then images/<shortsha>/`
+  skim = `archive/index.html clusters by commit folder. npm run visual:archive rebuilds it. post-commit seals _wip only when it has stills (no Node, no Chrome otherwise).`
+  errors = `blank--, collision--, failed--, miss-- prefixes. The error name is the artifact. miss-- is a header-only clip of a region/component. Keep glitches; they diagnose later stills.`
+  clip = `Region and component stills clip the element's document box with captureBeyondViewport. A retry must keep the clip — never fall back to an unclipped page still.`
   gallery = `design/components/captures/index.html (latest) and archive/index.html (dated packs). Errors get their own section.`
   prune = `npm run visual:prune keeps --retain dated packs (default 12). Compost, not a landfill.`
   refuse = `Do not commit the packs. Pixels stay gitignored. Do not drop a blank without naming it.`
@@ -105,7 +107,7 @@
     source = `stable owning-section selector on the live specimen route`
     value = `Hierarchy, surrounding spacing, responsive packing, and component ownership`
     consumers = #[`design review`, `layout QA`, `agent briefs`][reg=set]
-    cost = `Requires a stable regionSelector; tall regions may capture only the visible viewport slice`
+    cost = `Requires a stable regionSelector. Clip is the element's document box (beyond the viewport), capped at 8000px tall.`
   }[reg=facet]
 
   component: .{

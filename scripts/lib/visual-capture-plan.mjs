@@ -467,6 +467,69 @@ export function cropToAspect(box, aspect, padding = 0) {
   };
 }
 
+export const CLIP_MAX_HEIGHT = 8000;
+
+/** Header-only text from a region/component still — the clip missed the specimen. */
+export function looksLikeShellChrome(text) {
+  const t = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!t) return false;
+  return /^(#>\s*)?SPWASHI\b/i.test(t) && /\bROUTES\b/i.test(t) && t.length < 480;
+}
+
+/**
+ * Clip in CSS pixels.
+ * `document` space is the element's page box (captureBeyondViewport).
+ * `viewport` space is the visible slice after scroll.
+ */
+export function clipForBox(box, viewport, padding, aspect, {
+  space = 'document',
+  maxHeight = CLIP_MAX_HEIGHT,
+} = {}) {
+  const cropped = cropToAspect(box, aspect || 'fit', padding);
+  if (!cropped) return null;
+  if (space === 'viewport') {
+    const vpW = viewport?.width || 1440;
+    const vpH = viewport?.height || 900;
+    const viewportX = Math.max(0, Math.floor(cropped.viewportX ?? 0));
+    const viewportY = Math.max(0, Math.floor(cropped.viewportY ?? 0));
+    return {
+      x: viewportX,
+      y: viewportY,
+      width: Math.max(2, Math.min(vpW - viewportX, Math.ceil(cropped.width))),
+      height: Math.max(2, Math.min(vpH - viewportY, Math.ceil(cropped.height))),
+      scale: 1,
+      aspect: cropped.aspect,
+      ratioLabel: cropped.ratioLabel,
+      coordinateSpace: 'viewport',
+      captureBeyondViewport: false,
+    };
+  }
+  return {
+    x: Math.max(0, Math.floor(cropped.x)),
+    y: Math.max(0, Math.floor(cropped.y)),
+    width: Math.max(2, Math.ceil(cropped.width)),
+    height: Math.max(2, Math.min(maxHeight, Math.ceil(cropped.height))),
+    scale: 1,
+    aspect: cropped.aspect,
+    ratioLabel: cropped.ratioLabel,
+    coordinateSpace: 'document',
+    captureBeyondViewport: true,
+  };
+}
+
+export function clipSpaceForJob(job) {
+  if (!job || job.flow === 'page') return null;
+  if (job.canvas === 'card' || job.flow === 'template' || job.flow === 'region' || job.flow === 'component') {
+    return 'document';
+  }
+  return 'document';
+}
+
+export function isMissedSpecimen(job, box) {
+  if (!job || job.flow === 'page' || job.canvas === 'card') return false;
+  return looksLikeShellChrome(box?.text);
+}
+
 export function viewportMatchesScenario(viewportId, layoutScenarios) {
   if (!layoutScenarios?.length) return true;
   const resolved = VIEWPORT_ALIASES[viewportId] || viewportId;

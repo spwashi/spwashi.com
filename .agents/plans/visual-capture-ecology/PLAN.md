@@ -34,6 +34,10 @@ Same still, four readings: mosey (notice the size), search (findable words), age
 
 `visual:plan` → `visual:capture` / `visual:ecology` / `visual:social` → gallery + `review.json` hints → smallest patch → `visual:review` (`--changed --keep`) → `precipitate.json` lock.
 
+Region/component clips use the element's document box, not the visible viewport origin. A capture retry keeps that clip. Header-only hits are `miss--` artifacts, not specimen stills.
+
+The dated archive is one folder of `YYYY-MM-DD_HHmmss--name.jpg` files plus `archive/index.html` as a single skim. `npm run visual:archive` rebuilds that page from whatever is already on disk.
+
 ## Commands
 
 ```bash
