@@ -43,13 +43,13 @@ Develop meaningful component real estate and region personality across spwashi.c
 
 **Files:** `index.html`, `services/index.html`, `topics/index.html`, `about/index.html`, `design/index.html`, `design/components/index.html`, load-symphony experiment copies
 
-| Task | Action |
-|------|--------|
-| Agent instruction leak | Remove `Operational entry: select a conceptual route...` from home hero; relocate to agent-anatomy block on `about/website/` or technical copy-depth layer |
-| Duplicates | Merge services hook + `site-lede`; merge topics hook + first `frame-note` |
-| Tour-guide cluster | Rewrite home tuning links — vary verbs (open, trace, compare) instead of Explore / Learn how / Dive into |
-| Perspective-pair | Replace seven inline `Objective terminal` / `Subjective terminal` labels with `perspective-pair` partial or glossary link; specimen stays on `design/components/` |
-| Consultant-deck | Rename `Strategic Landscape` kicker; shorten services evidence mantra in public tier |
+| Task | Action | Status |
+|------|--------|--------|
+| Agent instruction leak | Remove `Operational entry` from home hero | landed earlier |
+| Duplicates | Merge services hook + entry note; thin topics hook vs description | landed 2026-08-22 |
+| Tour-guide cluster | Vary verbs; destiffen "Return here when" | landed on services, about, tools seats |
+| Perspective-pair | Public hubs use Holds / First move; specimen keeps terminal labels at `/design/components/#perspective-pair` | landed 2026-08-22 |
+| Consultant-deck | Rename `Strategic Landscape` kicker | already gone |
 
 **Validation:** `rg 'Objective terminal' **/*.html` → only glossary/specimen routes.
 

@@ -56,7 +56,7 @@ fixity = "tending"
   operation: "audit"
   source: "HTML copy review, 2026-07-07"
   findings: #[
-    `Objective terminal / Subjective terminal pair appears verbatim on seven hub routes (topics, design, design/components, services, about, load-symphony a/b).`,
+    `Objective terminal / Subjective terminal pair appears verbatim on seven hub routes (topics, design, design/components, services, about, load-symphony a/b). Wave 1 (2026-08-22): public hubs now use Holds / First move. Specimen remains /design/components/#perspective-pair.`,
     `Home hero includes agent-instruction copy: Operational entry: select a conceptual route...`,
     `Tour-guide openers cluster: Return here when, Use this page as, Start here, Dive into, Explore the, For a deep.`,
     `Duplicated paragraphs on services/ (hook vs site-lede) and topics/ (hook vs frame-note).`,
