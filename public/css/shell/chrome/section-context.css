@@ -980,7 +980,8 @@ body > nav.spw-section-handle-shell {
   body > header[data-spw-menu-mode="toggle"] .header-brand,
   .site-header[data-spw-menu-mode="toggle"] .header-sigil,
   body > header[data-spw-menu-mode="toggle"] .header-sigil {
-    min-width: 0;
+    min-width: 11ch;
+    overflow: visible;
   }
 
   .site-header[data-spw-menu-mode="toggle"] .spw-header-actions,
@@ -992,7 +993,12 @@ body > nav.spw-section-handle-shell {
   body > header[data-spw-menu-mode="toggle"] .spw-nav-toggle {
     grid-column: 2;
     justify-self: end;
-    max-inline-size: min(42vw, 12rem);
+    max-inline-size: min(38vw, 9.5rem);
+  }
+
+  .site-header[data-spw-menu-mode="toggle"] .header-op-indicator,
+  body > header[data-spw-menu-mode="toggle"] .header-op-indicator {
+    display: none;
   }
 
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] nav,

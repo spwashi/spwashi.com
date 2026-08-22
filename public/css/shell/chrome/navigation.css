@@ -1284,7 +1284,7 @@ body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel 
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .header-sigil,
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-nav-toggle {
-  padding-inline: 1rem;
+  padding-inline: 0.55rem;
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .header-sigil {

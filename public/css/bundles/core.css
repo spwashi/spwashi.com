@@ -5140,7 +5140,8 @@ body > header:empty {
 .header-sigil {
   display: inline-flex;
   align-items: center;
-  min-width: 0;
+  min-width: 11ch;
+  overflow: visible;
   gap: 0.5rem;
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 74%, var(--active-op-color, var(--teal, #008080)) 26%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
@@ -7084,7 +7085,7 @@ body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel 
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .header-sigil,
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-nav-toggle {
-  padding-inline: 1rem;
+  padding-inline: 0.55rem;
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .header-sigil {
@@ -8507,7 +8508,12 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
 
   .header-brand,
   .header-sigil {
-    min-width: 0;
+    min-width: 11ch;
+    overflow: visible;
+  }
+
+  .header-op-indicator {
+    display: none;
   }
 
   :where(.site-header nav, body > header nav) {
@@ -10771,7 +10777,8 @@ body > nav.spw-section-handle-shell {
   body > header[data-spw-menu-mode="toggle"] .header-brand,
   .site-header[data-spw-menu-mode="toggle"] .header-sigil,
   body > header[data-spw-menu-mode="toggle"] .header-sigil {
-    min-width: 0;
+    min-width: 11ch;
+    overflow: visible;
   }
 
   .site-header[data-spw-menu-mode="toggle"] .spw-header-actions,
@@ -10783,7 +10790,12 @@ body > nav.spw-section-handle-shell {
   body > header[data-spw-menu-mode="toggle"] .spw-nav-toggle {
     grid-column: 2;
     justify-self: end;
-    max-inline-size: min(42vw, 12rem);
+    max-inline-size: min(38vw, 9.5rem);
+  }
+
+  .site-header[data-spw-menu-mode="toggle"] .header-op-indicator,
+  body > header[data-spw-menu-mode="toggle"] .header-op-indicator {
+    display: none;
   }
 
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] nav,
@@ -12413,13 +12425,13 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   --grammar-focus-outline: 2px solid var(--active-op-color, var(--teal, #008080));
   --grammar-focus-offset: 2px;
 
-  /* form defaults */
-  --grammar-form-open: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, transparent);
-  --grammar-form-close: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
-
-  /* objective / subjective rails */
+  /* objective / subjective rails — open leans shared setup, close leans residue */
   --grammar-objective-brace-color: var(--objective-brace-color, hsl(188 58% 32%));
   --grammar-subjective-brace-color: var(--subjective-brace-color, hsl(342 48% 36%));
+
+  /* form defaults: crawl the brace gradient instead of one hue at two opacities */
+  --grammar-form-open: color-mix(in srgb, var(--grammar-objective-brace-color) 42%, transparent);
+  --grammar-form-close: color-mix(in srgb, var(--grammar-subjective-brace-color) 38%, transparent);
 
   /* grammar energy / motion safety */
   --grammar-motion-budget: var(--local-motion-budget, var(--energy-budget-motion, 0.26));
@@ -13751,23 +13763,23 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 }
 
 :where([data-spw-form="brace"][data-spw-realization="conceptual"]) {
-  --brace-open-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 36%, transparent);
-  --brace-close-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 14%, transparent);
+  --brace-open-color: color-mix(in srgb, var(--grammar-objective-brace-color) 36%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--grammar-subjective-brace-color) 18%, transparent);
 }
 
 :where([data-spw-form="brace"][data-spw-realization="realized"]) {
-  --brace-open-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 18%, transparent);
-  --brace-close-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 38%, transparent);
+  --brace-open-color: color-mix(in srgb, var(--grammar-objective-brace-color) 18%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--grammar-subjective-brace-color) 38%, transparent);
 }
 
 :where([data-spw-form="brace"][data-spw-realization="hybrid"]) {
-  --brace-open-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 26%, transparent);
-  --brace-close-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 24%, transparent);
+  --brace-open-color: color-mix(in srgb, var(--grammar-objective-brace-color) 26%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--grammar-subjective-brace-color) 24%, transparent);
 }
 
 :where(.spw-frame[data-state~="active"][data-spw-form="brace"]) {
-  --brace-open-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 40%, transparent);
-  --brace-close-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 24%, transparent);
+  --brace-open-color: color-mix(in srgb, var(--grammar-objective-brace-color) 40%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--grammar-subjective-brace-color) 24%, transparent);
 }
 
 /* operator-specific brace hues */
@@ -22688,12 +22700,14 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
 }
 
 :where([data-spw-gesture="charging"]) {
+  transform: scale(1.03);
   box-shadow:
     inset 0 0 0 1px var(--gesture-anatomy-ring, transparent),
     0 0 0 2px color-mix(in srgb, var(--gesture-anatomy-accent) 10%, transparent);
 }
 
 :where([data-spw-gesture="armed"]) {
+  transform: scale(1.05);
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--gesture-anatomy-accent) 30%, transparent),
     0 0 0 3px color-mix(in srgb, var(--gesture-anatomy-accent) 12%, transparent);
@@ -22723,6 +22737,10 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   :where([data-spw-gesture="charging"], [data-spw-gesture="armed"], [data-spw-gesture="sustained"]),
   :where(.spw-living-term[data-spw-gesture-hint])::after {
     transition: none;
+  }
+
+  :where([data-spw-gesture="charging"], [data-spw-gesture="armed"]) {
+    transform: none;
   }
 }
 
@@ -30423,12 +30441,100 @@ html[data-spw-page-section-phase="idle"] {
   --spw-expression-warmth: 0;
 }
 
-/* Capture mode: a relation lit mid-frame reads as a rendering artifact to a
-   model interpreting the screenshot. Same reason arrival-electrostatics
-   suppresses there. */
-:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"]) [data-spw-expression-kin]),
-:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"]) [data-spw-expression-resonating]) {
+/* Capture: keep join washes and living-term emphasis so a still can show
+   breadth. Mute only transient kin on non-living hosts — a hover halo mid-
+   frame still reads as a rendering artifact. */
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"]) [data-spw-expression-kin]:not(.spw-living-term):not([data-spw-living-term])),
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"]) [data-spw-expression-resonating]:not(.spw-living-term):not([data-spw-living-term])) {
   box-shadow: none;
+}
+
+:where(body[data-spw-capture-mode] .spw-living-term, body[data-spw-capture-mode] [data-spw-living-term]) {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent);
+}
+
+:where(body[data-spw-capture-mode] .spw-living-term::after, body[data-spw-capture-mode] [data-spw-living-term]::after) {
+  content: none;
+}
+
+/* ── Joins: crawl is authored; project and common are punctuated ─────────
+   Crawl is `{mill}.{laminate}.{cure}` — complete practices, not a dotted list.
+   Project is potential then concept-edge. Common is co-held. List is quiet. */
+
+:where([data-spw-join="list"]) {
+  box-shadow: inset 0 -1px 0 0 color-mix(in srgb, currentColor 16%, transparent);
+}
+
+:where([data-spw-join="crawl"]) {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--grammar-objective-brace-color, hsl(188 58% 32%)) 11%, transparent),
+    color-mix(in srgb, var(--grammar-subjective-brace-color, hsl(342 48% 36%)) 13%, transparent)
+  );
+  background-repeat: no-repeat;
+}
+
+:where([data-spw-join="project"]) {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--op-ref-color, hsl(210 55% 42%)) 10%, transparent),
+    color-mix(in srgb, var(--op-surface-color, var(--teal, #008080)) 10%, transparent)
+  );
+  background-repeat: no-repeat;
+}
+
+:where([data-spw-join="common"]) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--grammar-ink-soft, currentColor) 12%, transparent);
+}
+
+:where([data-spw-expression-kin][data-spw-crawl-pole="open"]) {
+  --spw-expression-accent: var(--grammar-objective-brace-color, hsl(188 58% 32%));
+}
+
+:where([data-spw-expression-kin][data-spw-crawl-pole="close"]) {
+  --spw-expression-accent: var(--grammar-subjective-brace-color, hsl(342 48% 36%));
+}
+
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-join="crawl"]),
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-join="project"]),
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-join="common"]),
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-join="list"]) {
+  background-image: none;
+  box-shadow: none;
+}
+
+/* Join specimens: token first, kind next, gloss last — scannable without JS. */
+:where([data-spw-feature="join-specimens"]) {
+  display: grid;
+  gap: var(--spw-shell-panel-gap, 0.85rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  margin-block: var(--space-sm, 0.8rem) var(--space-md, 1rem);
+}
+
+/* Theme chips: a linked rail is the theme. A still of the row is the breadth. */
+:where([data-spw-feature="theme-chips"]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  margin-block: 0.7rem 1rem;
+}
+
+:where([data-spw-feature="join-specimens"] .spw-living-term, [data-spw-feature="join-specimens"] [data-spw-living-term]) {
+  border-bottom-style: solid;
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
+}
+
+/* Living terms inherit kin/salience without a second palette. */
+:where(.spw-living-term[data-spw-expression-kin], [data-spw-living-term][data-spw-expression-kin]) {
+  border-bottom-color: color-mix(
+    in srgb,
+    var(--spw-expression-accent, var(--active-op-color, #008080))
+      calc(var(--spw-expression-resonance, 0.45) * 70%),
+    transparent
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -40450,13 +40556,16 @@ html[data-spw-cognitive-handles="off"] :where(
 .spw-living-term,
 [data-spw-living-term] {
   display: inline;
-  border-bottom: 1px dotted color-mix(in srgb, var(--active-op-color, var(--teal)) 45%, transparent);
+  font-weight: 600;
+  border-bottom: 1.5px dashed color-mix(in srgb, var(--active-op-color, var(--teal)) 62%, transparent);
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent);
   cursor: help;
   position: relative;
   border-radius: 3px;
-  padding: 0.04em 0.2em;
-  margin: -0.04em -0.2em;
+  padding: 0.04em 0.22em;
+  margin: -0.04em -0.22em;
   text-decoration-skip-ink: none;
+  touch-action: manipulation;
   transition:
     border-color var(--handle-duration-fast, 140ms) var(--handle-ease),
     background-color var(--handle-duration-fast, 140ms) var(--handle-ease),
@@ -40471,8 +40580,8 @@ html[data-spw-cognitive-handles="off"] :where(
   right: -0.45em; /* tighter to reduce line-box pressure and wrapping artifacts at end of balanced text */
   top: -0.08em;
   font-size: 0.52em;
-  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 25%, transparent);
-  opacity: 0.4;
+  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, transparent);
+  opacity: 0.55;
   pointer-events: none;
   transition: opacity 120ms ease, color 120ms ease;
 }

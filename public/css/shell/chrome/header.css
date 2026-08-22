@@ -305,7 +305,8 @@
 .header-sigil {
   display: inline-flex;
   align-items: center;
-  min-width: 0;
+  min-width: 11ch;
+  overflow: visible;
   gap: 0.5rem;
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 74%, var(--active-op-color, var(--teal, #008080)) 26%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);

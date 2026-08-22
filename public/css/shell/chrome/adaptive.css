@@ -182,7 +182,12 @@
 
   .header-brand,
   .header-sigil {
-    min-width: 0;
+    min-width: 11ch;
+    overflow: visible;
+  }
+
+  .header-op-indicator {
+    display: none;
   }
 
   :where(.site-header nav, body > header nav) {
