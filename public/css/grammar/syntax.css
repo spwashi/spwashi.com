@@ -75,13 +75,13 @@
   --grammar-focus-outline: 2px solid var(--active-op-color, var(--teal, #008080));
   --grammar-focus-offset: 2px;
 
-  /* form defaults */
-  --grammar-form-open: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, transparent);
-  --grammar-form-close: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
-
-  /* objective / subjective rails */
+  /* objective / subjective rails — open leans shared setup, close leans residue */
   --grammar-objective-brace-color: var(--objective-brace-color, hsl(188 58% 32%));
   --grammar-subjective-brace-color: var(--subjective-brace-color, hsl(342 48% 36%));
+
+  /* form defaults: crawl the brace gradient instead of one hue at two opacities */
+  --grammar-form-open: color-mix(in srgb, var(--grammar-objective-brace-color) 42%, transparent);
+  --grammar-form-close: color-mix(in srgb, var(--grammar-subjective-brace-color) 38%, transparent);
 
   /* grammar energy / motion safety */
   --grammar-motion-budget: var(--local-motion-budget, var(--energy-budget-motion, 0.26));
@@ -1413,23 +1413,23 @@
 }
 
 :where([data-spw-form="brace"][data-spw-realization="conceptual"]) {
-  --brace-open-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 36%, transparent);
-  --brace-close-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 14%, transparent);
+  --brace-open-color: color-mix(in srgb, var(--grammar-objective-brace-color) 36%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--grammar-subjective-brace-color) 18%, transparent);
 }
 
 :where([data-spw-form="brace"][data-spw-realization="realized"]) {
-  --brace-open-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 18%, transparent);
-  --brace-close-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 38%, transparent);
+  --brace-open-color: color-mix(in srgb, var(--grammar-objective-brace-color) 18%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--grammar-subjective-brace-color) 38%, transparent);
 }
 
 :where([data-spw-form="brace"][data-spw-realization="hybrid"]) {
-  --brace-open-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 26%, transparent);
-  --brace-close-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal, #008080)) 24%, transparent);
+  --brace-open-color: color-mix(in srgb, var(--grammar-objective-brace-color) 26%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--grammar-subjective-brace-color) 24%, transparent);
 }
 
 :where(.spw-frame[data-state~="active"][data-spw-form="brace"]) {
-  --brace-open-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 40%, transparent);
-  --brace-close-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 24%, transparent);
+  --brace-open-color: color-mix(in srgb, var(--grammar-objective-brace-color) 40%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--grammar-subjective-brace-color) 24%, transparent);
 }
 
 /* operator-specific brace hues */

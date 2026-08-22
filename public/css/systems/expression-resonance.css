@@ -111,12 +111,100 @@
   --spw-expression-warmth: 0;
 }
 
-/* Capture mode: a relation lit mid-frame reads as a rendering artifact to a
-   model interpreting the screenshot. Same reason arrival-electrostatics
-   suppresses there. */
-:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"]) [data-spw-expression-kin]),
-:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"]) [data-spw-expression-resonating]) {
+/* Capture: keep join washes and living-term emphasis so a still can show
+   breadth. Mute only transient kin on non-living hosts — a hover halo mid-
+   frame still reads as a rendering artifact. */
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"]) [data-spw-expression-kin]:not(.spw-living-term):not([data-spw-living-term])),
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"]) [data-spw-expression-resonating]:not(.spw-living-term):not([data-spw-living-term])) {
   box-shadow: none;
+}
+
+:where(body[data-spw-capture-mode] .spw-living-term, body[data-spw-capture-mode] [data-spw-living-term]) {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent);
+}
+
+:where(body[data-spw-capture-mode] .spw-living-term::after, body[data-spw-capture-mode] [data-spw-living-term]::after) {
+  content: none;
+}
+
+/* ── Joins: crawl is authored; project and common are punctuated ─────────
+   Crawl is `{mill}.{laminate}.{cure}` — complete practices, not a dotted list.
+   Project is potential then concept-edge. Common is co-held. List is quiet. */
+
+:where([data-spw-join="list"]) {
+  box-shadow: inset 0 -1px 0 0 color-mix(in srgb, currentColor 16%, transparent);
+}
+
+:where([data-spw-join="crawl"]) {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--grammar-objective-brace-color, hsl(188 58% 32%)) 11%, transparent),
+    color-mix(in srgb, var(--grammar-subjective-brace-color, hsl(342 48% 36%)) 13%, transparent)
+  );
+  background-repeat: no-repeat;
+}
+
+:where([data-spw-join="project"]) {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--op-ref-color, hsl(210 55% 42%)) 10%, transparent),
+    color-mix(in srgb, var(--op-surface-color, var(--teal, #008080)) 10%, transparent)
+  );
+  background-repeat: no-repeat;
+}
+
+:where([data-spw-join="common"]) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--grammar-ink-soft, currentColor) 12%, transparent);
+}
+
+:where([data-spw-expression-kin][data-spw-crawl-pole="open"]) {
+  --spw-expression-accent: var(--grammar-objective-brace-color, hsl(188 58% 32%));
+}
+
+:where([data-spw-expression-kin][data-spw-crawl-pole="close"]) {
+  --spw-expression-accent: var(--grammar-subjective-brace-color, hsl(342 48% 36%));
+}
+
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-join="crawl"]),
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-join="project"]),
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-join="common"]),
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-join="list"]) {
+  background-image: none;
+  box-shadow: none;
+}
+
+/* Join specimens: token first, kind next, gloss last — scannable without JS. */
+:where([data-spw-feature="join-specimens"]) {
+  display: grid;
+  gap: var(--spw-shell-panel-gap, 0.85rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  margin-block: var(--space-sm, 0.8rem) var(--space-md, 1rem);
+}
+
+/* Theme chips: a linked rail is the theme. A still of the row is the breadth. */
+:where([data-spw-feature="theme-chips"]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  margin-block: 0.7rem 1rem;
+}
+
+:where([data-spw-feature="join-specimens"] .spw-living-term, [data-spw-feature="join-specimens"] [data-spw-living-term]) {
+  border-bottom-style: solid;
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
+}
+
+/* Living terms inherit kin/salience without a second palette. */
+:where(.spw-living-term[data-spw-expression-kin], [data-spw-living-term][data-spw-expression-kin]) {
+  border-bottom-color: color-mix(
+    in srgb,
+    var(--spw-expression-accent, var(--active-op-color, #008080))
+      calc(var(--spw-expression-resonance, 0.45) * 70%),
+    transparent
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -305,12 +305,14 @@
 }
 
 :where([data-spw-gesture="charging"]) {
+  transform: scale(1.03);
   box-shadow:
     inset 0 0 0 1px var(--gesture-anatomy-ring, transparent),
     0 0 0 2px color-mix(in srgb, var(--gesture-anatomy-accent) 10%, transparent);
 }
 
 :where([data-spw-gesture="armed"]) {
+  transform: scale(1.05);
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--gesture-anatomy-accent) 30%, transparent),
     0 0 0 3px color-mix(in srgb, var(--gesture-anatomy-accent) 12%, transparent);
@@ -340,6 +342,10 @@
   :where([data-spw-gesture="charging"], [data-spw-gesture="armed"], [data-spw-gesture="sustained"]),
   :where(.spw-living-term[data-spw-gesture-hint])::after {
     transition: none;
+  }
+
+  :where([data-spw-gesture="charging"], [data-spw-gesture="armed"]) {
+    transform: none;
   }
 }
 

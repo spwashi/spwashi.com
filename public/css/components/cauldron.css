@@ -115,17 +115,16 @@
   color: var(--ink, rgba(14, 18, 20, 0.95));
 }
 
-.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-body,
-.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-phase-rail {
+.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-body {
   display: none;
 }
 
 .site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-header {
-  margin-bottom: 0;
+  margin-bottom: 0.45rem;
 }
 
 .site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-kicker::after {
-  content: " · hold terms to stash handles";
+  content: " · hold or double-tap to stash";
   color: var(--ink-muted, rgba(14, 18, 20, 0.58));
   font-weight: 500;
   letter-spacing: normal;
@@ -147,7 +146,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.38rem;
-  min-height: 2.35rem;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
   padding: 0.34rem 0.72rem;
   border: 1px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 24%, var(--line));
   border-radius: 999px;

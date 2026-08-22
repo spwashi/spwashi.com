@@ -202,13 +202,16 @@
 .spw-living-term,
 [data-spw-living-term] {
   display: inline;
-  border-bottom: 1px dotted color-mix(in srgb, var(--active-op-color, var(--teal)) 45%, transparent);
+  font-weight: 600;
+  border-bottom: 1.5px dashed color-mix(in srgb, var(--active-op-color, var(--teal)) 62%, transparent);
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent);
   cursor: help;
   position: relative;
   border-radius: 3px;
-  padding: 0.04em 0.2em;
-  margin: -0.04em -0.2em;
+  padding: 0.04em 0.22em;
+  margin: -0.04em -0.22em;
   text-decoration-skip-ink: none;
+  touch-action: manipulation;
   transition:
     border-color var(--handle-duration-fast, 140ms) var(--handle-ease),
     background-color var(--handle-duration-fast, 140ms) var(--handle-ease),
@@ -223,8 +226,8 @@
   right: -0.45em; /* tighter to reduce line-box pressure and wrapping artifacts at end of balanced text */
   top: -0.08em;
   font-size: 0.52em;
-  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 25%, transparent);
-  opacity: 0.4;
+  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, transparent);
+  opacity: 0.55;
   pointer-events: none;
   transition: opacity 120ms ease, color 120ms ease;
 }
