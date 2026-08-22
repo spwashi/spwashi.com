@@ -76,14 +76,13 @@ function syncFloatingChip() {
   }
   applyCauldronState(chip, { phase, count });
 
-  const scrolled = window.scrollY > Math.max(420, window.innerHeight * 0.42);
   const footerVisible = (() => {
     const host = document.querySelector(PANEL_QUERY);
     if (!(host instanceof HTMLElement)) return false;
     const rect = host.getBoundingClientRect();
-    return rect.top < window.innerHeight * 0.82;
+    return rect.top < window.innerHeight * 0.82 && rect.bottom > 0;
   })();
-  chip.hidden = !(count > 0 && scrolled && !footerVisible);
+  chip.hidden = !(count > 0 && !footerVisible);
 }
 
 const safeSyncFloatingChip = guardCall(syncFloatingChip, 'cauldron:floating-chip');
@@ -129,17 +128,30 @@ export function syncCauldronPanelCollapse(count) {
   });
 }
 
+function toggleCauldronPanel(host) {
+  if (!(host instanceof HTMLElement)) return;
+  const next = host.dataset.spwCauldronPanel === 'open' ? 'compact' : 'open';
+  host.dataset.spwCauldronPanel = next;
+  host.dataset.spwCauldronPanelUser = next === 'open' ? 'open' : '';
+  syncPanelToggleLabels(host);
+}
+
 export function bindCauldronPanelToggle() {
   document.querySelectorAll('[data-spw-cauldron-panel-toggle]').forEach((button) => {
     if (button.dataset.spwCauldronPanelBound === 'true') return;
     button.dataset.spwCauldronPanelBound = 'true';
     button.addEventListener('click', () => {
-      const host = button.closest(PANEL_QUERY);
-      if (!(host instanceof HTMLElement)) return;
-      const next = host.dataset.spwCauldronPanel === 'open' ? 'compact' : 'open';
-      host.dataset.spwCauldronPanel = next;
-      host.dataset.spwCauldronPanelUser = next === 'open' ? 'open' : '';
-      syncPanelToggleLabels(host);
+      toggleCauldronPanel(button.closest(PANEL_QUERY));
+    });
+  });
+  document.querySelectorAll(PANEL_QUERY).forEach((host) => {
+    if (!(host instanceof HTMLElement) || host.dataset.spwCauldronHeaderToggle === 'true') return;
+    const header = host.querySelector('.site-footer__cauldron-header');
+    if (!(header instanceof HTMLElement)) return;
+    host.dataset.spwCauldronHeaderToggle = 'true';
+    header.addEventListener('click', (event) => {
+      if (event.target.closest('[data-set-cauldron-vessel], [data-spw-cauldron-panel-toggle], a, button')) return;
+      toggleCauldronPanel(host);
     });
   });
 }

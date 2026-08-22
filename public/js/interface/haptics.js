@@ -107,6 +107,39 @@ const holdPrimeTimers = new WeakMap();
 const suppressClickTargets = new WeakSet();
 const PASSIVE_CHARGE_DELAY_MS = 220;
 const HOLD_PRIME_DELAY_MS = 520;
+const HOLD_PRIME_DELAY_COARSE_MS = 420;
+const HOLD_SLOP_PX = 16;
+const HOLD_SLOP_COARSE_PX = 40;
+const DOUBLE_TAP_MS = 340;
+
+let lastPrimeTap = { target: null, at: 0 };
+
+function prefersQuietMotion() {
+  return Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
+}
+
+function isCoarsePointer() {
+  return Boolean(window.matchMedia?.('(pointer: coarse)')?.matches);
+}
+
+function holdPrimeDelayMs() {
+  return isCoarsePointer() ? HOLD_PRIME_DELAY_COARSE_MS : HOLD_PRIME_DELAY_MS;
+}
+
+function holdSlopPx() {
+  return isCoarsePointer() ? HOLD_SLOP_COARSE_PX : HOLD_SLOP_PX;
+}
+
+/** Short device tick. Quiet when the reader asked for less motion. */
+function tick(pattern = 8) {
+  if (prefersQuietMotion()) return;
+  if (typeof navigator?.vibrate !== 'function') return;
+  try {
+    navigator.vibrate(pattern);
+  } catch {
+    // Vibration is optional fidget, not a contract.
+  }
+}
 
 function setGroundedFlags(el, grounded) {
   el.dataset.spwGrounded = grounded ? 'true' : 'false';
@@ -236,19 +269,30 @@ function onPrimePointerDown(event) {
   const target = getInteractiveTarget(event.target, CAULDRON_CANDIDATE_SELECTORS);
   if (!target || shouldIgnorePrimeCandidate(target, event)) return;
 
+  const now = performance.now();
+  if (lastPrimeTap.target === target && now - lastPrimeTap.at <= DOUBLE_TAP_MS) {
+    lastPrimeTap = { target: null, at: 0 };
+    collectPrimeCandidate(target, event);
+    return;
+  }
+
   target.dataset.spwCauldronCandidate = 'true';
   setPrimeState(target, 'candidate');
   setGestureState(target, 'charging');
+  tick(8);
 
+  const delay = holdPrimeDelayMs();
   const armedTimer = window.setTimeout(() => {
     if (!holdPrimeTimers.has(target)) return;
     setGestureState(target, 'armed');
-  }, Math.round(HOLD_PRIME_DELAY_MS * 0.55));
+    tick(12);
+  }, Math.round(delay * 0.55));
 
   const timer = window.setTimeout(() => {
     holdPrimeTimers.delete(target);
+    lastPrimeTap = { target: null, at: 0 };
     collectPrimeCandidate(target, event);
-  }, HOLD_PRIME_DELAY_MS);
+  }, delay);
 
   holdPrimeTimers.set(target, {
     timer,
@@ -256,6 +300,7 @@ function onPrimePointerDown(event) {
     pointerId: event.pointerId,
     x: event.clientX,
     y: event.clientY,
+    startedAt: performance.now(),
   });
 }
 
@@ -265,13 +310,16 @@ function onPrimePointerMove(event) {
   const record = holdPrimeTimers.get(target);
   if (!record || record.pointerId !== event.pointerId) return;
   const distance = Math.hypot(event.clientX - record.x, event.clientY - record.y);
-  if (distance > 12) cancelHoldPrime(target);
+  if (distance > holdSlopPx()) cancelHoldPrime(target);
 }
 
 function onPrimePointerEnd(event) {
   const target = getInteractiveTarget(event.target, CAULDRON_CANDIDATE_SELECTORS);
   if (!target) return;
+  const record = holdPrimeTimers.get(target);
   cancelHoldPrime(target);
+  if (!record || event.type === 'pointercancel') return;
+  lastPrimeTap = { target, at: performance.now() };
 }
 
 function cancelHoldPrime(target) {
@@ -303,6 +351,7 @@ function collectPrimeCandidate(target, event) {
   suppressClickTargets.add(target);
   window.setTimeout(() => suppressClickTargets.delete(target), 800);
   animateSettle(target, 'spw-pop-snap');
+  tick([10, 28, 14]);
 
   bus.emit('spell:capture', {
     ...detail,
@@ -1102,6 +1151,13 @@ function shouldIgnoreGroundToggle(target, event) {
 
   if (target.closest('[data-spw-groundable="false"]')) return true;
   if (isPlainNavigableLink(target, event)) return true;
+  // Living terms stash on hold or double-tap. A tap should inspect, not latch.
+  if (
+    target.matches('[data-spw-living-term], .spw-living-term')
+    && !target.matches('.operator-chip, .frame-sigil, a.spw-chip')
+  ) {
+    return true;
+  }
 
   const activeTag = document.activeElement?.tagName;
   if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || document.activeElement?.isContentEditable) {
