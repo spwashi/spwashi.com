@@ -14,11 +14,13 @@
 @storage: ~"../../public/js/interface/cauldron/storage.js"
 @composition: ~"../../public/js/interface/composition.js"
 @resonance: ~"../../public/js/runtime/expression-resonance.js"
+@dot_join: ~"../language/dot-join.spw"
 
 operation = "contract"
 fixity = "tending"
 
 expression = cauldron[metabolism]{intake.digestion.return}<compost>
+vessel_join = `cauldron[garden]{sow.tend.harvest} — dots crawl the brace gradient; not a pipe.`
 
 ^"metabolism"{
   ~#note: "Four stages. Each is a real code path, not a metaphor laid over one."

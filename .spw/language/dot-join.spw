@@ -1,0 +1,52 @@
+# Joins
+#
+# Direction of Spw: the dot crawls the brace gradient.
+# Comma and semicolon are considered; disjunction is an open need.
+# operation: prime | fixity: tending
+
+#>dot_join
+#:language #!grammar #!direction #!join
+#:operation #!prime
+#:fixity #!tending
+#:layer #!semantics
+
+@braces: ~"../conventions/semantic-braces.spw"
+@lore: ~"./sigil-geometry-lore.spw"
+@cauldron: ~"../conventions/cauldron-dynamics.spw"
+@quest: ~"../../about/domains/spw.quest/index.html"
+@atlas: ~"../../topics/software/spw/index.html"
+
+operation = "prime"
+fixity = "tending"
+
+^"thesis"{
+  claim = `Do not deviate far from the dot as a crawl along the brace gradient. Opening { leans objective; closing } leans subjective. Dots are waypoints on that walk.`
+  example = `cauldron[garden]{sow.tend.harvest} — sow nearer the open bed; harvest nearer what you take. Same mark as member access: a crawl into a local field.`
+  house = `Direction notes that are still coming live on @quest, with texture.website as the neighboring material surface.`
+}[reg=facet]
+
+^"considered_punctuation"{
+  dot = `Crawl / walk. Gradient between brace meanings. Keep this as the default join inside {practice}.`
+  comma = `Common operator — co-held, together, without claiming the crawl. A and B, not A then B toward the close.`
+  semicolon = `Ordinal operator — order that is not the brace-gradient crawl. A sequence you can count without walking objective-to-subjective.`
+  disjunction = `An "or" is a real need. Not having one is not a virtue. | was a thought, not a landing. Do not pretend the language is complete without a way to hold alternatives.`
+  status = `Dot is in live expressions. Comma and semicolon are direction, not yet public parser law. Specimens belong on @quest and the operator atlas before they bind the workbench.`
+}[reg=facet]
+
+^"seats"{
+  member = `name.field — walk down into the local field.`
+  practice = `{sow.tend.harvest} — crawl from setup toward outcome inside one practice.`
+  body = `{intake.digestion.return} — metabolism along the same gradient.`
+  mix = `boon.bane.bone — voices on one crawl until a common or ordinal mark earns its own seat.`
+}[reg=facet]
+
+^"hypermedia"{
+  intuition = `A readable crawl is how a page teaches sequence without a tutorial.`
+  math_ux = `Distinction is a compare (two placements + ~). Alternatives still want an or. Do not collapse compare, crawl, common, and ordinal into one ornament.`
+  progressive = `The string is complete without JS. Hydration may light kinship or sit a vessel; it is not required to read the crawl.`
+}[reg=facet]
+
+validation: #[
+  `rg 'dot_join' .spw/language/index.spw`,
+  `rg 'sow.tend.harvest' _partials/site-footer.html public/js/interface/cauldron/contract.js`,
+][reg=set]
