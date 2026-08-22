@@ -64,8 +64,17 @@
                 </div>
                 <p class="spec-kicker">Systems / Architecture</p>
                 <h1 id="architecture-title">Systems That Stay Readable</h1>
-                <p>Architecture is where constraints become durable. This route gathers field notes on the choices that shape a system long after the first launch: plain-text protocols, route topology, local-first assumptions, interface boundaries, and the social cost of hidden state. The aim is not only correctness. The aim is to leave behind structures that another person can inspect, repair, and extend.</p>
-                <p data-spw-textual-role="note">This site practices what it describes: <code>data-spw-*</code> attrs, layered CSS, and staged runtime modules are inspectable seams — open the <a href="/about/website/">website field guide</a>, use the navigator on longer registers, and focus operator chips to see how resonance makes boundaries visible without extra dashboards.</p>
+                <div class="spw-reason-strip" aria-label="Architecture skill and now">
+                    <div data-spw-emphasis="primary">
+                        <strong>Skill</strong>
+                        <p>Constraints that last: protocols, route topology, local-first assumptions, interface boundaries. Hidden state has a social cost.</p>
+                    </div>
+                    <div data-spw-emphasis="secondary">
+                        <strong>Now</strong>
+                        <p>This site is the proof. <a href="/about/website/">Website field guide</a>. <a href="/about/#resume-practices">Design and software doors</a>.</p>
+                    </div>
+                </div>
+                <p data-spw-textual-role="note">Leave structures another person can inspect, repair, and extend. <code>data-spw-*</code>, layered CSS, and staged modules are the seams — focus operator chips to see resonance without a second dashboard.</p>
                 <nav class="frame-operators" aria-label="Topic nav">
                     <a class="spw-chip" data-spw-handle="true" href="/design/website/" data-spw-operator="potential" data-spw-action="explore">~website_design</a>
                     <a class="spw-chip" data-spw-handle="true" href="/about/website/" data-spw-operator="potential" data-spw-action="explore">~website_field_guide</a>
@@ -105,17 +114,17 @@
                     <h2>System Patterns</h2>
                 </header>
                 <div class="topic-reference-grid">
-                    <article class="topic-reference-card" data-spw-form="square">
+                    <article class="topic-reference-card" data-spw-form="square" data-spw-semantic-expression="architecture[protocol]{durable}">
                         <h3>Durable Protocols</h3>
                         <p>Portable formats, inspectable HTML, and local-first invariants are architectural choices because they decide who can recover the system later.</p>
                         <a href="https://localfirstweb.com/" target="_blank" rel="noreferrer">site: Local First Web</a>
                     </article>
-                    <article class="topic-reference-card" data-spw-form="square">
+                    <article class="topic-reference-card" data-spw-form="square" data-spw-semantic-expression="architecture[pattern]{language}">
                         <h3>Christopher Alexander</h3>
                         <p>Pattern language is still useful because it treats design as a family of recurring relationships rather than a single frozen blueprint.</p>
                         <a href="https://en.wikipedia.org/wiki/A_Pattern_Language" target="_blank" rel="noreferrer">wiki: A Pattern Language</a>
                     </article>
-                    <article class="topic-reference-card" data-spw-form="square">
+                    <article class="topic-reference-card" data-spw-form="square" data-spw-semantic-expression="architecture[surface]{readable}">
                         <h3>Readable Surface Architecture</h3>
                         <p>At site scale, architecture is not only data flow. It is also route affordances, semantic depth, and whether a public page can explain its own moving parts.</p>
                         <a href="/design/website/">route: Website design</a>
