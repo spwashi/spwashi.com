@@ -1,0 +1,149 @@
+# Landing Visual Hierarchy — dispatch
+#
+# 2026-08-21. Agents start here, then open the audit and one session packet.
+
+#>landing_visual_hierarchy
+#:plan #!landing #!hierarchy #!commons
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+date = "2026-08-21"
+
+@plan: ~"./PLAN.md"
+@audit: ~"./audit.spw"
+@cluster_map: ~"./cluster-map.spw"
+@ownership: ~"./region-ownership.spw"
+@nutrient: ~"./biome-nutrient.spw"
+@models: ~"./climate-models.spw"
+@harmony: ~"./ontology-harmony.spw"
+@grower: ~"./pnsb-grower.spw"
+@session: ~"./session-2026-08-21.spw"
+@measured_companion: ~"../landing-page-hierarchy-2026-08-21/index.spw"
+@route_census: ~"../landing-page-hierarchy-2026-08-21/route-census.spw"
+@hierarchy_lens: ~"../landing-page-hierarchy-2026-08-21/hierarchy-lens.spw"
+@wrap_jobs: ~"../wrap-job-utility/PLAN.md"
+@card_grid: ~"../card-grid-density-audit/PLAN.md"
+@typography_packing: ~"../../../.spw/conventions/typography-packing.spw"
+@daily_kernel: ~"../../../.spw/conventions/daily-kernel.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+intent: .{
+  goal = `Make public landing entry spines read as identity, notice, action, and proof while preserving route-specific density and visual fingerprint.`
+  owner = `landing-visual-hierarchy`
+  kind = `plan`
+  bucket = `css_layout_interaction`
+  artifact_shape = `PLAN.md | index.spw | audit.spw | cluster-map.spw | region-ownership.spw | biome-nutrient.spw | climate-models.spw | ontology-harmony.spw | pnsb-grower.spw | session-2026-08-21.spw | measured companion`
+}[reg=facet]
+
+^"dimensions"{
+  practice_depth = "reading | observation | tending"
+  semantic_layer = "pragmatics"
+  collaboration_phase = "audit | align | exchange"
+  memory_tier = "hot"
+  bucket = "css_layout_interaction"
+}[reg=facet]
+
+^"conceptual_model"{
+  thesis = `A landing earns clarity when its identity has the strongest gravity, its first action has one rail, and its proof appears before orientation and depth compete for attention. Named clusters are team desks; seats are habitat; components sit by guild and one limiting factor.`
+  concepts = #[`identity gravity`, `notice`, `action rail`, `proof`, `route fingerprint`, `team desk`, `guild`, `limit`, `electrostatic material`][reg=set]
+  surfaces = #[`primary navigation landings`, `adjacent design and recipes exemplars`, `route-local CSS after HTML proof`][reg=set]
+  fixity_tier = `tending`
+}[reg=facet]
+
+^"thesis"{
+  claim = `Public landings should cluster as identity, notice, action, proof. Extra rails, reason strips, and essays belong below that stack.`
+  risk = `Agents will restyle chips or cards without reducing competing clusters, so the first screen stays noisy.`
+  rule = `Name the cluster you are changing. Do not add a fifth action rail to solve four existing ones.`
+}
+
+^"landings"{
+  primary_navigation = #[`/`, `/about/`, `/topics/`, `/play/`, `/design/folios/`, `/services/`, `/now/`, `/settings/`][reg=set]
+  adjacent_exemplars = #[`/design/`, `/recipes/`][reg=set]
+  roles = `creator atlas | identity memo | topic atlas | play threshold | folio loop | service ladder | live bulletin | settings workbench`
+}
+
+^"read_order"{
+  path = #[
+    `PLAN.md`,
+    `audit.spw`,
+    `cluster-map.spw`,
+    `region-ownership.spw`,
+    `biome-nutrient.spw`,
+    `climate-models.spw`,
+    `ontology-harmony.spw`,
+    `measured companion census + hierarchy lens`,
+    `session-2026-08-21.spw`,
+    `one packet only`
+  ][reg=set]
+}
+
+^"owner_claim"{
+  claim_id = "plan-landing-visual-hierarchy-001"
+  layer = "pragmatic"
+  hypothesis = `HTML cluster order and route-local hierarchy can make public landings easier to scan without making their silhouettes interchangeable.`
+  spec_ref = @plan
+  impl_ref = @session
+  probe_ref = `Use @route_census and @hierarchy_lens, then inspect the claimed route at phone and desktop widths.`
+  falsification = `Identity, next action, or proof remains ambiguous after the first two viewport heights, or the routes lose their distinct roles.`
+  status = "active"
+}[reg=facet]
+
+^"research_bridge"{
+  measured_primary_navigation = @route_census
+  dimension_lens = @hierarchy_lens
+  selector_audit = @audit
+  cluster_model = @cluster_map
+  rule = `Use local route evidence; do not import a generic landing-page template.`
+}[reg=facet]
+
+^"connection_points"{
+  measured_companion = @measured_companion
+  related_plans = #[`wrap-job-utility`, `card-grid-density-audit`, `page-region-discoverability`, `component-region-personality`, `model-guided-refinement`, `daily-kernel-development`][reg=set]
+}[reg=facet]
+
+^"plan_refinement"{
+  tone = `Quiet, indexed, one seating voice. Experimental ontologies stay named and demoted, not loud.`
+  accuracy = `Hierarchy audit is measured. Desk map matches authored HTML. Wuxing diets are demoted. Grower identity is private.`
+  direction = `Claim packet L or M. Use ontology-harmony.spw before adding another climate file.`
+  inspiration = `Teams recognize a desk; models sit in chord instead of competing essays.`
+  alignment = `region-seats tropes, electrostatic-affordances, thermodynamic phase attrs, component-philosophy-harmony audit, copy-ecology soil harvest`
+}[reg=facet]
+
+dispatch: .{
+  plan = @plan
+  audit = @audit
+  cluster_map = @cluster_map
+  ownership = @ownership
+  nutrient = @nutrient
+  models = @models
+  harmony = @harmony
+  grower = @grower
+  session = @session
+  measured_companion = @measured_companion
+  route_census = @route_census
+  hierarchy_lens = @hierarchy_lens
+}[reg=facet]
+
+editor_prompts: #[
+  .{ ask = `Which selector-level clusters currently compete above the fold?` ; see = @audit }[reg=facet],
+  .{ ask = `Which primary route has the clearest measured hierarchy defect?` ; see = @route_census }[reg=facet],
+  .{ ask = `Which session packet can I claim without colliding with another route owner?` ; see = @session }[reg=facet],
+  .{ ask = `Which cluster is my team's desk, and which nicknames still fail to light a seat?` ; see = @ownership }[reg=facet],
+  .{ ask = `Which guild belongs on this seat, and what is limiting?` ; see = @nutrient }[reg=facet],
+  .{ ask = `Which climate model is seating, which is patch flavor, and which is the grower lab?` ; see = @models }[reg=facet],
+  .{ ask = `Which experimental voices are keep, demote, compare, or private?` ; see = @harmony }[reg=facet],
+  .{ ask = `What stays private about the grower relationship, and what PNSB facts are already public?` ; see = @grower }[reg=facet]
+][reg=set]
+
+validation: #[
+  `git diff --check`,
+  `node scripts/check-site.mjs`,
+  `node scripts/spw-anatomy-audit.mjs`,
+  `npm run audit:copy:align`,
+  `npm run check:local`
+][reg=set]

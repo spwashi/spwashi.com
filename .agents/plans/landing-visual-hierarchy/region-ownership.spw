@@ -1,0 +1,82 @@
+# Landing region ownership
+#
+# Teams get familiarity from named cluster wrappers that already exist.
+# Visual recognition comes from the six region-seat tropes, not team CSS.
+
+#>landing_region_ownership
+#:plan #!landing #!regions #!teams
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+date = "2026-08-21"
+
+@region_ecology: ~"../../../.spw/conventions/region-component-ecology.spw"
+@biome: ~"../../../.spw/conventions/component-biome.spw"
+@personality: ~"../../../.spw/conventions/component-region-personality.spw"
+@daily_kernel: ~"../../../.spw/conventions/daily-kernel.spw"
+@nutrient: ~"./biome-nutrient.spw"
+@models: ~"./climate-models.spw"
+@cluster_map: ~"./cluster-map.spw"
+
+^"thesis"{
+  claim = `A landing region is a team desk when it has one data-spw-cluster wrapper and one owner. Inner frames supply climate via the six seats. Familiarity is rg-ability plus tropes lighting up.`
+  evidence = `Cluster names already exist on home, about, topics, play, design, services, now. Settings and recipes have seats or biomes without cluster wrappers.`
+  refuse = `Empty wrappers for metadata. A seventh region seat. Team names as CSS classes. Inventing a campus biome the HTML does not author.`
+}
+
+^"desk_contract"{
+  wrapper = `data-spw-cluster on the existing grouping div — this is the desk name`
+  climate = `first inner .spw-frame data-spw-region. Later frames in the same wrapper may use other of the six seats.`
+  seats = `hook | hub | cluster | path | read | wide. region-role=entry-spine aliases hook.`
+  biome = `authored data-spw-biome only: commons, sanctuary, workshop, kitchen, lab, studio, archive. Campus readings in @daily_kernel are not HTML.`
+  owner = `one team in this file; claim the cluster in the session packet before editing`
+  probe = `rg 'data-spw-cluster="NAME"' then patch only descendants of that wrapper`
+}
+
+^"desks"{
+  home_entry: .{ cluster = `entry-orientation` ; climate = `hook` ; biome = `commons` ; team = `identity` ; route = `/` }[reg=facet]
+  home_onboard: .{ cluster = `onboarding-loops` ; climate = `path` ; team = `orientation` ; route = `/` }[reg=facet]
+  home_models: .{ cluster = `conceptual-models` ; climate = `cluster` ; team = `atlas` ; route = `/` }[reg=facet]
+  home_engines: .{ cluster = `structural-engines` ; climate = `hub` ; team = `systems` ; route = `/` }[reg=facet]
+  home_memory: .{ cluster = `memory-integration` ; climate = `read` ; team = `editorial` ; route = `/` }[reg=facet]
+  home_climate: .{ cluster = `sensory-climate` ; climate = `cluster` ; team = `material` ; route = `/` }[reg=facet]
+  about_kernel: .{ cluster = `kernel-identity` ; climate = `hook` ; biome = `sanctuary` ; team = `identity` ; route = `/about/` }[reg=facet]
+  about_systems: .{ cluster = `systems-architecture` ; climate = `hub` ; team = `systems` ; route = `/about/` }[reg=facet]
+  about_domains: .{ cluster = `creative-domains` ; climate = `cluster` ; team = `studio` ; route = `/about/` }[reg=facet]
+  about_mechanics: .{ cluster = `kernel-mechanics` ; climate = `read` ; team = `systems` ; route = `/about/` }[reg=facet]
+  topics_orient: .{ cluster = `atlas-orientation` ; climate = `hook` ; biome = `commons` ; team = `atlas` ; route = `/topics/` }[reg=facet]
+  topics_dir: .{ cluster = `topic-directory` ; climate = `cluster` ; team = `atlas` ; route = `/topics/` }[reg=facet]
+  topics_posture: .{ cluster = `pedagogical-postures` ; climate = `path` ; team = `learning` ; route = `/topics/` }[reg=facet]
+  topics_tools: .{ cluster = `reading-instruments` ; climate = `tuning` ; graduate = `read` ; team = `editorial` ; route = `/topics/` }[reg=facet]
+  play_orient: .{ cluster = `play-orientation` ; climate = `hook` ; biome = `commons` ; nicknames = #[`reentry`][reg=set] ; team = `play` ; route = `/play/` }[reg=facet]
+  play_gates: .{ cluster = `play-gateways` ; climate = `integration` ; nicknames = #[`integration`, `learning`, `quests`][reg=set] ; graduate = `path` ; team = `play` ; route = `/play/` }[reg=facet]
+  play_campaign: .{ cluster = `campaign-structures` ; climate = `register` ; nicknames = #[`register`, `structure`][reg=set] ; graduate = `cluster` ; team = `play` ; route = `/play/` }[reg=facet]
+  design_orient: .{ cluster = `design-orientation` ; climate = `entry-spine` ; team = `studio` ; route = `/design/` }[reg=facet]
+  design_lab: .{ cluster = `interactive-experiments` ; climate = `unset` ; graduate = `cluster` ; team = `studio` ; route = `/design/` }[reg=facet]
+  design_physics: .{ cluster = `rendering-physics` ; climate = `unset` ; graduate = `path` ; team = `material` ; route = `/design/` }[reg=facet]
+  design_collab: .{ cluster = `collaboration-tools` ; climate = `unset` ; graduate = `hub` ; team = `studio` ; route = `/design/` }[reg=facet]
+  services_orient: .{ cluster = `orientation-overview` ; climate = `hook` ; biome = `workshop` ; team = `offer` ; route = `/services/` }[reg=facet]
+  services_offer: .{ cluster = `service-offerings` ; climate = `paths` ; graduate = `path` ; team = `offer` ; route = `/services/` }[reg=facet]
+  services_terms: .{ cluster = `commercial-terms` ; climate = `configure` ; graduate = `hub` ; team = `offer` ; route = `/services/` }[reg=facet]
+  services_proof: .{ cluster = `public-proof-entry` ; climate = `demos` ; graduate = `cluster` ; team = `offer` ; route = `/services/` }[reg=facet]
+  services_support: .{ cluster = `portable-support` ; climate = `cards` ; graduate = `cluster` ; team = `offer` ; route = `/services/` }[reg=facet]
+  now_sprint: .{ cluster = `sprint-orientation` ; climate = `hook` ; biome = `commons` ; team = `live` ; route = `/now/` }[reg=facet]
+  now_support: .{ cluster = `support-actions` ; climate = `tiers` ; nicknames = #[`tiers`, `actions`][reg=set] ; graduate = `path` ; team = `live` ; route = `/now/` }[reg=facet]
+}
+
+^"gap"{
+  settings = `No authored cluster markers. Packet J may add task-shaped groups; graduate only into the six seats.`
+  recipes = `Kitchen biome on the hook; later regions use nicknames (demos, grammar, soil, garden) and have no cluster wrappers.`
+  biome_sparse = `Authored biomes sit on entry frames. Later desks inherit campus reading from @daily_kernel, not from HTML.`
+  seat_drift = `Local nicknames (reentry, integration, learning, quests, tuning, allocation, tiers) do not light region-seats.css tropes.`
+  unset_climate = `Design clusters after the hub omit data-spw-region entirely, so they have a desk name and no visual seat.`
+}
+
+^"familiarity_rule"{
+  claim = `A team learns a desk by editing the same wrapper weekly, not by reading an org chart.`
+  practice = `Claim cluster=NAME in the session packet. rg that attribute. Patch only descendants.`
+  visible = `Graduate nicknames and unset climates to hook|hub|cluster|path|read|wide so tropes light. Do not add team-color classes.`
+}

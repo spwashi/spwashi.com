@@ -1,0 +1,48 @@
+# Daily kernel — boonhonk dimensional flow
+#
+# 2026-08-21. Musician primary, designer bridge. Theater region.
+
+#>daily_kernel_boonhonk_dimensional_flow
+#:practice #!boonhonk #!dimensions #!rhythm
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@cache: ~"../../../.spw/caches/boonhonk-combinatoric-genre.spw"
+@ascent: ~"../../../.spw/conventions/dimensional-ascent-script-patterns.spw"
+@kernel: ~"../../../.spw/conventions/daily-kernel.spw"
+
+operation = "prime"
+fixity = "tending"
+
+^"daily_kernel"{
+  id = "boonhonk-dimensional-flow"
+  date = "2026-08-21"
+  focus = "boonhonk combinatoric genre as dimensional travel + musical occasion"
+  disciplines = .{
+    primary = "musician"
+    bridge = "designer"
+  }[reg=facet]
+  region = "theater"
+  brand_physics = "cadence"
+  intensity = "performance"
+  semantic_operation = "prime"
+  target = "about/#boonhonk-register, play/rpg-wednesday/#rpgw-boonhonk, .spw/caches/boonhonk-combinatoric-genre.spw"
+  claim = "Loosen the pair ceiling. Let a mix travel handle → vector → form → field → replay. Jazz is flow; hip-hop pillars stay earnest practices; funk is instrumentation; disco is fashion-linguistic occasion."
+  evidence = #[
+    `@cache`,
+    `@ascent`,
+    `about/index.html#boonhonk-register`,
+    `topics/software/index.html#dimensional-expression-path`
+  ][reg=set]
+  output = "claim + route-local copy + cache prime"
+  validation = "git diff --check; rg porch|jazz|hip-hop about/index.html play/rpg-wednesday/index.html"
+  do_not_touch = #[
+    `boonhonk-mixer.js math`,
+    `about/domains/boon.land and bane.land expansion`,
+    `lost domain names`,
+    `new data-spw-* families`,
+    `landing seating / biome ontologies`
+  ][reg=set]
+  next_kernel = "One production handle: pick an authored expression on RPG Wednesday and treat it as a loop cue without adding runtime."
+}[reg=facet]

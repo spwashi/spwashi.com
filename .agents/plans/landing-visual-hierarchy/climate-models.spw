@@ -1,0 +1,113 @@
+# Landing climate models
+#
+# Cache of which physics may seat a component on a landing desk.
+# No new attributes. Wuxing is not the seating rule.
+
+#>landing_climate_models
+#:plan #!climate #!charge #!phase #!nutrient #!chemistry
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "cache"
+fixity = "experimental"
+date = "2026-08-21"
+
+@elemental: ~"../../../.spw/conventions/model-guided-refinement.spw"
+@biome: ~"../../../.spw/conventions/component-biome.spw"
+@electrostatic: ~"../../../.spw/conventions/electrostatic-affordances.spw"
+@charge_cycle: ~"../../../.spw/conventions/charge-cycle.spw"
+@arrival: ~"../../../.spw/conventions/arrival-electrostatics.spw"
+@dimension: ~"../../../.spw/conventions/dimension-vocabulary.spw"
+@ownership: ~"./region-ownership.spw"
+@nutrient: ~"./biome-nutrient.spw"
+@grower: ~"./pnsb-grower.spw"
+@harmony: ~"./ontology-harmony.spw"
+
+^"insight"{
+  id = "landing-climate-models-2026-08-21"
+  claim = `A landing desk is seated by cluster + six tropes + guild + one limiting factor. Electrostatics names what the seat does to charge. Thermodynamic phase is already authored on hooks. Chemical elements and Wuxing are other laboratories.`
+  evidence = #[
+    `@electrostatic three_layers — operator terminal, interaction event, region material`,
+    `@dimension thermodynamic_continuum — replaces discrete elemental metaphors`,
+    `@biome decomposers — nothing returns nutrients; attention is the scarce quantity`,
+    `index.html / about / play / recipes / now already write data-spw-phase and tangibility`,
+    `recipes/index.html #soil-companions — PNSB as phototroph, not kitchen culture`
+  ][reg=set]
+  pattern_consideration = #[
+    `@elemental elemental_effects — patch flavor, not a desk diet`,
+    `@charge_cycle physical_metaphor_families — electrical mechanical field hydraulic; particle is not a fifth family yet`,
+    `weekly_microbiome nutrients — evidence and vocabulary, a third use of the word`
+  ][reg=set]
+  expansion_prime = `Packet L graduates seats. Packet M plants or composts by guild and names the limit. Do not author nutrient, quark, or NPK attributes.`
+  validation = `rg data-spw-phase index.html about/index.html play/index.html recipes/index.html now/index.html; rg data-spw-operator public/css/systems/electrostatic-affordances.css`
+  do_not_promote_until = `A claimed packet L or M uses seats and guilds without needing a Wuxing table to decide.`
+}
+
+^"harmony"{
+  cite = @harmony
+  chord = `indexed voices, one seating structure, laboratory picked by the question`
+}
+
+^"verdict"{
+  seating = `desks + hook|hub|cluster|path|read|wide + ruderal|networked|stored|decomposer + one limit`
+  climate = `electrostatic material of that seat`
+  matter = `authored data-spw-phase / tangibility / viscosity / coherence — do not invent a parallel phase`
+  chemistry = `grower lab: light, carbon, redox. Liebig: dose the constraint. Public only on /recipes/#soil-companions and /topics/nutrition/`
+  wuxing = `optional @elemental patch shorthand. Not a seating rule. identity_hook=air+fire is a thesaurus for identity plus CTA.`
+  particle = `conservation (charge must ground, transfer, or return) and photon-as-compare with PNSB light. No flavors, gluons, or desk named up.`
+}
+
+^"electrostatic_material"{
+  cite = @electrostatic
+  hook = `capacitor — stores; one rail; extra chips leak`
+  hub = `coupler — exchange is costly; indexes and search belong here`
+  cluster = `inductor — kin share momentum via :has(); six-plus cards close canopy`
+  path = `transfer line — cadence and sequence; still copy starves it`
+  read = `resistor — essay stays quiet`
+  wide = `field room — practice and atlas; not a second hook`
+  refuse = `Do not sticker discharge-kind on a chip that already has an operator.`
+}
+
+^"thermodynamic_phase"{
+  cite = @dimension
+  claim = `Continuous order parameters replace discrete elements.`
+  already = .{
+    home = `phase=ground tangibility=0.95`
+    about = `phase=ground tangibility=0.95`
+    play = `phase=fluid tangibility=0.35`
+    recipes = `phase=plastic tangibility=0.65`
+    now = `phase=membrane tangibility=0.50`
+  }[reg=facet]
+  do_not = `Rewrite play biome to theater so a campus word wins. Phase is already the matter reading.`
+}
+
+^"chemical"{
+  cite = @grower
+  limit = `Liebig: name what is scarce. Hook limit is attention. Cluster limit is canopy. Path limit is cadence.`
+  pnsb = `Anoxygenic phototroph. Light, low oxygen, wet carbon. Photon is the honest particle. Canopy light is CSS position.`
+  refuse = `data-spw-nitrogen. Blending pot, bed, and parser. Naming the grower.`
+}
+
+^"wuxing"{
+  cite = @elemental
+  status = `demoted`
+  keep_as = `one primary element on a model-guided patch when it names a real CSS home`
+  drop_as = `desk_diet tables that restate seat plus CTA as air+fire`
+}
+
+^"particle"{
+  keep = #[`field not objects`, `conservation of charge`, `coupling to a seat`, `photon compare`][reg=set]
+  drop = `Standard Model as org chart. Virtual particles as a new chip family.`
+  already = `@charge_cycle conservation; @arrival nucleus/shells/walls; --spw-charge-field one room loudness`
+}
+
+^"homonym"{
+  nutrient = #[
+    `Wuxing shorthand in @elemental`,
+    `CSS inheritance abundance in @biome soil`,
+    `leaflet byproducts in daily-kernel weekly_microbiome`,
+    `PNSB / soil chemistry on the recipes bed`
+  ][reg=set]
+  rule = `Say which laboratory. Do not write nutrient alone as if it picked one.`
+}

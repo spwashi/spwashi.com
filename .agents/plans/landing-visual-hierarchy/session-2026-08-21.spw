@@ -1,0 +1,199 @@
+# Daily kernel — 2026-08-21
+#
+# One-session packets. Pick one. Implementation is optional; do not merge packets.
+
+#>landing_session_2026_08_21
+#:kernel #!landing #!hierarchy
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "experimental"
+date = "2026-08-21"
+
+@plan: ~"./PLAN.md"
+@audit: ~"./audit.spw"
+@cluster_map: ~"./cluster-map.spw"
+@ownership: ~"./region-ownership.spw"
+@nutrient: ~"./biome-nutrient.spw"
+@models: ~"./climate-models.spw"
+@harmony: ~"./ontology-harmony.spw"
+@grower: ~"./pnsb-grower.spw"
+@measured_companion: ~"../landing-page-hierarchy-2026-08-21/index.spw"
+@route_census: ~"../landing-page-hierarchy-2026-08-21/route-census.spw"
+@hierarchy_lens: ~"../landing-page-hierarchy-2026-08-21/hierarchy-lens.spw"
+
+^"daily_kernel"{
+  id = "landing-visual-hierarchy-2026-08-21"
+  date = "2026-08-21"
+  focus = "route-region"
+  disciplines = .{
+    primary = "designer"
+    bridge = "engineer"
+  }[reg=facet]
+  region = "commons"
+  brand_physics = "gravity"
+  intensity = "quiet"
+  semantic_operation = "align"
+  target = "public landing entry spines"
+  claim = "Identity should outweigh instrument chrome on the first screen of primary navigation landings and their design/recipes exemplars."
+  output = "HTML pattern audit plus at most one landing HTML/CSS patch"
+  validation = "git diff --check; node scripts/check-site.mjs; 360 and 1280 view of the touched landing"
+  do_not_touch = #[
+    `wrap-job physics in spw-key-events.js`,
+    `creator identity sentence`,
+    `CSS layer order`,
+    `npm packages`,
+    `a second landing in the same patch`
+  ][reg=set]
+}
+
+^"daily_kernel_desks"{
+  id = "landing-region-desks-2026-08-21"
+  date = "2026-08-21"
+  focus = "route-region"
+  disciplines = .{
+    primary = "designer"
+    bridge = "engineer"
+  }[reg=facet]
+  region = "commons"
+  brand_physics = "threshold"
+  intensity = "quiet"
+  semantic_operation = "prime"
+  target = "named landing clusters as team desks; seats as biome conditions"
+  claim = "A team owns a data-spw-cluster wrapper. Inner frames become recognizable when they use the six region seats so tropes light. Components sit by guild under one limiting factor."
+  output = "ownership + seating primes plus claimable packets L and M"
+  validation = "rg data-spw-cluster and data-spw-region against region-ownership.spw; no public HTML until a packet is claimed"
+  do_not_touch = #[
+    `new data-spw families`,
+    `seventh region seat`,
+    `team-color CSS`,
+    `per-card nutrient tokens`,
+    `rewriting authored biomes to campus nicknames`
+  ][reg=set]
+}
+
+^"packets"{
+  home_masthead: .{
+    id = "A"
+    claim = "Split home identity from instrument. Keep h1+tagline+one notice in the first visual cluster; move narration and quick-start out of #home-frame or below a clear fold."
+    files = #[`index.html`, `public/css/routes/surfaces/home.css`][reg=set]
+    stop = "If wrap-jobs leave the hook, do not also restyle discovery cards."
+  }[reg=facet]
+  action_budget: .{
+    id = "B"
+    claim = "Cap above-fold action rails to one: wrap-jobs stay; motif-strip and home-quick-start leave the entry spine or become copy-depth=rich."
+    files = #[`index.html`][reg=set]
+    stop = "Do not delete first-move chips in .hook-sub; they are already density-gated."
+  }[reg=facet]
+  about_lead: .{
+    id = "C"
+    claim = "About source order should put identity before or beside the study figure, not after hook and wrap-jobs."
+    files = #[`about/index.html`][reg=set]
+    stop = "Do not thin about copy while moving order."
+  }[reg=facet]
+  topics_sit: .{
+    id = "D"
+    claim = "Topics wrap-jobs sit must host a real mode seat or become travel-only. The lane switch lives later; the sit chip currently hashes the register."
+    files = #[`topics/index.html`][reg=set]
+    stop = "Do not invent a second mode-switch in the topics topline unless the lane panels are in that frame."
+  }[reg=facet]
+  recipes_bodies: .{
+    id = "E"
+    claim = "Recipes hook expressions should name one ground, matching the wrap-job body rule."
+    files = #[`recipes/index.html`][reg=set]
+    examples = #[`recipe[cook]{mise}`, `recipe[theory]{flavor}`, `recipe[garden]{soil}`][reg=set]
+    stop = "Do not restyle the recipe hero while rewriting expressions."
+  }[reg=facet]
+  card_family: .{
+    id = "F"
+    claim = "One card family per landing grid. Prefer .frame-card slot order; do not mix home-discovery-card into a frame-card row."
+    files = #[`index.html`, `recipes/index.html`, `public/css/components/cards.css`][reg=set]
+    stop = "No new card class."
+  }[reg=facet]
+  verify_css: .{
+    id = "G"
+    claim = "Confirm fefc5fb7 brace hug, chip pill, and card stretch on the seven landings at 360 and 1280. Record gaps; patch only if a landing still stacks chip text or floats braces."
+    files = #[`public/css/grammar/syntax.css`, `public/css/handles/operators/sigils-and-chips.css`, `public/css/components/cards.css`][reg=set]
+    stop = "No new tokens. No !important outside ornament."
+  }[reg=facet]
+  play_outline: .{
+    id = "H"
+    claim = "Play source order must express its visible hierarchy: no H1 to H3 jump before the first H2, and the first landing target should be explicit."
+    files = #[`play/index.html`][reg=set]
+    stop = "Do not add a universal action slot or rewrite campaign copy."
+  }[reg=facet]
+  services_offer: .{
+    id = "I"
+    claim = "Services should establish offer, proof, and next action before optional tuning asks for attention."
+    files = #[`services/index.html`][reg=set]
+    stop = "Preserve pricing, public proof, and contact paths."
+  }[reg=facet]
+  settings_tasks: .{
+    id = "J"
+    claim = "Settings Quick Start should expose three to five task-shaped groups without changing canonical setting ownership or control behavior."
+    files = #[`settings/index.html`][reg=set]
+    stop = "HTML grouping first; no shared runtime or ornament work."
+  }[reg=facet]
+  now_control: .{
+    id = "K"
+    claim = "Now is the restraint control for the session; change it only when a reproducible containment, outline, or action defect appears."
+    files = #[`now/index.html`][reg=set]
+    stop = "No speculative expansion."
+  }[reg=facet]
+  desk_claim: .{
+    id = "L"
+    claim = "Make one named cluster recognizable as a team desk: graduate nicknames or unset climates on its inner frames to hook|hub|cluster|path|read|wide so region-seats tropes light."
+    files = #[`one claimed route index.html`][reg=set]
+    see = @ownership
+    stop = "No seventh seat. No empty wrappers. No team-color CSS. Do not invent a biome the HTML does not already author."
+  }[reg=facet]
+  guild_limit: .{
+    id = "M"
+    claim = "Plant, move, or compost one component family on one claimed desk by guild. Name the limiting factor (attention, canopy, cadence, or occupancy). Decomposer: copy-depth=rich, later frame, or delete."
+    files = #[`one claimed route index.html`][reg=set]
+    see = @nutrient
+    climate = @models
+    stop = "No per-card nutrient attributes. No Wuxing diet table. Do not fertilize a hook with a second chip rail."
+  }[reg=facet]
+}
+
+^"coordination"{
+  claim_rule = `One packet and one route owner at a time; add actor and status here before editing.`
+  shared_css_gate = `Closed unless the same named 2D–4D defect is reproduced on at least two routes and route HTML or existing route CSS cannot solve it.`
+  measured_evidence = @route_census
+  review_lens = @hierarchy_lens
+}
+
+^"session_log"{
+  entries = #[
+    .{ at = `2026-08-21` ; actor = `root review` ; kind = `audit` ; note = `Linked concurrent selector audit with the canonical eight-route census, Pretext fit evidence, 0–4D lens, and responsive gates. No public HTML or CSS changed.` }[reg=facet],
+    .{ at = `2026-08-21` ; actor = `root review` ; kind = `prime` ; packet = `L` ; note = `Mapped existing data-spw-cluster wrappers to team desks and seats to elemental nutrients. Corrected invented biomes against authored HTML. Packets L and M are claimable; no public HTML or CSS changed.` }[reg=facet],
+    .{ at = `2026-08-21` ; actor = `root review` ; kind = `cache` ; note = `Leaflet for a developing relationship with a plant grower who sells PNSB. Public facts stay on /recipes/#soil-companions. Person, shop, and relationship stay private.` }[reg=facet],
+    .{ at = `2026-08-21` ; actor = `root review` ; kind = `cache` ; note = `Demoted Wuxing desk diets. Seating is desks + seats + guilds + one limit. climate-models.spw compares electrostatic material, thermodynamic phase, chemical/Liebig, and particle conservation. No public HTML changed.` }[reg=facet],
+    .{ at = `2026-08-21` ; actor = `root review` ; kind = `cache` ; note = `ontology-harmony.spw makes experimental voices legible as indexed|structured|responsive. Template copied to model-guided-refinement/templates. Consolidation statuses: keep, climate, authored, demote, compare, private.` }[reg=facet]
+  ][reg=set]
+  append_shape = `.{ at; actor; packet; status; kind; note; files?; command? }[reg=facet]`
+}
+
+^"handoff"{
+  start = "Open PLAN.md, then this file, then one packet id."
+  commit_split = "Public HTML/CSS/JS stay out of .agents/.spw in the same commit."
+  identity = `I'm Spwashi. I build software and make art.`
+  next_kernel = "If home masthead lands, the next quiet kernel is packet B or C — not both. Region desks are packet L or M, one claimed cluster."
+}
+
+dispatch: .{
+  plan = @plan
+  audit = @audit
+  cluster_map = @cluster_map
+  ownership = @ownership
+  nutrient = @nutrient
+  models = @models
+  harmony = @harmony
+  grower = @grower
+  measured_companion = @measured_companion
+  route_census = @route_census
+  hierarchy_lens = @hierarchy_lens
+}[reg=facet]

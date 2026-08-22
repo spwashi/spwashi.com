@@ -1,0 +1,50 @@
+# Ontology harmony template
+#
+# Copy into a plan that holds more than one experimental or unstable
+# ontology. One physics. Named voices. No fourth dictionary.
+
+#>ontology_harmony_template
+#:template #!plans #!harmony #!ontology
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@harmony_audit: ~"../../../.spw/audits/component-philosophy-harmony-2026-07.spw"
+@plan_index: ~"../../../.spw/conventions/plan-index.spw"
+@capacity: ~"../../../.spw/conventions/semantic-capacity.spw"
+@materials: ~"../../../.spw/caches/region-ecology-materials.spw"
+
+^"use_when"{
+  trigger = `A plan caches two or more models for the same seating, climate, or meaning job.`
+  risk = `@harmony_audit metaphor_harmony: circuit + field + registers already name one physics; authors invent a fourth.`
+  refuse = `A new data-spw family per voice. A seating table that restates another voice.`
+}
+
+^"chord"{
+  cite = `@materials — profiler writes data-spw-harmony=indexed|structured|responsive`
+  indexed = `Each voice has a name, fixity, job, laboratory, and status. rg finds it.`
+  structured = `One voice seats. Others climate, flavor, compare, or stay private. Jobs do not stack.`
+  responsive = `The question picks the laboratory. Grower questions do not answer on a landing hook.`
+}
+
+^"voice_shape"{
+  name = `short stem shared with HTML/CSS/.spw when one exists`
+  fixity = `fixed | stable | tending | experimental | volatile`
+  job = `what this voice is for — one clause`
+  laboratory = `which convention, route, or leaflet owns it`
+  status = `keep | climate | authored | flavor | demote | compare | private`
+}
+
+^"consolidation"{
+  keep = `What remains the seating or ownership rule.`
+  demote = `What stays citable as flavor but must not decide a patch.`
+  compare = `What may sit beside another lab without blending.`
+  authored = `What HTML already writes; do not invent a parallel.`
+  private = `What must not reach public copy.`
+  do_not_promote_until = `What evidence would graduate a voice.`
+}
+
+^"harmony_test"{
+  pass = `An agent can name the seating voice, the climate reading, and one demoted voice without opening every file.`
+  fail = `Two voices both claim to seat, or a new dictionary appears that is not in this ledger.`
+}

@@ -1,0 +1,59 @@
+# Landing ontology harmony
+#
+# Experimental voices in this folder, read as one chord.
+# Copy the template at model-guided-refinement/templates/ontology-harmony.spw.
+
+#>landing_ontology_harmony
+#:plan #!harmony #!ontology #!consolidation
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "cache"
+fixity = "experimental"
+date = "2026-08-21"
+
+@template: ~"../model-guided-refinement/templates/ontology-harmony.spw"
+@harmony_audit: ~"../../../.spw/audits/component-philosophy-harmony-2026-07.spw"
+@materials: ~"../../../.spw/caches/region-ecology-materials.spw"
+@ownership: ~"./region-ownership.spw"
+@nutrient: ~"./biome-nutrient.spw"
+@models: ~"./climate-models.spw"
+@grower: ~"./pnsb-grower.spw"
+@session: ~"./session-2026-08-21.spw"
+
+^"chord"{
+  indexed = `Voices below. Status is keep|climate|authored|flavor|demote|compare|private.`
+  structured = `Seating is desks + six seats + guild + one limit. Electrostatics reads the seat. Phase is already on hooks. Nothing else seats.`
+  responsive = `Landing patch → seating. Hook climate → electrostatic material. Matter already on the frame → phase. Grower fact → chemical compare. Person → private.`
+  refuse = `A fourth physics dictionary. Wuxing diet as seating. NPK or quark attributes.`
+}
+
+^"voices"{
+  desks: .{ name = `data-spw-cluster` ; fixity = `tending` ; job = `team ownership` ; laboratory = @ownership ; status = `keep` }[reg=facet]
+  seats: .{ name = `hook|hub|cluster|path|read|wide` ; fixity = `stable` ; job = `habitat tropes` ; laboratory = `region-seats.css` ; status = `keep` }[reg=facet]
+  guilds: .{ name = `ruderal|networked|stored|decomposer` ; fixity = `experimental` ; job = `organism strategy` ; laboratory = @nutrient ; status = `keep` }[reg=facet]
+  limit: .{ name = `attention|canopy|cadence|occupancy` ; fixity = `experimental` ; job = `Liebig constraint` ; laboratory = @nutrient ; status = `keep` }[reg=facet]
+  electrostatic: .{ name = `capacitor|inductor|resistor|ground` ; fixity = `experimental` ; job = `what the seat does to charge` ; laboratory = @models ; status = `climate` }[reg=facet]
+  phase: .{ name = `data-spw-phase` ; fixity = `stable` ; job = `thermodynamic matter` ; laboratory = `authored hooks` ; status = `authored` }[reg=facet]
+  wuxing: .{ name = `earth|water|air|fire|metal|wood` ; fixity = `experimental` ; job = `optional patch shorthand` ; laboratory = `model-guided-refinement` ; status = `demote` }[reg=facet]
+  chemical: .{ name = `light|carbon|redox` ; fixity = `experimental` ; job = `grower lab` ; laboratory = @grower ; status = `compare` }[reg=facet]
+  particle: .{ name = `conservation|photon` ; fixity = `experimental` ; job = `charge must return; PNSB light compare` ; laboratory = @models ; status = `compare` }[reg=facet]
+  grower: .{ name = `person` ; fixity = `volatile` ; job = `weekly connection` ; laboratory = @grower ; status = `private` }[reg=facet]
+}
+
+^"consolidation"{
+  keep = `desks, seats, guilds, one limit — packets L and M`
+  climate = `electrostatic material of the claimed seat`
+  authored = `phase and tangibility already on home, about, play, recipes, now`
+  demote = `Wuxing desk diets such as identity_hook=air+fire`
+  compare = `PNSB phototroph vs decomposer guild; photon vs canopy light`
+  private = `grower name, shop, relationship`
+  do_not_promote_until = `A claimed L or M decides without a Wuxing table, and no new data-spw family appears`
+}
+
+^"harmony_test"{
+  pass = `Open this file, then one packet. Seating voice is obvious. Demoted voice cannot win.`
+  fail = `Two files both offer a desk diet, or a patch authors nutrient, nitrogen, or quark.`
+  cite = @harmony_audit
+}

@@ -1,0 +1,94 @@
+# 0–4D Landing Hierarchy Lens
+#
+# A review vocabulary for sizing, alignment, clustering, and responsive change.
+
+#>landing_page_hierarchy_lens_0_4d
+#:audit #!anatomy #!hierarchy #!alignment #!responsive
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+operation = "contract"
+fixity = "tending"
+
+@plan: ~"./PLAN.md"
+@census: ~"./route-census.spw"
+@measurement_contract: ~"../../../.spw/conventions/measurement-contract.spw"
+@copy_flow: ~"../../../.spw/conventions/copy-flow.spw"
+@component_packing: ~"../../../.spw/conventions/component-packing.spw"
+
+^"thesis"{
+  claim = `Hierarchy is not a font-size ladder. It is the agreement among local marks, reading order, spatial clusters, perceptual depth, and change across viewport or state.`
+  use = `Review dimensions in order; repair the lowest dimension that explains the defect before styling a higher one.`
+}[reg=facet]
+
+^"dimension_0d_mark"{
+  question = `Can each item be identified without relying on position?`
+  inspect = #[`heading text`, `link purpose`, `label-control relation`, `operator meaning`, `alt text`, `slot name`][reg=set]
+  failure = `A control or region is only understandable from color, icon shape, or neighboring copy.`
+  first_fix = `Use semantic HTML, clear text, and existing attributes; do not add visual weight yet.`
+}[reg=facet]
+
+^"dimension_1d_sequence"{
+  question = `Does source and focus order tell the same story as the visible reading path?`
+  inspect = #[`H1→H2→H3 nesting`, `DOM order`, `tab order`, `promise before tuning`, `proof before commitment`, `action after context`][reg=set]
+  failure = `Visual CSS implies hierarchy that the document outline contradicts, as in the current Play H1→H3 opening.`
+  first_fix = `Reorder or relabel existing HTML regions before moving boxes.`
+}[reg=facet]
+
+^"dimension_2d_cluster"{
+  question = `Do alignment, proximity, and whitespace make reader tasks visible?`
+  inspect = #[`shared left edges`, `page-track ownership`, `cluster boundary`, `internal vs external gap`, `figure-caption relation`, `action grouping`][reg=set]
+  flush_rule = `Opening title, lead, and first action should share an intentional track; figures may break the track only when the break expresses route identity.`
+  spacing_rule = `Space within a task cluster is smaller than space between task clusters; nested containers do not each reapply the page gutter.`
+  failure = `Everything appears equally separate or equally fused.`
+  first_fix = `Use the existing section/frame/grid anatomy; add a wrapper only when it names a real task cluster.`
+}[reg=facet]
+
+^"dimension_3d_depth"{
+  question = `Does material, scale, contrast, and disclosure express priority rather than decoration?`
+  inspect = #[`primary vs secondary surface`, `matte vs glass`, `figure-ground`, `open vs collapsed detail`, `main vs supporting action`, `brochure vs workbench posture`][reg=set]
+  failure = `Every frame carries equal material weight, so dense pages become catalogs of peers.`
+  first_fix = `Reduce or demote secondary treatment; do not add another card style.`
+}[reg=facet]
+
+^"dimension_4d_change"{
+  question = `Does hierarchy survive width, text scaling, input mode, disclosure, and runtime enhancement?`
+  inspect = #[`320/390/768/1280px`, `100/125% text scale`, `keyboard/coarse pointer`, `reduced motion`, `details open/closed`, `enhanced/unenhanced state`][reg=set]
+  pinch_effect = `Pinch and text-scale changes should reflow reading tracks without hiding actions, overlapping chrome, or causing horizontal escape.`
+  failure = `A stable desktop composition becomes ambiguous or clipped when title lines, controls, or figures repack.`
+  first_fix = `Correct intrinsic sizing, min-width, wrapping, and container ownership before adding a breakpoint.`
+}[reg=facet]
+
+^"pretext_usage"{
+  beneficial_for = #[`H1`, `opening hook`, `compact action heading`, `copy whose line count changes the first-view hierarchy`][reg=set]
+  not_a_target_for = #[`body copy by default`, `semantic outline`, `action order`, `cluster ownership`, `route identity`][reg=set]
+  rule = `A volatile result opens a visual measurement task; it does not authorize an automatic copy rewrite.`
+  current_flags = `Topics H1 and Settings hook at 288px; isolated long headings on Home and Play.`
+}[reg=facet]
+
+^"route_fingerprint_contract"{
+  home = `creator atlas — broad choice with a personal masthead`
+  about = `identity memo — long-form registers with tiered proof`
+  topics = `topic atlas — visual lanes and comparative discovery`
+  play = `play threshold — immediate landing target and campaign movement`
+  art = `folio loop — compact archive, process, and adjacent stops`
+  services = `studio-house ladder — offer, proof, terms, then contact`
+  now = `live bulletin — current target, funding meaning, support`
+  settings = `utility workbench — task clusters, controls, disclosure, state`
+  test = `Hide the masthead label: the first two viewport heights should still suggest which route role is present.`
+}[reg=facet]
+
+^"decision_order"{
+  sequence = ?< `0D name`, `1D order`, `2D cluster`, `3D depth`, `4D reflow` >[reg=stream]
+  stop_rule = `Stop at the smallest dimension whose correction resolves the defect.`
+  promotion_rule = `Only repeated 2D–4D needs across at least two routes justify shared CSS consideration.`
+}[reg=facet]
+
+dispatch: .{
+  plan = @plan
+  census = @census
+  measurement_contract = @measurement_contract
+  copy_flow = @copy_flow
+  component_packing = @component_packing
+}[reg=facet]

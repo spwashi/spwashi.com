@@ -1,0 +1,80 @@
+# Biome seating
+#
+# Seats are habitat. Guilds are organisms. Compost returns unused rails.
+# Wuxing is optional patch flavor — see @models. No new attributes.
+
+#>landing_biome_nutrient
+#:plan #!biome #!guild #!components
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "experimental"
+date = "2026-08-21"
+
+@elemental: ~"../../../.spw/conventions/model-guided-refinement.spw"
+@biome: ~"../../../.spw/conventions/component-biome.spw"
+@region_ecology: ~"../../../.spw/conventions/region-component-ecology.spw"
+@rhizosphere: ~"../../../.spw/conventions/kernel-rhizosphere.spw"
+@daily_kernel: ~"../../../.spw/conventions/daily-kernel.spw"
+@ownership: ~"./region-ownership.spw"
+@models: ~"./climate-models.spw"
+@grower: ~"./pnsb-grower.spw"
+
+^"thesis"{
+  claim = `A landing region is habitat: light, disturbance, moisture, succession. A component belongs there if its guild can live in that seat without a second rail. The scarce quantity is attention, not a Wuxing diet.`
+  layers = `campus = authored data-spw-biome. condition = six seats. organism = ruderal|networked|stored|decomposer. climate reading = @models electrostatic material.`
+  expression = region[seat]{light.disturbance.moisture.succession} ~ component[guild]{uptake}<land>
+  refuse = `A nutrient token per card. A team color. A seventh element. Desk diets of air+fire. Writing theater when the frame authors commons.`
+}
+
+^"conditions"{
+  light = `Canopy from @biome. Sparse seat = clearing. Six-plus cards = understory. Position, not a setting.`
+  disturbance = `Hook / entry-spine is high disturbance: identity and one action may land; long essays wash out.`
+  moisture = `Path and promo seats move; read seats stay still. Cadence copy belongs in moist seats.`
+  succession = `Ruderal chips belong in hook. Networked ledgers belong in hub. Stored residue belongs in cluster after dwell.`
+}
+
+^"guilds"{
+  ruderal = `fast chips and invitations. Tolerate hook disturbance. Do not persist as a second rail.`
+  networked = `cauldron, kinship, wrap-jobs that search. Need hub exchange. Costly on purpose.`
+  stored = `registers, ledgers, card grids. Need cluster shade or they bleach.`
+  decomposer = `@biome names the missing guild: prune, compost, return. Landings accumulate rails and do not return them.`
+}
+
+^"limit"{
+  cite = @models
+  rule = `Name one scarce quantity per patch. Do not dose six elements.`
+  hook = `attention — one rail`
+  cluster = `canopy — shade after six cards`
+  path = `cadence — sequence without a second CTA`
+  workbench = `occupancy — task groups, not brochure clusters`
+}
+
+^"compare"{
+  cite = @grower
+  rule = `PNSB and the decomposer guild share a curiosity about return. They are not one metaphor.`
+  phototroph = `Purple non-sulfur bacteria: light, low oxygen, wet carbon. Photon is the honest particle. Facts live on /recipes/#soil-companions.`
+  software = `Landing rails compost by copy-depth, later frame, or delete.`
+  refuse = `Do not author data-spw-guild=pnsb. Do not name a grower on a landing desk.`
+}
+
+^"component_rule"{
+  plant = `Seat the component by guild. A card in a hook is ruderal; if it stays, move it to cluster.`
+  do_not_fertilize = `Adding chips to a starved identity hook is nitrogen on a clearing. Thin the rail; do not add a second.`
+  return = `When a rail no longer feeds, compost it: copy-depth=rich, later frame, or delete.`
+}
+
+^"wuxing"{
+  status = `demoted`
+  see = @models
+  keep = `One primary @elemental effect on a model-guided patch when it names a real CSS home.`
+}
+
+^"cross_language"{
+  html = `data-spw-cluster + data-spw-region + optional data-spw-biome and authored phase`
+  css = `region-seats tropes + component-biome canopy + electrostatic channeling. No team-color rules.`
+  js = `region-profiler and charge-field receipts stay receipts.`
+  spw = `this file + @ownership + @models. Patch claims one desk, one guild, one limit.`
+}

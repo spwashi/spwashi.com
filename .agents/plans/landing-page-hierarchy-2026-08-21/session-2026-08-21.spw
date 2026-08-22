@@ -1,0 +1,92 @@
+# Landing Hierarchy Session Handoff — 2026-08-21
+#
+# Hot coordination surface for reviewers and agents working this dated session.
+
+#>landing_page_hierarchy_session_2026_08_21
+#:session #!handoff #!landing_pages #!review
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@census: ~"./route-census.spw"
+@lens: ~"./hierarchy-lens.spw"
+@owner_session: ~"../landing-visual-hierarchy/session-2026-08-21.spw"
+@owner_ownership: ~"../landing-visual-hierarchy/region-ownership.spw"
+@owner_nutrient: ~"../landing-visual-hierarchy/biome-nutrient.spw"
+@owner_models: ~"../landing-visual-hierarchy/climate-models.spw"
+@owner_harmony: ~"../landing-visual-hierarchy/ontology-harmony.spw"
+
+session: .{
+  date = `2026-08-21`
+  timezone = `America/Chicago`
+  state = `review complete; proposed parcels defer claims to @owner_session`
+  public_goal = `Clarify route-specific landing hierarchy without normalizing density or increasing shared runtime weight.`
+}[reg=facet]
+
+^"first_read"{
+  sequence = ?< @plan, @census, @lens >[reg=stream]
+  rule = `Read the target route after these three surfaces; do not start from shared CSS.`
+}[reg=facet]
+
+^"work_parcels"{
+  A: .{ status = `proposed` ; files = #[`play/index.html`][reg=set] ; goal = `repair heading outline and entry action` ; proof = `H1 no longer jumps to H3; keyboard and phone reading order agree` }[reg=facet]
+  B: .{ status = `proposed` ; files = #[`services/index.html`][reg=set] ; goal = `put offer/proof/action before optional tuning` ; proof = `first two viewports explain the practical path and next action` }[reg=facet]
+  C: .{ status = `proposed` ; files = #[`settings/index.html`][reg=set] ; goal = `group Quick Start into 3–5 task families` ; proof = `control and disclosure order remains coherent with JS off and keyboard only` }[reg=facet]
+  D: .{ status = `proposed` ; files = #[`index.html`, `about/index.html`][reg=set] ; goal = `tier dense editorial regions without deleting voice` ; proof = `primary, secondary, and tertiary regions scan distinctly at phone and desktop` }[reg=facet]
+  E: .{ status = `proposed` ; files = #[`topics/index.html`, `design/folios/index.html`][reg=set] ; goal = `preserve visual-directory and folio identities while fixing measured packing` ; proof = `figures keep purpose; title and actions reflow without overflow` }[reg=facet]
+  F: .{ status = `proposed` ; files = #[`now/index.html`][reg=set] ; goal = `serve as restraint and support-action control` ; proof = `no change unless a reproducible defect is logged` }[reg=facet]
+  G: .{ status = `proposed` ; defer = `owner packets L and M` ; goal = `make named clusters recognizable as team desks and seat components by guild and one limit` ; proof = `claimed cluster lights a six-seat trope; unused rails compost rather than accumulate` }[reg=facet]
+}[reg=facet]
+
+^"claim_protocol"{
+  before = #[`claim the matching route packet in @owner_session`, `add agent/session identifier`, `record baseline command or screenshot`, `confirm no other parcel edits the same file`][reg=set]
+  during = #[`append evidence; do not overwrite another reviewer note`, `keep edits to parcel files`, `escalate shared CSS need as a proposal`][reg=set]
+  after = #[`set status review_ready`, `record changed files and validation`, `name any unresolved device state`, `leave route fingerprint verdict`][reg=set]
+}[reg=facet]
+
+^"shared_css_gate"{
+  status = `closed by default`
+  open_when = `The same named 2D–4D defect is reproduced on at least two routes and cannot be solved honestly in route HTML or existing route CSS.`
+  payload_constraint = `Core CSS measured 1629 KiB against a 1638 KiB soft budget on 2026-08-21.`
+  ownership = `One agent owns the shared CSS proposal and its cross-route validation.`
+}[reg=facet]
+
+^"review_questions"{
+  questions = #[
+    `What is the route promise before any tuning or secondary navigation?`,
+    `Which edges should be flush, and which intentional breaks create the route fingerprint?`,
+    `Does source order still make sense with CSS and JS disabled?`,
+    `Which spacing separates tasks, and which spacing only decorates components?`,
+    `What changes under phone width, text scale, disclosure, and reduced motion?`,
+    `Would removing a surface or wrapper improve hierarchy more than adding one?`
+  ][reg=set]
+}[reg=facet]
+
+^"session_log"{
+  entries = #[
+    .{ at = `2026-08-21` ; actor = `root review` ; kind = `audit` ; note = `Recorded eight-route static census, heading sequences, copy density, Pretext fit, breakpoint normalization, and CSS payload constraint. No route implementation changed.` }[reg=facet]
+  ][reg=set]
+  append_shape = `.{ at; actor; parcel; kind = evidence|decision|change|validation|blocker; note; files?; command? }[reg=facet]`
+}[reg=facet]
+
+^"stop_conditions"{
+  stop = #[`route identity becomes less distinct`, `copy or links would need deletion without explicit review`, `fix requires a new shared semantic family`, `same file is claimed twice`, `horizontal overflow cannot be isolated to a safe container`, `validation changes unrelated generated output`][reg=set]
+  response = `Record the blocker here and return the parcel to review; do not broaden scope silently.`
+}[reg=facet]
+
+dispatch: .{
+  plan = @plan
+  index = @index
+  census = @census
+  lens = @lens
+  owner_session = @owner_session
+  owner_ownership = @owner_ownership
+  owner_nutrient = @owner_nutrient
+  owner_models = @owner_models
+  owner_harmony = @owner_harmony
+}[reg=facet]

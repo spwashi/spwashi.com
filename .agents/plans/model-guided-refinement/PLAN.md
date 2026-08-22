@@ -52,6 +52,7 @@ When a value is inherently multi-part, keep the source shape as a list, set, fac
 For small cached insights, use:
 
 - `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw`
+- `.agents/plans/model-guided-refinement/templates/ontology-harmony.spw` — when a plan holds more than one experimental ontology; name each voice keep, climate, authored, demote, compare, or private so they read as one chord (indexed / structured / responsive) instead of a fourth physics dictionary.
 
 Do not create a new full plan when a single insight-cache entry would preserve the idea and make the next patch easier.
 

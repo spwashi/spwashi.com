@@ -56,6 +56,7 @@ intent: .{
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @daily_kernel: ~"../../../.spw/conventions/daily-kernel.spw"
+@boonhonk_flow: ~"./boonhonk-dimensional-flow-2026-08-21.spw"
 @site: ~"../../../.spw/site.spw"
 @index: ~"../../../.spw/conventions/index.spw"
 @readme: ~"../../../.agents/plans/README.md"
@@ -63,6 +64,7 @@ intent: .{
 dispatch: .{
  plan = @plan
  daily_kernel = @daily_kernel
+ boonhonk_flow = @boonhonk_flow
  site = @site
  index = @index
  readme = @readme

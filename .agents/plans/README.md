@@ -37,6 +37,7 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 - `language-reclustering/PLAN.md` — dimensional clusters for the attribute/event lexicon, census-driven trace coverage, event-grammar boundary (broadcast vs bus-local), nutritious-architecture practices; use when vocabulary is added, audited, or consolidated.
 - `homonym-renaming/PLAN.md` — semantic-geometry verdicts on load-bearing homonyms (settle/prime/ground/phase), echo-vs-homonym criteria, alias-windowed rename mechanics; use before renaming any shared vocabulary.
 - `agent-optimization/PLAN.md` — use when the work changes the agent/editor operating environment itself.
+- `landing-visual-hierarchy/PLAN.md` — 2026-08-21 session: landing cluster rank, team desks, guild seating, climate models, and ontology-harmony ledger for experimental voices.
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.
 

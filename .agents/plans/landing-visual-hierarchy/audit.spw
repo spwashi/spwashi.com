@@ -1,0 +1,141 @@
+# Landing HTML audit — 2026-08-21
+#
+# Sizing, alignment, and visual clustering on public entry spines.
+# Evidence is selectors and file paths, not screenshots.
+
+#>landing_html_audit
+#:audit #!html #!hierarchy #!landing
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+source = "route HTML review 2026-08-21"
+audience = "business-minded software-adjacent supporters of the arts"
+
+^"scope"{
+  routes = #[
+    `index.html #home-frame`,
+    `about/index.html #about-frame`,
+    `topics/index.html #topics-register`,
+    `play/index.html #play-surface`,
+    `design/index.html #design-hub`,
+    `recipes/index.html #recipe-field`,
+    `services/index.html entry spine`,
+    `now/index.html #now-hook`
+  ][reg=set]
+  axes = #[`sizing`, `alignment`, `clustering`, `hierarchy`][reg=set]
+}
+
+^"home_entry_overload"{
+  claim = `One entry spine carries identity, lens, wrap-jobs, motifs, reasons, a long narration, and an eight-chip quick-start.`
+  evidence = #[
+    `index.html #home-frame[data-spw-region-role="entry-spine"]`,
+    `.mode-switch[data-spw-feature="home-perspective-lens"]`,
+    `nav[data-spw-feature="wrap-jobs"]`,
+    `ul.spw-copy-motif-strip`,
+    `div.spw-reason-strip`,
+    `div.spw-narration`,
+    `nav.home-quick-start`
+  ][reg=set]
+  sizing = `home-hero-copy uses --home-gap-lg uniformly after the masthead; reason-strip and narration inherit that gap and read as siblings of the identity.`
+  alignment = `home-hero-grid is one column until a later breakpoint; two figures sit as grid siblings of the copy stack, so brand plate and occasion image compete with the headline.`
+  hierarchy = `h1 "I'm Spwashi." is correct gravity. Wrap-jobs, motif chips, and quick-start all look like next-move rails.`
+  gap = `No HTML marker separates masthead from instrument from essay.`
+}
+
+^"duplicate_doors"{
+  claim = `Home offers three pick-a-door clusters after the hero.`
+  evidence = #[
+    `#choose-your-entrance .entrance-role-hooks`,
+    `.home-component-discovery__grid .home-discovery-card`,
+    later illustrated `.spw-card.frame-card` entry grid
+  ][reg=set]
+  hierarchy = `Each cluster is valid; three in sequence flatten the first door.`
+}
+
+^"chip_family_split"{
+  claim = `The same column uses frame-sigil, spw-chip, and operator-chip.`
+  evidence = #[
+    `#home-frame .frame-sigil`,
+    `.hook-sub a.spw-chip`,
+    `nav.wrap-jobs a.operator-chip`,
+    `nav.home-quick-start a.spw-chip`
+  ][reg=set]
+  note = `fefc5fb7 made operator-chip share the spw-chip pill. Hierarchy is still four rails, not one.`
+}
+
+^"about_order"{
+  claim = `About places the study figure before the identity sentence in source order.`
+  evidence = #[
+    `about/index.html figure.image-study before h1#about-title`,
+    `hook-call and wrap-jobs also precede the h1`
+  ][reg=set]
+  hierarchy = `Creator identity should lead. Image and lens can sit beside or after, not above the sentence.`
+}
+
+^"topics_sit_host"{
+  claim = `Topics wrap-jobs sit-lens has no mode-switch in the same topline.`
+  evidence = #[
+    `#topics-register .frame-topline` has spec-pills, not `.mode-switch`,
+    `nav.wrap-jobs [data-spw-action="sit"]` href="#topics-register",
+    later `.topic-route-switch` is the actual lane seat
+  ][reg=set]
+  sizing = `Sit chip looks equal to travel/look even though it cannot open a local seat until a later switch.`
+}
+
+^"design_services_pattern"{
+  claim = `Design and services keep one hook invitation as destination chips, not wrap-jobs. That is thinner and clearer.`
+  evidence = #[
+    `design/index.html p.hook-invitation` with two spw-chips,
+    `services/index.html p.hook-invitation` with character-sheet and budgeting chips
+  ][reg=set]
+  pattern_consideration = `Do not auto-upgrade these invitations; they already name a next room.`
+}
+
+^"recipes_dotted_siblings"{
+  claim = `Recipes hook ledes still join sibling facets with dots.`
+  evidence = #[
+    `recipe[cook]{mise.timing.execution}`,
+    `recipe[theory]{flavor.chemistry.grammar}`,
+    `recipe[garden]{soil.companion.season}`
+  ][reg=set]
+  note = `Public-spine wrap bodies were corrected to one ground. Recipes hook bodies were not.`
+}
+
+^"card_anatomy_mix"{
+  claim = `Landing grids mix a.frame-card, article.frame-card, and home-discovery-card.`
+  evidence = #[
+    `recipes/index.html #principle-register` mixed a and article cards,
+    `index.html .home-discovery-card` parallel to `.spw-card.frame-card`
+  ][reg=set]
+  alignment = `Subgrid stretch from cards.css helps equal height; mixed slot order still misaligns headers across a row.`
+}
+
+^"css_already_landed"{
+  claim = `Brace hug, chip pill share, and card stretch landed in fefc5fb7. This audit is remaining HTML clustering, not a redo of that CSS.`
+  evidence = #[
+    `public/css/grammar/syntax.css frame delimiter min-block-size 1.62rem`,
+    `public/css/handles/operators/sigils-and-chips.css .operator-chip`,
+    `public/css/components/cards.css align-self stretch`
+  ][reg=set]
+}
+
+^"region_recognition"{
+  claim = `Teams cannot see delegated desks because many inner frames use nicknames or omit seats, so region-seats tropes never light.`
+  evidence = #[
+    `play-gateways: integration, learning, quests`,
+    `play-orientation later frame: reentry`,
+    `topics reading-instruments: tuning`,
+    `now support-actions: tiers, actions`,
+    `design interactive-experiments / rendering-physics / collaboration-tools: no data-spw-region`,
+    `settings: no data-spw-cluster`
+  ][reg=set]
+  visible = `hook hub cluster path read wide wash and seam. Nicknames look like unseated frames.`
+  owner = `region-ownership.spw packet L`
+}
+
+^"falsify"{
+  path = `If a landing at 360px and 1280px shows identity first, one action rail, and one proof image before reasons/essay, this overload claim is stale.`
+}

@@ -1,0 +1,121 @@
+# Landing Page HTML Hierarchy — Measured Companion Index
+#
+# Agent-facing entry for the measured August 21 landing-page hierarchy review.
+
+#>plan_landing_page_hierarchy_2026_08_21_index
+#:index #!plan #!landing_pages #!hierarchy
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@model_guided_refinement: ~"../../../.spw/conventions/model-guided-refinement.spw"
+@measurement_contract: ~"../../../.spw/conventions/measurement-contract.spw"
+@page_region_owner: ~"../page-region-discoverability/index.spw"
+@layout_qa: ~"../../../.spw/audits/layout-qa-measurement-2026-07/index.spw"
+@plan: ~"./PLAN.md"
+@census: ~"./route-census.spw"
+@lens: ~"./hierarchy-lens.spw"
+@session: ~"./session-2026-08-21.spw"
+@owner_plan: ~"../landing-visual-hierarchy/index.spw"
+
+intent: .{
+  goal = `Give each primary landing one clear opening promise, one legible next move, deliberate cluster boundaries, and device-stable hierarchy while retaining its own density and visual fingerprint.`
+  owner = `landing-visual-hierarchy`
+  kind = `audit_companion`
+  bucket = `css_layout_interaction`
+  artifact_shape = `PLAN.md | index.spw | route-census.spw | hierarchy-lens.spw | session-2026-08-21.spw`
+}[reg=facet]
+
+^"dimensions"{
+  practice_depth = "reading | observation | tending"
+  semantic_layer = "pragmatics"
+  collaboration_phase = "audit | tending | exchange"
+  memory_tier = "hot"
+  bucket = "css_layout_interaction"
+}[reg=facet]
+
+^"conceptual_model"{
+  thesis = `Landing pages should share alignment discipline without sharing one silhouette: hierarchy is the relationship among marks, reading order, clusters, depth, and responsive change.`
+  concepts = #[`opening intent`, `reading outline`, `visual cluster`, `route fingerprint`, `responsive fit`][reg=set]
+  surfaces = #[`index.html`, `about/index.html`, `topics/index.html`, `play/index.html`, `design/folios/index.html`, `services/index.html`, `now/index.html`, `settings/index.html`][reg=set]
+  fixity_tier = `tending`
+}[reg=facet]
+
+^"model_guided_declaration"{
+  focus_dimension = `region`
+  supporting_dimension = `css_behavior: spacing`
+  primary_element = `air`
+  secondary_element = `metal`
+  owner_surface = `route HTML first; route CSS only after measured need`
+  do_not_touch = `shared runtime, CSS layer order, creator identity, operator semantics, shared core CSS without cross-route proof`
+  validation = `@census + @layout_qa + manual width/text-scale matrix`
+}[reg=facet]
+
+^"owner_claim"{
+  claim_id = "plan-landing-page-hierarchy-2026-08-21-001"
+  layer = "pragmatic"
+  hypothesis = `A route-specific HTML hierarchy pass can improve scanning, action clarity, and responsive packing without normalizing density or adding shared runtime weight.`
+  spec_ref = @plan
+  impl_ref = @session
+  probe_ref = `Rerun the census and verify the PLAN acceptance gates at 320, 390, 768, and 1280px.`
+  falsification = `The revised routes still hide their promise or next move, overflow at phone width, or become more visually interchangeable.`
+  status = "active"
+}[reg=facet]
+
+^"research_bridge"{
+  local_research = #[
+    .{ label = `measured_route_census` ; path = @census }[reg=facet],
+    .{ label = `0_4d_hierarchy_lens` ; path = @lens }[reg=facet],
+    .{ label = `layout_qa_contract` ; path = @layout_qa }[reg=facet],
+    .{ label = `page_region_owner` ; path = @page_region_owner }[reg=facet]
+  ][reg=set]
+  rule = `Use repository HTML and local audits; do not substitute a generic landing-page pattern.`
+}[reg=facet]
+
+^"connection_points"{
+  owner_rail = `model-guided-refinement`
+  implementation_owner = @owner_plan
+  related_plans = #[`landing-visual-hierarchy`, `page-region-discoverability`, `model-guided-refinement`][reg=set]
+  session_handoff = @session
+}[reg=facet]
+
+dispatch: .{
+  plan = @plan
+  census = @census
+  lens = @lens
+  session = @session
+  model_guided_refinement = @model_guided_refinement
+  measurement_contract = @measurement_contract
+  page_region_owner = @page_region_owner
+  layout_qa = @layout_qa
+  implementation_owner = @owner_plan
+}[reg=facet]
+
+editor_prompts: #[
+  .{ ask = `Which landing has the clearest measured hierarchy defect?` ; see = @census }[reg=facet],
+  .{ ask = `How should sizing and clustering be reviewed without reducing hierarchy to pixels?` ; see = @lens }[reg=facet],
+  .{ ask = `Which parcel is safe to claim in the August 21 session?` ; see = @session }[reg=facet],
+  .{ ask = `Which named cluster is a team desk, and which guild plus limit seats a component there?` ; see = @owner_plan }[reg=facet]
+][reg=set]
+
+validation: #[
+  `node scripts/spw-anatomy-audit.mjs`,
+  `npm run audit:copy:align`,
+  `node scripts/normalize-breakpoints.mjs`,
+  `npm run smoke:nav:ci`,
+  `npm run check:local`
+][reg=set]
+
+invariants: #[
+  `Equal alignment discipline does not imply equal page density.`,
+  `HTML outline and region order precede CSS polish.`,
+  `A new cluster must answer a reader task and use an honest existing container.`,
+  `One shared CSS owner at a time.`
+  `Implementation claims live in landing-visual-hierarchy; this folder supplies measured evidence.`
+][reg=set]

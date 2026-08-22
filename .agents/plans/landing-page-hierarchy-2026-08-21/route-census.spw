@@ -1,0 +1,140 @@
+# Main Landing Route Census — 2026-08-21
+#
+# Static HTML and local audit evidence. Rerun before implementation if routes drift.
+
+#>landing_page_route_census_2026_08_21
+#:audit #!html #!hierarchy #!density #!responsive
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+
+@plan: ~"./PLAN.md"
+@lens: ~"./hierarchy-lens.spw"
+@session: ~"./session-2026-08-21.spw"
+
+audit_run: .{
+  at = `2026-08-21`
+  scope = `Canonical header landings: /, /about/, /topics/, /play/, /design/folios/, /services/, /now/, /settings/.`
+  methods = #[`static HTML census`, `heading sequence read`, `node scripts/spw-anatomy-audit.mjs`, `node scripts/page-copy-audit.mjs inventory`, `npm run audit:copy:align`, `npm run css:payload`, `node scripts/normalize-breakpoints.mjs`][reg=set]
+  posture = `Evidence for sequencing; not a visual-regression verdict.`
+}[reg=facet]
+
+^"route_home"{
+  route = `/`
+  role = `creator atlas`
+  layout = `newspaper`
+  measures = `157939 bytes · 19 sections · 15 frames · 6 clusters · 9 grids · 16 figures · 23 buttons · 14 details`
+  outline = `H1 1 · H2 14 · H3 42`
+  copy = `243 blocks · 24965 chars · longest block 349 chars`
+  finding = `Creator identity and Pick your door are strong; early pathways compete before the next regional handoff.`
+  keep = `First-person creator masthead and choice-first opening.`
+  next_probe = `Group the earliest pathways by reader intent before changing spacing.`
+}[reg=facet]
+
+^"route_about"{
+  route = `/about/`
+  role = `identity memo with practice registers`
+  layout = `newspaper`
+  measures = `130163 bytes · 21 sections · 15 frames · 4 clusters · 10 grids · 4 figures · 15 buttons`
+  outline = `H1 1 · H2 14 · H3 50`
+  copy = `201 blocks · 32691 chars · longest block 1262 chars`
+  finding = `Identity is clear; biography and technical registers risk reading as equally weighted frames.`
+  keep = `Canonical creator sentence and map-like long form.`
+  next_probe = `Separate identity, proof, and current-direction tiers without shortening by default.`
+}[reg=facet]
+
+^"route_topics"{
+  route = `/topics/`
+  role = `visual topic atlas`
+  layout = `atlas`
+  measures = `97651 bytes · 10 sections · 9 frames · 4 clusters · 2 grids · 16 figures · 10 buttons`
+  outline = `H1 1 · H2 13 · H3 12`
+  copy = `89 blocks · 7388 chars · longest block 363 chars`
+  finding = `Task-oriented lanes and image routing are strong; the H1 is Pretext-volatile at 288px.`
+  keep = `Visual directory, lane language, and atlas breadth.`
+  next_probe = `Test title measure and figure/card stacking before editing words.`
+}[reg=facet]
+
+^"route_play"{
+  route = `/play/`
+  role = `play threshold and campaign gateway`
+  layout = `wide`
+  measures = `54410 bytes · 12 sections · 7 frames · 3 clusters · 4 grids · 1 figure · 4 buttons`
+  outline = `H1 1 · H2 6 · H3 15; first post-H1 heading is H3`
+  copy = `106 blocks · 11636 chars · longest block 333 chars`
+  finding = `The visible opening relies on styled hierarchy that the document outline does not express; explicit action slots are absent.`
+  keep = `Session-like voice and play-to-learning bridge.`
+  next_probe = `Repair nesting and name the first meaningful landing target without a blanket slot migration.`
+}[reg=facet]
+
+^"route_art"{
+  route = `/design/folios/`
+  role = `folio archive and processing loop`
+  layout = `wide`
+  measures = `23981 bytes · 7 sections · 7 frames · 0 clusters · 3 grids · 3 figures · 12 buttons · 1 detail`
+  outline = `H1 1 · H2 5 · H3 14`
+  copy = `67 blocks · 4683 chars · longest block 249 chars`
+  finding = `Compact progression is coherent; older anatomy has no authored clusters, features, body slots, or action slots.`
+  keep = `Concise folio rhythm and distinct archive identity.`
+  next_probe = `Decide whether existing sections already provide sufficient grouping before adding metadata.`
+}[reg=facet]
+
+^"route_services"{
+  route = `/services/`
+  role = `studio-house offer ladder`
+  layout = `wide`
+  measures = `72401 bytes · 17 sections · 16 frames · 5 clusters · 5 grids · 5 figures · 5 buttons · 1 detail`
+  outline = `H1 1 · H2 15 · H3 32`
+  copy = `168 blocks · 16162 chars · longest block 405 chars`
+  finding = `Offer taxonomy is practical, but Tune this register precedes Four Paths, proof, and next action.`
+  keep = `Concrete paths, public proof, pricing, and contact routes.`
+  next_probe = `Move optional tuning behind offer comprehension and compare action prominence at phone width.`
+}[reg=facet]
+
+^"route_now"{
+  route = `/now/`
+  role = `live bulletin and support ladder`
+  layout = `wide`
+  measures = `15195 bytes · 4 sections · 4 frames · 2 clusters · 1 grid · 1 figure · 0 buttons`
+  outline = `H1 1 · H2 4 · H3 6`
+  copy = `36 blocks · 3178 chars · longest block 345 chars`
+  finding = `The clearest restrained sequence in the set: current target, funding meaning, support ladder, help paths.`
+  keep = `Compact action hierarchy and live-note character.`
+  next_probe = `Use as a control; change only after a measured accessibility or containment defect.`
+}[reg=facet]
+
+^"route_settings"{
+  route = `/settings/`
+  role = `utility workbench`
+  layout = `wide`
+  measures = `227169 bytes · 14 sections · 13 frames · 0 clusters · 2 grids · 49 buttons · 13 details`
+  outline = `H1 1 · H2 12 · H3 46; Quick Start carries 10 H3s before the next H2`
+  copy = `254 blocks · 23246 chars · longest block 651 chars`
+  finding = `Task controls and disclosure groups are extensive but the largest opening task region has no authored cluster boundaries; its hook is Pretext-volatile at 288px.`
+  keep = `Live controls, inspectability, and utility posture.`
+  next_probe = `Group Quick Start into 3–5 task families and test keyboard/disclosure order before visual ornament.`
+}[reg=facet]
+
+^"cross_route_findings"{
+  density_range = `Nav peers intentionally span more than 10x in source bytes and nearly 8x in copy characters.`
+  opening_anatomy = `The de facto opening contract is broader than .site-hero: toplines and headers are common, explicit action slots are rare.`
+  pretext = `Clearest phone-width risks: Topics H1 and Settings hook. About H1 is responsive rather than broken; Home and Play have isolated volatile long headings.`
+  containment = `Breakpoints normalize cleanly across 169 CSS files; future fixes should start with container ownership and measure, not new thresholds.`
+  payload = `Core CSS is 1629 KiB against a 1638 KiB soft budget; a shared CSS addition needs cross-route proof or compensating reduction.`
+}[reg=facet]
+
+^"interpretation_rules"{
+  rule_1 = `Counts reveal pressure; they do not prescribe equalization.`
+  rule_2 = `A missing data-spw cluster or slot is not itself a defect.`
+  rule_3 = `Pretext volatility triggers a measured phone review before copy change.`
+  rule_4 = `Preserve route role before adjusting component anatomy.`
+}[reg=facet]
+
+dispatch: .{
+  plan = @plan
+  lens = @lens
+  session = @session
+}[reg=facet]

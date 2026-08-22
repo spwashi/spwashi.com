@@ -103,7 +103,7 @@ reading_order: .{
 @plan_spw_surface_normalization: ~"./spw-surface-normalization/index.spw"
 ^"css_layout_interaction"{
  label = "css layout interaction"
- count = 12
+ count = 13
  members = #[
   `card-grid-density-audit`,
   `chrome-navigation-wonder`,
@@ -112,6 +112,7 @@ reading_order: .{
   `gesture-state-refinement`,
   `hook-region-anatomy`,
   `interaction-loop-contract`,
+  `landing-visual-hierarchy`,
   `navigation-header-disclosure`,
   `page-region-discoverability`,
   `shell-model-vocabulary-consolidation`,
@@ -128,6 +129,7 @@ reading_order: .{
 @plan_gesture_state_refinement: ~"./gesture-state-refinement/index.spw"
 @plan_hook_region_anatomy: ~"./hook-region-anatomy/index.spw"
 @plan_interaction_loop_contract: ~"./interaction-loop-contract/index.spw"
+@plan_landing_visual_hierarchy: ~"./landing-visual-hierarchy/index.spw"
 @plan_navigation_header_disclosure: ~"./navigation-header-disclosure/index.spw"
 @plan_page_region_discoverability: ~"./page-region-discoverability/index.spw"
 @plan_shell_model_vocabulary_consolidation: ~"./shell-model-vocabulary-consolidation/index.spw"

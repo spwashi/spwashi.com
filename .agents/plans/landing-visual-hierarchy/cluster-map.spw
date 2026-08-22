@@ -1,0 +1,79 @@
+# Landing cluster map
+#
+# Named clusters so agents edit one unit instead of "the hero".
+
+#>landing_cluster_map
+#:plan #!landing #!anatomy
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+@ownership: ~"./region-ownership.spw"
+@nutrient: ~"./biome-nutrient.spw"
+@models: ~"./climate-models.spw"
+
+^"desks"{
+  claim = `data-spw-cluster is the rg-able team desk. Rank below is reader hierarchy, not org chart.`
+  owner = @ownership
+  seating = @nutrient
+  climate = @models
+}
+
+^"rank"{
+  rule = `On a landing, clusters appear in this order. Later clusters may exist on the page; they must not share the entry-spine visual weight.`
+  1_identity = "kicker + h1 + tagline. Creator first."
+  2_notice = "one lede or one live note. Not both plus a second note."
+  3_action = "one rail: wrap-jobs OR first-move chips OR hook invitation. Not stacked."
+  4_proof = "one figure or one card that can be screenshotted."
+  5_orient = "reason-strip, motif-strip, entrance sorter — below the fold or a later frame."
+  6_depth = "narration, registers, card grids — later frames."
+}
+
+^"home_clusters"{
+  identity = `#home-title + .home-tagline`
+  notice = `#home-frame-note` xor `.home-live-note`
+  lens = `.mode-switch[data-spw-feature="home-perspective-lens"]`
+  wrap = `nav[data-spw-feature="wrap-jobs"]`
+  first_move = `.hook-sub a.spw-chip`
+  motif = `ul.spw-copy-motif-strip`
+  reason = `div.spw-reason-strip`
+  essay = `div.spw-narration`
+  quick = `nav.home-quick-start`
+  proof = `.home-brand-plate` xor `.image-study.topic-photo-card`
+  door_a = `#choose-your-entrance`
+  door_b = `.home-component-discovery`
+  door_c = illustrated `.spw-card.frame-card` grid
+  conflict = `identity + wrap + first_move + motif + reason + essay + quick share #home-frame`
+}
+
+^"shared_entry_anatomy"{
+  topline = `.frame-topline: delimiter + sigil + (mode-switch | spec-strip) + meta`
+  hook = `.hook-call: lede + optional sub + invitation`
+  wrap_jobs = `nav.wrap-jobs` when the page has a local mode seat
+  body = `.frame-body` or `.home-hero-copy`
+  figure = `[data-spw-slot="figure"]`
+  rule = `Topline is chrome. Hook is the first verb. Figure is proof. Body copy is not a fourth verb.`
+}
+
+^"action_rail_budget"{
+  claim = `Above the fold, one action rail.`
+  keep = `wrap-jobs when a mode-switch exists in the same frame; otherwise hook-invitation chips.`
+  demote = #[`motif-strip`, `home-quick-start`, `hook-sub` at default density][reg=set]
+  already = `home.css hides .hook-sub except rich density or scene-enter — keep that.`
+}
+
+^"card_families"{
+  frame_card = `.frame-card / .spw-card — slot anatomy header meta body figure actions`
+  discovery_card = `.home-discovery-card — image-forward route preview`
+  role_hook = `.spw-role-hooks li — pressure-named door`
+  prefer = `Use one family per frame. Do not mix discovery-card and frame-card in the same grid.`
+}
+
+^"size_tokens"{
+  cite = @typography_packing
+  masthead = `negative-margin bind of h1 + tagline already in home.css — preserve`
+  do_not = `Do not flatten identity into --home-gap-lg equality with wrap-jobs and narration`
+}

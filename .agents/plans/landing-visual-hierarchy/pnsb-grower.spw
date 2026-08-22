@@ -1,0 +1,103 @@
+# Leaflet — grower / PNSB relationship
+#
+# Weekly-connection precipitate. Do not name the person in public HTML.
+# Do not blend pond phototrophs with CSS biome or kitchen ferments.
+
+#>leaflet_pnsb_grower_2026_08_21
+#:leaflet #!garden #!collaborator #!pnsb
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+#:source #!conversation
+#:region #!garden
+
+operation = "cache"
+fixity = "experimental"
+date = "2026-08-21"
+
+@daily_kernel: ~"../../../.spw/conventions/daily-kernel.spw"
+@capacity: ~"../../../.spw/conventions/semantic-capacity.spw"
+@copy_ecology: ~"../../../.spw/conventions/copy-ecology.spw"
+@marketing: ~"../../../.spw/conventions/model-guided-refinement.spw"
+@biome: ~"../../../.spw/conventions/component-biome.spw"
+@nutrient: ~"./biome-nutrient.spw"
+@models: ~"./climate-models.spw"
+@soil_frame: ~"../../../recipes/index.html"
+
+^"daily_kernel"{
+  id = "grower-pnsb-2026-08-21"
+  date = "2026-08-21"
+  focus = "audience register"
+  disciplines = .{
+    primary = "engineer"
+    bridge = "grower"
+  }[reg=facet]
+  region = "garden"
+  brand_physics = "grain"
+  intensity = "quiet"
+  semantic_operation = "cache"
+  target = "relationship with a plant grower who sells PNSB; existing /recipes/#soil-companions facts"
+  claim = "A live grower who sells purple non-sulfur bacteria is a weekly connection, not a metaphor upgrade. PNSB already has a public bed. The CSS decomposer guild may compare to nutrient return; it must not claim to be PNSB."
+  output = "leaflet"
+  validation = "rg pnsb recipes/index.html topics/nutrition/index.html .spw/conventions/copy-ecology.spw; no new public name or shop URL"
+  do_not_touch = #[
+    `public HTML that names the person or the relationship`,
+    `blending PNSB with sauerkraut, parsers, or region-seats tropes`,
+    `inventing a seventh element or a nutrient token per card`,
+    `services or now copy that sells their culture without consent`
+  ][reg=set]
+  next_kernel = "If they want to review the soil frame, patch facts only on /recipes/#soil-companions. If they want a public handle, wait for a name they choose."
+}
+
+^"leaflet"{
+  id = "pnsb-grower-2026-08-21"
+  claim = "The missing decomposer guild in component-biome is a software problem. A grower who sells PNSB is a person who already returns nutrients in water and wet soil. Keep those as a compare."
+  source = "conversation | weekly production | collaborator note"
+  evidence = #[
+    `recipes/index.html #soil-companions — PNSB are not kitchen culture`,
+    `topics/nutrition/index.html — kitchen protein and bed nitrogen stay a compare`,
+    `.spw/conventions/copy-ecology.spw#embedding_garden soil_harvest`,
+    `.spw/conventions/component-biome.spw#decomposers — nothing returns nutrients`,
+    `./biome-nutrient.spw decomposer = prune, compost, return of unused rails`
+  ][reg=set]
+  nutrient = "community connection, garden-bed fact-checking, and a caution against fertilizing the landing nutrient model with a real organism's name"
+  organism = "this leaflet; @nutrient compare; recipes soil frame if they review it"
+  byproduct = "grower register draft below; privacy rule; compare-not-stew for phototroph vs CSS guild"
+  microbiome_relation = "byproduct of a relationship. Do not treat the person as soil for the repo."
+  merge_target = "Stay a leaflet until they consent to a public handle. Then a grower card_contract on a route they choose — not a convention."
+  decay_rule = "Archive if the relationship does not continue or if public collaboration never becomes wanted. Promote only after a named, consented surface exists."
+  next_action = "Share /recipes/#soil-companions as a fact bed they can correct. Do not add their shop, portrait, or story until they ask."
+}
+
+^"weekly_connection"{
+  production_dimension = "garden"
+  connection_dimension = "collaborator"
+  week_signal = "2026-08-21 landing biome-nutrient prime met a developing relationship with someone who grows plants and sells PNSB"
+  validation = `rg -n 'PNSB|pnsb|Purple non-sulfur' recipes/index.html topics/nutrition/index.html .spw/conventions/copy-ecology.spw`
+}
+
+^"compare"{
+  rule = `Synesthesia is a compare, not a stew — same rule as the soil frame.`
+  phototroph = `PNSB: anoxygenic phototrophs. Light, low oxygen, carbon in water or wet soil. Sold and tended by a grower.`
+  photon = `The honest particle next to this craft. Canopy light is CSS position; PNSB light is PAR. See @models.`
+  rhizobia = `Legume partnership. Not PNSB. Already named on the soil frame.`
+  css_decomposer = `Unused landing rails that should return: copy-depth=rich, later frame, or delete.`
+  refuse = `Do not write PNSB as a data-spw-guild. Do not put their culture in a fermentation jar, a parser, or a region seat.`
+}
+
+^"grower_register"{
+  note = `Draft only. Fill before any public collaborator copy. From @marketing card_contract.`
+  audience = `a plant grower and PNSB seller, plus readers who already cook or tend beds`
+  offer = `named soil and pond facts they can correct; a private working friendship; later, a handle they choose`
+  proof = `/recipes/#soil-companions and /topics/nutrition/ — already public, already refusing the blend`
+  resonance = `nutrient return is their craft. The site can listen without turning them into a mascot.`
+  extension = `bed notes, culture care, seasonal crop, commission of a soil leaflet — if they want that work`
+  next_action = `keep the relationship off the published spine until they name a next room`
+}
+
+^"privacy"{
+  claim = `A developing relationship is not a product line.`
+  public = `PNSB the organism, beans, companions, and the soil frame`
+  private = `their name, shop, likeness, and the fact of the relationship`
+  until = `they choose a public handle and a route`
+}
