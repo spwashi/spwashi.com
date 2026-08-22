@@ -47,6 +47,15 @@ export const VIEWPORTS = Object.freeze({
   wide: Object.freeze({
     id: 'wide', width: 1920, height: 1080, deviceScaleFactor: 1, mobile: false, hasTouch: false,
   }),
+  pocket: Object.freeze({
+    id: 'pocket', width: 390, height: 844, deviceScaleFactor: 3, mobile: true, hasTouch: true,
+  }),
+  fold: Object.freeze({
+    id: 'fold', width: 768, height: 1024, deviceScaleFactor: 2, mobile: true, hasTouch: true,
+  }),
+  broadsheet: Object.freeze({
+    id: 'broadsheet', width: 1440, height: 900, deviceScaleFactor: 1, mobile: false, hasTouch: false,
+  }),
 });
 
 export const DEFAULT_ROUTES = Object.freeze([

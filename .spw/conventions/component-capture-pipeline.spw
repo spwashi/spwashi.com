@@ -10,17 +10,66 @@
 
 @starter_kit: ~"./site-starter-component-kit.spw"
 @fixtures: ~"../../public/ts/component-fixtures.ts"
+@ecology_fixtures: ~"../../public/ts/region-ecology-fixtures.ts"
+@plan_lib: ~"../../scripts/lib/visual-capture-plan.mjs"
 @capture_script: ~"../../scripts/component-snapshots.mjs"
 @harness: ~"../../scripts/lib/chrome-headless-harness.mjs"
 @design_components: ~"../../design/components/index.html"
 @compose_css: ~"../../public/css/compose.css"
+@copy_flow: ~"./copy-flow.spw"
+@region_ecology: ~"./region-component-ecology.spw"
 @layout_qa: ~"../audits/layout-qa-measurement-2026-07/index.spw"
 @perf_matrix: ~"../../scripts/perf-matrix.mjs"
+@visual_plan: ~"../../.agents/plans/visual-capture-ecology/PLAN.md"
 
 ^"thesis"{
-  claim = `Screenshot value comes from named capture *flows* (page / region / component / template) plus a manifest agents can read — not from dumping full-page PNGs into git.`
+  claim = `Screenshot value comes from named capture *tracks* (qa device-reason vs social content-fit) plus a manifest agents can read — not from dumping full-page PNGs into git.`
   risk = `Pixel baselines without owners create noise; full-page-only captures hide whether the portable unit still works under compose.css.`
-  rule = `Fixtures declare capture value and publish targets; capture packs are review artifacts; baselines are opt-in per fixture later.`
+  rule = `Fixtures declare capture value, size token, and publish targets. Packs are review artifacts. Precipitates are named stills + hashes. Baselines stay opt-in.`
+}[reg=facet]
+
+^"tracks"{
+  qa = `pocket / fold / broadsheet viewports and their media queries. Answers: does this seat pack?`
+  social = `unique content-fit cards (pretext measure token) plus named feed crops (1/1, 4/5, 9/16, 16/9, 1.91/1). Answers: is this combination worth posting?`
+  size_reasons = #[`device-reason`, `pretext-fit`, `social-crop`][reg=set]
+  size_tokens = #[`measure-compact`, `measure-card`, `measure-reading`][reg=set]
+  pretext = `@copy_flow measure is the unique card's width. Do not invent a second crop physics. Live pretext-physics stays lab-only.`
+}[reg=facet]
+
+^"review_loop"{
+  steps = #[`capture`, `gallery + review.json hints`, `smallest honest patch`, `npm run visual:review (--changed --keep)`, `precipitate lock`][reg=set]
+  skip = `--keep skips unchanged fingerprints. Do not recapture the whole ecology to review one card.`
+  enhance = `Wrap volatile / leftover-track / xs width-class are enhancement hints, not failures.`
+}[reg=facet]
+
+^"marketing_teasers"{
+  claim = `Intermediate measures are prompts. Wrap volatility, leftover-track packing, unique content-fit ratios, and visibility-lens stills are teasers — not only QA diagnostics.`
+  store = `precipitate.json stills[].prompt + review.json items[].prompt`
+  publish = `marketing-teaser`
+  refuse = `Do not auto-post. A human picks the still. Do not turn wrap class into a slogan CMS.`
+}[reg=facet]
+
+^"intelligence_bands"{
+  claim = `Tooling across a range of intelligence. Same still, four readings. Visitors never wait on a model.`
+  bands = #[`mosey`, `search`, `agent`, `llm`][reg=set]
+  mosey = `Visible copy. Notice the size. No glossary required.`
+  search = `Haystack words on the specimen route + a components facet.`
+  agent = `Recapture contract: id, flow, selector, size reason.`
+  llm = `Editor-side prompt to restage the still. Optional SpaceXAI later. Never a public chat client.`
+  refuse = `Do not add a visitor chatbot. Do not require an API key to mosey.`
+}[reg=facet]
+
+^"visibility_lenses"{
+  claim = `Some design dimensions make a still more or less visible or tangible. Those stills are lenses into sizing and Spw relationships — not extra chrome.`
+  lenses = #[`density`, `enhancement`, `tangibility`, `labels`][reg=set]
+  asks: .{
+    density = `Does the measure token still hold when packing changes?`
+    enhancement = `What is structural vs ornament?`
+    tangibility = `Does the object still occupy space when it recedes?`
+    labels = `Does the Spw relationship survive without captions?`
+  }
+  spend = `Opt-in: npm run visual:social -- --lenses density,labels. Do not factorial these against every viewport.`
+  mapping = `Reuse existing query keys (density, enhancement, meaning) and data-spw-* attrs. Do not invent a parallel lens family.`
 }[reg=facet]
 
 ^"flows"{
@@ -63,7 +112,9 @@
     .{ pipeline = `agent-brief`, prefers = #[`component`, `page`][reg=set], store = `manifest.json semantics + alt text` },
     .{ pipeline = `layout-qa`, prefers = #[`component`][reg=set], store = `structural metrics (perf-matrix/layout-qa), not pixels` },
     .{ pipeline = `design-catalog`, prefers = #[][reg=set], store = `attributes/tokens only — do not dump PNGs into catalog generator` },
-    .{ pipeline = `external-art`, prefers = #[`template`, `component`][reg=set], store = `clip exports as stills for illustration tools` }
+    .{ pipeline = `external-art`, prefers = #[`template`, `component`][reg=set], store = `clip exports as stills for illustration tools` },
+    .{ pipeline = `marketing-teaser`, prefers = #[`fit`, `region`][reg=set], store = `prompt + unique still; human-curated post` },
+    .{ pipeline = `ecology-qa`, prefers = #[`region`][reg=set], store = `seat tropes at pocket/fold/broadsheet` }
   ][reg=set]
 }[reg=facet]
 
@@ -81,12 +132,16 @@
 }[reg=facet]
 
 ^"output_pack"{
-  command = `npm run component:screenshots -- --base <url>`
+  command = `npm run visual:capture`
+  plan = `npm run visual:plan`
+  ecology = `npm run visual:ecology`
+  social = `npm run visual:social`
+  review = `npm run visual:review`
   auto_server = `omit --base to spawn dev-server`
   directory = `design/components/captures/`
-  files = #[`manifest.json`, `pipeline.json`, `index.html`, `captures/*.png`][reg=set]
+  files = #[`manifest.json`, `pipeline.json`, `precipitate.json`, `review.json`, `index.html`, `captures/*`][reg=set]
   gitignore = `design/components/captures/ — packs are local/CI artifacts by default`
-  value_fields = #[`flow`, `viewport`, `selector`, `snippetHash`, `semantics`, `alt`, `publish[]`][reg=set]
+  value_fields = #[`track`, `flow`, `viewport`, `aspect`, `sizeReason`, `sizeToken`, `prompt`, `hint`, `sha256`, `publish[]`][reg=set]
 }[reg=facet]
 
 ^"fixture_contract"{
@@ -123,8 +178,9 @@
 ^"validation"{
   commands = #[
     `npm run component:check`,
-    `npm run component:screenshots -- --ids frame-card --flows component,template --viewports phone`,
+    `npm run visual:plan -- --ecology --social --ids frame-card,about-years`,
+    `npm run visual:capture -- --ids frame-card --flows component --viewports phone --quick`,
     `test -f design/components/captures/manifest.json`,
-    `test -f design/components/captures/index.html`
+    `test -f design/components/captures/precipitate.json`
   ][reg=set]
 }[reg=facet]

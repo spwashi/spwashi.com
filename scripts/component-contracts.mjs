@@ -11,6 +11,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { COMPONENT_FIXTURES } from '../public/js/kernel/component-fixtures.js';
+import { REGION_ECOLOGY_FIXTURES } from '../public/js/kernel/region-ecology-fixtures.js';
+import { REGION_SEATS, SOCIAL_ASPECTS } from './lib/visual-capture-plan.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -45,6 +47,14 @@ function sourceHasSelector(source, selector) {
   return needle.marker === '#'
     ? source.includes(`id="${needle.name}"`)
     : source.includes(needle.name);
+}
+
+function sourceHasEcologySelector(source, selector) {
+  const idMatch = String(selector || '').match(/^#([A-Za-z0-9_-]+)/);
+  if (idMatch) return source.includes(`id="${idMatch[1]}"`);
+  const clusterMatch = String(selector || '').match(/data-spw-cluster="([^"]+)"/);
+  if (clusterMatch) return source.includes(`data-spw-cluster="${clusterMatch[1]}"`);
+  return source.includes(selector);
 }
 
 export async function collectComponentContractReport() {
@@ -94,6 +104,9 @@ export async function collectComponentContractReport() {
     if (!fixture.layoutScenarios.every((scenario) => ['phone', 'desktop'].includes(scenario))) {
       errors.push(`${fixture.id}: layout scenarios must use phone and/or desktop`);
     }
+    if (fixture.socialAspects && !fixture.socialAspects.every((aspect) => Boolean(SOCIAL_ASPECTS[aspect]))) {
+      errors.push(`${fixture.id}: socialAspects must be fit/square/portrait/story/landscape/og`);
+    }
 
     for (const slot of fixture.requiredSlots) {
       if (!routeText.includes(`data-spw-slot=\"${slot}\"`)) {
@@ -105,7 +118,38 @@ export async function collectComponentContractReport() {
     }
   }
 
-  return { fixtures: COMPONENT_FIXTURES.length, errors };
+  for (const fixture of REGION_ECOLOGY_FIXTURES) {
+    if (ids.has(fixture.id)) errors.push(`${fixture.id}: duplicate fixture id`);
+    ids.add(fixture.id);
+    if (!REGION_SEATS.includes(fixture.seat)) {
+      errors.push(`${fixture.id}: seat must be one of ${REGION_SEATS.join(', ')}`);
+    }
+    const routeFile = routeToFile(fixture.specimenRoute);
+    const cssFile = path.join(ROOT, fixture.cssOwner);
+    if (!(await exists(routeFile))) {
+      errors.push(`${fixture.id}: missing specimen route ${fixture.specimenRoute}`);
+      continue;
+    }
+    if (!(await exists(cssFile))) {
+      errors.push(`${fixture.id}: missing CSS owner ${fixture.cssOwner}`);
+    }
+    const routeText = await fileText(routeFile);
+    if (!sourceHasEcologySelector(routeText, fixture.selector)) {
+      errors.push(`${fixture.id}: specimen route lacks ${fixture.selector}`);
+    }
+    if (fixture.socialAspects && !fixture.socialAspects.every((aspect) => Boolean(SOCIAL_ASPECTS[aspect]))) {
+      errors.push(`${fixture.id}: socialAspects must be fit/square/portrait/story/landscape/og`);
+    }
+    if (!fixture.layoutScenarios?.length) {
+      errors.push(`${fixture.id}: ecology fixture needs layoutScenarios`);
+    }
+  }
+
+  return {
+    fixtures: COMPONENT_FIXTURES.length,
+    ecology: REGION_ECOLOGY_FIXTURES.length,
+    errors,
+  };
 }
 
 export async function main() {
@@ -115,7 +159,7 @@ export async function main() {
     process.exitCode = 1;
     return;
   }
-  console.log(`[component:check] ${report.fixtures} fixtures passed`);
+  console.log(`[component:check] ${report.fixtures} fixtures + ${report.ecology} ecology seats passed`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) main();

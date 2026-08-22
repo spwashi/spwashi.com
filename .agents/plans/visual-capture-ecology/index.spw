@@ -1,0 +1,25 @@
+# Review — visual capture ecology for QA device-reasons, unique pretext-fit cards, and visibility lenses.
+
+#>plan_visual_capture_ecology_index
+#:index #!plan
+#:operation #!contract
+#:layer #!pragmatics
+
+operation = "contract"
+fixity = "tending"
+
+intent: .{
+  goal = `QA stills at device-reason media, unique content-fit cards sized to copy-flow measure, optional visibility lenses into Spw relationships. Precipitates are named stills + hashes. Intermediate measures may be marketing teasers.`
+  owner = `visual-capture-ecology`
+  kind = `plan`
+}[reg=facet]
+
+@plan: ~"./PLAN.md"
+@capture_pipeline: ~"../../../.spw/conventions/component-capture-pipeline.spw"
+@plan_lib: ~"../../../scripts/lib/visual-capture-plan.mjs"
+
+dispatch: .{
+  plan = @plan
+  capture_pipeline = @capture_pipeline
+  plan_lib = @plan_lib
+}[reg=facet]

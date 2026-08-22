@@ -1,0 +1,34 @@
+# Component LLM intelligence — 2026-08-22
+#
+# Range of intelligence for component stills and search. Visitors never wait
+# on a model. A capable LLM is an editor-side option, not a public runtime.
+
+#>component_llm_intelligence_2026_08
+#:cache #!components #!search #!llm
+#:operation #!cache
+#:fixity #!tending
+
+@capture: ~"../conventions/component-capture-pipeline.spw"
+@copy_flow: ~"../conventions/copy-flow.spw"
+@plan: ~"../../.agents/plans/visual-capture-ecology/PLAN.md"
+@search: ~"../../scripts/generate-site-search-index.mjs"
+
+operation = "cache"
+fixity = "tending"
+
+^"insight_cache"{
+  id = "component-llm-intelligence"
+  operation = "cache"
+  fixity = "tending"
+  source = "chat"
+  claim = `Same still, four readings: mosey (notice the size), search (findable words), agent (recapture contract), llm (prompt to restage). Do not add a visitor chatbot. Do not factorial every lens.`
+  evidence = #[
+    `scripts/lib/visual-capture-plan.mjs#INTELLIGENCE_BANDS`,
+    `public/js/runtime/site-search.js components facet`,
+    `design/components/index.html#component-glances`,
+  ][reg=set]
+  pattern_consideration = `model-guided-refinement already names weaker models. SpaceXAI stays editor-side if teasers are ever rewritten by a model — never a public npm client.`
+  expansion_prime = `Optional editor command that pastes llm prompts to SpaceXAI. Public site stays static.`
+  validation = `npm run visual:plan -- --ids frame-card --social; search "frame card" and "years packing"`
+  do_not_promote_until = `A second public route uses component-glances without turning them into a second glossary.`
+}[reg=facet]

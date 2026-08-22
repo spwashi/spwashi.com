@@ -5,6 +5,10 @@ import {
   COMPONENT_FIXTURES,
   getComponentFixture,
 } from '../../public/js/kernel/component-fixtures.js';
+import {
+  REGION_ECOLOGY_FIXTURES,
+  getRegionEcologyFixture,
+} from '../../public/js/kernel/region-ecology-fixtures.js';
 import { collectComponentContractReport } from '../component-contracts.mjs';
 
 test('component fixtures have stable ids and consumer lookup', () => {
@@ -31,4 +35,12 @@ test('component fixtures have stable ids and consumer lookup', () => {
 test('component fixtures point to real specimens and CSS owners', async () => {
   const report = await collectComponentContractReport();
   assert.deepEqual(report.errors, []);
+  assert.equal(report.ecology, REGION_ECOLOGY_FIXTURES.length);
+});
+
+test('region ecology fixtures name six seats on live routes', () => {
+  assert.equal(getRegionEcologyFixture('about-years')?.seat, 'path');
+  assert.equal(getRegionEcologyFixture('about-systems-desk')?.selector, '[data-spw-cluster="systems-architecture"]');
+  assert.ok(REGION_ECOLOGY_FIXTURES.every((fixture) => fixture.specimenRoute && fixture.selector && fixture.seat));
+  assert.equal(getComponentFixture('frame-card')?.sizeToken, 'measure-card');
 });

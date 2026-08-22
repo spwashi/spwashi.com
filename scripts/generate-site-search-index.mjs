@@ -13,6 +13,9 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 import { buildRouteRuntimeManifest } from './typed/site-contracts/index.mjs';
+import { COMPONENT_FIXTURES } from '../public/js/kernel/component-fixtures.js';
+import { REGION_ECOLOGY_FIXTURES } from '../public/js/kernel/region-ecology-fixtures.js';
+import { componentSearchEntries } from './lib/visual-capture-plan.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -364,6 +367,10 @@ function buildSearchEntry(routeRecord, harvested = { handles: [], operators: [] 
 
 export async function generateSiteSearchIndex() {
   const manifest = await buildRouteRuntimeManifest();
+  const components = componentSearchEntries({
+    componentFixtures: COMPONENT_FIXTURES,
+    ecologyFixtures: REGION_ECOLOGY_FIXTURES,
+  });
   const routes = [];
   for (const record of manifest.routes || []) {
     let harvested = { handles: [], operators: [], expressions: [], expressionHosts: {} };
@@ -376,7 +383,14 @@ export async function generateSiteSearchIndex() {
       }
     }
     const entry = buildSearchEntry(record, harvested);
-    if (entry) routes.push(entry);
+    if (entry) {
+      const extras = components.filter((item) => item.route.split('#')[0] === record.route);
+      if (extras.length) {
+        entry.haystack = `${entry.haystack} ${extras.map((item) => item.haystack).join(' ')}`.trim();
+        entry.componentIds = extras.map((item) => item.componentId);
+      }
+      routes.push(entry);
+    }
   }
   routes.sort((a, b) => a.route.localeCompare(b.route));
 
@@ -393,12 +407,14 @@ export async function generateSiteSearchIndex() {
     generatedAt: new Date().toISOString(),
     version: 2,
     routeCount: routes.length,
+    componentCount: components.length,
     facets: {
       nestRoots: Object.keys(byNestRoot).sort(),
       kinds: Object.keys(byKind).sort(),
       motions: Object.keys(byMotion).sort(),
-      counts: { byNestRoot, byKind, byMotion },
+      counts: { byNestRoot, byKind, byMotion, components: components.length },
     },
+    components,
     geometryLegend: OPERATOR_GEOMETRY_INDEX,
     routes,
   };
@@ -412,7 +428,7 @@ export async function main() {
   const payload = await generateSiteSearchIndex();
   console.log(`[search-index] wrote ${path.relative(ROOT, OUTPUT)}`);
   console.log(`[search-index] routes=${payload.routeCount} version=${payload.version}`);
-  console.log(`[search-index] kinds=${payload.facets.kinds.join(',')}`);
+  console.log(`[search-index] kinds=${payload.facets.kinds.join(',')} components=${payload.componentCount}`);
 }
 
 const isMain = process.argv[1]

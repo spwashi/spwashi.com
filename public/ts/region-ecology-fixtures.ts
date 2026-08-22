@@ -1,0 +1,100 @@
+export type RegionSeat = 'hook' | 'hub' | 'cluster' | 'path' | 'read' | 'wide';
+export type SocialAspectId = 'fit' | 'square' | 'portrait' | 'story' | 'landscape' | 'og';
+
+export type RegionEcologyFixture = Readonly<{
+  id: string;
+  label: string;
+  seat: RegionSeat;
+  selector: string;
+  specimenRoute: string;
+  cssOwner: string;
+  layoutScenarios: readonly string[];
+  socialAspects?: readonly SocialAspectId[];
+  sizeToken?: 'measure-compact' | 'measure-card' | 'measure-reading';
+  captureValue: string;
+  /** Why this still is worth posting or wondering at — not a caption dump. */
+  wonder: string;
+  synergy?: Readonly<{ with: string; reason: string }>;
+}>;
+
+export const REGION_ECOLOGY_FIXTURES = Object.freeze([
+  {
+    id: 'home-hook',
+    label: 'Home hook',
+    seat: 'hook',
+    selector: '#home-frame',
+    specimenRoute: '/',
+    cssOwner: 'public/css/systems/region-seats.css',
+    layoutScenarios: ['pocket', 'fold', 'desktop'],
+    socialAspects: ['fit', 'landscape', 'og'],
+    captureValue: 'Entry spine — one breath before the atlas opens.',
+    wonder: 'Does the hook still hold when the crop is a link preview?',
+  },
+  {
+    id: 'home-cluster',
+    label: 'Home reading layers',
+    seat: 'cluster',
+    selector: '#reading-layers',
+    specimenRoute: '/',
+    cssOwner: 'public/css/systems/region-seats.css',
+    layoutScenarios: ['pocket', 'fold', 'desktop'],
+    socialAspects: ['fit', 'square'],
+    captureValue: 'Cluster desk where leftover frames wrap at fold.',
+    wonder: 'Fold leftover tracks should look like a desk, not a forced two-column main.',
+    synergy: { with: '[data-spw-cluster="entry-orientation"]', reason: 'cluster + leftover packing' },
+  },
+  {
+    id: 'about-hook',
+    label: 'About hook',
+    seat: 'hook',
+    selector: '#about-frame',
+    specimenRoute: '/about/',
+    cssOwner: 'public/css/systems/region-seats.css',
+    layoutScenarios: ['pocket', 'fold', 'desktop'],
+    socialAspects: ['fit', 'og'],
+    captureValue: 'Person-first entry. Hospitality before the years list.',
+    wonder: 'The person leads. A short crop must not turn identity into a tag list.',
+  },
+  {
+    id: 'about-systems-desk',
+    label: 'About systems desk',
+    seat: 'cluster',
+    selector: '[data-spw-cluster="systems-architecture"]',
+    specimenRoute: '/about/',
+    cssOwner: 'public/css/systems/region-seats.css',
+    layoutScenarios: ['pocket', 'fold', 'desktop'],
+    socialAspects: ['fit', 'landscape'],
+    captureValue: 'Cluster wrapper that leftover-track packing actually spends.',
+    wonder: 'At fold, leftover frames wrap inside this desk — the intrigue is the wrap, not a 1fr 1fr main.',
+    synergy: { with: '#systems-register', reason: 'hub inside a cluster desk' },
+  },
+  {
+    id: 'about-years',
+    label: 'About years path',
+    seat: 'path',
+    selector: '#about-years',
+    specimenRoute: '/about/',
+    cssOwner: 'public/css/routes/surfaces/about.css',
+    layoutScenarios: ['pocket', 'fold', 'desktop'],
+    socialAspects: ['fit', 'portrait'],
+    sizeToken: 'measure-compact',
+    captureValue: 'Years list: 2-up at 40rem container, 3-up at 56rem.',
+    wonder: 'The unique ratio is the years packing itself — a 4/5 still should show the turn, not one lonely year.',
+  },
+  {
+    id: 'recipes-hook',
+    label: 'Recipes hook',
+    seat: 'hook',
+    selector: '#recipe-field',
+    specimenRoute: '/recipes/',
+    cssOwner: 'public/css/systems/region-seats.css',
+    layoutScenarios: ['pocket', 'fold', 'desktop'],
+    socialAspects: ['fit', 'square', 'portrait'],
+    captureValue: 'Kitchen entry spine. Mise and timing as a still.',
+    wonder: 'A square card of mise is more honest than a full-page kitchen screenshot.',
+  },
+] as const satisfies readonly RegionEcologyFixture[]);
+
+export function getRegionEcologyFixture(id: string): RegionEcologyFixture | undefined {
+  return REGION_ECOLOGY_FIXTURES.find((fixture) => fixture.id === id);
+}

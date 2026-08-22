@@ -37,6 +37,7 @@ const FACETS = Object.freeze([
   { id: 'operators', label: 'Operators' },
   { id: 'places', label: 'Places' },
   { id: 'labs', label: 'Labs' },
+  { id: 'components', label: 'Components' },
   { id: 'expressions', label: 'Expressions' },
 ]);
 
@@ -109,6 +110,7 @@ function passesFacet(entry, facet) {
   if (facet === 'operators') return entry.kind === 'operator' || Boolean(entry.operatorSlug);
   if (facet === 'places') return entry.kind === 'place' || entry.kind === 'atlas';
   if (facet === 'labs') return entry.kind === 'lab' || entry.kind === 'play';
+  if (facet === 'components') return entry.kind === 'component' || Boolean(entry.componentId);
   if (facet === 'expressions') return Array.isArray(entry.expressions) && entry.expressions.length > 0;
   return true;
 }
@@ -161,6 +163,7 @@ function scoreEntry(entry, tokens, sigilHints, query = '') {
 
   if (entry.pageRole === 'topic-register' || entry.pageFamily === 'field-guide') score += 1;
   if (entry.kind === 'operator') score += 1;
+  if (entry.kind === 'component') score += 2;
 
   const queryShape = parseExpressionQuery(query);
   if (queryShape.wrapped || queryShape.subject || queryShape.freeTokens.length) {
@@ -210,7 +213,9 @@ function loadIndex() {
     .then(async (response) => {
       if (!response.ok) throw new Error(`search index ${response.status}`);
       const payload = await response.json();
-      entries = Array.isArray(payload?.routes) ? payload.routes : [];
+      const routes = Array.isArray(payload?.routes) ? payload.routes : [];
+      const components = Array.isArray(payload?.components) ? payload.components : [];
+      entries = routes.concat(components);
       facetsMeta = payload?.facets || null;
       geometryLegend = payload?.geometryLegend || null;
       return entries;
