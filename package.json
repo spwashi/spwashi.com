@@ -102,6 +102,8 @@
     "visual:ecology": "node scripts/component-snapshots.mjs --ecology --no-components --flows region --viewports pocket,fold,desktop",
     "visual:social": "node scripts/component-snapshots.mjs --social-only --precipitate --aspects fit,square,portrait",
     "visual:review": "node scripts/component-snapshots.mjs --changed --keep --ecology",
+    "spw:capture": "node scripts/component-snapshots.mjs",
+    "spw:capture:plan": "node scripts/component-snapshots.mjs --dry-plan",
     "test:engagement": "npm run build:tools && npm run build:runtime && npm run test:engagement:run",
     "test:engagement:run": "node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/engagement-features.test.mjs",
     "test:components": "npm run build:runtime && npm run test:components:run",

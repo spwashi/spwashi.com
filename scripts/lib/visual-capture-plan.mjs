@@ -21,6 +21,57 @@ export const SIZE_REASONS = Object.freeze(['device-reason', 'pretext-fit', 'soci
 export const SIZE_TOKENS = Object.freeze(['measure-compact', 'measure-card', 'measure-reading']);
 
 /**
+ * Public names for generated stills. Not Storybook stories.
+ *
+ * print      — isolated card on the compose.css bed (manufactured part)
+ * situation  — component + live copy seated in a room (environmental context)
+ * set        — a Midjourney-style grid of situations for review / direction
+ * clip       — anatomy without the room
+ * page       — the whole factory floor
+ */
+export const ASSET_KINDS = Object.freeze({
+  page: Object.freeze({
+    id: 'page',
+    flow: 'page',
+    name: 'page still',
+    wonder: 'The factory floor. Chrome and packing context.',
+  }),
+  situation: Object.freeze({
+    id: 'situation',
+    flow: 'region',
+    name: 'situation',
+    wonder: 'The component at work in a room, with real copy. Not a story.',
+  }),
+  clip: Object.freeze({
+    id: 'clip',
+    flow: 'component',
+    name: 'clip',
+    wonder: 'Anatomy without the room.',
+  }),
+  print: Object.freeze({
+    id: 'print',
+    flow: 'template',
+    name: 'print',
+    wonder: 'The manufactured part on the compose.css bed. You take the part, not the shop.',
+  }),
+  set: Object.freeze({
+    id: 'set',
+    flow: null,
+    name: 'situation set',
+    wonder: 'A grid of situations for review and direction — the Midjourney screenshot of the plate.',
+  }),
+});
+
+export const COST_BANDS = Object.freeze({
+  plan: Object.freeze({ id: 'plan', chrome: false, ms: 10, learn: 'Pure Spw plan. Always cheap.' }),
+  check: Object.freeze({ id: 'check', chrome: false, ms: 80, learn: 'Fixture contracts. No render.' }),
+  set: Object.freeze({ id: 'set', chrome: true, ms: 2500, learn: 'One specimen nav, then a plate of situation clips. Review like a Midjourney grid.' }),
+  print: Object.freeze({ id: 'print', chrome: true, ms: 800, learn: 'Isolated compose.css print. No site-shell nav.' }),
+});
+
+export const SEAT_PRIORITY = Object.freeze(['hook', 'path', 'cluster', 'hub', 'read', 'wide']);
+
+/**
  * Tooling across a range of intelligence. Same still, four readings.
  * Visitors never wait on a model. A capable LLM is an editor-side option.
  */
@@ -809,4 +860,95 @@ export function buildCapturePlan({
 
   const groups = groupJobsByNavigation(jobs);
   return { jobs, groups, summary: summarizePlan(jobs) };
+}
+
+export function assetKindFor(job) {
+  if (job?.track === 'social' && job?.canvas === 'card') return ASSET_KINDS.print;
+  if (job?.flow === 'region' || job?.kind === 'ecology') return ASSET_KINDS.situation;
+  if (job?.flow === 'component') return ASSET_KINDS.clip;
+  if (job?.flow === 'template') return ASSET_KINDS.print;
+  if (job?.flow === 'page') return ASSET_KINDS.page;
+  return ASSET_KINDS.situation;
+}
+
+export function jobCost(job) {
+  if (!job) return COST_BANDS.plan;
+  if (job.canvas === 'card' || job.flow === 'template') return COST_BANDS.print;
+  return COST_BANDS.set;
+}
+
+export function estimatePlanCost(jobs = []) {
+  const groups = groupJobsByNavigation(jobs);
+  const setNavs = groups.filter((group) => group.canvas === 'specimen').length;
+  const prints = groups.filter((group) => group.canvas === 'card').length;
+  const estMs = setNavs * COST_BANDS.set.ms + prints * COST_BANDS.print.ms;
+  return {
+    chrome: setNavs + prints > 0,
+    setNavs,
+    prints,
+    estMs,
+    learn: setNavs
+      ? `${setNavs} situation-set navs (~${COST_BANDS.set.ms}ms each, clips share a nav) · ${prints} prints (~${COST_BANDS.print.ms}ms, no shell)`
+      : prints
+        ? `${prints} prints on the compose.css bed. No site shell.`
+        : 'Plan only. No Chrome.',
+  };
+}
+
+export function parseSpwCaptureTokens(tokens = [], knownIds = []) {
+  const seats = [];
+  const aspects = [];
+  const viewports = [];
+  const lenses = [];
+  const ids = [];
+  const expressions = [];
+  let wantSet = false;
+  let wantPrint = false;
+  let wantSituation = false;
+  for (const raw of tokens) {
+    const token = String(raw || '').trim();
+    if (!token || token.startsWith('-')) continue;
+    if (token === 'set' || token === 'plate') wantSet = true;
+    else if (token === 'print' || token === 'prints') wantPrint = true;
+    else if (token === 'situation' || token === 'situations') wantSituation = true;
+    else if (REGION_SEATS.includes(token)) seats.push(token);
+    else if (SOCIAL_ASPECTS[token]) aspects.push(token);
+    else if (DEVICE_REASONS[token] || VIEWPORT_ALIASES[token]) viewports.push(token);
+    else if (VISIBILITY_LENSES[token]) lenses.push(token);
+    else if (knownIds.includes(token)) ids.push(token);
+    else if (/[\[{<]/.test(token)) expressions.push(token);
+    else ids.push(token);
+  }
+  return {
+    seats,
+    aspects,
+    viewports,
+    lenses,
+    ids,
+    expressions,
+    ecology: wantSituation || seats.length > 0,
+    social: wantPrint || aspects.length > 0,
+    set: wantSet,
+  };
+}
+
+export function formatCapturePlanSpw(plan, { cost = null } = {}) {
+  const jobs = plan?.jobs || [];
+  const estimate = cost || estimatePlanCost(jobs);
+  const lines = [
+    '#>visual_capture',
+    '#:plan #!situation #!print',
+    `cost = \`${estimate.learn}\``,
+    `priority = ${SEAT_PRIORITY.join(' > ')}`,
+    'learn = `Situation sets share a nav. Prints skip the shell. Lenses multiply. Do not open Chrome to learn the plan.`',
+    '',
+  ];
+  for (const job of jobs) {
+    const kind = assetKindFor(job);
+    const seat = job.seat || job.aspect || 'seat';
+    const where = job.viewportId || job.aspect || '';
+    const projection = where ? `<${where}>` : '';
+    lines.push(`${job.id}[${seat}]{${kind.id}}${projection} = \`${jobCost(job).id} ~${jobCost(job).ms}ms\``);
+  }
+  return `${lines.join('\n')}\n`;
 }

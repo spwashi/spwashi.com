@@ -26,6 +26,17 @@
   claim = `Screenshot value comes from named capture *tracks* (qa device-reason vs social content-fit) plus a manifest agents can read — not from dumping full-page PNGs into git.`
   risk = `Pixel baselines without owners create noise; full-page-only captures hide whether the portable unit still works under compose.css.`
   rule = `Fixtures declare capture value, size token, and publish targets. Packs are review artifacts. Precipitates are named stills + hashes. Baselines stay opt-in.`
+  refuse_storybook = `Do not stand up Storybook. Specimens live on routes. Situations are stills of those specimens in a room.`
+}[reg=facet]
+
+^"asset_names"{
+  print = `Isolated card on the compose.css bed — the manufactured part. Additive: you deposit the object, you do not mill the factory.`
+  situation = `Component + live copy seated in an environmental context (a region/room). The still shows how the component works there. Not a Storybook story.`
+  set = `A plate of situations for review and direction — the Midjourney move of generating many and screenshotting the grid.`
+  clip = `Anatomy without the room.`
+  page = `Whole-route still. Chrome noise. Use sparingly.`
+  technical = `flows stay page|region|component|template. Public speech uses print|situation|set.`
+  b2b = `Hand the print or the situation, not a dump of the shop. A frontend team ships a part; a studio reviews a set, then locks one print.`
 }[reg=facet]
 
 ^"tracks"{

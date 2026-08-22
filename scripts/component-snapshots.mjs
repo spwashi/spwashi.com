@@ -41,6 +41,9 @@ import {
   enhancementHint,
   marketingPrompt,
   intelligencePrompts,
+  parseSpwCaptureTokens,
+  formatCapturePlanSpw,
+  estimatePlanCost,
 } from './lib/visual-capture-plan.mjs';
 import {
   CdpSession,
@@ -87,6 +90,7 @@ function parseArgs(argv) {
     socialOnly: false,
     timeoutMs: 45000,
     viewports: null,
+    tokens: [],
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -137,6 +141,32 @@ function parseArgs(argv) {
     else if (arg === '--settle-ms' && argv[i + 1]) options.settleMs = Number(argv[++i]) || options.settleMs;
     else if (arg === '--timeout-ms' && argv[i + 1]) options.timeoutMs = Number(argv[++i]) || options.timeoutMs;
     else if (arg === '--port' && argv[i + 1]) options.port = Number(argv[++i]) || 0;
+    else if (arg === '--fast') {
+      options.quick = true;
+      options.settleMs = 1500;
+    } else if (arg === '--set') {
+      options.ecology = true;
+      options.format = options.precipitate ? options.format : 'jpeg';
+    } else if (!arg.startsWith('-')) {
+      options.tokens.push(arg);
+    }
+  }
+
+  if (options.tokens.length) {
+    const knownIds = [
+      ...COMPONENT_FIXTURES.map((fixture) => fixture.id),
+      ...REGION_ECOLOGY_FIXTURES.map((fixture) => fixture.id),
+    ];
+    const parsed = parseSpwCaptureTokens(options.tokens, knownIds);
+    if (parsed.seats.length) options.seats = [...new Set([...(options.seats || []), ...parsed.seats])];
+    if (parsed.aspects.length) options.aspects = [...new Set([...options.aspects, ...parsed.aspects])];
+    if (parsed.viewports.length) options.viewports = [...new Set([...(options.viewports || []), ...parsed.viewports])];
+    if (parsed.lenses.length) options.lenses = [...new Set([...options.lenses, ...parsed.lenses])];
+    if (parsed.ids.length) options.ids = [...new Set([...(options.ids || []), ...parsed.ids])];
+    if (parsed.ecology) options.ecology = true;
+    if (parsed.social) options.social = true;
+    if (parsed.set) options.ecology = true;
+    if (parsed.seats.length && !parsed.ids.length) options.noComponents = true;
   }
 
   if (options.quick) {
@@ -167,11 +197,17 @@ function printHelp() {
   console.log(`visual-capture — component + region ecology stills
 
 Tracks:
-  qa       Device-reason viewports and media queries (pocket / fold / broadsheet)
-  social   Unique content-fit cards + named feed crops (1/1, 4/5, 9/16, 16/9, 1.91/1)
+  qa       Device-reason viewports (pocket / fold / broadsheet)
+  social   Unique content-fit prints + named feed crops
+
+Public names (not Storybook stories):
+  situation  Component + live copy in a room (region flow)
+  print      Manufactured part on the compose.css bed (template flow)
+  set        Midjourney-style plate of situations for review / direction
 
 Usage:
-  npm run visual:capture -- --base http://127.0.0.1:4173
+  npm run spw:capture:plan -- hook
+  npm run spw:capture -- situation set --dry-plan
   npm run visual:capture -- --dry-plan
   npm run visual:ecology
   npm run visual:social -- --ids frame-card --aspects fit,square,portrait
@@ -523,17 +559,16 @@ async function main() {
 
   if (!plan.jobs.length) throw new Error('No capture jobs selected');
 
+  const cost = estimatePlanCost(plan.jobs);
   process.stderr.write(
-    `[visual:capture] ${plan.summary.jobs} jobs · ${plan.summary.specimenNavs} specimen navs · ${plan.summary.cardNavs} cards · qa ${plan.summary.byTrack.qa} / social ${plan.summary.byTrack.social}\n`,
+    `[visual:capture] ${plan.summary.jobs} jobs · ${cost.learn}\n`,
   );
 
   if (options.dryPlan) {
     if (options.json) {
-      process.stdout.write(`${JSON.stringify({ summary: plan.summary, jobs: plan.jobs }, null, 2)}\n`);
+      process.stdout.write(`${JSON.stringify({ summary: plan.summary, cost, jobs: plan.jobs }, null, 2)}\n`);
     } else {
-      for (const group of plan.groups) {
-        process.stdout.write(`  ${group.canvas} ${group.key} (${group.jobs.length})\n`);
-      }
+      process.stdout.write(formatCapturePlanSpw(plan, { cost }));
     }
     return 0;
   }

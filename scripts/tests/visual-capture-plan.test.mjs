@@ -21,6 +21,11 @@ import {
   intelligencePrompt,
   componentSearchEntries,
   INTELLIGENCE_BANDS,
+  ASSET_KINDS,
+  parseSpwCaptureTokens,
+  estimatePlanCost,
+  assetKindFor,
+  formatCapturePlanSpw,
 } from '../lib/visual-capture-plan.mjs';
 import { VIEWPORTS } from '../lib/chrome-headless-harness.mjs';
 
@@ -190,6 +195,31 @@ test('component search entries make cards and seats findable', () => {
   assert.ok(entries.some((entry) => entry.componentId === 'frame-card' && entry.haystack.includes('card')));
   assert.ok(entries.some((entry) => entry.componentId === 'about-years' && entry.haystack.includes('path')));
   assert.ok(entries.every((entry) => entry.kind === 'component' && entry.route && entry.wonder));
+});
+
+test('situation / print / set are the public names — not Storybook stories', () => {
+  assert.equal(ASSET_KINDS.situation.flow, 'region');
+  assert.equal(ASSET_KINDS.print.flow, 'template');
+  assert.equal(assetKindFor({ flow: 'region', kind: 'ecology' }).id, 'situation');
+  assert.equal(assetKindFor({ flow: 'template' }).id, 'print');
+  const parsed = parseSpwCaptureTokens(['hook', 'print', 'fit'], ['frame-card']);
+  assert.deepEqual(parsed.seats, ['hook']);
+  assert.equal(parsed.ecology, true);
+  assert.equal(parsed.social, true);
+  const spw = formatCapturePlanSpw({ jobs: [{ id: 'home-hook', seat: 'hook', flow: 'region', kind: 'ecology' }] });
+  assert.match(spw, /situation/);
+  assert.match(spw, /cost = /);
+});
+
+test('situation-set navs are the expensive cluster; prints skip the shell', () => {
+  const cost = estimatePlanCost([
+    { id: 'home-hook', flow: 'region', specimenRoute: '/', viewportId: 'fold', canvas: 'specimen' },
+    { id: 'home-cluster', flow: 'region', specimenRoute: '/', viewportId: 'fold', canvas: 'specimen' },
+    { id: 'frame-card', flow: 'template', canvas: 'card', viewportId: 'fit' },
+  ]);
+  assert.equal(cost.setNavs, 1);
+  assert.equal(cost.prints, 1);
+  assert.match(cost.learn, /share a nav/);
 });
 
 test('navigation groups keep template cards off the specimen tab', () => {
