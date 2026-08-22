@@ -32,10 +32,16 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.65rem;
+      justify-content: flex-start;
+      gap: 0.55rem 0.65rem;
+    }
+
+    & .literal-parser-samples {
+      container: parser-samples / inline-size;
     }
 
     & .literal-parser-samples > span {
+      flex: 0 0 auto;
       color: currentColor;
       font: 0.76rem/1.4 var(--font-mono, monospace);
       letter-spacing: 0.05em;
@@ -336,5 +342,20 @@
       & .literal-parser-output summary small {
         text-align: left;
       }
+  }
+}
+
+@media (pointer: coarse) {
+  :where(body[data-spw-surface="tools-spw-parser"]) .literal-parser-samples button,
+  :where(body[data-spw-surface="tools-spw-parser"]) .literal-parser-file-action {
+    min-height: 2.75rem;
+  }
+}
+
+@supports (container-type: inline-size) {
+  @container parser-samples (max-width: 24rem) {
+    :where(body[data-spw-surface="tools-spw-parser"]) .literal-parser-samples > span {
+      flex-basis: 100%;
+    }
   }
 }

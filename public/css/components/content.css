@@ -875,6 +875,50 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   text-underline-offset: 0.14em;
 }
 
+/* Token + gloss lists. Stack on a narrow host; sit token | gloss when the
+   list itself has room. Surfaces may recolor; they should not re-invent the grid. */
+:where(.syntax-list) {
+  container: syntax-list / inline-size;
+  display: grid;
+  gap: var(--component-gap-tight, 0.55rem);
+  margin-block: 0.4rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.syntax-list > li) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.28rem 0.85rem;
+  align-items: baseline;
+  min-width: 0;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 88%, transparent);
+  border-radius: var(--component-radius-loose, 0.7rem);
+}
+
+:where(.syntax-list > li > .syntax-token) {
+  min-width: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+:where(.syntax-list > li > :not(.syntax-token)) {
+  min-width: 0;
+  max-inline-size: min(100%, 60ch);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+@supports (container-type: inline-size) {
+  @container syntax-list (min-width: 28rem) {
+    :where(.syntax-list > li) {
+      grid-template-columns: minmax(min(100%, 11rem), max-content) minmax(0, 1fr);
+    }
+  }
+}
+
 /* Portable literary surfaces. Safe to copy into a rogue page or generator
    output when the stylesheet itself needs to read like an annotated text. */
 :where(.spw-literary-note, [data-spw-textual-role="note"]) {

@@ -1078,6 +1078,18 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   line-height: 1.48;
 }
 
+:where(.spw-card-group) {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: var(--component-gap-tight, 0.55rem);
+  min-width: 0;
+  align-content: stretch;
+}
+
+:where(.spw-card-group > .spw-card-reason) {
+  margin-block-start: 0;
+}
+
 :where(.frame-card, .frame-panel, .returner-card):is(:hover, :focus-within)
   :where(.spw-card-meta strong, .spw-card-reason > summary) {
   color: var(--active-op-color, var(--component-accent));
