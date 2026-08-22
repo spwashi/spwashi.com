@@ -102,6 +102,7 @@ export const CAULDRON_CONTRACT = Object.freeze({
   }),
   attributes: Object.freeze({
     host: 'data-spw-cauldron',
+    vessel: 'data-spw-cauldron-vessel',
     state: 'data-spw-cauldron-state',
     ingredient: 'data-spw-cauldron-ingredient',
     ingredientPhase: 'data-spw-ingredient-phase',
@@ -150,7 +151,65 @@ export const CAULDRON_CONTRACT = Object.freeze({
 
 /* Cauldron state travels as one axis bundle (G1 grammar, 2026-07-03):
    data-spw-cauldron-state="phase:mixing count:4 garden:tending biome:prairie". */
-export const CAULDRON_STATE_AXES = Object.freeze(['phase', 'count', 'garden', 'resonance', 'collected', 'discoverability', 'biome', 'fixity', 'element', 'phaseState', 'tangibility']);
+export const CAULDRON_VESSEL_KEY = 'spw:cauldron-vessel';
+
+/** Open set. Named demos first; any other id still writes cauldron[id]{gather.mix.cast}. */
+export const CAULDRON_VESSELS = Object.freeze({
+  garden: {
+    kicker: 'garden bed',
+    expression: 'cauldron[garden]{sow.tend.harvest}',
+    phases: ['sow', 'tend', 'mix', 'harvest'],
+    mix: '!mix[harvest]',
+    plant: '^plant',
+  },
+  soup: {
+    kicker: 'stock pot',
+    expression: 'cauldron[soup]{stock.simmer.serve}',
+    phases: ['stock', 'simmer', 'taste', 'serve'],
+    mix: '!mix[serve]',
+    plant: '^ladle',
+  },
+  salad: {
+    kicker: 'toss bowl',
+    expression: 'cauldron[salad]{wash.toss.plate}',
+    phases: ['wash', 'cut', 'toss', 'plate'],
+    mix: '!toss',
+    plant: '^plate',
+  },
+  toolbox: {
+    kicker: 'toolbox',
+    expression: 'cauldron[toolbox]{pick.fit.return}',
+    phases: ['pick', 'fit', 'check', 'return'],
+    mix: '!fit',
+    plant: '^return',
+  },
+  workbench: {
+    kicker: 'workbench',
+    expression: 'cauldron[workbench]{clamp.cut.assemble}',
+    phases: ['clamp', 'cut', 'join', 'assemble'],
+    mix: '!join',
+    plant: '^assemble',
+  },
+});
+
+export function normalizeCauldronVessel(name) {
+  const id = String(name || 'garden').trim().toLowerCase();
+  if (CAULDRON_VESSELS[id]) return id;
+  return id.replace(/[^a-z0-9_-]/g, '').slice(0, 24) || 'garden';
+}
+
+export function getCauldronVesselSpec(name) {
+  const id = normalizeCauldronVessel(name);
+  return CAULDRON_VESSELS[id] || {
+    kicker: id,
+    expression: `cauldron[${id}]{gather.mix.cast}`,
+    phases: ['gather', 'prime', 'mix', 'cast'],
+    mix: '!mix',
+    plant: '^plant',
+  };
+}
+
+export const CAULDRON_STATE_AXES = Object.freeze(['phase', 'count', 'vessel', 'garden', 'resonance', 'collected', 'discoverability', 'biome', 'fixity', 'element', 'phaseState', 'tangibility']);
 
 /**
  * @typedef {Object} CauldronStateParts

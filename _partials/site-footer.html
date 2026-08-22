@@ -25,6 +25,8 @@
                 class="site-footer__cauldron"
                 data-spw-feature="cauldron"
                 data-spw-cauldron
+                data-spw-cauldron-vessel="garden"
+                data-spw-semantic-expression="cauldron[garden]{sow.tend.harvest}"
                 data-spw-cauldron-panel="compact"
                 data-spw-hypermedia-extension="state output resume"
                 data-spw-interaction-contract="tap inspect hold prime drag project double-click inspect-prime keyboard commit"
@@ -34,7 +36,14 @@
                 data-spw-interaction-double-click="inspect and prime semantic brace value immediately"
                 data-spw-interaction-keyboard="Enter or Space commits the focused semantic brace">
                 <div class="site-footer__cauldron-header">
-                    <p class="site-footer__cauldron-kicker">Saved fragments</p>
+                    <p class="site-footer__cauldron-kicker" data-cauldron-vessel-kicker>garden bed</p>
+                    <div class="mode-switch site-footer__cauldron-vessels" role="group" aria-label="Sit a vessel">
+                        <button class="frame-sigil" type="button" data-set-cauldron-vessel="garden" aria-pressed="true">garden</button>
+                        <button class="frame-sigil" type="button" data-set-cauldron-vessel="soup" aria-pressed="false">soup</button>
+                        <button class="frame-sigil" type="button" data-set-cauldron-vessel="salad" aria-pressed="false">salad</button>
+                        <button class="frame-sigil" type="button" data-set-cauldron-vessel="toolbox" aria-pressed="false">toolbox</button>
+                        <button class="frame-sigil" type="button" data-set-cauldron-vessel="workbench" aria-pressed="false">workbench</button>
+                    </div>
                     <button
                         class="site-footer__cauldron-panel-toggle"
                         type="button"
@@ -44,6 +53,7 @@
                         Show
                     </button>
                 </div>
+                <p class="site-footer__cauldron-expression" data-cauldron-vessel-expression data-spw-semantic-expression="cauldron[garden]{sow.tend.harvest}">cauldron[garden]{sow.tend.harvest}</p>
                 <ol class="site-footer__cauldron-phase-rail" data-spw-cauldron-phase-rail aria-label="Hypermedia extension phase">
                     <li class="site-footer__cauldron-phase-step" data-spw-phase-step="empty">
                         <p class="site-footer__cauldron-phase-label">gather</p>

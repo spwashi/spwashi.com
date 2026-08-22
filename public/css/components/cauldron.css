@@ -18,9 +18,40 @@
 
 .site-footer__cauldron-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+}
+
+.site-footer__cauldron-vessels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.22rem;
+}
+
+.site-footer__cauldron-expression {
+  margin: 0;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.03em;
+  color: var(--ink-soft, inherit);
+}
+
+.site-footer__cauldron[data-spw-cauldron-vessel="soup"] {
+  --component-accent: color-mix(in srgb, #a86132 70%, var(--active-op-color, teal));
+}
+
+.site-footer__cauldron[data-spw-cauldron-vessel="salad"] {
+  --component-accent: color-mix(in srgb, #4a8f4a 65%, var(--active-op-color, teal));
+}
+
+.site-footer__cauldron[data-spw-cauldron-vessel="toolbox"] {
+  --component-accent: color-mix(in srgb, #3d6b8a 70%, var(--active-op-color, teal));
+}
+
+.site-footer__cauldron[data-spw-cauldron-vessel="workbench"] {
+  --component-accent: color-mix(in srgb, #8a6b3d 70%, var(--active-op-color, teal));
 }
 
 .site-footer__cauldron-panel-toggle {

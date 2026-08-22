@@ -32,6 +32,7 @@ import { composeOpBundle } from '/public/js/kernel/shared.js';
 import { guardCall } from '/public/js/kernel/dom-render.js';
 import {
   CAULDRON_CONTRACT,
+  CAULDRON_VESSEL_KEY,
   GARDEN_PRUNE_DAYS,
   applyCauldronState,
   cauldronCapacity,
@@ -39,6 +40,8 @@ import {
   computeIngredientPhase,
   countPrimeableSources,
   getCauldronStatusCopy,
+  getCauldronVesselSpec,
+  normalizeCauldronVessel,
 } from './cauldron/contract.js';
 import {
   bindCauldronPanelToggle,
@@ -87,6 +90,7 @@ export function initCauldron() {
   document.addEventListener('spw:settings:changed', syncCauldronState, { passive: true });
   document.addEventListener('spw:settings-change', syncCauldronState, { passive: true });
 
+  sitCauldronVessel(readStoredCauldronVessel(), { persist: false });
   syncCauldronState();
 
   cleanupHandle = () => {
@@ -109,6 +113,13 @@ export function initCauldron() {
 
 function handleCauldronUIActions(e) {
   if (!(e.target instanceof Element)) return;
+  const vesselBtn = e.target.closest('[data-set-cauldron-vessel]');
+  if (vesselBtn) {
+    sitCauldronVessel(vesselBtn.getAttribute('data-set-cauldron-vessel'));
+    flashCauldronAction(vesselBtn, 'sat');
+    e.preventDefault();
+    return;
+  }
   const mixBtn = e.target.closest('[data-spw-cauldron-action="mix"]');
   const clearBtn = e.target.closest('[data-spw-cauldron-action="clear"]');
   const pruneBtn = e.target.closest('[data-spw-cauldron-action="prune"]');
@@ -245,7 +256,9 @@ function handleCauldronUIActions(e) {
     const ingredients = getCauldron();
     if (ingredients.length) {
       const expr = ingredients.map((i) => i.expression).join(' + ');
-      const spwSignature = `spell[cauldron]{${expr}}`;
+      const vessel = normalizeCauldronVessel(document.documentElement.dataset.spwCauldronVessel || 'garden');
+      const spec = getCauldronVesselSpec(vessel);
+      const spwSignature = `${spec.expression.replace(/\{[^}]*\}/, `{${expr}}`)}`;
       const shareData = {
         title: 'Spw Cauldron Spell',
         text: `Spw Cauldron Spell: ${spwSignature}\nGathered from: ${window.location.href}`,
@@ -661,6 +674,53 @@ function syncIngredientAvailability() {
   });
 }
 
+function readStoredCauldronVessel() {
+  try {
+    return normalizeCauldronVessel(localStorage.getItem(CAULDRON_VESSEL_KEY) || 'garden');
+  } catch {
+    return 'garden';
+  }
+}
+
+function sitCauldronVessel(name, { persist = true } = {}) {
+  const id = normalizeCauldronVessel(name);
+  const spec = getCauldronVesselSpec(id);
+  const root = document.documentElement;
+  root.dataset.spwCauldronVessel = id;
+  document.querySelectorAll('[data-spw-cauldron]').forEach((host) => {
+    if (!(host instanceof HTMLElement)) return;
+    host.dataset.spwCauldronVessel = id;
+    host.setAttribute('data-spw-semantic-expression', spec.expression);
+    applyCauldronState(host, { vessel: id });
+    const kicker = host.querySelector('[data-cauldron-vessel-kicker], .site-footer__cauldron-kicker');
+    if (kicker) kicker.textContent = spec.kicker;
+    const expr = host.querySelector('[data-cauldron-vessel-expression]');
+    if (expr) {
+      expr.textContent = spec.expression;
+      expr.setAttribute('data-spw-semantic-expression', spec.expression);
+    }
+    host.querySelectorAll('[data-spw-phase-step] [data-cauldron-phase-label], [data-spw-phase-step] .site-footer__cauldron-phase-label').forEach((label, index) => {
+      if (spec.phases[index]) label.textContent = spec.phases[index];
+    });
+    const mix = host.querySelector('[data-spw-cauldron-action="mix"]');
+    if (mix) mix.textContent = spec.mix;
+    const plant = host.querySelector('[data-spw-cauldron-action="plant"]');
+    if (plant) plant.textContent = spec.plant;
+  });
+  document.querySelectorAll('[data-set-cauldron-vessel]').forEach((btn) => {
+    const seated = btn.getAttribute('data-set-cauldron-vessel') === id;
+    btn.setAttribute('aria-pressed', seated ? 'true' : 'false');
+  });
+  if (persist) {
+    try {
+      localStorage.setItem(CAULDRON_VESSEL_KEY, id);
+    } catch {
+      /* vessel memory is best-effort */
+    }
+  }
+  bus.emit('cauldron:vessel', { vessel: id, expression: spec.expression });
+}
+
 function flashCauldronAction(button, state = 'active') {
   if (!(button instanceof HTMLElement)) return;
   button.dataset.spwCauldronActionState = state;
@@ -793,7 +853,8 @@ function syncCauldronState() {
   syncCollectedSourceMarks(ingredients);
   syncOperatorResonance(ingredients);
   syncDiscoverabilityCues(count, phase, availableSources);
-  applyCauldronState(root, { phase, count });
+  const vessel = readStoredCauldronVessel();
+  applyCauldronState(root, { phase, count, vessel });
   syncCauldronHosts(ingredients, phase);
 
   if (count > 0) {
@@ -848,7 +909,7 @@ function syncCauldronHosts(ingredients, phase) {
   const hosts = document.querySelectorAll('[data-spw-cauldron]');
   syncGardenHealth(hosts, ingredients);
   hosts.forEach((host) => {
-    applyCauldronState(host, { phase, count });
+    applyCauldronState(host, { phase, count, vessel: host.dataset.spwCauldronVessel || readStoredCauldronVessel() });
     /* Spatial physics: the vessel is a charging container; sigils inside it
        express accumulation until cast (discharge) or checkpoint (reference). */
     host.dataset.spwOpDisposition = 'charge';
@@ -1328,6 +1389,7 @@ export {
   pruneStale,
   nourishIngredient,
   getCauldron as getCauldronIngredients,
+  sitCauldronVessel,
 };
 
 /**
