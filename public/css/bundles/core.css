@@ -29022,6 +29022,12 @@ html[data-spw-theme-pack="electric-studio"] {
   left: calc(0.2rem + (100% - 0.4rem) * var(--spw-place, 0.5));
   background: var(--spw-operator-color, var(--ink, currentColor));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-compare-rail) 70%, transparent);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+:where(.spw-compare:hover .spw-compare__tick, .spw-compare:focus-within .spw-compare__tick) {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--spw-compare-rail) 80%, transparent);
 }
 
 :where([data-spw-place="low"]) { --spw-place: 0.12; }
