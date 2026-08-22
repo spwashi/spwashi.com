@@ -18,7 +18,7 @@
     wonder="comparison locality consequence"
     route_family="editorial profile workshop"
     features="operators navigator console"
-    related_routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/"
+    related_routes="/|/about/|/topics/film/|/tools/|/tools/character-sheet/|/tools/midjourney/|/tools/budgeting/|/services/|/settings/"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
     <spw-site-head></spw-site-head>
 </head>
 <body data-spw-surface="tools-profile"
-    data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial profile workshop" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-page-family="workshop" data-spw-page-modes="edit inspect export compare" data-spw-page-seed="page_tools_tools_profile" data-spw-page-role="tool-surface" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
+    data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial profile workshop" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-page-family="workshop" data-spw-page-modes="edit inspect export compare" data-spw-page-seed="page_tools_tools_profile" data-spw-page-role="tool-surface" data-spw-related-routes="/|/about/|/topics/film/|/tools/|/tools/character-sheet/|/tools/midjourney/|/tools/budgeting/|/services/|/settings/">
 <a class="skip-link" href="#main-content">Skip to content</a>
 <a class="spw-section-handle" href="#main-content" data-spw-handle-state="hidden"
        data-spw-gravity
@@ -42,7 +42,7 @@
         current_href="/tools/profile/"
         indicator="frame"
         seed="page_tools_tools_profile__site_header"
-        related_routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/"
+        related_routes="/|/about/|/topics/film/|/tools/|/tools/character-sheet/|/tools/midjourney/|/tools/budgeting/|/services/|/settings/"
         context_relevance="profile builder local only json extensible screenshottable build"
         nav_items="Home:/|About:/about|Tools:/tools/|Profile:/tools/profile/|Services:/services/|Settings:/settings/"
     ></spw-site-header>
@@ -55,8 +55,8 @@
                 aria-describedby="profile-lede profile-privacy-note"
                 data-spw-role="context"
                 data-spw-form="brace"
-                data-spw-meaning="professional profile card wizard for laid-off engineers and peers"
-                data-spw-operator="object" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="workshop" data-spw-locality="high" data-spw-consequence="memory" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_tools_tools_profile__profile_builder_frame" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/"
+                data-spw-meaning="profile card builder for the six public practices"
+                data-spw-operator="object" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="workshop" data-spw-locality="high" data-spw-consequence="memory" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_tools_tools_profile__profile_builder_frame" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/topics/film/|/tools/|/tools/character-sheet/|/tools/midjourney/|/tools/budgeting/|/services/|/settings/"
                 data-spw-region-purpose="public-spine"
                 data-spw-region-role="entry-spine">
                 <div class="frame-topline" data-spw-slot="header">
@@ -68,8 +68,8 @@
                     </div>
                 </div>
                 <h1 id="profile-title">Profile Builder</h1>
-                <p id="profile-lede" data-spw-textual-role="lede">Describe what you do in a form that travels.</p>
-                <p>This tool is for engineers, collaborators, and peers who need to articulate their work quickly and clearly. Fill in the fields, get a card, copy the JSON, or screenshot the result.</p>
+                <p id="profile-lede" data-spw-textual-role="lede">Describe the practices you already do in a form that travels.</p>
+                <p>Software, film, illustration, design, oration, organization — pick the doors that are true this week. Fill in the fields, get a card, copy the JSON, or screenshot the result. The years on <a href="/about/#about-years">About</a> are the timing.</p>
                 <p id="profile-privacy-note" data-spw-textual-role="note">Everything stays in this browser. Nothing is sent anywhere.</p>
                 <div class="spw-reason-strip" aria-label="Profile builder reasons" data-spw-feature="profile-builder-reasons">
                     <div>
@@ -78,7 +78,7 @@
                     </div>
                     <div>
                         <strong>Use this when</strong>
-                        <p>you need a clear work summary for a hiring manager, collaborator, or yourself.</p>
+                        <p>you need a card a collaborator, a table, or a later-you can actually read.</p>
                     </div>
                     <div>
                         <strong>What it can produce</strong>
@@ -91,6 +91,9 @@
                     <a class="spw-chip" data-spw-handle="true" href="#import-export" data-spw-operator="perspective">@import_export</a>
                     <a class="spw-chip" data-spw-handle="true" href="/tools/character-sheet/" data-spw-operator="perspective" data-spw-action="enter">@character_sheet</a>
                     <a class="spw-chip" data-spw-handle="true" href="/tools/midjourney/" data-spw-operator="potential" data-spw-action="explore">~midjourney_bench</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/about/#resume-practices" data-spw-operator="integration">^practices</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/film/" data-spw-operator="stream">*film</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/tools/budgeting/#year-mix" data-spw-operator="potential">~year_mix</a>
                     <a class="spw-chip" data-spw-handle="true" href="/tools/" data-spw-operator="integration" data-spw-action="publish">^tools_index</a>
                     <a class="spw-chip" data-spw-handle="true" href="/services/" data-spw-operator="perspective" data-spw-action="enter">@services</a>
                 </nav>
@@ -101,7 +104,7 @@
                 aria-labelledby="builder-form-title"
                 data-spw-role="vessel"
                 data-spw-form="brace"
-                data-spw-meaning="profile wizard — form fields that drive live card preview" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__builder_form" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
+                data-spw-meaning="profile wizard — form fields that drive live card preview" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__builder_form" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/topics/film/|/tools/|/tools/character-sheet/|/tools/midjourney/|/tools/budgeting/|/services/|/settings/">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#builder-form">^"build"</a>
                     <h2 id="builder-form-title">Build your profile card</h2>
@@ -268,7 +271,7 @@
                 aria-labelledby="import-export-title"
                 data-spw-role="vessel"
                 data-spw-form="square"
-                data-spw-meaning="JSON import — paste a saved profile to restore it" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__import_export" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
+                data-spw-meaning="JSON import — paste a saved profile to restore it" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__import_export" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/topics/film/|/tools/|/tools/character-sheet/|/tools/midjourney/|/tools/budgeting/|/services/|/settings/">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#import-export">@"import"</a>
                     <h2 id="import-export-title">Import or restore JSON</h2>
@@ -287,7 +290,7 @@
                 aria-labelledby="schema-reference-title"
                 data-spw-role="reference"
                 data-spw-form="square"
-                data-spw-meaning="profile card JSON schema reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__schema_reference" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
+                data-spw-meaning="profile card JSON schema reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__schema_reference" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/topics/film/|/tools/|/tools/character-sheet/|/tools/midjourney/|/tools/budgeting/|/services/|/settings/">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#schema-reference">~"schema"</a>
                     <h2 id="schema-reference-title">Schema reference</h2>

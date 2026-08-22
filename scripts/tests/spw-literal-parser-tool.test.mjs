@@ -35,6 +35,15 @@ describe('literal Spw parser proof', () => {
     assert.equal(result.source, 'proof § unsupported_character');
   });
 
+  it('parses practice, language-sync, film, and year-mix specimens losslessly', () => {
+    for (const key of ['practices', 'sync', 'film', 'year']) {
+      const result = parseLiteralSource(SPW_LITERAL_PARSER_SAMPLES[key]);
+      assert.equal(result.output.success, true, `sample "${key}" failed to parse`);
+      assert.equal(result.output.errors.length, 0, `sample "${key}" returned errors`);
+      assert.equal(result.reconstructsExactly, true, `sample "${key}" was not lossless`);
+    }
+  });
+
   it('encodes exact source into an app-loadable route URL', () => {
     const source = 'proof[parser]{literal.ast.lossless}';
     const url = createParserAppUrl(source, 'proof.spw');

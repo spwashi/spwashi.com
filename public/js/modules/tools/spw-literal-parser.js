@@ -25,6 +25,23 @@ export const SPW_LITERAL_PARSER_SAMPLES = Object.freeze({
 beans.<
 <beans>#
 beans.[stew]`,
+  /** Six public practice doors. Kin to About resume.practice.* handles. */
+  practices: `practice[software]{business}
+practice[learning]{text}
+practice[illustration]{folios}
+practice[design]{components}
+practice[oration]{comedy}
+practice[organization]{sprint}`,
+  /** Language as synchronization: shape of ideas, and across spiritual vocabularies. */
+  sync: `language[sync]{
+  ~<god>
+  ~<ideas>
+}`,
+  film: `practice[film]{release}
+~<shot>
+~<voice>`,
+  year: `budget[year]{income.skill.expectation}
+career[year]{heard.unknown}`,
 });
 
 function countAstNodes(value, depth = 0, census = { total: 0, maxDepth: 0, types: new Map() }) {

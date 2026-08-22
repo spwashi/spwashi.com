@@ -20,7 +20,7 @@ export const STATUS_OPTIONS = [
   { value: 'consulting',  label: 'consulting',         hint: 'Taking project-based engagements.' },
   { value: 'open',        label: 'open to offers',     hint: 'Employed but listening.' },
   { value: 'building',    label: 'building',           hint: 'Heads-down on something.' },
-  { value: 'looking',     label: 'actively looking',   hint: 'Recently laid off, seeking.' },
+  { value: 'looking',     label: 'actively looking',   hint: 'Seeking the next collaboration or sprint.' },
 ];
 
 export const OPERATOR_OPTIONS = [
@@ -41,6 +41,7 @@ export const BADGE_CLUSTERS = [
   { value: 'approach', label: 'approach', hint: 'How you work — your method or stance.' },
   { value: 'context',  label: 'context',  hint: 'Where you have worked or what you have shipped.' },
   { value: 'role',     label: 'role',     hint: 'Formal or informal titles and functions.' },
+  { value: 'practice', label: 'practice', hint: 'Software, film, illustration, design, oration, organization.' },
 ];
 
 /** Empty profile schema */

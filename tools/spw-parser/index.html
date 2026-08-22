@@ -19,7 +19,7 @@
     route_family="toolbench language proof"
     layout="atlas"
     features="operators navigator console"
-    related_routes="/tools/|/topics/software/spw/|/topics/software/parsers/|https://github.com/spwashi/spw-workbench"
+    related_routes="/tools/|/about/|/topics/film/|/topics/software/spw/|/topics/software/parsers/|/tools/budgeting/|/topics/math/combinatorics/|https://github.com/spwashi/spw-workbench"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -39,7 +39,7 @@
     data-spw-page-role="parser-proof"
     data-spw-layout="atlas"
     data-spw-section-handle-desktop="auto"
-    data-spw-related-routes="/tools/|/topics/software/spw/|/topics/software/parsers/|https://github.com/spwashi/spw-workbench">
+    data-spw-related-routes="/tools/|/about/|/topics/film/|/topics/software/spw/|/topics/software/parsers/|/tools/budgeting/|/topics/math/combinatorics/|https://github.com/spwashi/spw-workbench">
     <a class="skip-link" href="#main-content">Skip to parser</a>
 
     <spw-site-header
@@ -47,8 +47,8 @@
         current_href="/tools/spw-parser/"
         indicator="probe"
         seed="page_tools_spw_parser__site_header"
-        related_routes="/tools/|/topics/software/spw/|/topics/software/parsers/|https://github.com/spwashi/spw-workbench"
-        context_relevance="Spw parser AST tokens diagnostics workbench proof"
+        related_routes="/tools/|/about/|/topics/film/|/topics/software/spw/|/topics/software/parsers/|/tools/budgeting/|/topics/math/combinatorics/|https://github.com/spwashi/spw-workbench"
+        context_relevance="Spw parser AST tokens diagnostics practices film year-mix language sync"
         nav_items="Home:/|Tools:/tools/|Spw:/topics/software/spw/|Parsers:/topics/software/parsers/|Settings:/settings/"
     ></spw-site-header>
 
@@ -85,10 +85,14 @@
                 </div>
                 <h1 id="parser-title">Literal Spw Parser</h1>
                 <p data-spw-textual-role="lede">This is the parser, running in your browser. Change the source and watch Spw become tokens, an abstract syntax tree, diagnostics, and an exact reconstruction.</p>
-                <p>This tool ships the portable parser kernel from <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>. The public page does not imitate a parse or infer braces with display-only rules: the same parser package used by the CLI and language tooling produces the result below. Use it as a garden bed for combinatorics the site is still tending — <code>&lt;beans&gt;</code>, <code>beans.&lt;</code>, <code>&lt;beans&gt;#</code> — so parser demand comes from public specimens, not private theory.</p>
+                <p>This tool ships the portable parser kernel from <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>. The public page does not imitate a parse or infer braces with display-only rules: the same parser package used by the CLI and language tooling produces the result below. Load practices, language-sync, film, and year-mix as public specimens — plus the beans garden (<code>&lt;beans&gt;</code>, <code>beans.&lt;</code>, <code>&lt;beans&gt;#</code>) — so demand comes from work already on the site, not private theory.</p>
                 <nav class="frame-operators" aria-label="Parser proof routes">
                     <a class="spw-chip" data-spw-handle="true" href="#literal-parser" data-spw-operator="perspective" data-spw-action="enter">@parse_source</a>
                     <a class="spw-chip" data-spw-handle="true" href="#proof-output" data-spw-operator="action">!inspect[ast]</a>
+                    <a class="spw-chip" data-spw-handle="true" href="?spw_sample=practices#literal-parser" data-spw-operator="integration">^practices</a>
+                    <a class="spw-chip" data-spw-handle="true" href="?spw_sample=year#literal-parser" data-spw-operator="potential">~year_mix</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/about/#resume-practices" data-spw-operator="ref">~doors</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/film/" data-spw-operator="stream">*film</a>
                     <a class="spw-chip" data-spw-handle="true" href="#app-loading" data-spw-operator="frame">#&gt;load_in_app</a>
                     <a class="spw-chip" data-spw-handle="true" href="https://github.com/spwashi/spw-workbench/tree/main/packages/spw-seed/src/parser" data-spw-operator="potential" data-spw-action="explore">~parser_source</a>
                 </nav>
@@ -126,6 +130,10 @@
                     <button type="button" data-parser-sample="navigation">navigation</button>
                     <button type="button" data-parser-sample="diagnostic">diagnostic</button>
                     <button type="button" data-parser-sample="beans">beans combinatorics</button>
+                    <button type="button" data-parser-sample="practices">practices</button>
+                    <button type="button" data-parser-sample="sync">language sync</button>
+                    <button type="button" data-parser-sample="film">film</button>
+                    <button type="button" data-parser-sample="year">year mix</button>
                 </div>
 
                 <div class="literal-parser-workspace">
