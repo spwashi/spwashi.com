@@ -1,0 +1,80 @@
+# Thinking / dreaming runtime
+#
+# Not a workbench clone. The useful dream is: this site's HTML/CSS/JS
+# as the culture that turns .spw into a document, and stills into the next idea.
+
+#>thinking_dreaming_runtime
+#:cache #!runtime #!cache #!dispatch #!projection
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@capacity: ~"../conventions/semantic-capacity.spw"
+@recursive: ~"../conventions/recursive-improvement.spw"
+@serialize: ~"../conventions/spw-serialization-hydration.spw"
+@bus: ~"../../public/js/typed/bus.js"
+@idle: ~"../../public/js/runtime/module-loader.js"
+@salience: ~"../../public/js/runtime/expression-resonance.js"
+@capture: ~"../conventions/component-capture-pipeline.spw"
+@assets: ~"../assets.spw"
+
+operation = "cache"
+fixity = "experimental"
+
+^"insight"{
+  id = "thinking-dreaming-runtime"
+  operation = "cache"
+  fixity = "experimental"
+  source = `chat 2026-08-22 — thinking/dreaming; .spw as HTML; sourdough starter; screenshot as feed; Imagine later`
+  claim = `The Spw runtime on this site is a thinking/dreaming culture, not the workbench executor. Thinking is a pass through these HTML/CSS/JS/.spw patterns. Dreaming is imagining a .spw file as an HTML document those patterns could already host.`
+  evidence = #[
+    `@serialize triad: static seed, kinetic hydration, spell replay`,
+    `@bus history + idle-residue already exist; do not invent a second dispatcher`,
+    `@recursive loop: inventory → cache → smallest patch → validate`,
+    `@capture stills as local, gitignored, commit-clustered feed`
+  ][reg=set]
+  pattern_consideration = #[
+    `workbench parse() is a check, not the dream`,
+    `idle-residue is when memory modules wake — residue, not a night cycle`,
+    `bus.recent is already a short-term thought trace`
+  ][reg=set]
+  expansion_prime = `Each pass through this codebase should leave the starter more useful: a cache, a still, a trope, or a named HTML projection of a .spw file. Do not stand up a parallel dream VM.`
+  validation = `rg 'thinking_dreaming_runtime' .spw/caches/index.spw; rg 'idle-residue' public/js/runtime/module-loader.js`
+  do_not_promote_until = `A second consumer besides this cache: one .spw specimen projected as a public HTML cluster, or one still that actually changed a trope.`
+}[reg=facet]
+
+^"starter"{
+  metaphor = `Sourdough. This checkout is the culture. You feed it by walking through it again.`
+  feed = #[
+    `a cache note`,
+    `a still in the capture archive`,
+    `a smallest HTML/CSS/JS patch`,
+    `a named Imagine study with a sidecar`
+  ][reg=set]
+  refuse = `A new runtime that replaces the workbench. A dream loop that animates the page while someone is reading.`
+}[reg=facet]
+
+^"spw_as_html"{
+  claim = `The practical dream is to look at a .spw file and see the HTML this site would already write: frames, chips, living terms, braces, vessels.`
+  rules = `Operator chips, data-spw-* families, region seats, join kinds, copy-units. Imagine the document; then author the smallest cluster that proves the reading.`
+  workbench = `Far from current workbench behavior, on purpose. This site is the proof of concept while workbench updates.`
+}[reg=facet]
+
+^"screenshot_feed"{
+  immediate = `Post a still, then either patch the design or open a trope. Same sitting.`
+  later = `Grok Imagine or Midjourney can read the still another day. Visible words on the still are handles — living terms, chips, copy. A weirder image starts from those words. Document output like any image asset. Chain is allowed: still → model → production (including anime frames), never auto-post.`
+  archive = `Commit-clustered files under archive/images/<commit>/ so a still stays next to the thought that made it.`
+  lenses = `Tune the codebase so later analysis has better handles: density, enhancement, tangibility, labels, join marks. Same as sourcing: which bed, which pass.`
+}[reg=facet]
+
+^"sourcing_media"{
+  learn = `Restaurant ingredient sourcing learns the same visibility Plants & Sorcery already taught: who grew it, which season, how far, which bed. One named source. Do not blend PNSB with kitchen ferments or CSS biome.`
+  pipeline = `Media loops are the internal sourcing analog: capture → commit cluster → cook now (patch) or hold (Imagine later). Print / situation / set stay harvest speech.`
+  refuse = `A supplier directory on the public kitchen. A Midjourney grid as someone else's harvest.`
+}[reg=facet]
+
+^"dispatch_and_cache"{
+  think = `User and runtime events on the existing bus. Charge, kin, cauldron:updated.`
+  dream = `Idle-residue paints cached salience. bus.recent is the short trace. .spw/caches is the long culture.`
+  refuse = `A second bus. A dream:* family until a real consumer exists. Nightly animation.`
+}[reg=facet]

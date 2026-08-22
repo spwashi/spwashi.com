@@ -60,6 +60,12 @@ fixity = "tending"
   plans = `.agents/plans/<slug>/` when multi-route implementation`
 }[reg=facet]
 
+^"starter"{
+  metaphor = `This checkout is a sourdough culture. A pass through HTML/CSS/JS/.spw feeds it.`
+  cite = ~"../caches/thinking-dreaming-runtime.spw"
+  feed = `Cache, still, smallest patch, or named Imagine study. Several passes make idea generation easier, not a new VM.`
+}[reg=facet]
+
 ^"active_pass_2026_07"{
   name = `structure + features + thoroughness + recursive scripts`
   caches = ~"../caches/recursive-improvement-2026-07.spw"

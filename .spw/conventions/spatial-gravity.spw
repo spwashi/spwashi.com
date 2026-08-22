@@ -82,6 +82,22 @@ fixity = "tending"
   variant = `Key CSS off data-spw-space-variant, not a guessed media query, when the choice must track real room.`
 }[reg=facet]
 
+^"precipitation"{
+  claim = `A region precipitates when leftover vertical room is named and a still or print condenses from that seat.`
+  falls = `data-spw-vertical-gravity=falls is leftover room below — the way a mix or a capture can land without inventing weather.`
+  query = `?precipitate=print|screenshot is query condensation onto a region, not a second gravity.`
+  capture = `A situation still is regional precipitation: the seat, not the whole page. Clip the element's document box.`
+  refuse = `A rain metaphor on every cluster. A seventh region seat named precipitate.`
+}[reg=facet]
+
+^"magnetism_and_edge"{
+  claim = `Magnetism is already proximity. Edge navigation is proximity plus a handle.`
+  tokens = `--spw-proximity-top|bottom|left|right, --spw-edge-proximity, data-spw-edge-gravity`
+  rest = `edge-gravity=none until the host nears an edge. Do not glow every card.`
+  nav = `Section handle and chrome sit flush-viewport. They should opt into gravity rather than private rect math.`
+  first = `spw-section-handle → edge-y=top + seating=flush-viewport. region-menu → gravity=open.`
+}[reg=facet]
+
 ^"adoption"{
   operation = "audit"
   fixity = "tending"
