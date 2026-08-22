@@ -1730,6 +1730,47 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
     grid-column: 1 / -1;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Photonic lens — a seated card is a filter, not a caption.
+
+   html[data-spw-active-lens-mode] is already written by lens-modes.js.
+   Cards declare which frequencies they pass with data-spw-lens-pass.
+   Unmarked cards are broadband. Matching cards stay bright. The rest recede.
+   Do not display:none — the situation set stays in the tab order.
+   -------------------------------------------------------------------------- */
+
+:where(body[data-spw-surface="home"] [data-spw-lens-pass]) {
+  transition:
+    opacity var(--home-transition-base, 180ms) ease,
+    filter var(--home-transition-base, 180ms) ease,
+    box-shadow var(--home-transition-base, 180ms) ease;
+}
+
+:where(html[data-spw-active-lens-mode="reading"] body[data-spw-surface="home"] [data-spw-lens-pass]:not([data-spw-lens-pass~="reading"])),
+:where(html[data-spw-active-lens-mode="systems"] body[data-spw-surface="home"] [data-spw-lens-pass]:not([data-spw-lens-pass~="systems"])),
+:where(html[data-spw-active-lens-mode="play"] body[data-spw-surface="home"] [data-spw-lens-pass]:not([data-spw-lens-pass~="play"])),
+:where(html[data-spw-active-lens-mode="studio"] body[data-spw-surface="home"] [data-spw-lens-pass]:not([data-spw-lens-pass~="studio"])) {
+  opacity: 0.42;
+  filter: saturate(0.4) brightness(0.94);
+}
+
+:where(html[data-spw-active-lens-mode="reading"] body[data-spw-surface="home"] [data-spw-lens-pass~="reading"]),
+:where(html[data-spw-active-lens-mode="systems"] body[data-spw-surface="home"] [data-spw-lens-pass~="systems"]),
+:where(html[data-spw-active-lens-mode="play"] body[data-spw-surface="home"] [data-spw-lens-pass~="play"]),
+:where(html[data-spw-active-lens-mode="studio"] body[data-spw-surface="home"] [data-spw-lens-pass~="studio"]) {
+  opacity: 1;
+  filter: saturate(1.06);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--home-accent-primary, teal) 38%, transparent),
+    var(--home-shadow-quiet, none);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(body[data-spw-surface="home"] [data-spw-lens-pass]) {
+    transition: none;
+  }
+}
 }
 
 /* /public/css/routes/surfaces/home-panels.css */

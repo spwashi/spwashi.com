@@ -24,6 +24,7 @@
 @boonhonk_combinatoric_genre: ~"./boonhonk-combinatoric-genre.spw"
 @structure_ecology_2026_08: ~"./structure-ecology-2026-08.spw"
 @component_llm_intelligence_2026_08: ~"./component-llm-intelligence-2026-08.spw"
+@situation_print_set_2026_08: ~"./situation-print-set-2026-08.spw"
 
 operation = "align"
 fixity = "tending"
@@ -42,6 +43,7 @@ fixity = "tending"
   boonhonk_combinatoric_genre = @boonhonk_combinatoric_genre
   structure_ecology_2026_08 = @structure_ecology_2026_08
   component_llm_intelligence_2026_08 = @component_llm_intelligence_2026_08
+  situation_print_set_2026_08 = @situation_print_set_2026_08
 }[reg=facet]
 
 ^"cache_rules"{

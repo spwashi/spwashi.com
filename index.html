@@ -115,7 +115,7 @@
         <header class="frame-topline" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
             <a class="frame-sigil" href="#home-frame" data-spw-operator="frame">#&gt;home_frame</a>
-            <div class="mode-switch" role="group" aria-label="Perspective lens" data-spw-feature="home-perspective-lens" data-spw-operator="mode" data-spw-semantic-expression="home[reading]{open.sit}">
+            <div class="mode-switch" role="group" aria-label="Sit a lens — cards that pass that light stay bright" data-spw-feature="home-perspective-lens" data-spw-operator="mode" data-spw-kind="lens" data-spw-semantic-expression="home[reading]{open.sit}">
                 <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="reading" aria-pressed="true" data-spw-operator="ground">.reading</button>
                 <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="systems" aria-pressed="false" data-spw-operator="integration">^systems</button>
                 <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="play" aria-pressed="false" data-spw-operator="potential">~play</button>
@@ -160,7 +160,7 @@
                     data-spw-gesture-contract="tap:prime hold:inspect"
                     class="hook-call"
                     role="group"
-                    aria-label="Pick a lens, then take the first move in that room"
+                    aria-label="Sit a lens. The situation set filters. Then take the first move in that room"
                 >
                     <div class="mode-panels" data-spw-feature="home-perspective-panels">
                         <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="reading" data-spw-role="orientation" data-spw-kind="lens">
@@ -730,11 +730,11 @@
 
         <div class="frame-body" data-spw-slot="body">
             <p data-spw-textual-role="note" data-spw-copy-depth="normal">
-                Four routes if you want component diversity: glossary, live playtest, public kitchen, and texture/support. Returning readers can skip straight to the loop that matches today's material pressure.
+                Four situations: a glossary, a live table, a kitchen, a texture surface. Sit .reading ^systems ~play @studio in the hook — the set filters like a Midjourney grid. The card that stays bright is the part you would print.
             </p>
 
             <div class="spw-grid frame-grid frame-grid--dense">
-                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-components" data-spw-form="block">
+                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-components" data-spw-form="block" data-spw-situation="component-glossary" data-spw-lens-pass="reading systems">
                     <a href="/design/components/" id="card-entry-components" data-spw-operator="address">
                         <figure class="spw-card__media frame-card-media" data-spw-slot="figure">
                             <img
@@ -752,7 +752,7 @@
                     </a>
                 </article>
 
-                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-rpgw" data-spw-form="block">
+                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-rpgw" data-spw-form="block" data-spw-situation="rpg-wednesday" data-spw-lens-pass="play">
                     <a href="/play/rpg-wednesday/" id="card-entry-rpgw" data-spw-operator="stream">
                         <figure class="spw-card__media frame-card-media" data-spw-slot="figure">
                             <img
@@ -770,7 +770,7 @@
                     </a>
                 </article>
 
-                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-recipes" data-spw-form="block">
+                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-recipes" data-spw-form="block" data-spw-situation="recipe-atlas" data-spw-lens-pass="reading studio">
                     <a href="/recipes/" id="card-entry-recipes" data-spw-operator="ground">
                         <figure class="spw-card__media frame-card-media" data-spw-slot="figure">
                             <img
@@ -788,7 +788,7 @@
                     </a>
                 </article>
 
-                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-texture" data-spw-form="block">
+                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-texture" data-spw-form="block" data-spw-situation="texture-surface" data-spw-lens-pass="studio">
                     <a href="https://texture.website" id="card-entry-texture" data-spw-operator="surface">
                         <figure class="spw-card__media frame-card-media" data-spw-slot="figure">
                             <img

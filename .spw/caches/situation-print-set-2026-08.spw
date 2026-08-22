@@ -1,0 +1,32 @@
+# Situation / print / set — 2026-08-22
+#
+# Names for generated stills of components in environmental context.
+# Not Storybook stories.
+
+#>situation_print_set_2026_08
+#:cache #!components #!capture #!naming
+#:operation #!cache
+#:fixity #!tending
+
+@capture: ~"../conventions/component-capture-pipeline.spw"
+@home: ~"../../index.html"
+
+operation = "cache"
+fixity = "tending"
+
+^"insight_cache"{
+  id = "situation-print-set"
+  operation = "cache"
+  fixity = "tending"
+  source = "chat"
+  claim = `A situation is a still of a component with live copy, seated in a room. A print is the manufactured part on the compose.css bed. A set is the Midjourney move: generate many, screenshot the plate for direction. Do not call these stories.`
+  evidence = #[
+    `scripts/lib/visual-capture-plan.mjs#ASSET_KINDS`,
+    `index.html [data-spw-situation] [data-spw-lens-pass]`,
+    `html[data-spw-active-lens-mode] photonic filter on home`,
+  ][reg=set]
+  pattern_consideration = `Region flow stays the technical name. Public speech is situation. Template flow is print. Gallery is set.`
+  expansion_prime = `B2B: hand a print or a situation, not the shop. Frontend: additive manufacture — deposit the card, do not mill the SPA.`
+  validation = `Sit .reading ^systems ~play @studio on / and watch #entry-loops recede/pass. npm run spw:capture:plan -- hook`
+  do_not_promote_until = `A second route uses data-spw-lens-pass without becoming a Storybook index.`
+}[reg=facet]
