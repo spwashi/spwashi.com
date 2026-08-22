@@ -68,11 +68,13 @@
   refuse: "Do not blend pocket, fold, and broadsheet into one fluid scale. Mid mush is not a fourth reason."
   dual_read: "CSS media queries spend the reason on first paint. html[data-spw-layout-reason] is an inspect receipt written by contextual-ui, not the source of the grid."
   seats: .{
-    pocket = `[pocket] — one column because one hand and one attention. Relates to the grasp. compact|narrow.`
-    fold = `[fold] — two facing seats. Headline faces figure; two frames can sit as a spread. mid.`
+    pocket = `[pocket] — one column because one hand and one attention. Relates to the grasp. compact|narrow. Tall aspect (≤3:4) prioritizes vertical step spines and thumb-zone actions.`
+    fold = `[fold] — two facing seats. Headline faces figure; leftover frames sit as a spread inside a cluster desk. mid. Aspects 3:4 to 4:3 (iPad and 1:1). Do not two-column main.`
+    shallow_landscape = `[landscape] — compact vertical clearance (≤34rem height). Streamlines regional padding and gaps.`
     broadsheet = `[broadsheet] — modules share a row so they can be compared. regular|wide. Frame may spend wide so two measures fit.`
+    atlas = `[atlas] — spatial panorama (≥21:9). Generous framing and canvas anchor lines without measure elongation.`
   }[reg=facet]
-  alignment: "A component packs by its own inline size (`data-spw-pack-local`). A region sits by the device reason. Do not ask a card to restyle because the viewport changed if its container did not."
+  alignment: "A component packs by its own inline size (`data-spw-pack-local`). A region sits by the device reason and aspect ratio. Do not ask a card to restyle because the viewport changed if its container did not."
   islands: "A floating island that is not seated in a named region is ungrounded `~`. Reader layer keeps inspect islands off; they are not a layout reason."
 }
 

@@ -2877,6 +2877,14 @@ html[data-spw-reduce-motion="on"] {
   --spw-card-pad: clamp(0.75rem, 2.5cqi, 1.2rem);
   --spw-card-rhythm: clamp(0.5rem, 1.8cqi, 0.85rem);
 
+  /* Regional form-factor & aspect-ratio padding ladders */
+  --spw-region-pad-pocket: clamp(0.75rem, 2.2cqi, 1rem);
+  --spw-region-pad-fold: clamp(0.95rem, 2.6cqi, 1.35rem);
+  --spw-region-pad-broadsheet: clamp(1.1rem, 2.8cqi, 1.6rem);
+  --spw-region-pad-atlas: clamp(1.35rem, 3.2cqi, 2.1rem);
+  --spw-region-aspect-bias: 1;
+  --spw-region-step-spine-width: 2px;
+
   /* ------------------------------------------------------------------------
      Temporal — positioning phases (salience direction + page ecology)
      ------------------------------------------------------------------------ */
@@ -4579,6 +4587,86 @@ figure.generic-figure,
   }
   :where(body[data-spw-layout="atlas"], main[data-spw-layout="atlas"]) {
     --spw-shell-frame-cap: 116rem;
+  }
+}
+
+/* Pocket tall: one hand. Width-gated so an iPad 4:3 portrait is not a phone. */
+@media (max-width: 45rem) and (max-aspect-ratio: 3/4) {
+  :root {
+    --spw-region-aspect-bias: 0.92;
+  }
+
+  :where(.page-intro, .page-hero, .shell-hero, [data-spw-region-role="entry-spine"]) {
+    gap: clamp(0.65rem, 2.2vw, 0.95rem);
+  }
+}
+
+/* Fold / square / tablet spread. 3:4–4:3 covers iPad and 1:1 folds. */
+@media (min-width: 45rem) and (max-width: 61.24rem) and (min-aspect-ratio: 3/4) and (max-aspect-ratio: 4/3) {
+  :root {
+    --spw-region-aspect-bias: 1.05;
+  }
+}
+
+/* Shallow landscape: compact vertical clearance, not a new column reason. */
+@media (orientation: landscape) and (max-height: 34rem) {
+  :root {
+    --header-height: 2.75rem;
+    --shell-header-height: 2.75rem;
+    --page-stack-gap: clamp(0.65rem, 1.8vw, 0.95rem);
+    --page-section-gap: clamp(0.85rem, 2.2vw, 1.25rem);
+    --spw-main-padding-block-start: clamp(0.5rem, 1.5vw, 0.85rem);
+    --spw-region-aspect-bias: 0.96;
+  }
+}
+
+/* Atlas panorama: extra inline breath, canvas seams on newspaper too. */
+@media (min-width: 120rem) and (min-aspect-ratio: 21/9) {
+  :root {
+    --spw-region-aspect-bias: 1.08;
+  }
+
+  :where(
+    body[data-spw-layout="atlas"],
+    body[data-spw-layout="wide"],
+    body[data-spw-layout="newspaper"]
+  ) main {
+    position: relative;
+  }
+
+  :where(
+    body[data-spw-layout="atlas"],
+    body[data-spw-layout="wide"],
+    body[data-spw-layout="newspaper"]
+  ) main::before,
+  :where(
+    body[data-spw-layout="atlas"],
+    body[data-spw-layout="wide"],
+    body[data-spw-layout="newspaper"]
+  ) main::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--site-frame-seam-color, var(--line, rgba(0, 128, 128, 0.18))) 0%, transparent 92%);
+    pointer-events: none;
+  }
+
+  :where(
+    body[data-spw-layout="atlas"],
+    body[data-spw-layout="wide"],
+    body[data-spw-layout="newspaper"]
+  ) main::before {
+    left: calc(var(--page-gutter-inline) * -0.35);
+  }
+
+  :where(
+    body[data-spw-layout="atlas"],
+    body[data-spw-layout="wide"],
+    body[data-spw-layout="newspaper"]
+  ) main::after {
+    right: calc(var(--page-gutter-inline) * -0.35);
   }
 }
 
@@ -29159,7 +29247,6 @@ html[data-spw-theme-pack="electric-studio"] {
 
   :where(.frame-body > :is(
     [data-spw-textual-role="lede"],
-    [data-spw-textual-role="lede"],
     .inline-note,
     [data-spw-textual-role="note"],
     .spw-route-bridge,
@@ -29173,12 +29260,44 @@ html[data-spw-theme-pack="electric-studio"] {
   }
 }
 
-/* Path: steps share a row when there is a path to walk. */
+/* Path: steps share a row when there is a path to walk. Pocket keeps a spine
+   without flattening the grid into flex (pack tracks still apply). */
+@container spw-path (max-width: 35.99rem) {
+  :where(.frame-grid, .frame-grid--dense) {
+    gap: clamp(0.65rem, 2cqi, 0.95rem);
+    padding-inline-start: clamp(0.75rem, 2.5cqi, 1.15rem);
+    border-inline-start: var(--spw-region-step-spine-width, 2px) solid color-mix(in srgb, var(--site-frame-seam-color, var(--line)) 78%, transparent);
+  }
+}
+
 @container spw-path (min-width: 36rem) {
   :where(.frame-grid, .frame-grid--dense) {
     --spw-grid-min-base: 12.5rem;
     align-items: start;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
+  }
+}
+
+/* Inner slots query the frame. Do not style the named container as if it were a child. */
+@container spw-frame (max-width: 32rem) {
+  :where(.frame-body, .frame-heading, .frame-topline) {
+    gap: calc(0.55rem * var(--spw-region-aspect-bias, 1));
+  }
+
+  :where(.page-actions, .card-actions, .section-actions, [data-spw-slot="actions"]) {
+    gap: 0.35rem 0.5rem;
+  }
+}
+
+@container spw-frame (min-width: 36rem) and (max-width: 54rem) {
+  :where(.spw-frame[data-spw-region="cluster"] .frame-grid) {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr));
+  }
+}
+
+@container spw-frame (min-width: 55rem) {
+  :where(.frame-body) {
+    padding-inline: calc(var(--spw-region-pad-broadsheet, 1.1rem) * 0.35 * var(--spw-region-aspect-bias, 1));
   }
 }
 
@@ -29238,6 +29357,60 @@ html[data-spw-theme-pack="electric-studio"] {
     body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-pack~="fill"]
   ) {
     grid-column: 1 / -1;
+  }
+}
+
+/*
+ * Fold leftover tracks. Unclustered frames (recipes, long registers) sit
+ * beside a neighbor when 18rem remains. Cluster desks span, then wrap
+ * their own leftover frames. Hook / fill / balanced stay a full row.
+ */
+@container spw-shell (min-width: 36rem) and (max-width: 61.24rem) {
+  :where(body[data-spw-layout="newspaper"] main) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    align-items: start;
+    grid-auto-flow: dense;
+    column-gap: clamp(0.85rem, 1.8cqi, 1.4rem);
+  }
+
+  :where(
+    body[data-spw-layout="newspaper"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"] main > [data-spw-region="hook"],
+    body[data-spw-layout="newspaper"] main > [data-spw-pack~="balanced"],
+    body[data-spw-layout="newspaper"] main > [data-spw-pack~="fill"],
+    body[data-spw-layout="newspaper"] main > [data-spw-cluster]
+  ) {
+    grid-column: 1 / -1;
+  }
+
+  :where(main > [data-spw-cluster]) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    align-items: start;
+    column-gap: clamp(0.85rem, 1.8cqi, 1.4rem);
+    row-gap: var(--page-stack-gap, 1rem);
+  }
+
+  :where(
+    main > [data-spw-cluster] > [data-spw-region-role="entry-spine"],
+    main > [data-spw-cluster] > [data-spw-region="hook"],
+    main > [data-spw-cluster] > [data-spw-pack~="balanced"],
+    main > [data-spw-cluster] > [data-spw-pack~="fill"]
+  ) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Compact-height / Shallow Landscape viewports (≤34rem height) */
+@media (orientation: landscape) and (max-height: 34rem) {
+  :where(.spw-frame[data-spw-region], .spw-frame[data-spw-region-role]) {
+    padding-block: clamp(0.55rem, 1.6vw, 0.85rem);
+    gap: clamp(0.45rem, 1.4vw, 0.75rem);
+  }
+
+  :where(.spw-frame > .frame-heading, .spw-frame > .frame-topline) {
+    margin-block-end: 0.15rem;
   }
 }
 

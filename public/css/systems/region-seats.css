@@ -189,7 +189,6 @@
 
   :where(.frame-body > :is(
     [data-spw-textual-role="lede"],
-    [data-spw-textual-role="lede"],
     .inline-note,
     [data-spw-textual-role="note"],
     .spw-route-bridge,
@@ -203,12 +202,44 @@
   }
 }
 
-/* Path: steps share a row when there is a path to walk. */
+/* Path: steps share a row when there is a path to walk. Pocket keeps a spine
+   without flattening the grid into flex (pack tracks still apply). */
+@container spw-path (max-width: 35.99rem) {
+  :where(.frame-grid, .frame-grid--dense) {
+    gap: clamp(0.65rem, 2cqi, 0.95rem);
+    padding-inline-start: clamp(0.75rem, 2.5cqi, 1.15rem);
+    border-inline-start: var(--spw-region-step-spine-width, 2px) solid color-mix(in srgb, var(--site-frame-seam-color, var(--line)) 78%, transparent);
+  }
+}
+
 @container spw-path (min-width: 36rem) {
   :where(.frame-grid, .frame-grid--dense) {
     --spw-grid-min-base: 12.5rem;
     align-items: start;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
+  }
+}
+
+/* Inner slots query the frame. Do not style the named container as if it were a child. */
+@container spw-frame (max-width: 32rem) {
+  :where(.frame-body, .frame-heading, .frame-topline) {
+    gap: calc(0.55rem * var(--spw-region-aspect-bias, 1));
+  }
+
+  :where(.page-actions, .card-actions, .section-actions, [data-spw-slot="actions"]) {
+    gap: 0.35rem 0.5rem;
+  }
+}
+
+@container spw-frame (min-width: 36rem) and (max-width: 54rem) {
+  :where(.spw-frame[data-spw-region="cluster"] .frame-grid) {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr));
+  }
+}
+
+@container spw-frame (min-width: 55rem) {
+  :where(.frame-body) {
+    padding-inline: calc(var(--spw-region-pad-broadsheet, 1.1rem) * 0.35 * var(--spw-region-aspect-bias, 1));
   }
 }
 
@@ -268,6 +299,60 @@
     body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-pack~="fill"]
   ) {
     grid-column: 1 / -1;
+  }
+}
+
+/*
+ * Fold leftover tracks. Unclustered frames (recipes, long registers) sit
+ * beside a neighbor when 18rem remains. Cluster desks span, then wrap
+ * their own leftover frames. Hook / fill / balanced stay a full row.
+ */
+@container spw-shell (min-width: 36rem) and (max-width: 61.24rem) {
+  :where(body[data-spw-layout="newspaper"] main) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    align-items: start;
+    grid-auto-flow: dense;
+    column-gap: clamp(0.85rem, 1.8cqi, 1.4rem);
+  }
+
+  :where(
+    body[data-spw-layout="newspaper"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"] main > [data-spw-region="hook"],
+    body[data-spw-layout="newspaper"] main > [data-spw-pack~="balanced"],
+    body[data-spw-layout="newspaper"] main > [data-spw-pack~="fill"],
+    body[data-spw-layout="newspaper"] main > [data-spw-cluster]
+  ) {
+    grid-column: 1 / -1;
+  }
+
+  :where(main > [data-spw-cluster]) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    align-items: start;
+    column-gap: clamp(0.85rem, 1.8cqi, 1.4rem);
+    row-gap: var(--page-stack-gap, 1rem);
+  }
+
+  :where(
+    main > [data-spw-cluster] > [data-spw-region-role="entry-spine"],
+    main > [data-spw-cluster] > [data-spw-region="hook"],
+    main > [data-spw-cluster] > [data-spw-pack~="balanced"],
+    main > [data-spw-cluster] > [data-spw-pack~="fill"]
+  ) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Compact-height / Shallow Landscape viewports (≤34rem height) */
+@media (orientation: landscape) and (max-height: 34rem) {
+  :where(.spw-frame[data-spw-region], .spw-frame[data-spw-region-role]) {
+    padding-block: clamp(0.55rem, 1.6vw, 0.85rem);
+    gap: clamp(0.45rem, 1.4vw, 0.75rem);
+  }
+
+  :where(.spw-frame > .frame-heading, .spw-frame > .frame-topline) {
+    margin-block-end: 0.15rem;
   }
 }
 

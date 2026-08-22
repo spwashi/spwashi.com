@@ -418,6 +418,12 @@ body[data-spw-surface="about"] {
   }
 }
 
+@container (min-width: 56rem) {
+  [data-spw-surface="about"] .about-years {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 /* Pinch text scaling changes packing as well as glyph size. The wider record
    measure lets the intrinsic grid shed a column before copy feels pinched. */
 :where(html[data-spw-font-size-scale="110"], html[data-spw-font-size-scale="120"])
