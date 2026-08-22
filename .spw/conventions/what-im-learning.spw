@@ -1,0 +1,63 @@
+# What I'm learning
+#
+# Producer notes for /coordination/#what-im-learning.
+# Values and thought process — how I want to work in public, not a policy.
+# operation: prime | fixity: tending
+
+#>what_im_learning
+#:convention #!coordination #!learning #!hospitality
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plant_ecology: ~"./plant-ecology-operations.spw"
+@copy_ecology: ~"./copy-ecology.spw"
+@curriculum: ~"../../curriculum/index.html"
+@coordination: ~"../../coordination/index.html"
+@recipes: ~"../../recipes/index.html"
+@about: ~"../../about/index.html"
+@resume_record: ~"./resume-record.spw"
+
+operation = "prime"
+fixity = "tending"
+
+^"values"{
+  stance = `I'm a producer. I want learning to be visible: what I'm trying, how deep, and that it can move.`
+  people = `If I name someone, I want them to hear that I'm learning from them — not that I own a niche, not that their shop is my proof.`
+  rooms = `Software, a kitchen, a restaurant someday: I like rooms you can read. Setup, pressure, recovery. I don't need to own the whole stack.`
+  change = `I try to be careful with names. I won't always get to ask first. If something goes stale, the page can change.`
+}[reg=facet]
+
+^"how_i_think"{
+  start = `/coordination/#what-im-learning`
+  facts = `/recipes/#soil-companions` # garden compare
+  source = `/recipes/#plants-and-sorcery` # copy-unit recipes.soilCompanions.plantsAndSorcery
+  kitchen = `/recipes/#grower-start`
+  trajectory = `/about/#current-direction`
+  seats = `Lede for invitation. Reason-strip for distinct learning seats. One source aside. One model prompt, in details. Site-ops in details.`
+  flux = `Sales counts and named copy change. I keep them in one public sentence so I can revise without restacking.`
+  paths = `These .spw files are for editors. Public pages don't need the filepath.`
+}[reg=facet]
+
+^"one_named_source"{
+  who = `Plants & Sorcery (@worm.folk)`
+  relation = `I'm learning PNSB from them.`
+  shop = `https://www.tiktok.com/@worm.folk`
+  sales = `more than 1,200` # public once, as of 2026-08
+  note = `This is one person I'm learning from, not a pattern to stamp on everyone later.`
+}[reg=facet]
+
+^"questions_i_sit_with"{
+  learn = `What am I actually trying to learn?`
+  depth = `A note, a practice, or something I'm ready to claim?`
+  dynamics = `How does it sit next to season, software, kitchen, service?`
+  brittle = `What keeps this from going stiff when things move?`
+  civic = `What can a small public surface hold without pretending to be an institution?`
+}[reg=facet]
+
+validation: #[
+  `rg 'what-im-learning' coordination/index.html`,
+  `rg 'recipes.soilCompanions.plantsAndSorcery' recipes/index.html`,
+  `rg '1,200' recipes/index.html coordination/index.html`,
+  `rg 'what-im-learning' .spw/conventions/index.spw`,
+][reg=set]

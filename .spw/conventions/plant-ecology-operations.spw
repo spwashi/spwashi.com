@@ -1,0 +1,87 @@
+# Plant Ecology Operations
+#
+# How I think with plant / microbial language: name a mechanism, then where it
+# breaks. Living people aren't specimens here.
+# operation: prime | fixity: tending
+
+#>plant_ecology_operations
+#:convention #!ecology #!garden #!operations #!curriculum
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@component_biome: ~"./component-biome.spw"
+@kernel_rhizosphere: ~"./kernel-rhizosphere.spw"
+@copy_flow: ~"./copy-flow.spw"
+@region_ecology: ~"./region-component-ecology.spw"
+@capture: ~"./component-capture-pipeline.spw"
+@daily_kernel: ~"./daily-kernel.spw"
+@soil_html: ~"../../recipes/index.html"
+@grower_start: ~"../../recipes/index.html"
+@what_im_learning: ~"./what-im-learning.spw"
+@curriculum: ~"../../curriculum/index.html"
+@hospitality: ~"../../about/index.html"
+
+operation = "prime"
+fixity = "tending"
+
+^"thesis"{
+  claim = `I use plant-ecology language when I can name a mechanism and a break. Living culture and CSS biomes are different jobs. A restaurant is a horizon I'm practicing toward.`
+  method = `Compare, then operate. PNSB, rhizobia, lactic ferments, and :has() don't have to become one organism.`
+  curriculum = `Same method as /curriculum/: analogy opens the door; a boundary test keeps it honest.`
+}[reg=facet]
+
+^"dimensions"{
+  light: .{
+    analogy = `Phototrophs need light and low oxygen. Canopy in @component_biome is position-density, not a lamp a card carries.`
+    operate = `Ask what energy a surface actually uses: light in a jug, attention on a page, heat in a pan.`
+    break = `A situation still does not photosynthesize. PNSB are not restaurant lighting.`
+  }[reg=facet]
+  substrate: .{
+    analogy = `The medium is never blank — soil, wet carbon, flour, compose.css.`
+    operate = `Name the bed before inoculation: route HTML, print bed, mise station.`
+    break = `Kernel rhizosphere is nutrient transport in JS, not dirt.`
+  }[reg=facet]
+  inoculation: .{
+    analogy = `A culture arrives into a medium that already has history.`
+    operate = `Seeds, snippets, fixtures, and starters continue; they do not begin from zero.`
+    break = `npm install is not a pond culture.`
+  }[reg=facet]
+  exchange: .{
+    analogy = `Mycorrhizal exchange is bidirectional and costly.`
+    operate = `:has(), kinship, hospitality — if it is free inheritance, I don't call it exchange.`
+    break = `A link isn't exchange if nothing is two-way. Someone's method isn't site lore.`
+  }[reg=facet]
+  succession: .{
+    analogy = `Ruderal vs networked presence in @component_biome.`
+    operate = `Cards may be fast and dense; ledgers and cauldrons persist.`
+    break = `Deleting a route is not compost unless something returns as nutrient.`
+  }[reg=facet]
+  harvest: .{
+    analogy = `Print / situation / set — the part, the room, the review plate.`
+    operate = `Capture cheap plans before Chrome. Hand a still, not the whole catalog.`
+    break = `A Midjourney grid is a review plate, not a harvest from someone else's bed.`
+  }[reg=facet]
+  sourcing: .{
+    analogy = `Who grew it, which season, how far, what the ingredient wanted to become.`
+    operate = `Ingredient lists should keep process visible. I prefer asking. Names can be revised.`
+    break = `A public kitchen isn't a supplier directory.`
+  }[reg=facet]
+  service: .{
+    analogy = `Restaurant horizon: setup, pressure, recovery, close.`
+    operate = `Hospitality flows already live on about + recipes. Practice sourcing before a brand.`
+    break = `I don't publish a restaurant that doesn't exist.`
+  }[reg=facet]
+}[reg=facet]
+
+^"if_someone_points_a_model"{
+  start = `/recipes/#grower-start`
+  named_source = `/recipes/#soil-companions` # aside #plants-and-sorcery
+  also = #[`/curriculum/`, `/about/#nutrition-register`, `/coordination/#what-im-learning`][reg=set]
+  process = `Kitchen grid stays kitchen language. Stills and code live in details. Shop stats stay in the one public sentence.`
+}[reg=facet]
+
+validation: #[
+  `rg 'grower-start' recipes/index.html`,
+  `rg 'plant-ecology-operations' .spw/conventions/index.spw`,
+][reg=set]

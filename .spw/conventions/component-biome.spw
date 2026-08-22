@@ -17,6 +17,7 @@
 @css: ~"../../public/css/systems/component-biome.css"
 @image_theming: ~"../../public/css/systems/image-theming.css"
 @paper_motif: ~"../../public/css/systems/paper-motif.css"
+@plant_ecology_operations: ~"./plant-ecology-operations.spw"
 
 operation = "prime"
 fixity = "experimental"
