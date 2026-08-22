@@ -128,12 +128,13 @@
                     <a class="spw-chip" data-spw-handle="true" href="/topics/software/pretext/" data-spw-operator="potential" data-spw-action="explore">~pretext_lab</a>
                     <a class="spw-chip" data-spw-handle="true" href="#concept-form-lab" data-spw-operator="frame" data-spw-action="address">#&gt;concept_forms</a>
                     <a class="spw-chip" data-spw-handle="true" href="#compare-differentials" data-spw-operator="normalize" data-spw-action="measure">%compare</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#join-crawl" data-spw-operator="direction" data-spw-action="enter">{mill}.{laminate}.{cure}</a>
                     <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_sample=beans#literal-parser" data-spw-operator="probe" data-spw-action="enter">?parse[beans]</a>
                     <a class="spw-chip" data-spw-handle="true" href="#spw-living-medium" data-spw-operator="frame" data-spw-action="address">#&gt;living_medium</a>
                 </nav>
             </section>
 
-            <section class="spw-frame" id="concept-form-lab" data-spw-kind="frame" data-spw-role="probe" data-spw-form="angle" data-spw-context="analysis" data-spw-feature="concept-form-lab" data-spw-semantic-expression="beans[form]{wrap.postfix.parse}" data-spw-affordance="inspect" data-spw-liminality="deep" data-spw-consequence="model" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_topics_topics_software_spw__concept_form_lab" data-spw-related-routes="/tools/spw-parser/|/recipes/|/topics/nutrition/|/topics/search/|/play/">
+            <section class="spw-frame" id="concept-form-lab" data-spw-kind="frame" data-spw-role="probe" data-spw-form="angle" data-spw-context="analysis" data-spw-feature="concept-form-lab" data-spw-semantic-expression="beans[form]{wrap.edge}" data-spw-affordance="inspect" data-spw-liminality="deep" data-spw-consequence="model" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_topics_topics_software_spw__concept_form_lab" data-spw-related-routes="/tools/spw-parser/|/recipes/|/topics/nutrition/|/topics/search/|/play/">
                 <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#concept-form-lab">#&gt;concept_forms</a>
                     <div class="spec-strip">
@@ -156,10 +157,10 @@
                         <strong>Variant / mode</strong>
                         <span>Sibling forms of the same root: stew, broth, salad — comparable, not a new noun.</span>
                     </a>
-                    <a class="frame-card" href="/recipes/" data-spw-form="brace" data-spw-operator="direction">
-                        <span class="frame-card-sigil">{beans}</span>
+                    <a class="frame-card" href="/recipes/" data-spw-form="brace" data-spw-operator="direction" data-spw-semantic-expression="beans[practice]{soak,cook,serve}" data-spw-join="common">
+                        <span class="frame-card-sigil">{soak,cook,serve}</span>
                         <strong>Practice / direction</strong>
-                        <span>What to do with the root: cook, host, ferment. Behavior without renaming beans.</span>
+                        <span>Comma holds them in common: soak, cook, and serve together. Not a crawl from soak toward serve.</span>
                     </a>
                     <a class="frame-card" href="/play/" data-spw-form="circle" data-spw-operator="scene">
                         <span class="frame-card-sigil">(beans)</span>
@@ -197,6 +198,41 @@
                     </p>
                     <p data-spw-textual-role="note">Poles are AST handles: change the prefix, the place, or the measure-kind and the sentence still names one axis. Register only changes how loud the placements read. See <code>.spw/conventions/comparison-differentials.spw</code>.</p>
                 </div>
+                <div class="frame-panel" id="join-crawl">
+                    <h3>Joins you can challenge</h3>
+                    <p>Opening <code>{</code> leans objective. Closing <code>}</code> leans subjective. The crawl is between complete practices, not a list of names inside one brace. There is nothing that is <span class="spw-living-term" data-spw-living-term data-spw-concept="cure" tabindex="0">cure</span> about <span class="spw-living-term" data-spw-living-term data-spw-concept="laminate" tabindex="0">laminate</span> about <span class="spw-living-term" data-spw-living-term data-spw-concept="mill" tabindex="0">mill</span>.</p>
+                    <div class="semantic-contract-grid" data-spw-feature="join-specimens">
+                        <article class="semantic-contract-card" data-spw-join="common" data-spw-semantic-expression="bin[feedstock]{cullet,grog,fiber}">
+                            <span class="semantic-contract-token">{cullet,grog,fiber}</span>
+                            <strong>Common</strong>
+                            <p><span class="spw-living-term" data-spw-living-term data-spw-concept="cullet" tabindex="0">Cullet</span>, <span class="spw-living-term" data-spw-living-term data-spw-concept="grog" tabindex="0">grog</span>, and <span class="spw-living-term" data-spw-living-term data-spw-concept="fiber" tabindex="0">fiber</span> in one bin. Held together. Parser splits on comma.</p>
+                        </article>
+                        <article class="semantic-contract-card" data-spw-join="list" data-spw-semantic-expression="board[workshop]{mill.laminate.cure}">
+                            <span class="semantic-contract-token">{mill.laminate.cure}</span>
+                            <strong>List</strong>
+                            <p>The lexer may swallow the dots as one name. Not nested-about, not a memory walk.</p>
+                        </article>
+                        <article class="semantic-contract-card" data-spw-join="crawl">
+                            <span class="semantic-contract-token">{<span data-spw-semantic-expression="workshop[practice]{mill}">mill</span>}.{<span data-spw-semantic-expression="workshop[practice]{laminate}">laminate</span>}.{<span data-spw-semantic-expression="workshop[practice]{cure}">cure</span>}</span>
+                            <strong>Crawl</strong>
+                            <p>Each brace is a workshop practice. Dots walk the gradient between them.</p>
+                        </article>
+                        <article class="semantic-contract-card" data-spw-join="project">
+                            <span class="semantic-contract-token"><span class="spw-living-term" data-spw-living-term data-spw-concept="scrap" tabindex="0">scrap</span> <span data-spw-operator="potential">~</span><span data-spw-operator="concept-edge">&gt;</span> <span class="spw-living-term" data-spw-living-term data-spw-concept="mill" tabindex="0">mill</span> <span data-spw-operator="potential">~</span><span data-spw-operator="concept-edge">&gt;</span> <span class="spw-living-term" data-spw-living-term data-spw-concept="temper" tabindex="0">temper</span></span>
+                            <strong>Project</strong>
+                            <p>Potential, then an edge. Scrap holds a path that projects without collapsing.</p>
+                        </article>
+                    </div>
+                    <nav class="frame-operators" data-spw-feature="theme-chips" aria-label="Join destinations">
+                        <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_source=bin%5Bfeedstock%5D%7Bcullet%2Cgrog%2Cfiber%7D" data-spw-operator="wonder">?parser</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/about/#boonhonk-register" data-spw-operator="value">*boonhonk</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/topics/knowledge-bases/#dregg-contribution" data-spw-operator="stream">*crew_record</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/about/domains/spw.quest/" data-spw-operator="potential">~spw.quest</a>
+                    </nav>
+                    <p data-spw-textual-role="note">
+                        Hold a living term — mill, cullet, scrap — and matching expressions on this page should echo. Chips leave for rich HTML. Check a reading with <code>__SPW_SITE__.parser.parse('…')</code>. The garden cauldron still writes its own live list. An <em>or</em> is still a need.
+                    </p>
+                </div>
             </section>
 
             <section class="spw-frame" id="operator-philosophy" data-spw-role="orientation" data-spw-meaning="operator philosophy" data-spw-form="brace" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="orientation comparison projection" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="framing" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_spw__operator_philosophy" data-spw-context-relevance="operator philosophy brace semantics projection" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/|/topics/software/pretext/">
@@ -208,8 +244,8 @@
                 <div class="semantic-contract-grid" aria-label="Brace and projection contracts">
                     <article class="semantic-contract-card">
                         <span class="semantic-contract-token">{ enter</span>
-                        <strong>Opening edges should align a scope</strong>
-                        <p>An opening brace or frame edge should bias toward entry, alignment, and local orientation. It marks where attention gathers.</p>
+                        <strong>Opening braces lean objective</strong>
+                        <p>An opening brace or frame edge should bias toward enclosure, setup, and what can be shared. It marks where attention gathers.</p>
                     </article>
                     <article class="semantic-contract-card">
                         <span class="semantic-contract-token">[ narrow ]</span>
@@ -223,8 +259,8 @@
                     </article>
                     <article class="semantic-contract-card">
                         <span class="semantic-contract-token">} close</span>
-                        <strong>Closing edges should consolidate the block</strong>
-                        <p>A closing brace is where serialization, selection, or future projection can gather. It should feel like consolidation, not a dead ornament.</p>
+                        <strong>Closing braces lean subjective</strong>
+                        <p>A closing brace is residue: what the run did, what you take. Dots crawl from the open bed toward that close. Consolidation, not a dead ornament.</p>
                     </article>
                     <article class="semantic-contract-card">
                         <span class="semantic-contract-token">&gt; project</span>
@@ -851,11 +887,11 @@
                     <a class="frame-sigil" href="#language-evolution-v04" data-spw-operator="frame">#&gt;language_evolution_v04</a>
                     <h2>Language evolution toward v0.4</h2>
                 </header>
-                <p data-spw-textual-role="note">Spw should become a compiler for meaning — not only readable text, but inspectable contracts that agents, editors, and tools can traverse without re-learning dialects per folder. The v0.4 direction is expressed here in public language; the inspectable pillar artifacts live in the site <code>.spw</code> layer and will precipitate upstream into the workbench submodule after review.</p>
+                <p data-spw-textual-role="note">Spw should become a compiler for meaning — not only readable text, but inspectable contracts that editors, tools, and runtimes can traverse uniformly. The v0.4 direction is expressed here in public language; the inspectable pillar artifacts live in the site <code>.spw</code> layer and precipitate into the workbench tooling after review.</p>
                 <div class="spw-reason-strip" aria-label="Language evolution reasons">
                     <div>
                         <strong>This direction exists because</strong>
-                        <p>Essay-level conventions do not scale when agents must re-parse folder dialects on every pass.</p>
+                        <p>Plain-text conventions scale best when the grammar provides uniform structural handles rather than requiring ad-hoc folder interpretations.</p>
                     </div>
                     <div>
                         <strong>Use this when</strong>
@@ -894,6 +930,11 @@
                         <p>Plan indexes, agent manifests, and design catalogs should emit from register precipitates — not from one-off maintenance scripts alone.</p>
                     </article>
                     <article class="semantic-contract-card">
+                        <span class="semantic-contract-token">{a}.{b}.{c}</span>
+                        <strong>Crawl joins complete braces</strong>
+                        <p>A dotted list inside one brace is not the crawl. Comma is common; <code>~&gt;</code> is a path. Specimens: <a href="#join-crawl">joins</a>.</p>
+                    </article>
+                    <article class="semantic-contract-card">
                         <span class="semantic-contract-token">@bridge</span>
                         <strong>Submodule carries the proof</strong>
                         <p>Site pillars propose; <code>spw-workbench</code> on branch <code>feature/spw-language-v04</code> proves. Pin the submodule after human review.</p>
@@ -914,10 +955,10 @@
                     </div>
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_spw__language_evolution_panel_4">
                         <h3>What stays out of scope here</h3>
-                        <p>This section does not ship the v0.4 parser. It names the direction, keeps site and workbench aligned, and gives agents a stable reading order before upstream grammar lands.</p>
+                        <p>This section outlines the v0.4 grammar direction: unifying plain-text authoring with inspectable runtime and tooling contracts.</p>
                     </div>
                 </div>
-                <p data-spw-textual-role="note">Phase 1 (this site) lands pillar artifacts and public copy. Phase 2 ports contracts into <code>docs/specs/spw/v04/</code> in the workbench and pins <code>.spw/_workbench</code>. Phase 3 precipitates stable stems into runtime checks and conventions. Read the plan at <code>.agents/plans/spw-language-v04/</code> for sequencing detail.</p>
+                <p data-spw-textual-role="note">The rollout establishes public contracts and pillar specs on the site first, followed by formal syntax specifications and parser integration in the workbench tooling.</p>
             </section>
 
             <section class="spw-frame spw-embedded-workshop" id="toolmaker-submissions" data-spw-feature="toolmaker-submissions" data-spw-role="workshop" data-spw-kind="frame" data-spw-context="composition" data-spw-wonder="craft reproducibility toolmaking" data-spw-affordance="draft" data-spw-liminality="deep" data-spw-category-family="workshop" data-spw-locality="high" data-spw-consequence="projection" data-spw-seed="page_topics_topics_software_spw__toolmaker_submissions">
@@ -1066,7 +1107,7 @@
 
                 <p class="spec-kicker">Language Reality &amp; Vision</p>
                 <h2>Spw in Practice: Proven Ground &amp; Open Horizons</h2>
-                <p data-spw-textual-role="lede">Spw is not an abstract thought experiment. It is the living operational medium that powers every page, layout band, dataset contract, and knowledge audit across this entire site.</p>
+                <p data-spw-textual-role="lede">Spw is a <span class="spw-living-term" data-spw-living-term data-spw-concept="living-medium" tabindex="0">living medium</span>: the same notation on the page, in the <span class="spw-living-term" data-spw-living-term data-spw-concept="parser" tabindex="0">parser</span>, and in sidecar <code>.spw</code>. Hold a term. A <span class="spw-living-term" data-spw-living-term data-spw-concept="join" tabindex="0">join</span> can be checked. The page is complete before any of that lights.</p>
 
                 <!-- 1. EXISTING REALITY -->
                 <div class="frame-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference">
