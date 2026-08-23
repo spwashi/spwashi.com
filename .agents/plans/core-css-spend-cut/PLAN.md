@@ -34,11 +34,15 @@ The literature is the selectors: `>` a child, `+` the next sibling, `:has()` a p
 - Developmental-climate and page-anatomy stay in core until a first-paint probe says they are atmosphere.
 - Combinator literature is practice when touching ornament or wonder, not a new plan.
 
+## Load-literate tolerance
+The 1638 KiB core figure is a **soft** budget (`--strict-budget` to fail). Named first-paint PE — `@property` interpolation, reading-groove tokens, no-JS section-handle focus / scroll-timeline, CSS `:has()` operator kinship — may sit over that line. An audience that already understands how assets load can live with the warning. Do not strip those names to go green. Still fail a late restyle that hides, moves, or resizes what they already read.
+
 ## Non-Goals & Boundaries
 - Do not reorder `@layer`.
 - Do not move tokens/syntax/shell/frames/cards.
 - Inspect *suppressors* stay in core so public routes stay quiet.
 - Do not hang a show metaphor on the load schedule.
+- Do not treat a soft core overage as a blocker when the extra is PE substrate.
 
 ## Research bridges
 - `.spw/conventions/css-instruction.spw#cascade_vs_delivery`
@@ -53,7 +57,7 @@ The literature is the selectors: `>` a child, `+` the next sibling, `:has()` a p
 - `style-core.css`, `deferred-styles.js`, `site.js`
 
 ## Validation Steps
-1. `npm run build:css` — core at or under the soft budget
+1. `npm run build:css` — note the soft warning; fail only with `--strict-budget` or if late restyle shoves first paint
 2. `node --check` on edited JS
 3. Confirm flourish-pack begins with the same `@layer` list as `style-core.css`
 4. `npm run css:payload`

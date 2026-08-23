@@ -61,7 +61,7 @@ fixity = "tending"
 
 ^"progressive_enhancement"{
   claim: "This is where the ecology actually fails, and no amount of file hygiene fixes it."
-  measured: "core.css is 1623 KiB after the flourish eviction (soft budget 1638). Every visitor still downloads it on every route. @payload_report: 'Core dominates (~1.5 MiB). Route scoping mainly drops other-route CSS (~0.4-0.6 MiB).' Route scoping trims the tail; the trunk is the remaining work."
+  measured: "core.css is 1623 KiB after the flourish eviction (soft budget 1638). Named first-paint tokens, @property interpolation, no-JS handle CSS, and :has() operator kinship belong in core even when that warning trips. Every visitor still downloads core on every route. @payload_report: 'Core dominates (~1.5 MiB). Route scoping mainly drops other-route CSS (~0.4-0.6 MiB).' Route scoping trims the tail; the trunk is the remaining work."
   weight: #[
     `tokens/core.css ~86KB`,
     `grammar/syntax.css ~83KB`,
@@ -70,6 +70,9 @@ fixity = "tending"
     `shell/chrome/adaptive.css ~53KB`
   ][reg=set]
   rule: "A sheet belongs in core only if a first paint without it is wrong rather than merely plainer. Ornament, wonder, and cinematic now idle-load. Metaphysical-paper still dresses a surface that is already legible."
+  audience: "Editors, agents, and returning readers who already know how assets load may treat the soft budget warning as a delivery note. Do not evict named PE substrate (tokens, @property, no-JS :has() / focus / scroll-timeline) just to go green."
+  precomputed_layout: "Packing, measure, type scale, and page width are chosen in core tokens before JS runs. The browser may resolve container queries and @property interpolation. That is the rough style. Flourish-pack (grain, cinematic, wonder, ornament) may only dress it. JS leftover-room (--spw-room-below) and reading-groove rects report state; they must not set the carrier's inline-size, max-inline-size, position, or display."
+  felt_arrival: "It is interesting, and wanted, when the chosen rough layout holds and atmosphere loads later. html[data-spw-flourish=ready] marks that dress. If a late sheet shoves geometry, the interesting arrival becomes a shove."
   precedent: "themes/packs.css then flourish-pack.css: tokens stay in core; spend sheets append on demand through deferred-styles.js."
 }
 

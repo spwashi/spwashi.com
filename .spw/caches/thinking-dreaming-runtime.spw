@@ -84,3 +84,11 @@ fixity = "experimental"
   console = `window.spwCompose.controls.physics.snapshot() / .describe()`
   refuse = `A fourth physics VM. data-spw-region-personality, data-spw-region-voice, data-spw-region-gravity-axis. Those duplicate kind/role/harmony/context/seats. Copy personality stays in component-region-personality.spw.`
 }[reg=facet]
+
+^"precomputed_layout"{
+  claim = `The rough style is the layout. Core tokens already chose packing, measure, type scale, and page width. Flourishes loading later are interesting because that choice holds.`
+  css = `container queries and @property interpolation are browser-precomputed. That is still first paint, not a JS layout engine.`
+  js = `--spw-room-* and reading-groove rects report leftover room and beat. They must not set geometry. geometry_rule in data-spw-attribute-governance.`
+  mark = `html[data-spw-flourish=ready] is written on pack load and currently unread by CSS. The dress is the pack itself. Do not add a layout transition on that attribute.`
+  refuse = `A precompute pass that rewrites packing after paint. A second measure of the page so flourish can pretend the layout was always dressed.`
+}[reg=facet]

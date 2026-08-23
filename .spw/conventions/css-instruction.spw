@@ -122,6 +122,8 @@
   delivery: "What file arrives, when, and how it is cached lives in style-core, route/behavior bundles, and deferred-styles.js. That schedule is orthogonal to layer order."
   late_link: "A stylesheet appended after paint must restate the same @layer list and import each file into its owner layer. Unlayered rules beat every layer."
   keep: "Add imports inside the existing owner layer. Do not move a file to a later layer to 'make it load later'."
+  load_literate: "An audience that already understands how assets load can live with a soft core budget warning, a flourish sheet arriving after interactive, or a named @property that interpolates before JS. Those are delivery facts, not broken pages."
+  not_tolerable: "Hiding, moving, or resizing what the visitor already read. A JS alias map that conflates two operators. Unlayered late CSS that beats the stack."
 }
 
 ^"late_restyle"{
@@ -129,6 +131,7 @@
   hook: "First paint must already be worth staying for: a named person, a next action, readable structure, fast enough to trust."
   angry: "Hiding, moving, or resizing something the visitor already read — navigation restyle, measure change, type jump, content vanishing."
   prettier: "Deferred spend may only make an existing element more aesthetically pleasing. It may not invent a new layout."
+  rough_then_flourish: "The interesting load is: core already chose packing and measure; idle flourish dresses that choice. Keep that sequence perceptible. Do not precompute a second layout in JS to hide it."
 }
 
 ^"import_manifest"{
