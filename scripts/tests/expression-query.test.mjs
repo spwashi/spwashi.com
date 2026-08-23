@@ -5,7 +5,9 @@ import {
   bestExpressionMatch,
   parseExpressionQuery,
   readJoinChain,
+  readSpwHydration,
   scoreExpressionShape,
+  PRECIPITATES,
 } from '../../public/js/semantic/expression-query.js';
 import { formatWrapJobVariants } from '../../public/js/semantic/spw-compose.js';
 
@@ -58,6 +60,32 @@ test('runtime parser uses parse() and reports join kind', async () => {
   const list = parseSpw('board[workshop]{mill.laminate.cure}');
   assert.equal(list.join.kind, 'list');
   assert.equal(list.output.success, true);
+});
+
+test('hydration reads one host into motion, cauldron, and material precipitates', () => {
+  const host = {
+    dataset: {
+      spwSemanticExpression: 'bin[feedstock]{cullet,grog,fiber}',
+      spwJoin: 'common',
+      spwConcept: 'cullet',
+      spwCharge: 'charged',
+      spwVerticalGravity: 'falls',
+      spwEdgeGravity: 'bottom',
+      spwGravity: 'open',
+    },
+    closest(sel) {
+      if (String(sel).includes('data-spw-')) return this;
+      return null;
+    },
+  };
+  const hydration = readSpwHydration(host);
+  assert.equal(hydration.expression, 'bin[feedstock]{cullet,grog,fiber}');
+  assert.equal(hydration.join, 'common');
+  assert.equal(hydration.gravity.vertical, 'falls');
+  assert.equal(hydration.charge, 'charged');
+  assert.equal(hydration.precipitates[PRECIPITATES.cauldron], true);
+  assert.equal(hydration.precipitates[PRECIPITATES.motion], true);
+  assert.equal(hydration.precipitates[PRECIPITATES.material], true);
 });
 
 test('join chains tell list, crawl, common, and project apart', () => {

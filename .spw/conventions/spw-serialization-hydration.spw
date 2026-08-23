@@ -50,7 +50,7 @@ fixity = "stable"
     },
     .{
       stage: "2. AST Mapping",
-      action: "Extract subject, lens mode, component parts, phase, and claim metadata into memory without layout thrashing."
+      action: "Extract subject, lens mode, component parts, phase, and claim metadata into memory without layout thrashing. readSpwHydration(el) is the site primitive: one host, three precipitates (motion, cauldron, material). __SPW_SITE__.parser.hydrate(el)."
     },
     .{
       stage: "3. Field Alignment",

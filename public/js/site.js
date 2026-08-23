@@ -1135,6 +1135,7 @@ window.__SPW_SITE__ = {
   parser: {
     parse: (source, options) => import('./semantic/spw-runtime-parser.js').then((m) => m.parseSpw(source, options)),
     join: (source) => import('./semantic/expression-query.js').then((m) => m.readJoinChain(source)),
+    hydrate: (el) => import('./semantic/expression-query.js').then((m) => m.readSpwHydration(el)),
     build: () => import('./semantic/spw-workbench-parser.js').then((m) => m.SPW_PARSER_BUILD),
     contract: () => import('./semantic/spw-runtime-parser.js').then((m) => m.SPW_RUNTIME_PARSER_CONTRACT),
   },

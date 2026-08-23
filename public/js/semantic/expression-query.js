@@ -173,6 +173,64 @@ export function shapeFromExpression(expression = '') {
   };
 }
 
+export const PRECIPITATES = Object.freeze({
+  motion: 'motion',
+  cauldron: 'cauldron',
+  material: 'material',
+});
+
+function readDataset(el, key) {
+  return el?.dataset?.[key] || '';
+}
+
+/**
+ * One host, three precipitates. Read authored hydration without a second engine.
+ * Motion is leftover room; cauldron is the gathered string; material is inspectable charge.
+ */
+export function readSpwHydration(element) {
+  if (!element) return null;
+  const closest = typeof element.closest === 'function'
+    ? (sel) => element.closest(sel)
+    : () => element;
+  const host = closest('[data-spw-semantic-expression], [data-spw-gravity], [data-spw-charge], [data-spw-join], [data-spw-living-term], [data-spw-operator]')
+    || element;
+  const expression = readDataset(host, 'spwSemanticExpression');
+  const shape = expression ? parseExpressionQuery(expression) : {
+    raw: '',
+    subject: '',
+    mode: '',
+    parts: [],
+    join: JOIN_KINDS.none,
+    projection: '',
+  };
+  const gravityHost = closest('[data-spw-gravity]') || host;
+  const charge = readDataset(host, 'spwCharge') || readDataset(host, 'spwChargePhase');
+  const join = readDataset(host, 'spwJoin') || shape.join || JOIN_KINDS.none;
+  return {
+    expression,
+    join,
+    shape,
+    concept: readDataset(host, 'spwConcept'),
+    charge,
+    gravity: {
+      vertical: readDataset(gravityHost, 'spwVerticalGravity'),
+      edge: readDataset(gravityHost, 'spwEdgeGravity'),
+      open: readDataset(gravityHost, 'spwOpenDirection'),
+      variant: readDataset(gravityHost, 'spwSpaceVariant'),
+    },
+    region: closest('[data-spw-region]')?.dataset?.spwRegion || '',
+    precipitates: {
+      [PRECIPITATES.motion]: Boolean(
+        readDataset(gravityHost, 'spwGravity')
+        || readDataset(gravityHost, 'spwVerticalGravity')
+        || readDataset(gravityHost, 'spwEdgeGravity'),
+      ),
+      [PRECIPITATES.cauldron]: Boolean(expression || readDataset(host, 'spwLivingTerm') || readDataset(host, 'spwConcept')),
+      [PRECIPITATES.material]: Boolean(charge),
+    },
+  };
+}
+
 export function bestExpressionMatch(expressions = [], query = '') {
   const queryShape = typeof query === 'string' ? parseExpressionQuery(query) : query;
   if (!queryShape?.raw) return null;

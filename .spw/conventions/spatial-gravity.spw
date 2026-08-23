@@ -103,14 +103,15 @@ fixity = "tending"
   fixity = "tending"
   dated = `2026-08-17`
   hosts = #[
-    `@bench — the only authored data-spw-gravity specimens`,
-    `public/js/runtime/reward-ui.js — measureSpatialGravity for dock position; not a full opt-in`
+    `@bench — authored data-spw-gravity specimens`,
+    `public/js/runtime/reward-ui.js — measureSpatialGravity for dock position; not a full opt-in`,
+    `region-menu popover — data-spw-gravity=open + salience=focal + seating=flush-host`
   ][reg=set]
   mount = `module-catalog schedules spatial-gravity at VISIBLE when [data-spw-gravity] exists in authored HTML. A route with no authored opt-in cannot schedule gravity for a later dynamic popover.`
   still_private = #[`topic-discovery.js popover rect flip`, `dom-contracts positionFloatingChromePopover`][reg=set]
   first = #[
     `topic-discovery popover → gravity=open + salience=focal`,
-    `region-menu panel → gravity=open + seating=flush-host`,
+    `region-menu panel → gravity=open + seating=flush-host (landed)`,
     `state-inspector drag root → gravity + shared bottom-lane clearance`,
     `spw-section-handle → edge-y=top + seating=flush-viewport`
   ][reg=set]

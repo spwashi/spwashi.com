@@ -4,6 +4,7 @@ import {
   syncFloatingChromeState,
   writeDatasetValue,
 } from '/public/js/kernel/dom-contracts.js';
+import { measureSpatialGravity } from '/public/js/runtime/spatial-gravity.js';
 import { bus } from '/public/js/kernel/bus.js';
 import {
   collectSemanticBraceMatches,
@@ -423,6 +424,9 @@ function ensureMenu() {
   menu.dataset.spwMetamaterial = 'shell';
   menu.dataset.spwDismissible = 'true';
   menu.dataset.spwPopupPosture = readPopupPosture();
+  menu.dataset.spwGravity = 'open';
+  menu.dataset.spwSalience = 'focal';
+  menu.dataset.spwSeating = 'flush-host';
   annotateFloatingChromeElement(menu, {
     role: 'region-menu-popover',
     island: 'region-menu-popover',
@@ -777,6 +781,7 @@ function positionMenu(menu, target) {
   });
 
   if (!placement) return;
+  measureSpatialGravity(menu);
   menu.dataset.spwRegionMenuPlacement = placement.placement;
   menu.dataset.spwRegionMenuVertical = placement.vertical;
   menu.dataset.spwRegionMenuHorizontal = placement.horizontal;

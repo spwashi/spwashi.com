@@ -52,6 +52,7 @@ import {
 } from './cauldron/chrome.js';
 import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from './cauldron/helpers.js';
 import { broadcastCauldronSync, escapeHtml, getCauldron, inferOperator, ingredientNiche, normalizeIngredient, readSigilPayload, toSpwExpression } from './cauldron/storage.js';
+import { readSpwHydration } from '../semantic/expression-query.js';
 import { cauldronTrace, recordGestureTrace, recordPlantedTrail } from './cauldron/trace.js';
 import {
   clearMixOutputState,
@@ -1189,6 +1190,7 @@ function onCapture(event) {
     // name. Recording it here makes the ingredient expressible in native Spw
     // (see toSpwExpression) and lets a cast spell honour where it came from.
     payload: detail.payload || readSigilPayload(sourceElement),
+    hydration: detail.hydration || (sourceElement ? readSpwHydration(sourceElement) : null),
     // Filled below: the native-Spw rendering and whether it was read naively
     // (string alone) or integrated against the payload it was taken from.
     spwExpression: '',
