@@ -173,6 +173,13 @@
   initial-value: 0.5;
 }
 
+/* Local operator/theme pigment intensity. Authored on data-spw-accent-strength. */
+@property --spw-accent-strength {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
 /* Edge membrane tension across frame boundaries: 0 (relaxed) -> 1 (taut membrane) */
 @property --spw-edge-tension {
   syntax: "<number>";
@@ -686,6 +693,10 @@
   --site-sans-font: var(--font-family-sans);
   --site-display-font: var(--font-family-display);
   --site-editorial-font: "Newsreader", var(--font-family-manuscript), Georgia, serif;
+  --site-serif-font: var(--site-editorial-font);
+  --font-mono: var(--site-mono-font);
+  --font-sans: var(--site-sans-font);
+  --font-serif: var(--site-editorial-font);
 
   /* Interaction-progression defaults. Phase rules load later; these stay in core
      so first paint has the token names even before the deferred sheet arrives. */
@@ -802,6 +813,7 @@
   --ink: rgba(var(--charcoal-rgb), 0.92);
   --ink-soft: rgba(var(--charcoal-rgb), 0.8);
   --ink-mid: rgba(var(--charcoal-rgb), 0.68);
+  --ink-muted: rgba(var(--charcoal-rgb), 0.58);
   --ink-faint: rgba(var(--charcoal-rgb), 0.42);
   --ink-speculative: rgba(var(--charcoal-rgb), 0.24);
   --ink-disabled: rgba(var(--charcoal-rgb), 0.24);
@@ -824,6 +836,11 @@
   --text-on-matte-strong: var(--ink-on-matte-strong);
   --text-on-contrast: var(--ink-on-contrast);
   --text-on-contrast-soft: var(--ink-on-contrast-soft);
+  /* Dialects already spoken in the corpus (narrative, parser, chips).
+     One phenomenon, one canonical name; these only alias. */
+  --text-color: var(--ink);
+  --text-muted: var(--ink-muted);
+  --code-color: var(--ink);
 
   /* Material surface aliases (redistributed to tokens for earlier cascade value + broad availability).
      These provide a stable "tunable material surface" API: component authors and effects can use
@@ -863,6 +880,14 @@
   --line-strong: rgba(0, 128, 128, 0.34);
   --line-matte: rgba(var(--charcoal-rgb), 0.09);
   --line-quiet: rgba(var(--charcoal-rgb), 0.07);
+  --line-dim: var(--line-quiet);
+  --border-soft: var(--line-quiet);
+  --border-color: var(--line);
+  --card-border: var(--line);
+  --boundary-rail-width: var(--line-thick);
+  --boundary-rail-width-strong: var(--line-heavy);
+  --overlay-gradient-fade-bottom: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--surface) 88%, transparent) 100%);
+  --page-bg: var(--bg-field, #f8f7f5);
 
   /* SVG structural helpers */
   --spw-svg-stroke-scale: 1;
@@ -905,6 +930,9 @@
   --shadow-base: 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 18px -3px rgba(0, 0, 0, 0.07);
   --shadow-active: 0 4px 8px rgba(0, 0, 0, 0.05), 0 12px 32px -4px rgba(0, 0, 0, 0.11);
   --shadow-projecting: 0 8px 16px rgba(0, 0, 0, 0.06), 0 20px 48px -6px rgba(0, 0, 0, 0.15);
+  --shadow: var(--shadow-base);
+  --shadow-subtle: var(--shadow-xs);
+  --shadow-color: rgba(0, 0, 0, 0.08);
 
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04),
     0 6px 18px -3px rgba(0, 0, 0, 0.07);
@@ -1091,6 +1119,9 @@
   --ease-reveal: cubic-bezier(0, 0, 0, 1);
   --ease-pivot: var(--ease-paper);
   --ease-orbit: cubic-bezier(0.16, 0.84, 0.22, 1);
+  --ease-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-soft: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-spring: cubic-bezier(0.18, 1.25, 0.32, 1);
 
   --touch-acknowledge: 90ms;
   --touch-commit: 180ms;
@@ -1232,6 +1263,8 @@
   --resonance-accent: hsl(188 54% 45%);
   --valence-pos: hsl(160 45% 34%);
   --valence-neg: hsl(8 54% 42%);
+  --danger: var(--valence-neg, hsl(8 54% 42%));
+  --color-warning: var(--amber, hsl(42 78% 48%));
 
   /* Granular Spectral / Pigment Families
      Stable, theme-agnostic reference colors for art direction, SVG,
@@ -1960,6 +1993,7 @@ html[data-spw-color-mode="dark"] {
   --ink: rgba(228, 235, 232, 0.92);
   --ink-soft: rgba(202, 214, 210, 0.84);
   --ink-mid: rgba(202, 214, 210, 0.68);
+  --ink-muted: rgba(202, 214, 210, 0.58);
   --ink-faint: rgba(202, 214, 210, 0.52);
   --ink-speculative: rgba(190, 202, 198, 0.18);
   --ink-disabled: rgba(190, 202, 198, 0.24);
@@ -1975,11 +2009,19 @@ html[data-spw-color-mode="dark"] {
   --text-on-matte-strong: var(--ink-on-matte-strong);
   --text-on-contrast: var(--ink-on-contrast);
   --text-on-contrast-soft: var(--ink-on-contrast-soft);
+  --text-color: var(--ink);
+  --text-muted: var(--ink-muted);
+  --code-color: var(--ink);
 
   --line: rgba(228, 235, 232, 0.14);
   --line-strong: rgba(96, 210, 210, 0.34);
   --line-matte: rgba(228, 235, 232, 0.09);
   --line-quiet: rgba(228, 235, 232, 0.07);
+  --line-dim: var(--line-quiet);
+  --border-soft: var(--line-quiet);
+  --border-color: var(--line);
+  --card-border: var(--line);
+  --page-bg: var(--bg-field);
 
   --focus-ring: 0 0 0 3px rgba(96, 210, 210, 0.22);
 

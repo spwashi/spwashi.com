@@ -514,7 +514,7 @@
 
 :where(.spw-frame[data-spw-region-mark="active"], .spw-frame[data-spw-region-charge="active"]) {
   --spw-region-current: 1;
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 48%, var(--card-border));
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 48%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   box-shadow:
     var(--shadow-sm),
     0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent),
@@ -530,7 +530,7 @@
 :where(.spw-frame[data-spw-region-mark="active"][data-spw-signature], .spw-frame[data-spw-region-charge="active"][data-spw-signature]) > :where(.frame-topline, .frame-heading)::after {
   content: attr(data-spw-signature);
   flex-basis: 100%;
-  color: color-mix(in srgb, var(--ink-muted) 72%, var(--active-op-color, var(--teal, #008080)) 28%);
+  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.58)) 72%, var(--active-op-color, var(--teal, #008080)) 28%);
   font-family: var(--grammar-mono-font);
   font-size: clamp(0.66rem, 1.5vw, 0.8rem);
   letter-spacing: 0.045em;
@@ -568,7 +568,7 @@
   overflow: auto;
   overscroll-behavior: contain;
   padding: 0.72rem;
-  border: 1px solid color-mix(in srgb, var(--spw-region-menu-accent) 28%, var(--card-border));
+  border: 1px solid color-mix(in srgb, var(--spw-region-menu-accent) 28%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   border-radius: var(--shape-medium, 0.85rem);
   background:
     linear-gradient(
@@ -653,7 +653,7 @@
   flex: 0 0 auto;
   min-block-size: 1.85rem;
   padding: 0.22rem 0.44rem;
-  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, var(--card-border));
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   border-radius: 999px;
   background: color-mix(in srgb, var(--surface-strong, #fff) 84%, transparent);
   color: var(--ink-soft);
@@ -664,13 +664,13 @@
 }
 
 .spw-region-menu__dismiss:is(:hover, :focus-visible) {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, var(--card-border));
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   color: var(--ink);
   outline: none;
 }
 
 .spw-region-menu__summary {
-  color: var(--ink-muted);
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
   font-size: 0.78rem;
   line-height: 1.45;
   overflow-wrap: anywhere;
@@ -699,7 +699,7 @@
 
 .spw-region-menu__subtitle {
   margin: 0.16rem 0 0;
-  color: var(--ink-muted);
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
   font: 800 0.64rem/1.2 var(--grammar-mono-font);
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -715,7 +715,7 @@
   gap: 0.18rem 0.55rem;
   margin: 0.08rem 0 0.12rem;
   padding: 0.48rem;
-  border: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, var(--card-border));
+  border: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   border-radius: var(--shape-small, 0.55rem);
   background: color-mix(in srgb, var(--surface, #fff) 86%, transparent);
 }
@@ -728,7 +728,7 @@
 }
 
 .spw-region-menu__contract dt {
-  color: color-mix(in srgb, var(--ink-muted) 76%, var(--active-op-color, var(--teal, #008080)) 24%);
+  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.58)) 76%, var(--active-op-color, var(--teal, #008080)) 24%);
   font-family: var(--grammar-mono-font);
   font-weight: 800;
   letter-spacing: 0.06em;
@@ -747,7 +747,7 @@
   min-inline-size: 0;
   min-block-size: 2.1rem;
   padding: 0.45rem 0.58rem;
-  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 20%, var(--card-border));
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 20%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   border-radius: var(--shape-small, 0.55rem);
   background: color-mix(in srgb, var(--surface, #fff) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
   color: var(--ink);
@@ -759,7 +759,7 @@
 }
 
 .spw-region-menu button:is(:hover, :focus-visible) {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 44%, var(--card-border));
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 44%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   background: color-mix(in srgb, var(--surface-strong, #fff) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
   outline: none;
   transform: translateY(-0.03rem);
@@ -815,7 +815,7 @@
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
 }
 
 .spw-region-menu__suggestions {
@@ -835,7 +835,7 @@
 .spw-region-menu__action-label {
   grid-column: 1 / -1;
   margin: 0;
-  color: color-mix(in srgb, var(--ink-muted, #66706b) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.58)) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
   font-family: var(--grammar-mono-font);
   font-size: 0.6rem;
   font-weight: 850;
@@ -857,7 +857,7 @@
 }
 
 .spw-region-menu__action-group[data-spw-interaction-lane="reset"] {
-  --active-op-color: var(--ink-muted, #66706b);
+  --active-op-color: var(--ink-muted, rgba(14, 18, 20, 0.58));
 }
 
 @media (max-width: 45rem) {
@@ -883,7 +883,7 @@
   align-items: center;
   min-block-size: 1.62rem !important;
   padding: 0.12rem 0.48rem !important;
-  border: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, var(--card-border)) !important;
+  border: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14)))) !important;
   border-radius: 999px !important;
   background: color-mix(in srgb, var(--surface-strong, #fff) 88%, transparent) !important;
   color: color-mix(in srgb, var(--ink) 82%, var(--active-op-color, var(--teal, #008080)) 18%) !important;

@@ -635,7 +635,7 @@
 .spw-image-palette-swatch[data-active="true"] {
   transform: scale(1.24);
   border-color: #fff;
-  box-shadow: 0 0 0 2px var(--swatch-color), 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 2px var(--swatch-color, var(--spw-image-accent, currentColor)), 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* ─── Brush Mode Controls ──────────────────────────────────────────────── */

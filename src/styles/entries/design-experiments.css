@@ -295,7 +295,7 @@
 
 [data-spw-page-family="experiment-lab"] .design-css-annotation {
   padding-inline-start: 1rem;
-  border-inline-start: var(--boundary-rail-width-strong) solid color-mix(in srgb, var(--active-op-color) 42%, transparent);
+  border-inline-start: var(--boundary-rail-width-strong, var(--line-heavy, 3px)) solid color-mix(in srgb, var(--active-op-color) 42%, transparent);
 }
 
 [data-spw-page-family="experiment-lab"] .design-literary-grid {
@@ -328,7 +328,7 @@
 }
 
 [data-spw-page-family="experiment-lab"] .design-literary-card--stanza {
-  border-inline-start: var(--boundary-rail-width-strong) solid color-mix(in srgb, var(--op-ref-color) 38%, transparent);
+  border-inline-start: var(--boundary-rail-width-strong, var(--line-heavy, 3px)) solid color-mix(in srgb, var(--op-ref-color) 38%, transparent);
 }
 
 [data-spw-page-family="experiment-lab"] .design-literary-stanza {

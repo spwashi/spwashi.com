@@ -188,6 +188,7 @@
   --ornament-radius: var(--shape-component, 0.42rem);
   --ornament-radius-loose: var(--shape-surface, 0.7rem);
   --ornament-pill-radius: 999px;
+  --ornament-radius-pill: var(--ornament-pill-radius, var(--radius-pill, 9999px));
 
   --ornament-line-width: 1px;
   --ornament-line-strong-width: 1.5px;

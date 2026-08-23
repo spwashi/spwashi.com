@@ -405,3 +405,26 @@
     var(--pigment-violet-ink, #5a3d8a) 32%
   );
 }
+
+/* ==========================================================================
+   6. Thermodynamic continuum
+   --------------------------------------------------------------------------
+   The attribute is the number. @property initials on :root hold when the
+   browser cannot type attr(); authored HTML still inspects. Do not enumerate
+   float strings — 0.72 would stay dead.
+   ========================================================================== */
+
+@supports (top: attr(data-x type(<length>), 0px)) {
+  :where([data-spw-tangibility]) {
+    --spw-tangibility: attr(data-spw-tangibility type(<number>), 0.5);
+  }
+  :where([data-spw-viscosity]) {
+    --spw-viscosity: attr(data-spw-viscosity type(<number>), 0.3);
+  }
+  :where([data-spw-coherence]) {
+    --spw-coherence: attr(data-spw-coherence type(<number>), 0.5);
+  }
+  :where([data-spw-accent-strength]) {
+    --spw-accent-strength: attr(data-spw-accent-strength type(<number>), 1);
+  }
+}

@@ -650,7 +650,7 @@
   align-items: center;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft, var(--line-quiet, rgba(14, 18, 20, 0.1)));
 }
 
 :where(.inspect-label) {

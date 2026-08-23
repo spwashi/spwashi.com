@@ -490,7 +490,7 @@
 }
 
 :where(.page-index:has(a:is([aria-current="page"], :target))) {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--op-frame-color, #008080)) 26%, var(--line-dim));
+  border-color: color-mix(in srgb, var(--active-op-color, var(--op-frame-color, #008080)) 26%, var(--line-dim, var(--line-quiet, color-mix(in srgb, var(--ink, #111) 12%, transparent))));
 }
 
 :where([data-spw-region-flow="overlay"], .spw-region-overlay) {

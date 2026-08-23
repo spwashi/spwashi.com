@@ -849,6 +849,13 @@ html[data-spw-reduce-motion="on"] *::after {
   initial-value: 0.5;
 }
 
+/* Local operator/theme pigment intensity. Authored on data-spw-accent-strength. */
+@property --spw-accent-strength {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
 /* Edge membrane tension across frame boundaries: 0 (relaxed) -> 1 (taut membrane) */
 @property --spw-edge-tension {
   syntax: "<number>";
@@ -1362,6 +1369,10 @@ html[data-spw-reduce-motion="on"] *::after {
   --site-sans-font: var(--font-family-sans);
   --site-display-font: var(--font-family-display);
   --site-editorial-font: "Newsreader", var(--font-family-manuscript), Georgia, serif;
+  --site-serif-font: var(--site-editorial-font);
+  --font-mono: var(--site-mono-font);
+  --font-sans: var(--site-sans-font);
+  --font-serif: var(--site-editorial-font);
 
   /* Interaction-progression defaults. Phase rules load later; these stay in core
      so first paint has the token names even before the deferred sheet arrives. */
@@ -1478,6 +1489,7 @@ html[data-spw-reduce-motion="on"] *::after {
   --ink: rgba(var(--charcoal-rgb), 0.92);
   --ink-soft: rgba(var(--charcoal-rgb), 0.8);
   --ink-mid: rgba(var(--charcoal-rgb), 0.68);
+  --ink-muted: rgba(var(--charcoal-rgb), 0.58);
   --ink-faint: rgba(var(--charcoal-rgb), 0.42);
   --ink-speculative: rgba(var(--charcoal-rgb), 0.24);
   --ink-disabled: rgba(var(--charcoal-rgb), 0.24);
@@ -1500,6 +1512,11 @@ html[data-spw-reduce-motion="on"] *::after {
   --text-on-matte-strong: var(--ink-on-matte-strong);
   --text-on-contrast: var(--ink-on-contrast);
   --text-on-contrast-soft: var(--ink-on-contrast-soft);
+  /* Dialects already spoken in the corpus (narrative, parser, chips).
+     One phenomenon, one canonical name; these only alias. */
+  --text-color: var(--ink);
+  --text-muted: var(--ink-muted);
+  --code-color: var(--ink);
 
   /* Material surface aliases (redistributed to tokens for earlier cascade value + broad availability).
      These provide a stable "tunable material surface" API: component authors and effects can use
@@ -1539,6 +1556,14 @@ html[data-spw-reduce-motion="on"] *::after {
   --line-strong: rgba(0, 128, 128, 0.34);
   --line-matte: rgba(var(--charcoal-rgb), 0.09);
   --line-quiet: rgba(var(--charcoal-rgb), 0.07);
+  --line-dim: var(--line-quiet);
+  --border-soft: var(--line-quiet);
+  --border-color: var(--line);
+  --card-border: var(--line);
+  --boundary-rail-width: var(--line-thick);
+  --boundary-rail-width-strong: var(--line-heavy);
+  --overlay-gradient-fade-bottom: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--surface) 88%, transparent) 100%);
+  --page-bg: var(--bg-field, #f8f7f5);
 
   /* SVG structural helpers */
   --spw-svg-stroke-scale: 1;
@@ -1581,6 +1606,9 @@ html[data-spw-reduce-motion="on"] *::after {
   --shadow-base: 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 18px -3px rgba(0, 0, 0, 0.07);
   --shadow-active: 0 4px 8px rgba(0, 0, 0, 0.05), 0 12px 32px -4px rgba(0, 0, 0, 0.11);
   --shadow-projecting: 0 8px 16px rgba(0, 0, 0, 0.06), 0 20px 48px -6px rgba(0, 0, 0, 0.15);
+  --shadow: var(--shadow-base);
+  --shadow-subtle: var(--shadow-xs);
+  --shadow-color: rgba(0, 0, 0, 0.08);
 
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04),
     0 6px 18px -3px rgba(0, 0, 0, 0.07);
@@ -1767,6 +1795,9 @@ html[data-spw-reduce-motion="on"] *::after {
   --ease-reveal: cubic-bezier(0, 0, 0, 1);
   --ease-pivot: var(--ease-paper);
   --ease-orbit: cubic-bezier(0.16, 0.84, 0.22, 1);
+  --ease-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-soft: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-spring: cubic-bezier(0.18, 1.25, 0.32, 1);
 
   --touch-acknowledge: 90ms;
   --touch-commit: 180ms;
@@ -1908,6 +1939,8 @@ html[data-spw-reduce-motion="on"] *::after {
   --resonance-accent: hsl(188 54% 45%);
   --valence-pos: hsl(160 45% 34%);
   --valence-neg: hsl(8 54% 42%);
+  --danger: var(--valence-neg, hsl(8 54% 42%));
+  --color-warning: var(--amber, hsl(42 78% 48%));
 
   /* Granular Spectral / Pigment Families
      Stable, theme-agnostic reference colors for art direction, SVG,
@@ -2636,6 +2669,7 @@ html[data-spw-color-mode="dark"] {
   --ink: rgba(228, 235, 232, 0.92);
   --ink-soft: rgba(202, 214, 210, 0.84);
   --ink-mid: rgba(202, 214, 210, 0.68);
+  --ink-muted: rgba(202, 214, 210, 0.58);
   --ink-faint: rgba(202, 214, 210, 0.52);
   --ink-speculative: rgba(190, 202, 198, 0.18);
   --ink-disabled: rgba(190, 202, 198, 0.24);
@@ -2651,11 +2685,19 @@ html[data-spw-color-mode="dark"] {
   --text-on-matte-strong: var(--ink-on-matte-strong);
   --text-on-contrast: var(--ink-on-contrast);
   --text-on-contrast-soft: var(--ink-on-contrast-soft);
+  --text-color: var(--ink);
+  --text-muted: var(--ink-muted);
+  --code-color: var(--ink);
 
   --line: rgba(228, 235, 232, 0.14);
   --line-strong: rgba(96, 210, 210, 0.34);
   --line-matte: rgba(228, 235, 232, 0.09);
   --line-quiet: rgba(228, 235, 232, 0.07);
+  --line-dim: var(--line-quiet);
+  --border-soft: var(--line-quiet);
+  --border-color: var(--line);
+  --card-border: var(--line);
+  --page-bg: var(--bg-field);
 
   --focus-ring: 0 0 0 3px rgba(96, 210, 210, 0.22);
 
@@ -3364,6 +3406,29 @@ html[data-spw-reduce-motion="on"] {
     var(--pigment-violet-ink, #5a3d8a) 32%
   );
 }
+
+/* ==========================================================================
+   6. Thermodynamic continuum
+   --------------------------------------------------------------------------
+   The attribute is the number. @property initials on :root hold when the
+   browser cannot type attr(); authored HTML still inspects. Do not enumerate
+   float strings — 0.72 would stay dead.
+   ========================================================================== */
+
+@supports (top: attr(data-x type(<length>), 0px)) {
+  :where([data-spw-tangibility]) {
+    --spw-tangibility: attr(data-spw-tangibility type(<number>), 0.5);
+  }
+  :where([data-spw-viscosity]) {
+    --spw-viscosity: attr(data-spw-viscosity type(<number>), 0.3);
+  }
+  :where([data-spw-coherence]) {
+    --spw-coherence: attr(data-spw-coherence type(<number>), 0.5);
+  }
+  :where([data-spw-accent-strength]) {
+    --spw-accent-strength: attr(data-spw-accent-strength type(<number>), 1);
+  }
+}
 }
 
 /* /public/css/tokens/flourish-defaults.css */
@@ -3558,6 +3623,7 @@ html[data-spw-reduce-motion="on"] {
   --ornament-radius: var(--shape-component, 0.42rem);
   --ornament-radius-loose: var(--shape-surface, 0.7rem);
   --ornament-pill-radius: 999px;
+  --ornament-radius-pill: var(--ornament-pill-radius, var(--radius-pill, 9999px));
 
   --ornament-line-width: 1px;
   --ornament-line-strong-width: 1.5px;
@@ -13051,7 +13117,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 
 :where(.spw-frame[data-spw-region-mark="active"], .spw-frame[data-spw-region-charge="active"]) {
   --spw-region-current: 1;
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 48%, var(--card-border));
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 48%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   box-shadow:
     var(--shadow-sm),
     0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent),
@@ -13067,7 +13133,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 :where(.spw-frame[data-spw-region-mark="active"][data-spw-signature], .spw-frame[data-spw-region-charge="active"][data-spw-signature]) > :where(.frame-topline, .frame-heading)::after {
   content: attr(data-spw-signature);
   flex-basis: 100%;
-  color: color-mix(in srgb, var(--ink-muted) 72%, var(--active-op-color, var(--teal, #008080)) 28%);
+  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.58)) 72%, var(--active-op-color, var(--teal, #008080)) 28%);
   font-family: var(--grammar-mono-font);
   font-size: clamp(0.66rem, 1.5vw, 0.8rem);
   letter-spacing: 0.045em;
@@ -13105,7 +13171,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   overflow: auto;
   overscroll-behavior: contain;
   padding: 0.72rem;
-  border: 1px solid color-mix(in srgb, var(--spw-region-menu-accent) 28%, var(--card-border));
+  border: 1px solid color-mix(in srgb, var(--spw-region-menu-accent) 28%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   border-radius: var(--shape-medium, 0.85rem);
   background:
     linear-gradient(
@@ -13190,7 +13256,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   flex: 0 0 auto;
   min-block-size: 1.85rem;
   padding: 0.22rem 0.44rem;
-  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, var(--card-border));
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   border-radius: 999px;
   background: color-mix(in srgb, var(--surface-strong, #fff) 84%, transparent);
   color: var(--ink-soft);
@@ -13201,13 +13267,13 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 }
 
 .spw-region-menu__dismiss:is(:hover, :focus-visible) {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, var(--card-border));
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   color: var(--ink);
   outline: none;
 }
 
 .spw-region-menu__summary {
-  color: var(--ink-muted);
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
   font-size: 0.78rem;
   line-height: 1.45;
   overflow-wrap: anywhere;
@@ -13236,7 +13302,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 
 .spw-region-menu__subtitle {
   margin: 0.16rem 0 0;
-  color: var(--ink-muted);
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
   font: 800 0.64rem/1.2 var(--grammar-mono-font);
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -13252,7 +13318,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   gap: 0.18rem 0.55rem;
   margin: 0.08rem 0 0.12rem;
   padding: 0.48rem;
-  border: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, var(--card-border));
+  border: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   border-radius: var(--shape-small, 0.55rem);
   background: color-mix(in srgb, var(--surface, #fff) 86%, transparent);
 }
@@ -13265,7 +13331,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 }
 
 .spw-region-menu__contract dt {
-  color: color-mix(in srgb, var(--ink-muted) 76%, var(--active-op-color, var(--teal, #008080)) 24%);
+  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.58)) 76%, var(--active-op-color, var(--teal, #008080)) 24%);
   font-family: var(--grammar-mono-font);
   font-weight: 800;
   letter-spacing: 0.06em;
@@ -13284,7 +13350,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   min-inline-size: 0;
   min-block-size: 2.1rem;
   padding: 0.45rem 0.58rem;
-  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 20%, var(--card-border));
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 20%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   border-radius: var(--shape-small, 0.55rem);
   background: color-mix(in srgb, var(--surface, #fff) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
   color: var(--ink);
@@ -13296,7 +13362,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 }
 
 .spw-region-menu button:is(:hover, :focus-visible) {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 44%, var(--card-border));
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 44%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   background: color-mix(in srgb, var(--surface-strong, #fff) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
   outline: none;
   transform: translateY(-0.03rem);
@@ -13352,7 +13418,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
 }
 
 .spw-region-menu__suggestions {
@@ -13372,7 +13438,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 .spw-region-menu__action-label {
   grid-column: 1 / -1;
   margin: 0;
-  color: color-mix(in srgb, var(--ink-muted, #66706b) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.58)) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
   font-family: var(--grammar-mono-font);
   font-size: 0.6rem;
   font-weight: 850;
@@ -13394,7 +13460,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 }
 
 .spw-region-menu__action-group[data-spw-interaction-lane="reset"] {
-  --active-op-color: var(--ink-muted, #66706b);
+  --active-op-color: var(--ink-muted, rgba(14, 18, 20, 0.58));
 }
 
 @media (max-width: 45rem) {
@@ -13420,7 +13486,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   align-items: center;
   min-block-size: 1.62rem !important;
   padding: 0.12rem 0.48rem !important;
-  border: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, var(--card-border)) !important;
+  border: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14)))) !important;
   border-radius: 999px !important;
   background: color-mix(in srgb, var(--surface-strong, #fff) 88%, transparent) !important;
   color: color-mix(in srgb, var(--ink) 82%, var(--active-op-color, var(--teal, #008080)) 18%) !important;
@@ -15403,7 +15469,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 }
 
 :where(.page-index:has(a:is([aria-current="page"], :target))) {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--op-frame-color, #008080)) 26%, var(--line-dim));
+  border-color: color-mix(in srgb, var(--active-op-color, var(--op-frame-color, #008080)) 26%, var(--line-dim, var(--line-quiet, color-mix(in srgb, var(--ink, #111) 12%, transparent))));
 }
 
 :where([data-spw-region-flow="overlay"], .spw-region-overlay) {
@@ -21277,7 +21343,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 :where(.spw-literary-verse, .spw-literary-stanza, [data-spw-textual-role="verse"]) {
   display: block;
   padding: 0.9rem 1rem;
-  border-inline-start: var(--boundary-rail-width-strong) solid color-mix(in srgb, var(--component-accent) 34%, transparent);
+  border-inline-start: var(--boundary-rail-width-strong, var(--line-heavy, 3px)) solid color-mix(in srgb, var(--component-accent) 34%, transparent);
   border-radius: var(--component-radius-tight);
   background: color-mix(in srgb, var(--component-surface-strong) 94%, transparent);
   color: color-mix(in srgb, var(--ink, currentColor) 92%, var(--component-accent) 8%);
@@ -21310,7 +21376,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   gap: 0.45rem;
   max-inline-size: var(--component-measure-wide);
   padding: 0.95rem 1rem 1rem;
-  border-inline-start: var(--boundary-rail-width-strong) solid color-mix(in srgb, var(--component-accent) 30%, transparent);
+  border-inline-start: var(--boundary-rail-width-strong, var(--line-heavy, 3px)) solid color-mix(in srgb, var(--component-accent) 30%, transparent);
   border-radius: var(--component-radius-loose);
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--component-surface-strong) 98%, transparent), color-mix(in srgb, var(--component-surface-strong) 94%, transparent)),
@@ -32041,7 +32107,7 @@ html[data-spw-page-section-phase="idle"] {
       color-mix(in srgb, var(--surface-panel, var(--spw-shell-card-bg)) 94%, transparent)
     );
   --spw-shell-sheen: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.78)) 22%, transparent);
-  --spw-shell-overlay: var(--overlay-gradient-fade-bottom);
+  --spw-shell-overlay: var(--overlay-gradient-fade-bottom, linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--surface, #fff) 88%, transparent) 100%));
 
   --spw-shell-line:        var(--spw-surface-line-rest, var(--line, rgba(14, 18, 20, 0.14)));
   --spw-shell-line-strong: var(--spw-surface-line-active, var(--line-strong, rgba(0, 128, 128, 0.34)));
@@ -44796,7 +44862,7 @@ html[data-spw-developmental-indicators="on"] :where(
 .spw-image-palette-swatch[data-active="true"] {
   transform: scale(1.24);
   border-color: #fff;
-  box-shadow: 0 0 0 2px var(--swatch-color), 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 2px var(--swatch-color, var(--spw-image-accent, currentColor)), 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* ─── Brush Mode Controls ──────────────────────────────────────────────── */
