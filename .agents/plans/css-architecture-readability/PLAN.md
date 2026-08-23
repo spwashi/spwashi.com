@@ -94,6 +94,11 @@ Intern-sized examples:
 - Audit a set of operator chips (including newer ones like `!` pragma, `*` value, `&` merge, `.` ground) against the projections in operator-site-projection.spw; ensure their visual states (hover, active, resonance) are driven from centralized operator tokens and data attributes rather than ad-hoc rules.
 - Use debug labels on a dense route to check whether CSS owner markers document the HTML structure clearly.
 
+## 2026-08 token dialect pass
+- Anchor dialects the corpus already speaks (`--ink-muted`, `--card-border`, `--page-bg`, `--font-mono`, `--danger`, `--ease-smooth`) in `tokens/core.css`. Do not add a second ink family.
+- Thermodynamic HTML numbers project through typed `attr()` in `dimensions.css`. Enumerating `"0.75"` selectors is not an abstraction.
+- Owner of the pass: `data-attribute-css-token-refinement` as a satellite of this plan, not a new ontology.
+
 ## Success Criteria
 
 - Large CSS files have clearer local ownership and navigable sections.

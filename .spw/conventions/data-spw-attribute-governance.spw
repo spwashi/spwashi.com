@@ -92,6 +92,17 @@ region_menu: .{
   inference = `content-tone may be resolved; prefer data-spw-content-tone-resolved if overwriting risk appears — today JS fills base when absent.`
 }[reg=facet]
 
+^"thermodynamic_continuum_bridge"{
+  claim: `Thermodynamic continuum attributes are authored numbers. The attribute is the value. CSS reads it with typed attr() onto @property --spw-tangibility / --spw-viscosity / --spw-coherence / --spw-accent-strength.`
+  parameters: .{
+    tangibility = `tau in [0, 1]: material presence and edge weight.`
+    viscosity = `eta in [0, 1]: motion resistance and transition tempo.`
+    coherence = `kappa in [0, 1]: harmonic alignment.`
+    accent_strength = `Pigment intensity multiplier around 1.`
+  }[reg=facet]
+  bridge_rule = `Do not enumerate float strings as selectors. 0.72 would stay dead. @property initials hold when typed attr() is unavailable. No JS reflow.`
+}
+
 validation: #[
   `Hover/focus writes only transient charge state and must settle it on leave, blur, cancel, or reset.`,
   `Click, keyboard, saved spell, and explicit collection paths own persistent ground/collect state.`,
@@ -99,5 +110,6 @@ validation: #[
   `Local region state should be readable through lane attributes before global ornament effects are added.`,
   `Gravity overlap ranks apply only on data-spw-gravity hosts; field strength is data-spw-field-salience; viewing-reason stays off both.`,
   `Pack-layout and pack-fill mirrors must not be required for correct packing layout without JS.`,
-  `New packing/field attrs map to existing families or are rejected (harmony claim component-harmony-005).`
+  `New packing/field attrs map to existing families or are rejected (harmony claim component-harmony-005).`,
+  `Thermodynamic order parameters (tangibility, viscosity, coherence, accent-strength) map cleanly to CSS tokens in dimensions.css.`
 ][reg=set]

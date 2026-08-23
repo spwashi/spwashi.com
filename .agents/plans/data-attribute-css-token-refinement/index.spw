@@ -1,0 +1,37 @@
+# Data Attribute and CSS Token Refinement — dispatch
+#
+# 2026-08-22. Token anchors, attribute bridges, and fallback hygiene.
+
+#>data_attribute_css_token_refinement
+#:plan #!tokens #!attributes #!css #!semantics
+#:operation #!align
+#:fixity #!stable
+#:layer #!tokens
+
+operation = "align"
+fixity = "stable"
+date = "2026-08-22"
+
+@plan: ~"./PLAN.md"
+@attribute_governance: ~"../../../.spw/conventions/data-spw-attribute-governance.spw"
+@dimension_vocabulary: ~"../../../.spw/conventions/dimension-vocabulary.spw"
+@core_tokens: ~"../../../public/css/tokens/core.css"
+@dimensions_tokens: ~"../../../public/css/tokens/dimensions.css"
+@flourish_tokens: ~"../../../public/css/tokens/flourish-defaults.css"
+@plans_root: ~"../../../.agents/plans/index.spw"
+
+intent: .{
+  goal = `Anchor unanchored CSS custom properties in the tokens layer, bridge authored thermodynamic and accent-strength data attributes into live CSS properties, and guarantee fallback hygiene across grammar and systems.`
+  owner = `data-attribute-css-token-refinement`
+  kind = `plan`
+  bucket = `css_layout_interaction`
+  artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+  practice_depth = "observation | align | tending"
+  semantic_layer = "tokens"
+  collaboration_phase = "align | contract"
+  memory_tier = "hot"
+  bucket = "css_layout_interaction"
+}[reg=facet]

@@ -103,12 +103,13 @@ reading_order: .{
 @plan_spw_surface_normalization: ~"./spw-surface-normalization/index.spw"
 ^"css_layout_interaction"{
  label = "css layout interaction"
- count = 13
+ count = 14
  members = #[
   `card-grid-density-audit`,
   `chrome-navigation-wonder`,
   `component-box-model-responsive-audit`,
   `css-state-legibility`,
+  `data-attribute-css-token-refinement`,
   `gesture-state-refinement`,
   `hook-region-anatomy`,
   `interaction-loop-contract`,
@@ -126,6 +127,7 @@ reading_order: .{
 @plan_component_box_model_responsive_audit: ~"./component-box-model-responsive-audit/index.spw"
 @plan_css_maintainability_refactor: ~"./archive/css-maintainability-refactor/index.spw"
 @plan_css_state_legibility: ~"./css-state-legibility/index.spw"
+@plan_data_attribute_css_token_refinement: ~"./data-attribute-css-token-refinement/index.spw"
 @plan_gesture_state_refinement: ~"./gesture-state-refinement/index.spw"
 @plan_hook_region_anatomy: ~"./hook-region-anatomy/index.spw"
 @plan_interaction_loop_contract: ~"./interaction-loop-contract/index.spw"
