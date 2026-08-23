@@ -50,6 +50,11 @@
       );
 }
 
+:where([data-spw-expression-kin]:focus-visible, [data-spw-expression-resonating]:focus-visible) {
+  outline: 2px solid color-mix(in srgb, var(--spw-expression-accent, #008080) 55%, transparent);
+  outline-offset: 2px;
+}
+
 /* The element under the pointer is the terminal the field runs from, so it
    reads as source rather than as one more kin. */
 :where([data-spw-expression-resonating]) {

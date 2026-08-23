@@ -16,10 +16,12 @@
 :where(.spw-frame, .frame-card, .frame-panel, [data-spw-form="brace"]) {
   --spw-wonder-hold: 1;
   --spw-slot-attenuate: 1;
+  --spw-nest-attenuate: 1;
   --spw-projected-field: calc(
     var(--spw-field-intensity, var(--spw-charge-field, 0))
     * var(--spw-wonder-hold)
     * var(--spw-slot-attenuate)
+    * var(--spw-nest-attenuate)
   );
   --spw-projected-echo: calc(
     var(--attention-echo-duration, 480ms) * var(--spw-wonder-hold)
@@ -66,6 +68,19 @@
 
 :where([data-spw-slot="footer"]) {
   --spw-slot-attenuate: 0.48;
+}
+
+/* Nested seats leak more. Inner braces should not shout as loud as the outer wall. */
+:where(.spw-frame .spw-frame, .frame-card .frame-card, [data-spw-form="brace"] [data-spw-form="brace"]) {
+  --spw-nest-attenuate: 0.62;
+}
+
+:where(
+  .spw-frame .spw-frame .spw-frame,
+  .frame-card .frame-card .frame-card,
+  [data-spw-form="brace"] [data-spw-form="brace"] [data-spw-form="brace"]
+) {
+  --spw-nest-attenuate: 0.38;
 }
 
 /* Brace edges as terminals. Field raises the stroke; no field stays grammar-quiet. */

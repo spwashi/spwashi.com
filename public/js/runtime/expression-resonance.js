@@ -63,6 +63,7 @@ let elementsByExpression = null;
 let livingByConcept = null;
 let salience = null;
 let lit = [];
+let sourceRef = null;
 let dwellTimer = null;
 let cleanup = null;
 
@@ -195,11 +196,49 @@ function clearResonance() {
     node.removeAttribute(ATTR.kin);
     node.removeAttribute(ATTR.crawlPole);
     node.style.removeProperty('--spw-expression-resonance');
+    if (node.getAttribute('data-spw-kin-tab') === '1') {
+      node.removeAttribute('tabindex');
+      node.removeAttribute('data-spw-kin-tab');
+    }
   }
   lit = [];
+  sourceRef = null;
   document.querySelectorAll(`[${ATTR.source}]`).forEach((node) => {
     node.removeAttribute(ATTR.source);
   });
+}
+
+function kinTrail() {
+  return [sourceRef, ...lit].filter((node) => node?.isConnected);
+}
+
+function cycleKin(step) {
+  const trail = kinTrail();
+  if (trail.length < 2) return false;
+  const active = document.activeElement;
+  let index = trail.indexOf(active);
+  if (index < 0) index = 0;
+  const next = trail[(index + step + trail.length) % trail.length];
+  if (!(next instanceof HTMLElement)) return false;
+  if (next.tabIndex < 0 && !next.hasAttribute('tabindex')) {
+    next.setAttribute('data-spw-kin-tab', '1');
+    next.tabIndex = -1;
+  }
+  const reduce = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+  next.focus({ preventScroll: Boolean(reduce) });
+  if (!reduce) next.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+  return true;
+}
+
+function onKinKey(event) {
+  if (event.key !== '[' && event.key !== ']') return;
+  if (event.metaKey || event.ctrlKey || event.altKey) return;
+  const tag = event.target?.tagName;
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(tag) || event.target?.isContentEditable) return;
+  const inField = event.target?.closest?.(`[${ATTR.source}], [${ATTR.kin}]`);
+  if (!inField || !lit.length) return;
+  event.preventDefault();
+  cycleKin(event.key === ']' ? 1 : -1);
 }
 
 /**
@@ -212,6 +251,7 @@ function resonate(expression, sourceNode) {
   if (!shape) return 0;
 
   sourceNode?.setAttribute(ATTR.source, 'source');
+  sourceRef = sourceNode || null;
   const sourceJoin = sourceNode?.getAttribute?.(ATTR.join)
     || sourceNode?.closest?.(`[${ATTR.join}]`)?.getAttribute(ATTR.join);
   const sourceParts = shape.parts || [];
@@ -236,6 +276,7 @@ function resonateConcept(concept, sourceNode) {
   clearResonance();
   if (!concept) return 0;
   sourceNode?.setAttribute(ATTR.source, 'source');
+  sourceRef = sourceNode || null;
   lightLiving(concept, 'part', {}, sourceNode);
   for (const [expression, nodes] of elementsByExpression || []) {
     const shape = manifest?.[expression];
@@ -451,7 +492,9 @@ export async function initExpressionResonance(ctx = {}) {
     dwellTimer = setTimeout(() => depositConcept(concept), ENCOUNTER_MS);
   };
 
-  const onLeave = () => {
+  const onLeave = (event) => {
+    const next = event.relatedTarget;
+    if (next?.closest?.(`[${ATTR.source}], [${ATTR.kin}]`)) return;
     clearTimeout(dwellTimer);
     clearResonance();
   };
@@ -460,6 +503,7 @@ export async function initExpressionResonance(ctx = {}) {
   document.addEventListener('pointerout', onLeave, { passive: true });
   document.addEventListener('focusin', onEnter, { passive: true });
   document.addEventListener('focusout', onLeave, { passive: true });
+  document.addEventListener('keydown', onKinKey);
 
   // Gathering banks harder than dwell. The cauldron already broadcasts its full
   // item list, so the loop closes without the mix having to be touched.
@@ -486,6 +530,7 @@ export async function initExpressionResonance(ctx = {}) {
     document.removeEventListener('pointerout', onLeave);
     document.removeEventListener('focusin', onEnter);
     document.removeEventListener('focusout', onLeave);
+    document.removeEventListener('keydown', onKinKey);
   };
   return cleanup;
 }
@@ -508,7 +553,7 @@ export const EXPRESSION_RESONANCE_CONTRACT = Object.freeze({
   storageKey: STORAGE_KEY,
   encounterMs: ENCOUNTER_MS,
   salienceBands: SALIENCE_BANDS,
-  rule: 'hover previews kinship (pulse); dwell banks salience (residue); never the reverse. Living terms join the field by authored data-spw-concept. Crawl is authored, never inferred from a dotted list. Parser lives at `__SPW_SITE__.parser.parse`.',
+  rule: 'hover previews kinship (pulse); dwell banks salience (residue); never the reverse. [ and ] travel lit kin while a source is held. Living terms join the field by authored data-spw-concept. Crawl is authored, never inferred from a dotted list. Parser lives at `__SPW_SITE__.parser.parse`.',
 });
 
 export const SPW_MODULE_EXPORT = Object.freeze({

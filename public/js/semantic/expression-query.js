@@ -183,6 +183,17 @@ function readDataset(el, key) {
   return el?.dataset?.[key] || '';
 }
 
+function nestDepth(element) {
+  let depth = 0;
+  let node = element;
+  while (node && node.parentElement) {
+    node = node.parentElement;
+    if (node.matches?.('.spw-frame, .frame-card, [data-spw-form="brace"]')) depth += 1;
+    if (depth >= 4) break;
+  }
+  return depth;
+}
+
 /**
  * One host, three precipitates. Read authored hydration without a second engine.
  * Motion is leftover room; cauldron is the gathered string; material is inspectable charge.
@@ -219,6 +230,7 @@ export function readSpwHydration(element) {
       variant: readDataset(gravityHost, 'spwSpaceVariant'),
     },
     region: closest('[data-spw-region]')?.dataset?.spwRegion || '',
+    nest: nestDepth(host),
     precipitates: {
       [PRECIPITATES.motion]: Boolean(
         readDataset(gravityHost, 'spwGravity')

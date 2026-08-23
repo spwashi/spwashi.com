@@ -86,6 +86,7 @@ test('hydration reads one host into motion, cauldron, and material precipitates'
   assert.equal(hydration.precipitates[PRECIPITATES.cauldron], true);
   assert.equal(hydration.precipitates[PRECIPITATES.motion], true);
   assert.equal(hydration.precipitates[PRECIPITATES.material], true);
+  assert.equal(hydration.nest, 0);
 });
 
 test('join chains tell list, crawl, common, and project apart', () => {
