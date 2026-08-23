@@ -73,7 +73,8 @@ fixity = "stable"
   cauldron = `Hold or gather writes an ingredient. data-spw-semantic-expression is the payload. charge-cycle spell:capture transfers charge into the mix. Expression-resonance banks the same tokens as salience.`
   material = `Charge-field, electromagnetic-containers, arrival-electrostatics, material.css. Visual charge must stay inspectable as data-spw-charge / phase — never a glow without a state.`
   magnetism = `--spw-proximity-* and --spw-edge-proximity already pull toward an edge. Edge navigation is that pull plus a handle, not a new magnet API.`
-  refuse = `A unified physics VM. Private getBoundingClientRect flips for new popovers. Dream loops that animate while someone is reading.`
+  inspect = `snapshotPhysicalModel is the read of those engines (gravity, charge, beat, wonder, climate). writable: false. Not a fourth writer.`
+  refuse = `A unified physics VM. data-spw-region-personality / voice / gravity-axis. Private getBoundingClientRect flips for new popovers. Dream loops that animate while someone is reading.`
 }[reg=facet]
 
 ^"invariants"{

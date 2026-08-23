@@ -24,6 +24,7 @@ Develop meaningful component real estate and region personality across spwashi.c
 - Full locale rollout (`/es/...`)
 - Client-side translation runtime
 - Renaming every `data-spw-feature` in the tree (audit first, rename in wave 4)
+- Runtime `data-spw-region-personality`, `data-spw-region-voice`, `data-spw-region-gravity-axis`. Those duplicate kind/role/harmony/context/seats. This plan owns copy referentiality, not a new physics family.
 
 ## Constraints
 

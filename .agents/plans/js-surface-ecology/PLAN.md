@@ -12,6 +12,11 @@ Label what is suspicious.
 Merge only what is proven.
 ```
 
+## 2026-08 inspect primitives
+- Runtime organs report through frozen `SPW_*_CONTRACT` + `describe*` helpers. That is the inspect primitive, not a new folder.
+- `runtime/physical-model.js` gathers gravity / charge / beat / wonder / climate. It is pollinator (`compose.js`) and console (`spwCompose.controls.physics`), not a catalog-mounted writer.
+- Interface press uses `--spw-control-press-depth` / `--spw-micro-press-scale` on handles and card anchors. Do not invent a second :active scale.
+
 ## Proposed topology
 
 ```txt

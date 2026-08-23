@@ -19,6 +19,9 @@ Every runtime module should expose a predictable export surface for catalog moun
 - [ ] Land `.spw/conventions/module-export-contract.spw` (target export shape)
 - [ ] Wire conventions into `index.spw`, `site.spw`, `planning-ecology.spw`
 
+## 2026-08 inspect pattern (landed, not the export shape)
+Several organs now export `SPW_*_CONTRACT` + `describe*` without migrating to `SPW_MODULE_EXPORT`. Treat that as the inspect primitive for compose/console. Do not force those files through Phase 2 until a catalog mount needs the adapter.
+
 ## Phase 1 — Export contract (code, small)
 
 - [ ] Add `public/js/runtime/module-export-contract.js` with `SPW_MODULE_EXPORT_SHAPE`, `normalizeModuleExport()`, `describeModuleExport()`

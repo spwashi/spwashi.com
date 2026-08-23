@@ -22,6 +22,9 @@ This is a good fit because Settings already asks readers to tune density, layout
 - Write stable attributes such as `data-spw-box-model`, `data-spw-composition-flow`, `data-spw-box-overflow`, and `data-spw-box-measure`.
 - Add CSS that uses those attributes for quiet module-visuals affordances.
 
+## 2026-08 physics slice
+Physical inspect now satisfies the three contexts without a new page mount: `compose.js` re-exports `snapshotPhysicalModel`, `window.spwCompose.controls.physics` is the console helper, and the engines themselves remain progressive enhancement on existing markup.
+
 ## Follow-Up
 
 - Extend specific pages with explicit `data-spw-box-model` only where the distinction teaches something.

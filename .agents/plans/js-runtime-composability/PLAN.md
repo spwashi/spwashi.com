@@ -59,6 +59,13 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 - Updated the runtime contract checker to parse the new fields and fail malformed non-kebab contract tokens without requiring a broad rewrite of every route-specific feature module.
 - Kept this pass behavior-neutral: no selectors, route gates, feature gates, settings defaults, mount timing constants, or visual effects changed.
 
+## 2026-08 Physical snapshot pass
+- Landed `public/js/runtime/physical-model.js` as a **read-only** inspect surface: `snapshotPhysicalModel()` / `describePhysicalModelSummary()`.
+- Organs already named (spatial-gravity, charge-field, pulse-beat, wonder-memory, developmental-climate) keep writing. The snapshot does not.
+- Portable through `compose.js`; console through `window.spwCompose.controls.physics`.
+- Do not add `data-spw-region-personality`, `data-spw-region-voice`, or `data-spw-region-gravity-axis`. Copy personality stays in `component-region-personality`.
+
 ## Out of Scope
 - Renaming unrelated runtime modules.
 - Changing route-specific behavior beyond the page-state contract.
+- A fourth physics engine or a write-capable physical-model VM.

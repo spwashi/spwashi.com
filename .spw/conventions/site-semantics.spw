@@ -1273,11 +1273,13 @@ frame #utility_menu_layout
 
 frame #footer_cauldron_layout
   role extension
-  surface public/css/shell/chrome.css + cards.css + composition.js + guide-badge
-  concept improve footer cauldron layout + button alignment at bottom of cards/footers
-  data-spw-cauldron, .site-footer__cauldron , .spw-cauldron-footer
-  usage = "Flex column for status+ingredients, align-self flex-end on removes/actions, consistent min-heights/gaps for learnability and visual flow. Ties cauldron as garden/feedback surface."
-  note "Builds on recent cauldron-footer; makes collection state more readable/ergonomic in footer context across routes."
+  operation align
+  fixity stable
+  surface public/css/components/cauldron.css + public/js/interface/composition.js + public/js/interface/cauldron/* + _partials/site-footer.html
+  concept improve footer cauldron layout, ingredient token ecology, empty states, and crystallization readability
+  data-spw-cauldron, .site-footer__cauldron, [data-cauldron-ingredients], .cauldron-ingredient, .cauldron-ingredient-op, [data-spw-ingredient-phase], [data-spw-ingredient-primed]
+  usage = "Flex/wrap layout for ingredients with distinct operator badges (frame, probe, object, ref, action, topic), breadcrumb lanes (origin, gesture, reach), empty-state guidance, and syntax-highlighted combination/crystallization outputs with cast form recommendations."
+  note "Builds on the composition cauldron and memory garden; renders ingredient cards with operator colors and accessible actions across all responsive viewports."
 
 frame #configurable_feedback_learnability
   role extension
