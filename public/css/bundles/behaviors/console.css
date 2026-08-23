@@ -273,7 +273,52 @@
   animation: cauldron-output-reveal 420ms ease-out 1;
 }
 
+/* ─── Cauldron Ingredients Container & Empty State ──────────────────────── */
+
+.site-footer__cauldron-ingredients,
+[data-cauldron-ingredients] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.42rem;
+  margin-block: 0.45rem;
+  min-height: 2.2rem;
+}
+
+.site-footer__cauldron-ingredients:empty::before,
+[data-cauldron-ingredients]:empty::before {
+  content: "Empty gathering vessel · hold a highlighted term or inspect a handle to prime an ingredient";
+  display: block;
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  border: 1px dashed color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 22%, var(--footer-panel-line));
+  border-radius: var(--shape-control, 0.78rem);
+  color: var(--ink-muted, rgba(14, 18, 20, 0.52));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.02em;
+  text-align: center;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 85%, transparent);
+}
+
+/* ─── Cauldron Ingredient Card & Token Ecology ───────────────────────────── */
+
 .cauldron-ingredient {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.32rem 0.42rem;
+  padding: 0.28rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 24%, var(--footer-panel-line));
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--component-accent, var(--active-op-color, var(--teal))) 8%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-xs, 0.8rem);
+  line-height: 1.25;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
   transition:
     transform var(--spw-control-transition-fast, 140ms ease),
     background-color var(--spw-control-transition-fast, 140ms ease),
@@ -283,9 +328,235 @@
 
 .cauldron-ingredient:hover,
 .cauldron-ingredient:focus-visible {
-  transform: translateY(-1px) scale(1.02);
-  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 36%, transparent);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 12%, transparent);
+  transform: translateY(-1px) scale(1.015);
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 44%, transparent);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 14%, transparent);
+  outline: none;
+}
+
+.cauldron-ingredient-op {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 0.85em;
+  color: var(--spw-operator-color, var(--active-op-color, var(--teal)));
+}
+
+.cauldron-ingredient-op[data-spw-operator="frame"] { color: var(--op-frame-color, #008080); }
+.cauldron-ingredient-op[data-spw-operator="probe"],
+.cauldron-ingredient-op[data-spw-operator="wonder"] { color: var(--op-probe-color, #8b5cf6); }
+.cauldron-ingredient-op[data-spw-operator="object"],
+.cauldron-ingredient-op[data-spw-operator="integration"] { color: var(--op-object-color, #c48a28); }
+.cauldron-ingredient-op[data-spw-operator="ref"],
+.cauldron-ingredient-op[data-spw-operator="potential"] { color: var(--op-ref-color, #3b82f6); }
+.cauldron-ingredient-op[data-spw-operator="action"] { color: var(--op-action-color, #0d9488); }
+.cauldron-ingredient-op[data-spw-operator="topic"],
+.cauldron-ingredient-op[data-spw-operator="concept"] { color: var(--op-topic-color, #10b981); }
+
+.cauldron-ingredient-expr {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.cauldron-ingredient-meta-group {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.22rem;
+  font-size: 0.82em;
+}
+
+.cauldron-ingredient-meta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.08rem 0.32rem;
+  border-radius: calc(var(--shape-control, 0.78rem) - 0.35rem);
+  background: color-mix(in srgb, var(--ink, #161c1d) 5%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-size: 0.88em;
+}
+
+.cauldron-ingredient-meta[data-spw-wonder] {
+  color: var(--op-probe-color, #8b5cf6);
+  background: color-mix(in srgb, var(--op-probe-color, #8b5cf6) 8%, transparent);
+}
+
+.cauldron-ingredient-meta.cauldron-primed,
+.cauldron-ingredient[data-spw-ingredient-primed] {
+  border-color: color-mix(in srgb, var(--op-object-color, #c48a28) 46%, var(--footer-panel-line));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--op-object-color, #c48a28) 12%);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--op-object-color, #c48a28) 18%, transparent);
+}
+
+.cauldron-ingredient-meta.cauldron-deep-link {
+  color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 84%, var(--ink));
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--spw-control-transition-fast, 120ms ease);
+}
+
+.cauldron-ingredient-meta.cauldron-deep-link:hover,
+.cauldron-ingredient-meta.cauldron-deep-link:focus-visible {
+  text-decoration: underline;
+  color: var(--ink, #161c1d);
+}
+
+.cauldron-ingredient-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  min-height: 1.25rem;
+  padding: 0 0.18rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-muted, rgba(14, 18, 20, 0.52));
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--spw-control-transition-fast, 120ms ease),
+    color var(--spw-control-transition-fast, 120ms ease),
+    transform var(--spw-control-transition-fast, 120ms ease);
+}
+
+.cauldron-ingredient-remove:hover,
+.cauldron-ingredient-remove:focus-visible {
+  background: color-mix(in srgb, var(--op-action-color, #0d9488) 14%, transparent);
+  color: var(--ink, #161c1d);
+  transform: scale(1.15);
+}
+
+/* Lifecycle phase variations */
+.cauldron-ingredient[data-spw-ingredient-phase="resonant"] {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 46%, var(--footer-panel-line));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, transparent);
+}
+
+.cauldron-ingredient[data-spw-ingredient-phase="decayed"] {
+  border-style: dashed;
+  opacity: 0.74;
+}
+
+/* ─── Cauldron Output & Crystallization Panel ────────────────────────────── */
+
+.site-footer__cauldron-output {
+  margin-top: 0.65rem;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 26%, var(--footer-panel-line));
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--component-accent, var(--active-op-color, var(--teal))) 6%);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--ink, #0e1214) 4%, transparent);
+}
+
+.cauldron-combination-record,
+.cauldron-crystallization {
+  display: grid;
+  gap: 0.38rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-xs, 0.8rem);
+}
+
+.cauldron-section-label {
+  margin: 0;
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+.cauldron-forces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.cauldron-forces .op-chip {
+  padding: 0.12rem 0.42rem;
+  border-radius: var(--shape-control, 0.78rem);
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, transparent);
+  font-weight: 600;
+}
+
+.cauldron-expressions code {
+  padding: 0.12rem 0.38rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--ink, #161c1d) 6%, transparent);
+  font-weight: 600;
+}
+
+.cauldron-mnemonic {
+  padding: 0.55rem 0.75rem;
+  border-radius: calc(var(--shape-control, 0.78rem) - 0.2rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 96%, transparent);
+  border-left: 3px solid var(--component-accent, var(--active-op-color, var(--teal)));
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--ink, rgba(14, 18, 20, 0.95));
+}
+
+.cauldron-functional {
+  margin-top: 0.35rem;
+}
+
+.cauldron-functional summary {
+  cursor: pointer;
+  font-size: var(--text-size-2xs, 0.72rem);
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
+  user-select: none;
+}
+
+.cauldron-functional pre {
+  margin-top: 0.35rem;
+  padding: 0.55rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--surface-code, #161c1d) 96%, transparent);
+  color: #d1d5db;
+  font-size: 0.75rem;
+  overflow-x: auto;
+}
+
+.cauldron-garden-provenance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.45rem;
+  padding-top: 0.45rem;
+  border-top: 1px dashed color-mix(in srgb, var(--footer-panel-line) 75%, transparent);
+  font-size: var(--text-size-2xs, 0.72rem);
+}
+
+.spell-provenance__label {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+.spell-provenance__trace {
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
+}
+
+.garden-action.spell-action {
+  padding: 0.12rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 28%, var(--footer-panel-line));
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.88));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  cursor: pointer;
+}
+
+.garden-action.spell-action:hover,
+.garden-action.spell-action:focus-visible {
+  border-color: var(--component-accent, var(--active-op-color, var(--teal)));
+  background: var(--surface-strong, #fff);
 }
 
 .cauldron-ingredient.is-cauldron-ingredient-new,

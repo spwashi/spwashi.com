@@ -28,7 +28,11 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { composeOpBundle } from '/public/js/kernel/shared.js';
+import {
+  composeOpBundle,
+  detectOperator,
+  getOperatorDefinition,
+} from '/public/js/kernel/shared.js';
 import { guardCall } from '/public/js/kernel/dom-render.js';
 import {
   CAULDRON_CONTRACT,
@@ -1013,7 +1017,13 @@ function renderIngredientsList(ingredients) {
   container.dataset.lastSignature = signature;
 
   const html = ingredients.map((ing, idx) => {
-    const op = ing.operator ? `<span class="cauldron-ingredient-op" data-spw-operator="${ing.operator}">${ing.operator}</span>` : '';
+    const rawOp = ing.operator || inferOperator(ing.expression || '');
+    const opDef = rawOp ? (getOperatorDefinition(rawOp) || detectOperator(rawOp)) : null;
+    const opType = opDef?.type || rawOp || '';
+    const opSigil = opDef?.prefix || rawOp || '';
+    const op = opSigil && opType
+      ? `<span class="cauldron-ingredient-op" data-spw-operator="${escapeHtml(opType)}" title="${escapeHtml(opDef?.label || opType)}">${escapeHtml(opSigil)}</span>`
+      : '';
 
     // Show the payload-aligned native form when capture managed to read one -
     // `~orient[media-field-guide]{about.website.deep}` says where the fragment
@@ -1115,8 +1125,10 @@ function renderIngredientsList(ingredients) {
             data-spw-cauldron-ingredient
             data-spw-ingredient-state="collected"
             data-spw-op="${escapeHtml(composeOpBundle(ing.semanticExpression || ing.expression))}"
+            ${opType ? `data-spw-operator="${escapeHtml(opType)}"` : ''}
             data-spw-semantic-expression="${escapeHtml(ing.semanticExpression || ing.expression)}"
             data-spw-ingredient-phase="${phase}"
+            data-spw-fixity="${escapeHtml(ing.fixity || ing.payload?.fixity || 'tending')}"
             data-spw-source-route="${escapeHtml(ing.provenance?.route || '')}"
             ${ing.provenance?.anchor ? `data-spw-source-anchor="${escapeHtml(ing.provenance.anchor)}"` : ''}
             data-spw-source-element="${escapeHtml(ing.sourceElement || ing.expression)}"
@@ -1315,7 +1327,12 @@ export function mixIngredients() {
     <div class="cauldron-combination-record">
       <p class="cauldron-section-label">Combination Record — what was actually combined</p>
       <div class="cauldron-forces">
-        ${operators.length ? `Forces: ${operators.map(op => `<span class="op-chip" data-spw-operator="${op.replace(/[^#>?@~!*^<]+/g, '')}">${op}</span>`).join(' ')}` : ''}
+        ${operators.length ? `Forces: ${operators.map(rawOp => {
+          const def = getOperatorDefinition(rawOp) || detectOperator(rawOp);
+          const type = def?.type || rawOp;
+          const sigil = def?.prefix || rawOp;
+          return `<span class="op-chip" data-spw-operator="${escapeHtml(type)}" title="${escapeHtml(def?.label || type)}">${escapeHtml(sigil)} ${escapeHtml(type)}</span>`;
+        }).join(' ')}` : ''}
       </div>
       <div class="cauldron-expressions">
         ${expressions.map(expr => `<code data-spw-semantic-expression="${escapeHtml(expr)}">${escapeHtml(expr)}</code>`).join(' <span class="cauldron-plus">+</span> ')}
