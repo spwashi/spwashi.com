@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-16T02:14:49.676Z",
+  "generatedAt": "2026-08-23T21:58:16.597Z",
   "sourceRoot": "/public/images/",
-  "count": 384,
+  "count": 379,
   "concepts": [
     "about",
     "algorithm",
@@ -2629,126 +2629,6 @@
       "swapHint": "Use /public/images/renders/_raw/spwashi_moss_covered_metal_--profile_3q5khel_--v_7_6709bec8-cc21-4b8b-b54f-e43139b1b86a.png when a render visual needs a stable tracked asset."
     },
     {
-      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_40e653d8-fc96-4a81-b8f1-95b727075e94",
-      "title": "Papergami Machinery For Cognitive Layout And Web Design 40e653d8 Fc96 4a81 B8f1 95b727075e94",
-      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_40e653d8-fc96-4a81-b8f1-95b727075e94.png",
-      "directory": "public/images/renders/_raw",
-      "format": "png",
-      "bytes": 1652378,
-      "role": "render",
-      "concepts": [
-        "style-reference",
-        "surface",
-        "design"
-      ],
-      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_40e653d8-fc96-4a81-b8f1-95b727075e94.png when a style-reference / surface / design visual needs a stable tracked asset."
-    },
-    {
-      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_480e1202-d03a-458a-9901-9332064234fd",
-      "title": "Papergami Machinery For Cognitive Layout And Web Design 480e1202 D03a 458a 9901 9332064234fd",
-      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_480e1202-d03a-458a-9901-9332064234fd.png",
-      "directory": "public/images/renders/_raw",
-      "format": "png",
-      "bytes": 1562656,
-      "role": "render",
-      "concepts": [
-        "style-reference",
-        "surface",
-        "design"
-      ],
-      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_480e1202-d03a-458a-9901-9332064234fd.png when a style-reference / surface / design visual needs a stable tracked asset."
-    },
-    {
-      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_4cc4be87-b09c-4811-8351-32aef42f8e8e",
-      "title": "Papergami Machinery For Cognitive Layout And Web Design 4cc4be87 B09c 4811 8351 32aef42f8e8e",
-      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_4cc4be87-b09c-4811-8351-32aef42f8e8e.png",
-      "directory": "public/images/renders/_raw",
-      "format": "png",
-      "bytes": 1393820,
-      "role": "render",
-      "concepts": [
-        "style-reference",
-        "surface",
-        "design"
-      ],
-      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_4cc4be87-b09c-4811-8351-32aef42f8e8e.png when a style-reference / surface / design visual needs a stable tracked asset."
-    },
-    {
-      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_5501fc63-f058-448c-8d59-2164db78df0c",
-      "title": "Papergami Machinery For Cognitive Layout And Web Design 5501fc63 F058 448c 8d59 2164db78df0c",
-      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_5501fc63-f058-448c-8d59-2164db78df0c.png",
-      "directory": "public/images/renders/_raw",
-      "format": "png",
-      "bytes": 1466568,
-      "role": "render",
-      "concepts": [
-        "style-reference",
-        "surface",
-        "design"
-      ],
-      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_5501fc63-f058-448c-8d59-2164db78df0c.png when a style-reference / surface / design visual needs a stable tracked asset."
-    },
-    {
-      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_80eab55b-38c7-49b9-b58e-70a9f477c4a3",
-      "title": "Papergami Machinery For Cognitive Layout And Web Design 80eab55b 38c7 49b9 B58e 70a9f477c4a3",
-      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_80eab55b-38c7-49b9-b58e-70a9f477c4a3.png",
-      "directory": "public/images/renders/_raw",
-      "format": "png",
-      "bytes": 1585511,
-      "role": "render",
-      "concepts": [
-        "style-reference",
-        "surface",
-        "design"
-      ],
-      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_80eab55b-38c7-49b9-b58e-70a9f477c4a3.png when a style-reference / surface / design visual needs a stable tracked asset."
-    },
-    {
-      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_c8ab90c1-35ee-4d6b-8e60-08a64095befb",
-      "title": "Papergami Machinery For Cognitive Layout And Web Design C8ab90c1 35ee 4d6b 8e60 08a64095befb",
-      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_c8ab90c1-35ee-4d6b-8e60-08a64095befb.png",
-      "directory": "public/images/renders/_raw",
-      "format": "png",
-      "bytes": 1667070,
-      "role": "render",
-      "concepts": [
-        "style-reference",
-        "surface",
-        "design"
-      ],
-      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_c8ab90c1-35ee-4d6b-8e60-08a64095befb.png when a style-reference / surface / design visual needs a stable tracked asset."
-    },
-    {
-      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_cdd1b9f4-e2a0-4873-a74e-d9ec19ddf78a",
-      "title": "Papergami Machinery For Cognitive Layout And Web Design Cdd1b9f4 E2a0 4873 A74e D9ec19ddf78a",
-      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_cdd1b9f4-e2a0-4873-a74e-d9ec19ddf78a.png",
-      "directory": "public/images/renders/_raw",
-      "format": "png",
-      "bytes": 1594839,
-      "role": "render",
-      "concepts": [
-        "style-reference",
-        "surface",
-        "design"
-      ],
-      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_cdd1b9f4-e2a0-4873-a74e-d9ec19ddf78a.png when a style-reference / surface / design visual needs a stable tracked asset."
-    },
-    {
-      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_edcaed11-1323-4dcb-ac24-103d7c9e2d9d",
-      "title": "Papergami Machinery For Cognitive Layout And Web Design Edcaed11 1323 4dcb Ac24 103d7c9e2d9d",
-      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_edcaed11-1323-4dcb-ac24-103d7c9e2d9d.png",
-      "directory": "public/images/renders/_raw",
-      "format": "png",
-      "bytes": 1439992,
-      "role": "render",
-      "concepts": [
-        "style-reference",
-        "surface",
-        "design"
-      ],
-      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_edcaed11-1323-4dcb-ac24-103d7c9e2d9d.png when a style-reference / surface / design visual needs a stable tracked asset."
-    },
-    {
       "id": "spwashi_shorse_shark_horse_hybrid_--profile_3q5khel_--stylize_7_cc6cdadc-9d37-4fcd-8126-c4b6aa90aec8",
       "title": "Shorse Shark Horse Hybrid Profile 3q5khel Stylize 7 Cc6cdadc 9d37 4fcd 8126 C4b6aa90aec8",
       "path": "/public/images/renders/_raw/spwashi_shorse_shark_horse_hybrid_--profile_3q5khel_--stylize_7_cc6cdadc-9d37-4fcd-8126-c4b6aa90aec8.png",
@@ -3718,6 +3598,39 @@
       "role": "render",
       "concepts": [],
       "swapHint": "Use /public/images/renders/2026-08-13-spw-fluid-study/cauldron-spw-fluid-4.avif when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "crew-gold-record",
+      "title": "Crew Gold Record",
+      "path": "/public/images/renders/2026-08-22-recovered-gold-study/crew-gold-record.jpg",
+      "directory": "public/images/renders/2026-08-22-recovered-gold-study",
+      "format": "jpg",
+      "bytes": 309233,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-22-recovered-gold-study/crew-gold-record.jpg when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "recovered-gold-voyager",
+      "title": "Recovered Gold Voyager",
+      "path": "/public/images/renders/2026-08-22-recovered-gold-study/recovered-gold-voyager.jpg",
+      "directory": "public/images/renders/2026-08-22-recovered-gold-study",
+      "format": "jpg",
+      "bytes": 316443,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-22-recovered-gold-study/recovered-gold-voyager.jpg when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "upcycled-gold-feedstock",
+      "title": "Upcycled Gold Feedstock",
+      "path": "/public/images/renders/2026-08-22-recovered-gold-study/upcycled-gold-feedstock.jpg",
+      "directory": "public/images/renders/2026-08-22-recovered-gold-study",
+      "format": "jpg",
+      "bytes": 538344,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-22-recovered-gold-study/upcycled-gold-feedstock.jpg when a render visual needs a stable tracked asset."
     },
     {
       "id": "papergami-architecture",
