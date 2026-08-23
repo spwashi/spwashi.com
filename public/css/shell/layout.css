@@ -37,8 +37,8 @@
   --page-width: 72rem;
   --page-width-reading: 56rem;
   --page-width-newspaper: 68rem;
-  --page-width-wide: 84rem;
-  --page-width-atlas: 104rem;
+  --page-width-wide: 88rem;
+  --page-width-atlas: 108rem;
   /* One page gutter. Body owns safe-area; chrome/main/footer use this only. */
   --page-gutter-inline: var(--page-gutter, clamp(0.75rem, 2.5vw, 1.5rem));
   --page-gutter-block: clamp(
@@ -1274,7 +1274,7 @@ figure.generic-figure,
 @media (max-width: 22.5rem) {
   :root {
     --page-gutter-inline: 0.5rem;
-    --spw-component-pad: 0.62rem;
+    --spw-component-pad: 0.58rem;
   }
 
   .spw-chip,
@@ -1282,7 +1282,22 @@ figure.generic-figure,
   .meta-chip,
   .info-chip {
     font-size: 0.65rem;
-    padding-inline: 0.35rem;
+    padding-inline: 0.32rem;
+  }
+}
+
+/* Tall aspect-ratio viewports (long+narrow screens / modern phones) */
+@media (max-width: 30rem) and (min-aspect-ratio: 1/2) {
+  :root {
+    --page-gutter-block: clamp(0.75rem, 1.8vh, 1.25rem);
+    --page-stack-gap: clamp(0.85rem, 2vh, 1.35rem);
+  }
+}
+
+/* Extra-wide displays (≥90rem / 1440px) */
+@media (min-width: 90rem) {
+  :root {
+    --page-gutter-inline: var(--page-gutter, clamp(1.25rem, 3vw, 2.75rem));
   }
 }
 

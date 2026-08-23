@@ -23,6 +23,21 @@ function getTouchDistance(touches) {
   return Math.hypot(second.clientX - first.clientX, second.clientY - first.clientY);
 }
 
+function getTouchCenter(touches) {
+  if (!touches || touches.length < 2) return { x: 0, y: 0 };
+  const [first, second] = touches;
+  return {
+    x: Math.round((first.clientX + second.clientX) / 2),
+    y: Math.round((first.clientY + second.clientY) / 2),
+  };
+}
+
+function getVariantForIndex(index) {
+  if (index <= 1) return 'compact';
+  if (index >= 4) return 'roomy';
+  return 'balanced';
+}
+
 function isPinchTextScaleEnabled() {
   return getRootPreference('spwPinchTextScale', 'on') !== 'off';
 }
@@ -30,6 +45,7 @@ function isPinchTextScaleEnabled() {
 export function initPinchTextScale(root) {
   const main = root.querySelector?.('main');
   if (!(main instanceof HTMLElement)) return () => {};
+  const html = document.documentElement;
 
   const state = {
     active: false,
@@ -43,9 +59,17 @@ export function initPinchTextScale(root) {
     state.startDistance = 0;
     state.startIndex = clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale()));
     state.previewIndex = state.startIndex;
-    [document.documentElement, document.body, main].forEach((node) => {
+
+    html.style.removeProperty('--spw-pinch-factor');
+    html.style.removeProperty('--spw-pinch-delta');
+    html.style.removeProperty('--spw-pinch-origin-x');
+    html.style.removeProperty('--spw-pinch-origin-y');
+
+    [html, document.body, main].forEach((node) => {
       if (!(node instanceof HTMLElement)) return;
       node.removeAttribute(PINCH_ACTIVE_ATTR);
+      node.removeAttribute('data-spw-pinch-direction');
+      node.removeAttribute('data-spw-pinch-variant');
     });
   };
 
@@ -67,10 +91,20 @@ export function initPinchTextScale(root) {
     state.startIndex = clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale()));
     state.previewIndex = state.startIndex;
 
-    [document.documentElement, document.body, main].forEach((node) => {
+    const center = getTouchCenter(event.touches);
+    html.style.setProperty('--spw-pinch-origin-x', `${center.x}px`);
+    html.style.setProperty('--spw-pinch-origin-y', `${center.y}px`);
+    html.style.setProperty('--spw-pinch-factor', '1');
+    html.style.setProperty('--spw-pinch-delta', '0');
+
+    const variant = getVariantForIndex(state.startIndex);
+
+    [html, document.body, main].forEach((node) => {
       if (!(node instanceof HTMLElement)) return;
       writeAttributes(node, {
         [PINCH_ACTIVE_ATTR]: 'true',
+        'data-spw-pinch-direction': 'neutral',
+        'data-spw-pinch-variant': variant,
       });
     });
   };
@@ -82,10 +116,26 @@ export function initPinchTextScale(root) {
     const distance = getTouchDistance(event.touches);
     if (!(distance > 0) || !(state.startDistance > 0)) return;
 
-    const delta = Math.log2(distance / state.startDistance);
+    const ratio = distance / state.startDistance;
+    const delta = Math.log2(ratio);
     const stepChange = Math.round(delta / 0.12);
     const nextIndex = clampFontScaleIndex(state.startIndex + stepChange);
+
     event.preventDefault();
+
+    html.style.setProperty('--spw-pinch-factor', ratio.toFixed(3));
+    html.style.setProperty('--spw-pinch-delta', delta.toFixed(3));
+
+    const direction = delta > 0.04 ? 'expand' : delta < -0.04 ? 'contract' : 'neutral';
+    const variant = getVariantForIndex(nextIndex);
+
+    [html, document.body, main].forEach((node) => {
+      if (!(node instanceof HTMLElement)) return;
+      writeAttributes(node, {
+        'data-spw-pinch-direction': direction,
+        'data-spw-pinch-variant': variant,
+      });
+    });
 
     if (nextIndex === state.previewIndex) return;
     state.previewIndex = nextIndex;
@@ -117,6 +167,12 @@ export function initPinchTextScale(root) {
 }
 
 export const spwModule = {
-  updates: ['attr:data-spw-font-size-scale', 'attr:data-spw-pinch-active'],
+  updates: [
+    'attr:data-spw-font-size-scale',
+    'attr:data-spw-pinch-active',
+    'attr:data-spw-pinch-scaling',
+    'attr:data-spw-pinch-direction',
+    'attr:data-spw-pinch-variant',
+  ],
   mount: (mod, ctx, root) => initPinchTextScale(root),
 };

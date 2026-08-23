@@ -12,23 +12,23 @@
    ========================================================================== */
 
 :root {
-  --pack-tier-compact-pad: var(--spw-component-pad-tight, 0.65rem);
-  --pack-tier-compact-gap: var(--component-gap-tight, 0.55rem);
+  --pack-tier-compact-pad: var(--spw-component-pad-tight, 0.62rem);
+  --pack-tier-compact-gap: var(--component-gap-tight, 0.5rem);
   --pack-tier-compact-grid: var(--grid-min-compact, 12rem);
   --pack-tier-compact-measure: var(--measure-compact, 32ch);
-  --pack-tier-compact-flow: calc(var(--spw-rhythm-unit, 1rem) * 0.78);
+  --pack-tier-compact-flow: calc(var(--spw-rhythm-unit, 1rem) * 0.72);
 
-  --pack-tier-balanced-pad: var(--spw-component-pad, 0.9rem);
-  --pack-tier-balanced-gap: var(--component-gap, 0.9rem);
+  --pack-tier-balanced-pad: var(--spw-component-pad, 0.88rem);
+  --pack-tier-balanced-gap: var(--component-gap, 0.88rem);
   --pack-tier-balanced-grid: var(--grid-min-card, 15rem);
   --pack-tier-balanced-measure: var(--measure-panel, 52ch);
-  --pack-tier-balanced-flow: calc(var(--spw-rhythm-unit, 1rem) * 0.95);
+  --pack-tier-balanced-flow: calc(var(--spw-rhythm-unit, 1rem) * 0.92);
 
   --pack-tier-roomy-pad: var(--spw-component-pad-loose, 1.15rem);
   --pack-tier-roomy-gap: var(--component-gap-loose, 1.2rem);
   --pack-tier-roomy-grid: var(--grid-min-feature, 19rem);
   --pack-tier-roomy-measure: var(--measure-reading, 68ch);
-  --pack-tier-roomy-flow: calc(var(--spw-rhythm-unit, 1rem) * 1.12);
+  --pack-tier-roomy-flow: calc(var(--spw-rhythm-unit, 1rem) * 1.15);
 }
 
 /* --------------------------------------------------------------------------
@@ -38,7 +38,9 @@
 :where(
   [data-spw-density="dense"],
   [data-spw-component-density="dense"],
-  html[data-spw-component-density="dense"] :where(.spw-frame, .frame-panel, .frame-card)
+  [data-spw-pinch-variant="compact"],
+  html[data-spw-component-density="dense"] :where(.spw-frame, .frame-panel, .frame-card),
+  html[data-spw-pinch-variant="compact"] :where(.spw-frame, .frame-panel, .frame-card)
 ) {
   --component-pad: var(--pack-tier-compact-pad);
   --component-gap: var(--pack-tier-compact-gap);
@@ -60,7 +62,9 @@
   [data-spw-density="soft"],
   [data-spw-density="roomy"],
   [data-spw-component-density="roomy"],
-  html[data-spw-component-density="roomy"] :where(.spw-frame, .frame-panel, .frame-card)
+  [data-spw-pinch-variant="roomy"],
+  html[data-spw-component-density="roomy"] :where(.spw-frame, .frame-panel, .frame-card),
+  html[data-spw-pinch-variant="roomy"] :where(.spw-frame, .frame-panel, .frame-card)
 ) {
   --component-pad: var(--pack-tier-roomy-pad);
   --component-gap: var(--pack-tier-roomy-gap);
@@ -97,14 +101,14 @@
 
 /* Settings line-spacing routes into packing + typography together */
 :where(html[data-spw-line-spacing="compact"]) {
-  --site-line-height: var(--site-line-height-tight, 1.52);
+  --site-line-height: var(--site-line-height-tight, 1.32);
   --component-gap: calc(var(--pack-tier-balanced-gap) * 0.9);
   --component-pad: calc(var(--pack-tier-balanced-pad) * 0.94);
   --spw-flow-space: calc(var(--pack-tier-balanced-flow) * 0.92);
 }
 
 :where(html[data-spw-line-spacing="loose"]) {
-  --site-line-height: var(--site-line-height-loose, 1.82);
+  --site-line-height: var(--site-line-height-loose, 1.8);
   --component-gap: calc(var(--pack-tier-balanced-gap) * 1.1);
   --component-pad: calc(var(--pack-tier-balanced-pad) * 1.05);
   --spw-flow-space: calc(var(--pack-tier-balanced-flow) * 1.08);
@@ -115,8 +119,8 @@
    -------------------------------------------------------------------------- */
 
 :where([data-spw-textual-role="note"], .inline-note, .settings-note, .settings-start-note) {
-  font-size: var(--text-size-sm, 0.88rem);
-  line-height: var(--site-line-height-tight, 1.4);
+  font-size: var(--text-size-sm, 0.84rem);
+  line-height: var(--site-line-height-tight, 1.32);
   max-inline-size: min(100%, var(--pack-tier-balanced-measure));
   text-wrap: pretty;
   overflow-wrap: break-word;
@@ -124,9 +128,9 @@
 }
 
 :where(.spec-kicker, [data-spw-textual-role="kicker"], .vibe-widget-kicker) {
-  font-size: var(--text-size-label, 0.74rem);
+  font-size: var(--text-size-label, 0.7rem);
   letter-spacing: var(--tracking-spec, 0.06em);
-  line-height: var(--site-line-height-tight, 1.35);
+  line-height: var(--line-height-ui, 1.1);
   max-inline-size: min(100%, var(--measure-card, 42ch));
   text-wrap: balance;
   overflow-wrap: break-word;
@@ -162,8 +166,8 @@
   [data-spw-measure-kind="objective"]
 ) {
   font-family: var(--site-mono-font, monospace);
-  font-size: var(--text-size-xs, 0.76rem);
-  line-height: var(--site-line-height-tight, 1.35);
+  font-size: var(--text-size-xs, 0.72rem);
+  line-height: var(--line-height-mono, 1.42);
   letter-spacing: 0.01em;
 }
 

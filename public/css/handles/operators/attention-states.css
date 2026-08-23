@@ -251,12 +251,17 @@
    page does not move under a reader.
    ========================================================================== */
 
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='potential']:not(.spw-chip):not(.frame-sigil) {
+:where(span, strong, em, i, code, kbd, mark, small, time):is(
+  [data-spw-operator='potential'],
+  [data-spw-operator='ref']
+):not(.spw-chip):not(.frame-sigil) {
   text-decoration-style: dotted;
 }
 
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='wonder']:not(.spw-chip):not(.frame-sigil),
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='probe']:not(.spw-chip):not(.frame-sigil) {
+:where(span, strong, em, i, code, kbd, mark, small, time):is(
+  [data-spw-operator='wonder'],
+  [data-spw-operator='probe']
+):not(.spw-chip):not(.frame-sigil) {
   text-decoration-style: dashed;
 }
 
@@ -265,7 +270,23 @@
   text-decoration-color: color-mix(in srgb, var(--active-op-color, currentColor) 48%, transparent);
 }
 
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='integration']:not(.spw-chip):not(.frame-sigil) {
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='perspective']:not(.spw-chip):not(.frame-sigil) {
+  text-decoration-style: solid;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, currentColor) 48%, transparent);
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time):is(
+  [data-spw-operator='concept'],
+  [data-spw-operator='topic']
+):not(.spw-chip):not(.frame-sigil) {
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, var(--op-topic-color, #227c67) 54%, transparent);
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time):is(
+  [data-spw-operator='integration'],
+  [data-spw-operator='object']
+):not(.spw-chip):not(.frame-sigil) {
   text-decoration-style: double;
 }
 

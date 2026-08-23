@@ -1023,6 +1023,48 @@ html[data-spw-reduce-motion="on"] *::after {
   initial-value: 0;
 }
 
+/* Reading groove typographic focus & shift tokens */
+@property --spw-reading-rest-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.86;
+}
+
+@property --spw-reading-near-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.96;
+}
+
+@property --spw-reading-lead-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --spw-reading-near-shift {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0.035rem;
+}
+
+@property --spw-reading-lead-shift {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0.06rem;
+}
+
+@property --spw-pinch-factor {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --spw-pinch-delta {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 @property --spw-runtime-avg-module-ms {
   syntax: "<number>";
   inherits: true;
@@ -1173,10 +1215,10 @@ html[data-spw-reduce-motion="on"] *::after {
   --gap-inline-flow: var(--space-xs);
   --gap-inline-breath: var(--space-sm);
 
-  --gap-block-tight: var(--space-xs);
-  --gap-block-stack: var(--space-sm);
-  --gap-block-flow: var(--space-lg);
-  --gap-block-drift: var(--space-xl);
+  --gap-block-tight: var(--space-2xs);
+  --gap-block-stack: var(--space-xs);
+  --gap-block-flow: var(--space-md);
+  --gap-block-drift: var(--space-lg);
 
   --gap-surface: var(--spw-surface-gap);
   --gap-panel: clamp(0.65rem, 1.2vw, 0.9rem);
@@ -1203,12 +1245,12 @@ html[data-spw-reduce-motion="on"] *::after {
   --page-width: 72rem;
   --page-width-reading: 56rem;
   --page-width-newspaper: 68rem;
-  --page-width-wide: 84rem;
-  --page-width-atlas: 104rem;
+  --page-width-wide: 88rem;
+  --page-width-atlas: 108rem;
   --page-gutter: clamp(
     calc(var(--spw-rhythm-unit) * 0.72),
-    2.5vw,
-    calc(var(--spw-rhythm-unit) * 1.5)
+    2.6vw,
+    calc(var(--spw-rhythm-unit) * 1.8)
   );
 
   --touch-target-min: 2.75rem;
@@ -1221,6 +1263,21 @@ html[data-spw-reduce-motion="on"] *::after {
   --attention-field-radius: 0.4;
   --attention-field-decay: 0.65;
   --attention-echo-duration: 480ms;
+
+  /* -- Reading Groove & Typographic Attention --
+     Named here so first paint and no-JS can interpolate. typesetting.css
+     restates the same names when data-spw-reading-groove is on. */
+  --spw-reading-rest-opacity: 0.86;
+  --spw-reading-near-opacity: 0.96;
+  --spw-reading-lead-opacity: 1;
+  --spw-reading-near-shift: 0.035rem;
+  --spw-reading-lead-shift: 0.06rem;
+  --spw-reading-rest-color: color-mix(in oklab, var(--ink-soft, rgba(14, 18, 20, 0.74)) 96%, var(--ink, rgba(14, 18, 20, 0.92)) 4%);
+  --spw-reading-near-color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 98%, var(--active-op-color, #008080) 2%);
+  --spw-reading-lead-color: color-mix(in oklab, var(--ink-strong, #090b0c) 97%, var(--active-op-color, #008080) 3%);
+  --spw-reading-near-accent: color-mix(in oklab, var(--active-op-color, #008080) 4%, transparent);
+  --spw-reading-lead-accent: color-mix(in oklab, var(--active-op-color, #008080) 12%, transparent);
+  --spw-reading-lead-glow: inset 0.08rem 0 0 var(--spw-reading-lead-accent, transparent);
 
   /* -- Wonder Memory (attention-field.spw#tunable_parameters) --
      Same field_resonance_profile cluster as the three above; previously
@@ -1269,23 +1326,27 @@ html[data-spw-reduce-motion="on"] *::after {
   --font-family-display: Inter, "Segoe UI", system-ui, sans-serif;
   --font-family-manuscript: Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 
-  --text-size-2xs: clamp(0.69rem, 0.67rem + 0.05vw, 0.74rem);
-  --text-size-xs: clamp(0.76rem, 0.73rem + 0.08vw, 0.82rem);
-  --text-size-sm: clamp(0.88rem, 0.84rem + 0.1vw, 0.95rem);
-  --text-size-base: clamp(1rem, 0.98rem + 0.12vw, 1.06rem);
-  --text-size-lg: clamp(1.1rem, 1.04rem + 0.2vw, 1.22rem);
-  --text-size-xl: clamp(1.22rem, 1.12rem + 0.36vw, 1.42rem);
-  --text-size-2xl: clamp(1.46rem, 1.28rem + 0.7vw, 1.86rem);
-  --text-size-3xl: clamp(1.82rem, 1.52rem + 1.1vw, 2.45rem);
+  --text-size-2xs: clamp(0.66rem, 0.64rem + 0.06vw, 0.72rem);
+  --text-size-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.82rem);
+  --text-size-sm: clamp(0.84rem, 0.8rem + 0.14vw, 0.94rem);
+  --text-size-base: clamp(0.96rem, 0.92rem + 0.2vw, 1.08rem);
+  --text-size-lg: clamp(1.08rem, 1.02rem + 0.3vw, 1.25rem);
+  --text-size-xl: clamp(1.22rem, 1.14rem + 0.45vw, 1.48rem);
+  --text-size-2xl: clamp(1.42rem, 1.3rem + 0.8vw, 1.92rem);
+  --text-size-3xl: clamp(1.75rem, 1.5rem + 1.25vw, 2.5rem);
 
-  --text-size-chip: clamp(0.78rem, 0.75rem + 0.08vw, 0.86rem);
-  --text-size-nav: clamp(0.82rem, 0.79rem + 0.12vw, 0.92rem);
-  --text-size-label: clamp(0.74rem, 0.71rem + 0.08vw, 0.81rem);
+  --text-size-chip: clamp(0.75rem, 0.72rem + 0.1vw, 0.85rem);
+  --text-size-nav: clamp(0.8rem, 0.76rem + 0.14vw, 0.92rem);
+  --text-size-label: clamp(0.7rem, 0.68rem + 0.08vw, 0.78rem);
 
   --site-root-font-size: 100%;
-  --site-line-height: 1.68;
-  --site-line-height-tight: 1.35;
-  --site-line-height-loose: 1.82;
+  --site-line-height: 1.64;
+  --site-line-height-tight: 1.32;
+  --site-line-height-loose: 1.8;
+  --line-height-heading: 1.15;
+  --line-height-heading-sm: 1.22;
+  --line-height-ui: 1.1;
+  --line-height-mono: 1.42;
 
   --site-mono-font: var(--font-family-mono);
   --site-sans-font: var(--font-family-sans);
@@ -2435,25 +2496,42 @@ html[data-author-mode="archive"] {
    10. Runtime Density, Theme, Contrast, and Motion Modes
    ========================================================================== */
 
-/* Typography-to-container rhythm */
+/* Typography-to-container rhythm & mind-logic packing coordination */
 html[data-spw-font-size-scale="70"] {
   --spw-type-space-scale: 0.86;
+  --spw-pack-tier: compact;
+  --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.82);
+  --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.74);
+  --spw-card-rhythm: clamp(0.42rem, 1.4cqi, 0.72rem);
 }
 
 html[data-spw-font-size-scale="80"] {
   --spw-type-space-scale: 0.9;
+  --spw-pack-tier: compact;
+  --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.88);
+  --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.78);
+  --spw-card-rhythm: clamp(0.45rem, 1.5cqi, 0.76rem);
 }
 
 html[data-spw-font-size-scale="90"] {
   --spw-type-space-scale: 0.95;
+  --spw-pack-tier: balanced;
 }
 
 html[data-spw-font-size-scale="110"] {
   --spw-type-space-scale: 1.08;
+  --spw-pack-tier: roomy;
+  --spw-flow-space: calc(var(--spw-rhythm-unit) * 1.08);
+  --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.92);
+  --spw-card-rhythm: clamp(0.52rem, 1.7cqi, 0.88rem);
 }
 
 html[data-spw-font-size-scale="120"] {
   --spw-type-space-scale: 1.16;
+  --spw-pack-tier: roomy;
+  --spw-flow-space: calc(var(--spw-rhythm-unit) * 1.15);
+  --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.98);
+  --spw-card-rhythm: clamp(0.56rem, 1.9cqi, 0.95rem);
 }
 
 html[data-spw-line-spacing="compact"] {
@@ -2823,12 +2901,46 @@ html[data-spw-reduce-motion="on"] {
   :root {
     --spw-device-space-scale: 0.84;
     --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.78);
-    --spw-surface-padding: calc(var(--spw-rhythm-unit) * 0.68);
-    --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.68);
+    --spw-surface-padding: calc(var(--spw-rhythm-unit) * 0.65);
+    --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.65);
+    --spw-component-gap: calc(var(--spw-rhythm-unit) * 0.65);
     --spw-shell-trace-gap: 0.38rem;
-    --spw-shell-surface-padding-inline: 0.3rem;
-    --spw-control-padding-inline: 0.54rem;
-    --spw-control-gap: 0.22rem;
+    --spw-shell-surface-padding-inline: 0.28rem;
+    --spw-control-padding-inline: 0.52rem;
+    --spw-control-gap: 0.2rem;
+  }
+}
+
+@media (max-width: 22.5rem) {
+  :root {
+    --spw-device-space-scale: 0.8;
+    --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.74);
+    --spw-surface-padding: calc(var(--spw-rhythm-unit) * 0.58);
+    --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.58);
+    --spw-component-gap: calc(var(--spw-rhythm-unit) * 0.58);
+    --spw-control-padding-inline: 0.44rem;
+  }
+}
+
+/* Extra-wide displays (1440px+ and 1664px+) */
+@media (min-width: 90rem) {
+  :root {
+    --spw-device-space-scale: 1.05;
+    --page-gutter: clamp(1.5rem, 3.2vw, 2.75rem);
+    --spw-surface-padding: clamp(
+      calc(var(--spw-rhythm-unit) * 1.15),
+      2.5vw,
+      calc(var(--spw-rhythm-unit) * 1.8)
+    );
+    --spw-component-gap: calc(var(--spw-rhythm-unit) * 0.95);
+    --spw-surface-gap: calc(var(--spw-rhythm-unit) * 0.95);
+  }
+}
+
+@media (min-width: 104rem) {
+  :root {
+    --spw-device-space-scale: 1.08;
+    --page-gutter: clamp(2rem, 3.8vw, 3.5rem);
   }
 }
 }
@@ -2871,17 +2983,17 @@ html[data-spw-reduce-motion="on"] {
   --spw-pack-gap-active: var(--component-gap, 0.9rem);
 
   /* Fluid container coordinate system (derived from cqi) */
-  --spw-space-fluid: clamp(0.75rem, 2cqi, 1.25rem);
-  --spw-space-fluid-sm: clamp(0.5rem, 1.5cqi, 0.85rem);
-  --spw-space-fluid-lg: clamp(1rem, 3cqi, 1.75rem);
-  --spw-card-pad: clamp(0.75rem, 2.5cqi, 1.2rem);
-  --spw-card-rhythm: clamp(0.5rem, 1.8cqi, 0.85rem);
+  --spw-space-fluid: clamp(0.7rem, 2cqi, 1.25rem);
+  --spw-space-fluid-sm: clamp(0.45rem, 1.4cqi, 0.8rem);
+  --spw-space-fluid-lg: clamp(1rem, 3cqi, 1.85rem);
+  --spw-card-pad: clamp(0.7rem, 2.2cqi, 1.15rem);
+  --spw-card-rhythm: clamp(0.48rem, 1.6cqi, 0.82rem);
 
   /* Regional form-factor & aspect-ratio padding ladders */
-  --spw-region-pad-pocket: clamp(0.75rem, 2.2cqi, 1rem);
-  --spw-region-pad-fold: clamp(0.95rem, 2.6cqi, 1.35rem);
+  --spw-region-pad-pocket: clamp(0.65rem, 2cqi, 0.9rem);
+  --spw-region-pad-fold: clamp(0.9rem, 2.4cqi, 1.3rem);
   --spw-region-pad-broadsheet: clamp(1.1rem, 2.8cqi, 1.6rem);
-  --spw-region-pad-atlas: clamp(1.35rem, 3.2cqi, 2.1rem);
+  --spw-region-pad-atlas: clamp(1.4rem, 3.4cqi, 2.4rem);
   --spw-region-aspect-bias: 1;
   --spw-region-step-spine-width: 2px;
 
@@ -3525,8 +3637,8 @@ html[data-spw-reduce-motion="on"] {
   --page-width: 72rem;
   --page-width-reading: 56rem;
   --page-width-newspaper: 68rem;
-  --page-width-wide: 84rem;
-  --page-width-atlas: 104rem;
+  --page-width-wide: 88rem;
+  --page-width-atlas: 108rem;
   /* One page gutter. Body owns safe-area; chrome/main/footer use this only. */
   --page-gutter-inline: var(--page-gutter, clamp(0.75rem, 2.5vw, 1.5rem));
   --page-gutter-block: clamp(
@@ -4762,7 +4874,7 @@ figure.generic-figure,
 @media (max-width: 22.5rem) {
   :root {
     --page-gutter-inline: 0.5rem;
-    --spw-component-pad: 0.62rem;
+    --spw-component-pad: 0.58rem;
   }
 
   .spw-chip,
@@ -4770,7 +4882,22 @@ figure.generic-figure,
   .meta-chip,
   .info-chip {
     font-size: 0.65rem;
-    padding-inline: 0.35rem;
+    padding-inline: 0.32rem;
+  }
+}
+
+/* Tall aspect-ratio viewports (long+narrow screens / modern phones) */
+@media (max-width: 30rem) and (min-aspect-ratio: 1/2) {
+  :root {
+    --page-gutter-block: clamp(0.75rem, 1.8vh, 1.25rem);
+    --page-stack-gap: clamp(0.85rem, 2vh, 1.35rem);
+  }
+}
+
+/* Extra-wide displays (≥90rem / 1440px) */
+@media (min-width: 90rem) {
+  :root {
+    --page-gutter-inline: var(--page-gutter, clamp(1.25rem, 3vw, 2.75rem));
   }
 }
 
@@ -9938,6 +10065,47 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(6px);
 }
 
+/* Progressive enhancement: unenhanced fallback anchor becomes visible when keyboard focused */
+:where(.spw-section-handle:not([data-spw-handle-enhanced="true"])):is(:focus, :focus-visible) {
+  display: inline-flex;
+  opacity: 1;
+  pointer-events: auto;
+  transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0);
+  outline: 2px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 75%, transparent);
+  outline-offset: 2px;
+  z-index: var(--z-overlay, 200);
+}
+
+/* Progressive enhancement: scroll-driven reveal for no-JS or pre-hydration reading */
+@supports (animation-timeline: scroll()) {
+  @keyframes spw-fallback-handle-scroll-reveal {
+    0% {
+      opacity: 0;
+      pointer-events: none;
+      transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(6px);
+    }
+    100% {
+      opacity: 0.92;
+      pointer-events: auto;
+      transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0);
+    }
+  }
+
+  @media (max-width: 45rem) {
+    :where(.spw-section-handle:not([data-spw-handle-enhanced="true"]):not([data-spw-handle-state="visible"])) {
+      animation: spw-fallback-handle-scroll-reveal linear both;
+      animation-timeline: scroll(root);
+      animation-range: 120px 240px;
+    }
+  }
+
+  :is(html, body)[data-spw-section-handle-desktop="auto"] :where(.spw-section-handle:not([data-spw-handle-enhanced="true"]):not([data-spw-handle-state="visible"])) {
+    animation: spw-fallback-handle-scroll-reveal linear both;
+    animation-timeline: scroll(root);
+    animation-range: 120px 240px;
+  }
+}
+
 .spw-section-handle .spw-section-handle__op {
   color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 88%, var(--ink));
   font-weight: 600;
@@ -11323,7 +11491,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   color: color-mix(in srgb, var(--ink-strong, #090b0c) 94%, var(--active-op-color, var(--teal, #008080)) 6%);
   font-family: var(--site-sans-font, system-ui, sans-serif);
   font-feature-settings: "kern" 1, "liga" 1, "cv05" 1, "cv11" 1;
-  line-height: 1.18;
+  line-height: var(--line-height-heading, 1.15);
   letter-spacing: -0.02em;
   text-wrap: balance;
   overflow-wrap: break-word;
@@ -11338,49 +11506,49 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 
 /* Ranked air before headings — lower ranks sit closer to prior prose. */
 :where(h1) {
-  --spw-heading-flow-space-multiplier: 1.75;
-  font-size: clamp(2rem, 5vw, 3.15rem);
+  --spw-heading-flow-space-multiplier: 1.8;
+  font-size: clamp(1.95rem, 4.5vw, 3.15rem);
   font-weight: 800;
   letter-spacing: -0.034em;
   line-height: 1.1;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-1, 1)));
 }
 :where(h2) {
-  --spw-heading-flow-space-multiplier: 1.55;
-  font-size: clamp(1.5rem, 4vw, 2.05rem);
+  --spw-heading-flow-space-multiplier: 1.5;
+  font-size: clamp(1.45rem, 3.2vw, 2.05rem);
   font-weight: 700;
   letter-spacing: -0.026em;
-  line-height: 1.15;
+  line-height: var(--line-height-heading, 1.15);
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-2, 0.88)));
 }
 :where(h3) {
-  --spw-heading-flow-space-multiplier: 1.35;
-  font-size: clamp(1.25rem, 3vw, 1.52rem);
+  --spw-heading-flow-space-multiplier: 1.3;
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
   font-weight: 600;
   letter-spacing: -0.018em;
-  line-height: 1.22;
+  line-height: var(--line-height-heading-sm, 1.22);
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-3, 0.76)));
 }
 :where(h4) {
-  --spw-heading-flow-space-multiplier: 1.2;
-  font-size: clamp(1.1rem, 2vw, 1.26rem);
+  --spw-heading-flow-space-multiplier: 1.15;
+  font-size: clamp(1.05rem, 1.6vw, 1.24rem);
   font-weight: 600;
   letter-spacing: -0.012em;
-  line-height: 1.28;
+  line-height: 1.25;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-4, 0.64)));
 }
 :where(h5) {
-  --spw-heading-flow-space-multiplier: 1.1;
-  font-size: 1rem;
+  --spw-heading-flow-space-multiplier: 1.05;
+  font-size: 0.98rem;
   font-weight: 600;
   letter-spacing: 0;
-  line-height: 1.32;
+  line-height: 1.3;
 }
 :where(h6) {
   --spw-heading-flow-space-multiplier: 1;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.32;
   text-transform: uppercase;
   letter-spacing: 0.065em;
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
@@ -12307,6 +12475,14 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 
 :where(html[data-spw-pinch-scaling="true"], body[data-spw-pinch-scaling="true"]) {
   cursor: ns-resize;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+:where(html[data-spw-pinch-scaling="true"]) :where(main) {
+  transition:
+    padding var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    gap var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
 /* ==========================================================================
@@ -15989,23 +16165,23 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
    ========================================================================== */
 
 :root {
-  --pack-tier-compact-pad: var(--spw-component-pad-tight, 0.65rem);
-  --pack-tier-compact-gap: var(--component-gap-tight, 0.55rem);
+  --pack-tier-compact-pad: var(--spw-component-pad-tight, 0.62rem);
+  --pack-tier-compact-gap: var(--component-gap-tight, 0.5rem);
   --pack-tier-compact-grid: var(--grid-min-compact, 12rem);
   --pack-tier-compact-measure: var(--measure-compact, 32ch);
-  --pack-tier-compact-flow: calc(var(--spw-rhythm-unit, 1rem) * 0.78);
+  --pack-tier-compact-flow: calc(var(--spw-rhythm-unit, 1rem) * 0.72);
 
-  --pack-tier-balanced-pad: var(--spw-component-pad, 0.9rem);
-  --pack-tier-balanced-gap: var(--component-gap, 0.9rem);
+  --pack-tier-balanced-pad: var(--spw-component-pad, 0.88rem);
+  --pack-tier-balanced-gap: var(--component-gap, 0.88rem);
   --pack-tier-balanced-grid: var(--grid-min-card, 15rem);
   --pack-tier-balanced-measure: var(--measure-panel, 52ch);
-  --pack-tier-balanced-flow: calc(var(--spw-rhythm-unit, 1rem) * 0.95);
+  --pack-tier-balanced-flow: calc(var(--spw-rhythm-unit, 1rem) * 0.92);
 
   --pack-tier-roomy-pad: var(--spw-component-pad-loose, 1.15rem);
   --pack-tier-roomy-gap: var(--component-gap-loose, 1.2rem);
   --pack-tier-roomy-grid: var(--grid-min-feature, 19rem);
   --pack-tier-roomy-measure: var(--measure-reading, 68ch);
-  --pack-tier-roomy-flow: calc(var(--spw-rhythm-unit, 1rem) * 1.12);
+  --pack-tier-roomy-flow: calc(var(--spw-rhythm-unit, 1rem) * 1.15);
 }
 
 /* --------------------------------------------------------------------------
@@ -16015,7 +16191,9 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 :where(
   [data-spw-density="dense"],
   [data-spw-component-density="dense"],
-  html[data-spw-component-density="dense"] :where(.spw-frame, .frame-panel, .frame-card)
+  [data-spw-pinch-variant="compact"],
+  html[data-spw-component-density="dense"] :where(.spw-frame, .frame-panel, .frame-card),
+  html[data-spw-pinch-variant="compact"] :where(.spw-frame, .frame-panel, .frame-card)
 ) {
   --component-pad: var(--pack-tier-compact-pad);
   --component-gap: var(--pack-tier-compact-gap);
@@ -16037,7 +16215,9 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   [data-spw-density="soft"],
   [data-spw-density="roomy"],
   [data-spw-component-density="roomy"],
-  html[data-spw-component-density="roomy"] :where(.spw-frame, .frame-panel, .frame-card)
+  [data-spw-pinch-variant="roomy"],
+  html[data-spw-component-density="roomy"] :where(.spw-frame, .frame-panel, .frame-card),
+  html[data-spw-pinch-variant="roomy"] :where(.spw-frame, .frame-panel, .frame-card)
 ) {
   --component-pad: var(--pack-tier-roomy-pad);
   --component-gap: var(--pack-tier-roomy-gap);
@@ -16074,14 +16254,14 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 
 /* Settings line-spacing routes into packing + typography together */
 :where(html[data-spw-line-spacing="compact"]) {
-  --site-line-height: var(--site-line-height-tight, 1.52);
+  --site-line-height: var(--site-line-height-tight, 1.32);
   --component-gap: calc(var(--pack-tier-balanced-gap) * 0.9);
   --component-pad: calc(var(--pack-tier-balanced-pad) * 0.94);
   --spw-flow-space: calc(var(--pack-tier-balanced-flow) * 0.92);
 }
 
 :where(html[data-spw-line-spacing="loose"]) {
-  --site-line-height: var(--site-line-height-loose, 1.82);
+  --site-line-height: var(--site-line-height-loose, 1.8);
   --component-gap: calc(var(--pack-tier-balanced-gap) * 1.1);
   --component-pad: calc(var(--pack-tier-balanced-pad) * 1.05);
   --spw-flow-space: calc(var(--pack-tier-balanced-flow) * 1.08);
@@ -16092,8 +16272,8 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
    -------------------------------------------------------------------------- */
 
 :where([data-spw-textual-role="note"], .inline-note, .settings-note, .settings-start-note) {
-  font-size: var(--text-size-sm, 0.88rem);
-  line-height: var(--site-line-height-tight, 1.4);
+  font-size: var(--text-size-sm, 0.84rem);
+  line-height: var(--site-line-height-tight, 1.32);
   max-inline-size: min(100%, var(--pack-tier-balanced-measure));
   text-wrap: pretty;
   overflow-wrap: break-word;
@@ -16101,9 +16281,9 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 }
 
 :where(.spec-kicker, [data-spw-textual-role="kicker"], .vibe-widget-kicker) {
-  font-size: var(--text-size-label, 0.74rem);
+  font-size: var(--text-size-label, 0.7rem);
   letter-spacing: var(--tracking-spec, 0.06em);
-  line-height: var(--site-line-height-tight, 1.35);
+  line-height: var(--line-height-ui, 1.1);
   max-inline-size: min(100%, var(--measure-card, 42ch));
   text-wrap: balance;
   overflow-wrap: break-word;
@@ -16139,8 +16319,8 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   [data-spw-measure-kind="objective"]
 ) {
   font-family: var(--site-mono-font, monospace);
-  font-size: var(--text-size-xs, 0.76rem);
-  line-height: var(--site-line-height-tight, 1.35);
+  font-size: var(--text-size-xs, 0.72rem);
+  line-height: var(--line-height-mono, 1.42);
   letter-spacing: 0.01em;
 }
 
@@ -17081,7 +17261,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 
 /* Explicit defaults for consistent layout/wrapping/alignment across cards and panels */
 :where(.spw-card, .frame-card, .frame-panel, .math-lens-card, .topic-reference-card, .spw-principle-card) {
-  --card-internal-gap: 0.45rem;
+  --card-internal-gap: 0.42rem;
   display: grid;
   gap: var(--card-internal-gap);
   align-content: start;
@@ -17090,6 +17270,15 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   text-align: start;
   text-wrap: pretty;
   overflow-wrap: break-word;
+}
+
+:where(.spw-card, .frame-card, .frame-panel) :where(p) {
+  line-height: var(--site-line-height-tight, 1.4);
+}
+
+:where(.spw-card, .frame-card, .frame-panel) :where(h1, h2, h3, h4, h5, h6, .frame-card-title, .spw-card__title) {
+  line-height: var(--line-height-heading-sm, 1.2);
+  margin-block-start: 0;
 }
 
 :where(.frame-grid, .frame-grid--dense, .card-grid, .spw-grid) {
@@ -38300,12 +38489,17 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
    page does not move under a reader.
    ========================================================================== */
 
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='potential']:not(.spw-chip):not(.frame-sigil) {
+:where(span, strong, em, i, code, kbd, mark, small, time):is(
+  [data-spw-operator='potential'],
+  [data-spw-operator='ref']
+):not(.spw-chip):not(.frame-sigil) {
   text-decoration-style: dotted;
 }
 
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='wonder']:not(.spw-chip):not(.frame-sigil),
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='probe']:not(.spw-chip):not(.frame-sigil) {
+:where(span, strong, em, i, code, kbd, mark, small, time):is(
+  [data-spw-operator='wonder'],
+  [data-spw-operator='probe']
+):not(.spw-chip):not(.frame-sigil) {
   text-decoration-style: dashed;
 }
 
@@ -38314,7 +38508,23 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
   text-decoration-color: color-mix(in srgb, var(--active-op-color, currentColor) 48%, transparent);
 }
 
-:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='integration']:not(.spw-chip):not(.frame-sigil) {
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='perspective']:not(.spw-chip):not(.frame-sigil) {
+  text-decoration-style: solid;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, currentColor) 48%, transparent);
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time):is(
+  [data-spw-operator='concept'],
+  [data-spw-operator='topic']
+):not(.spw-chip):not(.frame-sigil) {
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, var(--op-topic-color, #227c67) 54%, transparent);
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time):is(
+  [data-spw-operator='integration'],
+  [data-spw-operator='object']
+):not(.spw-chip):not(.frame-sigil) {
   text-decoration-style: double;
 }
 

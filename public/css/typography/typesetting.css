@@ -258,6 +258,14 @@
 
 :where(html[data-spw-pinch-scaling="true"], body[data-spw-pinch-scaling="true"]) {
   cursor: ns-resize;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+:where(html[data-spw-pinch-scaling="true"]) :where(main) {
+  transition:
+    padding var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    gap var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
 /* ==========================================================================

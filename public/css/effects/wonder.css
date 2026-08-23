@@ -404,8 +404,13 @@ html[data-spw-interaction-wonder="architecture"] {
     --spw-resonance: 0.38;
   }
 
-  :where(main, body):has(:where([data-spw-operator="perspective"], [data-spw-operator="action"], [data-spw-operator="commit"]):is(:hover, :focus-visible))
-    :where([data-spw-operator="perspective"], [data-spw-operator="action"], [data-spw-operator="commit"]) {
+  :where(main, body):has(:where([data-spw-operator="action"], [data-spw-operator="commit"]):is(:hover, :focus-visible))
+    :where([data-spw-operator="action"], [data-spw-operator="commit"]) {
+    --spw-resonance: 0.45;
+  }
+
+  :where(main, body):has(:where([data-spw-operator="perspective"]:is(:hover, :focus-visible)))
+    :where([data-spw-operator="perspective"]) {
     --spw-resonance: 0.45;
   }
 
@@ -1162,32 +1167,40 @@ html[data-spw-active-layers="core"] :where(
    ========================================================================== */
 
 @supports selector(:has(*)) {
-  :where(main, body):has(:where([data-spw-operator="frame"]:is(:hover, :focus-visible)))
-    :where([data-spw-operator="frame"]:not(:hover):not(:focus-visible)) {
+  :where(main, body):has(:where([data-spw-operator="frame"], [data-spw-operator="address"]):is(:hover, :focus-visible))
+    :where([data-spw-operator="frame"], [data-spw-operator="address"]):not(:hover):not(:focus-visible) {
     --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
   }
-  :where(main, body):has(:where([data-spw-operator="object"]:is(:hover, :focus-visible)))
-    :where([data-spw-operator="object"]:not(:hover):not(:focus-visible)) {
+  :where(main, body):has(:where([data-spw-operator="object"], [data-spw-operator="integration"]):is(:hover, :focus-visible))
+    :where([data-spw-operator="object"], [data-spw-operator="integration"]):not(:hover):not(:focus-visible) {
     --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
   }
-  :where(main, body):has(:where([data-spw-operator="probe"]:is(:hover, :focus-visible)))
-    :where([data-spw-operator="probe"]:not(:hover):not(:focus-visible)) {
+  :where(main, body):has(:where([data-spw-operator="probe"], [data-spw-operator="wonder"]):is(:hover, :focus-visible))
+    :where([data-spw-operator="probe"], [data-spw-operator="wonder"]):not(:hover):not(:focus-visible) {
     --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
   }
-  :where(main, body):has(:where([data-spw-operator="ref"]:is(:hover, :focus-visible)))
-    :where([data-spw-operator="ref"]:not(:hover):not(:focus-visible)) {
+  :where(main, body):has(:where([data-spw-operator="ref"], [data-spw-operator="potential"]):is(:hover, :focus-visible))
+    :where([data-spw-operator="ref"], [data-spw-operator="potential"]):not(:hover):not(:focus-visible) {
     --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
   }
   :where(main, body):has(:where([data-spw-operator="action"]:is(:hover, :focus-visible)))
     :where([data-spw-operator="action"]:not(:hover):not(:focus-visible)) {
     --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
   }
+  :where(main, body):has(:where([data-spw-operator="perspective"]:is(:hover, :focus-visible)))
+    :where([data-spw-operator="perspective"]:not(:hover):not(:focus-visible)) {
+    --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
+  }
+  :where(main, body):has(:where([data-spw-operator="topic"], [data-spw-operator="concept"]):is(:hover, :focus-visible))
+    :where([data-spw-operator="topic"], [data-spw-operator="concept"]):not(:hover):not(:focus-visible) {
+    --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
+  }
   :where(main, body):has(:where([data-spw-operator="stream"]:is(:hover, :focus-visible)))
     :where([data-spw-operator="stream"]:not(:hover):not(:focus-visible)) {
     --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
   }
-  :where(main, body):has(:where([data-spw-operator="surface"]:is(:hover, :focus-visible)))
-    :where([data-spw-operator="surface"]:not(:hover):not(:focus-visible)) {
+  :where(main, body):has(:where([data-spw-operator="surface"], [data-spw-operator="concept-edge"]):is(:hover, :focus-visible))
+    :where([data-spw-operator="surface"], [data-spw-operator="concept-edge"]):not(:hover):not(:focus-visible) {
     --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
   }
 
@@ -1213,23 +1226,27 @@ html[data-spw-active-layers="core"] :where(
 /* Pinned resonance: when JS (or a future interaction) places
    [data-spw-resonance-probe] on <html>, it acts as a sustained probe
    across the whole page for that operator family. */
-html[data-spw-resonance-probe="frame"] :where([data-spw-operator="frame"]:not(:hover):not(:focus-visible)),
-html[data-spw-resonance-probe="object"] :where([data-spw-operator="object"]:not(:hover):not(:focus-visible)),
-html[data-spw-resonance-probe="probe"] :where([data-spw-operator="probe"]:not(:hover):not(:focus-visible)),
-html[data-spw-resonance-probe="ref"] :where([data-spw-operator="ref"]:not(:hover):not(:focus-visible)),
-html[data-spw-resonance-probe="action"] :where([data-spw-operator="action"]:not(:hover):not(:focus-visible)),
-html[data-spw-resonance-probe="stream"] :where([data-spw-operator="stream"]:not(:hover):not(:focus-visible)),
-html[data-spw-resonance-probe="surface"] :where([data-spw-operator="surface"]:not(:hover):not(:focus-visible)) {
+html:is([data-spw-resonance-probe="frame"], [data-spw-resonance-probe="address"]) :where([data-spw-operator="frame"], [data-spw-operator="address"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="object"], [data-spw-resonance-probe="integration"]) :where([data-spw-operator="object"], [data-spw-operator="integration"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="probe"], [data-spw-resonance-probe="wonder"]) :where([data-spw-operator="probe"], [data-spw-operator="wonder"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="ref"], [data-spw-resonance-probe="potential"]) :where([data-spw-operator="ref"], [data-spw-operator="potential"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="action"]) :where([data-spw-operator="action"]:not(:hover):not(:focus-visible)),
+html:is([data-spw-resonance-probe="perspective"]) :where([data-spw-operator="perspective"]:not(:hover):not(:focus-visible)),
+html:is([data-spw-resonance-probe="topic"], [data-spw-resonance-probe="concept"]) :where([data-spw-operator="topic"], [data-spw-operator="concept"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="stream"]) :where([data-spw-operator="stream"]:not(:hover):not(:focus-visible)),
+html:is([data-spw-resonance-probe="surface"], [data-spw-resonance-probe="concept-edge"]) :where([data-spw-operator="surface"], [data-spw-operator="concept-edge"]):not(:hover):not(:focus-visible) {
   --spw-resonance: calc(var(--attention-field-radius, 0.4) * var(--attention-field-decay, 0.65) + 0.25);
 }
 
-html[data-spw-resonance-probe="frame"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="frame"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="object"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="object"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="probe"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="probe"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="ref"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="ref"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="action"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="action"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="stream"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="stream"]:not(:hover):not(:focus-visible),
-html[data-spw-resonance-probe="surface"] :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="surface"]:not(:hover):not(:focus-visible) {
+html:is([data-spw-resonance-probe="frame"], [data-spw-resonance-probe="address"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill):is([data-spw-operator="frame"], [data-spw-operator="address"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="object"], [data-spw-resonance-probe="integration"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill):is([data-spw-operator="object"], [data-spw-operator="integration"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="probe"], [data-spw-resonance-probe="wonder"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill):is([data-spw-operator="probe"], [data-spw-operator="wonder"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="ref"], [data-spw-resonance-probe="potential"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill):is([data-spw-operator="ref"], [data-spw-operator="potential"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="action"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="action"]:not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="perspective"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="perspective"]:not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="topic"], [data-spw-resonance-probe="concept"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill):is([data-spw-operator="topic"], [data-spw-operator="concept"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="stream"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="stream"]:not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="surface"], [data-spw-resonance-probe="concept-edge"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill):is([data-spw-operator="surface"], [data-spw-operator="concept-edge"]):not(:hover):not(:focus-visible) {
   border-color: color-mix(
     in srgb,
     var(--spw-operator-color, var(--active-op-color, var(--teal))) 28%,

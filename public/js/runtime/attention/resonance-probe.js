@@ -1,3 +1,4 @@
+import { getOperatorDefinition } from '/public/js/kernel/operator-detection.js';
 import {
   PROBE_ATTR,
   PROBE_TARGET_SELECTOR,
@@ -6,6 +7,20 @@ import {
   logger,
 } from './shared.js';
 
+function readResonanceState(target) {
+  if (!target) return { key: '', concept: '', ingredient: '' };
+  const rawKey = (
+    target.getAttribute(RESONANCE_KEY_ATTR)
+    || target.getAttribute('data-spw-operator')
+    || ''
+  );
+  const def = rawKey ? getOperatorDefinition(rawKey) : null;
+  const key = def?.type || String(rawKey).trim().toLowerCase();
+  const concept = target.getAttribute('data-spw-concept') || '';
+  const ingredient = target.getAttribute('data-spw-ingredient') || '';
+  return { key, concept, ingredient };
+}
+
 export function initResonanceProbe(root) {
   const html = document.documentElement;
   let probeFocus = null;
@@ -13,18 +28,6 @@ export function initResonanceProbe(root) {
   let hoverTimer = 0;
   let lastProbeLogKey = '';
   const HOVER_DELAY = 260;
-
-  function readResonanceState(target) {
-    if (!target) return { key: '', concept: '', ingredient: '' };
-    const key = (
-      target.getAttribute(RESONANCE_KEY_ATTR)
-      || target.getAttribute('data-spw-operator')
-      || ''
-    );
-    const concept = target.getAttribute('data-spw-concept') || '';
-    const ingredient = target.getAttribute('data-spw-ingredient') || '';
-    return { key, concept, ingredient };
-  }
 
   let rafId = 0;
 

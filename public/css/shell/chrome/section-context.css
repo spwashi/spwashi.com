@@ -141,6 +141,47 @@
   transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(6px);
 }
 
+/* Progressive enhancement: unenhanced fallback anchor becomes visible when keyboard focused */
+:where(.spw-section-handle:not([data-spw-handle-enhanced="true"])):is(:focus, :focus-visible) {
+  display: inline-flex;
+  opacity: 1;
+  pointer-events: auto;
+  transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0);
+  outline: 2px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 75%, transparent);
+  outline-offset: 2px;
+  z-index: var(--z-overlay, 200);
+}
+
+/* Progressive enhancement: scroll-driven reveal for no-JS or pre-hydration reading */
+@supports (animation-timeline: scroll()) {
+  @keyframes spw-fallback-handle-scroll-reveal {
+    0% {
+      opacity: 0;
+      pointer-events: none;
+      transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(6px);
+    }
+    100% {
+      opacity: 0.92;
+      pointer-events: auto;
+      transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0);
+    }
+  }
+
+  @media (max-width: 45rem) {
+    :where(.spw-section-handle:not([data-spw-handle-enhanced="true"]):not([data-spw-handle-state="visible"])) {
+      animation: spw-fallback-handle-scroll-reveal linear both;
+      animation-timeline: scroll(root);
+      animation-range: 120px 240px;
+    }
+  }
+
+  :is(html, body)[data-spw-section-handle-desktop="auto"] :where(.spw-section-handle:not([data-spw-handle-enhanced="true"]):not([data-spw-handle-state="visible"])) {
+    animation: spw-fallback-handle-scroll-reveal linear both;
+    animation-timeline: scroll(root);
+    animation-range: 120px 240px;
+  }
+}
+
 .spw-section-handle .spw-section-handle__op {
   color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 88%, var(--ink));
   font-weight: 600;

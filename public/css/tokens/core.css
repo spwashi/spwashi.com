@@ -347,6 +347,48 @@
   initial-value: 0;
 }
 
+/* Reading groove typographic focus & shift tokens */
+@property --spw-reading-rest-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.86;
+}
+
+@property --spw-reading-near-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.96;
+}
+
+@property --spw-reading-lead-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --spw-reading-near-shift {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0.035rem;
+}
+
+@property --spw-reading-lead-shift {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0.06rem;
+}
+
+@property --spw-pinch-factor {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --spw-pinch-delta {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 @property --spw-runtime-avg-module-ms {
   syntax: "<number>";
   inherits: true;
@@ -497,10 +539,10 @@
   --gap-inline-flow: var(--space-xs);
   --gap-inline-breath: var(--space-sm);
 
-  --gap-block-tight: var(--space-xs);
-  --gap-block-stack: var(--space-sm);
-  --gap-block-flow: var(--space-lg);
-  --gap-block-drift: var(--space-xl);
+  --gap-block-tight: var(--space-2xs);
+  --gap-block-stack: var(--space-xs);
+  --gap-block-flow: var(--space-md);
+  --gap-block-drift: var(--space-lg);
 
   --gap-surface: var(--spw-surface-gap);
   --gap-panel: clamp(0.65rem, 1.2vw, 0.9rem);
@@ -527,12 +569,12 @@
   --page-width: 72rem;
   --page-width-reading: 56rem;
   --page-width-newspaper: 68rem;
-  --page-width-wide: 84rem;
-  --page-width-atlas: 104rem;
+  --page-width-wide: 88rem;
+  --page-width-atlas: 108rem;
   --page-gutter: clamp(
     calc(var(--spw-rhythm-unit) * 0.72),
-    2.5vw,
-    calc(var(--spw-rhythm-unit) * 1.5)
+    2.6vw,
+    calc(var(--spw-rhythm-unit) * 1.8)
   );
 
   --touch-target-min: 2.75rem;
@@ -545,6 +587,21 @@
   --attention-field-radius: 0.4;
   --attention-field-decay: 0.65;
   --attention-echo-duration: 480ms;
+
+  /* -- Reading Groove & Typographic Attention --
+     Named here so first paint and no-JS can interpolate. typesetting.css
+     restates the same names when data-spw-reading-groove is on. */
+  --spw-reading-rest-opacity: 0.86;
+  --spw-reading-near-opacity: 0.96;
+  --spw-reading-lead-opacity: 1;
+  --spw-reading-near-shift: 0.035rem;
+  --spw-reading-lead-shift: 0.06rem;
+  --spw-reading-rest-color: color-mix(in oklab, var(--ink-soft, rgba(14, 18, 20, 0.74)) 96%, var(--ink, rgba(14, 18, 20, 0.92)) 4%);
+  --spw-reading-near-color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 98%, var(--active-op-color, #008080) 2%);
+  --spw-reading-lead-color: color-mix(in oklab, var(--ink-strong, #090b0c) 97%, var(--active-op-color, #008080) 3%);
+  --spw-reading-near-accent: color-mix(in oklab, var(--active-op-color, #008080) 4%, transparent);
+  --spw-reading-lead-accent: color-mix(in oklab, var(--active-op-color, #008080) 12%, transparent);
+  --spw-reading-lead-glow: inset 0.08rem 0 0 var(--spw-reading-lead-accent, transparent);
 
   /* -- Wonder Memory (attention-field.spw#tunable_parameters) --
      Same field_resonance_profile cluster as the three above; previously
@@ -593,23 +650,27 @@
   --font-family-display: Inter, "Segoe UI", system-ui, sans-serif;
   --font-family-manuscript: Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 
-  --text-size-2xs: clamp(0.69rem, 0.67rem + 0.05vw, 0.74rem);
-  --text-size-xs: clamp(0.76rem, 0.73rem + 0.08vw, 0.82rem);
-  --text-size-sm: clamp(0.88rem, 0.84rem + 0.1vw, 0.95rem);
-  --text-size-base: clamp(1rem, 0.98rem + 0.12vw, 1.06rem);
-  --text-size-lg: clamp(1.1rem, 1.04rem + 0.2vw, 1.22rem);
-  --text-size-xl: clamp(1.22rem, 1.12rem + 0.36vw, 1.42rem);
-  --text-size-2xl: clamp(1.46rem, 1.28rem + 0.7vw, 1.86rem);
-  --text-size-3xl: clamp(1.82rem, 1.52rem + 1.1vw, 2.45rem);
+  --text-size-2xs: clamp(0.66rem, 0.64rem + 0.06vw, 0.72rem);
+  --text-size-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.82rem);
+  --text-size-sm: clamp(0.84rem, 0.8rem + 0.14vw, 0.94rem);
+  --text-size-base: clamp(0.96rem, 0.92rem + 0.2vw, 1.08rem);
+  --text-size-lg: clamp(1.08rem, 1.02rem + 0.3vw, 1.25rem);
+  --text-size-xl: clamp(1.22rem, 1.14rem + 0.45vw, 1.48rem);
+  --text-size-2xl: clamp(1.42rem, 1.3rem + 0.8vw, 1.92rem);
+  --text-size-3xl: clamp(1.75rem, 1.5rem + 1.25vw, 2.5rem);
 
-  --text-size-chip: clamp(0.78rem, 0.75rem + 0.08vw, 0.86rem);
-  --text-size-nav: clamp(0.82rem, 0.79rem + 0.12vw, 0.92rem);
-  --text-size-label: clamp(0.74rem, 0.71rem + 0.08vw, 0.81rem);
+  --text-size-chip: clamp(0.75rem, 0.72rem + 0.1vw, 0.85rem);
+  --text-size-nav: clamp(0.8rem, 0.76rem + 0.14vw, 0.92rem);
+  --text-size-label: clamp(0.7rem, 0.68rem + 0.08vw, 0.78rem);
 
   --site-root-font-size: 100%;
-  --site-line-height: 1.68;
-  --site-line-height-tight: 1.35;
-  --site-line-height-loose: 1.82;
+  --site-line-height: 1.64;
+  --site-line-height-tight: 1.32;
+  --site-line-height-loose: 1.8;
+  --line-height-heading: 1.15;
+  --line-height-heading-sm: 1.22;
+  --line-height-ui: 1.1;
+  --line-height-mono: 1.42;
 
   --site-mono-font: var(--font-family-mono);
   --site-sans-font: var(--font-family-sans);
@@ -1759,25 +1820,42 @@ html[data-author-mode="archive"] {
    10. Runtime Density, Theme, Contrast, and Motion Modes
    ========================================================================== */
 
-/* Typography-to-container rhythm */
+/* Typography-to-container rhythm & mind-logic packing coordination */
 html[data-spw-font-size-scale="70"] {
   --spw-type-space-scale: 0.86;
+  --spw-pack-tier: compact;
+  --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.82);
+  --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.74);
+  --spw-card-rhythm: clamp(0.42rem, 1.4cqi, 0.72rem);
 }
 
 html[data-spw-font-size-scale="80"] {
   --spw-type-space-scale: 0.9;
+  --spw-pack-tier: compact;
+  --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.88);
+  --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.78);
+  --spw-card-rhythm: clamp(0.45rem, 1.5cqi, 0.76rem);
 }
 
 html[data-spw-font-size-scale="90"] {
   --spw-type-space-scale: 0.95;
+  --spw-pack-tier: balanced;
 }
 
 html[data-spw-font-size-scale="110"] {
   --spw-type-space-scale: 1.08;
+  --spw-pack-tier: roomy;
+  --spw-flow-space: calc(var(--spw-rhythm-unit) * 1.08);
+  --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.92);
+  --spw-card-rhythm: clamp(0.52rem, 1.7cqi, 0.88rem);
 }
 
 html[data-spw-font-size-scale="120"] {
   --spw-type-space-scale: 1.16;
+  --spw-pack-tier: roomy;
+  --spw-flow-space: calc(var(--spw-rhythm-unit) * 1.15);
+  --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.98);
+  --spw-card-rhythm: clamp(0.56rem, 1.9cqi, 0.95rem);
 }
 
 html[data-spw-line-spacing="compact"] {
@@ -2147,11 +2225,45 @@ html[data-spw-reduce-motion="on"] {
   :root {
     --spw-device-space-scale: 0.84;
     --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.78);
-    --spw-surface-padding: calc(var(--spw-rhythm-unit) * 0.68);
-    --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.68);
+    --spw-surface-padding: calc(var(--spw-rhythm-unit) * 0.65);
+    --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.65);
+    --spw-component-gap: calc(var(--spw-rhythm-unit) * 0.65);
     --spw-shell-trace-gap: 0.38rem;
-    --spw-shell-surface-padding-inline: 0.3rem;
-    --spw-control-padding-inline: 0.54rem;
-    --spw-control-gap: 0.22rem;
+    --spw-shell-surface-padding-inline: 0.28rem;
+    --spw-control-padding-inline: 0.52rem;
+    --spw-control-gap: 0.2rem;
+  }
+}
+
+@media (max-width: 22.5rem) {
+  :root {
+    --spw-device-space-scale: 0.8;
+    --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.74);
+    --spw-surface-padding: calc(var(--spw-rhythm-unit) * 0.58);
+    --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.58);
+    --spw-component-gap: calc(var(--spw-rhythm-unit) * 0.58);
+    --spw-control-padding-inline: 0.44rem;
+  }
+}
+
+/* Extra-wide displays (1440px+ and 1664px+) */
+@media (min-width: 90rem) {
+  :root {
+    --spw-device-space-scale: 1.05;
+    --page-gutter: clamp(1.5rem, 3.2vw, 2.75rem);
+    --spw-surface-padding: clamp(
+      calc(var(--spw-rhythm-unit) * 1.15),
+      2.5vw,
+      calc(var(--spw-rhythm-unit) * 1.8)
+    );
+    --spw-component-gap: calc(var(--spw-rhythm-unit) * 0.95);
+    --spw-surface-gap: calc(var(--spw-rhythm-unit) * 0.95);
+  }
+}
+
+@media (min-width: 104rem) {
+  :root {
+    --spw-device-space-scale: 1.08;
+    --page-gutter: clamp(2rem, 3.8vw, 3.5rem);
   }
 }
