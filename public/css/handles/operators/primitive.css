@@ -132,7 +132,9 @@
   .spw-chip,
   .syntax-token,
   .frame-sigil,
-  .frame-card-sigil
+  .frame-card-sigil,
+  .spw-guide-chip,
+  [data-spw-handle="true"]
 ):active {
   --interaction-excitement: 0.42;
   transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));

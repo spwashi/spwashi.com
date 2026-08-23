@@ -16999,6 +16999,11 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   word-break: break-word;
 }
 
+:where(a.spw-card, a.frame-card, .spw-card > a:first-child, .frame-card > a:first-child):active {
+  transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));
+  transition-duration: var(--touch-acknowledge, 90ms);
+}
+
 @supports (grid-template-rows: subgrid) {
   :where(.spw-card, .frame-card) {
     grid-row: span 4;
@@ -37058,7 +37063,9 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   .spw-chip,
   .syntax-token,
   .frame-sigil,
-  .frame-card-sigil
+  .frame-card-sigil,
+  .spw-guide-chip,
+  [data-spw-handle="true"]
 ):active {
   --interaction-excitement: 0.42;
   transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));
