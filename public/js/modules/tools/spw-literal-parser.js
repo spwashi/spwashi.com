@@ -42,6 +42,38 @@ practice[organization]{sprint}`,
 ~<voice>`,
   year: `budget[year]{income.skill.expectation}
 career[year]{heard.unknown}`,
+  /** v0.4 Language evolution: claim and probe blocks with falsification contracts. */
+  v04_claims: `^"claim_probe_synthesis"{
+  hypothesis = "Every claim declares its falsification criteria."
+  spec_ref = ~"./pillars/claim-probe-syntax.spw"
+  probe = ?[claim_probes]{ !run{validate_spw} }
+  falsification = "Any claim without an executable probe is rejected."
+}[reg=facet]`,
+  /** v0.4 Profiles: file shape declarations implying required structural blocks. */
+  profiles: `!:profile "convention"
+#>convention_profile[spec]{
+  required_blocks = #[intent, dimensions, validation]
+  fixity = #!stable
+  operation = #!align
+}`,
+  /** v0.4 Dot-crawl joins: crawl traverses complete braces rather than dotted lists. */
+  dot_crawl: `{kitchen}.{prep}.{bake} ~> [loaf]
+(arrival).(settle).(resonate)
+harvest[crop].store[silo].mill[flour]`,
+  /** v0.4 Stem projection: single semantic root precipitating across substrates. */
+  stem_projection: `>stem[hero_banner]{
+  copy = "One root, multiple substrates."
+  tokens = #["--spw-hero-intensity", "--spw-tangibility"]
+  runtime = "data-spw-hero-kinetic"
+  inspect = ~"#>hero_inspection"
+}`,
+  /** v0.4 Combinatoric genre: boonhonk pantry and transformational expressions. */
+  boonhonk: `boonhonk[genre]{combine.discover.reward}
+boon[honk]{invite}
+bane[bone]{limit}
+bone[bonk]{hit}
+boon[bane]{cost}
+honk[bonk]{signal}`,
 });
 
 function countAstNodes(value, depth = 0, census = { total: 0, maxDepth: 0, types: new Map() }) {

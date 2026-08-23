@@ -134,6 +134,11 @@
                     <button type="button" data-parser-sample="sync">language sync</button>
                     <button type="button" data-parser-sample="film">film</button>
                     <button type="button" data-parser-sample="year">year mix</button>
+                    <button type="button" data-parser-sample="v04_claims">v0.4 claims</button>
+                    <button type="button" data-parser-sample="profiles">profiles</button>
+                    <button type="button" data-parser-sample="dot_crawl">dot crawl</button>
+                    <button type="button" data-parser-sample="stem_projection">stem projection</button>
+                    <button type="button" data-parser-sample="boonhonk">boonhonk genre</button>
                 </div>
 
                 <div class="literal-parser-workspace">
@@ -207,6 +212,54 @@
                         <summary><span>Diagnostics</span><small>errors and warnings are not hidden</small></summary>
                         <ul class="literal-parser-diagnostics" data-parser-diagnostics aria-live="polite"></ul>
                     </details>
+                </div>
+            </section>
+
+            <section class="spw-frame" id="v04-specimen-suite"
+                data-spw-kind="frame"
+                data-spw-role="reference"
+                data-spw-form="brace"
+                data-spw-context="analysis"
+                data-spw-wonder="literal structure consequence"
+                data-spw-affordance="inspect"
+                data-spw-liminality="threshold"
+                data-spw-category-family="register"
+                data-spw-locality="high"
+                data-spw-consequence="model"
+                data-spw-promptability="visible"
+                data-spw-collectability="high"
+                data-spw-seed="page_tools_spw_parser__v04_specimens"
+                data-spw-semantic-expression="workbench[v04]{claims.profiles.crawl.stems}">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#v04-specimen-suite">#&gt;v04_designer_specimens</a>
+                    <h2>Next-version language specimens (v0.4)</h2>
+                </header>
+                <p data-spw-textual-role="note">These specimens test candidate v0.4 grammar constructs against the live browser parser kernel. Workbench designers can click any specimen to load it into the editor, check token spans, verify AST depth, and falsify proposed grammar changes.</p>
+                <div class="frame-grid frame-grid--dense">
+                    <article class="frame-panel">
+                        <h3>Claims &amp; Probes (<a href="?spw_sample=v04_claims#literal-parser">load</a>)</h3>
+                        <p><code>owner_claim</code> and <code>^"synthesis"</code> blocks declare hypotheses, specification citations, and falsification probes. Pillar: <a href="/topics/software/spw/#language-evolution-v04">claim-probe syntax</a>.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>File Profiles (<a href="?spw_sample=profiles#literal-parser">load</a>)</h3>
+                        <p><code>!:profile "convention"</code> headers declare expected file anatomy and enforce required structural blocks across the corpus. Pillar: <a href="/topics/software/spw/#language-evolution-v04">profiles &amp; validator</a>.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Dot-Crawl Joins (<a href="?spw_sample=dot_crawl#literal-parser">load</a>)</h3>
+                        <p>Crawl traverses complete braces across boundaries (<code>{a}.{b}.{c}</code>), distinct from comma-separated lists and arrow paths. Pillar: <a href="/topics/software/spw/#join-crawl">joins</a>.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Stem Projections (<a href="?spw_sample=stem_projection#literal-parser">load</a>)</h3>
+                        <p><code>&gt;stem[name]{...}</code> projects one semantic root into copy, design tokens, runtime datasets, and inspection handles without forking truth.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Combinatoric Genre (<a href="?spw_sample=boonhonk#literal-parser">load</a>)</h3>
+                        <p>Tests pantry transforms and combinatoric genre expressions (<code>boonhonk[genre]{...}</code>) against the parser to verify lossless AST generation.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Workbench Bridge</h3>
+                        <p>Upstream language design lives on branch <code>feature/spw-language-v04</code> in <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>. See <a href="/topics/software/spw/#language-evolution-v04">language evolution</a> and <a href="https://github.com/spwashi/spw-workbench/blob/main/packages/spw-seed/src/parser.ts">parser source</a>.</p>
+                    </article>
                 </div>
             </section>
 

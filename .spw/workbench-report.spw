@@ -143,6 +143,19 @@ expression = consumer[report]{defect.gap.built}<upstream>
   $%[surface.degree, surface.age, surface.operation, reader.firstRead]
 }
 
+^"browser_parser_testbed"{
+  claim: "The portable parser kernel builds directly into public/js/semantic/spw-workbench-parser.js and runs lossless AST tests in the browser at /tools/spw-parser/."
+  verified_specimens: #[
+    "v04_claims (hypothesis, citations, falsification probes)",
+    "profiles (file shape declarations with required structural blocks)",
+    "dot_crawl (complete brace traversal {a}.{b}.{c} ~> [loaf])",
+    "stem_projection (multilateral substrate precipitation >stem[name]{...})",
+    "boonhonk (pantry combinatorics and transformational genres)"
+  ][reg=set]
+  testbed_route: ~"/tools/spw-parser/#v04-specimen-suite"
+  builder: ~"../scripts/build-spw-literal-parser.mjs"
+}
+
 ^"validation"{
   probe: `npm run spw:integrity && npm run spw:dimensions`
   falsification: "a finding here no longer reproduces from its stated probe against the pinned submodule"

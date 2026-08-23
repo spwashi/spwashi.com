@@ -44,6 +44,15 @@ describe('literal Spw parser proof', () => {
     }
   });
 
+  it('parses next-version v0.4 candidate specimens losslessly', () => {
+    for (const key of ['v04_claims', 'profiles', 'dot_crawl', 'stem_projection', 'boonhonk']) {
+      const result = parseLiteralSource(SPW_LITERAL_PARSER_SAMPLES[key]);
+      assert.equal(result.output.success, true, `v0.4 candidate sample "${key}" failed to parse`);
+      assert.equal(result.output.errors.length, 0, `v0.4 candidate sample "${key}" returned errors`);
+      assert.equal(result.reconstructsExactly, true, `v0.4 candidate sample "${key}" was not lossless`);
+    }
+  });
+
   it('encodes exact source into an app-loadable route URL', () => {
     const source = 'proof[parser]{literal.ast.lossless}';
     const url = createParserAppUrl(source, 'proof.spw');

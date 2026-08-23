@@ -12,6 +12,7 @@
 @feature_utilization: ~"../feature-utilization.spw"
 @recursive: ~"../recursive-improvement.spw"
 @plan: ~"../../../.agents/plans/spw-language-v04/PLAN.md"
+@parser_tool: ~"/tools/spw-parser/#v04-specimen-suite"
 
 operation = "prime"
 fixity = "tending"
@@ -87,5 +88,6 @@ fixity = "tending"
 validation: #[
   `rg '#language-evolution-v04' topics/software/spw/index.html`,
   `test -f .spw/language/v04/index.spw`,
+  `rg 'v04_specimen_suite' tools/spw-parser/index.html`,
   `rg 'owner_claim|claim #spw-language-v04|priority_stack' .spw/language/v04`,
 ][reg=set]
