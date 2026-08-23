@@ -321,10 +321,10 @@ function createChargeFieldInstance(ctx = null) {
     RELATION_STYLE_PROPERTIES.forEach((property) => {
       document.documentElement.style.removeProperty(property);
     });
-    ctx?.addCleanup?.(cleanup);
-
-    return { cleanup, syncRoot, syncReadouts };
   };
+  ctx?.addCleanup?.(cleanup);
+
+  return { cleanup, syncRoot, syncReadouts };
 }
 
 let lastChargeFieldInstance = null;
@@ -340,6 +340,28 @@ export function unmountChargeField() {
     try { lastChargeFieldInstance.cleanup(); } catch (_) {}
     lastChargeFieldInstance = null;
   }
+}
+
+export const SPW_CHARGE_FIELD_CONTRACT = Object.freeze({
+  phases: Object.freeze(Object.keys(PHASE_INTENSITY)),
+  phaseIntensity: PHASE_INTENSITY,
+  operatorDischarge: OPERATOR_DISCHARGE,
+  readoutKeys: READOUT_KEYS,
+  rewardProperties: RELATION_STYLE_PROPERTIES,
+  portableUse:
+    'Electrostatic charge and discharge field model tracking operator carrier, phase intensity, and relation rewards.',
+});
+
+export function describeChargeFieldState(root = document) {
+  const html = root?.documentElement
+    || (typeof document !== 'undefined' ? document.documentElement : null)
+    || (root?.nodeType === 1 ? root : null);
+  return {
+    field: html?.dataset?.spwChargeField || 'quiet',
+    intensity: Number.parseFloat(html?.dataset?.spwChargeIntensity || '0') || 0,
+    carrier: html?.dataset?.spwChargeCarrier || null,
+    discharge: html?.dataset?.spwLastDischarge || null,
+  };
 }
 
 export { unmountChargeField as unmount };

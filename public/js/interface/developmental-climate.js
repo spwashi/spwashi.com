@@ -538,7 +538,7 @@ const init = () => {
   initDevelopmentalClimate();
 };
 
-if (typeof document !== 'undefined') {
+if (typeof document !== 'undefined' && typeof window !== 'undefined' && window.location) {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {
@@ -549,6 +549,42 @@ if (typeof document !== 'undefined') {
 /* ==========================================================================
    9. Exports
    ========================================================================== */
+
+export const SPW_DEVELOPMENTAL_CLIMATE_CONTRACT = Object.freeze({
+  climates: DEVELOPMENTAL_CLIMATES,
+  defaultClimate: DEFAULT_CLIMATE_ID,
+  attributes: Object.freeze({
+    climate: 'data-spw-developmental-climate',
+    label: 'data-spw-developmental-label',
+    authorLabel: 'data-spw-developmental-author-label',
+    learningMode: 'data-spw-learning-mode',
+    spiritPhase: 'data-spw-spirit-phase',
+    menu: 'data-spw-developmental-menu',
+  }),
+  events: Object.freeze({
+    shifted: 'development:shifted',
+    spiritShifted: 'spirit:shifted',
+  }),
+  portableUse:
+    'Editorial and learning-oriented developmental climate system establishing attentive atmosphere and learning mode.',
+});
+
+export function describeDevelopmentalClimate(target = null) {
+  const current = target
+    ? normalizeDevelopmentalClimate(target)
+    : (typeof document !== 'undefined' ? document.documentElement?.dataset?.spwDevelopmentalClimate : null) || DEFAULT_CLIMATE_ID;
+  const def = getClimateDefinition(current) || DEVELOPMENTAL_CLIMATES[0];
+  return {
+    id: def.id,
+    label: def.label,
+    authorLabel: def.authorLabel,
+    learningMode: def.learningMode,
+    climateRole: def.climateRole,
+    description: def.description,
+    recipeBias: def.recipeBias,
+    wonderBias: def.wonderBias,
+  };
+}
 
 export {
   DEVELOPMENTAL_CLIMATES,

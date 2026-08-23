@@ -175,3 +175,21 @@ export function nextKinRelation(current = 'similar') {
   const index = KIN_CYCLE.indexOf(current);
   return KIN_CYCLE[(index + 1) % KIN_CYCLE.length];
 }
+
+export const SPW_REGION_KIN_CONTRACT = Object.freeze({
+  moves: KIN_MOVES,
+  cycle: KIN_CYCLE,
+  seatComplements: SEAT_COMPLEMENT,
+  operatorComplements: OPERATOR_COMPLEMENT,
+  portableUse:
+    'Region kinship grammar computing similar (~ potential), contrast (& subject), and resonate (# vibration) relations between regions.',
+});
+
+export function describeRegionKin(kin = {}) {
+  return {
+    similarId: kin.similar?.id || null,
+    contrastId: kin.contrast?.id || null,
+    resonateId: kin.resonate?.id || null,
+    hasKin: Boolean(kin.similar || kin.contrast || kin.resonate),
+  };
+}

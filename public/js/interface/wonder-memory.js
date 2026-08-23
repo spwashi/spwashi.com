@@ -267,3 +267,41 @@ export function applyWonderMemoryState(root = document) {
         target.style.setProperty('--delight-color', secondary);
     });
 }
+
+export const SPW_WONDER_MEMORY_CONTRACT = Object.freeze({
+    attributes: Object.freeze({
+        state: 'data-spw-wonder-memory-state',
+        wonder: 'data-spw-wonder-memory-wonder',
+        familiarity: 'data-spw-wonder-memory-familiarity',
+        liminality: 'data-spw-wonder-memory-liminality',
+        gradient: 'data-spw-wonder-memory-gradient',
+        signals: 'data-spw-wonder-memory-signals',
+        targetState: 'data-spw-wonder-state',
+        targetFieldWonder: 'data-spw-field-wonder',
+        targetMemoryMatch: 'data-spw-memory-match',
+    }),
+    customProperties: Object.freeze([
+        '--wonder-accent-color',
+        '--delight-color',
+        '--spw-wonder-memory-color',
+        '--spw-wonder-memory-alt-color',
+        '--field-balance',
+    ]),
+    portableUse:
+        'Wonder memory and resonance engine mapping temporal paths and cognitive familiarity into accent colors and field balance.',
+});
+
+export function describeWonderMemorySnapshot(root = document) {
+    const host = root?.documentElement
+        || (typeof document !== 'undefined' ? document.documentElement : null)
+        || root;
+    return {
+        state: host?.dataset?.spwWonderMemoryState || 'dormant',
+        wonder: host?.dataset?.spwWonderMemoryWonder || null,
+        familiarity: host?.dataset?.spwWonderMemoryFamiliarity || 'fresh',
+        liminality: host?.dataset?.spwWonderMemoryLiminality || 'settled',
+        gradient: host?.dataset?.spwWonderMemoryGradient || null,
+        signals: Number.parseInt(host?.dataset?.spwWonderMemorySignals || '0', 10) || 0,
+        fieldBalance: host?.style?.getPropertyValue('--field-balance')?.trim() || null,
+    };
+}

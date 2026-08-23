@@ -199,7 +199,41 @@ export function initPulseBeatTuner(root = document) {
   return () => controller.abort();
 }
 
-export { FRESHNESS_EVENT, BEAT_CADENCE };
+export const SPW_PULSE_BEAT_TUNER_CONTRACT = Object.freeze({
+  cadence: BEAT_CADENCE,
+  primeBeats: Object.freeze([...PRIME_BEATS]),
+  freshnessEvent: FRESHNESS_EVENT,
+  attributes: Object.freeze({
+    beat: 'data-spw-beat',
+    playing: 'data-spw-playing',
+    freshnessPulse: 'data-spw-freshness-pulse',
+    freshnessWeight: 'data-spw-freshness-weight',
+    reduceMotion: 'data-spw-reduce-motion',
+  }),
+  customProperties: Object.freeze([
+    '--spw-beat-interval-ms',
+    '--spw-microinteraction-pulse-duration',
+  ]),
+  portableUse:
+    'Tunable site cadence and freshness pulse driver matching the 13-beat rhythm and microinteraction duration.',
+});
+
+export function describePulseBeatTunerState(root = document) {
+  const html = root?.documentElement
+    || (typeof document !== 'undefined' ? document.documentElement : null)
+    || (root?.nodeType === 1 ? root : null);
+  return {
+    initialized,
+    currentBeat,
+    isPrime: PRIME_BEATS.has(currentBeat),
+    isPlaying: html?.dataset?.spwPlaying === 'on',
+    rhythmEnabled: html ? isRhythmEnabled(html) : false,
+    beatIntervalMs: html ? readBeatIntervalMs(html) : 1300,
+    pulseDurationMs: html ? readPulseDurationMs(html) : 280,
+  };
+}
+
+export { FRESHNESS_EVENT, BEAT_CADENCE, PRIME_BEATS };
 
 export const spwModule = {
   updates: ['attr:data-spw-beat-cadence', 'attr:data-spw-pulse-freshness'],

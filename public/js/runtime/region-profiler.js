@@ -37,7 +37,8 @@ export const SPW_REGION_PROFILER_CONTRACT = Object.freeze({
   portableUse:
     'Import this module when a page needs region harmony, tempo, and density without booting site.js. '
     + 'Read the region-diversity tier (or subscribe to spw:regions-profiled) to reward surfaces that '
-    + 'reveal a wider spread of component kinds — the substrate for collection/achievement systems.',
+    + 'reveal a wider spread of component kinds — the substrate for collection/achievement systems. '
+    + 'Voice and copy personality stay in component-region-personality.spw; do not stamp a parallel data-spw-* family.',
 });
 
 const TEMPO_CASCADE_PROFILES = Object.freeze({
@@ -325,6 +326,22 @@ export function buildRegionProfile(el, index = 0, options = {}) {
   profile.genome = buildRegionGenome(profile);
 
   return profile;
+}
+
+export function describeRegionProfile(profile) {
+  if (!profile) return { ready: false };
+  return {
+    key: profile.key,
+    kind: profile.kind,
+    role: profile.role,
+    context: profile.context,
+    harmony: profile.harmony,
+    tempo: profile.tempo,
+    density: profile.density,
+    stability: profile.compositionStability,
+    occupancy: profile.packOccupancy,
+    genome: profile.genome,
+  };
 }
 
 export function applyRegionProfile(el, profile) {

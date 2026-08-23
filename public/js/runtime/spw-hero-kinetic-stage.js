@@ -5,15 +5,35 @@
  * node physics animations, payload scrubbing, and cauldron drop triggers.
  * ========================================================================== */
 
-import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { writeDatasetValue } from '../kernel/dom-contracts.js';
+
+export const SPW_HERO_KINETIC_STAGE_CONTRACT = Object.freeze({
+  featureId: 'spw-hero-kinetic-stage',
+  selector: '[data-spw-feature="spw-hero-kinetic-stage"], .spw-hero-stage',
+  attributes: Object.freeze({
+    bound: 'data-spw-hero-stage-bound',
+    charge: 'data-spw-charge',
+    dropped: 'data-spw-dropped',
+  }),
+  events: Object.freeze({
+    ingredientGathered: 'spw:cauldron-ingredient-gathered',
+  }),
+  portableUse:
+    'Interactive kinetic hero stage driver supporting slide carousel, membrane kinetics, and cauldron gather feedback.',
+});
 
 export function initSpwHeroKineticStage(root = document) {
-  const stages = root.querySelectorAll?.('[data-spw-feature="spw-hero-kinetic-stage"], .spw-hero-stage');
-  if (!stages || !stages.length) return;
+  const stages = root.querySelectorAll?.(SPW_HERO_KINETIC_STAGE_CONTRACT.selector);
+  if (!stages || !stages.length) return () => {};
+
+  const controller = new AbortController();
+  const { signal } = controller;
+  const boundStages = [];
 
   stages.forEach((stage) => {
     if (stage.dataset.spwHeroStageBound) return;
     stage.dataset.spwHeroStageBound = 'true';
+    boundStages.push(stage);
 
     const slideButtons = stage.querySelectorAll('.spw-hero-slide-btn[data-hero-slide]');
     const slides = stage.querySelectorAll('.spw-hero-slide');
@@ -49,23 +69,24 @@ export function initSpwHeroKineticStage(root = document) {
       btn.addEventListener('click', () => {
         const idx = parseInt(btn.getAttribute('data-hero-slide'), 10);
         if (Number.isFinite(idx)) goToSlide(idx);
-      });
+      }, { signal });
     });
 
     if (prevBtn) {
-      prevBtn.addEventListener('click', () => goToSlide(activeIndex - 1));
+      prevBtn.addEventListener('click', () => goToSlide(activeIndex - 1), { signal });
     }
     if (nextBtn) {
-      nextBtn.addEventListener('click', () => goToSlide(activeIndex + 1));
+      nextBtn.addEventListener('click', () => goToSlide(activeIndex + 1), { signal });
     }
 
     // Node interaction & Cauldron drop triggers
     stage.querySelectorAll('.spw-kinetic-node').forEach((node) => {
       node.addEventListener('click', () => {
         node.style.transform = 'translateY(-6px) scale(1.1)';
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           node.style.transform = '';
         }, 220);
+        signal.addEventListener('abort', () => clearTimeout(timer), { once: true });
 
         const isCauldronDrop = node.getAttribute('data-action') === 'drop-cauldron';
         const payloadText = node.textContent.trim().replace(/[▾▾\s]+/g, ' ');
@@ -80,13 +101,30 @@ export function initSpwHeroKineticStage(root = document) {
             },
           }));
 
-          const originalText = node.textContent;
-          node.textContent = '✓ Dropped into Cauldron!';
-          setTimeout(() => {
-            node.textContent = originalText;
+          writeDatasetValue(node, 'spwDropped', 'true');
+          const resetTimer = setTimeout(() => {
+            delete node.dataset.spwDropped;
           }, 1400);
+          signal.addEventListener('abort', () => clearTimeout(resetTimer), { once: true });
         }
-      });
+      }, { signal });
     });
   });
+
+  return () => {
+    controller.abort();
+    boundStages.forEach((stage) => {
+      delete stage.dataset.spwHeroStageBound;
+      delete stage.dataset.spwCharge;
+    });
+  };
 }
+
+export const spwModule = {
+  updates: [
+    'structural:data-spw-hero-stage-bound',
+    'flourish:data-spw-charge',
+    'flourish:data-spw-dropped',
+  ],
+  mount: (mod, ctx, root) => initSpwHeroKineticStage(root),
+};

@@ -531,6 +531,11 @@ export async function initExpressionResonance(ctx = {}) {
     document.removeEventListener('focusin', onEnter);
     document.removeEventListener('focusout', onLeave);
     document.removeEventListener('keydown', onKinKey);
+    elementsByExpression = null;
+    livingByConcept = null;
+    lit = [];
+    sourceRef = null;
+    cleanup = null;
   };
   return cleanup;
 }

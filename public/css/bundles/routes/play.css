@@ -602,6 +602,12 @@
   box-shadow: 0 6px 18px color-mix(in srgb, var(--active-op-color, #008080) 25%, transparent);
 }
 
+:where(.spw-kinetic-node[data-spw-dropped="true"]) {
+  transform: translateY(-4px) scale(1.06);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--active-op-color, #008080) 55%, transparent);
+  background: color-mix(in srgb, var(--active-op-color, #008080) 12%, var(--surface-strong, #fff));
+}
+
 :where([data-spw-region-role="entry-spine"]-slide__theory) {
   display: flex;
   flex-direction: column;
