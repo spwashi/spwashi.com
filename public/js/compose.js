@@ -340,10 +340,65 @@ export {
 export {
   REGION_STATES,
   SPW_REGION_PROFILER_CONTRACT,
+  describeRegionProfile,
   primeRegions,
   refreshRegionProfiles,
   setRegionState,
 } from './runtime/region-profiler.js';
+
+export {
+  SEAT_COMPLEMENT,
+  OPERATOR_COMPLEMENT,
+  KIN_MOVES,
+  KIN_CYCLE,
+  SPW_REGION_KIN_CONTRACT,
+  classifyRegionRelation,
+  describeRegionKin,
+  pickKinLabel,
+  pickRegionKin,
+  nextKinRelation,
+} from './runtime/region-kin.js';
+
+export {
+  SPW_PHYSICAL_MODEL_CONTRACT,
+  describePhysicalModelSummary,
+  snapshotPhysicalModel,
+} from './runtime/physical-model.js';
+
+export {
+  SPW_CHARGE_FIELD_CONTRACT,
+  describeChargeFieldState,
+  initChargeField,
+  unmountChargeField,
+} from './runtime/charge-field.js';
+
+export {
+  SPW_PULSE_BEAT_TUNER_CONTRACT,
+  describePulseBeatTunerState,
+  readMicrointeractionPulseMs,
+} from './runtime/pulse-beat-tuner.js';
+
+export {
+  SPW_WONDER_MEMORY_CONTRACT,
+  describeWonderMemorySnapshot,
+} from './interface/wonder-memory.js';
+
+export {
+  DEVELOPMENTAL_CLIMATES,
+  SPW_DEVELOPMENTAL_CLIMATE_CONTRACT,
+  applyDevelopmentalClimate,
+  describeDevelopmentalClimate,
+  normalizeDevelopmentalClimate,
+} from './interface/developmental-climate.js';
+
+export {
+  SPW_CANVAS_ACCENTS_CONTRACT,
+  describeCanvasAccentInstance,
+} from './interface/canvas-accents.js';
+
+export {
+  SPW_HERO_KINETIC_STAGE_CONTRACT,
+} from './runtime/spw-hero-kinetic-stage.js';
 
 export {
   SPW_ROLE_INFERENCE_CONTRACT,

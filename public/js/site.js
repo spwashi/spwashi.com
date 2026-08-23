@@ -952,6 +952,15 @@ async function bootSite() {
         inspect: (target, options = {}) => loadCompositionBox().then((m) => m.snapshotCompositionBox(target, options)),
         snapshot: (root = document, options = {}) => loadCompositionBox().then((m) => m.snapshotCompositionBoxes(root, options)),
       },
+      physics: {
+        snapshot: (root = document) => import('./runtime/physical-model.js').then((m) => m.snapshotPhysicalModel(root)),
+        describe: (value) => import('./runtime/physical-model.js').then((m) => (
+          value && value.spatial
+            ? m.describePhysicalModelSummary(value)
+            : m.describePhysicalModelSummary()
+        )),
+        contract: () => import('./runtime/physical-model.js').then((m) => m.SPW_PHYSICAL_MODEL_CONTRACT),
+      },
       featureClusters: {
         inspect: (target) => describeFeatureClusterElement(target),
         list: (root = document) => loadGestureContract().then((m) => m.snapshotFeatureClusters(root)),

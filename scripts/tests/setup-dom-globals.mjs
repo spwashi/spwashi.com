@@ -40,8 +40,24 @@ if (!globalThis.document) {
   };
 }
 
+if (!globalThis.location) {
+  globalThis.location = {
+    pathname: '/',
+    search: '',
+    hash: '',
+    origin: 'https://spwashi.com',
+    hostname: 'spwashi.com',
+    host: 'spwashi.com',
+    href: 'https://spwashi.com/',
+  };
+}
+
 if (!globalThis.window) {
   globalThis.window = globalThis;
+}
+
+if (!globalThis.window.location) {
+  globalThis.window.location = globalThis.location;
 }
 
 if (!globalThis.HTMLElement) {
