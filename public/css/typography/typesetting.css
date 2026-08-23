@@ -257,6 +257,7 @@
 }
 
 :where(html[data-spw-pinch-scaling="true"], body[data-spw-pinch-scaling="true"]) {
+  --spw-pinch-origin: var(--spw-pinch-origin-x, 0px) var(--spw-pinch-origin-y, 0px);
   cursor: ns-resize;
   user-select: none;
   -webkit-user-select: none;

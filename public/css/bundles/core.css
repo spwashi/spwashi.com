@@ -1064,6 +1064,16 @@ html[data-spw-reduce-motion="on"] *::after {
   inherits: true;
   initial-value: 0;
 }
+@property --spw-pinch-origin-x {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+@property --spw-pinch-origin-y {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
 
 @property --spw-runtime-avg-module-ms {
   syntax: "<number>";
@@ -12474,6 +12484,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 }
 
 :where(html[data-spw-pinch-scaling="true"], body[data-spw-pinch-scaling="true"]) {
+  --spw-pinch-origin: var(--spw-pinch-origin-x, 0px) var(--spw-pinch-origin-y, 0px);
   cursor: ns-resize;
   user-select: none;
   -webkit-user-select: none;
