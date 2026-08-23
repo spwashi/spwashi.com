@@ -44,6 +44,34 @@ export function getCanvasAccentInstance(container) {
     return INSTANCE_MAP.get(container) || null;
 }
 
+export function describeCanvasAccentInstance(instance) {
+    if (!instance) return { active: false };
+    return {
+        active: !instance.destroyed,
+        type: instance.type,
+        pointsCount: instance.points?.length || 0,
+        particlesCount: instance.particles?.length || 0,
+        palette: instance.resolvedPalette,
+        visible: instance.visible,
+        charge: instance.charge,
+        brushMode: instance.brushMode,
+    };
+}
+
+export const SPW_CANVAS_ACCENTS_CONTRACT = Object.freeze({
+    archetypes: Object.freeze(['lattice', 'flow', 'wave', 'vortex', 'crystal', 'resonance']),
+    attributes: Object.freeze({
+        accent: 'data-spw-accent',
+        palette: 'data-spw-accent-palette',
+        count: 'data-spw-accent-count',
+        colors: 'data-spw-accent-colors',
+        resonance: 'data-spw-accent-resonance',
+        strength: 'data-spw-accent-strength',
+    }),
+    portableUse:
+        'Progressive-enhancement canvas accent system for image-bearing and structural frames.',
+});
+
 export function initSpwCanvasAccents(ctx, root) {
   if (!(root instanceof Node)) {
     root = (typeof document !== 'undefined' && document.querySelector('main')) || document;
@@ -361,6 +389,7 @@ class CanvasAccent {
     }
 
     resize() {
+        if (!this.ctx) return;
         const rect = this.container.getBoundingClientRect();
         this.width = Math.max(rect.width, 1);
         this.height = Math.max(rect.height, 1);
@@ -660,7 +689,7 @@ class CanvasAccent {
     }
 
     animate() {
-        if (this.destroyed) return;
+        if (this.destroyed || !this.ctx) return;
         this.rafId = 0;
         this.ctx.clearRect(0, 0, this.width, this.height);
 
