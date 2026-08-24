@@ -1,0 +1,32 @@
+#>asset_metadata
+#:layer #!math
+
+^"spirit"{
+  name: "math-fabric-local-curvature"
+  title: "Math as a Fabric"
+  description: "A close woven membrane makes local texture and global curvature available in one material metaphor."
+  visual_qualities: "woven membrane, teal and amber ridges, coral threads, local texture, curved surface"
+}
+
+^"provenance"{
+  generator: "Midjourney"
+  imported_on: "2026-08-23"
+  source_archive: "midjourney_session (4).zip"
+  source_master: "math_as_a_fabric_--profile_358wmu5_--stylize_750_--v_8.2_33aefdfd-3e5f-492d-9cbf-70cfe8c1924f_0.png; raw master intentionally not promoted"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "math-reference-study"
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["avif", "webp"]
+  alt_text: "A close woven membrane bends into teal, amber, and coral ridges with visible local texture."
+}
+
+^"optimization"{
+  variants: [
+    { tier: "thumb", size: "256x256", formats: ["avif", "webp"] },
+    { tier: "display", size: "512x512", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x1024", formats: ["avif", "webp"] }
+  ]
+}

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-24T01:38:04.594Z",
+  "generatedAt": "2026-08-24T03:14:08.257Z",
   "sourceRoot": "/public/images/",
-  "count": 391,
+  "count": 415,
   "concepts": [
     "about",
     "algorithm",
@@ -734,6 +734,138 @@
       "swapHint": "Use /public/images/assets/illustrations/material-weathered-copper-moss-study-thumb.webp when a thumbnail visual needs a stable tracked asset."
     },
     {
+      "id": "math-fabric-local-curvature",
+      "title": "Math Fabric Local Curvature",
+      "path": "/public/images/assets/illustrations/math-fabric-local-curvature-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 13335,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-fabric-local-curvature-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-fabric-local-curvature",
+      "title": "Math Fabric Local Curvature",
+      "path": "/public/images/assets/illustrations/math-fabric-local-curvature-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 11610,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-fabric-local-curvature-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-fabric-local-curvature",
+      "title": "Math Fabric Local Curvature",
+      "path": "/public/images/assets/illustrations/math-fabric-local-curvature-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 61689,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-fabric-local-curvature-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-fabric-local-curvature",
+      "title": "Math Fabric Local Curvature",
+      "path": "/public/images/assets/illustrations/math-fabric-local-curvature-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 45538,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-fabric-local-curvature-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-fabric-local-curvature",
+      "title": "Math Fabric Local Curvature",
+      "path": "/public/images/assets/illustrations/math-fabric-local-curvature-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 2321,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-fabric-local-curvature-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-fabric-local-curvature",
+      "title": "Math Fabric Local Curvature",
+      "path": "/public/images/assets/illustrations/math-fabric-local-curvature-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 2980,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-fabric-local-curvature-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-vector-field-flux-fold",
+      "title": "Math Vector Field Flux Fold",
+      "path": "/public/images/assets/illustrations/math-vector-field-flux-fold-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 13344,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-vector-field-flux-fold-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-vector-field-flux-fold",
+      "title": "Math Vector Field Flux Fold",
+      "path": "/public/images/assets/illustrations/math-vector-field-flux-fold-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 10920,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-vector-field-flux-fold-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-vector-field-flux-fold",
+      "title": "Math Vector Field Flux Fold",
+      "path": "/public/images/assets/illustrations/math-vector-field-flux-fold-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 77460,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-vector-field-flux-fold-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-vector-field-flux-fold",
+      "title": "Math Vector Field Flux Fold",
+      "path": "/public/images/assets/illustrations/math-vector-field-flux-fold-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 48528,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-vector-field-flux-fold-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-vector-field-flux-fold",
+      "title": "Math Vector Field Flux Fold",
+      "path": "/public/images/assets/illustrations/math-vector-field-flux-fold-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 2660,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-vector-field-flux-fold-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-vector-field-flux-fold",
+      "title": "Math Vector Field Flux Fold",
+      "path": "/public/images/assets/illustrations/math-vector-field-flux-fold-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 3112,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/math-vector-field-flux-fold-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
       "id": "papergami-architecture",
       "title": "Papergami Architecture",
       "path": "/public/images/assets/illustrations/papergami-architecture-display.avif",
@@ -1193,6 +1325,72 @@
       "swapHint": "Use /public/images/assets/illustrations/pretext-physics.png when a image visual needs a stable tracked asset."
     },
     {
+      "id": "research-question-horizon",
+      "title": "Research Question Horizon",
+      "path": "/public/images/assets/illustrations/research-question-horizon-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 9855,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/research-question-horizon-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "research-question-horizon",
+      "title": "Research Question Horizon",
+      "path": "/public/images/assets/illustrations/research-question-horizon-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 8122,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/research-question-horizon-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "research-question-horizon",
+      "title": "Research Question Horizon",
+      "path": "/public/images/assets/illustrations/research-question-horizon-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 48890,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/research-question-horizon-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "research-question-horizon",
+      "title": "Research Question Horizon",
+      "path": "/public/images/assets/illustrations/research-question-horizon-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 31260,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/research-question-horizon-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "research-question-horizon",
+      "title": "Research Question Horizon",
+      "path": "/public/images/assets/illustrations/research-question-horizon-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 1783,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/research-question-horizon-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "research-question-horizon",
+      "title": "Research Question Horizon",
+      "path": "/public/images/assets/illustrations/research-question-horizon-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 2206,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/research-question-horizon-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
       "id": "schedulers",
       "title": "Schedulers",
       "path": "/public/images/assets/illustrations/schedulers.png",
@@ -1546,6 +1744,102 @@
         "rpg"
       ],
       "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-thumb.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-wapboy-market-pie-balance",
+      "title": "Rpg Wapboy Market Pie Balance",
+      "path": "/public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-display.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 27601,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-display.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-wapboy-market-pie-balance",
+      "title": "Rpg Wapboy Market Pie Balance",
+      "path": "/public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-display.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 24906,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-display.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-wapboy-market-pie-balance",
+      "title": "Rpg Wapboy Market Pie Balance",
+      "path": "/public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-hero.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 70371,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-hero.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-wapboy-market-pie-balance",
+      "title": "Rpg Wapboy Market Pie Balance",
+      "path": "/public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-hero.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 55784,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-hero.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-wapboy-market-pie-balance",
+      "title": "Rpg Wapboy Market Pie Balance",
+      "path": "/public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-thumb.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 5761,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-thumb.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-wapboy-market-pie-balance",
+      "title": "Rpg Wapboy Market Pie Balance",
+      "path": "/public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-thumb.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 7334,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-thumb.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
     },
     {
       "id": "scheduler-clockwork",

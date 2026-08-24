@@ -1,0 +1,32 @@
+#>asset_metadata
+#:layer #!research
+
+^"spirit"{
+  name: "research-question-horizon"
+  title: "Keep the Question Larger than the Answer"
+  description: "A lone figure beneath a luminous question-shaped cloud holds uncertainty open as an attentional posture rather than a conclusion."
+  visual_qualities: "teal landscape, amber question cloud, solitary figure, atmospheric distance"
+}
+
+^"provenance"{
+  generator: "Midjourney"
+  imported_on: "2026-08-23"
+  source_archive: "midjourney_session (4).zip"
+  source_master: "what_if_--profile_358wmu5_--stylize_750_--v_8.1_5a11251e-8238-437c-9cd4-8710cc43970a_0.png; raw master intentionally not promoted"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "research-method-study"
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["avif", "webp"]
+  alt_text: "A lone figure stands beneath an immense glowing question-shaped cloud in a teal landscape."
+}
+
+^"optimization"{
+  variants: [
+    { tier: "thumb", size: "256x256", formats: ["avif", "webp"] },
+    { tier: "display", size: "512x512", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x1024", formats: ["avif", "webp"] }
+  ]
+}

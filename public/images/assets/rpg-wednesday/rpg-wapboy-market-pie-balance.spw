@@ -1,0 +1,39 @@
+#>asset_metadata
+#:layer #!rpg_wednesday
+
+^"spirit"{
+  name: "rpg-wapboy-market-pie-balance"
+  title: "Market Balance Rehearsal"
+  description: "A possible WAPboy performer balances an oversized pie in a warm market, testing scale, service, and precarious restraint."
+  visual_qualities: "warm market light, round orange head, oversized berry pie, theatrical balance"
+}
+
+^"provenance"{
+  generator: "Midjourney"
+  imported_on: "2026-08-23"
+  source_archive: "midjourney_session (4).zip"
+  source_master: "WAPboy_carefully_balancing_a_pie_flat_on_one_outstretched_arm_f3f638e9-5941-48c6-83ee-b11d06a6c858_1.png; raw master intentionally not promoted"
+}
+
+^"canon_posture"{
+  status: "interpretation"
+  invariant: "WAPboy is canonically an abstract two-dimensional drawing."
+  embodiment: "The market figure is one possible performer or rendition, not a replacement anatomy for WAPboy."
+  tested_pressure: "How service, appetite, scale, and restraint read when the pie outweighs the visible performer."
+}
+
+^"usage"{
+  surface: "rpg_wednesday"
+  role: "portrayal-study"
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["avif", "webp"]
+  alt_text: "A small round orange-headed performer stands beneath an enormous berry pie balanced like a hat in a warmly lit market."
+}
+
+^"optimization"{
+  variants: [
+    { tier: "thumb", size: "320x320", formats: ["avif", "webp"] },
+    { tier: "display", size: "640x640", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x1024", formats: ["avif", "webp"] }
+  ]
+}

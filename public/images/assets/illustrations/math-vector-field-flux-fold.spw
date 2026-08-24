@@ -1,0 +1,32 @@
+#>asset_metadata
+#:layer #!math
+
+^"spirit"{
+  name: "math-vector-field-flux-fold"
+  title: "Flux as a Fold"
+  description: "Interleaved teal and amber currents offer a pre-formal visual handle for transport, circulation, and changing local direction."
+  visual_qualities: "fluid folds, teal current, amber current, continuous field, luminous depth"
+}
+
+^"provenance"{
+  generator: "Midjourney"
+  imported_on: "2026-08-23"
+  source_archive: "midjourney_session (4).zip"
+  source_master: "flux_and_flow_--raw_--profile_358wmu5_--stylize_1000_--v_8.2_3a7c82a8-7d79-4070-a1b1-696ba5529238_0.png; raw master intentionally not promoted"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "math-reference-study"
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["avif", "webp"]
+  alt_text: "Teal and amber currents fold through one another in a continuous fluid field."
+}
+
+^"optimization"{
+  variants: [
+    { tier: "thumb", size: "256x256", formats: ["avif", "webp"] },
+    { tier: "display", size: "512x512", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x1024", formats: ["avif", "webp"] }
+  ]
+}
