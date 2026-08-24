@@ -14,6 +14,8 @@
 @ornament_contract: ~"./ornament-contract.spw"
 @site_semantics: ~"./site-semantics.spw"
 @wonder_memory_runtime: ~"../../public/js/interface/wonder-memory.js"
+@attention_compatibility_runtime: ~"../../public/js/runtime/attention-architecture.js"
+@attention_catalog: ~"../../public/js/runtime/module-catalog-enhancement.js"
 @accent_palette_runtime: ~"../../public/js/interface/accent-palette.js"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
 @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
@@ -176,6 +178,18 @@ expression = attention[field]{gradient.uptake.scarcity}<spend>
   }[reg=facet]
   balance_rule = "Use seamless adjustment for care work; use resonant pause for learning work; use sedimentation for architecture work."
 }
+
+^"progressive_runtime_schedule"{
+  fixity = `tending around stable data-spw-* and section-event contracts`
+  compatibility = `attention-architecture.js remains the direct-consumer facade; the runtime catalog imports children independently`
+  section_handle = `visible on a static handle or an eligible section ecology; owns section state, locomotion, region kin, and handle-local cauldron nudge`
+  resonance_probe = `visible event delegation; keyboard focus on every device, delayed hover only on fine hover pointers`
+  reading_groove = `idle on substantial prose; ordinary authored reading remains when observers are unavailable`
+  pinch_scale = `interaction scheduled; listeners mount only for multi-touch or coarse-pointer capability; site settings remains scale authority`
+  scroll_cadence = `idle on sectioned routes; projects the preference consumed by existing section-state CSS`
+  memory = `none of these attention children owns regional history; opt-in encounter memory belongs to feature-discovery`
+  anti = `do not reassemble the five children behind one catalog load or hide essential copy behind their attributes`
+}[reg=facet]
 
 register_diffusion_model: .{
  note = `The scalable approximation. Preserves neighborhood structure via shared register membership.`

@@ -168,6 +168,19 @@
   ][reg=set]
 }[reg=facet]
 
+^"landed_attention_L3_2026_08"{
+  status = `implemented downstream of the audit`
+  compatibility = `attention-architecture remains a direct-import facade and is no longer the catalog transport`
+  children: #[
+    .{ id = `attention-section-handle`, when = `visible`, owner = `section locomotion + handle-local cauldron nudge` },
+    .{ id = `attention-resonance-probe`, when = `visible`, owner = `keyboard focus + fine-pointer resonance` },
+    .{ id = `attention-reading-groove`, when = `idle`, owner = `optional prose beat observation` },
+    .{ id = `attention-pinch-scale`, when = `interaction`, owner = `capability-gated multi-touch scale preview` },
+    .{ id = `attention-scroll-cadence`, when = `idle`, owner = `section cadence preference projection` }
+  ][reg=set]
+  result = `L4 review boundaries now have L3 transport and scheduling boundaries; authored HTML/CSS remains the zero-JS prior.`
+}[reg=facet]
+
 ^"proposed_catalog_fields"{
   optional_inspect = #[
     `parent` # soft group for DevTools

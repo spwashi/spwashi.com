@@ -63,6 +63,25 @@ Review posture before landing:
 
 This remains the best second pilot because it crosses CSS, JS, runtime state, and editor inspectability. Candidate surfaces include `public/js/runtime/attention-architecture.js`, `public/css/effects/wonder.css`, `public/css/ornament/ornament.css`, `.spw/conventions/attention-field.spw`, and the design/runtime surfaces. The first useful patch should not restructure the whole field. It should create a slice contract that maps the existing authored HTML, data attributes, runtime events, and CSS selectors so a returning developer can understand where attention state is read, written, and projected.
 
+The first ownership seam is now explicit: attention emits coarse settled-section state but stores no regional history; `feature-discovery` may consume that state for an explicitly authored `attention-settle` feature, using session memory by default. This supports regional surprises without turning hover, resonance, or passive scroll into a permanent trail. Rich reveals remain scoped to play/scene/practice surfaces and essential reading content remains present before enhancement.
+
+### Landed scheduling slice — independent attention children
+
+**Public intent:** keep authored reading and static section travel intact, then load each attention affordance only when its own region, timing, and input posture can use it. This is a tending implementation around stable public attributes and events; it does not rename the attention contract.
+
+**Non-goals:** no new storage in attention, no per-hover history, no viewport polling loop, no required content hidden behind enhancement, no rich reveal on ordinary reading routes, and no change to the CSS layer order.
+
+**Runtime blueprint:**
+
+- `attention-section-handle` — visible; eligible authored sections or a static handle; owns section locomotion and the handle-local cauldron nudge.
+- `attention-resonance-probe` — visible; operator/concept/ingredient targets; keyboard focus everywhere and hover only on fine hover pointers.
+- `attention-reading-groove` — idle; substantial article/section prose; remains plain text when observers are unavailable and honors reduced-motion CSS.
+- `attention-pinch-scale` — interaction; mounts listeners only for multi-touch/coarse-pointer capability and leaves settings as the scale authority.
+- `attention-scroll-cadence` — idle; sectioned routes only; projects the preference consumed by existing section-state CSS.
+- `attention-architecture.js` remains a compatibility facade for direct consumers, not the catalog transport for every child.
+
+**Validation:** runtime catalog/definition contracts, module import architecture, focused submodule lifecycle tests, `node --check` on edited modules, `npm run check:runtime`, `npm run ecology`, and a zero-JS/reduced-motion inspection of the long-form fallback contract.
+
 ## Practice Beds
 
 Practice beds are the durable participation units inside each slice. They should be visible enough that a developer knows how to enter the slice, but light enough that they do not become a second curriculum system.
@@ -157,6 +176,8 @@ The slice should support both rhythms:
 - [ ] Bolder tree prototype (CSS) implemented and validated
 - [ ] First human volleyball pilot completed with handoff artifacts
 - [ ] Tooling and instruction updates landed
-- [ ] `attention-resonance-field` slice contract clarified alongside the current attention-field / wonder / ornament surfaces
+- [x] First `attention-resonance-field` ownership seam clarified: attention observes; feature discovery owns opt-in bounded memory
+- [x] Attention children independently scheduled with the authored HTML/CSS prior preserved
+- [ ] Full `attention-resonance-field` slice contract clarified alongside the current attention-field / wonder / ornament surfaces
 
 This plan treats the site as a living, multi-author artwork that improves through deliberate, inspectable, volleyed contributions rather than big-bang rewrites.

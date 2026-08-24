@@ -7,6 +7,9 @@
 #:fixity #!experimental
 #:layer #!public_semantics
 
+@feature_discovery: ~"../../public/js/runtime/feature-discovery.js"
+@attention_architecture: ~"../../public/js/runtime/attention-architecture.js"
+
 claim: `Discovery improves when terms, regions, and route sequences become usable material rather than decorative labels.`
 
 focus: .{
@@ -23,6 +26,16 @@ contract: .{
  arc_seed = `A small ordered path of terms and routes that can be reconstructed, remixed, or returned to.`
  conduit_event = `A named route from curiosity to artifact: screenshot, prompt packet, proof card, RPG Wednesday image drop, or teaching sprint.`
  semantic_spell = `A portable recipe that binds anchors, term clusters, component kinds, settings states, data attributes, and return paths into reusable material.`
+}[reg=facet]
+
+regional_attention_memory: .{
+ owner_split = `attention architecture emits coarse settled-section state; feature-discovery alone decides whether an authored region becomes an encounter record`
+ authored_trigger = `data-spw-feature-trigger=attention-settle on a real data-spw-feature region`
+ default_memory = `session unless the author explicitly requests persistent memory`
+ dwell = `a brief stable settle before discovery; one encounter per mounted element, no hover trail or scroll history`
+ progressive_fallback = `the region and all essential meaning remain visible without JS; data-spw-feature-fresh may reveal only optional ornament or local play`
+ playful_scope = `rich regional easter eggs belong on play, scene, practice, and lab surfaces; reading routes keep the same signal calm or omit the trigger`
+ anti = `do not make attention architecture a second storage owner, and do not persist per-hover resonance`
 }[reg=facet]
 
 spell_dimensions: .{
