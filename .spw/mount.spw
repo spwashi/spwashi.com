@@ -43,8 +43,8 @@
 workbench: .{
  # Pin tracks submodule HEAD (see git submodule status .spw/_workbench).
  version = `0.3.0`
- workbench_pin = `aae308a96ce9`
- pin_note = `aae308a+ parse completeness; relative doctor; spw-card stdin`
+ workbench_pin = `75d8f9d26253`
+ pin_note = `75d8f9d+ noun postfix; cache layers; refactor plan card`
  canon = @canon
  canon_mount = @canon_mount
  workspace = @workbench_workspace
