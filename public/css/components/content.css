@@ -826,6 +826,104 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   text-wrap: pretty;
 }
 
+/* Production notes keep one public premise buildable at several task-local
+   proficiencies. They describe paths through material; they do not rank the
+   reader or gate the complete base story. */
+:where(.spw-production-note) {
+  --production-note-accent: var(--active-op-color, var(--component-accent, var(--teal, #008080)));
+  --production-note-line: color-mix(in srgb, var(--production-note-accent) 30%, var(--line, rgba(14, 18, 20, 0.14)));
+  --production-note-surface: color-mix(in srgb, var(--component-surface-strong, var(--matte-surface, #f4efe5)) 94%, var(--production-note-accent) 6%);
+
+  container: spw-production-note / inline-size;
+  display: grid;
+  gap: clamp(0.72rem, 1.6vw, 1.05rem);
+  max-inline-size: min(100%, var(--component-measure-wide, 78rem));
+  margin-block: clamp(1rem, 2.4vw, 1.65rem);
+  padding: clamp(0.9rem, 2.2vw, 1.35rem);
+  border: 1px solid var(--production-note-line);
+  border-inline-start-width: var(--boundary-rail-width-strong, 3px);
+  border-radius: var(--component-radius-loose, 0.8rem);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--production-note-accent) 7%, transparent), transparent 42%),
+    var(--production-note-surface);
+  box-shadow: var(--component-shadow-soft, 0 0.45rem 1.4rem rgba(14, 18, 20, 0.08));
+}
+
+:where(.spw-production-note__header) {
+  display: grid;
+  gap: 0.28rem;
+  max-inline-size: var(--component-measure, 68ch);
+}
+
+:where(.spw-production-note__eyebrow) {
+  margin: 0;
+  color: color-mix(in srgb, var(--production-note-accent) 78%, var(--ink, currentColor));
+  font-size: var(--text-size-label, 0.76rem);
+  font-weight: 750;
+  letter-spacing: 0.075em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+:where(.spw-production-note__header :is(h2, h3, h4), .spw-production-note__path :is(h3, h4, h5)) {
+  margin: 0;
+  text-wrap: balance;
+}
+
+:where(.spw-production-note__header > p:last-child, .spw-production-note__path > p) {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+:where(.spw-production-note__paths) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.62rem;
+}
+
+:where(.spw-production-note__path) {
+  display: grid;
+  align-content: start;
+  gap: 0.34rem;
+  min-width: 0;
+  padding: 0.72rem 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--production-note-line) 72%, transparent);
+  border-radius: var(--component-radius-tight, 0.5rem);
+  background: color-mix(in srgb, var(--component-surface-strong, #fff) 86%, transparent);
+}
+
+:where(.spw-production-note__path[data-spw-proficiency="novice"]) {
+  border-block-start-color: color-mix(in srgb, var(--op-frame-color, var(--production-note-accent)) 58%, transparent);
+}
+
+:where(.spw-production-note__path[data-spw-proficiency="intermediate"]) {
+  border-block-start-color: color-mix(in srgb, var(--op-ref-color, var(--production-note-accent)) 58%, transparent);
+}
+
+:where(.spw-production-note__path[data-spw-proficiency="advanced"], .spw-production-note__path[data-spw-proficiency="expert"]) {
+  border-block-start-color: color-mix(in srgb, var(--op-probe-color, var(--production-note-accent)) 58%, transparent);
+}
+
+:where(.spw-production-note__footer) {
+  max-inline-size: var(--component-measure, 68ch);
+  padding-block-start: 0.62rem;
+  border-block-start: 1px solid color-mix(in srgb, var(--production-note-line) 64%, transparent);
+  color: var(--ink-mid, rgba(14, 18, 20, 0.68));
+  font-size: 0.86rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+:where(.spw-production-note__footer > :first-child) {
+  margin-block-start: 0;
+}
+
+@container spw-production-note (min-width: 42rem) {
+  :where(.spw-production-note__paths) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 :where(.frame-copy) {
   max-inline-size: min(100%, var(--component-measure-wide));
   line-height: 1.62;

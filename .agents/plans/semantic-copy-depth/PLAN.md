@@ -34,6 +34,27 @@ Let readers tune how much copy is visible without splitting the site into separa
 - Internal route bridges should include reasons for links, not only labels.
 - Collection should represent useful awareness or return value; reset paths should make tuned runtime state comparable to authored defaults.
 - Navigation anchors should not receive semantic topic markers that alter their default link behavior.
+- Copy depth and proficiency are independent: a new reader may want rich lore, while an expert may want a terse production brief.
+- Proficiency labels describe the demands of a local practice, never the worth, age, credentials, or fixed level of a person.
+- Production notes may identify an entry, developing, and deepening path, but must not gate the complete base reading.
+
+## Proficiency Production Note Slice
+
+**Public outcome:** readers on About and RPG Wednesday can see how one shared premise supports several depths of interpretation and practice without being sorted by age.
+
+**Daily kernel:** component; writer + designer; commons + theater; threshold; studio intensity; `contract`; HTML/CSS pattern + semantic convention; validate with copy measure, CSS/site checks, and mobile/desktop smoke.
+
+**Non-goals:** no age inference, learner scoring, persistent profile, gated content, universal proficiency rank, new runtime module, or separate audience-rating route tree.
+
+**Minimal seams:**
+
+- `about/index.html` — creator history, individuated education, AI, and standardization boundary.
+- `play/rpg-wednesday/index.html` — shared WAP mystery with entry/developing/deepening production handles.
+- `public/css/components/content.css` — shared `.spw-production-note` anatomy and responsive packing.
+- `.spw/conventions/intergenerational-literacy.spw` — task-local proficiency and concurrent-register contract.
+- `.spw/site.spw` + `.spw/conventions/index.spw` — make the existing literacy convention discoverable.
+
+**Component anatomy:** `header -> body -> proficiency paths -> footer`. Reuse `data-spw-kind`, `data-spw-role`, `data-spw-copy-depth`, and the existing `data-spw-proficiency` values; do not create a new attribute family.
 
 ## Follow-Up
 
