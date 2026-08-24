@@ -56,6 +56,9 @@ function isReadingGrooveEnabled() {
 export function initReadingGroove(root) {
   const beats = collectReadingBeats(root);
   if (beats.length < READING_GROOVE_MIN_BEATS) return () => {};
+  if (typeof IntersectionObserver !== 'function' || typeof MutationObserver !== 'function') {
+    return () => {};
+  }
 
   const syncReadingGroovePreference = () => {
     [document.documentElement, document.body].forEach((node) => {

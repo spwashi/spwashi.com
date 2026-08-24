@@ -42,7 +42,14 @@ function isPinchTextScaleEnabled() {
   return getRootPreference('spwPinchTextScale', 'on') !== 'off';
 }
 
+export function supportsPinchTextScaleInput(environment = globalThis) {
+  const touchPoints = Number(environment.navigator?.maxTouchPoints) || 0;
+  const coarsePointer = environment.matchMedia?.('(any-pointer: coarse)').matches === true;
+  return touchPoints >= 2 || coarsePointer;
+}
+
 export function initPinchTextScale(root) {
+  if (!supportsPinchTextScaleInput()) return () => {};
   const main = root.querySelector?.('main');
   if (!(main instanceof HTMLElement)) return () => {};
   const html = document.documentElement;

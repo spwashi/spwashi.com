@@ -1301,7 +1301,55 @@ function writePageSectionDatasets(snapshot) {
   }
 }
 
-function initSectionHandle(root) {
+function initHandleCauldronNudge(ctx, handle, shell) {
+  const bus = ctx?.bus || window.__SPW_SITE__?.bus || window.bus;
+  if (!bus || typeof bus.on !== 'function') return () => {};
+
+  const targets = [handle, shell].filter((node) => node instanceof HTMLElement);
+  const unsubs = [];
+  let raf = 0;
+  let clearTimer = 0;
+
+  const nudge = (event, fallback = 'inspect') => {
+    const resonance = String(event?.detail?.action || fallback);
+    if (raf) window.cancelAnimationFrame(raf);
+    raf = window.requestAnimationFrame(() => {
+      raf = 0;
+      targets.forEach((target) => target.setAttribute(CAULDRON_RESONANCE_ATTR, resonance));
+      if (clearTimer) window.clearTimeout(clearTimer);
+      clearTimer = window.setTimeout(() => {
+        clearTimer = 0;
+        targets.forEach((target) => {
+          if (target.getAttribute(CAULDRON_RESONANCE_ATTR) === resonance) {
+            target.removeAttribute(CAULDRON_RESONANCE_ATTR);
+          }
+        });
+      }, 1400);
+    });
+  };
+
+  try {
+    unsubs.push(bus.on('cauldron:ingredient-inspected', (event) => nudge(event, 'inspect')));
+    unsubs.push(bus.on('cauldron:updated', (event) => nudge(event, event?.detail?.count > 0 ? 'gather' : 'empty')));
+    unsubs.push(bus.on('cauldron:gardened', (event) => nudge(event, event?.detail?.action || 'garden')));
+  } catch (_) {
+    unsubs.forEach((off) => {
+      try { if (typeof off === 'function') off(); } catch (_) {}
+    });
+    return () => {};
+  }
+
+  return () => {
+    if (raf) window.cancelAnimationFrame(raf);
+    if (clearTimer) window.clearTimeout(clearTimer);
+    unsubs.forEach((off) => {
+      try { if (typeof off === 'function') off(); } catch (_) {}
+    });
+    targets.forEach((target) => target.removeAttribute(CAULDRON_RESONANCE_ATTR));
+  };
+}
+
+function initSectionHandle(root, ctx = {}) {
   const sections = collectSections();
   const { handle, generated } = ensureHandle(root, sections);
   if (!handle) return () => {};
@@ -1322,12 +1370,18 @@ function initSectionHandle(root) {
     ensureSectionId(section, index);
   });
 
-  return createSectionHandleController({
+  const cleanupController = createSectionHandleController({
     sections,
     handle,
     shell,
     generated,
   });
+  const cleanupCauldronNudge = initHandleCauldronNudge(ctx, handle, shell);
+
+  return () => {
+    cleanupCauldronNudge();
+    cleanupController();
+  };
 }
 
 export { initSectionHandle };

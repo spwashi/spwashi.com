@@ -11,6 +11,9 @@ import {
   TIMING_ARC_STEMS,
   STANDARD_IDLE_CHUNKS,
 } from '../../public/js/kernel/module-timing-contract.js';
+import { supportsPinchTextScaleInput } from '../../public/js/runtime/attention/pinch-scale.js';
+import { ENHANCEMENT_DEFS } from '../../public/js/runtime/module-catalog-enhancement.js';
+import { MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
 
 test('timingArc stems and idle chunks are stable contracts', () => {
   assert.ok(TIMING_ARC_STEMS.includes('immediate'));
@@ -70,4 +73,38 @@ test('summarizeCatalogTiming rolls when/arc/chunk hygiene', () => {
   assert.equal(rollup.idleWithChunk, 2);
   assert.equal(rollup.idleWithoutChunk, 1);
   assert.ok(rollup.nonstandardIdleChunk.includes('e'));
+});
+
+test('attention children own independent progressive schedules', () => {
+  const attention = Object.fromEntries(
+    ENHANCEMENT_DEFS
+      .filter((definition) => definition.id.startsWith('attention-'))
+      .map((definition) => [definition.id, definition]),
+  );
+
+  assert.equal(attention['attention-section-handle'].when, MOUNT_WHEN.VISIBLE);
+  assert.equal(attention['attention-resonance-probe'].when, MOUNT_WHEN.VISIBLE);
+  assert.equal(attention['attention-reading-groove'].when, MOUNT_WHEN.IDLE);
+  assert.equal(attention['attention-pinch-scale'].when, MOUNT_WHEN.INTERACTION);
+  assert.equal(attention['attention-scroll-cadence'].when, MOUNT_WHEN.IDLE);
+  assert.equal(ENHANCEMENT_DEFS.some((definition) => definition.id === 'attention-architecture'), false);
+
+  Object.values(attention).forEach((definition) => {
+    assert.match(String(definition.load), /\.\/attention\//);
+  });
+});
+
+test('pinch scaling does not retain listeners on pointer-only devices', () => {
+  assert.equal(supportsPinchTextScaleInput({
+    navigator: { maxTouchPoints: 0 },
+    matchMedia: () => ({ matches: false }),
+  }), false);
+  assert.equal(supportsPinchTextScaleInput({
+    navigator: { maxTouchPoints: 2 },
+    matchMedia: () => ({ matches: false }),
+  }), true);
+  assert.equal(supportsPinchTextScaleInput({
+    navigator: { maxTouchPoints: 0 },
+    matchMedia: () => ({ matches: true }),
+  }), true);
 });

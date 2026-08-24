@@ -23,6 +23,7 @@ function readResonanceState(target) {
 
 export function initResonanceProbe(root) {
   const html = document.documentElement;
+  const hoverCapable = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches === true;
   let probeFocus = null;
   let probeHover = null;
   let hoverTimer = 0;
@@ -105,16 +106,20 @@ export function initResonanceProbe(root) {
 
   root.addEventListener('focusin', onFocusIn);
   root.addEventListener('focusout', onFocusOut);
-  root.addEventListener('mouseover', onMouseEnter);
-  root.addEventListener('mouseout', onMouseLeave);
+  if (hoverCapable) {
+    root.addEventListener('mouseover', onMouseEnter);
+    root.addEventListener('mouseout', onMouseLeave);
+  }
 
   return () => {
     if (rafId) cancelAnimationFrame(rafId);
     clearTimeout(hoverTimer);
     root.removeEventListener('focusin', onFocusIn);
     root.removeEventListener('focusout', onFocusOut);
-    root.removeEventListener('mouseover', onMouseEnter);
-    root.removeEventListener('mouseout', onMouseLeave);
+    if (hoverCapable) {
+      root.removeEventListener('mouseover', onMouseEnter);
+      root.removeEventListener('mouseout', onMouseLeave);
+    }
     html.removeAttribute(PROBE_ATTR);
     html.removeAttribute('data-spw-resonance-concept');
     html.removeAttribute('data-spw-resonance-ingredient');

@@ -91,7 +91,7 @@ These are the best candidates when you want to reuse a file on another site:
 - `runtime/page-hooks.js` for page-unique hook discovery, focus, and pulse helpers.
 - `runtime/composition-box-model.js` for component box-model snapshots, composition roles, and presence/overflow clues.
 - `semantic/interaction-expression.js` for dependency-light Spw narration on an existing durable interaction event; parsing remains in `spw-expression-geometry.js`.
-- `runtime/attention-architecture.js` for section locomotion and resonance pinning.
+- `runtime/attention-architecture.js` as the direct-import compatibility facade; catalog scheduling loads its `runtime/attention/*` children independently.
 - `runtime/state-orchestrator.js` for frame-state toggles and relational focus helpers.
 - `media/svg-tunability.js` for declarative SVG palette, pointer, stroke, spacing, and screenshot tuning.
 - `media/image-store.js` for IndexedDB-backed image persistence.
