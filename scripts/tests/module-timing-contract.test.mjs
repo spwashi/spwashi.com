@@ -115,6 +115,38 @@ test('concept salience receives a document root instead of lifecycle context', (
   assert.equal(unmounted, true);
 });
 
+test('visible image enhancers receive the matched document root', () => {
+  const ownerDocument = { querySelectorAll() {} };
+  const cases = [
+    ['image-utilization', 'initImageUtilization', 'unmountImageUtilization'],
+    ['image-interaction', 'initImageInteraction'],
+    ['effect-interpretation', 'initEffectInterpretation'],
+  ];
+
+  cases.forEach(([id, initName, unmountName]) => {
+    const definition = ENHANCEMENT_DEFS.find(({ id: definitionId }) => definitionId === id);
+    let mountedRoot = null;
+    let unmounted = false;
+    const module = {
+      [initName](root) {
+        mountedRoot = root;
+        return () => {};
+      },
+    };
+    if (unmountName) {
+      module[unmountName] = () => {
+        unmounted = true;
+      };
+    }
+
+    definition.mount(module, { document: 'lifecycle context' }, { ownerDocument });
+    definition.unmount?.(module);
+
+    assert.equal(mountedRoot, ownerDocument, id);
+    if (unmountName) assert.equal(unmounted, true, id);
+  });
+});
+
 test('pinch scaling does not retain listeners on pointer-only devices', () => {
   assert.equal(supportsPinchTextScaleInput({
     navigator: { maxTouchPoints: 0 },

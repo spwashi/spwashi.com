@@ -1138,6 +1138,8 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'media element-state',
     load: () => import('../semantic/image-utilization.js'),
+    mount: (mod, ctx, root) => mod?.initImageUtilization?.(root?.ownerDocument || document),
+    unmount: (mod) => mod?.unmountImageUtilization?.(),
   },
   {
     id: 'image-interaction',
@@ -1159,6 +1161,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'media listeners element-state',
     load: () => import('../semantic/image-interaction.js'),
+    mount: (mod, ctx, root) => mod?.initImageInteraction?.(root?.ownerDocument || document),
   },
   {
     id: 'effect-interpretation',
@@ -1180,6 +1183,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'local-dom element-state',
     load: () => import('../semantic/effect-interpretation.js'),
+    mount: (mod, ctx, root) => mod?.initEffectInterpretation?.(root?.ownerDocument || document),
   },
   {
     id: 'pulse-beat-tuner',
