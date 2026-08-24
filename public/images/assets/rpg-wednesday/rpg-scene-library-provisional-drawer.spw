@@ -1,0 +1,31 @@
+#>asset_metadata
+#:layer #!rpg_wednesday
+
+^"spirit"{
+  name: "rpg-scene-library-provisional-drawer"
+  title: "The Provisional Drawer"
+  description: "'l'n'd'r and a human librarian preserve a possible future without hardening it into destiny."
+  visual_qualities: "clay figure, library drawers, blank record card, brass stamp, teal and amber archive light"
+}
+^"provenance"{
+  generator: "ChatGPT built-in image workflow"
+  interpretation_model: "5.6 Sol"
+  generated_on: "2026-08-23"
+  source_master: "conversation attachment; raw master intentionally not promoted"
+}
+
+^"canon_posture"{
+  status: "concept-study"
+  fixity: "tending"
+  scene_law: "A record may hold a possible future without reducing a person to it."
+  refuse: "Do not treat the unnamed librarian, drawer design, or exact scene as dated session canon."
+}
+
+^"usage"{
+  surface: "rpg_wednesday"
+  role: "library-concept-study"
+  aspect_ratio: "16:9"
+  variants: ["320x180", "640x360", "1024x576"]
+  formats: ["avif", "webp"]
+  alt_text: "'l'n'd'r, a blue-grey clay-bodied figure with a pointed hat, slides a blank record card toward an open wooden drawer while a human librarian waits with a brass stamp among shelves and symbol-marked cabinets."
+}

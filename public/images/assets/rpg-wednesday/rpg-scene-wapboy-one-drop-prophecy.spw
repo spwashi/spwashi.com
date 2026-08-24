@@ -1,0 +1,35 @@
+#>asset_metadata
+#:layer #!rpg_wednesday
+
+^"spirit"{
+  name: "rpg-scene-wapboy-one-drop-prophecy"
+  title: "One Drop Before Gravy Davis"
+  description: "A dreamlike dramatization or possible stage rendition in which WAPboy recognizes the materiality of the Gravy Davis prophecy in one particular form."
+  visual_qualities: "library construction, low-angle tension, berry pie, suspended drop, nested jazz performance"
+}
+
+^"provenance"{
+  generator: "ChatGPT built-in image workflow"
+  interpretation_model: "5.6 Sol"
+  generated_on: "2026-08-23"
+  source_master: "conversation attachment; raw master intentionally not promoted"
+}
+
+^"canon_posture"{
+  status: "interpretation"
+  invariant: "WAPboy is canonically an abstract two-dimensional drawing."
+  protagonist_goal: "The abstract form keeps WAPboy flexible across styles, media, and portrayals without making one body definitive."
+  pronouns: "Open. Do not infer a new set; use WAPboy or the role until the character choice receives sincere thought."
+  embodiment: "The figure is a dimensional performer in a potential stage rendition, not a replacement anatomy for WAPboy."
+  scene_law: "The image is a dreamlike dramatization in which one suspended drop lets WAPboy recognize the prophecy's materiality in a particular form. It does not prove that the prophecy occurred; the recurring spill usually launches the whole pie into a clown's face."
+  dream_trope: "Dreams of performances may let WAPboy become aware that actors play the role while WAPboy remains the drawing beneath each portrayal."
+}
+
+^"usage"{
+  surface: "rpg_wednesday"
+  role: "narrative-concept-study"
+  aspect_ratio: "16:9"
+  variants: ["320x180", "640x360", "1024x576"]
+  formats: ["avif", "webp"]
+  alt_text: "A performer portraying WAPboy braces a huge berry pie on a metal tray while one red drop falls beneath it; inside the suspended drop, a jazz pianist performs among spilled pies."
+}

@@ -16,6 +16,7 @@
 @measurement: ~"./conventions/measurement-contract.spw"
 @page_copy_audit: ~"./conventions/page-copy-audit.spw"
 @copy_flow: ~"./conventions/copy-flow.spw"
+@intergenerational_literacy: ~"./conventions/intergenerational-literacy.spw"
 @page_pretext_measurement: ~"./audits/page-pretext-measurement-2026-08/index.spw"
 @conventions: ~"./conventions/index.spw"
 @site_semantics: ~"./conventions/site-semantics.spw"
@@ -327,6 +328,7 @@ dispatch: .{
  navigation_header_disclosure = @navigation_header_disclosure
  floating_chrome_stack = @floating_chrome_stack
  semantic_copy_depth = @semantic_copy_depth
+ intergenerational_literacy = @intergenerational_literacy
  component_region_personality = @component_region_personality
  spw_architecture_ecology = @spw_architecture_ecology
  modular_experience_slices = @modular_experience_slices

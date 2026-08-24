@@ -23,6 +23,8 @@
 @combinatorics: ~"../../topics/math/combinatorics/index.html"
 @software_path: ~"../../topics/software/index.html#dimensional-expression-path"
 @mixer: ~"../../public/js/modules/widgets/boonhonk-mixer.js"
+@wapboy_image: ~"../../public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy.spw"
+@drawer_image: ~"../../public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer.spw"
 @kernel: ~"../../.agents/plans/daily-kernel-development/boonhonk-dimensional-flow-2026-08-21.spw"
 @voyager_window: ~"./golden-voyager-window.spw"
 
@@ -72,6 +74,45 @@ fixity = "tending"
   refuse = `Do not stand up another land to hold a mix. Do not mention lost domains. boon.land and bane.land stay skeletons. Do not costume hip-hop, jazz, funk, or disco as flavor adjectives.`
 }[reg=facet]
 
+^"wap_interpretive_space"{
+  operation = "align"
+  fixity = "tending"
+  house_expansion = `Wonder About Pi(e).`
+  posture = `Public copy states the house expansion plainly and leaves interpretation to the audience.`
+  use = `Allocate enough structural room for appetite, embodiment, performance, and authorship to become discussable through the story itself.`
+  refuse = `Do not cue, explain, deny, or editorialize about alternate readings in story-facing copy.`
+}[reg=facet]
+
+^"concurrent_proficiency_registers"{
+  operation = "contract"
+  fixity = "tending"
+  shared_substrate = `One cast, event field, mystery, emotional consequence, and world logic should sustain both registers.`
+  entry = `Follow the character wants, comic danger, dream-performance, and pie prophecy.`
+  developing = `Compare portrayals, remix a relation, vary a trope, or create a character, faction, invention, or setting that changes the pressure.`
+  deepening = `Interrogate repetition, appetite, embodiment, projection, spectacle, authorship, and compulsory performance through the established story material.`
+  editions = `Different renditions may choose different content boundaries, but audience category does not define interpretive proficiency.`
+  wap_role = `Wonder About Pi(e) is the stated expansion; other interpretations belong to readers and performances rather than editorial prompting.`
+  refuse = `Do not rank readers as people, advertise an unstated reading, or make the deepening path an answer key.`
+}[reg=facet]
+
+^"boonwap_banewap_foil"{
+  operation = "align"
+  fixity = "tending"
+  boonwap = `Mr. BoonWAP is generally well-intentioned but may be dense or self-absorbed enough to miss what the room is telling him.`
+  banewap = `Mr. BaneWAP is the foil: a comically evil cartoon nemesis whose schemes remain satisfyingly thwartable.`
+  pair = `Their contrast should create readable comic pressure without converting either character into genuine cruelty.`
+  refuse = `Do not turn BoonWAP's density into malice or make BaneWAP's schemes unthwartable unless repeated play earns a real change.`
+}[reg=facet]
+
+^"bonewap_invention"{
+  operation = "align"
+  fixity = "tending"
+  role = `Mx. BoneWAP is a scientist.`
+  knowledge = `They know that some trope-driven magic operates in their universe.`
+  practice = `They seek to observe, test, and harness that magic in a variety of inventions.`
+  refuse = `Trope awareness is not omniscience, and an invention should not be assumed successful before play establishes what it can do.`
+}[reg=facet]
+
 ^"dimensional_travel"{
   cite = @ascent
   nav = @dimensional_nav
@@ -111,6 +152,32 @@ fixity = "tending"
     cite = @fashion
     not = `Nostalgia glitter or a costume party`
   }[reg=facet]
+}[reg=facet]
+
+^"wapboy_projection"{
+  operation = "align"
+  fixity = "tending"
+  canon = `WAPboy is canonically an abstract two-dimensional drawing rather than a fixed anatomy.`
+  protagonist_goal = `The abstract form keeps WAPboy a flexible protagonist across styles, media, and portrayals without making one body definitive.`
+  pronouns = `Open. Do not infer a new set; use WAPboy or the role until the character choice receives sincere thought.`
+  embodiment = `A dimensional figure may perform or stage WAPboy without replacing the drawing as the canonical form. The ChatGPT stage study uses one performer without making that body canonical.`
+  dream_trope = `Dreams of performances may let WAPboy notice that actors play the role while WAPboy remains the drawing beneath every portrayal.`
+  prophecy = `The recurring spill usually launches the whole pie into a clown's face. A dreamlike dramatization or stage study may let WAPboy recognize the prophecy's materiality in one suspended drop without proving that the 1pi spill occurred.`
+  record_law = `A library record may hold a possible future without reducing a person to it.`
+  images = #[ @wapboy_image ; @drawer_image ][reg=set]
+  refuse = `Do not promote a performer's body, an unnamed librarian, or a generated library layout into dated session canon.`
+}[reg=facet]
+
+^"production_bible_posture"{
+  operation = "align"
+  fixity = "tending"
+  audience = `Readers enjoy creating characters and discussing what works in the media they consume.`
+  front_lane = `Story-facing WAP copy should read like the back of a strange book: cast, pressure, image, consequence, and one unanswered question.`
+  back_lane = `Production-bible handles should expose character contradictions, trope engines, worldbuilding questions, and remix points without pre-solving them.`
+  texture = `Let prophecy leak backward, let jokes acquire material weight, and let performers or dreams complicate identity without explaining away the gag.`
+  note_lane = `Pronoun status, canon boundaries, generator provenance, and session discipline stay in compact notes rather than carrying the hook.`
+  retain = `Do not drop a compelling worldbuilding or trope-development hook merely to make the prose more atmospheric.`
+  refuse = `Do not flatten the lore into a taxonomy, a product brief, or an exhaustive mechanism explanation before the reader has a reason to turn the page; do not make the jacket voice so opaque that a collaborator cannot build from it.`
 }[reg=facet]
 
 ^"window"{

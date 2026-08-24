@@ -2162,7 +2162,7 @@ Part of the current campaign fabric turns on a touchy cluster of beings and perf
 ### Mr. BoonWAP
 
 
-Mr. BoonWAP is a sentient pie, one of the quinary five, and a protagonist for developing augmented-reality storytelling as a medium. The name carries its own field note: WAP stands for Wonder About Pi(e). He already exists in the campaign logic; the deeper test is how the world handles a being who may be pastry, person, projection, offering, mascot, menu item, or some unstable braid of all six.
+Mr. BoonWAP is a sentient pie, one of the quinary five, and a protagonist for developing augmented-reality storytelling as a medium. He is generally well-intentioned, though sometimes dense or self-absorbed enough to miss what the room is telling him. WAP expands to Wonder About Pi(e). He already exists in the campaign logic; the deeper test is how the world handles a being who may be pastry, person, projection, offering, mascot, menu item, or some unstable braid of all six.
 
 
 The dimensional pie relationship should be meaningful outside the page. If BoonWAP cannot suggest a table scene, a phone-camera overlay, a pop-up truck ritual, a shop sign, a flavor flight, and a reason to talk about attention, appetite, and service, the concept is not yet engineered well enough.
@@ -2177,13 +2177,28 @@ Slibbon Bap is Mr. BoonWAP's magical elf-like assistant, friend, and something c
 ### Mr. BaneWAP
 
 
-Mr. BaneWAP follows the ceiling of a classic cartoon villain: dramatic, mischievous, and hungry for trope-based trouble, but not built for true malice. He is officially Mr. BoonWAP's nemesis, though the pair function as a necessary duality and keep ending up on the same side of larger harmony quests.
+Mr. BaneWAP is Mr. BoonWAP's foil and follows the ceiling of a classic cartoon villain: dramatic, mischievous, and committed to comically evil schemes that remain satisfyingly thwartable. He is a nemesis built for trope-based trouble rather than true malice, though the pair function as a necessary duality and keep ending up on the same side of larger harmony quests.
+
+
+### Mx. BoneWAP
+
+
+Mx. BoneWAP is a scientist who knows that some trope-driven magic operates in their universe and seeks to harness it in a variety of inventions. Their work turns recurring story behavior into an experimental field: something to observe, test, build with, and occasionally misunderstand. Trope awareness is not omniscience, and individual inventions should stay provisional until play establishes what they can do.
 
 
 ### How it should read
 
 
 Let the series perform agency slowly. Early scenes can rely on gesture, staging, and mutual adjustment; later scenes can afford clearer language because the characters earned it. If a scene has to choose between theory and chemistry, keep the chemistry and let the notes lane carry the interpretation.
+
+
+### Concurrent proficiency registers
+
+
+The WAP universe may support several renditions that share the same characters, events, mysteries, and emotional consequences. Production notes should cluster interpretive paths by task-local proficiency rather than presume that an audience category predicts depth. Every rendition should provide enough wonder, comedy, danger, and character agency to stand on its own.
+
+
+Build the shared hook first. Then identify an entry path for following the fiction, a developing path for remixing character and trope logic, and a deepening path for interrogating the substrate. State Wonder About Pi(e) plainly. The frame may support other interpretations, but story-facing copy should not cue, explain, deny, or resolve them. Deeper interpretation should arise from character, performance, repetition, and consequence rather than editorial prompting.
 
 
 This material should move through the existing ladder: jot it in the local kit, log it in sessions once it happens, and only then let it harden into cast memory, arc naming, or asset-atlas portrait cards.
@@ -2207,13 +2222,13 @@ Boonhonk treats naming as operational. Boon adds arrival, bane adds cost, bone a
 ### WAPboy
 
 
-WAPboy is black, and his only characteristic so far is that he is trying not to spill 1pi. That is enough because the surrounding physics can carry the load. He works like a cherry on top of deeper lore: simple enough for shenanigans, precise enough that every wobble, shortcut, warning, or near-spill can reveal how Wonder About Pi(e) behaves.
+WAPboy is black and canonically appears as an abstract two-dimensional drawing. The abstraction keeps WAPboy a flexible protagonist across styles, media, performances, and other portrayals without making one body definitive. The central story pressure so far is trying not to spill 1pi. That is enough because the surrounding physics can carry the load: every wobble, shortcut, warning, or near-spill can reveal how the Wonder About Pi(e) house reading behaves while the acronym's song-shaped cultural charge remains available underneath. Pronouns remain open pending more sincere character thought; until then, public copy should prefer WAPboy or the role rather than infer a new set.
 
 
 ### Gravy Davis
 
 
-It is prophesied that once WAPboy spills 1pi, he becomes Gravy Davis. Gravy Davis is a jazz musician who really does not care about spilling pies and has already spilled infinity pi(e)s. That makes him both a future self and a warning about what a looser relation to consequence looks like.
+The prophecy says that spilling 1pi transforms WAPboy into Gravy Davis. The spill usually lands as clown physics: the whole pie comically launches into a clown's face. Gravy Davis is a jazz musician who really does not care about spilling pies and has already spilled infinity pi(e)s. That makes Gravy Davis both a possible future and a warning about what a looser relation to consequence looks like.
 
 
 ### Honk Bazongas
@@ -2282,7 +2297,7 @@ Use this section when the route needs a stable image seed for town memory, clay-
 ### Aetheris Solune and 'l'n'd'r are learning how to narrate a past surprise while the town builds a place sturdy enough to hold future memory.
 
 
-The library lets the campaign ask better questions: what deserves indexing, what should remain touchy or provisional, what becomes public canon, and how older and younger readers might inherit the same story without flattening its magic.
+The library lets the campaign ask better questions: what deserves indexing, what should remain touchy or provisional, what becomes public canon, and how readers with different histories might inherit the same story without flattening its magic.
 
 
 This is also where a culture can start to hold. A good library card should survive a screenshot, a spoken caption, a screen-reading agent, and a prompt copied into a recent image generator without losing the scene's actual point.

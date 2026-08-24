@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-23T21:58:16.597Z",
+  "generatedAt": "2026-08-24T01:38:04.594Z",
   "sourceRoot": "/public/images/",
-  "count": 379,
+  "count": 391,
   "concepts": [
     "about",
     "algorithm",
@@ -1342,6 +1342,210 @@
         "rpg"
       ],
       "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-thumb.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-library-provisional-drawer",
+      "title": "Rpg Scene Library Provisional Drawer",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-display.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 23998,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "library",
+        "worldbuilding",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-display.avif when a rpg-wednesday / session-memory / character / library / worldbuilding / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-library-provisional-drawer",
+      "title": "Rpg Scene Library Provisional Drawer",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-display.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 20772,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "library",
+        "worldbuilding",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-display.webp when a rpg-wednesday / session-memory / character / library / worldbuilding / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-library-provisional-drawer",
+      "title": "Rpg Scene Library Provisional Drawer",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-hero.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 84506,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "library",
+        "worldbuilding",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-hero.avif when a rpg-wednesday / session-memory / character / library / worldbuilding / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-library-provisional-drawer",
+      "title": "Rpg Scene Library Provisional Drawer",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-hero.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 64590,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "library",
+        "worldbuilding",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-hero.webp when a rpg-wednesday / session-memory / character / library / worldbuilding / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-library-provisional-drawer",
+      "title": "Rpg Scene Library Provisional Drawer",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-thumb.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 3610,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "library",
+        "worldbuilding",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-thumb.avif when a rpg-wednesday / session-memory / character / library / worldbuilding / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-library-provisional-drawer",
+      "title": "Rpg Scene Library Provisional Drawer",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-thumb.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 4116,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "library",
+        "worldbuilding",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-thumb.webp when a rpg-wednesday / session-memory / character / library / worldbuilding / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-wapboy-one-drop-prophecy",
+      "title": "Rpg Scene Wapboy One Drop Prophecy",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-display.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 35021,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-display.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-wapboy-one-drop-prophecy",
+      "title": "Rpg Scene Wapboy One Drop Prophecy",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-display.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 32902,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-display.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-wapboy-one-drop-prophecy",
+      "title": "Rpg Scene Wapboy One Drop Prophecy",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-hero.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 110383,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-hero.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-wapboy-one-drop-prophecy",
+      "title": "Rpg Scene Wapboy One Drop Prophecy",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-hero.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 88816,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-hero.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-wapboy-one-drop-prophecy",
+      "title": "Rpg Scene Wapboy One Drop Prophecy",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-thumb.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 6387,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-thumb.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-scene-wapboy-one-drop-prophecy",
+      "title": "Rpg Scene Wapboy One Drop Prophecy",
+      "path": "/public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-thumb.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 7564,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-thumb.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
     },
     {
       "id": "scheduler-clockwork",

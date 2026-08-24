@@ -18,6 +18,9 @@
 @dregg_lineage: ~"./dregg-lineage.spw"
 @registers: ~"./cauldron-registers.spw"
 @copy_ecology: ~"./copy-ecology.spw"
+@copy_depth_plan: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
+@about: ~"../../about/index.html#about-production-note-title"
+@rpg: ~"../../play/rpg-wednesday/index.html#wap-production-note-title"
 
 operation = "contract"
 fixity = "tending"
@@ -49,11 +52,36 @@ expression = literacy[intergenerational]{pointer.medium.transfer}<shared_ground>
   ~#claim: "plural media is the method, not a distribution strategy. A literacy claim you can only make in one medium is a claim about that medium."
 }
 
+^"proficiency_before_age"{
+  claim: "Age, credential, and social threshold are weak proxies for readiness; production notes should describe the work a reader can try instead."
+  task_local = `proficiency belongs to a particular practice and can change from medium to medium or from one day to the next`
+  standardized_values = `novice | intermediate | advanced | expert remain useful machine-readable coordinates when they clarify local task demand`
+  public_labels = `entry | developing | deepening may read more hospitably than ranking a person`
+  independence = `copy depth is a reading preference, not a proficiency score; rich lore may welcome a newcomer and an expert may request a terse brief`
+  refuse = `no age inference, learner scoring, credential gate, universal level, or persistent profile`
+}
+
+^"individuated_ai_learning"{
+  opportunity = `AI can individuate examples, pacing, feedback, practice media, and routes through a subject with much lower coordination cost.`
+  standardization = `a standard is useful when it clarifies a demonstrated capability, transferable evidence, safety boundary, or shared coordination point.`
+  boundary = `a standard becomes harmful when it substitutes a cohort average for a person, hides the reason for comparison, or turns one learning path into the definition of competence.`
+  intergenerational_use = `shared coordinates should help people with different media histories compare pointers, predictions, and evidence without assigning one generation the remedial role.`
+}
+
+^"production_note_component"{
+  plan = @copy_depth_plan
+  surfaces = #[ @about ; @rpg ][reg=set]
+  selector = `.spw-production-note[data-spw-feature="proficiency-production-note"]`
+  anatomy = `header -> body -> task-local proficiency paths -> footer`
+  path = `Each path names an action the reader or maker can try; essential story and navigation remain outside any optional depth layer.`
+  accessibility = `Use headings and ordinary sections, keep labels visible in text, and never rely on proficiency accent color alone.`
+}
+
 ^"honest_limits"{
   ~#note: "Recorded so this does not become a mission statement that outruns the work."
   ~#not_yet: `nothing here measures whether a reader's comprehension improved. The site measures coverage and encounter, which is contact rather than transfer.`
   ~#risk(condescension): "framing one generation as needing to be taught the other's medium is the failure mode. The pointer is made visible on both sides or the work is remedial."
-  ~#unearned: `this surface states a purpose. It does not yet state a curriculum, and should not pretend to.`
+  ~#unearned: `this surface states a purpose and a component pattern. It does not yet measure transfer or define a universal curriculum, and should not pretend to.`
 }
 
 #>wonder_intergenerational_1
@@ -66,7 +94,7 @@ expression = literacy[intergenerational]{pointer.medium.transfer}<shared_ground>
 }
 
 ^"validation"{
-  probe: `rg -il "media literacy|intergenerational" --glob '!dist*' --glob '!_workbench'`
+  probe: `rg -n "spw-production-note|proficiency-production-note|intergenerational media" about/index.html play/rpg-wednesday/index.html public/css/components/content.css .spw/conventions/intergenerational-literacy.spw`
   falsification: "the site states this as its subject and no route makes a literacy affordance a reader could use without reading the theory first"
   ~#note(measured absence): "before this surface, media literacy appeared 0 times in markup and 0 times in the corpus, and intergenerational appeared twice inside one prompt string"
 }

@@ -63,6 +63,7 @@
 @stylesheet_ecology: ~"./stylesheet-ecology.spw"  # a stylesheet is a standalone document; cascade is not delivery; combinators are the literature
 @semantic_expression_consequence: ~"./semantic-expression-consequence.spw"  # 441 authored expressions parsed at build time; kinship as inductance
 @depth_perspectives: ~"./depth-perspectives.spw"  # beginner/advanced as projections, not rungs; why the arrows stalled
+@intergenerational_literacy: ~"./intergenerational-literacy.spw"  # task-local proficiency, plural media, and production-note paths
 @corpus_completion: ~"./corpus-completion.spw"  # authoring completions derived from what the copy already says
 @compound_expressions: ~"./compound-expressions.spw"  # compounds parse today and are unused; declared bonds vs inferred kinship
 @html_spw_block_association: ~"./html-spw-block-association.spw"  # HTML-Spw block association, local AST mapping algorithms, and selection affordances
@@ -172,6 +173,7 @@ dispatch: .{
  semantic_capacity = @semantic_capacity
  discovery_powerups = @discovery_powerups
  daily_kernel = @daily_kernel
+ intergenerational_literacy = @intergenerational_literacy
  relational_attention_media = @relational_attention_media
  page_anatomy_vocabulary = @page_anatomy_vocabulary
  page_template_authoring = @page_template_authoring
