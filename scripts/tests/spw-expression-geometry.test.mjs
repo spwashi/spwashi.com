@@ -9,6 +9,7 @@ import {
   SPW_DIMENSIONAL_ASCENT,
   SPW_DIMENSIONAL_EDGES,
 } from '../../public/js/semantic/spw-expression-geometry.js';
+import { formatMicrointeractionExpression } from '../../public/js/semantic/interaction-expression.js';
 
 test('reads root and paired-boundary geometry without claiming evaluation', () => {
   const result = describeSpwExpression('root[variant]{behavior}<lens>');
@@ -146,4 +147,60 @@ test('separates authored 0D-2D evidence from contextual 3D-4D projections', () =
   const compound = describeSpwExpression('surface[route]{path} > projection[css]{bundle}');
   assert.ok(compound.tokens.length > 0);
   assert.ok(compound.operators.includes('concept-edge'));
+});
+
+test('parses transdimensional expressions with prefix/postfix, scenes, and registers', () => {
+  const expr = '<a,b,c>{ foo ; bar } (( ! ~> $ )) { foo ; bar }<abc>[reg=clipboard@"copied"]';
+  const result = describeSpwExpression(expr);
+
+  assert.equal(result.balanced, true);
+  assert.deepEqual(result.forms, ['capsule', 'body', 'scene', 'frame']);
+  const openForms = result.tokens
+    .filter((token) => token.type === 'boundary' && token.direction === 'open')
+    .map((token) => token.form);
+  assert.deepEqual(openForms, ['capsule', 'body', 'scene', 'body', 'capsule', 'frame']);
+  assert.ok(result.channels.includes('a,b,c'));
+  assert.ok(result.channels.includes('abc'));
+  assert.equal(result.formSignature, '<>{}(())[]');
+});
+
+test('formatMicrointeractionExpression serializes rich transdimensional gestures and states', () => {
+  const formatted = formatMicrointeractionExpression({
+    input: 'data-spw-metamaterial',
+    gesture: 'click',
+    transform: '!copy ~> $clipboard',
+    destination: 'catalog',
+    register: 'clipboard',
+    state: 'copied',
+  });
+
+  assert.equal(
+    formatted,
+    '<data-spw-metamaterial> { click } (( !copy ~> $clipboard )) <catalog> [reg=clipboard@"copied"]',
+  );
+
+  const scanned = describeSpwExpression(formatted);
+  assert.equal(scanned.balanced, true);
+  assert.deepEqual(scanned.forms, ['capsule', 'body', 'scene', 'frame']);
+  const openForms = scanned.tokens
+    .filter((token) => token.type === 'boundary' && token.direction === 'open')
+    .map((token) => token.form);
+  assert.deepEqual(openForms, ['capsule', 'body', 'scene', 'capsule', 'frame']);
+});
+
+test('microinteraction narration keeps event-derived delimiters parseable', () => {
+  const formatted = formatMicrointeractionExpression({
+    input: 'chip<unsafe>',
+    gesture: 'press {again}',
+    transform: '!settle ~> $sigil',
+    destination: 'region[one]',
+    register: 'probe state',
+    state: 'ready "now"',
+  });
+
+  assert.equal(
+    formatted,
+    '<chip-unsafe> { press -again- } (( !settle ~> $sigil )) <region-one> [reg=probe-state@"ready \\"now\\""]',
+  );
+  assert.equal(describeSpwExpression(formatted).balanced, true);
 });

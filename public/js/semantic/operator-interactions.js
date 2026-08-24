@@ -10,6 +10,7 @@ import {
   writeDatasetValue,
 } from '/public/js/kernel/dom-contracts.js';
 import { normalizeToken } from '/public/js/kernel/shared.js';
+import { formatMicrointeractionExpression } from '/public/js/semantic/interaction-expression.js';
 
 const SIGIL_TRANSITION_SELECTOR = [
   '.frame-sigil',
@@ -270,9 +271,18 @@ function clearLocalPayloadState(element) {
 }
 
 function emitSigilTransition(payload, phase, source, previousKey = '') {
+  const expression = formatMicrointeractionExpression({
+    input: payload.key || payload.sigil || 'sigil',
+    gesture: source || 'interaction',
+    transform: `!${phase} ~> $sigil`,
+    destination: payload.region?.key || payload.page?.key || 'page',
+    register: payload.operator || 'sigil',
+    state: phase,
+  });
   const detail = {
     phase,
     source,
+    expression,
     key: payload.key,
     sigil: payload.sigil,
     operator: payload.operator,

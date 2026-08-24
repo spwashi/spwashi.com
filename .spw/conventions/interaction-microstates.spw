@@ -28,6 +28,7 @@
 @charge_field: ~"../../public/js/runtime/charge-field.js"
 @effect_ledger: ~"../../public/js/runtime/effect-ledger.js"
 @attribute_governance: ~"./data-spw-attribute-governance.spw"
+@microinteraction_expressions: ~"./microinteraction-expressions.spw"
 
 operation = "contract"
 fixity = "stable"
@@ -134,6 +135,7 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
   api: `window.__SPW_SIGIL_TRANSITIONS__.snapshot()` 
   event: `spw:sigil-transition`
   bus_event: `sigil:transition`
+  expression: `event detail.expression uses the experimental microinteraction expression grammar; it is narration, not layout authority or persisted spell state`
   rule: "Sigil transitions should carry the page key and nearest profiled region when available; visual motion is tending, payload keys are stable."
 }
 

@@ -413,3 +413,18 @@ export {
   ANNOTATION_LAYER_REGION_SELECTOR,
   ANNOTATION_LAYER_REGION_SELECTORS,
 } from './kernel/dom-contracts.js';
+
+export {
+  SPW_DIMENSIONAL_ASCENT,
+  SPW_DIMENSIONAL_EDGES,
+  SPW_EXPRESSION_GEOMETRY_CONTRACT,
+  describeSpwDimensionality,
+  describeSpwExpression,
+  parseSpwExpression,
+  scanSpwExpression,
+} from './semantic/spw-expression-geometry.js';
+
+export {
+  SPW_INTERACTION_EXPRESSION_CONTRACT,
+  formatMicrointeractionExpression,
+} from './semantic/interaction-expression.js';

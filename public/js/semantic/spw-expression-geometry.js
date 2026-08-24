@@ -12,6 +12,7 @@ const FORM_GLYPHS = Object.freeze({
   frame: '[]',
   body: '{}',
   scope: '()',
+  scene: '(())',
   capsule: '<>',
   stream: '<<>>',
   couple: '<>',
@@ -21,11 +22,12 @@ const OPEN_BOUNDARIES = Object.freeze({
   '[': Object.freeze({ close: ']', form: 'frame' }),
   '{': Object.freeze({ close: '}', form: 'body' }),
   '(': Object.freeze({ close: ')', form: 'scope' }),
+  '((': Object.freeze({ close: '))', form: 'scene' }),
   '<': Object.freeze({ close: '>', form: 'capsule' }),
   '<<': Object.freeze({ close: '>>', form: 'stream' }),
 });
 
-const CLOSE_BOUNDARIES = new Set([']', '}', ')', '>', '>>']);
+const CLOSE_BOUNDARIES = new Set([']', '}', ')', '))', '>', '>>']);
 const OPERATOR_SIGILS = Object.freeze(['#>', '#:', '?', '~', '@', '&', '*', '^', '.', '$', '%', '!', '=', '>', '#']);
 const QUOTES = new Set(['"', "'", '`']);
 const ROOT_RE = /^\s*([A-Za-z_][A-Za-z0-9_.-]*)/;
@@ -155,6 +157,32 @@ export function scanSpwExpression(source = '') {
       } else {
         errors.push({ type: 'unexpected-close', value: '>>', index: cursor });
         pushText(tokens, '>>', cursor, cursor + 2);
+      }
+      cursor += 2;
+      textStart = cursor;
+      continue;
+    }
+
+    if (input.startsWith('((', cursor)) {
+      flushText(cursor);
+      const meta = OPEN_BOUNDARIES['(('];
+      tokens.push(boundaryToken('((', meta, 'open', cursor, cursor + 2));
+      stack.push({ ...meta, open: '((', contentStart: cursor + 2 });
+      rememberForm(meta.form);
+      cursor += 2;
+      textStart = cursor;
+      continue;
+    }
+
+    if (input.startsWith('))', cursor)) {
+      flushText(cursor);
+      const active = stack[stack.length - 1];
+      if (active?.close === '))') {
+        stack.pop();
+        tokens.push(boundaryToken('))', active, 'close', cursor, cursor + 2));
+      } else {
+        errors.push({ type: 'unexpected-close', value: '))', index: cursor });
+        pushText(tokens, '))', cursor, cursor + 2);
       }
       cursor += 2;
       textStart = cursor;

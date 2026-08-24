@@ -70,6 +70,9 @@ expression = container[formation]{nest.join.chain}<hold>
   operators_in_body: .{ form = `host[mode]{~carry.^lift.?ask}`, parse = `Op:4 Fr:1 Bd:1`,
     from = `capsule`,
     note = `The strangest verified form. Operators live inside a body as parts — the body holds operations rather than names. Op:4 from three inner operators plus the host.` }[reg=facet]
+  transdimensional_microinteraction: .{ form = `<input>{gesture} (( !action ~> $result )) <destination>[reg=sink@"state"]`,
+    from = `projected`,
+    note = `Transdimensional microinteraction expression. Bounds an input capsule prefix, gesture direction, transformation scene (( )), destination postfix, and perspective/register state.` }[reg=facet]
 }
 
 ^"validation"{

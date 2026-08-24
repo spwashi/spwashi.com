@@ -33,6 +33,7 @@
 @approach_topography: ~"./surfaces/approach-topography.spw"
 @product_lines: ~"./surfaces/product-lines.spw"
 @attention_field: ~"./conventions/attention-field.spw"
+@microinteraction_expressions: ~"./conventions/microinteraction-expressions.spw"
 @cognitive_navigation: ~"./conventions/cognitive-navigation.spw"
 @semantic_navigation_plan: ~"../.agents/plans/semantic-navigation-geometry/PLAN.md"
 @expression_geometry_runtime: ~"../public/js/semantic/spw-expression-geometry.js"

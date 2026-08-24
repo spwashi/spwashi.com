@@ -47,6 +47,7 @@
 @semantic_hierarchy: ~"./semantic-hierarchy.spw"
 @coloring_depth: ~"./coloring-depth.spw"
 @interaction_microstates: ~"./interaction-microstates.spw"
+@microinteraction_expressions: ~"./microinteraction-expressions.spw"
 @model_guided_refinement: ~"./model-guided-refinement.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
 @discovery_powerups: ~"./discovery-powerups.spw"

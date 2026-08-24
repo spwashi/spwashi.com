@@ -1,0 +1,61 @@
+# Microinteraction Expressions — Transdimensional Grammar & Gestures
+#
+# Maps durable interaction transitions and editor-side capture annotations into
+# Spw syntax. It does not make every hover/keystroke a spell or a DOM contract.
+#
+# NOTE: This syntax is experimental / tending and subject to change as the Spw
+# language and runtime evolve.
+
+#>spw_microinteraction_expressions
+#:convention #!interaction #!grammar #!microinteractions #!motion
+#:layer #!semantics
+#:operation #!prime
+#:fixity #!experimental
+
+@site_semantics: ~"./site-semantics.spw"
+@interaction_microstates: ~"./interaction-microstates.spw"
+@attention_field: ~"./attention-field.spw"
+@ornament_contract: ~"./ornament-contract.spw"
+@container_formations: ~"../language/expressions/container-formations.spw"
+@register_serialization: ~"../language/v04/pillars/register-serialization.spw"
+@expression_geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
+@interaction_formatter: ~"../../public/js/semantic/interaction-expression.js"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = microinteraction[grammar]{prefix.gesture.transform.postfix}<registers>
+
+^"syntax_structure"{
+  ~#note: "A transdimensional microinteraction expression models an action moving across dimensional boundaries from source to destination."
+  general_form = `<input>{ gesture } (( !action ~> $result )) <destination>[reg=sink@"state"]`
+  prefix_capsule = `<input>`               # 2D source concept / environment boundary
+  gesture_body = `{ gesture ; params }`    # 2D directional intent or tactile trigger
+  transform_scene = `(( !action ~> $result ))` # 2D/3D midprocess transformation scene
+  postfix_capsule = `<destination>`       # 2D destination concept / target surface
+  register_state = `[reg=target@"state"]` # 1D/2D situated register and perspective state
+  evolution_status = `experimental — syntax and delimiters are subject to change as v0.4 grammar solidifies`
+}[reg=facet]
+
+^"exemplar_register"{
+  clipboard_copy = `<data-spw-metamaterial> { click } (( !copy ~> $clipboard )) <catalog> [reg=clipboard@"copied"]`
+  filter_select = `<attributes> { select } (( !filter ~> $catalog )) <catalog> [reg=kind@"attribute"]`
+  density_pack = `<compact> { toggle } (( !pack ~> $layout )) <catalog> [reg=density@"compact"]`
+  resonance_probe = `<operator-chip> { hover } (( !resonate ~> $field )) <attention> [reg=probe@"pinned"]`
+  section_travel = `<section-handle> { click } (( !travel ~> $viewport )) <route> [reg=section@"active"]`
+  view_transition = `<card-image> { navigate } (( !morph ~> $hero )) <destination-route> [reg=motion@"settled"]`
+}[reg=facet]
+
+^"runtime_bridges"{
+  formatter = `formatMicrointeractionExpression(options) in public/js/semantic/interaction-expression.js — a pure leaf with no DOM or parser dependency`
+  scanner = `scanSpwExpression(expression)`
+  interaction_event = `expression field on the existing sigil:transition / spw:sigil-transition payload`
+  capture_annotation = `expression field in visual precipitate.json; componentExpression remains separate authored evidence`
+  dom_stamp = `none by default — volatile interaction narration must not overwrite data-spw-semantic-expression or root spell state`
+  rule = `serialize durable phase transitions and precipitation receipts; ordinary search input and hover styling remain ordinary UI state`
+}[reg=facet]
+
+^"validation"{
+  unit_tests = `scripts/tests/spw-expression-geometry.test.mjs`
+  syntax_check = `npm run test:modules`
+}[reg=facet]
