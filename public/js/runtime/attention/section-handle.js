@@ -12,6 +12,8 @@ import {
   APPROACH_ATTR,
   CAULDRON_RESONANCE_ATTR,
   HANDLE_AVAILABILITY_ATTR,
+  HANDLE_CADENCE_ATTR,
+  HANDLE_CADENCE_MOTION_ATTR,
   HANDLE_COMPACT_QUERY,
   HANDLE_ENHANCED_ATTR,
   HANDLE_LABEL_ATTR,
@@ -40,6 +42,7 @@ import {
   clearAttributes,
   getScrollBehavior,
   logger,
+  readCadenceAnnotation,
   writeAttributes,
   writeSectionProgressStyle,
 } from './shared.js';
@@ -94,6 +97,8 @@ function buildSectionSnapshot(section, index, activeIndex, phase, source, origin
     currentIndex: activeIndex,
     currentLabel: info.label,
     currentToken: info.token,
+    currentCadence: info.cadence,
+    currentCadenceMotion: info.cadenceMotion,
     sectionCount,
     availability: describeAvailability(activeIndex, sectionCount),
     phase,
@@ -136,6 +141,7 @@ function syncHandleContent(parts, info, activeIndex, sectionCount) {
     currentToken,
     currentLabel,
     currentForm,
+    currentCadence,
     progressNode,
     currentLink,
     prevButton,
@@ -156,6 +162,13 @@ function syncHandleContent(parts, info, activeIndex, sectionCount) {
       ? `Spw geometry: ${info.syntaxDescription}`
       : '';
     currentForm.hidden = !info.syntaxWake;
+  }
+  if (currentCadence instanceof HTMLElement) {
+    currentCadence.textContent = info.cadence || '';
+    currentCadence.title = info.cadenceMotion
+      ? `Cadence motion: ${info.cadenceMotion}`
+      : '';
+    currentCadence.hidden = !info.cadence;
   }
   if (cauldronNode instanceof HTMLElement) {
     if (info.ingredientsCount > 0) {
@@ -321,6 +334,7 @@ function describeSection(section, index = 0, sections = []) {
   const token = getSectionToken(section);
   const label = getSectionLabel(section, index);
   const expression = getSectionExpression(section);
+  const cadence = readCadenceAnnotation(section);
   const syntax = expression ? describeSpwExpression(expression, { maxRootLength: 16 }) : null;
   const prevLabel = index > 0 ? getSectionLabel(sections[index - 1], index - 1) : '';
   const nextLabel = index < sections.length - 1 ? getSectionLabel(sections[index + 1], index + 1) : '';
@@ -344,6 +358,8 @@ function describeSection(section, index = 0, sections = []) {
     wonder,
     seat: section.getAttribute('data-spw-region') || '',
     expression: expression || '',
+    cadence: cadence.cadence,
+    cadenceMotion: cadence.motion,
     ingredientsCount,
     ingredientNames,
     syntaxWake: syntax?.wake || '',
@@ -432,6 +448,8 @@ function createHandleShell(origin) {
     'handleSource',
     'sectionHandleLabel',
     'sectionHandleOp',
+    'handleCadence',
+    'handleCadenceMotion',
   ].join(',');
   shell.dataset.spwHandleOrigin = origin;
   shell.innerHTML = `
@@ -449,6 +467,7 @@ function createHandleShell(origin) {
       <span class="spw-section-handle-current-copy">
         <span class="spw-section-handle-current-label">section</span>
         <span class="spw-section-handle-current-form" aria-hidden="true" hidden></span>
+        <span class="spw-section-handle-current-cadence" aria-hidden="true" hidden></span>
         <span class="spw-section-handle-cauldron" aria-label="Section ingredients" hidden>
           <span class="spw-section-handle-cauldron-sigil" aria-hidden="true">⌁</span>
           <span class="spw-section-handle-cauldron-count">0</span>
@@ -502,6 +521,7 @@ function getSectionHandleRefs(handle, shell) {
     currentToken: shell.querySelector('.spw-section-handle-current-token'),
     currentLabel: shell.querySelector('.spw-section-handle-current-label'),
     currentForm: shell.querySelector('.spw-section-handle-current-form'),
+    currentCadence: shell.querySelector('.spw-section-handle-current-cadence'),
     cauldronNode: shell.querySelector('.spw-section-handle-cauldron'),
     cauldronCount: shell.querySelector('.spw-section-handle-cauldron-count'),
     progressNode: shell.querySelector('.spw-section-handle-progress'),
@@ -608,7 +628,7 @@ function syncSectionHandleAttributes(handle, shell, info, activeIndex, sectionCo
 
   writeAttributes(handle, {
     href: `#${info.id}`,
-    'aria-label': `Jump to ${info.label}`,
+    'aria-label': `Jump to ${info.label}${info.cadence ? `; ${info.cadence} cadence` : ''}`,
     [HANDLE_OP_ATTR]: info.token || '',
     [HANDLE_LABEL_ATTR]: info.label || '',
   });
@@ -617,6 +637,14 @@ function syncSectionHandleAttributes(handle, shell, info, activeIndex, sectionCo
     [HANDLE_LABEL_ATTR]: info.label || '',
     [HANDLE_OP_ATTR]: info.token || '',
     [HANDLE_AVAILABILITY_ATTR]: snapshot.availability.join(' '),
+  });
+
+  [handle, shell].forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    if (info.cadence) node.setAttribute(HANDLE_CADENCE_ATTR, info.cadence);
+    else node.removeAttribute(HANDLE_CADENCE_ATTR);
+    if (info.cadenceMotion) node.setAttribute(HANDLE_CADENCE_MOTION_ATTR, info.cadenceMotion);
+    else node.removeAttribute(HANDLE_CADENCE_MOTION_ATTR);
   });
 
   if (info.consequence) {
@@ -743,10 +771,13 @@ function updateSectionHandleState({
       currentToken: refs.currentToken,
       currentLabel: refs.currentLabel,
       currentForm: refs.currentForm,
+      currentCadence: refs.currentCadence,
       progressNode: refs.progressNode,
       currentLink: refs.currentLink,
       prevButton: refs.prevButton,
       nextButton: refs.nextButton,
+      cauldronNode: refs.cauldronNode,
+      cauldronCount: refs.cauldronCount,
     },
     info,
     state.activeIndex,

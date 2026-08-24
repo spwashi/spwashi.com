@@ -483,6 +483,33 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
     transform 160ms var(--ease-settle, ease);
 }
 
+/* Editorial cadence annotation. The active section authors the value; the
+   attention handle only mirrors it while that section is current. Text rather
+   than a pulse keeps this distinct from the runtime site-rhythm ornament and
+   preserves a calm reduced-motion posture. */
+.spw-section-handle-current-cadence {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.16rem;
+  padding: 0.03rem 0.28rem;
+  border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 66%, var(--ink-soft, #555));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.55rem;
+  font-weight: 720;
+  letter-spacing: 0.045em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.spw-section-handle-current-cadence::before {
+  content: "↻";
+  font-size: 0.62rem;
+  line-height: 1;
+}
+
 .spw-section-handle-cauldron {
   display: inline-flex;
   align-items: center;

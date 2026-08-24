@@ -34,6 +34,8 @@ export const PROBE_TARGET_SELECTOR = '[data-spw-resonance-key], [data-spw-operat
 export const HANDLE_STATE_ATTR = 'data-spw-handle-state';
 export const HANDLE_LABEL_ATTR = 'data-spw-section-handle-label';
 export const HANDLE_OP_ATTR = 'data-spw-section-handle-op';
+export const HANDLE_CADENCE_ATTR = 'data-spw-handle-cadence';
+export const HANDLE_CADENCE_MOTION_ATTR = 'data-spw-handle-cadence-motion';
 export const HANDLE_PHASE_ATTR = 'data-spw-handle-phase';
 export const HANDLE_AVAILABILITY_ATTR = 'data-spw-handle-availability';
 export const HANDLE_ENHANCED_ATTR = 'data-spw-handle-enhanced';
@@ -98,6 +100,8 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
     handleState: HANDLE_STATE_ATTR,
     handleLabel: HANDLE_LABEL_ATTR,
     handleOperator: HANDLE_OP_ATTR,
+    handleCadence: HANDLE_CADENCE_ATTR,
+    handleCadenceMotion: HANDLE_CADENCE_MOTION_ATTR,
     handlePhase: HANDLE_PHASE_ATTR,
     handleAvailability: HANDLE_AVAILABILITY_ATTR,
     handleEnhanced: HANDLE_ENHANCED_ATTR,
@@ -141,13 +145,26 @@ export const logger = createSpwLogger('attention-architecture', {
   role: 'runtime',
   metaphor: 'attention-field',
   owns: 'section locomotion, operator resonance probe',
-  writes: 'data-spw-page-section-*, data-spw-section-state, data-spw-resonance-probe, data-spw-subvocal-rehearsal, data-spw-cauldron-resonance, data-spw-wonder-entry, data-spw-approach',
+  writes: 'data-spw-page-section-*, data-spw-section-state, data-spw-handle-cadence, data-spw-handle-cadence-motion, data-spw-resonance-probe, data-spw-subvocal-rehearsal, data-spw-cauldron-resonance, data-spw-wonder-entry, data-spw-approach',
 });
 
 export { SPW_LOG_RELATIONSHIPS };
 
 export function getScrollBehavior() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+}
+
+/**
+ * Read editorial rhythm already authored on a section. Attention mirrors this
+ * annotation while the section is current; it never infers dates or keeps a
+ * cadence history of its own.
+ */
+export function readCadenceAnnotation(node) {
+  const read = (name) => String(node?.getAttribute?.(name) || '').trim();
+  return Object.freeze({
+    cadence: read('data-spw-cadence'),
+    motion: read('data-spw-cadence-motion'),
+  });
 }
 
 export function writeAttributes(node, attributes = {}) {

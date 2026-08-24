@@ -94,6 +94,10 @@ export function readSigilPayload(element) {
     // recomposed into something that affords the same.
     affordance: near('data-spw-affordance', 'spwAffordance'),
     consequence: near('data-spw-consequence', 'spwConsequence'),
+    // Editorial rhythm travels with the ingredient that was gathered. These
+    // are authored annotations, not a due-date calculation or cauldron clock.
+    cadence: near('data-spw-cadence', 'spwCadence'),
+    cadenceMotion: near('data-spw-cadence-motion', 'spwCadenceMotion'),
     fixity: explicitFixity,
     phase: explicitPhase,
     element: explicitPhase,
@@ -341,4 +345,3 @@ export function escapeHtml(str) {
     "'": '&#39;',
   }[s]));
 }
-

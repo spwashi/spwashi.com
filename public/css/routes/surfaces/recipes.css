@@ -526,7 +526,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
   stroke-width: 2;
 }
 
-@container production-season (max-width: 35rem) {
+@container production-season (max-width: 30rem) {
   :where(body[data-spw-surface="recipes"] #production-season .production-season-grid) {
     grid-template-columns: 1fr;
   }

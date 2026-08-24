@@ -48,3 +48,9 @@ Make the annual October 1–January 4 production season legible as one reusable 
 ## Completion Signal
 
 A visitor can read the full season without JavaScript, navigate its four movements through the SVG score, gather a cadence-bearing Halloween ingredient, and see the active cadence reflected by the section handle without any date scheduler or new persistence layer.
+
+## Status
+
+- [x] Authored score, route pilot, responsive SVG, and slice contract.
+- [x] Cadence mirror and portable cauldron payload.
+- [ ] Browser QA and final tending note.

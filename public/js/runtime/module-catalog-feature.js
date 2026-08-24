@@ -417,6 +417,8 @@ export const FEATURE_DEFS = [
       'structural:data-spw-cauldron-ingredient',
       'structural:data-spw-ingredient-phase',
       'structural:data-spw-semantic-expression',
+      'structural:data-spw-cadence',
+      'structural:data-spw-cadence-motion',
     ],
     evaluates: 'semantics composition learning attention-field emergence',
     timingArc: 'enhance-collectible',

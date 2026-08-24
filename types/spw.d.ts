@@ -252,6 +252,24 @@ declare global {
 }
 
 /** A cauldron ingredient as normalized by interface/cauldron/storage.js. */
+export interface SpwIngredientPayload {
+  scope?: string;
+  page?: string;
+  family?: string;
+  role?: string;
+  topic?: string;
+  region?: string;
+  liminality?: string;
+  affordance?: string;
+  consequence?: string;
+  cadence?: string;
+  cadenceMotion?: string;
+  fixity?: string;
+  phase?: string;
+  biome?: string;
+  [key: string]: unknown;
+}
+
 export interface SpwIngredient {
   expression: string;
   label: string;
@@ -260,6 +278,8 @@ export interface SpwIngredient {
   /** Expression with the operator prefix stripped. */
   operand?: string;
   wonder?: string;
+  /** Nearest authored semantic context preserved at capture time. */
+  payload?: SpwIngredientPayload;
   capturedAt: number;
   type?: 'numerical' | string;
   value?: number;

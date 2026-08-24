@@ -84,6 +84,7 @@ vessel_join = `cauldron[garden]{sow.tend.harvest} — live garden list. Join tea
     `data-spw-role on the element, not only data-spw-page-role on the body`,
     `data-spw-affordance — what this could do, which becomes the frame's second term`,
     `data-spw-consequence — what happens, which becomes the projection`,
+    `data-spw-cadence + data-spw-cadence-motion when timing is authored meaning that should remain portable after capture`,
     `data-spw-region and data-spw-liminality — the body's two locating parts`
   ][reg=set]
   ~#reading(a bare element): `still captures, still resolves to page level, and renders a thinner expression — the gradient is the incentive`
@@ -91,6 +92,7 @@ vessel_join = `cauldron[garden]{sow.tend.harvest} — live garden list. Join tea
     `data-spw-sigil-payload-* by hand — the runtime owns those and they are transient`,
     `a region that is capturable and says nothing about itself`
   ][reg=set]
+  cadence_boundary = `Cadence stays in the ingredient payload and breadcrumb. It does not claim a fourth rendered Spw slot, infer a due date, or give the cauldron its own clock.`
 }
 
 #>wonder_cauldron_dynamics_1

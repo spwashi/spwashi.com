@@ -205,6 +205,7 @@ export function initSpwHaptics() {
 
   document.addEventListener('click', onGroundToggleClick, true);
   document.addEventListener('keydown', onGroundToggleKeydown, true);
+  document.addEventListener('keydown', onPrimeKeydown, true);
 
   document.addEventListener('pointerdown', onPrimePointerDown, true);
   document.addEventListener('pointerup', onPrimePointerEnd, true);
@@ -225,6 +226,7 @@ export function initSpwHaptics() {
 
     document.removeEventListener('click', onGroundToggleClick, true);
     document.removeEventListener('keydown', onGroundToggleKeydown, true);
+    document.removeEventListener('keydown', onPrimeKeydown, true);
 
     document.removeEventListener('pointerdown', onPrimePointerDown, true);
     document.removeEventListener('pointerup', onPrimePointerEnd, true);
@@ -342,8 +344,8 @@ function shouldIgnorePrimeCandidate(target, event) {
   return false;
 }
 
-function collectPrimeCandidate(target, event) {
-  const detail = buildSemanticDetail(target, { source: 'hold-prime' });
+function collectPrimeCandidate(target, event, source = 'hold-prime') {
+  const detail = buildSemanticDetail(target, { source });
   setPrimeState(target, 'primed');
   setGestureState(target, 'committed');
   target.dataset.spwCauldronCandidate = 'true';
@@ -357,7 +359,7 @@ function collectPrimeCandidate(target, event) {
     ...detail,
     origin: detail.context || document.body?.dataset?.spwSurface || 'page',
     originLabel: detail.context || document.body?.dataset?.spwSurface || 'page',
-    primedBy: 'hold-prime',
+    primedBy: source,
     chargeContext: detail.substrate || detail.context || '',
     gestureHistory: `notice->prime->gather:${detail.key.split(':').pop()}`,
     sourceElement: detail.key,
@@ -369,6 +371,19 @@ function collectPrimeCandidate(target, event) {
   window.setTimeout(() => setGestureState(target, ''), 420);
 
   bus.emit('prime:collected', detail, { target, element: target });
+}
+
+function onPrimeKeydown(event) {
+  if (event.defaultPrevented) return;
+  if (event.altKey || event.ctrlKey || event.metaKey) return;
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+
+  const target = getInteractiveTarget(event.target, CAULDRON_CANDIDATE_SELECTORS);
+  if (!target || shouldIgnorePrimeCandidate(target, event)) return;
+  if (target.closest('a[href], button, input, textarea, select')) return;
+
+  event.preventDefault();
+  collectPrimeCandidate(target, event, 'keyboard-prime');
 }
 
 function onGroundToggleKeydown(event) {

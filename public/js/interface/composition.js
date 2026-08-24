@@ -1078,6 +1078,15 @@ function renderIngredientsList(ingredients) {
     if (ing.gestureHistory) {
       lanes.gesture.push(`<span class="cauldron-ingredient-meta cauldron-gesture-trace" data-spw-gesture-trace title="Gesture chain that created this ingredient">${escapeHtml(ing.gestureHistory)}</span>`);
     }
+    if (ing.payload?.cadence) {
+      const cadence = escapeHtml(ing.payload.cadence);
+      const motion = escapeHtml(ing.payload.cadenceMotion || '');
+      lanes.gesture.push(
+        `<span class="cauldron-ingredient-meta cauldron-cadence" data-spw-cadence="${cadence}"`
+        + (motion ? ` data-spw-cadence-motion="${motion}" title="Cadence motion: ${motion}"` : '')
+        + `>${cadence}</span>`,
+      );
+    }
 
     /* Where it came from, as somewhere you can go.
        This was a <span> labelled "hash anchor" or "route anchor" — it named the
@@ -1136,6 +1145,8 @@ function renderIngredientsList(ingredients) {
             ${ing.deepLinkLabel ? `data-spw-deep-link-label="${escapeHtml(ing.deepLinkLabel)}"` : ''}
             ${ing.origin ? `data-spw-origin="${escapeHtml(ing.origin)}"` : ''}
             ${ing.primedBy ? `data-spw-ingredient-primed="${escapeHtml(ing.primedBy)}"` : ''}
+            ${ing.payload?.cadence ? `data-spw-cadence="${escapeHtml(ing.payload.cadence)}"` : ''}
+            ${ing.payload?.cadenceMotion ? `data-spw-cadence-motion="${escapeHtml(ing.payload.cadenceMotion)}"` : ''}
             tabindex="0"
             role="group"
             data-spw-hypermedia-extension="state-fragment"
