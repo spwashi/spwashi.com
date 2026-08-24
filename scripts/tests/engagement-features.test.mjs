@@ -21,6 +21,11 @@ import {
 } from '../../public/js/typed/promo-wonder-cycle.js';
 import { createModuleLoader } from '../../public/js/runtime/module-loader.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
+import {
+  SPW_FEATURE_DISCOVERY_CONTRACT,
+  initFeatureDiscovery,
+  normalizeFeatureTrigger,
+} from '../../public/js/runtime/feature-discovery.js';
 import { createRegistry, readRuntimePolicy } from '../../public/js/runtime/runtime-helpers.js';
 import {
   resolvePackFillFromCount,
@@ -53,6 +58,95 @@ test('variant choice honors explicit intent and names its traversed edge', () =>
     label: 'read → inspect',
   });
   assert.equal(buildVariantEdge('inspect', 'inspect').changed, false);
+});
+
+test('feature discovery keeps regional attention opt-in and bounded', () => {
+  assert.equal(normalizeFeatureTrigger('attention-settle'), 'attention-settle');
+  assert.equal(normalizeFeatureTrigger('manual'), 'manual');
+  assert.equal(normalizeFeatureTrigger('unknown'), 'view');
+  assert.deepEqual(
+    SPW_FEATURE_DISCOVERY_CONTRACT.triggerModels,
+    ['view', 'attention-settle', 'manual'],
+  );
+
+  const runtime = initFeatureDiscovery({ html: document.documentElement });
+  assert.doesNotThrow(() => runtime.cleanup(), 'feature discovery teardown must reset WeakSet memory safely');
+  assert.equal(document.documentElement.dataset.spwFeatureDiscoveryInit, undefined);
+});
+
+test('feature discovery waits for settled regional attention before recording an encounter', async () => {
+  const originalQuerySelectorAll = document.querySelectorAll;
+  const originalGetElementById = document.getElementById;
+  const originalAddEventListener = document.addEventListener;
+  const originalRemoveEventListener = document.removeEventListener;
+  let sectionListener = null;
+
+  const attributes = new Map([
+    ['data-spw-feature', 'regional-surprise'],
+    ['data-spw-feature-trigger', 'attention-settle'],
+    ['data-spw-feature-traits', 'regional-memory'],
+  ]);
+  const element = {
+    nodeType: 1,
+    dataset: { spwFeature: 'regional-surprise' },
+    isConnected: true,
+    getAttribute(name) { return attributes.get(name) ?? null; },
+    hasAttribute(name) { return attributes.has(name); },
+    setAttribute(name, value) { attributes.set(name, String(value)); },
+    removeAttribute(name) { attributes.delete(name); },
+    matches(selector) { return selector.includes('data-spw-feature-trigger="attention-settle"'); },
+    closest() { return null; },
+    querySelectorAll() { return []; },
+  };
+
+  document.querySelectorAll = () => [element];
+  document.getElementById = (id) => (id === 'regional-surprise-section' ? element : null);
+  document.addEventListener = (type, listener) => {
+    if (type === 'spw:section-locomotion-state') sectionListener = listener;
+  };
+  document.removeEventListener = (type, listener) => {
+    if (type === 'spw:section-locomotion-state' && sectionListener === listener) sectionListener = null;
+  };
+
+  const html = {
+    dataset: {
+      spwPageSectionCurrent: 'regional-surprise-section',
+      spwPageSectionPhase: 'settled',
+    },
+  };
+  let runtime;
+  try {
+    runtime = initFeatureDiscovery({ html });
+    assert.ok(sectionListener, 'attention-settle listener is installed only with feature discovery');
+    assert.equal(attributes.has('data-spw-feature-encounter'), false);
+
+    sectionListener({
+      detail: {
+        currentId: 'regional-surprise-section',
+        phase: 'settled',
+      },
+    });
+    assert.equal(attributes.has('data-spw-feature-encounter'), false, 'the region is not recorded immediately');
+
+    await new Promise((resolve) => setTimeout(resolve, 900));
+    assert.equal(attributes.get('data-spw-feature-encounter'), 'novel');
+    assert.equal(
+      window.spwFeatureDiscovery.get().species['regional-surprise'],
+      undefined,
+      'attention-settle encounters default to session memory rather than persistent storage',
+    );
+    assert.equal(
+      window.spwFeatureDiscovery.get().traits['regional-memory'],
+      undefined,
+      'bounded attention traits do not leak into the persistent convergence ledger',
+    );
+  } finally {
+    runtime?.cleanup();
+    document.querySelectorAll = originalQuerySelectorAll;
+    document.getElementById = originalGetElementById;
+    document.addEventListener = originalAddEventListener;
+    document.removeEventListener = originalRemoveEventListener;
+  }
 });
 
 const noticeFeed = {

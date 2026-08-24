@@ -54,6 +54,9 @@ declare global {
     /** Identifies a localized functional component layout */
     spwFeature?: string;
 
+    /** Chooses when an opted-in feature becomes a discovery encounter */
+    spwFeatureTrigger?: 'view' | 'attention-settle' | 'manual';
+
     /** Type classification of a sigil or operator */
     spwOperator?:
       | 'frame'

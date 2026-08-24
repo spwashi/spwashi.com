@@ -172,7 +172,7 @@ export const ENHANCEMENT_DEFS = [
     selector: '[data-spw-feature]',
     features: ['feature-discovery'],
     rootMode: 'single',
-    describes: 'field-guide[features] progression[local-contract] memory[local-contract] encounter[novel|convergent|return]',
+    describes: 'field-guide[features] progression[local-contract] memory[local-contract] trigger[view|attention-settle|manual] encounter[novel|convergent|return]',
     updates: [
       'html:residue:data-spw-feature-discovery-init',
       'flourish:data-spw-feature-encounter',
@@ -181,10 +181,11 @@ export const ENHANCEMENT_DEFS = [
       'flourish:data-spw-feature-convergent',
       'flourish:data-spw-feature-fresh',
     ],
-    evaluates: 'feature discovery, per-feature progression + memory contracts, convergent-trait recognition',
+    triggers: ['viewport-encounter', 'settled-region-attention', 'owner-discovery'],
+    evaluates: 'feature discovery, per-feature progression + bounded memory contracts, convergent-trait recognition',
     timingArc: 'enhance-collection',
     timingChunk: 'idle-collectible',
-    effectScope: 'element-state storage observer bus global-api',
+    effectScope: 'element-state storage observer section-event bus global-api',
     load: () => import('./feature-discovery.js'),
   },
   {

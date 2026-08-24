@@ -13,6 +13,7 @@
  *   data-spw-feature-traits="escalating-reward resonance keyboard-navigable"
  *   data-spw-feature-progression="depth"     // familiarity | depth | traversal | (JS fn)
  *   data-spw-feature-memory="persistent"      // persistent | session | none
+ *   data-spw-feature-trigger="view"            // view | attention-settle | manual
  *
  * registerFeature({...}) is the JS escape hatch for a custom progression fn or
  * traits a module owns rather than the markup.
@@ -37,6 +38,12 @@ import { ATTENTION_PHASE_SHIFT } from '/public/js/runtime/page-state.js';
 const STORAGE_KEY = STORAGE_KEYS.FEATURE_DISCOVERY;
 const FRESH_PULSE_MS = 2400;
 const DEFAULT_MAX_LEVEL = 3;
+const ATTENTION_SETTLE_DWELL_MS = 840;
+// Public event authority lives in attention/shared.js. Keep the name local here
+// so the idle field guide does not pull the attention logger/instrumentation
+// graph into its chunk merely to consume one progressive-enhancement signal.
+const SECTION_ATTENTION_EVENT = 'spw:section-locomotion-state';
+const FEATURE_TRIGGER_MODELS = Object.freeze(['view', 'attention-settle', 'manual']);
 
 // Canonical diversity ladder shared with the profiler/collection (the "depth"
 // progression rides the collection tier). Duplicated as a literal rather than
@@ -63,14 +70,16 @@ export const SPW_FEATURE_DISCOVERY_CONTRACT = Object.freeze({
   declares: Object.freeze({
     progression: 'data-spw-feature-progression',
     memory: 'data-spw-feature-memory',
+    trigger: 'data-spw-feature-trigger',
     traits: 'data-spw-feature-traits',
     maxLevel: 'data-spw-feature-max-level',
   }),
   progressionModels: Object.freeze(['familiarity', 'depth', 'traversal']),
   memoryModels: Object.freeze(['persistent', 'session', 'none']),
+  triggerModels: FEATURE_TRIGGER_MODELS,
   portableUse:
-    'Annotate a [data-spw-feature] cluster with data-spw-feature-progression/-memory/-traits, '
-    + 'or registerFeature({ species, progression, memory, traits }) for a custom fn. Encounters '
+    'Annotate a [data-spw-feature] cluster with data-spw-feature-progression/-memory/-trigger/-traits, '
+    + 'or registerFeature({ species, progression, memory, trigger, traits }) for a custom fn. Encounters '
     + 'accrue a field-guide record with novel/convergent/return classification.',
 });
 
@@ -103,6 +112,11 @@ const PROGRESSION_MODELS = Object.freeze({
 const isElement = (v) => Boolean(v) && v.nodeType === 1;
 const normToken = (v = '') => String(v).trim().toLowerCase();
 const parseTraits = (v = '') => String(v).split(/[\s,]+/).map(normToken).filter(Boolean);
+
+export function normalizeFeatureTrigger(value = 'view') {
+  const trigger = normToken(value);
+  return FEATURE_TRIGGER_MODELS.includes(trigger) ? trigger : 'view';
+}
 
 function getStore() {
   try {
@@ -144,7 +158,8 @@ function writePersistent(store, data) {
 const registry = new Map();          // species → normalized descriptor
 const elementsBySpecies = new Map(); // species → Set<HTMLElement>
 const sessionRecords = new Map();    // species → record (for memory: 'session')
-const viewedThisSession = new WeakSet(); // elements already counted as a view
+const sessionTraitOrigins = new Map(); // trait → species for bounded attention encounters
+let viewedThisSession = new WeakSet(); // elements already counted during this mount
 const tokenSnapshots = new Map();        // element → authored values for generated attrs
 
 let persistent = emptyStore();
@@ -165,12 +180,15 @@ function ensurePersistentLoaded() {
 function normalizeDescriptor(input = {}) {
   const species = normToken(input.species || '');
   if (!species) return null;
+  const trigger = normalizeFeatureTrigger(input.trigger);
   const progression = typeof input.progression === 'function'
     ? input.progression
     : (PROGRESSION_MODELS[normToken(input.progression)] ? normToken(input.progression) : 'familiarity');
   const memory = SPW_FEATURE_DISCOVERY_CONTRACT.memoryModels.includes(normToken(input.memory))
     ? normToken(input.memory)
-    : 'persistent';
+    // A regional surprise is page-attention residue, not a permanent visitor
+    // preference. Authors can still request persistent memory explicitly.
+    : (trigger === 'attention-settle' ? 'session' : 'persistent');
   const maxLevel = Number.isFinite(input.maxLevel) && input.maxLevel > 0
     ? Math.floor(input.maxLevel)
     : (progression === 'depth' ? 4 : DEFAULT_MAX_LEVEL);
@@ -180,6 +198,7 @@ function normalizeDescriptor(input = {}) {
     traits: Array.isArray(input.traits) ? input.traits.map(normToken).filter(Boolean) : parseTraits(input.traits),
     progression,
     memory,
+    trigger,
     maxLevel,
   };
 }
@@ -193,6 +212,7 @@ function descriptorFromElement(el) {
     traits: el.getAttribute(d.traits) || '',
     progression: el.getAttribute(d.progression) || '',
     memory: el.getAttribute(d.memory) || '',
+    trigger: el.getAttribute(d.trigger) || '',
     maxLevel: Number.parseInt(el.getAttribute(d.maxLevel) || '', 10),
   });
 }
@@ -236,13 +256,13 @@ function computeLevel(descriptor, record, detail) {
 
 // Traits are the axis of convergence. The persistent ledger records the first
 // species to exhibit each trait; a *different* species later carrying that trait
-// is convergent evolution. Session/ephemeral features still contribute to and
-// read from this ledger, so recognition works across the whole field guide.
+// is convergent evolution. Default attention-settle traits stay in a parallel
+// session ledger so regional attention cannot leave an indirect durable trail.
 function classifyConvergence(descriptor) {
   const shared = [];
   let origin = '';
   for (const trait of descriptor.traits) {
-    const owner = persistent.traits[trait];
+    const owner = persistent.traits[trait] || sessionTraitOrigins.get(trait);
     if (owner && owner !== descriptor.species) {
       shared.push(trait);
       if (!origin) origin = owner;
@@ -253,8 +273,17 @@ function classifyConvergence(descriptor) {
 
 function registerTraits(descriptor) {
   let changed = false;
+  const boundedAttention = descriptor.trigger === 'attention-settle'
+    && descriptor.memory !== 'persistent';
   for (const trait of descriptor.traits) {
-    if (!persistent.traits[trait]) { persistent.traits[trait] = descriptor.species; changed = true; }
+    if (boundedAttention) {
+      if (!persistent.traits[trait] && !sessionTraitOrigins.has(trait)) {
+        sessionTraitOrigins.set(trait, descriptor.species);
+      }
+    } else if (!persistent.traits[trait]) {
+      persistent.traits[trait] = descriptor.species;
+      changed = true;
+    }
   }
   return changed;
 }
@@ -421,8 +450,23 @@ function trackSpeciesElements(species) {
         fresh: false,
       });
     }
-    intersectionObserver?.observe(el);
+    if (descriptor.trigger === 'view') intersectionObserver?.observe?.(el);
+    else intersectionObserver?.unobserve?.(el);
   });
+}
+
+function attentionFeatureCandidates(currentId = '') {
+  if (!currentId || typeof document.getElementById !== 'function') return [];
+  const section = document.getElementById(currentId);
+  if (!isElement(section)) return [];
+
+  const selector = '[data-spw-feature][data-spw-feature-trigger="attention-settle"]';
+  const candidates = [];
+  if (section.matches?.(selector)) candidates.push(section);
+  const parent = section.closest?.(selector);
+  if (parent && parent !== section) candidates.push(parent);
+  section.querySelectorAll?.(selector).forEach((element) => candidates.push(element));
+  return [...new Set(candidates)].filter((element) => !viewedThisSession.has(element));
 }
 
 let intersectionObserver = null;
@@ -447,9 +491,11 @@ export function initFeatureDiscovery(ctx = {}) {
         if (!entry.isIntersecting) return;
         const el = entry.target;
         if (viewedThisSession.has(el)) return;
-        viewedThisSession.add(el);
         const species = normToken(el.dataset.spwFeature || '');
-        if (species) discoverFeature(species, { trigger: 'view', element: el });
+        const descriptor = resolveDescriptor(species, el);
+        if (!species || descriptor?.trigger !== 'view') return;
+        viewedThisSession.add(el);
+        discoverFeature(species, { trigger: 'view', element: el });
       });
     // Large feature clusters can be taller than the viewport, making a 35%
     // ratio unreachable. A small threshold records an actual encounter while
@@ -467,11 +513,67 @@ export function initFeatureDiscovery(ctx = {}) {
       const declared = registry.has(species)
         || el.hasAttribute(SPW_FEATURE_DISCOVERY_CONTRACT.declares.progression)
         || el.hasAttribute(SPW_FEATURE_DISCOVERY_CONTRACT.declares.memory)
+        || el.hasAttribute(SPW_FEATURE_DISCOVERY_CONTRACT.declares.trigger)
         || el.hasAttribute(SPW_FEATURE_DISCOVERY_CONTRACT.declares.traits);
       if (declared) trackSpeciesElements(species);
     });
   };
   scan();
+
+  // Attention owns only the coarse, page-local signal. The field guide owns
+  // whether that signal becomes memory. Explicit attention-settle features
+  // wait through a brief dwell, count once per mounted element, and default to
+  // session-shaped records; no hover trail or section history is retained.
+  let attentionTimer = 0;
+  let attentionCandidateId = '';
+  const clearAttentionCandidate = () => {
+    if (attentionTimer) window.clearTimeout(attentionTimer);
+    attentionTimer = 0;
+    attentionCandidateId = '';
+  };
+  const handleAttentionSettle = (event) => {
+    const detail = event?.detail || {};
+    const currentId = String(detail.currentId || html.dataset.spwPageSectionCurrent || '').trim();
+    if (detail.phase !== 'settled' || !currentId) {
+      clearAttentionCandidate();
+      return;
+    }
+    if (currentId === attentionCandidateId && attentionTimer) return;
+
+    const candidates = attentionFeatureCandidates(currentId);
+    clearAttentionCandidate();
+    if (!candidates.length) return;
+
+    attentionCandidateId = currentId;
+    attentionTimer = window.setTimeout(() => {
+      attentionTimer = 0;
+      if (
+        html.dataset.spwPageSectionCurrent !== currentId
+        || html.dataset.spwPageSectionPhase !== 'settled'
+      ) return;
+      candidates.forEach((element) => {
+        if (!element.isConnected || viewedThisSession.has(element)) return;
+        const species = normToken(element.dataset.spwFeature || '');
+        if (!species) return;
+        viewedThisSession.add(element);
+        discoverFeature(species, {
+          trigger: 'attention-settle',
+          variant: currentId,
+          element,
+        });
+      });
+    }, ATTENTION_SETTLE_DWELL_MS);
+  };
+  document.addEventListener(SECTION_ATTENTION_EVENT, handleAttentionSettle);
+
+  if (html.dataset.spwPageSectionPhase === 'settled' && html.dataset.spwPageSectionCurrent) {
+    handleAttentionSettle({
+      detail: {
+        currentId: html.dataset.spwPageSectionCurrent,
+        phase: 'settled',
+      },
+    });
+  }
 
   const api = {
     register: registerFeature,
@@ -481,6 +583,7 @@ export function initFeatureDiscovery(ctx = {}) {
     reset() {
       persistent = emptyStore();
       sessionRecords.clear();
+      sessionTraitOrigins.clear();
       if (store) {
         try {
           store.removeItem(STORAGE_KEY);
@@ -507,9 +610,11 @@ export function initFeatureDiscovery(ctx = {}) {
   const cleanup = () => {
     intersectionObserver?.disconnect();
     intersectionObserver = null;
+    clearAttentionCandidate();
+    document.removeEventListener(SECTION_ATTENTION_EVENT, handleAttentionSettle);
     freshTimers.forEach((t) => window.clearTimeout(t));
     freshTimers.clear();
-    viewedThisSession.clear();
+    viewedThisSession = new WeakSet();
     elementsBySpecies.forEach((elements) => elements.forEach(restoreElementTokens));
     tokenSnapshots.clear();
     elementsBySpecies.clear();
