@@ -90,6 +90,16 @@ export const READING_GROOVE_SELECTOR = [
 ].join(', ');
 
 export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
+  writable: false,
+  children: Object.freeze({
+    'scroll-cadence': 'idle',
+    'section-handle': 'visible',
+    'resonance-probe': 'visible',
+    'reading-groove': 'idle',
+    'pinch-scale': 'interaction',
+  }),
+  portableUse:
+    'Catalog mounts each child on its own when=. initSpwAttentionArchitecture({ children }) is the compose/all-at-once facade. describeAttentionArchitecture() reads; it does not write.',
   selectors: Object.freeze({
     handle: HANDLE_SELECTOR,
     operatorSections: OPERATOR_SECTION_SELECTOR,
@@ -126,6 +136,9 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
     scrollCadence: SCROLL_CADENCE_ATTR,
     pinchTextScale: PINCH_TEXT_SCALE_ATTR,
     pinchScaling: PINCH_ACTIVE_ATTR,
+    pinchDirection: 'data-spw-pinch-direction',
+    pinchVariant: 'data-spw-pinch-variant',
+    flourish: 'data-spw-flourish',
     subvocalRehearsal: SUBVOCAL_REHEARSAL_ATTR,
     cauldronResonance: CAULDRON_RESONANCE_ATTR,
     resonanceKey: RESONANCE_KEY_ATTR,
@@ -190,6 +203,26 @@ export function getRootPreference(name, fallback = 'off') {
   const htmlValue = document.documentElement?.dataset?.[name];
   const bodyValue = document.body?.dataset?.[name];
   return String(htmlValue || bodyValue || fallback);
+}
+
+export function describeAttentionArchitecture(root = typeof document !== 'undefined' ? document : null) {
+  const doc = root?.nodeType === 9 ? root : root?.ownerDocument || (typeof document !== 'undefined' ? document : null);
+  const html = doc?.documentElement || null;
+  if (!html) return { ready: false };
+  const ds = html.dataset || {};
+  const handle = doc.querySelector?.('[data-spw-handle-cadence], [data-spw-handle-enhanced="true"]') || null;
+  return {
+    ready: true,
+    flourish: ds.spwFlourish || 'pending',
+    probe: ds.spwResonanceProbe || null,
+    readingGroove: ds.spwReadingGroove || 'off',
+    pinchScaling: ds.spwPinchScaling === 'true',
+    pinchVariant: ds.spwPinchVariant || null,
+    handleEnhanced: handle?.getAttribute(HANDLE_ENHANCED_ATTR) === 'true',
+    handleCadence: handle?.getAttribute(HANDLE_CADENCE_ATTR) || null,
+    sectionCurrent: ds.spwPageSectionCurrent || null,
+    scrollCadence: ds.spwScrollCadence || null,
+  };
 }
 
 export function writeSectionProgressStyle(node, progress, step) {

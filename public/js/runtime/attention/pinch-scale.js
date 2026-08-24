@@ -180,6 +180,10 @@ export const spwModule = {
     'attr:data-spw-pinch-scaling',
     'attr:data-spw-pinch-direction',
     'attr:data-spw-pinch-variant',
+    'css-var:--spw-pinch-factor',
+    'css-var:--spw-pinch-delta',
+    'css-var:--spw-pinch-origin-x',
+    'css-var:--spw-pinch-origin-y',
   ],
   mount: (mod, ctx, root) => initPinchTextScale(root),
 };

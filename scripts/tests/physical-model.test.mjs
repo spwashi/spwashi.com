@@ -49,6 +49,11 @@ import {
   SPW_HERO_KINETIC_STAGE_CONTRACT,
 } from "../../public/js/runtime/spw-hero-kinetic-stage.js";
 
+import {
+  ATTENTION_ARCHITECTURE_CONTRACT,
+  describeAttentionArchitecture,
+} from "../../public/js/runtime/attention-architecture.js";
+
 test("physical model snapshot returns cohesive physics slices", () => {
   const snapshot = snapshotPhysicalModel(document);
   assert.ok(snapshot.spatial);
@@ -163,6 +168,15 @@ test("canvas accents instance descriptor and contract are well-formed", () => {
   assert.equal(desc.type, "lattice");
   assert.equal(desc.pointsCount, 1);
   assert.ok(SPW_CANVAS_ACCENTS_CONTRACT.archetypes.includes("lattice"));
+});
+
+test("attention architecture describes without writing and names child schedules", () => {
+  const snapshot = describeAttentionArchitecture(document);
+  assert.equal(snapshot.ready, true);
+  assert.equal(snapshot.flourish, "pending");
+  assert.equal(ATTENTION_ARCHITECTURE_CONTRACT.writable, false);
+  assert.equal(ATTENTION_ARCHITECTURE_CONTRACT.children["section-handle"], "visible");
+  assert.equal(ATTENTION_ARCHITECTURE_CONTRACT.children["pinch-scale"], "interaction");
 });
 
 test("hero kinetic stage supports teardown", () => {

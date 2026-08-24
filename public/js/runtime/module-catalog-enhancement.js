@@ -980,6 +980,8 @@ export const ENHANCEMENT_DEFS = [
       'structural:data-spw-pinch-variant',
       'measure:--spw-pinch-factor',
       'measure:--spw-pinch-delta',
+      'measure:--spw-pinch-origin-x',
+      'measure:--spw-pinch-origin-y',
     ],
     timingArc: 'interaction-attention',
     effectScope: 'conditional-touch-listeners root-css-vars settings-api',

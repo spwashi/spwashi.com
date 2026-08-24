@@ -961,6 +961,10 @@ async function bootSite() {
         )),
         contract: () => import('./runtime/physical-model.js').then((m) => m.SPW_PHYSICAL_MODEL_CONTRACT),
       },
+      attention: {
+        snapshot: (root = document) => import('./runtime/attention-architecture.js').then((m) => m.describeAttentionArchitecture(root)),
+        contract: () => import('./runtime/attention-architecture.js').then((m) => m.ATTENTION_ARCHITECTURE_CONTRACT),
+      },
       featureClusters: {
         inspect: (target) => describeFeatureClusterElement(target),
         list: (root = document) => loadGestureContract().then((m) => m.snapshotFeatureClusters(root)),

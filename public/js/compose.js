@@ -183,6 +183,12 @@ export {
 
 export {
   ATTENTION_ARCHITECTURE_CONTRACT,
+  describeAttentionArchitecture,
+  initPinchTextScale,
+  initReadingGroove,
+  initResonanceProbe,
+  initScrollCadenceState,
+  initSectionHandle,
   initSpwAttentionArchitecture,
 } from './runtime/attention-architecture.js';
 
