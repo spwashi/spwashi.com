@@ -1320,6 +1320,8 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-semantics',
     effectScope: 'local-dom element-state',
     load: () => import('../semantic/concept-salience.js'),
+    mount: (mod, ctx, root) => mod?.initConceptSalience?.(root?.ownerDocument || document),
+    unmount: (mod) => mod?.unmountConceptSalience?.(),
   },
   {
     id: 'precipitation-request',

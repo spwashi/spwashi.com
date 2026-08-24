@@ -94,6 +94,27 @@ test('attention children own independent progressive schedules', () => {
   });
 });
 
+test('concept salience receives a document root instead of lifecycle context', () => {
+  const definition = ENHANCEMENT_DEFS.find(({ id }) => id === 'concept-salience');
+  const ownerDocument = { querySelectorAll() {} };
+  let mountedRoot = null;
+  let unmounted = false;
+  const module = {
+    initConceptSalience(root) {
+      mountedRoot = root;
+    },
+    unmountConceptSalience() {
+      unmounted = true;
+    },
+  };
+
+  definition.mount(module, { document: 'lifecycle context' }, { ownerDocument });
+  definition.unmount(module);
+
+  assert.equal(mountedRoot, ownerDocument);
+  assert.equal(unmounted, true);
+});
+
 test('pinch scaling does not retain listeners on pointer-only devices', () => {
   assert.equal(supportsPinchTextScaleInput({
     navigator: { maxTouchPoints: 0 },
