@@ -65,6 +65,11 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 - Portable through `compose.js`; console through `window.spwCompose.controls.physics`.
 - Do not add `data-spw-region-personality`, `data-spw-region-voice`, or `data-spw-region-gravity-axis`. Copy personality stays in `component-region-personality`.
 
+## 2026-08 Attention compose pass
+- Catalog remains the demand schedule. `initSpwAttentionArchitecture({ children })` is the all-at-once facade.
+- `describeAttentionArchitecture()` is read-only, exported from `compose.js` and `window.spwCompose.controls.attention`.
+- `--spw-flourish-presence` interpolates atmosphere after pack load. It must not change packing or measure.
+
 ## Out of Scope
 - Renaming unrelated runtime modules.
 - Changing route-specific behavior beyond the page-state contract.
