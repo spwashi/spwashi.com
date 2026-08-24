@@ -31,6 +31,17 @@
  anti_pattern: "Changing important calls to action randomly on every render."
 }
 
+^"production_season_contract"{
+ operation = "prime"
+ fixity = "tending"
+ annual_span = "October 1 through January 4 inclusive. The 2026–2027 public instance is 96 days: 31 + 30 + 31 + 4."
+ october = "Daily illustration resonance with a Halloween episode as the release hook."
+ november = "Daily novel-writing practice with explicit episode dates; the 2026 pilot releases on five Sundays: November 1, 8, 15, 22, and 29."
+ december = "Holiday transition through the existing 13th/26th A/B release closes."
+ january = "Four-day coda through January 4 for archive, gratitude, handoff, and rest."
+ authored_rule = "The complete score, dates, fractions, and fallback copy live in HTML. Runtime may mirror authored cadence or preserve it with a gathered ingredient, but it does not decide what is due."
+}
+
 ^"notice_surface"{
  rule: "Dismissible discovery notices should key dismissal to the active cadence so a daily promo can return tomorrow and a weekly promo can return next week."
  shape: "Notice cards are still copy units: label, title, summary, href, and cta stay complete enough to render without fragmenting the editorial thought."
@@ -80,4 +91,5 @@ invariants: #[
  `Templates own page-level locale metadata; runtime modules own generated-card locale metadata.`,
  `Text measurement surfaces (pretext physics, frame metrics) must re-interpret on typography settings changes so projected widths and line counts stay accurate when --site-root-font-size or data-spw-font-size-scale shift.`,
  `Variant text lives in markup (data-* or templates) or JSON sidecars; the authored HTML default is always the crawler-present truth.`
+ `The October 1–January 4 production season is an authored editorial score, not a browser scheduler.`
 ][reg=set]

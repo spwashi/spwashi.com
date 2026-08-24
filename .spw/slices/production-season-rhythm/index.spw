@@ -1,0 +1,69 @@
+# Production Season Rhythm Slice
+
+#>production_season_rhythm
+#:slice #!cadence #!recipes #!attention #!svg
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"../../../.agents/plans/production-season-rhythm/PLAN.md"
+@recipes: ~"../../../recipes/index.html#production-season"
+@recipe_css: ~"../../../public/css/routes/surfaces/recipes.css"
+@attention: ~"../../../public/js/runtime/attention/section-handle.js"
+@cauldron_storage: ~"../../../public/js/interface/cauldron/storage.js"
+@svg_runtime: ~"../../../public/js/media/svg-tunability.js"
+@timing: ~"../../philosophy/timing-data-localization.spw"
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Turn October 1 through January 4 into a 96-day score that can seed repeatable creative traditions without becoming a browser scheduler.`
+ public_proof = `The recipes route carries one Halloween episode, four seasonal movements, and an accessible SVG score.`
+}[reg=facet]
+
+season_contract: .{
+ span = `October 1 through January 4 inclusive = 96 days: 31 + 30 + 31 + 4.`
+ october = `Inktober resonance: one daily mark (1/31), weekly gathering, Halloween recipe episode.`
+ november = `Novel writing: one daily writing pass (1/30), Sunday episode releases on Nov 1, 8, 15, 22, and 29 in the 2026 pilot.`
+ december = `Holiday transition: continue the existing A/B release closes on the 13th and 26th.`
+ january = `Four-day coda through January 4: archive, thank, hand off, rest.`
+ recurrence = `Month/day identity is durable; dated 2026–2027 time elements are the current public instance.`
+}[reg=facet]
+
+participation_contract: .{
+ local = `Share the same room, food, tools, and closing note.`
+ hybrid = `Keep one local host or table while remote collaborators contribute prompts, captions, drafts, or witness.`
+ remote = `Use the same authored score asynchronously; exchange a small artifact instead of simulating co-presence.`
+ tradition_rule = `Repeated, source-honest practice may become tradition. The page does not declare a new recipe inherited tradition before repetition earns it.`
+}[reg=facet]
+
+progressive_contract: .{
+ html = `Dates, fractions, recipe method, participation modes, SVG title/description, and rail links exist before enhancement.`
+ svg = `Anchor targets work without JS; svg-tunability adds node preview and capture posture.`
+ attention = `The section handle may mirror data-spw-cadence and data-spw-cadence-motion only while the authored section is active.`
+ cauldron = `Gathering preserves nearest cadence and cadence motion in the ingredient payload; it adds no storage key.`
+ ornament = `Cadence stays a readable annotation until a measurable ornament source is defined; do not repurpose runtime site-rhythm nodes.`
+}[reg=facet]
+
+negative_boundaries: #[
+ `No generic date scheduler, notification system, timezone inference, or automatic publishing.`,
+ `No essential copy hidden behind JavaScript or semantic-density controls.`,
+ `No attention-owned history and no new ornament class without an inspectable measure.`,
+ `No claim of cultural or family provenance for an original site recipe.`
+][reg=set]
+
+practice_beds: .{
+ reading = `Read the four movements and Halloween method on /recipes/.`
+ observation = `Inspect active section cadence, SVG focus-node state, and gathered ingredient payload.`
+ gesture = `Focus a score-rail link or gather one marked recipe concept.`
+ tending = `Adjust one cadence only after a real production week supplies evidence.`
+ succession = `Keep this contract aligned with the public dates and the 13th/26th release rhythm.`
+}[reg=facet]
+
+validation: #[
+ `npm run spw:integrity`,
+ `npm run ecology`,
+ `npm run check:local`,
+ `browser: phone + desktop + keyboard SVG rail + reduced motion + no-JS`
+][reg=set]

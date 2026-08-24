@@ -1,0 +1,34 @@
+# Plan Index — Production Season Rhythm
+
+#>plan_production_season_rhythm
+#:index #!plan #!cadence #!recipes
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+@plan: ~"./PLAN.md"
+@slice: ~"../../../.spw/slices/production-season-rhythm/index.spw"
+@recipes: ~"../../../recipes/index.html#production-season"
+@timing: ~"../../../.spw/philosophy/timing-data-localization.spw"
+
+intent: .{
+ goal = `Give the October 1–January 4 production season a source-readable public score and a portable cadence contract.`
+ owner = `production-season-rhythm`
+ artifact_shape = `PLAN.md | index.spw | route pilot | slice contract`
+}[reg=facet]
+
+dispatch: .{
+ plan = @plan
+ slice = @slice
+ recipes = @recipes
+ timing = @timing
+}[reg=facet]
+
+validation: #[
+ `npm run spw:integrity`,
+ `npm run ecology`,
+ `npm run check:local`,
+ `browser smoke: phone + desktop + no-JS`
+][reg=set]

@@ -384,6 +384,158 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
   }
 }
 
+/* Production season is an authored score, not a date-driven dashboard. The
+   route keeps the complete 96-day reading in HTML; this chapter only changes
+   packing and gives the proportional SVG movements enough visual separation
+   to survive both phone reading and screenshot interpretation. */
+:where(body[data-spw-surface="recipes"] #production-season) {
+  container-type: inline-size;
+  container-name: production-season;
+  background:
+    radial-gradient(circle at 8% 4%, color-mix(in srgb, var(--recipes-ember) 13%, transparent), transparent 34%),
+    radial-gradient(circle at 92% 92%, color-mix(in srgb, var(--recipes-accent) 10%, transparent), transparent 38%),
+    var(--recipes-paper);
+  border-color: color-mix(in srgb, var(--recipes-ember) 26%, var(--recipes-line));
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-intro) {
+  max-inline-size: 78ch;
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: clamp(0.7rem, 1.5cqi, 1.05rem);
+  align-items: stretch;
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-card) {
+  min-inline-size: 0;
+  background: var(--recipes-panel);
+  border-block-start: 0.2rem solid var(--production-cadence-accent, var(--recipes-accent));
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-card[data-spw-cadence="daily"]) {
+  --production-cadence-accent: var(--op-action-color, var(--recipes-accent));
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-card[data-spw-cadence="weekly"]) {
+  --production-cadence-accent: var(--op-probe-color, var(--recipes-ember));
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-card[data-spw-cadence="cycle"]) {
+  --production-cadence-accent: var(--op-frame-color, var(--recipes-accent));
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-recipe) {
+  grid-column: 1 / -1;
+  min-inline-size: 0;
+  background: var(--recipes-panel-warm);
+  border-color: color-mix(in srgb, var(--recipes-ember) 30%, var(--recipes-line));
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-recipe__method) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr));
+  gap: clamp(0.65rem, 1.2cqi, 0.9rem);
+  margin-block: 1rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: production-recipe-step;
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-recipe__method li) {
+  counter-increment: production-recipe-step;
+  min-inline-size: 0;
+  padding: 0.75rem 0.82rem;
+  border: 1px solid var(--recipes-line);
+  border-radius: var(--shape-component, 0.75rem);
+  background: color-mix(in srgb, var(--recipes-surface-strong) 94%, var(--recipes-gold) 6%);
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-recipe__method li)::before {
+  content: counter(production-recipe-step, decimal-leading-zero);
+  display: block;
+  margin-block-end: 0.3rem;
+  color: color-mix(in srgb, var(--recipes-ember) 74%, var(--recipes-ink));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-participation) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: clamp(0.55rem, 1.2cqi, 0.85rem);
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-participation > div) {
+  min-inline-size: 0;
+  padding: 0.72rem 0.8rem;
+  border-inline-start: 0.18rem solid color-mix(in srgb, var(--recipes-accent) 48%, var(--recipes-line));
+  background: color-mix(in srgb, var(--recipes-surface) 92%, transparent);
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-score) {
+  margin-block: clamp(1rem, 2.6cqi, 1.6rem);
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-score__ground) {
+  stroke: color-mix(in srgb, var(--recipes-ink) 18%, transparent);
+  stroke-width: 2;
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-score__movement) {
+  color: var(--production-score-color, var(--recipes-accent));
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-score__movement rect) {
+  fill: color-mix(in srgb, currentColor 15%, var(--recipes-surface-strong));
+  stroke: color-mix(in srgb, currentColor 72%, var(--recipes-line));
+  stroke-width: 2;
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-score__movement--ink) {
+  --production-score-color: var(--op-action-color, #006d6d);
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-score__movement--novel) {
+  --production-score-color: var(--op-probe-color, #4a2180);
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-score__movement--holiday) {
+  --production-score-color: var(--recipes-ember);
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-score__movement--coda) {
+  --production-score-color: var(--op-frame-color, #008080);
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-score__movement .spw-svg-label) {
+  fill: color-mix(in srgb, currentColor 78%, var(--recipes-ink));
+  font-weight: 800;
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-score__movement .spw-svg-note) {
+  fill: color-mix(in srgb, currentColor 54%, var(--recipes-ink-soft));
+}
+
+:where(body[data-spw-surface="recipes"] #production-season .production-season-score__coda-mark) {
+  stroke: var(--op-frame-color, var(--recipes-accent));
+  stroke-width: 2;
+}
+
+@container production-season (max-width: 35rem) {
+  :where(body[data-spw-surface="recipes"] #production-season .production-season-grid) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(body[data-spw-surface="recipes"] #production-season .production-season-recipe) {
+    grid-column: 1;
+  }
+}
+
 :where(body[data-spw-surface="recipes"] #plants-and-sorcery) {
   margin-block-start: clamp(0.75rem, 2vw, 1.15rem);
 }

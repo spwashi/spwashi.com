@@ -114,6 +114,7 @@
 @spw_architecture_ecology_plan: ~"../.agents/plans/spw-architecture-ecology/PLAN.md"
 @modular_experience_slices: ~"../.agents/plans/modular-experience-slices/PLAN.md"
 @slices: ~"./slices/index.spw"
+@production_season_rhythm: ~"./slices/production-season-rhythm/index.spw"
 @scenes: ~"./scenes/index.spw"
 @local_mount: ~"./mount.spw"
 @local_workspace: ~"./workspace.spw"
@@ -228,6 +229,7 @@ translations: .{
  semantic_capacity = #[@semantic_capacity, @model_guided_refinement, @planning_ecology][reg=set]
  discovery_powerups = #[@discovery_powerups, @semantic_capacity, @query_disposition][reg=set]
  daily_kernel = #[@daily_kernel, @semantic_capacity, @attention_field, @product_lines][reg=set]
+ production_season_rhythm = #[@production_season_rhythm, @timing_data_localization, @attention_field, @ornament_contract][reg=set]
  professional_skill_worldbuilding = #[@professional_skill_worldbuilding, @professional_skill_worldbuilding_cache, @product_lines][reg=set]
  relational_attention_media = #[@relational_attention_media, @relational_attention_media_plan, @relational_attention_media_cache, @attention_field, @product_lines][reg=set]
  approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
@@ -363,6 +365,7 @@ dispatch: .{
  semantic_capacity = @semantic_capacity
  discovery_powerups = @discovery_powerups
  daily_kernel = @daily_kernel
+ production_season_rhythm = @production_season_rhythm
  pretext_whimsy = @pretext_whimsy_model
  naming_structured_values = @naming_structured_values
  relational_attention_media = @relational_attention_media
