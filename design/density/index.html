@@ -49,26 +49,31 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>
-            <section class="spw-frame" data-spw-role="orientation" data-spw-kind="frame" id="density-measure" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+            <section class="spw-frame" id="density-measure" data-spw-role="orientation" data-spw-kind="frame" data-spw-attentional-weight="1.25" data-spw-semantic-expression="density[spec]{balance.measure}<lattice>" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="/design/">#>design</a>
-                    <div class="spec-strip">
+                    <div class="spec-strip" data-spw-cluster="spec">
                         <span class="spec-pill">spacing model</span>
                         <span class="spec-pill">environmental response</span>
                     </div>
                 </div>
 
-                <p class="spec-kicker">Component Options / Spacing</p>
+                <p class="spec-kicker" data-spw-textual-role="kicker">Component Options / Spacing</p>
                 <h1>Density & Measure</h1>
 
                 <p data-spw-textual-role="lede">
                     Spacing scales smoothly when driven by density attributes rather than hard-coded inline values.
                 </p>
+
+                <figure class="image-study" data-spw-slot="figure">
+                    <img src="/public/images/assets/illustrations/papergami-cognitive-display.webp" alt="Papergami cognitive layout study with calibrated metric ladders and proportional spaces." loading="lazy" decoding="async" width="512" height="512">
+                </figure>
+
                 <p data-spw-textual-role="note" data-spw-module-evaluates="semantic-density">
                     Research note (for interns + designers): "rich" / high-density often compelling in business/inspection/tool contexts (high information per inch, registers, settings lists). "minimal" + roomy more useful for experiential/relationship reading (breathing room, calm presence). Use data-spw-density + data-spw-locality + data-spw-physics-reason in your own components for granular, vocabulary-building architecture. See /design/ bench and .spw page_architecture_vocabulary.
                 </p>
 
-                <div class="frame-grid frame-grid--dense">
+                <div class="frame-grid frame-grid--dense" data-spw-slot="body">
                     <article class="frame-panel" data-spw-density="dense">
                         <h3>Density: dense</h3>
                         <p>High information per inch. Pads tightly and condenses line-height. Great for data registers, lists of settings, or tightly packed chips.</p>
@@ -83,7 +88,7 @@
                     </article>
                     <article class="frame-panel" data-spw-reading="measure">
                         <h3>Reading: measure</h3>
-                        <p>Caps the width to roughly 65ch (characters) for ideal reading of long-form prose, avoiding eye fatigue on wide screens.</p>
+                        <p>Caps the width to roughly 68ch (characters) for ideal reading of long-form prose, avoiding eye fatigue on wide screens.</p>
                     </article>
                 </div>
             </section>

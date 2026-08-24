@@ -382,6 +382,21 @@
   width: 100%;
 }
 
+:where([data-spw-cluster="actions"], [data-spw-cluster="buttons"]) {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--component-gap-tight, 0.55rem);
+}
+
+:where([data-spw-cluster="spec"], [data-spw-cluster="tags"]) {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  width: auto;
+  gap: var(--space-3xs, 0.25rem);
+}
+
 :where(main) > :where([data-spw-cluster]) + :where([data-spw-cluster]),
 :where(main) > :where([data-spw-cluster]) + :where(.spw-frame),
 :where(main) > :where(.spw-frame) + :where([data-spw-cluster]) {

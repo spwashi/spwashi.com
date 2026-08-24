@@ -221,12 +221,16 @@
 }
 
 :where(.spw-frame[data-spw-attentional-weight="1.35"]) {
+  --spw-local-shadow: 0 4px 20px color-mix(in srgb, var(--active-op-color, var(--teal)) 6%, transparent), var(--component-shadow, none);
   border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 30%, var(--line, transparent));
+  box-shadow: var(--spw-local-shadow);
 }
 
 :where(.spw-frame[data-spw-attentional-weight="1.25"]),
 :where(.spw-frame[data-spw-attentional-weight="1.2"]) {
+  --spw-local-shadow: 0 2px 12px color-mix(in srgb, var(--active-op-color, var(--teal)) 4%, transparent), var(--component-shadow, none);
   border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 24%, var(--line, transparent));
+  box-shadow: var(--spw-local-shadow);
 }
 
 :where(.spw-frame[data-spw-attentional-weight="1.15"]),

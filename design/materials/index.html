@@ -49,51 +49,57 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>
-            <section class="spw-frame" data-spw-role="orientation" data-spw-kind="frame" id="metamaterial-attributes" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+            <section class="spw-frame" id="metamaterial-attributes" data-spw-role="orientation" data-spw-kind="frame" data-spw-attentional-weight="1.25" data-spw-semantic-expression="materials[spec]{paper.glass.matte.field}<metamaterial>" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="/design/">#>design</a>
-                    <div class="spec-strip">
+                    <div class="spec-strip" data-spw-cluster="spec">
                         <span class="spec-pill">rendering physics</span>
                         <span class="spec-pill">surface materials</span>
                     </div>
                 </div>
 
-                <p class="spec-kicker">Component Options / Physics</p>
+                <p class="spec-kicker" data-spw-textual-role="kicker">Component Options / Physics</p>
                 <h1>Metamaterial Attributes</h1>
 
                 <p data-spw-textual-role="lede">
                     Metamaterials dictate how a surface responds to the scroll canvas beneath it. It affects opacity, blur, and base contrast.
                 </p>
 
-                <div class="frame-grid frame-grid--dense">
+                <div class="frame-grid frame-grid--dense" data-spw-slot="body">
                     <article class="frame-panel" data-spw-metamaterial="paper">
-                        <figure class="image-study" style="margin: 0 0 0.75rem 0;">
+                        <figure class="image-study" data-spw-slot="figure" style="margin: 0 0 0.75rem 0;">
                             <img src="/public/images/assets/illustrations/craft-biofilm-papyrus-substrate-display.webp" alt="Papyrus and biofilm material study demonstrating cellulose grain and warm tactile reading surface." loading="lazy" decoding="async" width="512" height="512">
                         </figure>
                         <h3>Material: Paper</h3>
                         <p>Opaque and warm. Used for stable documents that want full reading focus without the distraction of layers passing underneath.</p>
                     </article>
                     <article class="frame-panel" data-spw-metamaterial="glass">
-                        <figure class="image-study" style="margin: 0 0 0.75rem 0;">
+                        <figure class="image-study" data-spw-slot="figure" style="margin: 0 0 0.75rem 0;">
                             <img src="/public/images/assets/illustrations/design-papergami-layout-machine-display.webp" alt="Papergami layout apparatus with translucent geometric apertures and spatial layers." loading="lazy" decoding="async" width="512" height="512">
                         </figure>
                         <h3>Material: Glass</h3>
                         <p>Translucent with a heavily blurred backdrop (like `backdrop-filter: blur`). Best for floating panels that should feel lightweight and aware of their environment.</p>
                     </article>
                     <article class="frame-panel" data-spw-metamaterial="matte">
-                        <figure class="image-study" style="margin: 0 0 0.75rem 0;">
+                        <figure class="image-study" data-spw-slot="figure" style="margin: 0 0 0.75rem 0;">
                             <img src="/public/images/assets/illustrations/material-weathered-copper-moss-study-display.webp" alt="Weathered copper and moss living surface study with organic matte patina." loading="lazy" decoding="async" width="512" height="512">
                         </figure>
                         <h3>Material: Matte</h3>
                         <p>Flat, low-contrast, and solid. Used for background structures, secondary asides, or anything that needs to recede from primary attention.</p>
                     </article>
                     <article class="frame-panel" data-spw-metamaterial="field">
-                        <figure class="image-study" style="margin: 0 0 0.75rem 0;">
+                        <figure class="image-study" data-spw-slot="figure" style="margin: 0 0 0.75rem 0;">
                             <img src="/public/images/assets/illustrations/boonhonk-attentional-fluid-display.webp" alt="Contour-bounded attentional fluid study showing high-contrast energy rings and directed fields." loading="lazy" decoding="async" width="512" height="512">
                         </figure>
                         <h3>Material: Field</h3>
                         <p>High-contrast, saturated environment used for interactive staging, active tests, or alert states.</p>
                     </article>
+                </div>
+
+                <div class="frame-actions" data-spw-slot="actions" data-spw-cluster="actions">
+                    <a class="operator-chip" href="/design/slots/" data-spw-operator="frame">#>slots</a>
+                    <a class="operator-chip" href="/design/density/" data-spw-operator="probe">?density</a>
+                    <a class="operator-chip" href="/design/palettes/" data-spw-operator="concept-edge">>palettes</a>
                 </div>
             </section>
         </article>

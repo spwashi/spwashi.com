@@ -49,51 +49,61 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>
-            <section class="spw-frame" data-spw-role="orientation" data-spw-kind="frame" id="universal-slots" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+            <section class="spw-frame" id="universal-slots" data-spw-role="orientation" data-spw-kind="frame" data-spw-attentional-weight="1.25" data-spw-semantic-expression="slots[spec]{header.meta.body.figure.actions.footer}<anatomy>" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="/design/">#>design</a>
-                    <div class="spec-strip">
+                    <div class="spec-strip" data-spw-cluster="spec">
                         <span class="spec-pill">component anatomy</span>
                         <span class="spec-pill">html constraints</span>
                     </div>
                 </div>
 
-                <p class="spec-kicker">Component Options / Dom Structure</p>
+                <p class="spec-kicker" data-spw-textual-role="kicker">Component Options / Dom Structure</p>
                 <h1>Universal Slots</h1>
 
                 <p data-spw-textual-role="lede">
                     Most pieces of UI in Spwashi are a variation of the <code>.frame-card</code> or <code>.frame-panel</code> structure. Instead of authoring arbitrary wrappers, we use a predictable slot anatomy.
                 </p>
 
+                <figure class="image-study" data-spw-slot="figure">
+                    <img src="/public/images/assets/illustrations/design-papergami-layout-machine-display.webp" alt="Papergami layout apparatus showing anatomical component slot hierarchy and apertures." loading="lazy" decoding="async" width="512" height="512">
+                </figure>
+
                 <p data-spw-textual-role="note">
                     <strong>For producers and directors tuning visual style:</strong> The same slot contract used in rendered character/profile cards (header → meta → body → figure → actions → footer) is the grammar you tune in <a href="/design/palettes/">palettes</a>, <a href="/design/components/">components</a>, and <a href="/design/materials/">materials</a>. When a card from the character builder is used as a style packet in the Midjourney bench, its rendered slots become the testable surface for material, light, and rhythm decisions. This is the ergonomic loop: edit card → see rendered output → tune slots/palettes → send packet → iterate images with coherence.
                 </p>
 
-                <div class="frame-grid frame-grid--dense">
-                    <article class="frame-panel">
+                <div class="frame-grid frame-grid--dense" data-spw-slot="body">
+                    <article class="frame-panel" data-spw-slot-specimen="header">
                         <h3>[data-spw-slot="header"]</h3>
                         <p>Used for the component's identifying marker, sigil, title, or top-level pill row. It anchors the component and provides identity before interaction.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="frame-panel" data-spw-slot-specimen="meta">
                         <h3>[data-spw-slot="meta"]</h3>
                         <p>For secondary information directly beneath the header—timestamps, provenance hints, and contextual breadcrumbs.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="frame-panel" data-spw-slot-specimen="figure">
                         <h3>[data-spw-slot="figure"]</h3>
                         <p>The primary visual container, whether for a raster image study or a runtime SVG rendering surface.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="frame-panel" data-spw-slot-specimen="body">
                         <h3>[data-spw-slot="body"]</h3>
                         <p>The container for prose, lists, and structurally dense readable content. Handled by a <code>max-inline-size</code> measure.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="frame-panel" data-spw-slot-specimen="actions">
                         <h3>[data-spw-slot="actions"]</h3>
                         <p>Holds operator chips, buttons, and outbound links, usually sitting at the bottom boundary before references.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="frame-panel" data-spw-slot-specimen="footer">
                         <h3>[data-spw-slot="footer"]</h3>
                         <p>For terminal metadata, reference traces, or system-level output.</p>
                     </article>
+                </div>
+
+                <div class="frame-actions" data-spw-slot="actions" data-spw-cluster="actions">
+                    <a class="operator-chip" href="/design/materials/" data-spw-operator="concept-edge">>materials</a>
+                    <a class="operator-chip" href="/design/density/" data-spw-operator="probe">?density</a>
+                    <a class="operator-chip" href="/design/components/" data-spw-operator="frame">#>components</a>
                 </div>
             </section>
         </article>
