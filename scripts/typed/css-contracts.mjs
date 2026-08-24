@@ -157,6 +157,8 @@ function hasInstructionHeader(source, filename) {
         || /\bPurpose\b|Direction|Design goals|Surface purpose|Visual mixer|Route-scoped|CSS for\b/.test(firstChunk));
 }
 function hasTopFileContract(source) {
+    if (source.startsWith('@layer '))
+        return true;
     const firstChunk = source.slice(0, 1200);
     return firstChunk.trimStart().startsWith('/*');
 }
@@ -288,7 +290,8 @@ export async function collectCssContractReport() {
         if (!compatibilityWrapper
             && !isGeneratedBundlePath(rootPath)
             && !knownReferences.has(rootPath)
-            && !INTENTIONAL_STANDALONE_CSS.has(rootPath)) {
+            && !INTENTIONAL_STANDALONE_CSS.has(rootPath)
+            && !ROUTE_BUNDLE_ONLY_CSS.has(rootPath)) {
             warnings.push(`${relativePath} is not imported by the style manifest or linked by rendered routes.`);
         }
     }
