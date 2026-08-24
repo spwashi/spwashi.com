@@ -755,6 +755,15 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
       assets: assets.sort((left, right) => left.path.localeCompare(right.path)),
     }));
 
+  function isColorToken(name, value = '') {
+    if (!name && !value) return false;
+    const str = String(value || '').trim();
+    if (/^#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(str)) return true;
+    if (/^(?:rgb|rgba|hsl|hsla|oklch|color-mix)\(/.test(str)) return true;
+    if (/-(?:color|bg|surface|border|tint|glow|palette|ink|accent|brand)(?:-|$)/.test(name)) return true;
+    return false;
+  }
+
   const attrRows = attrEntries
     .sort((a, b) => b.htmlUsageCount - a.htmlUsageCount || a.name.localeCompare(b.name))
     .map((entry) => {
@@ -763,7 +772,10 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
       return `
         <article class="catalog-entry" id="attr-${esc(entry.name)}" data-spw-catalog-kind="attribute">
           <header class="catalog-entry__header">
-            <code class="catalog-entry__name">${esc(entry.name)}</code>
+            <div class="catalog-entry__title-wrap">
+              <code class="catalog-entry__name">${esc(entry.name)}</code>
+              <button type="button" class="catalog-copy-btn" data-copy-target="${esc(entry.name)}" title="Copy attribute name">Copy</button>
+            </div>
             <span class="catalog-entry__meta">${entry.cssSelectors.length} CSS • ${entry.htmlUsageCount} HTML • ${entry.jsWrites.length} JS • ${entry.docMentions.length} docs</span>
           </header>
           ${values.length ? `<p class="catalog-entry__line"><strong>values:</strong> ${values.slice(0, 32).map((value) => `<code>${esc(value)}</code>`).join(' ')}${values.length > 32 ? ` <em>+${values.length - 32}</em>` : ''}</p>` : ''}
@@ -780,7 +792,10 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
     .map(([file, info]) => `
       <article class="catalog-entry" id="css-${esc(file)}" data-spw-catalog-kind="css-file">
         <header class="catalog-entry__header">
-          <code class="catalog-entry__name">${esc(file)}</code>
+          <div class="catalog-entry__title-wrap">
+            <code class="catalog-entry__name">${esc(file)}</code>
+            <button type="button" class="catalog-copy-btn" data-copy-target="${esc(file)}" title="Copy CSS file path">Copy</button>
+          </div>
           <span class="catalog-entry__meta">layer ${esc(info.layer || '—')} • ${info.attributesUsed.length} attrs • ${info.tokensDefined.length} tokens</span>
         </header>
         ${info.header ? `<p class="catalog-entry__doc">${esc(info.header)}</p>` : ''}
@@ -800,7 +815,10 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
         ${assets.map((asset) => `
           <article class="catalog-entry catalog-entry--asset" data-spw-catalog-kind="image-asset" id="image-${esc(slugifyCatalogId(asset.path))}">
             <header class="catalog-entry__header">
-              <code class="catalog-entry__name"><a href="${esc(asset.href)}">${esc(asset.path)}</a></code>
+              <div class="catalog-entry__title-wrap">
+                <code class="catalog-entry__name"><a href="${esc(asset.href)}">${esc(asset.path)}</a></code>
+                <button type="button" class="catalog-copy-btn" data-copy-target="${esc(asset.path)}" title="Copy asset path">Copy</button>
+              </div>
               <span class="catalog-entry__meta">${esc(asset.state)} • ${esc(asset.extension)} • ${humanizeBytes(asset.bytes)}</span>
             </header>
             <a class="catalog-entry__preview" href="${esc(asset.href)}" aria-label="Open ${esc(asset.path)}">
@@ -858,12 +876,18 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
   const docRows = docEntries.map(([file, info]) => `
     <article class="catalog-entry" data-spw-catalog-kind="doc">
       <header class="catalog-entry__header">
-        <code class="catalog-entry__name"><a href="/${esc(file)}">${esc(file)}</a></code>
+        <div class="catalog-entry__title-wrap">
+          <code class="catalog-entry__name"><a href="/${esc(file)}">${esc(file)}</a></code>
+          <button type="button" class="catalog-copy-btn" data-copy-target="/${esc(file)}" title="Copy doc path">Copy</button>
+        </div>
         <span class="catalog-entry__meta">${info.attributesMentioned.length} attrs • ${info.tokensMentioned.length} tokens</span>
       </header>
       ${info.attributesMentioned.length ? `<p class="catalog-entry__line"><strong>mentions attrs:</strong> ${info.attributesMentioned.map((attr) => `<a href="#attr-${esc(attr)}"><code>${esc(attr)}</code></a>`).join(' ')}</p>` : ''}
     </article>
   `).join('\n');
+
+  const renderedTokenCount = Math.min(tokenEntries.length, 500);
+  const totalEntriesCount = attrEntries.length + renderedTokenCount + Object.keys(cssFiles).length + docEntries.length + imageAssets.length + 1;
 
   return `<!DOCTYPE html>
 <html lang="en" data-spw-page-family="design" data-spw-page-role="catalog">
@@ -887,7 +911,7 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
   data-spw-page-modes="inspect trace browse"
   data-spw-page-role="catalog"
   data-spw-layout="atlas">
-<main class="catalog-main">
+<main class="catalog-main" id="catalog-top" data-catalog-density="standard">
   <header class="catalog-masthead">
     <h1>Design Catalog</h1>
     <p class="catalog-masthead__lede">
@@ -908,6 +932,38 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
       <a href="#wonder-connections">Unique Wonder Connections</a>
     </nav>
   </header>
+
+  <aside class="catalog-toolbar" aria-label="Catalog Search and Filters">
+    <div class="catalog-toolbar__row">
+      <div class="catalog-search-wrap">
+        <input
+          id="catalog-search"
+          type="search"
+          placeholder="Filter attributes, tokens, files, docs... (Press '/' to focus)"
+          aria-label="Filter catalog items">
+        <button id="catalog-search-clear" type="button" class="catalog-search-clear" aria-label="Clear filter" hidden>&times;</button>
+      </div>
+      <div class="catalog-count-badge" aria-live="polite">
+        Showing <strong id="catalog-visible-count">${totalEntriesCount}</strong> of <span id="catalog-total-count">${totalEntriesCount}</span>
+      </div>
+    </div>
+    <div class="catalog-toolbar__row catalog-toolbar__filters">
+      <div class="catalog-filter-group" role="group" aria-label="Filter by kind">
+        <button type="button" class="catalog-filter-chip" data-catalog-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="catalog-filter-chip" data-catalog-filter="attribute" aria-pressed="false">Attributes (${attrEntries.length})</button>
+        <button type="button" class="catalog-filter-chip" data-catalog-filter="token" aria-pressed="false">Tokens (${renderedTokenCount}${tokenEntries.length > renderedTokenCount ? ` of ${tokenEntries.length}` : ''})</button>
+        <button type="button" class="catalog-filter-chip" data-catalog-filter="css-file" aria-pressed="false">CSS (${Object.keys(cssFiles).length})</button>
+        <button type="button" class="catalog-filter-chip" data-catalog-filter="image-asset" aria-pressed="false">Assets (${imageAssets.length})</button>
+        <button type="button" class="catalog-filter-chip" data-catalog-filter="doc" aria-pressed="false">Docs (${docEntries.length})</button>
+        <button type="button" class="catalog-filter-chip" data-catalog-filter="orphan" aria-pressed="false">Orphans</button>
+      </div>
+      <div class="catalog-density-group" role="group" aria-label="View density">
+        <span class="catalog-density-label">Density:</span>
+        <button type="button" class="catalog-density-btn" data-catalog-density="standard" aria-pressed="true">Standard</button>
+        <button type="button" class="catalog-density-btn" data-catalog-density="compact" aria-pressed="false">Compact</button>
+      </div>
+    </div>
+  </aside>
 
   ${orphanBlock}
 
@@ -935,16 +991,23 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
     <h2>Custom-property tokens</h2>
     <p>Every <code>--token</code> — where defined, where consumed.</p>
     <div class="catalog-entries">
-      ${tokenEntries.slice(0, 500).map((token) => `
+      ${tokenEntries.slice(0, 500).map((token) => {
+        const isColor = isColorToken(token.name, token.initialValue);
+        return `
         <article class="catalog-entry" id="token-${esc(token.name)}" data-spw-catalog-kind="token">
           <header class="catalog-entry__header">
-            <code class="catalog-entry__name">${esc(token.name)}</code>
+            <div class="catalog-entry__title-wrap">
+              ${isColor ? `<span class="catalog-token-swatch" style="background: var(${esc(token.name)}, ${esc(token.initialValue || 'rgba(0,0,0,0.1)')});" title="Preview of ${esc(token.name)}"></span>` : ''}
+              <code class="catalog-entry__name">${esc(token.name)}</code>
+              <button type="button" class="catalog-copy-btn" data-copy-target="${esc(token.name)}" title="Copy token name">Copy</button>
+            </div>
             <span class="catalog-entry__meta">${token.definitions.length} defs • ${token.consumers.length} reads${token.syntax ? ` • syntax <code>${esc(token.syntax)}</code>` : ''}</span>
           </header>
           ${token.initialValue ? `<p class="catalog-entry__line"><strong>initial:</strong> <code>${esc(token.initialValue)}</code></p>` : ''}
           ${token.definitions.length ? `<p class="catalog-entry__line"><strong>defined in:</strong> ${[...new Set(token.definitions.map((definition) => definition.file))].map((file) => `<code>${esc(file)}</code>`).join(' ')}</p>` : ''}
         </article>
-      `).join('\n')}
+      `;
+      }).join('\n')}
       ${tokenEntries.length > 500 ? `<p><em>Showing first 500 of ${tokenEntries.length} tokens. See catalog.json for the full list.</em></p>` : ''}
     </div>
   </section>
@@ -955,6 +1018,161 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
     <div class="catalog-entries">${docRows}</div>
   </section>
 </main>
+
+<a href="#catalog-top" class="catalog-back-to-top" id="catalog-back-to-top" aria-label="Back to top" hidden>↑ Top</a>
+
+<script type="module">
+  function initDesignCatalog() {
+    const searchInput = document.getElementById('catalog-search');
+    const clearBtn = document.getElementById('catalog-search-clear');
+    const countDisplay = document.getElementById('catalog-visible-count');
+    const filterButtons = document.querySelectorAll('[data-catalog-filter]');
+    const densityButtons = document.querySelectorAll('[data-catalog-density]');
+    const entries = Array.from(document.querySelectorAll('.catalog-entry, .catalog-asset-bucket'));
+    const sections = Array.from(document.querySelectorAll('.catalog-section'));
+    const backToTop = document.getElementById('catalog-back-to-top');
+
+    let currentFilter = 'all';
+    let currentQuery = '';
+    let visibilityFrame = 0;
+
+    function updateVisibility() {
+      visibilityFrame = 0;
+      const q = currentQuery.trim().toLowerCase();
+      let visibleCount = 0;
+
+      entries.forEach((entry) => {
+        const kind = entry.dataset.spwCatalogKind || (entry.classList.contains('catalog-asset-bucket') ? 'asset-bucket' : '');
+        const matchesFilter = currentFilter === 'all'
+          || (currentFilter === 'attribute' && kind === 'attribute')
+          || (currentFilter === 'token' && kind === 'token')
+          || (currentFilter === 'css-file' && kind === 'css-file')
+          || (currentFilter === 'image-asset' && (kind === 'image-asset' || kind === 'asset-bucket'))
+          || (currentFilter === 'doc' && kind === 'doc')
+          || (currentFilter === 'orphan' && entry.closest('#orphans'));
+
+        const text = entry.textContent.toLowerCase();
+        const matchesQuery = !q || text.includes(q);
+
+        const isVisible = matchesFilter && matchesQuery;
+        entry.hidden = !isVisible;
+        if (isVisible && kind !== 'asset-bucket') visibleCount++;
+      });
+
+      sections.forEach((section) => {
+        if (section.id === 'orphans') {
+          const matchesOrphanFilter = currentFilter === 'all' || currentFilter === 'orphan';
+          const matchesOrphanQuery = !q || section.textContent.toLowerCase().includes(q);
+          section.hidden = !matchesOrphanFilter || !matchesOrphanQuery;
+          if (!section.hidden) visibleCount += 1;
+          return;
+        }
+        if (section.id === 'wonder-connections') {
+          section.hidden = currentFilter !== 'all'
+            || Boolean(q && !section.textContent.toLowerCase().includes(q));
+          return;
+        }
+        const visibleChild = section.querySelector('.catalog-entry:not([hidden]), .catalog-asset-bucket:not([hidden])');
+        section.hidden = (currentFilter !== 'all' || Boolean(q)) && !visibleChild;
+      });
+
+      if (countDisplay) {
+        countDisplay.textContent = visibleCount;
+      }
+    }
+
+    function scheduleVisibilityUpdate() {
+      if (visibilityFrame) return;
+      visibilityFrame = window.requestAnimationFrame(updateVisibility);
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        currentQuery = e.target.value;
+        if (clearBtn) clearBtn.hidden = !currentQuery;
+        scheduleVisibilityUpdate();
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement !== searchInput && !['input', 'textarea'].includes(document.activeElement?.tagName?.toLowerCase())) {
+          e.preventDefault();
+          searchInput.focus();
+          searchInput.select();
+        } else if (e.key === 'Escape' && document.activeElement === searchInput) {
+          searchInput.value = '';
+          currentQuery = '';
+          if (clearBtn) clearBtn.hidden = true;
+          searchInput.blur();
+          updateVisibility();
+        }
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        if (searchInput) {
+          searchInput.value = '';
+          searchInput.focus();
+        }
+        currentQuery = '';
+        clearBtn.hidden = true;
+        updateVisibility();
+      });
+    }
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        currentFilter = btn.dataset.catalogFilter || 'all';
+        updateVisibility();
+      });
+    });
+
+    densityButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        densityButtons.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        const density = btn.dataset.catalogDensity;
+        document.querySelector('.catalog-main')?.setAttribute('data-catalog-density', density);
+      });
+    });
+
+    document.addEventListener('click', async (e) => {
+      const copyBtn = e.target.closest('[data-copy-target]');
+      if (!copyBtn) return;
+      const textToCopy = copyBtn.dataset.copyTarget;
+      if (!textToCopy) return;
+
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = '✓ Copied';
+        copyBtn.classList.add('copied');
+        setTimeout(() => {
+          copyBtn.textContent = originalText;
+          copyBtn.classList.remove('copied');
+        }, 1600);
+      } catch (err) {
+        console.warn('Clipboard copy failed:', err);
+      }
+    });
+
+    if (backToTop) {
+      window.addEventListener('scroll', () => {
+        backToTop.hidden = window.scrollY < 400;
+      }, { passive: true });
+    }
+
+    updateVisibility();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDesignCatalog);
+  } else {
+    initDesignCatalog();
+  }
+</script>
 </body>
 </html>
 `;
@@ -975,6 +1193,101 @@ const CATALOG_CSS = `
 .catalog-toc { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; font-size: 0.9rem; }
 .catalog-toc--compact { gap: 0.5rem 0.75rem; font-size: 0.8rem; }
 .catalog-toc a { text-decoration: none; border-bottom: 1px dotted currentColor; }
+
+/* Sticky interactive search and filter toolbar */
+.catalog-toolbar {
+  position: sticky;
+  top: 1rem;
+  z-index: 100;
+  background: var(--surface-glass, rgba(255, 255, 255, 0.85));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.12));
+  border-radius: 0.75rem;
+  padding: 0.85rem 1.15rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  display: grid;
+  gap: 0.75rem;
+}
+.catalog-toolbar__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.catalog-search-wrap {
+  position: relative;
+  flex: 1 1 20rem;
+  display: flex;
+  align-items: center;
+}
+#catalog-search {
+  width: 100%;
+  padding: 0.5rem 2rem 0.5rem 0.85rem;
+  font-size: 0.92rem;
+  border-radius: 0.45rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.18));
+  background: var(--surface, rgba(255, 255, 255, 0.9));
+  color: inherit;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+#catalog-search:focus {
+  border-color: var(--op-frame-color, #008899);
+  box-shadow: 0 0 0 3px rgba(0, 136, 153, 0.18);
+}
+.catalog-search-clear {
+  position: absolute;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--ink-soft, #778);
+  cursor: pointer;
+  padding: 0.2rem;
+  line-height: 1;
+}
+.catalog-count-badge {
+  font-size: 0.85rem;
+  color: var(--ink-soft, #556);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.catalog-toolbar__filters {
+  font-size: 0.85rem;
+}
+.catalog-filter-group,
+.catalog-density-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+.catalog-filter-chip,
+.catalog-density-btn {
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.12));
+  background: var(--surface-soft, rgba(0, 0, 0, 0.04));
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.catalog-filter-chip[aria-pressed="true"],
+.catalog-density-btn[aria-pressed="true"] {
+  background: var(--op-frame-color, #008899);
+  color: #fff;
+  border-color: transparent;
+}
+.catalog-density-label {
+  font-size: 0.8rem;
+  color: var(--ink-soft, #667);
+  margin-right: 0.2rem;
+}
+
 .catalog-section { display: grid; gap: 1rem; }
 .catalog-section h2 { margin: 0; }
 .catalog-entries { display: grid; gap: 0.75rem; }
@@ -983,21 +1296,74 @@ const CATALOG_CSS = `
 .catalog-asset-bucket__header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; align-items: baseline; }
 .catalog-asset-bucket__meta { margin: 0; font-size: 0.85rem; color: var(--ink-soft, #667); }
 .catalog-asset-grid { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+
 .catalog-entry {
   padding: 0.75rem 1rem;
   border: 1px solid var(--line, rgba(0,0,0,0.1));
   border-radius: 0.5rem;
   background: var(--surface, rgba(255,255,255,0.6));
   display: grid; gap: 0.35rem;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.catalog-entry:hover {
+  border-color: var(--op-frame-color, rgba(0, 136, 153, 0.4));
 }
 .catalog-entry--asset { gap: 0.6rem; }
-.catalog-entry__header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; align-items: baseline; }
+.catalog-entry__header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.catalog-entry__title-wrap { display: flex; align-items: center; gap: 0.5rem; }
 .catalog-entry__name { font-weight: 600; }
 .catalog-entry__meta { font-size: 0.8rem; color: var(--ink-soft, #667); font-variant-numeric: tabular-nums; }
 .catalog-entry__line { margin: 0; font-size: 0.88rem; }
 .catalog-entry__line code { font-size: 0.82rem; }
 .catalog-entry__line--warn { color: hsl(18 60% 40%); }
 .catalog-entry__doc { margin: 0; font-size: 0.85rem; color: var(--ink-soft, #556); font-style: italic; }
+
+/* Quick Copy button */
+.catalog-copy-btn {
+  padding: 0.12rem 0.45rem;
+  font-size: 0.72rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.15));
+  background: var(--surface-soft, rgba(0, 0, 0, 0.04));
+  color: var(--ink-soft, #556);
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.catalog-entry:hover .catalog-copy-btn,
+.catalog-copy-btn:focus-visible {
+  opacity: 1;
+}
+.catalog-copy-btn.copied {
+  opacity: 1;
+  background: var(--op-topic-color, #1a8754);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Token Color Swatch */
+.catalog-token-swatch {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 0.2rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.2));
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* Compact view mode */
+.catalog-main[data-catalog-density="compact"] .catalog-entry {
+  padding: 0.4rem 0.75rem;
+  gap: 0.15rem;
+}
+.catalog-main[data-catalog-density="compact"] .catalog-entry__line {
+  font-size: 0.8rem;
+}
+.catalog-main[data-catalog-density="compact"] .catalog-entries {
+  gap: 0.4rem;
+}
+
 .orphan-list dt { font-weight: 600; margin-top: 0.5rem; }
 .orphan-list dd { margin: 0.15rem 0 0.5rem 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .catalog-entry__preview { display: block; border-radius: 0.45rem; overflow: hidden; aspect-ratio: 4 / 3; background: var(--surface-soft, rgba(0,0,0,0.04)); border: 1px solid var(--line, rgba(0,0,0,0.1)); }
@@ -1005,6 +1371,37 @@ const CATALOG_CSS = `
 .catalog-asset-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .catalog-chip { display: inline-flex; align-items: center; padding: 0.15rem 0.45rem; border-radius: 999px; background: var(--surface-soft, rgba(0,0,0,0.05)); font-size: 0.75rem; }
 .catalog-chip--link { text-decoration: none; color: inherit; }
+
+.catalog-back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 99;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: var(--surface-glass, rgba(255, 255, 255, 0.85));
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.15));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: inherit;
+  transition: transform 0.15s ease;
+}
+.catalog-back-to-top:hover {
+  transform: translateY(-2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .catalog-entry,
+  .catalog-filter-chip,
+  .catalog-density-btn,
+  .catalog-copy-btn,
+  .catalog-back-to-top {
+    transition: none;
+  }
+  .catalog-back-to-top:hover { transform: none; }
+}
 `;
 
 function serializeTokens(tokens) {
