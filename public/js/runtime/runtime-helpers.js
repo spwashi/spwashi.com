@@ -7,11 +7,12 @@
  */
 
 import { runtimeToken } from '/public/js/kernel/text-normalization.js';
+import { MOUNT_WHEN } from '/public/js/runtime/module-catalog-constants.js';
 
 const RUNTIME_TIMING_POLICIES = new Set(['normal', 'eager', 'defer', 'quiet', 'manual']);
-const MOUNT_WHEN_VALUES = new Set(['immediate', 'visible', 'idle', 'interaction', 'region', 'settled']);
-const HTML = document.documentElement;
-const BODY = document.body;
+const MOUNT_WHEN_VALUES = new Set(Object.values(MOUNT_WHEN));
+const HTML = typeof document !== 'undefined' ? document.documentElement : null;
+const BODY = typeof document !== 'undefined' ? document.body : null;
 
 /**
  * Small contract for code that wants to reuse the runtime's helper layer
