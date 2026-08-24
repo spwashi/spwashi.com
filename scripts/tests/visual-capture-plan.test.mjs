@@ -30,6 +30,8 @@ import {
   clipSpaceForJob,
   looksLikeShellChrome,
   isMissedSpecimen,
+  assessCaptureOccupancy,
+  formatCaptureExpression,
 } from '../lib/visual-capture-plan.mjs';
 import { VIEWPORTS } from '../lib/chrome-headless-harness.mjs';
 
@@ -269,4 +271,56 @@ test('a header-only preview is a miss for a region, not a specimen', () => {
     { flow: 'page' },
     { text: '#>SPWASHI ROUTES' },
   ), false);
+});
+
+test('capture occupancy distinguishes light prose from visual-led presence', () => {
+  const lightBox = {
+    width: 600,
+    height: 400,
+    area: 240000,
+    childCount: 1,
+    text: 'Brief single link.',
+    textLength: 18,
+  };
+  const result = assessCaptureOccupancy({ viewportId: 'desktop' }, lightBox);
+  assert.equal(result.occupancy, 'light');
+  assert.equal(result.reason, 'low-presence-density');
+
+  const visual = assessCaptureOccupancy({}, {
+    area: 240000,
+    childCount: 1,
+    mediaCount: 1,
+    textLength: 0,
+  });
+  assert.equal(visual.occupancy, 'visual-led');
+  assert.equal(visual.reason, 'media-carries-presence');
+
+  const healthyBox = {
+    width: 400,
+    height: 300,
+    area: 120000,
+    childCount: 4,
+    text: 'This is a well-balanced card with a header, multi-line paragraph description, operator chips, and a link footer that fills the allocated measure.',
+    textLength: 147,
+  };
+  const healthyResult = assessCaptureOccupancy({ viewportId: 'desktop' }, healthyBox);
+  assert.equal(healthyResult.occupancy, 'balanced');
+});
+
+test('capture expression annotates the still without replacing component semantics', () => {
+  const expression = formatCaptureExpression({
+    id: 'frame-card--fit',
+    fixtureId: 'frame-card',
+    aspect: 'fit',
+    flow: 'template',
+    sizeReason: 'pretext-fit',
+  }, {
+    occupancy: 'balanced',
+    semantics: { feature: 'frame-card-specimen' },
+  });
+
+  assert.equal(
+    expression,
+    'still[fit]{template.pretext-fit.balanced}<frame-card-specimen>',
+  );
 });

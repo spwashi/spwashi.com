@@ -284,7 +284,78 @@ export function marketingPrompt(job, snapshot = {}) {
   return null;
 }
 
+/**
+ * Describe what occupies a captured box without treating prose density as
+ * layout authority. An image-led card is not vacant merely because it has few
+ * characters, and a light composition is a review clue rather than a repair.
+ */
+export function assessCaptureOccupancy(job = {}, snapshot = {}) {
+  const text = snapshot.text ?? '';
+  const textLength = snapshot.textLength ?? text.length ?? 0;
+  const area = snapshot.area ?? (snapshot.width && snapshot.height ? snapshot.width * snapshot.height : 0);
+  const childCount = snapshot.childCount ?? 0;
+  const mediaCount = snapshot.mediaCount ?? 0;
+  const interactiveCount = snapshot.interactiveCount ?? 0;
+  const characterDensity = area > 0 ? (textLength / area) * 1000 : 0;
+
+  if (area <= 0) {
+    return { occupancy: 'unknown', reason: 'unmeasured-box', characterDensity, mediaCount, interactiveCount };
+  }
+  if (!textLength && !mediaCount && !childCount) {
+    return { occupancy: 'empty', reason: 'no-rendered-content', characterDensity, mediaCount, interactiveCount };
+  }
+  if (mediaCount > 0 && textLength < 24) {
+    return { occupancy: 'visual-led', reason: 'media-carries-presence', characterDensity, mediaCount, interactiveCount };
+  }
+
+  const presenceUnits = textLength + (mediaCount * 180) + (interactiveCount * 24);
+  const presenceDensity = presenceUnits / Math.max(1, area / 1000);
+  const occupancy = presenceDensity < 0.45
+    ? 'light'
+    : presenceDensity > 3.2
+      ? 'dense'
+      : 'balanced';
+
+  return {
+    occupancy,
+    reason: occupancy === 'light' ? 'low-presence-density' : null,
+    characterDensity,
+    mediaCount,
+    interactiveCount,
+  };
+}
+
+function expressionToken(value = '', fallback = 'unknown') {
+  const token = String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_.-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return token || fallback;
+}
+
+/** A capture annotation, kept separate from the component's authored expression. */
+export function formatCaptureExpression(job = {}, snapshot = {}) {
+  const mode = expressionToken(job.aspect || job.viewportId || 'fit', 'fit');
+  const flow = expressionToken(job.flow || 'component', 'component');
+  const sizeReason = expressionToken(job.sizeReason || sizeReasonFor(job), 'device-reason');
+  const occupancy = expressionToken(snapshot.occupancy || 'unknown', 'unknown');
+  const subject = expressionToken(
+    snapshot.semantics?.feature
+      || snapshot.semantics?.kind
+      || job.fixtureId
+      || job.id
+      || job.kind,
+    'component',
+  );
+  return `still[${mode}]{${flow}.${sizeReason}.${occupancy}}<${subject}>`;
+}
+
 export function enhancementHint(job, snapshot = {}) {
+  const occupancy = assessCaptureOccupancy(job, snapshot);
+  if (occupancy.occupancy === 'empty') {
+    return 'Capture box is empty — check fixture hydration or selector ownership before reviewing composition.';
+  }
   if (snapshot.wrap === 'volatile') {
     return 'Wrap is volatile — tighten copy or the measure token before locking a social still.';
   }
@@ -920,7 +991,6 @@ export function buildCapturePlan({
   }
   if (lenses.length) jobs = applyVisibilityLenses(jobs, lenses);
   if (changedFiles?.length) jobs = jobs.filter((job) => jobTouchesChanged(job, changedFiles));
-
   const groups = groupJobsByNavigation(jobs);
   return { jobs, groups, summary: summarizePlan(jobs) };
 }

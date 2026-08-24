@@ -46,6 +46,8 @@ import {
   clipForBox,
   clipSpaceForJob,
   isMissedSpecimen,
+  assessCaptureOccupancy,
+  formatCaptureExpression,
 } from './lib/visual-capture-plan.mjs';
 import {
   archiveKeptPack,
@@ -188,7 +190,6 @@ function parseArgs(argv) {
   }
 
   if (options.quick) {
-    options.flows = ['region', 'component'];
     options.viewports = options.viewports || ['phone', 'desktop'];
     options.settleMs = Math.min(options.settleMs, 2000);
     options.format = options.format === 'png' && options.precipitate ? 'png' : 'jpeg';
@@ -331,6 +332,86 @@ async function measureSelector(session, selector) {
       await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       const r = el.getBoundingClientRect();
       const ds = el.dataset || {};
+      const text = (el.innerText || '').trim();
+      let composition = null;
+      let pretext = null;
+      let measurementError = null;
+
+      try {
+        const compositionUrl = new URL('/public/js/runtime/composition-box-model.js', document.baseURI).href;
+        const pretextUrl = new URL('/public/js/semantic/pretext-measurement-bus.js', document.baseURI).href;
+        const [boxModule, pretextModule] = await Promise.all([
+          import(compositionUrl),
+          import(pretextUrl),
+        ]);
+        const boxSnapshot = boxModule.snapshotCompositionBox(el, { root: document });
+        if (boxSnapshot) {
+          composition = {
+            role: boxSnapshot.role,
+            presence: boxSnapshot.presence,
+            measure: boxSnapshot.measure,
+            sizeContext: boxSnapshot.sizeContext,
+            contentTone: boxSnapshot.contentTone,
+            settlePhase: boxSnapshot.settlePhase,
+            flow: boxSnapshot.flow,
+            box: boxSnapshot.box,
+            packLocal: boxSnapshot.packLocal,
+            packLayout: boxSnapshot.packLayout,
+            packFill: boxSnapshot.packFill,
+            story: boxSnapshot.story,
+            semantics: boxSnapshot.semantics,
+          };
+        }
+
+        const signals = pretextModule.readPretextSignals(el);
+        if (signals?.host) {
+          pretext = {
+            kind: signals.kind || null,
+            density: signals.density || null,
+            measure: signals.measure || null,
+            projection: signals.projection || null,
+            ornament: signals.ornament || null,
+            wrap: signals.wrap || null,
+            widthClass: signals.widthClass || null,
+            mode: signals.mode || null,
+            preset: signals.preset || null,
+            canonicalWidth: signals.canonicalWidth || null,
+            projectedWidth: signals.projectedWidth || null,
+            lineCount: signals.lineCount || null,
+            projectedLineCount: signals.projectedLineCount || null,
+            heightPx: signals.heightPx || null,
+            measureKind: signals.measureKind,
+            source: signals.source,
+          };
+
+          if (!signals.lineCount) {
+            const hostRect = signals.host.getBoundingClientRect();
+            const hostStyle = getComputedStyle(signals.host);
+            const padding = (Number.parseFloat(hostStyle.paddingLeft) || 0)
+              + (Number.parseFloat(hostStyle.paddingRight) || 0);
+            const width = Math.max(40, hostRect.width - padding);
+            const measured = await pretextModule.measureTextLayout({
+              text: (signals.host.innerText || '').trim(),
+              width,
+            });
+            pretext = {
+              ...pretext,
+              lineCount: measured.lineCount,
+              projectedLineCount: measured.compareLineCount,
+              heightPx: measured.height,
+              widthPx: measured.width,
+              compareWidthPx: measured.compareWidth,
+              wrap: measured.wrap,
+              measureKind: measured.measureKind,
+              source: 'visual-capture-pretext',
+            };
+          }
+        }
+      } catch (error) {
+        // Capture still proceeds; module-derived evidence is an enhancement.
+        measurementError = String(error?.message || error || 'measurement module unavailable');
+      }
+
       return {
         found: true,
         x: r.left + window.scrollX,
@@ -343,21 +424,23 @@ async function measureSelector(session, selector) {
         scrollY: window.scrollY,
         inView: r.bottom > 0 && r.top < (window.innerHeight || 1),
         semantics: {
-          kind: ds.spwKind || el.getAttribute('data-spw-kind') || null,
-          role: ds.spwRole || el.getAttribute('data-spw-role') || null,
+          kind: ds.spwKind || el.getAttribute('data-spw-kind') || composition?.semantics?.kind || null,
+          role: ds.spwRole || el.getAttribute('data-spw-role') || composition?.semantics?.role || composition?.role || null,
           region: ds.spwRegion || el.getAttribute('data-spw-region') || null,
           cluster: ds.spwCluster || el.getAttribute('data-spw-cluster') || null,
           feature: ds.spwFeature || el.getAttribute('data-spw-feature') || null,
           operator: ds.spwOperator || el.getAttribute('data-spw-operator') || null,
         },
-        pretext: {
-          wrap: ds.textWrap || ds.spwPretextWrap || el.getAttribute('data-text-wrap') || null,
-          widthClass: ds.textWidthClass || ds.spwPretextWidthClass || el.getAttribute('data-text-width-class') || null,
-          measure: ds.textMeasure || ds.spwPretextMeasure || null,
-          occupancy: ds.spwPackOccupancy || el.getAttribute('data-spw-pack-occupancy') || null,
-          density: ds.spwDensity || ds.textDensity || null,
-        },
-        text: (el.innerText || '').trim().slice(0, 240),
+        componentExpression: ds.spwSemanticExpression || el.getAttribute('data-spw-semantic-expression') || null,
+        composition,
+        pretext,
+        measurementError,
+        area: Math.round(r.width * r.height),
+        childCount: el.childElementCount,
+        mediaCount: el.querySelectorAll('img, picture, video, canvas, svg').length,
+        interactiveCount: el.querySelectorAll('a[href], button, input, select, textarea, [role="button"]').length,
+        textLength: text.length,
+        text: text.slice(0, 240),
       };
     })()`,
     returnByValue: true,
@@ -377,6 +460,8 @@ function galleryHtml(manifest) {
         ${c.ratioLabel ? `<br/><code>${c.ratioLabel}</code>` : ''}
         ${c.clip?.coordinateSpace ? `<br/><code>${c.clip.coordinateSpace} ${Math.round(c.clip.x)},${Math.round(c.clip.y)} ${Math.round(c.clip.width)}×${Math.round(c.clip.height)}</code>` : ''}
         ${c.media ? `<br/><code>${c.media}</code>` : ''}
+        ${c.captureExpression ? `<br/><code>${c.captureExpression}</code>` : ''}
+        ${c.captureOccupancy?.occupancy ? `<br/><span class="meta">occupancy: ${c.captureOccupancy.occupancy}${c.captureOccupancy.reason ? ` · ${c.captureOccupancy.reason}` : ''}</span>` : ''}
         ${c.textPreview ? `<br/><span class="meta">${String(c.textPreview).replace(/</g, '&lt;').slice(0, 160)}</span>` : ''}
       </figcaption>
     </figure>`).join('\n');
@@ -533,13 +618,17 @@ async function hashSources(job) {
 async function renderCardDocument(session, base, snippetHtml, aspect, viewport, sizeToken, lens = null) {
   const html = templateDocumentHtml(base, snippetHtml, { aspect, sizeToken, lens });
   await applyViewport(session, viewport);
+  let frameId = null;
   try {
-    await session.send('Page.navigate', { url: 'about:blank' }, 8000);
+    const navigation = await session.send('Page.navigate', { url: `${base}/design/components/` }, 8000);
+    frameId = navigation?.frameId || null;
   } catch {
-    // continue; setDocumentContent still needs a frame
+    // Continue with the current frame; setDocumentContent still provides the bed.
   }
-  const { frameTree } = await session.send('Page.getFrameTree');
-  const frameId = frameTree?.frame?.id;
+  if (!frameId) {
+    const { frameTree } = await session.send('Page.getFrameTree');
+    frameId = frameTree?.frame?.id || null;
+  }
   if (!frameId) throw new Error('No main frame id for card document');
   await session.send('Page.setDocumentContent', { frameId, html });
   await new Promise((r) => setTimeout(r, 500));
@@ -586,6 +675,8 @@ async function captureJob(session, job, {
     buffer = await screenshotBuffer(session, { format, quality, clip });
   }
   const sha256 = createHash('sha256').update(buffer).digest('hex');
+  const snapshot = { ...(box?.pretext || {}), ...(box || {}) };
+  const captureOccupancy = assessCaptureOccupancy(job, snapshot);
   return {
     buffer,
     clip,
@@ -594,10 +685,19 @@ async function captureJob(session, job, {
     ms: Math.round(performance.now() - started),
     ratioLabel: clip?.ratioLabel || (box ? `${Math.round((box.width / box.height) * 100) / 100}` : null),
     semantics: box?.semantics || null,
+    componentExpression: box?.componentExpression || null,
+    composition: box?.composition || null,
     pretext: box?.pretext || null,
-    hint: enhancementHint(job, box?.pretext || {}),
-    prompt: marketingPrompt(job, box?.pretext || {}),
-    prompts: intelligencePrompts(job, box?.pretext || {}),
+    measurementError: box?.measurementError || null,
+    captureOccupancy,
+    captureExpression: formatCaptureExpression(job, {
+      ...snapshot,
+      occupancy: captureOccupancy.occupancy,
+      semantics: box?.semantics || null,
+    }),
+    hint: enhancementHint(job, snapshot),
+    prompt: marketingPrompt(job, snapshot),
+    prompts: intelligencePrompts(job, snapshot),
     textPreview: box?.text || null,
   };
 }
@@ -824,6 +924,11 @@ async function main() {
               sizeToken: job.sizeToken,
               lens: job.lens || null,
               pretext: shot.pretext,
+              measurementError: shot.measurementError,
+              composition: shot.composition,
+              captureOccupancy: shot.captureOccupancy,
+              captureExpression: shot.captureExpression,
+              componentExpression: shot.componentExpression,
               hint: shot.hint,
               prompt: shot.prompt,
               prompts: shot.prompts,
@@ -931,6 +1036,13 @@ async function main() {
       file: c.file,
       sha256: c.sha256,
       selector: c.selector,
+      expression: c.captureExpression,
+      componentExpression: c.componentExpression,
+      semantics: c.semantics,
+      composition: c.composition,
+      pretext: c.pretext,
+      measurementError: c.measurementError,
+      occupancy: c.captureOccupancy,
       wonder: c.wonder,
       prompt: c.prompt || c.wonder,
       prompts: c.prompts,
@@ -962,6 +1074,9 @@ async function main() {
         sizeToken: c.sizeToken,
         wrap: c.pretext?.wrap || null,
         widthClass: c.pretext?.widthClass || null,
+        occupancy: c.captureOccupancy?.occupancy || null,
+        occupancyReason: c.captureOccupancy?.reason || null,
+        expression: c.captureExpression,
         hint: c.hint,
         prompt: c.prompt || c.wonder,
         next: 'smallest honest patch, then npm run visual:capture -- --changed --keep',

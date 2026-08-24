@@ -65,6 +65,15 @@
   enhance = `Wrap volatile / leftover-track / xs width-class are enhancement hints, not failures.`
 }[reg=facet]
 
+^"measurement_boundary"{
+  composition = `Consume snapshotCompositionBox() so capture, layout QA, and runtime inspection share one physical receipt.`
+  pretext = `Invoke Pretext only for an actual data-spw-flow="pretext" host. Record wrap and line evidence; never make capture measurement a public packing writer.`
+  css = `Container queries own component packing. Runtime attributes report the chosen state and must not become a second layout engine.`
+  occupancy = #[`empty`, `light`, `balanced`, `dense`, `visual-led`, `unknown`][reg=set]
+  occupancy_rule = `Media contributes presence. Low character density alone must not classify an image-led card as vacant.`
+  expressions = `precipitate stills keep generated capture expression and authored componentExpression as separate fields.`
+}[reg=facet]
+
 ^"marketing_teasers"{
   claim = `Intermediate measures are prompts. Wrap volatility, leftover-track packing, unique content-fit ratios, and visibility-lens stills are teasers — not only QA diagnostics.`
   store = `precipitate.json stills[].prompt + review.json items[].prompt`
@@ -164,7 +173,7 @@
   directory = `design/components/captures/`
   files = #[`manifest.json`, `pipeline.json`, `precipitate.json`, `review.json`, `index.html`, `captures/*`][reg=set]
   gitignore = `design/components/captures/ — packs are local/CI artifacts by default`
-  value_fields = #[`track`, `flow`, `viewport`, `aspect`, `sizeReason`, `sizeToken`, `prompt`, `hint`, `sha256`, `publish[]`][reg=set]
+  value_fields = #[`track`, `flow`, `viewport`, `aspect`, `sizeReason`, `sizeToken`, `expression`, `componentExpression`, `composition`, `pretext`, `occupancy`, `prompt`, `hint`, `sha256`, `publish[]`][reg=set]
 }[reg=facet]
 
 ^"fixture_contract"{

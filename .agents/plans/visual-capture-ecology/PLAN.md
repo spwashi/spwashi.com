@@ -21,6 +21,13 @@ Same still, four readings: mosey (notice the size), search (findable words), age
 - Copy measure: `.spw/conventions/copy-flow.spw` (`measure-compact|card|reading`)
 - Seats: `.spw/conventions/region-component-ecology.spw`
 
+## Runtime Boundary
+
+- The runner consumes `snapshotCompositionBox()` as the shared physical receipt instead of inventing a parallel capture-only box model.
+- Pretext is invoked only when the captured element contains or belongs to a real `data-spw-flow="pretext"` host. It records wrap evidence; it does not write packing or width-class state onto ordinary cards.
+- CSS/container queries remain the layout owner. Capture occupancy (`empty|light|balanced|dense|visual-led`) is a review annotation, never an automatic repair.
+- `precipitate.json` keeps the still's generated capture expression separate from the component's authored `data-spw-semantic-expression`.
+
 ## Tracks
 
 | Track | Size reason | Question |
@@ -33,6 +40,8 @@ Same still, four readings: mosey (notice the size), search (findable words), age
 ## Loop
 
 `visual:plan` → `visual:capture` / `visual:ecology` / `visual:social` → gallery + `review.json` hints → smallest patch → `visual:review` (`--changed --keep`) → `precipitate.json` lock.
+
+Each precipitated still records physical composition, optional Pretext evidence, capture occupancy, an authored component expression when present, and a generated `still[mode]{flow.size-reason.occupancy}<subject>` annotation.
 
 Region/component clips use the element's document box, not the visible viewport origin. A capture retry keeps that clip. Header-only hits are `miss--` artifacts, not specimen stills.
 
