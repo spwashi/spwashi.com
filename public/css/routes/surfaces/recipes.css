@@ -404,7 +404,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
 
 :where(body[data-spw-surface="recipes"] #production-season .production-season-grid) {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--pack-tier-compact-grid, 12rem)), 1fr));
   gap: clamp(0.7rem, 1.5cqi, 1.05rem);
   align-items: stretch;
 }

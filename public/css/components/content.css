@@ -877,7 +877,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 
 :where(.spw-production-note__paths) {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--pack-tier-compact-grid, 12rem)), 1fr));
   gap: 0.62rem;
 }
 
@@ -916,12 +916,6 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 
 :where(.spw-production-note__footer > :first-child) {
   margin-block-start: 0;
-}
-
-@container spw-production-note (min-width: 42rem) {
-  :where(.spw-production-note__paths) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 :where(.frame-copy) {
