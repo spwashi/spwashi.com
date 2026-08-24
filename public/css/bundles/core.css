@@ -3480,8 +3480,19 @@ html[data-spw-reduce-motion="on"] {
   --spw-delight-burst-glow: 12px;
 }
 
+@property --spw-flourish-presence {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 :root {
   --spw-wonder-layer-mod: calc(1 + (var(--spw-runtime-layer-count, 2) - 2) * 0.05);
+  --spw-flourish-presence: 0;
+}
+
+html[data-spw-flourish="ready"] {
+  --spw-flourish-presence: 1;
 }
 
 :root {
@@ -10481,6 +10492,10 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
     color 160ms var(--ease-settle, ease),
     opacity 160ms var(--ease-settle, ease),
     transform 160ms var(--ease-settle, ease);
+}
+
+:where(.spw-section-handle, .spw-section-handle-shell)[data-spw-handle-cadence] {
+  --spw-handle-cadence-mark: 1;
 }
 
 /* Editorial cadence annotation. The active section authors the value; the

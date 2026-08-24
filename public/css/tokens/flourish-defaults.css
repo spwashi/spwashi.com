@@ -45,8 +45,19 @@
   --spw-delight-burst-glow: 12px;
 }
 
+@property --spw-flourish-presence {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 :root {
   --spw-wonder-layer-mod: calc(1 + (var(--spw-runtime-layer-count, 2) - 2) * 0.05);
+  --spw-flourish-presence: 0;
+}
+
+html[data-spw-flourish="ready"] {
+  --spw-flourish-presence: 1;
 }
 
 :root {

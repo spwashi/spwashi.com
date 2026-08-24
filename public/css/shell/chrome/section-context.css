@@ -483,6 +483,10 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
     transform 160ms var(--ease-settle, ease);
 }
 
+:where(.spw-section-handle, .spw-section-handle-shell)[data-spw-handle-cadence] {
+  --spw-handle-cadence-mark: 1;
+}
+
 /* Editorial cadence annotation. The active section authors the value; the
    attention handle only mirrors it while that section is current. Text rather
    than a pulse keeps this distinct from the runtime site-rhythm ornament and
