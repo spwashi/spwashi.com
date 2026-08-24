@@ -53,4 +53,4 @@ A visitor can read the full season without JavaScript, navigate its four movemen
 
 - [x] Authored score, route pilot, responsive SVG, and slice contract.
 - [x] Cadence mirror and portable cauldron payload.
-- [ ] Browser QA and final tending note.
+- [x] Browser QA and final tending note.

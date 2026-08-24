@@ -44,6 +44,17 @@ const queryModePanels = (group, root = document) =>
 
 export const LENS_MODE_SETTLE_MS = 720;
 
+export function shouldUseLensViewTransition({
+  source = 'mode-switch',
+  supportsTransition = false,
+  reduceMotion = false,
+} = {}) {
+  return supportsTransition
+    && !reduceMotion
+    && source !== 'initial'
+    && source !== 'query';
+}
+
 export function findLensModeSwitches(buttons = []) {
   const switches = new Set();
   for (const button of buttons) {
@@ -158,9 +169,17 @@ export function writeLensModeState({
     }
   };
 
-  if (typeof doc.startViewTransition === 'function' && !globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches) {
+  const supportsTransition = typeof doc.startViewTransition === 'function';
+  const reduceMotion = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
+  if (shouldUseLensViewTransition({ source, supportsTransition, reduceMotion })) {
     try {
-      doc.startViewTransition(applyDomUpdates);
+      const transition = doc.startViewTransition(applyDomUpdates);
+      // Browsers reject one or more lifecycle promises when another transition
+      // supersedes this one. The DOM update is still authoritative; cancellation
+      // is a progressive-enhancement outcome, not an application error.
+      ['ready', 'updateCallbackDone', 'finished'].forEach((phase) => {
+        transition?.[phase]?.catch?.(() => {});
+      });
     } catch {
       applyDomUpdates();
     }

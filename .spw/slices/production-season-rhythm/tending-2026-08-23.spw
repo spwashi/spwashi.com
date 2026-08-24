@@ -1,0 +1,64 @@
+# Production Season Rhythm Tending — 2026-08-23
+
+#>production_season_rhythm_tending_2026_08_23
+#:review #!cadence #!attention #!recipes #!progressive_enhancement
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+note: .{
+  slice = `production-season-rhythm`
+  bed = `observation + gesture`
+  date = `2026-08-23`
+  author = `Codex with Spwashi`
+  status = `reviewed`
+}[reg=facet]
+
+observation: .{
+  summary = `At a 1280px desktop viewport, the recipes ecology gives the season a constrained 588px seat. Lowering the route-local container threshold lets five cards pack in two columns without overflow. The active handle shows cycle / ink.write.release.coda, clears the annotation outside authored cadence sections, and keyboard gathering preserves the lantern-pot cadence in the rendered cauldron ingredient.`
+  entry_point = `/recipes/#production-season, section handle, SVG companion rail, and cauldron ingredient capture`
+  affected_files = #[
+    `recipes/index.html`,
+    `public/css/routes/surfaces/recipes.css`,
+    `public/js/runtime/attention/section-handle.js`,
+    `public/js/interface/haptics.js`,
+    `public/js/interface/cauldron/storage.js`,
+    `public/js/interface/composition.js`,
+    `public/js/runtime/lens-modes.js`
+  ][reg=set]
+}[reg=facet]
+
+contract: .{
+  semantic_family = `data-spw-cadence + data-spw-cadence-motion across authored section, attention mirror, and cauldron payload`
+  changed = `yes`
+  note = `Cadence remains authored data. Attention mirrors only the current section, the cauldron preserves the nearest annotation, and neither runtime infers dates or owns a schedule.`
+}[reg=facet]
+
+claim_chain: .{
+  claim_id = `production-season-progressive-still`
+  hypothesis = `Initial lens hydration should apply its DOM state without opening overlapping document view transitions; user-triggered lens changes may animate and must absorb cancellation.`
+  spec_ref = `../../../.agents/plans/production-season-rhythm/PLAN.md`
+  impl_ref = `../../../public/js/runtime/lens-modes.js`
+  probe_ref = `fresh in-app-browser load of /recipes/#production-season followed by settled screenshot and error-log inspection`
+  falsification = `An initial load emits InvalidStateError, leaves the lens state unapplied, or produces an obscured still after runtime settlement.`
+  status = `confirmed`
+}[reg=facet]
+
+gesture: .{
+  reversible_experiment = `Gather winter squash with keyboard Space after idle haptics mount, inspect cadence and motion on the rendered cauldron ingredient, then remove the QA item.`
+  outcome = `kept`
+}[reg=facet]
+
+sedimentation: .{
+  decision = `Keep initial and query lens hydration static; reserve view-transition motion for deliberate lens changes. Keep cadence text static rather than adding a pulse or site-rhythm ornament.`
+  evidence = `Browser logs were clean after the lens guard; the settled still painted; the 588px seat packed two columns with zero horizontal overflow; keyboard capture rendered cycle / mise.gather.cast and cleanup restored the prior cauldron state.`
+  next_handoff = `Measure a real October production week before introducing cadence-responsive ornament, notifications, or automatic date behavior.`
+}[reg=facet]
+
+validation: #[
+  `node --test lens and production-season runtime contracts`,
+  `npm run ecology`,
+  `npm run check:runtime`,
+  `npm run check:local`,
+  `in-app browser: clean load logs, settled screenshot, constrained-region packing, SVG semantics, cadence clearing, keyboard cauldron capture`
+][reg=set]

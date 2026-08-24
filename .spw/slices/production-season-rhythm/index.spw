@@ -13,6 +13,7 @@
 @cauldron_storage: ~"../../../public/js/interface/cauldron/storage.js"
 @svg_runtime: ~"../../../public/js/media/svg-tunability.js"
 @timing: ~"../../philosophy/timing-data-localization.spw"
+@tending: ~"./tending-2026-08-23.spw"
 
 operation = "prime"
 fixity = "tending"
