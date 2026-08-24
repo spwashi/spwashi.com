@@ -52,8 +52,8 @@
   --home-radius-lg: var(--shape-floating, 18px);
   --home-radius-pill: 999px;
 
-  --home-measure-tight: 46ch;
-  --home-measure: 62ch;
+  --home-measure-tight: var(--measure-card, 42ch);
+  --home-measure: var(--measure-reading, 68ch);
   --home-measure-wide: 74ch;
 
   --home-transition-fast: calc(var(--duration-fast, 120ms) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))) var(--ease-mechanical, ease);
