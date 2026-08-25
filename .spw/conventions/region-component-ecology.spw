@@ -55,7 +55,7 @@ fixity = "tending"
   tropes = #[`hook`, `hub`, `cluster`, `path`, `read`, `wide`][reg=set]
   spend = `@css has tropes for those six. data-spw-region-role=entry-spine aliases hook seating.`
   roles = `data-spw-region-role names the job (atlas, entry-spine, promo-cycle). data-spw-region-purpose names why it is there (public-spine, section-hub, route-sorter).`
-  leftover = `On newspaper / broadsheet, unused tracks may hold a compact path or cluster when ~28rem remains. Hook, pack=fill, and pack=balanced span. Do not force two columns on every later region.`
+  leftover = `On newspaper / broadsheet, unused tracks may hold a compact path or cluster when ~28rem remains. Hook, pack=fill, and pack=balanced span. A hero-split leftover occupant is a *direct-child* figure — slotted or a bare <figure>. Nested plates stay inside the body slot. Do not reserve a column for a figure that is not there. Do not force two columns on every later region.`
 }[reg=facet]
 
 ^"authored_vs_runtime"{

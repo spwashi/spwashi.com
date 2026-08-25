@@ -264,6 +264,17 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   grid-template-columns: none;
 }
 
+/* Broadsheet: a full-row lens steals the meta tag (kernel_entry, spec pills).
+   Share the topline when leftover room exists. Pocket/fold keep 100% width. */
+@media (min-width: 61.25rem) {
+  .frame-topline > .mode-switch[data-spw-lens-track="row"],
+  .frame-heading > .mode-switch[data-spw-lens-track="row"] {
+    width: auto;
+    flex: 1 1 16rem;
+    max-inline-size: min(100%, 38rem);
+  }
+}
+
 .mode-switch[data-spw-lens-track="row"] > .frame-sigil {
   flex: 1 1 0;
   min-inline-size: 0;

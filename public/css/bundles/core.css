@@ -20187,7 +20187,15 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   gap: var(--spw-hero-gap, clamp(1.1rem, 2cqi, 1.5rem));
 }
 
-:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > :where([data-spw-slot="header"], [data-spw-slot="body"], [data-spw-slot="figure"], [data-spw-slot="actions"]) {
+:where([data-spw-anatomy="hero-split"]) > :where(
+  [data-spw-slot="header"],
+  [data-spw-slot="body"],
+  [data-spw-slot="figure"],
+  [data-spw-slot="actions"],
+  .topic-hero-copy,
+  .recipe-hero-copy,
+  figure
+) {
   min-width: 0;
 }
 
@@ -20209,14 +20217,17 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 }
 
 @supports (container-type: inline-size) {
-  /* The nearest inline-size container may be the shell or a nested frame. */
+  /* Split only when a figure is a *direct* child — slotted or a bare
+     <figure>. Nested plates stay in the body slot (home) and must not
+     reserve an empty sibling column. Unslotted .topic-hero-copy still
+     occupies the copy track so film/nutrition leftover is spent. */
   @container (min-width: 60rem) {
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       gap: var(--gap-inline-flow, var(--space-xs, 0.5rem)) var(--gap-block-flow, var(--space-lg, 1.5rem));
     }
 
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > canvas {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) > canvas {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -20224,23 +20235,33 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
       pointer-events: none;
     }
 
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="header"] {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) > :is(
+      [data-spw-slot="header"],
+      .frame-topline
+    ) {
       grid-column: 1 / -1;
       grid-row: 1;
     }
 
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="body"] {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) > :is(
+      [data-spw-slot="body"],
+      .topic-hero-copy,
+      .recipe-hero-copy
+    ) {
       grid-column: 1 / span 6;
       grid-row: 2;
     }
 
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="figure"] {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) > :is(
+      figure,
+      [data-spw-slot="figure"]
+    ) {
       grid-column: 8 / -1;
       grid-row: 2;
       width: 100%;
     }
 
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="actions"] {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) > [data-spw-slot="actions"] {
       grid-column: 1 / span 7;
       grid-row: 3;
     }
@@ -29771,6 +29792,38 @@ html[data-spw-theme-pack="electric-studio"] {
   max-inline-size: min(100%, 72ch);
 }
 
+/* Nested leftover: a figure inside the body slot is still a leftover
+   occupant. Do not reserve a sibling column for a plate that is not there. */
+@container (min-width: 60rem) {
+  :where(
+    .spw-frame[data-spw-anatomy="hero-split"]:not(:has(> :is(figure, [data-spw-slot="figure"])))
+    > [data-spw-slot="body"]:has(> :is(figure, [data-spw-slot="figure"]))
+  ) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(13rem, 17rem);
+    align-items: start;
+    column-gap: clamp(0.9rem, 1.8cqi, 1.5rem);
+  }
+
+  :where(
+    .spw-frame[data-spw-anatomy="hero-split"]:not(:has(> :is(figure, [data-spw-slot="figure"])))
+    > [data-spw-slot="body"]:has(> :is(figure, [data-spw-slot="figure"]))
+    > :not(:is(figure, [data-spw-slot="figure"]))
+  ) {
+    grid-column: 1;
+  }
+
+  :where(
+    .spw-frame[data-spw-anatomy="hero-split"]:not(:has(> :is(figure, [data-spw-slot="figure"])))
+    > [data-spw-slot="body"]:has(> :is(figure, [data-spw-slot="figure"]))
+    > :is(figure, [data-spw-slot="figure"])
+  ) {
+    grid-column: 2;
+    justify-self: stretch;
+    max-inline-size: 17rem;
+  }
+}
+
 /* Broadsheet: leftover tracks, not a forced two-column. Compact/path/cluster
    sit beside a neighbor when 28rem remains. Masthead and fill/balanced span. */
 @media (min-width: 61.25rem) {
@@ -39062,6 +39115,17 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   margin: 0;
   box-sizing: border-box;
   grid-template-columns: none;
+}
+
+/* Broadsheet: a full-row lens steals the meta tag (kernel_entry, spec pills).
+   Share the topline when leftover room exists. Pocket/fold keep 100% width. */
+@media (min-width: 61.25rem) {
+  .frame-topline > .mode-switch[data-spw-lens-track="row"],
+  .frame-heading > .mode-switch[data-spw-lens-track="row"] {
+    width: auto;
+    flex: 1 1 16rem;
+    max-inline-size: min(100%, 38rem);
+  }
 }
 
 .mode-switch[data-spw-lens-track="row"] > .frame-sigil {

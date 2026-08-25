@@ -269,6 +269,38 @@
   max-inline-size: min(100%, 72ch);
 }
 
+/* Nested leftover: a figure inside the body slot is still a leftover
+   occupant. Do not reserve a sibling column for a plate that is not there. */
+@container (min-width: 60rem) {
+  :where(
+    .spw-frame[data-spw-anatomy="hero-split"]:not(:has(> :is(figure, [data-spw-slot="figure"])))
+    > [data-spw-slot="body"]:has(> :is(figure, [data-spw-slot="figure"]))
+  ) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(13rem, 17rem);
+    align-items: start;
+    column-gap: clamp(0.9rem, 1.8cqi, 1.5rem);
+  }
+
+  :where(
+    .spw-frame[data-spw-anatomy="hero-split"]:not(:has(> :is(figure, [data-spw-slot="figure"])))
+    > [data-spw-slot="body"]:has(> :is(figure, [data-spw-slot="figure"]))
+    > :not(:is(figure, [data-spw-slot="figure"]))
+  ) {
+    grid-column: 1;
+  }
+
+  :where(
+    .spw-frame[data-spw-anatomy="hero-split"]:not(:has(> :is(figure, [data-spw-slot="figure"])))
+    > [data-spw-slot="body"]:has(> :is(figure, [data-spw-slot="figure"]))
+    > :is(figure, [data-spw-slot="figure"])
+  ) {
+    grid-column: 2;
+    justify-self: stretch;
+    max-inline-size: 17rem;
+  }
+}
+
 /* Broadsheet: leftover tracks, not a forced two-column. Compact/path/cluster
    sit beside a neighbor when 28rem remains. Masthead and fill/balanced span. */
 @media (min-width: 61.25rem) {

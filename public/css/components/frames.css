@@ -448,7 +448,15 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   gap: var(--spw-hero-gap, clamp(1.1rem, 2cqi, 1.5rem));
 }
 
-:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > :where([data-spw-slot="header"], [data-spw-slot="body"], [data-spw-slot="figure"], [data-spw-slot="actions"]) {
+:where([data-spw-anatomy="hero-split"]) > :where(
+  [data-spw-slot="header"],
+  [data-spw-slot="body"],
+  [data-spw-slot="figure"],
+  [data-spw-slot="actions"],
+  .topic-hero-copy,
+  .recipe-hero-copy,
+  figure
+) {
   min-width: 0;
 }
 
@@ -470,14 +478,17 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 }
 
 @supports (container-type: inline-size) {
-  /* The nearest inline-size container may be the shell or a nested frame. */
+  /* Split only when a figure is a *direct* child — slotted or a bare
+     <figure>. Nested plates stay in the body slot (home) and must not
+     reserve an empty sibling column. Unslotted .topic-hero-copy still
+     occupies the copy track so film/nutrition leftover is spent. */
   @container (min-width: 60rem) {
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       gap: var(--gap-inline-flow, var(--space-xs, 0.5rem)) var(--gap-block-flow, var(--space-lg, 1.5rem));
     }
 
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > canvas {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) > canvas {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -485,23 +496,33 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
       pointer-events: none;
     }
 
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="header"] {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) > :is(
+      [data-spw-slot="header"],
+      .frame-topline
+    ) {
       grid-column: 1 / -1;
       grid-row: 1;
     }
 
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="body"] {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) > :is(
+      [data-spw-slot="body"],
+      .topic-hero-copy,
+      .recipe-hero-copy
+    ) {
       grid-column: 1 / span 6;
       grid-row: 2;
     }
 
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="figure"] {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) > :is(
+      figure,
+      [data-spw-slot="figure"]
+    ) {
       grid-column: 8 / -1;
       grid-row: 2;
       width: 100%;
     }
 
-    :where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="actions"] {
+    :where([data-spw-anatomy="hero-split"]:has(> :is(figure, [data-spw-slot="figure"]))) > [data-spw-slot="actions"] {
       grid-column: 1 / span 7;
       grid-row: 3;
     }

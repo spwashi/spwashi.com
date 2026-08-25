@@ -173,9 +173,10 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   overflow: clip;
 }
 
-/* Use the nearest shell/frame inline-size container; query lists are invalid here. */
+/* Split the section only when a figure is a direct child. Home seats its
+   plate inside .home-hero-grid, so a reserved figure area here was empty. */
 @container (min-width: 60rem) {
-  :where([data-spw-feature="home-kernel-entry"]:is([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"])) {
+  :where([data-spw-feature="home-kernel-entry"][data-spw-anatomy="hero-split"]:has(> [data-spw-slot="figure"])) {
     grid-template-columns: minmax(0, 1.08fr) minmax(14rem, 17rem);
     grid-template-areas:
       "header figure"
@@ -184,22 +185,22 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
     align-items: start;
   }
 
-  :where([data-spw-feature="home-kernel-entry"][data-spw-anatomy="hero-split"]) > [data-spw-slot="header"] {
+  :where([data-spw-feature="home-kernel-entry"][data-spw-anatomy="hero-split"]:has(> [data-spw-slot="figure"])) > [data-spw-slot="header"] {
     grid-area: header;
   }
 
-  :where([data-spw-feature="home-kernel-entry"][data-spw-anatomy="hero-split"]) > [data-spw-slot="body"] {
+  :where([data-spw-feature="home-kernel-entry"][data-spw-anatomy="hero-split"]:has(> [data-spw-slot="figure"])) > [data-spw-slot="body"] {
     grid-area: body;
   }
 
-  :where([data-spw-feature="home-kernel-entry"][data-spw-anatomy="hero-split"]) > [data-spw-slot="figure"] {
+  :where([data-spw-feature="home-kernel-entry"][data-spw-anatomy="hero-split"]:has(> [data-spw-slot="figure"])) > [data-spw-slot="figure"] {
     grid-area: figure;
     align-self: start;
     justify-self: end;
     max-inline-size: min(100%, 13.75rem);
   }
 
-  :where([data-spw-feature="home-kernel-entry"][data-spw-anatomy="hero-split"]) > [data-spw-slot="actions"] {
+  :where([data-spw-feature="home-kernel-entry"][data-spw-anatomy="hero-split"]:has(> [data-spw-slot="figure"])) > [data-spw-slot="actions"] {
     grid-area: actions;
   }
 }
@@ -626,17 +627,33 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   text-transform: uppercase;
 }
 
+@media (min-width: 61.25rem) {
+  /* Broadsheet leftover: plate + supporting study sit beside copy, not
+     under a copy element that spanned both columns and left col 2 empty. */
+  :where([data-spw-feature="home-kernel-entry"] .frame-topline > .mode-switch[data-spw-lens-track="row"]) {
+    width: auto;
+    flex: 1 1 16rem;
+    max-inline-size: min(100%, 38rem);
+  }
+
+  :where([data-spw-feature="home-kernel-entry"] .frame-topline > .spw-component-meta) {
+    flex: 0 0 auto;
+    margin-inline-start: 0;
+  }
+}
+
 @media (min-width: 72rem) {
   :where([data-spw-feature="home-kernel-entry"] .home-hero-grid) {
     grid-template-columns: minmax(0, 1.08fr) minmax(14rem, 17rem);
+    grid-template-rows: auto auto;
     column-gap: clamp(0.95rem, 1.9vw, 1.6rem);
+    align-items: start;
   }
 
   :where([data-spw-feature="home-kernel-entry"] .home-hero-copy) {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    grid-template-columns: minmax(0, 1.08fr) minmax(14rem, 17rem);
-    column-gap: clamp(0.95rem, 1.9vw, 1.6rem);
+    grid-column: 1;
+    grid-row: 1 / -1;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   :where(
@@ -660,14 +677,22 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
     justify-self: start;
   }
 
-  :where([data-spw-feature="home-kernel-entry"] .home-brand-plate) {
+  :where([data-spw-feature="home-kernel-entry"] .home-hero-grid > .home-brand-plate) {
     grid-column: 2;
     grid-row: 1;
     justify-self: end;
     align-self: start;
     inline-size: min(100%, 13.25rem);
-    margin-block-start: 1.1rem;
+    margin-block-start: 0;
     position: static;
+  }
+
+  :where([data-spw-feature="home-kernel-entry"] .home-hero-grid > .image-study) {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: stretch;
+    align-self: start;
+    margin-block-start: 0;
   }
 
   :where([data-spw-feature="home-kernel-entry"] .spw-reason-strip) {
