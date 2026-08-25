@@ -135,10 +135,11 @@
 }
 
 /* ── Joins: crawl is authored; project and common are punctuated ─────────
-   Crawl is `{mill}.{laminate}.{cure}` — complete practices, not a dotted list.
-   Project is potential then concept-edge. Common is co-held. List is quiet. */
+   Crawl is `{mill}.{laminate}.{cure}` — complete practices.
+   Ident is `{mill.laminate.cure}` — one name the parser keeps whole.
+   Project is potential then concept-edge. Common is co-held. List stays quiet. */
 
-:where([data-spw-join="list"]) {
+:where([data-spw-join="ident"], [data-spw-join="list"]) {
   box-shadow: inset 0 -1px 0 0 color-mix(in srgb, currentColor 16%, transparent);
 }
 
@@ -175,6 +176,7 @@
 :where(html[data-spw-enhancement-level="minimal"] [data-spw-join="crawl"]),
 :where(html[data-spw-enhancement-level="minimal"] [data-spw-join="project"]),
 :where(html[data-spw-enhancement-level="minimal"] [data-spw-join="common"]),
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-join="ident"]),
 :where(html[data-spw-enhancement-level="minimal"] [data-spw-join="list"]) {
   background-image: none;
   box-shadow: none;

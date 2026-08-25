@@ -83,7 +83,7 @@ export const REGION_ECOLOGY_FIXTURES = Object.freeze([
         cssOwner: 'public/css/systems/expression-resonance.css',
         layoutScenarios: ['pocket', 'fold', 'desktop'],
         socialAspects: ['fit', 'landscape'],
-        captureValue: 'Four join kinds with living terms emphasized — a still of the plate is the lesson.',
+        captureValue: 'Four join kinds with living terms emphasized — identifier, crawl, common, project; a still of the plate is the lesson.',
         wonder: 'Cullet, mill, scrap should photograph as marks, not as plain prose.',
     },
     {

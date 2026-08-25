@@ -4,7 +4,7 @@
  * Search matches slots the build already named: subject, [mode], {parts},
  * <projection>. Unclosed fragments count: `home[` is a subject plus an open
  * mode slot; `{open` is a part prefix. Join reading tells `.` `,` `;` and `~>`
- * apart so a dotted list is not treated as a brace crawl.
+ * apart so a qualified identifier is not treated as a brace crawl.
  *
  * The workbench parser is available through `__SPW_SITE__.parser.parse` — this
  * module does not load it. Kinship and search stay on authored slots.
@@ -12,12 +12,16 @@
 
 export const JOIN_KINDS = Object.freeze({
   none: 'none',
+  ident: 'ident',
   list: 'list',
   common: 'common',
   ordinal: 'ordinal',
   project: 'project',
   crawl: 'crawl',
 });
+
+/** Tight `mill.laminate.cure` — one IDENTIFIER. Parser keeps it whole. */
+const TIGHT_IDENT = /^[A-Za-z_][\w-]*(?:\.[A-Za-z_][\w-]*)+$/;
 
 const BRACED_CRAWL = /^(?:\{[^{}]+\}\s*\.\s*)+\{[^{}]+\}$/;
 
@@ -120,10 +124,56 @@ export function readBodyJoins(body = '') {
   if (raw.includes(',')) {
     return { kind: JOIN_KINDS.common, parts: raw.split(',').map(trim).filter(Boolean) };
   }
-  if (raw.includes('.')) {
-    return { kind: JOIN_KINDS.list, parts: raw.split('.').map(trim).filter(Boolean) };
+  if (TIGHT_IDENT.test(raw)) {
+    return { kind: JOIN_KINDS.ident, parts: raw.split('.').map(trim).filter(Boolean) };
   }
   return { kind: JOIN_KINDS.none, parts: [raw] };
+}
+
+/**
+ * What `parse()` tokenized. Site join is a check against these tokens.
+ * `;` is site ordinal until the default lexer emits it as a connector.
+ */
+export function kernelJoinFromTokens(tokens = []) {
+  const sig = (Array.isArray(tokens) ? tokens : []).filter(
+    (token) => token && token.type && token.type !== 'WHITESPACE' && token.type !== 'EOF',
+  );
+  if (!sig.length) return { kind: JOIN_KINDS.none, parts: [] };
+
+  const types = sig.map((token) => token.type);
+  const values = sig.map((token) => String(token.value || ''));
+  const identParts = sig
+    .filter((token) => token.type === 'IDENTIFIER')
+    .map((token) => String(token.value || '').trim())
+    .filter(Boolean);
+
+  for (let i = 1; i < sig.length - 1; i += 1) {
+    if (
+      sig[i].type === 'OPERATOR'
+      && values[i] === '.'
+      && sig[i - 1].type === 'CONTAINER_CLOSE'
+      && sig[i + 1].type === 'CONTAINER_OPEN'
+    ) {
+      return { kind: JOIN_KINDS.crawl, parts: identParts };
+    }
+  }
+  if (types.includes('COMMA')) {
+    return { kind: JOIN_KINDS.common, parts: identParts };
+  }
+  if (sig.some((token) => token.type === 'CONNECTOR' && token.value === ';')) {
+    return { kind: JOIN_KINDS.ordinal, parts: identParts };
+  }
+  if (values.some((value, i) => value === '~' && values[i + 1] === '>')) {
+    return { kind: JOIN_KINDS.project, parts: identParts };
+  }
+  const dotted = identParts.find((part) => part.includes('.'));
+  if (dotted && TIGHT_IDENT.test(dotted)) {
+    return { kind: JOIN_KINDS.ident, parts: dotted.split('.').filter(Boolean) };
+  }
+  if (identParts.length === 1) {
+    return { kind: JOIN_KINDS.none, parts: identParts };
+  }
+  return { kind: JOIN_KINDS.none, parts: identParts };
 }
 
 /**
@@ -131,8 +181,7 @@ export function readBodyJoins(body = '') {
  *
  * `{mill}.{laminate}.{cure}` is a crawl: each unit is a complete practice.
  * `scrap ~> mill ~> temper` is potential then concept-edge — a path, not nested-about.
- * `{cullet,grog,fiber}` is common. `{mill.laminate.cure}` is a list: the lexer may
- * swallow the dots as one identifier; that is not cure-about-laminate-about-mill.
+ * `{cullet,grog,fiber}` is common. `{mill.laminate.cure}` is one identifier.
  */
 export function readJoinChain(source = '') {
   const raw = trim(source);

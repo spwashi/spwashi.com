@@ -6,8 +6,8 @@
  *
  * Use `parse()`, not `parseExpression()`. The latter truncates identifier-led
  * noun forms. This site is a proof of concept while spw-workbench updates:
- * rival readings (list vs crawl vs project vs common) can be checked against
- * the kernel and against material/interaction surfaces here.
+ * rival readings (ident vs crawl vs project vs common vs ordinal) can be
+ * checked against the kernel and against material/interaction surfaces here.
  */
 
 import {
@@ -15,7 +15,11 @@ import {
   parseExpression,
   SPW_PARSER_BUILD,
 } from '/public/js/semantic/spw-workbench-parser.js';
-import { readJoinChain, shapeFromExpression } from '/public/js/semantic/expression-query.js';
+import {
+  kernelJoinFromTokens,
+  readJoinChain,
+  shapeFromExpression,
+} from '/public/js/semantic/expression-query.js';
 
 export { SPW_PARSER_BUILD };
 
@@ -28,7 +32,8 @@ export const SPW_RUNTIME_PARSER_CONTRACT = Object.freeze({
   attrs: Object.freeze({
     join: 'data-spw-join',
   }),
-  kinds: Object.freeze(['none', 'list', 'common', 'ordinal', 'project', 'crawl']),
+  kinds: Object.freeze(['none', 'ident', 'list', 'common', 'ordinal', 'project', 'crawl']),
+  process: 'parse() first; site join is a check against those tokens, not a second grammar',
 });
 
 export function parseSpw(source, options = {}) {
@@ -39,10 +44,12 @@ export function parseSpw(source, options = {}) {
   const output = expressionEntry
     ? parseExpression(input, options.parseOptions || {})
     : parseSeed(input, options.parseOptions || {});
+  const kernel = kernelJoinFromTokens(output.tokens);
 
   return {
     source: input,
     join,
+    kernel,
     shape,
     output,
     entry: expressionEntry ? 'parseExpression' : 'parse',

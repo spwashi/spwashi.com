@@ -200,17 +200,17 @@
                 </div>
                 <div class="frame-panel" id="join-crawl">
                     <h3>Joins you can challenge</h3>
-                    <p>Opening <code>{</code> leans objective. Closing <code>}</code> leans subjective. The crawl is between complete practices, not a list of names inside one brace. There is nothing that is <span class="spw-living-term" data-spw-living-term data-spw-concept="cure" tabindex="0">cure</span> about <span class="spw-living-term" data-spw-living-term data-spw-concept="laminate" tabindex="0">laminate</span> about <span class="spw-living-term" data-spw-living-term data-spw-concept="mill" tabindex="0">mill</span>.</p>
+                    <p>Opening <code>{</code> leans objective. Closing <code>}</code> leans subjective. The crawl is between complete practices. Tight dots inside one brace are one identifier — the parser keeps it whole. Comma holds company; semicolon counts a schedule; <code>~&gt;</code> holds a path. There is nothing that is <span class="spw-living-term" data-spw-living-term data-spw-concept="cure" tabindex="0">cure</span> about <span class="spw-living-term" data-spw-living-term data-spw-concept="laminate" tabindex="0">laminate</span> about <span class="spw-living-term" data-spw-living-term data-spw-concept="mill" tabindex="0">mill</span>.</p>
                     <div class="semantic-contract-grid" data-spw-feature="join-specimens">
                         <article class="semantic-contract-card" data-spw-join="common" data-spw-semantic-expression="bin[feedstock]{cullet,grog,fiber}">
                             <span class="semantic-contract-token">{cullet,grog,fiber}</span>
                             <strong>Common</strong>
                             <p><span class="spw-living-term" data-spw-living-term data-spw-concept="cullet" tabindex="0">Cullet</span>, <span class="spw-living-term" data-spw-living-term data-spw-concept="grog" tabindex="0">grog</span>, and <span class="spw-living-term" data-spw-living-term data-spw-concept="fiber" tabindex="0">fiber</span> in one bin. Held together. Parser splits on comma.</p>
                         </article>
-                        <article class="semantic-contract-card" data-spw-join="list" data-spw-semantic-expression="board[workshop]{mill.laminate.cure}">
+                        <article class="semantic-contract-card" data-spw-join="ident" data-spw-semantic-expression="board[workshop]{mill.laminate.cure}">
                             <span class="semantic-contract-token">{mill.laminate.cure}</span>
-                            <strong>List</strong>
-                            <p>The lexer may swallow the dots as one name. Not nested-about, not a memory walk.</p>
+                            <strong>Identifier</strong>
+                            <p>One workshop name. Parser keeps it whole. Segments are for navigation, not a list of other names.</p>
                         </article>
                         <article class="semantic-contract-card" data-spw-join="crawl">
                             <span class="semantic-contract-token">{<span data-spw-semantic-expression="workshop[practice]{mill}">mill</span>}.{<span data-spw-semantic-expression="workshop[practice]{laminate}">laminate</span>}.{<span data-spw-semantic-expression="workshop[practice]{cure}">cure</span>}</span>
@@ -230,7 +230,7 @@
                         <a class="spw-chip" data-spw-handle="true" href="/about/domains/spw.quest/" data-spw-operator="potential">~spw.quest</a>
                     </nav>
                     <p data-spw-textual-role="note">
-                        Hold a living term — mill, cullet, scrap — and matching expressions on this page should echo. Chips leave for rich HTML. Check a reading with <code>__SPW_SITE__.parser.parse('…')</code>. The garden cauldron still writes its own live list. An <em>or</em> is still a need.
+                        Hold a living term — mill, cullet, scrap — and matching expressions on this page should echo. Chips leave for rich HTML. Check a reading with <code>__SPW_SITE__.parser.parse('…')</code> and compare <code>join</code> to <code>kernel</code>. The garden cauldron still writes its own vessel identifier. An <em>or</em> is still a need.
                     </p>
                 </div>
             </section>
@@ -932,7 +932,7 @@
                     <article class="semantic-contract-card">
                         <span class="semantic-contract-token">{a}.{b}.{c}</span>
                         <strong>Crawl joins complete braces</strong>
-                        <p>A dotted list inside one brace is not the crawl. Comma is common; <code>~&gt;</code> is a path. <a href="/tools/spw-parser/?spw_sample=dot_crawl#literal-parser">Test dot crawl →</a></p>
+                        <p>Tight dots inside one brace are one identifier, not the crawl. Comma is common; semicolon is a schedule; <code>~&gt;</code> is a path. <a href="/tools/spw-parser/?spw_sample=dot_crawl#literal-parser">Test dot crawl →</a></p>
                     </article>
                     <article class="semantic-contract-card">
                         <span class="semantic-contract-token">@bridge</span>

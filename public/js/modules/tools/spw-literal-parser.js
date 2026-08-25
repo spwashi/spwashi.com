@@ -56,7 +56,7 @@ career[year]{heard.unknown}`,
   fixity = #!stable
   operation = #!align
 }`,
-  /** v0.4 Dot-crawl joins: crawl traverses complete braces rather than dotted lists. */
+  /** Dot-crawl joins: crawl traverses complete braces rather than one identifier. */
   dot_crawl: `{kitchen}.{prep}.{bake} ~> [loaf]
 (arrival).(settle).(resonate)
 harvest[crop].store[silo].mill[flour]`,

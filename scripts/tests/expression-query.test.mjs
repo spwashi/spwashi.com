@@ -50,16 +50,19 @@ test('best match returns the strongest authored expression', () => {
   assert.equal(bestExpressionMatch(expressions, 'zzz'), null);
 });
 
-test('runtime parser uses parse() and reports join kind', async () => {
-  const { parseSpw } = await import('../../public/js/semantic/spw-runtime-parser.js');
-  const crawl = parseSpw('{mill}.{laminate}.{cure}');
-  assert.equal(crawl.entry, 'parse');
-  assert.equal(crawl.join.kind, 'crawl');
-  assert.deepEqual(crawl.join.parts, ['mill', 'laminate', 'cure']);
-  assert.equal(crawl.output.success, true);
-  const list = parseSpw('board[workshop]{mill.laminate.cure}');
-  assert.equal(list.join.kind, 'list');
-  assert.equal(list.output.success, true);
+test('parse() tokens and site join agree on crawl and ident', async () => {
+  const { parse } = await import('../../public/js/semantic/spw-workbench-parser.js');
+  const { kernelJoinFromTokens } = await import('../../public/js/semantic/expression-query.js');
+  const crawlSource = '{mill}.{laminate}.{cure}';
+  const crawlOut = parse(crawlSource);
+  assert.equal(crawlOut.success, true);
+  assert.equal(readJoinChain(crawlSource).kind, 'crawl');
+  assert.equal(kernelJoinFromTokens(crawlOut.tokens).kind, 'crawl');
+  const identSource = 'board[workshop]{mill.laminate.cure}';
+  const identOut = parse(identSource);
+  assert.equal(identOut.success, true);
+  assert.equal(readJoinChain(identSource).kind, 'ident');
+  assert.equal(kernelJoinFromTokens(identOut.tokens).kind, 'ident');
 });
 
 test('hydration reads one host into motion, cauldron, and material precipitates', () => {
@@ -89,9 +92,9 @@ test('hydration reads one host into motion, cauldron, and material precipitates'
   assert.equal(hydration.nest, 0);
 });
 
-test('join chains tell list, crawl, common, and project apart', () => {
+test('join chains tell ident, crawl, common, and project apart', () => {
   assert.deepEqual(readJoinChain('{mill.laminate.cure}'), {
-    kind: 'list',
+    kind: 'ident',
     parts: ['mill', 'laminate', 'cure'],
     raw: '{mill.laminate.cure}',
   });
@@ -110,8 +113,10 @@ test('join chains tell list, crawl, common, and project apart', () => {
     parts: ['scrap', 'mill', 'temper'],
     raw: 'scrap ~> mill ~> temper',
   });
-  assert.equal(parseExpressionQuery('{open.sit}').join, 'list');
+  assert.equal(parseExpressionQuery('{open.sit}').join, 'ident');
+  assert.deepEqual(parseExpressionQuery('{open.sit}').parts, ['open', 'sit']);
   assert.deepEqual(parseExpressionQuery('{soak,cook,serve}').parts, ['soak', 'cook', 'serve']);
+  assert.equal(readJoinChain('{mill . laminate}').kind, 'none');
 });
 
 test('wrap-job copy variants stay exclusive by depth', () => {

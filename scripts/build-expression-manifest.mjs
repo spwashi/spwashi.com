@@ -54,7 +54,7 @@
 import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { readBodyJoins, readJoinChain } from '../public/js/semantic/expression-query.js';
+import { kernelJoinFromTokens, readBodyJoins, readJoinChain } from '../public/js/semantic/expression-query.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'public/js/generated/spw-expressions.js');
@@ -91,20 +91,24 @@ async function collectRoutes(dir = ROOT, out = []) {
  * well-formed; these are the fields the runtime actually wants, and reading
  * them off the source keeps the manifest small enough to ship.
  */
-function readShape(expression) {
+function readShape(expression, tokens) {
+  const kernel = kernelJoinFromTokens(tokens);
   const chain = readJoinChain(expression);
   const match = expression.match(/^([^[{<]+)(?:\[([^\]]*)\])?(?:\{([^}]*)\})?(?:<([^>]*)>)?/);
+  const join = kernel.kind !== 'none' ? kernel : chain;
   if (!match) {
-    return { subject: expression, mode: '', parts: chain.parts, projection: '', join: chain.kind };
+    return { subject: expression, mode: '', parts: join.parts, projection: '', join: join.kind };
   }
   const body = readBodyJoins(match[3] || '');
-  const parts = chain.kind === 'crawl' || chain.kind === 'project' ? chain.parts : body.parts;
+  const parts = join.kind === 'crawl' || join.kind === 'project' || join.kind === 'ident'
+    ? join.parts
+    : body.parts;
   return {
     subject: (match[1] || '').trim(),
     mode: (match[2] || '').trim(),
     parts,
     projection: (match[4] || '').trim(),
-    join: chain.kind === 'none' ? body.kind : chain.kind,
+    join: join.kind === 'none' ? body.kind : join.kind,
   };
 }
 
@@ -195,7 +199,7 @@ async function main() {
     }
 
     // Shape only — see the header on why routes and the kin index are omitted.
-    manifest[expression] = readShape(expression);
+    manifest[expression] = readShape(expression, result.tokens);
   }
 
   const projections = await collectSpwProjections();

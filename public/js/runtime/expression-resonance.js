@@ -392,7 +392,7 @@ export function depositGathered(items = [], weight = GATHER_WEIGHT) {
 
 /**
  * Honor authored crawl; mark common / ordinal / project from punctuation.
- * Never infer crawl from a dotted list — that list is not cure-about-laminate.
+ * Never infer crawl from tight dots — those are one identifier, not nested-about.
  */
 function paintJoin(expression) {
   const shape = manifest?.[expression];
@@ -558,7 +558,7 @@ export const EXPRESSION_RESONANCE_CONTRACT = Object.freeze({
   storageKey: STORAGE_KEY,
   encounterMs: ENCOUNTER_MS,
   salienceBands: SALIENCE_BANDS,
-  rule: 'hover previews kinship (pulse); dwell banks salience (residue); never the reverse. [ and ] travel lit kin while a source is held. Living terms join the field by authored data-spw-concept. Crawl is authored, never inferred from a dotted list. Parser lives at `__SPW_SITE__.parser.parse`.',
+  rule: 'hover previews kinship (pulse); dwell banks salience (residue); never the reverse. [ and ] travel lit kin while a source is held. Living terms join the field by authored data-spw-concept. Crawl is authored, never inferred from tight dots. Parser lives at `__SPW_SITE__.parser.parse`.',
 });
 
 export const SPW_MODULE_EXPORT = Object.freeze({

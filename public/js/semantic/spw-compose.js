@@ -71,23 +71,31 @@ function slotParts(values) {
  * that a frame and body were considered and found empty, which is a different
  * statement from not having said.
  */
-export function composeExpression({ sigil = '', subject = '', frame = [], body = [], projection = '' } = {}) {
+export function composeExpression({
+  sigil = '',
+  subject = '',
+  frame = [],
+  body = [],
+  projection = '',
+  bodyJoin = '.',
+} = {}) {
   const nucleus = String(subject || '').trim();
   if (!nucleus) return '';
 
   const framePart = slotParts(frame);
   const bodyPart = slotParts(body);
   const projectionPart = String(projection || '').trim();
+  const join = bodyJoin === ',' || bodyJoin === ';' ? bodyJoin : '.';
 
   return `${sigil || ''}${nucleus}`
     + (framePart.length ? `[${framePart.join('.')}]` : '')
-    + (bodyPart.length ? `{${bodyPart.join('.')}}` : '')
+    + (bodyPart.length ? `{${bodyPart.join(join)}}` : '')
     + (projectionPart ? `<${projectionPart}>` : '');
 }
 
 /**
- * A mode-switch names the seat in [ ] and the interaction queue in { }.
- * Variants are siblings, not a dotted path. Do not join them with `.`.
+ * A mode-switch names the seat in [ ]. `{open.sit}` is one occupancy identifier,
+ * not sibling variants. Seats stay in [ ]; do not join seat names with `.`.
  */
 export function composeModeSeatExpression({ subject = 'lens', seat = 'mode' } = {}) {
   const nucleus = String(subject || 'lens').trim() || 'lens';
@@ -95,7 +103,7 @@ export function composeModeSeatExpression({ subject = 'lens', seat = 'mode' } = 
   return `${nucleus}[${mode}]{open.sit}`;
 }
 
-/** One job per wrap. `{ }` holds a path of one ground, never sibling verbs. */
+/** One job per wrap. `{ }` holds one identifier of that ground, never sibling verbs. */
 export const WRAP_JOBS = Object.freeze({
   mode: Object.freeze({ wrap: 'mode', job: 'display', verb: 'sit', body: 'open.sit' }),
   direction: Object.freeze({ wrap: 'direction', job: 'navigate', verb: 'travel', body: 'travel' }),

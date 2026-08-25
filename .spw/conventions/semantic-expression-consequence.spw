@@ -68,7 +68,7 @@ fixity = "experimental"
     `data-spw-expression-kin = subject | mode | part`,
     `data-spw-expression-resonating on the source`,
     `data-spw-expression-salience = 0..4 (residue)`,
-    `data-spw-join = crawl (authored) | common | ordinal | project (from punctuation)`,
+    `data-spw-join = crawl (authored) | ident (authored tight identifier) | common | ordinal | project (from punctuation)`,
     `--spw-expression-resonance`
   ][reg=set]
   do_not_author: #[

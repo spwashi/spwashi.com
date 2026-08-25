@@ -20,7 +20,7 @@ operation = "contract"
 fixity = "tending"
 
 expression = cauldron[metabolism]{intake.digestion.return}<compost>
-vessel_join = `cauldron[garden]{sow.tend.harvest} — live garden list. Join teaching lives on the workshop set: {mill}.{laminate}.{cure}, scrap ~> mill ~> temper, {cullet,grog,fiber}.`
+vessel_join = `cauldron[garden]{sow.tend.harvest} — live vessel identifier. Not the join lesson. Teaching lives on the workshop set: {mill.laminate.cure}, {mill}.{laminate}.{cure}, scrap ~> mill ~> temper, {cullet,grog,fiber}.`
 
 ^"metabolism"{
   ~#note: "Four stages. Each is a real code path, not a metaphor laid over one."
