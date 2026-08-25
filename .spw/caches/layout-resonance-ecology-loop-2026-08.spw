@@ -1,0 +1,71 @@
+# Layout / resonance / ecology loop — 2026-08-24
+#
+# One stack. A region, a still, a parser reading, and a future agent
+# should name the same seats. Do not invent a seventh ecology.
+
+#>layout_resonance_ecology_loop_2026_08
+#:cache #!layout #!resonance #!ecology #!parser #!capture
+#:operation #!align
+#:fixity #!tending
+
+@page_model: ~"../surfaces/page-model.spw"
+@region: ~"../conventions/region-component-ecology.spw"
+@packing: ~"../conventions/component-packing.spw"
+@gravity: ~"../conventions/spatial-gravity.spw"
+@attention: ~"../conventions/attention-field.spw"
+@biome: ~"../conventions/component-biome.spw"
+@expression: ~"../conventions/semantic-expression-consequence.spw"
+@block: ~"../conventions/html-spw-block-association.spw"
+@capture: ~"../conventions/component-capture-pipeline.spw"
+@recursive: ~"../conventions/recursive-improvement.spw"
+@visual_plan: ~"../../.agents/plans/visual-capture-ecology/PLAN.md"
+@kernel: ~"../../.agents/plans/daily-kernel-development/layout-resonance-loop-2026-08-24.spw"
+
+operation = "align"
+fixity = "tending"
+
+^"insight"{
+  id = "layout-resonance-ecology-loop"
+  operation = "align"
+  fixity = "tending"
+  source = "chat"
+  claim = `Page layout is a named stack, not a metaphor pile: posture → seat → pack → gravity → resonance → still. Parser slots and capture device-reasons spend that stack; they do not grow a parallel physics.`
+  evidence = #[
+    `.spw/conventions/region-component-ecology.spw#stack`
+    `.spw/conventions/spatial-gravity.spw#stack`
+    `.spw/conventions/component-packing.spw#stack`
+    `public/css/systems/region-seats.css`
+    `public/js/semantic/expression-query.js#parseExpressionQuery`
+    `scripts/lib/visual-capture-plan.mjs#DEVICE_REASONS`
+    `public/js/semantic/spw-block-association.js was unmounted and regex-only`
+  ][reg=set]
+  pattern_consideration = #[
+    `operator resonance in wonder.css is page-wide sigil echo — keep it`
+    `expression-resonance is authored kin from the build manifest — keep it off the parser`
+    `component-biome is density-as-canopy, not a fourth placement axis`
+    `DEFAULT_QA_VIEWPORTS was phone/desktop while DEVICE_REASONS already named pocket/fold/broadsheet`
+  ][reg=set]
+  expansion_prime = `Mount block-association at idle; apply expression-query slots; lazy parse() only on inspect. Named device-reason defaults. Region-local card echo. Agent still briefs name the stack.`
+  validation = `node --test scripts/tests/visual-capture-plan.test.mjs scripts/tests/expression-query.test.mjs; rg 'spw-block-association' public/js/runtime/module-catalog-enhancement.js`
+  do_not_promote_until = `A second still pass uses named device-reasons without adding a new viewport physics, and inspect parse() is challenged against at least one authored definition.`
+}[reg=facet]
+
+^"stack"{
+  posture = `body[data-spw-layout] = reading | newspaper | wide | atlas | split`
+  seat = `data-spw-region = hook | hub | cluster | path | read | wide`
+  pack = `data-spw-pack-local + container queries. Card width, not viewport.`
+  gravity = `data-spw-gravity leftover room. Wait for settle.`
+  resonance = `page-wide operator echo · authored expression kin · region-local sibling wash`
+  still = `qa device-reason (pocket/fold/broadsheet) · social pretext-fit · agent brief`
+}[reg=facet]
+
+^"parser"{
+  cheap = `parseExpressionQuery reads subject[mode]{parts}<projection> without the kernel.`
+  kinship = `expression-resonance.js reads the build-time manifest. Do not parse for kin.`
+  inspect = `Idle block-association applies slots. Lazy __SPW_SITE__.parser.parse challenges a reading. Never parseExpression().`
+}[reg=facet]
+
+^"loop"{
+  steps = #[`visual:plan`, `visual:capture or visual:ecology`, `gallery + review.json`, `smallest honest patch`, `check:local`, `cache status`][reg=set]
+  owner = @recursive
+}[reg=facet]

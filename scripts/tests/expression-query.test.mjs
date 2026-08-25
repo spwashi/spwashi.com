@@ -119,6 +119,14 @@ test('join chains tell ident, crawl, common, and project apart', () => {
   assert.equal(readJoinChain('{mill . laminate}').kind, 'none');
 });
 
+test('definition-shaped expressions still expose subject mode parts', () => {
+  const shape = parseExpressionQuery('topics[hook]{atlas}<register>');
+  assert.equal(shape.subject, 'topics');
+  assert.equal(shape.mode, 'hook');
+  assert.deepEqual(shape.parts, ['atlas']);
+  assert.equal(shape.projection, 'register');
+});
+
 test('wrap-job copy variants stay exclusive by depth', () => {
   const variants = formatWrapJobVariants({ wrap: 'mode', subject: 'home', seat: 'systems' });
   assert.equal(variants.entry, 'change view');

@@ -90,6 +90,18 @@ fixity = "tending"
   ][reg=set]
 }[reg=facet]
 
+^"active_pass_2026_08_layout"{
+  name = `layout stack + region resonance + parser inspect + named stills`
+  caches = ~"../caches/layout-resonance-ecology-loop-2026-08.spw"
+  deliverables = #[
+    `region-component-ecology page_layout_theory`
+    `idle spw-block-association (expression-query slots; lazy parse())`
+    `region-seats sibling resonance`
+    `visual:plan named device-reasons pocket/fold/broadsheet`
+  ][reg=set]
+  loop = `npm run visual:plan -- --ecology; gallery; smallest patch; node --test scripts/tests/visual-capture-plan.test.mjs`
+}[reg=facet]
+
 validation: #[
   `npm run ecology`
   `npm run census`

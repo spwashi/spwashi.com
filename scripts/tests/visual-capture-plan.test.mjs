@@ -5,6 +5,9 @@ import { COMPONENT_FIXTURES } from '../../public/js/kernel/component-fixtures.js
 import { REGION_ECOLOGY_FIXTURES } from '../../public/js/kernel/region-ecology-fixtures.js';
 import {
   DEVICE_REASONS,
+  DEFAULT_QA_VIEWPORTS,
+  DEFAULT_ECOLOGY_VIEWPORTS,
+  LAYOUT_STACK,
   SOCIAL_ASPECTS,
   SIZE_TOKENS,
   buildCapturePlan,
@@ -42,9 +45,14 @@ const fold = VIEWPORTS.fold;
 test('device reasons carry media queries for QA', () => {
   assert.match(DEVICE_REASONS.pocket.media, /max-width: 45rem/);
   assert.match(DEVICE_REASONS.fold.media, /max-aspect-ratio: 4\/3/);
+  assert.match(DEVICE_REASONS.phablet.media, /min-width: 26.25rem/);
   assert.equal(VIEWPORTS.pocket.width, VIEWPORTS.phone.width);
   assert.equal(VIEWPORTS.fold.width, VIEWPORTS.tablet.width);
   assert.equal(VIEWPORTS.broadsheet.width, VIEWPORTS.desktop.width);
+  assert.equal(VIEWPORTS.phablet.width, DEVICE_REASONS.phablet.width);
+  assert.deepEqual(DEFAULT_QA_VIEWPORTS, ['pocket', 'fold', 'broadsheet']);
+  assert.deepEqual(DEFAULT_ECOLOGY_VIEWPORTS, ['pocket', 'fold', 'broadsheet']);
+  assert.deepEqual([...LAYOUT_STACK], ['posture', 'seat', 'pack', 'gravity', 'resonance', 'still']);
 });
 
 test('grouped specimen navs collapse shared route+viewport', () => {
@@ -150,8 +158,13 @@ test('--changed filter keeps only jobs whose sources moved', () => {
 
 test('viewport aliases match component phone/desktop scenarios', () => {
   assert.equal(viewportMatchesScenario('pocket', ['phone', 'desktop']), true);
+  assert.equal(viewportMatchesScenario('phone', ['pocket', 'fold', 'broadsheet']), true);
+  assert.equal(viewportMatchesScenario('broadsheet', ['phone', 'desktop']), true);
+  assert.equal(viewportMatchesScenario('desktop', ['pocket', 'fold', 'broadsheet']), true);
   assert.equal(viewportMatchesScenario('fold', ['phone', 'desktop']), false);
   assert.equal(viewportMatchesScenario('fold', ['pocket', 'fold', 'desktop']), true);
+  assert.equal(viewportMatchesScenario('tablet', ['fold']), true);
+  assert.equal(viewportMatchesScenario('phablet', ['phone', 'desktop']), false);
 });
 
 test('visibility lenses stamp tangibility/density without a default factorial', () => {
@@ -189,6 +202,7 @@ test('intelligence bands scale from mosey copy to llm restage prompts', () => {
   assert.equal(intelligencePrompt('mosey', job), job.wonder);
   assert.match(intelligencePrompt('search', job), /measure-card/);
   assert.match(intelligencePrompt('agent', job), /selector \.frame-card/);
+  assert.match(intelligencePrompt('agent', job), /stack posture>seat>pack>gravity>resonance>still/);
   assert.match(intelligencePrompt('llm', job), /Spw relationship/);
   assert.equal(Object.keys(INTELLIGENCE_BANDS).join(','), 'mosey,search,agent,llm');
 });
@@ -215,6 +229,7 @@ test('situation / print / set are the public names — not Storybook stories', (
   const spw = formatCapturePlanSpw({ jobs: [{ id: 'home-hook', seat: 'hook', flow: 'region', kind: 'ecology' }] });
   assert.match(spw, /situation/);
   assert.match(spw, /cost = /);
+  assert.match(spw, /stack = `posture > seat > pack > gravity > resonance > still`/);
 });
 
 test('situation-set navs are the expensive cluster; prints skip the shell', () => {

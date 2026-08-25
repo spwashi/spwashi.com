@@ -41,6 +41,8 @@ Same still, four readings: mosey (notice the size), search (findable words), age
 
 `visual:plan` → `visual:capture` / `visual:ecology` / `visual:social` → gallery + `review.json` hints → smallest patch → `visual:review` (`--changed --keep`) → `precipitate.json` lock.
 
+Default QA and ecology viewports are named device-reasons: `pocket`, `fold`, `broadsheet`. `phablet` is opt-in density. Agent briefs name the layout stack (posture → seat → pack → gravity → resonance → still).
+
 Each precipitated still records physical composition, optional Pretext evidence, capture occupancy, an authored component expression when present, and a generated `still[mode]{flow.size-reason.occupancy}<subject>` annotation.
 
 Region/component clips use the element's document box, not the visible viewport origin. A capture retry keeps that clip. Header-only hits are `miss--` artifacts, not specimen stills.

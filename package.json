@@ -100,7 +100,7 @@
     "component:screenshots": "node scripts/component-snapshots.mjs",
     "visual:capture": "node scripts/component-snapshots.mjs",
     "visual:plan": "node scripts/component-snapshots.mjs --dry-plan",
-    "visual:ecology": "node scripts/component-snapshots.mjs --ecology --no-components --flows region --viewports pocket,fold,desktop",
+    "visual:ecology": "node scripts/component-snapshots.mjs --ecology --no-components --flows region --viewports pocket,fold,broadsheet",
     "visual:social": "node scripts/component-snapshots.mjs --social-only --precipitate --aspects fit,square,portrait",
     "visual:review": "node scripts/component-snapshots.mjs --changed --keep --ecology",
     "visual:prune": "node scripts/component-snapshots.mjs --prune",

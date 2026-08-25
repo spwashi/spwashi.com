@@ -13,8 +13,9 @@ import { createHash } from 'node:crypto';
 
 export const FLOWS = Object.freeze(['page', 'region', 'component', 'template']);
 export const DEFAULT_QA_FLOWS = Object.freeze(['region', 'component']);
-export const DEFAULT_QA_VIEWPORTS = Object.freeze(['phone', 'desktop']);
-export const DEFAULT_ECOLOGY_VIEWPORTS = Object.freeze(['pocket', 'fold', 'desktop']);
+export const DEFAULT_QA_VIEWPORTS = Object.freeze(['pocket', 'fold', 'broadsheet']);
+export const DEFAULT_ECOLOGY_VIEWPORTS = Object.freeze(['pocket', 'fold', 'broadsheet']);
+export const LAYOUT_STACK = Object.freeze(['posture', 'seat', 'pack', 'gravity', 'resonance', 'still']);
 export const DEFAULT_SOCIAL_ASPECTS = Object.freeze(['fit', 'square']);
 export const REGION_SEATS = Object.freeze(['hook', 'hub', 'cluster', 'path', 'read', 'wide']);
 export const SIZE_REASONS = Object.freeze(['device-reason', 'pretext-fit', 'social-crop']);
@@ -105,9 +106,12 @@ export function intelligencePrompt(band, job = {}, snapshot = {}) {
   if (band === 'agent') {
     return [
       `Recapture ${job.id || job.fixtureId || 'fixture'}`,
+      `stack ${LAYOUT_STACK.join('>')}`,
       job.flow,
+      job.seat && `seat ${job.seat}`,
       job.viewportId || job.aspect,
       job.sizeReason,
+      job.media && `media ${job.media}`,
       job.selector && `selector ${job.selector}`,
       job.sizeToken,
     ].filter(Boolean).join(' · ');
@@ -381,6 +385,14 @@ export const DEVICE_REASONS = Object.freeze({
     media: '(max-width: 45rem) and (max-aspect-ratio: 3/4)',
     wonder: 'One hand. Tall. The region has to stand without leftover tracks.',
   }),
+  phablet: Object.freeze({
+    id: 'phablet',
+    viewport: 'phablet',
+    width: 430,
+    height: 932,
+    media: '(max-width: 45rem) and (min-width: 26.25rem) and (max-aspect-ratio: 3/4)',
+    wonder: 'Tall one-hand. Chip rows and wrap before leftover tracks; not a second pocket alias.',
+  }),
   fold: Object.freeze({
     id: 'fold',
     viewport: 'tablet',
@@ -601,14 +613,22 @@ export function isMissedSpecimen(job, box) {
   return looksLikeShellChrome(box?.text);
 }
 
+function viewportFamily(id) {
+  const alias = VIEWPORT_ALIASES[id] || id;
+  const reason = DEVICE_REASONS[id]
+    || Object.values(DEVICE_REASONS).find((entry) => entry.id === id || entry.viewport === id);
+  return new Set([id, alias, reason?.id, reason?.viewport].filter(Boolean));
+}
+
 export function viewportMatchesScenario(viewportId, layoutScenarios) {
   if (!layoutScenarios?.length) return true;
-  const resolved = VIEWPORT_ALIASES[viewportId] || viewportId;
-  const reason = Object.values(DEVICE_REASONS).find((entry) => entry.id === viewportId);
-  const reasonViewport = reason?.viewport;
-  return layoutScenarios.includes(viewportId)
-    || layoutScenarios.includes(resolved)
-    || (reasonViewport ? layoutScenarios.includes(reasonViewport) : false);
+  const wanted = viewportFamily(viewportId);
+  return layoutScenarios.some((scenario) => {
+    for (const token of viewportFamily(scenario)) {
+      if (wanted.has(token)) return true;
+    }
+    return false;
+  });
 }
 
 export function deviceReasonFor(viewportId) {
@@ -1073,6 +1093,7 @@ export function formatCapturePlanSpw(plan, { cost = null } = {}) {
     '#:plan #!situation #!print',
     `cost = \`${estimate.learn}\``,
     `priority = ${SEAT_PRIORITY.join(' > ')}`,
+    `stack = \`${LAYOUT_STACK.join(' > ')}\``,
     'learn = `Situation sets share a nav. Prints skip the shell. Lenses multiply. Do not open Chrome to learn the plan.`',
     '',
   ];

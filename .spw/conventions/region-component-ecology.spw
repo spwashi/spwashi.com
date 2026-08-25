@@ -36,10 +36,19 @@ fixity = "tending"
 }[reg=facet]
 
 ^"stack"{
+  posture = `body[data-spw-layout] chooses reading | newspaper | wide | atlas | split. Page-model owns the names.`
   region = `This file. Authored seat + runtime profile.`
   packing = `@component_packing for cards that must reflow in more than one shell width.`
   gravity = `@spatial_gravity for floating/opening hosts. Wait for settle; do not reposition on approach.`
+  resonance = `Page-wide operator echo stays in wonder.css. Authored expression kin stays in expression-resonance. Region-local sibling wash lives in @css. Do not invent a fourth axis.`
+  still = `QA stills use named device-reasons (pocket/fold/broadsheet), not generic phone/desktop aliases.`
   copy = `@copy_flow measures lede/hook/expression wrap offline. CSS spends the seat; JS may improve fit after dwell.`
+}[reg=facet]
+
+^"page_layout_theory"{
+  claim = `Layout theory is this stack: posture → seat → pack → gravity → resonance → still. A screenshot and a parser reading must name the same seats the CSS spends.`
+  expression = page[layout]{posture.seat.pack.gravity.resonance}<still>
+  !anti = `Do not add a seventh seat because a card is vivid. Do not parse on the critical path to decide packing.`
 }[reg=facet]
 
 ^"seats"{
@@ -92,6 +101,7 @@ fixity = "tending"
 validation: #[
   `rg 'data-spw-region="(hook|hub|cluster|path|read|wide)"' --glob '*.html'`,
   `rg 'data-spw-region=' public/css/systems/region-seats.css`,
-  `node --check public/js/runtime/region-profiler.js public/js/runtime/page-region-rail.js`,
+  `rg 'spw-region-resonance|page_layout_theory' public/css/systems/region-seats.css .spw/conventions/region-component-ecology.spw`,
+  `node --check public/js/runtime/region-profiler.js public/js/runtime/page-region-rail.js public/js/semantic/spw-block-association.js`,
   `rg 'REGION_ENHANCER_SELECTOR|shell-0' public/js .spw/caches/arrival-perceptibility-2026-08.spw`
 ][reg=set]

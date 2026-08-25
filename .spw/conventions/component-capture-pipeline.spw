@@ -40,7 +40,7 @@
 }[reg=facet]
 
 ^"tracks"{
-  qa = `pocket / fold / broadsheet viewports and their media queries. Answers: does this seat pack?`
+  qa = `Named device-reasons: pocket / fold / broadsheet (phablet opt-in). Default QA and ecology stills use those names, not generic phone/desktop aliases. Answers: does this seat pack?`
   social = `unique content-fit cards (pretext measure token) plus named feed crops (1/1, 4/5, 9/16, 16/9, 1.91/1). Answers: is this combination worth posting?`
   size_reasons = #[`device-reason`, `pretext-fit`, `social-crop`][reg=set]
   size_tokens = #[`measure-compact`, `measure-card`, `measure-reading`][reg=set]

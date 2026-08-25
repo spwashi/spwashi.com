@@ -2,13 +2,14 @@
  * spw-block-association.js
  * ---------------------------------------------------------------------------
  * HTML-Spw block association and editorial publishing convenience.
- * Enables zero-boilerplate embedding of Spw definitions into HTML frames,
- * local AST mapping, selection affordances, and bi-directional synchronization.
+ * Cheap path reads subject/mode/parts via expression-query. Kernel parse()
+ * is lazy and inspect-only. Kinship stays on the build-time manifest.
  * See .spw/conventions/html-spw-block-association.spw.
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { writeDatasetValue, writeDatasetValueIfMissing } from '/public/js/kernel/dom-contracts.js';
+import { parseExpressionQuery } from '/public/js/semantic/expression-query.js';
 import { scanSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 
 const BLOCK_HOST_SELECTOR = [
@@ -18,56 +19,88 @@ const BLOCK_HOST_SELECTOR = [
   '[data-spw-ref]',
 ].join(', ');
 
+const INSPECT_HOST_SELECTOR = [
+  '.site-frame',
+  '.frame-card',
+  '[data-spw-definition]',
+  '[data-spw-semantic-expression]',
+].join(', ');
+
+function expressionLineFrom(source = '') {
+  const text = String(source || '').trim();
+  if (!text) return '';
+  const line = text
+    .split('\n')
+    .map((entry) => entry.trim())
+    .find((entry) => entry && !entry.startsWith('#:') && !entry.startsWith('#!'))
+    || text;
+  return line.replace(/^#>[A-Za-z0-9_-]+\s*/, '').trim() || line;
+}
+
 export function parseSpwDefinition(source = '') {
-  const text = source.trim();
+  const text = String(source || '').trim();
   if (!text) return null;
 
-  // Read handle #>handle
-  const handleMatch = text.match(/^#>([a-zA-Z0-9_\-]+)/);
+  const handleMatch = text.match(/^#>([A-Za-z0-9_-]+)/);
   const handle = handleMatch ? handleMatch[1] : '';
+  const expression = expressionLineFrom(text);
+  const shape = parseExpressionQuery(expression);
+  const geometry = scanSpwExpression(expression);
 
-  // Read capsule / expression
-  const capsuleMatch = text.match(/([a-zA-Z0-9_.\-]+(?:\[[^\]]*\])?(?:\{[^}]*\})?(?:<[^>]*>)?)/);
-  const expression = capsuleMatch ? capsuleMatch[1] : text;
-
-  // Read claims #:key #!val
   const claims = {};
-  for (const match of text.matchAll(/#:([a-zA-Z0-9_\-]+)\s+#!([^\n]+)/g)) {
+  for (const match of text.matchAll(/#:([A-Za-z0-9_-]+)\s+#!([^\n]+)/g)) {
     claims[match[1]] = match[2].trim();
   }
-
-  const geometry = scanSpwExpression(expression);
 
   return {
     raw: text,
     handle,
-    expression,
+    expression: shape.raw || expression,
     claims,
     geometry,
+    shape,
+    join: shape.join,
   };
+}
+
+export async function challengeSpwDefinition(source, options = {}) {
+  const parsed = parseSpwDefinition(source);
+  if (!parsed) return null;
+  const { parseSpw } = await import('/public/js/semantic/spw-runtime-parser.js');
+  const kernel = parseSpw(parsed.expression || parsed.raw, options);
+  return { ...parsed, kernel };
 }
 
 export function resolveElementSpwBlock(element) {
   if (!(element instanceof HTMLElement)) return null;
 
-  // Direct attribute definition
   if (element.dataset.spwDefinition) {
     return parseSpwDefinition(element.dataset.spwDefinition);
   }
 
-  // Adjacent or nested script[type="text/spw"]
   const script = element.querySelector('script[type="text/spw"]')
     || element.parentElement?.querySelector(`script[type="text/spw"][data-for="${CSS.escape(element.id || '')}"]`);
   if (script?.textContent) {
     return parseSpwDefinition(script.textContent);
   }
 
-  // Expression attribute fallback
   if (element.dataset.spwSemanticExpression) {
     return parseSpwDefinition(element.dataset.spwSemanticExpression);
   }
 
   return null;
+}
+
+export function applyExpressionSlots(element, parsed = resolveElementSpwBlock(element)) {
+  if (!(element instanceof HTMLElement) || !parsed?.shape) return false;
+  const join = parsed.shape.join;
+  if (join && join !== 'none') {
+    writeDatasetValueIfMissing(element, 'spwJoin', join, {
+      source: 'spw-block-association',
+      reason: 'apply-slots',
+    });
+  }
+  return true;
 }
 
 export function serializeElementToSpw(element) {
@@ -118,6 +151,7 @@ export function hydrateElementFromSpw(element, spwSource) {
     });
   }
 
+  applyExpressionSlots(element, parsed);
   return true;
 }
 
@@ -128,17 +162,37 @@ export function copySpwToClipboard(text) {
   return true;
 }
 
+function emitBlockSelection(host, block, extra = {}) {
+  const shape = block?.shape || {};
+  bus.emit('spw:block-selection', {
+    subject: shape.subject || block?.handle || '',
+    mode: shape.mode || '',
+    activePart: (shape.parts || [])[0] || '',
+    claim: Object.keys(block?.claims || {})[0] || '',
+    join: shape.join || block?.join || '',
+    host,
+    ...extra,
+  });
+}
+
 export function initSpwBlockAssociations(root = document) {
   if (typeof document === 'undefined') return () => {};
+  const scope = root instanceof Document || root instanceof Element ? root : document;
+
+  scope.querySelectorAll('[data-spw-definition], script[type="text/spw"]').forEach((host) => {
+    if (host instanceof HTMLElement) applyExpressionSlots(host);
+  });
 
   const onDblClick = (event) => {
-    const host = event.target?.closest?.('.site-frame, .frame-card, [data-spw-definition], [data-spw-semantic-expression]');
+    const host = event.target?.closest?.(INSPECT_HOST_SELECTOR);
     if (!host) return;
 
     const block = resolveElementSpwBlock(host);
     if (!block?.expression) return;
 
     copySpwToClipboard(block.expression);
+    applyExpressionSlots(host, block);
+    emitBlockSelection(host, block, { action: 'copy' });
     writeDatasetValue(host, 'spwCopiedState', 'flashed', {
       source: 'spw-block-association',
       reason: 'copy-spw',
@@ -148,10 +202,30 @@ export function initSpwBlockAssociations(root = document) {
     }, 600);
   };
 
-  root.addEventListener('dblclick', onDblClick, { passive: true });
+  const onFocusIn = (event) => {
+    const host = event.target?.closest?.('[data-spw-definition], script[type="text/spw"]');
+    if (!(host instanceof HTMLElement)) return;
+    const block = resolveElementSpwBlock(host);
+    if (!block) return;
+    applyExpressionSlots(host, block);
+    emitBlockSelection(host, block, { action: 'inspect' });
+    const source = block.raw || block.expression;
+    if (!source) return;
+    challengeSpwDefinition(source).then((challenged) => {
+      if (!challenged?.kernel) return;
+      emitBlockSelection(host, challenged, {
+        action: 'parse',
+        entry: challenged.kernel.entry,
+      });
+    }).catch(() => {});
+  };
+
+  scope.addEventListener('dblclick', onDblClick, { passive: true });
+  scope.addEventListener('focusin', onFocusIn);
 
   return () => {
-    root.removeEventListener('dblclick', onDblClick);
+    scope.removeEventListener('dblclick', onDblClick);
+    scope.removeEventListener('focusin', onFocusIn);
   };
 }
 
@@ -161,4 +235,14 @@ export const SPW_BLOCK_ASSOCIATION_CONTRACT = Object.freeze({
   resolve: resolveElementSpwBlock,
   serialize: serializeElementToSpw,
   hydrate: hydrateElementFromSpw,
+  apply: applyExpressionSlots,
+  challenge: challengeSpwDefinition,
+  entry: 'parse',
+  refuse: 'parseExpression truncates identifier-led noun forms',
+});
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'spw-block-association',
+  describes: 'block[association]{definition.expression.inspect}<parse>',
+  updates: ['inspect:data-spw-copied-state', 'flourish:data-spw-join'],
 });

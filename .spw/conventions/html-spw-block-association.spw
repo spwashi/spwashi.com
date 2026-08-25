@@ -41,9 +41,10 @@
     algorithm: [
       "1. Locate closest [data-spw-definition], script[type='text/spw'], or [data-spw-ref]",
       "2. Resolve raw Spw text via cache or embedded script textContent",
-      "3. Parse geometry using spw-expression-geometry or workbench AST",
-      "4. Calculate token offset and map coordinate to active sub-clause",
-      "5. Emit spw:block-selection with { subject, mode, activePart, claim }"
+      "3. Cheap path: parseExpressionQuery + spw-expression-geometry for subject/mode/parts. Kinship stays on the build-time manifest.",
+      "4. Inspect path: lazy parse() via __SPW_SITE__.parser.parse. Never parseExpression() for identifier-led nouns.",
+      "5. Calculate token offset and map coordinate to active sub-clause",
+      "6. Emit spw:block-selection with { subject, mode, activePart, claim, join }"
     ]
   }
   publishing_affordances: {

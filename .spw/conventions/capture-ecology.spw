@@ -24,7 +24,7 @@ fixity = "tending"
 
 ^"routing"{
  owner_plan: "spellcraft-authoring"
- satellite_plans: #[`relational-attention-media`, `literacy-precipitation-press`, `rpg-asset-capture-frames`, `screenshot-semantics`][reg=set]
+ satellite_plans: #[`relational-attention-media`, `literacy-precipitation-press`, `rpg-asset-capture-frames`, `screenshot-semantics`, `visual-capture-ecology`][reg=set]
  conventions: #[`relational-attention-media`, `component-region-personality#screenshot_literacy`][reg=set]
  vocabulary_rule: "Prefer screenshot artifact, capture note, interpretable capture — not proof card as default noun."
  media_company_bridge: "product-lines.spw for offers; capture surfaces must read on camera and in model interpretation."

@@ -374,6 +374,31 @@ html[data-spw-high-contrast="on"] :where(.spw-frame[data-spw-region], .spw-frame
   --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
 }
 
+/* Region-local component echo. Page-wide operator kin stays in wonder.css;
+   authored expression kin stays in expression-resonance.css. Paint-only:
+   apply the extra ring only when a sibling is live, so resting cards keep
+   their own shadow. */
+@supports selector(:has(*)) {
+  :where(.spw-frame[data-spw-region]):has(.frame-card:is(:hover, :focus-visible), .spw-card:is(:hover, :focus-visible))
+    :where(.frame-card, .spw-card):not(:hover):not(:focus-visible) {
+    --spw-region-resonance: calc(var(--attention-field-radius, 0.4) * 0.7);
+    --spw-region-wash: calc(var(--spw-region-wash, 3%) + 2%);
+    box-shadow:
+      var(--spw-local-shadow, none),
+      0 0 0 calc(1px * var(--spw-region-resonance))
+        color-mix(in srgb, var(--component-accent, var(--active-op-color, #008080)) 28%, transparent);
+  }
+
+  :where(.spw-frame[data-spw-region]):has([data-spw-expression-resonating])
+    :where([data-spw-expression-kin]) {
+    --spw-region-resonance: calc(var(--attention-field-radius, 0.4) * 0.85);
+    box-shadow:
+      var(--spw-local-shadow, none),
+      0 0 0 calc(1px * var(--spw-region-resonance))
+        color-mix(in srgb, var(--component-accent, var(--active-op-color, #008080)) 32%, transparent);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :where(.spw-frame[data-spw-region], .spw-frame[data-spw-region-role]) {
     transition: none;

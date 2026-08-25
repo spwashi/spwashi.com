@@ -1,0 +1,38 @@
+# Daily kernel — 2026-08-24
+# Layout stack, region resonance, parser inspect, named stills.
+
+#>daily_kernel
+#:practice #!handoff
+#:layer #!pragmatics
+
+^"daily_kernel"{
+  id = "layout-resonance-loop"
+  date = "2026-08-24"
+  focus = "route-region layout stack + component stills"
+  disciplines = .{
+    primary = "engineer"
+    bridge = "designer"
+  }[reg=facet]
+  region = "lab"
+  brand_physics = "resonance"
+  intensity = "studio"
+  semantic_operation = "align"
+  target = "region-component-ecology + spw-block-association + region-seats.css + visual-capture-plan"
+  claim = "A region, a screenshot, a parser reading, and a future agent name the same layout stack."
+  evidence = #[
+    `.spw/caches/layout-resonance-ecology-loop-2026-08.spw`
+    `public/css/systems/region-seats.css`
+    `public/js/semantic/spw-block-association.js`
+    `scripts/lib/visual-capture-plan.mjs`
+  ][reg=set]
+  output = "aligned stack + idle parser inspect + region-local card echo + named device-reason stills"
+  validation = "node --test scripts/tests/visual-capture-plan.test.mjs scripts/tests/expression-query.test.mjs; git diff --check"
+  do_not_touch = #[
+    `CSS cascade layer order`
+    `parseExpression() as a kinship path`
+    `new data-spw-* families`
+    `Storybook or committed pixel goldens`
+    `IMMEDIATE mount for the parser`
+  ][reg=set]
+  next_kernel = "One flagship hook seat recapture at pocket/fold/broadsheet; challenge one data-spw-definition against parse()."
+}

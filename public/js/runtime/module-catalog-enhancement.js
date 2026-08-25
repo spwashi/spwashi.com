@@ -1736,4 +1736,29 @@ export const ENHANCEMENT_DEFS = [
     load: () => import('./spw-hero-kinetic-stage.js'),
     mount: (mod, target) => mod?.initSpwHeroKineticStage?.(target),
   },
+  {
+    // Idle inspect path for authored Spw blocks. Cheap slots come from
+    // expression-query; kernel parse() is lazy on definition focus.
+    // Kinship stays on expression-resonance + the build-time manifest.
+    id: 'spw-block-association',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IDLE,
+    selector: '[data-spw-definition], [data-spw-semantic-expression], script[type="text/spw"]',
+    rootMode: 'single',
+    describes: 'block[association]{definition.expression.inspect}<parse>',
+    updates: [
+      'inspect:data-spw-copied-state',
+      'flourish:data-spw-join',
+    ],
+    evaluates: 'spw definition inspect copy kernel-challenge join-slots',
+    timingArc: 'idle-inspection',
+    timingChunk: 'idle-lab',
+    effectScope: 'local-dom bus',
+    load: () => import('../semantic/spw-block-association.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initSpwBlockAssociations;
+      if (!isFn(fn)) return;
+      return fn(ctx?.root || document);
+    },
+  },
 ];

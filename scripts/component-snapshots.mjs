@@ -190,7 +190,7 @@ function parseArgs(argv) {
   }
 
   if (options.quick) {
-    options.viewports = options.viewports || ['phone', 'desktop'];
+    options.viewports = options.viewports || ['pocket', 'broadsheet'];
     options.settleMs = Math.min(options.settleMs, 2000);
     options.format = options.format === 'png' && options.precipitate ? 'png' : 'jpeg';
   }
@@ -207,7 +207,7 @@ function parseArgs(argv) {
       : [...DEFAULT_QA_VIEWPORTS];
   }
   if (options.ecology && !options.noComponents && !argv.some((arg) => arg === '--viewports' || arg.startsWith('--viewports='))) {
-    options.viewports = ['phone', 'fold', 'desktop'];
+    options.viewports = [...DEFAULT_ECOLOGY_VIEWPORTS];
   }
   return options;
 }
