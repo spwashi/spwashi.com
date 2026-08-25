@@ -55,7 +55,7 @@ fixity = "tending"
   tropes = #[`hook`, `hub`, `cluster`, `path`, `read`, `wide`][reg=set]
   spend = `@css has tropes for those six. data-spw-region-role=entry-spine aliases hook seating.`
   roles = `data-spw-region-role names the job (atlas, entry-spine, promo-cycle). data-spw-region-purpose names why it is there (public-spine, section-hub, route-sorter).`
-  leftover = `On newspaper / broadsheet, unused tracks may hold a compact path or cluster when ~28rem remains. Hook, hub, wide, pack=fill, and pack=balanced span — including inside a cluster desk. A hero-split leftover occupant is a *direct-child* figure — slotted or a bare <figure>. Nested plates stay inside the body slot. Hub internals auto-fit leftover; do not two-col the whole .frame-body. 68ch/72ch is prose measure (.prose, notes, companion asides) — never the packing body of a hub/wide/hook seat. Do not reserve a column for a figure that is not there.`
+  leftover = `Newspaper, atlas, and wide desks are flex-wrap at two levels: main (and main > article) and page clusters. Span seats use inline-size 100%, not flex-basis 100% — percentage basis on an inline-size container collapses to content. Leftover seats flex 1 1 leftover-track with a 16rem floor: two share; one grows. Play nests clusters under article. About and services keep authored 12-col grids. A composition-flow=grid host with a header or __grid child is a shell and stacks. 68ch/72ch is prose measure, not a packing body. Card titles wrap on words.`
 }[reg=facet]
 
 ^"authored_vs_runtime"{

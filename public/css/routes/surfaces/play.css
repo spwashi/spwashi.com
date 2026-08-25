@@ -416,7 +416,8 @@
 
 @media (max-width: 35rem) {
   :where(body[data-spw-surface="play"] .frame-operators) { gap: 0.4rem; }
-  :where(body[data-spw-surface="play"] :is(.spw-chip, .frame-sigil, .syntax-token)) { max-width: 100%; overflow-wrap: anywhere; }
+  :where(body[data-spw-surface="play"] :is(.spw-chip, .syntax-token)) { max-width: 100%; overflow-wrap: break-word; }
+  :where(body[data-spw-surface="play"] .frame-sigil) { max-width: 100%; overflow-wrap: normal; white-space: nowrap; }
   :where(body[data-spw-surface="play"] .frame-heading) { flex-direction: column; align-items: flex-start; gap: 0.45rem; }
   :where(body[data-spw-surface="play"] :is(button, .mode-switch button, [data-mode-group][data-set-mode])) { width: 100%; min-width: 0; }
 }

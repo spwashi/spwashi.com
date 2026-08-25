@@ -72,8 +72,7 @@
   color: inherit;
   font-weight: inherit;
   text-decoration: none;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 :where(a.spw-card, a.frame-card, .spw-card > a:first-child, .frame-card > a:first-child):active {
@@ -572,8 +571,7 @@
   max-inline-size: min(100%, 36ch);
   line-height: 1.22;
   text-wrap: balance;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Light upgrade for .frame-panel used in card-like roles on landing pages.
@@ -1202,7 +1200,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 ) {
   line-height: 1.46;
   max-inline-size: min(100%, 60ch);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   word-break: break-word;
 }
 

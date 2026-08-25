@@ -66,7 +66,6 @@
   --home-hero-padding: clamp(0.85rem, 2vw, 1.3rem);
   --home-frame-padding: clamp(0.95rem, 2vw, 1.35rem);
   --home-section-max: 96rem;
-  --spw-main-display: grid;
   --spw-main-padding-block-start: clamp(0.8rem, 1.8vw, 1.4rem);
   --spw-main-gap: var(--home-gap-xl);
 }
@@ -1411,79 +1410,13 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
    ========================================================================== */
 
 :where(body[data-spw-surface="home"] main.home-atlas-flow) {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: clamp(var(--home-gap-lg), 2.6vw, var(--home-gap-2xl));
 }
 
-/*
- * Broadsheet: later regions sit beside each other so they can be compared.
- * The hero stays the masthead and spans. Pocket/fold keep one column.
- */
-@media (min-width: 61.25rem) {
-  :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow) {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
-    align-items: start;
-    grid-auto-flow: dense;
-    column-gap: clamp(1rem, 2vw, 1.6rem);
-    row-gap: clamp(var(--home-gap-lg), 2.2vw, var(--home-gap-xl));
-  }
-
-  :where(
-    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-feature="home-kernel-entry"],
-    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-pack~="balanced"],
-    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-pack~="fill"]
-  ) {
-    grid-column: 1 / -1;
-  }
-
-  /*
-   * Cluster wrappers are grid items too.
-   *
-   * The span rules above address `main > …` directly, and clusters introduced a
-   * wrapper between them — so the masthead stopped being a child of the grid and
-   * silently lost its span, collapsing into one broadsheet column and squeezing
-   * every descendant with it.
-   *
-   * A cluster spans by definition rather than by exception: it groups sections
-   * that answer one question, and splitting that group across columns is the
-   * one arrangement it exists to prevent. Its own children lay out inside it.
-   */
-  :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster]) {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
-    align-items: start;
-    column-gap: clamp(1rem, 2vw, 1.6rem);
-    row-gap: clamp(var(--home-gap-lg), 2.2vw, var(--home-gap-xl));
-    min-width: 0;
-  }
-
-  :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > .spw-frame) {
-    inline-size: 100%;
-    max-inline-size: none;
-    margin-block-start: 0;
-  }
-
-  :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] + [data-spw-cluster]) {
-    margin-block-start: 0;
-    padding-block-start: clamp(0.9rem, 1.8vw, 1.3rem);
-    border-block-start: 1px solid color-mix(in srgb, var(--home-accent-line) 72%, transparent);
-  }
-
-  /* Inside a cluster, the masthead, hub/wide seats, and full-bleed packs span.
-     wide is a hub alias — the entrance sorter is not a leftover compact. */
-  :where(
-    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-feature="home-kernel-entry"],
-    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-region-role="entry-spine"],
-    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-region="hook"],
-    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-region="hub"],
-    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-region="wide"],
-    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-pack~="balanced"],
-    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-pack~="fill"]
-  ) {
-    grid-column: 1 / -1;
-  }
+:where(body[data-spw-surface="home"] main.home-atlas-flow > [data-spw-cluster] + [data-spw-cluster]) {
+  margin-block-start: 0;
+  padding-block-start: clamp(0.9rem, 1.8vw, 1.3rem);
+  border-block-start: 1px solid color-mix(in srgb, var(--home-accent-line) 72%, transparent);
 }
 
 :where(body[data-spw-surface="home"] main > .spw-frame) {
@@ -1792,7 +1725,9 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 @media (min-width: 61.25rem) {
   :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-fit-demand="wide"]),
   :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-fit-demand="wide"]) {
-    grid-column: 1 / -1;
+    flex: 0 0 auto;
+    inline-size: 100%;
+    max-inline-size: 100%;
   }
 }
 

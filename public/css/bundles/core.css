@@ -509,8 +509,6 @@ code {
 
 /* Safer text wrapping for long symbolic strings */
 :where(
-  .frame-sigil,
-  .frame-card-sigil,
   .spw-chip,
   .spec-pill,
   .plan-status,
@@ -519,6 +517,12 @@ code {
   pre
 ) {
   overflow-wrap: anywhere;
+}
+
+:where(.frame-sigil, .frame-card-sigil) {
+  overflow-wrap: normal;
+  white-space: nowrap;
+  min-inline-size: min-content;
 }
 
 /* ── 11. Surface-specific baseline bridges ─────────────────────────────── */
@@ -17336,8 +17340,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   color: inherit;
   font-weight: inherit;
   text-decoration: none;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 :where(a.spw-card, a.frame-card, .spw-card > a:first-child, .frame-card > a:first-child):active {
@@ -17836,8 +17839,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   max-inline-size: min(100%, 36ch);
   line-height: 1.22;
   text-wrap: balance;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Light upgrade for .frame-panel used in card-like roles on landing pages.
@@ -18466,7 +18468,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 ) {
   line-height: 1.46;
   max-inline-size: min(100%, 60ch);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   word-break: break-word;
 }
 
@@ -20740,13 +20742,10 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
       .spw-route-bridge__links,
       .spw-resonance-lab,
       .spw-learning-game,
-      .spw-semantic-emphasis-map,
-      .home-component-discovery,
-      .spw-visual-link-board,
-      [data-spw-box-model="image-route-grid"],
-      [data-spw-box-model="visual-link-board"]
+      .spw-semantic-emphasis-map
     ),
-    :has(> header)
+    :has(> header),
+    :has(> [class$="__grid"])
   )
 ) {
   display: grid;
@@ -29886,94 +29885,85 @@ html[data-spw-theme-pack="electric-studio"] {
   }
 }
 
-/* Broadsheet: leftover tracks, not a forced two-column. Compact/path/cluster
-   sit beside a neighbor when 28rem remains. Masthead and fill/balanced span. */
+/*
+ * Leftover desk. One primitive at two levels: main (and main > article)
+ * and page clusters. Flex wrap, not auto-fit grid.
+ *
+ * Auto-fit + 1/-1 leaves empty tracks beside a spanning sibling.
+ * flex-basis: 100% on an inline-size container resolves as content,
+ * then min-width: 0 collapses the seat to a sigil (~44px). Span with
+ * inline-size: 100%. Leftover keeps a 16rem floor so two share and
+ * one grows. Shell sets flex-direction: column — desks set row.
+ *
+ * Play nests clusters in main > article. Contact has no clusters.
+ * About and services author 12-col grids in routes and stay out.
+ */
+body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]),
+body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]),
+body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) {
+  --spw-desk-leftover: min(100%, 18rem);
+  --spw-cluster-leftover: var(--spw-desk-leftover);
+}
+
 @media (min-width: 61.25rem) {
-  :where(
-    body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main,
-    body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main,
-    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main,
-    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-atlas"] main
-  ) {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
-    align-items: start;
-    grid-auto-flow: dense;
-    column-gap: clamp(1rem, 2vw, 1.6rem);
-  }
-
-  :where(
-    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-region-role="entry-spine"],
-    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-region="hook"],
-    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-region="hub"],
-    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-region="wide"],
-    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-pack~="balanced"],
-    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-pack~="fill"],
-    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster]
-  ) {
-    grid-column: 1 / -1;
-  }
-
-  :where(body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster]) {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
-    align-items: start;
-    column-gap: clamp(1rem, 2vw, 1.6rem);
-    row-gap: var(--page-stack-gap, 1rem);
-    min-width: 0;
-  }
-
-  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-region-role="entry-spine"],
-  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-region="hook"],
-  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-region="hub"],
-  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-region="wide"],
-  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-pack~="balanced"],
-  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-pack~="fill"] {
-    grid-column: 1 / -1;
+  body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]),
+  body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]),
+  body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) {
+    --spw-desk-leftover: min(100%, 28rem);
+    --spw-cluster-leftover: var(--spw-desk-leftover);
   }
 }
 
-/*
- * Fold leftover tracks. Unclustered frames (recipes, long registers) sit
- * beside a neighbor when 18rem remains. Cluster desks span, then wrap
- * their own leftover frames. Hook / fill / balanced stay a full row.
- */
-@container spw-shell (min-width: 36rem) and (max-width: 61.24rem) {
-  :where(body[data-spw-layout="newspaper"] main) {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    align-items: start;
-    grid-auto-flow: dense;
-    column-gap: clamp(0.85rem, 1.8cqi, 1.4rem);
+@media (min-width: 36rem) {
+  body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article),
+  body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article),
+  body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article),
+  body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]),
+  body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]),
+  body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: clamp(0.85rem, 1.8cqi, 1.6rem) clamp(1rem, 2vw, 1.6rem);
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    min-inline-size: 0;
   }
 
-  :where(
-    body[data-spw-layout="newspaper"] main > [data-spw-region-role="entry-spine"],
-    body[data-spw-layout="newspaper"] main > [data-spw-region="hook"],
-    body[data-spw-layout="newspaper"] main > [data-spw-region="hub"],
-    body[data-spw-layout="newspaper"] main > [data-spw-region="wide"],
-    body[data-spw-layout="newspaper"] main > [data-spw-pack~="balanced"],
-    body[data-spw-layout="newspaper"] main > [data-spw-pack~="fill"],
-    body[data-spw-layout="newspaper"] main > [data-spw-cluster]
-  ) {
-    grid-column: 1 / -1;
+  body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > .spw-frame,
+  body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > .spw-frame,
+  body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > .spw-frame,
+  body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) > .spw-frame,
+  body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) > .spw-frame,
+  body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) > .spw-frame {
+    flex: 1 1 var(--spw-desk-leftover, min(100%, 18rem));
+    box-sizing: border-box;
+    min-inline-size: min(100%, 16rem);
+    max-inline-size: 100%;
   }
 
-  :where(main > [data-spw-cluster]) {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    align-items: start;
-    column-gap: clamp(0.85rem, 1.8cqi, 1.4rem);
-    row-gap: var(--page-stack-gap, 1rem);
+  body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > :is([data-spw-cluster], [data-spw-region-role="entry-spine"], [data-spw-region="hook"], [data-spw-region="hub"], [data-spw-region="wide"], [data-spw-pack~="balanced"], [data-spw-pack~="fill"]),
+  body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > :is([data-spw-cluster], [data-spw-region-role="entry-spine"], [data-spw-region="hook"], [data-spw-region="hub"], [data-spw-region="wide"], [data-spw-pack~="balanced"], [data-spw-pack~="fill"]),
+  body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > :is([data-spw-cluster], [data-spw-region-role="entry-spine"], [data-spw-region="hook"], [data-spw-region="hub"], [data-spw-region="wide"], [data-spw-pack~="balanced"], [data-spw-pack~="fill"]),
+  body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) > :is([data-spw-region-role="entry-spine"], [data-spw-region="hook"], [data-spw-region="hub"], [data-spw-region="wide"], [data-spw-pack~="balanced"], [data-spw-pack~="fill"]),
+  body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) > :is([data-spw-region-role="entry-spine"], [data-spw-region="hook"], [data-spw-region="hub"], [data-spw-region="wide"], [data-spw-pack~="balanced"], [data-spw-pack~="fill"]),
+  body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) > :is([data-spw-region-role="entry-spine"], [data-spw-region="hook"], [data-spw-region="hub"], [data-spw-region="wide"], [data-spw-pack~="balanced"], [data-spw-pack~="fill"]) {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    min-inline-size: 0;
   }
 
-  main > [data-spw-cluster] > [data-spw-region-role="entry-spine"],
-  main > [data-spw-cluster] > [data-spw-region="hook"],
-  main > [data-spw-cluster] > [data-spw-region="hub"],
-  main > [data-spw-cluster] > [data-spw-region="wide"],
-  main > [data-spw-cluster] > [data-spw-pack~="balanced"],
-  main > [data-spw-cluster] > [data-spw-pack~="fill"] {
-    grid-column: 1 / -1;
+  body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) > :not(.spw-frame),
+  body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) > :not(.spw-frame),
+  body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) > :not(.spw-frame) {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: 100%;
   }
 }
 

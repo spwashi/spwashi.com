@@ -506,8 +506,6 @@ code {
 
 /* Safer text wrapping for long symbolic strings */
 :where(
-  .frame-sigil,
-  .frame-card-sigil,
   .spw-chip,
   .spec-pill,
   .plan-status,
@@ -516,6 +514,12 @@ code {
   pre
 ) {
   overflow-wrap: anywhere;
+}
+
+:where(.frame-sigil, .frame-card-sigil) {
+  overflow-wrap: normal;
+  white-space: nowrap;
+  min-inline-size: min-content;
 }
 
 /* ── 11. Surface-specific baseline bridges ─────────────────────────────── */

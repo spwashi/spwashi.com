@@ -181,6 +181,7 @@ body[data-spw-surface="about"] {
    allowing the hero's existing wide composition to open honestly. */
 @media (min-width: 61.25rem) {
   [data-spw-surface="about"] main {
+    display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     align-items: start;
     column-gap: clamp(1rem, 2vw, 1.6rem);

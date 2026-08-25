@@ -217,13 +217,10 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
       .spw-route-bridge__links,
       .spw-resonance-lab,
       .spw-learning-game,
-      .spw-semantic-emphasis-map,
-      .home-component-discovery,
-      .spw-visual-link-board,
-      [data-spw-box-model="image-route-grid"],
-      [data-spw-box-model="visual-link-board"]
+      .spw-semantic-emphasis-map
     ),
-    :has(> header)
+    :has(> header),
+    :has(> [class$="__grid"])
   )
 ) {
   display: grid;
