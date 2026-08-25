@@ -155,7 +155,7 @@
 
 :where(.review-constellation__link):is(:hover, :focus-visible) .review-constellation__node,
 :where(.review-constellation__link[data-review-active="true"]) .review-constellation__node {
-  transform: translateY(-1px) scale(1.06);
+  transform: translateY(var(--spw-control-hover-lift, -1px)) scale(var(--spw-hover-scale, 1.006));
   filter: drop-shadow(0 0 10px color-mix(in srgb, var(--review-rail-accent) 20%, transparent));
 }
 

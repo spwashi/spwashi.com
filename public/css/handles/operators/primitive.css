@@ -58,7 +58,7 @@
   box-shadow:
       var(--handle-shadow-rest),
       0 0 calc(var(--interaction-excitement) * 12px) color-mix(in srgb, currentColor calc(var(--interaction-excitement) * 40%), transparent);
-  transform: translateY(calc(var(--handle-arrival-lift) + (var(--interaction-excitement) * -2px)));
+  transform: translateY(calc(var(--handle-arrival-lift) + (var(--interaction-excitement) * var(--spw-control-hover-lift, -1px))));
   cursor: pointer;
   contain: paint style;
   transition:

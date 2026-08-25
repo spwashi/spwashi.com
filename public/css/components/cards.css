@@ -316,7 +316,7 @@
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, var(--line, rgba(0, 0, 0, 0.12)));
 }
 :where([data-spw-liminality="entry"]:is(:hover, :focus-within)) {
-  --card-lift: -2px;
+  --card-lift: -1px;
   box-shadow: 0 6px 18px var(--card-shadow-color);
 }
 
@@ -327,8 +327,8 @@
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 45%, var(--line, rgba(0, 0, 0, 0.15)));
 }
 :where([data-spw-liminality="threshold"]:is(:hover, :focus-within)) {
-  --card-lift: -3px;
-  --card-scale: 1.01;
+  --card-lift: -1.5px;
+  --card-scale: var(--spw-hover-scale, 1.006);
   border-style: solid;
   border-color: var(--active-op-color, var(--teal));
   box-shadow: 0 10px 24px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
@@ -348,13 +348,13 @@
 /* Liminality: Projected */
 :where([data-spw-liminality="projected"]) {
   --spw-physics-mass: 1.1;
-  --card-lift: -3px;
+  --card-lift: -1.5px;
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 60%, var(--line, transparent));
   box-shadow: 0 8px 24px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
 }
 :where([data-spw-liminality="projected"]:is(:hover, :focus-within)) {
-  --card-lift: -5px;
-  --card-scale: 1.015;
+  --card-lift: -2px;
+  --card-scale: var(--spw-armed-scale, 1.01);
   box-shadow: 0 14px 32px color-mix(in srgb, var(--active-op-color, var(--teal)) 25%, transparent);
 }
 
@@ -367,7 +367,7 @@
 
 /* Valence: Positive (Magnetic Lift) */
 :where([data-spw-valence="positive"]:is(:hover, :focus-within)) {
-  --card-lift: -3.5px;
+  --card-lift: -1.5px;
   box-shadow: 0 10px 22px color-mix(in srgb, var(--op-frame-color, var(--teal)) 20%, transparent);
 }
 
@@ -387,7 +387,7 @@
   box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--active-op-color, var(--teal)) 40%, transparent), 0 6px 18px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
 }
 :where([data-spw-valence="charged"]:is(:hover, :focus-within)) {
-  --card-lift: -4px;
+  --card-lift: -2px;
   box-shadow: 0 0 0 2.5px var(--active-op-color, var(--teal)), 0 12px 28px color-mix(in srgb, var(--active-op-color, var(--teal)) 28%, transparent);
 }
 
@@ -411,7 +411,7 @@
 @keyframes spw-card-discharge {
   0% {
     box-shadow: 0 0 0 6px var(--active-op-color, var(--teal)), 0 14px 36px color-mix(in srgb, var(--active-op-color, var(--teal)) 35%, transparent);
-    transform: scale(1.02);
+    transform: scale(var(--spw-armed-scale, 1.01));
   }
   100% {
     box-shadow: var(--component-shadow);
@@ -499,7 +499,7 @@
 }
 
 :where(.spw-card[data-spw-text-variant="ludic"]:hover, :where([data-spw-climate="ludic"]) .spw-card:hover) {
-  transform: translateY(-2px) scale(1.01);
+  transform: translateY(var(--spw-control-hover-lift, -1px)) scale(var(--spw-hover-scale, 1.006));
   box-shadow: 0 8px 24px color-mix(in srgb, var(--component-accent, var(--teal)) 14%, transparent);
 }
 

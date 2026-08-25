@@ -181,7 +181,9 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
    Authored flow works without JS; annotation is enhancement.
    -------------------------------------------------------------------------- */
 
-/* Cluster A — multi-column packing (exclude stages + known grid hosts) */
+/* Cluster A — multi-column packing (exclude stages, known card grids, and
+   shells whose children are chrome + an inner grid). A header beside a
+   card grid is leftover inside the component, not packing. */
 :where(
   [data-spw-composition-flow="grid"]:not(
     :is(
@@ -215,8 +217,13 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
       .spw-route-bridge__links,
       .spw-resonance-lab,
       .spw-learning-game,
-      .spw-semantic-emphasis-map
-    )
+      .spw-semantic-emphasis-map,
+      .home-component-discovery,
+      .spw-visual-link-board,
+      [data-spw-box-model="image-route-grid"],
+      [data-spw-box-model="visual-link-board"]
+    ),
+    :has(> header)
   )
 ) {
   display: grid;
@@ -1162,6 +1169,9 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   font-size: var(--text-size-2xs, 0.72rem);
   font-weight: 700;
   line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   pointer-events: none;
 }
 
@@ -1180,6 +1190,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 :where(.spw-visual-link-board) {
   --spw-visual-link-accent: var(--active-op-color, var(--teal, #008080));
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.78rem;
   margin-block: 1rem;
 }
@@ -1203,8 +1214,10 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 
 :where(.spw-visual-link-board__grid) {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr));
   gap: 0.72rem;
+  min-width: 0;
+  inline-size: 100%;
 }
 
 :where(.spw-visual-link-card) {
@@ -1276,7 +1289,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 
 :where(.spw-visual-link-card:is(:hover, :focus-visible) .spw-visual-link-card__media img) {
   filter: saturate(1.08) contrast(1.03);
-  transform: scale(1.025);
+  transform: scale(var(--spw-hover-scale, 1.006));
 }
 
 :where(.spw-visual-link-card__kicker, .spw-visual-link-card__cue) {

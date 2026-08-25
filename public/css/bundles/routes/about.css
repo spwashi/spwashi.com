@@ -241,6 +241,13 @@ body[data-spw-surface="about"] {
    2. Generic frame tuning
    ========================================================================== */
 
+[data-spw-surface="about"] .spw-frame > .frame-actions:has(> .spw-delimiter:only-child) {
+  margin-block: 0;
+  padding-block: 0.1rem 0;
+  min-block-size: 0;
+  flex-grow: 0;
+}
+
 [data-spw-surface="about"] :is(.spw-frame, .spw-frame) {
   border-color: color-mix(in srgb, var(--about-line) 96%, transparent);
   border-radius: var(--about-panel-radius);
@@ -1471,7 +1478,7 @@ body[data-spw-surface="about"] {
   }
 
   &[data-spw-selection="focused"] .bhm-node-dot {
-    transform: scale(1.09);
+    transform: scale(var(--spw-armed-scale, 1.01));
     stroke: color-mix(in oklab, var(--bhm-operator-color, var(--bhm-accent)) 44%, white);
     stroke-width: 2.6;
     filter:
@@ -1485,7 +1492,7 @@ body[data-spw-surface="about"] {
   }
 
   &[data-spw-selection="selected"] .bhm-node-dot {
-    transform: scale(1.03);
+    transform: scale(var(--spw-hover-scale, 1.006));
   }
 
   &[data-spw-selection="focused"] .bhm-node-label,

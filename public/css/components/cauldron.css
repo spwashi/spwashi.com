@@ -325,7 +325,7 @@
 
 .cauldron-ingredient:hover,
 .cauldron-ingredient:focus-visible {
-  transform: translateY(-1px) scale(1.015);
+  transform: translateY(var(--spw-control-hover-lift, -1px)) scale(var(--spw-hover-scale, 1.006));
   border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 44%, transparent);
   box-shadow: 0 4px 14px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 14%, transparent);
   outline: none;
@@ -422,7 +422,7 @@
 .cauldron-ingredient-remove:focus-visible {
   background: color-mix(in srgb, var(--op-action-color, #0d9488) 14%, transparent);
   color: var(--ink, #161c1d);
-  transform: scale(1.15);
+  transform: scale(var(--spw-armed-scale, 1.01));
 }
 
 /* Lifecycle phase variations */

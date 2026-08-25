@@ -143,7 +143,10 @@
   max-inline-size: 100%;
 }
 
-:where(.frame-body > .prose, .frame-body[data-spw-slot="body"]) {
+/* Measure belongs on prose, not on the packing body. Capping
+   .frame-body[data-spw-slot="body"] at 68ch left hub/wide asides
+   (discovery, visual boards) in a leftover column. */
+:where(.frame-body > .prose) {
   max-inline-size: min(100%, var(--measure-reading, 68ch));
   min-width: 0;
 }

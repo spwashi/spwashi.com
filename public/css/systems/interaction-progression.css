@@ -15,10 +15,16 @@
 
 :where(html[data-spw-enhancement-level="minimal"]) {
   --spw-interaction-phase-tuning: 0.72;
+  --spw-hover-scale: 1;
+  --spw-armed-scale: 1.004;
+  --spw-burst-scale: 1.006;
 }
 
-:where(html[data-spw-enhancement-level="rich"]) {
+:where(html[data-spw-enhancement-level="rich"], html[data-spw-enhancement-level="theatrical"]) {
   --spw-interaction-phase-tuning: 1.14;
+  --spw-hover-scale: 1.01;
+  --spw-armed-scale: 1.016;
+  --spw-burst-scale: 1.02;
 }
 
 :where(html[data-spw-semantic-density="minimal"]) {

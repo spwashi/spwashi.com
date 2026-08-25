@@ -993,7 +993,7 @@
 .profile-tag-remove:hover,
 .profile-tag-remove:focus-visible {
   opacity: 1;
-  transform: scale(1.06);
+  transform: scale(var(--spw-armed-scale, 1.01));
 }
 
 /* ==========================================================================

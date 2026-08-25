@@ -99,7 +99,7 @@
 
 :where(.spw-logo[data-logo-state="charged"] .spw-logo-mark) {
   filter: brightness(1.08) saturate(1.12);
-  transform: translateY(-1px) scale(1.04);
+  transform: translateY(-1px) scale(var(--spw-hover-scale, 1.006));
 }
 
 :where(.spw-logo[data-logo-state="charged"] .mark-layer--arc) {
@@ -119,13 +119,13 @@
 
 :where(.spw-logo[data-logo-state="emitting"] .spw-logo-mark) {
   filter: brightness(1.12) saturate(1.2);
-  transform: scale(1.06);
+  transform: scale(var(--spw-armed-scale, 1.01));
 }
 
 @keyframes logo-emit-pulse {
-  0%   { opacity: 0; transform: scale(0.95); }
-  40%  { opacity: 0.3; transform: scale(1.08); }
-  100% { opacity: 0; transform: scale(1.2); }
+  0%   { opacity: 0; transform: scale(0.98); }
+  40%  { opacity: 0.3; transform: scale(1.04); }
+  100% { opacity: 0; transform: scale(1.08); }
 }
 
 :where(.spw-logo[data-logo-state="emitting"])::after {

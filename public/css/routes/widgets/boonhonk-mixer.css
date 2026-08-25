@@ -403,7 +403,7 @@
   }
 
   &[data-spw-selection="focused"] .bhm-node-dot {
-    transform: scale(1.09);
+    transform: scale(var(--spw-armed-scale, 1.01));
     stroke: color-mix(in oklab, var(--bhm-operator-color, var(--bhm-accent)) 44%, white);
     stroke-width: 2.6;
     filter:
@@ -417,7 +417,7 @@
   }
 
   &[data-spw-selection="selected"] .bhm-node-dot {
-    transform: scale(1.03);
+    transform: scale(var(--spw-hover-scale, 1.006));
   }
 
   &[data-spw-selection="focused"] .bhm-node-label,

@@ -394,6 +394,12 @@
   opacity: 0.62;
 }
 
+.frame-actions:has(> .spw-delimiter:only-child) > .spw-delimiter {
+  min-block-size: 0;
+  min-inline-size: 1.05rem;
+  line-height: 1;
+}
+
 :where(.spw-frame:has(> :where(.frame-topline, .frame-heading) > .spw-delimiter)) {
   position: relative;
 }
@@ -895,7 +901,7 @@
 .spw-suggestion-chip:hover {
   border-style: solid !important;
   background: color-mix(in srgb, var(--surface-strong, #fff) 96%, var(--active-op-color, var(--teal, #008080)) 4%) !important;
-  transform: scale(1.02) !important;
+  transform: scale(var(--spw-hover-scale, 1.006)) !important;
 }
 
 @supports (container-type: inline-size) {
@@ -2166,13 +2172,13 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 :where(.spw-delimiter:hover, [data-spw-gesture="charging"].spw-delimiter) {
   color: var(--spw-operator-color);
   text-shadow: 0 0 4px color-mix(in srgb, var(--spw-operator-color) 45%, transparent);
-  transform: translateY(-0.5px) scale(1.04);
+  transform: translateY(-0.5px) scale(var(--spw-hover-scale, 1.006));
 }
 
 :where([data-spw-gesture="active"].spw-delimiter) {
   color: var(--spw-operator-color);
   text-shadow: 0 0 6px color-mix(in srgb, var(--spw-operator-color) 65%, transparent);
-  transform: translateY(-0.5px) scale(1.06);
+  transform: translateY(-0.5px) scale(var(--spw-armed-scale, 1.01));
 }
 
 :where([data-spw-popped="true"].spw-delimiter) {
@@ -2205,7 +2211,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 
   50% {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(var(--spw-hover-scale, 1.006));
     text-shadow: 0 0 10px var(--teal-soft);
   }
 }
@@ -2364,9 +2370,9 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   border-color: var(--active-op-color, var(--teal, #008080));
   background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 15%, var(--surface-strong, #fff));
   box-shadow: 0 0 8px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 24%, transparent);
-  transform: scale(1.08);
+  transform: scale(var(--spw-armed-scale, 1.01));
 }
 
 .spw-brace-action:active {
-  transform: scale(0.96);
+  transform: scale(var(--spw-micro-press-scale, 0.997));
 }

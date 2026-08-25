@@ -41,7 +41,7 @@
     0 4px 12px color-mix(in srgb, var(--delight-color) 6%, transparent);
 
   /* Burst/scale taste knobs — keep recognition, avoid carnival. */
-  --spw-delight-burst-scale: 1.035;
+  --spw-delight-burst-scale: var(--spw-burst-scale, 1.012);
   --spw-delight-burst-glow: 12px;
 }
 

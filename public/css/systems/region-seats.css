@@ -105,7 +105,13 @@
  * Dual-read: first paint. html[data-spw-layout-reason] is a receipt.
  * Copy flow is authored in HTML; these rules only fit it.
  */
-:where(main > .spw-frame[data-spw-region="hub"], main > .spw-frame[data-spw-region="wide"]) {
+/* Nested wide/hub seats (cluster desks) pack from their own width.
+   Do not wait for main > .spw-frame — home wraps the sorter in a cluster. */
+:where(
+  .spw-frame[data-spw-region="hub"],
+  .spw-frame[data-spw-region="wide"]
+) {
+  container-type: inline-size;
   container-name: spw-region spw-hub;
 }
 
@@ -178,27 +184,13 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-region-track)), 1fr));
 }
 
-/* Hub / wide: two-up internals once the seat can hold two measures. */
+/* Hub / wide: inner grids auto-fit. Do not two-col the whole .frame-body —
+   that reserved an empty track beside discovery asides and image strips. */
 @container spw-hub (min-width: 40rem) {
   :where(.frame-body) {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: start;
-    column-gap: clamp(0.85rem, 1.6vw, 1.35rem);
-  }
-
-  :where(.frame-body > :is(
-    [data-spw-textual-role="lede"],
-    .inline-note,
-    [data-spw-textual-role="note"],
-    .spw-route-bridge,
-    .frame-grid,
-    .frame-grid--dense,
-    .spw-role-hooks,
-    .spw-narration,
-    [data-spw-textual-role="narration"]
-  )) {
-    grid-column: 1 / -1;
   }
 }
 
@@ -264,9 +256,33 @@
   }
 }
 
-/* Companion asides sit; they do not become a second essay. */
-:where(.spw-frame[data-spw-region] aside, .spw-frame[data-spw-region] .spw-route-bridge) {
+/* Prose companions sit at measure. Packing asides — discovery grids,
+   image strips, visual boards — fill the seat. 72ch on those left a
+   leftover column beside Algorithm labs. */
+:where(
+  .spw-frame[data-spw-region] aside:not(
+    [data-spw-box-model],
+    [data-spw-feature],
+    [data-spw-composition-flow]
+  )
+) {
   max-inline-size: min(100%, 72ch);
+}
+
+:where(.spw-frame[data-spw-region] .spw-route-bridge) {
+  max-inline-size: min(100%, 72ch);
+}
+
+/* Hub/wide/hook/cluster bodies spend leftover. Read seats keep prose measure
+   on their notes. */
+:where(
+  .spw-frame[data-spw-region="hub"] > .frame-body,
+  .spw-frame[data-spw-region="wide"] > .frame-body,
+  .spw-frame[data-spw-region="cluster"] > .frame-body,
+  .spw-frame[data-spw-region="hook"] > .frame-body,
+  .spw-frame[data-spw-region-role="entry-spine"] > .frame-body
+) {
+  max-inline-size: none;
 }
 
 /* Nested leftover: a figure inside the body slot is still a leftover
@@ -318,18 +334,32 @@
   }
 
   :where(
-    body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main > [data-spw-region-role="entry-spine"],
-    body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main > [data-spw-region-role="entry-spine"],
-    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main > [data-spw-region-role="entry-spine"],
-    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-atlas"] main > [data-spw-region-role="entry-spine"],
-    body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main > [data-spw-region-role="entry-spine"],
-    body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main > [data-spw-region-role="entry-spine"],
-    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main > [data-spw-region-role="entry-spine"],
-    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-atlas"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-region-role="entry-spine"],
     body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-region="hook"],
+    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-region="hub"],
+    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-region="wide"],
     body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-pack~="balanced"],
-    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-pack~="fill"]
+    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-pack~="fill"],
+    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster]
   ) {
+    grid-column: 1 / -1;
+  }
+
+  :where(body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster]) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+    align-items: start;
+    column-gap: clamp(1rem, 2vw, 1.6rem);
+    row-gap: var(--page-stack-gap, 1rem);
+    min-width: 0;
+  }
+
+  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-region-role="entry-spine"],
+  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-region="hook"],
+  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-region="hub"],
+  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-region="wide"],
+  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-pack~="balanced"],
+  body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-cluster] > [data-spw-pack~="fill"] {
     grid-column: 1 / -1;
   }
 }
@@ -351,6 +381,8 @@
   :where(
     body[data-spw-layout="newspaper"] main > [data-spw-region-role="entry-spine"],
     body[data-spw-layout="newspaper"] main > [data-spw-region="hook"],
+    body[data-spw-layout="newspaper"] main > [data-spw-region="hub"],
+    body[data-spw-layout="newspaper"] main > [data-spw-region="wide"],
     body[data-spw-layout="newspaper"] main > [data-spw-pack~="balanced"],
     body[data-spw-layout="newspaper"] main > [data-spw-pack~="fill"],
     body[data-spw-layout="newspaper"] main > [data-spw-cluster]
@@ -366,12 +398,12 @@
     row-gap: var(--page-stack-gap, 1rem);
   }
 
-  :where(
-    main > [data-spw-cluster] > [data-spw-region-role="entry-spine"],
-    main > [data-spw-cluster] > [data-spw-region="hook"],
-    main > [data-spw-cluster] > [data-spw-pack~="balanced"],
-    main > [data-spw-cluster] > [data-spw-pack~="fill"]
-  ) {
+  main > [data-spw-cluster] > [data-spw-region-role="entry-spine"],
+  main > [data-spw-cluster] > [data-spw-region="hook"],
+  main > [data-spw-cluster] > [data-spw-region="hub"],
+  main > [data-spw-cluster] > [data-spw-region="wide"],
+  main > [data-spw-cluster] > [data-spw-pack~="balanced"],
+  main > [data-spw-cluster] > [data-spw-pack~="fill"] {
     grid-column: 1 / -1;
   }
 }

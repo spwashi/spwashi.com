@@ -120,7 +120,7 @@ html[data-spw-resonance-token] .grammar-token:not(.token-dialogue) {
 html[data-spw-resonance-token] .grammar-token[data-spw-resonant="true"] {
   opacity: 1;
   filter: none;
-  transform: scale(1.05) translateY(-1px);
+  transform: scale(var(--spw-hover-scale, 1.006)) translateY(-1px);
   background: color-mix(in srgb, var(--token-op-color, var(--accent, #707070)) 20%, transparent);
   border-color: var(--token-op-color, var(--accent, #707070));
   box-shadow: 0 0 14px color-mix(in srgb, var(--token-op-color, var(--accent, #707070)) 30%, transparent);

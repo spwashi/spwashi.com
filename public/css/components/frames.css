@@ -283,16 +283,22 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   margin-block-start: var(--space-3xs, 0.125rem);
 }
 
-:where(.frame-actions:has(> .spw-delimiter:only-child)) {
+/* :where() is specificity 0, so it lost to `.frame-actions { margin-top: auto }`
+   and the `}`-only footer still painted a tall strip. Beat the class. */
+.frame-actions:has(> .spw-delimiter:only-child) {
   gap: 0;
+  margin-block: 0;
   margin-top: 0;
-  padding-top: var(--space-xs, 0.5rem);
+  padding-block: 0.1rem 0;
+  padding-top: 0.1rem;
   border-top: 0;
   min-block-size: 0;
+  align-self: end;
 }
 
-:where(.frame-actions:has(> .spw-delimiter:only-child) > .spw-delimiter) {
-  min-block-size: 1.5rem;
+.frame-actions:has(> .spw-delimiter:only-child) > .spw-delimiter {
+  min-block-size: 0;
+  line-height: 1;
 }
 
 :where(.spw-frame) > [data-spw-slot="header"] { order: -2; }

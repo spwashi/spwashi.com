@@ -68,6 +68,19 @@ fixity = "tending"
   motif_on_mobile: "paper-motif now changes role below 48rem rather than switching off, but the mobile treatment has not been judged on a device."
 }
 
+^"component_container_home_2026_08_24"{
+  operation = "audit"
+  fixity = "tending"
+  route = "/"
+  claim = `A composition-flow=grid shell is not a packing grid. Header + inner grid as two auto-fit tracks left Algorithm labs in half the discovery host. Cluster A packs sibling cards; a host with a header child stacks.`
+  measured = #[
+    .{ host = `.home-component-discovery`; container = `#choose-your-entrance spw-hub 1383px`; before = `634+634 header|grid`; after = `1fr stack, inner auto-fit cards` }
+    .{ host = `.spw-visual-link-board`; same = `header|grid 653+653` }
+    .{ host = `.home-discovery-card`; container = `unnamed inline-size from data-spw-kind=card`; card = `312px` }
+    .{ host = `.frame-heading`; conflict = `home.css space-between overrode foundation flex-start` }
+  ][reg=set]
+}
+
 ^"dimensional_expression_navigation_2026_08_17"{
   operation = "audit"
   fixity = "tending"

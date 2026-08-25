@@ -10,6 +10,13 @@
    - Create a strong default for math and future design-adjacent topic pages.
    ========================================================================== */
 
+body[data-spw-surface="topics"] .spw-frame > .frame-actions:has(> .spw-delimiter:only-child) {
+  margin-block: 0;
+  padding-block: 0.1rem 0;
+  min-block-size: 0;
+  flex-grow: 0;
+}
+
 :where(body[data-spw-surface="topics"]) {
   --topics-accent: var(--semantic-accent, #2a504b);
   --topics-warm: #9e592b;

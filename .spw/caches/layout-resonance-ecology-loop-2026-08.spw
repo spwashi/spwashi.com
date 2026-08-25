@@ -69,3 +69,16 @@ fixity = "tending"
   steps = #[`visual:plan`, `visual:capture or visual:ecology`, `gallery + review.json`, `smallest honest patch`, `check:local`, `cache status`][reg=set]
   owner = @recursive
 }[reg=facet]
+
+^"leftover_still_2026_08_24"{
+  operation = "align"
+  fixity = "tending"
+  claim = `A wide/hub seat inside a cluster is not a leftover compact. Broadsheet cluster desks span hook/hub/wide; hub internals auto-fit so a single aside fills. Heading space-between plus a 10rem meta track clips threshold; }-only frame-actions lost to :where() specificity against margin-top:auto. 72ch is prose-companion measure, not a packing aside cap.`
+  evidence = #[
+    `home #choose-your-entrance data-spw-region=wide sat in one 28rem cluster track`
+    `hub two-up 1fr 1fr reserved an empty column beside home-component-discovery`
+    `.frame-actions:has(> .spw-delimiter:only-child) was :where() so margin-top:auto won`
+    `foundation heading justify-content:space-between parked { in empty leftover`
+    `region-seats 72ch on every aside starved discovery/visual boards at ~653px`
+  ][reg=set]
+}[reg=facet]

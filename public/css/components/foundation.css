@@ -477,7 +477,7 @@
 
 :where(.page-index a:hover, .page-index a:focus-visible)::before {
   opacity: 0.9;
-  transform: scale(1.15);
+  transform: scale(var(--spw-armed-scale, 1.01));
 }
 
 :where(.page-index a:focus-visible) {
@@ -495,7 +495,7 @@
 
 :where(.page-index a:is([aria-current="page"], [aria-current="true"], :target, [data-spw-active="true"]))::before {
   opacity: 1;
-  transform: scale(1.25);
+  transform: scale(var(--spw-burst-scale, 1.012));
   box-shadow: 0 0 6px color-mix(in srgb, var(--active-op-color, #008080) 50%, transparent);
 }
 
@@ -591,7 +591,9 @@
 :where([data-spw-slot="header"], .frame-topline, .frame-heading) {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  /* flex-start + meta margin-inline-start:auto parks the tag without
+     distributing leftover between `{`, sigil, and title. */
+  justify-content: flex-start;
   flex-wrap: wrap;
   /* Block gap < inline gap: wrapped meta/actions sit closer under the title. */
   gap: var(--gap-block-tight, 0.45rem) var(--spw-slot-gap, clamp(0.6rem, 1.6vw, 0.9rem));
@@ -632,11 +634,21 @@
   max-inline-size: 100%;
 }
 
-/* When meta wraps under the title, occupy the full row instead of a right stub. */
+/* Park meta at the end of the heading row. Do not flex-grow into a 10rem
+   track that clips `threshold` when leftover is tight. Spec strips may wrap. */
 :where(
   [data-spw-slot="header"] > [data-spw-slot="meta"],
   .frame-heading > [data-spw-slot="meta"],
-  .frame-topline > [data-spw-slot="meta"],
+  .frame-topline > [data-spw-slot="meta"]
+) {
+  flex: 0 0 auto;
+  min-inline-size: min-content;
+  max-inline-size: none;
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+
+:where(
   .frame-topline > .spec-strip,
   .frame-topline > .frame-operators
 ) {

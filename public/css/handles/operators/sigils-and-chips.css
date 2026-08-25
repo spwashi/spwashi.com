@@ -775,7 +775,7 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
 
 @keyframes spwCopyFlash {
   0% {
-    transform: scale(1.02);
+    transform: scale(var(--spw-hover-scale, 1.006));
     box-shadow: 0 0 16px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 45%, transparent);
   }
   100% {

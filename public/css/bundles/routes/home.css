@@ -764,7 +764,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: var(--home-gap-sm);
   min-width: 0;
 }
@@ -1179,6 +1179,8 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 :where([data-spw-feature="home-entrance-sorter"] .entrance-role-hooks) {
   --spw-role-hook-min: 15.5rem;
   margin-block: 0;
+  max-inline-size: none;
+  inline-size: 100%;
 }
 
 :where([data-spw-feature="home-entrance-sorter"] .entrance-role-hooks > li) {
@@ -1366,7 +1368,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 
 :where(#living-concepts .living-concept-card > summary:is(:hover, :focus-visible)::after) {
   color: var(--home-accent-primary);
-  transform: scale(1.15);
+  transform: scale(var(--spw-armed-scale, 1.01));
 }
 
 :where(#living-concepts .living-concept-card[open] > summary::after) {
@@ -1469,10 +1471,14 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
     border-block-start: 1px solid color-mix(in srgb, var(--home-accent-line) 72%, transparent);
   }
 
-  /* Inside a cluster, the masthead and full-bleed packs still span. */
+  /* Inside a cluster, the masthead, hub/wide seats, and full-bleed packs span.
+     wide is a hub alias — the entrance sorter is not a leftover compact. */
   :where(
     body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-feature="home-kernel-entry"],
     body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-region-role="entry-spine"],
+    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-region="hook"],
+    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-region="hub"],
+    body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-region="wide"],
     body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-pack~="balanced"],
     body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-pack~="fill"]
   ) {
@@ -1498,15 +1504,17 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 }
 
 :where(body[data-spw-surface="home"] .spw-frame .frame-heading h2) {
-  flex: 1 1 auto;
+  flex: 1 1 12rem;
   min-width: 0;
-  max-inline-size: 28ch;
+  max-inline-size: none;
   text-wrap: balance;
 }
 
 :where(body[data-spw-surface="home"] .spw-frame .frame-heading > .spw-component-meta) {
   flex: 0 0 auto;
   min-inline-size: min-content;
+  max-inline-size: none;
+  white-space: nowrap;
 }
 
 @media (max-width: 32rem) {
@@ -1916,7 +1924,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 
 :where(body[data-spw-surface="home"] .home-microcosm-strip) {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
   gap: clamp(0.72rem, 1.4vw, 1rem);
   padding: clamp(0.58rem, 1.2vw, 0.82rem);
   border: 1px solid color-mix(in srgb, var(--home-accent-primary, var(--teal)) 18%, var(--home-accent-line, rgba(0, 0, 0, 0.14)) 82%);
@@ -2150,16 +2158,17 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   box-shadow: var(--home-shadow);
 }
 
-:where(body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:only-child)) {
+body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:only-child) {
   align-self: end;
   inline-size: auto;
-  margin-block-start: calc(-1 * var(--home-gap-xs));
-  padding-block-start: 0;
+  margin-block: 0;
+  padding-block: 0.1rem 0;
 }
 
-:where(body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:only-child) > .spw-delimiter) {
+body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:only-child) > .spw-delimiter {
   min-inline-size: 1.05rem;
-  min-block-size: 1.25rem;
+  min-block-size: 0;
+  line-height: 1;
   border-color: color-mix(in srgb, var(--home-accent-primary) 20%, transparent);
   background: transparent;
   opacity: 0.64;
@@ -2365,6 +2374,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 
 :where(body[data-spw-surface="home"] .home-component-discovery) {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--home-gap-md, 0.9rem);
   margin-block: var(--home-gap-lg, 1.25rem);
   padding: clamp(0.8rem, 1.6vw, 1.05rem);
@@ -2391,8 +2401,10 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 
 :where(body[data-spw-surface="home"] .home-component-discovery__grid) {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr));
   gap: var(--home-gap-sm, 0.62rem);
+  min-width: 0;
+  inline-size: 100%;
 }
 
 :where(body[data-spw-surface="home"] .home-discovery-card) {

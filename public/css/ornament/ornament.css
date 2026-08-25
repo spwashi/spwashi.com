@@ -276,7 +276,7 @@
 
 .spw-ornament-rail > .spw-ornament-node[data-spw-child-active="true"]::before {
   opacity: 1;
-  transform: scale(1.08);
+  transform: scale(var(--spw-armed-scale, 1.01));
 }
 
 /* ==========================================================================

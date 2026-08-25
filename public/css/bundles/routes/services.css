@@ -1170,7 +1170,7 @@
       filter:
         drop-shadow(0 0 10px color-mix(in oklab, currentColor 26%, transparent))
         drop-shadow(0 0 22px color-mix(in oklab, currentColor 10%, transparent));
-      transform: scale(1.05);
+      transform: scale(var(--spw-armed-scale, 1.01));
     }
     & .svc-center-hit { cursor: pointer; }
     & :is(.svc-center-utility, .svc-center-reason, .svc-center-shift) {

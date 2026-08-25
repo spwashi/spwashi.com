@@ -428,21 +428,21 @@ html[data-spw-interaction-wonder="architecture"] {
    ========================================================================== */
 
 :where(.spw-chip, [data-spw-operator]):is([data-spw-operator="probe"], [data-spw-operator="wonder"]):is(:hover, :focus-visible) {
-  transform: translateY(-1.5px);
+  transform: translateY(var(--spw-control-hover-lift, -1px));
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--op-probe-color) 38%, transparent),
     var(--op-probe-glow);
 }
 
 :where(.spw-chip, [data-spw-operator]):is([data-spw-operator="integration"], [data-spw-operator="object"]):is(:hover, :focus-visible) {
-  transform: translateY(-1.5px) scale(1.015);
+  transform: translateY(var(--spw-control-hover-lift, -1px)) scale(var(--spw-hover-scale, 1.006));
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--op-object-color) 38%, transparent),
     var(--op-object-glow);
 }
 
 :where(.spw-chip, [data-spw-operator]):is([data-spw-operator="potential"], [data-spw-operator="ref"]):is(:hover, :focus-visible) {
-  transform: translateY(-1px);
+  transform: translateY(var(--spw-control-hover-lift, -1px));
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--op-ref-color) 38%, transparent),
     var(--op-ref-glow);

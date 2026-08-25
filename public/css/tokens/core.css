@@ -972,8 +972,8 @@
   --projection-lift-lg: 8px;
 
   --projection-scale-rest: 1;
-  --projection-scale-focus: 1.01;
-  --projection-scale-projecting: 1.03;
+  --projection-scale-focus: 1.004;
+  --projection-scale-projecting: 1.01;
 
   --glow-soft: 0 0 0 1px color-mix(in srgb, var(--active-op-color) 12%, transparent),
   0 0 12px color-mix(in srgb, var(--active-op-color) 10%, transparent);
@@ -1131,6 +1131,9 @@
   /* Shared settling field: small offsets/opacities that page-state and components can spend together. */
   --spw-micro-lift-distance: 1px;
   --spw-micro-press-scale: 0.997;
+  --spw-hover-scale: 1.006;
+  --spw-armed-scale: 1.01;
+  --spw-burst-scale: 1.012;
   /* Machined chassis: century-scale handles meant to be inspected, not merely clicked. */
   --spw-chassis-highlight: inset 0 1px 0 color-mix(in srgb, white 22%, transparent);
   --spw-chassis-shadow: inset 0 -1px 0 color-mix(in srgb, var(--shadow-color, #111) 6%, transparent);
@@ -2194,6 +2197,9 @@ html[data-spw-reduce-motion="on"] {
   --spw-component-settle-transition: 1ms linear;
   --spw-micro-lift-distance: 0px;
   --spw-micro-press-scale: 1;
+  --spw-hover-scale: 1;
+  --spw-armed-scale: 1;
+  --spw-burst-scale: 1;
   --spw-settle-offset-start: 0px;
   --spw-settle-offset-mid: 0px;
   --spw-settle-offset-end: 0px;
