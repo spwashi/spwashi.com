@@ -80,6 +80,14 @@ expression = lineage[dregg]{determinism.verification.hypermedia}<topics>
     ~#note(cadence): "a weekly digest is a season boundary for attention, which is the same primitive as the versioned table"
   }[reg=facet]
 
+  proof_and_ownership: .{
+    why = `people who clone Dregg-adjacent repos often arrive wondering about proof assistants and ownership-typed mutation`
+    ours = `parse completeness receipts, effect grades, and plan-only refactor cards`
+    lean_precedent = `a proof that names what was consumed, what remains, and whether fallback occurred`
+    rust_precedent = `a write that cannot happen until ownership and effect grade allow it`
+    refuse = `do not put those names on public HTML; keep them in .spw, labs, and sidecar curriculum`
+  }[reg=facet]
+
   simulation_physics: .{
     why = `computational physics and game engines sit behind the specs, which is why their determinism language is precise rather than decorative`
     ours = @world_physics

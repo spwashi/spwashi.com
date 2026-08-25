@@ -74,6 +74,30 @@ Musicians need cadence, motif, loop, score, timbre, performance, and session log
 - Reward: they can read the site as a performable score.
 - Risk: metaphor that does not produce a concrete timing or interaction contract.
 
+### Actors
+
+Actors need blocking, beat, scene, and a rehearsal that can be recovered.
+
+- Best entry: play routes, theater region, inspect-source structure, postfix noun contour.
+- Reward: a page can be blocked and replayed, not only read.
+- Risk: performance copy with no beat or scene contract.
+
+### Puppeteers
+
+Puppeteers need hand, joint, and string: operator as gesture, brace as joint.
+
+- Best entry: operator chips, frame/body/scope/capsule, cauldron, spell replay.
+- Reward: a visitor can feel who is moving what.
+- Risk: puppet language with no operator or brace.
+
+### Fashion designers
+
+Fashion designers need grain, cut, collection, and a season boundary.
+
+- Best entry: tokens, material physics, product lines, inspect-source tokens.
+- Reward: a collection can be cut and dated without silently re-bucketing.
+- Risk: wardrobe language that regenerates the catalog without a season.
+
 ## University Architecture Metaphor
 
 Treat the site like a small university or studio campus. The metaphor is useful only when it improves regional semantics.

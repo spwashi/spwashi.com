@@ -59,6 +59,21 @@
     best_entry = #[`promo/wonder cycle`, `attention rhythm`, `play sessions`, `cauldron mixing`, `operator voices`][reg=set]
     risk = "metaphor that does not produce a timing, interaction, or return contract"
   }[reg=facet]
+  actor: .{
+    needs = #[`blocking`, `beat`, `scene`, `recoverable rehearsal`, `audience path`][reg=set]
+    best_entry = #[`play routes`, `theater region`, `inspect source structure`, `postfix noun contour`][reg=set]
+    risk = "performance copy that cannot be blocked or rehearsed on the page"
+  }[reg=facet]
+  puppeteer: .{
+    needs = #[`hand`, `joint`, `string`, `operator as gesture`, `brace as joint`][reg=set]
+    best_entry = #[`operator chips`, `frame/body/scope/capsule`, `cauldron`, `spell replay`][reg=set]
+    risk = "string metaphor with no actual operator or brace contract"
+  }[reg=facet]
+  fashion: .{
+    needs = #[`grain`, `cut`, `collection`, `season boundary`, `edition`][reg=set]
+    best_entry = #[`tokens/core`, `material physics`, `product lines`, `inspect source tokens`][reg=set]
+    risk = "wardrobe language that silently re-buckets a collection"
+  }[reg=facet]
 }
 
 ^"university_regions"{

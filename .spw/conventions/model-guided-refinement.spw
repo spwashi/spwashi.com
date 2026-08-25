@@ -23,7 +23,7 @@
 }
 
 ^"focus_dimensions"{
-  audience = "animator | illustrator | designer | musician | visual-artist | writer-worldbuilder | engineer-toolmaker | patron-collaborator"
+  audience = "animator | illustrator | designer | musician | visual-artist | writer-worldbuilder | engineer-toolmaker | actor | puppeteer | fashion-designer | patron-collaborator"
   operator = "one canonical operator or operator family from operator-site-projection.spw"
   component = "operator-chip | frame-card | promo-wonder-cycle | tuning-strip | math-practice-lab | site-header"
   slice = "attention-resonance-field | creative-marketing-engine | daily-kernel | math-practice-labs | operator-grammar | cauldron-composition"

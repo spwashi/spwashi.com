@@ -13,8 +13,8 @@
   date = "YYYY-MM-DD"
   focus = "operator | component | route-region | CSS cluster | audience register | product-line dimension"
   disciplines = .{
-    primary = "engineer | animator | illustrator | designer | musician | writer | patron"
-    bridge = "engineer | animator | illustrator | designer | musician | writer | patron"
+    primary = "engineer | animator | illustrator | designer | musician | writer | actor | puppeteer | fashion | patron"
+    bridge = "engineer | animator | illustrator | designer | musician | writer | actor | puppeteer | fashion | patron"
   }[reg=facet]
   region = "commons | studio | lab | library | theater | workshop | garden"
   brand_physics = "gravity | resonance | cadence | grain | charge | threshold | edition | repair"

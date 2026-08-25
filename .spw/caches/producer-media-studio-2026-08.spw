@@ -1,0 +1,86 @@
+# Producer Media Studio
+#
+# Spwashi as a producer of media for collaborating disciplines. The site is a
+# consumer of the workbench. Sidecar Dregg clones are curriculum, not Spw.
+# Lean/Rust belong in lineage and labs, not public HTML.
+
+#>producer_media_studio_2026_08
+#:cache #!producer #!curriculum #!media
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@daily_kernel: ~"../conventions/daily-kernel.spw"
+@model_guided: ~"../conventions/model-guided-refinement.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@dregg_lineage: ~"../conventions/dregg-lineage.spw"
+@sidecar: ~"../conventions/sidecar-references.spw"
+@copy_ecology: ~"../conventions/copy-ecology.spw"
+@workbench_report: ~"../workbench-report.spw"
+
+operation = "cache"
+fixity = "tending"
+
+expression = producer[media]{studio,theater,workshop}<disciplines>
+
+^"identity"{
+  claim: "I'm Spwashi. I build software and make art."
+  site: "a surface for the work, not the person"
+  visitor_paths: #{
+    words = "copy, claims, curriculum notes"
+    rooms = "components, routes, practice beds"
+  }[reg=facet]
+}[reg=facet]
+
+^"disciplines"{
+  ~#note: "Each needs one inspectable contract, not a metaphor dump."
+  engineer: "ownership, validation, small surfaces"
+  animator: "timing, reduced-motion, gesture consequence"
+  illustrator: "substrate, edition, screenshotable cards"
+  designer: "anatomy, interaction, hierarchy"
+  musician: "cadence, motif, score"
+  writer: "copy ecology, dual visitor path"
+  actor: "blocking, beat, scene, recoverable rehearsal"
+  puppeteer: "operator as hand, brace as joint, score as string"
+  fashion: "grain, cut, collection, season boundary"
+  patron: "proof, next action, edition"
+}[reg=facet]
+
+^"workbench_as_consumer_tool"{
+  tokens: "grain and cut — what was written"
+  structure: "blocking and score — what holds, including postfix nouns"
+  trace: "rehearsal notes — what work was retained"
+  cache_layer: "wardrobe vs performance vs archive planes"
+  refactor_plan: "edition change, plan-only until write is granted"
+  ~#law: "the public site consumes these products; it does not become the workbench"
+}[reg=facet]
+
+^"sidecar_curriculum"{
+  dregg: "cloned .spw beside a host language; not Descent .scene; not spoken for"
+  verification: "proof-assistant completeness (Lean as precedent) maps to parse completeness receipts"
+  ownership: "ownership-typed mutation (as a systems precedent) maps to effect grades and --write gates"
+  refuse_html: "do not name those precedents on public HTML; keep them in .spw, labs, and sidecar notes"
+}[reg=facet]
+
+^"daily_kernel_defaults"{
+  producer_media: .{
+    region = "studio | theater | workshop"
+    disciplines = "primary maker + engineer or writer bridge"
+    brand_physics = "grain | cadence | edition | repair"
+    semantic_operation = "cache | prime | align"
+    output = "note | route-local sketch | claim"
+  }[reg=facet]
+}
+
+^"workbench_process"{
+  pin = `75d8f9d2 — postfix nouns, cache planes, refactor plan. Version stays 0.3.0.`
+  parse = `manifest:expressions and __SPW_SITE__.parser.parse use parse(), not parseExpression().`
+  join = `Kernel tokens first. Site join is a check. Layout is authored data-spw-join plus the preprocessed manifest.`
+  offering = `Do not change the workbench impulsively. If the default lexer still drops semicolon, keep ordinal site-owned until a deliberate offering.`
+}[reg=facet]
+
+validation: #[
+  `rg 'producer_media_studio_2026_08' .spw/caches/index.spw`,
+  `rg 'actor:|puppeteer:|fashion:' .spw/conventions/daily-kernel.spw`,
+  `rg 'kernelJoinFromTokens' public/js/semantic/expression-query.js`,
+][reg=set]

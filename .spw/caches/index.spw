@@ -27,6 +27,7 @@
 @situation_print_set_2026_08: ~"./situation-print-set-2026-08.spw"
 @golden_voyager_window: ~"./golden-voyager-window.spw"
 @thinking_dreaming_runtime: ~"./thinking-dreaming-runtime.spw"
+@producer_media_studio: ~"./producer-media-studio-2026-08.spw"
 
 operation = "align"
 fixity = "tending"
@@ -48,6 +49,7 @@ fixity = "tending"
   situation_print_set_2026_08 = @situation_print_set_2026_08
   golden_voyager_window = @golden_voyager_window
   thinking_dreaming_runtime = @thinking_dreaming_runtime
+  producer_media_studio_2026_08 = @producer_media_studio
 }[reg=facet]
 
 ^"cache_rules"{
