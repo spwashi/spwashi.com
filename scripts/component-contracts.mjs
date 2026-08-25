@@ -12,7 +12,26 @@ import { fileURLToPath } from 'node:url';
 
 import { COMPONENT_FIXTURES } from '../public/js/kernel/component-fixtures.js';
 import { REGION_ECOLOGY_FIXTURES } from '../public/js/kernel/region-ecology-fixtures.js';
-import { REGION_SEATS, SOCIAL_ASPECTS } from './lib/visual-capture-plan.mjs';
+import {
+  DEVICE_REASONS,
+  REGION_SEATS,
+  SOCIAL_ASPECTS,
+  VIEWPORT_ALIASES,
+} from './lib/visual-capture-plan.mjs';
+
+const PHONE_FAMILY = new Set(['phone', 'pocket', 'phablet']);
+const DESKTOP_FAMILY = new Set(['desktop', 'broadsheet', 'laptop', 'wide']);
+
+function isKnownLayoutScenario(scenario) {
+  return Boolean(VIEWPORT_ALIASES[scenario] || DEVICE_REASONS[scenario]);
+}
+
+function layoutFamily(scenario) {
+  const alias = VIEWPORT_ALIASES[scenario] || scenario;
+  if (PHONE_FAMILY.has(scenario) || PHONE_FAMILY.has(alias)) return 'phone';
+  if (DESKTOP_FAMILY.has(scenario) || DESKTOP_FAMILY.has(alias)) return 'desktop';
+  return alias;
+}
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -101,8 +120,13 @@ export async function collectComponentContractReport() {
         errors.push(`${fixture.id}: specimen route lacks region ${fixture.regionSelector}`);
       }
     }
-    if (!fixture.layoutScenarios.every((scenario) => ['phone', 'desktop'].includes(scenario))) {
-      errors.push(`${fixture.id}: layout scenarios must use phone and/or desktop`);
+    if (!fixture.layoutScenarios.every((scenario) => isKnownLayoutScenario(scenario))) {
+      errors.push(`${fixture.id}: layout scenarios must be named device-reasons or viewport aliases`);
+    } else {
+      const families = new Set(fixture.layoutScenarios.map(layoutFamily));
+      if (!families.has('phone') || !families.has('desktop')) {
+        errors.push(`${fixture.id}: layout scenarios must include a pocket/phone still and a broadsheet/desktop still`);
+      }
     }
     if (fixture.socialAspects && !fixture.socialAspects.every((aspect) => Boolean(SOCIAL_ASPECTS[aspect]))) {
       errors.push(`${fixture.id}: socialAspects must be fit/square/portrait/story/landscape/og`);
