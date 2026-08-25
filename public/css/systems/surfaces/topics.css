@@ -80,8 +80,10 @@
   gap: 0.72rem;
 }
 
-:where(.frame-card-sigil) {
-  width: fit-content;
+.frame-card .frame-card-sigil,
+.spw-card .frame-card-sigil {
+  width: 100%;
+  max-width: 100%;
 }
 
 :where(.frame-card-media) {

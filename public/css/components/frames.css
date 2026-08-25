@@ -283,17 +283,23 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   margin-block-start: var(--space-3xs, 0.125rem);
 }
 
-/* :where() is specificity 0, so it lost to `.frame-actions { margin-top: auto }`
-   and the `}`-only footer still painted a tall strip. Beat the class. */
+/* `}`-only footers are the closing brace, not a row. Sit them on the
+   frame corner so they do not leave an empty strip under a card grid. */
+.spw-frame:has(> .frame-actions:has(> .spw-delimiter:only-child)) {
+  position: relative;
+  padding-block-end: 1.35rem;
+}
+
 .frame-actions:has(> .spw-delimiter:only-child) {
+  position: absolute;
+  inset: auto 0.55rem 0.4rem auto;
+  z-index: var(--material-layer-overlay, 2);
   gap: 0;
-  margin-block: 0;
-  margin-top: 0;
-  padding-block: 0.1rem 0;
-  padding-top: 0.1rem;
-  border-top: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
   min-block-size: 0;
-  align-self: end;
+  pointer-events: none;
 }
 
 .frame-actions:has(> .spw-delimiter:only-child) > .spw-delimiter {
@@ -746,8 +752,11 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 /* Not :where() — a zero-specificity floor loses to every rule that set the
    width in the first place, which defeats the point of a floor. */
 .mode-switch,
-.frame-card-sigil,
 .frame-sigil,
 .garden-consequence {
   min-inline-size: min(100%, max-content);
+}
+
+.frame-card-sigil {
+  min-inline-size: 0;
 }

@@ -25,7 +25,7 @@
   .tag,
   .pill,
   .frame-sigil,
-  .frame-card-sigil,
+  .frame-card-sigil:not(.frame-card .frame-card-sigil):not(.spw-card .frame-card-sigil),
   .resonance-sigil,
   .spw-delimiter,
   .spw-component-tag,
@@ -79,7 +79,7 @@
   .tag,
   .pill,
   .frame-sigil,
-  .frame-card-sigil,
+  .frame-card-sigil:not(.frame-card .frame-card-sigil):not(.spw-card .frame-card-sigil),
   .resonance-sigil,
   .spw-delimiter,
   .spw-component-tag,
@@ -111,7 +111,7 @@
   .tag,
   .pill,
   .frame-sigil,
-  .frame-card-sigil,
+  .frame-card-sigil:not(.frame-card .frame-card-sigil):not(.spw-card .frame-card-sigil),
   .resonance-sigil,
   .spw-delimiter,
   .spw-component-tag,
@@ -302,14 +302,16 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 
 /* Rich route choices and card-body links carry operator metadata, but their
    contents are card anatomy rather than inline handles. Preserve the component
-   grid contract instead of letting the handle primitive compress them. */
+   grid contract instead of letting the handle primitive compress them.
+   justify-items: start + overflow-wrap: anywhere shrinks a nowrap sigil to
+   1ch, then contain:paint clips it to the last glyphs. */
 :where(.spw-route-bridge__links a[data-spw-operator], a.frame-card[data-spw-operator], .frame-card > a:first-child[data-spw-operator]) {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
   align-content: start;
   justify-content: stretch;
-  justify-items: start;
+  justify-items: stretch;
   gap: var(--card-rhythm, var(--component-gap-tight, 0.65rem));
   inline-size: 100%;
   max-inline-size: 100%;
@@ -319,8 +321,24 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   background: transparent;
   box-shadow: none;
   color: inherit;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   text-align: start;
   white-space: normal;
+}
+
+.frame-card .frame-card-sigil,
+.spw-card .frame-card-sigil {
+  display: block;
+  box-sizing: border-box;
+  justify-self: stretch;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-inline-size: 0;
+  contain: none;
+  overflow: hidden;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 

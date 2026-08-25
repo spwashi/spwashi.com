@@ -17449,7 +17449,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   align-items: stretch;
 }
 
-:where(.spw-card, .frame-card, .frame-panel) :where(.spw-chip, .operator-chip, .frame-sigil, .frame-card-sigil) {
+:where(.spw-card, .frame-card, .frame-panel) :where(.spw-chip, .operator-chip, .frame-sigil) {
   white-space: nowrap;
   max-inline-size: 100%;
   overflow: hidden;
@@ -20051,17 +20051,23 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   margin-block-start: var(--space-3xs, 0.125rem);
 }
 
-/* :where() is specificity 0, so it lost to `.frame-actions { margin-top: auto }`
-   and the `}`-only footer still painted a tall strip. Beat the class. */
+/* `}`-only footers are the closing brace, not a row. Sit them on the
+   frame corner so they do not leave an empty strip under a card grid. */
+.spw-frame:has(> .frame-actions:has(> .spw-delimiter:only-child)) {
+  position: relative;
+  padding-block-end: 1.35rem;
+}
+
 .frame-actions:has(> .spw-delimiter:only-child) {
+  position: absolute;
+  inset: auto 0.55rem 0.4rem auto;
+  z-index: var(--material-layer-overlay, 2);
   gap: 0;
-  margin-block: 0;
-  margin-top: 0;
-  padding-block: 0.1rem 0;
-  padding-top: 0.1rem;
-  border-top: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
   min-block-size: 0;
-  align-self: end;
+  pointer-events: none;
 }
 
 .frame-actions:has(> .spw-delimiter:only-child) > .spw-delimiter {
@@ -20514,10 +20520,13 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 /* Not :where() — a zero-specificity floor loses to every rule that set the
    width in the first place, which defeats the point of a floor. */
 .mode-switch,
-.frame-card-sigil,
 .frame-sigil,
 .garden-consequence {
   min-inline-size: min(100%, max-content);
+}
+
+.frame-card-sigil {
+  min-inline-size: 0;
 }
 }
 
@@ -32864,8 +32873,10 @@ html[data-spw-page-section-phase="idle"] {
   gap: 0.72rem;
 }
 
-:where(.frame-card-sigil) {
-  width: fit-content;
+.frame-card .frame-card-sigil,
+.spw-card .frame-card-sigil {
+  width: 100%;
+  max-width: 100%;
 }
 
 :where(.frame-card-media) {
@@ -37523,7 +37534,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   .tag,
   .pill,
   .frame-sigil,
-  .frame-card-sigil,
+  .frame-card-sigil:not(.frame-card .frame-card-sigil):not(.spw-card .frame-card-sigil),
   .resonance-sigil,
   .spw-delimiter,
   .spw-component-tag,
@@ -37577,7 +37588,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   .tag,
   .pill,
   .frame-sigil,
-  .frame-card-sigil,
+  .frame-card-sigil:not(.frame-card .frame-card-sigil):not(.spw-card .frame-card-sigil),
   .resonance-sigil,
   .spw-delimiter,
   .spw-component-tag,
@@ -37609,7 +37620,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   .tag,
   .pill,
   .frame-sigil,
-  .frame-card-sigil,
+  .frame-card-sigil:not(.frame-card .frame-card-sigil):not(.spw-card .frame-card-sigil),
   .resonance-sigil,
   .spw-delimiter,
   .spw-component-tag,
@@ -37800,14 +37811,16 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 
 /* Rich route choices and card-body links carry operator metadata, but their
    contents are card anatomy rather than inline handles. Preserve the component
-   grid contract instead of letting the handle primitive compress them. */
+   grid contract instead of letting the handle primitive compress them.
+   justify-items: start + overflow-wrap: anywhere shrinks a nowrap sigil to
+   1ch, then contain:paint clips it to the last glyphs. */
 :where(.spw-route-bridge__links a[data-spw-operator], a.frame-card[data-spw-operator], .frame-card > a:first-child[data-spw-operator]) {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
   align-content: start;
   justify-content: stretch;
-  justify-items: start;
+  justify-items: stretch;
   gap: var(--card-rhythm, var(--component-gap-tight, 0.65rem));
   inline-size: 100%;
   max-inline-size: 100%;
@@ -37817,9 +37830,25 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   background: transparent;
   box-shadow: none;
   color: inherit;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   text-align: start;
   white-space: normal;
+}
+
+.frame-card .frame-card-sigil,
+.spw-card .frame-card-sigil {
+  display: block;
+  box-sizing: border-box;
+  justify-self: stretch;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-inline-size: 0;
+  contain: none;
+  overflow: hidden;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 }
 

@@ -317,10 +317,14 @@
 }
 
 body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:only-child) {
-  align-self: end;
+  position: absolute;
+  inset: auto 0.55rem 0.4rem auto;
+  align-self: auto;
   inline-size: auto;
-  margin-block: 0;
-  padding-block: 0.1rem 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  pointer-events: none;
 }
 
 body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:only-child) > .spw-delimiter {
