@@ -283,6 +283,7 @@
   --spw-control-min-height: 1.7rem;
   --spw-control-padding-block: 0.16rem;
   --spw-control-padding-inline: 0.5rem;
+  flex: 1 1 12rem;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.74rem;
   line-height: 1.2;

@@ -80,8 +80,7 @@
   gap: 0.72rem;
 }
 
-.frame-card .frame-card-sigil,
-.spw-card .frame-card-sigil {
+:where(:is(.frame-card, .spw-card) .frame-card-sigil) {
   width: 100%;
   max-width: 100%;
 }
@@ -138,8 +137,9 @@
    ========================================================================== */
 
 :where(.spw-resonance-lab) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
   gap: var(--spw-shell-panel-gap, 1rem);
   margin-block: 1.2rem;
   padding: 1rem;
@@ -150,6 +150,9 @@
 
 :where(.spw-resonance-lab > div) {
   display: grid;
+  flex: 1 1 14rem;
+  min-inline-size: 12rem;
+  max-inline-size: 100%;
   gap: 0.35rem;
   padding: 0.75rem;
   border-radius: var(--radius-sm, 6px);

@@ -44,7 +44,9 @@
       transparent 22%
     ),
     color-mix(in srgb, var(--component-surface-strong) calc(88% + (10% * var(--spw-tangibility, 0.5))), var(--component-route-accent) 5%);
-  box-shadow: var(--component-shadow);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 48%, transparent),
+    var(--component-shadow);
 
   /* Transitions */
   transition:

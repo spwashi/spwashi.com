@@ -1124,6 +1124,16 @@
 :where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
   margin-left: auto;
   justify-content: flex-end;
+  flex: 0 0 auto;
+  min-inline-size: min-content;
+}
+
+:where(.frame-topline > .spw-component-meta > .spw-component-tag,
+       .frame-heading > .spw-component-meta > .spw-component-tag) {
+  flex-shrink: 0;
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 :where(.spw-component-guides) {
@@ -1416,6 +1426,16 @@
   --brace-corner-width: 2.2rem;
   --brace-corner-height: 1.6rem;
   --brace-corner-stroke: 2px;
+}
+
+:where([data-spw-form="brace"]):is(:hover, :focus-within)::before {
+  border-color: color-mix(in oklab, var(--brace-open-color) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--brace-open-color) 45%, transparent));
+}
+
+:where([data-spw-form="brace"]):is(:hover, :focus-within)::after {
+  border-color: color-mix(in oklab, var(--brace-close-color) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--brace-close-color) 45%, transparent));
 }
 
 :where([data-spw-form="brace"][data-spw-realization="conceptual"]) {

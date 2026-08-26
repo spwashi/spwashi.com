@@ -8,40 +8,40 @@
    17. Meaningful card utilities
    ========================================================================== */
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="soft"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="soft"]) {
   --component-pad: 1rem;
   --component-gap-tight: 0.65rem;
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="dense"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="dense"]) {
   --component-pad: 0.75rem;
   --component-gap-tight: 0.4rem;
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="roomy"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="roomy"]) {
   --component-pad: 1.2rem;
   --component-gap-tight: 0.8rem;
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="measure"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="measure"]) {
   max-inline-size: min(100%, var(--component-measure));
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="code"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="code"]) {
   max-inline-size: min(100%, var(--component-code-measure));
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="ambient"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="ambient"]) {
   color: color-mix(in srgb, var(--ink, currentColor) 94%, transparent);
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-attention="focused"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-attention="focused"]) {
   border-color: color-mix(in srgb, var(--component-accent) 34%, var(--line, transparent));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 18%, transparent),
   var(--component-shadow);
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-attention="held"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-attention="held"]) {
   border-color: color-mix(in srgb, var(--component-accent) 44%, var(--line, transparent));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 24%, transparent),
   var(--component-shadow-active);
@@ -216,6 +216,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
       .spw-role-hooks,
       .spw-route-bridge__links,
       .spw-resonance-lab,
+      .home-microcosm-strip,
       .spw-learning-game,
       .spw-semantic-emphasis-map
     ),

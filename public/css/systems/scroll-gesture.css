@@ -1,7 +1,10 @@
 /* ==========================================================================
-   scroll-gesture.css
+   scroll-gesture.css — gesture hygiene and scroll posture
    --------------------------------------------------------------------------
-   Seamless vertical scroll with horizontal swipe reserved for lens/progression.
+   Reads as: seamless vertical scroll with horizontal swipe reserved for lens/progression
+   Genome — states sensed: data-spw-gesture-contract, data-spw-scroll-rail, data-spw-image-discovery
+   Genome — custom properties defined: 0; intent hooks consumed: --shell-header-height
+   Probe: drag or swipe media rails on pocket/fold; horizontal scroll stays contained.
    ========================================================================== */
 
 @media (prefers-reduced-motion: no-preference) {
@@ -39,8 +42,20 @@
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
 }
 
 :where([data-spw-scroll-rail] > *, .spw-visual-link-board__grid > *, .frame-grid--media > *) {
   scroll-snap-align: start;
+}
+
+/* Subtle edge illumination for scroll rails indicating horizontal continuity */
+:where([data-spw-scroll-rail], .frame-grid--media) {
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black min(1.2rem, 3%),
+    black max(calc(100% - min(1.2rem, 3%)), 97%),
+    transparent 100%
+  );
 }

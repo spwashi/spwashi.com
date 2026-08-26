@@ -14,6 +14,10 @@
    ========================================================================== */
 
 :where(body[data-spw-surface="play"]) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "routes";
+  --spw-debug-layer-color: #a67c00;
+
   /* Route Layout Variables */
   --play-shell-max: 1160px;
   --spw-main-width: var(--play-shell-max);

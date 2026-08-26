@@ -155,8 +155,9 @@
 :where(.spw-resonance-lab) {
   --spw-resonance-ground: color-mix(in srgb, var(--component-surface-strong) 92%, var(--active-op-color, var(--component-accent)) 5%);
   --spw-resonance-line: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 22%, var(--line, rgba(14, 18, 20, 0.14)));
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
   gap: var(--component-gap-tight);
   margin-block: var(--component-gap) var(--component-gap-loose);
   padding: clamp(0.75rem, 2vw, 1rem);
@@ -173,7 +174,9 @@
 }
 
 :where(.spw-resonance-lab > *) {
-  min-width: 0;
+  flex: 1 1 13rem;
+  min-inline-size: 12rem;
+  max-inline-size: 100%;
   padding-block: 0.15rem;
 }
 

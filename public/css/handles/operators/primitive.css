@@ -169,6 +169,16 @@
   letter-spacing: 0.04em;
 }
 
+:where(:is(.frame-heading, .frame-topline) .spw-component-tag) {
+  flex-shrink: 0;
+  contain: none;
+  width: max-content;
+  max-width: none;
+  min-width: min-content;
+  overflow: visible;
+  text-overflow: clip;
+}
+
 /* ==========================================================================
    Visual refinement for .spw-component-tag (rune slip / codex treatment)
    --------------------------------------------------------------------------

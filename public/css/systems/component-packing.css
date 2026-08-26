@@ -1,17 +1,10 @@
 /* ==========================================================================
- * component-packing.css
+ * component-packing.css — container-relative component layout
  * --------------------------------------------------------------------------
- * Component-local layout: a card arranges its OWN regions by its own inline
- * size, not the viewport. This is the container-relative counterpart to
- * spatial-gravity.css (which is viewport-relative): outer gravity says where a
- * card sits; inner packing says how the card arranges itself. Both are
- * first-class, and a card in a narrow column packs the same way whether that
- * column is on a phone or a sidebar on a wide screen — because it reads its
- * container, not the screen.
- *
- * Native + framework-free on purpose (container queries + :has), so it doubles
- * as a legible reference. The box model mirrors the resolved variant into
- * data-spw-pack-layout / data-spw-pack-fill for inspection + JS consumers.
+ * Reads as: a card arranges its own regions by its own inline size, not the viewport
+ * Genome — states sensed: data-spw-pack-local, data-spw-pack-regions, data-spw-pack-region, data-spw-content-tone, data-spw-pack-fill
+ * Genome — custom properties defined: 1; intent hooks consumed: --spw-pack-gap
+ * Probe: open /design/composition/ and resize .pack-demo-resizer to step stack -> split -> feature.
  * ========================================================================== */
 
 /* Opt in: the card becomes an inline-size container; its region grid responds

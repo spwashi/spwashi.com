@@ -10,6 +10,10 @@
    ========================================================================== */
 
 :where(body[data-spw-surface="website"]) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "routes";
+  --spw-debug-layer-color: #a67c00;
+
   --website-accent: var(--semantic-accent, color-mix(in srgb, var(--teal, #008080) 76%, var(--amber, #c58b2a) 24%));
   --website-accent-soft: color-mix(in srgb, var(--website-accent) 14%, transparent);
   --website-accent-quiet: color-mix(in srgb, var(--website-accent) 8%, transparent);
