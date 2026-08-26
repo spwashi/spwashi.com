@@ -18,6 +18,11 @@ body[data-spw-surface="topics"] .spw-frame > .frame-actions:has(> .spw-delimiter
 }
 
 :where(body[data-spw-surface="topics"]) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "routes";
+  --spw-debug-layer-color: #a67c00;
+
+  /* Route Tokens */
   --topics-accent: var(--semantic-accent, #2a504b);
   --topics-warm: #9e592b;
   --spw-main-width: 1180px;
@@ -99,7 +104,7 @@ body[data-spw-surface="topics"] .spw-frame > .frame-actions:has(> .spw-delimiter
   color: var(--topics-ink);
 }
 
-html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
+:where(html[data-spw-color-mode="dark"] body[data-spw-surface="topics"]) {
   --topics-accent: #86beb5;
   --topics-warm: #d0a06e;
   --topics-ink: rgba(235, 240, 238, 0.94);
@@ -151,7 +156,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
 }
 
 @media (prefers-color-scheme: dark) {
-  html[data-spw-color-mode="auto"] :where(body[data-spw-surface="topics"]) {
+  :where(html[data-spw-color-mode="auto"] body[data-spw-surface="topics"]) {
     --topics-accent: #86beb5;
     --topics-warm: #d0a06e;
     --topics-ink: rgba(235, 240, 238, 0.94);

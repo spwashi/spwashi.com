@@ -4304,16 +4304,23 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
   display: grid;
   gap: clamp(0.85rem, 1.8vw, 1.2rem);
   padding: var(--shell-hero-pad-block) var(--shell-hero-pad-inline);
-  border: 1px solid var(--shell-panel-line);
+  border: 1px solid color-mix(in oklab, var(--active-op-color, var(--teal, #008080)) 14%, var(--shell-panel-line));
   border-radius: var(--shell-panel-radius-loose);
   background:
+    radial-gradient(
+      ellipse 90% 40% at 50% 0%,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 6%, transparent) 0%,
+      transparent 70%
+    ),
     linear-gradient(
       180deg,
       color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 4%, transparent),
       transparent 26%
     ),
     var(--shell-panel-bg);
-  box-shadow: var(--shell-panel-shadow);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 60%, transparent),
+    var(--shell-panel-shadow);
 }
 
 .page-intro > :first-child,
@@ -9625,7 +9632,9 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 
 @media (max-width: 600px) {
   :where(.site-header, body > header) {
-    padding-top: max(0.12rem, env(safe-area-inset-top));
+    /* The page shell already owns safe-area insets. Keep the navbar flush to
+       that shell edge instead of reserving a second strip above its controls. */
+    padding-top: 0;
   }
 
   .spw-nav-toggle {
@@ -10769,7 +10778,7 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
   }
 
   .spw-nav-toggle {
-    margin-inline-end: calc(var(--subjective-brace-width, 28px) + 0.3rem);
+    margin-inline-end: 0;
     padding:
       calc(var(--spw-control-padding-block, 0.2rem) + 0.08rem)
       calc(var(--spw-control-padding-inline, 0.52rem) + 0.04rem);
@@ -11066,6 +11075,9 @@ body > nav.spw-section-handle-shell {
   .site-header[data-spw-menu-mode="toggle"],
   body > header[data-spw-menu-mode="toggle"] {
     grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "sigil toggle"
+      "tools tools";
     align-items: center;
   }
 
@@ -11524,34 +11536,34 @@ body[aria-busy="true"] {
    Clean-capture visibility rules for screenshots and archival renders.
    ========================================================================== */
 
-html[data-spw-capture-mode="clean"] .spw-console,
-html[data-spw-capture-mode="clean"] .spw-state-inspector,
-html[data-spw-capture-mode="clean"] .spw-discovery-notice-stack,
-html[data-spw-capture-mode="clean"] [data-spw-floating-chrome="true"],
-html[data-spw-capture-mode="clean"] [data-spw-runtime-status] {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-console,
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-state-inspector,
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-discovery-notice-stack,
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) [data-spw-floating-chrome="true"],
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) [data-spw-runtime-status] {
   display: none !important;
 }
 
 /* SVG surfaces: freeze flows and drop pointer artifacts so the same tuned
    diagram captures identically every time. Labels stay at full presence. */
-html[data-spw-capture-mode="clean"] .spw-svg-flow--animated {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-flow--animated {
   animation-play-state: paused !important;
 }
 
-html[data-spw-capture-mode="clean"] .spw-svg-figure {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-figure {
   --spw-svg-device-pointer-lift: 0 !important;
 }
 
-html[data-spw-capture-mode="clean"] .spw-svg-figure[data-spw-svg-pointer]::after {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-figure[data-spw-svg-pointer]::after {
   opacity: 0 !important;
 }
 
-html[data-spw-capture-mode="clean"] .spw-svg-surface {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-surface {
   transform: none !important;
 }
 
-html[data-spw-capture-mode="clean"] .spw-svg-label,
-html[data-spw-capture-mode="clean"] .spw-svg-note {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-label,
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-note {
   opacity: 1 !important;
 }
 }
@@ -13779,6 +13791,16 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 :where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
   margin-left: auto;
   justify-content: flex-end;
+  flex: 0 0 auto;
+  min-inline-size: min-content;
+}
+
+:where(.frame-topline > .spw-component-meta > .spw-component-tag,
+       .frame-heading > .spw-component-meta > .spw-component-tag) {
+  flex-shrink: 0;
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 :where(.spw-component-guides) {
@@ -14071,6 +14093,16 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   --brace-corner-width: 2.2rem;
   --brace-corner-height: 1.6rem;
   --brace-corner-stroke: 2px;
+}
+
+:where([data-spw-form="brace"]):is(:hover, :focus-within)::before {
+  border-color: color-mix(in oklab, var(--brace-open-color) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--brace-open-color) 45%, transparent));
+}
+
+:where([data-spw-form="brace"]):is(:hover, :focus-within)::after {
+  border-color: color-mix(in oklab, var(--brace-close-color) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--brace-close-color) 45%, transparent));
 }
 
 :where([data-spw-form="brace"][data-spw-realization="conceptual"]) {
@@ -17312,7 +17344,9 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
       transparent 22%
     ),
     color-mix(in srgb, var(--component-surface-strong) calc(88% + (10% * var(--spw-tangibility, 0.5))), var(--component-route-accent) 5%);
-  box-shadow: var(--component-shadow);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 48%, transparent),
+    var(--component-shadow);
 
   /* Transitions */
   transition:
@@ -18671,8 +18705,9 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 :where(.spw-resonance-lab) {
   --spw-resonance-ground: color-mix(in srgb, var(--component-surface-strong) 92%, var(--active-op-color, var(--component-accent)) 5%);
   --spw-resonance-line: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 22%, var(--line, rgba(14, 18, 20, 0.14)));
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
   gap: var(--component-gap-tight);
   margin-block: var(--component-gap) var(--component-gap-loose);
   padding: clamp(0.75rem, 2vw, 1rem);
@@ -18689,7 +18724,9 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 }
 
 :where(.spw-resonance-lab > *) {
-  min-width: 0;
+  flex: 1 1 13rem;
+  min-inline-size: 12rem;
+  max-inline-size: 100%;
   padding-block: 0.15rem;
 }
 
@@ -19780,12 +19817,13 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 :where(.spw-frame, [data-spw-kind="frame"]) {
   --surface-gap: var(--spw-surface-gap, clamp(0.72rem, 1.55cqi, 1.14rem));
   --surface-padding: var(--spw-surface-padding, clamp(0.88rem, 1.85cqi, 1.28rem));
-  --site-frame-seam-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
+  --site-frame-seam-color: color-mix(in srgb, var(--component-accent) 22%, transparent);
   --frame-arrival-offset: 0px;
   --frame-arrival-opacity: 1;
 
   display: flex;
   flex-direction: column;
+  align-content: start;
   gap: var(--surface-gap);
   min-width: 0;
   overflow: clip;
@@ -19801,8 +19839,8 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
     color-mix(in srgb, var(--component-surface) 97%, var(--component-accent) 3%);
   box-shadow:
     var(--component-frame-shadow),
-    var(--spw-chassis-highlight, inset 0 1px 0 color-mix(in srgb, white 18%, transparent)),
-    var(--spw-chassis-shadow, inset 0 -1px 0 color-mix(in srgb, var(--shadow-color, #111) 5%, transparent));
+    var(--spw-chassis-highlight, inset 0 1px 0 color-mix(in oklab, white 45%, transparent)),
+    var(--spw-chassis-shadow, inset 0 -1px 0 color-mix(in srgb, var(--shadow-color, #111) 6%, transparent));
   scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
   container: spw-frame / inline-size;
   opacity: var(--frame-arrival-opacity);
@@ -20542,40 +20580,40 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
    17. Meaningful card utilities
    ========================================================================== */
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="soft"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="soft"]) {
   --component-pad: 1rem;
   --component-gap-tight: 0.65rem;
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="dense"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="dense"]) {
   --component-pad: 0.75rem;
   --component-gap-tight: 0.4rem;
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="roomy"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="roomy"]) {
   --component-pad: 1.2rem;
   --component-gap-tight: 0.8rem;
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="measure"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="measure"]) {
   max-inline-size: min(100%, var(--component-measure));
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="code"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="code"]) {
   max-inline-size: min(100%, var(--component-code-measure));
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="ambient"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="ambient"]) {
   color: color-mix(in srgb, var(--ink, currentColor) 94%, transparent);
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-attention="focused"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-attention="focused"]) {
   border-color: color-mix(in srgb, var(--component-accent) 34%, var(--line, transparent));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 18%, transparent),
   var(--component-shadow);
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-attention="held"] {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-attention="held"]) {
   border-color: color-mix(in srgb, var(--component-accent) 44%, var(--line, transparent));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 24%, transparent),
   var(--component-shadow-active);
@@ -20750,6 +20788,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
       .spw-role-hooks,
       .spw-route-bridge__links,
       .spw-resonance-lab,
+      .home-microcosm-strip,
       .spw-learning-game,
       .spw-semantic-emphasis-map
     ),
@@ -24955,6 +24994,17 @@ html[data-spw-search-selection-pulse] {
 
 :where([data-spw-section-state]) {
   --spw-section-local-resonance: 0;
+  /* Viewport rank is a low-authority reading cue. The authored region seat
+     supplies the electrostatic channel; material tangibility tempers it. */
+  --spw-section-viewport-authority: clamp(
+    0.42,
+    calc(
+      var(--spw-e-channel, 0.78)
+      * (0.72 + (0.28 * var(--spw-tangibility, 0.5)))
+    ),
+    1
+  );
+  --spw-section-attention-authority: var(--spw-section-viewport-authority);
   transition:
     border-color var(--spw-interaction-commit, var(--component-transition-base)),
     box-shadow var(--spw-interaction-settle, var(--component-transition-base)),
@@ -24963,14 +25013,33 @@ html[data-spw-search-selection-pulse] {
     transform var(--spw-interaction-settle, var(--component-transition-base));
 }
 
+/* Address, focus, selection, and deliberate marking outrank the viewport's
+   automatic guess without inventing another attention state. */
+:where([data-spw-section-state]:is(
+  :target,
+  :focus-within,
+  [data-spw-region-mark],
+  [data-spw-active="true"],
+  [data-spw-selection="focused"]
+)) {
+  --spw-section-attention-authority: 1;
+}
+
 :where([data-spw-section-state="active"]) {
-  --spw-section-local-resonance: var(--spw-transition-hierarchy-resonance, 0.12);
+  --spw-section-local-resonance: calc(
+    var(--spw-transition-hierarchy-resonance, 0.12)
+    * var(--spw-section-attention-authority, 1)
+  );
   box-shadow: var(--spw-transition-hierarchy-shadow, var(--spw-local-shadow, var(--component-shadow, none)));
   transform: translateY(calc(var(--spw-section-inertia-shift, 0px) * -1));
 }
 
 :where([data-spw-section-state="previous"], [data-spw-section-state="next"]) {
-  --spw-section-local-resonance: calc(var(--spw-transition-hierarchy-resonance, 0.12) * 0.42);
+  --spw-section-local-resonance: calc(
+    var(--spw-transition-hierarchy-resonance, 0.12)
+    * 0.42
+    * var(--spw-section-attention-authority, 1)
+  );
   filter: saturate(calc(1 + var(--spw-section-local-resonance, 0) * 0.12));
 }
 
@@ -25433,7 +25502,11 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   }
 }
 
-:where(main > section.spw-frame[data-spw-section-state], main > article > section.spw-frame[data-spw-section-state]) {
+:where(
+  main > section.spw-frame[data-spw-section-state],
+  main > article > section.spw-frame[data-spw-section-state],
+  main > [data-spw-cluster] > section.spw-frame[data-spw-section-state]
+) {
   transition:
     box-shadow var(--spw-layout-measure-settle, var(--component-transition-deliberate)),
     border-color var(--spw-component-settle-transition, var(--component-transition-deliberate)),
@@ -25441,22 +25514,38 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     opacity var(--component-transition-arrival);
 }
 
-:where(main > section.spw-frame[data-spw-section-state="active"], main > article > section.spw-frame[data-spw-section-state="active"]) {
+:where(
+  main > section.spw-frame[data-spw-section-state="active"],
+  main > article > section.spw-frame[data-spw-section-state="active"],
+  main > [data-spw-cluster] > section.spw-frame[data-spw-section-state="active"]
+) {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--component-accent) 12%, transparent),
   var(--component-shadow-active);
 }
 
-:where(main > section.spw-frame[data-spw-section-state="active"], main > article > section.spw-frame[data-spw-section-state="active"]) :where(h1, h2, h3) {
+:where(
+  main > section.spw-frame[data-spw-section-state="active"],
+  main > article > section.spw-frame[data-spw-section-state="active"],
+  main > [data-spw-cluster] > section.spw-frame[data-spw-section-state="active"]
+) :where(h1, h2, h3) {
   color: color-mix(in srgb, var(--ink, currentColor) 90%, var(--component-accent) 10%);
 }
 
 :where(html[data-spw-scroll-cadence="on"]) {
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state] {
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state] {
     position: relative;
     overflow: clip;
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state]::before {
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state]::before {
     content: "";
     position: absolute;
     inset-block: 1rem;
@@ -25473,7 +25562,11 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     pointer-events: none;
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state]::after {
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state]::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -25483,45 +25576,87 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     pointer-events: none;
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame):is(
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  ):is(
     [data-spw-section-state="previous"],
     [data-spw-section-state="next"]
   )::before {
-    opacity: 0.24;
+    opacity: clamp(
+      0.16,
+      calc(0.24 * var(--spw-section-attention-authority, 1)),
+      0.24
+    );
     transform: scaleY(0.56);
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"] {
-    border-color: color-mix(in oklab, var(--component-accent) 18%, transparent);
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state="active"] {
+    border-color: color-mix(
+      in oklab,
+      var(--component-accent) calc(18% * var(--spw-section-attention-authority, 1)),
+      transparent
+    );
     box-shadow:
-      inset 0 0 0 1px color-mix(in oklab, var(--component-accent) 10%, transparent),
-      0 0.55rem 1.4rem color-mix(in oklab, var(--component-accent) 5%, transparent),
+      inset 0 0 0 1px color-mix(
+        in oklab,
+        var(--component-accent) calc(10% * var(--spw-section-attention-authority, 1)),
+        transparent
+      ),
+      0 0.55rem 1.4rem color-mix(
+        in oklab,
+        var(--component-accent) calc(5% * var(--spw-section-attention-authority, 1)),
+        transparent
+      ),
       var(--component-shadow-active);
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]::before {
-    opacity: 0.58;
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state="active"]::before {
+    opacity: clamp(
+      0.3,
+      calc(0.5 * var(--spw-section-attention-authority, 1)),
+      0.5
+    );
     transform: scaleY(1);
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]::after {
-    opacity: 1;
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state="active"]::after {
+    opacity: clamp(
+      0.28,
+      calc(0.68 * var(--spw-section-attention-authority, 1)),
+      0.68
+    );
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state="active"]
     :where(.frame-sigil, h1, h2, h3, .inline-note, [data-spw-textual-role="note"]) {
     transition:
-      transform var(--component-transition-deliberate),
       color var(--component-transition-deliberate),
       opacity var(--component-transition-deliberate);
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]
-    :where(.frame-sigil, h1, h2, h3) {
-    transform: translateX(0.08rem);
-  }
-
-  & main > :is(section.spw-frame, article > section.spw-frame):is(
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  ):is(
     [data-spw-section-state="previous"],
     [data-spw-section-state="next"]
   ) :where(.inline-note, [data-spw-textual-role="note"]) {
@@ -25530,8 +25665,16 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(html[data-spw-scroll-cadence="on"] main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state])::before,
-  :where(html[data-spw-scroll-cadence="on"] main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, [data-spw-textual-role="note"]) {
+  :where(html[data-spw-scroll-cadence="on"] :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state])::before,
+  :where(html[data-spw-scroll-cadence="on"] :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, [data-spw-textual-role="note"]) {
     transition: none;
     transform: none;
   }
@@ -28149,9 +28292,12 @@ html[data-spw-theme-pack="electric-studio"] {
 /* /public/css/systems/scroll-gesture.css */
 @layer systems {
 /* ==========================================================================
-   scroll-gesture.css
+   scroll-gesture.css — gesture hygiene and scroll posture
    --------------------------------------------------------------------------
-   Seamless vertical scroll with horizontal swipe reserved for lens/progression.
+   Reads as: seamless vertical scroll with horizontal swipe reserved for lens/progression
+   Genome — states sensed: data-spw-gesture-contract, data-spw-scroll-rail, data-spw-image-discovery
+   Genome — custom properties defined: 0; intent hooks consumed: --shell-header-height
+   Probe: drag or swipe media rails on pocket/fold; horizontal scroll stays contained.
    ========================================================================== */
 
 @media (prefers-reduced-motion: no-preference) {
@@ -28189,29 +28335,34 @@ html[data-spw-theme-pack="electric-studio"] {
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
 }
 
 :where([data-spw-scroll-rail] > *, .spw-visual-link-board__grid > *, .frame-grid--media > *) {
   scroll-snap-align: start;
+}
+
+/* Subtle edge illumination for scroll rails indicating horizontal continuity */
+:where([data-spw-scroll-rail], .frame-grid--media) {
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black min(1.2rem, 3%),
+    black max(calc(100% - min(1.2rem, 3%)), 97%),
+    transparent 100%
+  );
 }
 }
 
 /* /public/css/systems/component-packing.css */
 @layer systems {
 /* ==========================================================================
- * component-packing.css
+ * component-packing.css — container-relative component layout
  * --------------------------------------------------------------------------
- * Component-local layout: a card arranges its OWN regions by its own inline
- * size, not the viewport. This is the container-relative counterpart to
- * spatial-gravity.css (which is viewport-relative): outer gravity says where a
- * card sits; inner packing says how the card arranges itself. Both are
- * first-class, and a card in a narrow column packs the same way whether that
- * column is on a phone or a sidebar on a wide screen — because it reads its
- * container, not the screen.
- *
- * Native + framework-free on purpose (container queries + :has), so it doubles
- * as a legible reference. The box model mirrors the resolved variant into
- * data-spw-pack-layout / data-spw-pack-fill for inspection + JS consumers.
+ * Reads as: a card arranges its own regions by its own inline size, not the viewport
+ * Genome — states sensed: data-spw-pack-local, data-spw-pack-regions, data-spw-pack-region, data-spw-content-tone, data-spw-pack-fill
+ * Genome — custom properties defined: 1; intent hooks consumed: --spw-pack-gap
+ * Probe: open /design/composition/ and resize .pack-demo-resizer to step stack -> split -> feature.
  * ========================================================================== */
 
 /* Opt in: the card becomes an inline-size container; its region grid responds
@@ -32873,8 +33024,7 @@ html[data-spw-page-section-phase="idle"] {
   gap: 0.72rem;
 }
 
-.frame-card .frame-card-sigil,
-.spw-card .frame-card-sigil {
+:where(:is(.frame-card, .spw-card) .frame-card-sigil) {
   width: 100%;
   max-width: 100%;
 }
@@ -32931,8 +33081,9 @@ html[data-spw-page-section-phase="idle"] {
    ========================================================================== */
 
 :where(.spw-resonance-lab) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
   gap: var(--spw-shell-panel-gap, 1rem);
   margin-block: 1.2rem;
   padding: 1rem;
@@ -32943,6 +33094,9 @@ html[data-spw-page-section-phase="idle"] {
 
 :where(.spw-resonance-lab > div) {
   display: grid;
+  flex: 1 1 14rem;
+  min-inline-size: 12rem;
+  max-inline-size: 100%;
   gap: 0.35rem;
   padding: 0.75rem;
   border-radius: var(--radius-sm, 6px);
@@ -35161,6 +35315,7 @@ body[data-spw-micro-world="true"]::before {
   --spw-control-min-height: 1.7rem;
   --spw-control-padding-block: 0.16rem;
   --spw-control-padding-inline: 0.5rem;
+  flex: 1 1 12rem;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.74rem;
   line-height: 1.2;
@@ -37678,6 +37833,16 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   letter-spacing: 0.04em;
 }
 
+:where(:is(.frame-heading, .frame-topline) .spw-component-tag) {
+  flex-shrink: 0;
+  contain: none;
+  width: max-content;
+  max-width: none;
+  min-width: min-content;
+  overflow: visible;
+  text-overflow: clip;
+}
+
 /* ==========================================================================
    Visual refinement for .spw-component-tag (rune slip / codex treatment)
    --------------------------------------------------------------------------
@@ -39083,6 +39248,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
    Routes set palette via --mode-switch-*-intent and opt into chrome/track:
 
      data-spw-lens-chrome="silent"  — AT keeps aria-label; visual label chip off
+     data-spw-lens-chrome="quiet"   — flat editorial tabs; no capsule chassis
      data-spw-lens-track="row"      — full-width equal-share flex track (no 2×2)
 
    Progressive enhancement: labeled chrome only when aria-label is present;
@@ -39156,6 +39322,19 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 .mode-switch[data-spw-lens-chrome~="silent"][data-spw-lens-feedback]::after {
   content: none;
   display: none;
+}
+
+/* Quiet chrome keeps the same mode semantics and touch geometry but removes
+   the nested capsule treatment when a local editorial instrument already has
+   an authored label and boundary. */
+.mode-switch[data-spw-lens-chrome~="quiet"] {
+  gap: 0;
+  padding: 0;
+  border: 0;
+  border-block-end: 1px solid color-mix(in srgb, var(--spw-lens-cascade-color) 24%, var(--line, transparent) 76%);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .mode-switch[data-spw-mode-seat="open"] {
@@ -39500,6 +39679,41 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 .mode-switch .frame-sigil:not([aria-pressed="true"]):is(:hover, :focus-visible) {
   opacity: 1;
+}
+
+/* Quiet-state composition follows the shared pressed/idle rules so the local
+   editorial treatment remains the final handle-layer decision. */
+.mode-switch[data-spw-lens-chrome~="quiet"] > .frame-sigil {
+  --mode-switch-border-width-intent: 0;
+  --mode-switch-idle-bg-intent: transparent;
+  --mode-switch-idle-shadow-intent: none;
+  --mode-switch-hover-bg-intent: color-mix(in srgb, var(--active-op-color, var(--teal)) 7%, transparent);
+  --mode-switch-hover-border-intent: transparent;
+  --mode-switch-hover-shadow-intent: none;
+  --mode-switch-hover-lift-intent: 0;
+  --mode-switch-active-bg-intent: color-mix(in srgb, var(--active-op-color, var(--teal)) 9%, transparent);
+  --mode-switch-active-border-intent: transparent;
+  --mode-switch-active-shadow-intent: inset 0 -0.16rem 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 68%, transparent);
+  --mode-switch-active-lift-intent: 0;
+  --mode-switch-focus-shadow-intent: inset 0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--teal)) 26%, transparent);
+  --mode-switch-pressed-animation-intent: none;
+  border: 0;
+  border-radius: 0;
+}
+
+.mode-switch[data-spw-lens-chrome~="quiet"] > .frame-sigil:not([aria-pressed="true"]) {
+  background: transparent;
+  box-shadow: none;
+}
+
+.mode-switch[data-spw-lens-chrome~="quiet"] > .frame-sigil[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 9%, transparent);
+  box-shadow: inset 0 -0.16rem 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 68%, transparent);
+}
+
+.mode-switch[data-spw-lens-chrome~="quiet"] > .frame-sigil[aria-pressed]::after {
+  content: none;
+  display: none;
 }
 
 @keyframes spw-lens-commit-pulse {

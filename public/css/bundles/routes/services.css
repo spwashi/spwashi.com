@@ -719,223 +719,224 @@
    - Keep the surface readable while carrying more atmosphere.
    ========================================================================== */
 
-@layer surface {
-  :where(body[data-spw-surface="services"]) {
-    --services-accent: var(--semantic-accent, #986134);
-    --services-accent-cool: #455342;
-    --services-glow: #8d945e;
-    --spw-main-width: 1160px;
-    --services-line:
-      color-mix(in srgb, var(--services-accent-cool) 18%, rgba(18, 24, 28, 0.12));
-    --services-line-strong:
-      color-mix(in srgb, var(--services-accent) 32%, transparent);
-    --services-paper:
-      linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.94),
-        rgba(248, 245, 239, 0.92)
-      );
-    --services-panel:
-      linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.86),
-        rgba(245, 241, 234, 0.94)
-      );
+:where(body[data-spw-surface="services"]) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "routes";
+  --spw-debug-layer-color: #a67c00;
+
+  /* Route Tokens */
+  --services-accent: var(--semantic-accent, #986134);
+  --services-accent-cool: #455342;
+  --services-glow: #8d945e;
+  --spw-main-width: 1160px;
+  --services-line:
+    color-mix(in srgb, var(--services-accent-cool) 18%, rgba(18, 24, 28, 0.12));
+  --services-line-strong:
+    color-mix(in srgb, var(--services-accent) 32%, transparent);
+  --services-paper:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.94),
+      rgba(248, 245, 239, 0.92)
+    );
+  --services-panel:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.86),
+      rgba(245, 241, 234, 0.94)
+    );
+  background:
+    radial-gradient(
+      circle at top center,
+      color-mix(in srgb, var(--services-glow) 10%, transparent),
+      transparent 34%
+    ),
+    linear-gradient(180deg, rgba(248, 245, 239, 0.92), rgba(241, 237, 230, 0.98));
+
+  & main > article {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.4rem);
+  }
+
+  & [data-spw-cluster] {
+    min-inline-size: 0;
+  }
+
+  & [data-spw-cluster] + [data-spw-cluster] {
+    padding-block-start: clamp(0.9rem, 1.8vw, 1.3rem);
+    border-block-start: 1px solid color-mix(in srgb, var(--services-line-strong) 62%, var(--services-line));
+  }
+
+  & article > .spw-frame {
+    overflow: clip;
+    border-color: var(--services-line);
+    background: var(--services-paper);
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.05),
+      0 2px 8px rgba(0, 0, 0, 0.025);
+
+    &:hover {
+      box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.07),
+        0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+  }
+
+  & #services-frame {
+    min-height: clamp(22rem, 50vw, 30rem);
     background:
-      radial-gradient(
-        circle at top center,
-        color-mix(in srgb, var(--services-glow) 10%, transparent),
-        transparent 34%
+      linear-gradient(
+        110deg,
+        rgba(250, 247, 241, 0.96) 0%,
+        rgba(250, 247, 241, 0.9) 28%,
+        rgba(250, 247, 241, 0.7) 54%,
+        rgba(36, 46, 45, 0.42) 100%
       ),
-      linear-gradient(180deg, rgba(248, 245, 239, 0.92), rgba(241, 237, 230, 0.98));
+      radial-gradient(
+        circle at 82% 18%,
+        color-mix(in srgb, var(--services-accent) 24%, transparent),
+        transparent 24%
+      ),
+      url('/public/images/services/studio-house-hero.webp') center/cover no-repeat;
 
-    & main > article {
-      display: grid;
-      gap: clamp(1rem, 2vw, 1.4rem);
+    & :is(.frame-topline, h1, p, nav) {
+      max-width: min(50rem, 100%);
     }
 
-    & [data-spw-cluster] {
-      min-inline-size: 0;
+    & [data-spw-textual-role="lede"] {
+      color: color-mix(in srgb, var(--ink, #1f2423) 88%, var(--services-accent-cool));
     }
 
-    & [data-spw-cluster] + [data-spw-cluster] {
-      padding-block-start: clamp(0.9rem, 1.8vw, 1.3rem);
-      border-block-start: 1px solid color-mix(in srgb, var(--services-line-strong) 62%, var(--services-line));
+    & .spec-pill {
+      border-color: color-mix(in srgb, var(--services-accent) 18%, transparent);
+      background: color-mix(in srgb, rgba(255, 255, 255, 0.96) 95%, var(--services-accent) 5%);
+      color: color-mix(in srgb, var(--ink, #1f2423) 82%, var(--services-accent-cool) 18%);
     }
+  }
 
-    & article > .spw-frame {
-      overflow: clip;
-      border-color: var(--services-line);
-      background: var(--services-paper);
-      box-shadow:
-        0 10px 28px rgba(0, 0, 0, 0.05),
-        0 2px 8px rgba(0, 0, 0, 0.025);
+  & .frame-panel {
+    background: var(--services-panel);
+    border-color: color-mix(in srgb, var(--services-accent) 14%, var(--line));
 
-      &:hover {
-        box-shadow:
-          0 14px 34px rgba(0, 0, 0, 0.07),
-          0 4px 12px rgba(0, 0, 0, 0.03);
-      }
+    &:hover .panel-image img {
+      transform: scale(1.018);
+      filter: saturate(1.04) contrast(1.02);
     }
+  }
 
-    & #services-frame {
-      min-height: clamp(22rem, 50vw, 30rem);
-      background:
-        linear-gradient(
-          110deg,
-          rgba(250, 247, 241, 0.96) 0%,
-          rgba(250, 247, 241, 0.9) 28%,
-          rgba(250, 247, 241, 0.7) 54%,
-          rgba(36, 46, 45, 0.42) 100%
-        ),
-        radial-gradient(
-          circle at 82% 18%,
-          color-mix(in srgb, var(--services-accent) 24%, transparent),
-          transparent 24%
-        ),
-        url('/public/images/services/studio-house-hero.webp') center/cover no-repeat;
+  & .panel-image {
+    margin: 0 0 0.9rem;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--services-line-strong) 46%, var(--services-line));
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.38),
+      0 8px 18px rgba(0, 0, 0, 0.04);
 
-      & :is(.frame-topline, h1, p, nav) {
-        max-width: min(50rem, 100%);
-      }
-
-      & [data-spw-textual-role="lede"] {
-        color: color-mix(in srgb, var(--ink, #1f2423) 88%, var(--services-accent-cool));
-      }
-
-      & .spec-pill {
-        border-color: color-mix(in srgb, var(--services-accent) 18%, transparent);
-        background: color-mix(in srgb, rgba(255, 255, 255, 0.96) 95%, var(--services-accent) 5%);
-        color: color-mix(in srgb, var(--ink, #1f2423) 82%, var(--services-accent-cool) 18%);
-      }
+    & img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      transition:
+        transform var(--duration-deliberate, 360ms) var(--ease-mechanical, ease),
+        filter var(--duration-deliberate, 360ms) var(--ease-mechanical, ease);
     }
+  }
 
-    & .frame-panel {
-      background: var(--services-panel);
-      border-color: color-mix(in srgb, var(--services-accent) 14%, var(--line));
-
-      &:hover .panel-image img {
-        transform: scale(1.018);
-        filter: saturate(1.04) contrast(1.02);
-      }
-    }
-
-    & .panel-image {
-      margin: 0 0 0.9rem;
-      overflow: hidden;
-      border: 1px solid color-mix(in srgb, var(--services-line-strong) 46%, var(--services-line));
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.72);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.38),
-        0 8px 18px rgba(0, 0, 0, 0.04);
-
-      & img {
-        display: block;
-        width: 100%;
-        aspect-ratio: 16 / 10;
-        object-fit: cover;
-        transition:
-          transform var(--duration-deliberate, 360ms) var(--ease-mechanical, ease),
-          filter var(--duration-deliberate, 360ms) var(--ease-mechanical, ease);
-      }
-    }
-
-    & .svc-svg[data-state~="resolved"] .svc-center {
-      filter: none;
-      animation: none;
-    }
+  & .svc-svg[data-state~="resolved"] .svc-center {
+    filter: none;
+    animation: none;
   }
 }
 
 /* Studio-house brochure: the threshold remains a wide cover, while the
    material below packs into offer, terms, proof, and support spreads. */
 @media (min-width: 61.25rem) {
-  @layer surface {
-    :where(body[data-spw-surface="services"]) {
-      & [data-spw-cluster] {
-        display: grid;
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-        align-items: start;
-        gap: clamp(1rem, 2vw, 1.6rem);
-      }
+  :where(body[data-spw-surface="services"]) {
+    & [data-spw-cluster] {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      align-items: start;
+      gap: clamp(1rem, 2vw, 1.6rem);
+    }
 
-      & [data-spw-cluster] > .spw-frame {
-        min-inline-size: 0;
-        margin-block-start: 0;
-      }
+    & [data-spw-cluster] > .spw-frame {
+      min-inline-size: 0;
+      margin-block-start: 0;
+    }
 
-      & [data-spw-cluster="orientation-overview"] > #services-frame,
-      & [data-spw-cluster="commercial-terms"] > #render-queue,
-      & [data-spw-cluster="public-proof-entry"] > #learning-demos {
-        grid-column: 1 / -1;
-      }
+    & [data-spw-cluster="orientation-overview"] > #services-frame,
+    & [data-spw-cluster="commercial-terms"] > #render-queue,
+    & [data-spw-cluster="public-proof-entry"] > #learning-demos {
+      grid-column: 1 / -1;
+    }
 
-      & [data-spw-cluster="orientation-overview"] > #services-tuning,
-      & [data-spw-cluster="commercial-terms"] > :is(#pricing, #cadence),
-      & [data-spw-cluster="public-proof-entry"] > #services-reentry {
-        grid-column: span 5;
-      }
+    & [data-spw-cluster="orientation-overview"] > #services-tuning,
+    & [data-spw-cluster="commercial-terms"] > :is(#pricing, #cadence),
+    & [data-spw-cluster="public-proof-entry"] > #services-reentry {
+      grid-column: span 5;
+    }
 
-      & [data-spw-cluster="orientation-overview"] > #b2b-share,
-      & [data-spw-cluster="commercial-terms"] > :is(#configure, #custom-quote),
-      & [data-spw-cluster="public-proof-entry"] > #conversion-paths {
-        grid-column: span 7;
-      }
+    & [data-spw-cluster="orientation-overview"] > #b2b-share,
+    & [data-spw-cluster="commercial-terms"] > :is(#configure, #custom-quote),
+    & [data-spw-cluster="public-proof-entry"] > #conversion-paths {
+      grid-column: span 7;
+    }
 
-      & [data-spw-cluster="service-offerings"] > #three-paths {
-        grid-column: span 7;
-      }
+    & [data-spw-cluster="service-offerings"] > #three-paths {
+      grid-column: span 7;
+    }
 
-      & [data-spw-cluster="service-offerings"] > #service-proof {
-        grid-column: span 5;
-      }
+    & [data-spw-cluster="service-offerings"] > #service-proof {
+      grid-column: span 5;
+    }
 
-      & [data-spw-cluster="portable-support"] > .spw-frame {
-        grid-column: span 4;
-      }
+    & [data-spw-cluster="portable-support"] > .spw-frame {
+      grid-column: span 4;
+    }
 
-      & #services-frame > .frame-body {
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-        align-items: start;
-        inline-size: 100%;
-        max-inline-size: none;
-        column-gap: clamp(1.1rem, 2.6vw, 2rem);
-      }
+    & #services-frame > .frame-body {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      align-items: start;
+      inline-size: 100%;
+      max-inline-size: none;
+      column-gap: clamp(1.1rem, 2.6vw, 2rem);
+    }
 
-      & #services-frame > .frame-body > #services-hook,
-      & #services-frame > .frame-body > :is(.frame-operators, .page-index),
-      & #services-frame > .frame-body > figure + p {
-        grid-column: 1 / -1;
-      }
+    & #services-frame > .frame-body > #services-hook,
+    & #services-frame > .frame-body > :is(.frame-operators, .page-index),
+    & #services-frame > .frame-body > figure + p {
+      grid-column: 1 / -1;
+    }
 
-      & #services-frame > .frame-body > :is(
-        h1,
-        #services-description,
-        [data-spw-copy-depth="entry"],
-        [data-spw-copy-depth="normal"],
-        .spw-metric-grid
-      ) {
-        grid-column: 1 / 6;
-      }
+    & #services-frame > .frame-body > :is(
+      h1,
+      #services-description,
+      [data-spw-copy-depth="entry"],
+      [data-spw-copy-depth="normal"],
+      .spw-metric-grid
+    ) {
+      grid-column: 1 / 6;
+    }
 
-      & #services-frame > .frame-body > .image-study {
-        grid-column: 6 / -1;
-        grid-row: 2 / span 5;
-        margin-block: 0;
-      }
+    & #services-frame > .frame-body > .image-study {
+      grid-column: 6 / -1;
+      grid-row: 2 / span 5;
+      margin-block: 0;
+    }
 
-      & #services-frame > .frame-body > figure + p + p,
-      & #services-frame > .frame-body > .frame-list + p {
-        grid-column: 1 / 6;
-        max-inline-size: none;
-      }
+    & #services-frame > .frame-body > figure + p + p,
+    & #services-frame > .frame-body > .frame-list + p {
+      grid-column: 1 / 6;
+      max-inline-size: none;
+    }
 
-      & #services-frame > .frame-body > .frame-list,
-      & #services-frame > .frame-body > .frame-list + p + p {
-        grid-column: 6 / -1;
-        max-inline-size: none;
-      }
+    & #services-frame > .frame-body > .frame-list,
+    & #services-frame > .frame-body > .frame-list + p + p {
+      grid-column: 6 / -1;
+      max-inline-size: none;
     }
   }
 }

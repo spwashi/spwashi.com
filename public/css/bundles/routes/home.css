@@ -277,29 +277,11 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
   :where([data-spw-feature="home-kernel-entry"] .frame-topline) {
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 0.38rem 0.42rem;
     padding: 0.28rem 0 0.48rem;
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .frame-topline > .mode-switch) {
-    flex: 0 0 auto;
-    width: 100%;
-    min-inline-size: 0;
-    min-height: 0;
-    align-self: auto;
-    align-items: center;
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .mode-switch[data-spw-lens-track="row"] > .frame-sigil) {
-    min-block-size: 2.15rem;
-    max-block-size: 2.35rem;
-    align-self: center;
-    padding-block: 0.28rem;
-    padding-inline: 0.32rem;
-    font-size: clamp(0.62rem, 2.6vw, 0.76rem);
   }
 
   :where([data-spw-feature="home-kernel-entry"] h1) {
@@ -521,10 +503,78 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
 :where([data-spw-feature="home-kernel-entry"] .hook-call) {
   min-width: 0;
-  max-inline-size: min(100%, var(--home-measure-wide));
+  max-inline-size: none;
   display: grid;
   gap: 0.42rem;
   margin-block-start: 0.15rem;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-working-view) {
+  --spw-control-min-height: 2.97rem;
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.58rem;
+  border-inline-start: 0.2rem solid color-mix(in srgb, var(--home-accent-primary) 52%, transparent);
+  border-radius: 0 var(--home-radius-sm) var(--home-radius-sm) 0;
+  background: color-mix(in srgb, var(--home-surface-bg-strong) 92%, var(--home-accent-primary) 8%);
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-working-view__intro) {
+  display: grid;
+  gap: 0.16rem;
+  min-width: 0;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-working-view__intro strong) {
+  color: var(--home-accent-ink);
+  font-size: 0.88rem;
+  line-height: 1.2;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-working-view__intro > span) {
+  color: var(--ink-soft, rgba(27, 31, 35, 0.68));
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch) {
+  display: flex;
+  align-items: stretch;
+  inline-size: 100%;
+  min-inline-size: 0;
+  gap: 0.32rem;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch > .frame-sigil) {
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.12rem;
+  min-inline-size: 0;
+  min-block-size: var(--touch-target-min, 2.75rem);
+  padding: 0.38rem 0.24rem;
+  border-radius: calc(var(--home-radius-sm) - 2px);
+  font-family: var(--site-ui-font, system-ui, sans-serif);
+  font-size: 0.78rem;
+  line-height: 1.05;
+  text-align: center;
+  white-space: normal;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-working-view__token) {
+  color: color-mix(in srgb, currentColor 76%, transparent);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.58rem;
+  font-weight: 650;
+  letter-spacing: 0.035em;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .hook-call .mode-panel) {
+  max-inline-size: none;
+  inline-size: 100%;
 }
 
 :where([data-spw-feature="home-kernel-entry"] .hook-call .spw-playable-hook) {
@@ -541,29 +591,32 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 :where([data-spw-feature="home-kernel-entry"] .hook-call .hook-sub),
 :where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation:not([data-spw-feature="wrap-jobs"])) {
   display: none;
-}
-
-:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"]) {
-  display: flex;
-}
-
-:where([data-spw-feature="home-kernel-entry"] .hook-call[data-spw-scene-state="entered"] .hook-sub) {
-  display: block;
-}
-
-:where(html[data-spw-semantic-density="rich"] [data-spw-feature="home-kernel-entry"] .hook-call .hook-sub),
-:where(html[data-spw-semantic-density="rich"] [data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation:not([data-spw-feature="wrap-jobs"])) {
-  display: block;
-}
-
-:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-sub),
-:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation) {
   margin: 0;
   max-inline-size: var(--home-measure-wide);
   color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 86%, var(--home-accent-primary) 14%);
   font-size: 0.86rem;
   line-height: 1.48;
   text-wrap: pretty;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"]) {
+  display: flex;
+  inline-size: 100%;
+  margin: 0;
+  max-inline-size: none;
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 86%, var(--home-accent-primary) 14%);
+  font-size: 0.86rem;
+  line-height: 1.48;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"] :is(.operator-chip, .spw-chip)) {
+  flex: 1 1 9rem;
+  min-inline-size: 0;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .hook-call[data-spw-scene-state="entered"] .hook-sub),
+:where(html[data-spw-semantic-density="rich"] [data-spw-feature="home-kernel-entry"] .hook-call :is(.hook-sub, .hook-invitation:not([data-spw-feature="wrap-jobs"]))) {
+  display: block;
 }
 
 :where([data-spw-feature="home-kernel-entry"] .hook-call [data-spw-perspective="objective"]),
@@ -673,7 +726,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
   :where([data-spw-feature="home-kernel-entry"] .hook-call) {
     grid-column: 1;
-    justify-self: start;
+    justify-self: stretch;
   }
 
   :where([data-spw-feature="home-kernel-entry"] .home-hero-grid > .home-brand-plate) {
@@ -691,6 +744,8 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
     grid-row: 2;
     justify-self: stretch;
     align-self: start;
+    inline-size: 100%;
+    max-inline-size: none;
     margin-block-start: 0;
   }
 
@@ -712,6 +767,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
     grid-column: 1 / -1;
     align-self: start;
     max-inline-size: none;
+    column-width: min(100%, 22rem);
   }
 
   :where([data-spw-feature="home-kernel-entry"] .spw-role-hooks) {
@@ -1443,10 +1499,27 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   text-wrap: balance;
 }
 
+:where(body[data-spw-surface="home"] .spw-frame .frame-heading) {
+  overflow: visible;
+}
+
 :where(body[data-spw-surface="home"] .spw-frame .frame-heading > .spw-component-meta) {
-  flex: 0 0 auto;
+  flex: 0 0 max-content;
   min-inline-size: min-content;
   max-inline-size: none;
+  white-space: nowrap;
+}
+
+body[data-spw-surface="home"] .frame-heading .spw-component-tag,
+body[data-spw-surface="home"] .frame-topline .spw-component-tag {
+  display: inline-block;
+  flex-shrink: 0;
+  contain: none;
+  box-sizing: content-box;
+  width: max-content;
+  max-width: none;
+  min-width: min-content;
+  overflow: visible;
   white-space: nowrap;
 }
 
@@ -1482,6 +1555,10 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 
 :where(body[data-spw-surface="home"] :is(.spw-frame, .spw-frame)) {
   --home-region-salience: var(--spw-salience, 1);
+}
+
+:where([data-spw-feature="home-entrance-sorter"] .spw-resonance-lab) {
+  flex-direction: row;
 }
 
 :where([data-spw-feature="home-entrance-sorter"] .spw-resonance-lab [data-spw-resonance-axis]) {
@@ -1568,6 +1645,104 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   border: 1px solid color-mix(in srgb, var(--home-accent-line) 80%, transparent);
   border-radius: var(--home-radius-md);
   background: color-mix(in srgb, var(--home-surface-bg-muted) 90%, var(--home-accent-primary) 10%);
+}
+
+/* Progressive packing keeps the public spine immediate and the editorial or
+   component atlas available by choice. These are native disclosures: no JS,
+   storage, or viewport guess decides whether the deeper layer exists. */
+:where([data-spw-feature="home-kernel-entry"] .home-field-notes),
+:where([data-spw-feature="home-entrance-sorter"] .home-depth-disclosure) {
+  min-width: 0;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-field-notes > summary),
+:where([data-spw-feature="home-entrance-sorter"] .home-depth-disclosure > summary) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.35rem 0.8rem;
+  min-block-size: var(--touch-target-min, 2.75rem);
+  padding: 0.58rem 0.68rem;
+  border-radius: calc(var(--home-radius-md) - 2px);
+  color: var(--home-accent-ink, var(--ink));
+  cursor: pointer;
+  list-style: none;
+  text-decoration: none;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-field-notes > summary)::-webkit-details-marker,
+:where([data-spw-feature="home-entrance-sorter"] .home-depth-disclosure > summary)::-webkit-details-marker {
+  display: none;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-field-notes > summary)::after,
+:where([data-spw-feature="home-entrance-sorter"] .home-depth-disclosure > summary)::after {
+  content: "+";
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: var(--home-accent-primary);
+  font: 700 1.1rem/1 var(--site-mono-font, monospace);
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-field-notes[open] > summary)::after,
+:where([data-spw-feature="home-entrance-sorter"] .home-depth-disclosure[open] > summary)::after {
+  content: "−";
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-field-notes > summary:is(:hover, :focus-visible)),
+:where([data-spw-feature="home-entrance-sorter"] .home-depth-disclosure > summary:is(:hover, :focus-visible)) {
+  background: color-mix(in srgb, var(--home-accent-primary) 7%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--home-accent-primary) 28%, transparent);
+  outline-offset: 2px;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-field-notes__body),
+:where([data-spw-feature="home-entrance-sorter"] .home-depth-disclosure__body) {
+  display: grid;
+  align-content: start;
+  gap: var(--home-gap-md);
+  min-width: 0;
+  margin-block-start: var(--home-gap-sm);
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-field-notes__body) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+}
+
+:where([data-spw-feature="home-entrance-sorter"] .home-depth-disclosure) {
+  padding: 0.34rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent-primary) 16%, transparent);
+  border-radius: var(--home-radius-md);
+  background: color-mix(in srgb, var(--home-surface-bg-muted) 88%, transparent);
+}
+
+:where(.home-disclosure-summary__note) {
+  grid-column: 1;
+  color: var(--ink-soft, rgba(27, 31, 35, 0.68));
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+/* The three reasons carry different semantic charges instead of inheriting
+   one anonymous card voice. */
+:where(#home-reason-why) {
+  --home-reason-accent: var(--op-frame-color, var(--home-accent-primary));
+}
+
+:where(#home-reason-readers) {
+  --home-reason-accent: var(--op-object-color, var(--home-accent-ember));
+}
+
+:where(#home-reason-takeaway) {
+  --home-reason-accent: var(--op-probe-color, var(--home-accent-blue));
+}
+
+:where([data-spw-feature="home-kernel-entry"] .spw-reason-strip > *) {
+  border-inline-start: 0.2rem solid color-mix(in srgb, var(--home-reason-accent) 62%, transparent);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--home-reason-accent) 9%, transparent), transparent 54%),
+    var(--component-surface-strong, var(--home-surface-bg-strong));
 }
 
 :where([data-spw-feature="home-kernel-entry"] .spw-reason-strip > *) {
@@ -1732,13 +1907,36 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 }
 
 /* --------------------------------------------------------------------------
-   Photonic lens — a seated card is a filter, not a caption.
+   Working view — a chosen route posture reweights rather than removes.
 
    html[data-spw-active-lens-mode] is already written by lens-modes.js.
    Cards declare which frequencies they pass with data-spw-lens-pass.
-   Unmarked cards are broadband. Matching cards stay bright. The rest recede.
+   Unmarked cards are broadband. Matching cards stay bright. The rest recede
+   enough to show relation without looking disabled.
    Do not display:none — the situation set stays in the tab order.
    -------------------------------------------------------------------------- */
+
+/* The deploy route bundle is intentionally unlayered, so it repeats the
+   quiet-chrome projection after the home sigil palette. Without this local
+   projection the later route palette turns the editorial tabs back into
+   generic pills even though the shared handle contract is `quiet`. */
+:where(body[data-spw-surface="home"] .home-working-view > .mode-switch[data-spw-lens-chrome~="quiet"]) {
+  gap: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+:where(body[data-spw-surface="home"] .home-working-view > .mode-switch[data-spw-lens-chrome~="quiet"] > .frame-sigil) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+:where(body[data-spw-surface="home"] .home-working-view > .mode-switch[data-spw-lens-chrome~="quiet"] > .frame-sigil[aria-pressed="true"]) {
+  background: color-mix(in srgb, var(--active-op-color, var(--home-accent-primary)) 9%, transparent);
+  box-shadow: inset 0 -0.16rem 0 color-mix(in srgb, var(--active-op-color, var(--home-accent-primary)) 68%, transparent);
+}
 
 :where(body[data-spw-surface="home"] [data-spw-lens-pass]) {
   transition:
@@ -1751,8 +1949,8 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 :where(html[data-spw-active-lens-mode="systems"] body[data-spw-surface="home"] [data-spw-lens-pass]:not([data-spw-lens-pass~="systems"])),
 :where(html[data-spw-active-lens-mode="play"] body[data-spw-surface="home"] [data-spw-lens-pass]:not([data-spw-lens-pass~="play"])),
 :where(html[data-spw-active-lens-mode="studio"] body[data-spw-surface="home"] [data-spw-lens-pass]:not([data-spw-lens-pass~="studio"])) {
-  opacity: 0.42;
-  filter: saturate(0.4) brightness(0.94);
+  opacity: 0.72;
+  filter: saturate(0.72);
 }
 
 :where(html[data-spw-active-lens-mode="reading"] body[data-spw-surface="home"] [data-spw-lens-pass~="reading"]),
@@ -1858,8 +2056,9 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 }
 
 :where(body[data-spw-surface="home"] .home-microcosm-strip) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
   gap: clamp(0.72rem, 1.4vw, 1rem);
   padding: clamp(0.58rem, 1.2vw, 0.82rem);
   border: 1px solid color-mix(in srgb, var(--home-accent-primary, var(--teal)) 18%, var(--home-accent-line, rgba(0, 0, 0, 0.14)) 82%);
@@ -1872,6 +2071,9 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 
 :where(body[data-spw-surface="home"] .home-microcosm-figure) {
   display: grid;
+  flex: 1 1 18rem;
+  width: auto;
+  min-width: 0;
   grid-template-rows: auto 1fr;
   gap: 0.58rem;
   margin: 0;
