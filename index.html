@@ -115,16 +115,6 @@
         <header class="frame-topline" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
             <a class="frame-sigil" href="#home-frame" data-spw-operator="frame">#&gt;home_frame</a>
-            <div class="mode-switch" role="group" aria-label="Sit a lens — cards that pass that light stay bright" data-spw-feature="home-perspective-lens" data-spw-operator="mode" data-spw-kind="lens" data-spw-lens-track="row" data-spw-lens-chrome="silent" data-spw-semantic-expression="home[reading]{open.sit}">
-                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="reading" aria-pressed="true" data-spw-operator="ground">.reading</button>
-                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="systems" aria-pressed="false" data-spw-operator="integration">^systems</button>
-                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="play" aria-pressed="false" data-spw-operator="potential">~play</button>
-                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="studio" aria-pressed="false" data-spw-operator="perspective">@studio</button>
-            </div>
-            <div class="spw-component-meta" data-spw-slot="meta">
-                <span class="spw-component-tag spw-living-term" data-spw-living-term data-spw-concept="kernel-entry" data-spw-gesture-contract="tap:inspect hold:prime-to-cauldron" tabindex="0"
-                      title="tap: inspect • hold to prime this kernel entry (and its operators + measures) into active attention">kernel_entry</span>
-            </div>
         </header>
 
         <div class="home-hero-grid" data-spw-slot="body" data-spw-composition-flow="split" data-spw-activates="hero-content">
@@ -162,6 +152,18 @@
                     role="group"
                     aria-label="Sit a lens. The situation set filters. Then take the first move in that room"
                 >
+                    <div class="home-working-view" data-spw-feature="home-perspective-lens">
+                        <div class="home-working-view__intro">
+                            <strong>Choose a working view</strong>
+                            <span>Reweights related cards across this page; every route stays available.</span>
+                        </div>
+                        <div class="mode-switch" role="group" aria-label="Choose which route posture stays visually prominent" data-spw-operator="mode" data-spw-kind="lens" data-spw-lens-track="row" data-spw-lens-chrome="silent quiet" data-spw-semantic-expression="home[reading]{open.sit}">
+                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="reading" aria-pressed="true" data-spw-operator="ground"><span>Study</span><span class="home-working-view__token">.reading</span></button>
+                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="systems" aria-pressed="false" data-spw-operator="integration"><span>Build</span><span class="home-working-view__token">^systems</span></button>
+                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="play" aria-pressed="false" data-spw-operator="potential"><span>Play</span><span class="home-working-view__token">~play</span></button>
+                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="studio" aria-pressed="false" data-spw-operator="perspective"><span>Studio</span><span class="home-working-view__token">@studio</span></button>
+                        </div>
+                    </div>
                     <div class="mode-panels" data-spw-feature="home-perspective-panels">
                         <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="reading" data-spw-role="orientation" data-spw-kind="lens">
                             <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[reading]{craft}<entry>">
@@ -201,10 +203,9 @@
                         </section>
                     </div>
                     <nav class="hook-invitation wrap-jobs" aria-label="Spw wrap jobs" data-spw-feature="wrap-jobs" data-spw-semantic-expression="home[wrap]{rail}">
-                        <a class="operator-chip" href="#home-frame" data-spw-operator="mode" data-spw-action="sit" data-spw-semantic-expression="home[reading]{open.sit}<display>" aria-label="Sit a lens to change what this room shows"><span data-spw-copy-depth="entry">change view</span><span data-spw-copy-depth="normal">[reading] sit lens</span><span data-spw-copy-depth="technical">home[reading]{open.sit}&lt;display&gt;</span></a>
-                        <a class="operator-chip" href="#choose-your-entrance" data-spw-operator="direction" data-spw-action="travel" data-spw-semantic-expression="rooms{travel}<navigate>" aria-label="Move to the next frame on this page"><span data-spw-copy-depth="entry">next room</span><span data-spw-copy-depth="normal">{rooms} next frame</span><span data-spw-copy-depth="technical">rooms{travel}&lt;navigate&gt;</span></a>
-                        <a class="operator-chip" href="#home-reason-why" data-spw-operator="scene" data-spw-action="enter" data-spw-semantic-expression="(look){stage}<learn>" aria-label="Look closer at this room"><span data-spw-copy-depth="entry">look closer</span><span data-spw-copy-depth="normal">(look) learn more</span><span data-spw-copy-depth="technical">(look{stage}&lt;learn&gt;</span></a>
-                        <a class="operator-chip" href="/topics/search/?q=%5Breading%5D" data-spw-operator="wonder" data-spw-action="inspect" data-spw-semantic-expression="?reading{kin}<learn>" aria-label="Search expressions that sit in [reading]"><span data-spw-copy-depth="entry">find related</span><span data-spw-copy-depth="normal">?[reading]</span><span data-spw-copy-depth="technical">?reading{kin}&lt;learn&gt;</span></a>
+                        <a class="operator-chip" href="#choose-your-entrance" data-spw-operator="direction" data-spw-action="travel" aria-label="Move to the next frame on this page">Next room</a>
+                        <a class="operator-chip" href="#home-reason-why" data-spw-operator="scene" data-spw-action="enter" aria-label="Read why this home page exists">Why this page</a>
+                        <a class="operator-chip" href="/topics/search/?q=%5Breading%5D" data-spw-operator="wonder" data-spw-action="inspect" aria-label="Search routes related to the reading view">Find related routes</a>
                     </nav>
                 </div>
 
@@ -217,24 +218,29 @@
                     <li data-spw-motif="lore" data-spw-discharge-kind="situate" data-spw-operator="perspective">lore</li>
                 </ul>
 
-                <div class="spw-reason-strip" role="list" aria-label="Home page reasons" data-spw-role="schema" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-attention="scan" data-spw-behavior="invite">
-                    <div id="home-reason-why" data-spw-form="brace" data-spw-semantic-expression="home[why]{notice}">
+                <section class="spw-reason-strip" aria-label="Home page reasons" data-spw-role="schema" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-attention="scan" data-spw-behavior="invite">
+                    <article id="home-reason-why" data-spw-form="brace" data-spw-semantic-expression="home[why]{notice}">
                         <strong>Why this home page exists</strong>
                         <p>The sentences name what you might notice. The page then helps that notice travel: matching handles echo, glass and matte stay in their jobs, and the Midjourney renders keep one world across a folio, a card, and a session. <a href="/topics/">Topics</a> names the rooms. <a href="/settings/">Settings</a> names the variables.</p>
-                    </div>
-                    <div id="home-reason-readers" data-spw-form="brace" data-spw-semantic-expression="home[reader]{patron}">
+                    </article>
+                    <article id="home-reason-readers" data-spw-form="brace" data-spw-semantic-expression="home[reader]{patron}">
                         <strong>Primary readers</strong>
                         <p>Business-minded, software-adjacent supporters of the arts — producers, commissioners, working engineers, and patrons who want the handles to mean something and the pictures to stay in one world. <a href="/about/">About</a> is context. <a href="/services/">Services</a> is a conversation.</p>
-                    </div>
-                    <div id="home-reason-takeaway" data-spw-form="brace" data-spw-semantic-expression="home[takeaway]{handle}">
+                    </article>
+                    <article id="home-reason-takeaway" data-spw-form="brace" data-spw-semantic-expression="home[takeaway]{handle}">
                         <strong>Concrete things you can leave with</strong>
                         <p>A feel for how <a href="/topics/software/spw/">Spw</a> behaves, a current map of the work, and a visual canon you can carry: <a href="/cards/">proof cards</a>, <a href="/design/folios/">folio</a> studies, prompt packets from the <a href="/tools/midjourney/">depiction bench</a>, session traces from <a href="/play/rpg-wednesday/">RPG Wednesday</a>.</p>
                         <p data-spw-semantic-expression="prompt[example]{prime}">Example: hold any living term on this page to prime it as a working handle. Matching operators on the page should echo that hold.</p>
-                    </div>
-                </div>
+                    </article>
+                </section>
 
-                <div class="spw-narration" data-spw-textual-role="narration" data-spw-form="brace" data-spw-box-model="narration-card" data-spw-composition-flow="stack">
-                    <p class="spw-narration__cue" data-spw-textual-role="cue">Current direction</p>
+                <aside class="spw-narration" aria-label="Editorial direction and design notes" data-spw-textual-role="narration" data-spw-form="brace" data-spw-box-model="narration-card" data-spw-composition-flow="stack">
+                    <details class="home-field-notes" data-spw-disclosure="progressive">
+                    <summary>
+                        <span class="spw-narration__cue" data-spw-textual-role="cue">Current direction</span>
+                        <span class="home-disclosure-summary__note">The longer editorial model, held as field notes.</span>
+                    </summary>
+                    <div class="home-field-notes__body">
                     <p class="spw-narration__text" data-spw-textual-role="narration-text">
                         The site helps me practice through recipes, components, spells, study plans, and session notes — then share what is worth reusing. The current metaphor is a cookbook with engineering notes in the margins. The test: can a pattern be read, reused, revised, and served to someone else without losing its source?
                     </p>
@@ -282,7 +288,9 @@
                     <p class="spw-narration__text" data-spw-textual-role="narration-text">
                         The site should feel learnable before it feels elaborate. Every interaction should show what changed, where to return, and whether the state is temporary or worth keeping. Depth appears through repeated handles, visible state, and small shifts in spacing, color, or copy. Resonance here means a visual relationship that teaches why a change matters.
                     </p>
-                </div>
+                    </div>
+                    </details>
+                </aside>
 
                 <nav class="frame-operators home-quick-start" aria-label="Quick start actions">
                     <span class="home-quick-start__label">next move</span>
@@ -401,6 +409,13 @@
                 </p>
             </li>
         </ul>
+
+        <details class="home-depth-disclosure" data-spw-disclosure="progressive">
+            <summary>
+                <span>Open the deeper atlas</span>
+                <span class="home-disclosure-summary__note">Resonance practice, image routes, and component paths.</span>
+            </summary>
+            <div class="home-depth-disclosure__body">
 
         <aside class="spw-resonance-lab" aria-label="Resonance practice paths" data-spw-role="probe" data-spw-box-model="resonance-lab" data-spw-composition-flow="grid">
             <div data-spw-resonance-axis="ground" data-spw-semantic-expression="resonance[ground]{stable}">
@@ -688,6 +703,8 @@
                     </details>
                 </article>
             </div>
+            </div>
+        </details>
         </div>
         <footer class="frame-actions" data-spw-slot="actions">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
