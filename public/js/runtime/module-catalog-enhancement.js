@@ -12,9 +12,9 @@ import {
 } from './module-catalog-constants.js';
 
 const ATTENTION_SECTION_SELECTOR = [
-  '.spw-section-handle',
   'main > :is(section, aside, article, [data-spw-svg-host]):nth-child(n+4)',
   'main > article > :is(section, aside, [data-spw-svg-host]):nth-child(n+4)',
+  'main > [data-spw-cluster] > :is(section, aside, article, [data-spw-svg-host])',
   'main [data-spw-kind="hook"]',
   'main [data-spw-component-kind="hook"]',
 ].join(', ');
@@ -867,7 +867,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'attention-section-handle',
     familiarity: 'familiar',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.VISIBLE,
+    when: MOUNT_WHEN.IDLE,
     costClass: COST_CLASS.PAINT_COMPOSITE,
     subfeatures: ['section-handle-locomotion', 'cauldron-handle-nudge'],
     triggers: ['scroll-boundary', 'section-travel', 'cauldron-update'],
@@ -913,7 +913,8 @@ export const ENHANCEMENT_DEFS = [
       'measure:--spw-section-step',
       'measure:--field-balance',
     ],
-    timingArc: 'visible-attention',
+    timingArc: 'idle-attention',
+    timingChunk: 'idle-residue',
     effectScope: 'root-state section-state scroll-listener bus css-vars',
     evaluates: 'section handle semantic-expression geometry authored-cadence region-kin cauldron resonance',
     load: () => import('./attention/section-handle.js'),

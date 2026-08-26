@@ -13,6 +13,19 @@ export const NESTED_HOOK_SECTION_SELECTOR = [
   'main article [data-spw-component-kind="hook"]',
 ].join(', ');
 
+/* Some long-form routes group their authored regions under one structural
+   cluster so the page shell can pack them as a unit. The cluster is not the
+   navigable address; its direct section/article/aside children are. */
+export const CLUSTER_SECTION_SELECTOR = [
+  'main > [data-spw-cluster] > section[id]',
+  'main > [data-spw-cluster] > section[data-spw-kind]',
+  'main > [data-spw-cluster] > aside[id]',
+  'main > [data-spw-cluster] > aside[data-spw-kind]',
+  'main > [data-spw-cluster] > article[id]',
+  'main > [data-spw-cluster] > article[data-spw-kind]',
+  'main > [data-spw-cluster] > [data-spw-svg-host]',
+].join(', ');
+
 export const OPERATOR_SECTION_SELECTOR = [
   'main > section[id]',
   'main > section[data-spw-kind]',
@@ -26,6 +39,7 @@ export const OPERATOR_SECTION_SELECTOR = [
   'main > article > aside[data-spw-kind]',
   'main > [data-spw-svg-host]',
   'main > article > [data-spw-svg-host]',
+  CLUSTER_SECTION_SELECTOR,
   NESTED_HOOK_SECTION_SELECTOR,
 ].join(', ');
 export const PROBE_ATTR = 'data-spw-resonance-probe';
@@ -93,7 +107,7 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
   writable: false,
   children: Object.freeze({
     'scroll-cadence': 'idle',
-    'section-handle': 'visible',
+    'section-handle': 'idle',
     'resonance-probe': 'visible',
     'reading-groove': 'idle',
     'pinch-scale': 'interaction',
@@ -103,6 +117,7 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
   selectors: Object.freeze({
     handle: HANDLE_SELECTOR,
     operatorSections: OPERATOR_SECTION_SELECTOR,
+    clusteredSections: CLUSTER_SECTION_SELECTOR,
     nestedHookSections: NESTED_HOOK_SECTION_SELECTOR,
   }),
   attributes: Object.freeze({

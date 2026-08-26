@@ -6,6 +6,7 @@ import {
   SPW_LOG_RELATIONSHIPS,
   logger,
 } from './shared.js';
+import { readPinnedProbe } from './capture-pins.js';
 
 function readResonanceState(target) {
   if (!target) return { key: '', concept: '', ingredient: '' };
@@ -38,7 +39,8 @@ export function initResonanceProbe(root) {
   }
 
   function apply() {
-    const state = probeFocus || probeHover || { key: '', concept: '', ingredient: '' };
+    const pinnedProbe = readPinnedProbe(document);
+    const state = probeFocus || probeHover || (pinnedProbe ? { key: pinnedProbe, concept: '', ingredient: '' } : { key: '', concept: '', ingredient: '' });
     const key = state.key;
     const concept = state.concept;
     const ingredient = state.ingredient;
@@ -110,6 +112,7 @@ export function initResonanceProbe(root) {
     root.addEventListener('mouseover', onMouseEnter);
     root.addEventListener('mouseout', onMouseLeave);
   }
+  if (readPinnedProbe(document)) scheduleApply();
 
   return () => {
     if (rafId) cancelAnimationFrame(rafId);
@@ -120,7 +123,7 @@ export function initResonanceProbe(root) {
       root.removeEventListener('mouseover', onMouseEnter);
       root.removeEventListener('mouseout', onMouseLeave);
     }
-    html.removeAttribute(PROBE_ATTR);
+    if (!readPinnedProbe(document)) html.removeAttribute(PROBE_ATTR);
     html.removeAttribute('data-spw-resonance-concept');
     html.removeAttribute('data-spw-resonance-ingredient');
   };

@@ -82,7 +82,7 @@ test('attention children own independent progressive schedules', () => {
       .map((definition) => [definition.id, definition]),
   );
 
-  assert.equal(attention['attention-section-handle'].when, MOUNT_WHEN.VISIBLE);
+  assert.equal(attention['attention-section-handle'].when, MOUNT_WHEN.IDLE);
   assert.equal(attention['attention-resonance-probe'].when, MOUNT_WHEN.VISIBLE);
   assert.equal(attention['attention-reading-groove'].when, MOUNT_WHEN.IDLE);
   assert.equal(attention['attention-pinch-scale'].when, MOUNT_WHEN.INTERACTION);

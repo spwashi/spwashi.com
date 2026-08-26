@@ -175,7 +175,7 @@ test("attention architecture describes without writing and names child schedules
   assert.equal(snapshot.ready, true);
   assert.equal(snapshot.flourish, "pending");
   assert.equal(ATTENTION_ARCHITECTURE_CONTRACT.writable, false);
-  assert.equal(ATTENTION_ARCHITECTURE_CONTRACT.children["section-handle"], "visible");
+  assert.equal(ATTENTION_ARCHITECTURE_CONTRACT.children["section-handle"], "idle");
   assert.equal(ATTENTION_ARCHITECTURE_CONTRACT.children["pinch-scale"], "interaction");
 });
 

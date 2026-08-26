@@ -11,6 +11,7 @@ import {
   AUTO_HANDLE_MIN_SECTIONS,
   APPROACH_ATTR,
   CAULDRON_RESONANCE_ATTR,
+  NESTED_HOOK_SECTION_SELECTOR,
   HANDLE_AVAILABILITY_ATTR,
   HANDLE_CADENCE_ATTR,
   HANDLE_CADENCE_MOTION_ATTR,
@@ -46,6 +47,7 @@ import {
   writeAttributes,
   writeSectionProgressStyle,
 } from './shared.js';
+import { applyAttentionCapturePins } from './capture-pins.js';
 
 let lastSectionLogKey = '';
 let lastSectionIndex = 0;
@@ -369,10 +371,19 @@ function describeSection(section, index = 0, sections = []) {
 
 function collectSections() {
   const sections = Array.from(document.querySelectorAll(OPERATOR_SECTION_SELECTOR));
+  const sectionSet = new Set(sections);
   return sections.filter((section) => {
     if (!(section instanceof HTMLElement)) return false;
     if (!section.closest('main')) return false;
     if (section.hidden || section.getAttribute('aria-hidden') === 'true') return false;
+
+    /* A nested hook is a fallback section only when no authored section host
+       already contains it. Otherwise one visual region gets two addresses. */
+    if (section.matches(NESTED_HOOK_SECTION_SELECTOR)) {
+      const owningSection = section.parentElement?.closest('section, article, aside');
+      if (owningSection && sectionSet.has(owningSection)) return false;
+    }
+
     const info = describeSection(section);
     return !!info?.label;
   });
@@ -1263,6 +1274,39 @@ function createSectionHandleController({
 function resolveActiveIndex(sections) {
   if (!sections.length) return -1;
 
+  const indexForNode = (node) => {
+    if (!(node instanceof Node)) return -1;
+    return sections.findIndex((section) => section === node || section.contains(node));
+  };
+
+  /* Authored attention outranks the viewport's automatic reading anchor.
+     Focus and explicit selection are durable interaction signals. A fragment
+     address wins while its target remains in the local viewport field, then
+     passive scroll is free to resume section locomotion. */
+  const focusedIndex = indexForNode(document.activeElement);
+  if (focusedIndex >= 0 && document.activeElement !== document.body) {
+    return focusedIndex;
+  }
+
+  const selectedIndex = sections.findIndex((section) => section.matches([
+    '[data-spw-region-mark]',
+    '[data-spw-active="true"]',
+    '[data-spw-selection="focused"]',
+  ].join(', ')));
+  if (selectedIndex >= 0) return selectedIndex;
+
+  const target = document.querySelector(':target');
+  const targetedIndex = indexForNode(target);
+  if (targetedIndex >= 0 && target instanceof HTMLElement) {
+    const targetRect = target.getBoundingClientRect();
+    const attentionMargin = window.innerHeight * 0.25;
+    const targetInLocalField = (
+      targetRect.bottom >= -attentionMargin
+      && targetRect.top <= window.innerHeight + attentionMargin
+    );
+    if (targetInLocalField) return targetedIndex;
+  }
+
   const anchorY = window.scrollY + Math.min(Math.max(window.innerHeight * 0.28, 120), 320);
   let activeIndex = sections.length - 1;
 
@@ -1381,6 +1425,7 @@ function initHandleCauldronNudge(ctx, handle, shell) {
 }
 
 function initSectionHandle(root, ctx = {}) {
+  applyAttentionCapturePins(root?.ownerDocument || document);
   const sections = collectSections();
   const { handle, generated } = ensureHandle(root, sections);
   if (!handle) return () => {};
