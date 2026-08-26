@@ -220,6 +220,20 @@ function referencesSemanticCss(source: string): boolean {
   return /\bdata-spw-|--spw-|--component-|--grammar-|--handle-|--shell-|--material-|--ornament-/.test(source);
 }
 
+function findSelectorAtRuleJoins(source: string): number[] {
+  const withoutComments = source.replace(/\/\*[\s\S]*?\*\//g, (comment) => comment.replace(/[^\n]/g, ' '));
+  const lines = withoutComments.split('\n');
+  const invalidLines: number[] = [];
+
+  for (let index = 0; index < lines.length - 1; index += 1) {
+    if (!lines[index].trimEnd().endsWith(',')) continue;
+    if (!/^\s*@(media|supports|container|layer|scope)\b/.test(lines[index + 1])) continue;
+    invalidLines.push(index + 1);
+  }
+
+  return invalidLines;
+}
+
 export async function collectCssContractReport(): Promise<CssContractReport> {
   const errors: string[] = [];
   const warnings: string[] = [];
@@ -343,6 +357,12 @@ export async function collectCssContractReport(): Promise<CssContractReport> {
 
     if (!compatibilityWrapper && referencesSemanticCss(source) && !hasTopFileContract(source)) {
       warnings.push(`${relativePath} uses semantic CSS hooks without an obvious top-of-file contract.`);
+    }
+
+    if (!compatibilityWrapper && !isGeneratedBundlePath(rootPath)) {
+      for (const line of findSelectorAtRuleJoins(source)) {
+        errors.push(`${relativePath}:${line} ends a selector with a comma immediately before a conditional at-rule.`);
+      }
     }
 
     if (
