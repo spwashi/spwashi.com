@@ -115,6 +115,22 @@ fixity = "tending"
   owner = ".agents/plans/alignment-content-fit/PLAN.md"
 }
 
+^"home_progressive_vertical_packing_2026_08_25"{
+  operation = "audit"
+  fixity = "tending"
+  route = "/"
+  claim = `The home route had no horizontal containment failure at 390x844; it had a disclosure and vertical packing failure. Immediate orientation and encyclopedic depth occupied the same register, so automatic viewport attention could not choose a truthful subject.`
+  measured: #[
+    .{ viewport = `390x844`; page_inline = `383px client / 383px scroll`; before = `home-frame 6820px (8.1 viewports), choose-your-entrance 9426px (11.2 viewports)` },
+    .{ viewport = `390x844`; after = `home-frame 3068px (3.63 viewports), choose-your-entrance 229px (0.27 viewports), total page 8703px`; disclosures = `field notes closed, deeper atlas closed` },
+    .{ navbar = `top 0px, padding-top 0px`; menu = `11.4px right inset, matching the shell gutter`; working_view = `116.7px local instrument, four flat tabs` }
+  ][reg=set]
+  alignment = "Long editorial narration and the secondary image/component atlas now use native reversible details. The working view sits beside the panels it reweights, and the global Routes menu owns the shell end edge."
+  attention = "Focused, selected, marked, or locally targeted authored sections outrank the passive viewport anchor; fragment ownership mounts in the first idle residue tranche."
+  unmeasured = "Desktop visual rhythm after the final quiet-tab and navbar patches; disclosure-open screenshots; physical-device safe-area behavior."
+  owner = ".agents/plans/css-scroll-dark-regression/FIX.md"
+}
+
 #>wonder_ui_containment_1
 ?["Can containment be proven by anything other than looking?"]{
   #:depth #!experiential ~#lens(evidence)

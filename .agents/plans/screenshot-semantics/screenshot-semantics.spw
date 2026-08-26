@@ -67,10 +67,49 @@
  sharing_consideration: "A URL-encoded hash state (e.g., #frame=operators&liminality=nested) can supplement a screenshot with enough context to reconstruct the address, if not the full path."
 }
 
+^["qa_capture_process"]{
+  operation = "contract"
+  fixity = "tending"
+  claim = `QA stills and region anatomy are different crops of the same page. A person-screenshot is the device frame after an authored prepare. A situation clip is the seat's document box, which may be several viewports tall.`
+  tracks = #[
+    .{ name = `situation`; command = `npm run visual:ecology`; crop = `region document box`; judges = `seat packing, leftover desk, anatomy` },
+    .{ name = `viewport still`; command = `npm run visual:stills`; crop = `device frame after scroll/prepare`; judges = `one dominant subject, chrome geometry, disclosure honesty` },
+    .{ name = `page walk`; command = `npm run visual:walk`; crop = `viewport-tall slices to the bottom of core routes`; judges = `the last screen is present, not only the opening` },
+    .{ name = `survey`; command = `npm run visual:survey`; crop = `named stills + checks + walks, nested by day/profile/run`; judges = `parallel-safe, readable folders` },
+    .{ name = `print`; command = `npm run visual:social`; crop = `compose.css card`; judges = `content-fit, social crop` }
+  ][reg=set]
+  rules = #[
+    `Do not judge "one subject" from a region clip taller than ~1.25 device frames.`,
+    `Named stills live in scripts/lib/viewport-still-recipes.mjs, not the public runtime catalog.`,
+    `Prepare steps (open/close details, scroll to selector) are part of the recipe, not a /tmp script.`,
+    `Capture retries compositor blanks and a closed CDP target; live-reload is not a failed still.`,
+    `data-spw-capture-mode=screenshot freezes passage; still value must not depend on an animation peak.`,
+    `Route, hash, and query are the capture address: ?color-mode, ?theme, ?pin, ?probe, #section.`,
+    `Dark and reduced-motion checks get their own browse folder (pocket-dark, pocket-reduced) so arrow keys stay inside one environment.`,
+    `Attention pins write existing data-spw-region-mark and data-spw-resonance-probe; they do not invent a new family.`
+  ][reg=set]
+  home_pocket = #[`home-opening`, `home-reasons`, `home-entrance-closed`, `home-entrance-open`][reg=set]
+  browse = `runs/<day>/<profile>/<clock>--<hash>/<viewport>/ — readable names first (survey, pocket, pocket--dark-mode). Clock+hash lets parallel agents coexist. Walk slices are home--00000.jpg, home--00844.jpg down the page.`
+}
+
+^["viewport_passage_contract"]{
+ automatic_viewport: "Scroll position may compose a candidate still through low-amplitude edge light and material continuity. It does not know what the reader considers important."
+ attention_precedence: #[
+  `explicit addressed, selected, active, or focused state`,
+  `authored regional attentional weight and composition stability`,
+  `interaction-field distribution among nearby regions`,
+  `automatic viewport passage`
+ ][reg=set]
+ balance_rule: "Viewport passage dresses existing seams and specular layers. It must not replace component transform, opacity, border, or animation ownership, and intentional attention must remain visibly stronger."
+ capture_rule: "A non-default capture mode freezes passage into the component's settled authored state. A screenshot must not require catching a transient animation peak."
+ complexity_rule: "As visible complexity rises, salience becomes more differential, not uniformly louder: one addressed subject may strengthen while neighboring material remains coherent and readable."
+}
+
 ^["invariant"]{
  "Every screenshottable state must be reachable through touch, keyboard, and pointer equally.",
  "Priming signals must survive in data attributes, not just in CSS interaction pseudo-classes.",
  "Journey tokens must not appear in the default ambient state — they require earned engagement.",
  "Screenshot legibility must not depend on color alone — structure, label, and attribute should all carry signal.",
- "The calm default state must remain undisturbed when screenshottable state infrastructure is added."
+ "The calm default state must remain undisturbed when screenshottable state infrastructure is added.",
+ "Viewport passage is subordinate to authored and explicit attention, and capture mode must settle it."
 }

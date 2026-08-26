@@ -8,8 +8,8 @@ The desired end state is a site where a screenshot at any moment captures someth
 
 ## Scope
 
-- **In scope**: priming semantics (how pre-selection attention is visualized without hover), selection state visual persistence (what carries meaning in a still image), journey token design (what a captured state communicates about its path), data attributes and CSS that carry state legibly without JavaScript, screenshottable state taxonomy, and visual markers for liminality, selection, and operator engagement.
-- **Out of scope**: screenshot automation, social sharing infrastructure, server-side rendering, persistent screenshot storage, or URL-encoded state reconstruction beyond what simple hashes already support.
+- **In scope**: priming semantics (how pre-selection attention is visualized without hover), selection state visual persistence (what carries meaning in a still image), journey token design (what a captured state communicates about its path), data attributes and CSS that carry state legibly without JavaScript, screenshottable state taxonomy, visual markers for liminality, selection, and operator engagement, and the QA capture process that distinguishes a device-frame still from a tall region anatomy clip.
+- **Out of scope**: screenshot automation as a public product, social sharing infrastructure, server-side rendering, persistent screenshot storage, or URL-encoded state reconstruction beyond what simple hashes already support. Ad-hoc `/tmp` capture scripts are not a capture track.
 
 ## Files
 
@@ -21,6 +21,9 @@ The desired end state is a site where a screenshot at any moment captures someth
 [MOD?] public/css/style.css — ensure selection, priming, and liminality state survive as visible CSS without hover/focus
 [MOD?] public/js/spw-component-semantics.js — write priming and address state into data attributes at interaction time
 [MOD?] public/js/spw-shared.js — helpers for persisting address and journey state into markup attributes
+[MOD] scripts/lib/visual-capture-plan.mjs — viewport still vs region anatomy; --stills track
+[NEW] scripts/lib/viewport-still-recipes.mjs — named device-frame subjects (tooling-only)
+[MOD] scripts/component-snapshots.mjs — prepare, blank/target retry, shared screenshotBuffer
 [MOD?] index.html — add screenshottable state hooks to primary frames
 [MOD?] topics/software/index.html — ensure operator grammar states are legibly captured
 [MOD?] topics/software/spw/index.html — operator atlas pages should be maximally screenshot-legible
@@ -31,6 +34,9 @@ Craft guard:
 - Journey tokens should be sparse and semantically rich — earned marks, not labels on every element.
 - Visual markers for address and liminality should use existing operator color tokens, not new arbitrary colors.
 - Nothing added for screenshot legibility should clutter the calm default state.
+- Each scroll position may offer a visually composed viewport, but viewport position is atmospheric evidence, not semantic address.
+- Explicit address, selection, focus, and authored attentional weight must remain more salient than automatic scroll passage.
+- A capture must remain attractive after transient motion is frozen; screenshot value cannot depend on catching an animation peak.
 
 ## Commits
 

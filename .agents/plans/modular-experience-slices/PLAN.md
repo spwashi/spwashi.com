@@ -73,7 +73,7 @@ The first ownership seam is now explicit: attention emits coarse settled-section
 
 **Runtime blueprint:**
 
-- `attention-section-handle` — visible; eligible authored sections or a static handle; owns section locomotion and the handle-local cauldron nudge.
+- `attention-section-handle` — first idle residue tranche; eligible authored sections or a static handle; owns section locomotion and the handle-local cauldron nudge. Idle avoids making deep-link correctness depend on a pre-settle viewport observation, while the first tranche lets fragment ownership settle before collectible or lab flourishes.
 - `attention-resonance-probe` — visible; operator/concept/ingredient targets; keyboard focus everywhere and hover only on fine hover pointers.
 - `attention-reading-groove` — idle; substantial article/section prose; remains plain text when observers are unavailable and honors reduced-motion CSS.
 - `attention-pinch-scale` — interaction; mounts listeners only for multi-touch/coarse-pointer capability and leaves settings as the scale authority.

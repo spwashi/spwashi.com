@@ -172,7 +172,7 @@
   status = `implemented downstream of the audit`
   compatibility = `attention-architecture remains a direct-import facade and is no longer the catalog transport`
   children: #[
-    .{ id = `attention-section-handle`, when = `visible`, owner = `section locomotion + handle-local cauldron nudge` },
+    .{ id = `attention-section-handle`, when = `idle-residue`, owner = `section locomotion + handle-local cauldron nudge; address model must exist in the first idle tranche even when a fragment settles outside the initial visibility sample` },
     .{ id = `attention-resonance-probe`, when = `visible`, owner = `keyboard focus + fine-pointer resonance` },
     .{ id = `attention-reading-groove`, when = `idle`, owner = `optional prose beat observation` },
     .{ id = `attention-pinch-scale`, when = `interaction`, owner = `capability-gated multi-touch scale preview` },

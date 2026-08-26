@@ -105,3 +105,17 @@ fixity = "tending"
   constraint = "keep specialist route silhouettes intact and add no shared-core CSS while the core payload is near budget"
   probe = `npm run css:payload && node scripts/normalize-breakpoints.mjs && node scripts/check-site.mjs && git diff --check`
 }[reg=facet]
+
+^"viewport_capture_alignment_2026_08_25"{
+  #:operation #!align
+  #:fixity #!tending
+  focus = "hierarchy"
+  owner = "effects/material.css + screenshot-semantics"
+  core_bundle_kb = 1672
+  core_soft_budget_kb = 1638
+  constraint = "add no shared motion token; reuse regional-lighting bias, authored seams, and card specular state"
+  precedence = "explicit address / selection > authored region weight > interaction distribution > viewport passage"
+  capture_rule = "scroll passage lives on decorative pseudo-elements and freezes in non-default capture mode"
+  falsification = "a viewport-timeline animation suppresses hover, focus, active, discharge, frame-bloom, or a settled capture"
+  probe = `npm run css:payload && node scripts/check-site.mjs && git diff --check`
+}[reg=facet]

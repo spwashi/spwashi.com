@@ -15,6 +15,10 @@
 @packs_css: ~"../../public/css/themes/packs.css"
 @syntax: ~"../../public/css/grammar/syntax.css"
 @seats: ~"../../public/css/systems/region-seats.css"
+@material_physics: ~"../conventions/material-physics.spw"
+@electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
+@region_personality: ~"../conventions/component-region-personality.spw"
+@screenshot_semantics: ~"../../.agents/plans/screenshot-semantics/screenshot-semantics.spw"
 
 operation = "cache"
 fixity = "tending"
@@ -34,4 +38,31 @@ fixity = "tending"
   pattern_consideration = `Pack × harmony is a climate wash. Seat tropes (hook|hub|cluster|path|read|wide) stay in @seats. Charge stays on the field token. Three spends, one job each.`
   expansion_prime = `Do not add hook/hub/cluster layout to packs.css. If a pack wash fights a seat trope, fix the pack selector, not the seat.`
   validation = `rg 'data-spw-harmony' public/css/themes/packs.css public/css/grammar/syntax.css public/css/systems/region-seats.css`
+}[reg=facet]
+
+^"progressive_region_voice_2026_08"{
+  id = "progressive-region-voice-2026-08"
+  operation = "cache"
+  fixity = "experimental"
+  source = `2026-08-25 public scroll review + workbench progressive-product, cache-field, and material-model comparison`
+  claim = `A region develops a recognizable voice when authored identity, material response, electrostatic attention, and progressive disclosure remain independent and then compose. A universal viewport reveal collapses those axes into one synthetic sheen.`
+  evidence = #[
+    `@region_personality already names region role, vocabulary, register, copy depth, and link contour, while home supplies distinct data-spw-region-role values across its long scroll`,
+    `@material_physics maps tangibility, viscosity, coherence, optics, and ground into numeric response rather than named looks alone`,
+    `@electrostatic_affordances maps operator -> terminal and region seat -> store|conduct|couple|leak|resist through --spw-e-channel`,
+    `@screenshot_semantics requires explicit address, selection, focus, and authored weight to outrank automatic viewport passage`,
+    `spw-workbench docs/theory/spw/cache-field.spw: identity is not retention, disclosure, or attention`,
+    `spw-workbench packages/spw-seed/src/ir/progressive.ts: a progressive product reports included, omitted, deferred, requested-field completeness, and elapsed time honestly`,
+    `spw-workbench .spw/biome/ocean/algos/material.spw: density, viscosity, elasticity, porosity, and anisotropy guide tuning while canonical semantics remain stable`
+  ][reg=set]
+  pattern_consideration = #[
+    `region identity: data-spw-region-role / purpose / vocabulary — authored truth`,
+    `material response: tangibility / viscosity / coherence / metamaterial — how the seat carries content`,
+    `attention: operator terminal x region channel x nest — how emphasis travels`,
+    `disclosure: visible public copy is included; details, modes, and copy-depth may be deferred; unavailable material must be named as omitted rather than implied`,
+    `retention: grounding, collection, browser-local memory, build output, and service-worker data name their plane; scroll position is not a cache`
+  ][reg=set]
+  expansion_prime = `First make section locomotion address the authored frames under the home page cluster, then attenuate its existing cadence through the authored region channel; do not animate every frame/card/brace. Next, browser-review a short home sequence and author material/disclosure differences only where the content supplies a real reason.`
+  validation = `npm run spw:integrity; rg 'spw-section-attention-authority|spw-e-channel' public/css/components/runtime-states.css public/css/systems/electrostatic-affordances.css; browser stills at rest, scroll-active, focus-within, and reduced-motion.`
+  do_not_promote_until = `At least three materially different home regions remain recognizable in still captures with automatic cadence disabled, and the same model explains one non-home route without new attributes.`
 }[reg=facet]

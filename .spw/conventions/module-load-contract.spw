@@ -52,6 +52,7 @@ fixity = "settled"
     awoken_modules = #[`attention-section-handle`, `attention-resonance-probe`, `sigil-anatomy`, `operators`][reg=set]
     electrostatics = "Latent terminals arm (data-spw-charge=armed). Resonance probe lights matching sigils across the page via CSS :has()."
     affordance = "Sticky section handle surfaces current conceptual coordinates; matching operators echo softly in peripheral vision."
+    section_locomotion = "The lightweight section address model mounts in the first idle residue tranche after first paint. Its correctness cannot depend on which region a pre-settle visibility observer sampled, especially on fragment entry, and it should settle before collectible or lab flourishes."
   }[reg=facet]
 
   act_3_touch_and_conduction: .{

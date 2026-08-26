@@ -24,7 +24,7 @@ attributes: .{
  data_spw_box_presence = `presence state: hidden, waiting, present, overfull.`
  data_spw_box_overflow = `true when scroll size exceeds visible box size.`
  data_spw_box_story = `short narrative-readable summary for console, screenshots, and model hydration.`
- data_spw_lens_chrome = `mode-switch visual chrome: silent hides decorative aria-label chip (AT still uses aria-label). Lives in handles — not a route override.`
+ data_spw_lens_chrome = `mode-switch visual chrome: silent hides the decorative aria-label chip (AT still uses aria-label); quiet removes the capsule chassis for a locally labeled editorial tab row. Lives in handles — not a route override.`
  data_spw_lens_track = `mode-switch track layout: row = full-width equal-share flex (no phone 2×2). Authored progressive contract.`
 }[reg=facet]
 

@@ -85,6 +85,14 @@ fixity = "tending"
   capture_rule: "Both systems go identity under a non-default `data-spw-capture-mode`. A screenshot read by another model should carry the image, not this site's mood applied to it."
 }
 
+^"capture_ready_passage"{
+  claim: "A viewport may become more composed as it passes, but scroll position is not semantic attention. Passage is a weak atmospheric input beneath explicit address, authored attentional weight, and interaction-field distribution."
+  ownership: "Scroll-linked effects animate existing decorative seams or specular pseudo-elements. They do not take ownership of a component's transform, opacity, border, or animation shorthand."
+  balance: "Differential salience is allowed and useful. Complexity is managed by making the addressed subject clearer while neighboring regions stay coherent, not by raising every visible surface to the same intensity."
+  capture: "Non-default capture mode freezes transient passage. A still must remain attractive and legible at rest rather than depending on an animation midpoint."
+  probe: `rg -n "scroll-passage|capture-mode" public/css/effects/material.css public/css/effects/living-motions.css`
+}
+
 ^"breakpoints"{
   ladder: "Rungs are canonical only where usage already clustered — see @breakpoints. 58 distinct thresholds became 32 by snapping drift (719/720/721, 979/980/981, 760 beside 768 beside 48rem) with no move beyond 5%."
   latest: "2026-08-19 alignment follow-up snapped the remaining 36rem layout thresholds (component container and section-context media query) to the established 35rem rung; the dry probe is clean again."
