@@ -47,8 +47,24 @@ import {
   clipSpaceForJob,
   isMissedSpecimen,
   assessCaptureOccupancy,
+  assessViewportSubject,
+  isBlankStill,
   formatCaptureExpression,
+  errorFile,
+  captureSearchParams,
+  CAPTURE_MEASURE,
 } from './lib/visual-capture-plan.mjs';
+import { VIEWPORT_STILL_CHECKS, VIEWPORT_STILL_RECIPES } from './lib/viewport-still-recipes.mjs';
+import {
+  CAPTURE_PROFILES,
+  DEFAULT_WALK_ROUTES,
+  applyCaptureProfile,
+  captureRunLayout,
+  resolveCaptureProfile,
+  walkFileName,
+  writeRunPointer,
+  writeRunsIndex,
+} from './lib/capture-profiles.mjs';
 import {
   archiveKeptPack,
   writeArchiveIndex,
@@ -69,8 +85,10 @@ import {
   pickFreePort,
   pickViewports,
   resolveChrome,
+  screenshotBuffer,
   spawnDevServer,
   waitForHttp,
+  evaluateProbe,
   ROOT,
 } from './lib/chrome-headless-harness.mjs';
 
@@ -103,6 +121,12 @@ function parseArgs(argv) {
     settleMs: 2500,
     social: false,
     socialOnly: false,
+    stills: false,
+    checks: false,
+    walk: false,
+    walkRoutes: null,
+    maxSlices: 8,
+    profile: null,
     timeoutMs: 45000,
     viewports: null,
     tokens: [],
@@ -114,6 +138,11 @@ function parseArgs(argv) {
     else if (arg === '--json') options.json = true;
     else if (arg === '--dry-plan') options.dryPlan = true;
     else if (arg === '--ecology') options.ecology = true;
+    else if (arg === '--stills') options.stills = true;
+    else if (arg === '--checks') options.checks = true;
+    else if (arg === '--walk') options.walk = true;
+    else if (arg === '--profile' && argv[i + 1]) options.profile = argv[++i];
+    else if (arg.startsWith('--profile=')) options.profile = arg.slice(10);
     else if (arg === '--no-components') options.noComponents = true;
     else if (arg === '--social') options.social = true;
     else if (arg === '--social-only') {
@@ -131,8 +160,13 @@ function parseArgs(argv) {
     else if (arg === '--quick') options.quick = true;
     else if (arg === '--base' && argv[i + 1]) options.base = argv[++i];
     else if (arg.startsWith('--base=')) options.base = arg.slice(7);
-    else if (arg === '--out' && argv[i + 1]) options.out = argv[++i];
-    else if (arg.startsWith('--out=')) options.out = arg.slice(6);
+    else if (arg === '--out' && argv[i + 1]) {
+      options.out = argv[++i];
+      options.outExplicit = true;
+    } else if (arg.startsWith('--out=')) {
+      options.out = arg.slice(6);
+      options.outExplicit = true;
+    }
     else if (arg === '--chrome' && argv[i + 1]) options.chrome = argv[++i];
     else if (arg.startsWith('--chrome=')) options.chrome = arg.slice(9);
     else if (arg === '--ids' && argv[i + 1]) options.ids = argv[++i].split(',').filter(Boolean);
@@ -176,6 +210,8 @@ function parseArgs(argv) {
     const knownIds = [
       ...COMPONENT_FIXTURES.map((fixture) => fixture.id),
       ...REGION_ECOLOGY_FIXTURES.map((fixture) => fixture.id),
+      ...VIEWPORT_STILL_RECIPES.map((recipe) => recipe.id),
+      ...VIEWPORT_STILL_CHECKS.map((recipe) => recipe.id),
     ];
     const parsed = parseSpwCaptureTokens(options.tokens, knownIds);
     if (parsed.seats.length) options.seats = [...new Set([...(options.seats || []), ...parsed.seats])];
@@ -186,7 +222,31 @@ function parseArgs(argv) {
     if (parsed.ecology) options.ecology = true;
     if (parsed.social) options.social = true;
     if (parsed.set) options.ecology = true;
+    if (parsed.stills) options.stills = true;
+    if (parsed.checks) {
+      options.checks = true;
+      options.stills = true;
+    }
+    if (parsed.walk) options.walk = true;
     if (parsed.seats.length && !parsed.ids.length) options.noComponents = true;
+  }
+
+  if (options.profile) {
+    const profile = resolveCaptureProfile(options.profile);
+    if (!profile) {
+      throw new Error(`Unknown capture profile: ${options.profile}. Use ${Object.keys(CAPTURE_PROFILES).join(', ')}`);
+    }
+    Object.assign(options, applyCaptureProfile(options, profile));
+  }
+  if (options.checks) options.stills = true;
+  if (options.walk) {
+    options.walkRoutes = options.walkRoutes || [...DEFAULT_WALK_ROUTES];
+    options.noComponents = true;
+  }
+  const flowsPassed = argv.some((arg) => arg === '--flows' || arg.startsWith('--flows='));
+  if ((options.stills || options.walk) && !flowsPassed) {
+    options.flows = ['page'];
+    options.noComponents = true;
   }
 
   if (options.quick) {
@@ -242,6 +302,11 @@ Options:
   --aspects a,b      fit,square,portrait,story,landscape,og
   --lenses a,b       density,enhancement,tangibility,labels (opt-in visibility/tangibility)
   --ecology          Include region-ecology seats
+  --stills           Named viewport stills (device frame after scroll/prepare). Default flow is page.
+  --checks           Route/env/theme/attention pin stills (deep link, dark, reduced motion).
+  --walk             Viewport-tall slices to the bottom of core routes.
+  --profile name     ambient | walk | checks | survey
+  --out PATH         Pack root (default design/components/captures). Runs nest as runs/<day>/<profile>/<clock>--<hash>/
   --no-components    Skip component fixtures
   --social           Emit unique/social cards on top of QA
   --social-only      Social cards only (content-fit + named aspects)
@@ -259,16 +324,42 @@ Options:
   --json
 
 Clips: region/component use the element's document box (beyond the viewport).
+Runs nest as runs/<day>/<profile>/<clock>--<hash>/. Viewport folders use readable names (pocket, pocket--dark-mode).
+Walks write home--00000.jpg, home--00844.jpg so slices sort down the page.
+JSON stays at pack root. Blanks/misses go in captures/errors/.
 Retries keep the clip. Header-only hits are miss--, not specimen stills.
 `);
 }
 
-function captureQuery(url, lens = null) {
+function captureQuery(url, job = null) {
   const u = new URL(url);
   if (!u.searchParams.has('interaction')) u.searchParams.set('interaction', 'calm');
   if (!u.searchParams.has('precipitate')) u.searchParams.set('precipitate', 'print');
+  const lens = job?.lens;
   if (lens?.query && lens?.value) u.searchParams.set(lens.query, lens.value);
+  const extra = captureSearchParams(job?.conditions || {}, job?.attention || {});
+  extra.forEach((value, key) => {
+    if (!u.searchParams.has(key)) u.searchParams.set(key, value);
+  });
   return u.href;
+}
+
+async function emulateCaptureEnvironment(session, conditions = {}) {
+  const features = [];
+  if (conditions.colorMode === 'dark' || conditions.colorScheme === 'dark') {
+    features.push({ name: 'prefers-color-scheme', value: 'dark' });
+  } else if (conditions.colorMode === 'light' || conditions.colorScheme === 'light') {
+    features.push({ name: 'prefers-color-scheme', value: 'light' });
+  }
+  if (conditions.reducedMotion === 'reduce' || conditions.reducedMotion === true) {
+    features.push({ name: 'prefers-reduced-motion', value: 'reduce' });
+  }
+  if (!features.length) return;
+  try {
+    await session.send('Emulation.setEmulatedMedia', { features });
+  } catch {
+    // optional on older Chrome
+  }
 }
 
 function gitChangedFiles() {
@@ -280,47 +371,13 @@ function gitChangedFiles() {
   return result.stdout.split('\n').map((line) => line.trim()).filter(Boolean);
 }
 
-async function screenshotBuffer(session, { format = 'png', quality = 70, clip = null } = {}) {
-  const cssClip = clip
-    ? {
-      x: Math.max(0, clip.x),
-      y: Math.max(0, clip.y),
-      width: Math.max(2, clip.width),
-      height: Math.max(2, clip.height),
-      scale: clip.scale || 1,
-    }
-    : null;
-  const beyond = Boolean(clip?.captureBeyondViewport);
-  const attempts = cssClip
-    ? [
-      { format, fromSurface: true, captureBeyondViewport: beyond, clip: cssClip },
-      { format, fromSurface: true, captureBeyondViewport: !beyond, clip: cssClip },
-      { format, fromSurface: false, captureBeyondViewport: beyond, clip: cssClip },
-    ]
-    : [
-      { format, fromSurface: true, captureBeyondViewport: false },
-      { format, fromSurface: false, captureBeyondViewport: false },
-    ];
-  let lastErr = null;
-  for (let i = 0; i < attempts.length; i += 1) {
-    const params = { ...attempts[i] };
-    if (format === 'jpeg') params.quality = quality;
-    try {
-      const { data } = await session.send('Page.captureScreenshot', params, 12000);
-      if (data) {
-        if (i > 0) process.stderr.write(`  ~ capture retry ${i} clip=${Boolean(params.clip)}\n`);
-        return Buffer.from(data, 'base64');
-      }
-    } catch (err) {
-      lastErr = err;
-    }
-  }
-  throw lastErr || new Error('captureScreenshot failed');
-}
-
 async function measureSelector(session, selector) {
   const { result, exceptionDetails } = await session.send('Runtime.evaluate', {
     expression: `(async () => {
+      const race = (promise, ms) => Promise.race([
+        promise,
+        new Promise((resolve) => setTimeout(resolve, ms)),
+      ]);
       const el = document.querySelector(${JSON.stringify(selector)});
       if (!el) return null;
       const html = document.documentElement;
@@ -329,6 +386,13 @@ async function measureSelector(session, selector) {
       if (body) body.setAttribute('data-spw-capture-mode', 'screenshot');
       try { el.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'nearest' }); }
       catch { el.scrollIntoView(true); }
+      if (document.fonts && document.fonts.ready) {
+        try { await race(document.fonts.ready, ${CAPTURE_MEASURE.fontWaitMs}); } catch { /* ignore font errors */ }
+      }
+      const pendingImages = Array.from(el.querySelectorAll('img')).filter((img) => !img.complete);
+      if (pendingImages.length) {
+        await race(Promise.allSettled(pendingImages.map((img) => img.decode ? img.decode() : new Promise((res) => { img.onload = img.onerror = res; }))), ${CAPTURE_MEASURE.imageWaitMs});
+      }
       await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       const r = el.getBoundingClientRect();
       const ds = el.dataset || {};
@@ -340,10 +404,13 @@ async function measureSelector(session, selector) {
       try {
         const compositionUrl = new URL('/public/js/runtime/composition-box-model.js', document.baseURI).href;
         const pretextUrl = new URL('/public/js/semantic/pretext-measurement-bus.js', document.baseURI).href;
-        const [boxModule, pretextModule] = await Promise.all([
+        const [boxModule, pretextModule] = await race(Promise.all([
           import(compositionUrl),
           import(pretextUrl),
-        ]);
+        ]), ${CAPTURE_MEASURE.importWaitMs});
+        if (!boxModule || !pretextModule) {
+          throw new Error('measurement modules timed out');
+        }
         const boxSnapshot = boxModule.snapshotCompositionBox(el, { root: document });
         if (boxSnapshot) {
           composition = {
@@ -445,7 +512,7 @@ async function measureSelector(session, selector) {
     })()`,
     returnByValue: true,
     awaitPromise: true,
-  });
+  }, CAPTURE_MEASURE.evaluateTimeoutMs);
   if (exceptionDetails) throw new Error(exceptionDetails.text || 'measureSelector failed');
   return result?.value || null;
 }
@@ -512,7 +579,7 @@ function galleryHtml(manifest) {
     <h1>Visual capture pack</h1>
     <p class="meta">Generated ${manifest.at || ''} · ${manifest.captures?.length || 0} stills · qa device-reasons + social content-fit cards</p>
     <p class="meta">QA answers “does it pack?” Social precipitates answer “is this combination worth posting?” Pixels stay gitignored.</p>
-    <p class="meta"><a href="${manifest.archiveIndex || 'archive/index.html'}">Archive skim</a> — <code>archive/images/&lt;commit&gt;/</code>. Errors keep <code>blank--</code>, <code>collision--</code>, <code>failed--</code>, <code>miss--</code>.</p>
+    <p class="meta"><a href="${manifest.archiveIndex || 'archive/index.html'}">Archive skim</a> — stills cluster as <code>captures/&lt;viewport&gt;/NN-id.jpg</code> for arrow-key preview. JSON lives at pack root; blanks go in <code>captures/errors/</code>.</p>
     <div class="filters" role="group" aria-label="Filter stills">
       <button type="button" data-filter="all" aria-pressed="true">all</button>
       <button type="button" data-filter="qa">qa</button>
@@ -544,21 +611,11 @@ function galleryHtml(manifest) {
 </html>`;
 }
 
-/** Compositor blanks compress hard. A small real clip can be well under 40KB. */
-function isBlankStill(buffer, job, clip = null) {
-  const bytes = buffer?.length || 0;
-  const pixels = Math.max(0, (clip?.width || 0) * (clip?.height || 0));
-  if (bytes < 800) return true;
-  if (job.flow === 'page' && bytes < 48000) return true;
-  if (pixels > 10000 && bytes / pixels < 0.025 && bytes < 25000) return true;
-  if ((job.flow === 'component' || job.flow === 'template') && bytes < 500) return true;
-  return false;
-}
-
 function errorArtifactRel(kind, job, ext = null) {
-  const base = path.basename(job.file || `${job.id}--${job.viewportId}--${job.flow}.jpg`);
-  const named = ext ? base.replace(/\.[^.]+$/, ext) : base;
-  return `captures/${kind}--${named}`;
+  const rel = errorFile(kind, job);
+  if (!ext) return rel;
+  const suffix = ext.startsWith('.') ? ext : `.${ext}`;
+  return rel.replace(/\.[^.]+$/, suffix);
 }
 
 async function writeErrorArtifact(outDir, kind, job, { buffer, message, twin } = {}) {
@@ -596,12 +653,25 @@ async function readPriorManifest(outDir) {
 }
 
 async function existingCaptureFiles(outDir) {
-  try {
-    const names = await readdir(path.join(outDir, 'captures'));
-    return new Set(names.map((name) => `captures/${name}`));
-  } catch {
-    return new Set();
+  const files = new Set();
+  async function walk(dir, prefix) {
+    let entries = [];
+    try {
+      entries = await readdir(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) {
+        await walk(path.join(dir, entry.name), rel);
+        continue;
+      }
+      files.add(`captures/${rel}`);
+    }
   }
+  await walk(path.join(outDir, 'captures'), '');
+  return files;
 }
 
 async function hashSources(job) {
@@ -640,6 +710,94 @@ function resolveJobViewport(job, qaViewports) {
     || { id: job.viewportId, width: 1440, height: 900, deviceScaleFactor: 1, mobile: false, hasTouch: false };
 }
 
+async function readPageExtent(session) {
+  return evaluateProbe(session, `(() => ({
+    scrollY: Math.round(window.scrollY),
+    innerHeight: window.innerHeight || 1,
+    scrollHeight: Math.max(
+      document.documentElement.scrollHeight || 0,
+      document.body?.scrollHeight || 0,
+    ),
+  }))()`, CAPTURE_MEASURE.evaluateTimeoutMs);
+}
+
+async function scrollPageTo(session, y) {
+  return evaluateProbe(session, `(async () => {
+    window.scrollTo(0, ${Number(y) || 0});
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    return Math.round(window.scrollY);
+  })()`, CAPTURE_MEASURE.evaluateTimeoutMs);
+}
+
+async function capturePageWalk(session, job, { viewport, format, quality }) {
+  const ext = format === 'jpeg' ? 'jpg' : format;
+  const cluster = String(job.file || '').replace(/^captures\//, '').split('/').slice(0, -1).join('/') || (job.viewportId || 'pocket');
+  const maxSlices = Math.max(1, Number(job.maxSlices) || 8);
+  const slices = [];
+  let extent = await readPageExtent(session);
+  const lastY = Math.max(0, extent.scrollHeight - extent.innerHeight);
+  let y = 0;
+  for (let index = 0; index < maxSlices; index += 1) {
+    await scrollPageTo(session, y);
+    const buffer = await screenshotBuffer(session, { format, quality });
+    const file = `captures/${cluster}/${walkFileName(job.specimenRoute, y, ext)}`;
+    slices.push({
+      buffer,
+      file,
+      y,
+      scrollHeight: extent.scrollHeight,
+      innerHeight: extent.innerHeight,
+    });
+    if (y >= lastY - 24) break;
+    y = Math.min(lastY, y + extent.innerHeight);
+    extent = await readPageExtent(session);
+  }
+  return slices;
+}
+
+async function applyCapturePrepare(session, job) {
+  const prepare = job?.prepare;
+  const attention = job?.attention || {};
+  const close = Array.isArray(prepare?.close) ? prepare.close : (prepare?.close ? [prepare.close] : []);
+  const open = Array.isArray(prepare?.open) ? prepare.open : (prepare?.open ? [prepare.open] : []);
+  if (!close.length && !open.length && !attention.section && !attention.probe) return;
+  await evaluateProbe(session, `(async () => {
+    const html = document.documentElement;
+    for (const sel of ${JSON.stringify(close)}) {
+      document.querySelectorAll(sel).forEach((el) => { if ('open' in el) el.open = false; });
+    }
+    for (const sel of ${JSON.stringify(open)}) {
+      document.querySelectorAll(sel).forEach((el) => { if ('open' in el) el.open = true; });
+    }
+    const pins = {
+      section: ${JSON.stringify(attention.section || '')},
+      probe: ${JSON.stringify(attention.probe || '')},
+    };
+    try {
+      const mod = await import('/public/js/runtime/attention/capture-pins.js');
+      mod.applyAttentionCapturePins(document, pins);
+    } catch {
+      if (pins.section) {
+        const node = document.getElementById(pins.section);
+        if (node) {
+          node.setAttribute('data-spw-region-mark', 'capture');
+          html.setAttribute('data-spw-page-section-current', pins.section);
+        }
+      }
+      if (pins.probe) html.setAttribute('data-spw-resonance-probe', pins.probe);
+    }
+    html.setAttribute('data-spw-capture-mode', 'screenshot');
+    document.body?.setAttribute('data-spw-capture-mode', 'screenshot');
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    return true;
+  })()`, CAPTURE_MEASURE.evaluateTimeoutMs);
+}
+
+function isTargetGoneError(error) {
+  const message = String(error?.message || error || '');
+  return /navigated or closed|session closed|websocket|timeout: Runtime\.evaluate/i.test(message);
+}
+
 async function captureJob(session, job, {
   base,
   viewport,
@@ -657,17 +815,21 @@ async function captureJob(session, job, {
     await renderCardDocument(session, base, snippet, job.aspect || 'fit', viewport, job.sizeToken, job.lens);
     box = await measureSelector(session, job.selector)
       || await measureSelector(session, '[data-spw-capture-host="template"]');
-  } else if (job.flow !== 'page') {
-    box = await measureSelector(session, job.selector);
-    if (!box || box.width < 2 || box.height < 2) {
-      throw new Error(`${job.selector} not found or empty`);
+  } else {
+    await applyCapturePrepare(session, job);
+    if (job.selector) {
+      box = await measureSelector(session, job.selector);
+      if (!box || box.width < 2 || box.height < 2) {
+        throw new Error(`${job.selector} not found or empty`);
+      }
     }
   }
 
   const padding = job.flow === 'region' ? 20 : job.canvas === 'card' ? 16 : 12;
   let clip = null;
   let buffer;
-  if (job.flow === 'page' || !box) {
+  const deviceFrame = job.still || job.flow === 'page' || !box;
+  if (deviceFrame) {
     buffer = await screenshotBuffer(session, { format, quality });
   } else {
     const space = clipSpaceForJob(job) || 'document';
@@ -677,6 +839,7 @@ async function captureJob(session, job, {
   const sha256 = createHash('sha256').update(buffer).digest('hex');
   const snapshot = { ...(box?.pretext || {}), ...(box || {}) };
   const captureOccupancy = assessCaptureOccupancy(job, snapshot);
+  const subjectFit = assessViewportSubject(job, snapshot, viewport);
   return {
     buffer,
     clip,
@@ -690,12 +853,13 @@ async function captureJob(session, job, {
     pretext: box?.pretext || null,
     measurementError: box?.measurementError || null,
     captureOccupancy,
+    subjectFit,
     captureExpression: formatCaptureExpression(job, {
       ...snapshot,
       occupancy: captureOccupancy.occupancy,
       semantics: box?.semantics || null,
     }),
-    hint: enhancementHint(job, snapshot),
+    hint: enhancementHint(job, snapshot) || subjectFit.hint,
     prompt: marketingPrompt(job, snapshot),
     prompts: intelligencePrompts(job, snapshot),
     textPreview: box?.text || null,
@@ -748,6 +912,28 @@ async function main() {
     throw new Error('format must be jpeg or png');
   }
 
+  const packRoot = options.out;
+  let runLayout = null;
+  if (!options.outExplicit && (options.stills || options.walk || options.profile)) {
+    const profileName = options.profile
+      || (options.walk && options.checks ? 'survey'
+        : options.walk ? 'walk'
+          : options.checks ? 'checks'
+            : 'ambient');
+    runLayout = captureRunLayout(packRoot, {
+      profile: profileName,
+      params: {
+        viewports: options.viewports,
+        stills: options.stills,
+        checks: options.checks,
+        walk: options.walk,
+        routes: options.walkRoutes,
+      },
+    });
+    options.out = runLayout.dir;
+    process.stderr.write(`[visual:capture] run ${runLayout.rel}\n`);
+  }
+
   const qaViewports = pickViewports(options.viewports, { fallback: [...DEFAULT_QA_VIEWPORTS] });
   const changedFiles = options.changed ? gitChangedFiles() : null;
   const plan = buildCapturePlan({
@@ -762,6 +948,12 @@ async function main() {
     includeEcology: options.ecology,
     includeSocial: options.social || options.precipitate,
     includeQa: !options.socialOnly,
+    includeStills: options.stills,
+    includeChecks: options.checks,
+    includeWalk: options.walk,
+    walkRoutes: options.walkRoutes || DEFAULT_WALK_ROUTES,
+    maxSlices: options.maxSlices || 8,
+    stillRecipes: VIEWPORT_STILL_RECIPES,
     format: options.format,
     changedFiles,
     lenses: options.lenses,
@@ -776,8 +968,9 @@ async function main() {
 
   if (options.dryPlan) {
     if (options.json) {
-      process.stdout.write(`${JSON.stringify({ summary: plan.summary, cost, jobs: plan.jobs }, null, 2)}\n`);
+      process.stdout.write(`${JSON.stringify({ run: runLayout, summary: plan.summary, cost, jobs: plan.jobs }, null, 2)}\n`);
     } else {
+      if (runLayout) process.stdout.write(`run = \`${runLayout.rel}\`\n`);
       process.stdout.write(formatCapturePlanSpw(plan, { cost }));
     }
     return 0;
@@ -849,7 +1042,7 @@ async function main() {
       for (const group of groups) {
         const viewport = resolveJobViewport(group.jobs[0], qaViewports);
         if (group.canvas === 'specimen') {
-          const specimenUrl = captureQuery(new URL(routeHref(group.route, base), `${base}/`).href, group.jobs[0]?.lens);
+          const specimenUrl = captureQuery(new URL(routeHref(group.route, base), `${base}/`).href, group.jobs[0]);
           process.stderr.write(`[visual:capture] nav ${group.key}\n`);
           await navigateAndProbe(session, {
             url: specimenUrl,
@@ -859,18 +1052,83 @@ async function main() {
             retries: 1,
             partialGraceMs: 2000,
           });
+          await emulateCaptureEnvironment(session, group.jobs[0]?.conditions || {});
         }
 
         for (const job of group.jobs) {
           const jobViewport = resolveJobViewport(job, qaViewports);
           try {
-            const shot = await captureJob(session, job, {
-              base,
-              viewport: jobViewport,
-              format: options.format,
-              quality: options.quality,
-              snippetCache,
-            });
+            if (job.walk) {
+              try {
+                await applyCapturePrepare(session, job);
+              } catch {
+                // walk still proceeds
+              }
+              const slices = await capturePageWalk(session, job, {
+                viewport: jobViewport,
+                format: options.format,
+                quality: options.quality,
+              });
+              for (const slice of slices) {
+                const abs = path.join(options.out, slice.file);
+                if (isBlankStill(slice.buffer, job, null)) {
+                  const artifact = await writeErrorArtifact(options.out, 'blank', { ...job, file: slice.file }, {
+                    buffer: slice.buffer,
+                    message: `Blank: ${slice.file} (${slice.buffer.length}B)`,
+                  });
+                  errorArtifacts.push(artifact);
+                  errors.push(artifact.message);
+                  process.stderr.write(`  ! blank ${artifact.file} (${slice.buffer.length}B)\n`);
+                  continue;
+                }
+                await mkdir(path.dirname(abs), { recursive: true });
+                await writeFile(abs, slice.buffer);
+                captures.push({
+                  id: `${job.id}--${String(slice.y).padStart(5, '0')}`,
+                  fixtureId: job.fixtureId,
+                  label: job.label,
+                  kind: job.kind,
+                  track: job.track,
+                  flow: job.flow,
+                  walk: true,
+                  viewport: job.viewportId,
+                  file: slice.file,
+                  scrollY: slice.y,
+                });
+                process.stderr.write(`  ${job.track} ${job.id} y=${slice.y} ${job.viewportId} -> ${slice.file}\n`);
+              }
+              continue;
+            }
+            let shot;
+            try {
+              shot = await captureJob(session, job, {
+                base,
+                viewport: jobViewport,
+                format: options.format,
+                quality: options.quality,
+                snippetCache,
+              });
+            } catch (firstErr) {
+              if (!isTargetGoneError(firstErr) || group.canvas !== 'specimen') throw firstErr;
+              process.stderr.write(`  ~ target closed, re-nav ${group.key}\n`);
+              const specimenUrl = captureQuery(new URL(routeHref(group.route, base), `${base}/`).href, job);
+              await navigateAndProbe(session, {
+                url: specimenUrl,
+                viewport: jobViewport,
+                settleMs: options.settleMs,
+                timeoutMs: options.timeoutMs,
+                retries: 1,
+                partialGraceMs: 2000,
+              });
+              await emulateCaptureEnvironment(session, job.conditions || {});
+              shot = await captureJob(session, job, {
+                base,
+                viewport: jobViewport,
+                format: options.format,
+                quality: options.quality,
+                snippetCache,
+              });
+            }
             const abs = path.join(options.out, job.file);
             if (isBlankStill(shot.buffer, job, shot.clip)) {
               const artifact = await writeErrorArtifact(options.out, 'blank', job, {
@@ -927,6 +1185,8 @@ async function main() {
               measurementError: shot.measurementError,
               composition: shot.composition,
               captureOccupancy: shot.captureOccupancy,
+              subjectFit: shot.subjectFit || null,
+              still: Boolean(job.still),
               captureExpression: shot.captureExpression,
               componentExpression: shot.componentExpression,
               hint: shot.hint,
@@ -968,6 +1228,8 @@ async function main() {
     const manifest = {
       at: new Date().toISOString(),
       kind: 'visual-capture-pack',
+      run: runLayout,
+      profile: options.profile || runLayout?.profile || null,
       tracks: {
         qa: 'Device-reason viewports and media queries — packing proof',
         social: 'Unique content-fit cards and named feed crops — posting / intrigue',
@@ -994,11 +1256,34 @@ async function main() {
       },
     };
 
+    await mkdir(options.out, { recursive: true });
     await writeFile(path.join(options.out, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
     await writeFile(path.join(options.out, 'index.html'), galleryHtml(manifest));
-    const archiveStamp = await archiveKeptPack(options.out, manifest, captures, errorArtifacts);
-    if (archiveStamp) {
-      process.stderr.write(`[visual:capture] archived archive/${archiveStamp}\n`);
+    if (runLayout) {
+      await writeFile(
+        path.join(options.out, 'profile.json'),
+        `${JSON.stringify({
+          profile: runLayout.profile,
+          runId: runLayout.runId,
+          day: runLayout.day,
+          stills: options.stills,
+          checks: options.checks,
+          walk: options.walk,
+          routes: options.walkRoutes || null,
+          viewports: options.viewports,
+        }, null, 2)}\n`,
+      );
+      await writeRunPointer(packRoot, runLayout, {
+        at: manifest.at,
+        stills: captures.length,
+        errors: errorArtifacts.length,
+      });
+      await writeRunsIndex(packRoot);
+    } else {
+      const archiveStamp = await archiveKeptPack(options.out, manifest, captures, errorArtifacts);
+      if (archiveStamp) {
+        process.stderr.write(`[visual:capture] archived archive/${archiveStamp}\n`);
+      }
     }
     if (options.prune) {
       const dropped = await pruneArchivePacks(options.out, options.retain);

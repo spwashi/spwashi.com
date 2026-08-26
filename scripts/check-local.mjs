@@ -18,10 +18,15 @@ import process from 'node:process';
 
 import { reportStages, runCommand, runCompile } from './build-compile.mjs';
 
+const allowDirty = process.argv.includes('--allow-dirty') || process.argv.includes('--dirty');
+
 const VALIDATORS = [
   { label: 'check-site', script: 'scripts/check-site.mjs' },
   { label: 'pwa-contracts', script: 'scripts/pwa-contracts.mjs' },
-  { label: 'check-generated', script: 'scripts/check-generated.mjs' },
+  {
+    label: 'check-generated',
+    args: allowDirty ? ['scripts/check-generated.mjs', '--allow-dirty'] : ['scripts/check-generated.mjs'],
+  },
   { label: 'component-contracts', script: 'scripts/component-contracts.mjs' },
   { label: 'check-observation-locality', script: 'scripts/check-observation-locality.mjs' },
   {

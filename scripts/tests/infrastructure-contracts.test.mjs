@@ -143,10 +143,40 @@ test('check:local module tests match the test:modules script', async () => {
     checkLocalSource.includes('scripts/run-module-tests.mjs'),
     'check-local.mjs should run the shared module-test runner',
   );
-  assert.ok(
-    MODULE_TEST_FILES.includes('scripts/tests/spw-key-wrap-physics.test.mjs'),
-    'module test list should include wrap-physics',
-  );
+
+  const { readdir } = await import('node:fs/promises');
+  const testDirEntries = await readdir(path.join(ROOT, 'scripts/tests'), { withFileTypes: true });
+  const allTestFiles = testDirEntries
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.test.mjs'))
+    .map((entry) => `scripts/tests/${entry.name}`)
+    .sort();
+
+  for (const testFile of allTestFiles) {
+    assert.ok(
+      MODULE_TEST_FILES.includes(testFile),
+      `MODULE_TEST_FILES is missing test suite "${testFile}". Add it to scripts/module-tests.mjs.`,
+    );
+  }
+});
+
+test('narrow npm test scripts keep public-import loaders', async () => {
+  const packageJson = JSON.parse(await readFile(path.join(ROOT, 'package.json'), 'utf8'));
+  const { MODULE_TEST_IMPORTS } = await import('../module-tests.mjs');
+  const scripts = [
+    'test:timing',
+    'test:engagement:run',
+    'test:components:run',
+  ];
+
+  for (const scriptName of scripts) {
+    const script = packageJson.scripts[scriptName] || '';
+    for (const specifier of MODULE_TEST_IMPORTS) {
+      assert.ok(
+        script.includes(`--import ${specifier}`),
+        `${scriptName} should import ${specifier} so public runtime modules resolve`,
+      );
+    }
+  }
 });
 
 test('mounted workbench CLI scripts keep consumer-relative doctor/roots paths', async () => {

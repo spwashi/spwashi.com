@@ -53,8 +53,10 @@ export function applyPrecipitationRequest(root = document, search = root.default
   });
 
   if (printReady) {
+    html.setAttribute('data-spw-capture-mode', 'screenshot');
     body?.setAttribute('data-spw-capture-mode', 'screenshot');
   } else {
+    html.removeAttribute('data-spw-capture-mode');
     body?.removeAttribute('data-spw-capture-mode');
   }
 

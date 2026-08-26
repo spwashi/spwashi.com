@@ -4,33 +4,33 @@
    Clean-capture visibility rules for screenshots and archival renders.
    ========================================================================== */
 
-html[data-spw-capture-mode="clean"] .spw-console,
-html[data-spw-capture-mode="clean"] .spw-state-inspector,
-html[data-spw-capture-mode="clean"] .spw-discovery-notice-stack,
-html[data-spw-capture-mode="clean"] [data-spw-floating-chrome="true"],
-html[data-spw-capture-mode="clean"] [data-spw-runtime-status] {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-console,
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-state-inspector,
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-discovery-notice-stack,
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) [data-spw-floating-chrome="true"],
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) [data-spw-runtime-status] {
   display: none !important;
 }
 
 /* SVG surfaces: freeze flows and drop pointer artifacts so the same tuned
    diagram captures identically every time. Labels stay at full presence. */
-html[data-spw-capture-mode="clean"] .spw-svg-flow--animated {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-flow--animated {
   animation-play-state: paused !important;
 }
 
-html[data-spw-capture-mode="clean"] .spw-svg-figure {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-figure {
   --spw-svg-device-pointer-lift: 0 !important;
 }
 
-html[data-spw-capture-mode="clean"] .spw-svg-figure[data-spw-svg-pointer]::after {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-figure[data-spw-svg-pointer]::after {
   opacity: 0 !important;
 }
 
-html[data-spw-capture-mode="clean"] .spw-svg-surface {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-surface {
   transform: none !important;
 }
 
-html[data-spw-capture-mode="clean"] .spw-svg-label,
-html[data-spw-capture-mode="clean"] .spw-svg-note {
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-label,
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-note {
   opacity: 1 !important;
 }

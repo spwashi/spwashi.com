@@ -22,6 +22,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/lens-modes.test.mjs',
   'scripts/tests/production-season-runtime.test.mjs',
   'scripts/tests/template-migration.test.mjs',
+  'scripts/tests/template-personality.test.mjs',
   'scripts/tests/spw-key-wrap-physics.test.mjs',
   'scripts/tests/expression-query.test.mjs',
   'scripts/tests/physical-model.test.mjs',

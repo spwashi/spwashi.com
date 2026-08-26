@@ -609,6 +609,13 @@ export const PERF_PROBE_EXPRESSION = `(() => {
     layoutShiftState: html?.dataset?.spwLayoutShiftState || null,
     layoutShiftTotal: html?.dataset?.spwLayoutShiftTotal || null,
     layoutAssumptionsPass: html?.dataset?.spwLayoutAssumptionsPass || null,
+    colorMode: html?.dataset?.spwColorMode || null,
+    paletteResonance: html?.dataset?.spwPaletteResonance || null,
+    tangibility: html?.dataset?.spwTangibility || null,
+    captureMode: html?.dataset?.spwCaptureMode || null,
+    fontsReady: document.fonts ? document.fonts.status === 'loaded' : true,
+    activeSection: document.querySelector('main section[data-spw-section-state="active"]')?.id || null,
+    sectionHandleState: document.querySelector('.spw-section-handle')?.getAttribute('data-spw-handle-state') || null,
     viewport: {
       innerWidth: window.innerWidth,
       innerHeight: window.innerHeight,
@@ -677,6 +684,46 @@ export async function evaluateProbe(session, expression = PERF_PROBE_EXPRESSION,
     throw new Error(exceptionDetails.text || 'Runtime.evaluate failed');
   }
   return result?.value || {};
+}
+
+/**
+ * Capture a JPEG/PNG still. Tries compositor surface first, then the
+ * fallback that survives headless blanks. Shared by visual:capture and
+ * ad-hoc viewport still scripts so they cannot drift.
+ */
+export async function screenshotBuffer(session, { format = 'png', quality = 70, clip = null } = {}) {
+  const cssClip = clip
+    ? {
+      x: Math.max(0, clip.x),
+      y: Math.max(0, clip.y),
+      width: Math.max(2, clip.width),
+      height: Math.max(2, clip.height),
+      scale: clip.scale || 1,
+    }
+    : null;
+  const beyond = Boolean(clip?.captureBeyondViewport);
+  const attempts = cssClip
+    ? [
+      { format, fromSurface: true, captureBeyondViewport: beyond, clip: cssClip },
+      { format, fromSurface: true, captureBeyondViewport: !beyond, clip: cssClip },
+      { format, fromSurface: false, captureBeyondViewport: beyond, clip: cssClip },
+    ]
+    : [
+      { format, fromSurface: true, captureBeyondViewport: false },
+      { format, fromSurface: false, captureBeyondViewport: false },
+    ];
+  let lastErr = null;
+  for (let i = 0; i < attempts.length; i += 1) {
+    const params = { ...attempts[i] };
+    if (format === 'jpeg') params.quality = quality;
+    try {
+      const { data } = await session.send('Page.captureScreenshot', params, 12000);
+      if (data) return Buffer.from(data, 'base64');
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr || new Error('captureScreenshot failed');
 }
 
 /**

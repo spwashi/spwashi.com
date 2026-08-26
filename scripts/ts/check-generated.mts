@@ -64,7 +64,10 @@ export async function collectGeneratedOutputs(): Promise<string[]> {
   return groups.flatMap((group) => group.paths).sort();
 }
 
+import { promises as fs } from 'node:fs';
+
 export async function main(): Promise<void> {
+  const allowDirty = process.argv.includes('--allow-dirty') || process.argv.includes('--permissive');
   const groups = await collectGeneratedGroups();
   const generatedOutputs = await collectGeneratedOutputs();
   const unstaged = collectChangedFiles(['diff', '--name-only', '--', ...generatedOutputs]);
@@ -76,8 +79,31 @@ export async function main(): Promise<void> {
     console.log(`  ${group.label}: ${group.paths.length}`);
   }
 
+  // Ensure all generated files actually exist on disk
+  const missing: string[] = [];
+  for (const output of generatedOutputs) {
+    try {
+      await fs.access(output);
+    } catch {
+      missing.push(output);
+    }
+  }
+
+  if (missing.length) {
+    console.log(`[generated] missing=${missing.length}`);
+    for (const file of missing.slice(0, 20)) {
+      console.log(`  missing: ${file}`);
+    }
+    process.exit(1);
+  }
+
   if (!changed.length) {
     console.log('[generated] passed');
+    return;
+  }
+
+  if (allowDirty) {
+    console.log(`[generated] passed (${changed.length} generated file(s) modified in working tree)`);
     return;
   }
 

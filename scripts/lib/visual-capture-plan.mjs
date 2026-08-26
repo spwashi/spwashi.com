@@ -6,10 +6,16 @@
  *   social  — unique content-fit stills plus named feed crops that turn a combination
  *             into a postable card
  *
+ * QA still vs anatomy:
+ *   page / --stills  — the device frame a person would screenshot (one subject)
+ *   region           — the seat's document box, which may be several viewports tall
+ *
  * Pure functions. The Chrome runner consumes jobs; tests consume the same plan.
  */
 
 import { createHash } from 'node:crypto';
+
+import { VIEWPORT_STILL_CHECKS, VIEWPORT_STILL_RECIPES } from './viewport-still-recipes.mjs';
 
 export const FLOWS = Object.freeze(['page', 'region', 'component', 'template']);
 export const DEFAULT_QA_FLOWS = Object.freeze(['region', 'component']);
@@ -17,6 +23,13 @@ export const DEFAULT_QA_VIEWPORTS = Object.freeze(['pocket', 'fold', 'broadsheet
 export const DEFAULT_ECOLOGY_VIEWPORTS = Object.freeze(['pocket', 'fold', 'broadsheet']);
 export const LAYOUT_STACK = Object.freeze(['posture', 'seat', 'pack', 'gravity', 'resonance', 'still']);
 export const DEFAULT_SOCIAL_ASPECTS = Object.freeze(['fit', 'square']);
+/** Live capture must not inherit the 60s CDP default. Font/image waits race these caps. */
+export const CAPTURE_MEASURE = Object.freeze({
+  evaluateTimeoutMs: 8000,
+  fontWaitMs: 1200,
+  imageWaitMs: 2000,
+  importWaitMs: 2500,
+});
 export const REGION_SEATS = Object.freeze(['hook', 'hub', 'cluster', 'path', 'read', 'wide']);
 export const SIZE_REASONS = Object.freeze(['device-reason', 'pretext-fit', 'social-crop']);
 export const SIZE_TOKENS = Object.freeze(['measure-compact', 'measure-card', 'measure-reading']);
@@ -372,7 +385,53 @@ export function enhancementHint(job, snapshot = {}) {
   if (job.sizeReason === 'pretext-fit' && snapshot.widthClass === 'xs') {
     return 'Pretext width-class is xs — the unique ratio may be starving the copy.';
   }
+  const subject = assessViewportSubject(job, snapshot);
+  if (subject.fit === 'overflows-viewport') {
+    return subject.hint;
+  }
   return null;
+}
+
+/**
+ * A region clip may be several device-frames tall. Subject judgment belongs
+ * on a viewport still; the tall clip is anatomy.
+ */
+export function assessViewportSubject(job = {}, snapshot = {}, viewport = null) {
+  const vh = viewport?.height
+    || DEVICE_REASONS[job.viewportId]?.height
+    || Object.values(DEVICE_REASONS).find((entry) => entry.viewport === job.viewportId)?.height
+    || 0;
+  const boxH = snapshot.height || 0;
+  if (!vh || !boxH) {
+    return { fit: 'unknown', viewportsTall: null, hint: null };
+  }
+  const viewportsTall = Number((boxH / vh).toFixed(2));
+  if ((job.flow === 'region' || job.kind === 'ecology') && !job.still && viewportsTall > 1.25) {
+    return {
+      fit: 'overflows-viewport',
+      viewportsTall,
+      hint: 'Region is taller than one device frame. Use a viewport still (--stills) for subject judgment; keep the region clip for anatomy.',
+    };
+  }
+  if (job.still || job.flow === 'page') {
+    return {
+      fit: viewportsTall <= 1.15 ? 'fills-frame' : 'in-frame',
+      viewportsTall,
+      hint: null,
+    };
+  }
+  return { fit: 'in-frame', viewportsTall, hint: null };
+}
+
+/** Compositor blanks compress hard. A small real clip can be well under 40KB. */
+export function isBlankStill(buffer, job, clip = null) {
+  const bytes = buffer?.length || 0;
+  const pixels = Math.max(0, (clip?.width || 0) * (clip?.height || 0));
+  if (bytes < 800) return true;
+  if (job?.flow === 'page' && bytes < 48000) return true;
+  if (pixels > 10000 && bytes / pixels < 0.025 && bytes < 25000) return true;
+  if ((job?.flow === 'component' || job?.flow === 'template') && bytes < 500) return true;
+  return false;
 }
 
 /** Device reasons used for QA. Aliases map onto harness viewport ids. */
@@ -573,13 +632,17 @@ export function clipForBox(box, viewport, padding, aspect, {
   if (space === 'viewport') {
     const vpW = viewport?.width || 1440;
     const vpH = viewport?.height || 900;
-    const viewportX = Math.max(0, Math.floor(cropped.viewportX ?? 0));
-    const viewportY = Math.max(0, Math.floor(cropped.viewportY ?? 0));
+    const rawX = cropped.viewportX ?? 0;
+    const rawY = cropped.viewportY ?? 0;
+    const viewportX = Math.max(0, Math.floor(rawX));
+    const viewportY = Math.max(0, Math.floor(rawY));
+    const adjustedWidth = cropped.width + Math.min(0, rawX);
+    const adjustedHeight = cropped.height + Math.min(0, rawY);
     return {
       x: viewportX,
       y: viewportY,
-      width: Math.max(2, Math.min(vpW - viewportX, Math.ceil(cropped.width))),
-      height: Math.max(2, Math.min(vpH - viewportY, Math.ceil(cropped.height))),
+      width: Math.max(2, Math.min(vpW - viewportX, Math.ceil(adjustedWidth))),
+      height: Math.max(2, Math.min(vpH - viewportY, Math.ceil(adjustedHeight))),
       scale: 1,
       aspect: cropped.aspect,
       ratioLabel: cropped.ratioLabel,
@@ -587,11 +650,17 @@ export function clipForBox(box, viewport, padding, aspect, {
       captureBeyondViewport: false,
     };
   }
+  const rawDocX = cropped.x ?? 0;
+  const rawDocY = cropped.y ?? 0;
+  const docX = Math.max(0, Math.floor(rawDocX));
+  const docY = Math.max(0, Math.floor(rawDocY));
+  const adjustedDocWidth = cropped.width + Math.min(0, rawDocX);
+  const adjustedDocHeight = cropped.height + Math.min(0, rawDocY);
   return {
-    x: Math.max(0, Math.floor(cropped.x)),
-    y: Math.max(0, Math.floor(cropped.y)),
-    width: Math.max(2, Math.ceil(cropped.width)),
-    height: Math.max(2, Math.min(maxHeight, Math.ceil(cropped.height))),
+    x: docX,
+    y: docY,
+    width: Math.max(2, Math.ceil(adjustedDocWidth)),
+    height: Math.max(2, Math.min(maxHeight, Math.ceil(adjustedDocHeight))),
     scale: 1,
     aspect: cropped.aspect,
     ratioLabel: cropped.ratioLabel,
@@ -601,7 +670,9 @@ export function clipForBox(box, viewport, padding, aspect, {
 }
 
 export function clipSpaceForJob(job) {
-  if (!job || job.flow === 'page') return null;
+  if (job?.clipSpace === 'viewport' || job?.clipSpace === 'document') return job.clipSpace;
+  // Page and named viewport stills are the device frame, including chrome.
+  if (!job || job.flow === 'page' || job.still) return null;
   if (job.canvas === 'card' || job.flow === 'template' || job.flow === 'region' || job.flow === 'component') {
     return 'document';
   }
@@ -637,20 +708,98 @@ export function deviceReasonFor(viewportId) {
     || null;
 }
 
-function jobFile(job, format) {
+export function browseStem(job) {
+  return String(job?.id || 'still')
+    .replace(/[^a-z0-9._-]+/gi, '-')
+    .replace(/^-+|-+$/g, '')
+    || 'still';
+}
+
+export function conditionClusterKey(conditions = {}, attention = {}) {
+  if (conditions?.colorMode === 'dark') return 'dark-mode';
+  if (conditions?.reducedMotion === 'reduce' || conditions?.reducedMotion === true) return 'reduced-motion';
+  if (attention?.section || attention?.probe) return 'section-pin';
+  return '';
+}
+
+export function captureSearchParams(conditions = {}, attention = {}) {
+  const params = new URLSearchParams();
+  if (conditions.colorMode) params.set('color-mode', conditions.colorMode);
+  if (conditions.themePack) params.set('theme', conditions.themePack);
+  if (conditions.enhancement) params.set('enhancement', conditions.enhancement);
+  if (attention.section) params.set('pin', attention.section);
+  if (attention.probe) params.set('probe', attention.probe);
+  return params;
+}
+
+export function specimenNavigationKey(job) {
+  const lens = job?.lens ? `${job.lens.id}:${job.lens.value}` : 'plain';
+  const env = conditionClusterKey(job?.conditions);
+  const pin = job?.attention?.section || '';
+  return `${job?.specimenRoute || '/'}|${job?.viewportId || ''}|${env}|${pin}|${lens}`;
+}
+
+/** Folder a person arrows through in the file tree. JSON and errors stay out. */
+export function browseCluster(job) {
+  if (job?.track === 'social' || job?.canvas === 'card' || job?.flow === 'template') return 'social';
+  const viewport = job?.viewportId || 'desktop';
+  const env = conditionClusterKey(job?.conditions, job?.attention);
+  return env ? `${viewport}--${env}` : viewport;
+}
+
+function browseRank(job) {
+  const recipe = VIEWPORT_STILL_RECIPES.findIndex((recipe) => recipe.id === job?.id);
+  if (recipe >= 0) return recipe;
+  if (job?.still) return 50;
+  if (job?.flow === 'page') return 80;
+  const seat = SEAT_PRIORITY.indexOf(job?.seat);
+  if (seat >= 0) return 100 + seat;
+  return 200;
+}
+
+export function compareBrowseOrder(a, b) {
+  const rank = browseRank(a) - browseRank(b);
+  if (rank) return rank;
+  return String(a?.id || '').localeCompare(String(b?.id || ''));
+}
+
+export function jobFile(job, format = 'jpeg') {
   const ext = extFor(format);
-  if (job.track === 'social') {
-    const aspect = job.aspect || 'fit';
-    const kind = job.kind === 'ecology' ? 'ecology' : job.id;
-    return `captures/social--${kind}--${aspect}--${job.flow}.${ext}`;
+  const stem = browseStem(job);
+  if (job?.track === 'social' || job?.canvas === 'card' || job?.flow === 'template') {
+    return `captures/social/${stem}--${job.aspect || 'fit'}.${ext}`;
   }
-  if (job.flow === 'page') {
-    return `captures/page--${routeFileId(job.specimenRoute)}--${job.viewportId}.${ext}`;
+  const cluster = browseCluster(job);
+  if (job?.walk) {
+    const slug = routeFileId(job.specimenRoute);
+    return `captures/${cluster}/${slug}--00000.${ext}`;
   }
-  if (job.kind === 'ecology') {
-    return `captures/ecology--${job.id}--${job.viewportId}--${job.flow}.${ext}`;
+  const seq = String(job?.browseIndex || 1).padStart(2, '0');
+  return `captures/${cluster}/${seq}-${stem}.${ext}`;
+}
+
+export function errorFile(kind, job, format = 'jpeg') {
+  const ext = extFor(format);
+  const cluster = job?.viewportId || browseCluster(job) || 'qa';
+  return `captures/errors/${cluster}--${kind}--${browseStem(job)}.${ext}`;
+}
+
+/** Number stills inside each viewport folder so arrow-key preview follows review order. */
+export function assignBrowsePaths(jobs, format = 'jpeg') {
+  const clusters = new Map();
+  for (const job of jobs || []) {
+    const cluster = browseCluster(job);
+    if (!clusters.has(cluster)) clusters.set(cluster, []);
+    clusters.get(cluster).push(job);
   }
-  return `captures/${job.id}--${job.viewportId}--${job.flow}.${ext}`;
+  for (const group of clusters.values()) {
+    group.sort(compareBrowseOrder);
+    group.forEach((job, index) => {
+      job.browseIndex = index + 1;
+      job.file = jobFile(job, format);
+    });
+  }
+  return jobs || [];
 }
 
 function sourceFilesForComponent(fixture) {
@@ -711,7 +860,7 @@ export function groupJobsByNavigation(jobs) {
       });
       continue;
     }
-    const key = `${navigationKey(job.specimenRoute, job.viewportId)}|${job.lens ? `${job.lens.id}:${job.lens.value}` : 'plain'}`;
+    const key = specimenNavigationKey(job);
     if (!index.has(key)) {
       const group = { key, route: job.specimenRoute, viewportId: job.viewportId, canvas: 'specimen', jobs: [] };
       index.set(key, group);
@@ -814,14 +963,22 @@ export function buildEcologyJobs(fixtures, {
   viewports = [],
   seats = null,
   format = 'jpeg',
+  flows = ['region'],
 } = {}) {
   const seatFilter = seats?.length ? new Set(seats) : null;
+  const wantRegion = !flows?.length || flows.includes('region');
+  const wantPage = Boolean(flows?.includes('page'));
   const jobs = [];
+  const pageSeen = new Set();
   for (const fixture of fixtures) {
     if (seatFilter && !seatFilter.has(fixture.seat)) continue;
     for (const viewport of viewports) {
       if (!viewportMatchesScenario(viewport.id, fixture.layoutScenarios)) continue;
       const reason = deviceReasonFor(viewport.id);
+      if (wantPage) {
+        pushPageJob(jobs, pageSeen, fixture, viewport, format);
+      }
+      if (!wantRegion) continue;
       const job = {
         kind: 'ecology',
         id: fixture.id,
@@ -851,6 +1008,105 @@ export function buildEcologyJobs(fixtures, {
     }
   }
   return jobs;
+}
+
+function stillJobFromRecipe(recipe, viewport, format) {
+  const reason = deviceReasonFor(viewport.id);
+  return {
+    kind: 'ecology',
+    id: recipe.id,
+    fixtureId: recipe.fixtureId || recipe.id,
+    label: recipe.label,
+    track: 'qa',
+    flow: 'page',
+    still: true,
+    viewportId: viewport.id,
+    specimenRoute: recipe.specimenRoute,
+    selector: recipe.selector,
+    regionSelector: recipe.selector,
+    seat: recipe.seat || null,
+    aspect: null,
+    canvas: 'specimen',
+    snippet: null,
+    cssOwner: recipe.cssOwner || null,
+    sourceFiles: [...(recipe.sourceFiles || [])],
+    captureValue: recipe.captureValue || '',
+    wonder: recipe.wonder || reason?.wonder || recipe.captureValue || '',
+    sizeReason: 'device-reason',
+    sizeToken: 'measure-reading',
+    media: reason?.media || null,
+    prepare: recipe.prepare || null,
+    conditions: recipe.conditions || null,
+    attention: recipe.attention || null,
+    publish: ['layout-qa', 'design-review', 'agent-brief'],
+  };
+}
+
+export function buildViewportStillJobs(recipes = VIEWPORT_STILL_RECIPES, {
+  viewports = [],
+  format = 'jpeg',
+  ids = null,
+  seats = null,
+  includeChecks = false,
+  checkRecipes = VIEWPORT_STILL_CHECKS,
+} = {}) {
+  const idFilter = ids instanceof Set ? ids : (ids?.length ? new Set(ids) : null);
+  const catalog = includeChecks ? [...recipes, ...checkRecipes] : [...recipes];
+  const jobs = [];
+  for (const recipe of catalog) {
+    if (idFilter && !idFilter.has(recipe.id) && !idFilter.has(recipe.fixtureId)) continue;
+    if (seats?.length && recipe.seat && !seats.includes(recipe.seat)) continue;
+    for (const viewport of viewports) {
+      if (!viewportMatchesScenario(viewport.id, recipe.layoutScenarios)) continue;
+      jobs.push(stillJobFromRecipe(recipe, viewport, format));
+    }
+  }
+  return assignBrowsePaths(jobs, format);
+}
+
+export function buildWalkJobs({
+  routes = ['/'],
+  viewports = [],
+  format = 'jpeg',
+  maxSlices = 8,
+  conditions = null,
+} = {}) {
+  const jobs = [];
+  for (const route of routes) {
+    for (const viewport of viewports) {
+      jobs.push({
+        kind: 'ecology',
+        id: `walk-${routeFileId(route)}`,
+        fixtureId: routeFileId(route),
+        label: `Walk ${route}`,
+        track: 'qa',
+        flow: 'page',
+        still: true,
+        walk: true,
+        maxSlices,
+        viewportId: viewport.id,
+        specimenRoute: route,
+        selector: null,
+        regionSelector: null,
+        seat: null,
+        aspect: null,
+        canvas: 'specimen',
+        snippet: null,
+        cssOwner: null,
+        sourceFiles: [],
+        captureValue: 'Viewport-tall slices from the top of the route to the bottom.',
+        wonder: 'A walk should reach the last screen, not stop after the opening.',
+        sizeReason: 'device-reason',
+        sizeToken: 'measure-reading',
+        media: deviceReasonFor(viewport.id)?.media || null,
+        prepare: null,
+        conditions,
+        attention: null,
+        publish: ['layout-qa', 'design-review', 'agent-brief'],
+      });
+    }
+  }
+  return assignBrowsePaths(jobs, format);
 }
 
 export function buildSocialJobs(fixtures, {
@@ -984,6 +1240,12 @@ export function buildCapturePlan({
   includeEcology = false,
   includeSocial = false,
   includeQa = true,
+  includeStills = false,
+  includeChecks = false,
+  includeWalk = false,
+  walkRoutes = ['/'],
+  maxSlices = 8,
+  stillRecipes = VIEWPORT_STILL_RECIPES,
   format = 'jpeg',
   changedFiles = null,
   lenses = [],
@@ -999,7 +1261,24 @@ export function buildCapturePlan({
   let jobs = [];
   if (includeQa) {
     if (components.length) jobs = jobs.concat(buildComponentJobs(components, { flows, viewports, format }));
-    if (ecology.length) jobs = jobs.concat(buildEcologyJobs(ecology, { viewports, seats, format }));
+    if (ecology.length) jobs = jobs.concat(buildEcologyJobs(ecology, { viewports, seats, format, flows }));
+  }
+  if (includeStills) {
+    jobs = jobs.concat(buildViewportStillJobs(stillRecipes, {
+      viewports,
+      format,
+      ids: idFilter,
+      seats,
+      includeChecks,
+    }));
+  }
+  if (includeWalk) {
+    jobs = jobs.concat(buildWalkJobs({
+      routes: walkRoutes,
+      viewports,
+      format,
+      maxSlices,
+    }));
   }
   if (includeSocial) {
     if (components.length) {
@@ -1011,16 +1290,17 @@ export function buildCapturePlan({
   }
   if (lenses.length) jobs = applyVisibilityLenses(jobs, lenses);
   if (changedFiles?.length) jobs = jobs.filter((job) => jobTouchesChanged(job, changedFiles));
+  assignBrowsePaths(jobs, format);
   const groups = groupJobsByNavigation(jobs);
   return { jobs, groups, summary: summarizePlan(jobs) };
 }
 
 export function assetKindFor(job) {
   if (job?.track === 'social' && job?.canvas === 'card') return ASSET_KINDS.print;
+  if (job?.still || job?.flow === 'page') return ASSET_KINDS.page;
   if (job?.flow === 'region' || job?.kind === 'ecology') return ASSET_KINDS.situation;
   if (job?.flow === 'component') return ASSET_KINDS.clip;
   if (job?.flow === 'template') return ASSET_KINDS.print;
-  if (job?.flow === 'page') return ASSET_KINDS.page;
   return ASSET_KINDS.situation;
 }
 
@@ -1058,12 +1338,24 @@ export function parseSpwCaptureTokens(tokens = [], knownIds = []) {
   let wantSet = false;
   let wantPrint = false;
   let wantSituation = false;
+  let wantStills = false;
+  let wantChecks = false;
+  let wantWalk = false;
   for (const raw of tokens) {
     const token = String(raw || '').trim();
     if (!token || token.startsWith('-')) continue;
     if (token === 'set' || token === 'plate') wantSet = true;
     else if (token === 'print' || token === 'prints') wantPrint = true;
     else if (token === 'situation' || token === 'situations') wantSituation = true;
+    else if (token === 'still' || token === 'stills' || token === 'page') wantStills = true;
+    else if (token === 'check' || token === 'checks') wantChecks = true;
+    else if (token === 'walk') wantWalk = true;
+    else if (token === 'survey') {
+      wantStills = true;
+      wantChecks = true;
+      wantWalk = true;
+    }
+    else if (token === 'ambient') wantStills = true;
     else if (REGION_SEATS.includes(token)) seats.push(token);
     else if (SOCIAL_ASPECTS[token]) aspects.push(token);
     else if (DEVICE_REASONS[token] || VIEWPORT_ALIASES[token]) viewports.push(token);
@@ -1082,6 +1374,9 @@ export function parseSpwCaptureTokens(tokens = [], knownIds = []) {
     ecology: wantSituation || seats.length > 0,
     social: wantPrint || aspects.length > 0,
     set: wantSet,
+    stills: wantStills,
+    checks: wantChecks,
+    walk: wantWalk,
   };
 }
 

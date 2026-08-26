@@ -34,9 +34,24 @@ import {
   looksLikeShellChrome,
   isMissedSpecimen,
   assessCaptureOccupancy,
+  assessViewportSubject,
+  isBlankStill,
   formatCaptureExpression,
+  buildViewportStillJobs,
+  errorFile,
+  browseCluster,
+  captureSearchParams,
+  specimenNavigationKey,
+  CAPTURE_MEASURE,
 } from '../lib/visual-capture-plan.mjs';
+import { VIEWPORT_STILL_CHECKS, VIEWPORT_STILL_RECIPES } from '../lib/viewport-still-recipes.mjs';
+import { archiveImageRel } from '../lib/visual-capture-archive.mjs';
 import { VIEWPORTS } from '../lib/chrome-headless-harness.mjs';
+import {
+  captureRunLayout,
+  formatCaptureRunId,
+  walkFileName,
+} from '../lib/capture-profiles.mjs';
 
 const phone = VIEWPORTS.phone;
 const desktop = VIEWPORTS.desktop;
@@ -276,6 +291,8 @@ test('document clips use page coordinates and are not clamped to the viewport', 
 
 test('a header-only preview is a miss for a region, not a specimen', () => {
   assert.equal(clipSpaceForJob({ flow: 'region' }), 'document');
+  assert.equal(clipSpaceForJob({ flow: 'page' }), null);
+  assert.equal(clipSpaceForJob({ still: true }), null);
   assert.equal(looksLikeShellChrome('#>SPWASHI ROUTES ABOUT'), true);
   assert.equal(looksLikeShellChrome('Joins you can challenge. Cullet, grog, and fiber.'), false);
   assert.equal(isMissedSpecimen(
@@ -338,4 +355,217 @@ test('capture expression annotates the still without replacing component semanti
     expression,
     'still[fit]{template.pretext-fit.balanced}<frame-card-specimen>',
   );
+});
+
+test('viewport stills are device frames, not tall region anatomy', () => {
+  const pocket = VIEWPORTS.pocket;
+  const jobs = buildViewportStillJobs(VIEWPORT_STILL_RECIPES, {
+    viewports: [pocket],
+    ids: ['home-hook'],
+  });
+  assert.ok(jobs.length >= 4);
+  assert.ok(jobs.every((job) => job.flow === 'page' && job.still === true));
+  assert.equal(jobs[0].file, 'captures/pocket/01-home-opening.jpg');
+  assert.equal(jobs[1].file, 'captures/pocket/02-home-reasons.jpg');
+  assert.ok(jobs.every((job) => job.file.startsWith('captures/pocket/')));
+  assert.equal(errorFile('blank', jobs[0]), 'captures/errors/pocket--blank--home-opening.jpg');
+  assert.ok(jobs.some((job) => job.id === 'home-opening' && job.prepare?.close?.includes('.home-field-notes')));
+  assert.ok(jobs.some((job) => job.id === 'home-entrance-open' && job.prepare?.open?.includes('.home-depth-disclosure')));
+
+  const tall = assessViewportSubject(
+    { flow: 'region', kind: 'ecology', viewportId: 'pocket' },
+    { height: 2900 },
+    pocket,
+  );
+  assert.equal(tall.fit, 'overflows-viewport');
+  assert.match(tall.hint, /viewport still/);
+
+  const opening = assessViewportSubject(
+    { flow: 'page', still: true, viewportId: 'pocket' },
+    { height: 844 },
+    pocket,
+  );
+  assert.equal(opening.fit, 'fills-frame');
+  assert.equal(isBlankStill(Buffer.alloc(120), { flow: 'page' }), true);
+});
+
+test('ecology page flow emits one rest still per route without dropping region jobs when asked', () => {
+  const { jobs } = buildCapturePlan({
+    ecologyFixtures: REGION_ECOLOGY_FIXTURES,
+    viewports: [VIEWPORTS.pocket],
+    flows: ['page', 'region'],
+    includeComponents: false,
+    includeEcology: true,
+    ids: ['home-hook'],
+  });
+  assert.ok(jobs.some((job) => job.flow === 'page' && job.id.startsWith('page-')));
+  assert.ok(jobs.some((job) => job.flow === 'region' && job.id === 'home-hook'));
+});
+
+test('capture conditions split route, theme, and attention into separate still folders', () => {
+  const params = captureSearchParams(
+    { colorMode: 'dark' },
+    { section: 'entry-loops', probe: 'frame' },
+  );
+  assert.equal(params.get('color-mode'), 'dark');
+  assert.equal(params.get('pin'), 'entry-loops');
+  assert.equal(params.get('probe'), 'frame');
+
+  const dark = {
+    still: true,
+    viewportId: 'pocket',
+    conditions: { colorMode: 'dark' },
+    specimenRoute: '/about/',
+    id: 'about-opening-dark',
+  };
+  assert.equal(browseCluster(dark), 'pocket--dark-mode');
+  assert.match(specimenNavigationKey(dark), /\/about\/\|pocket\|dark/);
+
+  const pin = {
+    still: true,
+    viewportId: 'pocket',
+    specimenRoute: '/#entry-loops',
+    attention: { section: 'entry-loops' },
+    id: 'home-entry-loops-pin',
+  };
+  assert.match(specimenNavigationKey(pin), /#entry-loops/);
+  assert.notEqual(
+    specimenNavigationKey(pin),
+    specimenNavigationKey({ ...pin, specimenRoute: '/' }),
+  );
+
+  const checks = buildViewportStillJobs(VIEWPORT_STILL_RECIPES, {
+    viewports: [VIEWPORTS.pocket],
+    includeChecks: true,
+  });
+  assert.ok(checks.some((job) => job.id === 'about-opening-dark' && job.conditions?.colorMode === 'dark'));
+  assert.ok(checks.some((job) => job.id === 'home-entry-loops-pin' && job.attention?.section === 'entry-loops'));
+  assert.ok(checks.some((job) => job.file.startsWith('captures/pocket--dark-mode/')));
+  assert.ok(checks.some((job) => job.id === 'home-entry-loops-pin' && job.file.startsWith('captures/pocket--section-pin/')));
+  assert.equal(VIEWPORT_STILL_CHECKS.length >= 3, true);
+});
+
+test('capture runs nest readable profile folders under the day', () => {
+  const when = new Date(2026, 7, 25, 18, 56, 58);
+  const a = captureRunLayout('/tmp/pack', { profile: 'survey', params: { walk: true }, when, nonce: 'a' });
+  const b = captureRunLayout('/tmp/pack', { profile: 'survey', params: { walk: true }, when, nonce: 'b' });
+  assert.equal(a.day, '2026-08-25');
+  assert.equal(a.profile, 'survey');
+  assert.match(a.rel, /^runs\/2026-08-25\/survey\/\d{2}-\d{2}-\d{2}--[a-f0-9]{6}$/);
+  assert.notEqual(a.runId, b.runId);
+  assert.ok(a.runId < '99-99-99--ffffff');
+  assert.equal(walkFileName('/', 0), 'home--00000.jpg');
+  assert.equal(walkFileName('/about/', 844), 'about--00844.jpg');
+  assert.equal(formatCaptureRunId({ when, nonce: 'x' }).split('--')[0], a.runId.split('--')[0]);
+});
+
+test('page walks emit one expandable job per route', () => {
+  const { jobs } = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeWalk: true,
+    walkRoutes: ['/', '/about/'],
+    viewports: [VIEWPORTS.pocket],
+  });
+  assert.equal(jobs.length, 2);
+  assert.ok(jobs.every((job) => job.walk && job.file.includes('--00000.jpg')));
+  assert.ok(jobs.some((job) => job.file.startsWith('captures/pocket/home--')));
+  assert.ok(jobs.some((job) => job.file.startsWith('captures/pocket/about--')));
+});
+
+test('archive copies stills into viewport folders and keeps json out', () => {
+  assert.equal(archiveImageRel('captures/pocket/01-home-opening.jpg'), 'pocket/01-home-opening.jpg');
+  assert.equal(
+    archiveImageRel('captures/errors/pocket--blank--home-opening.jpg'),
+    'errors/pocket--blank--home-opening.jpg',
+  );
+});
+
+test('still token opts into named viewport recipes', () => {
+  const parsed = parseSpwCaptureTokens(['still', 'home-opening', 'pocket'], ['home-opening', 'home-hook']);
+  assert.equal(parsed.stills, true);
+  assert.deepEqual(parsed.ids, ['home-opening']);
+  assert.deepEqual(parsed.viewports, ['pocket']);
+
+  const { jobs } = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeStills: true,
+    viewports: [VIEWPORTS.pocket],
+  });
+  assert.equal(jobs.length, VIEWPORT_STILL_RECIPES.length);
+  assert.ok(jobs.every((job) => job.still && job.flow === 'page'));
+  assert.equal(assetKindFor(jobs[0]).id, 'page');
+});
+
+test('clipForBox compensates dimensions when box is near page edges', () => {
+  const edgeBox = {
+    x: 5,
+    y: 5,
+    width: 300,
+    height: 150,
+    viewportX: 5,
+    viewportY: 5,
+  };
+  // padding = 20: cropped.x will be -15, cropped.width will be 340
+  const docClip = clipForBox(edgeBox, phone, 20, 'fit', { space: 'document' });
+  assert.equal(docClip.x, 0);
+  assert.equal(docClip.y, 0);
+  // Adjusted width compensates for the clamped 15px: 340 - 15 = 325
+  assert.equal(docClip.width, 325);
+  assert.equal(docClip.height, 175);
+
+  const vpClip = clipForBox(edgeBox, phone, 20, 'fit', { space: 'viewport' });
+  assert.equal(vpClip.x, 0);
+  assert.equal(vpClip.y, 0);
+  assert.equal(vpClip.width, 325);
+  assert.equal(vpClip.height, 175);
+});
+
+test('attention capture pins write existing region-mark and probe attributes', async () => {
+  const {
+    applyAttentionCapturePins,
+    readCapturePinQuery,
+  } = await import('../../public/js/runtime/attention/capture-pins.js');
+  const pins = readCapturePinQuery('?pin=entry-loops&probe=frame', '#ignored');
+  assert.equal(pins.section, 'entry-loops');
+  assert.equal(pins.probe, 'frame');
+  const marked = {};
+  const node = {
+    setAttribute(name, value) {
+      marked[name] = value;
+    },
+  };
+  const rootAttrs = {};
+  document.getElementById = (id) => (id === 'entry-loops' ? node : null);
+  document.documentElement.setAttribute = (name, value) => {
+    rootAttrs[name] = value;
+  };
+  document.documentElement.getAttribute = (name) => rootAttrs[name] || null;
+  applyAttentionCapturePins(document, pins);
+  assert.equal(marked['data-spw-region-mark'], 'capture');
+  assert.equal(rootAttrs['data-spw-page-section-current'], 'entry-loops');
+  assert.equal(rootAttrs['data-spw-resonance-probe'], 'frame');
+});
+
+test('live capture measure evaluate is bounded and races font wait', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const source = await readFile(new URL('../component-snapshots.mjs', import.meta.url), 'utf8');
+  assert.ok(CAPTURE_MEASURE.evaluateTimeoutMs < 60000);
+  assert.match(source, /CAPTURE_MEASURE\.evaluateTimeoutMs/);
+  assert.match(source, /CAPTURE_MEASURE\.fontWaitMs/);
+  assert.match(source, /fonts\.ready[\s\S]{0,180}race\(/);
+  assert.doesNotMatch(
+    source,
+    /await document\.fonts\.ready;/,
+    'unbounded fonts.ready hung the thorough run for 60s per job',
+  );
+});
+
+test('PERF_PROBE_EXPRESSION instruments capture, font readiness, and section handle state', async () => {
+  const { PERF_PROBE_EXPRESSION } = await import('../lib/chrome-headless-harness.mjs');
+  assert.match(PERF_PROBE_EXPRESSION, /fontsReady/);
+  assert.match(PERF_PROBE_EXPRESSION, /activeSection/);
+  assert.match(PERF_PROBE_EXPRESSION, /sectionHandleState/);
+  assert.match(PERF_PROBE_EXPRESSION, /captureMode/);
 });

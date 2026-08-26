@@ -1,6 +1,8 @@
 /**
  * Local capture archive: stills live under archive/images/.
  * WIP until a commit; post-commit seals into archive/images/<shortsha>/.
+ * Image folders stay image-only (viewport clusters, numbered names) so a
+ * file-tree arrow-key preview walks stills, not JSON sidecars.
  * Fast no-op when _wip is empty — do not import the Chrome harness here.
  */
 import { copyFile, mkdir, readFile, readdir, rename, rm, writeFile, stat } from 'node:fs/promises';
@@ -53,31 +55,52 @@ function errorKindFromName(name) {
   return ERROR_PREFIX.exec(path.basename(name))?.[1] || null;
 }
 
-async function listImageFiles(dir) {
+function isMetaName(name) {
+  return name.endsWith('.json') || name.endsWith('.html') || name === 'meta';
+}
+
+export function archiveImageRel(captureFile) {
+  return String(captureFile || '').replace(/^captures\//, '');
+}
+
+async function listImageFiles(dir, prefix = '') {
+  let entries = [];
   try {
-    return (await readdir(dir, { withFileTypes: true }))
-      .filter((entry) => entry.isFile() && !entry.name.endsWith('.json') && !entry.name.endsWith('.html'))
-      .map((entry) => entry.name);
+    entries = await readdir(dir, { withFileTypes: true });
   } catch {
     return [];
   }
+  const names = [];
+  for (const entry of entries) {
+    if (isMetaName(entry.name) || entry.name.startsWith('.')) continue;
+    const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) {
+      names.push(...await listImageFiles(path.join(dir, entry.name), rel));
+      continue;
+    }
+    names.push(rel);
+  }
+  return names.sort();
 }
 
 export async function archiveKeptPack(outDir, manifest, kept, errorArtifacts = []) {
   if (!kept.length && !errorArtifacts.length) return null;
   const stamp = formatArchiveStamp();
   const destDir = wipDir(outDir);
-  await mkdir(destDir, { recursive: true });
+  await mkdir(path.join(destDir, 'meta'), { recursive: true });
   const flats = [];
   for (const still of [...kept, ...errorArtifacts]) {
     if (!still.file) continue;
-    const destName = `${stamp}--${path.basename(still.file)}`;
+    const rel = archiveImageRel(still.file);
+    if (!rel || rel.endsWith('.json') || rel.endsWith('.html')) continue;
+    const dest = path.join(destDir, rel);
     try {
-      await copyFile(path.join(outDir, still.file), path.join(destDir, destName));
+      await mkdir(path.dirname(dest), { recursive: true });
+      await copyFile(path.join(outDir, still.file), dest);
       flats.push({
-        file: destName,
-        kind: errorKindFromName(destName) || still.kind || still.flow || 'still',
-        id: still.id || still.fixtureId || destName,
+        file: rel,
+        kind: errorKindFromName(rel) || still.kind || still.flow || 'still',
+        id: still.id || still.fixtureId || rel,
         textPreview: still.textPreview || still.message || '',
       });
     } catch {
@@ -85,7 +108,7 @@ export async function archiveKeptPack(outDir, manifest, kept, errorArtifacts = [
     }
   }
   await writeFile(
-    path.join(destDir, `${stamp}.json`),
+    path.join(destDir, 'meta', `${stamp}.json`),
     `${JSON.stringify({
       at: manifest.at,
       archive: stamp,
@@ -255,7 +278,7 @@ export async function writeArchiveIndex(outDir) {
 </head>
 <body>
   <h1>Visual capture archive</h1>
-  <p class="meta">Images live in <code>archive/images/&lt;commit&gt;/</code>. WIP waits in <code>_wip</code> until the post-commit hook seals it. Latest pack: <a href="../index.html">current</a>.</p>
+  <p class="meta">Images live in <code>archive/images/&lt;commit&gt;/&lt;viewport&gt;/</code>. JSON is in <code>meta/</code>. WIP waits in <code>_wip</code> until seal. Latest pack: <a href="../index.html">current</a>.</p>
   <nav class="toc">${tocParts.join(' · ') || 'No stills yet. Run <code>npm run visual:capture</code>.'}</nav>
   ${sections.join('\n')}
 </body>
