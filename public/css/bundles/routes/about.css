@@ -1044,17 +1044,20 @@ body[data-spw-surface="about"] {
 
   [data-spw-surface="about"] #about-frame > .frame-topline > .spec-strip {
     flex: 0 1 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.5rem), 1fr));
-    inline-size: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.28rem 0.38rem;
+    inline-size: auto;
     min-inline-size: 0;
   }
 
   [data-spw-surface="about"] #about-frame .spec-pill {
     min-inline-size: 0;
     max-inline-size: 100%;
-    white-space: normal;
-    overflow-wrap: anywhere;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   [data-spw-surface="about"] .frame-grid {

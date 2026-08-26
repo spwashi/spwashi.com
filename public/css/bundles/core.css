@@ -11536,12 +11536,32 @@ body[aria-busy="true"] {
    Clean-capture visibility rules for screenshots and archival renders.
    ========================================================================== */
 
-html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-console,
-html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-state-inspector,
-html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-discovery-notice-stack,
-html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) [data-spw-floating-chrome="true"],
-html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) [data-spw-runtime-status] {
+:is(html, body):is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) :is(
+  .spw-console,
+  .spw-state-inspector,
+  .spw-discovery-notice-stack,
+  .spw-discovery-notice,
+  .spw-discovery-notice-modal,
+  [data-spw-discovery-notice],
+  [data-spw-discovery-notice-stack],
+  [data-spw-discovery-notice-modal],
+  .spw-section-handle,
+  .spw-section-handle-shell,
+  .spw-section-handle-current,
+  .spw-section-handle-step,
+  .spw-section-handle-toggle,
+  [data-spw-chrome-role="section-handle"],
+  [data-pwa-toast],
+  .spw-toast,
+  [data-spw-floating-chrome="true"],
+  [data-spw-runtime-status],
+  body > .promo-wonder-cycle__card,
+  .promo-wonder-cycle__card[data-spw-presentation="modal"]
+) {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* SVG surfaces: freeze flows and drop pointer artifacts so the same tuned
@@ -13611,10 +13631,11 @@ html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .
       .frame-topline > .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil,
       .frame-topline > .frame-operators > *
     ) {
-      flex: 1 1 0;
+      flex: 1 1 auto;
       justify-content: center;
-      min-inline-size: min(100%, 4.25rem);
+      min-inline-size: 0;
       white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 
@@ -13791,17 +13812,21 @@ html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .
 :where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
   margin-left: auto;
   justify-content: flex-end;
-  flex: 0 0 auto;
-  min-inline-size: min-content;
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 :where(.frame-topline > .spw-component-meta > .spw-component-tag,
        .frame-heading > .spw-component-meta > .spw-component-tag) {
-  flex-shrink: 0;
-  max-width: none;
-  overflow: visible;
-  text-overflow: clip;
+  flex-shrink: 1;
+  min-inline-size: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+/* Pocket drop of the rail tag lives in handles/primitive.css (later layer). */
 
 :where(.spw-component-guides) {
   display: none;
@@ -14425,10 +14450,10 @@ html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .
 
 :where(.frame-topline > .spw-component-meta > .spw-component-tag,
        .frame-heading > .spw-component-meta > .spw-component-tag) {
-  flex: 0 0 auto;
-  min-inline-size: min-content;
+  flex: 0 1 auto;
+  min-inline-size: 0;
   max-inline-size: min(100%, 34ch);
-  padding-inline: 0.7rem;
+  padding-inline: 0.55rem;
 }
 
 :where([data-spw-form="brace"] > .spw-component-tag::before) {
@@ -35306,8 +35331,8 @@ body[data-spw-micro-world="true"]::before {
 :where([data-spw-feature="wrap-jobs"]) {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0.28rem 0.38rem;
+  align-items: stretch;
+  gap: 0.32rem 0.42rem;
   margin-block: 0.42rem 0.08rem;
 }
 
@@ -35315,7 +35340,10 @@ body[data-spw-micro-world="true"]::before {
   --spw-control-min-height: 1.7rem;
   --spw-control-padding-block: 0.16rem;
   --spw-control-padding-inline: 0.5rem;
-  flex: 1 1 12rem;
+  flex: 1 1 7.2rem;
+  min-inline-size: min(100%, 7.2rem);
+  justify-content: center;
+  text-align: center;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.74rem;
   line-height: 1.2;
@@ -35351,22 +35379,21 @@ body[data-spw-micro-world="true"]::before {
 }
 
 :where(
-  html[data-spw-semantic-density="normal"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="normal"],
-  html[data-spw-semantic-density="rich"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="normal"]
+  html[data-spw-semantic-density="normal"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="normal"]
 ) {
   display: inline;
 }
 
 :where(
   html[data-spw-runtime-posture="precision"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="technical"],
-  body[data-spw-page-modes~="inspect"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="technical"]
+  html[data-spw-semantic-density="rich"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="technical"]
 ) {
   display: inline;
 }
 
 :where(
   html[data-spw-runtime-posture="precision"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth]:not([data-spw-copy-depth="technical"]),
-  body[data-spw-page-modes~="inspect"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth]:not([data-spw-copy-depth="technical"])
+  html[data-spw-semantic-density="rich"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth]:not([data-spw-copy-depth="technical"])
 ) {
   display: none;
 }
@@ -35689,7 +35716,6 @@ body[data-spw-micro-world="true"]::before {
   html[data-spw-semantic-density="rich"] [data-spw-copy-depth="rich"],
   html[data-spw-semantic-density="rich"] [data-spw-copy-depth="dense"],
   html[data-spw-runtime-posture="precision"] [data-spw-copy-depth="technical"],
-  body[data-spw-page-modes~="inspect"] [data-spw-copy-depth="technical"],
   html[data-spw-runtime-posture="resonant"] [data-spw-copy-depth="genre"],
   html[data-spw-runtime-posture="theatrical"] [data-spw-copy-depth="genre"]
 ) {
@@ -37834,13 +37860,25 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
 }
 
 :where(:is(.frame-heading, .frame-topline) .spw-component-tag) {
-  flex-shrink: 0;
+  flex-shrink: 1;
   contain: none;
-  width: max-content;
-  max-width: none;
-  min-width: min-content;
-  overflow: visible;
-  text-overflow: clip;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Pocket: drop the rail tag instead of clipping THRESHOLD / LOOPS / CYCLE.
+   Handles layer, no :where() — grammar hide lost to later display:flex. */
+@media (max-width: 35rem) {
+  .frame-topline > .spw-component-meta,
+  .frame-heading > .spw-component-meta,
+  .card-topline > .spw-component-meta,
+  .frame-topline .spw-component-tag,
+  .frame-heading .spw-component-tag {
+    display: none;
+  }
 }
 
 /* ==========================================================================
@@ -38432,7 +38470,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .operator-chip) {
   }
 }
 
-.spec-pill {
+:where(.spec-pill) {
   color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%);
   border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--handle-line-soft) 82%);
   background: color-mix(in oklab, var(--surface-strong, #fff) 94%, var(--active-op-color, var(--teal)) 6%);
@@ -38461,7 +38499,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .operator-chip) {
   box-shadow: inset 0 1px 0 color-mix(in srgb, white 28%, transparent);
 }
 
-:where(html[data-spw-color-mode="dark"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel) :where(.spw-component-tag, .spec-pill) {
+:where(html[data-spw-color-mode="dark"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, .spec-strip) :where(.spw-component-tag, .spec-pill) {
   background: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, rgba(255, 255, 255, 0.16) 64%);
   color: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
@@ -38471,7 +38509,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .operator-chip) {
 }
 
 @media (prefers-color-scheme: dark) {
-  :where(html[data-spw-color-mode="auto"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel) :where(.spw-component-tag, .spec-pill) {
+  :where(html[data-spw-color-mode="auto"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, .spec-strip) :where(.spw-component-tag, .spec-pill) {
     background: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
     border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, rgba(255, 255, 255, 0.16) 64%);
     color: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
@@ -39464,10 +39502,30 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     width: 100%;
     margin-inline-start: 0;
   }
+
+  /* Play only: leftover sigil was stretching beside a clipped lens. */
+  body[data-spw-surface="play"] #play-surface > .frame-topline {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.55rem;
+  }
+
+  body[data-spw-surface="play"] #play-surface > .frame-topline > .frame-sigil {
+    align-self: flex-start;
+    flex: 0 0 auto;
+    position: static;
+  }
+
+  body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
+    width: 100%;
+    max-inline-size: 100%;
+    flex: 1 0 auto;
+  }
 }
 
-/* Cluster F — phone density; 2×2 only for labeled multi-option tracks (not row) */
-@media (max-width: 32rem) {
+/* Cluster F — phone density; 2×2 for multi-option tracks (not row) */
+@media (max-width: 48rem) {
   .mode-switch .frame-sigil {
     min-inline-size: 0;
     min-block-size: max(2.15rem, var(--touch-target-compact, 2.15rem));
@@ -39480,14 +39538,24 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     padding-inline: 0.4rem;
   }
 
-  /* 4+ lens options: 2×2 only when the track is narrow and not a forced row. */
-  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"]) {
+  /* 3+ lens options: 2×2 when the track is narrow and not a forced row. */
+  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(3)):not([data-spw-lens-track="row"]) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.32rem;
+    width: 100%;
+    inline-size: 100%;
   }
 
-  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"])::before,
-  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"])[data-spw-lens-feedback]::after {
+  .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .mode-switch[aria-label]:not([data-spw-lens-track="row"])::before,
+  .mode-switch[aria-label]:not([data-spw-lens-track="row"])[data-spw-lens-feedback]::after {
     grid-column: 1 / -1;
   }
 }
@@ -46457,9 +46525,9 @@ html[data-spw-narrative-mode="on"] :where([data-spw-narrative-copy])::selection 
 :where(.spec-pill) {
     display: inline-block;
     padding: 0.25rem 0.65rem;
-    border: 1px solid var(--token-border, rgba(0, 128, 128, 0.55));
+    border: 1px solid var(--token-border, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, var(--line, rgba(0, 128, 128, 0.35))));
     border-radius: var(--spw-paper-corner);
-    background: var(--token-bg, rgba(255, 255, 255, 0.82));
+    background: var(--token-bg, color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--active-op-color, var(--teal, #008080)) 6%));
     color: var(--ink, #161c1d);
     font-size: var(--text-size-sm, 0.8rem);
     font-weight: 600;
