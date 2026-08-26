@@ -104,7 +104,6 @@
   html[data-spw-semantic-density="rich"] [data-spw-copy-depth="rich"],
   html[data-spw-semantic-density="rich"] [data-spw-copy-depth="dense"],
   html[data-spw-runtime-posture="precision"] [data-spw-copy-depth="technical"],
-  body[data-spw-page-modes~="inspect"] [data-spw-copy-depth="technical"],
   html[data-spw-runtime-posture="resonant"] [data-spw-copy-depth="genre"],
   html[data-spw-runtime-posture="theatrical"] [data-spw-copy-depth="genre"]
 ) {

@@ -274,8 +274,8 @@
 :where([data-spw-feature="wrap-jobs"]) {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0.28rem 0.38rem;
+  align-items: stretch;
+  gap: 0.32rem 0.42rem;
   margin-block: 0.42rem 0.08rem;
 }
 
@@ -283,7 +283,10 @@
   --spw-control-min-height: 1.7rem;
   --spw-control-padding-block: 0.16rem;
   --spw-control-padding-inline: 0.5rem;
-  flex: 1 1 12rem;
+  flex: 1 1 7.2rem;
+  min-inline-size: min(100%, 7.2rem);
+  justify-content: center;
+  text-align: center;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.74rem;
   line-height: 1.2;
@@ -319,22 +322,21 @@
 }
 
 :where(
-  html[data-spw-semantic-density="normal"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="normal"],
-  html[data-spw-semantic-density="rich"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="normal"]
+  html[data-spw-semantic-density="normal"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="normal"]
 ) {
   display: inline;
 }
 
 :where(
   html[data-spw-runtime-posture="precision"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="technical"],
-  body[data-spw-page-modes~="inspect"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="technical"]
+  html[data-spw-semantic-density="rich"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth="technical"]
 ) {
   display: inline;
 }
 
 :where(
   html[data-spw-runtime-posture="precision"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth]:not([data-spw-copy-depth="technical"]),
-  body[data-spw-page-modes~="inspect"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth]:not([data-spw-copy-depth="technical"])
+  html[data-spw-semantic-density="rich"] [data-spw-feature="wrap-jobs"] [data-spw-copy-depth]:not([data-spw-copy-depth="technical"])
 ) {
   display: none;
 }

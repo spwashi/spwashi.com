@@ -182,9 +182,9 @@
 :where(.spec-pill) {
     display: inline-block;
     padding: 0.25rem 0.65rem;
-    border: 1px solid var(--token-border, rgba(0, 128, 128, 0.55));
+    border: 1px solid var(--token-border, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, var(--line, rgba(0, 128, 128, 0.35))));
     border-radius: var(--spw-paper-corner);
-    background: var(--token-bg, rgba(255, 255, 255, 0.82));
+    background: var(--token-bg, color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--active-op-color, var(--teal, #008080)) 6%));
     color: var(--ink, #161c1d);
     font-size: var(--text-size-sm, 0.8rem);
     font-weight: 600;

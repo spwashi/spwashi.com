@@ -133,12 +133,25 @@
   box-shadow: var(--shadow-sm, 0 10px 32px rgba(0, 0, 0, 0.08));
 }
 
-:where(body[data-spw-surface="play"] [data-spw-region-role="entry-spine"] .frame-topline) {
+body[data-spw-surface="play"] #play-surface > .frame-topline {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-sm, 0.8rem);
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0.55rem;
+  flex-wrap: nowrap;
+}
+
+body[data-spw-surface="play"] #play-surface > .frame-topline > .frame-sigil {
+  align-self: flex-start;
+  flex: 0 0 auto;
+  position: static;
+}
+
+body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
+  width: 100%;
+  max-inline-size: 100%;
+  flex: 1 0 auto;
 }
 
 :where(body[data-spw-surface="play"] [data-spw-region-role="entry-spine"] :is(p, .inline-note, [data-spw-textual-role="note"])) {
@@ -266,7 +279,7 @@
    9. Controls + toggles
    ========================================================================== */
 
-:where(body[data-spw-surface="play"] :is(button, .mode-switch button, [data-mode-group][data-set-mode], .phase-menu-trigger, .session-action, .play-action)) {
+:where(body[data-spw-surface="play"] :is(button:not(.mode-switch *):not(.frame-sigil), .phase-menu-trigger, .session-action, .play-action)) {
   min-width: var(--play-control-min-width);
   min-height: var(--play-control-min-height);
   padding: 0.42rem 0.72rem;
@@ -410,7 +423,6 @@
   :where(body[data-spw-surface="play"]) main { --spw-main-padding-inline: 0.8rem; }
   :where(body[data-spw-surface="play"]) main > article { padding-top: 0.85rem; }
   :where(body[data-spw-surface="play"] [data-spw-region-role="entry-spine"]) { padding: 1rem 1rem 1.2rem; }
-  :where(body[data-spw-surface="play"] [data-spw-region-role="entry-spine"] .frame-topline) { flex-direction: column; align-items: flex-start; }
   :where(body[data-spw-surface="play"] :is(.frame-grid, .session-grid, .play-grid)) { grid-template-columns: 1fr; }
   :where(body[data-spw-surface="play"] :is(.frame-grid > *, .session-grid > *, .play-grid > *)) { grid-column: auto; }
   :where(body[data-spw-surface="play"] [data-pwa-toast="install"]) {
@@ -423,7 +435,7 @@
   :where(body[data-spw-surface="play"] :is(.spw-chip, .syntax-token)) { max-width: 100%; overflow-wrap: break-word; }
   :where(body[data-spw-surface="play"] .frame-sigil) { max-width: 100%; overflow-wrap: normal; white-space: nowrap; }
   :where(body[data-spw-surface="play"] .frame-heading) { flex-direction: column; align-items: flex-start; gap: 0.45rem; }
-  :where(body[data-spw-surface="play"] :is(button, .mode-switch button, [data-mode-group][data-set-mode])) { width: 100%; min-width: 0; }
+  :where(body[data-spw-surface="play"] :is(.session-action, .play-action)) { width: 100%; min-width: 0; }
 }
 
 /* ==========================================================================

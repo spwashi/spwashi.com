@@ -944,10 +944,11 @@
       .frame-topline > .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil,
       .frame-topline > .frame-operators > *
     ) {
-      flex: 1 1 0;
+      flex: 1 1 auto;
       justify-content: center;
-      min-inline-size: min(100%, 4.25rem);
+      min-inline-size: 0;
       white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 
@@ -1124,17 +1125,21 @@
 :where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
   margin-left: auto;
   justify-content: flex-end;
-  flex: 0 0 auto;
-  min-inline-size: min-content;
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 :where(.frame-topline > .spw-component-meta > .spw-component-tag,
        .frame-heading > .spw-component-meta > .spw-component-tag) {
-  flex-shrink: 0;
-  max-width: none;
-  overflow: visible;
-  text-overflow: clip;
+  flex-shrink: 1;
+  min-inline-size: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+/* Pocket drop of the rail tag lives in handles/primitive.css (later layer). */
 
 :where(.spw-component-guides) {
   display: none;
@@ -1758,10 +1763,10 @@
 
 :where(.frame-topline > .spw-component-meta > .spw-component-tag,
        .frame-heading > .spw-component-meta > .spw-component-tag) {
-  flex: 0 0 auto;
-  min-inline-size: min-content;
+  flex: 0 1 auto;
+  min-inline-size: 0;
   max-inline-size: min(100%, 34ch);
-  padding-inline: 0.7rem;
+  padding-inline: 0.55rem;
 }
 
 :where([data-spw-form="brace"] > .spw-component-tag::before) {

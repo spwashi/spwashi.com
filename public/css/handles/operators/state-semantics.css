@@ -349,10 +349,30 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     width: 100%;
     margin-inline-start: 0;
   }
+
+  /* Play only: leftover sigil was stretching beside a clipped lens. */
+  body[data-spw-surface="play"] #play-surface > .frame-topline {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.55rem;
+  }
+
+  body[data-spw-surface="play"] #play-surface > .frame-topline > .frame-sigil {
+    align-self: flex-start;
+    flex: 0 0 auto;
+    position: static;
+  }
+
+  body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
+    width: 100%;
+    max-inline-size: 100%;
+    flex: 1 0 auto;
+  }
 }
 
-/* Cluster F — phone density; 2×2 only for labeled multi-option tracks (not row) */
-@media (max-width: 32rem) {
+/* Cluster F — phone density; 2×2 for multi-option tracks (not row) */
+@media (max-width: 48rem) {
   .mode-switch .frame-sigil {
     min-inline-size: 0;
     min-block-size: max(2.15rem, var(--touch-target-compact, 2.15rem));
@@ -365,14 +385,24 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     padding-inline: 0.4rem;
   }
 
-  /* 4+ lens options: 2×2 only when the track is narrow and not a forced row. */
-  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"]) {
+  /* 3+ lens options: 2×2 when the track is narrow and not a forced row. */
+  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(3)):not([data-spw-lens-track="row"]) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.32rem;
+    width: 100%;
+    inline-size: 100%;
   }
 
-  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"])::before,
-  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"])[data-spw-lens-feedback]::after {
+  .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .mode-switch[aria-label]:not([data-spw-lens-track="row"])::before,
+  .mode-switch[aria-label]:not([data-spw-lens-track="row"])[data-spw-lens-feedback]::after {
     grid-column: 1 / -1;
   }
 }

@@ -170,13 +170,25 @@
 }
 
 :where(:is(.frame-heading, .frame-topline) .spw-component-tag) {
-  flex-shrink: 0;
+  flex-shrink: 1;
   contain: none;
-  width: max-content;
-  max-width: none;
-  min-width: min-content;
-  overflow: visible;
-  text-overflow: clip;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Pocket: drop the rail tag instead of clipping THRESHOLD / LOOPS / CYCLE.
+   Handles layer, no :where() — grammar hide lost to later display:flex. */
+@media (max-width: 35rem) {
+  .frame-topline > .spw-component-meta,
+  .frame-heading > .spw-component-meta,
+  .card-topline > .spw-component-meta,
+  .frame-topline .spw-component-tag,
+  .frame-heading .spw-component-tag {
+    display: none;
+  }
 }
 
 /* ==========================================================================

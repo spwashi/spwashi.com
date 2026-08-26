@@ -411,7 +411,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .operator-chip) {
   }
 }
 
-.spec-pill {
+:where(.spec-pill) {
   color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%);
   border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--handle-line-soft) 82%);
   background: color-mix(in oklab, var(--surface-strong, #fff) 94%, var(--active-op-color, var(--teal)) 6%);
@@ -440,7 +440,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .operator-chip) {
   box-shadow: inset 0 1px 0 color-mix(in srgb, white 28%, transparent);
 }
 
-:where(html[data-spw-color-mode="dark"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel) :where(.spw-component-tag, .spec-pill) {
+:where(html[data-spw-color-mode="dark"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, .spec-strip) :where(.spw-component-tag, .spec-pill) {
   background: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, rgba(255, 255, 255, 0.16) 64%);
   color: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
@@ -450,7 +450,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .operator-chip) {
 }
 
 @media (prefers-color-scheme: dark) {
-  :where(html[data-spw-color-mode="auto"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel) :where(.spw-component-tag, .spec-pill) {
+  :where(html[data-spw-color-mode="auto"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, .spec-strip) :where(.spw-component-tag, .spec-pill) {
     background: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
     border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, rgba(255, 255, 255, 0.16) 64%);
     color: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
