@@ -734,10 +734,16 @@ async function capturePageWalk(session, job, { viewport, format, quality }) {
   const cluster = String(job.file || '').replace(/^captures\//, '').split('/').slice(0, -1).join('/') || (job.viewportId || 'pocket');
   const maxSlices = Math.max(1, Number(job.maxSlices) || 8);
   const slices = [];
+  const pinCaptureMode = `(() => {
+    document.documentElement.setAttribute('data-spw-capture-mode', 'screenshot');
+    document.body?.setAttribute('data-spw-capture-mode', 'screenshot');
+  })()`;
+  await evaluateProbe(session, pinCaptureMode);
   let extent = await readPageExtent(session);
   const lastY = Math.max(0, extent.scrollHeight - extent.innerHeight);
   let y = 0;
   for (let index = 0; index < maxSlices; index += 1) {
+    await evaluateProbe(session, pinCaptureMode);
     await scrollPageTo(session, y);
     const buffer = await screenshotBuffer(session, { format, quality });
     const file = `captures/${cluster}/${walkFileName(job.specimenRoute, y, ext)}`;
@@ -760,9 +766,12 @@ async function applyCapturePrepare(session, job) {
   const attention = job?.attention || {};
   const close = Array.isArray(prepare?.close) ? prepare.close : (prepare?.close ? [prepare.close] : []);
   const open = Array.isArray(prepare?.open) ? prepare.open : (prepare?.open ? [prepare.open] : []);
-  if (!close.length && !open.length && !attention.section && !attention.probe) return;
+  const needsPrepare = close.length || open.length || attention.section || attention.probe;
   await evaluateProbe(session, `(async () => {
     const html = document.documentElement;
+    if (html) html.setAttribute('data-spw-capture-mode', 'screenshot');
+    document.body?.setAttribute('data-spw-capture-mode', 'screenshot');
+    if (!${needsPrepare ? 'true' : 'false'}) return true;
     for (const sel of ${JSON.stringify(close)}) {
       document.querySelectorAll(sel).forEach((el) => { if ('open' in el) el.open = false; });
     }
@@ -786,8 +795,6 @@ async function applyCapturePrepare(session, job) {
       }
       if (pins.probe) html.setAttribute('data-spw-resonance-probe', pins.probe);
     }
-    html.setAttribute('data-spw-capture-mode', 'screenshot');
-    document.body?.setAttribute('data-spw-capture-mode', 'screenshot');
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     return true;
   })()`, CAPTURE_MEASURE.evaluateTimeoutMs);

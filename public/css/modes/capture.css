@@ -4,12 +4,32 @@
    Clean-capture visibility rules for screenshots and archival renders.
    ========================================================================== */
 
-html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-console,
-html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-state-inspector,
-html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-discovery-notice-stack,
-html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) [data-spw-floating-chrome="true"],
-html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) [data-spw-runtime-status] {
+:is(html, body):is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) :is(
+  .spw-console,
+  .spw-state-inspector,
+  .spw-discovery-notice-stack,
+  .spw-discovery-notice,
+  .spw-discovery-notice-modal,
+  [data-spw-discovery-notice],
+  [data-spw-discovery-notice-stack],
+  [data-spw-discovery-notice-modal],
+  .spw-section-handle,
+  .spw-section-handle-shell,
+  .spw-section-handle-current,
+  .spw-section-handle-step,
+  .spw-section-handle-toggle,
+  [data-spw-chrome-role="section-handle"],
+  [data-pwa-toast],
+  .spw-toast,
+  [data-spw-floating-chrome="true"],
+  [data-spw-runtime-status],
+  body > .promo-wonder-cycle__card,
+  .promo-wonder-cycle__card[data-spw-presentation="modal"]
+) {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* SVG surfaces: freeze flows and drop pointer artifacts so the same tuned
