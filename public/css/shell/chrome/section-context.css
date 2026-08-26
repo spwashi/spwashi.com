@@ -748,7 +748,7 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
   }
 
   .spw-nav-toggle {
-    margin-inline-end: calc(var(--subjective-brace-width, 28px) + 0.3rem);
+    margin-inline-end: 0;
     padding:
       calc(var(--spw-control-padding-block, 0.2rem) + 0.08rem)
       calc(var(--spw-control-padding-inline, 0.52rem) + 0.04rem);
@@ -1045,6 +1045,9 @@ body > nav.spw-section-handle-shell {
   .site-header[data-spw-menu-mode="toggle"],
   body > header[data-spw-menu-mode="toggle"] {
     grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "sigil toggle"
+      "tools tools";
     align-items: center;
   }
 

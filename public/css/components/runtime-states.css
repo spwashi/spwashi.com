@@ -54,6 +54,17 @@
 
 :where([data-spw-section-state]) {
   --spw-section-local-resonance: 0;
+  /* Viewport rank is a low-authority reading cue. The authored region seat
+     supplies the electrostatic channel; material tangibility tempers it. */
+  --spw-section-viewport-authority: clamp(
+    0.42,
+    calc(
+      var(--spw-e-channel, 0.78)
+      * (0.72 + (0.28 * var(--spw-tangibility, 0.5)))
+    ),
+    1
+  );
+  --spw-section-attention-authority: var(--spw-section-viewport-authority);
   transition:
     border-color var(--spw-interaction-commit, var(--component-transition-base)),
     box-shadow var(--spw-interaction-settle, var(--component-transition-base)),
@@ -62,14 +73,33 @@
     transform var(--spw-interaction-settle, var(--component-transition-base));
 }
 
+/* Address, focus, selection, and deliberate marking outrank the viewport's
+   automatic guess without inventing another attention state. */
+:where([data-spw-section-state]:is(
+  :target,
+  :focus-within,
+  [data-spw-region-mark],
+  [data-spw-active="true"],
+  [data-spw-selection="focused"]
+)) {
+  --spw-section-attention-authority: 1;
+}
+
 :where([data-spw-section-state="active"]) {
-  --spw-section-local-resonance: var(--spw-transition-hierarchy-resonance, 0.12);
+  --spw-section-local-resonance: calc(
+    var(--spw-transition-hierarchy-resonance, 0.12)
+    * var(--spw-section-attention-authority, 1)
+  );
   box-shadow: var(--spw-transition-hierarchy-shadow, var(--spw-local-shadow, var(--component-shadow, none)));
   transform: translateY(calc(var(--spw-section-inertia-shift, 0px) * -1));
 }
 
 :where([data-spw-section-state="previous"], [data-spw-section-state="next"]) {
-  --spw-section-local-resonance: calc(var(--spw-transition-hierarchy-resonance, 0.12) * 0.42);
+  --spw-section-local-resonance: calc(
+    var(--spw-transition-hierarchy-resonance, 0.12)
+    * 0.42
+    * var(--spw-section-attention-authority, 1)
+  );
   filter: saturate(calc(1 + var(--spw-section-local-resonance, 0) * 0.12));
 }
 
@@ -532,7 +562,11 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   }
 }
 
-:where(main > section.spw-frame[data-spw-section-state], main > article > section.spw-frame[data-spw-section-state]) {
+:where(
+  main > section.spw-frame[data-spw-section-state],
+  main > article > section.spw-frame[data-spw-section-state],
+  main > [data-spw-cluster] > section.spw-frame[data-spw-section-state]
+) {
   transition:
     box-shadow var(--spw-layout-measure-settle, var(--component-transition-deliberate)),
     border-color var(--spw-component-settle-transition, var(--component-transition-deliberate)),
@@ -540,22 +574,38 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     opacity var(--component-transition-arrival);
 }
 
-:where(main > section.spw-frame[data-spw-section-state="active"], main > article > section.spw-frame[data-spw-section-state="active"]) {
+:where(
+  main > section.spw-frame[data-spw-section-state="active"],
+  main > article > section.spw-frame[data-spw-section-state="active"],
+  main > [data-spw-cluster] > section.spw-frame[data-spw-section-state="active"]
+) {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--component-accent) 12%, transparent),
   var(--component-shadow-active);
 }
 
-:where(main > section.spw-frame[data-spw-section-state="active"], main > article > section.spw-frame[data-spw-section-state="active"]) :where(h1, h2, h3) {
+:where(
+  main > section.spw-frame[data-spw-section-state="active"],
+  main > article > section.spw-frame[data-spw-section-state="active"],
+  main > [data-spw-cluster] > section.spw-frame[data-spw-section-state="active"]
+) :where(h1, h2, h3) {
   color: color-mix(in srgb, var(--ink, currentColor) 90%, var(--component-accent) 10%);
 }
 
 :where(html[data-spw-scroll-cadence="on"]) {
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state] {
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state] {
     position: relative;
     overflow: clip;
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state]::before {
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state]::before {
     content: "";
     position: absolute;
     inset-block: 1rem;
@@ -572,7 +622,11 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     pointer-events: none;
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state]::after {
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state]::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -582,45 +636,87 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     pointer-events: none;
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame):is(
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  ):is(
     [data-spw-section-state="previous"],
     [data-spw-section-state="next"]
   )::before {
-    opacity: 0.24;
+    opacity: clamp(
+      0.16,
+      calc(0.24 * var(--spw-section-attention-authority, 1)),
+      0.24
+    );
     transform: scaleY(0.56);
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"] {
-    border-color: color-mix(in oklab, var(--component-accent) 18%, transparent);
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state="active"] {
+    border-color: color-mix(
+      in oklab,
+      var(--component-accent) calc(18% * var(--spw-section-attention-authority, 1)),
+      transparent
+    );
     box-shadow:
-      inset 0 0 0 1px color-mix(in oklab, var(--component-accent) 10%, transparent),
-      0 0.55rem 1.4rem color-mix(in oklab, var(--component-accent) 5%, transparent),
+      inset 0 0 0 1px color-mix(
+        in oklab,
+        var(--component-accent) calc(10% * var(--spw-section-attention-authority, 1)),
+        transparent
+      ),
+      0 0.55rem 1.4rem color-mix(
+        in oklab,
+        var(--component-accent) calc(5% * var(--spw-section-attention-authority, 1)),
+        transparent
+      ),
       var(--component-shadow-active);
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]::before {
-    opacity: 0.58;
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state="active"]::before {
+    opacity: clamp(
+      0.3,
+      calc(0.5 * var(--spw-section-attention-authority, 1)),
+      0.5
+    );
     transform: scaleY(1);
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]::after {
-    opacity: 1;
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state="active"]::after {
+    opacity: clamp(
+      0.28,
+      calc(0.68 * var(--spw-section-attention-authority, 1)),
+      0.68
+    );
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state="active"]
     :where(.frame-sigil, h1, h2, h3, .inline-note, [data-spw-textual-role="note"]) {
     transition:
-      transform var(--component-transition-deliberate),
       color var(--component-transition-deliberate),
       opacity var(--component-transition-deliberate);
   }
 
-  & main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]
-    :where(.frame-sigil, h1, h2, h3) {
-    transform: translateX(0.08rem);
-  }
-
-  & main > :is(section.spw-frame, article > section.spw-frame):is(
+  & :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  ):is(
     [data-spw-section-state="previous"],
     [data-spw-section-state="next"]
   ) :where(.inline-note, [data-spw-textual-role="note"]) {
@@ -629,8 +725,16 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(html[data-spw-scroll-cadence="on"] main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state])::before,
-  :where(html[data-spw-scroll-cadence="on"] main > :is(section.spw-frame, article > section.spw-frame)[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, [data-spw-textual-role="note"]) {
+  :where(html[data-spw-scroll-cadence="on"] :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state])::before,
+  :where(html[data-spw-scroll-cadence="on"] :is(
+    main > section.spw-frame,
+    main > article > section.spw-frame,
+    main > [data-spw-cluster] > section.spw-frame
+  )[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, [data-spw-textual-role="note"]) {
     transition: none;
     transform: none;
   }

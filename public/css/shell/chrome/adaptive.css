@@ -1075,7 +1075,9 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 
 @media (max-width: 600px) {
   :where(.site-header, body > header) {
-    padding-top: max(0.12rem, env(safe-area-inset-top));
+    /* The page shell already owns safe-area insets. Keep the navbar flush to
+       that shell edge instead of reserving a second strip above its controls. */
+    padding-top: 0;
   }
 
   .spw-nav-toggle {

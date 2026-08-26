@@ -133,6 +133,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
    Routes set palette via --mode-switch-*-intent and opt into chrome/track:
 
      data-spw-lens-chrome="silent"  — AT keeps aria-label; visual label chip off
+     data-spw-lens-chrome="quiet"   — flat editorial tabs; no capsule chassis
      data-spw-lens-track="row"      — full-width equal-share flex track (no 2×2)
 
    Progressive enhancement: labeled chrome only when aria-label is present;
@@ -206,6 +207,19 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 .mode-switch[data-spw-lens-chrome~="silent"][data-spw-lens-feedback]::after {
   content: none;
   display: none;
+}
+
+/* Quiet chrome keeps the same mode semantics and touch geometry but removes
+   the nested capsule treatment when a local editorial instrument already has
+   an authored label and boundary. */
+.mode-switch[data-spw-lens-chrome~="quiet"] {
+  gap: 0;
+  padding: 0;
+  border: 0;
+  border-block-end: 1px solid color-mix(in srgb, var(--spw-lens-cascade-color) 24%, var(--line, transparent) 76%);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .mode-switch[data-spw-mode-seat="open"] {
@@ -550,6 +564,41 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 .mode-switch .frame-sigil:not([aria-pressed="true"]):is(:hover, :focus-visible) {
   opacity: 1;
+}
+
+/* Quiet-state composition follows the shared pressed/idle rules so the local
+   editorial treatment remains the final handle-layer decision. */
+.mode-switch[data-spw-lens-chrome~="quiet"] > .frame-sigil {
+  --mode-switch-border-width-intent: 0;
+  --mode-switch-idle-bg-intent: transparent;
+  --mode-switch-idle-shadow-intent: none;
+  --mode-switch-hover-bg-intent: color-mix(in srgb, var(--active-op-color, var(--teal)) 7%, transparent);
+  --mode-switch-hover-border-intent: transparent;
+  --mode-switch-hover-shadow-intent: none;
+  --mode-switch-hover-lift-intent: 0;
+  --mode-switch-active-bg-intent: color-mix(in srgb, var(--active-op-color, var(--teal)) 9%, transparent);
+  --mode-switch-active-border-intent: transparent;
+  --mode-switch-active-shadow-intent: inset 0 -0.16rem 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 68%, transparent);
+  --mode-switch-active-lift-intent: 0;
+  --mode-switch-focus-shadow-intent: inset 0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--teal)) 26%, transparent);
+  --mode-switch-pressed-animation-intent: none;
+  border: 0;
+  border-radius: 0;
+}
+
+.mode-switch[data-spw-lens-chrome~="quiet"] > .frame-sigil:not([aria-pressed="true"]) {
+  background: transparent;
+  box-shadow: none;
+}
+
+.mode-switch[data-spw-lens-chrome~="quiet"] > .frame-sigil[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 9%, transparent);
+  box-shadow: inset 0 -0.16rem 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 68%, transparent);
+}
+
+.mode-switch[data-spw-lens-chrome~="quiet"] > .frame-sigil[aria-pressed]::after {
+  content: none;
+  display: none;
 }
 
 @keyframes spw-lens-commit-pulse {

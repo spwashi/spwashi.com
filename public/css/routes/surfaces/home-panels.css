@@ -81,8 +81,9 @@
 }
 
 :where(body[data-spw-surface="home"] .home-microcosm-strip) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
   gap: clamp(0.72rem, 1.4vw, 1rem);
   padding: clamp(0.58rem, 1.2vw, 0.82rem);
   border: 1px solid color-mix(in srgb, var(--home-accent-primary, var(--teal)) 18%, var(--home-accent-line, rgba(0, 0, 0, 0.14)) 82%);
@@ -95,6 +96,9 @@
 
 :where(body[data-spw-surface="home"] .home-microcosm-figure) {
   display: grid;
+  flex: 1 1 18rem;
+  width: auto;
+  min-width: 0;
   grid-template-rows: auto 1fr;
   gap: 0.58rem;
   margin: 0;
