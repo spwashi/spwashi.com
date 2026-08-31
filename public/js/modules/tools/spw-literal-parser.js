@@ -74,6 +74,20 @@ bane[bone]{limit}
 bone[bonk]{hit}
 boon[bane]{cost}
 honk[bonk]{signal}`,
+  /** Discrete path count: the spatial twin of a boonhonk pair. */
+  paths: `paths[grid]{east.north}
+count[paths]{binomial}`,
+  /** Slice-specific rates packaged as one local uphill hint. */
+  gradient: `field[gradient]{uphill}
+slice[x]{hold.y}
+slice[y]{hold.x}`,
+  /** Seed, season, table — holdings, not a single ticker. */
+  holdings: `hold[seed.season.table]{identity.boundary.ledger}<policy>
+seed[identity]{render.twice}
+season[boundary]{no.silent.mint}`,
+  beat: `beat[unary]{close}<offer>
+beat[pair]{pieces}<compose>
+beat[season]{portfolio}<dwell>`,
 });
 
 function countAstNodes(value, depth = 0, census = { total: 0, maxDepth: 0, types: new Map() }) {

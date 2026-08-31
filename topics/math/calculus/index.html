@@ -20,7 +20,7 @@
     features="operators navigator console"
     related_routes="/topics/math/|/topics/math/trigonometry/|/topics/math/differential-equations/|/topics/math/vector-calculus/|/topics/math/numerical-methods/|/topics/math/scale-intuition/|/topics/math/statistical-analysis/|/topics/software/algorithms/|/topics/software/spw/|/topics/software/differential-lambda-calculus/|/play/rpg-wednesday/world/|/play/rpg-wednesday/arcs/"
     stylesheet_mode="scoped"
-    extra_scripts="/public/js/modules/math/diagrams.js?v=0.0.1"
+    extra_scripts="/public/js/modules/math/diagrams.js?v=0.0.2"
 ></spw-page>
 <!DOCTYPE html>
 <html lang="en">
@@ -323,6 +323,7 @@
                         <figcaption data-spw-textual-role="note">The orange slice holds y fixed. The violet slice holds x fixed. Their slopes are different because a surface carries directional local behavior.</figcaption>
                     </figure>
                     <p class="math-diagram-status" data-role="status">Move x and y to compare the slice-specific slopes on the same surface.</p>
+                    <p class="math-diagram-next" data-spw-semantic-expression="slice[state]{next}<channel>"><span data-role="next-reason">Slice-specific rates package into a local uphill hint.</span> <a data-role="next" href="/topics/math/vector-calculus/#vector-field-lab">vector field lab</a></p>
                     <div class="topic-reference-grid">
                         <article class="topic-reference-card">
                             <h3>What changes</h3>
@@ -393,7 +394,7 @@
                         </div>
                         <h3>Gradient shorthand</h3>
                         <p><code>∇f = (∂f/∂x, ∂f/∂y, ...)</code>. The gradient packages slice-specific rates into one local uphill hint.</p>
-                        <a href="/topics/math/vector-calculus/">route: vector calculus stub</a>
+                        <a href="/topics/math/vector-calculus/#vector-field-lab">route: vector field lab</a>
                     </article>
                     <article class="math-lens-card">
                         <span class="frame-card-sigil">demo</span>

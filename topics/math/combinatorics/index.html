@@ -18,8 +18,9 @@
     wonder="counting adjacency recursion"
     route_family="editorial math field-guide"
     features="operators navigator console"
-    related_routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/|/about/|/play/rpg-wednesday/"
+    related_routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/math/calculus/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/|/about/|/play/rpg-wednesday/|/services/creator/|/tools/spw-parser/"
     stylesheet_mode="scoped"
+    extra_scripts="/public/js/modules/math/diagrams.js?v=0.0.2"
 ></spw-page>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +42,7 @@
     ></spw-site-header>
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_combinatorics__main_surface" data-spw-wonder="counting adjacency recursion" id="main-content" tabindex="-1" aria-labelledby="combinatorics-title">
         <article>
-            <section class="spw-frame" data-spw-region-role="entry-spine" id="combinatorics-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_combinatorics__combinatorics_hero" data-spw-context-relevance="combinatorics counting partitions graphs recursion finite structure" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/|/about/|/play/rpg-wednesday/" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+            <section class="spw-frame" data-spw-region-role="entry-spine" id="combinatorics-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_combinatorics__combinatorics_hero" data-spw-semantic-expression="count[structure]{paths.partitions.graphs}<lab>" data-spw-context-relevance="combinatorics counting partitions graphs recursion finite structure" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/|/about/|/play/rpg-wednesday/" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#combinatorics-hero">#&gt;finite_structure_you_can_count</a>
                     <div class="spec-strip">
@@ -52,16 +53,18 @@
                 </div>
                 <p class="spec-kicker">Math / Pure Structure</p>
                 <h1 id="combinatorics-title">Combinatorics turns possibility into a visible arrangement.</h1>
-                <p>This route is for the side of pure math that treats finite structure as something you can count, compare, and reorganize. Combinatorics is not only about big answers; it is about learning to see recurrence, adjacency, and equivalence classes inside small examples. A handful of points, paths, or boxes can already contain the full pattern.</p>
+                <p data-spw-copy-unit="math.combinatorics.hero.lede">Finite structure you can count, compare, and reorganize. A small example is often the whole pattern. The lab below is a porch: paths, then a five-voice dummy. The dummy is not the house.</p>
                 <nav class="frame-operators" aria-label="Combinatorics routes">
                     <a class="spw-chip" data-spw-handle="true" href="#combinatorics-intuition" data-spw-operator="frame" data-spw-action="address">#&gt;intuition_first</a>
                     <a class="spw-chip" data-spw-handle="true" href="#combinatorics-map" data-spw-operator="frame" data-spw-action="address">#&gt;counting_map</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#combinatorics-lab" data-spw-operator="frame" data-spw-action="address">#&gt;count_lab</a>
                     <a class="spw-chip" data-spw-handle="true" href="#combinatorics-handles" data-spw-operator="frame" data-spw-action="address">#&gt;visual_handles</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/about/#boonhonk-register" data-spw-operator="value" data-spw-action="materialize">*boonhonk</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/services/creator/#first-beat" data-spw-operator="concept">beat[unary]<offer></a>
                     <a class="spw-chip" data-spw-handle="true" href="/topics/math/" data-spw-operator="potential" data-spw-action="explore">~math_hub</a>
                     <a class="spw-chip" data-spw-handle="true" href="/topics/math/topology/#topology-map" data-spw-operator="potential" data-spw-action="explore">~topology_map</a>
                     <a class="spw-chip" data-spw-handle="true" href="/topics/math/symmetry/#symmetry-map" data-spw-operator="potential" data-spw-action="explore">~symmetry_map</a>
                     <a class="spw-chip" data-spw-handle="true" href="/topics/software/lattices/" data-spw-operator="potential" data-spw-action="explore">~lattices</a>
-                    <a class="spw-chip" data-spw-handle="true" href="/about/#boonhonk-register" data-spw-operator="value" data-spw-action="materialize">*boonhonk_register</a>
                 </nav>
             </section>
 
@@ -70,6 +73,7 @@
                     <li><a href="#combinatorics-hero">Overview</a></li>
                     <li><a href="#combinatorics-intuition">Intuition First</a></li>
                     <li><a href="#combinatorics-map">Counting Map</a></li>
+                    <li><a href="#combinatorics-lab">Count Lab</a></li>
                     <li><a href="#combinatorics-handles">What To Look For</a></li>
                     <li><a href="#combinatorics-neighbors">Neighbor Routes</a></li>
                 </ul>
@@ -152,8 +156,73 @@
                         <text x="360" y="264" text-anchor="middle" font-size="14" fill="var(--ink-soft)">count by stacking units into shape</text>
                         <text x="586" y="264" text-anchor="middle" font-size="14" fill="var(--ink-soft)">count by naming adjacency relations</text>
                     </svg>
-                    <figcaption data-spw-textual-role="note">The strength of combinatorics is translation. A hard question often softens when it becomes a path count, a partition diagram, or a graph with a better notion of neighborhood.</figcaption>
+                    <figcaption data-spw-textual-role="note">The strength of combinatorics is translation. A hard question often softens when it becomes a path count, a partition diagram, or a graph with a better notion of neighborhood. The labs below keep that picture live.</figcaption>
                 </figure>
+            </section>
+
+            <section class="spw-frame" id="combinatorics-lab" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-affordance="practice" data-spw-liminality="threshold" data-spw-category-family="workshop" data-spw-locality="high" data-spw-consequence="entry" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_topics_topics_math_combinatorics__lab" data-spw-feature="combinatorics-count-lab" data-spw-semantic-expression="count[dummy]{paths.mix}<next>">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#combinatorics-lab">^"count_lab"{</a>
+                    <h2>Count Lab: Paths, Then A Mix</h2>
+                </header>
+                <p data-spw-textual-role="note" data-spw-copy-unit="math.combinatorics.lab.lede">Two pictures, one skill. Paths count walks; boonhonk counts beats. A unary is one close. A pair is two named pieces. A season is a book of holds. The status line below is a channel: it names the next region when the count changes.</p>
+
+                <div class="math-interactive-lab" data-math-visual="lattice-paths" data-spw-feature="lattice-path-lab">
+                    <div class="math-diagram-controls">
+                        <label class="math-control">
+                            <span>east <output data-output="rightSteps">3</output></span>
+                            <input data-control="rightSteps" type="range" min="1" max="6" value="3">
+                        </label>
+                        <label class="math-control">
+                            <span>north <output data-output="upSteps">3</output> / paths <output data-output="pathCount">20</output></span>
+                            <input data-control="upSteps" type="range" min="1" max="6" value="3">
+                        </label>
+                    </div>
+                    <figure class="spw-svg-figure" data-spw-svg-persona="learner teacher engineer">
+                        <svg viewBox="0 0 720 320" role="img" aria-labelledby="lattice-paths-title lattice-paths-desc">
+                            <title id="lattice-paths-title">Lattice path count</title>
+                            <desc id="lattice-paths-desc">A grid with two highlighted monotone paths from southwest to northeast. Path count is the binomial coefficient.</desc>
+                        </svg>
+                        <figcaption data-spw-textual-role="note">If the controls are unavailable, read a 3-by-3 grid: twenty monotone paths, two drawn. Orange runs east then north. Violet interleaves.</figcaption>
+                    </figure>
+                    <p class="math-diagram-status" data-role="status">Move east and north to watch the count and the next door change.</p>
+                    <p class="math-diagram-next" data-spw-semantic-expression="count[state]{next}<channel>"><span data-role="next-reason">Balanced grids sit at the binomial peak.</span> <a data-role="next" href="/about/#boonhonk-register">boonhonk pair count</a></p>
+                </div>
+
+                <div class="math-interactive-lab" data-math-visual="boonhonk-count" data-spw-feature="boonhonk-count-lab">
+                    <div class="math-diagram-controls">
+                        <label class="math-control">
+                            <span>first voice <output data-output="firstVoice">boon</output></span>
+                            <select data-control="firstVoice">
+                                <option value="boon" selected>boon — invite</option>
+                                <option value="bane">bane — limit</option>
+                                <option value="bone">bone — hold</option>
+                                <option value="bonk">bonk — hit</option>
+                                <option value="honk">honk — signal</option>
+                            </select>
+                        </label>
+                        <label class="math-control">
+                            <span>second voice <output data-output="secondVoice">honk</output> / <output data-output="sceneKind">ordered pair (20)</output></span>
+                            <select data-control="secondVoice">
+                                <option value="boon">boon — invite</option>
+                                <option value="bane">bane — limit</option>
+                                <option value="bone">bone — hold</option>
+                                <option value="bonk">bonk — hit</option>
+                                <option value="honk" selected>honk — signal</option>
+                            </select>
+                        </label>
+                    </div>
+                    <figure class="spw-svg-figure" data-spw-svg-persona="learner artist storyteller">
+                        <svg viewBox="0 0 720 320" role="img" aria-labelledby="boonhonk-count-title boonhonk-count-desc">
+                            <title id="boonhonk-count-title">Boonhonk unary and pair count</title>
+                            <desc id="boonhonk-count-desc">Five voices on a field. Selecting the same voice twice is a unary. Two different voices are an ordered pair. Five plus twenty is twenty-five scenes.</desc>
+                        </svg>
+                        <figcaption data-spw-textual-role="note">This is a dummy on purpose: the same five names already live in the mixer. Use them to count, then to pick a small first offering — not to invent twenty-five products.</figcaption>
+                    </figure>
+                    <p class="math-diagram-status" data-role="status">Pick two voices. Same voice: one close. Different voices: a pair of named pieces.</p>
+                    <p class="math-diagram-next" data-spw-semantic-expression="beat[pair]{pieces}<channel>"><span data-role="next-reason">A pair is two holdings, not a second ticker.</span> <a data-role="next" href="/services/creator/#first-beat">first beat</a></p>
+                    <p><a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_sample=boonhonk#literal-parser" data-spw-operator="wonder">? parse[boonhonk]</a> <a class="spw-chip" data-spw-handle="true" href="/about/#boonhonk-register" data-spw-operator="value">*mixer</a> <a class="spw-chip" data-spw-handle="true" href="/design/palettes/" data-spw-operator="concept-edge">&gt;color_field</a></p>
+                </div>
             </section>
 
             <section class="spw-frame" id="combinatorics-handles" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_combinatorics__combinatorics_handles" data-spw-context-relevance="combinatorics counting partitions graphs recursion finite structure" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/|/about/|/play/rpg-wednesday/">
@@ -217,8 +286,13 @@
                     </article>
                     <article class="topic-reference-card">
                         <h3>Boonhonk mixes</h3>
-                        <p>Five transforms and a pair rule: 5 unary plus 20 ordered pairs is 25 scenes. The genre continues past that arithmetic.</p>
-                        <a href="/about/#boonhonk-register">route: Boonhonk Register</a>
+                        <p>Five transforms and a pair rule: 5 unary plus 20 ordered pairs is 25 scenes. Use that as a dummy to pick one close, not twenty-five products.</p>
+                        <a href="#combinatorics-lab">anchor: count lab</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>First beat</h3>
+                        <p>A unary is $250–$750. A pair is two named pieces. A season is a portfolio.</p>
+                        <a href="/services/creator/#first-beat">route: first beat</a>
                     </article>
                     <article class="topic-reference-card">
                         <h3>Dimensional path</h3>

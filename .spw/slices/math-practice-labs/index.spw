@@ -13,6 +13,8 @@
   "/topics/math/vector-calculus/#vector-field-lab"
   "/topics/math/numerical-methods/#numerical-stepping-lab"
   "/topics/math/differential-equations/#slope-field-lab"
+  "/topics/math/combinatorics/#combinatorics-lab"
+  "/topics/math/calculus/#multivariable-shape"
 ][reg=set]
 
 @runtime_module: ~"../../../public/js/modules/math/diagrams.js"

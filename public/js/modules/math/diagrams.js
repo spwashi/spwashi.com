@@ -30,6 +30,15 @@ function createSvgNode(name, attrs = {}) {
   return node;
 }
 
+/** Keep a dynamically redrawn SVG's authored accessible name intact. */
+function appendSvgDescription(svg, titleId, titleText, descriptionId, descriptionText) {
+  const title = createSvgNode('title', { id: titleId });
+  title.textContent = titleText;
+  const description = createSvgNode('desc', { id: descriptionId });
+  description.textContent = descriptionText;
+  svg.append(title, description);
+}
+
 /**
  * setMeasuredValue
  * Helper to update a status or value element with a % measure.
@@ -75,6 +84,40 @@ function isPrime(n) {
 
 function formatNumber(value, digits = 2) {
   return Number(value).toFixed(digits).replace(/\.?0+$/, '');
+}
+
+function binomial(n, k) {
+  if (k < 0 || k > n) return 0;
+  k = Math.min(k, n - k);
+  let count = 1;
+  for (let i = 1; i <= k; i += 1) {
+    count = (count * (n - k + i)) / i;
+  }
+  return Math.round(count);
+}
+
+function setNextRoute(root, href, label, reason) {
+  const link = safeQuery('[data-role="next"]', root);
+  const why = safeQuery('[data-role="next-reason"]', root);
+  if (link) {
+    link.setAttribute('href', href);
+    link.textContent = label;
+    link.setAttribute('data-spw-consequence', 'entry');
+  }
+  if (why) why.textContent = reason;
+  const host = link?.closest?.('[data-spw-semantic-expression]')
+    || why?.closest?.('[data-spw-semantic-expression]')
+    || safeQuery('[data-spw-semantic-expression]', root);
+  const expression = host?.getAttribute('data-spw-semantic-expression') || '';
+  if (host) {
+    host.setAttribute('data-spw-projection', 'channel');
+    host.setAttribute('data-spw-channel', 'live');
+  }
+  const detail = { href, label, reason, expression };
+  // The document event is enough: expression-resonance owns this document-local
+  // residue. Mirroring it to the bus would process the same change twice and
+  // suggest that a temporary lab choice should travel between routes.
+  (host || root).dispatchEvent(new CustomEvent('spw:expression-channel', { bubbles: true, detail }));
 }
 
 function initModClock(root) {
@@ -955,6 +998,15 @@ function initPartialDerivatives(root) {
       scale: 'local-slope',
       unit: 'rate'
     });
+    const ax = Math.abs(fx);
+    const ay = Math.abs(fy);
+    if (ax < 0.35 && ay < 0.35) {
+      setNextRoute(root, '/topics/math/vector-calculus/#vector-field-lab', 'vector field lab', 'Both slices are quiet — a local critical region. Follow the field, not a single slope.');
+    } else if (ax > 2 * ay || ay > 2 * ax) {
+      setNextRoute(root, '/topics/math/combinatorics/#combinatorics-lab', 'combinatorics lab', 'One axis dominates, like a right-heavy path count. Discrete preference is the combinatoric twin of a gradient.');
+    } else {
+      setNextRoute(root, '/about/#boonhonk-register', 'boonhonk mix', 'The slices are in harmony — two voices loud together. A pair, not a single currency.');
+    }
   }
 
   xInput.addEventListener('input', render);
@@ -1375,6 +1427,13 @@ function initVectorFieldLab(root) {
       saddle: `Saddle flow (divergence = 0, curl = 0). Air passing over a mountain ridge, showing hyperbolic trade paths and unstable routing seams.`
     };
     status.textContent = `Field type is ${typeLabels[type]}. At (${formatNumber(px, 2)}, ${formatNumber(py, 2)}), the flow vector is (${formatNumber(probeField.dx, 2)}, ${formatNumber(probeField.dy, 2)}). ${descMetaphors[type]} Euler stepping uses local flow vectors to trace a path step-by-step.`;
+    if (type === 'saddle') {
+      setNextRoute(root, '/topics/math/combinatorics/#combinatorics-lab', 'path count lab', 'A saddle is two pressures at once. Count the discrete paths before you pick a trade.');
+    } else if (type === 'source' || type === 'sink') {
+      setNextRoute(root, '/topics/math/calculus/#multivariable-shape', 'partial derivatives', 'Inward or outward flow is a gradient with a sign. Read the slices.');
+    } else {
+      setNextRoute(root, '/about/#boonhonk-register', 'boonhonk register', 'Rotation keeps every voice in play — a mix, not a single ticker.');
+    }
   }
 
   if (fieldTypeSelect) fieldTypeSelect.addEventListener('change', render);
@@ -1605,6 +1664,228 @@ function initNumericalSteppingLab(root) {
   render();
 }
 
+function initLatticePaths(root) {
+  const rightInput = safeQuery('[data-control="rightSteps"]', root);
+  const upInput = safeQuery('[data-control="upSteps"]', root);
+  const rightOutput = safeQuery('[data-output="rightSteps"]', root);
+  const upOutput = safeQuery('[data-output="upSteps"]', root);
+  const countOutput = safeQuery('[data-output="pathCount"]', root);
+  const svg = safeQuery('svg', root);
+  const status = safeQuery('[data-role="status"]', root);
+  if (!rightInput || !upInput || !svg || !status) return;
+
+  function render() {
+    const right = Math.max(1, Math.min(6, Number.parseInt(rightInput.value, 10) || 3));
+    const up = Math.max(1, Math.min(6, Number.parseInt(upInput.value, 10) || 3));
+    rightInput.value = String(right);
+    upInput.value = String(up);
+    const count = binomial(right + up, right);
+    if (rightOutput) rightOutput.textContent = String(right);
+    if (upOutput) upOutput.textContent = String(up);
+    if (countOutput) {
+      setMeasuredValue(countOutput, String(count), {
+        kind: 'objective',
+        source: 'lattice-path-count',
+        scale: 'count',
+      });
+    }
+
+    const cell = 36;
+    const originX = 48;
+    const originY = 268;
+    svg.innerHTML = '';
+    svg.setAttribute('viewBox', '0 0 720 320');
+    appendSvgDescription(
+      svg,
+      'lattice-paths-title',
+      `Lattice path count: ${count} monotone paths`,
+      'lattice-paths-desc',
+      `A ${right}-by-${up} grid with two highlighted monotone paths from southwest to northeast. The total is the binomial coefficient C(${right + up}, ${right}) = ${count}.`,
+    );
+    svg.append(createSvgNode('rect', {
+      x: 16, y: 16, width: 688, height: 288, rx: 24,
+      fill: 'rgba(255,255,255,0.88)', stroke: 'rgba(0,128,128,0.16)',
+    }));
+
+    const grid = createSvgNode('g', { stroke: 'rgba(0,128,128,0.22)', 'stroke-width': 2 });
+    for (let i = 0; i <= right; i += 1) {
+      grid.append(createSvgNode('line', {
+        x1: originX + i * cell, y1: originY, x2: originX + i * cell, y2: originY - up * cell,
+      }));
+    }
+    for (let j = 0; j <= up; j += 1) {
+      grid.append(createSvgNode('line', {
+        x1: originX, y1: originY - j * cell, x2: originX + right * cell, y2: originY - j * cell,
+      }));
+    }
+    svg.append(grid);
+
+    const eastThenNorth = [];
+    for (let i = 0; i <= right; i += 1) eastThenNorth.push([i, 0]);
+    for (let j = 1; j <= up; j += 1) eastThenNorth.push([right, j]);
+    const interleaved = [[0, 0]];
+    let cx = 0;
+    let cy = 0;
+    while (cx < right || cy < up) {
+      if (cx < right && (cy === up || (cx - cy) <= 0)) {
+        cx += 1;
+      } else if (cy < up) {
+        cy += 1;
+      } else {
+        cx += 1;
+      }
+      interleaved.push([cx, cy]);
+    }
+
+    function pathFromCells(cells, stroke) {
+      const d = cells.map(([x, y], index) => {
+        const sx = originX + x * cell;
+        const sy = originY - y * cell;
+        return `${index === 0 ? 'M' : 'L'}${sx} ${sy}`;
+      }).join(' ');
+      return createSvgNode('path', {
+        d, fill: 'none', stroke, 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round',
+      });
+    }
+    svg.append(pathFromCells(eastThenNorth, 'var(--op-object-color, #c68a22)'));
+    svg.append(pathFromCells(interleaved, 'var(--op-probe-color, #6a3fb8)'));
+
+    const labels = createSvgNode('g', {
+      'font-family': 'JetBrains Mono, monospace',
+      'font-size': 14,
+      fill: 'var(--ink-soft, rgba(0,0,0,0.72))',
+    });
+    const add = (text, x, y, attrs = {}) => {
+      const node = createSvgNode('text', { x, y, ...attrs });
+      node.textContent = text;
+      labels.append(node);
+    };
+    add(`${right} east`, originX + right * cell, originY + 22, { 'text-anchor': 'middle' });
+    add(`${up} north`, originX - 10, originY - up * cell - 8, { 'text-anchor': 'end' });
+    add(`C(${right + up}, ${right}) = ${count}`, 420, 48, { fill: 'var(--ink)', 'font-size': 16 });
+    add('paths[grid]{east.north}', 420, 72, { fill: 'var(--op-frame-color, #178282)' });
+    svg.append(labels);
+
+    const phrase = `paths[grid]{east.${right}.north.${up}}`;
+    if (right === up) {
+      status.textContent = `${phrase} — ${count} monotone paths on a square. The two axes are in harmony, like a balanced mix: neither voice is a single currency.`;
+      setNextRoute(root, '/about/#boonhonk-register', 'boonhonk pair count', 'Square grids are the binomial peak. The five-voice dummy counts the same way: 5 unary, 20 ordered pairs.');
+    } else if (count > 70) {
+      status.textContent = `${phrase} — ${count} paths. Too many to list by hand; this is why recurrence and budgets exist.`;
+      setNextRoute(root, '/topics/math/complexity/#parser-budgets', 'complexity budgets', 'When a count outgrows the page, name the budget before naming a product.');
+    } else {
+      status.textContent = `${phrase} — ${count} paths. One axis leads, a discrete gradient: more walks hug the heavier side.`;
+      setNextRoute(root, '/topics/math/calculus/#multivariable-shape', 'partial derivatives', 'An imbalanced grid is a slice-specific rate you can still count.');
+    }
+  }
+
+  rightInput.addEventListener('input', render);
+  upInput.addEventListener('input', render);
+  render();
+}
+
+function initBoonhonkCount(root) {
+  const firstInput = safeQuery('[data-control="firstVoice"]', root);
+  const secondInput = safeQuery('[data-control="secondVoice"]', root);
+  const firstOutput = safeQuery('[data-output="firstVoice"]', root);
+  const secondOutput = safeQuery('[data-output="secondVoice"]', root);
+  const sceneOutput = safeQuery('[data-output="sceneKind"]', root);
+  const svg = safeQuery('svg', root);
+  const status = safeQuery('[data-role="status"]', root);
+  if (!firstInput || !secondInput || !svg || !status) return;
+
+  const voices = [
+    { id: 'boon', label: 'boon', gloss: 'invite', x: 150, y: 92 },
+    { id: 'bane', label: 'bane', gloss: 'limit', x: 570, y: 92 },
+    { id: 'bone', label: 'bone', gloss: 'hold', x: 360, y: 168 },
+    { id: 'bonk', label: 'bonk', gloss: 'hit', x: 540, y: 250 },
+    { id: 'honk', label: 'honk', gloss: 'signal', x: 180, y: 250 },
+  ];
+  const byId = Object.fromEntries(voices.map((voice) => [voice.id, voice]));
+
+  function render() {
+    const firstId = byId[firstInput.value] ? firstInput.value : 'boon';
+    const secondId = byId[secondInput.value] ? secondInput.value : 'honk';
+    firstInput.value = firstId;
+    secondInput.value = secondId;
+    const first = byId[firstId];
+    const second = byId[secondId];
+    const unary = firstId === secondId;
+    if (firstOutput) firstOutput.textContent = first.label;
+    if (secondOutput) secondOutput.textContent = second.label;
+    if (sceneOutput) sceneOutput.textContent = unary ? 'unary (5)' : 'ordered pair (20)';
+
+    svg.innerHTML = '';
+    svg.setAttribute('viewBox', '0 0 720 320');
+    appendSvgDescription(
+      svg,
+      'boonhonk-count-title',
+      unary ? `Boonhonk unary: ${first.label}` : `Boonhonk ordered pair: ${first.label} then ${second.label}`,
+      'boonhonk-count-desc',
+      unary
+        ? `Five possible unary scenes. ${first.label} is selected twice as one close.`
+        : `Five voices on a field. ${first.label} followed by ${second.label} is one of twenty ordered pairs.`,
+    );
+    svg.append(createSvgNode('rect', {
+      x: 16, y: 16, width: 688, height: 288, rx: 24,
+      fill: 'rgba(255,255,255,0.88)', stroke: 'rgba(0,128,128,0.16)',
+    }));
+    const threads = createSvgNode('g', { stroke: 'rgba(0,128,128,0.2)', 'stroke-width': 2, fill: 'none' });
+    voices.forEach((voice) => {
+      if (voice.id === 'bone') return;
+      threads.append(createSvgNode('line', { x1: 360, y1: 168, x2: voice.x, y2: voice.y }));
+    });
+    svg.append(threads);
+    if (!unary) {
+      svg.append(createSvgNode('line', {
+        x1: first.x, y1: first.y, x2: second.x, y2: second.y,
+        stroke: 'var(--op-object-color, #c68a22)', 'stroke-width': 4, 'stroke-linecap': 'round',
+      }));
+    }
+    voices.forEach((voice) => {
+      const active = voice.id === firstId || voice.id === secondId;
+      const node = createSvgNode('g');
+      node.append(createSvgNode('circle', {
+        cx: voice.x, cy: voice.y, r: voice.id === 'bone' ? 28 : 22,
+        fill: active ? 'var(--op-topic-color, #2a8c76)' : 'rgba(0,128,128,0.12)',
+        stroke: active ? 'var(--op-frame-color, #178282)' : 'rgba(0,128,128,0.2)',
+        'stroke-width': active ? 3 : 1.5,
+      }));
+      const label = createSvgNode('text', {
+        x: voice.x, y: voice.y + 5, 'text-anchor': 'middle',
+        'font-family': 'JetBrains Mono, monospace', 'font-size': 12, fill: 'var(--ink)',
+      });
+      label.textContent = voice.label;
+      node.append(label);
+      svg.append(node);
+    });
+    const caption = createSvgNode('text', {
+      x: 36, y: 44, 'font-family': 'JetBrains Mono, monospace', 'font-size': 15, fill: 'var(--ink)',
+    });
+    caption.textContent = unary
+      ? `${first.label}[${first.gloss}]  ·  5 unaries`
+      : `${first.label}[${second.label}]{${first.gloss}.${second.gloss}}  ·  20 pairs`;
+    svg.append(caption);
+    const total = createSvgNode('text', {
+      x: 36, y: 66, 'font-family': 'JetBrains Mono, monospace', 'font-size': 13, fill: 'var(--ink-soft, rgba(0,0,0,0.72))',
+    });
+    total.textContent = '5 + 20 = 25 scenes. You do not buy all twenty-five.';
+    svg.append(total);
+
+    if (unary) {
+      status.textContent = `One voice loud: ${first.label} as ${first.gloss}. A unary is one close — an affordable first beat, not a whole season.`;
+      setNextRoute(root, '/services/creator/#first-beat', 'first beat', 'Stay small: one transform, one close. The first-beat surface explains the possible shapes without treating this dummy as a catalog.');
+    } else {
+      status.textContent = `A pair, not a single currency: ${first.label} + ${second.label}. Still 20 of these, not 25 products. The count helps name a composition; it does not prescribe one.`;
+      setNextRoute(root, '/services/creator/#first-beat', 'first beat', 'A pair is two named pieces. The first-beat surface keeps the possible next shapes in one calm, contextual place.');
+    }
+  }
+
+  firstInput.addEventListener('change', render);
+  secondInput.addEventListener('change', render);
+  render();
+}
+
 function init() {
   safeQueryAll('[data-math-visual="mod-clock"]').forEach(initModClock);
   safeQueryAll('[data-math-visual="commuting-square"]').forEach(initCategorySquare);
@@ -1615,6 +1896,8 @@ function init() {
   safeQueryAll('[data-math-visual="diff-eq-slope-field"]').forEach(initDiffEqSlopeField);
   safeQueryAll('[data-math-visual="vector-field-lab"]').forEach(initVectorFieldLab);
   safeQueryAll('[data-math-visual="numerical-stepping-lab"]').forEach(initNumericalSteppingLab);
+  safeQueryAll('[data-math-visual="lattice-paths"]').forEach(initLatticePaths);
+  safeQueryAll('[data-math-visual="boonhonk-count"]').forEach(initBoonhonkCount);
 }
 
 if (document.readyState === 'loading') {

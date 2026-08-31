@@ -20,7 +20,10 @@
 @register: ~"../../about/index.html#boonhonk-register"
 @rpg: ~"../../play/rpg-wednesday/index.html#rpgw-boonhonk"
 @fit: ~"../../play/rpg-wednesday/library/index.html#boonhonk-fit"
-@combinatorics: ~"../../topics/math/combinatorics/index.html"
+@combinatorics: ~"../../topics/math/combinatorics/index.html#combinatorics-lab"
+@first_beat: ~"../../services/creator/index.html#first-beat"
+@regions: ~"../../services/ecosystem/index.html#regions"
+@holdings: ~"../../topics/knowledge-bases/index.html#dregg-tokenomics"
 @software_path: ~"../../topics/software/index.html#dimensional-expression-path"
 @mixer: ~"../../public/js/modules/widgets/boonhonk-mixer.js"
 @wapboy_image: ~"../../public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy.spw"
@@ -63,6 +66,21 @@ fixity = "tending"
   job = `A small countable example for @combinatorics. Not the house.`
   mixer = `Continuous 5-simplex weights are equally valid. Discrete names are for calling a beat out loud.`
   refuse = `Do not treat 25 as a legal maximum. Ensemble, sequence, and dimensional travel are in-genre.`
+}[reg=facet]
+
+^"channels"{
+  gather = `@combinatorics lab + @mixer — count or sit a mix`
+  register = `@first_beat unary | pair | season`
+  precipitate = `rates and series home; taste is a unary close`
+  relation = `@regions as capsules between rooms; @holdings as policy not ticker`
+  expressions = #[
+    `count[dummy]{paths.mix}<next>`,
+    `beat[unary.pair.season]{close.pieces.portfolio}<offer>`,
+    `orbit[region]{studio.table.lab}<relation>`,
+    `hold[seed.season.table]{identity.boundary.ledger}<policy>`,
+    `expression[dimension]{handle.vector.form.field.path}<channel>`
+  ][reg=set]
+  copy_rule = `Say "ticker" or "gold" once, on holdings. Elsewhere: unary, pair, season, channel.`
 }[reg=facet]
 
 ^"play_rule"{
