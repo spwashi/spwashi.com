@@ -19,6 +19,8 @@
 @charge_cycle: ~"./charge-cycle.spw"
 @module_updates_contract: ~"../../public/js/runtime/module-updates-contract.js"
 @module_catalog_constants: ~"../../public/js/runtime/module-catalog-constants.js"
+@module_catalog_normalize: ~"../../public/js/runtime/module-catalog-normalize.js"
+@module_export_contract: ~"../../public/js/runtime/module-export-contract.js"
 
 operation = "contract"
 fixity = "settled"
@@ -134,4 +136,15 @@ fixity = "settled"
   rule_1 = "Never author an interaction effect without a declared affordance. If a module cannot name what the reader can now do, its activation is an ungrounded cost."
   rule_2 = "Electrostatics are inferred from the operator and material. Do not author data-spw-charge=charged statically in HTML."
   rule_3 = "Subfeatures must be fine-grained: a single module may house multiple subfeatures, but they must coordinate through the shared bus and DOM contracts."
+}
+
+^"orchestration_view_2026_08_31"{
+  operation = "align"
+  fixity = "stable"
+  flat_authoring = "Catalog definitions remain the one reviewable source: schedule, gates, subfeatures, triggers, affordances, effects, lifecycle adapters, and cost stay beside the module id."
+  derived_view = "@module_catalog_normalize#describeModuleOrchestration groups that flat source into schedule, gates, capabilities, effects, lifecycle, and cost for loaders, audits, and DevTools. Authors never hand-maintain the grouped copy."
+  capability_rule = "If any of subfeatures, triggers, affordances, or electrostatics is authored, orchestration coverage reports whether the whole capability story is complete. A decorative list that no loader or inspector reads is not a contract."
+  export_authority = "@module_export_contract owns portable mount/refresh behavior. Catalog timing and effects remain authoritative; export mirrors are diagnostic and drift is recorded after load rather than silently rescheduling the module."
+  lifecycle_rule = "Mounted records and lifecycle events carry the derived affordance story, so an orchestrator can answer what woke, what became possible, what changed, and what cleanup owns."
+  probe = `npm run check:runtime && node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/infrastructure-contracts.test.mjs`
 }

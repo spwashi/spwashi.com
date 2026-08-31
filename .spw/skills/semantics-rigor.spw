@@ -96,6 +96,16 @@ expression = semantics[align]{name.attribute.expression}<corpus>
   owner = `@expression_consequence + ../slices/dimensional-expression-navigation/index.spw`
 }
 
+^"module_orchestration_alignment_2026_08_31"{
+  operation = "align"
+  fixity = "stable"
+  finding = `Subfeatures, triggers, affordances, and electrostatics were present on a small catalog cohort but absent from loader records, so their vocabulary could not guide orchestration.`
+  repair = `A derived orchestration view groups existing flat fields for loader, lifecycle, audit, and DevTools consumers; export mirrors now report catalog drift without taking schedule authority.`
+  naming = `No new data-spw stem or catalog authoring family; the repair gives current fields a consumer and one ownership rule.`
+  owner = `../conventions/module-load-contract.spw + ../../public/js/runtime/module-catalog-normalize.js`
+  probe = `npm run check:runtime`
+}
+
 #>wonder_semantics_rigor_1
 ?["Does part-kinship carry meaning, or only vocabulary?"]{
   #:depth #!mathematical ~#lens(inductance)

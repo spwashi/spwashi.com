@@ -91,3 +91,10 @@ Validation additions:
 
 - `rg -n "dataset\\.|setAttribute\\(\\\"data-spw|data-spw-" public/js public/css **/index.html`
 - `npm run check:runtime`
+
+## Active Refinement - 2026-08-31 Orchestration View
+
+- Keep catalog authoring flat and derive one loader-facing view with `schedule`, `gates`, `capabilities`, `effects`, `lifecycle`, and `cost`.
+- Treat `subfeatures`, `triggers`, `affordances`, and `electrostatics` as orchestration inputs only when inspection and lifecycle records expose them.
+- Keep `SPW_MODULE_EXPORT` authoritative for portable mount/refresh behavior; catalog schedule/effect mirrors are diagnostic and report drift after load.
+- Use `texture-slice` as the working-tree proof: visible gate, stable capture affordance, reversible inline projection, and aligned catalog/export updates.
