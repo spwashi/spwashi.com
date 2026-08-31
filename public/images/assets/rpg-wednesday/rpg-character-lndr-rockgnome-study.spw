@@ -26,7 +26,7 @@
 
 ^"optimization"{
   optimized_on: "2026-08-15T21:13:37Z"
-  source_render: ~"../../renders/_raw/spwashi_lndr_is_a_greyteal_rockgnome_with_a_boonhat_working_on__0564699b-85a8-4418-8682-4fb50c0011cc.png"
+  source_master: "spwashi_lndr_is_a_greyteal_rockgnome_with_a_boonhat_working_on__0564699b-85a8-4418-8682-4fb50c0011cc.png"
   variants: [
     { tier: "thumb", size: "320x320", formats: ["avif", "webp"] },
     { tier: "display", size: "640x640", formats: ["avif", "webp"] },

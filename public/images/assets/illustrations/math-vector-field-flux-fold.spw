@@ -11,8 +11,7 @@
 ^"provenance"{
   generator: "Midjourney"
   imported_on: "2026-08-23"
-  source_archive: "midjourney_session (4).zip"
-  source_master: "flux_and_flow_--raw_--profile_358wmu5_--stylize_1000_--v_8.2_3a7c82a8-7d79-4070-a1b1-696ba5529238_0.png; raw master intentionally not promoted"
+  source_master: "flux_and_flow_--raw_--profile_358wmu5_--stylize_1000_--v_8.2_3a7c82a8-7d79-4070-a1b1-696ba5529238_0.png"
 }
 
 ^"usage"{

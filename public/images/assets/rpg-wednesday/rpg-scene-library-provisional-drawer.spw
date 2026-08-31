@@ -11,7 +11,7 @@
   generator: "ChatGPT built-in image workflow"
   interpretation_model: "5.6 Sol"
   generated_on: "2026-08-23"
-  source_master: "conversation attachment; raw master intentionally not promoted"
+  source_master: "conversation attachment"
 }
 
 ^"canon_posture"{
