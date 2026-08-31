@@ -35,7 +35,8 @@ fixity = "experimental"
   claim: "Two expressions are kin when they share a subject, a mode, or a body part. That relation is @electrostatic_affordances' inductance made literal — 'kin of the same terminal share momentum' — and it is dense enough to spend: 205 distinct subjects, 292 modes, 501 parts, and 423 of 441 expressions having at least one kin."
   authored_not_inferred: "The relation comes from what an author wrote, not from similarity scoring. This is the whole reason it can be trusted: touching an element lights the elements a person decided were related."
   living_terms: "A living term whose data-spw-concept matches a subject, mode, or part on this page joins the same field. The concept was authored; the coupling is not inferred from the visible word."
-  ordering: "Subject binds tightest, then mode, then part. Sharing what a thing *is* is a stronger tie than sharing one of its components."
+  ordering: "Subject binds tightest, then mode, then projection (the authored capsule / channel), then part. Sharing what a thing *is* is a stronger tie than sharing where it is allowed to go, which is stronger than sharing one component."
+  projection_channel: "The capsule `<channel>`, `<offer>`, `<next>`, `<policy>` is kinship and a live UX channel. Hover still only pulses. A math lab may name its next learning region with data-spw-channel=live without calling resonate(); it is document-local residue of the current consideration, not a preview, stored preference, or cross-route event."
   singleton_rule: "A token only one expression carries is a name, not kinship. Singletons are dropped so the index holds only edges that can fire."
 }
 
@@ -65,10 +66,12 @@ fixity = "experimental"
     `data-spw-concept on living terms when that name should couple to expressions`
   ][reg=set]
   runtime_writes: #[
-    `data-spw-expression-kin = subject | mode | part`,
+    `data-spw-expression-kin = subject | mode | part | projection`,
     `data-spw-expression-resonating on the source`,
     `data-spw-expression-salience = 0..4 (residue)`,
     `data-spw-join = crawl (authored) | ident (authored tight identifier) | common | ordinal | project (from punctuation)`,
+    `data-spw-projection = capsule token from the authored <channel>`,
+    `data-spw-channel = live when a lab names the next region (residue of consideration, not hover)`,
     `--spw-expression-resonance`
   ][reg=set]
   do_not_author: #[

@@ -73,6 +73,17 @@
 :where([data-spw-expression-kin="part"]) {
   --spw-expression-accent: var(--op-thread-color, var(--active-op-color, #008080));
 }
+:where([data-spw-expression-kin="projection"]) {
+  --spw-expression-accent: var(--op-concept-color, var(--op-frame-color, #178282));
+}
+
+/* Live channel: lab state residue, not a hover pulse. The capsule named
+   where the next region is allowed to take the handle. */
+:where([data-spw-channel="live"]) {
+  box-shadow:
+    inset 0 0 0 1px
+      color-mix(in srgb, var(--op-frame-color, #178282) 48%, transparent);
+}
 
 /* ── Salience: accumulated warmth ──────────────────────────────────────── */
 

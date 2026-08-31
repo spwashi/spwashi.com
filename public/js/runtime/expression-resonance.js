@@ -50,6 +50,8 @@ const ATTR = Object.freeze({
   crawlOpen: 'data-spw-crawl-open',
   crawlClose: 'data-spw-crawl-close',
   crawlPole: 'data-spw-crawl-pole',
+  projection: 'data-spw-projection',
+  channel: 'data-spw-channel',
 });
 
 /** Dwell past this reads as an encounter rather than a glance. */
@@ -70,7 +72,10 @@ let cleanup = null;
 const LIVING_SELECTOR = '[data-spw-living-term][data-spw-concept], .spw-living-term[data-spw-concept]';
 
 function kinStrength(relation) {
-  return relation === 'subject' ? 1 : relation === 'mode' ? 0.7 : 0.45;
+  if (relation === 'subject') return 1;
+  if (relation === 'mode') return 0.7;
+  if (relation === 'projection') return 0.55;
+  return 0.45;
 }
 
 function shapeTokens(shape) {
@@ -81,6 +86,7 @@ function shapeTokens(shape) {
   for (const part of shape.parts || []) {
     if (part) tokens.push({ token: part, relation: 'part' });
   }
+  if (shape.projection) tokens.push({ token: shape.projection, relation: 'projection' });
   return tokens;
 }
 
@@ -118,6 +124,7 @@ function buildKinIndex(entries) {
     add(shape.subject, expression);
     add(shape.mode, expression);
     for (const part of shape.parts || []) add(part, expression);
+    add(shape.projection, expression);
   }
   // A token only one expression carries is a name, not kinship.
   for (const [token, set] of index) {
@@ -187,6 +194,7 @@ export function kinOf(expression) {
   relate(shape.subject, 'subject');
   relate(shape.mode, 'mode');
   for (const part of shape.parts || []) relate(part, 'part');
+  relate(shape.projection, 'projection');
 
   return [...found.entries()].map(([other, meta]) => ({ expression: other, ...meta }));
 }
@@ -295,7 +303,7 @@ function depositSalience(expression) {
   const shape = manifest?.[expression];
   if (!shape) return;
   const store = readSalience();
-  for (const token of [shape.subject, shape.mode, ...(shape.parts || [])]) {
+  for (const token of [shape.subject, shape.mode, ...(shape.parts || []), shape.projection]) {
     if (!token) continue;
     store[token] = (store[token] || 0) + 1;
   }
@@ -360,7 +368,7 @@ export function depositGathered(items = [], weight = GATHER_WEIGHT) {
     const shape = expression && manifest[expression];
     if (!shape) continue;
 
-    for (const token of [shape.subject, shape.mode, ...(shape.parts || [])]) {
+    for (const token of [shape.subject, shape.mode, ...(shape.parts || []), shape.projection]) {
       if (!token) continue;
       store[token] = (store[token] || 0) + weight;
     }
@@ -414,6 +422,17 @@ function paintJoin(expression) {
   }
 }
 
+/** Capsule is the authored channel — where the expression is allowed to go. */
+function paintProjection(expression) {
+  const projection = manifest?.[expression]?.projection;
+  if (!projection) return;
+  for (const node of elementsByExpression.get(expression) || []) {
+    if (!node.getAttribute(ATTR.projection)) {
+      node.setAttribute(ATTR.projection, projection);
+    }
+  }
+}
+
 /** Project accumulated warmth onto living terms whose concept was travelled. */
 function paintLivingSalience() {
   if (!livingByConcept) return;
@@ -433,6 +452,7 @@ function paintSalience(expression) {
   const band = Math.max(
     salienceBand(shape.subject),
     salienceBand(shape.mode),
+    salienceBand(shape.projection),
     ...(shape.parts || []).map(salienceBand),
     0,
   );
@@ -470,6 +490,7 @@ export async function initExpressionResonance(ctx = {}) {
   for (const expression of elementsByExpression.keys()) {
     paintSalience(expression);
     paintJoin(expression);
+    paintProjection(expression);
   }
   paintLivingSalience();
 
@@ -521,6 +542,40 @@ export async function initExpressionResonance(ctx = {}) {
     depositGathered(detail.composted || [], COMPOST_WEIGHT);
   }) || null;
 
+  /**
+   * Lab state names a live channel. That is residue of the current
+   * consideration, not a hover preview — it must not call resonate().
+   */
+  function markLiveChannel(expression, sourceNode) {
+    document.querySelectorAll(`[${ATTR.channel}="live"]`).forEach((node) => {
+      if (node !== sourceNode) node.removeAttribute(ATTR.channel);
+    });
+    if (sourceNode) {
+      sourceNode.setAttribute(ATTR.channel, 'live');
+      const projection = manifest?.[expression]?.projection || sourceNode.getAttribute(ATTR.projection);
+      if (projection) sourceNode.setAttribute(ATTR.projection, projection);
+    }
+    if (!expression || !manifest?.[expression]) return;
+    const light = (expr) => {
+      for (const node of elementsByExpression.get(expr) || []) {
+        node.setAttribute(ATTR.channel, 'live');
+        const projection = manifest[expr]?.projection;
+        if (projection) node.setAttribute(ATTR.projection, projection);
+      }
+    };
+    light(expression);
+    for (const { expression: other, relation } of kinOf(expression)) {
+      if (relation === 'projection') light(other);
+    }
+  }
+
+  const onChannel = (event) => {
+    const detail = event?.detail || event || {};
+    const source = event.target?.closest?.(`[${ATTR.expression}]`) || null;
+    markLiveChannel(detail.expression || '', source);
+  };
+  document.addEventListener('spw:expression-channel', onChannel);
+
   cleanup = () => {
     offGathered?.();
     offComposted?.();
@@ -531,6 +586,7 @@ export async function initExpressionResonance(ctx = {}) {
     document.removeEventListener('focusin', onEnter);
     document.removeEventListener('focusout', onLeave);
     document.removeEventListener('keydown', onKinKey);
+    document.removeEventListener('spw:expression-channel', onChannel);
     elementsByExpression = null;
     livingByConcept = null;
     lit = [];
@@ -549,6 +605,7 @@ export function describeExpressionField() {
     onThisPage: elementsByExpression?.size || 0,
     kinTokens: kinIndex?.size || 0,
     livingConcepts: livingByConcept?.size || 0,
+    projections: Object.values(manifest).filter((shape) => shape?.projection).length,
     salience: readSalience(),
   };
 }
@@ -558,18 +615,20 @@ export const EXPRESSION_RESONANCE_CONTRACT = Object.freeze({
   storageKey: STORAGE_KEY,
   encounterMs: ENCOUNTER_MS,
   salienceBands: SALIENCE_BANDS,
-  rule: 'hover previews kinship (pulse); dwell banks salience (residue); never the reverse. [ and ] travel lit kin while a source is held. Living terms join the field by authored data-spw-concept. Crawl is authored, never inferred from tight dots. Parser lives at `__SPW_SITE__.parser.parse`.',
+  rule: 'hover previews kinship (pulse); dwell banks salience (residue); never the reverse. Capsule projection is a kinship dimension and a live channel when a lab names the next region. [ and ] travel lit kin while a source is held. Living terms join the field by authored data-spw-concept. Crawl is authored, never inferred from tight dots. Parser lives at `__SPW_SITE__.parser.parse`.',
 });
 
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'expression-resonance',
   mount: (ctx) => initExpressionResonance(ctx),
-  describes: 'expression[kin]{subject.mode.part}<resonance.join>',
+  describes: 'expression[kin]{subject.mode.part.projection}<resonance.join.channel>',
   updates: [
     'flourish:data-spw-expression-kin',
     'flourish:data-spw-expression-resonating',
     'flourish:data-spw-join',
     'flourish:data-spw-crawl-pole',
+    'flourish:data-spw-projection',
+    'flourish:data-spw-channel',
     'residue:data-spw-expression-salience',
     'measure:--spw-expression-resonance',
   ],
