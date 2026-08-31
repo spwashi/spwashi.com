@@ -41,4 +41,4 @@ Make shared gesture behavior calmer on mobile, remove accidental menu / brace ac
 
 ## Landed 2026-08-31 — texture-slice respects coarse pointers
 
-`public/js/media/texture-slice.js` binds pointer crop only when the pointer is fine, motion is allowed, and capture is off. CSS hover lift is gated to `(hover: hover) and (pointer: fine)`; keyboard `focus-within` still lifts. Capture mode and `data-spw-reduce-motion` rebind after mount. This does not reopen brace-gestures or region-menu.
+`public/js/media/texture-slice.js` binds pointer crop only when the pointer is fine, motion is allowed, and capture is off. CSS hover lift is gated to `(hover: hover) and (pointer: fine)`; keyboard `focus-within` still lifts. Coarse now also reads `html[data-spw-pointer-mode]`. Capture mode and `data-spw-reduce-motion` rebind after mount. This does not reopen brace-gestures or region-menu.

@@ -96,6 +96,16 @@ expression = semantics[align]{name.attribute.expression}<corpus>
   owner = `@expression_consequence + ../slices/dimensional-expression-navigation/index.spw`
 }
 
+^"image_visit_attribute_alignment_2026_08_31"{
+  operation = "align"
+  fixity = "stable"
+  finding = `data-spw-image-input was authored as a source channel (prompt-packet) and overwritten at runtime with pointer class (fine|coarse|keyboard). data-spw-texture-slice="auto" was similarly overwritten with a resolved family.`
+  repair = `Pointer class reads html[data-spw-pointer-mode]. Visit persistence keys on authored data-spw-image-key when data-spw-returnable is not false. Texture family resolution writes data-spw-slice-family and leaves the authored slice token in place.`
+  naming = `No new data-spw stem. data-spw-image-input stays a source channel; data-spw-slot on image hosts stays figure.`
+  owner = `../../public/js/media/image-metaphysics.js + ../../public/js/media/texture-slice.js`
+  probe = `rg -n "dataset.spwImageInput|setAttribute\\('data-spw-texture-slice'" public/js/media && node --check public/js/media/image-metaphysics.js public/js/media/texture-slice.js`
+}
+
 ^"module_orchestration_alignment_2026_08_31"{
   operation = "align"
   fixity = "stable"

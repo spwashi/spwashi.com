@@ -57,7 +57,10 @@ expression = material[optics]{transmission.specular.shadow}<surface>
     rest = `--spw-slice-lift: 0`
     lift = `--spw-slice-lift`
     owner = `public/css/effects/texture-slice.css`
-    ~#note: "crop, opacity, and saturate on one axis. charge and hold-to-visit raise the coefficient; they are not a third rest-state."
+    authored = `data-spw-texture-slice: paper | linen | harlequin | wash | auto`
+    resolved = `data-spw-slice-family: paper | linen | harlequin | wash`
+    seed = `data-spw-image-key || data-spw-seed || id`
+    ~#note: "crop, opacity, and saturate on one axis. charge and hold-to-visit raise the coefficient; they are not a third rest-state. Runtime must not overwrite the authored family."
     consumers = #[`hover fine-pointer`, `focus-within`, `data-spw-gesture charging|armed`, `data-spw-hold-state arming`, `data-spw-image-state primed|engaged`][reg=set]
   }[reg=facet]
 }

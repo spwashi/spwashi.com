@@ -1021,4 +1021,6 @@ Manual review:
 ## Landed 2026-08-31 — morning material tiles as CSS slices
 
 Four motif tiles (paper, linen, harlequin, wash) and four stills were promoted as optimized AVIF/WebP, then translated into an opt-in overlay (`data-spw-texture-slice`) instead of full-bleed backgrounds. Stills sit on about, lore.land, creator, craft, recipes, and the Midjourney bench. Culture hosts: home hook (wash), about years (paper), RPG boonhonk (harlequin). Crop and glitch live in flourish CSS/JS; capture and reduced motion freeze the crop. This is Patch 4 (material translation) plus a small Patch 6 promotion — CSS still owns the behavior.
+
+`data-spw-texture-slice="auto"` on the screenshot-imagine frame stays an authoring alias. Runtime writes the resolved family to `data-spw-slice-family` and hashes the visit key for the crop, so a shared still keeps one seed across routes.
 - Which visual concepts are already canonical enough to document: paper machinery, signal atlas, folded rail, or operator enamel?

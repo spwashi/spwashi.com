@@ -79,3 +79,7 @@ Fuzz strategy:
 ## Spw Artifact
 
 `.agents/plans/screenshot-semantics/screenshot-semantics.spw`
+
+## Landed 2026-08-31 — crop seed follows the visit key
+
+Texture-slice hashes `data-spw-image-key` before seed/id, so the same still (crane on craft and the Midjourney bench) keeps one crop in a screenshot. Authored `data-spw-texture-slice` stays on the host; resolved family lives on `data-spw-slice-family`. Capture still freezes crop motion.
