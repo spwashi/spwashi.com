@@ -104,14 +104,31 @@
                 <p data-spw-textual-role="note" data-spw-intent="producer-director-guidance">
                     <strong>For producers and directors developing a visual style:</strong> Start with rendered cards from the <a href="/tools/character-sheet/">character sheet builder</a> or <a href="/tools/profile/">profile tool</a>. Their tropes, badges, and sections become stable identity packets. Combine them with style refs (material + light + palette) and omni refs (world rules) here. Use the design palettes and slots pages to tune the underlying component language so the same atmosphere holds across stills, motion tests, and UI. Query parameters on this bench and the character tools let you share exact higher-order style combinations (card state + palette + image memory) with your art team.
                 </p>
-                <figure class="image-study topic-photo-card" data-spw-image-prominence="feature" data-spw-image-shape="landscape" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#154a52, #b7834f, #d8d3c8, #406173" data-spw-accent-anchor="midjourney bench shelf counter culture" data-spw-accent-operator="ref">
-                    <img src="/public/images/renders/unsorted-curation/orbital-thread-field.webp" alt="A dim teal-and-amber field of suspended lines and glowing nodes, reading like a reef of references hovering above a night counter." loading="lazy" decoding="async" width="768" height="768">
+                <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-surface data-spw-image-key="craft-paper-crane-unfurling" data-spw-image-prominence="feature" data-spw-image-shape="landscape" data-spw-texture-slice="linen" data-spw-semantic-expression="fold[crane]{counter}<share>" data-spw-realization="hybrid" data-spw-substrate="surface" data-spw-phrase="artifact" data-spw-returnable="true" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#154a52, #b7834f, #d8d3c8, #406173" data-spw-accent-anchor="midjourney bench paper crane share seed" data-spw-accent-operator="ref">
+                    <picture>
+                        <source
+                            srcset="/public/images/assets/illustrations/craft-paper-crane-unfurling-thumb.avif 205w,
+                                    /public/images/assets/illustrations/craft-paper-crane-unfurling-display.avif 410w,
+                                    /public/images/assets/illustrations/craft-paper-crane-unfurling-hero.avif 819w"
+                            sizes="(max-width: 48rem) calc(100vw - 2rem), 28rem"
+                            type="image/avif">
+                        <source
+                            srcset="/public/images/assets/illustrations/craft-paper-crane-unfurling-thumb.webp 205w,
+                                    /public/images/assets/illustrations/craft-paper-crane-unfurling-display.webp 410w,
+                                    /public/images/assets/illustrations/craft-paper-crane-unfurling-hero.webp 819w"
+                            sizes="(max-width: 48rem) calc(100vw - 2rem), 28rem"
+                            type="image/webp">
+                        <img src="/public/images/assets/illustrations/craft-paper-crane-unfurling-display.webp"
+                             alt="A pale paper crane on a teal surface releases a trail of warm sparks into the dark."
+                             loading="lazy" decoding="async" width="410" height="512">
+                    </picture>
                     <figcaption>
-                        <strong>Night shelf</strong>
-                        <span>Not every render belongs on the wall. Some belong on the counter for another round, next to the refs that keep the room coherent.</span>
+                        <strong>Counter seed</strong>
+                        <span>A kept fold for the bench. Screenshot the page, interpret with Imagine, and share that reading — the published still, not unpublished source.</span>
                     </figcaption>
                 </figure>
                 <nav class="frame-operators" aria-label="Midjourney bench routes">
+                    <a class="spw-chip" data-spw-handle="true" href="#screenshot-imagine" data-spw-operator="perspective" data-spw-action="enter">@screenshot_imagine</a>
                     <a class="spw-chip" data-spw-handle="true" href="#v82-workbench" data-spw-operator="frame" data-spw-action="address">#&gt;v8_2</a>
                     <a class="spw-chip" data-spw-handle="true" href="#sticker-imagine" data-spw-operator="concept-edge" data-spw-action="show">$sticker&gt;$scene</a>
                     <a class="spw-chip" data-spw-handle="true" href="#prompt-mining-loop" data-spw-operator="potential" data-spw-action="mine" data-spw-target="prompt-loop">~mine_prompt_loop</a>
@@ -129,6 +146,40 @@
                     <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/" data-spw-operator="potential" data-spw-action="explore">~svg_cleanup</a>
                     <a class="spw-chip" data-spw-handle="true" href="/design/website/" data-spw-operator="potential" data-spw-action="explore">~website_design</a>
                 </nav>
+            </section>
+
+            <section class="spw-frame" id="screenshot-imagine"
+                data-spw-role="practice"
+                data-spw-form="brace"
+                data-spw-meaning="screenshot the site, interpret with Imagine, share the reading"
+                data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection locality consequence" data-spw-affordance="practice" data-spw-liminality="threshold" data-spw-category-family="workshop" data-spw-texture-slice="auto" data-spw-semantic-expression="share[screenshot]{imagine}<orbit>" data-spw-seed="page_tools_tools_midjourney__screenshot_imagine">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#screenshot-imagine">@screenshot_imagine</a>
+                    <h2>Screenshot, interpret, share</h2>
+                </header>
+                <p data-spw-textual-role="note">Share a published crop that already looks like this site. Capture a route, hand the still to Grok Imagine, send the interpretation to a chat or a story. Unpublished generations stay off the feed.</p>
+                <div class="frame-grid">
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="practice" data-spw-semantic-expression="capture[route]{still}<seed>">
+                        <span class="frame-card-sigil">!capture</span>
+                        <strong>Capture the room</strong>
+                        <span>Capture a clean route still. Paper, linen, harlequin, and wash tiles sit in slices so the crop still reads as Spwashi after Imagine restyles it.</span>
+                    </article>
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="practice" data-spw-semantic-expression="imagine[still]{room}<reading>">
+                        <span class="frame-card-sigil">~interpret</span>
+                        <strong>Interpret, don’t reprint</strong>
+                        <span>Ask Imagine for a reading of the screenshot: same teal/ochre weather, same fold or pearl. If the output looks like a generic poster, the page crop was the wrong seed.</span>
+                    </article>
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="practice" data-spw-semantic-expression="orbit[chat]{still}<share>">
+                        <span class="frame-card-sigil">*share</span>
+                        <strong>Share the reading</strong>
+                        <span>A chat, a story post, a collaborator thread. Credit the route. Share the published still — not unpublished source files.</span>
+                    </article>
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="practice" data-spw-semantic-expression="slice[seed]{glitch}<variety>">
+                        <span class="frame-card-sigil">%slice</span>
+                        <strong>Slice from a seed</strong>
+                        <span>An authored seed picks a crop so neighboring cards do not wear the same tile. A few hosts glitch; a clean capture freezes them. Variety, not a second wallpaper.</span>
+                    </article>
+                </div>
             </section>
 
             <section class="spw-frame" id="v82-workbench"
@@ -408,7 +459,7 @@
                 <div class="frame-grid">
                     <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_midjourney__panel_canon" data-spw-concept="canon-maintenance" data-spw-grounding="named-packets" data-spw-attention="return" data-spw-behavior="settle">
                         <h3>Canon maintenance</h3>
-                        <p>Streaks, stickers, screenshots, and Discord drops can stabilize canon when they get turned into named packets instead of a loose image flood.</p>
+                        <p>Streaks, stickers, and screenshots stabilize canon when they become named packets instead of a loose image flood.</p>
                     </article>
                     <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_midjourney__panel_credit" data-spw-concept="credited-art" data-spw-grounding="collaborator-bucket" data-spw-attention="read" data-spw-behavior="credit">
                         <h3>Credited art</h3>

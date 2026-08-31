@@ -84,6 +84,11 @@
   --spw-prompt-block-line: color-mix(in srgb, var(--about-accent) 22%, var(--about-line));
   --spw-prompt-block-ink: var(--about-ink);
 
+  --component-surface: var(--about-surface);
+  --component-surface-strong: var(--about-surface-strong);
+  --component-text: var(--about-ink);
+  --component-text-soft: var(--about-ink-soft);
+
   color: var(--about-ink);
 }
 
@@ -92,15 +97,15 @@
   --about-bg-deep: hsl(18 12% 8%);
   --about-bg-field: hsl(24 10% 13%);
 
-  --about-surface: rgba(255, 248, 239, 0.08);
-  --about-surface-strong: rgba(255, 248, 239, 0.12);
-  --about-surface-soft: rgba(255, 248, 239, 0.06);
-  --about-surface-matte: rgba(255, 248, 239, 0.08);
+  --about-surface: hsl(24 12% 15%);
+  --about-surface-strong: hsl(24 11% 18%);
+  --about-surface-soft: hsl(24 10% 13%);
+  --about-surface-matte: hsl(24 12% 16%);
 
-  --about-ink: hsl(32 22% 91%);
-  --about-ink-soft: hsl(30 12% 72%);
-  --about-ink-mid: hsla(30, 12%, 72%, 0.72);
-  --about-ink-faint: hsla(30, 12%, 72%, 0.40);
+  --about-ink: hsl(32 22% 93%);
+  --about-ink-soft: hsl(30 16% 82%);
+  --about-ink-mid: hsla(30, 16%, 82%, 0.82);
+  --about-ink-faint: hsla(30, 16%, 82%, 0.52);
 
   --about-line: rgba(255, 240, 225, 0.12);
   --about-line-strong: rgba(209, 164, 134, 0.22);
@@ -132,15 +137,15 @@
     --about-bg-deep: hsl(18 12% 8%);
     --about-bg-field: hsl(24 10% 13%);
 
-    --about-surface: rgba(255, 248, 239, 0.08);
-    --about-surface-strong: rgba(255, 248, 239, 0.12);
-    --about-surface-soft: rgba(255, 248, 239, 0.06);
-    --about-surface-matte: rgba(255, 248, 239, 0.08);
+    --about-surface: hsl(24 12% 15%);
+    --about-surface-strong: hsl(24 11% 18%);
+    --about-surface-soft: hsl(24 10% 13%);
+    --about-surface-matte: hsl(24 12% 16%);
 
-    --about-ink: hsl(32 22% 91%);
-    --about-ink-soft: hsl(30 12% 72%);
-    --about-ink-mid: hsla(30, 12%, 72%, 0.72);
-    --about-ink-faint: hsla(30, 12%, 72%, 0.40);
+    --about-ink: hsl(32 22% 93%);
+    --about-ink-soft: hsl(30 16% 82%);
+    --about-ink-mid: hsla(30, 16%, 82%, 0.82);
+    --about-ink-faint: hsla(30, 16%, 82%, 0.52);
 
     --about-line: rgba(255, 240, 225, 0.12);
     --about-line-strong: rgba(209, 164, 134, 0.22);
@@ -811,6 +816,55 @@ body[data-spw-surface="about"] {
     var(--about-surface);
 }
 
+[data-spw-surface="about"] #boonhonk-window-theme > #boonhonk-valence-study {
+  --spw-image-frame-pad: clamp(0.3rem, 0.8cqi, 0.46rem);
+  --spw-image-frame-line: color-mix(in srgb, var(--boon-border) 28%, var(--about-line));
+  --spw-image-mat: color-mix(in srgb, var(--about-surface-strong) 94%, var(--boon-bg-soft) 6%);
+  inline-size: min(100%, 36rem);
+  margin-block: clamp(0.75rem, 1.8cqi, 1.05rem);
+  scroll-margin-block-start: clamp(4.5rem, 10vh, 7rem);
+  box-shadow: 0 0.85rem 2rem color-mix(in srgb, var(--about-ink) 7%, transparent);
+}
+
+[data-spw-surface="about"] #boonhonk-valence-study > picture {
+  position: relative;
+  z-index: 1;
+  display: block;
+  overflow: clip;
+  border-radius: calc(var(--component-radius-tight, 8px) - 2px);
+  background: color-mix(in srgb, var(--about-surface-matte) 88%, var(--boon-bg-soft) 12%);
+}
+
+[data-spw-surface="about"] #boonhonk-valence-study img {
+  aspect-ratio: 16 / 10;
+  border-radius: inherit;
+}
+
+[data-spw-surface="about"] #boonhonk-valence-study figcaption {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.32rem;
+  padding: clamp(0.74rem, 1.8cqi, 1rem) clamp(0.78rem, 2cqi, 1.1rem) clamp(0.82rem, 2.2cqi, 1.08rem);
+  border-block-start: 1px solid color-mix(in srgb, var(--boon-border) 18%, transparent);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--boon-bg-soft) 14%, transparent), transparent 58%),
+    color-mix(in srgb, var(--about-surface-strong) 96%, transparent);
+}
+
+[data-spw-surface="about"] #boonhonk-valence-study figcaption strong {
+  color: color-mix(in srgb, var(--about-ink) 84%, var(--boon-border));
+  font-size: clamp(0.92rem, 1.5cqi, 1.04rem);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+[data-spw-surface="about"] #boonhonk-valence-study figcaption span {
+  max-inline-size: 58ch;
+  color: var(--about-ink-soft);
+  line-height: 1.48;
+}
+
 [data-spw-surface="about"] #boonhonk-register .frame-grid {
   align-items: stretch;
   gap: clamp(0.65rem, 1.4cqi, 1.05rem);
@@ -825,6 +879,16 @@ body[data-spw-surface="about"] {
 }
 
 @container spw-region (max-width: 36rem) {
+  [data-spw-surface="about"] #boonhonk-window-theme > #boonhonk-valence-study {
+    --spw-image-frame-pad: 0.28rem;
+    inline-size: 100%;
+    box-shadow: 0 0.65rem 1.4rem color-mix(in srgb, var(--about-ink) 5%, transparent);
+  }
+
+  [data-spw-surface="about"] #boonhonk-valence-study figcaption {
+    padding: 0.7rem 0.76rem 0.8rem;
+  }
+
   [data-spw-surface="about"] #boonhonk-register .frame-grid {
     grid-template-columns: 1fr;
   }
