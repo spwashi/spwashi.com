@@ -24,6 +24,5 @@ design/components/captures/
 !.references/README.md
 !.references/catalog.json
 
-# Midjourney session exports — unpack into public/images/renders/<date>-<study>/ and
-# register the study in .spw/assets.spw; the zip itself is not an asset.
+# Midjourney session exports — the zip is not a published asset.
 midjourney_session*.zip

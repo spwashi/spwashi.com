@@ -1,0 +1,31 @@
+#>asset_metadata
+#:layer #!craft
+
+^"spirit"{
+  name: "craft-paper-crane-unfurling"
+  title: "Fold That Travels"
+  description: "One paper crane on a teal table sheds a flock of light. The fold is the grammar; the sparks are what a screenshot can hand Imagine."
+  visual_qualities: "teal ground, origami crane, amber particle flock, quiet table"
+}
+
+^"provenance"{
+  generator: "Midjourney"
+  imported_on: "2026-08-31"
+  source_master: "a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_0.png"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "craft-fold-study"
+  dimensions: { width: 960, height: 1200 }
+  formats_available: ["avif", "webp"]
+  alt_text: "A pale paper crane on a teal surface releases a trail of warm sparks into the dark."
+}
+
+^"optimization"{
+  variants: [
+    { tier: "thumb", size: "205x256", formats: ["avif", "webp"] },
+    { tier: "display", size: "410x512", formats: ["avif", "webp"] },
+    { tier: "hero", size: "819x1024", formats: ["avif", "webp"] }
+  ]
+}

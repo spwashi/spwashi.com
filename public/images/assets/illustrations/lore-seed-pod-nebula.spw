@@ -1,0 +1,31 @@
+#>asset_metadata
+#:layer #!lore
+
+^"spirit"{
+  name: "lore-seed-pod-nebula"
+  title: "Seed That Holds a Room"
+  description: "A teal seed pod opens on a dark ground and keeps a small nebula. A series starts as a closed thing with light already inside."
+  visual_qualities: "teal husk, gold interior lights, dark field, hanging form"
+}
+
+^"provenance"{
+  generator: "Midjourney"
+  imported_on: "2026-08-31"
+  source_master: "a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_0.png"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "series-home-study"
+  dimensions: { width: 960, height: 1200 }
+  formats_available: ["avif", "webp"]
+  alt_text: "A hanging teal seed pod splits to show a cluster of warm lights inside a dark interior."
+}
+
+^"optimization"{
+  variants: [
+    { tier: "thumb", size: "205x256", formats: ["avif", "webp"] },
+    { tier: "display", size: "410x512", formats: ["avif", "webp"] },
+    { tier: "hero", size: "819x1024", formats: ["avif", "webp"] }
+  ]
+}

@@ -1,0 +1,31 @@
+#>asset_metadata
+#:layer #!about
+
+^"spirit"{
+  name: "boon-crown-splash"
+  title: "Pearl Becoming Crown"
+  description: "A pearl lifts a crown of molten gold in teal air — valence turning into form, not jewelry."
+  visual_qualities: "teal atmosphere, amber splash, pearl nucleus, liquid crown"
+}
+
+^"provenance"{
+  generator: "Midjourney"
+  imported_on: "2026-08-31"
+  source_master: "pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_2.png"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "boonhonk-valence-study"
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["avif", "webp"]
+  alt_text: "A luminous pearl stands in teal mist while molten gold splashes upward into a crown."
+}
+
+^"optimization"{
+  variants: [
+    { tier: "thumb", size: "256x256", formats: ["avif", "webp"] },
+    { tier: "display", size: "512x512", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x1024", formats: ["avif", "webp"] }
+  ]
+}

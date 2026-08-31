@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-24T03:14:08.257Z",
+  "generatedAt": "2026-08-31T20:40:15.419Z",
   "sourceRoot": "/public/images/",
-  "count": 415,
+  "count": 623,
   "concepts": [
     "about",
     "algorithm",
@@ -288,6 +288,156 @@
       "swapHint": "Use /public/images/assets/illustrations/artifact-ovoid-monolith-study-thumb.webp when a thumbnail visual needs a stable tracked asset."
     },
     {
+      "id": "boon-crown-splash",
+      "title": "Boon Crown Splash",
+      "path": "/public/images/assets/illustrations/boon-crown-splash-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 7746,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boon-crown-splash-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon-crown-splash",
+      "title": "Boon Crown Splash",
+      "path": "/public/images/assets/illustrations/boon-crown-splash-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 6880,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boon-crown-splash-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon-crown-splash",
+      "title": "Boon Crown Splash",
+      "path": "/public/images/assets/illustrations/boon-crown-splash-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 33906,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boon-crown-splash-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon-crown-splash",
+      "title": "Boon Crown Splash",
+      "path": "/public/images/assets/illustrations/boon-crown-splash-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 24752,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boon-crown-splash-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon-crown-splash",
+      "title": "Boon Crown Splash",
+      "path": "/public/images/assets/illustrations/boon-crown-splash-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 1573,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boon-crown-splash-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon-crown-splash",
+      "title": "Boon Crown Splash",
+      "path": "/public/images/assets/illustrations/boon-crown-splash-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 1822,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boon-crown-splash-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon-dough-pearl-skin",
+      "title": "Boon Dough Pearl Skin",
+      "path": "/public/images/assets/illustrations/boon-dough-pearl-skin-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 19595,
+      "role": "display",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/boon-dough-pearl-skin-display.avif when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon-dough-pearl-skin",
+      "title": "Boon Dough Pearl Skin",
+      "path": "/public/images/assets/illustrations/boon-dough-pearl-skin-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 17300,
+      "role": "display",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/boon-dough-pearl-skin-display.webp when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon-dough-pearl-skin",
+      "title": "Boon Dough Pearl Skin",
+      "path": "/public/images/assets/illustrations/boon-dough-pearl-skin-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 71102,
+      "role": "hero",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/boon-dough-pearl-skin-hero.avif when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon-dough-pearl-skin",
+      "title": "Boon Dough Pearl Skin",
+      "path": "/public/images/assets/illustrations/boon-dough-pearl-skin-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 52856,
+      "role": "hero",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/boon-dough-pearl-skin-hero.webp when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon-dough-pearl-skin",
+      "title": "Boon Dough Pearl Skin",
+      "path": "/public/images/assets/illustrations/boon-dough-pearl-skin-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 3932,
+      "role": "thumbnail",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/boon-dough-pearl-skin-thumb.avif when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon-dough-pearl-skin",
+      "title": "Boon Dough Pearl Skin",
+      "path": "/public/images/assets/illustrations/boon-dough-pearl-skin-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 4690,
+      "role": "thumbnail",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/boon-dough-pearl-skin-thumb.webp when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
       "id": "boonhonk-attentional-fluid",
       "title": "Boonhonk Attentional Fluid",
       "path": "/public/images/assets/illustrations/boonhonk-attentional-fluid-display.avif",
@@ -509,6 +659,84 @@
       "swapHint": "Use /public/images/assets/illustrations/craft-biofilm-papyrus-substrate-thumb.webp when a craft visual needs a stable tracked asset."
     },
     {
+      "id": "craft-paper-crane-unfurling",
+      "title": "Craft Paper Crane Unfurling",
+      "path": "/public/images/assets/illustrations/craft-paper-crane-unfurling-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 5513,
+      "role": "display",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-paper-crane-unfurling-display.avif when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-paper-crane-unfurling",
+      "title": "Craft Paper Crane Unfurling",
+      "path": "/public/images/assets/illustrations/craft-paper-crane-unfurling-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 5082,
+      "role": "display",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-paper-crane-unfurling-display.webp when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-paper-crane-unfurling",
+      "title": "Craft Paper Crane Unfurling",
+      "path": "/public/images/assets/illustrations/craft-paper-crane-unfurling-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 16021,
+      "role": "hero",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-paper-crane-unfurling-hero.avif when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-paper-crane-unfurling",
+      "title": "Craft Paper Crane Unfurling",
+      "path": "/public/images/assets/illustrations/craft-paper-crane-unfurling-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 14200,
+      "role": "hero",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-paper-crane-unfurling-hero.webp when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-paper-crane-unfurling",
+      "title": "Craft Paper Crane Unfurling",
+      "path": "/public/images/assets/illustrations/craft-paper-crane-unfurling-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 1446,
+      "role": "thumbnail",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-paper-crane-unfurling-thumb.avif when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-paper-crane-unfurling",
+      "title": "Craft Paper Crane Unfurling",
+      "path": "/public/images/assets/illustrations/craft-paper-crane-unfurling-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 1618,
+      "role": "thumbnail",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-paper-crane-unfurling-thumb.webp when a craft visual needs a stable tracked asset."
+    },
+    {
       "id": "design-papergami-layout-machine",
       "title": "Design Papergami Layout Machine",
       "path": "/public/images/assets/illustrations/design-papergami-layout-machine-display.avif",
@@ -666,6 +894,90 @@
         "worldbuilding"
       ],
       "swapHint": "Use /public/images/assets/illustrations/lore-land-signal-poster.png when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "lore-seed-pod-nebula",
+      "title": "Lore Seed Pod Nebula",
+      "path": "/public/images/assets/illustrations/lore-seed-pod-nebula-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 7472,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/lore-seed-pod-nebula-display.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "lore-seed-pod-nebula",
+      "title": "Lore Seed Pod Nebula",
+      "path": "/public/images/assets/illustrations/lore-seed-pod-nebula-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 6490,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/lore-seed-pod-nebula-display.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "lore-seed-pod-nebula",
+      "title": "Lore Seed Pod Nebula",
+      "path": "/public/images/assets/illustrations/lore-seed-pod-nebula-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 30230,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/lore-seed-pod-nebula-hero.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "lore-seed-pod-nebula",
+      "title": "Lore Seed Pod Nebula",
+      "path": "/public/images/assets/illustrations/lore-seed-pod-nebula-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 24304,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/lore-seed-pod-nebula-hero.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "lore-seed-pod-nebula",
+      "title": "Lore Seed Pod Nebula",
+      "path": "/public/images/assets/illustrations/lore-seed-pod-nebula-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 1595,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/lore-seed-pod-nebula-thumb.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "lore-seed-pod-nebula",
+      "title": "Lore Seed Pod Nebula",
+      "path": "/public/images/assets/illustrations/lore-seed-pod-nebula-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 1748,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/lore-seed-pod-nebula-thumb.webp when a library / worldbuilding visual needs a stable tracked asset."
     },
     {
       "id": "material-weathered-copper-moss-study",
@@ -1444,6 +1756,100 @@
       "role": "image",
       "concepts": [],
       "swapHint": "Use /public/images/assets/motifs/spwashi-alchemy-token.png when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "texture-cream-ochre-wash",
+      "title": "Texture Cream Ochre Wash",
+      "path": "/public/images/assets/motifs/texture-cream-ochre-wash-display.avif",
+      "directory": "public/images/assets/motifs",
+      "format": "avif",
+      "bytes": 2423,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/motifs/texture-cream-ochre-wash-display.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "texture-cream-ochre-wash",
+      "title": "Texture Cream Ochre Wash",
+      "path": "/public/images/assets/motifs/texture-cream-ochre-wash-display.webp",
+      "directory": "public/images/assets/motifs",
+      "format": "webp",
+      "bytes": 8600,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/motifs/texture-cream-ochre-wash-display.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "texture-harlequin-diamonds",
+      "title": "Texture Harlequin Diamonds",
+      "path": "/public/images/assets/motifs/texture-harlequin-diamonds-display.avif",
+      "directory": "public/images/assets/motifs",
+      "format": "avif",
+      "bytes": 13220,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/texture-harlequin-diamonds-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "texture-harlequin-diamonds",
+      "title": "Texture Harlequin Diamonds",
+      "path": "/public/images/assets/motifs/texture-harlequin-diamonds-display.webp",
+      "directory": "public/images/assets/motifs",
+      "format": "webp",
+      "bytes": 25758,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/texture-harlequin-diamonds-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "texture-linen-weave",
+      "title": "Texture Linen Weave",
+      "path": "/public/images/assets/motifs/texture-linen-weave-display.avif",
+      "directory": "public/images/assets/motifs",
+      "format": "avif",
+      "bytes": 7281,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/texture-linen-weave-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "texture-linen-weave",
+      "title": "Texture Linen Weave",
+      "path": "/public/images/assets/motifs/texture-linen-weave-display.webp",
+      "directory": "public/images/assets/motifs",
+      "format": "webp",
+      "bytes": 14232,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/texture-linen-weave-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "texture-paper-fiber",
+      "title": "Texture Paper Fiber",
+      "path": "/public/images/assets/motifs/texture-paper-fiber-display.avif",
+      "directory": "public/images/assets/motifs",
+      "format": "avif",
+      "bytes": 4990,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/texture-paper-fiber-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "texture-paper-fiber",
+      "title": "Texture Paper Fiber",
+      "path": "/public/images/assets/motifs/texture-paper-fiber-display.webp",
+      "directory": "public/images/assets/motifs",
+      "format": "webp",
+      "bytes": 12816,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/texture-paper-fiber-display.webp when a display visual needs a stable tracked asset."
     },
     {
       "id": "rpg-character-lndr-rockgnome-study",
@@ -2889,6 +3295,2125 @@
       "role": "render",
       "concepts": [],
       "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/spwashi_paper_--raw_--profile_e3yhbyz_--stylize_1000_--weird__e3028404-ffbc-4daf-9a25-ce039dcf6465_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_0",
+      "title": "A Cracked Porcelain Teacup With Liquid Starlight Pouring Upwa 14e06a66 090b 4bc6 9550 12f8dfa484fe 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1374605,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_1",
+      "title": "A Cracked Porcelain Teacup With Liquid Starlight Pouring Upwa 14e06a66 090b 4bc6 9550 12f8dfa484fe 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1281323,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_2",
+      "title": "A Cracked Porcelain Teacup With Liquid Starlight Pouring Upwa 14e06a66 090b 4bc6 9550 12f8dfa484fe 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1316107,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_3",
+      "title": "A Cracked Porcelain Teacup With Liquid Starlight Pouring Upwa 14e06a66 090b 4bc6 9550 12f8dfa484fe 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1375252,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_cracked_porcelain_teacup_with_liquid_starlight_pouring_upwa_14e06a66-090b-4bc6-9550-12f8dfa484fe_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_0",
+      "title": "A Folded Paper Crane Unfurling Into A Flock Of Tiny Glowing L Effe0e3e Fab5 44d9 B8a3 Affd8c7b2ef4 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1275222,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_1",
+      "title": "A Folded Paper Crane Unfurling Into A Flock Of Tiny Glowing L Effe0e3e Fab5 44d9 B8a3 Affd8c7b2ef4 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1510780,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_2",
+      "title": "A Folded Paper Crane Unfurling Into A Flock Of Tiny Glowing L Effe0e3e Fab5 44d9 B8a3 Affd8c7b2ef4 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1442802,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_3",
+      "title": "A Folded Paper Crane Unfurling Into A Flock Of Tiny Glowing L Effe0e3e Fab5 44d9 B8a3 Affd8c7b2ef4 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1429139,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_folded_paper_crane_unfurling_into_a_flock_of_tiny_glowing_l_effe0e3e-fab5-44d9-b8a3-affd8c7b2ef4_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_0",
+      "title": "A Glass Hourglass Filled With Swirling Galaxy Dust Instead Of 7e259a86 3927 4634 Ada9 A3cdc2217e78 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1741161,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_1",
+      "title": "A Glass Hourglass Filled With Swirling Galaxy Dust Instead Of 7e259a86 3927 4634 Ada9 A3cdc2217e78 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1528081,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_2",
+      "title": "A Glass Hourglass Filled With Swirling Galaxy Dust Instead Of 7e259a86 3927 4634 Ada9 A3cdc2217e78 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1157912,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_3",
+      "title": "A Glass Hourglass Filled With Swirling Galaxy Dust Instead Of 7e259a86 3927 4634 Ada9 A3cdc2217e78 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1564433,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_glass_hourglass_filled_with_swirling_galaxy_dust_instead_of_7e259a86-3927-4634-ada9-a3cdc2217e78_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_0",
+      "title": "A Pair Of Ornate Wax Candlesticks Twisted Together Forming An Db01c112 1568 4695 843d 446a53275fa3 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1586797,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_1",
+      "title": "A Pair Of Ornate Wax Candlesticks Twisted Together Forming An Db01c112 1568 4695 843d 446a53275fa3 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1355301,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_2",
+      "title": "A Pair Of Ornate Wax Candlesticks Twisted Together Forming An Db01c112 1568 4695 843d 446a53275fa3 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1399192,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_3",
+      "title": "A Pair Of Ornate Wax Candlesticks Twisted Together Forming An Db01c112 1568 4695 843d 446a53275fa3 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1560419,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_pair_of_ornate_wax_candlesticks_twisted_together_forming_an_db01c112-1568-4695-843d-446a53275fa3_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_0",
+      "title": "A Single Feather Dissolving Into Glowing Golden Light Particl E74ad0b7 Cb8e 4197 9ab8 1541d4e1b587 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1612192,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_1",
+      "title": "A Single Feather Dissolving Into Glowing Golden Light Particl E74ad0b7 Cb8e 4197 9ab8 1541d4e1b587 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1488637,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_2",
+      "title": "A Single Feather Dissolving Into Glowing Golden Light Particl E74ad0b7 Cb8e 4197 9ab8 1541d4e1b587 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1510212,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_3",
+      "title": "A Single Feather Dissolving Into Glowing Golden Light Particl E74ad0b7 Cb8e 4197 9ab8 1541d4e1b587 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1531541,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_feather_dissolving_into_glowing_golden_light_particl_e74ad0b7-cb8e-4197-9ab8-1541d4e1b587_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_0",
+      "title": "A Single Oversized Fabric Pompom Made Of Vibrant Silk Threads 6bb17482 4fae 4620 A871 D1072dcb7b2f 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1929094,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_1",
+      "title": "A Single Oversized Fabric Pompom Made Of Vibrant Silk Threads 6bb17482 4fae 4620 A871 D1072dcb7b2f 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1372037,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_2",
+      "title": "A Single Oversized Fabric Pompom Made Of Vibrant Silk Threads 6bb17482 4fae 4620 A871 D1072dcb7b2f 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 993657,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_3",
+      "title": "A Single Oversized Fabric Pompom Made Of Vibrant Silk Threads 6bb17482 4fae 4620 A871 D1072dcb7b2f 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1475756,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_oversized_fabric_pompom_made_of_vibrant_silk_threads_6bb17482-4fae-4620-a871-d1072dcb7b2f_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_0",
+      "title": "A Single Oversized Round Leather Shoe Form Resting On A Pedes 5aba2197 9a17 483c 8ee1 6a48777a1e4b 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1710397,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_1",
+      "title": "A Single Oversized Round Leather Shoe Form Resting On A Pedes 5aba2197 9a17 483c 8ee1 6a48777a1e4b 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1475368,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_2",
+      "title": "A Single Oversized Round Leather Shoe Form Resting On A Pedes 5aba2197 9a17 483c 8ee1 6a48777a1e4b 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1691930,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_3",
+      "title": "A Single Oversized Round Leather Shoe Form Resting On A Pedes 5aba2197 9a17 483c 8ee1 6a48777a1e4b 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1623144,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_oversized_round_leather_shoe_form_resting_on_a_pedes_5aba2197-9a17-483c-8ee1-6a48777a1e4b_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_0",
+      "title": "A Single Seed Pod Cracked Open Revealing A Tiny Glowing Nebul Ae747181 F149 45ff 8bed 1af44a25df51 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1284708,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_1",
+      "title": "A Single Seed Pod Cracked Open Revealing A Tiny Glowing Nebul Ae747181 F149 45ff 8bed 1af44a25df51 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1282780,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_2",
+      "title": "A Single Seed Pod Cracked Open Revealing A Tiny Glowing Nebul Ae747181 F149 45ff 8bed 1af44a25df51 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1237552,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_3",
+      "title": "A Single Seed Pod Cracked Open Revealing A Tiny Glowing Nebul Ae747181 F149 45ff 8bed 1af44a25df51 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1307142,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_seed_pod_cracked_open_revealing_a_tiny_glowing_nebul_ae747181-f149-45ff-8bed-1af44a25df51_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_0",
+      "title": "A Single Stone Orb Levitating Just Above A Marble Pedestal Fa Fd27e2d7 Adf5 4f25 99b2 84b6e856ee7c 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1194911,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_1",
+      "title": "A Single Stone Orb Levitating Just Above A Marble Pedestal Fa Fd27e2d7 Adf5 4f25 99b2 84b6e856ee7c 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1420494,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_2",
+      "title": "A Single Stone Orb Levitating Just Above A Marble Pedestal Fa Fd27e2d7 Adf5 4f25 99b2 84b6e856ee7c 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1139191,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_3",
+      "title": "A Single Stone Orb Levitating Just Above A Marble Pedestal Fa Fd27e2d7 Adf5 4f25 99b2 84b6e856ee7c 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1265132,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_single_stone_orb_levitating_just_above_a_marble_pedestal_fa_fd27e2d7-adf5-4f25-99b2-84b6e856ee7c_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_0",
+      "title": "A Smooth River Stone Split Open To Reveal A Geode Core Made O 79286960 5cae 4e30 8a13 503c01e543ec 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1385316,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_1",
+      "title": "A Smooth River Stone Split Open To Reveal A Geode Core Made O 79286960 5cae 4e30 8a13 503c01e543ec 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1399323,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_2",
+      "title": "A Smooth River Stone Split Open To Reveal A Geode Core Made O 79286960 5cae 4e30 8a13 503c01e543ec 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1377835,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_3",
+      "title": "A Smooth River Stone Split Open To Reveal A Geode Core Made O 79286960 5cae 4e30 8a13 503c01e543ec 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1406151,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/a_smooth_river_stone_split_open_to_reveal_a_geode_core_made_o_79286960-5cae-4e30-8a13-503c01e543ec_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_0",
+      "title": "Abstract Architectural Geometric Shapes Overlapping Transluce C6d69b7f 1c70 417a B17d F6d228d33e2c 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1787481,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_1",
+      "title": "Abstract Architectural Geometric Shapes Overlapping Transluce C6d69b7f 1c70 417a B17d F6d228d33e2c 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1870517,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_2",
+      "title": "Abstract Architectural Geometric Shapes Overlapping Transluce C6d69b7f 1c70 417a B17d F6d228d33e2c 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1842439,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_3",
+      "title": "Abstract Architectural Geometric Shapes Overlapping Transluce C6d69b7f 1c70 417a B17d F6d228d33e2c 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1844037,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_architectural_geometric_shapes_overlapping_transluce_c6d69b7f-1c70-417a-b17d-f6d228d33e2c_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_0",
+      "title": "Abstract Bokeh Light Streaks On Dark Background Glowing Orbs 4cbfd6bb C2cc 4184 9f44 57cbc28d7c95 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1578124,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_1",
+      "title": "Abstract Bokeh Light Streaks On Dark Background Glowing Orbs 4cbfd6bb C2cc 4184 9f44 57cbc28d7c95 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1899918,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_2",
+      "title": "Abstract Bokeh Light Streaks On Dark Background Glowing Orbs 4cbfd6bb C2cc 4184 9f44 57cbc28d7c95 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1620327,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_3",
+      "title": "Abstract Bokeh Light Streaks On Dark Background Glowing Orbs 4cbfd6bb C2cc 4184 9f44 57cbc28d7c95 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1674000,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_bokeh_light_streaks_on_dark_background_glowing_orbs__4cbfd6bb-c2cc-4184-9f44-57cbc28d7c95_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_0",
+      "title": "Abstract Fluid Gradient In Blush Pink And Soft Coral Tones Dr 5c3fab6d 4cd5 4e59 B28d 436821deff88 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1407381,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_1",
+      "title": "Abstract Fluid Gradient In Blush Pink And Soft Coral Tones Dr 5c3fab6d 4cd5 4e59 B28d 436821deff88 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1627600,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_2",
+      "title": "Abstract Fluid Gradient In Blush Pink And Soft Coral Tones Dr 5c3fab6d 4cd5 4e59 B28d 436821deff88 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1685272,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_3",
+      "title": "Abstract Fluid Gradient In Blush Pink And Soft Coral Tones Dr 5c3fab6d 4cd5 4e59 B28d 436821deff88 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1572980,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_fluid_gradient_in_blush_pink_and_soft_coral_tones_dr_5c3fab6d-4cd5-4e59-b28d-436821deff88_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_0",
+      "title": "Abstract Fluid Marble Ink Texture Swirling Liquid Paint Patte A46edb2b 09b1 435b 9a54 B20b9dd5ab09 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1522613,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_1",
+      "title": "Abstract Fluid Marble Ink Texture Swirling Liquid Paint Patte A46edb2b 09b1 435b 9a54 B20b9dd5ab09 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1689007,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_2",
+      "title": "Abstract Fluid Marble Ink Texture Swirling Liquid Paint Patte A46edb2b 09b1 435b 9a54 B20b9dd5ab09 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1708578,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_3",
+      "title": "Abstract Fluid Marble Ink Texture Swirling Liquid Paint Patte A46edb2b 09b1 435b 9a54 B20b9dd5ab09 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1723793,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_fluid_marble_ink_texture_swirling_liquid_paint_patte_a46edb2b-09b1-435b-9a54-b20b9dd5ab09_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_0",
+      "title": "Abstract Geometric Pattern Inspired By Harlequin Diamonds Mut Bf1265de Dfb2 461c B1b9 8aa075f845dc 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2320170,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_1",
+      "title": "Abstract Geometric Pattern Inspired By Harlequin Diamonds Mut Bf1265de Dfb2 461c B1b9 8aa075f845dc 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2280893,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_2",
+      "title": "Abstract Geometric Pattern Inspired By Harlequin Diamonds Mut Bf1265de Dfb2 461c B1b9 8aa075f845dc 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2243323,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_3",
+      "title": "Abstract Geometric Pattern Inspired By Harlequin Diamonds Mut Bf1265de Dfb2 461c B1b9 8aa075f845dc 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1937794,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_geometric_pattern_inspired_by_harlequin_diamonds_mut_bf1265de-dfb2-461c-b1b9-8aa075f845dc_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_0",
+      "title": "Abstract Gradient In Warm Cream And Soft Ochre Tones Gentle P 3f544c1b 5266 4d9c A6c9 B6bc26248dff 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2024046,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_1",
+      "title": "Abstract Gradient In Warm Cream And Soft Ochre Tones Gentle P 3f544c1b 5266 4d9c A6c9 B6bc26248dff 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2102139,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_2",
+      "title": "Abstract Gradient In Warm Cream And Soft Ochre Tones Gentle P 3f544c1b 5266 4d9c A6c9 B6bc26248dff 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2147433,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_3",
+      "title": "Abstract Gradient In Warm Cream And Soft Ochre Tones Gentle P 3f544c1b 5266 4d9c A6c9 B6bc26248dff 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1765060,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_gradient_in_warm_cream_and_soft_ochre_tones_gentle_p_3f544c1b-5266-4d9c-a6c9-b6bc26248dff_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_0",
+      "title": "Abstract Gradient Mesh In Cool Blue And Lavender Tones Soft D 583eb741 5432 49a7 9ce8 E76f7609d69b 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1633825,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_1",
+      "title": "Abstract Gradient Mesh In Cool Blue And Lavender Tones Soft D 583eb741 5432 49a7 9ce8 E76f7609d69b 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1860515,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_2",
+      "title": "Abstract Gradient Mesh In Cool Blue And Lavender Tones Soft D 583eb741 5432 49a7 9ce8 E76f7609d69b 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1590231,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_3",
+      "title": "Abstract Gradient Mesh In Cool Blue And Lavender Tones Soft D 583eb741 5432 49a7 9ce8 E76f7609d69b 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1493486,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_gradient_mesh_in_cool_blue_and_lavender_tones_soft_d_583eb741-5432-49a7-9ce8-e76f7609d69b_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_0",
+      "title": "Abstract Organic Texture In Sage Green And Cream Tones Soft F B7f12e45 C9fe 461e Bc3a 0b1035970076 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2111616,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_1",
+      "title": "Abstract Organic Texture In Sage Green And Cream Tones Soft F B7f12e45 C9fe 461e Bc3a 0b1035970076 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2108172,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_2",
+      "title": "Abstract Organic Texture In Sage Green And Cream Tones Soft F B7f12e45 C9fe 461e Bc3a 0b1035970076 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1809795,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_3",
+      "title": "Abstract Organic Texture In Sage Green And Cream Tones Soft F B7f12e45 C9fe 461e Bc3a 0b1035970076 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2211283,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_organic_texture_in_sage_green_and_cream_tones_soft_f_b7f12e45-c9fe-461e-bc3a-0b1035970076_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_0",
+      "title": "Abstract Still Life Of Oversized Silk Pompoms And Ruffled Fab 614d331b 86d1 485c 814d 353c58685ae6 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1350228,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_1",
+      "title": "Abstract Still Life Of Oversized Silk Pompoms And Ruffled Fab 614d331b 86d1 485c 814d 353c58685ae6 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1525895,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_2",
+      "title": "Abstract Still Life Of Oversized Silk Pompoms And Ruffled Fab 614d331b 86d1 485c 814d 353c58685ae6 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1399277,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_3",
+      "title": "Abstract Still Life Of Oversized Silk Pompoms And Ruffled Fab 614d331b 86d1 485c 814d 353c58685ae6 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1319869,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_still_life_of_oversized_silk_pompoms_and_ruffled_fab_614d331b-86d1-485c-814d-353c58685ae6_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_0",
+      "title": "Abstract Topographic Contour Line Pattern Thin Elegant Lines 9c03f295 D15d 4bdc B11e 28509aea3826 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2108987,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_1",
+      "title": "Abstract Topographic Contour Line Pattern Thin Elegant Lines 9c03f295 D15d 4bdc B11e 28509aea3826 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1681381,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_2",
+      "title": "Abstract Topographic Contour Line Pattern Thin Elegant Lines 9c03f295 D15d 4bdc B11e 28509aea3826 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2004923,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_3",
+      "title": "Abstract Topographic Contour Line Pattern Thin Elegant Lines 9c03f295 D15d 4bdc B11e 28509aea3826 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1718611,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_topographic_contour_line_pattern_thin_elegant_lines__9c03f295-d15d-4bdc-b11e-28509aea3826_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_0",
+      "title": "Abstract Wireframe Grid Mesh Structure Geometric Low Poly Net E477b5cf 63be 4a24 89ec 2cc05124a237 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1484141,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_1",
+      "title": "Abstract Wireframe Grid Mesh Structure Geometric Low Poly Net E477b5cf 63be 4a24 89ec 2cc05124a237 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1478764,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_2",
+      "title": "Abstract Wireframe Grid Mesh Structure Geometric Low Poly Net E477b5cf 63be 4a24 89ec 2cc05124a237 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1672423,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_3",
+      "title": "Abstract Wireframe Grid Mesh Structure Geometric Low Poly Net E477b5cf 63be 4a24 89ec 2cc05124a237 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1636886,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/abstract_wireframe_grid_mesh_structure_geometric_low-poly_net_e477b5cf-63be-4a24-89ec-2cc05124a237_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_0",
+      "title": "An Antique Brass Key With The Bow Unraveling Into Wisps Of Sm 1d87bf68 Eb98 43ab Ae0f 72d0d4a4962e 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1363041,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_1",
+      "title": "An Antique Brass Key With The Bow Unraveling Into Wisps Of Sm 1d87bf68 Eb98 43ab Ae0f 72d0d4a4962e 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1395725,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_2",
+      "title": "An Antique Brass Key With The Bow Unraveling Into Wisps Of Sm 1d87bf68 Eb98 43ab Ae0f 72d0d4a4962e 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1433039,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_3",
+      "title": "An Antique Brass Key With The Bow Unraveling Into Wisps Of Sm 1d87bf68 Eb98 43ab Ae0f 72d0d4a4962e 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1508878,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_antique_brass_key_with_the_bow_unraveling_into_wisps_of_sm_1d87bf68-eb98-43ab-ae0f-72d0d4a4962e_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_0",
+      "title": "An Old Leather Bound Book With Its Pages Turning Into A Flock D8a06bbc F0a5 4eaf B07e Ae5fe689986c 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1240562,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_1",
+      "title": "An Old Leather Bound Book With Its Pages Turning Into A Flock D8a06bbc F0a5 4eaf B07e Ae5fe689986c 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1489375,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_2",
+      "title": "An Old Leather Bound Book With Its Pages Turning Into A Flock D8a06bbc F0a5 4eaf B07e Ae5fe689986c 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1367366,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_3",
+      "title": "An Old Leather Bound Book With Its Pages Turning Into A Flock D8a06bbc F0a5 4eaf B07e Ae5fe689986c 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1462867,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_old_leather-bound_book_with_its_pages_turning_into_a_flock_d8a06bbc-f0a5-4eaf-b07e-ae5fe689986c_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_0",
+      "title": "An Ornate Ruffled Clown Collar Rendered As Sculptural Haute C 6dcfbc0b E2b3 4d88 B86e 1e3df574beef 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1624753,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_1",
+      "title": "An Ornate Ruffled Clown Collar Rendered As Sculptural Haute C 6dcfbc0b E2b3 4d88 B86e 1e3df574beef 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1371018,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_2",
+      "title": "An Ornate Ruffled Clown Collar Rendered As Sculptural Haute C 6dcfbc0b E2b3 4d88 B86e 1e3df574beef 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1561492,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_3",
+      "title": "An Ornate Ruffled Clown Collar Rendered As Sculptural Haute C 6dcfbc0b E2b3 4d88 B86e 1e3df574beef 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1720182,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/an_ornate_ruffled_clown_collar_rendered_as_sculptural_haute_c_6dcfbc0b-e2b3-4d88-b86e-1e3df574beef_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_0",
+      "title": "Billowing Smoke And Mist Abstract Texture Soft Organic Shapes A5f14e04 A626 4ef3 93b3 1672be091385 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1575664,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_1",
+      "title": "Billowing Smoke And Mist Abstract Texture Soft Organic Shapes A5f14e04 A626 4ef3 93b3 1672be091385 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1388666,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_2",
+      "title": "Billowing Smoke And Mist Abstract Texture Soft Organic Shapes A5f14e04 A626 4ef3 93b3 1672be091385 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1517615,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_3",
+      "title": "Billowing Smoke And Mist Abstract Texture Soft Organic Shapes A5f14e04 A626 4ef3 93b3 1672be091385 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1776524,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/billowing_smoke_and_mist_abstract_texture_soft_organic_shapes_a5f14e04-a626-4ef3-93b3-1672be091385_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_0",
+      "title": "Brushed Metal Surface Texture Fine Linear Grain Subtle Reflec D2c02132 5702 4160 994c 4150fd9a3ac1 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1914549,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_1",
+      "title": "Brushed Metal Surface Texture Fine Linear Grain Subtle Reflec D2c02132 5702 4160 994c 4150fd9a3ac1 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2131340,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_2",
+      "title": "Brushed Metal Surface Texture Fine Linear Grain Subtle Reflec D2c02132 5702 4160 994c 4150fd9a3ac1 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2105238,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_3",
+      "title": "Brushed Metal Surface Texture Fine Linear Grain Subtle Reflec D2c02132 5702 4160 994c 4150fd9a3ac1 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1791183,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/brushed_metal_surface_texture_fine_linear_grain_subtle_reflec_d2c02132-5702-4160-994c-4150fd9a3ac1_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_0",
+      "title": "Close Up Macro Of An Antique Brass Candlesticks Fluted Curves A4bb96ba Ad62 4627 8a9a 8782eb73be93 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1268118,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_1",
+      "title": "Close Up Macro Of An Antique Brass Candlesticks Fluted Curves A4bb96ba Ad62 4627 8a9a 8782eb73be93 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1246134,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_2",
+      "title": "Close Up Macro Of An Antique Brass Candlesticks Fluted Curves A4bb96ba Ad62 4627 8a9a 8782eb73be93 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1246575,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_3",
+      "title": "Close Up Macro Of An Antique Brass Candlesticks Fluted Curves A4bb96ba Ad62 4627 8a9a 8782eb73be93 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1267258,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_macro_of_an_antique_brass_candlesticks_fluted_curves_a4bb96ba-ad62-4627-8a9a-8782eb73be93_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_0",
+      "title": "Close Up Of A Cobbled Leather Clown Shoe Oversized Rounded To 63b3eef0 E207 4d2a 8ac3 C7fd7f594a20 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1581892,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_1",
+      "title": "Close Up Of A Cobbled Leather Clown Shoe Oversized Rounded To 63b3eef0 E207 4d2a 8ac3 C7fd7f594a20 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1735484,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_2",
+      "title": "Close Up Of A Cobbled Leather Clown Shoe Oversized Rounded To 63b3eef0 E207 4d2a 8ac3 C7fd7f594a20 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1658280,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_3",
+      "title": "Close Up Of A Cobbled Leather Clown Shoe Oversized Rounded To 63b3eef0 E207 4d2a 8ac3 C7fd7f594a20 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1795682,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_of_a_cobbled_leather_clown_shoe_oversized_rounded_to_63b3eef0-e207-4d2a-8ac3-c7fd7f594a20_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_0",
+      "title": "Close Up Of Delicate Fine Stitching Seam On Woven Fabric Smal 1280ddf4 3033 4758 92d9 D3110d1aec12 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1762253,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_1",
+      "title": "Close Up Of Delicate Fine Stitching Seam On Woven Fabric Smal 1280ddf4 3033 4758 92d9 D3110d1aec12 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1736772,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_2",
+      "title": "Close Up Of Delicate Fine Stitching Seam On Woven Fabric Smal 1280ddf4 3033 4758 92d9 D3110d1aec12 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1617150,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_3",
+      "title": "Close Up Of Delicate Fine Stitching Seam On Woven Fabric Smal 1280ddf4 3033 4758 92d9 D3110d1aec12 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1735317,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_of_delicate_fine_stitching_seam_on_woven_fabric_smal_1280ddf4-3033-4758-92d9-d3110d1aec12_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_0",
+      "title": "Close Up Water Ripples And Caustic Light Patterns Organic Wav 0089f310 D915 4094 A516 Bc99b859486d 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1859167,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_1",
+      "title": "Close Up Water Ripples And Caustic Light Patterns Organic Wav 0089f310 D915 4094 A516 Bc99b859486d 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1916358,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_2",
+      "title": "Close Up Water Ripples And Caustic Light Patterns Organic Wav 0089f310 D915 4094 A516 Bc99b859486d 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1931368,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_3",
+      "title": "Close Up Water Ripples And Caustic Light Patterns Organic Wav 0089f310 D915 4094 A516 Bc99b859486d 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1795186,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/close-up_water_ripples_and_caustic_light_patterns_organic_wav_0089f310-d915-4094-a516-bc99b859486d_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "detailed_3d_rendering_of_a_whimsical_fantasy_scene._a_rustic__baaecee3-5220-4e57-a5ac-6efad4a5cba8_0",
+      "title": "Detailed 3d Rendering Of A Whimsical Fantasy Scene",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/detailed_3d_rendering_of_a_whimsical_fantasy_scene._a_rustic__baaecee3-5220-4e57-a5ac-6efad4a5cba8_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1453134,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/detailed_3d_rendering_of_a_whimsical_fantasy_scene._a_rustic__baaecee3-5220-4e57-a5ac-6efad4a5cba8_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_0",
+      "title": "Dumplings Dough Being Laid As Skin On A Pearlskull Lifeboon 445efef0 8435 4827 9ce0 A984a5626c0c 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1594172,
+      "role": "render",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_0.png when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_1",
+      "title": "Dumplings Dough Being Laid As Skin On A Pearlskull Lifeboon 445efef0 8435 4827 9ce0 A984a5626c0c 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1340862,
+      "role": "render",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_1.png when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_2",
+      "title": "Dumplings Dough Being Laid As Skin On A Pearlskull Lifeboon 445efef0 8435 4827 9ce0 A984a5626c0c 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1579353,
+      "role": "render",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_2.png when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_3",
+      "title": "Dumplings Dough Being Laid As Skin On A Pearlskull Lifeboon 445efef0 8435 4827 9ce0 A984a5626c0c 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1524816,
+      "role": "render",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_445efef0-8435-4827-9ce0-a984a5626c0c_3.png when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_c6dac65b-3a15-475c-a6c4-a7d4c65bd26e_0",
+      "title": "Dumplings Dough Being Laid As Skin On A Pearlskull Lifeboon C6dac65b 3a15 475c A6c4 A7d4c65bd26e 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_c6dac65b-3a15-475c-a6c4-a7d4c65bd26e_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1340862,
+      "role": "render",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_c6dac65b-3a15-475c-a6c4-a7d4c65bd26e_0.png when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_0",
+      "title": "High Contrast Black And White Abstract Ink Texture Bold Fluid 3c41e8f7 Ebea 4ee6 Bb2f F93cb3806a02 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2103943,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_1",
+      "title": "High Contrast Black And White Abstract Ink Texture Bold Fluid 3c41e8f7 Ebea 4ee6 Bb2f F93cb3806a02 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1874506,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_2",
+      "title": "High Contrast Black And White Abstract Ink Texture Bold Fluid 3c41e8f7 Ebea 4ee6 Bb2f F93cb3806a02 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2149998,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_3",
+      "title": "High Contrast Black And White Abstract Ink Texture Bold Fluid 3c41e8f7 Ebea 4ee6 Bb2f F93cb3806a02 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1792812,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/high_contrast_black_and_white_abstract_ink_texture_bold_fluid_3c41e8f7-ebea-4ee6-bb2f-f93cb3806a02_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_0",
+      "title": "Iridescent Holographic Gradient Wave Glossy Liquid Chrome Lig 0a5aa193 D9b9 42f5 9392 D4ffdb9bb68a 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1442884,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_1",
+      "title": "Iridescent Holographic Gradient Wave Glossy Liquid Chrome Lig 0a5aa193 D9b9 42f5 9392 D4ffdb9bb68a 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1597472,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_2",
+      "title": "Iridescent Holographic Gradient Wave Glossy Liquid Chrome Lig 0a5aa193 D9b9 42f5 9392 D4ffdb9bb68a 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1602147,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_3",
+      "title": "Iridescent Holographic Gradient Wave Glossy Liquid Chrome Lig 0a5aa193 D9b9 42f5 9392 D4ffdb9bb68a 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1715010,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/iridescent_holographic_gradient_wave_glossy_liquid_chrome_lig_0a5aa193-d9b9-42f5-9392-d4ffdb9bb68a_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_0",
+      "title": "Macro Close Up Of A Brushed Brass Drawer Handle Elegant Minim 9ce25716 D82e 45ff 9f93 Ecc532f77aab 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1357969,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_1",
+      "title": "Macro Close Up Of A Brushed Brass Drawer Handle Elegant Minim 9ce25716 D82e 45ff 9f93 Ecc532f77aab 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1320367,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_2",
+      "title": "Macro Close Up Of A Brushed Brass Drawer Handle Elegant Minim 9ce25716 D82e 45ff 9f93 Ecc532f77aab 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1179754,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_3",
+      "title": "Macro Close Up Of A Brushed Brass Drawer Handle Elegant Minim 9ce25716 D82e 45ff 9f93 Ecc532f77aab 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1209698,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_brushed_brass_drawer_handle_elegant_minim_9ce25716-d82e-45ff-9f93-ecc532f77aab_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_0",
+      "title": "Macro Close Up Of A Small Smooth Ceramic Knob Matte White Fin 09d0cfad 3df1 4737 A4aa E2acf2f11b20 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1682767,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_1",
+      "title": "Macro Close Up Of A Small Smooth Ceramic Knob Matte White Fin 09d0cfad 3df1 4737 A4aa E2acf2f11b20 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1554939,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_2",
+      "title": "Macro Close Up Of A Small Smooth Ceramic Knob Matte White Fin 09d0cfad 3df1 4737 A4aa E2acf2f11b20 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1129373,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_3",
+      "title": "Macro Close Up Of A Small Smooth Ceramic Knob Matte White Fin 09d0cfad 3df1 4737 A4aa E2acf2f11b20 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1595940,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_close-up_of_a_small_smooth_ceramic_knob_matte_white_fin_09d0cfad-3df1-4737-a4aa-e2acf2f11b20_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_0",
+      "title": "Macro Detail Of Fine Engraved Concentric Line Pattern On Brus Fb9f0294 5d63 42a5 Bfa7 E33f286bf6b3 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1680177,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_1",
+      "title": "Macro Detail Of Fine Engraved Concentric Line Pattern On Brus Fb9f0294 5d63 42a5 Bfa7 E33f286bf6b3 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1477738,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_2",
+      "title": "Macro Detail Of Fine Engraved Concentric Line Pattern On Brus Fb9f0294 5d63 42a5 Bfa7 E33f286bf6b3 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1815559,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_3",
+      "title": "Macro Detail Of Fine Engraved Concentric Line Pattern On Brus Fb9f0294 5d63 42a5 Bfa7 E33f286bf6b3 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1696235,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_detail_of_fine_engraved_concentric_line_pattern_on_brus_fb9f0294-5d63-42a5-bfa7-e33f286bf6b3_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_0",
+      "title": "Macro Detail Of Glossy Round Leather Clown Shoe Toe Warm Refl 9e71b19e 2ab1 4b52 8494 9dbf33e99a3f 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1742736,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_1",
+      "title": "Macro Detail Of Glossy Round Leather Clown Shoe Toe Warm Refl 9e71b19e 2ab1 4b52 8494 9dbf33e99a3f 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1505367,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_2",
+      "title": "Macro Detail Of Glossy Round Leather Clown Shoe Toe Warm Refl 9e71b19e 2ab1 4b52 8494 9dbf33e99a3f 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1331224,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_3",
+      "title": "Macro Detail Of Glossy Round Leather Clown Shoe Toe Warm Refl 9e71b19e 2ab1 4b52 8494 9dbf33e99a3f 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1692679,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_detail_of_glossy_round_leather_clown_shoe_toe_warm_refl_9e71b19e-2ab1-4b52-8494-9dbf33e99a3f_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_0",
+      "title": "Macro Paper Texture Torn Deckled Edges Subtle Fiber Grain Sof 7fd90dbc 6838 46bd 8d9b 7b5d7bfa6bb2 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2121036,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_1",
+      "title": "Macro Paper Texture Torn Deckled Edges Subtle Fiber Grain Sof 7fd90dbc 6838 46bd 8d9b 7b5d7bfa6bb2 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2098115,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_2",
+      "title": "Macro Paper Texture Torn Deckled Edges Subtle Fiber Grain Sof 7fd90dbc 6838 46bd 8d9b 7b5d7bfa6bb2 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2204459,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_3",
+      "title": "Macro Paper Texture Torn Deckled Edges Subtle Fiber Grain Sof 7fd90dbc 6838 46bd 8d9b 7b5d7bfa6bb2 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 2091534,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/macro_paper_texture_torn_deckled_edges_subtle_fiber_grain_sof_7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_0",
+      "title": "Ornate Brass Candlestick Sculpted Into The Elegant Curved For 31a68ce4 Fcd9 4b01 B7a7 289d0d92efc6 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1390839,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_1",
+      "title": "Ornate Brass Candlestick Sculpted Into The Elegant Curved For 31a68ce4 Fcd9 4b01 B7a7 289d0d92efc6 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1487942,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_2",
+      "title": "Ornate Brass Candlestick Sculpted Into The Elegant Curved For 31a68ce4 Fcd9 4b01 B7a7 289d0d92efc6 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1430176,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_3",
+      "title": "Ornate Brass Candlestick Sculpted Into The Elegant Curved For 31a68ce4 Fcd9 4b01 B7a7 289d0d92efc6 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1461998,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/ornate_brass_candlestick_sculpted_into_the_elegant_curved_for_31a68ce4-fcd9-4b01-b7a7-289d0d92efc6_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._0044cc81-059c-4734-8ef2-98159139d8a3_0",
+      "title": "Pearl To Boon Of Crown Profile 358wmu5 Stylize 750 V 8",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._0044cc81-059c-4734-8ef2-98159139d8a3_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1309738,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._0044cc81-059c-4734-8ef2-98159139d8a3_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_0",
+      "title": "Pearl To Boon Of Crown Profile 358wmu5 Stylize 750 V 8",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1272699,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_1",
+      "title": "Pearl To Boon Of Crown Profile 358wmu5 Stylize 750 V 8",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1309738,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_2",
+      "title": "Pearl To Boon Of Crown Profile 358wmu5 Stylize 750 V 8",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1145747,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_3",
+      "title": "Pearl To Boon Of Crown Profile 358wmu5 Stylize 750 V 8",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1237384,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/pearl_to_boon_of_crown_--profile_358wmu5_--stylize_750_--v_8._74ddffa5-4840-4160-835f-7500e6eface7_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_0",
+      "title": "Small Cluster Of Glass Beads And Orbs Soft Glowing Highlights Ca45b2f5 4ee9 4695 8dd7 Eab766f21e2b 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1270224,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_1",
+      "title": "Small Cluster Of Glass Beads And Orbs Soft Glowing Highlights Ca45b2f5 4ee9 4695 8dd7 Eab766f21e2b 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1460561,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_2",
+      "title": "Small Cluster Of Glass Beads And Orbs Soft Glowing Highlights Ca45b2f5 4ee9 4695 8dd7 Eab766f21e2b 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1564047,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_3",
+      "title": "Small Cluster Of Glass Beads And Orbs Soft Glowing Highlights Ca45b2f5 4ee9 4695 8dd7 Eab766f21e2b 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1357228,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/small_cluster_of_glass_beads_and_orbs_soft_glowing_highlights_ca45b2f5-4ee9-4695-8dd7-eab766f21e2b_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_0",
+      "title": "Soft Abstract Gradient Mesh Dreamy Pastel Color Blend Gentle 72378e77 B0b7 435a Aa4b 09a6e95175cc 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1373290,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_1",
+      "title": "Soft Abstract Gradient Mesh Dreamy Pastel Color Blend Gentle 72378e77 B0b7 435a Aa4b 09a6e95175cc 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1384114,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_1.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_2",
+      "title": "Soft Abstract Gradient Mesh Dreamy Pastel Color Blend Gentle 72378e77 B0b7 435a Aa4b 09a6e95175cc 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1616981,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_2.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_3",
+      "title": "Soft Abstract Gradient Mesh Dreamy Pastel Color Blend Gentle 72378e77 B0b7 435a Aa4b 09a6e95175cc 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1539457,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/soft_abstract_gradient_mesh_dreamy_pastel_color_blend_gentle__72378e77-b0b7-435a-aa4b-09a6e95175cc_3.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "this_3d_digital_art_depicts_a_large_teal_bucket_overflowing_w_a07ac72c-ad21-4688-8665-363a834011dc_0",
+      "title": "This 3d Digital Art Depicts A Large Teal Bucket Overflowing W A07ac72c Ad21 4688 8665 363a834011dc 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/this_3d_digital_art_depicts_a_large_teal_bucket_overflowing_w_a07ac72c-ad21-4688-8665-363a834011dc_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1481297,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/this_3d_digital_art_depicts_a_large_teal_bucket_overflowing_w_a07ac72c-ad21-4688-8665-363a834011dc_0.png when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_0",
+      "title": "Woven Fabric Linen Texture Close Up Macro Weave Pattern Soft 6a147e5f F967 42af Befa 3ca69cb560f2 0",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_0.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1491334,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_1",
+      "title": "Woven Fabric Linen Texture Close Up Macro Weave Pattern Soft 6a147e5f F967 42af Befa 3ca69cb560f2 1",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_1.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1508603,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_2",
+      "title": "Woven Fabric Linen Texture Close Up Macro Weave Pattern Soft 6a147e5f F967 42af Befa 3ca69cb560f2 2",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_2.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1555581,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_3",
+      "title": "Woven Fabric Linen Texture Close Up Macro Weave Pattern Soft 6a147e5f F967 42af Befa 3ca69cb560f2 3",
+      "path": "/public/images/renders/_raw/2026-08-31-morning/woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_3.png",
+      "directory": "public/images/renders/_raw/2026-08-31-morning",
+      "format": "png",
+      "bytes": 1253283,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_3.png when a render visual needs a stable tracked asset."
     },
     {
       "id": "Brainstorming sketch with robot and text",

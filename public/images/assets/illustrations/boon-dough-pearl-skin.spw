@@ -1,0 +1,31 @@
+#>asset_metadata
+#:layer #!recipes
+
+^"spirit"{
+  name: "boon-dough-pearl-skin"
+  title: "Pearl Under Dough Skin"
+  description: "A pearl wears dumpling dough as skin while flour falls. Culinary valence: the close is a wrap, not a product shot."
+  visual_qualities: "warm kitchen light, translucent dough, pearl core, falling flour"
+}
+
+^"provenance"{
+  generator: "Midjourney"
+  imported_on: "2026-08-31"
+  source_master: "dumplings_dough_being_laid_as_skin_on_a_pearlskull_lifeboon_-_c6dac65b-3a15-475c-a6c4-a7d4c65bd26e_0.png"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "culinary-boon-study"
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["avif", "webp"]
+  alt_text: "A pearl wrapped in translucent dumpling dough on a floured board, with a fine rain of flour above it."
+}
+
+^"optimization"{
+  variants: [
+    { tier: "thumb", size: "256x256", formats: ["avif", "webp"] },
+    { tier: "display", size: "512x512", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x1024", formats: ["avif", "webp"] }
+  ]
+}

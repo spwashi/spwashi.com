@@ -52,7 +52,11 @@
         { name: "design-papergami-layout-machine", spirit: "design-papergami-layout-machine", role: "system-specimen" },
         { name: "craft-biofilm-papyrus-substrate", spirit: "craft-biofilm-papyrus-substrate", role: "material-study" },
         { name: "artifact-ovoid-monolith-study", spirit: "artifact-ovoid-monolith-study", role: "proof-artifact" },
-        { name: "material-weathered-copper-moss-study", spirit: "material-weathered-copper-moss-study", role: "material-study" }
+        { name: "material-weathered-copper-moss-study", spirit: "material-weathered-copper-moss-study", role: "material-study" },
+        { name: "boon-crown-splash", spirit: "boon-crown-splash", role: "boonhonk-valence-study" },
+        { name: "lore-seed-pod-nebula", spirit: "lore-seed-pod-nebula", role: "series-home-study" },
+        { name: "craft-paper-crane-unfurling", spirit: "craft-paper-crane-unfurling", role: "craft-fold-study" },
+        { name: "boon-dough-pearl-skin", spirit: "boon-dough-pearl-skin", role: "culinary-boon-study" }
       ]
     }
 
@@ -61,7 +65,11 @@
       purpose: "Reusable design motifs — operator palettes, constellation patterns, UI elements"
       status: "active"
       images: [
-        { name: "spwashi-alchemy-token.png", spirit: "threshold-seal", role: "identity-token" }
+        { name: "spwashi-alchemy-token.png", spirit: "threshold-seal", role: "identity-token" },
+        { name: "texture-paper-fiber", spirit: "morning-material-tiles", role: "css-slice-tile" },
+        { name: "texture-linen-weave", spirit: "morning-material-tiles", role: "css-slice-tile" },
+        { name: "texture-harlequin-diamonds", spirit: "morning-material-tiles", role: "css-slice-tile" },
+        { name: "texture-cream-ochre-wash", spirit: "morning-material-tiles", role: "css-slice-tile" }
       ]
     }
   }
@@ -84,6 +92,18 @@
           note: "Commissioned as a design reference, not decoration — and it changed the code. arrival-electrostatics.css drew a ring with a soft bloom until this showed the boundary is one hard side, the charge is grain concentrating toward it, and the nucleus is about one percent of the frame." },
         { spirit_name: "boonhonk-attentional-fluid", variants: ["archive", "thumb", "display", "hero"], formats: ["avif", "webp"],
           note: "Preferred. Flat contour-bounded teal fields with warm gold nuclei inside rings and vertical threads between them — attention moving through fields separated by walls, with no glow spill. Closest reference the site has to arrival-electrostatics: a bounded ring with a warm centre rather than a bloom. Extracted to assets/illustrations with a .spw sidecar." }
+      ]},
+      { date: "2026-08-31", name: "morning", status: "archived-source-and-extracted", images: 176, content: [
+        { spirit_name: "texture-session-5", variants: ["paper", "linen", "harlequin", "wash"], formats: ["avif", "webp"],
+          note: "Material tiles for CSS slices and screenshot inoculation. Consume via texture-slice.css." },
+        { spirit_name: "boon-crown-splash", variants: ["thumb", "display", "hero"], formats: ["avif", "webp"],
+          note: "Pearl becoming crown — boonhonk valence study on /about/#boonhonk-register." },
+        { spirit_name: "lore-seed-pod-nebula", variants: ["thumb", "display", "hero"], formats: ["avif", "webp"],
+          note: "Closed seed with interior light — series-home and lore.land." },
+        { spirit_name: "craft-paper-crane-unfurling", variants: ["thumb", "display", "hero"], formats: ["avif", "webp"],
+          note: "Fold that travels — craft page and Imagine share seed." },
+        { spirit_name: "boon-dough-pearl-skin", variants: ["thumb", "display", "hero"], formats: ["avif", "webp"],
+          note: "Pearl under dumpling dough — culinary valence on /recipes/." }
       ]},
       { date: "2026-08-22", name: "recovered-gold-study", status: "archived-source", images: 3, content: [
         { spirit_name: "recovered-gold-voyager", variants: ["source"], formats: ["jpg"],
