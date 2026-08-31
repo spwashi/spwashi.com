@@ -1,0 +1,277 @@
+/* ==========================================================================
+   texture-slice.css
+   --------------------------------------------------------------------------
+   Morning material tiles as opt-in slices. Grain already spends frame
+   pseudos, so the overlay is a child `.spw-texture-slice`.
+
+   Physics (material-physics + color-motion): two states, rest vs lift.
+   Hover (fine pointer), focus, hold-to-visit, and gesture charge raise
+   `--spw-slice-lift`. Specular return is attenuated by the local canopy.
+   Reduced motion and capture keep the substrate at rest.
+   Pointer crop is `--spw-slice-px/py` from media/texture-slice.js.
+   ========================================================================== */
+
+@property --spw-slice-lift {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+:root {
+  --spw-texture-paper: image-set(
+    url('/public/images/assets/motifs/texture-paper-fiber-display.avif') type('image/avif'),
+    url('/public/images/assets/motifs/texture-paper-fiber-display.webp') type('image/webp')
+  );
+  --spw-texture-linen: image-set(
+    url('/public/images/assets/motifs/texture-linen-weave-display.avif') type('image/avif'),
+    url('/public/images/assets/motifs/texture-linen-weave-display.webp') type('image/webp')
+  );
+  --spw-texture-harlequin: image-set(
+    url('/public/images/assets/motifs/texture-harlequin-diamonds-display.avif') type('image/avif'),
+    url('/public/images/assets/motifs/texture-harlequin-diamonds-display.webp') type('image/webp')
+  );
+  --spw-texture-wash: image-set(
+    url('/public/images/assets/motifs/texture-cream-ochre-wash-display.avif') type('image/avif'),
+    url('/public/images/assets/motifs/texture-cream-ochre-wash-display.webp') type('image/webp')
+  );
+
+  --spw-texture-slice-image: var(--spw-texture-paper);
+  --spw-texture-slice-opacity: 0.075;
+  --spw-slice-u: 28%;
+  --spw-slice-v: 42%;
+  --spw-slice-size: 170%;
+  --spw-slice-px: 0%;
+  --spw-slice-py: 0%;
+  --spw-slice-lift: 0;
+}
+
+[data-spw-texture-slice] {
+  position: relative;
+  isolation: isolate;
+  transition: --spw-slice-lift var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1));
+}
+
+[data-spw-texture-slice] > :not(.spw-texture-slice) {
+  position: relative;
+  z-index: 1;
+}
+
+[data-spw-texture-slice='paper'] { --spw-texture-slice-image: var(--spw-texture-paper); }
+[data-spw-texture-slice='linen'] { --spw-texture-slice-image: var(--spw-texture-linen); }
+[data-spw-texture-slice='harlequin'] {
+  --spw-texture-slice-image: var(--spw-texture-harlequin);
+  --spw-texture-slice-opacity: 0.06;
+}
+[data-spw-texture-slice='wash'] {
+  --spw-texture-slice-image: var(--spw-texture-wash);
+}
+
+/* Seed last nibble as a no-JS crop so stills vary before idle JS. */
+:where([data-spw-seed$='0'], [data-spw-seed$='a']) { --spw-slice-u: 12%; --spw-slice-v: 18%; }
+:where([data-spw-seed$='1'], [data-spw-seed$='b']) { --spw-slice-u: 38%; --spw-slice-v: 22%; }
+:where([data-spw-seed$='2'], [data-spw-seed$='c']) { --spw-slice-u: 64%; --spw-slice-v: 16%; }
+:where([data-spw-seed$='3'], [data-spw-seed$='d']) { --spw-slice-u: 18%; --spw-slice-v: 48%; }
+:where([data-spw-seed$='4'], [data-spw-seed$='e']) { --spw-slice-u: 52%; --spw-slice-v: 56%; }
+:where([data-spw-seed$='5'], [data-spw-seed$='f']) { --spw-slice-u: 76%; --spw-slice-v: 44%; }
+:where([data-spw-seed$='6']) { --spw-slice-u: 14%; --spw-slice-v: 72%; }
+:where([data-spw-seed$='7']) { --spw-slice-u: 44%; --spw-slice-v: 78%; }
+:where([data-spw-seed$='8']) { --spw-slice-u: 70%; --spw-slice-v: 68%; }
+:where([data-spw-seed$='9']) { --spw-slice-u: 32%; --spw-slice-v: 36%; }
+
+/* Invite: keyboard always; pointer hover only when the device can hover. */
+[data-spw-texture-slice]:focus-within {
+  --spw-slice-lift: 0.55;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-spw-texture-slice]:hover {
+    --spw-slice-lift: 0.55;
+  }
+}
+
+/* Charge / hold — same lift axis, higher coefficient. No third rest-state. */
+[data-spw-texture-slice]:is(
+  [data-spw-gesture='charging'],
+  [data-spw-gesture='armed'],
+  [data-spw-hold-state='arming'],
+  [data-spw-image-state='primed'],
+  [data-spw-image-state='engaged']
+) {
+  --spw-slice-lift: 0.9;
+}
+
+[data-spw-texture-slice]:is([data-spw-collected='true'], [data-spw-visited='true']) {
+  --spw-texture-slice-opacity: 0.10;
+}
+
+.spw-texture-slice {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--spw-local-layer-substrate, 0);
+  overflow: clip;
+  border-radius: inherit;
+  --spw-slice-return: calc(
+    var(--material-specular, 0.28)
+    * (1 - var(--spw-biome-attenuation, 0))
+  );
+  box-shadow: inset 0 1px 0 color-mix(
+    in srgb,
+    white calc((var(--spw-slice-return) + (var(--spw-slice-lift) * 0.06)) * 34%),
+    transparent
+  );
+}
+
+.spw-texture-slice::before,
+[data-spw-texture-slice]:not(:has(> .spw-texture-slice))::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--spw-local-layer-substrate, 0);
+  border-radius: inherit;
+  background-image: var(--spw-texture-slice-image);
+  background-repeat: no-repeat;
+  background-size: var(--spw-slice-size);
+  background-position:
+    calc(var(--spw-slice-u) + (var(--spw-slice-lift) * 1.5%) + var(--spw-slice-px))
+    calc(var(--spw-slice-v) - (var(--spw-slice-lift) * 1%) + var(--spw-slice-py));
+  opacity: calc(var(--spw-texture-slice-opacity) + (var(--spw-slice-lift) * 0.018));
+  mix-blend-mode: normal;
+  filter: saturate(calc(1 + (var(--spw-slice-lift) * 0.06)));
+  -webkit-mask-image: linear-gradient(
+    166deg,
+    transparent 0 10%,
+    #000 19% 26%,
+    transparent 35% 63%,
+    #000 72% 79%,
+    transparent 88%
+  );
+  mask-image: linear-gradient(
+    166deg,
+    transparent 0 10%,
+    #000 19% 26%,
+    transparent 35% 63%,
+    #000 72% 79%,
+    transparent 88%
+  );
+  transition: opacity var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1));
+}
+
+/* Pointer crop settles after leave; while invited it tracks immediately. */
+[data-spw-texture-slice]:not(:hover):not(:focus-within) .spw-texture-slice::before,
+[data-spw-texture-slice]:not(:hover):not(:focus-within):not(:has(> .spw-texture-slice))::after {
+  transition:
+    opacity var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1)),
+    background-position var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1)),
+    filter var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1));
+}
+
+.spw-texture-slice[data-spw-slice-glitch='true']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: inherit;
+  background-position:
+    calc(var(--spw-slice-u) + 3% + (var(--spw-slice-lift) * 2%) + var(--spw-slice-px))
+    calc(var(--spw-slice-v) - 2% + var(--spw-slice-py));
+  mix-blend-mode: screen;
+  opacity: calc(0.22 + (var(--spw-slice-lift) * 0.12));
+  clip-path: polygon(0 40%, 100% 28%, 100% 46%, 0 58%);
+  transition: opacity var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1));
+}
+
+html:is([data-spw-capture-mode='clean'], [data-spw-capture-mode='screenshot'], [data-spw-capture-mode='study'])
+  [data-spw-texture-slice] {
+  --spw-slice-lift: 0;
+  --spw-slice-px: 0%;
+  --spw-slice-py: 0%;
+}
+
+html:is([data-spw-capture-mode='clean'], [data-spw-capture-mode='screenshot'], [data-spw-capture-mode='study'])
+  .spw-texture-slice[data-spw-slice-glitch='true']::after {
+  content: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-spw-texture-slice] {
+    --spw-slice-lift: 0;
+    --spw-slice-px: 0%;
+    --spw-slice-py: 0%;
+    transition: none;
+  }
+
+  .spw-texture-slice::before,
+  [data-spw-texture-slice]:not(:has(> .spw-texture-slice))::after {
+    filter: none;
+    transition: opacity var(--duration-fast, 140ms) linear;
+  }
+
+  .spw-texture-slice[data-spw-slice-glitch='true']::after {
+    content: none;
+  }
+}
+
+html[data-spw-reduce-motion='on'] [data-spw-texture-slice] {
+  --spw-slice-lift: 0;
+  --spw-slice-px: 0%;
+  --spw-slice-py: 0%;
+  transition: none;
+}
+
+html[data-spw-reduce-motion='on'] .spw-texture-slice::before,
+html[data-spw-reduce-motion='on'] [data-spw-texture-slice]:not(:has(> .spw-texture-slice))::after {
+  filter: none;
+  transition: opacity var(--duration-fast, 140ms) linear;
+}
+
+html[data-spw-reduce-motion='on'] .spw-texture-slice[data-spw-slice-glitch='true']::after {
+  content: none;
+}
+
+html[data-spw-color-mode='dark'] {
+  --spw-texture-slice-opacity: 0.07;
+}
+
+html[data-spw-color-mode='dark'] [data-spw-texture-slice='wash'],
+html[data-spw-color-mode='dark'] [data-spw-texture-slice='paper'] {
+  --spw-texture-slice-opacity: 0.06;
+}
+
+html[data-spw-color-mode='dark'] [data-spw-texture-slice='harlequin'] {
+  --spw-texture-slice-opacity: 0.045;
+}
+
+html[data-spw-color-mode='dark'] [data-spw-texture-slice='linen'] {
+  --spw-texture-slice-opacity: 0.065;
+}
+
+[data-spw-texture-slice][data-spw-slice-ground='dark'] {
+  --spw-texture-slice-opacity: 0.065;
+}
+
+[data-spw-texture-slice][data-spw-slice-ground='dark'][data-spw-texture-slice='harlequin'] {
+  --spw-texture-slice-opacity: 0.045;
+}
+
+html[data-spw-high-contrast='on'] {
+  --spw-texture-slice-opacity: 0.025;
+}
+
+html[data-spw-high-contrast='on'] [data-spw-texture-slice]:is(:hover, :focus-within) {
+  --spw-slice-lift: 0.28;
+}
+
+html[data-spw-high-contrast='on'] .spw-texture-slice[data-spw-slice-glitch='true']::after {
+  content: none;
+}
+
+html[data-spw-base-metamaterial='paper'] [data-spw-texture-slice='paper'] {
+  --spw-texture-slice-opacity: 0.10;
+}
+
+html[data-spw-base-metamaterial='paper'][data-spw-color-mode='dark'] [data-spw-texture-slice='paper'],
+html[data-spw-base-metamaterial='paper'] [data-spw-texture-slice='paper'][data-spw-slice-ground='dark'] {
+  --spw-texture-slice-opacity: 0.065;
+}

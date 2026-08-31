@@ -12,6 +12,7 @@
 @layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
 
 @import url('/public/css/effects/grain-texture.css') layer(effects);
+@import url('/public/css/effects/texture-slice.css') layer(effects);
 @import url('/public/css/effects/cinematic.css') layer(effects);
 @import url('/public/css/effects/wonder.css') layer(effects);
 @import url('/public/css/ornament/ornament.css') layer(ornament);

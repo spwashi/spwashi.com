@@ -76,6 +76,7 @@ const DEFERRED_RUNTIME_CSS = new Set([
   '/public/css/systems/interaction-progression.css',
   '/public/css/effects/flourish-pack.css',
   '/public/css/effects/grain-texture.css',
+  '/public/css/effects/texture-slice.css',
   '/public/css/effects/cinematic.css',
   '/public/css/effects/wonder.css',
   '/public/css/ornament/ornament.css',
