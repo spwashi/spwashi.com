@@ -7,20 +7,26 @@
 
 import { describeModuleUpdates, normalizeModuleUpdates } from './module-updates-contract.js';
 
+const PORTABLE_EXPORT_FIELDS = Object.freeze([
+  'id',
+  'refresh',
+  'contract',
+  'updates',
+  'describes',
+]);
+
+const CATALOG_MIRROR_FIELDS = Object.freeze([
+  'evaluates',
+  'timingArc',
+  'timingChunk',
+  'effectScope',
+]);
+
 export const SPW_MODULE_EXPORT_SHAPE = Object.freeze({
   required: Object.freeze(['mount']),
-  optional: Object.freeze([
-    'id',
-    'refresh',
-    'contract',
-    'updates',
-    'guild',
-    'describes',
-    'evaluates',
-    'timingArc',
-    'timingChunk',
-    'effectScope',
-  ]),
+  optional: Object.freeze([...PORTABLE_EXPORT_FIELDS, 'guild', ...CATALOG_MIRROR_FIELDS]),
+  portable: PORTABLE_EXPORT_FIELDS,
+  catalogMirrors: CATALOG_MIRROR_FIELDS,
   aliases: Object.freeze(['spwModule']),
 });
 
@@ -41,7 +47,7 @@ export const SPW_MODULE_EXPORT_CONTRACT = Object.freeze({
   routeBoundary:
     'Routes replace the document; partial DOM replacement uses refresh/untracking. Do not tear down on pagehide because BFCache may restore the same document.',
   catalogParity:
-    'Prefer catalog fields (when, features, timingArc, timingChunk, effectScope, visual, updates with role: topology) as the schedule contract; SPW_MODULE_EXPORT mirrors mount + optional updates/describes for portable compose.',
+    'The catalog owns gates, schedule, effects, and cost. SPW_MODULE_EXPORT owns mount/refresh portability and may mirror descriptive fields; describeModuleExport reports mirror drift without letting an export silently reschedule itself.',
   updatesTopology:
     'updates may use scope:role:kind:name (html:flourish:--token). Roles: structural|flourish|inspect|residue|measure|diagnostic.',
   datasetFields: Object.freeze({
@@ -55,6 +61,27 @@ const INIT_EXPORT_RE = /^init[A-Z]/;
 
 function isFn(value) {
   return typeof value === 'function';
+}
+
+function comparableFieldValue(field, value) {
+  if (value == null || value === '') return null;
+  if (field === 'updates') {
+    return normalizeModuleUpdates(value).slice().sort();
+  }
+  if (field === 'effectScope' || field === 'evaluates') {
+    const entries = Array.isArray(value) ? value : String(value).split(/[\s,]+/);
+    return entries.map((entry) => String(entry || '').trim().toLowerCase()).filter(Boolean).sort();
+  }
+  return String(value).trim();
+}
+
+function listCatalogMirrorDrift(exportSurface, meta = {}) {
+  if (!exportSurface || !meta?.id) return [];
+  return ['id', 'updates', 'describes', ...CATALOG_MIRROR_FIELDS].filter((field) => {
+    if (exportSurface[field] == null || meta[field] == null) return false;
+    return JSON.stringify(comparableFieldValue(field, exportSurface[field]))
+      !== JSON.stringify(comparableFieldValue(field, meta[field]));
+  });
 }
 
 export function resolveModuleMount(mod) {
@@ -84,6 +111,8 @@ export function describeModuleExport(mod, meta = {}) {
   const exportSurface = resolved?.surface || mod?.SPW_MODULE_EXPORT || mod?.spwModule || null;
   const updates = normalizeModuleUpdates(exportSurface?.updates || meta.updates);
   const updatesDescribe = describeModuleUpdates(updates);
+  const drift = listCatalogMirrorDrift(exportSurface, meta);
+  const catalogBacked = Boolean(meta?.id);
 
   return {
     id: exportSurface?.id || meta.id || null,
@@ -101,6 +130,12 @@ export function describeModuleExport(mod, meta = {}) {
     timingArc: exportSurface?.timingArc || meta.timingArc || null,
     timingChunk: exportSurface?.timingChunk || meta.timingChunk || null,
     effectScope: exportSurface?.effectScope || meta.effectScope || null,
+    orchestration: {
+      authority: catalogBacked ? 'catalog' : 'export',
+      status: catalogBacked ? (drift.length ? 'drift' : 'aligned') : 'portable',
+      drift,
+      catalogMirrors: CATALOG_MIRROR_FIELDS,
+    },
   };
 }
 

@@ -37,6 +37,7 @@ export { FEATURE_DEFS } from './module-catalog-feature.js';
 export { REGION_DEFS } from './module-catalog-region.js';
 export { ENHANCEMENT_DEFS } from './module-catalog-enhancement.js';
 export {
+  describeModuleOrchestration,
   filterEnhancementDefs,
   inferModuleCost,
   inferModuleCostClass,

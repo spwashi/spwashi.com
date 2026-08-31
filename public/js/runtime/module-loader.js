@@ -4,6 +4,7 @@
 
 import { writeDatasetValue } from '../kernel/dom-contracts.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from './module-catalog-constants.js';
+import { describeModuleOrchestration } from './module-catalog-normalize.js';
 import {
   annotateModuleUpdatesTarget,
   describeModuleUpdates,
@@ -12,7 +13,7 @@ import {
   normalizeModuleUpdates,
   summarizeModuleUpdates,
 } from './module-updates-contract.js';
-import { resolveModuleMount } from './module-export-contract.js';
+import { describeModuleExport, resolveModuleMount } from './module-export-contract.js';
 import { REGION_STATES, setRegionState } from './region-profiler.js';
 import { applyFamiliarityGate } from './familiarity-gate.js';
 import {
@@ -65,6 +66,8 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
     'Optional timingChunk (idle-residue|idle-collectible|idle-chrome|idle-lab|idle-default) staggers IDLE mounts so residue/ledger land before collectible flourishes.',
   effectScope:
     'Module definitions may name effectScope tokens to make global state, storage, observer, media, or local DOM side effects auditable.',
+  orchestrationView:
+    'Normalized definitions expose one derived orchestration view: schedule, gates, capabilities, effects, lifecycle, and cost. Flat catalog fields remain the authored source of truth.',
   cost:
     'Optional cost { commitment, spend, copy? }. enter=when, act=spend, leave=cleanup, remain=commitment. costClass remains a derived alias. Schedule still uses when/features/selector.',
   updatesContract:
@@ -236,6 +239,7 @@ function emitModuleLifecycle(ctx, record, stage, detail = {}) {
     route: ctx?.route || null,
     root: record?.root || null,
     transportHref: record?.transportHref || null,
+    affordances: record?.orchestration?.capabilities?.affordances || [],
   });
   return record;
 }
@@ -334,6 +338,7 @@ function listModuleDefinitions(ctx) {
   return moduleDefs.map((def) => {
     const effectiveWhen = ctx ? getEffectiveMountWhen(def, ctx) : (def.when || mountWhen.IMMEDIATE);
     const record = ctx?.registry?.get(def.id);
+    const orchestration = def.orchestration || describeModuleOrchestration(def);
     return {
       id: def.id,
       layer: def.layer,
@@ -352,6 +357,7 @@ function listModuleDefinitions(ctx) {
       updatesDescribe: describeModuleUpdates(def.updates),
       reason: ctx ? describeMountReason(def, ctx, null, effectiveWhen) : (def.reason || ''),
       status: record?.status || 'defined',
+      orchestration,
     };
   });
 }
@@ -373,6 +379,8 @@ function snapshotRuntimeModules(ctx) {
     updatesDescribe: describeModuleUpdates(record.updates),
     timingArc: record.timingArc || null,
     effectScope: normalizeModuleIntentValue(record.effectScope),
+    orchestration: record.orchestration || null,
+    exportContract: record.exportContract || null,
     stage: record.stage || record.status || 'scheduled',
     stageAt: record.stageAt || null,
     lifecycle: Array.isArray(record.lifecycle)
@@ -1046,6 +1054,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
   const reason = describeMountReason(def, ctx, root, effectiveWhen);
   const evaluates = inferModuleDimensions(def);
   const effectScope = normalizeModuleIntentValue(def.effectScope);
+  const orchestration = def.orchestration || describeModuleOrchestration(def);
   const transportHref = moduleSpecifierToUrl(extractDynamicImportSpecifier(def)) || null;
   const scheduledAt = Math.round(performance.now());
 
@@ -1067,6 +1076,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     timingArc: def.timingArc || null,
     transportHref,
     effectScope: effectScope.length ? effectScope : null,
+    orchestration,
+    exportContract: null,
     status: 'idle',
     stage: 'scheduled',
     stageAt: scheduledAt,
@@ -1122,6 +1133,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     });
     performance.mark(`spw:module:${def.id}:load-start`);
     const mod = await def.load();
+    record.exportContract = describeModuleExport(mod, def).orchestration;
     const loadEndedAt = performance.now();
     performance.mark(`spw:module:${def.id}:load-end`);
     performance.measure(
@@ -1202,6 +1214,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       timingArc: record.timingArc,
       transportHref: record.transportHref,
       effectScope: record.effectScope,
+      orchestration: record.orchestration,
+      exportContract: record.exportContract,
       loadMs: Math.round(record.loadMs),
       mountMs: Math.round(record.mountMs),
       durationMs: Math.round(record.durationMs),
@@ -1228,6 +1242,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       timingArc: record.timingArc,
       transportHref: record.transportHref,
       effectScope: record.effectScope,
+      orchestration: record.orchestration,
+      exportContract: record.exportContract,
       route: ctx.route,
       root,
       loadMs: record.loadMs,

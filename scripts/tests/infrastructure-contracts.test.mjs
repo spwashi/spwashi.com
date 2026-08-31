@@ -6,9 +6,11 @@ import test from 'node:test';
 import { MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
 import { ENHANCEMENT_DEFS } from '../../public/js/runtime/module-catalog-enhancement.js';
 import {
+  describeModuleOrchestration,
   resolveModuleCatalogSpecifier,
   resolveRuntimeModuleSpecifier,
 } from '../../public/js/runtime/module-catalog-normalize.js';
+import { describeModuleExport } from '../../public/js/runtime/module-export-contract.js';
 import {
   composeOpBundle,
   getOperatorDefinition,
@@ -268,6 +270,54 @@ test('runtime resource probes resolve from the module catalog directory', () => 
     ),
     'https://spwashi.test/public/js/spw-idle-lab-a1b2c3.js',
   );
+});
+
+test('module orchestration groups one flat catalog definition for loaders and inspectors', () => {
+  const orchestration = describeModuleOrchestration({
+    id: 'material-probe',
+    layer: 'enhancement',
+    when: 'visible',
+    selector: '[data-material-probe]',
+    rootMode: 'multiple',
+    subfeatures: ['crop-projection'],
+    triggers: ['viewport-encounter'],
+    affordances: ['inspect-material-crop'],
+    electrostatics: { role: 'capacitor', discharge: 'settle' },
+    updates: ['flourish:--material-crop'],
+    effectScope: 'local-dom css-vars',
+    cost: { commitment: 'project', spend: 'none', copy: null },
+    mount() {},
+    unmount() {},
+  });
+
+  assert.equal(orchestration.schedule.when, 'visible');
+  assert.equal(orchestration.gates.selector, '[data-material-probe]');
+  assert.equal(orchestration.capabilities.complete, true);
+  assert.deepEqual(orchestration.capabilities.affordances, ['inspect-material-crop']);
+  assert.equal(orchestration.effects.electrostatics.role, 'capacitor');
+  assert.equal(orchestration.lifecycle.mount, 'catalog-adapter');
+  assert.equal(orchestration.lifecycle.cleanup, 'catalog-unmount');
+});
+
+test('module export inspection reports catalog mirror drift without changing authority', () => {
+  const report = describeModuleExport({
+    SPW_MODULE_EXPORT: {
+      id: 'material-probe',
+      mount() {},
+      updates: ['flourish:--material-crop'],
+      timingArc: 'idle-visual',
+      effectScope: 'local-dom css-vars',
+    },
+  }, {
+    id: 'material-probe',
+    updates: ['flourish:--material-crop'],
+    timingArc: 'visible-media',
+    effectScope: 'css-vars local-dom',
+  });
+
+  assert.equal(report.orchestration.authority, 'catalog');
+  assert.equal(report.orchestration.status, 'drift');
+  assert.deepEqual(report.orchestration.drift, ['timingArc']);
 });
 
 test('deploy packs preserve catalog timing language and module addresses', () => {

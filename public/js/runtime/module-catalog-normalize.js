@@ -42,6 +42,21 @@ function asToken(value) {
   return String(value || '').trim().toLowerCase();
 }
 
+function asList(value, { tokens = false } = {}) {
+  if (value == null || value === '') return [];
+  const values = Array.isArray(value) ? value : String(value).split(/[\s,]+/);
+  return values
+    .map((entry) => (tokens ? asToken(entry) : String(entry || '').trim()))
+    .filter(Boolean);
+}
+
+function asUpdatesList(value) {
+  if (value == null || value === '') return [];
+  return (Array.isArray(value) ? value : [value])
+    .map((entry) => String(entry || '').trim())
+    .filter(Boolean);
+}
+
 function updatesText(def = {}) {
   const updates = def.updates;
   if (Array.isArray(updates)) return updates.join(' ');
@@ -88,6 +103,66 @@ export function filterEnhancementDefs(defs, includeLayoutAudit = true) {
   return (defs || []).filter((def) => def?.id !== 'layout-shift-audit');
 }
 
+/**
+ * Derive the loader-facing story from existing catalog fields.
+ *
+ * Authors keep one flat definition for reviewability; orchestrators and
+ * inspectors receive a grouped view that answers five questions without
+ * inventing a second source of truth: what gates entry, when it wakes, what it
+ * enables, what it changes, and what remains after cleanup.
+ */
+export function describeModuleOrchestration(def = {}) {
+  const cost = def.cost || inferModuleCost(def);
+  const subfeatures = asList(def.subfeatures, { tokens: true });
+  const triggers = asList(def.triggers, { tokens: true });
+  const affordances = asList(def.affordances, { tokens: true });
+  const effectScope = asList(def.effectScope, { tokens: true });
+
+  return {
+    schedule: {
+      layer: def.layer || 'unknown',
+      when: def.when || MOUNT_WHEN.IMMEDIATE,
+      timingArc: def.timingArc || null,
+      timingChunk: def.timingChunk || null,
+    },
+    gates: {
+      features: asList(def.features, { tokens: true }),
+      route: asList(def.route),
+      pageFamily: asList(def.pageFamily, { tokens: true }),
+      pageRole: asList(def.pageRole, { tokens: true }),
+      pageModes: asList(def.pageModes, { tokens: true }),
+      pageContext: asList(def.pageContext, { tokens: true }),
+      pageSurface: asList(def.pageSurface, { tokens: true }),
+      selector: def.selector || null,
+      rootMode: def.rootMode || 'single',
+      debugOnly: Boolean(def.debugOnly),
+    },
+    capabilities: {
+      subfeatures,
+      triggers,
+      affordances,
+      complete: subfeatures.length > 0 && triggers.length > 0 && affordances.length > 0,
+    },
+    effects: {
+      describes: def.describes || null,
+      evaluates: asList(def.evaluates, { tokens: true }),
+      updates: asUpdatesList(def.updates),
+      scope: effectScope,
+      visual: def.visual || null,
+      electrostatics: def.electrostatics ? { ...def.electrostatics } : null,
+    },
+    lifecycle: {
+      mount: typeof def.mount === 'function' ? 'catalog-adapter' : 'portable-export',
+      cleanup: typeof def.unmount === 'function' ? 'catalog-unmount' : 'mount-result',
+    },
+    cost: {
+      commitment: cost.commitment,
+      spend: cost.spend,
+      copy: cost.copy || null,
+    },
+  };
+}
+
 /** Lightweight index for ecology scripts and DevTools without mounting modules. */
 export function listModuleCatalogIndex(defs = []) {
   const byLayer = Object.create(null);
@@ -102,6 +177,7 @@ export function listModuleCatalogIndex(defs = []) {
     const when = def.when || 'immediate';
     const cost = def.cost || inferModuleCost(def);
     const costClass = def.costClass || inferModuleCostClass(def);
+    const orchestration = def.orchestration || describeModuleOrchestration(def);
     (byLayer[layer] ||= []).push(def.id);
     (byWhen[when] ||= []).push(def.id);
     (byCostClass[costClass] ||= []).push(def.id);
@@ -123,6 +199,7 @@ export function listModuleCatalogIndex(defs = []) {
       selector: def.selector || null,
       debugOnly: Boolean(def.debugOnly),
       effectScope: def.effectScope || null,
+      orchestration,
     });
   }
   return {
@@ -276,16 +353,18 @@ export function normalizeCatalogDefinition(def) {
   const cost = inferModuleCost(def);
   const costClass = costClassFromModel(cost);
   const described = describeModuleCost(cost);
+  const orchestration = describeModuleOrchestration({ ...def, cost });
   if (
     def.costClass === costClass
     && def.cost?.commitment === cost.commitment
     && def.cost?.spend === cost.spend
     && def.cost?.copy === cost.copy
     && def.costLabel === described
+    && def.orchestration
   ) {
     return def;
   }
-  return { ...def, cost, costClass, costLabel: described };
+  return { ...def, cost, costClass, costLabel: described, orchestration };
 }
 
 export function normalizeCatalogDefinitions(defs = []) {
@@ -312,6 +391,18 @@ export function summarizeModuleCatalogOptimization(defs = []) {
   const byCommitment = countBy(normalized, (d) => d.cost?.commitment);
   const bySpend = countBy(normalized, (d) => d.cost?.spend);
   const byCopy = countBy(normalized.filter((d) => d.cost?.copy), (d) => d.cost.copy);
+  const capabilityRows = normalized.filter((d) => {
+    const capabilities = d.orchestration?.capabilities;
+    return capabilities && (
+      capabilities.subfeatures.length
+      || capabilities.triggers.length
+      || capabilities.affordances.length
+      || d.orchestration.effects.electrostatics
+    );
+  });
+  const completeCapabilities = capabilityRows.filter(
+    (d) => d.orchestration.capabilities.complete && d.orchestration.effects.electrostatics,
+  );
 
   const enhancementImmediate = normalized.filter(
     (d) => d.layer === MODULE_LAYERS.ENHANCEMENT && d.when === MOUNT_WHEN.IMMEDIATE && !d.debugOnly,
@@ -350,6 +441,13 @@ export function summarizeModuleCatalogOptimization(defs = []) {
     byCommitment,
     bySpend,
     byCopy,
+    orchestrationCoverage: {
+      described: capabilityRows.length,
+      complete: completeCapabilities.length,
+      incomplete: capabilityRows
+        .filter((d) => !completeCapabilities.includes(d))
+        .map((d) => d.id),
+    },
     byTimingStem: timing.byTimingStem,
     byIdleChunk: timing.byIdleChunk,
     timingHygiene: {
@@ -370,6 +468,7 @@ export function summarizeModuleCatalogOptimization(defs = []) {
       'costClass is a derived alias (early→premature_commitment, wide→working_memory_pressure, …).',
       'when / layer remain the schedule contract. INTERACTION is unused when interactionSlotEmpty.',
       'byTimingStem / byIdleChunk come from module-timing-contract.',
+      'orchestration groups the flat authoring fields into schedule, gates, capabilities, effects, lifecycle, and cost.',
     ],
   };
 }
@@ -412,4 +511,6 @@ export const MODULE_CATALOG_NORMALIZE_CONTRACT = Object.freeze({
     'enter=when, act=spend, leave=cleanup handle, remain=commitment. copy only at residue.',
   scheduleOwns:
     'when / timingArc / timingChunk / features remain the runtime schedule; cost is budget/inspect only unless a future loader policy opts in.',
+  orchestrationView:
+    'describeModuleOrchestration() derives schedule, gates, capabilities, effects, lifecycle, and cost from one flat catalog definition. The grouped view is for loaders and inspectors; authors do not duplicate it.',
 });
