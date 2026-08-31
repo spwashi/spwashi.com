@@ -297,6 +297,10 @@ Add small "Daily Practice" affordances (progressive): buttons or forms that reco
 
 ---
 
+### Patch 002 — 2026-08-31 (figure slot + visit attrs on morning stills)
+
+Image-study stills on about, creator, craft, recipes, and the Midjourney bench now carry `data-spw-slot="figure"` where it was missing, plus image-visit keys so a card figure can be held and remembered. Texture overlay is a `data-spw-overlay` child (overlay-layer-ownership), not a new card slot. RPG boonhonk uses harlequin as substrate on the existing frame, not a new card type.
+
 **Next action**: User to choose the immediate follow-up from the slice options above (or another). This patch is ready for review in context of the full plan. Run `spw-plan-maintenance` only after .spw or planning ecology shifts.
 
 This compounds: better semantics + anatomy makes the whole site more readable and charming while giving the painting artifacts a clear, consistent home in the Spwashi visual language — and gives the 200-day cohort the "quiet, time-tested wisdom" their streak has earned.

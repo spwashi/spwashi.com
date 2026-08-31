@@ -69,3 +69,7 @@ Fuzz strategy:
 ## Spw Artifact
 
 `.agents/plans/image-visit-metaphysics/image-visit-metaphysics.spw`
+
+## Landed 2026-08-31 — morning stills as returnable surfaces
+
+Promoted stills now carry `data-spw-image-surface`, `data-spw-image-key`, `data-spw-realization`, `data-spw-substrate`, `data-spw-phrase`, and `data-spw-returnable="true"` so hold-to-visit can key them across routes (crown, seed-pod, crane, dough, wash tile). Texture-slice lift reads `data-spw-hold-state` / `data-spw-image-state` / `data-spw-visited` instead of adding a parallel ritual. Helper chrome stays in image-metaphysics; the slice only inoculates the crop.

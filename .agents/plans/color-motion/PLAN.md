@@ -893,3 +893,7 @@ Manual states:
 - Which interaction should define the feel of the site: operator chips, cards, or mode switches?
 - Are delight/resonance effects currently too frequent, too slow, or too visually strong?
 - Should theme packs be treated as product-facing modes or internal tuning presets?
+
+## Landed 2026-08-31 — texture-slice consumes settle timing
+
+`public/css/effects/texture-slice.css` registers `--spw-slice-lift` and transitions it with `--spw-motion-settle`. Invite/charge/hold raise one coefficient; they do not invent a third duration. Pointer crop tracks immediately, then settles on leave. Reduced motion (`prefers-reduced-motion` and `html[data-spw-reduce-motion="on"]`) keeps opacity, drops crop motion and glitch. This is a Patch 4 consumer, not a new timing band.
