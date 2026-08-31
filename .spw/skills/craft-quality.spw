@@ -119,3 +119,50 @@ fixity = "tending"
   falsification = "a viewport-timeline animation suppresses hover, focus, active, discharge, frame-bloom, or a settled capture"
   probe = `npm run css:payload && node scripts/check-site.mjs && git diff --check`
 }[reg=facet]
+
+^"home_grassroots_region_alignment_2026_08_29"{
+  #:operation #!align
+  #:fixity #!tending
+  focus = "hierarchy + device parity"
+  owner = "routes/surfaces/home.css"
+  evidence = "Named pocket/fold/broadsheet stills showed the entrance metadata wrapper at 2px for 58px of text, five equal broadsheet cards, and a double-surfaced reading panel."
+  alignment = "Home heading metadata keeps its intrinsic width and may wrap as a unit; the local mode panel yields its generic shell so the reading expression is the one authored surface."
+  ecology = "The entrance packs by relation: support + systems form a two-seat band; illustrator + author + performer form a three-seat creator band. Pocket remains a single grassroots path."
+  constraint = "Use the existing spw-hub container and 45rem/70rem ladder; add no shared-core rule, JS writer, or cosmetic data attribute."
+  falsification = "threshold clips, the creator band collapses into five equal broadsheet columns, or pocket gains horizontal overflow."
+  probe = `npm run visual:capture -- --stills --ids home-opening,home-entrance-closed --viewports pocket,fold,broadsheet`
+}[reg=facet]
+
+^"about_timeline_hierarchy_2026_08_31"{
+  #:operation #!align
+  #:fixity #!tending
+  focus = "hierarchy"
+  owner = "routes/surfaces/about.css"
+  evidence = "The pocket capture rendered reason-strip prose at the inherited body size above its 0.84rem labels, while runtime slot treatment and generic footer padding made timeline actions read as separate cards."
+  alignment = "Timeline records use a small-label → supporting-copy → record-title type ladder; reason cards keep titles larger and darker than compact supporting prose; local padding carries the tighter rhythm."
+  constraint = "Keep the change route-local while the 1680 KiB core bundle exceeds its 1638 KiB soft budget."
+  probe = `npm run visual:capture -- --ids about-years --ecology --viewports pocket`
+}[reg=facet]
+
+^"core_route_card_hierarchy_2026_08_31"{
+  #:operation #!align
+  #:fixity #!tending
+  focus = "hierarchy across pocket route cards"
+  owner = "components/cards.css + components/semantic-resonance.css + routes/surfaces/topics.css"
+  evidence = "Five-route pocket walks showed reason-card prose larger than labels on Home, Topics, Play, and Settings; wisdom-card prose competed with titles on Home and Play; Topic directory descriptions matched title scale too closely."
+  alignment = "Reusable reason and wisdom cards own the shared title/support ladder; Topic directory cards keep address labels smallest, titles strongest, and descriptions quieter. Settings navigation preserves 44px touch rows."
+  constraint = "Edit three existing CSS owners only; no copy, DOM, runtime, token, or touch-target changes while core remains over its soft budget."
+  result = "40 pocket stills across five routes, 0 capture errors; core moved from 1679.6 KiB to 1679.8 KiB."
+  probe = `npm run visual:walk && node scripts/check-site.mjs && npm run check:runtime && git diff --check`
+}[reg=facet]
+
+^"core_route_card_contrast_2026_08_31"{
+  #:operation #!align
+  #:fixity #!tending
+  focus = "contrast across pale layered route cards"
+  owner = "components/cards.css + components/semantic-resonance.css"
+  evidence = "The five-route pocket walk showed route-dependent translucent soft ink weakening reason-card copy on Home, Topics, Play, and Settings and wisdom-card copy on Home and Play. About's route-local ink already remained legible."
+  alignment = "Shared card headings retain a small semantic accent, while supporting prose resolves through the existing matte soft/strong ink pair so layered backgrounds cannot dilute it below the reading voice."
+  constraint = "Keep spacing, type size, DOM, route palettes, and interaction state unchanged; add no token while core remains at 1680 KiB against a 1638 KiB soft budget."
+  probe = `npm run build:css:core && npm run visual:walk && node scripts/check-site.mjs && npm run check:runtime && git diff --check`
+}[reg=facet]

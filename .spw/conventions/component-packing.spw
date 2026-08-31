@@ -32,7 +32,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"stack"{
-  region = `@region_ecology names the page seat. pack-region media|body|actions must match real slots on that seat.`
+  region = `@region_ecology names the page seat. pack-region context|media|body|actions must match real slots on that seat.`
   packing = `This file. Width chooses arrangement; content chooses density.`
   gravity = `@spatial_gravity is outer placement. A card may use both: outer reads viewport room, inner reads container inline-size.`
   density = `@typography_packing compact|balanced|roomy is pad/gap/measure. It is not pack-layout and not pack-fill.`
@@ -43,14 +43,15 @@ fixity = "tending"
 ^"opt_in"{
   host = `data-spw-pack-local → container: spw-pack / inline-size.`
   grid = `[data-spw-pack-regions] holds the region grid.`
-  regions = `data-spw-pack-region = media | body | actions.`
+  regions = `data-spw-pack-region = context | media | body | actions.`
   collision = `data-spw-region=body on a payment strip is a page-region id, not a pack-region. Do not reuse pack-region tokens as page seats.`
 }[reg=facet]
 
 ^"axes"{
-  width = `Pure CSS @container. stack (default) → split at 26rem → feature at 44rem. PACK_LAYOUT_BANDS in @runtime are 416 / 704 so the JS mirror matches a 16px root.`
-  content = `:has(> [data-spw-pack-region] > :nth-child(6)) tightens gap. data-spw-content-tone dense|operator-heavy|text-long also tunes gap. Orthogonal to width.`
+  width = `Pure CSS @container plus owned region topology. stack is the default; media + body may split at 26rem; media + body + actions may feature at 44rem; context + body + actions stays stacked until 52rem, then opens a body/action split. PACK_LAYOUT_BANDS in @runtime are 416 / 704 / 832 so the JS mirror matches a 16px root.`
+  content = `:has(> [data-spw-pack-region] > :nth-child(6)) tightens a locally long region. data-spw-content-tone dense|operator-heavy|text-long also tunes gap. Orthogonal to width.`
   fill = `data-spw-pack-fill = sparse | balanced | full (item-count band from @runtime).`
+  topology = `Never reserve an empty track for an absent region. Width states available capacity; direct pack-region children state occupiable lanes.`
   box_measure = `@runtime also writes data-spw-box-measure from a different ladder: <320 narrow, <640 compact, <960 comfortable, else wide. That is box-width of any observed host, not pack-layout.`
   occupancy = `data-spw-pack-occupancy is written by region-profiler on frames. That is a page-region receipt, not this card-local fill band. Keep the names apart.`
   rule = `Width → arrangement. Content → density. Do not overload one to carry the other.`
@@ -59,8 +60,17 @@ fixity = "tending"
 ^"mirror"{
   writes = `data-spw-pack-layout = stack | split | feature. data-spw-pack-fill = sparse | balanced | full.`
   when = `JS mirror runs on resize/attention for opted-in cards. CSS already laid the card out. Never gate visibility on pack-layout.`
-  sync = `If the @container rem thresholds move, move PACK_LAYOUT_BANDS in the same patch. JS cannot read a container-query threshold.`
+  sync = `If the @container rem thresholds move, move PACK_LAYOUT_BANDS in the same patch. JS cannot read a container-query threshold. Read owned regions once per snapshot, then reuse that topology for layout, fill, and inspection metadata.`
   readout = `[data-spw-pack-readout] narrates layout + fill + measured px. Labs and inspect only.`
+}[reg=facet]
+
+^"topology_alignment_2026_08_29"{
+  operation = "align"
+  fixity = "tending"
+  claim = `Packing is a two-input decision: container width × owned region topology.`
+  layout = `One region remains stack. Media + body may split at 26rem but never report feature without actions. Media + body + actions may feature at 44rem. Context-led orientation stays stacked through medium measures and opens body + actions only at 52rem.`
+  fill = `A region carrying content directly counts as one item. A wrapper region counts its direct children. This preserves plain p/img regions while still measuring lists and action clusters.`
+  proof = `@runtime pure boundary tests + @css topology selectors + @bench resizer.`
 }[reg=facet]
 
 ^"adoption"{
@@ -95,7 +105,7 @@ fixity = "tending"
 
 validation: #[
   `rg 'data-spw-pack-local' --glob '*.html'`,
-  `rg 'PACK_LAYOUT_BANDS|min-width: 26rem|min-width: 44rem' public/js/runtime/composition-box-model.js public/css/systems/component-packing.css`,
+  `rg 'PACK_LAYOUT_BANDS|min-width: 26rem|min-width: 44rem|min-width: 52rem' public/js/runtime/composition-box-model.js public/css/systems/component-packing.css`,
   `node --check public/js/runtime/composition-box-model.js`,
   `Open /design/composition/ and drag the pack-card — layout must walk stack|split|feature without a viewport resize`
 ][reg=set]

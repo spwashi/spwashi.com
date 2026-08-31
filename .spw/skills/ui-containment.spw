@@ -131,6 +131,22 @@ fixity = "tending"
   owner = ".agents/plans/css-scroll-dark-regression/FIX.md"
 }
 
+^"component_region_topology_2026_08_29"{
+  operation = "align"
+  fixity = "tending"
+  claim = `Component-local packing spends columns only for regions the card actually owns. Width chooses available capacity; region topology chooses whether that capacity can become split or feature layout.`
+  before = `A two-region card at 44rem reported feature and inherited a three-lane grid with an empty media track.`
+  alignment = `Topology is named, not inferred only from count. Media + body may split at 26rem; media + body + actions may feature at 44rem; context + body + actions stays stacked until 52rem so orientation copy keeps a useful measure.`
+  occupancy = `A region that directly carries text or media counts as one unit; wrapper regions count their direct children, so plain semantic region elements no longer disappear from fill measurement.`
+  measured = #[
+    .{ viewport = `780x1200, rich density, 120% text`; pack = `680px`; layout = `stack`; regions = `context 680px, body 680px, actions 680px`; page_overflow = `0px` },
+    .{ viewport = `1920x1200`; main = `1568px centered at x=173`; home_frame = `1530px centered at x=192`; page_overflow = `0px` },
+    .{ viewport = `3840x1200`; main = `1568px centered at x=1133`; home_frame = `1530px centered at x=1152`; hook_pack = `1186px context/body/action split`; page_overflow = `0px` }
+  ][reg=set]
+  runtime = `One owned-region scan feeds layout, fill, and inspection metadata on resize-driven snapshots.`
+  probe = `npm run test:engagement:run && node scripts/css-contracts.mjs && node scripts/css-build.mjs --check`
+}
+
 #>wonder_ui_containment_1
 ?["Can containment be proven by anything other than looking?"]{
   #:depth #!experiential ~#lens(evidence)

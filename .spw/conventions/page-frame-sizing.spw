@@ -49,7 +49,7 @@
 ^"owners"{
   route_layout = `body[data-spw-layout] sets --spw-shell-frame-cap`
   settings_tuner = `layoutTuner profile writes --spw-layout-measure + --spw-layout-frame-max`
-  shell = `layout.css spends --spw-shell-frame-max on main; footer uses same frame max`
+  shell = `layout.css spends --spw-shell-frame-max on main; footer uses same frame max. Region desks may change main's display, but must preserve --spw-main-width and centered margins.`
   postures = `layout-postures.css biases measure/grid; does not reassign rem to prose inline`
   dimensions = `real-estate-frame ↔ frame; real-estate-inline ↔ measure; block/section ↔ vertical gaps`
 }
@@ -110,6 +110,7 @@
   - `Set --spw-real-estate-inline to a page-width rem (breaks typography ch math)`
   - `Map layoutTuner newspaper → layout wide (loses page-width-newspaper)`
   - `Invent route-local main max-width in px without going through --spw-main-width / frame-cap`
+  - `Let a region desk replace main's shell cap with max-inline-size: 100%`
   - `Hardcode 220ms for micro pulses when --spw-microinteraction-pulse-duration exists`
 }
 

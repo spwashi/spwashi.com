@@ -55,7 +55,7 @@ fixity = "tending"
   tropes = #[`hook`, `hub`, `cluster`, `path`, `read`, `wide`][reg=set]
   spend = `@css has tropes for those six. data-spw-region-role=entry-spine aliases hook seating.`
   roles = `data-spw-region-role names the job (atlas, entry-spine, promo-cycle). data-spw-region-purpose names why it is there (public-spine, section-hub, route-sorter).`
-  leftover = `Newspaper, atlas, and wide desks are flex-wrap at two levels: main (and main > article) and page clusters. Span seats use inline-size 100%, not flex-basis 100% — percentage basis on an inline-size container collapses to content. Leftover seats flex 1 1 leftover-track with a 16rem floor: two share; one grows. Play nests clusters under article. About and services keep authored 12-col grids. A composition-flow=grid host with a header or __grid child is a shell and stacks. 68ch/72ch is prose measure, not a packing body. Card titles wrap on words.`
+  leftover = `Newspaper, atlas, and wide desks are flex-wrap at two levels: main (and main > article) and page clusters. The desk may change display, but main preserves --spw-main-width and capped span seats center inside it; never replace the shell cap with 100%. Span seats use inline-size 100%, not flex-basis 100% — percentage basis on an inline-size container collapses to content. Leftover seats flex 1 1 leftover-track with a 16rem floor: two share; one grows. Play nests clusters under article. About and services keep authored 12-col grids. A composition-flow=grid host with a header or __grid child is a shell and stacks. 68ch/72ch is prose measure, not a packing body. Card titles wrap on words.`
 }[reg=facet]
 
 ^"authored_vs_runtime"{
