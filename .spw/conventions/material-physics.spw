@@ -53,6 +53,13 @@ expression = material[optics]{transmission.specular.shadow}<surface>
     highlight = `--card-highlight`
     ~#note(highlight is inset) = `specular returned from the top edge, which is what makes a card read as raised rather than as outlined`
   }[reg=facet]
+  slice: .{
+    rest = `--spw-slice-lift: 0`
+    lift = `--spw-slice-lift`
+    owner = `public/css/effects/texture-slice.css`
+    ~#note: "crop, opacity, and saturate on one axis. charge and hold-to-visit raise the coefficient; they are not a third rest-state."
+    consumers = #[`hover fine-pointer`, `focus-within`, `data-spw-gesture charging|armed`, `data-spw-hold-state arming`, `data-spw-image-state primed|engaged`][reg=set]
+  }[reg=facet]
 }
 
 ^"grounds"{
@@ -77,10 +84,21 @@ expression = material[optics]{transmission.specular.shadow}<surface>
     material_blur_uses = 11
     card_shadow_hover_uses = 5
     material_shadow_rest_uses = 4
-    material_specular_uses = 0
+    material_specular_uses = 1
   }[reg=facet]
-  ~#finding: "specular is declared at 0.28 and read by nothing"
+  ~#finding: "specular is declared at 0.28 and now has one paired consumer: texture-slice return attenuated by the inherited biome canopy"
   probe: `for t in material-specular material-transmission material-blur; do echo "$t $(grep -rn "var(--$t" public/css | grep -v bundles | wc -l)"; done`
+}
+
+^"slice_return_2026_08_31"{
+  operation = "align"
+  fixity = "tending"
+  owner = "public/css/effects/texture-slice.css + public/js/media/texture-slice.js"
+  claim = "A lifted texture slice returns a slightly stronger leading edge and a smaller crop displacement. Its strength is material specular multiplied by the light left after biome attenuation."
+  containment = "The texture uses normal compositing beneath content. Translucent cards may inherit a quiet material tint; opaque content must never acquire hard slice bands or lose contrast."
+  interaction = "Fine-pointer hover and keyboard focus share one 0.55 lift. Hold/charge raises the same coefficient to 0.9. Coarse pointers, capture, and reduced motion stay at rest."
+  lifecycle = "Unmount restores authored family, ground, inline crop properties, and any pre-existing overlay datasets; only module-created overlays are removed."
+  probe = `node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/infrastructure-contracts.test.mjs && npm run check:runtime`
 }
 
 #>wonder_material_physics_1
@@ -108,5 +126,5 @@ expression = material[optics]{transmission.specular.shadow}<surface>
     `a third rest-state is added for one component`,
     `a stacking value is authored as a literal beside the derived handle`
   ][reg=set]
-  next: specular[pair]{material.canopy} ^ highlight[returned]{}
+  next: ground[assignment]{surface.role} ^ transmission[pair]{material.canopy}
 }

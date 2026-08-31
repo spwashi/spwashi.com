@@ -144,6 +144,17 @@ fixity = "tending"
   probe = `npm run visual:capture -- --ids about-years --ecology --viewports pocket`
 }[reg=facet]
 
+^"boonhonk_valence_device_alignment_2026_08_31"{
+  #:operation #!align
+  #:fixity #!tending
+  focus = "hierarchy + device parity"
+  owner = "routes/surfaces/about.css + about/index.html"
+  evidence = "Phone, tablet, and desktop stills showed a sound 36rem image scale, but the generic nested mat flattened caption hierarchy, the square shape label contradicted the rendered 16:10 crop, and the desktop sizes hint selected the 512px derivative for a 576px seat."
+  alignment = "The route-local valence study keeps its scale, uses a lighter responsive mat, separates caption title from supporting copy, names the landscape crop honestly, and requests the 1024px derivative at the desktop seat."
+  constraint = "Keep the change route-local while core remains 1680 KiB against its 1638 KiB soft budget; add no shared component rule or motion token."
+  probe = `phone 390x844 -> tablet 820x1180 -> desktop 1440x1000 at /about/#boonhonk-valence-study; node scripts/check-site.mjs && git diff --check`
+}[reg=facet]
+
 ^"core_route_card_hierarchy_2026_08_31"{
   #:operation #!align
   #:fixity #!tending
