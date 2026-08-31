@@ -716,7 +716,16 @@ export function browseStem(job) {
 }
 
 export function conditionClusterKey(conditions = {}, attention = {}) {
-  if (conditions?.colorMode === 'dark') return 'dark-mode';
+  const pack = conditions?.themePack ? String(conditions.themePack) : '';
+  const dark = conditions?.colorMode === 'dark';
+  const hc = conditions?.highContrast === 'on' || conditions?.highContrast === true;
+  if (pack && dark && hc) return `${pack}-dark-high-contrast`;
+  if (pack && dark) return `${pack}-dark`;
+  if (pack && hc) return `${pack}-high-contrast`;
+  if (pack) return pack;
+  if (hc && dark) return 'dark-high-contrast';
+  if (hc) return 'high-contrast';
+  if (dark) return 'dark-mode';
   if (conditions?.reducedMotion === 'reduce' || conditions?.reducedMotion === true) return 'reduced-motion';
   if (attention?.section || attention?.probe) return 'section-pin';
   return '';
@@ -726,6 +735,9 @@ export function captureSearchParams(conditions = {}, attention = {}) {
   const params = new URLSearchParams();
   if (conditions.colorMode) params.set('color-mode', conditions.colorMode);
   if (conditions.themePack) params.set('theme', conditions.themePack);
+  if (conditions.highContrast === 'on' || conditions.highContrast === true) {
+    params.set('high-contrast', 'on');
+  }
   if (conditions.enhancement) params.set('enhancement', conditions.enhancement);
   if (attention.section) params.set('pin', attention.section);
   if (attention.probe) params.set('probe', attention.probe);

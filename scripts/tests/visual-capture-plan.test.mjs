@@ -411,6 +411,16 @@ test('capture conditions split route, theme, and attention into separate still f
   assert.equal(params.get('pin'), 'entry-loops');
   assert.equal(params.get('probe'), 'frame');
 
+  const themeParams = captureSearchParams(
+    { themePack: 'banked-ember', highContrast: 'on' },
+  );
+  assert.equal(themeParams.get('theme'), 'banked-ember');
+  assert.equal(themeParams.get('high-contrast'), 'on');
+  assert.equal(
+    browseCluster({ still: true, viewportId: 'pocket', conditions: { themePack: 'banked-ember', highContrast: 'on' } }),
+    'pocket--banked-ember-high-contrast',
+  );
+
   const dark = {
     still: true,
     viewportId: 'pocket',
