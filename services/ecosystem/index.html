@@ -19,7 +19,7 @@
     route_family="editorial service resting-point"
     context="routing"
     features="operators navigator console"
-    related_routes="/|/services/|/services/creator/|/services/systems/|/services/care/|/play/rpg-wednesday/"
+    related_routes="/|/services/|/services/creator/|/services/systems/|/services/care/|/play/rpg-wednesday/|/about/domains/lore.land/|/tools/spw-parser/"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -69,6 +69,8 @@
 
                 <nav class="frame-operators" aria-label="Ecosystem sections">
                     <a class="spw-chip" data-spw-handle="true" href="#how" data-spw-operator="integration" data-spw-action="publish">^how_it_works</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#regions" data-spw-operator="frame" data-spw-action="address">#&gt;regions</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#taste" data-spw-operator="value" data-spw-action="materialize">*taste_pass</a>
                     <a class="spw-chip" data-spw-handle="true" href="#join" data-spw-operator="action" data-spw-action="explore">!join[group]</a>
                     <a class="spw-chip" data-spw-handle="true" href="#cadence" data-spw-operator="value" data-spw-action="materialize">*release_cadence</a>
                     <a class="spw-chip" data-spw-handle="true" href="#visible" data-spw-operator="integration" data-spw-action="publish">^visible_work</a>
@@ -92,7 +94,7 @@
                 <div class="frame-grid">
                     <div class="frame-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" data-spw-seed="page_services_ecosystem__panel_shape">
                         <h3>The Shape</h3>
-                        <p>About thirty people in active orbit. A few dozen more in looser contact. Skills stretch from illustration and editing through data engineering and gardening. The overlap is attention — everyone cares about paying real attention to the work.</p>
+                        <p>About thirty people in active orbit. A few dozen more in looser contact. Skills stretch from illustration and editing through data engineering and gardening. The overlap is attention — everyone cares about paying real attention to the work. When a page or a flow is ready to be seen, that orbit can read it for taste.</p>
                     </div>
                     <div class="frame-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" data-spw-seed="page_services_ecosystem__panel_referral">
                         <h3>How Referrals Go</h3>
@@ -104,6 +106,74 @@
                         <p>Not a directory. Not a marketplace. Not a certification scheme. People are added to the network by working together, not by signing up. That keeps the signal high and the door warm.</p>
                     </div>
                 </div>
+            </section>
+
+            <section
+                class="spw-frame"
+                id="regions"
+                data-spw-role="reference"
+                data-spw-form="brace"
+                data-spw-meaning="regions and relationships — portfolio not one currency"
+                data-spw-operator="frame"
+                data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="projection consequence locality" data-spw-affordance="read" data-spw-category-family="register" data-spw-seed="page_services_ecosystem__regions"
+                data-spw-semantic-expression="orbit[region]{studio.table.lab}<relation>">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#regions">#&gt;regions</a>
+                    <h2>Regions And Relationships</h2>
+                </header>
+                <p data-spw-textual-role="lede" data-spw-copy-unit="services.ecosystem.regions.lede">People arrive from different rooms. The orbit’s worth is a small book of holds that stay in relation: a close, a taste note, a seed that renders twice, a series home, a referral that remains a bookmark.</p>
+                <p>Each region is a channel, not a stall. Count in the <a href="/topics/math/combinatorics/#combinatorics-lab">lab</a>, name a beat in the <a href="/services/creator/#first-beat">studio</a>, keep policy in the <a href="/topics/knowledge-bases/#dregg-tokenomics">vault companion</a>. Start with one unary or one pair.</p>
+                <div class="frame-grid">
+                    <div class="frame-panel" data-spw-semantic-expression="region[studio]{beat}<offer>">
+                        <h3>Studio</h3>
+                        <p>Commissions, plates, openings. Color and material live here. <a href="/services/creator/#first-beat">First beat →</a></p>
+                    </div>
+                    <div class="frame-panel" data-spw-semantic-expression="region[table]{figure}<play>">
+                        <h3>Table</h3>
+                        <p>RPG Wednesday pressure-tests a figure before it hardens. <a href="/play/rpg-wednesday/">Play →</a></p>
+                    </div>
+                    <div class="frame-panel" data-spw-semantic-expression="region[lab]{count}<next>">
+                        <h3>Lab</h3>
+                        <p>Counts, gradients, phrases. State on a slider should name the next door. <a href="/topics/math/combinatorics/#combinatorics-lab">Count lab →</a></p>
+                    </div>
+                    <div class="frame-panel" data-spw-semantic-expression="region[vault]{seed.season.table}<policy>">
+                        <h3>Vault companion</h3>
+                        <p>Seed, season, table version — holdings other coins could reuse as policy, not as a pitch. <a href="/topics/knowledge-bases/#dregg-tokenomics">Holdings →</a></p>
+                    </div>
+                    <div class="frame-panel" data-spw-semantic-expression="region[orbit]{taste}<note>">
+                        <h3>Orbit</h3>
+                        <p>About thirty people who will read a page for taste. One note, not thirty reports. <a href="#taste">Taste →</a></p>
+                    </div>
+                    <div class="frame-panel" data-spw-semantic-expression="region[close]{cadence}<landmark>">
+                        <h3>Close</h3>
+                        <p>The 13th and 26th are the shared landmarks. Relationship without a feed. <a href="#cadence">Cadence →</a></p>
+                    </div>
+                </div>
+                <p data-spw-textual-role="note">Emphasis and palette change how a region is seen; they do not replace the hold. Tune those on <a href="/settings/">settings</a> and <a href="/design/palettes/">palettes</a>.</p>
+            </section>
+
+            <!-- TASTE — orbit reads a page or a flow -->
+            <section
+                class="spw-frame"
+                id="taste"
+                data-spw-role="reference"
+                data-spw-form="square"
+                data-spw-meaning="taste pass — the orbit reads a page or a flow"
+                data-spw-operator="value"
+                data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="projection consequence locality" data-spw-affordance="read" data-spw-category-family="register" data-spw-seed="page_services_ecosystem__taste">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#taste">*"taste_pass"</a>
+                    <h2>Taste</h2>
+                </header>
+                <p data-spw-textual-role="lede">About thirty people in orbit will look at a page or a flow for taste when the work is ready to be seen. You get one short note, not thirty reports.</p>
+                <p>This is not a review marketplace and not a design committee. It is the same people who already share a close: they read for whether the room holds, whether the path is kind, and whether a phrase wants to stay. A <a href="/services/#taste-pass">$500 taste pass</a> is one close. On a series home, it usually sits before a 13th or 26th ship — cheap to learn the page is wrong while it can still move.</p>
+                <p data-spw-textual-role="note">If you are in the orbit and want to read, say so. The ask is the same as the rest of the ecosystem: show up for the people who show up for you. Neighboring crews — a table, a <a href="/topics/knowledge-bases/#dregg-contribution">Dregg scene share</a>, a parser phrase — can send a surface the same way.</p>
+                <nav class="frame-operators" aria-label="Taste next steps">
+                    <a class="spw-chip" data-spw-handle="true" href="/services/#taste-pass" data-spw-operator="substrate">$taste_pass</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/contact/?subject=taste-pass" data-spw-operator="action">!start[taste_pass]</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#cadence" data-spw-operator="value">*release_cadence</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/" data-spw-operator="wonder">? try_a_phrase</a>
+                </nav>
             </section>
 
             <!-- RELEASE CADENCE -->
@@ -129,7 +199,7 @@
                     <li><strong>24 per year</strong> — two dozen landmarks. Most yearly goals are tractable in that many steps.</li>
                 </ul>
 
-                <p data-spw-textual-role="note">You are welcome to adopt this cadence without asking. If you want to, I'm happy to pair you with someone else already on it — accountability is easier in parallel than alone.</p>
+                <p data-spw-textual-role="note">You are welcome to adopt this cadence without asking. If you want to, I'm happy to pair you with someone else already on it — accountability is easier in parallel than alone. A <a href="#taste">taste pass</a> fits on a close: the orbit reads, then the ship happens.</p>
             </section>
 
             <!-- JOIN -->
@@ -190,7 +260,12 @@
                     <div class="frame-panel" data-spw-brace="subjective" data-spw-kind="panel" data-spw-role="reference" data-spw-seed="page_services_ecosystem__panel_workbench">
                         <figure class="panel-image"><img src="/public/images/assets/illustrations/compression.png" alt="Compression crystals" width="420" height="280"></figure>
                         <h3><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a></h3>
-                        <p>Public grammar research and systems-thinking laboratory. Long-horizon work that becomes durable infrastructure.</p>
+                        <p>Public grammar research. Try a phrase in the <a href="/tools/spw-parser/">literal parser</a> first — if it holds, it is worth keeping as an idiom. The repo is for people who want the kernel under that.</p>
+                    </div>
+                    <div class="frame-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" data-spw-seed="page_services_ecosystem__panel_lore">
+                        <figure class="panel-image"><img src="/public/images/assets/illustrations/pretext-physics.png" alt="Pretext physics" width="420" height="280"></figure>
+                        <h3><a href="https://lore.land">lore.land</a></h3>
+                        <p>A show that is also a book. The public companion for long-form that should not stay in a vault. <a href="/services/creator/#series-home">Series home</a> is the same shape for someone else's story.</p>
                     </div>
                     <div class="frame-panel" data-spw-brace="subjective" data-spw-kind="panel" data-spw-role="reference" data-spw-seed="page_services_ecosystem__panel_site">
                         <figure class="panel-image"><img src="/public/images/renders/papergami/papergami-kinetic.webp" alt="Papergami kinetic study with folded forms." width="420" height="280"></figure>

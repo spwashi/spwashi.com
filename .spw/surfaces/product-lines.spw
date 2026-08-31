@@ -52,6 +52,34 @@ product_lines: .{
   next_step = `Add deeper instances and keep the route in active use.`
  }[reg=facet]
  }[reg=facet]
+ series_home = .{
+  pitch = `A public reading surface for a serial: chapters someone can open, not only a file in a store. lore.land is the working example. The author keeps the world.`
+  feature_shape = `Opening = home + 3 chapter pages + share image ($4,000, one or two closes). Further chapter = $800, one close. Series home = opening + 10 further chapters + reading path ($12,000, a season). Cover, EPUB, and plates remain add-ons. Optional $500 taste pass from the ~30-person orbit before a 13th/26th close.`
+  collectible_unit = `A chapter page; a share image; a season of chapters; a taste note.`
+  audience_primary = illustrator
+  audience_bridge = #[
+   `authors read it as a home for the series`,
+   `engineers read it as a composed PWA`,
+   `librarians read it as a catalog the public can actually open`
+  ][reg=set]
+  integration_contract = .{
+   audience = `writer/worldbuilder; engineer/toolmaker is a bridge, not the public lead.`
+   offer = `A reading home for a series, with notes or a manuscript as valid starts.`
+   proof = `lore.land; the creator route's opening, chapter, and season shapes.`
+   resonance = `A serial gains a room people can return to, not only a file or a pitch.`
+   extension = `A chapter, share image, cover, EPUB, or optional taste pass can be added without redefining the story.`
+   next_action = `/services/creator/#series-home → /services/ecosystem/#taste → /contact/?subject=series-home.`
+  }[reg=facet]
+  current_state = .{
+   summary = `Offered as creator work. Proof is lore.land. Taste lives on the ecosystem orbit.`
+   evidence = #[
+    `route copy at /services/creator/#series-home`,
+    `pricing ladder on /services/#pricing`,
+    `taste pass at /services/ecosystem/#taste`
+   ][reg=set]
+   next_step = `Walk one opening with a manuscript in hand; do not require Spw or .scene first.`
+  }[reg=facet]
+ }[reg=facet]
  seed_cards = .{
   pitch = `Configurable, screenshottable cards for rates, asks, and offerings. The same card shape serves 'my hourly rate is X' and 'I need groceries this week'.`
   feature_shape = `A single card component with slots for header, body, badges, footer. Configurable accent and palette. Exportable as image.`
@@ -204,7 +232,7 @@ audience_register: .{
  }[reg=facet]
  illustrator = .{
   profile = `Passionate multimodal artist; reads aesthetic and material language fluently; values substrate and composition.`
-  doors = #[recipes, domain_cards, seed_cards][reg=set]
+  doors = #[recipes, domain_cards, seed_cards, series_home][reg=set]
   reads_for = `substrate, figure, palette, the opposing-brace orientation as negative space, motion through gradient`
   served_by = `paper grain, ornament restraint, motion that carries meaning, palette that distinguishes regions`
  }[reg=facet]

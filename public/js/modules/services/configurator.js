@@ -101,10 +101,10 @@ const TIERS = {
     },
     fast: {
         label: 'Creator Work',
-        price: '$600–$2,500+',
-        note: 'Covers. Formatting. Launch.',
+        price: '$600–$12,000+',
+        note: 'Covers. Formatting. Series homes.',
         accent: 'hsl(188 72% 34%)',
-        paymentNote: 'Authored deliverables for authors, illustrators, and independent makers.',
+        paymentNote: 'Pieces from $600 (plates $250). Story surfaces from $4,000. A $500 taste pass lets the orbit read a page before a close.',
         primaryHref: '/services/creator/',
         primaryLabel: 'open creator work',
         secondaryHref: '/services/#pricing',
