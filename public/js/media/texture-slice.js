@@ -16,13 +16,7 @@ const CAPTURE_ATTRS = Object.freeze([
   'data-spw-color-mode',
   'data-spw-high-contrast',
   'data-spw-theme-pack',
-]);
-const INLINE_VARS = Object.freeze([
-  '--spw-slice-u',
-  '--spw-slice-v',
-  '--spw-slice-size',
-  '--spw-slice-px',
-  '--spw-slice-py',
+  'data-spw-pointer-mode',
 ]);
 const FORBIDDEN_OVERLAY_HOSTS = new Set([
   'OL', 'UL', 'DL', 'TABLE', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'SELECT',
@@ -70,7 +64,8 @@ function prefersReducedMotion() {
 }
 
 function isCoarsePointer() {
-  return window.matchMedia?.('(pointer: coarse)')?.matches === true;
+  return document.documentElement.dataset.spwPointerMode === 'coarse'
+    || window.matchMedia?.('(pointer: coarse)')?.matches === true;
 }
 
 function isCapturing() {
@@ -115,30 +110,57 @@ function resetParallax(host) {
   host.style.setProperty('--spw-slice-py', '0%');
 }
 
+function readInlineVar(host, property) {
+  return {
+    value: host.style.getPropertyValue(property),
+    priority: host.style.getPropertyPriority(property),
+  };
+}
+
 function readHostState(host) {
   return {
     family: host.getAttribute('data-spw-texture-slice'),
     ground: host.getAttribute('data-spw-slice-ground'),
-    inline: Object.fromEntries(INLINE_VARS.map((property) => [property, {
-      value: host.style.getPropertyValue(property),
-      priority: host.style.getPropertyPriority(property),
-    }])),
+    sliceFamily: host.getAttribute('data-spw-slice-family'),
+    inline: {
+      u: readInlineVar(host, '--spw-slice-u'),
+      v: readInlineVar(host, '--spw-slice-v'),
+      size: readInlineVar(host, '--spw-slice-size'),
+      px: readInlineVar(host, '--spw-slice-px'),
+      py: readInlineVar(host, '--spw-slice-py'),
+    },
   };
 }
 
 function restoreHostState(host, state) {
   restoreAttribute(host, 'data-spw-texture-slice', state?.family);
   restoreAttribute(host, 'data-spw-slice-ground', state?.ground);
+  restoreAttribute(host, 'data-spw-slice-family', state?.sliceFamily);
 
-  INLINE_VARS.forEach((property) => {
-    const authored = state?.inline?.[property];
-    if (authored?.value) host.style.setProperty(property, authored.value, authored.priority);
-    else host.style.removeProperty(property);
-  });
+  const u = state?.inline?.u;
+  if (u?.value) host.style.setProperty('--spw-slice-u', u.value, u.priority);
+  else host.style.removeProperty('--spw-slice-u');
+
+  const v = state?.inline?.v;
+  if (v?.value) host.style.setProperty('--spw-slice-v', v.value, v.priority);
+  else host.style.removeProperty('--spw-slice-v');
+
+  const size = state?.inline?.size;
+  if (size?.value) host.style.setProperty('--spw-slice-size', size.value, size.priority);
+  else host.style.removeProperty('--spw-slice-size');
+
+  const px = state?.inline?.px;
+  if (px?.value) host.style.setProperty('--spw-slice-px', px.value, px.priority);
+  else host.style.removeProperty('--spw-slice-px');
+
+  const py = state?.inline?.py;
+  if (py?.value) host.style.setProperty('--spw-slice-py', py.value, py.priority);
+  else host.style.removeProperty('--spw-slice-py');
 }
 
 function seedHashFor(host) {
-  const seed = host.getAttribute('data-spw-seed')
+  const seed = host.getAttribute('data-spw-image-key')
+    || host.getAttribute('data-spw-seed')
     || host.getAttribute('id')
     || host.getAttribute('data-spw-feature')
     || '';
@@ -153,6 +175,7 @@ function syncEnvironment(host, hash = seedHashFor(host)) {
   const guarded = ground === 'guarded' || isHighContrast();
 
   host.setAttribute('data-spw-slice-ground', ground);
+  host.setAttribute('data-spw-slice-family', family);
   if (!overlay) return;
   overlay.dataset.spwSliceFamily = family;
   overlay.dataset.spwSliceGlitch = (capturing || guarded) ? 'false' : (((hash >>> 16) % 5) === 0 ? 'true' : 'false');
@@ -160,11 +183,9 @@ function syncEnvironment(host, hash = seedHashFor(host)) {
 
 function annotate(host) {
   const hash = seedHashFor(host);
-  const family = familyFor(host, hash);
   const u = 8 + (hash % 78);
   const v = 10 + ((hash >>> 8) % 74);
 
-  host.setAttribute('data-spw-texture-slice', family);
   host.style.setProperty('--spw-slice-u', `${u}%`);
   host.style.setProperty('--spw-slice-v', `${v}%`);
   host.style.setProperty('--spw-slice-size', `${155 + (hash % 40)}%`);
@@ -278,9 +299,8 @@ export function initTextureSlice() {
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'texture-slice',
   mount: () => initTextureSlice(),
-  describes: 'texture[slice]{paper.linen.harlequin.wash}<glitch.lift.screenshot>',
+  describes: 'texture[slice]{paper.linen.harlequin.wash.auto}<glitch.lift.screenshot>',
   updates: [
-    'flourish:data-spw-texture-slice',
     'flourish:data-spw-slice-ground',
     'flourish:data-spw-overlay',
     'flourish:data-spw-slice-family',

@@ -56,13 +56,17 @@
   z-index: 1;
 }
 
-[data-spw-texture-slice='paper'] { --spw-texture-slice-image: var(--spw-texture-paper); }
-[data-spw-texture-slice='linen'] { --spw-texture-slice-image: var(--spw-texture-linen); }
-[data-spw-texture-slice='harlequin'] {
+[data-spw-texture-slice='paper'],
+[data-spw-slice-family='paper'] { --spw-texture-slice-image: var(--spw-texture-paper); }
+[data-spw-texture-slice='linen'],
+[data-spw-slice-family='linen'] { --spw-texture-slice-image: var(--spw-texture-linen); }
+[data-spw-texture-slice='harlequin'],
+[data-spw-slice-family='harlequin'] {
   --spw-texture-slice-image: var(--spw-texture-harlequin);
   --spw-texture-slice-opacity: 0.06;
 }
-[data-spw-texture-slice='wash'] {
+[data-spw-texture-slice='wash'],
+[data-spw-slice-family='wash'] {
   --spw-texture-slice-image: var(--spw-texture-wash);
 }
 
@@ -234,16 +238,26 @@ html[data-spw-color-mode='dark'] {
   --spw-texture-slice-opacity: 0.07;
 }
 
-html[data-spw-color-mode='dark'] [data-spw-texture-slice='wash'],
-html[data-spw-color-mode='dark'] [data-spw-texture-slice='paper'] {
+html[data-spw-color-mode='dark'] :is(
+  [data-spw-texture-slice='wash'],
+  [data-spw-slice-family='wash'],
+  [data-spw-texture-slice='paper'],
+  [data-spw-slice-family='paper']
+) {
   --spw-texture-slice-opacity: 0.06;
 }
 
-html[data-spw-color-mode='dark'] [data-spw-texture-slice='harlequin'] {
+html[data-spw-color-mode='dark'] :is(
+  [data-spw-texture-slice='harlequin'],
+  [data-spw-slice-family='harlequin']
+) {
   --spw-texture-slice-opacity: 0.045;
 }
 
-html[data-spw-color-mode='dark'] [data-spw-texture-slice='linen'] {
+html[data-spw-color-mode='dark'] :is(
+  [data-spw-texture-slice='linen'],
+  [data-spw-slice-family='linen']
+) {
   --spw-texture-slice-opacity: 0.065;
 }
 
@@ -251,7 +265,10 @@ html[data-spw-color-mode='dark'] [data-spw-texture-slice='linen'] {
   --spw-texture-slice-opacity: 0.065;
 }
 
-[data-spw-texture-slice][data-spw-slice-ground='dark'][data-spw-texture-slice='harlequin'] {
+[data-spw-texture-slice][data-spw-slice-ground='dark']:is(
+  [data-spw-texture-slice='harlequin'],
+  [data-spw-slice-family='harlequin']
+) {
   --spw-texture-slice-opacity: 0.045;
 }
 
@@ -267,11 +284,20 @@ html[data-spw-high-contrast='on'] .spw-texture-slice[data-spw-slice-glitch='true
   content: none;
 }
 
-html[data-spw-base-metamaterial='paper'] [data-spw-texture-slice='paper'] {
+html[data-spw-base-metamaterial='paper'] :is(
+  [data-spw-texture-slice='paper'],
+  [data-spw-slice-family='paper']
+) {
   --spw-texture-slice-opacity: 0.10;
 }
 
-html[data-spw-base-metamaterial='paper'][data-spw-color-mode='dark'] [data-spw-texture-slice='paper'],
-html[data-spw-base-metamaterial='paper'] [data-spw-texture-slice='paper'][data-spw-slice-ground='dark'] {
+html[data-spw-base-metamaterial='paper'][data-spw-color-mode='dark'] :is(
+  [data-spw-texture-slice='paper'],
+  [data-spw-slice-family='paper']
+),
+html[data-spw-base-metamaterial='paper'] :is(
+  [data-spw-texture-slice='paper'],
+  [data-spw-slice-family='paper']
+)[data-spw-slice-ground='dark'] {
   --spw-texture-slice-opacity: 0.065;
 }

@@ -362,6 +362,7 @@ export const ENHANCEMENT_DEFS = [
       'structural:data-spw-contrast-state',
       'flourish:data-spw-image-effect',
       'residue:data-spw-visited',
+      'residue:data-spw-image-key',
     ],
     evaluates: 'image treatment gesture memory visual semantics',
     timingArc: 'visible-media',
@@ -380,9 +381,8 @@ export const ENHANCEMENT_DEFS = [
     electrostatics: { role: 'capacitor', discharge: 'settle', dielectric: true, field: '--spw-slice-lift' },
     selector: '[data-spw-texture-slice]',
     rootMode: 'single',
-    describes: 'texture[slice]{paper.linen.harlequin.wash}<glitch.lift.screenshot>',
+    describes: 'texture[slice]{paper.linen.harlequin.wash.auto}<glitch.lift.screenshot>',
     updates: [
-      'flourish:data-spw-texture-slice',
       'flourish:data-spw-slice-ground',
       'flourish:data-spw-overlay',
       'flourish:data-spw-slice-family',

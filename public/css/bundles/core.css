@@ -44979,7 +44979,7 @@ html[data-spw-developmental-indicators="on"] :where(
    while keeping their own anatomy.
    Genome — states sensed: data-spw-image-prominence, data-spw-image-effect,
    data-spw-image-gesture, data-spw-image-layout, data-spw-image-preview,
-   data-spw-image-resonance, data-spw-image-input, data-spw-hold-state,
+   data-spw-image-resonance, data-spw-hold-state, html[data-spw-pointer-mode],
    data-spw-brush-active, data-spw-brush-mode, data-spw-contrast-state,
    data-spw-controls-open, data-spw-effect, data-spw-effect-stop
    Genome — custom properties defined: 50; intent hooks consumed: none
@@ -45351,7 +45351,7 @@ html[data-spw-developmental-indicators="on"] :where(
   opacity: 0.96;
 }
 
-.spw-metaphysics-host[data-spw-image-input="coarse"] .spw-image-hint {
+html[data-spw-pointer-mode="coarse"] .spw-metaphysics-host .spw-image-hint {
   height: 4px;
 }
 
@@ -45826,7 +45826,7 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory__value {
   order: 3;
 }
 
-.spw-metaphysics-host[data-spw-image-layout="compact"][data-spw-image-input="coarse"] :where(
+html[data-spw-pointer-mode="coarse"] .spw-metaphysics-host[data-spw-image-layout="compact"] :where(
   .spw-image-helper,
   .spw-image-memory,
   .spw-image-brush-toggle

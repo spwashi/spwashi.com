@@ -109,7 +109,10 @@ const HOST_RESIZE_OBSERVER = typeof ResizeObserver === 'function'
 
 const getMedium = (host) => (host.querySelector('svg') ? 'vector' : 'raster');
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-const isCoarsePointerEnvironment = () => window.matchMedia?.('(pointer: coarse)')?.matches === true;
+const isCoarsePointerEnvironment = () => (
+    document.documentElement.dataset.spwPointerMode === 'coarse'
+    || window.matchMedia?.('(pointer: coarse)')?.matches === true
+);
 
 function getHostRuntime(host) {
     let runtime = HOST_RUNTIME.get(host);
@@ -129,7 +132,6 @@ function getHostRuntime(host) {
 function setHostInput(host, input = '') {
     const runtime = getHostRuntime(host);
     runtime.input = input || (isCoarsePointerEnvironment() ? IMAGE_INPUTS.COARSE : IMAGE_INPUTS.FINE);
-    host.dataset.spwImageInput = runtime.input;
 }
 
 function resolveImageLayout(host) {
@@ -177,7 +179,6 @@ function resolveContrastState(host, imageState = resolveImageState(host)) {
 }
 
 function syncInteractionState(host) {
-    const runtime = getHostRuntime(host);
     const imageState = resolveImageState(host);
     const contrastState = resolveContrastState(host, imageState);
     const imageLayout = resolveImageLayout(host);
@@ -185,7 +186,6 @@ function syncInteractionState(host) {
     host.dataset.spwImageState = imageState;
     host.dataset.spwContrastState = contrastState;
     host.dataset.spwImageLayout = imageLayout;
-    host.dataset.spwImageInput = runtime.input || (isCoarsePointerEnvironment() ? IMAGE_INPUTS.COARSE : IMAGE_INPUTS.FINE);
     host.dataset.spwImagePrimed = host.dataset.spwImagePrimed === 'true' ? 'true' : 'false';
     host.dataset.spwImageMemoryState = host.dataset.spwVisited === 'true' ? 'visited' : 'fresh';
 
@@ -198,7 +198,6 @@ function syncInteractionState(host) {
         node.dataset.spwImageState = imageState;
         node.dataset.spwContrastState = contrastState;
         node.dataset.spwImageLayout = imageLayout;
-        node.dataset.spwImageInput = host.dataset.spwImageInput;
     });
 }
 
@@ -270,8 +269,17 @@ const normalizeKey = (value) => {
     }
 };
 
+function isReturnable(host) {
+    return host.getAttribute('data-spw-returnable') !== 'false';
+}
+
 function getSurfaceKey(host) {
-    if (host.dataset.spwImageKey) return host.dataset.spwImageKey;
+    const authored = (host.dataset.spwImageKey || '').trim();
+    const page = window.location.pathname;
+    const returnable = isReturnable(host);
+
+    if (authored) return returnable ? authored : `${page}#${authored}`;
+    if (!returnable) return '';
 
     const img = host.querySelector('img');
     if (img) {
@@ -286,10 +294,11 @@ function getSurfaceKey(host) {
             || svg.querySelector('title')?.textContent?.trim()
             || host.id
             || 'svg-surface';
-        return `${window.location.pathname}#${label}`;
+        return `${page}#${label}`;
     }
 
-    return `${window.location.pathname}:${host.textContent.trim().slice(0, 80)}`;
+    const excerpt = host.textContent.trim().slice(0, 80);
+    return excerpt ? `${page}:${excerpt}` : '';
 }
 
 function getSemanticContext(host) {
@@ -620,14 +629,15 @@ function ensureHelper(host) {
 function syncHost(host) {
     const context = getSemanticContext(host);
     const key = getSurfaceKey(host);
-    const visited = Boolean(readVisitedMap()[key]);
+    const returnable = isReturnable(host);
+    const visited = Boolean(returnable && key && readVisitedMap()[key]);
     const prominence = getProminence(host);
     const resonance = getResonance(host, context, prominence);
 
     host.classList.add('spw-metaphysics-host');
     host.dataset.spwImageManaged = 'true';
     host.dataset.spwImageSurface = 'true';
-    host.dataset.spwImageKey = key;
+    if (key) host.dataset.spwImageKey = key;
     host.dataset.spwMedium = context.medium;
     host.dataset.spwRealization = context.realization;
     host.dataset.spwSubstrate = context.substrate;
@@ -649,8 +659,18 @@ function syncHost(host) {
 }
 
 function markVisited(host) {
+    if (!isReturnable(host)) {
+        delete host.dataset.spwHoldState;
+        syncHost(host);
+        return;
+    }
+
     const key = getSurfaceKey(host);
     const medium = getMedium(host);
+    if (!key) {
+        delete host.dataset.spwHoldState;
+        return;
+    }
 
     recordVisitedSurface({
         key,
