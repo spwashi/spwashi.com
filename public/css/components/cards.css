@@ -1039,11 +1039,11 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 :where(.spw-reason-strip strong, .spw-role-hooks strong, .spw-card-meta strong) {
   display: block;
   margin-block-end: var(--space-2xs, 0.25rem);
-  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--component-accent)) 18%);
-  font-size: 0.84rem;
+  color: color-mix(in srgb, var(--material-ink-matte-strong, var(--ink, rgba(14, 18, 20, 0.92))) 88%, var(--active-op-color, var(--component-accent)) 12%);
+  font-size: clamp(0.88rem, 0.86rem + 0.08vw, 0.94rem);
   font-weight: 800;
-  letter-spacing: 0.055em;
-  line-height: 1.2;
+  letter-spacing: 0.045em;
+  line-height: 1.18;
   text-transform: uppercase;
 }
 
@@ -1054,8 +1054,13 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 
 :where(.spw-reason-strip p, .spw-role-hooks p, .spw-card-meta p) {
   margin: 0;
-  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
-  line-height: 1.46;
+  color: color-mix(
+    in srgb,
+    var(--material-ink-matte-soft, var(--ink-soft, rgba(0, 0, 0, 0.72))) 72%,
+    var(--material-ink-matte-strong, var(--ink, rgba(0, 0, 0, 0.92))) 28%
+  );
+  font-size: clamp(0.84rem, 0.82rem + 0.1vw, 0.9rem);
+  line-height: 1.5;
   text-wrap: pretty;
 }
 

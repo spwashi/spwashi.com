@@ -362,7 +362,7 @@ body[data-spw-surface="about"] {
 [data-spw-surface="about"] .about-years {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.65rem;
+  gap: 0.55rem;
   margin-block: 1rem 1.15rem;
   padding: 0;
   list-style: none;
@@ -370,10 +370,31 @@ body[data-spw-surface="about"] {
 }
 
 [data-spw-surface="about"] .about-years > .resume-record {
+  --material-surface: var(--about-surface-strong);
+  --material-line: color-mix(in srgb, var(--about-line-accent) 58%, var(--about-line));
+  --material-prime-color: var(--about-accent);
   display: grid;
-  gap: 0.4rem;
+  gap: 0.48rem;
   min-inline-size: 0;
+  min-block-size: 0;
   margin: 0;
+  padding: clamp(0.75rem, 2.4vw, 0.95rem);
+  border-color: color-mix(in srgb, var(--about-line-accent) 58%, var(--about-line));
+  background:
+    linear-gradient(145deg, var(--about-accent-soft), transparent 62%),
+    var(--about-surface-strong);
+  box-shadow: var(--about-frame-shadow);
+}
+
+[data-spw-surface="about"] .about-years > .resume-record > :is(
+  header[data-spw-slot="header"],
+  footer[data-spw-slot="actions"]
+) {
+  --material-surface: transparent;
+  --material-line: transparent;
+  --material-shadow-rest: none;
+  --material-highlight-inset: none;
+  --interaction-glow: none;
 }
 
 [data-spw-surface="about"] .about-years header {
@@ -381,26 +402,33 @@ body[data-spw-surface="about"] {
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.35rem 0.75rem;
+  padding-block-end: 0.32rem;
 }
 
 [data-spw-surface="about"] .about-years time {
   font-family: var(--grammar-mono-font, var(--site-mono-font, monospace));
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 750;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.045em;
   color: color-mix(in srgb, var(--about-accent) 78%, var(--about-ink));
+}
+
+[data-spw-surface="about"] .about-years header strong {
+  font-size: clamp(0.98rem, 0.93rem + 0.22vw, 1.08rem);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
 }
 
 [data-spw-surface="about"] .about-years dl {
   display: grid;
-  gap: 0.32rem;
+  gap: 0.28rem;
   margin: 0;
 }
 
 [data-spw-surface="about"] .about-years dl > div {
   display: grid;
-  grid-template-columns: 4.25rem minmax(0, 1fr);
-  gap: 0.45rem;
+  grid-template-columns: 3.6rem minmax(0, 1fr);
+  gap: 0.4rem;
   align-items: baseline;
 }
 
@@ -408,12 +436,16 @@ body[data-spw-surface="about"] {
   margin: 0;
   color: var(--about-ink-mid);
   font-family: var(--grammar-mono-font, var(--site-mono-font, monospace));
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 750;
+  letter-spacing: 0.045em;
 }
 
 [data-spw-surface="about"] .about-years dd {
   margin: 0;
+  color: var(--about-ink-soft);
+  font-size: clamp(0.88rem, 0.84rem + 0.16vw, 0.95rem);
+  line-height: 1.56;
 }
 
 [data-spw-surface="about"] .about-years footer,
@@ -421,13 +453,32 @@ body[data-spw-surface="about"] {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+  margin-block-start: 0.1rem;
+  padding: 0.42rem 0 0;
 }
 
 [data-spw-surface="about"] .spw-reason-strip {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.65rem;
-  margin-block: 0.4rem 1.15rem;
+  gap: 0.55rem;
+  margin-block: 0.3rem 1rem;
+}
+
+[data-spw-surface="about"] .spw-reason-strip > * {
+  padding: 0.72rem 0.75rem;
+}
+
+[data-spw-surface="about"] .spw-reason-strip strong {
+  margin-block-end: 0.22rem;
+  font-size: clamp(0.88rem, 0.86rem + 0.08vw, 0.94rem);
+  letter-spacing: 0.04em;
+  line-height: 1.18;
+}
+
+[data-spw-surface="about"] .spw-reason-strip p {
+  color: var(--about-ink-soft);
+  font-size: clamp(0.84rem, 0.82rem + 0.1vw, 0.9rem);
+  line-height: 1.5;
 }
 
 @media (orientation: landscape) and (max-height: 40rem) {

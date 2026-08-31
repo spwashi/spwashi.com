@@ -740,6 +740,26 @@ body[data-spw-surface="topics"] .spw-frame > .frame-actions:has(> .spw-delimiter
     linear-gradient(180deg, transparent, color-mix(in srgb, var(--topics-surface-strong) 18%, transparent) 52%, color-mix(in srgb, var(--topics-surface-strong) 52%, transparent));
 }
 
+:where(body[data-spw-surface="topics"] #topic-cards .frame-card > a:first-child) {
+  gap: clamp(0.42rem, 1.3cqi, 0.62rem);
+}
+
+:where(body[data-spw-surface="topics"] #topic-cards .frame-card > a:first-child > .frame-card-sigil) {
+  font-size: 0.72rem;
+  line-height: 1.3;
+}
+
+:where(body[data-spw-surface="topics"] #topic-cards .frame-card > a:first-child > strong) {
+  font-size: clamp(0.94rem, 0.91rem + 0.12vw, 1.02rem);
+  line-height: 1.18;
+}
+
+:where(body[data-spw-surface="topics"] #topic-cards .frame-card > a:first-child > span:not(.frame-card-sigil)) {
+  color: var(--topics-ink-soft);
+  font-size: clamp(0.84rem, 0.81rem + 0.12vw, 0.91rem);
+  line-height: 1.5;
+}
+
 :where(body[data-spw-surface="topics"] .spw-svg-figure) {
   margin: 0;
   background: var(--topics-panel);

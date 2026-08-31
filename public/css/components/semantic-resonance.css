@@ -303,9 +303,9 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 :where(.spw-wisdom-card) {
   --spw-wisdom-accent: var(--active-op-color, var(--component-accent));
   display: grid;
-  gap: 0.48rem;
+  gap: 0.42rem;
   min-width: 0;
-  padding: 0.82rem 0.9rem;
+  padding: 0.74rem 0.8rem;
   border: 1px solid color-mix(in srgb, var(--spw-wisdom-accent) 18%, var(--line, rgba(14, 18, 20, 0.14)));
   border-radius: var(--component-radius-loose);
   background:
@@ -363,15 +363,20 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 }
 
 :where(.spw-wisdom-card strong) {
-  color: color-mix(in srgb, var(--ink, #111) 82%, var(--spw-wisdom-accent) 18%);
-  font-size: 1rem;
+  color: color-mix(in srgb, var(--material-ink-matte-strong, var(--ink, #111)) 88%, var(--spw-wisdom-accent) 12%);
+  font-size: clamp(0.94rem, 0.91rem + 0.12vw, 1.02rem);
   line-height: 1.18;
 }
 
 :where(.spw-wisdom-card p) {
   margin: 0;
-  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
-  line-height: 1.45;
+  color: color-mix(
+    in srgb,
+    var(--material-ink-matte-soft, var(--ink-soft, rgba(0, 0, 0, 0.72))) 72%,
+    var(--material-ink-matte-strong, var(--ink, rgba(0, 0, 0, 0.92))) 28%
+  );
+  font-size: clamp(0.84rem, 0.81rem + 0.12vw, 0.91rem);
+  line-height: 1.5;
 }
 
 :where(.spw-wisdom-card code) {
