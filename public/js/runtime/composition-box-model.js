@@ -43,22 +43,43 @@ const MEASURE_BANDS = Object.freeze({
 });
 
 /* Component-local packing mirror. These px values mirror the @container
-   breakpoints in component-packing.css (26rem / 44rem at a 16px root) so the
-   inspectable data-spw-pack-layout attribute agrees with the CSS that actually
-   lays the card out. Only written for [data-spw-pack-local] opt-ins. */
-const PACK_LAYOUT_BANDS = Object.freeze({ split: 416, feature: 704 });
+   breakpoints in component-packing.css (26rem / 44rem / 52rem at a 16px root);
+   owned region topology then decides whether that room can become split or feature.
+   Only written for [data-spw-pack-local] opt-ins. */
+const PACK_LAYOUT_BANDS = Object.freeze({ split: 416, feature: 704, contextSplit: 832 });
 
-export const resolvePackLayoutForWidth = (inlineSize = 0) => {
+export const resolvePackLayoutForWidth = (inlineSize = 0, regionTopology = 3) => {
   const width = Number.isFinite(Number(inlineSize)) ? Number(inlineSize) : 0;
-  if (width >= PACK_LAYOUT_BANDS.feature) return 'feature';
-  if (width >= PACK_LAYOUT_BANDS.split) return 'split';
+  const regionNames = Array.isArray(regionTopology) || regionTopology instanceof Set
+    ? new Set([...regionTopology].map(normalizeToken).filter(Boolean))
+    : null;
+  const regionCount = regionNames
+    ? regionNames.size
+    : Math.max(0, Number.parseInt(regionTopology, 10) || 0);
+  const ownsFeatureTopology = regionNames
+    ? ['media', 'body', 'actions'].every((name) => regionNames.has(name))
+    : regionCount >= 3;
+  const ownsContextTopology = regionNames?.has('context') || false;
+
+  if (width >= PACK_LAYOUT_BANDS.feature && ownsFeatureTopology) return 'feature';
+  if (ownsContextTopology) {
+    return width >= PACK_LAYOUT_BANDS.contextSplit && regionCount >= 2 ? 'split' : 'stack';
+  }
+  if (width >= PACK_LAYOUT_BANDS.split && regionCount >= 2) return 'split';
   return 'stack';
 };
 
-const resolvePackLayout = (box) => {
+const readPackRegions = (el) => [...(el.querySelectorAll?.(
+  '[data-spw-pack-regions] > [data-spw-pack-region]',
+) || [])].filter((region) => region.closest?.('[data-spw-pack-local]') === el);
+
+const resolvePackLayoutFromRegions = (box, regions) => {
   // Use the content-box inline size — that is what `container-type: inline-size`
   // measures, so the mirror matches the @container decision at the boundaries.
-  return resolvePackLayoutForWidth(box.contentInline || box.inlineSize);
+  return resolvePackLayoutForWidth(
+    box.contentInline || box.inlineSize,
+    regions.map((region) => region.dataset.spwPackRegion),
+  );
 };
 
 export const resolvePackFillFromCount = (itemCount = 0) => {
@@ -68,15 +89,25 @@ export const resolvePackFillFromCount = (itemCount = 0) => {
   return 'full';
 };
 
-const resolvePackFill = (el) => {
-  const regionItems = el.querySelectorAll?.('[data-spw-pack-region] > *').length || 0;
+export const resolvePackRegionItemCount = (regions = []) => [...regions].reduce(
+  (count, region) => count + Math.max(1, region?.children?.length || 0),
+  0,
+);
+
+const resolvePackFill = (el, regions = readPackRegions(el)) => {
+  // A region is itself one meaningful unit when it directly carries copy or
+  // media. When it is a wrapper, count its direct children. This keeps a plain
+  // <p data-spw-pack-region> from disappearing from the occupancy signal.
+  const regionItems = resolvePackRegionItemCount(regions);
   const listItems = el.querySelectorAll?.(
     ':scope > ol > li, :scope > ul > li, :scope > nav > ol > li, :scope > nav > ul > li',
   ).length || 0;
   const directItems = [...(el.children || [])]
     .filter((child) => !child.hasAttribute?.('data-spw-pack-readout'))
     .length;
-  return resolvePackFillFromCount(regionItems || listItems || directItems);
+  return resolvePackFillFromCount(
+    regions.length ? regionItems : (listItems || directItems),
+  );
 };
 
 const PRESENCE_STATES = Object.freeze({
@@ -310,11 +341,18 @@ export function snapshotCompositionBox(target, options = {}) {
   const isPackLocal = el.hasAttribute('data-spw-pack-local')
     || el.dataset?.spwPackLocal === 'true'
     || el.dataset?.spwPackLocal === '';
+  // One structural scan feeds layout, fill, and inspection metadata. Packing
+  // hosts can sit on resize-driven paths, so do not rediscover the same region
+  // topology for each output attribute.
+  const packRegionNodes = isPackLocal ? readPackRegions(el) : [];
+  const packRegions = [...new Set(
+    packRegionNodes.map((region) => normalizeToken(region.dataset.spwPackRegion)).filter(Boolean),
+  )];
   const packLayout = isPackLocal
-    ? (el.dataset.spwPackLayout || resolvePackLayout(box))
+    ? resolvePackLayoutFromRegions(box, packRegionNodes)
     : (el.dataset.spwPackLayout || null);
   const packFill = isPackLocal
-    ? (el.dataset.spwPackFill || resolvePackFill(el))
+    ? resolvePackFill(el, packRegionNodes)
     : (el.dataset.spwPackFill || null);
 
   return {
@@ -331,6 +369,8 @@ export function snapshotCompositionBox(target, options = {}) {
     packLocal: isPackLocal,
     packLayout,
     packFill,
+    packRegions,
+    packRegionCount: packRegions.length,
     story: describeBox(el, box, role, presence),
     semantics: {
       kind: el.dataset.spwKind || '',
@@ -373,8 +413,7 @@ export function annotateCompositionBox(target, options = {}) {
   // and content fill so the CSS container-query decision is inspectable and
   // available to JS consumers. Only for elements that opt into packing.
   if (el.matches?.('[data-spw-pack-local]')) {
-    const packLayout = resolvePackLayout(snapshot.box);
-    const packFill = resolvePackFill(el);
+    const { packLayout, packFill } = snapshot;
     writeDatasetValues(el, {
       spwPackLayout: packLayout,
       spwPackFill: packFill,
@@ -490,6 +529,7 @@ export const SPW_COMPOSITION_BOX_MODEL_CONTRACT = Object.freeze({
   sizeContexts: SIZE_CONTEXTS,
   contentTones: CONTENT_TONES,
   packLayoutBands: PACK_LAYOUT_BANDS,
+  packRegions: Object.freeze(['context', 'media', 'body', 'actions']),
   portableUse:
     'Import snapshotCompositionBox() or annotateCompositionBoxes() to make a static component explain its layout, presence, size context, content tone, and next repair clue.',
 });

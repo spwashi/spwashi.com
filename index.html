@@ -148,11 +148,13 @@
                     data-spw-liminality="entry"
                     data-spw-consequence="framing"
                     data-spw-gesture-contract="tap:prime hold:inspect"
+                    data-spw-pack-local
                     class="hook-call"
                     role="group"
                     aria-label="Sit a lens. The situation set filters. Then take the first move in that room"
                 >
-                    <div class="home-working-view" data-spw-feature="home-perspective-lens">
+                    <div class="home-hook-pack" data-spw-pack-regions>
+                    <div class="home-working-view" data-spw-feature="home-perspective-lens" data-spw-pack-region="context">
                         <div class="home-working-view__intro">
                             <strong>Choose a working view</strong>
                             <span>Reweights related cards across this page; every route stays available.</span>
@@ -164,7 +166,7 @@
                             <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="studio" aria-pressed="false" data-spw-operator="perspective"><span>Studio</span><span class="home-working-view__token">@studio</span></button>
                         </div>
                     </div>
-                    <div class="mode-panels" data-spw-feature="home-perspective-panels">
+                    <div class="mode-panels" data-spw-feature="home-perspective-panels" data-spw-pack-region="body">
                         <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="reading" data-spw-role="orientation" data-spw-kind="lens">
                             <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[reading]{craft}<entry>">
                                 <span class="spw-living-term" data-spw-living-term data-spw-concept="reading" tabindex="0" title="tap: inspect • hold to prime">.reading</span>: Personal study routes, creator records, and craft traditions worth revisiting.
@@ -202,11 +204,12 @@
                             </p>
                         </section>
                     </div>
-                    <nav class="hook-invitation wrap-jobs" aria-label="Spw wrap jobs" data-spw-feature="wrap-jobs" data-spw-semantic-expression="home[wrap]{rail}">
+                    <nav class="hook-invitation wrap-jobs" aria-label="Spw wrap jobs" data-spw-feature="wrap-jobs" data-spw-pack-region="actions" data-spw-semantic-expression="home[wrap]{rail}">
                         <a class="operator-chip" href="#choose-your-entrance" data-spw-operator="direction" data-spw-action="travel" aria-label="Move to the next frame on this page">Next room</a>
                         <a class="operator-chip" href="#home-reason-why" data-spw-operator="scene" data-spw-action="enter" aria-label="Read why this home page exists">Why this page</a>
                         <a class="operator-chip" href="/topics/search/?q=%5Breading%5D" data-spw-operator="wonder" data-spw-action="inspect" aria-label="Search routes related to the reading view">Find related routes</a>
                     </nav>
+                    </div>
                 </div>
 
 

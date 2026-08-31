@@ -364,6 +364,16 @@ body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surfa
     min-inline-size: 0;
   }
 
+  /* The desk may wrap its children, but main still owns the route frame cap.
+     Replacing that cap with 100% made ultra-wide screens into an unbounded
+     empty canvas and pinned capped seats to the left edge. */
+  body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article),
+  body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article),
+  body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) {
+    max-inline-size: var(--spw-main-width);
+    margin-inline: auto;
+  }
+
   body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > .spw-frame,
   body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > .spw-frame,
   body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > .spw-frame,
@@ -387,6 +397,7 @@ body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surfa
     inline-size: 100%;
     max-inline-size: 100%;
     min-inline-size: 0;
+    margin-inline: auto;
   }
 
   body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) > :not(.spw-frame),

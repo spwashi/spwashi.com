@@ -18,30 +18,61 @@
     display: grid;
     gap: var(--spw-pack-gap, var(--space-sm, 0.75rem));
     grid-template-areas:
+        "context"
         "media"
         "body"
         "actions";
 }
 
+[data-spw-pack-region="context"] { grid-area: context; min-inline-size: 0; }
 [data-spw-pack-region="media"] { grid-area: media; min-inline-size: 0; }
 [data-spw-pack-region="body"] { grid-area: body; min-inline-size: 0; }
 [data-spw-pack-region="actions"] { grid-area: actions; min-inline-size: 0; }
 
 @supports (container-type: inline-size) {
-  /* Split: media seats beside body once the card itself is wide enough. */
+  /* Split: spend two columns only when two real regions can occupy them. */
   @container spw-pack (min-width: 26rem) {
-    [data-spw-pack-regions] {
+    [data-spw-pack-regions]:has(> [data-spw-pack-region="media"]):has(> [data-spw-pack-region="body"]) {
       grid-template-columns: minmax(7rem, 1fr) minmax(0, 1.7fr);
       grid-template-areas:
         "media body"
         "media actions";
       align-items: start;
     }
+
+    [data-spw-pack-regions]:has(> [data-spw-pack-region="media"]):has(> [data-spw-pack-region="body"]):not(:has(> [data-spw-pack-region="actions"])) {
+      grid-template-areas: "media body";
+    }
+
+    [data-spw-pack-regions]:not(:has(> [data-spw-pack-region="media"])):not(:has(> [data-spw-pack-region="context"])):has(> [data-spw-pack-region="body"]):has(> [data-spw-pack-region="actions"]) {
+      grid-template-columns: minmax(0, 1fr) minmax(6rem, auto);
+      grid-template-areas: "body actions";
+      align-items: start;
+    }
+
+    [data-spw-pack-regions]:has(> [data-spw-pack-region="media"]):not(:has(> [data-spw-pack-region="body"])):has(> [data-spw-pack-region="actions"]) {
+      grid-template-columns: minmax(7rem, 1fr) minmax(6rem, auto);
+      grid-template-areas: "media actions";
+      align-items: start;
+    }
   }
 
-  /* Feature: three lanes when the card has room to spread. */
+  /* Context + prose needs more room than thumbnail + prose. Keep it stacked
+     through medium measures; only open the action rail when the component
+     itself reaches 52rem. */
+  @container spw-pack (min-width: 52rem) {
+    [data-spw-pack-regions]:has(> [data-spw-pack-region="context"]):has(> [data-spw-pack-region="body"]):has(> [data-spw-pack-region="actions"]) {
+      grid-template-columns: minmax(0, 1.45fr) minmax(12rem, 0.8fr);
+      grid-template-areas:
+        "context context"
+        "body actions";
+      align-items: start;
+    }
+  }
+
+  /* Feature: three lanes only when all three regions exist. */
   @container spw-pack (min-width: 44rem) {
-    [data-spw-pack-regions] {
+    [data-spw-pack-regions]:has(> [data-spw-pack-region="media"]):has(> [data-spw-pack-region="body"]):has(> [data-spw-pack-region="actions"]) {
       grid-template-columns: minmax(7rem, 1fr) minmax(0, 2fr) minmax(6rem, auto);
       grid-template-areas: "media body actions";
       align-items: center;
@@ -49,8 +80,8 @@
   }
 }
 
-/* Content-count awareness (the other packing axis). A card holding many items
-   tightens its rhythm regardless of width — :has counts without JS. */
+/* Content-count awareness (the other packing axis). A locally long region
+   tightens its rhythm without waiting for the optional JS mirror. */
 [data-spw-pack-regions]:has(> [data-spw-pack-region] > :nth-child(6)) {
     --spw-pack-gap: var(--space-xs, 0.5rem);
 }

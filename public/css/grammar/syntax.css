@@ -959,7 +959,12 @@
       align-items: stretch;
     }
 
-    :where(.frame-topline > .frame-sigil, .frame-heading > .frame-sigil, .frame-topline > .spw-delimiter) {
+    :where(
+      .frame-topline > .frame-sigil,
+      .frame-heading > .frame-sigil,
+      .frame-topline > .spw-delimiter,
+      .frame-heading > .spw-delimiter
+    ) {
       align-self: flex-start;
     }
   }

@@ -159,11 +159,13 @@
 }
 
 /* `container-type` implies `contain: layout`, which establishes a containing
-   block for `position: fixed` descendants — the shell header must not, or the
-   disclosure menu is positioned against the header box instead of the viewport. */
+   block and removes intrinsic inline contribution. Shell chrome, anatomy slots,
+   and compact metadata tags are not component containers even when the runtime
+   annotates them with data-spw-kind; containing those labels collapses their
+   max-content width to zero. */
 :where(
-  [data-spw-component-kind]:not(body):not(main):not(.site-header),
-  [data-spw-kind]:not(body):not(main):not(.site-header),
+  [data-spw-component-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag),
+  [data-spw-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag),
   .spw-frame,
   .frame-card,
   .media-card,

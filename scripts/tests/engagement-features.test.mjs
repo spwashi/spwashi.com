@@ -30,6 +30,7 @@ import { createRegistry, readRuntimePolicy } from '../../public/js/runtime/runti
 import {
   resolvePackFillFromCount,
   resolvePackLayoutForWidth,
+  resolvePackRegionItemCount,
 } from '../../public/js/runtime/composition-box-model.js';
 import {
   buildVariantEdge,
@@ -41,9 +42,19 @@ test('component packing resolves width and fill on independent axes', () => {
   assert.equal(resolvePackLayoutForWidth(416), 'split');
   assert.equal(resolvePackLayoutForWidth(703), 'split');
   assert.equal(resolvePackLayoutForWidth(704), 'feature');
+  assert.equal(resolvePackLayoutForWidth(704, 2), 'split');
+  assert.equal(resolvePackLayoutForWidth(704, 1), 'stack');
+  assert.equal(resolvePackLayoutForWidth(704, ['body', 'actions']), 'split');
+  assert.equal(resolvePackLayoutForWidth(704, ['media', 'body', 'actions']), 'feature');
+  assert.equal(resolvePackLayoutForWidth(704, ['body', 'body', 'actions']), 'split');
+  assert.equal(resolvePackLayoutForWidth(831, ['context', 'body', 'actions']), 'stack');
+  assert.equal(resolvePackLayoutForWidth(832, ['context', 'body', 'actions']), 'split');
+  assert.equal(resolvePackLayoutForWidth(415, 3), 'stack');
   assert.equal(resolvePackFillFromCount(2), 'sparse');
   assert.equal(resolvePackFillFromCount(5), 'balanced');
   assert.equal(resolvePackFillFromCount(6), 'full');
+  assert.equal(resolvePackRegionItemCount([{ children: [] }, { children: [] }]), 2);
+  assert.equal(resolvePackRegionItemCount([{ children: [1, 2] }, { children: [1, 2, 3] }]), 5);
 });
 
 test('variant choice honors explicit intent and names its traversed edge', () => {

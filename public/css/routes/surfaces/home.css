@@ -572,6 +572,12 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 :where([data-spw-feature="home-kernel-entry"] .hook-call .mode-panel) {
   max-inline-size: none;
   inline-size: 100%;
+  min-block-size: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 :where([data-spw-feature="home-kernel-entry"] .hook-call .spw-playable-hook) {
@@ -1259,6 +1265,34 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   margin: 0.12rem 0 0;
 }
 
+/* The entrance is a small ecology, not a directory of interchangeable tiles.
+   Support + systems share one band; the three creator disciplines share the
+   next. Container-relative tracks preserve that relationship wherever this
+   wide seat lands without inventing viewport-specific card widths. */
+@container spw-hub (min-width: 45rem) {
+  :where([data-spw-feature="home-entrance-sorter"] .entrance-role-hooks) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  :where([data-spw-feature="home-entrance-sorter"] .entrance-role-hooks > li:nth-child(5)) {
+    grid-column: 1 / -1;
+  }
+}
+
+@container spw-hub (min-width: 70rem) {
+  :where([data-spw-feature="home-entrance-sorter"] .entrance-role-hooks) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  :where([data-spw-feature="home-entrance-sorter"] .entrance-role-hooks > li:nth-child(-n + 2)) {
+    grid-column: span 6;
+  }
+
+  :where([data-spw-feature="home-entrance-sorter"] .entrance-role-hooks > li:nth-child(n + 3)) {
+    grid-column: span 4;
+  }
+}
+
 :where(#reader-builder-paths .reader-paths-lede) {
   margin: 0;
   max-inline-size: var(--home-measure-wide);
@@ -1501,9 +1535,10 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 }
 
 :where(body[data-spw-surface="home"] .spw-frame .frame-heading > .spw-component-meta) {
-  flex: 0 0 max-content;
-  min-inline-size: min-content;
-  max-inline-size: none;
+  flex: 0 0 auto;
+  inline-size: max-content;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   white-space: nowrap;
 }
 
@@ -1513,10 +1548,11 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
   flex-shrink: 0;
   contain: none;
   box-sizing: content-box;
-  width: max-content;
-  max-width: none;
-  min-width: min-content;
-  overflow: visible;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 

@@ -420,11 +420,21 @@
   }
 }
 
-/* Sibling Attention Attenuation (:has() Hyperphysics) */
+/* Cluster-local tide: attention creates a footprint without changing card geometry.
+   Existing card material keeps ownership of its shadow, padding, and grid. */
 :where(.frame-grid, [data-spw-cluster], .spw-card-group):has(:where(.spw-card, .frame-card, .plan-card, .ref-card):is(:hover, :focus-within, [data-spw-gesture="charging"], [data-spw-gesture="active"]))
   :where(.spw-card, .frame-card, .plan-card, .ref-card):not(:hover):not(:focus-within):not([data-spw-gesture="charging"]):not([data-spw-gesture="active"]) {
-  opacity: 0.86;
-  filter: saturate(0.92);
+  opacity: 0.91;
+  filter: saturate(0.96);
+  --spw-compression-depth: 0.35;
+}
+
+/* The focused card is a recently pressed footprint: present, crisp, and local. */
+:where(.frame-grid, [data-spw-cluster], .spw-card-group):has(:where(.spw-card, .frame-card, .plan-card, .ref-card):is(:hover, :focus-within, [data-spw-gesture="charging"], [data-spw-gesture="active"]))
+  :where(.spw-card, .frame-card, .plan-card, .ref-card):is(:hover, :focus-within, [data-spw-gesture="charging"], [data-spw-gesture="active"]) {
+  --spw-compression-depth: 1;
+  outline: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, transparent);
+  outline-offset: 2px;
 }
 
 /* Temporal Flux & Kinematics */

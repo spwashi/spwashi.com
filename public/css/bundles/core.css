@@ -13646,7 +13646,12 @@ html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .
       align-items: stretch;
     }
 
-    :where(.frame-topline > .frame-sigil, .frame-heading > .frame-sigil, .frame-topline > .spw-delimiter) {
+    :where(
+      .frame-topline > .frame-sigil,
+      .frame-heading > .frame-sigil,
+      .frame-topline > .spw-delimiter,
+      .frame-heading > .spw-delimiter
+    ) {
       align-self: flex-start;
     }
   }
@@ -15253,11 +15258,13 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 }
 
 /* `container-type` implies `contain: layout`, which establishes a containing
-   block for `position: fixed` descendants — the shell header must not, or the
-   disclosure menu is positioned against the header box instead of the viewport. */
+   block and removes intrinsic inline contribution. Shell chrome, anatomy slots,
+   and compact metadata tags are not component containers even when the runtime
+   annotates them with data-spw-kind; containing those labels collapses their
+   max-content width to zero. */
 :where(
-  [data-spw-component-kind]:not(body):not(main):not(.site-header),
-  [data-spw-kind]:not(body):not(main):not(.site-header),
+  [data-spw-component-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag),
+  [data-spw-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag),
   .spw-frame,
   .frame-card,
   .media-card,
@@ -17745,11 +17752,21 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   }
 }
 
-/* Sibling Attention Attenuation (:has() Hyperphysics) */
+/* Cluster-local tide: attention creates a footprint without changing card geometry.
+   Existing card material keeps ownership of its shadow, padding, and grid. */
 :where(.frame-grid, [data-spw-cluster], .spw-card-group):has(:where(.spw-card, .frame-card, .plan-card, .ref-card):is(:hover, :focus-within, [data-spw-gesture="charging"], [data-spw-gesture="active"]))
   :where(.spw-card, .frame-card, .plan-card, .ref-card):not(:hover):not(:focus-within):not([data-spw-gesture="charging"]):not([data-spw-gesture="active"]) {
-  opacity: 0.86;
-  filter: saturate(0.92);
+  opacity: 0.91;
+  filter: saturate(0.96);
+  --spw-compression-depth: 0.35;
+}
+
+/* The focused card is a recently pressed footprint: present, crisp, and local. */
+:where(.frame-grid, [data-spw-cluster], .spw-card-group):has(:where(.spw-card, .frame-card, .plan-card, .ref-card):is(:hover, :focus-within, [data-spw-gesture="charging"], [data-spw-gesture="active"]))
+  :where(.spw-card, .frame-card, .plan-card, .ref-card):is(:hover, :focus-within, [data-spw-gesture="charging"], [data-spw-gesture="active"]) {
+  --spw-compression-depth: 1;
+  outline: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, transparent);
+  outline-offset: 2px;
 }
 
 /* Temporal Flux & Kinematics */
@@ -18364,11 +18381,11 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 :where(.spw-reason-strip strong, .spw-role-hooks strong, .spw-card-meta strong) {
   display: block;
   margin-block-end: var(--space-2xs, 0.25rem);
-  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--component-accent)) 18%);
-  font-size: 0.84rem;
+  color: color-mix(in srgb, var(--material-ink-matte-strong, var(--ink, rgba(14, 18, 20, 0.92))) 88%, var(--active-op-color, var(--component-accent)) 12%);
+  font-size: clamp(0.88rem, 0.86rem + 0.08vw, 0.94rem);
   font-weight: 800;
-  letter-spacing: 0.055em;
-  line-height: 1.2;
+  letter-spacing: 0.045em;
+  line-height: 1.18;
   text-transform: uppercase;
 }
 
@@ -18379,8 +18396,13 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 
 :where(.spw-reason-strip p, .spw-role-hooks p, .spw-card-meta p) {
   margin: 0;
-  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
-  line-height: 1.46;
+  color: color-mix(
+    in srgb,
+    var(--material-ink-matte-soft, var(--ink-soft, rgba(0, 0, 0, 0.72))) 72%,
+    var(--material-ink-matte-strong, var(--ink, rgba(0, 0, 0, 0.92))) 28%
+  );
+  font-size: clamp(0.84rem, 0.82rem + 0.1vw, 0.9rem);
+  line-height: 1.5;
   text-wrap: pretty;
 }
 
@@ -19429,9 +19451,9 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 :where(.spw-wisdom-card) {
   --spw-wisdom-accent: var(--active-op-color, var(--component-accent));
   display: grid;
-  gap: 0.48rem;
+  gap: 0.42rem;
   min-width: 0;
-  padding: 0.82rem 0.9rem;
+  padding: 0.74rem 0.8rem;
   border: 1px solid color-mix(in srgb, var(--spw-wisdom-accent) 18%, var(--line, rgba(14, 18, 20, 0.14)));
   border-radius: var(--component-radius-loose);
   background:
@@ -19489,15 +19511,20 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 }
 
 :where(.spw-wisdom-card strong) {
-  color: color-mix(in srgb, var(--ink, #111) 82%, var(--spw-wisdom-accent) 18%);
-  font-size: 1rem;
+  color: color-mix(in srgb, var(--material-ink-matte-strong, var(--ink, #111)) 88%, var(--spw-wisdom-accent) 12%);
+  font-size: clamp(0.94rem, 0.91rem + 0.12vw, 1.02rem);
   line-height: 1.18;
 }
 
 :where(.spw-wisdom-card p) {
   margin: 0;
-  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
-  line-height: 1.45;
+  color: color-mix(
+    in srgb,
+    var(--material-ink-matte-soft, var(--ink-soft, rgba(0, 0, 0, 0.72))) 72%,
+    var(--material-ink-matte-strong, var(--ink, rgba(0, 0, 0, 0.92))) 28%
+  );
+  font-size: clamp(0.84rem, 0.81rem + 0.12vw, 0.91rem);
+  line-height: 1.5;
 }
 
 :where(.spw-wisdom-card code) {
@@ -28401,30 +28428,61 @@ html[data-spw-theme-pack="electric-studio"] {
     display: grid;
     gap: var(--spw-pack-gap, var(--space-sm, 0.75rem));
     grid-template-areas:
+        "context"
         "media"
         "body"
         "actions";
 }
 
+[data-spw-pack-region="context"] { grid-area: context; min-inline-size: 0; }
 [data-spw-pack-region="media"] { grid-area: media; min-inline-size: 0; }
 [data-spw-pack-region="body"] { grid-area: body; min-inline-size: 0; }
 [data-spw-pack-region="actions"] { grid-area: actions; min-inline-size: 0; }
 
 @supports (container-type: inline-size) {
-  /* Split: media seats beside body once the card itself is wide enough. */
+  /* Split: spend two columns only when two real regions can occupy them. */
   @container spw-pack (min-width: 26rem) {
-    [data-spw-pack-regions] {
+    [data-spw-pack-regions]:has(> [data-spw-pack-region="media"]):has(> [data-spw-pack-region="body"]) {
       grid-template-columns: minmax(7rem, 1fr) minmax(0, 1.7fr);
       grid-template-areas:
         "media body"
         "media actions";
       align-items: start;
     }
+
+    [data-spw-pack-regions]:has(> [data-spw-pack-region="media"]):has(> [data-spw-pack-region="body"]):not(:has(> [data-spw-pack-region="actions"])) {
+      grid-template-areas: "media body";
+    }
+
+    [data-spw-pack-regions]:not(:has(> [data-spw-pack-region="media"])):not(:has(> [data-spw-pack-region="context"])):has(> [data-spw-pack-region="body"]):has(> [data-spw-pack-region="actions"]) {
+      grid-template-columns: minmax(0, 1fr) minmax(6rem, auto);
+      grid-template-areas: "body actions";
+      align-items: start;
+    }
+
+    [data-spw-pack-regions]:has(> [data-spw-pack-region="media"]):not(:has(> [data-spw-pack-region="body"])):has(> [data-spw-pack-region="actions"]) {
+      grid-template-columns: minmax(7rem, 1fr) minmax(6rem, auto);
+      grid-template-areas: "media actions";
+      align-items: start;
+    }
   }
 
-  /* Feature: three lanes when the card has room to spread. */
+  /* Context + prose needs more room than thumbnail + prose. Keep it stacked
+     through medium measures; only open the action rail when the component
+     itself reaches 52rem. */
+  @container spw-pack (min-width: 52rem) {
+    [data-spw-pack-regions]:has(> [data-spw-pack-region="context"]):has(> [data-spw-pack-region="body"]):has(> [data-spw-pack-region="actions"]) {
+      grid-template-columns: minmax(0, 1.45fr) minmax(12rem, 0.8fr);
+      grid-template-areas:
+        "context context"
+        "body actions";
+      align-items: start;
+    }
+  }
+
+  /* Feature: three lanes only when all three regions exist. */
   @container spw-pack (min-width: 44rem) {
-    [data-spw-pack-regions] {
+    [data-spw-pack-regions]:has(> [data-spw-pack-region="media"]):has(> [data-spw-pack-region="body"]):has(> [data-spw-pack-region="actions"]) {
       grid-template-columns: minmax(7rem, 1fr) minmax(0, 2fr) minmax(6rem, auto);
       grid-template-areas: "media body actions";
       align-items: center;
@@ -28432,8 +28490,8 @@ html[data-spw-theme-pack="electric-studio"] {
   }
 }
 
-/* Content-count awareness (the other packing axis). A card holding many items
-   tightens its rhythm regardless of width — :has counts without JS. */
+/* Content-count awareness (the other packing axis). A locally long region
+   tightens its rhythm without waiting for the optional JS mirror. */
 [data-spw-pack-regions]:has(> [data-spw-pack-region] > :nth-child(6)) {
     --spw-pack-gap: var(--space-xs, 0.5rem);
 }
@@ -30117,6 +30175,16 @@ body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surfa
     min-inline-size: 0;
   }
 
+  /* The desk may wrap its children, but main still owns the route frame cap.
+     Replacing that cap with 100% made ultra-wide screens into an unbounded
+     empty canvas and pinned capped seats to the left edge. */
+  body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article),
+  body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article),
+  body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) {
+    max-inline-size: var(--spw-main-width);
+    margin-inline: auto;
+  }
+
   body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > .spw-frame,
   body[data-spw-layout="atlas"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > .spw-frame,
   body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main, main > article) > .spw-frame,
@@ -30140,6 +30208,7 @@ body[data-spw-layout="wide"]:not([data-spw-surface="about"]):not([data-spw-surfa
     inline-size: 100%;
     max-inline-size: 100%;
     min-inline-size: 0;
+    margin-inline: auto;
   }
 
   body[data-spw-layout="newspaper"]:not([data-spw-surface="about"]):not([data-spw-surface="services"]) :is(main > [data-spw-cluster], main > article > [data-spw-cluster]) > :not(.spw-frame),
@@ -31184,6 +31253,17 @@ html[data-spw-page-section-phase="idle"] {
 }
 :where([data-spw-expression-kin="part"]) {
   --spw-expression-accent: var(--op-thread-color, var(--active-op-color, #008080));
+}
+:where([data-spw-expression-kin="projection"]) {
+  --spw-expression-accent: var(--op-concept-color, var(--op-frame-color, #178282));
+}
+
+/* Live channel: lab state residue, not a hover pulse. The capsule named
+   where the next region is allowed to take the handle. */
+:where([data-spw-channel="live"]) {
+  box-shadow:
+    inset 0 0 0 1px
+      color-mix(in srgb, var(--op-frame-color, #178282) 48%, transparent);
 }
 
 /* ── Salience: accumulated warmth ──────────────────────────────────────── */
@@ -41415,7 +41495,12 @@ html[data-spw-cognitive-handles="off"] :where(
     margin-block-start: 0;
   }
 
-  :where(.frame-topline > .frame-sigil, .frame-heading > .frame-sigil, .frame-topline > .spw-delimiter) {
+  :where(
+    .frame-topline > .frame-sigil,
+    .frame-heading > .frame-sigil,
+    .frame-topline > .spw-delimiter,
+    .frame-heading > .spw-delimiter
+  ) {
     align-self: flex-start;
   }
 }
