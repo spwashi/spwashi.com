@@ -298,6 +298,18 @@
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--op-mode-color, var(--op-probe-color, #4a2180)) 38%, transparent);
 }
 
+html[data-spw-color-mode="dark"] :where([data-spw-feature="wrap-jobs"] :is(.operator-chip, .spw-chip)) {
+  background: color-mix(in srgb, var(--surface-panel-strong, var(--surface-strong)) 86%, var(--active-op-color, var(--teal)) 10%);
+  color: var(--ink-strong, CanvasText);
+  border-color: color-mix(in srgb, var(--line-strong) 65%, var(--active-op-color, var(--teal)) 35%);
+}
+
+html[data-spw-color-mode="dark"] [data-spw-surface="about"] :where([data-spw-feature="wrap-jobs"] :is(.operator-chip, .spw-chip)) {
+  background: var(--about-surface-strong, hsl(24 11% 18%));
+  color: var(--about-ink, var(--ink-strong));
+  border-color: var(--about-line-strong, var(--line-strong));
+}
+
 :where([data-spw-feature="wrap-jobs"] [data-spw-copy-depth]) {
   display: none;
   margin: 0;

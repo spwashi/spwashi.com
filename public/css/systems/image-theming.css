@@ -115,3 +115,12 @@
   --spw-image-saturation: 1;
   --spw-image-tint-strength: 0%;
 }
+
+html[data-spw-high-contrast="on"] :where(
+  figure img,
+  [data-spw-image-surface] img,
+  .topic-photo-card img,
+  .image-study img
+) {
+  filter: contrast(1.08);
+}

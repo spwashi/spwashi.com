@@ -129,6 +129,21 @@
   display: none;
 }
 
+html[data-spw-color-mode="dark"] :where(
+  .frame-card,
+  .media-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .operator-card
+) {
+  --component-text: var(--ink-strong, CanvasText);
+  --component-text-soft: var(--ink-soft, CanvasText);
+}
+
 :where(
   .frame-card,
   .media-card,

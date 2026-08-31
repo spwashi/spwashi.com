@@ -1994,8 +1994,8 @@ html[data-spw-color-mode="dark"] {
 
   --ink-strong: rgba(236, 241, 238, 0.96);
   --ink: rgba(228, 235, 232, 0.92);
-  --ink-soft: rgba(202, 214, 210, 0.84);
-  --ink-mid: rgba(202, 214, 210, 0.68);
+  --ink-soft: rgba(214, 224, 220, 0.90);
+  --ink-mid: rgba(214, 224, 220, 0.80);
   --ink-muted: rgba(202, 214, 210, 0.58);
   --ink-faint: rgba(202, 214, 210, 0.52);
   --ink-speculative: rgba(190, 202, 198, 0.18);
@@ -2162,7 +2162,8 @@ html[data-spw-high-contrast="on"] {
   --climate-outline-strength: max(var(--climate-outline-strength), 0.36);
 }
 
-html[data-spw-color-mode="dark"][data-spw-high-contrast="on"] {
+html[data-spw-color-mode="dark"][data-spw-high-contrast="on"],
+html[data-spw-high-contrast="on"][data-spw-theme-pack="banked-ember"]:not([data-spw-color-mode="light"]) {
   --ink-strong: rgba(255, 255, 255, 0.98);
   --ink: rgba(246, 248, 248, 0.96);
   --ink-soft: rgba(230, 238, 236, 0.88);
