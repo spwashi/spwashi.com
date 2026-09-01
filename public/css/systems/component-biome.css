@@ -93,19 +93,25 @@
 :where([data-spw-liminality="projected"]),
 :where([data-spw-liminality="settled"]) { --spw-canopy-depth: 0.2; }
 
-/* ── Measured canopy (forward-compatible) ───────────────────────────────
+/* ── Measured canopy ────────────────────────────────────────────────────
    The density above is structural: it counts children, which is what CSS can
    see unaided. Real canopy is not a count — it is how much sky is actually
    occluded, and that needs measurement.
-   runtime/positioning-orchestration.js is planned to project --spw-edge-proximity
-   and data-spw-extent from a batched MEASURE pass. When it lands, these rules
-   take over from the child count without anything else changing; until then the
-   fallbacks make them inert. A component near a crowded edge is shaded by what
-   is beside it rather than by how many siblings its parent happens to hold. */
 
-:where([data-spw-extent="crowded"]) { --spw-canopy-edge: 0.18; }
+   These rules were written against an anticipated vocabulary — crowded,
+   contained, open — and the pass that landed writes a different one. Only
+   `contained` ever matched, so the middle rule went live while the other two
+   sat dead, and the file read as inert when it was half-wired. The values are
+   now the ones kernel/spatial-bands.js actually produces.
+
+   Extent is a block-axis reading: how much of the viewport a component's own
+   height occupies. A component that fills the screen is under more canopy than
+   one that fits inside it, because there is less sky left around it. */
+
+:where([data-spw-extent="overtall"]) { --spw-canopy-edge: 0.18; }
+:where([data-spw-extent="tall"]) { --spw-canopy-edge: 0.13; }
 :where([data-spw-extent="contained"]) { --spw-canopy-edge: 0.08; }
-:where([data-spw-extent="open"]) { --spw-canopy-edge: 0; }
+:where([data-spw-extent="squat"]) { --spw-canopy-edge: 0; }
 
 /* What shade actually does. Contrast and saturation fall; nothing moves, and
    nothing is hidden — understory is still legible, it is simply further off. */

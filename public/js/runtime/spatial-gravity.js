@@ -40,15 +40,21 @@
  */
 
 import { writeDatasetValues, removeDatasetValues, writeStyleValue } from '../kernel/dom-contracts.js';
+import {
+  MEASURE_BANDS,
+  VERTICAL_DEADZONE,
+  resolveMeasureBand,
+  resolveExtent,
+} from '../kernel/spatial-bands.js';
 import { createSpwLogger, markInstrumented } from '../kernel/instrumentation.js';
 import { ensureSpatialGravityStyles } from '../kernel/deferred-styles.js';
 import { observeIntersections } from './runtime-helpers.js';
 
 const GRAVITY_SELECTOR = '[data-spw-gravity]';
 
-const MEASURE_BANDS = Object.freeze({ compact: 320, balanced: 580, wide: 880 });
+/* MEASURE_BANDS, VERTICAL_DEADZONE and the band resolvers come from
+   kernel/spatial-bands.js — see that file for why they are not local. */
 const EDGE_THRESHOLD_RATIO = 0.12;
-const VERTICAL_DEADZONE = 0.15;
 
 const logger = createSpwLogger('spw-spatial-gravity', {
   role: 'spatial-controller',
@@ -188,21 +194,6 @@ const resolveSalience = (el) => {
 
 const rectsIntersect = (a, b) =>
   a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
-
-const resolveMeasureBand = (inlineSize) => {
-  if (inlineSize < MEASURE_BANDS.compact) return 'compact';
-  if (inlineSize < MEASURE_BANDS.balanced) return 'balanced';
-  if (inlineSize < MEASURE_BANDS.wide) return 'wide';
-  return 'maximal';
-};
-
-const resolveExtent = (blockSize, viewportHeight) => {
-  const ratio = blockSize / Math.max(1, viewportHeight);
-  if (ratio < 0.25) return 'squat';
-  if (ratio <= 1) return 'contained';
-  if (ratio <= 1.8) return 'tall';
-  return 'overtall';
-};
 
 /* The raw primitive: room on each side of the element, in px (clamped >= 0).
    Everything else — gravity, edges, fit — derives from these four numbers, so

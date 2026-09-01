@@ -27,6 +27,12 @@ import {
   writeStyleValue,
 } from '/public/js/kernel/dom-contracts.js';
 import { guardCall } from '/public/js/kernel/dom-render.js';
+import {
+  MEASURE_BANDS,
+  resolveMeasureBand,
+  resolveExtent,
+  resolveVerticalGravity,
+} from '/public/js/kernel/spatial-bands.js';
 
 const TRACKED_SELECTOR = [
   '[data-spw-gravity]',
@@ -37,11 +43,9 @@ const TRACKED_SELECTOR = [
   '[data-spw-feature="cauldron"]',
 ].join(', ');
 
-const MEASURE_BANDS = Object.freeze({
-  compact: 320,
-  balanced: 580,
-  wide: 880,
-});
+/* Bands live in kernel/spatial-bands.js. This module used to carry its own
+   copy, and its block-axis thresholds disagreed with spatial-gravity's on the
+   same elements — "overtall" at 0.95 of the viewport here, 1.8 there. */
 
 const trackedElements = new Set();
 const visibleElements = new Set();
@@ -62,30 +66,17 @@ function computeSpatialMetrics(el, viewportWidth, viewportHeight) {
   const height = rect.height;
 
   // Measure band (inline axis)
-  const measureBand = width < MEASURE_BANDS.compact
-    ? 'compact'
-    : width < MEASURE_BANDS.balanced
-      ? 'balanced'
-      : width < MEASURE_BANDS.wide
-        ? 'wide'
-        : 'maximal';
+  const measureBand = resolveMeasureBand(width);
 
   // Extent (block axis relative to viewport)
-  const heightRatio = viewportHeight > 0 ? height / viewportHeight : 0;
-  const extent = heightRatio < 0.22
-    ? 'squat'
-    : heightRatio < 0.65
-      ? 'contained'
-      : heightRatio < 0.95
-        ? 'tall'
-        : 'overtall';
+  const extent = resolveExtent(height, viewportHeight);
 
   // Vertical bias (-1 room above -> +1 room below)
   const roomAbove = Math.max(0, rect.top);
   const roomBelow = Math.max(0, viewportHeight - rect.bottom);
   const totalRoom = roomAbove + roomBelow;
   const verticalBias = totalRoom > 0 ? (roomBelow - roomAbove) / totalRoom : 0;
-  const verticalGravity = verticalBias > 0.15 ? 'falls' : verticalBias < -0.15 ? 'rises' : 'balanced';
+  const verticalGravity = resolveVerticalGravity(verticalBias);
 
   // Edge proximity (0 = center, 1 = touching edge)
   const distFromEdgeX = Math.min(rect.left, viewportWidth - rect.right);
