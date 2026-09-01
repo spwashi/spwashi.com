@@ -8,18 +8,26 @@
 #:layer #!pragmatics
 
 @spirit_cycle: ~"./spirit-cycle.spw"
+@one_physics: ~"./one-physics.spw"
+@pacing: ~"./pacing.spw"
 @wonder_doctrine: ~"./wonder-doctrine.spw"
 @cognitive_surface: ~"./cognitive-surface.spw"
 @spatial_grammar: ~"./spatial-grammar.spw"
 @timing_data_localization: ~"./timing-data-localization.spw"
 @site_semantics: ~"../conventions/site-semantics.spw"
 @style_development: ~"../conventions/style-development.spw"
+@operator_typography: ~"../language/operator-typography.spw"
+@alignment_audit: ~"../audits/aesthetic-alignment-2026-08.spw"
 @valence_kb: ~"../_workbench/.agents/kb/valence.spw"
 @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
 @precipitates: ~"../_workbench/.spw/runtime/precipitates.spw"
 
 dispatch: .{
  spirit_cycle = @spirit_cycle
+ physics_of_the_site = @one_physics
+ pacing = @pacing
+ operator_typography = @operator_typography
+ alignment = @alignment_audit
  wonder = @wonder_doctrine
  cognition = @cognitive_surface
  spatial = @spatial_grammar
@@ -33,13 +41,16 @@ dispatch: .{
 
 reading_order: .{
  note = `Suggested reading order for someone building a coherent model from scratch.`
- sequence = ?< @spatial_grammar, @brace_physics, @wonder_doctrine, @spirit_cycle, @cognitive_surface, @timing_data_localization, @site_semantics, @style_development >[reg=stream]
+ sequence = ?< @spatial_grammar, @brace_physics, @one_physics, @wonder_doctrine, @spirit_cycle, @pacing, @cognitive_surface, @operator_typography, @timing_data_localization, @site_semantics, @style_development >[reg=stream]
  rationale = #[
   `spatial_grammar grounds everything else in something perceptible`,
   `brace_physics makes the spatial grammar physically intuitive`,
+  `one_physics states the single rule the whole site runs on, and separates the five metaphor registers that describe it`,
   `wonder_doctrine clarifies what this system is for`,
   `spirit_cycle shows how engagement arcs over time`,
-  `cognitive_surface integrates the prior four into a design model`,
+  `pacing shows how that arc is distributed — duration, latency, cadence, arc — and why duration is the least of the four`,
+  `cognitive_surface integrates the prior surfaces into a design model`,
+  `operator_typography is where the grammar becomes visible as form rather than as colour`,
   `timing_data_localization explains how scheduled copy becomes a maintainable data surface`,
   `site_semantics applies the model to concrete component decisions`,
   `style_development tracks where aesthetic choices emerge from the work`
@@ -47,17 +58,21 @@ reading_order: .{
 }[reg=facet]
 
 open_across_documents: #[
- .{ ask = `How does the valence pentad (boon, bane, bone, bonk, honk) map onto the spirit-cycle phases?` },
- .{ ask = `Is wonder a property of the surface, the visitor, or the relationship between them?` },
+ .{ ask = `How does the valence pentad (boon, bane, bone, bonk, honk) map onto the spirit-cycle phases?`, answered = @one_physics, answer = `It does not, and should not. The pentad is a sign on charge — what kind of difference this is. The arc is a position along distance — how far through the visit. Different terms of the one rule, so a mapping between them is a category error; any valence can occur at any arc position.` },
+ .{ ask = `Is wonder a property of the surface, the visitor, or the relationship between them?`, see = @wonder_doctrine, note = `The doctrine carries the probe at #>wonder_doctrine_1. Its five tests all measure the reader derivation rather than the designer intent, which is itself an argument for the third option.` },
  .{ ask = `What is the relationship between spatial grammar and accessibility — does the spatial model make the site more or less accessible?` },
  .{ ask = `How does the cognitive-surface model change when the visitor is the author rather than the reader?` },
  .{ ask = `When the site hosts another language through Spw, is the resulting surface more or less cognitively demanding?` },
- .{ ask = `How much timed variation is enough to create return value without making the site feel unstable?`, see = @timing_data_localization }
+ .{ ask = `How much timed variation is enough to create return value without making the site feel unstable?`, see = @timing_data_localization },
+ .{ ask = `Is duration the term the corpus theorised because it is the only one a stylesheet can express alone?`, see = @pacing },
+ .{ ask = `Does a register that is mute somewhere belong to the site, or only to the surfaces it can describe?`, see = @one_physics },
+ .{ ask = `Should a typographic distinction that vanishes in a crop count as a distinction at all?`, see = @operator_typography }
 ][reg=set]
 
 invariants: #[
  `These documents are working notes, not settled doctrine — open questions are more valuable than premature answers.`,
  `Philosophical claims should be falsifiable: every philosophical document should include at least one counterexample or test.`,
  `The philosophy should remain grounded in the site's actual design decisions, not abstract theory divorced from the work.`,
- `New philosophical documents should be added to this index and linked from the graph.`
+ `New philosophical documents should be added to this index and linked from the graph.`,
+ `A claim that names a token, a file, or an attribute value should be grepped before it is written. @alignment_audit found four surfaces asserting things the tree does not contain, and every one of them was mechanically checkable.`
 ][reg=set]

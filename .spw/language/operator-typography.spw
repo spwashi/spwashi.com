@@ -1,0 +1,185 @@
+# Operator Typography
+#
+# @spatial_grammar says what each operator FEELS like as a spatial act.
+# @operator_detection derives a GEOMETRY for each of nineteen operator types.
+# geometry-projection.css renders seven of those geometries as colour and lift.
+#
+# Nothing connects the three. This document is the missing middle term: why a
+# geometry implies a typographic form, and which of those forms is wired.
+#
+# It also rescues the charge-to-type thesis from .agents/project_spw_cognitive_texture.md,
+# which asserted an implementation across five files that no longer exist and,
+# living outside .spw, was never checked by npm run spw:integrity.
+
+#>spw_operator_typography
+#:language #!typography #!operators #!geometry #!charge
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@spatial_grammar: ~"../philosophy/spatial-grammar.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@one_physics: ~"../philosophy/one-physics.spw"
+@pacing: ~"../philosophy/pacing.spw"
+@sigil_geometry_lore: ~"./sigil-geometry-lore.spw"
+@lore_alignment: ~"./lore-alignment.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@operator_alignment: ~"../conventions/operator-alignment.spw"
+@operator_site_projection: ~"../conventions/operator-site-projection.spw"
+@operator_chip_grammar: ~"../conventions/operator-chip-grammar.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@expressive_registers: ~"../conventions/expressive-registers.spw"
+@typography_packing: ~"../conventions/typography-packing.spw"
+@capture_ecology: ~"../conventions/capture-ecology.spw"
+@coloring_depth: ~"../conventions/coloring-depth.spw"
+@alignment_audit: ~"../audits/aesthetic-alignment-2026-08.spw"
+@operator_detection: ~"../../public/js/kernel/operator-detection.js"
+@geometry_projection_css: ~"../../public/css/handles/operators/geometry-projection.css"
+@state_semantics_css: ~"../../public/css/handles/operators/state-semantics.css"
+@sigils_and_chips_css: ~"../../public/css/handles/operators/sigils-and-chips.css"
+@tokens_core: ~"../../public/css/tokens/core.css"
+@cognitive_texture_memo: ~"../../.agents/project_spw_cognitive_texture.md"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = operator[glyph]{geometry.weight.crop}<falsify>
+
+^"thesis"{
+  claim: "An operator's typographic form is not a style choice. It is the geometry the runtime already derived, made visible in type. @operator_detection assigns each of nineteen operator types a geometry — anchor, thread, field-plane, aperture, mass, and fifteen more — and geometry is a claim about shape. A shape has a typographic consequence, and the consequence is derivable rather than chosen."
+  why: "@spatial_grammar established that the operators encode spatial relationships that can be felt before they are named, and that the shift from syntax to space is where the site's wonder comes from. If that is true, the glyph should look like the space it encodes. Currently it looks like whatever the stylesheet needed."
+  the_test_it_must_pass: "@wonder_doctrine#test_structural — the reader must be able to derive why. A typographic form chosen because it looked right fails; a form derived from a geometry the reader can inspect in the DOM passes."
+}
+
+^"the_derived_middle"{
+  ~#note: "The nineteen geometries in @operator_detection OPERATOR_GEOMETRY sort into six families. The families are not invented here — they are what the geometry names already mean. Each family has one honest typographic response."
+  points: .{
+    geometries = #[`anchor`, `center-of-gravity`, `coordinate-origin`, `pin`, `frequency-anchor`][reg=set]
+    operators = `frame, ground, perspective, binding, vibration`
+    claim = `A point is a location. It is made present by mass, not by extension.`
+    response = `weight. A point operator gets heavier as it becomes active and never wider — tracking a point apart contradicts what a point is.`
+  }[reg=facet]
+  threads: .{
+    geometries = #[`thread`, `binding-axis`][reg=set]
+    operators = `potential, subject`
+    claim = `A thread is a connection with direction and distance. @spatial_grammar: "the thread is real but not the same as being at the other end."`
+    response = `tracking. A thread operator is made present by the space it spans, which means letter-spacing and never weight — a heavy thread reads as a point and loses the distance.`
+  }[reg=facet]
+  planes: .{
+    geometries = #[`field-plane`, `support-plane`, `scene-plane`][reg=set]
+    operators = `layer, substrate, scene`
+    claim = `A plane is an extent that holds other things. Its correctness is measured by what it lets be read on top of it.`
+    response = `recession. A plane operator gets quieter as it becomes active — lower contrast, not more weight. This is the one family where activity reads as withdrawal, and it is the family most likely to be styled wrong, because every instinct says an active thing should get louder.`
+  }[reg=facet]
+  edges: .{
+    geometries = #[`opening-edge`, `closing-edge`, `brace-container`][reg=set]
+    operators = `concept, concept-edge, direction`
+    claim = `An edge has an inside and an outside and they are not the same. @operator_semantics#operator_argument_geometry: the opening brace marks objective boundary, the closing brace marks subjective synthesis.`
+    response = `asymmetry. The glyph must read differently on each side. The site already holds the pigment for this — --objective-brace-color and --subjective-brace-color at @tokens_core — and has never carried it into weight or optical form.`
+    ~#guard: "Do not map left and right to good and bad. @operator_semantics is explicit, and the typographic version of that error is making one side look like a warning."
+  }[reg=facet]
+  events: .{
+    geometries = #[`impulse`, `lift`, `aperture`][reg=set]
+    operators = `action, integration, wonder`
+    claim = `An event is something that happens. It is the only family with a time axis.`
+    response = `optical slant. This is the sole family where italic or oblique is honest, because slant implies motion and only these three are in motion. Slant applied elsewhere is borrowed vocabulary — @wonder_doctrine#borrowed_vocabulary.`
+  }[reg=facet]
+  quantities: .{
+    geometries = #[`mass`, `ratio`, `coordinate-choice`][reg=set]
+    operators = `value, normalize, mode`
+    claim = `A quantity is a measured amount, and amounts exist to be compared.`
+    response = `tabular register. These must align down a column and hold their advance width under state change. A quantity that shifts when it activates has destroyed the comparison it exists for.`
+  }[reg=facet]
+  ~#completeness: "Nineteen geometries, six families, no remainder. Verify with the probe in ^\"validation\" rather than trusting the count."
+}
+
+^"charge_and_type"{
+  ~#note: "Rescued from @cognitive_texture_memo and corrected to the live tree. @alignment_audit#f5_operator_typography_unwired records why the original could not be trusted."
+  the_thesis_worth_keeping: "Typographic character should manifest progressively with charge. Not as a state flip but as a continuum: at rest a token is pure potential, and as attention accumulates the form arrives. This is the same claim @one_physics makes about everything else — a difference exists, and crossing it is what is visible."
+  what_was_wrong: "The memo named five implementation files, all of which are gone, and described fourteen implemented types. In the live tree @state_semantics_css sets literal font-weight: 750 and letter-spacing: 0.08em per state. Those are steps, not a continuum, and a step cannot express a charge that is a continuous quantity."
+  the_correction: "The response should read --spw-charge-field and the --spw-e-* dimensions from @electrostatic_affordances, not a state attribute. Charge already composes there — terminal by channel by nest, with --spw-nest-attenuate leaking 1 to 0.62 to 0.38 — so nested operators would quiet themselves without anyone authoring the quieting."
+  the_family_rule: "Each family responds along its own axis and only its own. A point gets heavier with charge; a thread gets wider; a plane gets quieter; an edge gets more asymmetric; an event gains slant; a quantity gains nothing and holds its width. One channel, one verb — the invariant @expressive_registers already enforces for colour, applied to type."
+  ~#status(dispositional): "None of the above is wired. It is stated as disposition, which @sigil_geometry_lore permits: a printed claim may exceed its wiring only when phrased as disposition, never when it names a gesture. Nothing here names a gesture."
+}
+
+^"wiring_boundary"{
+  ~#note: "What is true today, so the disposition above cannot be mistaken for a description. Measured 2026-08-31; re-measure."
+  geometries_total = `19, in @operator_detection`
+  geometries_projected = `7 — anchor, aperture, brace-container, field-plane, frequency-anchor, lift, mass — in @geometry_projection_css`
+  geometries_unprojected = `12. Twelve derived geometries are written to the DOM and nothing reads them.`
+  what_the_seven_get = `Almost entirely colour, scale, outline and alpha: --spw-sigil-saturate, --spw-sigil-brightness, --spw-sigil-payload-lift, --spw-sigil-payload-outline. Across the whole file there is one font-weight, one font-style, one font-size and one font-family.`
+  reading = `The geometry projection is real and it is optical rather than typographic. The site already believes geometry should be visible; it has been spending that belief on colour. This document argues type is the cheaper and more durable register, because it survives greyscale, capture and crop.`
+  honest_note = `Whether the six-family mapping is right is not established by any of this. It is derivable, which is what @wonder_doctrine#test_structural requires; being derivable is not the same as being correct.`
+}
+
+^"the_at_layering"{
+  ~#note: "@lore_alignment#copy_presence_refinement and @operator_semantics#lineage both named this and both deferred it. Deferred twice is a decision by default, so it is made here. @alignment_audit#f6_operator_namespaces carries the finding."
+  the_split: "In the notation layer @ is ref — an address, as in @name: ~\"path\". In the semantic-operator layer @ is perspective — a viewpoint, as in viewer@subject. @tokens_core carries the collision as --op-perspective-color: var(--op-action-color)."
+  the_decision: "Keep it layered. These are two altitudes of one glyph, not drift between two names. An address is where a thing is; a perspective is where it is seen from; a citation is literally the act of looking at another surface from here. The glyph is the same because the act is the same at two scales."
+  the_criterion_it_satisfies: "A reader who knows only the notation layer can predict the semantic layer — @ points away from here — without being told. That is the test @spatial_grammar sets for the whole grammar, and @ passes it. A split that a reader can traverse unaided is layering; one they cannot is drift."
+  typographic_consequence: "Same glyph, altitude distinguished by weight rather than by form. Notation-@ is a point geometry — coordinate-origin, an address — and takes weight. Semantic-@ is the same geometry at reading altitude and takes the same axis, one step lighter, because a viewpoint is a place you look from rather than a place you are."
+  what_this_does_not_do: #[
+    `No renames. @operator_site_projection remains the bridge it already claims to be.`,
+    `No migration of authored data-spw-operator values.`,
+    `No change to --op-perspective-color. The alias is a colour decision and this is a typographic document; if it is wrong, it is wrong for reasons @coloring_depth owns.`
+  ][reg=set]
+}
+
+^"crop_and_capture"{
+  ~#note: "@sigil_geometry_lore: 'the sigil expression is the atomic crop unit.' Extended from layout to type."
+  claim: "If the sigil expression is the atomic crop unit, then legibility at crop scale is a typographic constraint before it is a layout one. A form that only reads at full size has not survived the unit it is supposed to be atomic over."
+  why_here: "These pages are screenshotted and interpreted by other models, and @capture_ecology treats a still as a first-class reading. A typographic distinction that vanishes in a crop is a distinction the most common downstream reader never receives."
+  constraints: #[
+    `Every family response must survive greyscale. Colour is not available in every capture and is the register the site currently over-spends.`,
+    `Every family response must survive a crop to the sigil expression alone, with no surrounding context to compare against — which rules out any response that is only legible as a difference between neighbours.`,
+    `Advance width must be stable for the quantities family under every state, or a captured column stops aligning.`
+  ][reg=set]
+  ~#tension: "The crop rule and the charge rule pull against each other. Charge is a continuum and a crop is one frame, so a form mid-charge is captured as an unlabelled intermediate. @arrival_electrostatics already suppresses discharge under capture mode for exactly this reason; the typographic version of that suppression has not been designed."
+}
+
+# ── Wonders ────────────────────────────────────────────────────
+
+#>wonder_operator_typography_1
+?["Do the six families survive contact with the twelve unprojected geometries?"]{
+  #:depth #!computational ~#lens(derivation)
+  ~#tension: "The families were derived by reading nineteen geometry names, and seven of those nineteen have a rendering to check against. The other twelve have never been rendered, so the mapping is confirmed on the easy third and asserted on the rest."
+  ~#hypothesis: "planes and quantities break first — recession and stable advance width are the two responses that contradict the instinct to make an active thing louder, and nothing has yet pushed back on them."
+  !probe{ "take one unprojected geometry from each family and write the CSS its family rule implies. show the six to someone who knows the operator table and ask which operator each belongs to. the families that survive being guessed from their type alone are derived; the rest were named." }
+  $%[geometry.family, geometry.projected, reader.attribution]
+}
+
+#>wonder_operator_typography_2
+?["Is type the durable register, or just the one we have not spent yet?"]{
+  #:depth #!stylistic ~#lens(capture)
+  ~#with: ~"../conventions/capture-ecology.spw"
+  ~#tension: "This document argues type survives greyscale, capture and crop better than colour, and the site has nineteen geometries rendered almost entirely in colour. Either the corpus discovered the wrong register first, or type is being credited with durability it has not demonstrated because nothing has stress-tested it."
+  ~#hypothesis: "type is durable and low-bandwidth — it survives everything and can carry perhaps three distinctions before a reader stops counting, where colour is fragile and can carry nineteen."
+  !probe{ "render one operator cluster twice, once distinguished only by hue and once only by type. greyscale both, crop both to the sigil expression, and ask a reader to name the operators. count correct attributions per register." }
+  $%[register.attributions, register.survivesGreyscale, register.distinctionCount]
+}
+
+#>wonder_operator_typography_3
+?["What does a glyph mid-charge mean in a still?"]{
+  #:depth #!experiential ~#lens(crop)
+  ~#tension: "Charge is a continuum and a screenshot is one frame. A sigil captured at 0.4 charge is neither latent nor acted, and no legend anywhere says what the intermediate means — so the most common downstream reader receives a value with no key."
+  ~#hypothesis: "the intermediate is not readable and should not be captured — the typographic response should quantise under capture mode the way the arrival discharge already suppresses, so a still always shows a nameable state."
+  !probe{ "screenshot a charged operator at three charge levels with no other change. ask a reader to rank them. if the ranking is unreliable, the continuum is not surviving capture and should quantise." }
+  $%[sigil.chargeAtCapture, reader.ranking, html.captureMode]
+}
+
+^"validation"{
+  probe_families = `node -e "..." over OPERATOR_GEOMETRY in @operator_detection — every geometry belongs to exactly one family in ^"the_derived_middle" and the six sets union to nineteen`
+  probe_wiring = `grep -o 'data-spw-operator-geometry="[a-z-]*"' public/css/handles/operators/geometry-projection.css | sort -u | wc -l — the projected count in ^"wiring_boundary"`
+  probe_type_properties = `grep -cE '^\s+(font-[a-z]+|letter-spacing):' public/css/handles/operators/geometry-projection.css — how much of the projection is typographic at all`
+  probe_memo = `the five files named by @cognitive_texture_memo; each must either exist or the memo must point here`
+  falsification = #[
+    `A geometry belongs to two families, or a twentieth geometry is added to @operator_detection without a family.`,
+    `A typographic response is authored on a state attribute rather than on charge, reintroducing the step the correction replaced.`,
+    `A family responds along an axis belonging to another — a plane that gets heavier, a thread that gets bolder, a quantity whose advance width moves.`,
+    `Slant appears outside the events family.`,
+    `A claim here is rewritten to name a gesture rather than a disposition, which @sigil_geometry_lore forbids while the wiring is absent.`,
+    `The six-family mapping is treated as established. It is experimental fixity and confirmed against seven of nineteen geometries; #>wonder_operator_typography_1 is the open half.`
+  ][reg=set]
+}

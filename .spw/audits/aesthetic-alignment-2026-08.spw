@@ -1,0 +1,231 @@
+# Aesthetic alignment (2026-08)
+#
+# operation: audit + align
+# fixity: tending
+# method: read the aesthetic corpus against the working tree rather than against
+#         itself; grep every claim that names a token, a file, or an attribute
+#         value; record only what a re-run can reproduce.
+#
+# The corpus is not thin. It has grown faster than it has been reconciled, so
+# several surfaces now assert things the implementation contradicts. An
+# unreconciled claim is worse than a missing one: it is cited, and it teaches.
+
+#>aesthetic_alignment_2026_08
+#:audit #!aesthetics #!pacing #!typography #!physics #!alignment
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@spirit_cycle: ~"../philosophy/spirit-cycle.spw"
+@spatial_grammar: ~"../philosophy/spatial-grammar.spw"
+@cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+@philosophy_index: ~"../philosophy/index.spw"
+@design_whimsy: ~"../conventions/design-whimsy.spw"
+@coloring_depth: ~"../conventions/coloring-depth.spw"
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
+@world_physics: ~"../conventions/world-physics.spw"
+@metaphor_dimensional_lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"
+@material_physics: ~"../conventions/material-physics.spw"
+@component_biome: ~"../conventions/component-biome.spw"
+@material_projection: ~"../conventions/material-projection.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@cauldron_registers: ~"../conventions/cauldron-registers.spw"
+@dimension_vocabulary: ~"../conventions/dimension-vocabulary.spw"
+@surface_interaction_combinatorics: ~"../conventions/surface-interaction-combinatorics.spw"
+@daily_kernel: ~"../conventions/daily-kernel.spw"
+@operator_site_projection: ~"../conventions/operator-site-projection.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@typography_packing: ~"../conventions/typography-packing.spw"
+@expressive_registers: ~"../conventions/expressive-registers.spw"
+@sigil_geometry_lore: ~"../language/sigil-geometry-lore.spw"
+@lore_alignment: ~"../language/lore-alignment.spw"
+@harmony_audit: ~"./component-philosophy-harmony-2026-07.spw"
+@one_physics: ~"../philosophy/one-physics.spw"
+@pacing: ~"../philosophy/pacing.spw"
+@operator_typography: ~"../language/operator-typography.spw"
+@tokens_core: ~"../../public/css/tokens/core.css"
+@syntax_css: ~"../../public/css/grammar/syntax.css"
+@play_css: ~"../../public/css/routes/surfaces/play.css"
+@blog_frames_css: ~"../../public/css/routes/surfaces/blog-frames.css"
+@state_semantics_css: ~"../../public/css/handles/operators/state-semantics.css"
+@geometry_projection_css: ~"../../public/css/handles/operators/geometry-projection.css"
+@operator_detection: ~"../../public/js/kernel/operator-detection.js"
+@prepaint_state: ~"../../public/js/runtime/prepaint-state.js"
+@cognitive_texture_memo: ~"../../.agents/project_spw_cognitive_texture.md"
+
+operation = "align"
+fixity = "tending"
+
+expression = corpus[aesthetics]{audit.reconcile.retire}<falsify>
+
+audit_run: .{
+  at = `2026-08-31`
+  scope = `.spw philosophy, the aesthetic conventions, .spw/language, and the CSS/JS they cite. Excludes .spw/_workbench per the site README — that corpus is mounted infrastructure, not consumer theory.`
+  method = `Every claim naming a token, file, or attribute value was grepped against the working tree. Claims that could not be checked mechanically were left alone rather than graded.`
+  posture = `Findings cache here; the align moves live on the linked surfaces. This audit does not edit CSS — no rendered surface changes in this pass.`
+  prior = `@harmony_audit graded metaphor_harmony "B+ — powerful set; needs one physics dictionary". F7 is that grade, followed through.`
+}[reg=facet]
+
+^"thesis"{
+  claim = `The aesthetic corpus is strong where it is falsifiable and weak where it is merely asserted. Every finding below is a place where a document names something the tree does not contain, or where two documents name the same thing differently and neither knows.`
+  why_now = `@wonder_doctrine holds visual effects to a test the corpus does not hold itself to. A document that cites a deleted file fails test_inspectable exactly the way an uninspectable animation does.`
+  refuse = `Do not fix a finding by widening the claim until it becomes true. Either the tree changes or the sentence does.`
+}[reg=facet]
+
+# ── Findings ───────────────────────────────────────────────────
+
+^"f1_phase_namespaces"{
+  claim = `data-spw-phase carries four disjoint vocabularies, and the one with the most CSS usage has no document at all.`
+  musical = `ambient | verse | chorus | bridge | drop — 26 occurrences on html[data-spw-phase] (@play_css :78-102, @blog_frames_css :183-201). Zero .spw surfaces mention it.`
+  elemental = `ground | fluid | radiant | plastic | lattice | membrane — @syntax_css :2344-2349, each routed to an --op-*-color and a --spw-tangibility. Held by @cauldron_registers, @dimension_vocabulary, @surface_interaction_combinatorics.`
+  arc = `initiation | resistance | transformation | expression | return — @spirit_cycle, cited by thirteen surfaces, written to no attribute anywhere.`
+  climate = `orient | anchor | weave | rehearse | offer — @prepaint_state DEVELOPMENTAL_CLIMATES, @operator_site_projection, @daily_kernel. A fifth arc, on a different attribute.`
+  sidecars = `public/images/assets/**/*.spw carry a sixth ad-hoc spirit_phase set — invitation, threshold, structure, matter, growth, creation — matching none of the five.`
+  reading = `These are not one concept with five spellings. They are four different axes and one drift. The defect is not that they disagree; it is that three of them share an attribute name, so the disagreement is invisible at the selector.`
+  disposition = "bridge"
+  moves_to = @one_physics
+  probe = `grep -rhon 'data-spw-phase="[a-z-]*"' public/css/ | sed 's/.*="//;s/"//' | sort | uniq -c | sort -rn`
+}[reg=facet]
+
+^"f2_timing_vocabulary"{
+  claim = `The timing vocabulary @design_whimsy teaches does not exist in the codebase.`
+  asserted = `practice_settle 100ms, threshold_reveal 300ms, full_express 600ms — named in ^"timing_vocabulary" and referenced by nine micro-interaction entries and every operator whimsy block.`
+  measured = `Zero occurrences of practice-settle, threshold-reveal, or full-express across public/ and scripts/.`
+  actual = `Seven rungs at @tokens_core :1097-1110 — instant 50, snap 90, fast 140, base 220, deliberate 360, slow 480, ceremonial 720 — all collapsing to 1ms at :2178-2184 under reduced motion.`
+  severity = `@design_whimsy#whimsy_principles states "Timing is semantic — animations use named tokens (practice-settle, threshold-reveal, full-express)" as a principle. It is false as written, and it is the principle a reader would act on.`
+  reading = `The three-rung model was a good idea that the implementation outgrew into seven. Nothing recorded the outgrowing, so the theory kept teaching the smaller ladder.`
+  disposition = "align"
+  moves_to = @pacing
+  probe = `grep -rn "practice-settle\|threshold-reveal\|full-express" public/ scripts/ | wc -l  # expect 0`
+}[reg=facet]
+
+^"f3_hardcoded_phase_color"{
+  claim = `@design_whimsy#spirit_phase_visual_mapping hardcodes five HSL literals for phases that the cascade routes through operator color.`
+  authored = `initiation hsl(210 70% 38%), resistance hsl(0 40% 38%), transformation hsl(268 55% 42%), expression hsl(36 80% 36%), return hsl(160 60% 32%).`
+  contradicts = `@coloring_depth requires color to route through operator accent families rather than arbitrary hue; @syntax_css :2344-2349 already routes phase to --op-frame-color, --op-ref-color, --op-probe-color, --op-action-color, --op-object-color, --op-topic-color.`
+  reading = `Two color systems for one concept, and the literal one is the documented one. A reader following the doc would author hue the cascade cannot reason about.`
+  disposition = "align"
+  probe = `grep -n 'hsl(' .spw/conventions/design-whimsy.spw`
+}[reg=facet]
+
+^"f4_disqualified_futures"{
+  claim = `@design_whimsy#future_whimsy_opportunities proposes effects the site's own doctrine disqualifies.`
+  item_constellation = `"Home constellation renders itself slowly on page load" — fails @wonder_doctrine#ambient_decoration marker_1 (present on page load without any interaction) and marker_2 (does not change with liminality or circuit level).`
+  item_parallax = `always-on "parallax_depth" on cards or frames — same two markers, and it contradicts @arrival_electrostatics#thesis: "Do not author an entrance. Author a wall, and let the entrance be what crossing it looks like."`
+  reading = `The backlog predates the doctrine that rules it out. Leaving it costs nothing today and costs a bad afternoon the day someone builds from it.`
+  disposition = "retire"
+  keeps = `interaction_physics, discovery_trails, and responsive_whimsy survive the same tests and stay — the entry is pruned, not deleted.`
+  probe = `read @design_whimsy#future_whimsy_opportunities against @wonder_doctrine#what_disqualifies_wonder, item by item`
+}[reg=facet]
+
+^"f5_operator_typography_unwired"{
+  claim = `Operator typography is asserted as implemented, its named implementation is gone, and the claim lives outside the corpus so nothing checked it.`
+  asserted = `@cognitive_texture_memo — "Each operator type has a distinct typographic character that manifests progressively with charge. This is not decoration; it IS the meaning in motion." Names fourteen implemented types.`
+  named_files = #[
+    `public/css/spw-typography.css — gone`,
+    `public/css/spw-wonder.css — gone`,
+    `public/js/spw-cognitive-surface.js — gone`,
+    `public/js/spw-personas.js — gone`,
+    `public/js/spw-lattice.js — gone`
+  ][reg=set]
+  actual = `@state_semantics_css :176-177 sets literal font-weight: 750 and letter-spacing: 0.08em — a fixed step per state, not a function of --spw-charge-field. The progressive claim has no carrier.`
+  root_cause = `The memo sits in .agents/, outside the corpus, so npm run spw:integrity never resolved its citations. A flat-layout reorganization moved every file it named and nothing failed.`
+  reading = `The thesis is good and worth keeping — that is why this is a rescue and not a deletion. What it lacked was an address the integrity check could reach.`
+  disposition = "align"
+  moves_to = @operator_typography
+  probe = `for f in public/css/spw-typography.css public/js/spw-personas.js; do test -e "$f" || echo "GONE $f"; done`
+}[reg=facet]
+
+^"f6_operator_namespaces"{
+  claim = `Two operator namespaces coexist and two surfaces have now deferred the decision.`
+  deferral_one = `@lore_alignment#copy_presence_refinement — "This needs a deliberate align operation — either a mapping table between namespaces or a migration — not a silent edit."`
+  deferral_two = `@operator_semantics#lineage — "@ is the one open decision... Keep @ layered (notation sigil vs semantic operator) or unify it — resolve this before treating @ as drift to fix."`
+  baked_in = `@tokens_core carries the collision as a variable: --op-perspective-color: var(--op-action-color).`
+  disposition = "align"
+  resolution = `Keep layered. @ is ref/address in the notation layer and perspective in the semantic layer; these are different altitudes, not drift. @operator_typography states the layering rule and its typographic consequence. No renames, no migration — @operator_site_projection remains the bridge it already claims to be.`
+  moves_to = @operator_typography
+  probe = `grep -n 'op-perspective-color\|op-ref-color' public/css/tokens/core.css`
+}[reg=facet]
+
+^"f7_unadjudicated_physics"{
+  claim = `The corpus runs five metaphor families concurrently and holds two rules about metaphor that disagree.`
+  rule_subtraction = `@world_physics#the_move — "the physics is the art direction... a rule introduced once is a special case; a rule that holds everywhere is physics." Under this, five concurrent physics is four too many.`
+  rule_projection = `@metaphor_dimensional_lexicon#thesis — "Metaphors are projection registers... Freeze the coordinate; reproject the lexicon." Under this, five is fine and the number is not the question.`
+  families = #[
+    `electrostatics — @electrostatic_affordances, @arrival_electrostatics`,
+    `optics — @material_physics`,
+    `ecology — @component_biome`,
+    `solution chemistry — @material_projection`,
+    `field — @attention_field, @expressive_registers`
+  ][reg=set]
+  reading = `Both rules are right about different jobs and neither says so. The lexicon governs naming; world-physics governs rule admission. Read that way they compose, and the five families stop being a contradiction and become a claim that needs a test.`
+  disposition = "align"
+  moves_to = @one_physics
+  prior_grade = `@harmony_audit graded this B+ and named the missing piece as "one physics dictionary" in 2026-07. This is the follow-through.`
+  probe = `read @world_physics#the_move and @metaphor_dimensional_lexicon#thesis in one sitting and ask which one governs a new metaphor arriving tomorrow`
+}[reg=facet]
+
+# ── Dispositions ───────────────────────────────────────────────
+
+^"dispositions"{
+  ~#note: "What each finding becomes. Nothing here changes a rendered surface."
+  bridge = `F1 — four axes named and separated in @one_physics; the shared attribute name recorded as follow-up implementation work, not done here.`
+  align_pacing = `F2, F3 — @pacing carries the measured ladder; @design_whimsy is corrected to cite it.`
+  retire = `F4 — two backlog items struck with a one-line reason citing @wonder_doctrine.`
+  align_typography = `F5, F6 — @operator_typography rescues the charge-to-type thesis into the corpus and states the @ layering.`
+  align_physics = `F7 — @one_physics adjudicates, and gives F1's axis separation a home.`
+  carried = `The distance between @operator_typography's dispositional claims and @state_semantics_css's fixed steps is real and stays open. Per @sigil_geometry_lore a printed claim may exceed its wiring only as disposition, never as a named gesture — so the doc must mark which half it is on.`
+}[reg=facet]
+
+^"what_this_audit_does_not_claim"{
+  ~#note: "Boundaries, so a later reader does not over-read the grades."
+  not_measured = `Nothing here grades whether the aesthetics are good. Every finding is an internal-consistency defect, checkable by grep, and a corpus can be perfectly consistent and still ugly.`
+  not_scanned = `.spw/_workbench holds a parallel theory corpus (operator-algebra, brace-physics, lens-algebra). It was excluded deliberately. If its vocabulary has drifted from the site's, this audit would not see it.`
+  not_swept = `115 conventions surfaces exist; this pass read the aesthetic cluster. A claim-by-claim grep of the whole corpus would likely find more of F5's shape — a citation that survived a reorganization only because nothing resolved it.`
+}[reg=facet]
+
+# ── Wonders ────────────────────────────────────────────────────
+
+#>wonder_aesthetic_alignment_1
+?["Should a document that cites a deleted file fail the build the way a broken import does?"]{
+  #:depth #!computational ~#lens(integrity)
+  ~#tension: "npm run spw:integrity resolves 2,480 citations inside .spw and would have caught F5 instantly — but F5 lived in .agents/, where no check reaches. Extending the check makes every plan memo load-bearing, which is a cost; not extending it means the corpus is only as honest as its folder."
+  ~#hypothesis: "the folder is the real contract — a claim inside .spw is checked and a claim outside it is decoration, and F5 happened because a load-bearing thesis was filed as decoration."
+  !probe{ "point spw-integrity at .agents/ and count the unresolved citations. if the count is large, the boundary is doing real work and F5 was a filing error. if it is near zero, the boundary is arbitrary and the check should widen." }
+  $%[corpus.citationsResolved, memo.citationsUnresolved, claim.folder]
+}
+
+#>wonder_aesthetic_alignment_2
+?["How long can a vocabulary drift before the drift is the meaning?"]{
+  #:depth #!educational ~#lens(namespace)
+  ~#with: ~"../philosophy/one-physics.spw"
+  ~#tension: "F1's musical phases have no document and 26 usages; F1's arc phases have thirteen documents and no usages. One is real and unwritten, the other written and unreal. Aligning them means deciding which kind of existence counts."
+  ~#hypothesis: "usage wins — a value the cascade selects on is a fact about the site, and a value only prose names is a proposal."
+  !probe{ "for each of the four phase vocabularies, count CSS selectors and .spw citations. plot them. anything with high citations and zero selectors is a proposal wearing the clothes of a convention." }
+  $%[phase.cssSelectors, phase.spwCitations, phase.attributeName]
+}
+
+#>wonder_aesthetic_alignment_3
+?["Does the corpus get more honest by shrinking?"]{
+  #:depth #!stylistic ~#lens(subtraction)
+  ~#tension: "@world_physics says a world is defined by what it declines, and this audit's only deletion is two backlog lines. Every other disposition adds a surface. An audit that resolves inconsistency by writing more may be treating the symptom."
+  ~#hypothesis: "no for F1 and F7 — the axes are genuinely distinct and collapsing them would lose information — but yes somewhere, and the place to look is the 115-file conventions cluster rather than philosophy."
+  !probe{ "npm run spw:census .spw --sort degree. take the ten lowest-degree conventions surfaces and ask, for each, what would be lost by folding it into its nearest neighbour. count how many answers are 'nothing'." }
+  $%[surface.degree, surface.lineCount, surface.uniqueClaims]
+}
+
+^"validation"{
+  probe_integrity = `npm run spw:integrity — every citation above resolves; F5's failure mode is exactly what this catches`
+  probe_wonders = `npm run wonder`
+  probe_measures = `npm run wonder:measures`
+  probe_census = `npm run spw:census`
+  replay = `Each finding carries its own probe. Re-run them rather than trusting this file — the tree moves.`
+  falsification = #[
+    `A finding's probe no longer reproduces it, and the finding was not retired.`,
+    `An align disposition lands by widening the original claim until it became true, rather than by changing the tree or the sentence.`,
+    `A surface cited here is edited without this audit recording that the finding closed.`,
+    `The three new surfaces are written and npm run spw:census shows any of them at degree 1 — written but not wired, which is F5's defect committed again.`
+  ][reg=set]
+}

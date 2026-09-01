@@ -1,0 +1,230 @@
+# One Physics
+#
+# The site runs five metaphor families at once — electrostatics, optics,
+# ecology, solution chemistry, field. This document argues they are not five
+# physics. They are five registers on one rule, each specialised to a different
+# term of it, and the reason they have never contradicted each other is that
+# they have never been describing different things.
+#
+# Written because two conventions disagree about whether that is allowed, and
+# neither knows it disagrees.
+
+#>spw_one_physics
+#:philosophy #!physics #!metaphor #!registers
+#:operation #!align
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@philosophy_index: ~"./index.spw"
+@world_physics: ~"../conventions/world-physics.spw"
+@metaphor_dimensional_lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"
+@electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@material_physics: ~"../conventions/material-physics.spw"
+@component_biome: ~"../conventions/component-biome.spw"
+@material_projection: ~"../conventions/material-projection.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@expressive_registers: ~"../conventions/expressive-registers.spw"
+@cauldron_registers: ~"../conventions/cauldron-registers.spw"
+@dimension_vocabulary: ~"../conventions/dimension-vocabulary.spw"
+@surface_interaction_combinatorics: ~"../conventions/surface-interaction-combinatorics.spw"
+@operator_site_projection: ~"../conventions/operator-site-projection.spw"
+@daily_kernel: ~"../conventions/daily-kernel.spw"
+@coloring_depth: ~"../conventions/coloring-depth.spw"
+@wonder_doctrine: ~"./wonder-doctrine.spw"
+@spirit_cycle: ~"./spirit-cycle.spw"
+@spatial_grammar: ~"./spatial-grammar.spw"
+@cognitive_surface: ~"./cognitive-surface.spw"
+@pacing: ~"./pacing.spw"
+@alignment_audit: ~"../audits/aesthetic-alignment-2026-08.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@syntax_css: ~"../../public/css/grammar/syntax.css"
+@play_css: ~"../../public/css/routes/surfaces/play.css"
+@blog_frames_css: ~"../../public/css/routes/surfaces/blog-frames.css"
+@prepaint_state: ~"../../public/js/runtime/prepaint-state.js"
+
+operation = "align"
+fixity = "experimental"
+
+expression = physics[one]{rule.register.decline}<falsify>
+
+^"thesis"{
+  claim: "Nothing on this site happens without a potential difference across a boundary. That is the whole physics. Charge, liminality, saturation and phase are its measurable terms; electrostatics, optics, ecology, solution chemistry and field are five registers that describe it, each specialised to a different term. They have coexisted without contradiction for the reason that has never been written down: they were never rival accounts of the same thing."
+  why: "@world_physics says a rule that holds in one place is a special case and only a rule that holds everywhere is physics. @metaphor_dimensional_lexicon says metaphors are projection registers over frozen coordinates and may be swapped when a better lexicon arrives. Read as competitors, one of them must be wrong and the site must shed four metaphors. Read as answering different questions, they compose exactly."
+  division: "The lexicon governs naming. World-physics governs rule admission. A metaphor arriving tomorrow is a naming question and the lexicon decides it. A rule arriving tomorrow is an admission question and subtraction decides it. The corpus has been applying each to the other's job."
+  prior: "@harmony_audit graded metaphor harmony B+ in 2026-07 and named the gap as 'needs one physics dictionary'. This is that dictionary, and @alignment_audit#f7_unadjudicated_physics is the finding it closes."
+}
+
+^"the_rule"{
+  ~#note: "Run through @world_physics#the_questionnaire, which is the site's own admission test. A rule that cannot answer all four is a mood."
+  statement: "A potential difference across a boundary."
+  carrier: .{
+    answer = `Charge, carried by operators as terminals and by regions as material. @electrostatic_affordances already names this: an operator is an electrode, an interaction is how it arms, a region is what the current runs through.`
+    ~#why: `the rule is observable because charge has somewhere to be and something to cross`
+  }[reg=facet]
+  ordering: .{
+    answer = `Ordered. Distance is meaningful, which is what makes liminality a ladder rather than a set of labels and what makes an arrival perceptible only in proportion to what it crossed.`
+    ~#consequence: `every pacing question in @pacing follows from this answer. If difference were categorical, there would be nothing to distribute and pacing would collapse into scheduling.`
+  }[reg=facet]
+  identity: .{
+    answer = `Zero potential — a surface with no boundary, or a boundary with the same state on both sides. This is not "nothing is happening"; it is the precise, common, and correct state of most of the site most of the time.`
+    ~#reading: `@arrival_electrostatics measured it: 124 of 153 routes have one liminality band or none, so most arrivals genuinely have nothing to cross. Naming the zero is what let the silence be derived instead of decided.`
+  }[reg=facet]
+  composition: .{
+    answer = `Sum, with attenuation by nesting. @electrostatic_affordances: --spw-nest-attenuate 1 to 0.62 to 0.38. Inner braces leak; nested charge does not shout as loud as the outer wall.`
+    ~#why(this is the learnable one): `composition is the rule readers predict with. A reader who knows only that differences add and nesting damps can guess right about a surface they have not seen.`
+  }[reg=facet]
+}
+
+^"the_four_quantities"{
+  ~#note: "@world_physics#worked_example already states this site as a world and admits four rules. They are not four physics — they are the four terms the one rule is measured along. Restated here to show the fit, not to re-decide it."
+  charge = `signed, sums, identity 0. The quantity that crosses.`
+  liminality = `ordered ladder, composes as a span. The distance it crosses.`
+  saturation = `a solution holds only so much before more stops dissolving. The capacity of what it crosses into.`
+  phase = `categorical, six values, composes as most-tangible-present. The material state of the boundary itself.`
+  ~#reading: "Difference, distance, capacity, boundary. Each register below speaks fluently about one or two of these and haltingly about the rest, and that unevenness is the finding."
+}
+
+^"the_five_registers"{
+  ~#note: "For each: which term of the rule it speaks about, and what it cannot say. The second half is the part the corpus never wrote."
+  electrostatics: .{
+    term = `difference — charge, terminal, channel, dielectric, discharge`
+    home = @electrostatic_affordances
+    fluent = `arming, commit, grounding, why a mark in a hook lingers and the same mark in a read seat fades`
+    mute = `what a surface looks like at rest. Electrostatics describes events; a page nobody is touching is, to this register, simply latent — which is true and unhelpful.`
+  }[reg=facet]
+  optics: .{
+    term = `boundary — transmission, specular, saturation of returned light, blur, canopy`
+    home = @material_physics
+    fluent = `what a surface does to what arrives at it. "The difference between glass and matte is a number" is the sharpest sentence in the corpus about boundaries.`
+    mute = `time. Optics has no verb tense. It can describe the still before a crossing and the still after, and has no way to say the crossing.`
+  }[reg=facet]
+  ecology: .{
+    term = `distance, over seasons — soil, canopy, guild, exchange, decomposer`
+    home = @component_biome
+    fluent = `what accrues, what feeds what, why a region has a climate rather than a setting`
+    mute = `the instant. Ecology needs a population and a season; it has nothing to say about one sigil at one moment, and forcing it there produces the borrowed-vocabulary failure @wonder_doctrine names.`
+  }[reg=facet]
+  solution_chemistry: .{
+    term = `capacity — dissolving, saturated, supersaturated, precipitate`
+    home = @material_projection
+    fluent = `accumulation reaching a limit and changing state. This is the register that explains why more input stops producing more result, which none of the others can.`
+    mute = `direction. A solution does not approach or avoid. Valence has no meaning here, so anything goal-relative must be said in another register.`
+  }[reg=facet]
+  field: .{
+    term = `the aggregate of all four — intensity, resonance, attention, coherence`
+    home = @attention_field
+    fluent = `room loudness, coupling between kin, one number for how charged a whole page is`
+    mute = `locality. A field says what the room is doing and cannot say which element did it, which is why @expressive_registers had to add per-element channels underneath it.`
+  }[reg=facet]
+}
+
+^"the_universality_test"{
+  ~#note: "The test this document was written to run, the result of running it, and the correction the result forces. Recorded in this order deliberately."
+  as_stated = `Each register must be able to describe any surface. A register that can only describe some surfaces is a rival rule rather than a register, and @world_physics subtraction applies: it must be declined.`
+  result = `Optics fails it. Optics has no time axis, so it cannot describe an arrival, a settle, or any crossing — only the still on either side. Under the test as stated, the site would have to decline optics, which would mean declining @material_physics and the entire material system. That conclusion is absurd, so the test is wrong.`
+  correction = `The test conflated two things. A rival rule is one that makes a prediction contradicting the others. A specialised register is one that is silent where the others speak. Silence is not contradiction.`
+  as_corrected = #[
+    `Every register must describe its own term of the rule for ANY surface — optics must say what any boundary does to light, including a boundary with nothing crossing it.`,
+    `No register may contradict another where their domains overlap. Where two speak, they must agree.`,
+    `A register that is mute everywhere carries no term and is decoration; decline it.`,
+    `A register that speaks a different rule is a rival; decline it under @world_physics subtraction.`
+  ][reg=set]
+  rerun = `All five pass the corrected test. Each is mute somewhere — that is what "specialised" means — and none of the five mute-zones above is a place where another register says something incompatible.`
+  ~#reading: "The naive test would have deleted the material system to protect a sentence. Keeping the failed version of the test on the page is the point: it is the evidence that the registers are specialised rather than interchangeable, which is the actual claim."
+}
+
+^"phase_axes"{
+  ~#note: "@alignment_audit#f1_phase_namespaces found four vocabularies sharing one attribute name. They are four axes, not four spellings, and the bridge belongs here because separating them is a physics question — each names a different term of the rule."
+  arc: .{
+    names = `initiation | resistance | transformation | expression | return`
+    owner = @spirit_cycle
+    term = `distance — where a visit is in its story`
+    shape = `ordered, composes as a span`
+    status = `cited by thirteen surfaces, written to no attribute. A proposal, not yet a fact about the site.`
+  }[reg=facet]
+  material_state: .{
+    names = `ground | fluid | radiant | plastic | lattice | membrane`
+    owner = @dimension_vocabulary
+    also = #[@cauldron_registers, @surface_interaction_combinatorics][reg=set]
+    term = `boundary — what the surface is made of right now`
+    shape = `categorical, six values, composes as most-tangible-present`
+    status = `@syntax_css :2344-2349, routed to --op-*-color and --spw-tangibility. @world_physics#worked_example admits exactly this set as the site's phase rule, so it holds the strongest claim to the name.`
+  }[reg=facet]
+  movement: .{
+    names = `ambient | verse | chorus | bridge | drop`
+    owner = `nothing — this axis has no .spw surface and 26 CSS occurrences (@play_css, @blog_frames_css)`
+    term = `the aggregate — how loud the room is`
+    shape = `ordered by intensity, composes as strongest-wins`
+    status = `the most-used phase vocabulary on the site and the only one nobody wrote down. Song-structure terms: it names a section within a piece, not a state of matter.`
+  }[reg=facet]
+  climate: .{
+    names = `orient | anchor | weave | rehearse | offer`
+    owner = @daily_kernel
+    also = @operator_site_projection
+    term = `distance, over seasons — the authoring season, not the visit`
+    shape = `categorical, five values`
+    status = `already on its own attribute (@prepaint_state DEVELOPMENTAL_CLIMATES). No collision; listed so the count is honest.`
+  }[reg=facet]
+  the_defect = `Three of these are distinct axes and two of them share data-spw-phase. The disagreement is invisible at the selector, so a rule written for one silently applies to the other.`
+  the_move = `material_state keeps data-spw-phase — it is what @world_physics already admitted as this site's phase rule, and it is the only one of the four that is genuinely a state of matter. movement needs a name of its own; data-spw-movement is unclaimed and says what the axis means. arc needs an attribute at all before it is anything more than prose.`
+  deferred = `Renaming an attribute across 26 occurrences is implementation work and is NOT done in this pass. Recorded here so the naming decision is made once, in writing, before anyone touches a selector.`
+  guard = `phase is not register is not lens is not form. @expressive_registers already guards the last three; this adds the fourth to the same list.`
+}
+
+^"what_this_declines"{
+  ~#note: "@world_physics is a method of subtraction, so a document invoking it owes a list of what it turned down."
+  time_of_day = `Declined in @world_physics#worked_example and still declined: no carrier here and no consequence would follow.`
+  scarcity = `Declined there for contradicting charge. Restated in the register language: scarcity would make gathering competitive, and every register above describes accumulation as additive.`
+  a_sixth_register = `Any new metaphor family must name its term of the rule and its mute-zone before it is adopted. A metaphor that is fluent everywhere is not a register — it is a restatement of the rule with new nouns, and it costs vocabulary while adding nothing.`
+  ~#antipattern: "adopting a metaphor because a surface needed a word. That is the special case @world_physics warns about, wearing aesthetics."
+}
+
+^"standing_questions_this_answers"{
+  ~#note: "Open questions in @philosophy_index and elsewhere that follow from the above. Recorded so the index can retire them rather than carry them indefinitely."
+  valence_pentad = `"How does the valence pentad (boon, bane, bone, bonk, honk) map onto the spirit-cycle phases?" — It does not, and should not. The pentad is a sign on charge (what kind of difference this is); the arc is a position along distance (how far through the visit). They are different terms of the rule, so a mapping between them would be a category error. Any of the five valences can occur at any of the five arc positions.`
+  fragments = `@cognitive_surface hypothesises that a session gets fragments of the cycle and that arrival chooses the fragment. Consistent with this document: arrival is a difference event and the arc is a distance axis, so an arrival can place a reader anywhere on the arc without traversing it. The fragment is not a failure of the cycle; it is what the physics predicts.`
+}
+
+# ── Wonders ────────────────────────────────────────────────────
+
+#>wonder_one_physics_1
+?["Is a register's mute-zone a property of the metaphor, or of how little we have asked of it?"]{
+  #:depth #!mathematical ~#lens(specialisation)
+  ~#tension: "Optics is called mute about time here, but physical optics has propagation, interference and phase velocity — all temporal. The mute-zone may be a fact about the register or a fact about the four hundred lines of CSS that is all this site has asked optics to do."
+  ~#hypothesis: "the site's, not the metaphor's — every mute-zone above is a place the corpus stopped writing rather than a place the source discipline runs out."
+  !probe{ "take one mute-zone and try to write three sentences in that register about the term it supposedly cannot address. if the sentences are available and merely unwritten, the specialisation is an artefact of our attention and the corrected test is weaker than it looks." }
+  $%[register.term, register.muteZone, register.sourceDisciplineReach]
+}
+
+#>wonder_one_physics_2
+?["Can a reader who knows only the one rule predict a surface they have not seen?"]{
+  #:depth #!educational ~#lens(admission)
+  ~#with: ~"../conventions/world-physics.spw"
+  ~#tension: "@world_physics#wonder_world_physics_1 sets prediction as the test of whether a rule is load-bearing. This document adds a rule above the four and has not run that test on it. A rule that is true but unpredictive is a summary, not a physics."
+  ~#hypothesis: "yes for silence, no for form — a reader given only 'potential difference across a boundary' can correctly predict that most arrivals are invisible, and cannot predict what any of them look like."
+  !probe{ "state only the one rule to someone who has not read the corpus. show them two routes, one npm run reasons calls conductive and one it calls flat. ask which one should announce itself. if they get it right, the rule predicts." }
+  $%[reader.priorRules, reader.prediction, route.arrivalField]
+}
+
+#>wonder_one_physics_3
+?["What happens to the art direction if the one rule is wrong?"]{
+  #:depth #!stylistic ~#lens(subtraction)
+  ~#tension: "@world_physics claims the physics IS the art direction. If that holds, this document just made a claim about how the site should look, without touching a stylesheet — and if the rule is wrong, the look is wrong in a way no visual review would catch."
+  ~#hypothesis: "the rule is under-determined rather than wrong — potential difference across a boundary predicts silence correctly and predicts nothing about hue, weight, or grain, which is why the material system had to be developed separately in the first place."
+  !probe{ "list five visual decisions the site has made — the linen ground, the operator hues, grain at 0.028, the seven-rung duration ladder, matte for dense text. for each, ask whether the one rule constrains it. count how many it reaches." }
+  $%[decision.constrainedByRule, decision.registerHome, rule.reach]
+}
+
+^"validation"{
+  probe_registers = `each register in ^"the_five_registers" names a term and a mute-zone; a register with a blank mute-zone has not been examined`
+  probe_axes = `grep -rhon 'data-spw-phase="[a-z-]*"' public/css/ — the value set must match ^"phase_axes" or one of them is out of date`
+  probe_admission = `@world_physics#the_questionnaire answered in full by ^"the_rule"`
+  falsification = #[
+    `Two registers make contradicting predictions about the same surface. That is a rival rule and subtraction applies.`,
+    `A sixth metaphor family is adopted without naming its term and its mute-zone.`,
+    `data-spw-phase acquires a fifth vocabulary, or movement is renamed to anything other than its own attribute.`,
+    `The one rule is invoked to justify a visual decision it does not reach — see #>wonder_one_physics_3; the rule predicts silence, not style.`,
+    `This document is cited as settling the metaphor question. It is experimental fixity: it proposes a division of labour between two conventions, and either could still turn out to own the other.`
+  ][reg=set]
+}

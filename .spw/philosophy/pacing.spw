@@ -1,0 +1,172 @@
+# Pacing
+#
+# Duration is not pacing. Duration is how long one crossing takes; pacing is how
+# potential is distributed across a whole visit, and a site can get every
+# duration right and still have no pacing at all.
+#
+# @arrival_electrostatics already holds this site's real motion theory — "Do not
+# author an entrance. Author a wall, and let the entrance be what crossing it
+# looks like." It is filed as a convention about one subsystem. This lifts the
+# general law out of it, and replaces the timing vocabulary @design_whimsy
+# taught, which @alignment_audit found does not exist in the codebase.
+
+#>spw_pacing
+#:philosophy #!motion #!timing #!attention
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@philosophy_index: ~"./index.spw"
+@one_physics: ~"./one-physics.spw"
+@wonder_doctrine: ~"./wonder-doctrine.spw"
+@spirit_cycle: ~"./spirit-cycle.spw"
+@cognitive_surface: ~"./cognitive-surface.spw"
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
+@design_whimsy: ~"../conventions/design-whimsy.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@ornament_contract: ~"../conventions/ornament-contract.spw"
+@capture_ecology: ~"../conventions/capture-ecology.spw"
+@expressive_registers: ~"../conventions/expressive-registers.spw"
+@material_physics: ~"../conventions/material-physics.spw"
+@approach_topography: ~"../surfaces/approach-topography.spw"
+@alignment_audit: ~"../audits/aesthetic-alignment-2026-08.spw"
+@tokens_core: ~"../../public/css/tokens/core.css"
+@cinematic_css: ~"../../public/css/effects/cinematic.css"
+@material_css: ~"../../public/css/effects/material.css"
+@component_biome_css: ~"../../public/css/systems/component-biome.css"
+@module_loader: ~"../../public/js/runtime/module-loader.js"
+@page_state: ~"../../public/js/runtime/page-state.js"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = pacing[visit]{distribute.withhold.settle}<falsify>
+
+^"thesis"{
+  claim: "Pacing is the distribution of potential across a visit. Duration is only how long a single crossing takes. The corpus has had a duration vocabulary since the beginning and has never had a pacing one, which is why every timing question has been answered with a number of milliseconds."
+  why: "A page can hold seven correctly-chosen durations and still read as one wash, because nothing in a duration says when a change is permitted to start, how often changes may occur, or what shape the whole visit takes. @arrival_electrostatics measured the failure precisely — 58 mounts over 17.3s read as one wash — and the durations were never the problem."
+  inherits: "@one_physics: nothing happens without a potential difference across a boundary. Pacing is what that rule looks like across time rather than across a surface. Duration is the crossing; pacing is the distribution of what there is to cross."
+}
+
+^"four_terms"{
+  ~#note: "The corpus conflates these under the single word timing. Separating them is most of the work; each answers a different question and has a different owner."
+  duration: .{
+    asks = `how long does one change take?`
+    owner = `the seven --duration-* rungs at @tokens_core :1097-1110`
+    ~#note(this is the only one the corpus had): `and it is the least consequential of the four`
+  }[reg=facet]
+  latency: .{
+    asks = `how long before it is allowed to start?`
+    owner = `@module_loader MOUNT_WHEN gating, --spw-page-arrival-*-delay, --spw-medium-reveal-stagger-step`
+    ~#why: `latency is where sequence lives. Two changes with identical durations and different latencies are a different experience; two with identical latencies and different durations are the same experience slightly blurred.`
+  }[reg=facet]
+  cadence: .{
+    asks = `how often is a change permitted at all?`
+    owner = `@arrival_electrostatics grounding — one discharge per shell per arrival, and never again once grounded`
+    ~#why: `cadence is the only one of the four that can say no. A site with no cadence rule spends everything it has on whoever happens to be looking.`
+  }[reg=facet]
+  arc: .{
+    asks = `what shape does the whole visit take?`
+    owner = `@spirit_cycle for the story, @approach_topography for the topography — neither currently written to any attribute`
+    ~#note(the gap): `arc is the term with the most theory and the least implementation, which is the inverse of duration.`
+  }[reg=facet]
+  rule = `A timing decision that names only a duration has answered the least important question. State which of the four is being decided before choosing a number.`
+}
+
+^"the_measured_ladder"{
+  ~#note: "Replaces @design_whimsy#timing_vocabulary, which named practice_settle 100ms, threshold_reveal 300ms and full_express 600ms — none of which appear anywhere in public/ or scripts/. Counts below are authored CSS, excluding generated bundles, at 2026-08-31. Re-count rather than trust them."
+  instant: .{ ms = `50`; uses = `6`; hosts = `effects/wonder.css, grammar/syntax.css, typography/context.css`; reading = `sub-perceptual. Used where a change must not be seen happening — the value must arrive, not animate.` }[reg=facet]
+  snap: .{ ms = `90`; uses = `3`; hosts = `@tokens_core only — :547 aliases it into --spw-control-transition-fast, :1098 defines it, :2179 collapses it`; reading = `a rung with no consumer outside the file that defines it. Either it names something real that nothing has claimed yet, or it is a gap in the ladder that should close.` }[reg=facet]
+  fast: .{ ms = `140`; uses = `159`; hosts = `every layer — routes 13, systems 12, effects 7, components 7, handles 5`; reading = `the workhorse for local state.` }[reg=facet]
+  base: .{ ms = `220`; uses = `117`; hosts = `every layer — routes 14, systems 10, components 9, effects 8`; reading = `the default. Chosen when nothing about the change argues for another rung.` }[reg=facet]
+  deliberate: .{ ms = `360`; uses = `37`; hosts = `@material_css, systems/pretext-physics.css, systems/image-interaction.css, effects/developmental-climate.css, systems/svg-personas.css`; reading = `material properties. Every host is a surface where what changes is what something is made of.` }[reg=facet]
+  slow: .{ ms = `480`; uses = `18`; hosts = `@component_biome_css, systems/module-potential.css, systems/electrostatic-roles.css, systems/expression-resonance.css, systems/svg-surfaces.css`; reading = `field and system coupling. Every host is a surface where what changes is a relationship between things rather than a thing.` }[reg=facet]
+  ceremonial: .{ ms = `720`; uses = `5`; hosts = `@cinematic_css, and nothing else`; reading = `whole-frame events. One consumer, which is either correct restraint or an unfinished idea.` }[reg=facet]
+}
+
+^"the_scope_law"{
+  ~#note: "Derived from the counts above rather than decided. This is what the ladder turned out to already mean."
+  claim: "Above 220ms, the rung is chosen by the scope of what changes, not by taste. deliberate is a material property. slow is a coupling between things. ceremonial is a whole frame. The hosts sort cleanly and were never told to."
+  why_it_holds: "This is @one_physics restated in time. A wider scope is a larger potential difference, and a larger difference takes longer to cross. Duration is proportional to scope because scope is distance."
+  the_untheorised_half: "Below 220ms the ladder is undifferentiated — fast and base appear in every layer and 276 of 345 authored uses are one of the two. The busy half of the ladder has no law, and choosing between fast and base is currently taste wearing a token name."
+  ~#reading: "That is not a defect to fix by inventing a rule. It may be correct that local state has no scope gradient worth naming. But it should be known that the corpus has a law for the rungs it rarely uses and none for the rungs it always uses."
+  ~#antipattern: "reaching for ceremonial because a change feels important. Importance is not scope. A single button that matters enormously is still one element, and it gets fast."
+}
+
+^"reduced_motion_is_a_register"{
+  ~#note: "Answers @arrival_electrostatics#>wonder_arrival_potential_3 — 'What is the runtime's obligation to a reader who cannot see it?' — which hypothesised that perceptibility has a non-motion register that has not been designed."
+  what_actually_happens: "@tokens_core :2177-2184 collapses all seven rungs to 1ms under html[data-spw-reduce-motion=\"on\"]. Note the selector: this is a site-owned attribute the runtime writes, not a bare media query. The site already treats reduced motion as a state it holds an opinion about."
+  what_the_collapse_preserves: "Order. Every change still happens, still in sequence, still gated by the same latency. Collapsing duration to 1ms destroys duration and leaves latency, cadence and arc completely intact — three of the four terms survive."
+  the_answer: "The non-motion register was never missing. It is the other three terms, which were invisible because the corpus only had a word for the one that gets destroyed. A reader under reduced motion should receive the same pacing through order, weight, density and copy — and the runtime already computes all of it."
+  obligations: #[
+    `Order is perceptible without motion. Sequence the arrival; do not animate it.`,
+    `Weight is perceptible without motion. @expressive_registers salience reads --spw-attention as font-weight and opacity, both of which are static facts.`,
+    `Density is perceptible without motion. What arrived changed how much is on the page.`,
+    `Copy is perceptible without motion, and is the only register that can say what arrived rather than that something did.`
+  ][reg=set]
+  capture: "@arrival_electrostatics suppresses discharge under any non-default data-spw-capture-mode, because a transient flourish caught mid-frame is indistinguishable from a rendering artefact. Under this reading that is not a loss: a screenshot preserves order, weight and density perfectly and duration not at all, so a capture-mode page is a reduced-motion page with a stricter deadline. See @capture_ecology."
+  ~#consequence: "If the three surviving terms carry the pacing, then reduced motion is not a degraded path. It is the same pacing with one register muted, which is exactly what @one_physics means by a register being mute somewhere."
+}
+
+^"stranger_and_regular"{
+  ~#note: "@arrival_electrostatics#>wonder_arrival_potential_5 frames this as a live disagreement with @wonder_doctrine#earned_depth, and marks its own test_earned as failing deliberately. Restated here as a pacing question, which is where it belongs."
+  the_conflict: "The discharge fires on first encounter and grounds away forever, so the reader who returns most gets least. @wonder_doctrine#earned_depth wants the opposite — depth that prior engagement unlocks."
+  the_reframing: "Both are right about different terms. Orientation is a latency question: a stranger needs to know what arrived and in what order. Reward is a cadence question: a regular needs a change to be permitted again, on a schedule familiarity has earned. Treating perceptibility as one axis is what forces the choice, and perceptibility was never one axis — it is four."
+  the_prediction: "A grounding store that only ever decrements is spending cadence to buy latency. If the reframing is right, familiarity should raise cadence rather than lower it — which is what @electrostatic_affordances already says about capacitance: 'Familiarity raises capacitance (return visits leak slower).' The convention and the runtime disagree, and the convention is the one that matches this model."
+  ~#status: "Not resolved. Recorded so the disagreement is between two named terms rather than between two documents."
+}
+
+^"authoring_rules"{
+  ~#note: "What follows from the above, stated so it can be violated visibly."
+  say_which_term = `A timing decision states which of duration, latency, cadence or arc it decides. A number alone is not a decision.`
+  scope_picks_the_rung = `Above base, choose the rung by the scope of what changes: material property to deliberate, coupling to slow, whole frame to ceremonial. Never by how much the change matters.`
+  do_not_author_an_entrance = `Inherited verbatim from @arrival_electrostatics. Author the wall; the entrance is what crossing it looks like.`
+  no_new_rung = `Seven is enough and one of them already has no consumer. A surface that wants an eighth duration has a scope the ladder does not name, and that is the thing to write down.`
+  reduced_motion_is_not_an_exception = `Do not build a pacing that only exists in the duration term. If the pacing disappears when durations collapse to 1ms, it was decoration — @wonder_doctrine#ambient_decoration, arrived at from the timing side.`
+}
+
+# ── Wonders ────────────────────────────────────────────────────
+
+#>wonder_pacing_1
+?["Does the busy half of the duration ladder need a law, or is its lawlessness the law?"]{
+  #:depth #!computational ~#lens(scope)
+  ~#tension: "deliberate, slow and ceremonial sort cleanly by scope across 60 authored uses. fast and base sort by nothing across 276. Either local state genuinely has no scope gradient, or the gradient exists and two rungs are absorbing decisions that should be four."
+  ~#hypothesis: "no law is needed — local state is scopeless by definition, and the fast/base split is really a split between reversible and committing, which is a different axis that happens to have been spent on duration."
+  !probe{ "sample thirty authored uses of --duration-fast and thirty of --duration-base. for each, record whether the change it times is reversible by the reader. if the split tracks reversibility rather than scope, the two rungs are encoding a hidden second axis." }
+  $%[rung.uses, rung.hostLayer, change.reversible]
+}
+
+#>wonder_pacing_2
+?["If order carries the pacing, why is duration the term with all the vocabulary?"]{
+  #:depth #!educational ~#lens(register)
+  ~#with: ~"../conventions/arrival-electrostatics.spw"
+  ~#tension: "Reduced motion destroys duration and leaves latency, cadence and arc intact — so three quarters of pacing survives a setting the corpus treats as degradation. If that is true, the corpus has been theorising the fragile quarter."
+  ~#hypothesis: "duration is over-vocabularised because it is the only term a stylesheet can express alone. latency and cadence need a runtime, arc needs a memory, and CSS could always say 220ms."
+  !probe{ "load a rich route with html[data-spw-reduce-motion=on] and again without. name what differs. if the only difference is smoothness and not sequence, order was carrying the pacing the whole time and duration was carrying the credit." }
+  $%[html.reduceMotion, module.mountedAt, seat.liminality]
+}
+
+#>wonder_pacing_3
+?["Can a visit have an arc if nothing records where in the arc it is?"]{
+  #:depth #!experiential ~#lens(arc)
+  ~#tension: "@spirit_cycle names five phases and thirteen surfaces cite them, and no element on the site carries the value. @cognitive_surface hypothesises that sessions get fragments and never reach transformation. Both may be describing the same absence: an arc that is theorised but not instrumented cannot be paced, only hoped for."
+  ~#hypothesis: "no — arc is the one pacing term that requires memory, and a term with no substrate is a description of an intention rather than of a visit."
+  !probe{ "instrument one route to write the arc phase it believes the reader is in. walk it as a stranger and as a regular. if the written phase never leaves initiation, the arc is not being paced and the five phases are a reading of the design rather than a property of the visit." }
+  $%[session.phases, cycle.reached, arrival.discharges]
+}
+
+^"validation"{
+  probe_ladder = `grep -c -- "--duration-<rung>" across authored CSS; the counts in ^"the_measured_ladder" must still sort the same way`
+  probe_absent = `grep -rn "practice-settle\|threshold-reveal\|full-express" public/ scripts/ — must return zero; if it returns anything, someone implemented the retired vocabulary`
+  probe_reduced = `load a conductive route with html[data-spw-reduce-motion="on"] and name what still tells you the page finished becoming itself`
+  probe_field = `__SPW_SITE__.arrivalField.field()`
+  falsification = #[
+    `A rung above base is used for a scope it does not name — ceremonial on a single control, or fast on a whole-frame event.`,
+    `An eighth duration token is added instead of naming the scope the ladder was missing.`,
+    `A pacing decision is shipped that disappears entirely under reduced motion, meaning it lived only in the duration term.`,
+    `snap acquires consumers without anyone deciding what it names, or is deleted without anyone checking what :547 was for.`,
+    `The four terms collapse back into one in practice — a review that answers "how should this be paced" with a number of milliseconds.`
+  ][reg=set]
+  next = `The felt result of any of this is a browser call, not a document call. Per @interaction_microstates the review posture is human-in-browser; this surface's job was to give that review four things to look at instead of one.`
+}

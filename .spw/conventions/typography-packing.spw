@@ -1,6 +1,19 @@
-# Typography And Packing Plan
+# Typography And Packing
 #
 # Shared measure, pad, gap, and grid thresholds for components and surfaces.
+#
+# Packing is the density half of typography. Where @operator_typography asks
+# what a single glyph should look like given the geometry it encodes, this asks
+# how much room the glyph is given — measure, gap, pad, line-spacing — and the
+# two answers have to agree. A tracking response that widens a thread operator
+# is spending horizontal room that a compact packing tier has already promised
+# to something else.
+#
+# The tiers are objective rather than chosen: the Pretext measurement bus reports
+# line count and wrap volatility at a width, and a tier is the CSS target that
+# measurement selects. That is why this file is a list of thresholds rather than
+# a set of preferences — the preference is elsewhere, and this is where it meets
+# a measured line.
 
 #>typography_packing_plan
 #:convention #!typography #!layout #!components
@@ -11,6 +24,8 @@
 @foundation: ~"../../public/css/components/foundation.css"
 @measurement_bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
 @designer_conversation: ~"./designer-conversation-canvas.spw"
+@operator_typography: ~"../language/operator-typography.spw"
+@pacing: ~"../philosophy/pacing.spw"
 
 tiers: .{
   compact = `canonical compact tier: tight pad/gap, --grid-min-compact, --measure-compact (alias: dense)`
@@ -32,8 +47,16 @@ measurement: .{
   handoff = `Designer reviews cite specimen URL + token + measured lines at width`
 }
 
+glyph_room: .{
+  note = `Where packing and @operator_typography meet. One rule, stated from the packing side.`
+  budget = `A typographic response that changes advance width — the tracking axis of the threads family — spends room the active packing tier has budgeted. A compact tier cannot host a widening response without reflow.`
+  stable_axes = `Weight, slant, contrast and colour cost no room and are safe at every tier. Tracking and size are not.`
+  rule = `Below the balanced tier, operator responses must use a room-free axis. A response that reflows the measure has failed @pacing — a layout shift is a duration nobody chose.`
+}
+
 validation: #[
   `Settings line-spacing changes component gap/pad and prose line-height together.`
+  `An operator typographic response does not change measured line count at the compact tier.`
   `frame-grid defaults to balanced packing unless data-spw-pack overrides.`
   `frame-note and spec-kicker respect measure-panel/measure-card caps.`
 ][reg=set]
