@@ -244,8 +244,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'floating-chrome listeners bus root-state',
     visual: 'inspect',
     load: () => import('./frame-navigator.js'),
-    mount: (mod) => mod?.initFrameNavigator?.(),
-    unmount: (mod) => mod?.unmount?.(),
     // Presence gate: body[data-spw-features~="navigator"] via catalog features
     // (PRESENCE_FEATURE_KEYS in runtime-contracts — not a CSS behavior scope).
     // Module also self-gates on navigatorDisplay at runtime.
@@ -646,13 +644,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-lab',
     effectScope: 'local-dom bus clipboard navigation',
     load: () => import('./query-link-composer.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initQueryLinkComposer || mod?.bindQueryComposers;
-      if (!isFn(fn)) return;
-      if (mod?.initQueryLinkComposer) return fn(ctx);
-      const binding = fn(document);
-      return binding?.cleanup;
-    },
   },
   {
     id: 'discovery-notices',
@@ -717,7 +708,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-lab',
     effectScope: 'root-state bus',
     load: () => import('./cauldron-fluency.js'),
-    mount: (mod) => mod?.initCauldronFluency?.(),
   },
   {
     // A code block that answers about the page it is printed on. No parser is
@@ -1648,7 +1638,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-gesture',
     effectScope: 'element-state listeners bus',
     load: () => import('./brace-actions.js'),
-    mount: (mod) => mod?.initSpwBraceActions?.(),
   },
   {
     id: 'pwa-update-handler',
@@ -1683,7 +1672,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-flow',
     effectScope: 'element-state bus',
     load: () => import('./reactive-spine.js'),
-    mount: (mod) => mod?.initReactiveSpine?.(),
   },
   {
     id: 'toolmaker-submissions',
@@ -1706,7 +1694,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-workshop',
     effectScope: 'element-state local-dom clipboard session-lab',
     load: () => import('./toolmaker-submissions.js'),
-    mount: (mod, target) => mod?.initToolmakerSubmissions?.(target),
   },
   {
     id: 'interactive-expression-lab',
@@ -1729,7 +1716,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-expression-lab',
     effectScope: 'element-state local-dom hud storage bus',
     load: () => import('./interactive-expression-lab.js'),
-    mount: (mod, target) => mod?.initInteractiveExpressionLab?.(target),
   },
   {
     id: 'spw-hero-kinetic-stage',
@@ -1751,7 +1737,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-hero-stage',
     effectScope: 'element-state local-dom bus cauldron',
     load: () => import('./spw-hero-kinetic-stage.js'),
-    mount: (mod, target) => mod?.initSpwHeroKineticStage?.(target),
   },
   {
     // Idle inspect path for authored Spw blocks. Cheap slots come from

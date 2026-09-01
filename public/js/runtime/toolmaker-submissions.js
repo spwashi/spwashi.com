@@ -96,12 +96,15 @@ function compileSpwBlock(formState) {
 }
 
 export function initToolmakerSubmissions(root = document) {
-  const container = root instanceof HTMLElement && root.matches?.('[data-spw-feature="toolmaker-submissions"]')
-    ? root
-    : root.querySelector?.('[data-spw-feature="toolmaker-submissions"]');
+  const host = root instanceof Node ? root : document;
+  const container = host instanceof HTMLElement && host.matches?.('[data-spw-feature="toolmaker-submissions"]')
+    ? host
+    : host.querySelector?.('[data-spw-feature="toolmaker-submissions"]');
 
-  if (!container || container.dataset.spwSubmissionsBound) return;
+  if (!container || container.dataset.spwSubmissionsBound) return () => {};
   container.dataset.spwSubmissionsBound = 'true';
+  const abort = new AbortController();
+  const { signal } = abort;
 
   let currentMode = 'specimen';
 
@@ -217,13 +220,13 @@ export function initToolmakerSubmissions(root = document) {
       e.preventDefault();
       const mode = btn.getAttribute('data-submission-mode');
       loadPreset(mode);
-    });
+    }, { signal });
   });
 
   // Bind Input Changes
   [titleInput, categorySelect, operatorSelect, roleSelect, bodyTextarea].forEach((el) => {
-    el?.addEventListener('input', syncPreview);
-    el?.addEventListener('change', syncPreview);
+    el?.addEventListener('input', syncPreview, { signal });
+    el?.addEventListener('change', syncPreview, { signal });
   });
 
   // Bind Copy Action
@@ -244,7 +247,7 @@ export function initToolmakerSubmissions(root = document) {
       console.warn('Clipboard write failed', err);
       if (statusNote) statusNote.textContent = 'Copy failed. Select code directly from preview.';
     }
-  });
+  }, { signal });
 
   // Bind Reset / Clear Note Action
   resetBtn?.addEventListener('click', (e) => {
@@ -258,7 +261,7 @@ export function initToolmakerSubmissions(root = document) {
         statusNote.textContent = '';
       }, 2400);
     }
-  });
+  }, { signal });
 
   // Bind Feature Lab Test Action
   labTestBtn?.addEventListener('click', (e) => {
@@ -271,7 +274,7 @@ export function initToolmakerSubmissions(root = document) {
       statusNote.classList.add('is-active');
       setTimeout(() => location.reload(), 600);
     }
-  });
+  }, { signal });
 
   // Initial load from local storage or preset
   if (!restoreFromStorage()) {
@@ -279,4 +282,19 @@ export function initToolmakerSubmissions(root = document) {
   } else {
     syncPreview();
   }
+
+  return () => {
+    abort.abort();
+    delete container.dataset.spwSubmissionsBound;
+  };
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'toolmaker-submissions',
+  mount: (ctx, root) => initToolmakerSubmissions(root instanceof Node ? root : document),
+  describes: 'toolmaker[specimen|operator|dispatch|lab] submission drafting and live compilation bench',
+  timingArc: 'visible-workshop',
+  effectScope: 'element-state local-dom clipboard session-lab',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

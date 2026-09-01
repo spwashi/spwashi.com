@@ -47,6 +47,14 @@ export function isFn(value) {
   return typeof value === 'function';
 }
 
+/** Loader calls mount(ctx, root). Prefer the matched node over the context object. */
+export function resolveMountRoot(ctx, root, fallback = typeof document !== 'undefined' ? document : null) {
+  if (root instanceof Node) return root;
+  if (ctx?.root instanceof Node) return ctx.root;
+  if (ctx?.body instanceof Node) return ctx.body;
+  return fallback;
+}
+
 export function once(fn) {
   let called = false;
   let value;

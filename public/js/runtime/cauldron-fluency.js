@@ -78,9 +78,14 @@ export function publishFluency(doc = document) {
 }
 
 export function initCauldronFluency(ctx = {}) {
-  if (typeof document === 'undefined') return () => {};
+  const doc = ctx.root?.nodeType === 9
+    ? ctx.root
+    : ctx.root?.ownerDocument || (typeof document !== 'undefined' ? document : null);
+  if (!doc) return () => {};
 
-  const publish = () => publishFluency(document);
+  const abort = new AbortController();
+  const { signal } = abort;
+  const publish = () => publishFluency(doc);
   publish();
 
   /**
@@ -95,23 +100,22 @@ export function initCauldronFluency(ctx = {}) {
     publish();
   };
 
-  document.addEventListener('cauldron:updated', onUpdate);
-  document.addEventListener('cauldron:gardened', publish);
+  doc.addEventListener('cauldron:updated', onUpdate, { signal });
+  doc.addEventListener('cauldron:gardened', publish, { signal });
 
   const bus = ctx.bus || globalThis.__SPW_SITE__?.bus;
   const off = bus?.on?.('spw:runtime-refresh', publish) || null;
 
   return () => {
-    document.removeEventListener('cauldron:updated', onUpdate);
-    document.removeEventListener('cauldron:gardened', publish);
+    abort.abort();
     off?.();
-    for (const attr of Object.values(ATTR)) document.documentElement?.removeAttribute(attr);
+    for (const attr of Object.values(ATTR)) doc.documentElement?.removeAttribute(attr);
   };
 }
 
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'cauldron-fluency',
-  mount: (ctx) => initCauldronFluency(ctx),
+  mount: (ctx, root) => initCauldronFluency({ ...ctx, root }),
   describes: 'fluency[cauldron]{operators.slots.solution}<registers>',
   updates: [
     'residue:data-spw-fluency-operators',
@@ -122,3 +126,5 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   timingArc: 'idle-inspection',
   effectScope: 'root-state bus',
 });
+
+export const spwModule = SPW_MODULE_EXPORT;

@@ -634,7 +634,7 @@ class SpwFrameNavigator {
 let navigatorInstance = null;
 
 const initFrameNavigator = () => {
-    if (navigatorInstance?.initialized) return;
+    if (navigatorInstance?.initialized) return unmountFrameNavigator;
     navigatorInstance = new SpwFrameNavigator();
     navigatorInstance.init();
 
@@ -648,6 +648,7 @@ const initFrameNavigator = () => {
             isOpen: () => navigatorInstance?.isOpen() || false
         };
     }
+    return unmountFrameNavigator;
 };
 
 const unmountFrameNavigator = () => {
@@ -660,3 +661,13 @@ const unmountFrameNavigator = () => {
 };
 
 export { initFrameNavigator, unmountFrameNavigator as unmount };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'frame-navigator',
+  mount: () => initFrameNavigator(),
+  describes: 'surface-map[frames|routes] keyboard-spells[g|traverse|filter] navigator chrome',
+  timingArc: 'enhance-navigator',
+  effectScope: 'floating-chrome listeners bus root-state',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

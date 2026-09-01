@@ -120,11 +120,17 @@ export function initSpwHeroKineticStage(root = document) {
   };
 }
 
-export const spwModule = {
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'spw-hero-kinetic-stage',
+  mount: (ctx, root) => initSpwHeroKineticStage(root instanceof Node ? root : document),
+  describes: 'hero[kinetic-stage]{boundaries|electrostatics|cauldron} interactive motion and payload lab',
+  timingArc: 'visible-hero-stage',
+  effectScope: 'element-state local-dom bus cauldron',
   updates: [
     'structural:data-spw-hero-stage-bound',
     'flourish:data-spw-charge',
     'flourish:data-spw-dropped',
   ],
-  mount: (mod, ctx, root) => initSpwHeroKineticStage(root),
-};
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

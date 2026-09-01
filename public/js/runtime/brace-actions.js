@@ -177,7 +177,20 @@ function scan(root = document) {
     root.querySelectorAll?.(TARGET_SELECTOR).forEach(mountBraceActions);
 }
 
-export function initSpwBraceActions() {
-    scan(document);
-    document.addEventListener('spw:component-semantics-ready', () => scan(document));
+export function initSpwBraceActions(root = document) {
+    const host = root?.querySelectorAll ? root : document;
+    scan(host);
+    const abort = new AbortController();
+    document.addEventListener('spw:component-semantics-ready', () => scan(host), { signal: abort.signal });
+    return () => abort.abort();
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+    id: 'brace-actions',
+    mount: (ctx, root) => initSpwBraceActions(root?.querySelectorAll ? root : document),
+    describes: 'brace[actions|entry|projection] interactive entry and projection edge controls',
+    timingArc: 'visible-gesture',
+    effectScope: 'element-state listeners bus',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

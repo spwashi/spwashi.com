@@ -270,8 +270,9 @@ function ensureHud() {
 }
 
 export function initInteractiveExpressionLab(root = document) {
-  const elements = root.querySelectorAll?.('[data-spw-interactive-expression], .spw-interactive-expression, [data-spw-semantic-expression][data-spw-editable="true"]');
-  if (!elements || !elements.length) return;
+  const host = root instanceof Node ? root : document;
+  const elements = host.querySelectorAll?.('[data-spw-interactive-expression], .spw-interactive-expression, [data-spw-semantic-expression][data-spw-editable="true"]');
+  if (!elements || !elements.length) return () => {};
 
   const stored = readStoredExpressions();
   const pagePath = location.pathname;
@@ -448,4 +449,16 @@ export function initInteractiveExpressionLab(root = document) {
       }, 200);
     });
   });
+
+  return () => {};
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'interactive-expression-lab',
+  mount: (ctx, root) => initInteractiveExpressionLab(root instanceof Node ? root : document),
+  describes: 'interactive[expression]{edit|autocomplete|compare|navigate-0d-4d} boundary geometry and dimensional HUD',
+  timingArc: 'visible-expression-lab',
+  effectScope: 'element-state local-dom hud storage bus',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

@@ -209,6 +209,23 @@ test('visible image enhancers receive the matched document root', () => {
   });
 });
 
+test('runtime workshop modules mount through portable exports on the matched root', () => {
+  for (const id of [
+    'frame-navigator',
+    'query-link-composer',
+    'cauldron-fluency',
+    'brace-actions',
+    'reactive-spine',
+    'toolmaker-submissions',
+    'interactive-expression-lab',
+    'spw-hero-kinetic-stage',
+  ]) {
+    const definition = ENHANCEMENT_DEFS.find((entry) => entry.id === id);
+    assert.ok(definition, id);
+    assert.equal(typeof definition.mount, 'undefined', `${id} should use portable mount`);
+  }
+});
+
 test('pinch scaling does not retain listeners on pointer-only devices', () => {
   assert.equal(supportsPinchTextScaleInput({
     navigator: { maxTouchPoints: 0 },

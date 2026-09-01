@@ -563,3 +563,16 @@ export function initQueryLinkComposer(ctx) {
     refresh: binding.refresh,
   };
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'query-link-composer',
+  mount: (ctx, root) => initQueryLinkComposer({
+    ...ctx,
+    body: root instanceof Node ? root : (ctx?.body || document),
+  }),
+  describes: 'query[share-setup] composer[instruments] cauldron[offer] feature-hub[embed]',
+  timingArc: 'enhance-lab',
+  effectScope: 'local-dom bus clipboard navigation',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

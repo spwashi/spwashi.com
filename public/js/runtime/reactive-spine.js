@@ -59,10 +59,12 @@ const EVENT_TO_CHARGE = {
 
 const DECAY_MS = 700;
 
-export function initReactiveSpine() {
+export function initReactiveSpine(root = document) {
+    const host = root?.querySelector ? root : document;
     // Locate the SVG operator diagram
-    const spineFigure = document.querySelector('.spw-svg-flow-diagram')?.closest('figure');
-    if (!spineFigure) return;
+    const spineFigure = host.querySelector?.('.spw-svg-flow-diagram')?.closest('figure')
+        || host.closest?.('figure');
+    if (!spineFigure) return () => {};
 
     // Build operator → SVG node map from .op-node--{operator} classes
     const nodeMap = new Map();
@@ -73,7 +75,7 @@ export function initReactiveSpine() {
         nodeMap.set(operator, el);
     });
 
-    if (!nodeMap.size) return;
+    if (!nodeMap.size) return () => {};
 
     // Timers for charge decay
     const decayTimers = new Map();
@@ -100,13 +102,14 @@ export function initReactiveSpine() {
         }, DECAY_MS));
     }
 
-    // Subscribe to all mapped events
-    Object.entries(EVENT_TO_OPERATOR).forEach(([eventName, operator]) => {
+    const abort = new AbortController();
+    const { signal } = abort;
+    const offs = Object.entries(EVENT_TO_OPERATOR).map(([eventName, operator]) => (
         bus.on(eventName, () => {
             const chargeState = EVENT_TO_CHARGE[eventName] ?? 'active';
             pulse(operator, chargeState);
-        });
-    });
+        }, { signal })
+    ));
 
     // Expose for programmatic use
     window.spwSpine = {
@@ -114,4 +117,22 @@ export function initReactiveSpine() {
         nodes: () => Object.fromEntries(nodeMap),
         operators: () => [...nodeMap.keys()]
     };
+
+    return () => {
+        abort.abort();
+        offs.forEach((off) => { try { off?.(); } catch (_) {} });
+        decayTimers.forEach((timer) => clearTimeout(timer));
+        decayTimers.clear();
+        if (window.spwSpine?.pulse === pulse) delete window.spwSpine;
+    };
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+    id: 'reactive-spine',
+    mount: (ctx, root) => initReactiveSpine(root?.querySelector ? root : document),
+    describes: 'reactive-spine[operator|event|svg] cognitive instrument flow diagram',
+    timingArc: 'visible-flow',
+    effectScope: 'element-state bus',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
