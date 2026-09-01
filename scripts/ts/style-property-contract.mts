@@ -145,35 +145,70 @@ export async function collectCssCustomProperties(): Promise<string[]> {
   return [...properties].sort();
 }
 
-export async function collectRuntimeStyleWrites(): Promise<StylePropertyWrite[]> {
-  const jsFiles = await walk(PUBLIC_JS_DIR, (absolutePath) => absolutePath.endsWith('.js') && !isGeneratedJsFile(absolutePath));
-  const tsFiles = await walk(PUBLIC_TS_DIR, (absolutePath) => absolutePath.endsWith('.ts'));
-  const writes: StylePropertyWrite[] = [];
-
-  for (const file of [...jsFiles, ...tsFiles].sort()) {
-    const source = await fs.readFile(file, 'utf8');
-    for (const match of source.matchAll(SET_PROPERTY_CALL_RE)) {
-      const write = parseStyleWrite(source, match);
-      write.file = relativeRepoPath(file);
-      writes.push(write);
-    }
-  }
-
-  return writes.sort((left, right) => left.file.localeCompare(right.file) || left.line - right.line);
-}
-
 export function isAllowedRuntimeStyleProperty(property: string): boolean {
   return RUNTIME_PROPERTY_ALLOWANCES.some((allowance) => allowance.test(property));
 }
 
-export function isAllowedDynamicStyleWrite(write: StylePropertyWrite): boolean {
-  return DYNAMIC_STYLE_WRITE_FILES.has(write.file);
+export function collectQuotedCustomProperties(source: string): string[] {
+  return [...new Set(
+    [...source.matchAll(/['"`](--[A-Za-z0-9_-]+)['"`]/g)].map((match) => match[1]),
+  )];
+}
+
+export function fileHasClosedStyleTokenSet(
+  quotedProperties: string[],
+  cssPropertySet: Set<string>,
+): boolean {
+  if (!quotedProperties.length) return false;
+  return quotedProperties.every(
+    (property) => cssPropertySet.has(property) || isAllowedRuntimeStyleProperty(property),
+  );
+}
+
+export function isAllowedDynamicStyleWrite(
+  write: StylePropertyWrite,
+  quotedProperties: string[] = [],
+  cssPropertySet: Set<string> | null = null,
+): boolean {
+  if (DYNAMIC_STYLE_WRITE_FILES.has(write.file)) return true;
+  if (!cssPropertySet) return false;
+  return fileHasClosedStyleTokenSet(quotedProperties, cssPropertySet);
+}
+
+async function scanRuntimeStyleWrites(): Promise<{
+  quotedPropertiesByFile: Map<string, string[]>;
+  writes: StylePropertyWrite[];
+}> {
+  const jsFiles = await walk(PUBLIC_JS_DIR, (absolutePath) => absolutePath.endsWith('.js') && !isGeneratedJsFile(absolutePath));
+  const tsFiles = await walk(PUBLIC_TS_DIR, (absolutePath) => absolutePath.endsWith('.ts'));
+  const writes: StylePropertyWrite[] = [];
+  const quotedPropertiesByFile = new Map<string, string[]>();
+
+  for (const file of [...jsFiles, ...tsFiles].sort()) {
+    const source = await fs.readFile(file, 'utf8');
+    const relativePath = relativeRepoPath(file);
+    quotedPropertiesByFile.set(relativePath, collectQuotedCustomProperties(source));
+    for (const match of source.matchAll(SET_PROPERTY_CALL_RE)) {
+      const write = parseStyleWrite(source, match);
+      write.file = relativePath;
+      writes.push(write);
+    }
+  }
+
+  return {
+    quotedPropertiesByFile,
+    writes: writes.sort((left, right) => left.file.localeCompare(right.file) || left.line - right.line),
+  };
+}
+
+export async function collectRuntimeStyleWrites(): Promise<StylePropertyWrite[]> {
+  return (await scanRuntimeStyleWrites()).writes;
 }
 
 export async function collectStylePropertyContractReport(): Promise<StylePropertyContractReport> {
   const cssCustomProperties = await collectCssCustomProperties();
   const cssPropertySet = new Set(cssCustomProperties);
-  const runtimeStyleWrites = await collectRuntimeStyleWrites();
+  const { quotedPropertiesByFile, writes: runtimeStyleWrites } = await scanRuntimeStyleWrites();
   const dynamicStyleWrites = runtimeStyleWrites.filter((write) => !write.property && !write.prefix);
   const unknownStyleWrites = runtimeStyleWrites.filter((write) => {
     if (!write.property && !write.prefix) return false;
@@ -183,7 +218,13 @@ export async function collectStylePropertyContractReport(): Promise<StylePropert
     if (prefix && isAllowedRuntimeStyleProperty(`${prefix}runtime-placeholder`)) return false;
     return true;
   });
-  const unknownDynamicStyleWrites = dynamicStyleWrites.filter((write) => !isAllowedDynamicStyleWrite(write));
+  const unknownDynamicStyleWrites = dynamicStyleWrites.filter((write) => (
+    !isAllowedDynamicStyleWrite(
+      write,
+      quotedPropertiesByFile.get(write.file) || [],
+      cssPropertySet,
+    )
+  ));
 
   return {
     cssCustomProperties,

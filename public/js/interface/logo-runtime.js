@@ -89,6 +89,7 @@ export function initLogoRuntime() {
   document.querySelectorAll('.spw-logo').forEach(logo => {
     bindLogo(logo);
   });
+  return unmountLogoRuntime;
 }
 
 export function unmountLogoRuntime() {

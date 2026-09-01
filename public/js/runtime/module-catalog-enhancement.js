@@ -368,8 +368,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'target-dom gesture-memory listeners',
     load: () => import('../media/image-metaphysics.js'),
-    mount: (mod) => mod?.initImageMetaphysics?.(),
-    unmount: (mod) => mod?.unmount?.(),
   },
   {
     id: 'texture-slice',
@@ -398,7 +396,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'local-dom css-vars pointer',
     visual: 'express',
     load: () => import('../media/texture-slice.js'),
-    mount: (mod) => mod?.initTextureSlice?.(),
   },
   {
     id: 'logo-runtime',
@@ -419,12 +416,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-chrome',
     effectScope: 'element-state css-vars',
     load: () => import('../interface/logo-runtime.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwLogoRuntime || mod?.initLogoRuntime;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
-    unmount: (mod) => mod?.unmount?.(),
   },
   {
     id: 'topic-discovery',

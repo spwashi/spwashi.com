@@ -9,6 +9,17 @@
    `--spw-slice-lift`. Specular return is attenuated by the local canopy.
    Reduced motion and capture keep the substrate at rest.
    Pointer crop is `--spw-slice-px/py` from media/texture-slice.js.
+
+   Genome — states sensed: data-spw-texture-slice, data-spw-slice-family,
+   data-spw-slice-ground, data-spw-slice-glitch, data-spw-seed,
+   data-spw-gesture, data-spw-hold-state, data-spw-image-state,
+   data-spw-collected, data-spw-visited, html[data-spw-capture-mode],
+   html[data-spw-reduce-motion], html[data-spw-color-mode],
+   html[data-spw-high-contrast], html[data-spw-base-metamaterial]
+   Genome — custom properties defined: --spw-slice-lift, --spw-slice-u/v,
+   --spw-slice-size, --spw-slice-px/py, --spw-texture-slice-image/opacity
+   Probe: open /about/ or /topics/craft/; hover or focus a sliced figure.
+   Capture and reduced-motion keep the crop still.
    ========================================================================== */
 
 @property --spw-slice-lift {
@@ -43,12 +54,15 @@
   --spw-slice-px: 0%;
   --spw-slice-py: 0%;
   --spw-slice-lift: 0;
+  --spw-slice-lift-invite: 0.55;
+  --spw-slice-lift-charge: 0.9;
 }
 
 [data-spw-texture-slice] {
+  --spw-slice-motion: var(--spw-motion-settle, var(--duration-base, 220ms) var(--ease-settle));
   position: relative;
   isolation: isolate;
-  transition: --spw-slice-lift var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1));
+  transition: --spw-slice-lift var(--spw-slice-motion);
 }
 
 [data-spw-texture-slice] > :not(.spw-texture-slice) {
@@ -56,17 +70,17 @@
   z-index: 1;
 }
 
-[data-spw-texture-slice='paper'],
-[data-spw-slice-family='paper'] { --spw-texture-slice-image: var(--spw-texture-paper); }
-[data-spw-texture-slice='linen'],
-[data-spw-slice-family='linen'] { --spw-texture-slice-image: var(--spw-texture-linen); }
-[data-spw-texture-slice='harlequin'],
-[data-spw-slice-family='harlequin'] {
+:is([data-spw-texture-slice='paper'], [data-spw-slice-family='paper']) {
+  --spw-texture-slice-image: var(--spw-texture-paper);
+}
+:is([data-spw-texture-slice='linen'], [data-spw-slice-family='linen']) {
+  --spw-texture-slice-image: var(--spw-texture-linen);
+}
+:is([data-spw-texture-slice='harlequin'], [data-spw-slice-family='harlequin']) {
   --spw-texture-slice-image: var(--spw-texture-harlequin);
   --spw-texture-slice-opacity: 0.06;
 }
-[data-spw-texture-slice='wash'],
-[data-spw-slice-family='wash'] {
+:is([data-spw-texture-slice='wash'], [data-spw-slice-family='wash']) {
   --spw-texture-slice-image: var(--spw-texture-wash);
 }
 
@@ -84,12 +98,12 @@
 
 /* Invite: keyboard always; pointer hover only when the device can hover. */
 [data-spw-texture-slice]:focus-within {
-  --spw-slice-lift: 0.55;
+  --spw-slice-lift: var(--spw-slice-lift-invite);
 }
 
 @media (hover: hover) and (pointer: fine) {
   [data-spw-texture-slice]:hover {
-    --spw-slice-lift: 0.55;
+    --spw-slice-lift: var(--spw-slice-lift-invite);
   }
 }
 
@@ -101,7 +115,7 @@
   [data-spw-image-state='primed'],
   [data-spw-image-state='engaged']
 ) {
-  --spw-slice-lift: 0.9;
+  --spw-slice-lift: var(--spw-slice-lift-charge);
 }
 
 [data-spw-texture-slice]:is([data-spw-collected='true'], [data-spw-visited='true']) {
@@ -109,21 +123,21 @@
 }
 
 .spw-texture-slice {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: var(--spw-local-layer-substrate, 0);
-  overflow: clip;
-  border-radius: inherit;
   --spw-slice-return: calc(
     var(--material-specular, 0.28)
     * (1 - var(--spw-biome-attenuation, 0))
   );
+  inset: 0;
+  overflow: clip;
+  border-radius: inherit;
   box-shadow: inset 0 1px 0 color-mix(
     in srgb,
     white calc((var(--spw-slice-return) + (var(--spw-slice-lift) * 0.06)) * 34%),
     transparent
   );
+  pointer-events: none;
+  position: absolute;
+  z-index: var(--spw-local-layer-substrate, 0);
 }
 
 .spw-texture-slice::before,
@@ -159,16 +173,16 @@
     #000 72% 79%,
     transparent 88%
   );
-  transition: opacity var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1));
+  transition: opacity var(--spw-slice-motion);
 }
 
 /* Pointer crop settles after leave; while invited it tracks immediately. */
 [data-spw-texture-slice]:not(:hover):not(:focus-within) .spw-texture-slice::before,
 [data-spw-texture-slice]:not(:hover):not(:focus-within):not(:has(> .spw-texture-slice))::after {
   transition:
-    opacity var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1)),
-    background-position var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1)),
-    filter var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1));
+    opacity var(--spw-slice-motion),
+    background-position var(--spw-slice-motion),
+    filter var(--spw-slice-motion);
 }
 
 .spw-texture-slice[data-spw-slice-glitch='true']::after {
@@ -183,18 +197,31 @@
   mix-blend-mode: screen;
   opacity: calc(0.22 + (var(--spw-slice-lift) * 0.12));
   clip-path: polygon(0 40%, 100% 28%, 100% 46%, 0 58%);
-  transition: opacity var(--spw-motion-settle, 220ms cubic-bezier(0.2, 0.8, 0.2, 1));
+  transition: opacity var(--spw-slice-motion);
 }
 
-html:is([data-spw-capture-mode='clean'], [data-spw-capture-mode='screenshot'], [data-spw-capture-mode='study'])
-  [data-spw-texture-slice] {
+html:is(
+  [data-spw-capture-mode='clean'],
+  [data-spw-capture-mode='screenshot'],
+  [data-spw-capture-mode='study'],
+  [data-spw-reduce-motion='on']
+) [data-spw-texture-slice] {
   --spw-slice-lift: 0;
   --spw-slice-px: 0%;
   --spw-slice-py: 0%;
 }
 
-html:is([data-spw-capture-mode='clean'], [data-spw-capture-mode='screenshot'], [data-spw-capture-mode='study'])
-  .spw-texture-slice[data-spw-slice-glitch='true']::after {
+html[data-spw-reduce-motion='on'] [data-spw-texture-slice] {
+  transition: none;
+}
+
+html:is(
+  [data-spw-capture-mode='clean'],
+  [data-spw-capture-mode='screenshot'],
+  [data-spw-capture-mode='study'],
+  [data-spw-reduce-motion='on'],
+  [data-spw-high-contrast='on']
+) .spw-texture-slice[data-spw-slice-glitch='true']::after {
   content: none;
 }
 
@@ -217,21 +244,10 @@ html:is([data-spw-capture-mode='clean'], [data-spw-capture-mode='screenshot'], [
   }
 }
 
-html[data-spw-reduce-motion='on'] [data-spw-texture-slice] {
-  --spw-slice-lift: 0;
-  --spw-slice-px: 0%;
-  --spw-slice-py: 0%;
-  transition: none;
-}
-
 html[data-spw-reduce-motion='on'] .spw-texture-slice::before,
 html[data-spw-reduce-motion='on'] [data-spw-texture-slice]:not(:has(> .spw-texture-slice))::after {
   filter: none;
   transition: opacity var(--duration-fast, 140ms) linear;
-}
-
-html[data-spw-reduce-motion='on'] .spw-texture-slice[data-spw-slice-glitch='true']::after {
-  content: none;
 }
 
 html[data-spw-color-mode='dark'] {
@@ -274,14 +290,11 @@ html[data-spw-color-mode='dark'] :is(
 
 html[data-spw-high-contrast='on'] {
   --spw-texture-slice-opacity: 0.025;
+  --spw-slice-lift-invite: 0.28;
 }
 
 html[data-spw-high-contrast='on'] [data-spw-texture-slice]:is(:hover, :focus-within) {
-  --spw-slice-lift: 0.28;
-}
-
-html[data-spw-high-contrast='on'] .spw-texture-slice[data-spw-slice-glitch='true']::after {
-  content: none;
+  --spw-slice-lift: var(--spw-slice-lift-invite);
 }
 
 html[data-spw-base-metamaterial='paper'] :is(

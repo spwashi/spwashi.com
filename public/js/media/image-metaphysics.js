@@ -946,26 +946,37 @@ function scan(root = document) {
     });
 }
 
-export function initSpwImageMetaphysics() {
+function onViewportResize() {
+    if (HOST_RESIZE_OBSERVER) return;
+    document.querySelectorAll('[data-spw-image-managed="true"]').forEach((host) => syncInteractionState(host));
+}
+
+function onSemanticsReady() {
     scan(document);
-    window.addEventListener('resize', () => {
-        if (HOST_RESIZE_OBSERVER) return;
-        document.querySelectorAll('[data-spw-image-managed="true"]').forEach((host) => syncInteractionState(host));
-    }, { passive: true });
+}
 
-    document.addEventListener('spw:component-semantics-ready', () => {
-        scan(document);
-    });
-
-    let unsub = bus.on('settings:changed', () => {
-        document.querySelectorAll('[data-spw-image-managed="true"]').forEach((host) => syncHost(host));
-    });
-    activeUnsubscribes.push(unsub);
+function onSettingsChanged() {
+    document.querySelectorAll('[data-spw-image-managed="true"]').forEach((host) => syncHost(host));
 }
 
 let activeUnsubscribes = [];
+let moduleAbort = null;
+
+export function initSpwImageMetaphysics() {
+    unmountImageMetaphysics();
+    scan(document);
+
+    moduleAbort = new AbortController();
+    const { signal } = moduleAbort;
+    window.addEventListener('resize', onViewportResize, { passive: true, signal });
+    document.addEventListener('spw:component-semantics-ready', onSemanticsReady, { signal });
+    activeUnsubscribes.push(bus.on('settings:changed', onSettingsChanged));
+    return unmountImageMetaphysics;
+}
 
 export function unmountImageMetaphysics() {
+    moduleAbort?.abort();
+    moduleAbort = null;
     for (const un of activeUnsubscribes) {
         try { if (typeof un === 'function') un(); } catch (_) {}
     }
@@ -973,6 +984,24 @@ export function unmountImageMetaphysics() {
 }
 
 export { unmountImageMetaphysics as unmount };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+    id: 'image-metaphysics',
+    mount: () => initSpwImageMetaphysics(),
+    describes: 'image[managed|effect|memory|gesture] metaphysics',
+    updates: [
+        'structural:data-spw-image-managed',
+        'structural:data-spw-image-state',
+        'structural:data-spw-contrast-state',
+        'flourish:data-spw-image-effect',
+        'residue:data-spw-visited',
+        'residue:data-spw-image-key',
+    ],
+    timingArc: 'visible-media',
+    effectScope: 'target-dom gesture-memory listeners',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
 
 /* Local image memory for prompts (enhancement for creative resonance + annotation)
    - Associates an image/SVG surface with a prompt string locally (dataset + localStorage).

@@ -10,6 +10,18 @@ const HOST_SELECTOR = '[data-spw-texture-slice]';
 const FAMILIES = Object.freeze(['paper', 'linen', 'harlequin', 'wash']);
 const SLICE_CLASS = 'spw-texture-slice';
 const PARALLAX = 2.25;
+const HOST_ATTRS = Object.freeze({
+  family: 'data-spw-texture-slice',
+  ground: 'data-spw-slice-ground',
+  sliceFamily: 'data-spw-slice-family',
+});
+const SLICE_VARS = Object.freeze([
+  '--spw-slice-u',
+  '--spw-slice-v',
+  '--spw-slice-size',
+  '--spw-slice-px',
+  '--spw-slice-py',
+]);
 const CAPTURE_ATTRS = Object.freeze([
   'data-spw-capture-mode',
   'data-spw-reduce-motion',
@@ -32,7 +44,7 @@ function hashSeed(value = '') {
 }
 
 function familyFor(host, hash) {
-  const authored = host.getAttribute('data-spw-texture-slice') || '';
+  const authored = host.getAttribute(HOST_ATTRS.family) || '';
   if (FAMILIES.includes(authored)) return authored;
   return FAMILIES[hash % FAMILIES.length];
 }
@@ -41,10 +53,10 @@ function canMountOverlay(host) {
   return !FORBIDDEN_OVERLAY_HOSTS.has(host.tagName);
 }
 
-function overlayFor(host) {
+function overlayFor(host, { create = true } = {}) {
   if (!canMountOverlay(host)) return null;
   let overlay = host.querySelector(`:scope > .${SLICE_CLASS}`);
-  if (overlay) return overlay;
+  if (overlay || !create) return overlay;
   overlay = document.createElement('span');
   overlay.className = SLICE_CLASS;
   overlay.setAttribute('aria-hidden', 'true');
@@ -118,44 +130,28 @@ function readInlineVar(host, property) {
 }
 
 function readHostState(host) {
+  const inline = {};
+  for (const property of SLICE_VARS) {
+    inline[property] = readInlineVar(host, property);
+  }
   return {
-    family: host.getAttribute('data-spw-texture-slice'),
-    ground: host.getAttribute('data-spw-slice-ground'),
-    sliceFamily: host.getAttribute('data-spw-slice-family'),
-    inline: {
-      u: readInlineVar(host, '--spw-slice-u'),
-      v: readInlineVar(host, '--spw-slice-v'),
-      size: readInlineVar(host, '--spw-slice-size'),
-      px: readInlineVar(host, '--spw-slice-px'),
-      py: readInlineVar(host, '--spw-slice-py'),
-    },
+    family: host.getAttribute(HOST_ATTRS.family),
+    ground: host.getAttribute(HOST_ATTRS.ground),
+    sliceFamily: host.getAttribute(HOST_ATTRS.sliceFamily),
+    inline,
   };
 }
 
 function restoreHostState(host, state) {
-  restoreAttribute(host, 'data-spw-texture-slice', state?.family);
-  restoreAttribute(host, 'data-spw-slice-ground', state?.ground);
-  restoreAttribute(host, 'data-spw-slice-family', state?.sliceFamily);
+  restoreAttribute(host, HOST_ATTRS.family, state?.family);
+  restoreAttribute(host, HOST_ATTRS.ground, state?.ground);
+  restoreAttribute(host, HOST_ATTRS.sliceFamily, state?.sliceFamily);
 
-  const u = state?.inline?.u;
-  if (u?.value) host.style.setProperty('--spw-slice-u', u.value, u.priority);
-  else host.style.removeProperty('--spw-slice-u');
-
-  const v = state?.inline?.v;
-  if (v?.value) host.style.setProperty('--spw-slice-v', v.value, v.priority);
-  else host.style.removeProperty('--spw-slice-v');
-
-  const size = state?.inline?.size;
-  if (size?.value) host.style.setProperty('--spw-slice-size', size.value, size.priority);
-  else host.style.removeProperty('--spw-slice-size');
-
-  const px = state?.inline?.px;
-  if (px?.value) host.style.setProperty('--spw-slice-px', px.value, px.priority);
-  else host.style.removeProperty('--spw-slice-px');
-
-  const py = state?.inline?.py;
-  if (py?.value) host.style.setProperty('--spw-slice-py', py.value, py.priority);
-  else host.style.removeProperty('--spw-slice-py');
+  for (const property of SLICE_VARS) {
+    const entry = state?.inline?.[property];
+    if (entry?.value) host.style.setProperty(property, entry.value, entry.priority);
+    else host.style.removeProperty(property);
+  }
 }
 
 function seedHashFor(host) {
@@ -174,8 +170,8 @@ function syncEnvironment(host, hash = seedHashFor(host)) {
   const ground = groundPolarity();
   const guarded = ground === 'guarded' || isHighContrast();
 
-  host.setAttribute('data-spw-slice-ground', ground);
-  host.setAttribute('data-spw-slice-family', family);
+  host.setAttribute(HOST_ATTRS.ground, ground);
+  host.setAttribute(HOST_ATTRS.sliceFamily, family);
   if (!overlay) return;
   overlay.dataset.spwSliceFamily = family;
   overlay.dataset.spwSliceGlitch = (capturing || guarded) ? 'false' : (((hash >>> 16) % 5) === 0 ? 'true' : 'false');
@@ -193,7 +189,7 @@ function annotate(host) {
   syncEnvironment(host, hash);
 }
 
-function bindParallax(host, unbinds) {
+function bindParallax(host, signal) {
   let frame = 0;
 
   const onMove = (event) => {
@@ -204,6 +200,7 @@ function bindParallax(host, unbinds) {
     if (frame) return;
     frame = window.requestAnimationFrame(() => {
       frame = 0;
+      if (signal.aborted) return;
       const rect = host.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
       const amount = parallaxAmount();
@@ -222,47 +219,42 @@ function bindParallax(host, unbinds) {
     resetParallax(host);
   };
 
-  host.addEventListener('pointermove', onMove);
-  host.addEventListener('pointerleave', onLeave);
-  host.addEventListener('blur', onLeave, true);
-  unbinds.push(() => {
-    host.removeEventListener('pointermove', onMove);
-    host.removeEventListener('pointerleave', onLeave);
-    host.removeEventListener('blur', onLeave, true);
-    if (frame) window.cancelAnimationFrame(frame);
-    resetParallax(host);
-  });
+  host.addEventListener('pointermove', onMove, { signal });
+  host.addEventListener('pointerleave', onLeave, { signal });
+  host.addEventListener('blur', onLeave, { capture: true, signal });
+  signal.addEventListener('abort', onLeave, { once: true });
 }
 
 export function initTextureSlice() {
   const hosts = [...document.querySelectorAll(HOST_SELECTOR)];
   const hostStates = new Map(hosts.map((host) => [host, readHostState(host)]));
   const overlayStates = new Map(hosts.map((host) => {
-    const overlay = host.querySelector(`:scope > .${SLICE_CLASS}`);
+    const overlay = overlayFor(host, { create: false });
     return [host, overlay ? {
       element: overlay,
       family: overlay.getAttribute('data-spw-slice-family'),
       glitch: overlay.getAttribute('data-spw-slice-glitch'),
     } : null];
   }));
-  const pointerUnbinds = [];
   const abort = new AbortController();
   const { signal } = abort;
+  let pointerAbort = new AbortController();
 
   hosts.forEach(annotate);
 
   const rebindPointers = () => {
-    pointerUnbinds.splice(0).forEach((fn) => fn());
+    pointerAbort.abort();
+    pointerAbort = new AbortController();
     hosts.forEach((host) => syncEnvironment(host));
     if (!canParallax()) {
       hosts.forEach((host) => {
         resetParallax(host);
-        const overlay = host.querySelector(`:scope > .${SLICE_CLASS}`);
+        const overlay = overlayFor(host, { create: false });
         if (overlay && (isCapturing() || isHighContrast())) overlay.dataset.spwSliceGlitch = 'false';
       });
       return;
     }
-    hosts.forEach((host) => bindParallax(host, pointerUnbinds));
+    hosts.forEach((host) => bindParallax(host, pointerAbort.signal));
   };
 
   rebindPointers();
@@ -280,10 +272,10 @@ export function initTextureSlice() {
 
   return () => {
     abort.abort();
+    pointerAbort.abort();
     captureObserver.disconnect();
-    pointerUnbinds.splice(0).forEach((fn) => fn());
     hosts.forEach((host) => {
-      const overlay = host.querySelector(`:scope > .${SLICE_CLASS}`);
+      const overlay = overlayFor(host, { create: false });
       const authoredOverlay = overlayStates.get(host);
       if (authoredOverlay?.element === overlay) {
         restoreAttribute(overlay, 'data-spw-slice-family', authoredOverlay.family);

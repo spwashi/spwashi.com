@@ -12,6 +12,14 @@ import {
 } from '../../public/js/runtime/module-catalog-normalize.js';
 import { describeModuleExport } from '../../public/js/runtime/module-export-contract.js';
 import {
+  listNamedInitAdapterExports,
+  moduleSourceExportsName,
+} from '../typed/runtime-contracts.mjs';
+import {
+  collectQuotedCustomProperties,
+  fileHasClosedStyleTokenSet,
+} from '../typed/style-property-contract.mjs';
+import {
   composeOpBundle,
   getOperatorDefinition,
   getOperatorThresholdState,
@@ -297,6 +305,53 @@ test('module orchestration groups one flat catalog definition for loaders and in
   assert.equal(orchestration.effects.electrostatics.role, 'capacitor');
   assert.equal(orchestration.lifecycle.mount, 'catalog-adapter');
   assert.equal(orchestration.lifecycle.cleanup, 'catalog-unmount');
+});
+
+test('named catalog mount adapters must match a real init export', () => {
+  assert.deepEqual(
+    listNamedInitAdapterExports("mount: (mod) => mod?.initImageMetaphysics?.()"),
+    ['initImageMetaphysics'],
+  );
+  assert.deepEqual(
+    listNamedInitAdapterExports("const fn = mod?.initSpwLogoRuntime || mod?.initLogoRuntime;"),
+    ['initSpwLogoRuntime', 'initLogoRuntime'],
+  );
+  assert.equal(
+    moduleSourceExportsName('export function initSpwImageMetaphysics() {}', 'initImageMetaphysics'),
+    false,
+  );
+  assert.equal(
+    moduleSourceExportsName('export function initSpwImageMetaphysics() {}', 'initSpwImageMetaphysics'),
+    true,
+  );
+  assert.equal(
+    moduleSourceExportsName(
+      'const initFrameNavigator = () => {};\nexport { initFrameNavigator, unmountFrameNavigator as unmount };',
+      'initFrameNavigator',
+    ),
+    true,
+  );
+  assert.equal(
+    moduleSourceExportsName('export { initLocal as initFrameNavigator };', 'initFrameNavigator'),
+    true,
+  );
+});
+
+test('image metaphysics and texture slice keep portable mounts instead of named adapters', () => {
+  for (const id of ['image-metaphysics', 'texture-slice', 'logo-runtime']) {
+    const definition = ENHANCEMENT_DEFS.find((entry) => entry.id === id);
+    assert.ok(definition, id);
+    assert.equal(typeof definition.mount, 'undefined', `${id} should resolve mount from the loaded module`);
+  }
+});
+
+test('dynamic style writes are allowed when the file quotes a closed CSS token set', () => {
+  const source = "const TOKENS = ['--spw-slice-u', '--spw-slice-v'];\nhost.style.setProperty(property, value);";
+  const quoted = collectQuotedCustomProperties(source);
+  assert.deepEqual(quoted, ['--spw-slice-u', '--spw-slice-v']);
+  assert.equal(fileHasClosedStyleTokenSet(quoted, new Set(['--spw-slice-u', '--spw-slice-v'])), true);
+  assert.equal(fileHasClosedStyleTokenSet(quoted, new Set(['--spw-slice-u'])), false);
+  assert.equal(fileHasClosedStyleTokenSet([], new Set(['--spw-slice-u'])), false);
 });
 
 test('module export inspection reports catalog mirror drift without changing authority', () => {

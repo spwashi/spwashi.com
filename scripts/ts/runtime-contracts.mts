@@ -602,6 +602,60 @@ function importPathToAbsolute(importPath: string): string {
 }
 
 const INIT_EXPORT_SOURCE_RE = /\bexport\s+(?:async\s+)?function\s+init[A-Z]\w*|\bexport\s+const\s+init[A-Z]\w*\s*=|\bexport\s+\{[^}]*\binit[A-Z]\w*|\bSPW_MODULE_EXPORT\b|\bspwModule\b|\bexport\s+default\s*\{[^}]*\bmount\b/;
+const NAMED_INIT_ADAPTER_RE = /\bmod\??\.(init[A-Z][A-Za-z0-9]*)\b/g;
+
+export function listNamedInitAdapterExports(objectLiteral = ''): string[] {
+  return [...new Set(
+    [...String(objectLiteral).matchAll(NAMED_INIT_ADAPTER_RE)].map((match) => match[1]),
+  )];
+}
+
+export function moduleSourceExportsName(
+  moduleSource: string,
+  name: string,
+  absolutePath = '',
+  depth = 0,
+): boolean {
+  if (!name) return false;
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  if (new RegExp(`\\bexport\\s+(?:async\\s+)?function\\s+\\*?\\s*${escaped}\\b`).test(moduleSource)) {
+    return true;
+  }
+  if (new RegExp(`\\bexport\\s+(?:const|let|var)\\s+${escaped}\\b`).test(moduleSource)) {
+    return true;
+  }
+
+  for (const block of moduleSource.matchAll(/export\s+\{([^}]+)\}/g)) {
+    for (const part of block[1].split(',')) {
+      const trimmed = part.trim();
+      if (!trimmed) continue;
+      const aliased = trimmed.match(/^(\S+)\s+as\s+(\S+)$/);
+      if (aliased) {
+        if (aliased[2] === name) return true;
+        continue;
+      }
+      if (trimmed === name) return true;
+    }
+  }
+
+  if (depth >= 2 || !absolutePath) return false;
+  const starExports = [...moduleSource.matchAll(/\bexport\s+\*\s+from\s+['"]([^'"]+)['"]/g)];
+  for (const match of starExports) {
+    const spec = match[1];
+    if (!spec) continue;
+    const resolved = path.resolve(path.dirname(absolutePath), spec);
+    const candidates = [resolved, `${resolved}.js`, path.join(resolved, 'index.js')];
+    for (const candidate of candidates) {
+      try {
+        const nested = readFileSync(candidate, 'utf8');
+        if (moduleSourceExportsName(nested, name, candidate, depth + 1)) return true;
+      } catch {
+        // try next candidate
+      }
+    }
+  }
+  return false;
+}
 
 /**
  * True when resolveModuleMount can find a mount on this module source, or on a
@@ -736,26 +790,41 @@ function validateModule(
 
   // Catalog mount adapters are optional when resolveModuleMount can find
   // SPW_MODULE_EXPORT / spwModule / default.mount / init* on the loaded module.
+  // Named `mod?.initFoo` adapters must name an export that exists; a missing
+  // name is a silent no-op at boot.
+  let loadedSource = '';
+  let loadedPath = '';
+  if (module.importPath) {
+    loadedPath = importPathToAbsolute(module.importPath);
+    try {
+      loadedSource = readFileSync(loadedPath, 'utf8');
+    } catch {
+      loadedSource = '';
+    }
+  }
+
   if (!/\bmount:\s*\(/.test(module.objectLiteral)) {
-    if (module.importPath) {
-      const absoluteImport = importPathToAbsolute(module.importPath);
-      let moduleSource = '';
-      try {
-        moduleSource = readFileSync(absoluteImport, 'utf8');
-      } catch {
-        errors.push(`${label} is missing a mount() adapter and its load path is unreadable.`);
-        moduleSource = '';
-      }
-      if (moduleSource) {
-        const hasInitExport = moduleSourceHasResolvableMount(moduleSource, absoluteImport);
-        if (!hasInitExport) {
-          errors.push(
-            `${label} is missing a mount() adapter and ${module.importPath} has no init*/SPW_MODULE_EXPORT mount for resolveModuleMount.`,
-          );
-        }
-      }
-    } else {
+    if (!module.importPath) {
       errors.push(`${label} is missing a mount() contract.`);
+    } else if (!loadedSource) {
+      errors.push(`${label} is missing a mount() adapter and its load path is unreadable.`);
+    } else if (!moduleSourceHasResolvableMount(loadedSource, loadedPath)) {
+      errors.push(
+        `${label} is missing a mount() adapter and ${module.importPath} has no init*/SPW_MODULE_EXPORT mount for resolveModuleMount.`,
+      );
+    }
+  } else {
+    const namedInits = listNamedInitAdapterExports(module.objectLiteral);
+    if (namedInits.length) {
+      if (!loadedSource) {
+        errors.push(
+          `${label} mount adapter calls ${namedInits.join(' / ')} but ${module.importPath || 'its load path'} is unreadable.`,
+        );
+      } else if (!namedInits.some((name) => moduleSourceExportsName(loadedSource, name, loadedPath))) {
+        errors.push(
+          `${label} mount adapter calls ${namedInits.join(' / ')} but ${module.importPath} does not export that init.`,
+        );
+      }
     }
   }
 
