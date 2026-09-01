@@ -19,8 +19,8 @@ const ATTENTION_SECTION_SELECTOR = [
   'main [data-spw-component-kind="hook"]',
 ].join(', ');
 
-// Resonance is event-delegated from document. One visible main root avoids
-// retaining an IntersectionObserver target for every operator chip.
+// Resonance listens on the matched main so chrome operators are not in the
+// probe field. Loader calls SPW_MODULE_EXPORT.mount(ctx, root).
 const ATTENTION_PROBE_SELECTOR = 'main';
 
 const ATTENTION_READING_SELECTOR = [
@@ -939,7 +939,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'root-state section-state scroll-listener bus css-vars',
     evaluates: 'section handle semantic-expression geometry authored-cadence region-kin cauldron resonance',
     load: () => import('./attention/section-handle.js'),
-    mount: (mod, ctx) => mod?.initSectionHandle?.(document, ctx),
   },
   {
     id: 'attention-resonance-probe',
@@ -962,7 +961,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'root-state focus-listener conditional-hover-listener',
     evaluates: 'operator concept ingredient resonance',
     load: () => import('./attention/resonance-probe.js'),
-    mount: (mod) => mod?.initResonanceProbe?.(document),
   },
   {
     id: 'attention-reading-groove',
@@ -986,7 +984,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'root-state element-state intersection-observer preference-observer',
     evaluates: 'reading prose beat proximity groove preference',
     load: () => import('./attention/reading-groove.js'),
-    mount: (mod) => mod?.initReadingGroove?.(document),
   },
   {
     id: 'attention-pinch-scale',
@@ -1009,7 +1006,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'conditional-touch-listeners root-css-vars settings-api',
     evaluates: 'multi-touch text scale direction device posture',
     load: () => import('./attention/pinch-scale.js'),
-    mount: (mod) => mod?.initPinchTextScale?.(document),
   },
   {
     id: 'attention-scroll-cadence',
@@ -1025,7 +1021,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'root-state preference-projection',
     evaluates: 'scroll cadence preference section-state ornament',
     load: () => import('./attention/scroll-cadence.js'),
-    mount: (mod) => mod?.initScrollCadenceState?.(),
   },
   {
     id: 'annotation-layer',

@@ -5,6 +5,8 @@ import {
   RESONANCE_KEY_ATTR,
   SPW_LOG_RELATIONSHIPS,
   logger,
+  resolveAttentionMain,
+  resolveAttentionDocument,
 } from './shared.js';
 import { readPinnedProbe } from './capture-pins.js';
 
@@ -23,13 +25,17 @@ function readResonanceState(target) {
 }
 
 export function initResonanceProbe(root) {
-  const html = document.documentElement;
-  const hoverCapable = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches === true;
+  if (!root?.addEventListener) return () => {};
+  const doc = root.ownerDocument || document;
+  const html = doc.documentElement;
+  const hoverCapable = doc.defaultView?.matchMedia?.('(hover: hover) and (pointer: fine)').matches === true;
   let probeFocus = null;
   let probeHover = null;
   let hoverTimer = 0;
   let lastProbeLogKey = '';
   const HOVER_DELAY = 260;
+  const abort = new AbortController();
+  const { signal } = abort;
 
   let rafId = 0;
 
@@ -39,7 +45,7 @@ export function initResonanceProbe(root) {
   }
 
   function apply() {
-    const pinnedProbe = readPinnedProbe(document);
+    const pinnedProbe = readPinnedProbe(doc);
     const state = probeFocus || probeHover || (pinnedProbe ? { key: pinnedProbe, concept: '', ingredient: '' } : { key: '', concept: '', ingredient: '' });
     const key = state.key;
     const concept = state.concept;
@@ -106,30 +112,32 @@ export function initResonanceProbe(root) {
     scheduleApply();
   }
 
-  root.addEventListener('focusin', onFocusIn);
-  root.addEventListener('focusout', onFocusOut);
+  root.addEventListener('focusin', onFocusIn, { signal });
+  root.addEventListener('focusout', onFocusOut, { signal });
   if (hoverCapable) {
-    root.addEventListener('mouseover', onMouseEnter);
-    root.addEventListener('mouseout', onMouseLeave);
+    root.addEventListener('mouseover', onMouseEnter, { signal });
+    root.addEventListener('mouseout', onMouseLeave, { signal });
   }
-  if (readPinnedProbe(document)) scheduleApply();
+  if (readPinnedProbe(doc)) scheduleApply();
 
   return () => {
+    abort.abort();
     if (rafId) cancelAnimationFrame(rafId);
     clearTimeout(hoverTimer);
-    root.removeEventListener('focusin', onFocusIn);
-    root.removeEventListener('focusout', onFocusOut);
-    if (hoverCapable) {
-      root.removeEventListener('mouseover', onMouseEnter);
-      root.removeEventListener('mouseout', onMouseLeave);
-    }
-    if (!readPinnedProbe(document)) html.removeAttribute(PROBE_ATTR);
+    if (!readPinnedProbe(doc)) html.removeAttribute(PROBE_ATTR);
     html.removeAttribute('data-spw-resonance-concept');
     html.removeAttribute('data-spw-resonance-ingredient');
   };
 }
 
-export const spwModule = {
-  updates: ['attr:data-spw-resonance-probe'],
-  mount: (mod, ctx, root) => initResonanceProbe(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'attention-resonance-probe',
+  mount: (ctx, root) => initResonanceProbe(
+    resolveAttentionMain(ctx, root) || resolveAttentionDocument(ctx, root),
+  ),
+  describes: 'attention[operator|concept|ingredient] resonance probe',
+  timingArc: 'visible-attention',
+  effectScope: 'root-state focus-listener conditional-hover-listener',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

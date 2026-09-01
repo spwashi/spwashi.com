@@ -4,6 +4,10 @@
  * Orchestrator for attention-field enhancements. Submodules live under
  * ./attention/ for section locomotion, resonance probe, reading groove,
  * pinch scaling, and scroll cadence.
+ *
+ * Catalog mounts each child on its own when=. This facade is the
+ * compose/all-at-once path and uses the same SPW_MODULE_EXPORT.mount(ctx, root)
+ * contract the loader uses.
  * --------------------------------------------------------------------------
  */
 
@@ -12,11 +16,26 @@ import {
   ATTENTION_ARCHITECTURE_CONTRACT,
   describeAttentionArchitecture,
 } from './attention/shared.js';
-import { initSectionHandle } from './attention/section-handle.js';
-import { initResonanceProbe } from './attention/resonance-probe.js';
-import { initReadingGroove } from './attention/reading-groove.js';
-import { initPinchTextScale } from './attention/pinch-scale.js';
-import { initScrollCadenceState } from './attention/scroll-cadence.js';
+import {
+  initSectionHandle,
+  SPW_MODULE_EXPORT as sectionHandleExport,
+} from './attention/section-handle.js';
+import {
+  initResonanceProbe,
+  SPW_MODULE_EXPORT as resonanceProbeExport,
+} from './attention/resonance-probe.js';
+import {
+  initReadingGroove,
+  SPW_MODULE_EXPORT as readingGrooveExport,
+} from './attention/reading-groove.js';
+import {
+  initPinchTextScale,
+  SPW_MODULE_EXPORT as pinchScaleExport,
+} from './attention/pinch-scale.js';
+import {
+  initScrollCadenceState,
+  SPW_MODULE_EXPORT as scrollCadenceExport,
+} from './attention/scroll-cadence.js';
 
 export {
   ATTENTION_ARCHITECTURE_CONTRACT,
@@ -28,13 +47,19 @@ export {
   initScrollCadenceState,
 };
 
-const CHILD_INIT = Object.freeze({
-  'scroll-cadence': (_root, _ctx) => initScrollCadenceState(),
-  'section-handle': (root, ctx) => initSectionHandle(root, ctx),
-  'resonance-probe': (root) => initResonanceProbe(root),
-  'reading-groove': (root) => initReadingGroove(root),
-  'pinch-scale': (root) => initPinchTextScale(root),
+const CHILD_MOUNT = Object.freeze({
+  'scroll-cadence': scrollCadenceExport.mount,
+  'section-handle': sectionHandleExport.mount,
+  'resonance-probe': resonanceProbeExport.mount,
+  'reading-groove': readingGrooveExport.mount,
+  'pinch-scale': pinchScaleExport.mount,
 });
+
+function asCleanup(result) {
+  if (typeof result === 'function') return result;
+  if (typeof result?.cleanup === 'function') return result.cleanup;
+  return null;
+}
 
 export function initSpwAttentionArchitecture(ctx = {}) {
   const root = ctx.root || (typeof document !== 'undefined' ? document : null);
@@ -42,18 +67,17 @@ export function initSpwAttentionArchitecture(ctx = {}) {
     || Object.keys(ATTENTION_ARCHITECTURE_CONTRACT.children);
   const cleanups = [];
 
-  const safeInit = (name) => {
-    const factory = CHILD_INIT[name];
-    if (!factory) return;
-    const cleanup = guardCall(() => factory(root, ctx), `attention:${name}`, { silent: true })();
+  wanted.forEach((name) => {
+    const mount = CHILD_MOUNT[name];
+    if (!mount) return;
+    const result = guardCall(() => mount(ctx, root), `attention:${name}`, { silent: true })();
+    const cleanup = asCleanup(result);
     if (cleanup) cleanups.push(cleanup);
-  };
-
-  wanted.forEach(safeInit);
+  });
 
   return () => {
     for (const cleanup of cleanups) {
-      try { cleanup && cleanup(); } catch (_) {}
+      try { cleanup(); } catch (_) {}
     }
   };
 }

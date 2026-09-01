@@ -103,6 +103,26 @@ export const READING_GROOVE_SELECTOR = [
   'main > section h3',
 ].join(', ');
 
+/** Relative to a matched <main> so a paragraph gate still collects the whole column. */
+export const READING_GROOVE_SCOPED_SELECTOR = [
+  'article p',
+  'article li',
+  'article blockquote',
+  'article figcaption',
+  'article .inline-note',
+  'article .frame-note',
+  'article h2',
+  'article h3',
+  ':scope > section p',
+  ':scope > section li',
+  ':scope > section blockquote',
+  ':scope > section figcaption',
+  ':scope > section .inline-note',
+  ':scope > section .frame-note',
+  ':scope > section h2',
+  ':scope > section h3',
+].join(', ');
+
 export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
   writable: false,
   children: Object.freeze({
@@ -113,7 +133,7 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
     'pinch-scale': 'interaction',
   }),
   portableUse:
-    'Catalog mounts each child on its own when=. initSpwAttentionArchitecture({ children }) is the compose/all-at-once facade. describeAttentionArchitecture() reads; it does not write.',
+    'Catalog mounts each child on its own when=. Loader calls SPW_MODULE_EXPORT.mount(ctx, root). resolveAttentionHost/Document/Main map that pair onto the page. initSpwAttentionArchitecture({ children }) is the compose/all-at-once facade. describeAttentionArchitecture() reads; it does not write.',
   selectors: Object.freeze({
     handle: HANDLE_SELECTOR,
     operatorSections: OPERATOR_SECTION_SELECTOR,
@@ -178,8 +198,40 @@ export const logger = createSpwLogger('attention-architecture', {
 
 export { SPW_LOG_RELATIONSHIPS };
 
-export function getScrollBehavior() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+export function getScrollBehavior(doc = typeof document !== 'undefined' ? document : null) {
+  if (doc?.documentElement?.dataset?.spwReduceMotion === 'on') return 'auto';
+  const view = doc?.defaultView || globalThis;
+  return view.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ? 'auto' : 'smooth';
+}
+
+function isAttentionNode(value) {
+  return Boolean(value) && (value.nodeType === 1 || value.nodeType === 9 || typeof value.querySelector === 'function');
+}
+
+/** Matched catalog root, then ctx.root, then the document. */
+export function resolveAttentionHost(ctx, root) {
+  if (isAttentionNode(root)) return root;
+  if (isAttentionNode(ctx?.root)) return ctx.root;
+  return typeof document !== 'undefined' ? document : null;
+}
+
+/** Document that owns the matched host. Section-handle searches this for the authored anchor. */
+export function resolveAttentionDocument(ctx, root) {
+  const host = resolveAttentionHost(ctx, root);
+  if (!host) return typeof document !== 'undefined' ? document : null;
+  if (host.nodeType === 9) return host;
+  return host.ownerDocument || (typeof document !== 'undefined' ? document : null);
+}
+
+/** Main landmark when the catalog gated on a descendant. Pinch and reading groove pack here. */
+export function resolveAttentionMain(ctx, root) {
+  const host = resolveAttentionHost(ctx, root);
+  if (!host) {
+    return typeof document !== 'undefined' ? document.querySelector('main') : null;
+  }
+  if (host.matches?.('main')) return host;
+  if (host.nodeType === 9) return host.querySelector('main');
+  return host.closest?.('main') || host.querySelector?.('main') || host.ownerDocument?.querySelector?.('main') || null;
 }
 
 /**
@@ -214,14 +266,20 @@ export function clearAttributes(node, names = []) {
   });
 }
 
-export function getRootPreference(name, fallback = 'off') {
-  const htmlValue = document.documentElement?.dataset?.[name];
-  const bodyValue = document.body?.dataset?.[name];
+export function restoreAttribute(node, name, value) {
+  if (!(node instanceof HTMLElement) || !name) return;
+  if (value == null) node.removeAttribute(name);
+  else node.setAttribute(name, value);
+}
+
+export function getRootPreference(name, fallback = 'off', doc = typeof document !== 'undefined' ? document : null) {
+  const htmlValue = doc?.documentElement?.dataset?.[name];
+  const bodyValue = doc?.body?.dataset?.[name];
   return String(htmlValue || bodyValue || fallback);
 }
 
 export function describeAttentionArchitecture(root = typeof document !== 'undefined' ? document : null) {
-  const doc = root?.nodeType === 9 ? root : root?.ownerDocument || (typeof document !== 'undefined' ? document : null);
+  const doc = resolveAttentionDocument({ root }, root);
   const html = doc?.documentElement || null;
   if (!html) return { ready: false };
   const ds = html.dataset || {};

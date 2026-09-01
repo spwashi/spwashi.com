@@ -10213,6 +10213,17 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   }
 }
 
+/* No-JS compact jump-to-top when the browser cannot drive the handle from scroll. */
+@supports not (animation-timeline: scroll()) {
+  @media (max-width: 45rem) {
+    :where(.spw-section-handle:not([data-spw-handle-enhanced="true"])) {
+      opacity: 0.92;
+      pointer-events: auto;
+      transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0);
+    }
+  }
+}
+
 .spw-section-handle .spw-section-handle__op {
   color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 88%, var(--ink));
   font-weight: 600;

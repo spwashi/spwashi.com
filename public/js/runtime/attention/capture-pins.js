@@ -22,24 +22,34 @@ export function readCapturePinQuery(search = '', hash = '') {
   };
 }
 
+function resolveCaptureDocument(root) {
+  if (root?.nodeType === 9) return root;
+  return root?.ownerDocument || (typeof document !== 'undefined' ? document : null);
+}
+
+function escapeIdent(value) {
+  if (typeof CSS !== 'undefined' && typeof CSS.escape === 'function') return CSS.escape(value);
+  return String(value).replace(/([^a-zA-Z0-9_-])/g, '\\$1');
+}
+
 export function applyAttentionCapturePins(
-  root = document,
-  pins = readCapturePinQuery(
-    root.defaultView?.location?.search,
-    root.defaultView?.location?.hash,
-  ),
+  root = typeof document !== 'undefined' ? document : null,
+  pins,
 ) {
-  const html = root.documentElement;
+  const doc = resolveCaptureDocument(root);
+  const view = doc?.defaultView;
+  const resolvedPins = pins || readCapturePinQuery(view?.location?.search, view?.location?.hash);
+  const html = doc?.documentElement;
   if (!html) return { section: '', probe: '', node: null };
 
-  const section = String(pins?.section || '').trim();
-  const probe = String(pins?.probe || '').trim();
+  const section = String(resolvedPins?.section || '').trim();
+  const probe = String(resolvedPins?.probe || '').trim();
   let node = null;
 
   if (section) {
-    node = typeof root.getElementById === 'function'
-      ? root.getElementById(section)
-      : root.querySelector?.(`#${section}`);
+    node = typeof doc.getElementById === 'function'
+      ? doc.getElementById(section)
+      : doc.querySelector?.(`#${escapeIdent(section)}`);
     if (node) {
       node.setAttribute('data-spw-region-mark', CAPTURE_PIN_MARK);
       html.setAttribute(PAGE_SECTION_CURRENT_ATTR, section);
@@ -53,6 +63,8 @@ export function applyAttentionCapturePins(
   return { section, probe, node };
 }
 
-export function readPinnedProbe(root = document) {
-  return readCapturePinQuery(root.defaultView?.location?.search).probe;
+export function readPinnedProbe(root = typeof document !== 'undefined' ? document : null) {
+  const doc = resolveCaptureDocument(root);
+  const view = doc?.defaultView;
+  return readCapturePinQuery(view?.location?.search, view?.location?.hash).probe;
 }

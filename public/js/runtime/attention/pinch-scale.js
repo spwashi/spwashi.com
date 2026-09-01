@@ -1,14 +1,14 @@
 import {
   FONT_SCALE_STEPS,
   PINCH_ACTIVE_ATTR,
-  PINCH_TEXT_SCALE_ATTR,
   getRootPreference,
+  resolveAttentionMain,
   writeAttributes,
 } from './shared.js';
 
-function getCurrentFontScale() {
-  const current = window.spwSettings?.get?.()?.fontSizeScale
-    || document.documentElement.dataset.spwFontSizeScale
+function getCurrentFontScale(doc = document) {
+  const current = doc.defaultView?.spwSettings?.get?.()?.fontSizeScale
+    || doc.documentElement?.dataset?.spwFontSizeScale
     || '100';
   return FONT_SCALE_STEPS.includes(String(current)) ? String(current) : '100';
 }
@@ -38,8 +38,8 @@ function getVariantForIndex(index) {
   return 'balanced';
 }
 
-function isPinchTextScaleEnabled() {
-  return getRootPreference('spwPinchTextScale', 'on') !== 'off';
+function isPinchTextScaleEnabled(doc = document) {
+  return getRootPreference('spwPinchTextScale', 'on', doc) !== 'off';
 }
 
 export function supportsPinchTextScaleInput(environment = globalThis) {
@@ -50,21 +50,24 @@ export function supportsPinchTextScaleInput(environment = globalThis) {
 
 export function initPinchTextScale(root) {
   if (!supportsPinchTextScaleInput()) return () => {};
-  const main = root.querySelector?.('main');
+  const main = root?.matches?.('main') ? root : root?.querySelector?.('main');
   if (!(main instanceof HTMLElement)) return () => {};
-  const html = document.documentElement;
+  const doc = main.ownerDocument || document;
+  const html = doc.documentElement;
+  const abort = new AbortController();
+  const { signal } = abort;
 
   const state = {
     active: false,
     startDistance: 0,
-    startIndex: clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale())),
-    previewIndex: clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale())),
+    startIndex: clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale(doc))),
+    previewIndex: clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale(doc))),
   };
 
   const clearPinchState = () => {
     state.active = false;
     state.startDistance = 0;
-    state.startIndex = clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale()));
+    state.startIndex = clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale(doc)));
     state.previewIndex = state.startIndex;
 
     html.style.removeProperty('--spw-pinch-factor');
@@ -72,7 +75,7 @@ export function initPinchTextScale(root) {
     html.style.removeProperty('--spw-pinch-origin-x');
     html.style.removeProperty('--spw-pinch-origin-y');
 
-    [html, document.body, main].forEach((node) => {
+    [html, doc.body, main].forEach((node) => {
       if (!(node instanceof HTMLElement)) return;
       node.removeAttribute(PINCH_ACTIVE_ATTR);
       node.removeAttribute('data-spw-pinch-direction');
@@ -89,13 +92,13 @@ export function initPinchTextScale(root) {
   };
 
   const handleTouchStart = (event) => {
-    if (!isPinchTextScaleEnabled()) return;
+    if (!isPinchTextScaleEnabled(doc)) return;
     if (event.touches.length !== 2) return;
     if (!isAllowedTarget(event.target)) return;
 
     state.active = true;
     state.startDistance = getTouchDistance(event.touches);
-    state.startIndex = clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale()));
+    state.startIndex = clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale(doc)));
     state.previewIndex = state.startIndex;
 
     const center = getTouchCenter(event.touches);
@@ -106,7 +109,7 @@ export function initPinchTextScale(root) {
 
     const variant = getVariantForIndex(state.startIndex);
 
-    [html, document.body, main].forEach((node) => {
+    [html, doc.body, main].forEach((node) => {
       if (!(node instanceof HTMLElement)) return;
       writeAttributes(node, {
         [PINCH_ACTIVE_ATTR]: 'true',
@@ -118,7 +121,7 @@ export function initPinchTextScale(root) {
 
   const handleTouchMove = (event) => {
     if (!state.active || event.touches.length !== 2) return;
-    if (!isPinchTextScaleEnabled()) return;
+    if (!isPinchTextScaleEnabled(doc)) return;
 
     const distance = getTouchDistance(event.touches);
     if (!(distance > 0) || !(state.startDistance > 0)) return;
@@ -136,7 +139,7 @@ export function initPinchTextScale(root) {
     const direction = delta > 0.04 ? 'expand' : delta < -0.04 ? 'contract' : 'neutral';
     const variant = getVariantForIndex(nextIndex);
 
-    [html, document.body, main].forEach((node) => {
+    [html, doc.body, main].forEach((node) => {
       if (!(node instanceof HTMLElement)) return;
       writeAttributes(node, {
         'data-spw-pinch-direction': direction,
@@ -148,9 +151,10 @@ export function initPinchTextScale(root) {
     state.previewIndex = nextIndex;
 
     const nextScale = FONT_SCALE_STEPS[nextIndex];
-    if (nextScale && nextScale !== getCurrentFontScale()) {
-      if (window.spwSettings?.setFontSizeScale) window.spwSettings.setFontSizeScale(nextScale);
-      else window.spwSettings?.save?.({ fontSizeScale: nextScale });
+    if (nextScale && nextScale !== getCurrentFontScale(doc)) {
+      const view = doc.defaultView || window;
+      if (view.spwSettings?.setFontSizeScale) view.spwSettings.setFontSizeScale(nextScale);
+      else view.spwSettings?.save?.({ fontSizeScale: nextScale });
     }
   };
 
@@ -159,31 +163,23 @@ export function initPinchTextScale(root) {
     clearPinchState();
   };
 
-  main.addEventListener('touchstart', handleTouchStart, { passive: true });
-  main.addEventListener('touchmove', handleTouchMove, { passive: false });
-  main.addEventListener('touchend', handleTouchEnd, { passive: true });
-  main.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+  main.addEventListener('touchstart', handleTouchStart, { passive: true, signal });
+  main.addEventListener('touchmove', handleTouchMove, { passive: false, signal });
+  main.addEventListener('touchend', handleTouchEnd, { passive: true, signal });
+  main.addEventListener('touchcancel', handleTouchEnd, { passive: true, signal });
 
   return () => {
-    main.removeEventListener('touchstart', handleTouchStart);
-    main.removeEventListener('touchmove', handleTouchMove);
-    main.removeEventListener('touchend', handleTouchEnd);
-    main.removeEventListener('touchcancel', handleTouchEnd);
+    abort.abort();
     clearPinchState();
   };
 }
 
-export const spwModule = {
-  updates: [
-    'attr:data-spw-font-size-scale',
-    'attr:data-spw-pinch-active',
-    'attr:data-spw-pinch-scaling',
-    'attr:data-spw-pinch-direction',
-    'attr:data-spw-pinch-variant',
-    'css-var:--spw-pinch-factor',
-    'css-var:--spw-pinch-delta',
-    'css-var:--spw-pinch-origin-x',
-    'css-var:--spw-pinch-origin-y',
-  ],
-  mount: (mod, ctx, root) => initPinchTextScale(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'attention-pinch-scale',
+  mount: (ctx, root) => initPinchTextScale(resolveAttentionMain(ctx, root) || root),
+  describes: 'attention[pinch-scale] optional coarse-pointer text scale preview',
+  timingArc: 'interaction-attention',
+  effectScope: 'conditional-touch-listeners root-css-vars settings-api',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

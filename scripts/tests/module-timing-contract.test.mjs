@@ -12,6 +12,14 @@ import {
   STANDARD_IDLE_CHUNKS,
 } from '../../public/js/kernel/module-timing-contract.js';
 import { supportsPinchTextScaleInput } from '../../public/js/runtime/attention/pinch-scale.js';
+import {
+  getRootPreference,
+  getScrollBehavior,
+  resolveAttentionDocument,
+  resolveAttentionHost,
+  resolveAttentionMain,
+  restoreAttribute,
+} from '../../public/js/runtime/attention/shared.js';
 import { ENHANCEMENT_DEFS } from '../../public/js/runtime/module-catalog-enhancement.js';
 import { MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
 
@@ -91,7 +99,61 @@ test('attention children own independent progressive schedules', () => {
 
   Object.values(attention).forEach((definition) => {
     assert.match(String(definition.load), /\.\/attention\//);
+    assert.equal(typeof definition.mount, 'undefined', `${definition.id} should use portable mount`);
   });
+});
+
+test('attention host resolvers prefer the matched root over loader context', () => {
+  const doc = { nodeType: 9, querySelector: (sel) => (sel === 'main' ? main : null) };
+  const main = {
+    nodeType: 1,
+    matches: (sel) => sel === 'main',
+    closest: () => null,
+    querySelector: () => null,
+    ownerDocument: doc,
+  };
+  const paragraph = {
+    nodeType: 1,
+    matches: () => false,
+    closest: (sel) => (sel === 'main' ? main : null),
+    querySelector: () => null,
+    ownerDocument: doc,
+  };
+  const ctx = { root: doc };
+
+  assert.equal(resolveAttentionHost(ctx, paragraph), paragraph);
+  assert.equal(resolveAttentionDocument(ctx, paragraph), doc);
+  assert.equal(resolveAttentionMain(ctx, paragraph), main);
+  assert.equal(resolveAttentionMain(ctx, main), main);
+  assert.equal(resolveAttentionHost(ctx, null), doc);
+});
+
+test('attention preferences and restore helpers stay document-scoped', () => {
+  const html = {
+    dataset: { spwReduceMotion: 'on', spwScrollCadence: 'off' },
+  };
+  const body = { dataset: {} };
+  const doc = {
+    documentElement: html,
+    body,
+    defaultView: { matchMedia: () => ({ matches: false }) },
+  };
+  assert.equal(getScrollBehavior(doc), 'auto');
+  assert.equal(getRootPreference('spwScrollCadence', 'on', doc), 'off');
+
+  const stored = {};
+  const node = {
+    nodeType: 1,
+    getAttribute(name) { return Object.prototype.hasOwnProperty.call(stored, name) ? stored[name] : null; },
+    setAttribute(name, value) { stored[name] = String(value); },
+    removeAttribute(name) { delete stored[name]; },
+    hasAttribute(name) { return Object.prototype.hasOwnProperty.call(stored, name); },
+  };
+  Object.setPrototypeOf(node, HTMLElement.prototype);
+  restoreAttribute(node, 'data-spw-scroll-cadence', 'on');
+  assert.equal(stored['data-spw-scroll-cadence'], 'on');
+  restoreAttribute(node, 'data-spw-scroll-cadence', null);
+  assert.equal(Object.prototype.hasOwnProperty.call(stored, 'data-spw-scroll-cadence'), false);
 });
 
 test('concept salience receives a document root instead of lifecycle context', () => {

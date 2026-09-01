@@ -8,14 +8,24 @@ import {
   READING_GROOVE_COUNT_ATTR,
   READING_GROOVE_MIN_BEATS,
   READING_GROOVE_MODE_ATTR,
+  READING_GROOVE_SCOPED_SELECTOR,
   READING_GROOVE_SELECTOR,
   clearAttributes,
   getRootPreference,
+  resolveAttentionMain,
   writeAttributes,
 } from './shared.js';
 
+function resolveReadingScope(root) {
+  if (root?.matches?.('main')) return root;
+  if (root?.nodeType === 9) return root.querySelector('main') || root;
+  return root?.closest?.('main') || root?.querySelector?.('main') || root;
+}
+
 function collectReadingBeats(root) {
-  return Array.from(root.querySelectorAll(READING_GROOVE_SELECTOR)).filter((node) => {
+  if (!root?.querySelectorAll) return [];
+  const selector = root.matches?.('main') ? READING_GROOVE_SCOPED_SELECTOR : READING_GROOVE_SELECTOR;
+  return Array.from(root.querySelectorAll(selector)).filter((node) => {
     if (!(node instanceof HTMLElement)) return false;
     if (!node.closest('main')) return false;
     if (node.hidden || node.getAttribute('aria-hidden') === 'true') return false;
@@ -49,21 +59,26 @@ function writeReadingGrooveState(beats, leadIndex) {
   });
 }
 
-function isReadingGrooveEnabled() {
-  return getRootPreference('spwReadingGrooveMode', 'on') !== 'off';
+function isReadingGrooveEnabled(doc = document) {
+  return getRootPreference('spwReadingGrooveMode', 'on', doc) !== 'off';
 }
 
 export function initReadingGroove(root) {
-  const beats = collectReadingBeats(root);
+  const scope = resolveReadingScope(root);
+  const beats = collectReadingBeats(scope);
   if (beats.length < READING_GROOVE_MIN_BEATS) return () => {};
   if (typeof IntersectionObserver !== 'function' || typeof MutationObserver !== 'function') {
     return () => {};
   }
 
+  const doc = scope?.nodeType === 9 ? scope : scope?.ownerDocument || document;
+  const abort = new AbortController();
+  const { signal } = abort;
+
   const syncReadingGroovePreference = () => {
-    [document.documentElement, document.body].forEach((node) => {
+    [doc.documentElement, doc.body].forEach((node) => {
       writeAttributes(node, {
-        [READING_GROOVE_ATTR]: isReadingGrooveEnabled() ? 'on' : 'off',
+        [READING_GROOVE_ATTR]: isReadingGrooveEnabled(doc) ? 'on' : 'off',
         [READING_GROOVE_COUNT_ATTR]: beats.length,
       });
     });
@@ -148,20 +163,20 @@ export function initReadingGroove(root) {
     syncReadingGroovePreference();
   });
 
-  window.addEventListener('resize', onResize, { passive: true });
-  window.addEventListener('orientationchange', onResize);
-  preferenceObserver.observe(document.documentElement, {
+  const view = doc.defaultView || window;
+  view.addEventListener('resize', onResize, { passive: true, signal });
+  view.addEventListener('orientationchange', onResize, { signal });
+  preferenceObserver.observe(doc.documentElement, {
     attributes: true,
     attributeFilter: [READING_GROOVE_MODE_ATTR],
   });
 
   return () => {
+    abort.abort();
     observer.disconnect();
     preferenceObserver.disconnect();
-    window.removeEventListener('resize', onResize);
-    window.removeEventListener('orientationchange', onResize);
     if (state.raf) {
-      window.cancelAnimationFrame(state.raf);
+      view.cancelAnimationFrame(state.raf);
       state.raf = 0;
     }
     beats.forEach((beat) => {
@@ -173,7 +188,7 @@ export function initReadingGroove(root) {
         READING_BEAT_FOCUS_ATTR,
       ]);
     });
-    [document.documentElement, document.body].forEach((node) => {
+    [doc.documentElement, doc.body].forEach((node) => {
       clearAttributes(node, [
         READING_GROOVE_ATTR,
         READING_GROOVE_COUNT_ATTR,
@@ -182,11 +197,14 @@ export function initReadingGroove(root) {
   };
 }
 
-export const spwModule = {
-  updates: [
-    'attr:data-spw-reading-groove',
-    'attr:data-spw-reading-beat-state',
-    'attr:data-spw-reading-beat-role'
-  ],
-  mount: (mod, ctx, root) => initReadingGroove(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'attention-reading-groove',
+  mount: (ctx, root) => initReadingGroove(
+    resolveAttentionMain(ctx, root) || resolveReadingScope(root),
+  ),
+  describes: 'attention[reading-groove|beat-state] optional long-form reading locus',
+  timingArc: 'idle-attention',
+  effectScope: 'root-state element-state intersection-observer preference-observer',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

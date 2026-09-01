@@ -558,6 +558,15 @@ test('attention capture pins write existing region-mark and probe attributes', a
   assert.equal(rootAttrs['data-spw-resonance-probe'], 'frame');
 });
 
+test('readPinnedProbe reads probe from the live search string', async () => {
+  const { readPinnedProbe } = await import('../../public/js/runtime/attention/capture-pins.js');
+  const root = {
+    nodeType: 9,
+    defaultView: { location: { search: '?probe=topic', hash: '#entry-loops' } },
+  };
+  assert.equal(readPinnedProbe(root), 'topic');
+});
+
 test('live capture measure evaluate is bounded and races font wait', async () => {
   const { readFile } = await import('node:fs/promises');
   const source = await readFile(new URL('../component-snapshots.mjs', import.meta.url), 'utf8');

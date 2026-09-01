@@ -44,6 +44,7 @@ import {
   getScrollBehavior,
   logger,
   readCadenceAnnotation,
+  resolveAttentionDocument,
   writeAttributes,
   writeSectionProgressStyle,
 } from './shared.js';
@@ -369,8 +370,8 @@ function describeSection(section, index = 0, sections = []) {
   };
 }
 
-function collectSections() {
-  const sections = Array.from(document.querySelectorAll(OPERATOR_SECTION_SELECTOR));
+function collectSections(doc = document) {
+  const sections = Array.from(doc.querySelectorAll(OPERATOR_SECTION_SELECTOR));
   const sectionSet = new Set(sections);
   return sections.filter((section) => {
     if (!(section instanceof HTMLElement)) return false;
@@ -390,7 +391,8 @@ function collectSections() {
 }
 
 function ensureHandle(root, sections) {
-  const existing = root.querySelector(HANDLE_SELECTOR);
+  const doc = root?.nodeType === 9 ? root : root?.ownerDocument || document;
+  const existing = (root.nodeType === 9 ? root : doc).querySelector(HANDLE_SELECTOR);
   if (existing instanceof HTMLElement) {
     annotateFloatingChromeElement(existing, {
       role: 'section-handle',
@@ -406,7 +408,7 @@ function ensureHandle(root, sections) {
     return { handle: null, generated: false };
   }
 
-  const handle = document.createElement('a');
+  const handle = doc.createElement('a');
   handle.className = 'spw-section-handle spw-section-handle--generated';
   handle.href = '#main-content';
   handle.setAttribute('aria-label', 'Jump to current section');
@@ -422,7 +424,7 @@ function ensureHandle(root, sections) {
     <span class="spw-section-handle__label">section</span>
   `;
 
-  const header = document.querySelector('body > header, .site-header');
+  const header = doc.querySelector('body > header, .site-header');
   if (header?.after) {
     header.after(handle);
   } else {
@@ -432,8 +434,8 @@ function ensureHandle(root, sections) {
   return { handle, generated: true };
 }
 
-function createHandleShell(origin) {
-  const shell = document.createElement('nav');
+function createHandleShell(origin, doc = document) {
+  const shell = doc.createElement('nav');
   shell.className = HANDLE_SHELL_CLASS;
   shell.setAttribute('aria-label', 'Page locomotion');
   shell.setAttribute(HANDLE_ENHANCED_ATTR, 'true');
@@ -1425,9 +1427,10 @@ function initHandleCauldronNudge(ctx, handle, shell) {
 }
 
 function initSectionHandle(root, ctx = {}) {
-  applyAttentionCapturePins(root?.ownerDocument || document);
-  const sections = collectSections();
-  const { handle, generated } = ensureHandle(root, sections);
+  const doc = root?.nodeType === 9 ? root : root?.ownerDocument || document;
+  applyAttentionCapturePins(doc);
+  const sections = collectSections(doc);
+  const { handle, generated } = ensureHandle(doc, sections);
   if (!handle) return () => {};
 
   if (!sections.length) {
@@ -1435,11 +1438,9 @@ function initSectionHandle(root, ctx = {}) {
     return () => {};
   }
 
-  const shell = createHandleShell(generated ? 'generated' : 'markup');
+  const shell = createHandleShell(generated ? 'generated' : 'markup', doc);
 
   handle.after(shell);
-  handle.hidden = true;
-  handle.setAttribute(HANDLE_ENHANCED_ATTR, 'true');
 
   sections.forEach((section, index) => {
     section.setAttribute(SECTION_INDEX_ATTR, String(index + 1));
@@ -1452,6 +1453,8 @@ function initSectionHandle(root, ctx = {}) {
     shell,
     generated,
   });
+  handle.hidden = true;
+  handle.setAttribute(HANDLE_ENHANCED_ATTR, 'true');
   const cleanupCauldronNudge = initHandleCauldronNudge(ctx, handle, shell);
 
   return () => {
@@ -1461,3 +1464,13 @@ function initSectionHandle(root, ctx = {}) {
 }
 
 export { initSectionHandle };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'attention-section-handle',
+  mount: (ctx, root) => initSectionHandle(resolveAttentionDocument(ctx, root), ctx),
+  describes: 'attention[section-handle|section-state|region-kin|cauldron-nudge] locomotion',
+  timingArc: 'idle-attention',
+  effectScope: 'root-state section-state scroll-listener bus css-vars',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
