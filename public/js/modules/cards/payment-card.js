@@ -8,7 +8,12 @@
  * One method must always remain enabled (enforced on save).
  *
  * Tap-hold (420ms) on the card body → shows "adjust in settings" hint.
+ *
+ * One module serves two catalog ids. SPW_MODULE_EXPORT.mount dispatches on
+ * the matched host: #payment-settings-container → settings toggles, else cards.
  */
+
+import { resolveMountRoot, resolveOwnerDocument } from '/public/js/runtime/runtime-helpers.js';
 
 // ── Identity ──────────────────────────────────────────────────────────────────
 const HANDLE = 'spwashi';
@@ -221,11 +226,27 @@ function attachHoldBehavior(card) {
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
+function collectPaymentCardHosts(ctx, root) {
+    const host = resolveMountRoot(ctx, root);
+    const cards = [];
+    const seen = new Set();
+    const add = (card) => {
+        if (!card || seen.has(card)) return;
+        seen.add(card);
+        cards.push(card);
+    };
+    if (host?.nodeType === 1 && host.matches?.('[data-payment-card]')) {
+        add(host);
+        host.querySelectorAll?.('[data-payment-card]').forEach(add);
+        return cards;
+    }
+    const scope = resolveOwnerDocument(ctx, root) || host;
+    scope?.querySelectorAll?.('[data-payment-card]').forEach(add);
+    return cards;
+}
+
 export function initPaymentCards(ctx, root) {
-  if (!(root instanceof Node)) {
-    root = document;
-  }
-    root.querySelectorAll('[data-payment-card]').forEach(card => {
+    collectPaymentCardHosts(ctx, root).forEach((card) => {
         const body = card.querySelector('[data-spw-slot="body"]');
         if (!body) return;
 
@@ -303,3 +324,19 @@ export function unmountPaymentCards(container) {
 }
 
 export { unmountPaymentCards as unmount };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+    id: 'payment-cards',
+    mount: (ctx, root) => {
+        if (root?.id === 'payment-settings-container') {
+            initPaymentSettings(root);
+            return () => unmountPaymentCards(root);
+        }
+        return initPaymentCards(ctx, root);
+    },
+    describes: 'payment-card[method|amount|enabled] support routing',
+    timingArc: 'visible-feature',
+    effectScope: 'local-dom storage',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

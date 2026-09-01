@@ -439,3 +439,16 @@ const unmountPretextLab = () => {
 };
 
 export { initPretextLab, unmountPretextLab as unmount };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+    id: 'pretext-lab',
+    mount: async () => {
+        await initPretextLab();
+        return unmountPretextLab;
+    },
+    describes: 'pretext[layout|sandbox|projection] lab[observe|resize|inspect]',
+    timingArc: 'visible-lab',
+    effectScope: 'local-dom css-vars measure',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

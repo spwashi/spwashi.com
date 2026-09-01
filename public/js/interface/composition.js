@@ -1411,6 +1411,18 @@ export function clearCauldron() {
 /* Backwards-compatible alias for the mounting code in site.js */
 export const initCompositionSpell = initCauldron;
 
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'cauldron',
+  mount: () => initCauldron(),
+  refresh: refreshCauldronState,
+  describes: 'cauldron[gather|mix|garden] force[operator] emergence[composition]',
+  timingArc: 'enhance-collectible',
+  timingChunk: 'idle-collectible',
+  effectScope: 'storage bus floating-chrome root-state',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
+
 /* Public helpers for runtime mirrors, design labs, and inline instrumentation */
 export {
   CAULDRON_CONTRACT,

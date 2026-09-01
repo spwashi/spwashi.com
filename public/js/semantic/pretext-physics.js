@@ -1475,3 +1475,24 @@ function normalizeText(value = '') {
 function humanize(value = '') {
   return normalizeText(value).replace(/[_-]+/g, ' ').toLowerCase();
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'pretext-physics',
+  mount: (_ctx, root) => {
+    if (!root || root.nodeType !== 1) return;
+    // Catalog-mounted lab hosts stay quiet: measure and classify, do not
+    // ornament, pulse, or project from pointer. DEFAULTS keep those on for
+    // compose/direct callers.
+    return initPretextPhysics({
+      root,
+      ornamentEnabled: false,
+      rhythmEnabled: false,
+      pointerProjectionEnabled: false,
+    });
+  },
+  describes: 'lab[copy-flow.projection] live-host[wrap.width-class] not-sitewide-physics',
+  timingArc: 'visible-lab',
+  effectScope: 'local-dom css-vars measure',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

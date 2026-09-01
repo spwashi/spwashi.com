@@ -201,6 +201,25 @@ test('runtime workshop modules mount through portable exports on the matched roo
   }
 });
 
+test('feature catalog modules mount through portable exports', () => {
+  for (const id of [
+    'blog-interpreter',
+    'payment-cards',
+    'settings-page',
+    'payment-settings',
+    'cauldron',
+    'pretext-lab',
+    'pretext-physics',
+  ]) {
+    const definition = FEATURE_DEFS.find((entry) => entry.id === id);
+    assert.ok(definition, id);
+    assert.equal(typeof definition.mount, 'undefined', `${id} should use portable mount`);
+    assert.equal(typeof definition.unmount, 'undefined', `${id} should not keep a catalog unmount adapter`);
+  }
+
+  assert.equal(FEATURE_DEFS.find((entry) => entry.id === 'payment-cards')?.rootMode, 'each');
+});
+
 test('pinch scaling does not retain listeners on pointer-only devices', () => {
   assert.equal(supportsPinchTextScaleInput({
     navigator: { maxTouchPoints: 0 },

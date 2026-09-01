@@ -29,7 +29,7 @@ const DOMAIN_TAGS = [
     ['design', ['design', 'surface', 'layout', 'interaction', 'visual']]
 ];
 
-const $ = (root, selector) => root.querySelector(selector);
+const $ = (selector, root) => root.querySelector(selector);
 
 const splitLines = (text) => text
     .split(/\r?\n/)
@@ -353,3 +353,13 @@ export const initBlogInterpreter = (options = {}) => {
         }
     };
 };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+    id: 'blog-interpreter',
+    mount: (ctx, root) => initBlogInterpreter({ ...ctx, root }),
+    describes: 'blog[input.interpret] summary[tone|lens|questions]',
+    timingArc: 'visible-feature',
+    effectScope: 'local-dom element-state',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

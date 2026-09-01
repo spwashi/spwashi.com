@@ -1440,3 +1440,13 @@ export {
   syncUxRecipeControls,
   writeSettingsToScope,
 };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'settings-page',
+  mount: () => initSiteSettingsPage(),
+  describes: 'settings[form|preset|deviation-register] local defaults UI',
+  timingArc: 'visible-settings',
+  effectScope: 'form storage root-state',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

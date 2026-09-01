@@ -5,7 +5,6 @@
 
 import {
   COST_CLASS,
-  isFn,
   MODULE_LAYERS,
   MOUNT_WHEN,
   PRETEXT_LIVE_SELECTOR,
@@ -31,11 +30,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-feature',
     effectScope: 'local-dom element-state',
     load: () => import('../modules/blog/interpreter.js'),
-    mount: (mod, ctx, root) => {
-      const fn = mod?.initBlogInterpreter;
-      if (!isFn(fn)) return;
-      return fn({ ...ctx, root });
-    },
   },
   {
     id: 'blog-specimens',
@@ -98,6 +92,7 @@ export const FEATURE_DEFS = [
     when: MOUNT_WHEN.VISIBLE,
     route: 'services',
     selector: '[data-payment-card]',
+    rootMode: 'each',
     describes: 'payment-card[method|amount|enabled] support routing',
     updates: [
       'structural:data-spw-region-flow',
@@ -109,8 +104,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-feature',
     effectScope: 'local-dom storage',
     load: () => import('../modules/cards/payment-card.js'),
-    mount: (mod, ctx, el) => mod?.renderPaymentCard?.(el),
-    unmount: (mod, ctx, el) => mod?.unmount?.(el),
   },
   {
     id: 'services-configurators',
@@ -167,11 +160,6 @@ export const FEATURE_DEFS = [
       'html:inspect:data-spw-deviation-count',
     ],
     load: () => import('../kernel/site-settings-ui.js'),
-    mount: (mod) => {
-      const fn = mod?.initSiteSettingsPage;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'payment-settings',
@@ -185,12 +173,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-settings',
     effectScope: 'local-dom storage',
     load: () => import('../modules/cards/payment-card.js'),
-    mount: (mod) => {
-      const fn = mod?.renderPaymentSettings || mod?.initPaymentSettings;
-      if (!isFn(fn)) return;
-      return fn(document.getElementById('payment-settings-container'));
-    },
-    unmount: (mod) => mod?.unmount?.(document.getElementById('payment-settings-container')),
   },
   {
     id: 'home-section-index',
@@ -421,15 +403,6 @@ export const FEATURE_DEFS = [
     timingChunk: 'idle-collectible',
     effectScope: 'storage bus floating-chrome root-state',
     load: () => import('../interface/composition.js'),
-    mount: (mod) => {
-      const fn = mod?.initCauldron || mod?.initCompositionSpell;
-      if (!isFn(fn)) return;
-      const cleanup = fn();
-      return {
-        cleanup: isFn(cleanup) ? cleanup : null,
-        refresh: mod?.refreshCauldronState,
-      };
-    },
   },
   {
     id: 'local-notes',
@@ -483,8 +456,6 @@ export const FEATURE_DEFS = [
     evaluates: 'pretext layout sandbox projection observe resize inspect',
     effectScope: 'local-dom css-vars measure',
     load: () => import('../semantic/pretext-lab.js'),
-    mount: (mod) => mod?.initPretextLab?.(),
-    unmount: (mod) => mod?.unmount?.(),
   },
   {
     id: 'pretext-physics',
@@ -506,17 +477,6 @@ export const FEATURE_DEFS = [
     evaluates: 'pretext measure classify wrap-volatility width-class projection',
     effectScope: 'local-dom css-vars measure',
     load: () => import('../semantic/pretext-physics.js'),
-    mount: (mod, ctx, root) => {
-      const fn = mod?.initPretextPhysics;
-      if (!isFn(fn) || !(root instanceof HTMLElement)) return;
-      return fn({
-        root,
-        selector: PRETEXT_LIVE_SELECTOR,
-        ornamentEnabled: false,
-        rhythmEnabled: false,
-        pointerProjectionEnabled: false,
-      });
-    },
   },
   {
     id: 'typography-measurement-preview',
