@@ -64,6 +64,12 @@ export const IMAGE_EXTENSIONS = [
 export function toPosixPath(value) {
     return value.split('\\').join('/');
 }
+export function isErrnoCode(error, code) {
+    return Boolean(error
+        && typeof error === 'object'
+        && 'code' in error
+        && error.code === code);
+}
 export function firstPathSegment(repoPath) {
     return toPosixPath(repoPath).replace(/^\/+/, '').split('/')[0] || '';
 }

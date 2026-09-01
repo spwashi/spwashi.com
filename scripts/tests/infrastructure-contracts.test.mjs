@@ -28,9 +28,14 @@ import {
 } from '../../public/js/kernel/shared.js';
 
 import {
+  isErrnoCode,
   shouldExcludeBuildPath,
   shouldIgnoreValidationPath,
 } from '../typed/shared/build-topology.mjs';
+import {
+  isPublicSpecifier,
+  resolvePublicSpecifier,
+} from '../lib/resolve-public-specifier.mjs';
 import {
   collectLocalFragmentIssues,
   compareRouteRuntimeManifestSemantics,
@@ -187,6 +192,19 @@ test('narrow npm test scripts keep public-import loaders', async () => {
       );
     }
   }
+});
+
+test('public specifiers resolve onto a filesystem root', () => {
+  assert.equal(isPublicSpecifier('/public/js/kernel/operator-detection.js'), true);
+  assert.equal(isPublicSpecifier('../kernel/operator-detection.js'), false);
+  assert.equal(
+    resolvePublicSpecifier('/public/js/kernel/operator-detection.js', '/repo'),
+    path.join('/repo', 'public/js/kernel/operator-detection.js'),
+  );
+  assert.equal(resolvePublicSpecifier('./local.js', '/repo'), null);
+  assert.equal(isErrnoCode({ code: 'ENOENT' }, 'ENOENT'), true);
+  assert.equal(isErrnoCode({ code: 'EACCES' }, 'ENOENT'), false);
+  assert.equal(isErrnoCode('ENOENT', 'ENOENT'), false);
 });
 
 test('site build registers the public-js import hook before loading the catalog', async () => {

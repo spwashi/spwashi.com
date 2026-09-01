@@ -18,6 +18,7 @@ import {
   targetsForSourcePaths,
 } from './css-manifest.mjs';
 import {
+  isErrnoCode,
   shouldIgnoreValidationPath,
   toPosixPath,
 } from './shared/build-topology.mjs';
@@ -148,8 +149,8 @@ export async function collectCssBuildPlan(): Promise<CssBuildPlanEntry[]> {
 async function readIfExists(absolutePath: string): Promise<string | null> {
   try {
     return await fs.readFile(absolutePath, 'utf8');
-  } catch (error: any) {
-    if (error?.code === 'ENOENT') return null;
+  } catch (error) {
+    if (isErrnoCode(error, 'ENOENT')) return null;
     throw error;
   }
 }

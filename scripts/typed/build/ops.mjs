@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { getTemplateStats, renderTemplate, resetTemplateStats, } from '../../template.mjs';
 import { DEFAULT_COPY_CONCURRENCY, DEFAULT_COPY_PROGRESS_INTERVAL, } from './types.mjs';
-import { IMAGE_EXTENSIONS, shouldExcludeBuildPath, toPosixPath, } from '../shared/build-topology.mjs';
+import { IMAGE_EXTENSIONS, isErrnoCode, shouldExcludeBuildPath, toPosixPath, } from '../shared/build-topology.mjs';
 export const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 export const DEFAULT_OUT_DIR = path.join(ROOT_DIR, 'dist');
 function toPosix(value) {
@@ -209,7 +209,7 @@ export async function countFiles(dir) {
         entries = await fs.readdir(dir, { withFileTypes: true });
     }
     catch (error) {
-        if (error?.code === 'ENOENT')
+        if (isErrnoCode(error, 'ENOENT'))
             return 0;
         throw error;
     }
@@ -299,7 +299,7 @@ export async function copyTrackedPath(repoPath, options) {
         stats = await fs.lstat(srcPath);
     }
     catch (error) {
-        if (error?.code === 'ENOENT')
+        if (isErrnoCode(error, 'ENOENT'))
             return 'skipped-missing';
         throw error;
     }
@@ -311,7 +311,7 @@ export async function copyTrackedPath(repoPath, options) {
             await fs.unlink(dstPath);
         }
         catch (error) {
-            if (error?.code !== 'ENOENT')
+            if (!isErrnoCode(error, 'ENOENT'))
                 throw error;
         }
         const link = await fs.readlink(srcPath);

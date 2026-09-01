@@ -20,6 +20,7 @@ import {
 } from './types.mjs';
 import {
   IMAGE_EXTENSIONS,
+  isErrnoCode,
   shouldExcludeBuildPath,
   toPosixPath,
 } from '../shared/build-topology.mjs';
@@ -263,8 +264,8 @@ export async function countFiles(dir: string): Promise<number> {
   let entries;
   try {
     entries = await fs.readdir(dir, { withFileTypes: true });
-  } catch (error: any) {
-    if (error?.code === 'ENOENT') return 0;
+  } catch (error) {
+    if (isErrnoCode(error, 'ENOENT')) return 0;
     throw error;
   }
 
@@ -370,8 +371,8 @@ export async function copyTrackedPath(repoPath: string, options: BuildOptions): 
 
   try {
     stats = await fs.lstat(srcPath);
-  } catch (error: any) {
-    if (error?.code === 'ENOENT') return 'skipped-missing';
+  } catch (error) {
+    if (isErrnoCode(error, 'ENOENT')) return 'skipped-missing';
     throw error;
   }
 
@@ -382,8 +383,8 @@ export async function copyTrackedPath(repoPath: string, options: BuildOptions): 
 
     try {
       await fs.unlink(dstPath);
-    } catch (error: any) {
-      if (error?.code !== 'ENOENT') throw error;
+    } catch (error) {
+      if (!isErrnoCode(error, 'ENOENT')) throw error;
     }
 
     const link = await fs.readlink(srcPath);

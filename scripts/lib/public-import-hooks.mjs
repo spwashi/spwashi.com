@@ -7,8 +7,8 @@
  *   node --import ./scripts/lib/register-public-imports.mjs …
  */
 
-import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { resolvePublicSpecifier } from './resolve-public-specifier.mjs';
 import { ROOT } from './spw-inventory-core.mjs';
 
 /**
@@ -17,8 +17,8 @@ import { ROOT } from './spw-inventory-core.mjs';
  * @param {(specifier: string, context: object) => Promise<object>} nextResolve
  */
 export async function resolve(specifier, context, nextResolve) {
-  if (specifier.startsWith('/public/')) {
-    const filePath = path.join(ROOT, specifier.slice(1));
+  const filePath = resolvePublicSpecifier(specifier, ROOT);
+  if (filePath) {
     return {
       shortCircuit: true,
       url: pathToFileURL(filePath).href,

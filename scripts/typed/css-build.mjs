@@ -5,7 +5,7 @@ import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 import { buildBehaviorScopeModule, buildCssBundles, } from './css-bundle.mjs';
 import { isGeneratedCssHref, normalizeCssSourceHref, onlyTokensForTargets, readStyleCoreImports, targetsForSourcePaths, } from './css-manifest.mjs';
-import { shouldIgnoreValidationPath, toPosixPath, } from './shared/build-topology.mjs';
+import { isErrnoCode, shouldIgnoreValidationPath, toPosixPath, } from './shared/build-topology.mjs';
 const ROOT_DIR = path.resolve(import.meta.dirname, '..', '..');
 const SOURCE_ENTRIES_DIR = path.join(ROOT_DIR, 'src/styles/entries');
 const PUBLIC_CSS_DIR = path.join(ROOT_DIR, 'public/css');
@@ -96,7 +96,7 @@ async function readIfExists(absolutePath) {
         return await fs.readFile(absolutePath, 'utf8');
     }
     catch (error) {
-        if (error?.code === 'ENOENT')
+        if (isErrnoCode(error, 'ENOENT'))
             return null;
         throw error;
     }

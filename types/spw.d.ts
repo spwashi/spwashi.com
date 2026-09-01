@@ -248,6 +248,12 @@ declare global {
 
     /** Wonder-memory root projection (canvas-accents / wonder-memory.js) */
     spwWonderMemoryState?: 'active' | string;
+
+    /** Catalog describes dialect written by module-describes-contract.js */
+    spwModuleDescribes?: string;
+    spwModuleDescribesGrade?: 'expression' | 'mixed' | 'prose';
+    spwModuleDescribesSubject?: string;
+    spwModuleDescribesSpell?: string;
   }
 }
 

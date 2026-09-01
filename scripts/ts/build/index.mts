@@ -3,9 +3,9 @@ import process from 'node:process';
 import { createHash } from 'node:crypto';
 import { gzipSync } from 'node:zlib';
 import { promises as fs } from 'node:fs';
-import { register } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { build as rolldownBuild, type OutputChunk } from 'rolldown';
+import { resolvePublicSpecifier } from '../../lib/resolve-public-specifier.mjs';
 
 import {
   assertPwaContract,
@@ -29,33 +29,23 @@ import {
   writeNoJekyll,
   ROOT_DIR,
 } from './ops.mjs';
+import { isErrnoCode } from '../shared/build-topology.mjs';
 import type { BuildLogger } from './types.mjs';
 
 function relRepo(absPath: string): string {
   return path.relative(ROOT_DIR, absPath).split(path.sep).join('/');
 }
 
-async function walkFiles(directoryPath: string, results: string[] = []): Promise<string[]> {
-  let entries;
+async function walkFiles(directoryPath: string): Promise<string[]> {
   try {
-    entries = await fs.readdir(directoryPath, { withFileTypes: true });
-  } catch {
-    return results;
+    const entries = await fs.readdir(directoryPath, { recursive: true, withFileTypes: true });
+    return entries
+      .filter((entry) => entry.isFile())
+      .map((entry) => path.join(entry.parentPath || directoryPath, entry.name));
+  } catch (error) {
+    if (isErrnoCode(error, 'ENOENT')) return [];
+    throw error;
   }
-
-  for (const entry of entries) {
-    const entryPath = path.join(directoryPath, entry.name);
-    if (entry.isDirectory()) {
-      await walkFiles(entryPath, results);
-      continue;
-    }
-
-    if (entry.isFile()) {
-      results.push(entryPath);
-    }
-  }
-
-  return results;
 }
 
 function fingerprint(content: string | Buffer): string {
@@ -85,7 +75,7 @@ type CatalogDefinitionForBuild = {
   timingChunk?: string;
   describes?: string;
   updates?: unknown;
-  load?: unknown;
+  load?: () => Promise<unknown>;
 };
 
 type SemanticPackPlan = {
@@ -162,17 +152,15 @@ function normalizeModuleId(moduleId: string): string {
   return path.resolve(String(moduleId || '').split('?')[0].split('#')[0]);
 }
 
-function extractCatalogLoadSpecifier(load: unknown): string {
+function extractCatalogLoadSpecifier(load: CatalogDefinitionForBuild['load']): string {
   if (typeof load !== 'function') return '';
   const source = Function.prototype.toString.call(load);
   return source.match(/import\s*\(\s*(['"`])([^'"`]+)\1\s*\)/)?.[2] || '';
 }
 
 function resolveCatalogEntryPath(outDir: string, specifier: string): string {
-  if (specifier.startsWith('/public/js/')) {
-    return path.join(outDir, specifier.slice(1));
-  }
-  return path.resolve(path.join(outDir, 'public/js/runtime'), specifier);
+  return resolvePublicSpecifier(specifier, outDir)
+    || path.resolve(path.join(outDir, 'public/js/runtime'), specifier);
 }
 
 /**
@@ -263,10 +251,9 @@ let publicImportHookReady: Promise<void> | null = null;
  */
 function ensurePublicImportHook(): Promise<void> {
   if (!publicImportHookReady) {
-    const hookUrl = pathToFileURL(
-      path.join(ROOT_DIR, 'scripts/lib/public-import-hooks.mjs'),
-    ).href;
-    publicImportHookReady = Promise.resolve(register(hookUrl)).then(() => undefined);
+    publicImportHookReady = import(
+      pathToFileURL(path.join(ROOT_DIR, 'scripts/lib/register-public-imports.mjs')).href
+    ).then(() => undefined);
   }
   return publicImportHookReady;
 }
@@ -302,8 +289,7 @@ function createPublicJsResolvePlugin(outDir: string) {
   return {
     name: 'public-js-root',
     resolveId(id: string) {
-      if (id.startsWith('/public/')) return path.join(outDir, id.slice(1));
-      return null;
+      return resolvePublicSpecifier(id, outDir);
     },
   };
 }
@@ -460,11 +446,7 @@ async function minifyPublicJsModules(
 ): Promise<{ files: number; beforeBytes: number; afterBytes: number; ms: number }> {
   const jsRoot = path.join(outDir, 'public/js');
   const skip = new Set(
-    [...skipFiles].map((value) => (
-      value.startsWith('/public/js/')
-        ? path.join(outDir, value.slice(1))
-        : value
-    )),
+    [...skipFiles].map((value) => resolvePublicSpecifier(value, outDir) || value),
   );
   const allFiles = await walkFiles(jsRoot);
   const jsFiles = allFiles.filter((file) => file.endsWith('.js') && !skip.has(file));
@@ -558,8 +540,8 @@ async function hashAndRewritePublicAssets(
         chunk: 'site-runtime',
       });
     }
-  } catch (error: any) {
-    if (error?.code !== 'ENOENT') throw error;
+  } catch (error) {
+    if (!isErrnoCode(error, 'ENOENT')) throw error;
   }
 
   for (const rewrite of rewrites) {
@@ -580,8 +562,8 @@ async function hashAndRewritePublicAssets(
 
       await fs.rename(rewrite.source, target);
       assetMap[rewrite.original] = `/public/${path.relative(path.join(outDir, 'public'), target).split(path.sep).join('/')}`;
-    } catch (error: any) {
-      if (error?.code === 'ENOENT') continue;
+    } catch (error) {
+      if (isErrnoCode(error, 'ENOENT')) continue;
       throw error;
     }
   }

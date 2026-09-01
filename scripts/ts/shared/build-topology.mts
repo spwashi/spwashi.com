@@ -71,6 +71,15 @@ export function toPosixPath(value: string): string {
   return value.split('\\').join('/');
 }
 
+export function isErrnoCode(error: unknown, code: string): boolean {
+  return Boolean(
+    error
+    && typeof error === 'object'
+    && 'code' in error
+    && (error as NodeJS.ErrnoException).code === code,
+  );
+}
+
 export function firstPathSegment(repoPath: string): string {
   return toPosixPath(repoPath).replace(/^\/+/, '').split('/')[0] || '';
 }
