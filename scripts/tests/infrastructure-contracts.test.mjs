@@ -194,6 +194,20 @@ test('narrow npm test scripts keep public-import loaders', async () => {
   }
 });
 
+test('pre-commit syntax gate is JS-only', async () => {
+  const hook = await readFile(path.join(ROOT, 'scripts/githooks/pre-commit'), 'utf8');
+  assert.match(hook, /js\|mjs\|cjs/);
+  assert.doesNotMatch(hook, /ts\|mts/);
+  assert.match(hook, /tsc owns/);
+});
+
+test('generated-output check names uncommitted files, not stale outputs', async () => {
+  const source = await readFile(path.join(ROOT, 'scripts/ts/check-generated.mts'), 'utf8');
+  assert.match(source, /uncommitted=/);
+  assert.match(source, /--allow-dirty/);
+  assert.doesNotMatch(source, /\[generated\] stale=/);
+});
+
 test('public specifiers resolve onto a filesystem root', () => {
   assert.equal(isPublicSpecifier('/public/js/kernel/operator-detection.js'), true);
   assert.equal(isPublicSpecifier('../kernel/operator-detection.js'), false);

@@ -12,6 +12,10 @@
  * Output is buffered per stage and printed in declaration order, so a parallel
  * run reads the same as a serial one. Pass --serial to run every stage
  * end-to-end when isolating a failure.
+ *
+ * Deploy's extra step is `npm run build:site:run` (catalog bundle into dist/).
+ * This gate does not copy dist/. Catalog Node imports are covered by
+ * infrastructure-contracts via scripts/lib/register-public-imports.mjs.
  */
 import { availableParallelism } from 'node:os';
 import process from 'node:process';

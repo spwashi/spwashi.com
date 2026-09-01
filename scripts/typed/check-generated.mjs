@@ -82,12 +82,13 @@ export async function main() {
         console.log(`[generated] passed (${changed.length} generated file(s) modified in working tree)`);
         return;
     }
-    console.log(`[generated] stale=${changed.length}`);
+    console.log(`[generated] uncommitted=${changed.length}`);
     for (const file of changed.slice(0, 20)) {
-        console.log(`  stale: ${file}`);
+        console.log(`  uncommitted: ${file}`);
     }
     if (changed.length > 20) {
-        console.log(`  ... ${changed.length - 20} more stale generated file(s)`);
+        console.log(`  ... ${changed.length - 20} more uncommitted generated file(s)`);
     }
+    console.log('[generated] commit these outputs with the source change, or rerun with --allow-dirty');
     process.exit(1);
 }

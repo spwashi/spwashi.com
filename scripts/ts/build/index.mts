@@ -243,8 +243,24 @@ function ensurePublicImportHook(): Promise<void> {
 async function loadCatalogDefinitionsForBuild(): Promise<CatalogDefinitionForBuild[]> {
   await ensurePublicImportHook();
   const catalogUrl = pathToFileURL(path.join(ROOT_DIR, 'public/js/runtime/module-catalog.js')).href;
-  const catalog = await import(catalogUrl) as { MODULE_DEFS?: CatalogDefinitionForBuild[] };
-  return catalog.MODULE_DEFS || [];
+  try {
+    const catalog = await import(catalogUrl) as { MODULE_DEFS?: CatalogDefinitionForBuild[] };
+    return catalog.MODULE_DEFS || [];
+  } catch (error) {
+    const code = error && typeof error === 'object' && 'code' in error
+      ? String((error as { code?: unknown }).code)
+      : '';
+    const url = error && typeof error === 'object' && 'url' in error
+      ? String((error as { url?: unknown }).url)
+      : '';
+    if (code === 'ERR_MODULE_NOT_FOUND' && url.includes('/public/')) {
+      throw new Error(
+        `[build] catalog import failed (${url}). Node must register scripts/lib/register-public-imports.mjs before loading public/js — npm run build:site:run already does.`,
+        { cause: error },
+      );
+    }
+    throw error;
+  }
 }
 
 export function collectStaticChunkClosure(chunks: OutputChunk[]): OutputChunk[] {

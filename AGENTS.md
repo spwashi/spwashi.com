@@ -80,7 +80,7 @@ Default decision rule:
 
 ## Validation
 - Run `git diff --check` after edits.
-- Run `node --check <file>` for edited JS modules.
+- Run `node --check <file>` for edited JS modules. TypeScript uses `npm run typecheck` (pre-commit does not `node --check` `.ts` / `.mts`).
 - For **site runtime** feature packs (`data-spw-features`) or multi-audit work, run `npm run ecology`. Thoroughness: `.spw/audits/index.spw`. Loop: `.spw/conventions/recursive-improvement.spw`.
 - For **Spw language** features (operators, braces, claims, v04 pillars), run `npm run ecology:language`. Entry: `.spw/language/feature-utilization.spw`. Loop: `.spw/language/recursive-improvement.spw`. Do not conflate language operators with the runtime pack token `operators`.
 - For ordinary HTML/CSS/JS/`.spw` work that does not touch dependencies, prefer `npm run check:local`; it runs the local build, CSS/runtime/site contracts, generated-output checks, and `git diff --check` without the network-backed npm audit. Versioned git hooks in `scripts/githooks/` run a fast staged syntax/whitespace gate on commit and `npm run check:local` on push (`SKIP_GIT_HOOKS=1` to skip). `npm run hooks:install` sets `core.hooksPath`.
@@ -105,19 +105,20 @@ As of 2026-04, the site publishes through a local build step rather than serving
 |---------|--------------|
 | `npm run dev` | Vite dev server for the source tree, with Spw HTML template rendering wired through `vite.config.ts`. |
 | `npm run dev:legacy` | Previous zero-dep local dev server for fallback/template debugging. |
-| `npm run build` | Runs TypeScript typechecking, then produces `dist/` with the static deploy builder, sitemap, design catalog, and `.nojekyll` marker. |
+| `npm run build` | Typecheck, CSS bundles, then the static deploy builder into `dist/`. |
 | `npm run build:tools` | Compiles typed build-control modules from `scripts/ts/` into `scripts/typed/` for Node scripts. |
 | `npm run build:runtime` | Compiles selected TypeScript runtime modules from `public/ts/` into browser-ready modules under `public/js/typed/`. |
 | `npm run build:vite` | Vite production smoke build into `dist-vite/` for bundler compatibility checks; not the deploy artifact. |
 | `npm run catalog` | Regenerates the in-tree design catalog at `design/catalog/` (gitignored). |
 | `npm run manifest` | Regenerates the route runtime manifest. |
 | `npm run sitemap` | Generates `dist/sitemap.xml` from tracked route canonicals. |
-| `npm run check:local` | Default offline/local validation for non-dependency patches: type/build steps, CSS/runtime/site contracts, generated checks, and diff hygiene without `npm audit`. Does not validate commit grammar. |
+| `npm run check:local` | Default offline/local validation: compile, CSS, runtime/site contracts, generated checks. Does not copy `dist/`, and does not validate commit grammar. |
+| `npm run build:site:run` | Static deploy builder into `dist/`. Registers `scripts/lib/register-public-imports.mjs` so the catalog can load `/public/js` specifiers under Node. |
 | `npm run check:pwa` | Service-worker, manifest, offline, and PWA runtime contracts. |
 | `npm run check:runtime` | Validates JS runtime architecture contracts: module definition shape, import ownership, generated typed outputs, and root entrypoint boundaries. |
 | `npm run check` | Full validation for dependency-sensitive or pre-landing sweeps. Includes `npm run audit --audit-level=moderate`, so expect a registry/network call. |
 
-**Deploy:** `.github/workflows/deploy.yml` runs `npm run build` and publishes `dist/` to GitHub Pages on push to `main`. Binary deploy artifacts in `dist/` stay ignored; plaintext outputs can be tracked when useful for review.
+**Deploy:** `.github/workflows/deploy.yml` runs `npm run check:local`, then `npm run build:site:run`, then publishes `dist/` to GitHub Pages. `check:local` passing is not a `dist/` build. Binary deploy artifacts in `dist/` stay ignored; plaintext outputs can be tracked when useful for review.
 
 **Design catalog:** `design/catalog/index.html` is a generated cross-reference of every site-facing `data-spw-*` attribute, custom-property token, CSS file, and `.spw` philosophy doc, with orphan detection. It excludes the installed workbench/tooling subtrees. See `scripts/generate-design-catalog.mjs`.
 

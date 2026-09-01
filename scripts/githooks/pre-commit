@@ -10,7 +10,15 @@ git diff --cached --check
 
 # node --check parses JS. tsc owns .ts/.mts on check:local / pre-push.
 staged=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(js|mjs|cjs)$' || true)
-if [ -n "$staged" ]; then
-  # shellcheck disable=SC2086
-  node --check $staged
-fi
+fail=0
+while IFS= read -r file; do
+  [ -z "$file" ] && continue
+  if ! node --check "$file"; then
+    echo "[pre-commit] node --check failed: $file" >&2
+    echo "[pre-commit] JS/mjs/cjs only; npm run typecheck for .ts/.mts" >&2
+    fail=1
+  fi
+done <<EOF
+$staged
+EOF
+[ "$fail" -eq 0 ]
