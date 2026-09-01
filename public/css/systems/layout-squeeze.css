@@ -3,10 +3,18 @@
    --------------------------------------------------------------------------
    Bottom-up packing. Hosts already write box-measure, pack-occupancy,
    pack-layout, and (when gravity is on) space-variant. These rules spend
-   those receipts: tighten pad/gap, drop columns, and cap measure when the
-   box itself is small or overtall. Top-down seats stay in region-seats.css.
+   those receipts: tighten pad/gap and drop columns when the box itself is
+   small or overtall. Measure is never touched here — it belongs to the element
+   that carries the surface (typography-packing.css, cards.css). Top-down seats
+   stay in region-seats.css.
    ========================================================================== */
 
+/* The scalar is composed from independent contribution channels, never from
+   itself. `--spw-squeeze: max(var(--spw-squeeze, 0), 0.4)` is a cyclic
+   reference: it is invalid at computed-value time, so the property resolved to
+   empty rather than to a clamp, and every state that used that shape silently
+   destroyed the value instead of raising it. Floors raise, the ceiling caps,
+   and nothing reads its own output. */
 :where(
   .spw-frame,
   .frame-card,
@@ -15,60 +23,90 @@
   [data-spw-pack-local],
   [data-spw-gravity]
 ) {
-  --spw-squeeze: 0;
+  --squeeze-measure: 0;
+  --squeeze-occupancy: 0;
+  --squeeze-layout: 0;
+  --squeeze-extent: 0;
+  --squeeze-ceiling-occupancy: 1;
+  --squeeze-ceiling-layout: 1;
+  --squeeze-ceiling-extent: 1;
+  --squeeze-ceiling-variant: 1;
+
+  --spw-squeeze: min(
+    var(--squeeze-ceiling-occupancy, 1),
+    var(--squeeze-ceiling-layout, 1),
+    var(--squeeze-ceiling-extent, 1),
+    var(--squeeze-ceiling-variant, 1),
+    max(
+      var(--squeeze-measure, 0),
+      var(--squeeze-occupancy, 0),
+      var(--squeeze-layout, 0),
+      var(--squeeze-extent, 0)
+    )
+  );
+
+  /* Spend it. The scalar drives rhythm continuously instead of stepping through
+     discrete per-state assignments; a state that raises squeeze tightens gap and
+     pad in proportion rather than jumping to a fixed token. */
+  --spw-pack-gap: calc(
+    var(--space-md, 1rem)
+    - (var(--space-md, 1rem) - var(--space-xs, 0.5rem)) * var(--spw-squeeze, 0)
+  );
+  --spw-component-pad: calc(
+    var(--spw-component-pad-loose, 1.02rem)
+    - (var(--spw-component-pad-loose, 1.02rem) - var(--spw-component-pad-tight, 0.65rem)) * var(--spw-squeeze, 0)
+  );
+
   min-inline-size: 0;
 }
 
 /* Box-width from composition-box-model. */
 :where([data-spw-box-measure="narrow"]) {
-  --spw-squeeze: 0.85;
-  --spw-pack-gap: var(--space-xs, 0.5rem);
-  --spw-component-pad: var(--spw-component-pad-tight, 0.65rem);
+  --squeeze-measure: 0.85;
 }
 
 :where([data-spw-box-measure="compact"]) {
-  --spw-squeeze: 0.55;
-  --spw-pack-gap: var(--space-sm, 0.75rem);
+  --squeeze-measure: 0.55;
 }
 
 :where([data-spw-box-measure="wide"]) {
-  --spw-squeeze: 0.12;
+  --squeeze-measure: 0.12;
 }
 
 /* Frame occupancy from region-profiler — not pack-fill. */
 :where(.spw-frame[data-spw-pack-occupancy="full"]) {
-  --spw-squeeze: max(var(--spw-squeeze, 0), 0.4);
+  --squeeze-occupancy: 0.4;
 }
 
 :where(.spw-frame[data-spw-pack-occupancy="sparse"]) {
-  --spw-squeeze: min(var(--spw-squeeze, 0), 0.2);
+  --squeeze-ceiling-occupancy: 0.2;
 }
 
 /* Pack-local layout mirror. CSS @container already laid the grid out. */
 :where([data-spw-pack-local][data-spw-pack-layout="stack"]) {
-  --spw-squeeze: max(var(--spw-squeeze, 0), 0.7);
+  --squeeze-layout: 0.7;
 }
 
 :where([data-spw-pack-local][data-spw-pack-layout="feature"]) {
-  --spw-squeeze: min(var(--spw-squeeze, 0), 0.18);
+  --squeeze-ceiling-layout: 0.18;
 }
 
 /* Gravity space-variant: measure-extent-vertical. */
 :where([data-spw-space-variant^="compact-"]) {
-  --spw-squeeze: max(var(--spw-squeeze, 0), 0.8);
+  --squeeze-extent: 0.8;
 }
 
 :where([data-spw-extent="overtall"]) {
-  --spw-squeeze: max(var(--spw-squeeze, 0), 0.72);
-  --spw-pack-gap: var(--space-xs, 0.5rem);
+  --squeeze-extent: 0.72;
 }
 
 :where([data-spw-extent="squat"][data-spw-measure-band="wide"],
        [data-spw-extent="squat"][data-spw-measure-band="maximal"]) {
-  --spw-squeeze: min(var(--spw-squeeze, 0), 0.15);
+  --squeeze-ceiling-extent: 0.15;
 }
 
-/* Spend squeeze: drop extra columns and shorten prose inside a tight host. */
+/* Spend squeeze: drop extra columns inside a tight host. Inline measure is not
+   ours to spend; see the removal note below. */
 :where([data-spw-box-measure="narrow"]) .frame-body,
 :where([data-spw-pack-layout="stack"]) [data-spw-pack-regions] {
   grid-template-columns: minmax(0, 1fr);
@@ -83,15 +121,26 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
-:where(
-  [data-spw-box-measure="narrow"] :is(p, [data-spw-textual-role="note"], .inline-note, [data-spw-textual-role="lede"], [data-spw-textual-role="lede"]),
-  [data-spw-extent="overtall"] :is(p, [data-spw-textual-role="note"], .inline-note)
-) {
-  max-inline-size: min(100%, var(--measure-compact, 32ch));
-}
+/* Removed: a measure cap on every descendant p/note inside a narrow or overtall
+   host.
+
+   Two defects in one rule.
+
+   Axis — `overtall` is measured on the block axis (height / viewport height) and
+   was spent on the inline axis. Narrowing a paragraph makes it taller, so the
+   remedy fed its own trigger: overtall -> 32ch -> more lines -> taller -> still
+   overtall, with no path back. The state latched instead of settling.
+
+   Carrier — the cap landed on the descendant while its grid cell kept full
+   width, so the vacated inline space had no claimant. Measure belongs to the
+   element that carries the surface; see typography-packing.css, which already
+   states this twice after the same defect twice before.
+
+   A tight host still tightens: it drops columns below, and rhythm follows
+   --spw-squeeze. Neither touches a descendant's measure. */
 
 :where([data-spw-component-variant-active]) {
-  --spw-squeeze: min(var(--spw-squeeze, 0), 0.35);
+  --squeeze-ceiling-variant: 0.35;
 }
 
 @media (prefers-reduced-motion: reduce) {

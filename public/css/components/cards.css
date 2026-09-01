@@ -975,7 +975,17 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 }
 
 .spw-playable-hook {
-  max-inline-size: 64ch;
+  /* This element carries the surface — border, radius, background, padding — so
+     it IS the carrier, not prose inside one. It fills what it is given; a measure
+     below ordinary carrier width shrinks the visible chip and strands the
+     remainder as space nothing can claim (64ch here, overridden to 60ch by the
+     ancestor sweep below, inside panels routinely 80ch+).
+
+     --measure-maximal is a legibility ceiling, not a design measure: it engages
+     only in unusually wide carriers, where a bound is correct typography rather
+     than stranded space. A region that wants to be narrower than this should say
+     so itself — measure belongs to the carrier. */
+  max-inline-size: min(100%, var(--measure-maximal, 96ch));
   margin-block: var(--component-gap) var(--component-gap-loose);
   padding: var(--spw-component-pad-tight, 0.65rem) var(--spw-component-pad, 0.84rem);
   border-inline-start: 0.25rem solid var(--active-op-color, var(--component-accent));
@@ -1210,12 +1220,18 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   .compare-card,
   .spec-column,
   .ref-card
-) :is(
+) :where(
   p,
   li,
   span:not(.frame-card-sigil):not(.media-card-tag):not(.media-focus-operator):not(.operator-symbol):not(.spec-pill):not(.plan-status)
 ) {
   line-height: 1.46;
+  /* A reading floor, not a verdict. :where() keeps this at zero specificity so a
+     component that owns a decorated surface can state its own measure and win.
+     As :is(), the :not(.class) arguments raised this ancestor sweep to class
+     specificity — it then outranked .spw-playable-hook's own 64ch and capped a
+     full-width chip at 60ch, stranding the rest of the carrier as space nothing
+     could claim. */
   max-inline-size: min(100%, 60ch);
   overflow-wrap: break-word;
   word-break: break-word;
