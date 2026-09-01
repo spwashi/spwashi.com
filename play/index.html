@@ -79,7 +79,7 @@
                     <div class="mode-panels" data-spw-feature="play-perspective-panels">
                         <section class="mode-panel" data-mode-group="play-lens" data-mode-panel="play" data-spw-role="orientation" data-spw-kind="lens">
                             <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="play[orientation]{table.canon.humor}">
-                                A session is where a joke becomes evidence. Next table: Wednesday, August 26. Read the recap, or scroll the rooms.
+                                A <span class="spw-living-term" data-spw-living-term data-spw-concept="session-memory" data-spw-cauldron-candidate="true" tabindex="0" title="tap: inspect • hold to prime">session</span> is where a joke becomes evidence. Next table: Wednesday, September 2. Read the recap, scroll the rooms, or cook a seed in the <a href="#media-cauldron">media cauldron</a>.
                             </p>
                             <p class="hook-sub">
                                 <span data-spw-perspective="objective">Holds:</span> active campaign threads, character sheets, and rules that survive after the table.
@@ -101,7 +101,7 @@
                             </p>
                             <p class="hook-sub">
                                 <span data-spw-perspective="objective">Holds:</span> character-sheet builder, prompt cards, and SVG/CSS visual assets.
-                                <span data-spw-perspective="subjective">First move:</span> open <a class="spw-chip" data-spw-handle="true" href="/tools/character-sheet/" data-spw-operator="object">^character_sheet</a> or <a class="spw-chip" data-spw-handle="true" href="/tools/midjourney/" data-spw-operator="potential">~prompt_tools</a>.
+                                <span data-spw-perspective="subjective">First move:</span> open <a class="spw-chip" data-spw-handle="true" href="/tools/character-sheet/" data-spw-operator="object">^character_sheet</a>, <a class="spw-chip" data-spw-handle="true" href="#media-cauldron" data-spw-operator="action">!media_cauldron</a>, or <a class="spw-chip" data-spw-handle="true" href="/tools/midjourney/" data-spw-operator="potential">~prompt_tools</a>.
                             </p>
                         </section>
                         <section class="mode-panel" data-mode-group="play-lens" data-mode-panel="table" data-spw-role="scenario" data-spw-kind="lens" hidden>
@@ -139,7 +139,8 @@
                         Resume canon, step into a tool, or notice which structures still make sense outside games.
                         <a href="/play/rpg-wednesday/">RPG Wednesday</a> is the full example;
                         <a href="/town/">Town Atlas</a> holds the world bible;
-                        the <a href="/tools/character-sheet/">character-sheet builder</a> turns that grammar into a playable, drawable card.
+                        the <a href="/tools/character-sheet/">character-sheet builder</a> turns that grammar into a playable, drawable card;
+                        <a href="#media-cauldron">the media cauldron</a> cooks a table detail into a seed you can carry.
                     </p>
                     <p data-spw-copy-lens="memory" data-spw-copy-label="memory lens">
                         Session memory is the durable product: recaps, cast pressure, and world rules that return next week.
@@ -230,12 +231,15 @@
                         <li><a href="/play/rpg-wednesday/world/"><strong>World Register</strong><span>Use this when a repeated detail should become a stable rule, place, or trope.</span></a></li>
                         <li><a href="/recipes/"><strong>Recipes</strong><span>Use this when material practice, ingredient clusters, vegetable relationships, and named dishes can teach composition.</span></a></li>
                         <li><a href="/design/components/"><strong>Components</strong><span>Use this when a page pattern should become inspectable, reusable, and easier to screenshot.</span></a></li>
+                        <li><a href="#media-cauldron"><strong>Media Cauldron</strong><span>Use this when a session detail, motif, or pressure should become a copyable seed, proof card, or town note.</span></a></li>
                         <li><a href="/topics/search/#spell-ingredients"><strong>Spell Ingredients</strong><span>Use this when a session detail should become a reusable prompt, anchor, proof card, or semantic cluster.</span></a></li>
                         <li><a href="/about/#boonhonk-register"><strong>Boonhonk Register</strong><span>Use this when a mix, a name, or a dimensional travel should stay playable.</span></a></li>
                     </ul>
                 </aside>
                 <nav class="frame-operators" aria-label="Play routes" data-spw-box-model="operator-route-strip" data-spw-composition-flow="inline-wrap">
                     <a class="spw-chip" data-spw-handle="true" aria-current="page" href="/play/" data-spw-operator="potential">~play_surface</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#media-cauldron" data-spw-operator="action">!media_cauldron</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/#living-concepts" data-spw-operator="concept">&lt;living_concepts&gt;</a>
                     <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/" data-spw-operator="potential" data-spw-action="explore">~rpg_wednesday</a>
                     <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/library/" data-spw-operator="frame" data-spw-sigil="#&gt;town_library" data-spw-action="address">#&gt;town_library</a>
                     <a class="spw-chip" data-spw-handle="true" href="#transition-quests" data-spw-operator="integration" data-spw-action="publish">^transition_quests</a>
@@ -255,6 +259,17 @@
                     <a class="spw-chip" data-spw-handle="true" href="/services/" data-spw-operator="perspective" data-spw-action="enter">@services</a>
                     <a class="spw-chip" data-spw-handle="true" href="/contact/" data-spw-operator="frame" data-spw-action="address">#&gt;contact</a>
                 </nav>
+                <aside class="spw-route-bridge" data-spw-transition-surface="bridge" aria-label="Two cauldron vessels" data-spw-box-model="route-bridge" data-spw-composition-flow="stack" data-spw-semantic-expression="cauldron[pair]{garden.media}">
+                    <header>
+                        <h3>Two vessels, one practice</h3>
+                        <p>The <span class="spw-living-term" data-spw-living-term data-spw-concept="memory-garden" data-spw-cauldron-candidate="true" tabindex="0" title="tap: inspect • hold to prime">garden cauldron</span> in the footer gathers what you hold. The <span class="spw-living-term" data-spw-living-term data-spw-concept="media-cauldron" data-spw-cauldron-candidate="true" tabindex="0" title="tap: inspect • hold to prime">media cauldron</span> below cooks a named ingredient into a seed you can copy, card, or carry. <a href="/#living-concepts">Living concepts</a> names the handles that travel between them.</p>
+                    </header>
+                    <ul class="spw-route-bridge__links" data-spw-box-model="route-choice-field" data-spw-composition-flow="grid">
+                        <li><a href="#memory-garden-cauldron"><strong>Garden bed</strong><span>Hold a living term. Mix fragments into a portable extension.</span></a></li>
+                        <li><a href="#media-cauldron"><strong>Media workbench</strong><span>Prime attention, pick a medium, generate a structured seed.</span></a></li>
+                        <li><a href="/#living-concepts"><strong>Living concepts</strong><span>The atlas of handles this practice keeps warm.</span></a></li>
+                    </ul>
+                </aside>
             </section>
 
             <spw-include src="media-cauldron"></spw-include>

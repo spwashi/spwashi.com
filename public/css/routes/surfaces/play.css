@@ -315,6 +315,10 @@ body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
     0 0.3rem 0.8rem rgba(0, 0, 0, var(--play-rhythm-shadow-strength));
 }
 
+:where(body[data-spw-surface="play"] [data-media-cauldron] .spw-metric-grid) {
+  margin-block: 0.2rem 0.85rem;
+}
+
 :where(body[data-spw-surface="play"] [data-media-cauldron] .vibe-widget-actions) {
   display: flex;
   flex-wrap: wrap;

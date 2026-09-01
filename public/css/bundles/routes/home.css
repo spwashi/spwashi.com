@@ -1403,6 +1403,37 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-base, 17rem)), 1fr));
 }
 
+:where(#living-concepts .living-concepts-featured) {
+  margin-block: 0.2rem 0.35rem;
+}
+
+:where(#living-concepts .living-concepts-featured > [data-spw-operator]) {
+  --active-op-color: var(--spw-operator-color, var(--home-accent-primary));
+}
+
+:where(#living-concepts .living-concepts-featured .frame-operators) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-block-start: 0.7rem;
+}
+
+:where(#living-concepts .spw-metric-grid) {
+  margin-block: 0.55rem 0.2rem;
+}
+
+:where(#living-concepts .spw-copy-motif-strip) {
+  margin-block: 0 0.85rem;
+}
+
+:where(#living-concepts .living-concept-card[data-spw-operator]) {
+  border-color: color-mix(in oklab, var(--spw-operator-color, var(--home-accent-primary)) 34%, var(--line, transparent));
+}
+
+:where(#living-concepts .living-concept-card[data-spw-operator] .living-concept-card__short) {
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 68%, var(--spw-operator-color, var(--home-accent-primary)) 32%);
+}
+
 :where(#living-concepts .living-concept-card) {
   --component-shadow: var(--home-shadow-quiet);
   --component-shadow-active: var(--home-shadow-active);

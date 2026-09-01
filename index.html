@@ -131,7 +131,7 @@
                     A <a href="/design/folios/">folio</a>, a <a href="/cards/">proof card</a>, a <a href="/topics/craft/">craft</a> route, a <a href="/topics/software/spw/">Spw</a> handle, <a href="/topics/math/">math</a>, <a href="/recipes/">recipes</a>, <a href="/play/">play</a>, the <a href="/design/">design</a> lab, <a href="/topics/search/">search</a>, and the <a href="/tools/midjourney/">depiction bench</a>.
                 </p>
                 <p class="home-hero-note" data-spw-textual-role="note">
-                    If you already know the pressure, pick that room. Some people read. Some people scroll the rooms and work the components. <a href="/topics/">Topics</a> sorts the rest. <a href="/now/">Now</a> is open this week.
+                    If you already know the pressure, pick that room. Highlighted words are <span class="spw-living-term" data-spw-living-term data-spw-concept="living-concepts" data-spw-cauldron-candidate="true" tabindex="0" title="tap: inspect • hold to prime">living concepts</span> — tap to inspect, hold to prime the garden bed. <a href="#living-concepts">Open the atlas</a>. <a href="/topics/">Topics</a> sorts the rest. <a href="/now/">Now</a> is open this week.
                 </p>
                 <p class="home-live-note" data-spw-textual-role="note" data-spw-semantic-expression="live[production]{sprint}<public>">
                     Last night’s public prompts are on <a href="/now/">Now</a>. <a href="/recipes/#chicagoland-season">Recipes</a> is this week’s produce. <a href="/play/rpg-wednesday/">RPG Wednesday</a> is the table.
@@ -208,6 +208,7 @@
                     </div>
                     <nav class="hook-invitation wrap-jobs" aria-label="Spw wrap jobs" data-spw-feature="wrap-jobs" data-spw-pack-region="actions" data-spw-semantic-expression="home[wrap]{rail}">
                         <a class="operator-chip" href="#choose-your-entrance" data-spw-operator="direction" data-spw-action="travel" aria-label="Move to the next frame on this page">Next room</a>
+                        <a class="operator-chip" href="#living-concepts" data-spw-operator="concept" data-spw-action="enter" aria-label="Open living concepts on this page">Living concepts</a>
                         <a class="operator-chip" href="#home-reason-why" data-spw-operator="scene" data-spw-action="enter" aria-label="Read why this home page exists">Why this page</a>
                         <a class="operator-chip" href="/topics/search/?q=%5Breading%5D" data-spw-operator="wonder" data-spw-action="inspect" aria-label="Search routes related to the reading view">Find related routes</a>
                     </nav>
@@ -221,6 +222,7 @@
                     <li data-spw-motif="research" data-spw-discharge-kind="release" data-spw-operator="wonder">research</li>
                     <li data-spw-motif="prompt" data-spw-discharge-kind="project" data-spw-operator="value">prompt</li>
                     <li data-spw-motif="lore" data-spw-discharge-kind="situate" data-spw-operator="perspective">lore</li>
+                    <li data-spw-motif="cauldron" data-spw-discharge-kind="compose" data-spw-operator="action">cauldron</li>
                 </ul>
 
                 <section class="spw-reason-strip" aria-label="Home page reasons" data-spw-role="schema" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-attention="scan" data-spw-behavior="invite">
@@ -235,7 +237,7 @@
                     <article id="home-reason-takeaway" data-spw-form="brace" data-spw-semantic-expression="home[takeaway]{handle}">
                         <strong>Concrete things you can leave with</strong>
                         <p>A feel for how <a href="/topics/software/spw/">Spw</a> behaves, a current map of the work, and a visual canon you can carry: <a href="/cards/">proof cards</a>, <a href="/design/folios/">folio</a> studies, prompt packets from the <a href="/tools/midjourney/">depiction bench</a>, session traces from <a href="/play/rpg-wednesday/">RPG Wednesday</a>.</p>
-                        <p data-spw-semantic-expression="prompt[example]{prime}">Example: hold any living term on this page to prime it as a working handle. Matching operators on the page should echo that hold.</p>
+                        <p data-spw-semantic-expression="prompt[example]{prime}">Example: hold a <span class="spw-living-term" data-spw-living-term data-spw-concept="living-concepts" data-spw-cauldron-candidate="true" tabindex="0" title="tap: inspect • hold to prime">living term</span> to prime the garden bed. Matching operators should echo. Cook a seed in the <a href="/play/#media-cauldron">media cauldron</a> when you want something copyable.</p>
                     </article>
                 </section>
 
@@ -305,6 +307,8 @@
                     <a class="spw-chip" data-spw-handle="true" href="/cards/" data-spw-operator="action" data-spw-action="make-proof" data-spw-target="proof-card" data-spw-operator-reversibility="revisable" title="Make a screenshot-ready proof card">!make[proof_card]</a>
                     <a class="spw-chip" data-spw-handle="true" href="/design/folios/" data-spw-operator="value" data-spw-action="browse-folios" data-spw-target="folio-archive" data-spw-operator-reversibility="revisable" title="Browse the folio archive">*folios</a>
                     <a class="spw-chip" data-spw-handle="true" href="/services/" data-spw-operator="perspective" data-spw-action="enter-perspective" data-spw-target="commission-fit" data-spw-operator-reversibility="inspectable" title="Discuss a commission or collaboration">@discuss_a_commission</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#living-concepts" data-spw-operator="concept" data-spw-action="enter" data-spw-target="living-concepts" data-spw-operator-reversibility="reversible" title="Open living concepts on this page">&lt;living_concepts&gt;</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/#media-cauldron" data-spw-operator="action" data-spw-action="generate" data-spw-target="media-cauldron" data-spw-operator-reversibility="revisable" title="Generate a media seed from a primed ingredient">!media_cauldron</a>
                     <a class="spw-chip" data-spw-handle="true" href="/about/" data-spw-operator="wonder" data-spw-action="inspect" data-spw-target="site-system" data-spw-operator-reversibility="reversible" title="Understand how the site is built">? understand the system</a>
                     <a class="spw-chip" data-spw-handle="true" href="/now/" data-spw-operator="substrate" data-spw-action="inspect-substrate" data-spw-target="current-work" data-spw-operator-reversibility="returnable" title="See what is active right now">$current_work</a>
                 </nav>
@@ -420,6 +424,7 @@
                 <p class="spw-role-hooks__routes">
                     <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/" data-spw-operator="value" data-spw-action="materialize">*rpg_wednesday</a>
                     <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/library/" data-spw-operator="frame" data-spw-action="address">#&gt;town_library</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/#media-cauldron" data-spw-operator="action">!media_cauldron</a>
                 </p>
             </li>
         </ul>
@@ -1113,22 +1118,59 @@
             <h2 id="living-concepts-title">Living Concepts</h2>
             <div class="spw-component-meta" data-spw-slot="meta">
                 <span class="spw-component-tag" data-spw-role="concept-atlas" data-spw-stance="entry">atlas</span>
+                <span class="spw-component-tag" data-spw-role="production" data-spw-stance="threshold">cauldron</span>
             </div>
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p data-spw-textual-role="note" data-spw-copy-depth="normal">
-                Garden-and-apparatus ideas with a route where each one can be tuned, inspected, and carried into collaboration.
+            <p data-spw-textual-role="lede" data-spw-copy-depth="normal" data-spw-semantic-expression="concepts[living]{inspect.prime.carry}">
+                Ideas that stay warm after you leave the paragraph. A
+                <span class="spw-living-term" data-spw-living-term data-spw-concept="living-concepts" data-spw-cauldron-candidate="true" data-spw-gesture-hint tabindex="0" title="tap: inspect • hold to prime">living term</span>
+                is a handle: tap inspects it, hold primes it into the
+                <span class="spw-living-term" data-spw-living-term data-spw-concept="memory-garden" data-spw-cauldron-candidate="true" tabindex="0" title="tap: inspect • hold to prime">garden cauldron</span>
+                at the foot of the page. Open a card when you want the room that can tune, generate, or carry the same idea.
             </p>
 
+            <div class="spw-metric-grid" data-spw-kind="metric" data-spw-role="schema" aria-label="Living term gestures">
+                <p><strong>tap</strong> inspect without storing</p>
+                <p><strong>hold</strong> prime into the garden bed</p>
+                <p><strong>mix</strong> compose a portable extension</p>
+            </div>
+
+            <div class="spw-reason-strip living-concepts-featured" aria-label="Two cauldron vessels" data-spw-role="schema" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-semantic-expression="cauldron[pair]{garden.media}">
+                <article id="living-garden-vessel" data-spw-form="brace" data-spw-kind="panel" data-spw-operator="potential" data-spw-concept="memory-garden" data-spw-cauldron-candidate="true" data-spw-semantic-expression="cauldron[garden]{sow.tend.harvest}">
+                    <strong>Memory garden</strong>
+                    <p>The footer bed. Hold a living term, inspect a trail, or stash a fragment. Mix what gathered into a spell you can plant, share, or replay later.</p>
+                    <p class="frame-operators">
+                        <a class="spw-chip" data-spw-handle="true" href="#memory-garden-cauldron" data-spw-operator="potential" data-spw-action="explore">~open[garden]</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/library/#garden" data-spw-operator="frame" data-spw-action="address">#&gt;library_garden</a>
+                    </p>
+                </article>
+                <article id="living-media-vessel" data-spw-form="brace" data-spw-kind="panel" data-spw-operator="action" data-spw-concept="media-cauldron" data-spw-cauldron-candidate="true" data-spw-semantic-expression="media[cauldron]{attention.prime.generate}">
+                    <strong>Media cauldron</strong>
+                    <p>The Play workbench. Name a source ingredient and an attention posture, then generate a seed you can copy as a proof card, town note, or prompt pack.</p>
+                    <p class="frame-operators">
+                        <a class="spw-chip" data-spw-handle="true" href="/play/#media-cauldron" data-spw-operator="action">!generate[seed]</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/cards/" data-spw-operator="integration">^proof_cards</a>
+                    </p>
+                </article>
+            </div>
+
+            <ul class="spw-copy-motif-strip" aria-label="Living concept motifs" data-spw-box-model="motif-strip" data-spw-composition-flow="inline-wrap">
+                <li data-spw-motif="inspect" data-spw-operator="wonder">inspect</li>
+                <li data-spw-motif="prime" data-spw-operator="potential">prime</li>
+                <li data-spw-motif="mix" data-spw-operator="action">mix</li>
+                <li data-spw-motif="carry" data-spw-operator="integration">carry</li>
+            </ul>
+
             <div class="frame-grid frame-grid--dense living-concepts-grid" data-spw-box-model="concept-details-grid" data-spw-composition-flow="grid" data-spw-pack="fill dense">
-                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="attention-posture">
+                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="attention-posture" data-spw-concept="attention-posture" data-spw-operator="perspective" data-spw-cauldron-candidate="true" data-spw-semantic-expression="attention[posture]{self.local.global}">
                     <summary>
                         <span class="living-concept-card__name">Attention Posture</span>
                         <span class="living-concept-card__short">self / local / global</span>
                     </summary>
                     <div class="living-concept-card__body" data-spw-pack-regions>
-                        <p data-spw-pack-region="body">How the site names relation to self, immediate context, and wider horizon before generating or revising an artifact.</p>
+                        <p data-spw-pack-region="body">How the site names relation to self, the room you are in, and the wider horizon before generating or revising an artifact. The media cauldron reads this posture when it cooks a seed.</p>
                         <p class="frame-operators" data-spw-pack-region="actions">
                             <a class="spw-chip" data-spw-handle="true" href="/settings/#attention-posture-settings" data-spw-operator="binding">=tune[posture]</a>
                             <a class="spw-chip" data-spw-handle="true" href="/play/#media-cauldron" data-spw-operator="potential" data-spw-action="explore">~use_in_cauldron</a>
@@ -1136,27 +1178,13 @@
                     </div>
                 </details>
 
-                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="media-cauldron">
-                    <summary>
-                        <span class="living-concept-card__name">Media Cauldron</span>
-                        <span class="living-concept-card__short">seed / proof / carry</span>
-                    </summary>
-                    <div class="living-concept-card__body" data-spw-pack-regions>
-                        <p data-spw-pack-region="body">A local-first prompt instrument that turns a source ingredient and attention posture into copyable media or draft artifacts tuned to a collaborator's rhythm.</p>
-                        <p class="frame-operators" data-spw-pack-region="actions">
-                            <a class="spw-chip" data-spw-handle="true" href="/play/#media-cauldron" data-spw-operator="action">!generate[seed]</a>
-                            <a class="spw-chip" data-spw-handle="true" href="/cards/" data-spw-operator="integration">^proof_cards</a>
-                        </p>
-                    </div>
-                </details>
-
-                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="spw-operators">
+                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="spw-operators" data-spw-concept="spw-operators" data-spw-operator="frame" data-spw-cauldron-candidate="true" data-spw-semantic-expression="operator[handle]{address.probe.commit}">
                     <summary>
                         <span class="living-concept-card__name">Spw Operators</span>
                         <span class="living-concept-card__short">handles for action</span>
                     </summary>
                     <div class="living-concept-card__body" data-spw-pack-regions>
-                        <p data-spw-pack-region="body">Small readable marks for frames, probes, actions, references, topics, and artifacts so a page can be inspected and reused.</p>
+                        <p data-spw-pack-region="body">Small readable marks for frames, probes, actions, references, topics, and artifacts. Hold one and matching handles on the page should echo — that echo is how a concept stays findable.</p>
                         <p class="frame-operators" data-spw-pack-region="actions">
                             <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/" data-spw-operator="frame" data-spw-action="address">#&gt;operator_atlas</a>
                             <a class="spw-chip" data-spw-handle="true" href="/design/components/" data-spw-operator="potential" data-spw-action="explore">~components</a>
@@ -1164,13 +1192,27 @@
                     </div>
                 </details>
 
-                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="developmental-climate">
+                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="brace-physics" data-spw-concept="brace-physics" data-spw-operator="potential" data-spw-cauldron-candidate="true" data-spw-semantic-expression="brace[containment]{charge.prime.release}">
+                    <summary>
+                        <span class="living-concept-card__name">Brace physics</span>
+                        <span class="living-concept-card__short">hold / prime / release</span>
+                    </summary>
+                    <div class="living-concept-card__body" data-spw-pack-regions>
+                        <p data-spw-pack-region="body">Braces hold local value against a stable root. Charge one, and the garden cauldron can take that value as a primed ingredient instead of a leftover highlight.</p>
+                        <p class="frame-operators" data-spw-pack-region="actions">
+                            <a class="spw-chip" data-spw-handle="true" href="#memory-garden-cauldron" data-spw-operator="potential" data-spw-action="explore">~prime_to_garden</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/" data-spw-operator="wonder" data-spw-action="inspect">? operator_atlas</a>
+                        </p>
+                    </div>
+                </details>
+
+                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="developmental-climate" data-spw-concept="developmental-climate" data-spw-operator="ground" data-spw-cauldron-candidate="true" data-spw-semantic-expression="climate[reading]{orient.anchor.offer}">
                     <summary>
                         <span class="living-concept-card__name">Developmental Climate</span>
                         <span class="living-concept-card__short">orient / anchor / offer</span>
                     </summary>
                     <div class="living-concept-card__body" data-spw-pack-regions>
-                        <p data-spw-pack-region="body">The reading climate that controls how much support, density, and challenge the interface should carry while someone learns.</p>
+                        <p data-spw-pack-region="body">The reading climate that controls how much support, density, and challenge the interface should carry while someone learns. Tune it before a long study pass.</p>
                         <p class="frame-operators" data-spw-pack-region="actions">
                             <a class="spw-chip" data-spw-handle="true" href="/settings/#climate-settings" data-spw-operator="action">!tune[climate]</a>
                             <a class="spw-chip" data-spw-handle="true" href="/curriculum/" data-spw-operator="frame" data-spw-action="address">#&gt;curriculum</a>
@@ -1178,13 +1220,13 @@
                     </div>
                 </details>
 
-                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="town-atlas">
+                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="town-atlas" data-spw-concept="town-atlas" data-spw-operator="frame" data-spw-cauldron-candidate="true" data-spw-semantic-expression="town[atlas]{place.rule.guide}">
                     <summary>
                         <span class="living-concept-card__name">Town Atlas</span>
                         <span class="living-concept-card__short">world rulebook</span>
                     </summary>
                     <div class="living-concept-card__body" data-spw-pack-regions>
-                        <p data-spw-pack-region="body">The public world-bible surface for places, customs, rules, guide figures, and details that have earned a structured home.</p>
+                        <p data-spw-pack-region="body">The public world-bible for places, customs, rules, and guide figures that have earned a structured home. A cauldron town note is how a table detail graduates into this book.</p>
                         <p class="frame-operators" data-spw-pack-region="actions">
                             <a class="spw-chip" data-spw-handle="true" href="/town/" data-spw-operator="frame" data-spw-action="address">#&gt;town_atlas</a>
                             <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/library/" data-spw-operator="potential" data-spw-action="explore">~town_library</a>
@@ -1192,13 +1234,13 @@
                     </div>
                 </details>
 
-                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="proof-cards">
+                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="proof-cards" data-spw-concept="proof-cards" data-spw-operator="integration" data-spw-cauldron-candidate="true" data-spw-semantic-expression="proof[card]{claim.evidence.action}">
                     <summary>
                         <span class="living-concept-card__name">Proof Cards</span>
                         <span class="living-concept-card__short">claim / evidence / action</span>
                     </summary>
                     <div class="living-concept-card__body" data-spw-pack-regions>
-                        <p data-spw-pack-region="body">Screenshot-ready records that name a claim, show enough context, and leave behind a next action or review boundary.</p>
+                        <p data-spw-pack-region="body">Screenshot-ready records that name a claim, show enough context, and leave a next action. The media cauldron can mint one from a cooked seed.</p>
                         <p class="frame-operators" data-spw-pack-region="actions">
                             <a class="spw-chip" data-spw-handle="true" href="/cards/" data-spw-operator="action">!make[card]</a>
                             <a class="spw-chip" data-spw-handle="true" href="/now/" data-spw-operator="substrate" data-spw-action="support">$current_sprint</a>
@@ -1206,13 +1248,13 @@
                     </div>
                 </details>
 
-                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="motif-table" data-spw-semantic-expression="sticker[motif]{theme.pressure}">
+                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="motif-table" data-spw-concept="motif-table" data-spw-operator="wonder" data-spw-cauldron-candidate="true" data-spw-semantic-expression="sticker[motif]{theme.pressure}">
                     <summary>
                         <span class="living-concept-card__name">Motif Table</span>
                         <span class="living-concept-card__short">sticker / motif / theme</span>
                     </summary>
                     <div class="living-concept-card__body" data-spw-pack-regions>
-                        <p data-spw-pack-region="body">A low-stakes reading surface where a sticker becomes a portable handle, a team reading stages possibilities, and repeated associations grow into a theme without forcing canon too early.</p>
+                        <p data-spw-pack-region="body">A low-stakes reading surface where a sticker becomes a portable handle. Repeated associations grow into a theme without forcing canon too early — prime one when it starts to recur.</p>
                         <p class="frame-operators" data-spw-pack-region="actions">
                             <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/world/" data-spw-operator="wonder" data-spw-action="inspect">? sticker reading</a>
                             <a class="spw-chip" data-spw-handle="true" href="/play/" data-spw-operator="potential" data-spw-action="apply">~stage_possibilities</a>
@@ -1468,7 +1510,7 @@
             </div>
 
             <p class="kernel-carry-note" data-spw-textual-role="note" data-spw-projection="kernel" data-spw-intent="carry-wonder">
-                The <span class="spw-living-term" data-spw-living-term data-spw-concept="kernel" tabindex="0" title="tap: inspect • hold to prime">kernel</span>, <span class="spw-living-term" data-spw-living-term data-spw-concept="component-tag" tabindex="0" title="tap: inspect • hold to prime">component tags</span>, and attention handles you tune here can travel with you — garden sediment meeting apparatus inspection. Feed them with <span class="spw-living-term" data-spw-living-term data-spw-concept="garden-prompt" tabindex="0" title="tap: inspect • hold to prime">garden prompts</span>, compose them in the cauldron, or plant spell trails along ecological channels the Library can tend and replay at each collaborator's rhythm.
+                The <span class="spw-living-term" data-spw-living-term data-spw-concept="kernel" data-spw-cauldron-candidate="true" tabindex="0" title="tap: inspect • hold to prime">kernel</span>, <span class="spw-living-term" data-spw-living-term data-spw-concept="component-tag" data-spw-cauldron-candidate="true" tabindex="0" title="tap: inspect • hold to prime">component tags</span>, and attention handles you tune here can travel with you — garden sediment meeting apparatus inspection. Feed them with <span class="spw-living-term" data-spw-living-term data-spw-concept="garden-prompt" data-spw-cauldron-candidate="true" tabindex="0" title="tap: inspect • hold to prime">garden prompts</span>, compose them in the <span class="spw-living-term" data-spw-living-term data-spw-concept="memory-garden" data-spw-cauldron-candidate="true" tabindex="0" title="tap: inspect • hold to prime">garden cauldron</span> or cook a seed in the <span class="spw-living-term" data-spw-living-term data-spw-concept="media-cauldron" data-spw-cauldron-candidate="true" tabindex="0" title="tap: inspect • hold to prime">media cauldron</span>, then plant spell trails the Library can tend and replay at each collaborator's rhythm.
             </p>
             <!-- Live temporal consequence for the carry claim: shows the most recent attention that left this page and entered the garden. Maintains momentum between the prose promise and the actual runtime state. -->
             <p class="garden-carried" data-spw-textual-role="note" data-spw-garden-carried aria-live="polite">
@@ -1477,6 +1519,8 @@
             </p>
             <nav class="frame-operators kernel-carry-strip" aria-label="Carry the kernel" data-spw-feature="kernel-projection">
                 <span class="kernel-carry-strip__label">carry forward</span>
+                <a class="spw-chip" data-spw-handle="true" href="#memory-garden-cauldron" data-spw-operator="potential" data-spw-action="explore" title="Open the garden cauldron">~garden_bed</a>
+                <a class="spw-chip" data-spw-handle="true" href="/play/#media-cauldron" data-spw-operator="action" title="Cook a media seed">!media_cauldron</a>
                 <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/library/#daily-weekly-rhythm" data-spw-operator="integration" data-spw-intent="project-kernel" data-spw-target="town_library" title="Project kernel handles into the library rhythm" data-spw-action="publish">^carry_kernel_into_library</a>
                 <a class="spw-chip" data-spw-handle="true" href="/curriculum/#memory-buffers" data-spw-operator="integration" data-spw-intent="study" title="Study memory and buffers with Cask" data-spw-action="publish">^study_memory_and_buffers</a>
                 <a class="spw-chip" data-spw-handle="true" href="/curriculum/" data-spw-operator="frame" title="Open the full curriculum surface">#&gt;curriculum</a>
@@ -1600,6 +1644,8 @@
                    data-spw-operator="concept" data-spw-action="enter">&lt;topics&gt;</a>
                 <a class="spw-chip" data-spw-handle="true" href="/topics/software/" data-spw-form="angle" data-spw-operator="wonder" data-spw-action="inspect">? software_surface</a>
                 <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/" data-spw-form="angle" data-spw-operator="frame" data-spw-action="address">#&gt;spw_language</a>
+                <a class="spw-chip" data-spw-handle="true" href="#living-concepts" data-spw-form="angle" data-spw-operator="concept" data-spw-action="enter">&lt;living_concepts&gt;</a>
+                <a class="spw-chip" data-spw-handle="true" href="/play/#media-cauldron" data-spw-form="angle" data-spw-operator="action">!media_cauldron</a>
                 <a class="spw-chip" data-spw-handle="true" href="/topics/search/" data-spw-form="angle" data-spw-operator="wonder" data-spw-action="inspect">? search_rediscovery</a>
                 <a class="spw-chip" data-spw-handle="true" href="/topics/math/" data-spw-form="angle"
                    data-spw-operator="value" data-spw-action="materialize">*math_routes</a>
@@ -1691,8 +1737,8 @@
                 <article class="returner-card returner-card--warm" data-spw-kind="card" data-spw-role="reference" data-spw-form="brace">
                     <p class="returner-card-kicker" data-spw-slot="meta">Fresh entry</p>
                     <h3 data-spw-slot="header">Pick the route that makes your next question stranger and smaller.</h3>
-                    <p data-spw-slot="body">That might be <a href="/topics/" data-spw-operator="stream">topics</a> if you need a map, <a href="/topics/search/" data-spw-operator="wonder">search</a> if you need a term to return through, <a href="/cards/" data-spw-operator="integrate">cards</a> if you
-                        need a proof surface, or <a href="/blog/" data-spw-operator="stream">the blog</a> if you need to watch fragments turn into
+                    <p data-spw-slot="body">That might be <a href="/topics/" data-spw-operator="stream">topics</a> if you need a map, <a href="/topics/search/" data-spw-operator="wonder">search</a> if you need a term to return through, <a href="/cards/" data-spw-operator="integration">cards</a> if you
+                        need a proof surface, <a href="#living-concepts" data-spw-operator="concept">living concepts</a> if a handle should stay warm, or <a href="/blog/" data-spw-operator="stream">the blog</a> if you need to watch fragments turn into
                         public form.</p>
                 </article>
             </div>
