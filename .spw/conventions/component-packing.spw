@@ -21,6 +21,11 @@
 @component_taxonomy: ~"./component-taxonomy.spw"
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 @bench: ~"../../design/composition/index.html"
+@spatial_bands: ~"../../public/js/kernel/spatial-bands.js"
+@layout_squeeze_css: ~"../../public/css/systems/layout-squeeze.css"
+@cards_css: ~"../../public/css/components/cards.css"
+@alignment_audit: ~"../audits/aesthetic-alignment-2026-08.spw"
+@pacing: ~"../philosophy/pacing.spw"
 
 operation = "contract"
 fixity = "tending"
@@ -103,8 +108,50 @@ fixity = "tending"
   invariant = `data-spw-pack-layout remains narration; no geometry is gated on the runtime attribute.`
 }[reg=facet]
 
+^"packing_laws_2026_08_31"{
+  operation = "contract"
+  fixity = "tending"
+  note = `Four rules recovered from a defect that had already been patched locally twice before it was named. Each is stated so a violation is greppable rather than a matter of taste. See @alignment_audit#f8_measure_reaches_descendants through #f10_extent_three_vocabularies.`
+
+  carrier_owns_measure = .{
+    rule = `A measure cap belongs to the element that carries the visible surface — background, border, padding. Never to a bare descendant inside a decorated carrier.`
+    why = `A cap on a descendant leaves its grid cell at full width, so the vacated inline space has no claimant. The component shrinks to make room that nothing can take.`
+    symptom = `A chip narrower than the panel it sits in, with the remainder blank.`
+    instance = `@cards_css capped p/li inside eleven card classes at 60ch; the home hook chip rendered 553px inside a 753px panel.`
+    !anti = `Do not fix this by widening the cap. Either the carrier narrows and takes its surface with it, or the cap comes off.`
+  }[reg=facet]
+
+  axis_spends_itself = .{
+    rule = `A measurement on one axis may only be spent on that axis. Block-axis extent sets block-axis properties; it never sets inline measure.`
+    why = `Narrowing a paragraph makes it taller. An inline remedy for a block-axis trigger feeds its own trigger, so the state latches instead of settling and there is no path back.`
+    instance = `@layout_squeeze_css capped every descendant p at 32ch when a host read overtall — a ratio of height to viewport height.`
+  }[reg=facet]
+
+  deadband_when_self_driving = .{
+    rule = `A state whose remedy can change its own trigger needs a deadband, or a latch on pre-effect geometry.`
+    why = `Without one a component parked near a band edge flips between two states that are each correct for the geometry they were measured from, and nothing in the CSS explains the flicker.`
+    instance = `Extent drives a squeeze on gap and pad, which shortens the component that extent is measured from. @spatial_bands holds a band until the geometry clears its edge by BAND_HYSTERESIS, in the direction of travel only.`
+  }[reg=facet]
+
+  one_definition_per_vocabulary = .{
+    rule = `An attribute's value set has one definition. A module that writes it imports that definition; it does not restate it.`
+    why = `Two private copies drift silently, and the value on a shared element is then decided by measurement order rather than by geometry.`
+    instance = `data-spw-extent had two writers disagreeing about overtall — 0.95 of the viewport against 1.8 — on the same [data-spw-gravity] elements, and a third vocabulary in CSS that no writer produced.`
+    ~#open: "data-spw-measure-band and data-spw-box-measure remain two attributes with two overlapping vocabularies for inline size — compact|balanced|wide|maximal against narrow|compact|comfortable|wide, on different edges. Not merged; recorded so the next reader does not assume they agree."
+  }[reg=facet]
+
+  scalar_or_nothing = .{
+    rule = `A continuous channel must be spent continuously or removed. A 0-to-1 scalar behind a binary effect is the worst of both.`
+    why = `--spw-squeeze was assigned twelve times and read only by its own reassignments, and eight of those assignments were self-referential — cyclic, invalid at computed-value time, so they destroyed the value instead of clamping it. The only live effect was a hard measure cap.`
+    probe = `A custom property whose declaration contains var() of itself computes to empty, not to a clamp. Compose from independent channels instead.`
+  }[reg=facet]
+}[reg=facet]
+
 validation: #[
   `rg 'data-spw-pack-local' --glob '*.html'`,
+  `rg -n 'max-inline-size' public/css/components/cards.css — every cap is on a carrier, not a bare descendant`,
+  `rg -n 'var\(--spw-squeeze' public/css/systems/layout-squeeze.css — no declaration of --spw-squeeze may read --spw-squeeze`,
+  `rg -n 'MEASURE_BANDS|EXTENT_RATIOS' public/js/runtime/ — no runtime module defines its own copy`,
   `rg 'PACK_LAYOUT_BANDS|min-width: 26rem|min-width: 44rem|min-width: 52rem' public/js/runtime/composition-box-model.js public/css/systems/component-packing.css`,
   `node --check public/js/runtime/composition-box-model.js`,
   `Open /design/composition/ and drag the pack-card — layout must walk stack|split|feature without a viewport resize`

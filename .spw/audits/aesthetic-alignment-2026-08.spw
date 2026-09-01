@@ -54,6 +54,13 @@
 @operator_detection: ~"../../public/js/kernel/operator-detection.js"
 @prepaint_state: ~"../../public/js/runtime/prepaint-state.js"
 @cognitive_texture_memo: ~"../../.agents/project_spw_cognitive_texture.md"
+@component_packing: ~"../conventions/component-packing.spw"
+@cards_css: ~"../../public/css/components/cards.css"
+@layout_squeeze_css: ~"../../public/css/systems/layout-squeeze.css"
+@component_biome_css: ~"../../public/css/systems/component-biome.css"
+@spatial_bands: ~"../../public/js/kernel/spatial-bands.js"
+@spatial_gravity_js: ~"../../public/js/runtime/spatial-gravity.js"
+@positioning_orchestration: ~"../../public/js/runtime/positioning-orchestration.js"
 
 operation = "align"
 fixity = "tending"
@@ -167,6 +174,37 @@ audit_run: .{
   probe = `read @world_physics#the_move and @metaphor_dimensional_lexicon#thesis in one sitting and ask which one governs a new metaphor arriving tomorrow`
 }[reg=facet]
 
+^"f8_measure_reaches_descendants"{
+  claim = `Ancestor-keyed measure caps reach into descendants whose carriers keep full width, so a component shrinks to make space nothing can claim.`
+  observed = `The home hook chip rendered 553px inside a 753px panel — 200px blank. Reported as "some components opt to shrink to make space that is never filled".`
+  source = `@cards_css — :where(eleven card classes) :is(p, li, span:not(.class)...) at min(100%, 60ch). The :not() arguments inside :is() raise the sweep to class specificity, so it outranked .spw-playable-hook's own 64ch on an element that is itself the decorated surface.`
+  intermittency = `A ch measure against a px carrier. Whether the cap bites depends on font-size versus container width, which is why the same page renders both ways and the defect reads as random.`
+  recurrence = `Third occurrence. @typography_packing carries two comments recording earlier local patches, one of which says a body-slot cap "left hub/wide asides in a leftover column" — the same symptom, named and not generalised.`
+  disposition = "align"
+  moves_to = @component_packing
+  probe = `measure a decorated chip against its panel: getBoundingClientRect().width on both. A gap with no claimant is the defect.`
+}[reg=facet]
+
+^"f9_squeeze_scalar_cyclic"{
+  claim = `--spw-squeeze never resolved. Eight of its twelve assignments were self-referential, and nothing outside its own file read it.`
+  form = `--spw-squeeze: max(var(--spw-squeeze, 0), 0.4) is a cyclic reference. It is invalid at computed-value time, so the property computes to EMPTY rather than to a clamp — the ladder destroyed the value instead of raising it.`
+  verified = `Isolated page, five hosts: a literal assignment resolved, every self-referential clamp returned "". Not inferred from the spec.`
+  consequence = `The graduated channel was dead and the only live effect of the squeeze system was a hard 32ch measure cap — which is also the axis violation in F10's neighbourhood. A 0-to-1 scalar behind a binary effect.`
+  disposition = "align"
+  moves_to = @component_packing
+  probe = `getComputedStyle(el).getPropertyValue('--spw-squeeze') on an element in a clamped state. Empty means cyclic.`
+}[reg=facet]
+
+^"f10_extent_three_vocabularies"{
+  claim = `data-spw-extent has two writers that disagree and one reader using a vocabulary neither produces. Same shape as F1, one layer down.`
+  writers = `@spatial_gravity_js and @positioning_orchestration write the same four attributes — measure-band, extent, vertical-gravity, space-variant — to the same [data-spw-gravity] elements from private threshold tables. Inline bands agreed. Block bands did not: overtall at 0.95 of the viewport against 1.8, so the value was decided by measurement order.`
+  third_vocabulary = `@component_biome_css read crowded | contained | open. Only contained was ever produced, so one rule went live while two sat dead and the file's own comment described it as inert when it was half-wired.`
+  fourth_table = `composition-box-model carries a third band table for data-spw-box-measure — narrow | compact | comfortable | wide on 320/640/960 — overlapping in meaning with measure-band's compact | balanced | wide | maximal on 320/580/880. Not merged; recorded.`
+  disposition = "align"
+  moves_to = @component_packing
+  probe = `rg -n 'MEASURE_BANDS|EXTENT_RATIOS' public/js/runtime/ — a runtime module defining its own copy is the defect.`
+}[reg=facet]
+
 # ── Dispositions ───────────────────────────────────────────────
 
 ^"dispositions"{
@@ -176,6 +214,7 @@ audit_run: .{
   retire = `F4 — two backlog items struck with a one-line reason citing @wonder_doctrine.`
   align_typography = `F5, F6 — @operator_typography rescues the charge-to-type thesis into the corpus and states the @ layering.`
   align_physics = `F7 — @one_physics adjudicates, and gives F1's axis separation a home.`
+  align_packing = `F8, F9, F10 — the four laws land in @component_packing#packing_laws_2026_08_31: the carrier owns measure, an axis is spent on itself, a self-driving state gets a deadband, a vocabulary has one definition, and a scalar is spent continuously or removed.`
   carried = `The distance between @operator_typography's dispositional claims and @state_semantics_css's fixed steps is real and stays open. Per @sigil_geometry_lore a printed claim may exceed its wiring only as disposition, never as a named gesture — so the doc must mark which half it is on.`
 }[reg=facet]
 
@@ -226,6 +265,9 @@ audit_run: .{
     `A finding's probe no longer reproduces it, and the finding was not retired.`,
     `An align disposition lands by widening the original claim until it became true, rather than by changing the tree or the sentence.`,
     `A surface cited here is edited without this audit recording that the finding closed.`,
-    `The three new surfaces are written and npm run spw:census shows any of them at degree 1 — written but not wired, which is F5's defect committed again.`
+    `The three new surfaces are written and npm run spw:census shows any of them at degree 1 — written but not wired, which is F5's defect committed again.`,
+    `A measure cap is authored on a bare descendant inside a decorated carrier — F8 a fourth time.`,
+    `A custom property is declared in terms of itself — F9 again; it computes to empty, not to a clamp.`,
+    `A runtime module defines its own copy of a band table instead of importing @spatial_bands — F10 again.`
   ][reg=set]
 }
