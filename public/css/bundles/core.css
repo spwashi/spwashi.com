@@ -26312,15 +26312,16 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   max-width: 100%;
 }
 
-/* Module updates contract — grouped inspection surfaces on mounted triggers */
+/* Module describes + updates — inspect chips name the Spw expression, then the write brief */
 :where([data-spw-module-updates-contract]) {
   --spw-module-updates-accent: color-mix(in srgb, var(--op-probe-color, #6a3fb8) 58%, var(--teal, #008080) 42%);
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
-  [data-spw-module][data-spw-module-updates-brief]
+  [data-spw-module][data-spw-module-updates-brief],
+  [data-spw-module][data-spw-module-describes-spell]
 )::after {
-  content: attr(data-spw-module) " · " attr(data-spw-module-updates-brief);
+  content: attr(data-spw-module);
   position: absolute;
   inset-block-end: calc(100% + 0.18rem);
   inset-inline-start: 0;
@@ -26340,6 +26341,24 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   text-overflow: ellipsis;
   pointer-events: none;
   opacity: 0.92;
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
+  [data-spw-module][data-spw-module-updates-brief]
+)::after {
+  content: attr(data-spw-module) " · " attr(data-spw-module-updates-brief);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
+  [data-spw-module][data-spw-module-describes-spell]
+)::after {
+  content: attr(data-spw-module-describes-spell);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
+  [data-spw-module][data-spw-module-describes-spell][data-spw-module-updates-brief]
+)::after {
+  content: attr(data-spw-module-describes-spell) " · " attr(data-spw-module-updates-brief);
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(

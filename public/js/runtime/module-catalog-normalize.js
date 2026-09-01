@@ -22,6 +22,7 @@ import {
   describeModuleCost,
 } from './module-catalog-constants.js';
 import { summarizeCatalogTiming } from '../kernel/module-timing-contract.js';
+import { parseModuleDescribes } from './module-describes-contract.js';
 
 const COST_CLASS_SET = new Set(COST_CLASS_VALUES);
 const COMMITMENT_SET = new Set(COST_COMMITMENT_VALUES);
@@ -145,6 +146,7 @@ export function describeModuleOrchestration(def = {}) {
     },
     effects: {
       describes: def.describes || null,
+      describesContract: parseModuleDescribes(def.describes),
       evaluates: asList(def.evaluates, { tokens: true }),
       updates: asUpdatesList(def.updates),
       scope: effectScope,
@@ -170,6 +172,8 @@ export function listModuleCatalogIndex(defs = []) {
   const byCostClass = Object.create(null);
   const byCommitment = Object.create(null);
   const bySpend = Object.create(null);
+  const byDescribesSubject = Object.create(null);
+  const byDescribesGrade = Object.create(null);
   const rows = [];
   for (const def of defs) {
     if (!def?.id) continue;
@@ -178,11 +182,16 @@ export function listModuleCatalogIndex(defs = []) {
     const cost = def.cost || inferModuleCost(def);
     const costClass = def.costClass || inferModuleCostClass(def);
     const orchestration = def.orchestration || describeModuleOrchestration(def);
+    const described = orchestration.effects.describesContract || parseModuleDescribes(def.describes);
     (byLayer[layer] ||= []).push(def.id);
     (byWhen[when] ||= []).push(def.id);
     (byCostClass[costClass] ||= []).push(def.id);
     (byCommitment[cost.commitment] ||= []).push(def.id);
     (bySpend[cost.spend] ||= []).push(def.id);
+    if (described.grade) (byDescribesGrade[described.grade] ||= []).push(def.id);
+    for (const subject of described.subjects) {
+      (byDescribesSubject[subject] ||= []).push(def.id);
+    }
     rows.push({
       id: def.id,
       layer,
@@ -191,6 +200,8 @@ export function listModuleCatalogIndex(defs = []) {
       costClass,
       costLabel: def.costLabel || `${cost.commitment}/${cost.spend}`,
       describes: def.describes || null,
+      describesGrade: described.grade,
+      describesSubjects: described.subjects,
       timingArc: def.timingArc || null,
       timingChunk: def.timingChunk || null,
       features: def.features || null,
@@ -209,6 +220,8 @@ export function listModuleCatalogIndex(defs = []) {
     byCostClass,
     byCommitment,
     bySpend,
+    byDescribesSubject,
+    byDescribesGrade,
     modules: rows,
     optimization: summarizeModuleCatalogOptimization(defs),
   };
@@ -506,7 +519,7 @@ export const MODULE_CATALOG_NORMALIZE_CONTRACT = Object.freeze({
   copies: COST_COPY_VALUES,
   costClasses: COST_CLASS_VALUES,
   portableUse:
-    'inferModuleCost() returns { commitment, spend, copy? }. costClassFromModel() keeps older audits working. summarizeModuleCatalogOptimization() rolls up both views. listModuleCatalogIndex() includes describes so a module can be recognized by contract or by when/timingArc.',
+    'inferModuleCost() returns { commitment, spend, copy? }. costClassFromModel() keeps older audits working. summarizeModuleCatalogOptimization() rolls up both views. listModuleCatalogIndex() includes describes so a module can be recognized by subject, grade, contract, or when/timingArc.',
   process:
     'enter=when, act=spend, leave=cleanup handle, remain=commitment. copy only at residue.',
   scheduleOwns:

@@ -150,7 +150,9 @@ function loadExpressionGeometry() {
  * - route?: string | string[]
  * - features?: string | string[] — body[data-spw-features] tokens required before scheduling (aligns with CSS behavior bundles)
  * - reason?: human-readable load reason for audit surfaces
- * - describes?: Spw-style semantic expression describing what the module does or the structures it affects (strongly preferred for clarity)
+ * - describes?: catalog Spw dialect — one or more subject[mode]{direction}<capsule>
+ *   clauses naming what the module is. Trailing English is gloss. Parsed by
+ *   module-describes-contract.js; inspect chips and spellbook use the expression.
  * - updates?: string[] | { kind, name, scope? }[] — attrs, css vars, aria, classes, events,
  *   selectors, or properties the module writes. Flat strings are inferred (`data-spw-*`,
  *   `--token`, `aria-*`, `.class`, `spw:event`). Explicit kind prefixes (`attr:…`,

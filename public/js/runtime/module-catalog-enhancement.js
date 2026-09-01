@@ -39,7 +39,7 @@ export const ENHANCEMENT_DEFS = [
     // (site.js filterEnhancementDefs). Idle so QA never contends with first paint.
     selector: 'body',
     rootMode: 'single',
-    describes: 'page-wide layout stability observer with explicit cleanup of PerformanceObserver state and root datasets',
+    describes: 'layout[shift]{observer.cleanup} audit[stability]',
     updates: [
       'diagnostic:data-spw-layout-shift-state',
       'diagnostic:data-spw-layout-shift-count',
@@ -109,7 +109,7 @@ export const ENHANCEMENT_DEFS = [
     electrostatics: { role: 'channel', discharge: 'transfer', dielectric: true, field: '--spw-charge-field' },
     selector: '[data-spw-gesture-contract], .operator-chip, .frame-sigil, .spw-living-term, [data-spw-operator]',
     rootMode: 'single',
-    describes: 'charge/discharge field state on html + frame consequence-live projection; clears timers, bus subscriptions, frame state, and CSS custom property on teardown',
+    describes: 'charge[field]{discharge.consequence} html[projection]',
     updates: [
       'flourish:data-spw-charge-field',
       'flourish:data-spw-charge-intensity',
@@ -129,7 +129,7 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-gesture-contract], [data-spw-gesture-contract-resolved], [data-spw-slot], .spw-living-term[data-spw-living-term]',
     rootMode: 'single',
-    describes: 'slot anatomy rails + gesture-hint from authored/resolved contracts; theme-link projection',
+    describes: 'gesture[anatomy]{hint.slot} contract[authored|resolved]',
     updates: [
       'data-spw-gesture-hint',
       'data-spw-slot-label',
@@ -150,7 +150,7 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IDLE,
     selector: '[data-spw-feature], [data-spw-box-model], [data-spw-gesture-contract], [data-spw-slot]',
     rootMode: 'single',
-    describes: 'metacognitive posture accounting, layout-contract audit, feature learnability resonance',
+    describes: 'learnability[ledger]{posture.audit} feature[resonance]',
     updates: [
       'inspect:data-spw-learnability-ledger',
       'inspect:data-spw-learnability-posture',
@@ -253,7 +253,7 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IDLE,
     selector: 'body',
     rootMode: 'single',
-    describes: 'sitewide route probe dialog over public/data/site-search-index.json; Ctrl/Cmd+K and ?',
+    describes: 'search[route-probe]{dialog.index} chord[ctrl-k|question]',
     updates: [
       'structural:data-spw-site-search',
       'flourish:data-spw-search-selection-pulse',
@@ -646,7 +646,7 @@ export const ENHANCEMENT_DEFS = [
     costClass: COST_CLASS.DEMAND_COUPLED,
     selector: 'body',
     rootMode: 'single',
-    describes: 'page-wide discovery notice layer for runtime rewards, with dismissal storage and escape/listener teardown',
+    describes: 'discovery[notice]{reward.dismiss} stack[teardown]',
     updates: [
       'html:flourish:data-spw-discovery-notice-stack',
       'html:flourish:data-spw-discovery-notice-modal',

@@ -23,7 +23,8 @@
     `contract — optional SPW_*_CONTRACT reference`
     `updates — optional; normalized by module-updates-contract (scope:role:kind:name)`
     `guild — optional runtime-medium guild id`
-    `describes | evaluates — optional portable copy of catalog semantics`
+    `describes — catalog Spw dialect (subject[mode]{direction}); trailing English is gloss`
+    `evaluates — optional portable copy of catalog dimensions`
     `timingArc | timingChunk | effectScope — optional schedule/side-effect mirrors`
   ][reg=set]
 
@@ -59,7 +60,7 @@
 ^"catalog_comprehensiveness"{
   required_fields = #[`id`, `layer`, `when`, `load`, `mount`][reg=set]
   hygiene_fields = #[
-    `describes`
+    `describes` (subject[mode]{direction} clauses; gloss optional; prose is a hygiene finding)
     `evaluates`
     `updates` (role topology preferred for enhancement flourishes)
     `timingArc` (required intent for IMMEDIATE enhancement)
@@ -80,6 +81,7 @@
     `data-spw-module-export-shape`
     `data-spw-module-guild`
     `data-spw-module-export-grade`
+    `data-spw-module-describes-*` (raw, grade, subject, spell)
     `data-spw-module-updates-*` (contract, topology, flourishes, roles)
     `html[data-spw-runtime-idle-chunk]` during staggered idle schedule
   ][reg=set]

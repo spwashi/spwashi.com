@@ -285,6 +285,15 @@ export {
 } from './runtime/module-loader.js';
 
 export {
+  MODULE_DESCRIBES_GRADES,
+  SPW_MODULE_DESCRIBES_CONTRACT,
+  annotateModuleDescribesTarget,
+  describeModuleDescribes,
+  formatModuleDescribesSpell,
+  parseModuleDescribes,
+} from './runtime/module-describes-contract.js';
+
+export {
   SPW_MODULE_UPDATES_CONTRACT,
   annotateModuleUpdatesTarget,
   buildModuleUpdatesIndex,

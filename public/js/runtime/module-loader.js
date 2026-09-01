@@ -6,6 +6,10 @@ import { writeDatasetValue } from '../kernel/dom-contracts.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from './module-catalog-constants.js';
 import { describeModuleOrchestration } from './module-catalog-normalize.js';
 import {
+  annotateModuleDescribesTarget,
+  parseModuleDescribes,
+} from './module-describes-contract.js';
+import {
   annotateModuleUpdatesTarget,
   describeModuleUpdates,
   findModuleUpdateConflicts,
@@ -352,6 +356,7 @@ function listModuleDefinitions(ctx) {
       timingArc: def.timingArc || null,
       effectScope: normalizeModuleIntentValue(def.effectScope),
       describes: def.describes || null,
+      describesContract: parseModuleDescribes(def.describes),
       updates: normalizeModuleUpdates(def.updates),
       updatesSummary: summarizeModuleUpdates(def.updates),
       updatesDescribe: describeModuleUpdates(def.updates),
@@ -374,6 +379,7 @@ function snapshotRuntimeModules(ctx) {
     status: record.status,
     reason: record.reason,
     describes: record.describes || null,
+    describesContract: parseModuleDescribes(record.describes),
     updates: normalizeModuleUpdates(record.updates),
     updatesSummary: summarizeModuleUpdates(record.updates),
     updatesDescribe: describeModuleUpdates(record.updates),
@@ -404,7 +410,9 @@ function snapshotRuntimeModules(ctx) {
  */
 function moduleRecordToSpellExpression(record) {
   if (!record) return null;
-  const base = record.describes || record.reason || record.baseId || record.id;
+  const described = parseModuleDescribes(record.describes);
+  const head = described.expression
+    || `#>${record.layer || 'module'}:${record.baseId || record.id}`;
   const updatesPart = formatModuleUpdatesSpell(record.updates);
   const effectScope = normalizeModuleIntentValue(record.effectScope);
   const effectPart = effectScope.length
@@ -417,8 +425,7 @@ function moduleRecordToSpellExpression(record) {
     : '';
   const statusPart = record.status ? `:${record.status}` : '';
 
-  // Produce something like: #>module:cauldron{updates:data-spw-cauldron}[120ms]:mounted
-  return `#>${record.layer || 'module'}:${record.baseId || record.id}${updatesPart}${effectPart}${arcPart}${lifecyclePart}${timingPart}${statusPart} ${base}`.trim();
+  return `${head}${updatesPart}${effectPart}${arcPart}${lifecyclePart}${timingPart}${statusPart}`.trim();
 }
 
 /**
@@ -735,10 +742,7 @@ function annotateModuleTarget(target, record) {
   writeDatasetValue(target, 'spwModuleTriggerStatus', record.status);
   writeDatasetValue(target, 'spwModuleLifecycle', summarizeModuleLifecycle(record));
 
-  // New semantically meaningful fields for clarity, inspectability, and serialization as "module spells"
-  if (record.describes) {
-    writeDatasetValue(target, 'spwModuleDescribes', record.describes);
-  }
+  annotateModuleDescribesTarget(target, record.describes);
   annotateModuleUpdatesTarget(target, record.updates);
 
   writeDatasetValue(target, 'spwModuleHydration', record.status === 'mounted' ? 'ready' : record.status);
@@ -1070,6 +1074,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     reason,
     consequence: describeMountConsequence(def),
     describes: def.describes || null,
+    describesContract: parseModuleDescribes(def.describes),
     updates: normalizeModuleUpdates(def.updates),
     updatesSummary: summarizeModuleUpdates(def.updates),
     updatesDescribe: describeModuleUpdates(def.updates),
@@ -1573,6 +1578,7 @@ async function mountInvitedFeatures(defs, ctx) {
       if (!(el instanceof HTMLElement)) continue;
 
       annotateModuleTrigger(el, def, ctx, mountWhen.INVITED, 'waiting');
+      annotateModuleDescribesTarget(el, def.describes);
       // What the reader stands to gain, so the invitation can be drawn at a
       // strength that matches the offer rather than uniformly.
       writeDatasetValue(el, 'spwModuleOffer', offer);

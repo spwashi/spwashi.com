@@ -709,6 +709,9 @@ function validateModule(module, errors, warnings, recommendations) {
     if (module.layer !== 'core' && !module.describes) {
         recommendations.push(`${label} is missing describes; runtime audits cannot explain its semantic role.`);
     }
+    if (module.describes && !/\[[^\]]+\]|\{[^}]+\}|<[^>]+>/.test(module.describes)) {
+        recommendations.push(`${label} describes is prose; prefer subject[mode]{direction} catalog dialect so inspectors can group by subject.`);
+    }
     if (module.layer !== 'core' && module.describes && !module.updates.length && !module.evaluates) {
         recommendations.push(`${label} describes behavior but names neither updates nor evaluates.`);
     }
