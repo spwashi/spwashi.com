@@ -259,8 +259,10 @@ const measureElement = (el) => {
   const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 1;
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
 
-  const measureBand = resolveMeasureBand(rect.width);
-  const extent = resolveExtent(rect.height, viewportHeight);
+  // Current values engage the deadband: a band is held until the geometry
+  // clearly leaves it, so a squeeze cannot chase its own trigger across an edge.
+  const measureBand = resolveMeasureBand(rect.width, el?.dataset?.spwMeasureBand);
+  const extent = resolveExtent(rect.height, viewportHeight, el?.dataset?.spwExtent);
   const s = resolveSpatial(rect, viewportWidth, viewportHeight);
 
   writeDatasetValues(el, {

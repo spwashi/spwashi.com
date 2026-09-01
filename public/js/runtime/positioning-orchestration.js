@@ -65,11 +65,12 @@ function computeSpatialMetrics(el, viewportWidth, viewportHeight) {
   const width = rect.width;
   const height = rect.height;
 
-  // Measure band (inline axis)
-  const measureBand = resolveMeasureBand(width);
+  // Measure band (inline axis). The element's current value engages the
+  // deadband, so a band is held until the geometry clearly leaves it.
+  const measureBand = resolveMeasureBand(width, el?.dataset?.spwMeasureBand);
 
   // Extent (block axis relative to viewport)
-  const extent = resolveExtent(height, viewportHeight);
+  const extent = resolveExtent(height, viewportHeight, el?.dataset?.spwExtent);
 
   // Vertical bias (-1 room above -> +1 room below)
   const roomAbove = Math.max(0, rect.top);
