@@ -1,3 +1,5 @@
+import './lib/register-public-imports.mjs';
+
 export * from './typed/build/index.mjs';
 
 import path from 'node:path';

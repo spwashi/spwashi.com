@@ -110,7 +110,7 @@ test('composite build pipelines compile each TypeScript project once', async () 
   assert.equal(scripts['check:local:serial'], 'node scripts/check-local.mjs --serial');
   assert.equal(
     scripts.build,
-    'npm run build:compile && node scripts/css-build.mjs && node scripts/build.mjs',
+    'npm run build:compile && node scripts/css-build.mjs && node --import ./scripts/lib/register-public-imports.mjs scripts/build.mjs',
   );
   assert.equal(scripts.check, 'npm run audit && npm run check:local');
   assert.equal(scripts['check:pwa'], 'npm run build:tools && npm run check:pwa:run');
@@ -187,6 +187,34 @@ test('narrow npm test scripts keep public-import loaders', async () => {
       );
     }
   }
+});
+
+test('site build registers the public-js import hook before loading the catalog', async () => {
+  const packageJson = JSON.parse(await readFile(path.join(ROOT, 'package.json'), 'utf8'));
+  const hook = './scripts/lib/register-public-imports.mjs';
+  for (const scriptName of ['build', 'build:site', 'build:site:run']) {
+    const script = packageJson.scripts[scriptName] || '';
+    assert.ok(
+      script.includes(`--import ${hook}`),
+      `${scriptName} should register ${hook} so catalog /public/js specifiers resolve under Node`,
+    );
+  }
+
+  const buildEntry = await readFile(path.join(ROOT, 'scripts/build.mjs'), 'utf8');
+  assert.match(buildEntry, /register-public-imports/);
+
+  const { spawnSync } = await import('node:child_process');
+  const result = spawnSync(
+    process.execPath,
+    [
+      '--import',
+      hook,
+      '-e',
+      "import { MODULE_DEFS } from './public/js/runtime/module-catalog.js'; if (!Array.isArray(MODULE_DEFS) || !MODULE_DEFS.length) process.exit(2);",
+    ],
+    { cwd: ROOT, encoding: 'utf8' },
+  );
+  assert.equal(result.status, 0, result.stderr || result.stdout);
 });
 
 test('mounted workbench CLI scripts keep consumer-relative doctor/roots paths', async () => {

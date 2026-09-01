@@ -3,6 +3,7 @@ import process from 'node:process';
 import { createHash } from 'node:crypto';
 import { gzipSync } from 'node:zlib';
 import { promises as fs } from 'node:fs';
+import { register } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { build as rolldownBuild } from 'rolldown';
 import { assertPwaContract, collectOfflineDocumentDependencies, formatPwaContractSummary, injectBuildPrecacheAssets, } from '../pwa-contracts.mjs';
@@ -144,7 +145,21 @@ export function createSemanticModulePlan(definitions, outDir) {
         .sort((a, b) => a.id.localeCompare(b.id));
     return { packs, chunkNameByEntryPath };
 }
+let publicImportHookReady = null;
+/**
+ * Catalog/runtime modules use browser-absolute `/public/…` specifiers.
+ * Tests already register scripts/lib/public-import-hooks.mjs; the site
+ * bundler must too, or Node resolves those to file:///public/….
+ */
+function ensurePublicImportHook() {
+    if (!publicImportHookReady) {
+        const hookUrl = pathToFileURL(path.join(ROOT_DIR, 'scripts/lib/public-import-hooks.mjs')).href;
+        publicImportHookReady = Promise.resolve(register(hookUrl)).then(() => undefined);
+    }
+    return publicImportHookReady;
+}
 async function loadCatalogDefinitionsForBuild() {
+    await ensurePublicImportHook();
     const catalogUrl = pathToFileURL(path.join(ROOT_DIR, 'public/js/runtime/module-catalog.js')).href;
     const catalog = await import(catalogUrl);
     return catalog.MODULE_DEFS || [];
@@ -173,7 +188,7 @@ function createPublicJsResolvePlugin(outDir) {
     return {
         name: 'public-js-root',
         resolveId(id) {
-            if (id.startsWith('/public/js/'))
+            if (id.startsWith('/public/'))
                 return path.join(outDir, id.slice(1));
             return null;
         },
