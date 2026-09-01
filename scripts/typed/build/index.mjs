@@ -7,24 +7,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { build as rolldownBuild } from 'rolldown';
 import { resolvePublicSpecifier } from '../../lib/resolve-public-specifier.mjs';
 import { assertPwaContract, collectOfflineDocumentDependencies, formatPwaContractSummary, injectBuildPrecacheAssets, } from '../pwa-contracts.mjs';
-import { assertSafeOutputDir, checkImageRedundancy, copyRepo, countFiles, createLogger, listSourceRepoPaths, logDuplicateImages, parseArgs, printHelp, rmrf, runNodeScript, writeNoJekyll, ROOT_DIR, } from './ops.mjs';
-import { isErrnoCode } from '../shared/build-topology.mjs';
-function relRepo(absPath) {
-    return path.relative(ROOT_DIR, absPath).split(path.sep).join('/');
-}
-async function walkFiles(directoryPath) {
-    try {
-        const entries = await fs.readdir(directoryPath, { recursive: true, withFileTypes: true });
-        return entries
-            .filter((entry) => entry.isFile())
-            .map((entry) => path.join(entry.parentPath || directoryPath, entry.name));
-    }
-    catch (error) {
-        if (isErrnoCode(error, 'ENOENT'))
-            return [];
-        throw error;
-    }
-}
+import { assertSafeOutputDir, checkImageRedundancy, copyRepo, countFiles, createLogger, listFilesRecursive, listSourceRepoPaths, logDuplicateImages, parseArgs, printHelp, relRepo, rmrf, runNodeScript, writeNoJekyll, ROOT_DIR, } from './ops.mjs';
+import { isErrnoCode, toPosixPath } from '../shared/build-topology.mjs';
 function fingerprint(content) {
     return createHash('sha256').update(content).digest('hex').slice(0, 10);
 }
@@ -38,11 +22,8 @@ async function prepareServiceWorkerPrecache(outDir) {
     await fs.writeFile(workerPath, output, 'utf8');
     return dependencies;
 }
-function toPosix(value) {
-    return value.split(path.sep).join('/');
-}
 function toPublicHref(outDir, filePath) {
-    return `/public/${toPosix(path.relative(path.join(outDir, 'public'), filePath))}`;
+    return `/public/${toPosixPath(path.relative(path.join(outDir, 'public'), filePath))}`;
 }
 function slugifyChunkName(value) {
     return String(value || '')
@@ -299,7 +280,7 @@ async function injectBootModulePreloads(outDir, hrefs) {
     const links = extra
         .map((href) => `    <link href="${href}" rel="modulepreload" data-spw-boot-chunk="true" />`)
         .join('\n');
-    const files = (await walkFiles(outDir)).filter((file) => file.endsWith('.html'));
+    const files = (await listFilesRecursive(outDir)).filter((file) => file.endsWith('.html'));
     let changed = 0;
     for (const file of files) {
         const source = await fs.readFile(file, 'utf8');
@@ -321,7 +302,7 @@ async function injectBootModulePreloads(outDir, hrefs) {
 async function minifyPublicJsModules(outDir, logger, skipFiles = []) {
     const jsRoot = path.join(outDir, 'public/js');
     const skip = new Set([...skipFiles].map((value) => resolvePublicSpecifier(value, outDir) || value));
-    const allFiles = await walkFiles(jsRoot);
+    const allFiles = await listFilesRecursive(jsRoot);
     const jsFiles = allFiles.filter((file) => file.endsWith('.js') && !skip.has(file));
     const startedAt = Date.now();
     let beforeBytes = 0;
@@ -431,7 +412,7 @@ async function hashAndRewritePublicAssets(outDir, options, runtimeBundle) {
         }
     }
     const workerPath = path.join(outDir, 'sw.js');
-    const rewriteTargets = (await walkFiles(outDir)).filter((file) => (file.endsWith('.html')
+    const rewriteTargets = (await listFilesRecursive(outDir)).filter((file) => (file.endsWith('.html')
         || file.endsWith('.js')
         || path.resolve(file) === path.resolve(workerPath)));
     for (const file of rewriteTargets) {

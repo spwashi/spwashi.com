@@ -20,33 +20,19 @@ import {
   countFiles,
   createLogger,
   DEFAULT_OUT_DIR,
+  listFilesRecursive,
   listSourceRepoPaths,
   logDuplicateImages,
   parseArgs,
   printHelp,
+  relRepo,
   rmrf,
   runNodeScript,
   writeNoJekyll,
   ROOT_DIR,
 } from './ops.mjs';
-import { isErrnoCode } from '../shared/build-topology.mjs';
+import { isErrnoCode, toPosixPath } from '../shared/build-topology.mjs';
 import type { BuildLogger } from './types.mjs';
-
-function relRepo(absPath: string): string {
-  return path.relative(ROOT_DIR, absPath).split(path.sep).join('/');
-}
-
-async function walkFiles(directoryPath: string): Promise<string[]> {
-  try {
-    const entries = await fs.readdir(directoryPath, { recursive: true, withFileTypes: true });
-    return entries
-      .filter((entry) => entry.isFile())
-      .map((entry) => path.join(entry.parentPath || directoryPath, entry.name));
-  } catch (error) {
-    if (isErrnoCode(error, 'ENOENT')) return [];
-    throw error;
-  }
-}
 
 function fingerprint(content: string | Buffer): string {
   return createHash('sha256').update(content).digest('hex').slice(0, 10);
@@ -132,12 +118,8 @@ async function prepareServiceWorkerPrecache(outDir: string): Promise<string[]> {
   return dependencies;
 }
 
-function toPosix(value: string): string {
-  return value.split(path.sep).join('/');
-}
-
 function toPublicHref(outDir: string, filePath: string): string {
-  return `/public/${toPosix(path.relative(path.join(outDir, 'public'), filePath))}`;
+  return `/public/${toPosixPath(path.relative(path.join(outDir, 'public'), filePath))}`;
 }
 
 function slugifyChunkName(value: string): string {
@@ -421,7 +403,7 @@ async function injectBootModulePreloads(outDir: string, hrefs: string[]): Promis
   const links = extra
     .map((href) => `    <link href="${href}" rel="modulepreload" data-spw-boot-chunk="true" />`)
     .join('\n');
-  const files = (await walkFiles(outDir)).filter((file) => file.endsWith('.html'));
+  const files = (await listFilesRecursive(outDir)).filter((file) => file.endsWith('.html'));
   let changed = 0;
   for (const file of files) {
     const source = await fs.readFile(file, 'utf8');
@@ -448,7 +430,7 @@ async function minifyPublicJsModules(
   const skip = new Set(
     [...skipFiles].map((value) => resolvePublicSpecifier(value, outDir) || value),
   );
-  const allFiles = await walkFiles(jsRoot);
+  const allFiles = await listFilesRecursive(jsRoot);
   const jsFiles = allFiles.filter((file) => file.endsWith('.js') && !skip.has(file));
   const startedAt = Date.now();
   let beforeBytes = 0;
@@ -569,7 +551,7 @@ async function hashAndRewritePublicAssets(
   }
 
   const workerPath = path.join(outDir, 'sw.js');
-  const rewriteTargets = (await walkFiles(outDir)).filter(
+  const rewriteTargets = (await listFilesRecursive(outDir)).filter(
     (file) => (
       file.endsWith('.html')
       || file.endsWith('.js')

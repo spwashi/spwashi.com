@@ -2,4 +2,4 @@ export {
   createCardSigil,
   createFrameHeading,
   createFrameSigil,
-} from '../kernel/dom-contracts.js';
+} from '/public/js/kernel/dom-contracts.js';

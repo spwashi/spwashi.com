@@ -8,7 +8,8 @@ fi
 
 git diff --cached --check
 
-staged=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(js|mjs|cjs|ts|mts)$' || true)
+# node --check parses JS. tsc owns .ts/.mts on check:local / pre-push.
+staged=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(js|mjs|cjs)$' || true)
 if [ -n "$staged" ]; then
   # shellcheck disable=SC2086
   node --check $staged

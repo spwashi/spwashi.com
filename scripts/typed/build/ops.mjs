@@ -12,8 +12,21 @@ export const DEFAULT_OUT_DIR = path.join(ROOT_DIR, 'dist');
 function toPosix(value) {
     return toPosixPath(value);
 }
-function relRepo(absPath) {
+export function relRepo(absPath) {
     return toPosix(path.relative(ROOT_DIR, absPath));
+}
+export async function listFilesRecursive(directoryPath, options = {}) {
+    try {
+        const entries = await fs.readdir(directoryPath, { recursive: true, withFileTypes: true });
+        return entries
+            .filter((entry) => entry.isFile() || (options.includeSymlinks === true && entry.isSymbolicLink()))
+            .map((entry) => path.join(entry.parentPath || directoryPath, entry.name));
+    }
+    catch (error) {
+        if (isErrnoCode(error, 'ENOENT'))
+            return [];
+        throw error;
+    }
 }
 export function parsePositiveInteger(value, fallback) {
     const parsed = Number.parseInt(String(value), 10);
@@ -203,27 +216,7 @@ export async function copyFileOrRender(srcPath, dstPath) {
     return 'copied';
 }
 export async function countFiles(dir) {
-    let count = 0;
-    let entries;
-    try {
-        entries = await fs.readdir(dir, { withFileTypes: true });
-    }
-    catch (error) {
-        if (isErrnoCode(error, 'ENOENT'))
-            return 0;
-        throw error;
-    }
-    entries.sort((a, b) => a.name.localeCompare(b.name));
-    for (const entry of entries) {
-        const abs = path.join(dir, entry.name);
-        if (entry.isDirectory()) {
-            count += await countFiles(abs);
-        }
-        else if (entry.isFile() || entry.isSymbolicLink()) {
-            count += 1;
-        }
-    }
-    return count;
+    return (await listFilesRecursive(dir, { includeSymlinks: true })).length;
 }
 export function runGit(args) {
     const result = spawnSync('git', args, {

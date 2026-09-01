@@ -7,6 +7,9 @@
     "noEmit": false,
     "outDir": "public/js/typed",
     "rootDir": "public/ts",
+    "paths": {
+      "/public/js/*": ["./public/js/*"]
+    },
     "sourceMap": false,
     "types": []
   },
