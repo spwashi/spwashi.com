@@ -6,6 +6,7 @@
  */
 
 import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
+import { resolveOwnerDocument } from '/public/js/runtime/runtime-helpers.js';
 
 const TARGET_SELECTOR = [
   '[data-spw-concept]',
@@ -142,3 +143,13 @@ export function unmountConceptSalience() {
 }
 
 export { unmountConceptSalience as unmount };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'concept-salience',
+  mount: (ctx, root) => initConceptSalience(resolveOwnerDocument(ctx, root)),
+  describes: 'concept[salience|vocabulary|collectible] learnable-dimension',
+  timingArc: 'visible-semantics',
+  effectScope: 'local-dom element-state',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

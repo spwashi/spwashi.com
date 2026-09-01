@@ -97,7 +97,8 @@ export function initSpwRegionMenu(ctx, root) {
   }
   const doc = root?.nodeType === Node.DOCUMENT_NODE ? root : document;
   const body = doc.body;
-  if (!body || body.dataset.spwRegionMenuInit === '1') return;
+  if (!body) return () => {};
+  if (body.dataset.spwRegionMenuInit === '1') return unmountSpwRegionMenu;
 
   body.dataset.spwRegionMenuInit = '1';
   body.addEventListener('click', onClick, true);
@@ -113,6 +114,7 @@ export function initSpwRegionMenu(ctx, root) {
   window.addEventListener('resize', onViewportChange);
   window.visualViewport?.addEventListener?.('resize', onViewportChange);
   window.visualViewport?.addEventListener?.('scroll', onViewportChange, { passive: true });
+  return unmountSpwRegionMenu;
 }
 
 export function unmountSpwRegionMenu() {
@@ -136,6 +138,16 @@ export function unmountSpwRegionMenu() {
 }
 
 export { unmountSpwRegionMenu as unmount };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'region-menu',
+  mount: (ctx, root) => initSpwRegionMenu(ctx, root),
+  describes: 'region-menu[inspect|mark|focus] semantic popover',
+  timingArc: 'enhance-inspect',
+  effectScope: 'popover listeners',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
 
 function onClick(event) {
   const menu = document.getElementById(MENU_ID);

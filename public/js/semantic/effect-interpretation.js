@@ -9,6 +9,7 @@ import {
   getOperatorDefinition,
   getOperatorGeometry,
 } from '/public/js/kernel/shared.js';
+import { resolveOwnerDocument } from '/public/js/runtime/runtime-helpers.js';
 
 const FIGURE_SELECTOR = [
   '.topic-photo-card',
@@ -354,3 +355,13 @@ export function initEffectInterpretation(root = document) {
     observer?.disconnect();
   };
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'effect-interpretation',
+  mount: (ctx, root) => initEffectInterpretation(resolveOwnerDocument(ctx, root)),
+  describes: 'effect[interpretation]{lens|cues|state} visual legend',
+  timingArc: 'visible-media',
+  effectScope: 'local-dom element-state',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

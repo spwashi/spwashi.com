@@ -282,8 +282,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-settings',
     effectScope: 'local-dom root-state',
     load: () => import('./brace-pivots.js'),
-    mount: (mod) => mod?.initBracePivots?.(),
-    unmount: (mod) => mod?.unmountBracePivots?.(),
   },
   {
     id: 'narrative-instrumentation',
@@ -341,8 +339,6 @@ export const FEATURE_DEFS = [
     timingArc: 'enhance-inspect',
     effectScope: 'popover listeners',
     load: () => import('./region-menu.js'),
-    mount: (mod, ctx, el) => mod?.initSpwRegionMenu?.(ctx, el),
-    unmount: (mod) => mod?.unmountSpwRegionMenu?.(),
   },
   {
     id: 'pronunciation-hints',

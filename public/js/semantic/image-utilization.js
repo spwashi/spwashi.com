@@ -6,6 +6,7 @@
  */
 
 import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
+import { resolveOwnerDocument } from '/public/js/runtime/runtime-helpers.js';
 
 const MAIN_IMAGE_SELECTOR = 'main img, main picture img, [data-spw-image-surface] img, [data-spw-image-reward] img, [data-spw-image-discovery] img';
 const HERO_SELECTOR = '[data-spw-frame="hero"] img, main > .site-frame:first-of-type img, main > article > .site-frame:first-of-type img';
@@ -73,3 +74,13 @@ export function unmountImageUtilization() {
 }
 
 export { unmountImageUtilization as unmount };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'image-utilization',
+  mount: (ctx, root) => initImageUtilization(resolveOwnerDocument(ctx, root)),
+  describes: 'image[distribution|utilization] performance lazy-priority',
+  timingArc: 'visible-media',
+  effectScope: 'media element-state',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

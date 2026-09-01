@@ -6,6 +6,7 @@
  */
 
 import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
+import { resolveOwnerDocument } from '/public/js/runtime/runtime-helpers.js';
 import { syncEffectInterpretation } from './effect-interpretation.js';
 
 const INTERACTIVE_FIGURE_SELECTOR = [
@@ -316,3 +317,13 @@ export function initImageInteraction(root = document) {
 
   return () => controller.abort();
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'image-interaction',
+  mount: (ctx, root) => initImageInteraction(resolveOwnerDocument(ctx, root)),
+  describes: 'image[interaction]{prime|inspect|discover|lens} gesture-contract',
+  timingArc: 'visible-media',
+  effectScope: 'media listeners element-state',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

@@ -5,7 +5,6 @@
 
 import {
   COST_CLASS,
-  isFn,
   MODULE_LAYERS,
   MOUNT_WHEN,
   REGION_SELECTOR,
@@ -434,11 +433,6 @@ export const ENHANCEMENT_DEFS = [
       'flourish:data-spw-topic-popover',
     ],
     load: () => import('../interface/topic-discovery.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwTopicDiscovery || mod?.initTopicDiscovery;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'component-semantics',
@@ -837,8 +831,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'floating-chrome bus root-state',
     visual: 'inspect',
     load: () => import('../interface/console.js'),
-    mount: (mod) => mod?.initSpwConsole?.(),
-    unmount: (mod) => mod?.unmount?.(),
   },
   {
     id: 'design-experiments',
@@ -1149,8 +1141,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'media element-state',
     load: () => import('../semantic/image-utilization.js'),
-    mount: (mod, ctx, root) => mod?.initImageUtilization?.(root?.ownerDocument || document),
-    unmount: (mod) => mod?.unmountImageUtilization?.(),
   },
   {
     id: 'image-interaction',
@@ -1172,7 +1162,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'media listeners element-state',
     load: () => import('../semantic/image-interaction.js'),
-    mount: (mod, ctx, root) => mod?.initImageInteraction?.(root?.ownerDocument || document),
   },
   {
     id: 'effect-interpretation',
@@ -1194,7 +1183,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'local-dom element-state',
     load: () => import('../semantic/effect-interpretation.js'),
-    mount: (mod, ctx, root) => mod?.initEffectInterpretation?.(root?.ownerDocument || document),
   },
   {
     id: 'pulse-beat-tuner',
@@ -1335,8 +1323,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-semantics',
     effectScope: 'local-dom element-state',
     load: () => import('../semantic/concept-salience.js'),
-    mount: (mod, ctx, root) => mod?.initConceptSalience?.(root?.ownerDocument || document),
-    unmount: (mod) => mod?.unmountConceptSalience?.(),
   },
   {
     id: 'precipitation-request',
@@ -1757,10 +1743,5 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-lab',
     effectScope: 'local-dom bus',
     load: () => import('../semantic/spw-block-association.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwBlockAssociations;
-      if (!isFn(fn)) return;
-      return fn(ctx?.root || document);
-    },
   },
 ];

@@ -757,3 +757,16 @@ export function unmountSpwConsole() {
 }
 
 export { initSpwConsole, unmountSpwConsole as unmount };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+    id: 'console',
+    mount: () => {
+        initSpwConsole();
+        return unmountSpwConsole;
+    },
+    describes: 'console[frame|mode|bus|layout] diagnostics[screenshot]',
+    timingArc: 'idle-diagnostics',
+    effectScope: 'floating-chrome bus root-state',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

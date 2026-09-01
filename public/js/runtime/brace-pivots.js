@@ -161,6 +161,7 @@ export function initBracePivots() {
     const u2 = installPivotAffordance(subjectiveWall, 'operatorSaturation', PIVOT_LABELS.operatorSaturation);
     if (u1) activeUnbinds.push(u1);
     if (u2) activeUnbinds.push(u2);
+    return unmountBracePivots;
 }
 
 export function unmountBracePivots() {
@@ -171,3 +172,13 @@ export function unmountBracePivots() {
 }
 
 export { unmountBracePivots as unmount };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+    id: 'brace-pivots',
+    mount: () => initBracePivots(),
+    describes: 'brace-pivot[setting-cycle] inline defaults control',
+    timingArc: 'visible-settings',
+    effectScope: 'local-dom root-state',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

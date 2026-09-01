@@ -243,6 +243,9 @@ export const SPW_BLOCK_ASSOCIATION_CONTRACT = Object.freeze({
 
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'spw-block-association',
+  mount: (ctx, root) => initSpwBlockAssociations(root instanceof Node ? root : document),
   describes: 'block[association]{definition.expression.inspect}<parse>',
   updates: ['inspect:data-spw-copied-state', 'flourish:data-spw-join'],
 });
+
+export const spwModule = SPW_MODULE_EXPORT;

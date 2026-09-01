@@ -448,3 +448,13 @@ export function initTopicDiscovery() {
         })
     };
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+    id: 'topic-discovery',
+    mount: () => initTopicDiscovery(),
+    describes: 'topic[context|popover|navigation] discovery',
+    timingArc: 'enhance-topic',
+    effectScope: 'popover listeners bus',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

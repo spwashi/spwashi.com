@@ -21,7 +21,9 @@ import {
   restoreAttribute,
 } from '../../public/js/runtime/attention/shared.js';
 import { ENHANCEMENT_DEFS } from '../../public/js/runtime/module-catalog-enhancement.js';
+import { FEATURE_DEFS } from '../../public/js/runtime/module-catalog-feature.js';
 import { MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
+import { resolveOwnerDocument } from '../../public/js/runtime/runtime-helpers.js';
 
 test('timingArc stems and idle chunks are stable contracts', () => {
   assert.ok(TIMING_ARC_STEMS.includes('immediate'));
@@ -156,57 +158,30 @@ test('attention preferences and restore helpers stay document-scoped', () => {
   assert.equal(Object.prototype.hasOwnProperty.call(stored, 'data-spw-scroll-cadence'), false);
 });
 
-test('concept salience receives a document root instead of lifecycle context', () => {
-  const definition = ENHANCEMENT_DEFS.find(({ id }) => id === 'concept-salience');
-  const ownerDocument = { querySelectorAll() {} };
-  let mountedRoot = null;
-  let unmounted = false;
-  const module = {
-    initConceptSalience(root) {
-      mountedRoot = root;
-    },
-    unmountConceptSalience() {
-      unmounted = true;
-    },
-  };
+test('semantic image and concept modules mount through portable owner-document resolution', () => {
+  const ownerDocument = { nodeType: 9, querySelectorAll() {} };
+  const matched = { nodeType: 1, ownerDocument };
+  const ctx = { document: 'lifecycle context' };
 
-  definition.mount(module, { document: 'lifecycle context' }, { ownerDocument });
-  definition.unmount(module);
+  assert.equal(resolveOwnerDocument(ctx, matched), ownerDocument);
+  assert.equal(resolveOwnerDocument(ctx, ownerDocument), ownerDocument);
 
-  assert.equal(mountedRoot, ownerDocument);
-  assert.equal(unmounted, true);
-});
-
-test('visible image enhancers receive the matched document root', () => {
-  const ownerDocument = { querySelectorAll() {} };
-  const cases = [
-    ['image-utilization', 'initImageUtilization', 'unmountImageUtilization'],
-    ['image-interaction', 'initImageInteraction'],
-    ['effect-interpretation', 'initEffectInterpretation'],
-  ];
-
-  cases.forEach(([id, initName, unmountName]) => {
-    const definition = ENHANCEMENT_DEFS.find(({ id: definitionId }) => definitionId === id);
-    let mountedRoot = null;
-    let unmounted = false;
-    const module = {
-      [initName](root) {
-        mountedRoot = root;
-        return () => {};
-      },
-    };
-    if (unmountName) {
-      module[unmountName] = () => {
-        unmounted = true;
-      };
-    }
-
-    definition.mount(module, { document: 'lifecycle context' }, { ownerDocument });
-    definition.unmount?.(module);
-
-    assert.equal(mountedRoot, ownerDocument, id);
-    if (unmountName) assert.equal(unmounted, true, id);
-  });
+  for (const id of [
+    'concept-salience',
+    'image-utilization',
+    'image-interaction',
+    'effect-interpretation',
+    'topic-discovery',
+    'console',
+    'spw-block-association',
+    'brace-pivots',
+    'region-menu',
+  ]) {
+    const definition = ENHANCEMENT_DEFS.find((entry) => entry.id === id)
+      || FEATURE_DEFS.find((entry) => entry.id === id);
+    assert.ok(definition, id);
+    assert.equal(typeof definition.mount, 'undefined', `${id} should use portable mount`);
+  }
 });
 
 test('runtime workshop modules mount through portable exports on the matched root', () => {

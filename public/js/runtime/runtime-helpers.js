@@ -47,12 +47,24 @@ export function isFn(value) {
   return typeof value === 'function';
 }
 
+function isDomNode(value) {
+  return Boolean(value) && (value.nodeType === 1 || value.nodeType === 9 || typeof value.querySelector === 'function');
+}
+
 /** Loader calls mount(ctx, root). Prefer the matched node over the context object. */
 export function resolveMountRoot(ctx, root, fallback = typeof document !== 'undefined' ? document : null) {
-  if (root instanceof Node) return root;
-  if (ctx?.root instanceof Node) return ctx.root;
-  if (ctx?.body instanceof Node) return ctx.body;
+  if (isDomNode(root)) return root;
+  if (isDomNode(ctx?.root)) return ctx.root;
+  if (isDomNode(ctx?.body)) return ctx.body;
   return fallback;
+}
+
+/** Document that owns the matched root. Image/concept observers need body/documentElement. */
+export function resolveOwnerDocument(ctx, root, fallback = typeof document !== 'undefined' ? document : null) {
+  const host = resolveMountRoot(ctx, root, fallback);
+  if (!host) return fallback;
+  if (host.nodeType === 9) return host;
+  return host.ownerDocument || fallback;
 }
 
 export function once(fn) {
