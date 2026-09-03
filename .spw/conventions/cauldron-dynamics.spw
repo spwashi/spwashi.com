@@ -39,6 +39,7 @@ vessel_join = `cauldron[garden]{sow.tend.harvest} — live vessel identifier. No
     operator = 3023
   }[reg=facet]
   ~#reading(operator count): `the largest capture surface is the one nothing gathers from`
+  ~#fixed(2026-09-03): "of the 85 living terms, brace-gestures was never the one actually capturing them — haptics owns that (CAULDRON_CANDIDATE_SELECTORS, onPrimePointerDown, correctly reads data-spw-concept). brace-gestures's own capturePrimedContainment gates on meta.semantic.expression, which a living term never populates, so brace-gestures's only live effect on a held term was arming the wrong ancestor (whatever [data-spw-semantic-expression]/[data-spw-form] element happened to be nearest — often the whole paragraph). brace-gestures now excludes a bare living term or cauldron candidate — one with no brace-target markup of its own. The footer's garden/media cauldron vessels carry data-spw-cauldron-candidate AND data-spw-form=\"brace\" together on purpose, so the exclusion is a no-op there and their own expand/swap/pin behavior is untouched. See .spw/conventions/interaction-microstates.spw#wonder_interaction_microstates_1."
 }
 
 ^"digestion"{

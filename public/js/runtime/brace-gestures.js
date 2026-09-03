@@ -167,8 +167,47 @@ export function initBraceGestures() {
    Target resolution + semantic classification
    ========================================================================== */
 
+// [data-spw-kind="hook"] / [data-spw-component-kind="hook"] added 2026-09-03:
+// frames.css has carried a dashed-border "gesture-ready" rule for
+// [data-spw-kind="hook"][data-spw-gesture="armed"] since before this file
+// recognized hooks at all — the CSS side of the pairing existed, waiting.
+// 13 hero sections site-wide author data-spw-gesture-contract="tap:prime
+// hold:inspect" on this exact class of element and nothing made the promise
+// real: a hook was never a brace target, so tapping or holding one did
+// nothing. See .spw/conventions/interaction-microstates.spw#reward_contract.
+const BRACE_TARGET_SELECTOR = '[data-spw-form], [data-spw-kind="hook"], [data-spw-component-kind="hook"], .spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression], .spw-card, .frame-card, .plan-card, .ref-card, .media-card, .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card, [data-spw-card]';
+
+// Living terms (.spw-living-term / [data-spw-living-term]) and cauldron
+// candidates ([data-spw-cauldron-candidate="true"]) are excluded here on
+// purpose, added 2026-09-03 — but only when the matched element is a BARE
+// term/candidate with no brace-target markup of its own (137 of 140 site-
+// wide). Those are interface/haptics.js's own gesture system
+// (CAULDRON_CANDIDATE_SELECTORS, onPrimePointerDown), which resolves the
+// specific term via the same closest() pattern and correctly reads its
+// data-spw-concept. Neither file's listener stops propagation, so both fire
+// on the same hold; this engine's own selector list never named a living
+// term directly, so a hold anywhere inside prose used to resolve target to
+// the nearest [data-spw-semantic-expression] or [data-spw-form] ancestor —
+// often the whole surrounding paragraph or section, not the term. That
+// mismatch meant a second, wrong armed state (dashed border, userSelect
+// suppressed) rode along on the actual, correct cauldron-prime feedback
+// from haptics.js. This engine's own capturePrimedContainment also requires
+// meta.semantic.expression, which a living term's data-spw-concept never
+// populates, so it was never doing anything useful for a bare term besides
+// that stray side effect.
+//
+// The other 3 (the footer's garden/media cauldron vessels) carry
+// data-spw-cauldron-candidate="true" AND data-spw-form="brace" on the same
+// element — a re-primeable vessel that is also its own legitimate brace
+// target (expand, swap, pin). For those, cauldronMatch === the brace target
+// itself, so the exclusion below is a no-op and normal resolution proceeds.
+// See .spw/conventions/interaction-microstates.spw#reward_contract.
 function braceTarget(node) {
-  return node?.closest?.('[data-spw-form], .spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression], .spw-card, .frame-card, .plan-card, .ref-card, .media-card, .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card, [data-spw-card]') || null;
+  const cauldronMatch = node?.closest?.('.spw-living-term, [data-spw-living-term], [data-spw-cauldron-candidate="true"]');
+  if (cauldronMatch && !cauldronMatch.matches(BRACE_TARGET_SELECTOR)) {
+    return null;
+  }
+  return node?.closest?.(BRACE_TARGET_SELECTOR) || null;
 }
 
 function classifyTarget(el) {
@@ -833,8 +872,17 @@ function onPointerDown(event) {
     // while still allowing text selection on plain prose outside gesture contexts.
     if (target instanceof HTMLElement) {
       target.dataset.spwGestureArmed = 'true';
-      // Only force none if it wasn't explicitly text-friendly
-      if (!target.closest('[data-spw-text-friendly="true"], [data-spw-gesture-priority="text"]')) {
+      // Only force none if it wasn't explicitly text-friendly. A hook's job
+      // is to carry the memorable line (frames.css's own words) — its hold
+      // affordance should still show (dashed border), but should not fight
+      // a reader trying to select and copy the sentence it exists to say.
+      // data-spw-text-friendly/-gesture-priority are the general opt-in and
+      // remain unauthored anywhere on the site; hooks get this by default
+      // rather than needing 13 routes to each remember to add one.
+      const textFriendly = target.closest(
+        '[data-spw-text-friendly="true"], [data-spw-gesture-priority="text"], [data-spw-kind="hook"], [data-spw-component-kind="hook"]'
+      );
+      if (!textFriendly) {
         target.style.userSelect = 'none';
       }
     }
