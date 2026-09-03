@@ -1,41 +1,60 @@
-# Plan: catalog-demo-splits
+# Design Catalog Field Guide
 
-Split the longest catalog and demo surfaces into smaller linked pages so each route carries one primary job.
+## Public Goal
 
-## Goal
+Turn the generated design catalog into a visitor-readable field guide: stills should help people study component anatomy, typography, layout pressure, recurring visual tropes, and then wander back into the live routes that produced them.
 
-The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster lookup and less scrolling. The CSS and SVG experiment routes should also become thinner hubs that link to focused subpages for the rule bench, variable lab, diagram posture, tunability, and handoff guidance. The intent is not to multiply pages for its own sake; it is to make the existing structure easier to inspect, navigate, and review.
+The complete scan remains canonical in `catalog.json`; the HTML should reveal it in useful rooms instead of placing thousands of records in one opening page.
 
-## Scope
+## Semantic Posture
 
-- **In scope**: design/catalog route splits for asset review and at least one other long catalog section, CSS experiment route splits, SVG experiment route splits, and hub links from `design/index.html`.
-- **Out of scope**: broad copy rewrites, new media generation, runtime behavior changes, or a full redesign of the existing design hub.
+- Operation: `prime` the still-study direction, then `align` the generated surfaces.
+- Fixity: `tending`; scanner facts and existing component/capture contracts remain stable.
+- Focus: hierarchy and discovery.
+- Elements: air for readable disclosure; wood for routes that invite continued study.
 
-## Files
+## Non-Goals & Boundaries
 
-- `[MOD] design/index.html`
-- `[MOD] design/catalog/index.html` or its generator if the split is derived from the catalog scan
-- `[NEW] design/catalog/assets/index.html`
-- `[NEW] design/catalog/tokens/index.html` or another focused catalog child page if needed
-- `[MOD] design/experiments/css/index.html`
-- `[NEW] design/experiments/css/rule-bench/index.html`
-- `[NEW] design/experiments/css/variables/index.html`
-- `[MOD] design/experiments/svg/index.html`
-- `[NEW] design/experiments/svg/posture/index.html`
-- `[NEW] design/experiments/svg/tunability/index.html`
-- `[NEW] design/experiments/svg/handoff/index.html`
-- `[MOD] scripts/generate-design-catalog.mjs` if the catalog child pages should be generated from the same scan
-- `[MOD] public/css/*` only if a shared split-page chrome needs small adjustments
+- Do not publish the gitignored visual-capture archive or treat every screenshot as a public asset.
+- Do not add image generation, packages, a framework, or a global runtime module.
+- Do not invent new `data-spw-*` families or change canonical operator meanings.
+- Do not turn visual similarity into an automated quality score; stills provide evidence and questions.
 
-## Semantic seams
+## Visitor Lenses
 
-- The catalog already separates attributes, CSS files, assets, tokens, and docs.
-- The CSS experiment page already separates rule anatomy, variable behavior, and token registers.
-- The SVG experiment page already separates posture, carryover, tunability, and handoff.
+1. Component — compare slot order, edges, actions, and density.
+2. Type — compare hierarchy, line length, wrapping, and reading rhythm.
+3. Layout — compare device-reason stills for clipping, empty tracks, and over-regular grids.
+4. Trope — name the material, motif, posture, and composition worth carrying into another page or model prompt.
+
+## Seams & Minimal Touch Files
+
+- Generator, scanner, and route-local runtime/CSS: `scripts/generate-design-catalog.mjs`
+- Generated public rooms: `/design/catalog/`, `/design/catalog/assets/`, `/design/catalog/tokens/`, `/design/catalog/systems/`
+- Design-hub links already point at the asset and token rooms.
+- Durable screenshot boundary: `.spw/conventions/component-capture-pipeline.spw`
+- Targeted scanner tests: `scripts/tests/infrastructure-contracts.test.mjs`
+
+## Runtime Contract
+
+- Search/filter state is URL-restorable and local to the catalog.
+- The overview searches the canonical JSON graph without rendering the entire graph up front.
+- Child indexes remain meaningful before JavaScript; enhancement adds filtering, density, copy briefs, and back-to-top behavior.
+- Search results are capped and link to the complete child indexes.
 
 ## Validation
 
-- `git diff --check`
-- `npm run check`
-- Manual route sanity for the new pages and their links back to the hub pages
+1. `node --check scripts/generate-design-catalog.mjs`
+2. `node --check design/catalog/catalog.js`
+3. `node --test scripts/tests/infrastructure-contracts.test.mjs`
+4. `npm run catalog && node scripts/generate-design-catalog.mjs --check`
+5. `npm run check:local`
+6. Browser review at pocket and broadsheet widths for all four generated routes.
 
+## Status
+
+- [x] Public direction and capture boundary named.
+- [x] Image use and route context added to the scan.
+- [x] Overview and child indexes generated.
+- [x] Route-local CSS/runtime refactored.
+- [x] Responsive and local contract checks pass.

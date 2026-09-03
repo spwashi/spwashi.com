@@ -142,6 +142,8 @@ function imageBucketForPath(relativePath) {
   const family = imageParts[0] || 'images';
   const bucketParts = imageParts.slice(0, -1);
 
+  if (!bucketParts.length) return 'root';
+
   if (bucketParts.length > 1) {
     return bucketParts.join('/');
   }
@@ -156,7 +158,75 @@ function imageStateForBucket(bucket) {
   return 'published';
 }
 
-async function collectImageAssets(filePaths) {
+export function routeHrefForHtmlFile(relativePath) {
+  const normalized = toPosix(relativePath).replace(/^\/+/, '');
+  if (normalized === 'index.html') return '/';
+  if (normalized.endsWith('/index.html')) return `/${normalized.slice(0, -'index.html'.length)}`;
+  return `/${normalized}`;
+}
+
+function normalizedPublicImagePath(src) {
+  const normalized = decodeHtmlAttribute(src || '')
+    .split(/[?#]/, 1)[0]
+    .replace(/^\/+/, '');
+
+  return normalized.startsWith('public/images/') ? normalized : null;
+}
+
+export function collectHtmlImageReferences(html, relativeFile) {
+  const references = [];
+  const lineAt = createLineLocator(html);
+  const route = routeHrefForHtmlFile(relativeFile);
+
+  for (const tag of findStartTags(html)) {
+    if (tag.name !== 'img' && tag.name !== 'source') continue;
+    const attrs = parseTagAttributes(tag.source);
+    const sources = [];
+
+    if (attrs.get('src')) sources.push(attrs.get('src'));
+    if (attrs.get('srcset')) {
+      for (const candidate of attrs.get('srcset').split(',')) {
+        const source = candidate.trim().split(/\s+/, 1)[0];
+        if (source) sources.push(source);
+      }
+    }
+
+    for (const source of sources) {
+      const assetPath = normalizedPublicImagePath(source);
+      if (!assetPath) continue;
+      references.push({
+        alt: attrs.get('alt') || '',
+        file: relativeFile,
+        line: lineAt(tag.index),
+        path: assetPath,
+        route,
+      });
+    }
+  }
+
+  return references;
+}
+
+async function collectImageUsage(htmlFiles) {
+  const usageByPath = new Map();
+
+  for (const filePath of htmlFiles) {
+    const relativeFile = relRepo(filePath);
+    const html = await readTextFile(filePath);
+
+    for (const reference of collectHtmlImageReferences(html, relativeFile)) {
+      const existing = usageByPath.get(reference.path) || [];
+      if (!existing.some((usage) => usage.file === reference.file && usage.line === reference.line)) {
+        existing.push(reference);
+      }
+      usageByPath.set(reference.path, existing);
+    }
+  }
+
+  return usageByPath;
+}
+
+async function collectImageAssets(filePaths, imageUsage = new Map()) {
   const assets = [];
 
   for (const filePath of filePaths) {
@@ -182,8 +252,11 @@ async function collectImageAssets(filePaths) {
       }
     }
 
+    const usages = imageUsage.get(relativePath) || [];
+    const authoredAlt = usages.find((usage) => usage.alt.trim())?.alt.trim();
+
     assets.push({
-      alt: titleFromStem(stem),
+      alt: authoredAlt || titleFromStem(stem),
       bucket,
       bytes: stat.size,
       extension: extension.slice(1),
@@ -193,6 +266,7 @@ async function collectImageAssets(filePaths) {
       sidecars,
       state,
       stem,
+      usages,
     });
   }
 
@@ -206,6 +280,26 @@ function getGeneratedAt() {
   }
 
   return new Date().toISOString();
+}
+
+export function catalogGeneratedAtFromText(catalogText) {
+  if (!catalogText) return null;
+
+  try {
+    const generatedAt = JSON.parse(catalogText)?.generatedAt;
+    return typeof generatedAt === 'string' && Number.isFinite(Date.parse(generatedAt))
+      ? generatedAt
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+async function generatedAtForRun(options) {
+  if (!options.check) return getGeneratedAt();
+
+  const existingCatalog = await readOptionalTextFile(path.join(options.outDir, 'catalog.json'));
+  return catalogGeneratedAtFromText(existingCatalog) || getGeneratedAt();
 }
 
 function esc(value) {
@@ -254,6 +348,7 @@ export function shouldIgnoreRelativePath(relativePath, outputRelativePath = 'des
   if (segments.some((segment) => IGNORED_SEGMENTS.has(segment))) return true;
   if (normalizedPath === '.spw/_workbench' || normalizedPath.startsWith('.spw/_workbench/')) return true;
   if (normalizedPath === 'public/css/bundles' || normalizedPath.startsWith('public/css/bundles/')) return true;
+  if (normalizedPath === 'design/catalog' || normalizedPath.startsWith('design/catalog/')) return true;
 
   if (
     outputRelativePath
@@ -903,7 +998,6 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
 </head>
 <body
   data-spw-surface="design"
-  data-spw-features="console"
   data-spw-route-family="design"
   data-spw-context="analysis"
   data-spw-wonder="traceability"
@@ -1387,6 +1481,7 @@ const CATALOG_CSS = `
   font-size: 0.85rem;
   font-weight: 600;
   color: inherit;
+  cursor: pointer;
   transition: transform 0.15s ease;
 }
 .catalog-back-to-top:hover {
@@ -1401,6 +1496,1367 @@ const CATALOG_CSS = `
     transition: none;
   }
   .catalog-back-to-top:hover { transform: none; }
+}
+`;
+
+function isColorCatalogToken(name, value = '') {
+  const str = String(value || '').trim();
+  return /^#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(str)
+    || /^(?:rgb|rgba|hsl|hsla|oklch|color-mix)\(/.test(str)
+    || /-(?:color|bg|surface|border|tint|glow|palette|ink|accent|brand)(?:-|$)/.test(name);
+}
+
+function uniqueAssetRoutes(asset) {
+  return [...new Set((asset.usages || []).map((usage) => usage.route))].sort();
+}
+
+function modelBriefForAsset(asset) {
+  const routes = uniqueAssetRoutes(asset);
+  const routeContext = routes.length ? ` Seen on ${routes.join(', ')}.` : '';
+  return `Image reference: ${asset.alt}. Source: /${asset.path}.${routeContext} Study the composition, type hierarchy, spacing, material, and recurring motif. Borrow the visual relationships; write copy for the new page's own purpose.`;
+}
+
+function renderImageAssetCard(asset, options = {}) {
+  const routes = uniqueAssetRoutes(asset);
+  const title = titleFromStem(asset.stem);
+  const routeLinks = routes.slice(0, options.routeLimit || 4)
+    .map((route) => `<a href="${esc(route)}">${esc(route)}</a>`)
+    .join(' ');
+
+  return `
+    <article class="catalog-entry catalog-entry--asset" data-catalog-entry data-spw-catalog-kind="image-asset" data-catalog-state="${esc(asset.state)}" id="image-${esc(slugifyCatalogId(asset.path))}">
+      <a class="catalog-entry__preview" href="${esc(asset.href)}" aria-label="Open ${esc(title)}">
+        <img src="${esc(asset.href)}" alt="${esc(asset.alt)}" loading="lazy" decoding="async">
+      </a>
+      <div class="catalog-entry__body">
+        <header class="catalog-entry__header">
+          <div>
+            <p class="catalog-entry__eyebrow">${esc(asset.state)} · ${esc(asset.extension)} · ${humanizeBytes(asset.bytes)}</p>
+            <h3>${esc(title)}</h3>
+          </div>
+          <button type="button" class="catalog-copy-btn" data-copy-target="${esc(modelBriefForAsset(asset))}">Copy model brief</button>
+        </header>
+        <p class="catalog-entry__description">${esc(asset.alt)}</p>
+        <p class="catalog-entry__path"><code>/${esc(asset.path)}</code></p>
+        ${routeLinks ? `<p class="catalog-entry__routes"><strong>Seen in context</strong> ${routeLinks}${routes.length > 4 ? ` <span>+${routes.length - 4}</span>` : ''}</p>` : '<p class="catalog-entry__routes"><strong>Route context</strong> not yet authored</p>'}
+        <div class="catalog-asset-chips">
+          <span class="catalog-chip">${esc(asset.bucket)}</span>
+          ${asset.sidecars.map((sidecar) => `<a class="catalog-chip catalog-chip--link" href="/${esc(sidecar)}">${esc(path.basename(sidecar))}</a>`).join('')}
+        </div>
+      </div>
+    </article>`;
+}
+
+function selectFeaturedAssets(imageAssets, limit = 10) {
+  const candidates = imageAssets
+    .filter((asset) => asset.state !== 'raw' && uniqueAssetRoutes(asset).length && !/(?:favicon|touch-icon|app-icon)/i.test(asset.path))
+    .sort((left, right) => {
+      const routeDifference = uniqueAssetRoutes(right).length - uniqueAssetRoutes(left).length;
+      if (routeDifference) return routeDifference;
+      if (right.sidecars.length !== left.sidecars.length) return right.sidecars.length - left.sidecars.length;
+      return left.path.localeCompare(right.path);
+    });
+  const selected = [];
+  const usedBuckets = new Set();
+
+  for (const asset of candidates) {
+    if (usedBuckets.has(asset.bucket)) continue;
+    selected.push(asset);
+    usedBuckets.add(asset.bucket);
+    if (selected.length >= limit) return selected;
+  }
+
+  for (const asset of candidates) {
+    if (selected.includes(asset)) continue;
+    selected.push(asset);
+    if (selected.length >= limit) break;
+  }
+
+  return selected;
+}
+
+function renderRoomNav(currentPage) {
+  const rooms = [
+    ['overview', '/design/catalog/', 'Field guide'],
+    ['assets', '/design/catalog/assets/', 'Stills'],
+    ['tokens', '/design/catalog/tokens/', 'Tokens'],
+    ['systems', '/design/catalog/systems/', 'Systems'],
+    ['design', '/design/', 'Design hub'],
+  ];
+
+  return `<nav class="catalog-room-nav" aria-label="Design catalog rooms">
+    ${rooms.map(([page, href, label]) => `<a href="${href}"${page === currentPage ? ' aria-current="page"' : ''}>${label}</a>`).join('\n    ')}
+  </nav>`;
+}
+
+function renderCounts(counts) {
+  const items = [
+    [counts.imageAssets, 'images'],
+    [counts.attributes, 'attributes'],
+    [counts.tokens, 'tokens'],
+    [counts.cssFiles, 'CSS files'],
+    [counts.docs, 'meaning docs'],
+  ];
+
+  return `<dl class="catalog-counts" aria-label="Catalog inventory">
+    ${items.map(([value, label]) => `<div><dt>${value}</dt><dd>${label}</dd></div>`).join('\n    ')}
+  </dl>`;
+}
+
+function renderCatalogPage({page, title, lede, description, counts, generatedAt, body}) {
+  const canonicalPath = page === 'overview' ? '/design/catalog/' : `/design/catalog/${page}/`;
+
+  return `<!DOCTYPE html>
+<html lang="en" data-spw-page-family="design" data-spw-page-role="catalog">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spwashi • ${esc(title)}</title>
+  <meta name="description" content="${esc(description)}">
+  <link rel="canonical" href="https://spwashi.com${canonicalPath}">
+  <script type="module" src="/public/js/site.js"></script>
+  <link rel="stylesheet" href="/public/css/style.css">
+  <link rel="stylesheet" href="/design/catalog/catalog.css">
+</head>
+<body
+  data-spw-surface="design"
+  data-spw-route-family="design"
+  data-spw-context="analysis"
+  data-spw-wonder="traceability composition typography layout"
+  data-spw-page-family="design"
+  data-spw-page-modes="browse inspect compare reuse"
+  data-spw-page-role="catalog"
+  data-spw-layout="atlas">
+<main class="catalog-main" id="catalog-top" data-catalog-page="${esc(page)}" data-catalog-density="standard">
+  ${renderRoomNav(page)}
+  <header class="catalog-masthead">
+    <div class="catalog-masthead__copy">
+      <p class="catalog-kicker">Design field guide · generated evidence</p>
+      <h1>${esc(title)}</h1>
+      <p class="catalog-masthead__lede">${esc(lede)}</p>
+      <p class="catalog-masthead__stamp">Regenerated <time datetime="${esc(generatedAt)}">${esc(generatedAt.slice(0, 10))}</time> from the authored site.</p>
+    </div>
+    ${renderCounts(counts)}
+  </header>
+  ${body}
+</main>
+<button type="button" class="catalog-back-to-top" id="catalog-back-to-top" data-catalog-top-href="${canonicalPath}" aria-label="Back to top" hidden>↑ Top</button>
+<script type="module" src="/design/catalog/catalog.js"></script>
+</body>
+</html>
+`;
+}
+
+function renderSearchToolbar({counts, total, kinds = [], states = [], overview = false}) {
+  return `<aside class="catalog-toolbar" aria-label="Search this catalog room">
+    <div class="catalog-toolbar__row">
+      <div class="catalog-search-wrap">
+        <label class="visually-hidden" for="catalog-search">Search the design catalog</label>
+        <input id="catalog-search" type="search" placeholder="${overview ? 'Search the full catalog…' : 'Filter this room…'}" autocomplete="off">
+        <button id="catalog-search-clear" type="button" class="catalog-search-clear" aria-label="Clear search" hidden>×</button>
+      </div>
+      <p class="catalog-count-badge" aria-live="polite"><strong id="catalog-visible-count">${overview ? 0 : (total ?? '—')}</strong> <span id="catalog-count-label">${overview ? 'matches' : 'visible'}</span></p>
+    </div>
+    ${(kinds.length || states.length) ? `<div class="catalog-toolbar__row catalog-toolbar__filters">
+      ${kinds.length ? `<div class="catalog-filter-group" role="group" aria-label="Filter by kind">
+        <button type="button" class="catalog-filter-chip" data-catalog-filter="all" aria-pressed="true">All</button>
+        ${kinds.map(([kind, label, count]) => `<button type="button" class="catalog-filter-chip" data-catalog-filter="${esc(kind)}" aria-pressed="false">${esc(label)}${Number.isFinite(count) ? ` <span>${count}</span>` : ''}</button>`).join('')}
+      </div>` : ''}
+      ${states.length ? `<div class="catalog-filter-group" role="group" aria-label="Filter stills by state">
+        <button type="button" class="catalog-filter-chip" data-catalog-state-filter="all" aria-pressed="true">All states</button>
+        ${states.map((state) => `<button type="button" class="catalog-filter-chip" data-catalog-state-filter="${esc(state)}" aria-pressed="false">${esc(state)}</button>`).join('')}
+      </div>` : ''}
+      <div class="catalog-density-group" role="group" aria-label="View density">
+        <button type="button" class="catalog-density-btn" data-catalog-density="standard" aria-pressed="true">Roomy</button>
+        <button type="button" class="catalog-density-btn" data-catalog-density="compact" aria-pressed="false">Compact</button>
+      </div>
+    </div>` : ''}
+  </aside>`;
+}
+
+function renderStudyCards() {
+  const cards = [
+    {
+      label: '01 · component',
+      title: 'What can this still teach about the component?',
+      copy: 'Compare slot order, edges, actions, density, and how the card sits in company. Capture the page, the component, and the portable template for three different truths.',
+      href: '/design/components/#component-recipes-capture',
+      action: 'Study component captures',
+    },
+    {
+      label: '02 · typography',
+      title: 'Does the copy keep its hierarchy when the words change?',
+      copy: 'Use repeated stills to notice measure, wrapping, label-to-title contrast, paragraph rhythm, and which lines begin competing at pocket width.',
+      href: '/settings/#typography-measurement-preview',
+      action: 'Open the type measurement',
+    },
+    {
+      label: '03 · layout',
+      title: 'Is this a trend, a breakpoint, or a bug?',
+      copy: 'Compare pocket, fold, and broadsheet. Look for clipping, empty tracks, accidental symmetry, duplicated surfaces, and a layout that loses its reason between widths.',
+      href: '/design/composition/#spatial-gravity-title',
+      action: 'Inspect spatial gravity',
+    },
+    {
+      label: '04 · trope',
+      title: 'Which visual relationship is worth carrying forward?',
+      copy: 'Name the frame, motif, material, light, and posture before using a still as a model reference. Borrow the relationship; keep the destination’s own meaning and copy.',
+      href: '/design/palettes/',
+      action: 'Trace palette and material',
+    },
+  ];
+
+  return cards.map((card) => `<article class="catalog-study-card">
+    <p class="catalog-study-card__label">${esc(card.label)}</p>
+    <h3>${esc(card.title)}</h3>
+    <p>${esc(card.copy)}</p>
+    <a href="${esc(card.href)}">${esc(card.action)} <span aria-hidden="true">→</span></a>
+  </article>`).join('\n');
+}
+
+function renderCatalogOverview({attrs, cssFiles, tokens, docs, imageAssets, orphans, generatedAt, counts}) {
+  const featuredAssets = selectFeaturedAssets(imageAssets, 8);
+  const body = `
+  <section class="catalog-section catalog-section--opening" id="study">
+    <header class="catalog-section__header">
+      <p class="catalog-kicker">Four ways to look</p>
+      <h2>Read the information. Then read the design carrying it.</h2>
+      <p>A still is useful when it preserves a question. These lenses make screenshots and public images into evidence for the next component, type decision, layout repair, or visual direction.</p>
+    </header>
+    <div class="catalog-study-grid">${renderStudyCards()}</div>
+  </section>
+
+  <section class="catalog-section catalog-section--search" id="search">
+    <header class="catalog-section__header catalog-section__header--split">
+      <div>
+        <p class="catalog-kicker">Find a handle</p>
+        <h2>Search the complete design graph.</h2>
+      </div>
+      <p>Results open in the focused still, token, or systems room. Try <code>typography</code>, <code>cards.css</code>, <code>metamaterial</code>, or an image name.</p>
+    </header>
+    ${renderSearchToolbar({counts, overview: true, kinds: [
+      ['image-asset', 'Stills', counts.imageAssets],
+      ['attribute', 'Attributes', counts.attributes],
+      ['token', 'Tokens', counts.tokens],
+      ['css-file', 'CSS', counts.cssFiles],
+      ['doc', 'Meaning', counts.docs],
+    ]})}
+    <div class="catalog-search-results" id="catalog-search-results">
+      <p class="catalog-search-prompt">Type two or more characters to search without loading thousands of records into the page.</p>
+    </div>
+  </section>
+
+  <section class="catalog-section" id="stills">
+    <header class="catalog-section__header catalog-section__header--split">
+      <div>
+        <p class="catalog-kicker">Route-anchored stills</p>
+        <h2>Begin with images that already live in context.</h2>
+      </div>
+      <p>These references are selected by authored route use, not a taste score. Open a route to see what the image is doing around real copy.</p>
+    </header>
+    <div class="catalog-asset-grid catalog-asset-grid--featured">${featuredAssets.map((asset) => renderImageAssetCard(asset, {routeLimit: 2})).join('\n')}</div>
+    <p class="catalog-section__action"><a href="/design/catalog/assets/">Browse all ${counts.imageAssets} stills and image assets <span aria-hidden="true">→</span></a></p>
+  </section>
+
+  <section class="catalog-section" id="inventory">
+    <header class="catalog-section__header">
+      <p class="catalog-kicker">Rooms behind the field guide</p>
+      <h2>Go deep only where the question needs it.</h2>
+    </header>
+    <div class="catalog-room-grid">
+      <a class="catalog-room-card catalog-room-card--visual" href="/design/catalog/assets/"><span>stills</span><strong>Image &amp; still index</strong><em>Route context, alt text, sidecars, and model briefs.</em></a>
+      <a class="catalog-room-card" href="/design/catalog/tokens/"><span>tokens</span><strong>Named design decisions</strong><em>Color, type, spacing, shape, material, and motion handles.</em></a>
+      <a class="catalog-room-card" href="/design/catalog/systems/"><span>systems</span><strong>Cross-language trace</strong><em>Attributes, CSS owners, JavaScript writers, and meaning docs.</em></a>
+      <a class="catalog-room-card catalog-room-card--friction" href="/design/catalog/systems/#orphans"><span>friction</span><strong>${orphans.attrsInCssNotHtml.length + orphans.attrsInHtmlNotCss.length} trace gaps</strong><em>Useful suspicions, not automatic defects.</em></a>
+      <a class="catalog-room-card" href="/design/catalog/catalog.json"><span>machine</span><strong>Canonical JSON graph</strong><em>The complete scan for local tools and language-model analysis.</em></a>
+    </div>
+  </section>
+
+  <section class="catalog-section" id="tropes">
+    <header class="catalog-section__header">
+      <p class="catalog-kicker">Recurring design tropes</p>
+      <h2>Follow a relation, not a style label.</h2>
+      <p>The most useful site motifs connect information and atmosphere: frame as address, field as relation, material as reading condition, and route as room. Each becomes more convincing when it survives another page with different copy.</p>
+    </header>
+    <nav class="catalog-wander-grid" aria-label="Continue through the design system">
+      <a href="/design/components/"><strong>Frame as address</strong><span>Study components and their slots.</span></a>
+      <a href="/design/composition/"><strong>Field as relation</strong><span>See how pieces pack and influence one another.</span></a>
+      <a href="/design/materials/"><strong>Material as condition</strong><span>Compare glass, matte, paper, and canvas.</span></a>
+      <a href="/design/folios/"><strong>Artifact as memory</strong><span>Browse work that keeps a practice visible.</span></a>
+      <a href="/play/"><strong>Route as room</strong><span>Meet the grammar under playful pressure.</span></a>
+      <a href="/about/website/"><strong>Site as authored surface</strong><span>Read why this place is built this way.</span></a>
+    </nav>
+  </section>`;
+
+  return renderCatalogPage({
+    page: 'overview',
+    title: 'Design Catalog',
+    lede: 'A field guide to the site’s components, typography, layouts, images, and recurring visual ideas. Use it to notice what works, name what breaks, borrow a relationship, and wander back into the live work.',
+    description: 'A visitor-readable field guide to Spwashi components, typography, layouts, stills, tokens, and visual motifs.',
+    counts,
+    generatedAt,
+    body,
+  });
+}
+
+function renderAssetIndex({imageAssets, generatedAt, counts}) {
+  const imageBucketMap = new Map();
+  for (const asset of imageAssets) {
+    const bucket = imageBucketMap.get(asset.bucket) || [];
+    bucket.push(asset);
+    imageBucketMap.set(asset.bucket, bucket);
+  }
+  const bucketEntries = [...imageBucketMap.entries()].sort(([left], [right]) => left.localeCompare(right));
+  const states = [...new Set(imageAssets.map((asset) => asset.state))].sort();
+  const bucketNav = bucketEntries.map(([bucket, assets]) => `<a href="#images-${esc(slugifyCatalogId(bucket))}">${esc(bucket)} <span>${assets.length}</span></a>`).join('');
+  const buckets = bucketEntries.map(([bucket, assets]) => `<section class="catalog-asset-bucket" data-catalog-group id="images-${esc(slugifyCatalogId(bucket))}">
+    <header class="catalog-asset-bucket__header"><h2><code>${esc(bucket)}</code></h2><p>${assets.length} still${assets.length === 1 ? '' : 's'}</p></header>
+    <div class="catalog-asset-grid">${assets.map((asset) => renderImageAssetCard(asset)).join('\n')}</div>
+  </section>`).join('\n');
+  const body = `
+  <section class="catalog-section catalog-section--method">
+    <header class="catalog-section__header">
+      <p class="catalog-kicker">Stills as working evidence</p>
+      <h2>Keep the question attached to the image.</h2>
+      <p>Public images are curated route material. Local capture packs remain editor-side evidence. Use the four study lenses below before promoting a still or handing it to a model.</p>
+    </header>
+    <div class="catalog-study-grid">${renderStudyCards()}</div>
+  </section>
+  <section class="catalog-section catalog-section--controls" id="index">
+    <header class="catalog-section__header catalog-section__header--split"><div><p class="catalog-kicker">Image index</p><h2>Search by name, route, alt text, bucket, or state.</h2></div><p>“Copy model brief” carries source and route context with the image’s visible description.</p></header>
+    ${renderSearchToolbar({counts, total: imageAssets.length, states})}
+    <nav class="catalog-bucket-nav" aria-label="Image buckets">${bucketNav}</nav>
+  </section>
+  <div class="catalog-asset-buckets">${buckets}</div>`;
+
+  return renderCatalogPage({
+    page: 'assets',
+    title: 'Image & Still Index',
+    lede: 'Study public images as route evidence: where they appear, what their alt text says, which sidecars explain them, and which visual relationships might survive another page.',
+    description: 'Public image and still references with route context, alt text, sidecars, and copyable model briefs.',
+    counts,
+    generatedAt,
+    body,
+  });
+}
+
+function renderTokenCard(token) {
+  const color = isColorCatalogToken(token.name, token.initialValue);
+  const definitionFiles = [...new Set(token.definitions.map((definition) => definition.file))];
+  return `<article class="catalog-entry" data-catalog-entry data-catalog-color="${color}" id="token-${esc(token.name)}" data-spw-catalog-kind="token">
+    <header class="catalog-entry__header">
+      <div class="catalog-entry__title-wrap">
+        ${color ? `<span class="catalog-token-swatch" style="background:var(${esc(token.name)}, ${esc(token.initialValue || 'transparent')})" aria-hidden="true"></span>` : ''}
+        <code class="catalog-entry__name">${esc(token.name)}</code>
+      </div>
+      <button type="button" class="catalog-copy-btn" data-copy-target="${esc(token.name)}">Copy token</button>
+    </header>
+    <p class="catalog-entry__meta">${token.definitions.length} definition${token.definitions.length === 1 ? '' : 's'} · ${token.consumers.length} reads${token.syntax ? ` · ${esc(token.syntax)}` : ''}</p>
+    ${token.initialValue ? `<p class="catalog-entry__line"><strong>Initial</strong> <code>${esc(token.initialValue)}</code></p>` : ''}
+    ${definitionFiles.length ? `<p class="catalog-entry__line"><strong>Owned by</strong> ${definitionFiles.map((file) => `<code>${esc(file)}</code>`).join(' ')}</p>` : ''}
+  </article>`;
+}
+
+function renderTokenIndex({tokens, generatedAt, counts}) {
+  const tokenEntries = [...tokens.values()].sort((left, right) => left.name.localeCompare(right.name));
+  const body = `
+  <section class="catalog-section catalog-section--opening">
+    <header class="catalog-section__header"><p class="catalog-kicker">Tokens are decisions</p><h2>Read the name before the number.</h2><p>A strong token says what a value is for, where it can vary, and which family it belongs to. Compare type, measure, spacing, material, color, and timing without collapsing them into one theme knob.</p></header>
+    <nav class="catalog-wander-grid" aria-label="Token study routes">
+      <a href="/settings/#typography-measurement-preview"><strong>Typography &amp; measure</strong><span>Test the reading hierarchy with real copy.</span></a>
+      <a href="/design/palettes/"><strong>Palette grammar</strong><span>See color tokens acting in a family.</span></a>
+      <a href="/design/materials/"><strong>Material conditions</strong><span>See surface tokens change legibility.</span></a>
+      <a href="/design/experiments/css/"><strong>CSS rule bench</strong><span>Inspect how tokens meet selectors and layers.</span></a>
+    </nav>
+  </section>
+  <section class="catalog-section catalog-section--controls" id="tokens">
+    <header class="catalog-section__header catalog-section__header--split"><div><p class="catalog-kicker">Complete token index</p><h2>${tokenEntries.length} named handles</h2></div><p>Search a purpose such as <code>measure</code>, <code>ink</code>, <code>gap</code>, <code>motion</code>, or <code>material</code>.</p></header>
+    ${renderSearchToolbar({counts, total: tokenEntries.length, kinds: [['color', 'Color-like', tokenEntries.filter((token) => isColorCatalogToken(token.name, token.initialValue)).length]]})}
+    <div class="catalog-entries">${tokenEntries.map(renderTokenCard).join('\n')}</div>
+  </section>`;
+
+  return renderCatalogPage({
+    page: 'tokens',
+    title: 'Design Token Index',
+    lede: 'A complete index of the site’s named design decisions—what defines them, what reads them, and where to see them act on real copy and components.',
+    description: 'Design tokens for typography, color, spacing, shape, material, and motion, cross-referenced across the site.',
+    counts,
+    generatedAt,
+    body,
+  });
+}
+
+function renderSystemsIndex({attrs, cssFiles, docs, orphans, generatedAt, counts}) {
+  const attrRows = Object.values(attrs).sort((left, right) => right.htmlUsageCount - left.htmlUsageCount || left.name.localeCompare(right.name)).map((entry) => {
+    const values = entry.valuesInHtml.length ? entry.valuesInHtml : entry.valuesInCss;
+    return `<article class="catalog-entry" data-catalog-entry id="attr-${esc(entry.name)}" data-spw-catalog-kind="attribute">
+      <header class="catalog-entry__header"><code class="catalog-entry__name">${esc(entry.name)}</code><button type="button" class="catalog-copy-btn" data-copy-target="${esc(entry.name)}">Copy attribute</button></header>
+      <p class="catalog-entry__meta">${entry.cssSelectors.length} CSS · ${entry.htmlUsageCount} HTML · ${entry.jsWrites.length} JS · ${entry.docMentions.length} meaning</p>
+      ${values.length ? `<p class="catalog-entry__line"><strong>Values</strong> ${values.slice(0, 24).map((value) => `<code>${esc(value)}</code>`).join(' ')}${values.length > 24 ? ` <em>+${values.length - 24}</em>` : ''}</p>` : ''}
+      ${entry.cssFiles.length ? `<p class="catalog-entry__line"><strong>CSS</strong> ${entry.cssFiles.map((file) => `<a href="#css-${esc(slugifyCatalogId(file))}"><code>${esc(file)}</code></a>`).join(' ')}</p>` : ''}
+      ${entry.jsFiles.length ? `<p class="catalog-entry__line"><strong>Writers</strong> ${entry.jsFiles.map((file) => `<code>${esc(file)}</code>`).join(' ')}</p>` : ''}
+    </article>`;
+  }).join('\n');
+  const cssRows = Object.entries(cssFiles).sort(([left], [right]) => left.localeCompare(right)).map(([file, info]) => `<article class="catalog-entry" data-catalog-entry id="css-${esc(slugifyCatalogId(file))}" data-spw-catalog-kind="css-file">
+    <header class="catalog-entry__header"><code class="catalog-entry__name">${esc(file)}</code><button type="button" class="catalog-copy-btn" data-copy-target="${esc(file)}">Copy path</button></header>
+    <p class="catalog-entry__meta">layer ${esc(info.layer || 'unassigned')} · ${info.attributesUsed.length} attributes · ${info.tokensDefined.length} definitions</p>
+    ${info.header ? `<p class="catalog-entry__doc">${esc(info.header)}</p>` : ''}
+  </article>`).join('\n');
+  const docRows = Object.entries(docs).sort(([left], [right]) => left.localeCompare(right)).map(([file, info]) => `<article class="catalog-entry" data-catalog-entry id="doc-${esc(slugifyCatalogId(file))}" data-spw-catalog-kind="doc">
+    <header class="catalog-entry__header"><code class="catalog-entry__name"><a href="/${esc(file)}">${esc(file)}</a></code><button type="button" class="catalog-copy-btn" data-copy-target="/${esc(file)}">Copy path</button></header>
+    <p class="catalog-entry__meta">${info.attributesMentioned.length} attributes · ${info.tokensMentioned.length} tokens</p>
+  </article>`).join('\n');
+  const orphanGroups = [
+    ['CSS without authored HTML', orphans.attrsInCssNotHtml],
+    ['HTML without CSS readers', orphans.attrsInHtmlNotCss],
+    ['Runtime surface without a meaning doc', orphans.attrsWithNoDoc],
+    ['Meaning doc without implementation', orphans.attrsInDocOnly],
+  ];
+  const body = `
+  <section class="catalog-section catalog-section--opening">
+    <header class="catalog-section__header"><p class="catalog-kicker">Cross-language trace</p><h2>Follow one name through structure, presentation, behavior, and meaning.</h2><p>Use this room when a visual question becomes architectural: which HTML carries it, which CSS reads it, whether JavaScript writes it, and where the durable idea is explained.</p></header>
+  </section>
+  <section class="catalog-section catalog-section--controls" id="trace">
+    ${renderSearchToolbar({counts, total: counts.attributes + counts.cssFiles + counts.docs, kinds: [['attribute', 'Attributes', counts.attributes], ['css-file', 'CSS', counts.cssFiles], ['doc', 'Meaning', counts.docs]]})}
+  </section>
+  <details class="catalog-index-group" data-catalog-group open><summary><span>Attributes</span><strong>${counts.attributes}</strong></summary><div class="catalog-entries">${attrRows}</div></details>
+  <details class="catalog-index-group" data-catalog-group><summary><span>CSS files</span><strong>${counts.cssFiles}</strong></summary><div class="catalog-entries">${cssRows}</div></details>
+  <details class="catalog-index-group" data-catalog-group><summary><span>Meaning docs</span><strong>${counts.docs}</strong></summary><div class="catalog-entries">${docRows}</div></details>
+  <section class="catalog-section catalog-section--friction" id="orphans">
+    <header class="catalog-section__header"><p class="catalog-kicker">Friction index</p><h2>Trace gaps are questions, not verdicts.</h2><p>A missing edge may be stale code, progressive enhancement, a debug-only state, or an undocumented contract. Inspect context before deleting or promoting anything.</p></header>
+    <div class="catalog-friction-grid">${orphanGroups.map(([label, entries]) => `<details><summary><span>${esc(label)}</span><strong>${entries.length}</strong></summary><p>${entries.map((entry) => `<a href="#attr-${esc(entry)}"><code>${esc(entry)}</code></a>`).join(' ') || '<em>none</em>'}</p></details>`).join('')}</div>
+  </section>`;
+
+  return renderCatalogPage({
+    page: 'systems',
+    title: 'Design Systems Trace',
+    lede: 'The deep reference layer: attributes, CSS ownership, JavaScript writers, meaning documents, and the gaps that deserve a closer look.',
+    description: 'Trace Spwashi design attributes through HTML, CSS, JavaScript, and durable meaning documents.',
+    counts,
+    generatedAt,
+    body,
+  });
+}
+
+const CATALOG_FIELD_GUIDE_CSS = `
+/* Field-guide projection: the canonical scan stays dense; its public rooms breathe. */
+body[data-spw-page-role="catalog"] {
+  background:
+    radial-gradient(circle at 82% 7%, color-mix(in srgb, var(--op-probe-color, #7656a8) 10%, transparent), transparent 24rem),
+    radial-gradient(circle at 9% 31%, color-mix(in srgb, var(--op-frame-color, #087f83) 9%, transparent), transparent 29rem),
+    var(--page-bg, #f5f3ee);
+}
+
+body[data-spw-page-role="catalog"] > :is(
+  .spw-discovery-notice-stack,
+  .spw-section-handle,
+  .spw-section-handle-shell,
+  .spw-state-inspector
+) {
+  display: none;
+}
+
+.catalog-main {
+  width: min(100%, var(--page-width-atlas, 88rem));
+  padding: clamp(1rem, 2.5vw, 2.5rem) clamp(1rem, 3vw, 3rem) 7rem;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.catalog-room-nav {
+  position: sticky;
+  top: 0.65rem;
+  z-index: 110;
+  display: flex;
+  flex-wrap: wrap;
+  width: fit-content;
+  max-width: 100%;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  border: 1px solid color-mix(in srgb, var(--line, #ccd1cf) 86%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface, #fff) 88%, transparent);
+  box-shadow: 0 0.55rem 1.8rem rgb(20 34 34 / 8%);
+  backdrop-filter: blur(18px);
+}
+
+.catalog-room-nav a {
+  min-height: 2.35rem;
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 0.8rem;
+  border-radius: 999px;
+  color: var(--ink-soft, #4e5d5c);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.catalog-room-nav a[aria-current="page"] {
+  background: var(--ink, #142323);
+  color: var(--surface, #fff);
+}
+
+.catalog-masthead {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(15rem, 0.75fr);
+  align-items: end;
+  gap: clamp(2rem, 6vw, 7rem);
+  min-height: min(72vh, 42rem);
+  padding: clamp(1.5rem, 5vw, 5rem);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--op-frame-color, #087f83) 22%, var(--line, #ccd1cf));
+  border-radius: clamp(1rem, 2.5vw, 2rem);
+  background:
+    linear-gradient(140deg, color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--op-frame-color, #087f83) 6%), color-mix(in srgb, var(--surface, #f7f4ee) 91%, var(--op-probe-color, #7656a8) 9%));
+  box-shadow: 0 1.6rem 5rem rgb(24 42 42 / 10%);
+}
+
+.catalog-masthead::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: auto -7rem -10rem auto;
+  width: min(36rem, 54vw);
+  aspect-ratio: 1;
+  border: clamp(2rem, 6vw, 6rem) solid color-mix(in srgb, var(--op-frame-color, #087f83) 8%, transparent);
+  border-radius: 48% 52% 62% 38%;
+  transform: rotate(17deg);
+}
+
+.catalog-masthead__copy {
+  max-width: 66ch;
+}
+
+.catalog-masthead h1 {
+  max-width: 11ch;
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 7.6rem);
+  line-height: 0.86;
+  letter-spacing: -0.075em;
+  text-wrap: balance;
+}
+
+.catalog-kicker,
+.catalog-entry__eyebrow {
+  margin: 0 0 0.7rem;
+  color: color-mix(in srgb, var(--ink, #142323) 66%, var(--op-frame-color, #087f83) 34%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: clamp(0.68rem, 1.2vw, 0.78rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.catalog-masthead__lede {
+  max-width: 58ch;
+  margin: clamp(1.2rem, 3vw, 2.2rem) 0 0;
+  color: var(--ink, #142323);
+  font-family: var(--site-body-font, sans-serif);
+  font-size: clamp(1.05rem, 1.8vw, 1.42rem);
+  line-height: 1.55;
+}
+
+.catalog-masthead__stamp {
+  margin: 1.3rem 0 0;
+  color: var(--ink-soft, #586564);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.74rem;
+}
+
+.catalog-counts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--line, #ccd1cf) 80%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--line, #ccd1cf) 70%, transparent);
+}
+
+.catalog-counts div {
+  min-height: 7rem;
+  display: grid;
+  align-content: end;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--surface, #fff) 92%, transparent);
+}
+
+.catalog-counts div:first-child {
+  grid-column: span 2;
+}
+
+.catalog-counts dt {
+  font-family: var(--site-heading-font, sans-serif);
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.catalog-counts dd {
+  margin: 0.35rem 0 0;
+  color: var(--ink-soft, #586564);
+  font-size: 0.78rem;
+}
+
+.catalog-section {
+  gap: clamp(1.1rem, 2.5vw, 2rem);
+  scroll-margin-top: 6rem;
+}
+
+.catalog-section + .catalog-section,
+.catalog-asset-buckets,
+.catalog-index-group {
+  padding-block-start: clamp(2rem, 5vw, 5rem);
+  border-top: 1px solid color-mix(in srgb, var(--line, #ccd1cf) 78%, transparent);
+}
+
+.catalog-section__header {
+  max-width: 76ch;
+}
+
+.catalog-section__header--split {
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.65fr);
+  align-items: end;
+  gap: 1.5rem;
+}
+
+.catalog-section__header h2 {
+  max-width: 19ch;
+  margin: 0;
+  font-size: clamp(2rem, 4.4vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.catalog-section__header > p:last-child,
+.catalog-section__header--split > p {
+  margin: 1rem 0 0;
+  color: var(--ink-soft, #586564);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.65;
+}
+
+.catalog-study-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.catalog-study-card {
+  grid-column: span 6;
+  min-height: 19rem;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.2rem, 2.5vw, 2rem);
+  border: 1px solid color-mix(in srgb, var(--line, #ccd1cf) 84%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--surface, #fff) 86%, transparent);
+  box-shadow: 0 1rem 3rem rgb(24 42 42 / 5%);
+}
+
+.catalog-study-card:nth-child(1) { grid-column: 1 / span 7; }
+.catalog-study-card:nth-child(2) { grid-column: 8 / span 5; }
+.catalog-study-card:nth-child(3) { grid-column: 2 / span 5; }
+.catalog-study-card:nth-child(4) { grid-column: 7 / span 6; }
+
+.catalog-study-card__label {
+  margin: 0 0 auto;
+  color: var(--op-frame-color, #087f83);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.catalog-study-card h3 {
+  max-width: 22ch;
+  margin: 2.5rem 0 0;
+  font-size: clamp(1.35rem, 2.1vw, 2rem);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.catalog-study-card > p:not(.catalog-study-card__label) {
+  max-width: 56ch;
+  color: var(--ink-soft, #586564);
+  line-height: 1.6;
+}
+
+.catalog-study-card a,
+.catalog-section__action a {
+  width: fit-content;
+  margin-top: auto;
+  color: var(--ink, #142323);
+  font-weight: 750;
+  text-underline-offset: 0.22em;
+}
+
+.catalog-toolbar {
+  top: 6.75rem;
+  z-index: 90;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--surface, #fff) 91%, transparent);
+  box-shadow: 0 1rem 3rem rgb(24 42 42 / 9%);
+}
+
+.catalog-toolbar .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+#catalog-search {
+  min-height: 3.1rem;
+  padding-inline: 1rem 3rem;
+  border-radius: 0.7rem;
+  font-family: var(--site-body-font, sans-serif);
+  font-size: 1rem;
+}
+
+.catalog-filter-chip,
+.catalog-density-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.35rem;
+  padding-inline: 0.78rem;
+}
+
+.catalog-filter-chip span {
+  opacity: 0.72;
+  font-variant-numeric: tabular-nums;
+}
+
+.catalog-search-results {
+  min-height: 8rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 0.75rem;
+}
+
+.catalog-search-prompt,
+.catalog-search-empty {
+  grid-column: 1 / -1;
+  align-self: center;
+  margin: 0;
+  color: var(--ink-soft, #586564);
+}
+
+.catalog-search-result {
+  display: grid;
+  gap: 0.45rem;
+  min-height: 9rem;
+  padding: 1rem;
+  border: 1px solid var(--line, #ccd1cf);
+  border-radius: 0.75rem;
+  background: var(--surface, #fff);
+  color: inherit;
+  text-decoration: none;
+}
+
+.catalog-search-result span {
+  color: var(--op-frame-color, #087f83);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.catalog-search-result small {
+  color: var(--ink-soft, #586564);
+  line-height: 1.45;
+}
+
+.catalog-asset-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+}
+
+.catalog-entry--asset {
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  align-content: start;
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--surface, #fff) 92%, transparent);
+}
+
+.catalog-entry--asset .catalog-entry__preview {
+  aspect-ratio: 4 / 3;
+  border: 0;
+  border-bottom: 1px solid var(--line, #ccd1cf);
+  border-radius: 0;
+  background:
+    linear-gradient(45deg, rgb(0 0 0 / 3%) 25%, transparent 25% 75%, rgb(0 0 0 / 3%) 75%),
+    linear-gradient(45deg, rgb(0 0 0 / 3%) 25%, transparent 25% 75%, rgb(0 0 0 / 3%) 75%);
+  background-position: 0 0, 0.5rem 0.5rem;
+  background-size: 1rem 1rem;
+}
+
+.catalog-entry--asset .catalog-entry__preview img {
+  object-fit: contain;
+  transition: transform 240ms ease;
+}
+
+.catalog-entry--asset:hover .catalog-entry__preview img {
+  transform: scale(1.018);
+}
+
+.catalog-entry__body {
+  display: grid;
+  gap: 0.65rem;
+  padding: 1rem;
+}
+
+.catalog-entry__body h3 {
+  margin: 0;
+  font-size: 1.12rem;
+  line-height: 1.2;
+}
+
+.catalog-entry__description,
+.catalog-entry__path,
+.catalog-entry__routes {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.catalog-entry__description {
+  color: var(--ink-soft, #586564);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.catalog-entry__path {
+  font-size: 0.72rem;
+}
+
+.catalog-entry__routes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.55rem;
+  align-items: baseline;
+  font-size: 0.76rem;
+}
+
+.catalog-entry__routes strong {
+  width: 100%;
+  color: var(--ink-soft, #586564);
+}
+
+.catalog-asset-grid--featured .catalog-entry--asset:first-child {
+  grid-column: span 2;
+}
+
+.catalog-asset-grid--featured .catalog-entry--asset:first-child .catalog-entry__preview {
+  aspect-ratio: 16 / 9;
+}
+
+.catalog-copy-btn {
+  min-height: 2.1rem;
+  opacity: 0.72;
+}
+
+.catalog-room-grid,
+.catalog-wander-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0.75rem;
+}
+
+.catalog-room-card,
+.catalog-wander-grid a {
+  min-height: 12rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  padding: 1.2rem;
+  border: 1px solid var(--line, #ccd1cf);
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--surface, #fff) 91%, transparent);
+  color: inherit;
+  text-decoration: none;
+}
+
+.catalog-room-card--visual {
+  grid-column: span 2;
+  background: linear-gradient(140deg, color-mix(in srgb, var(--op-frame-color, #087f83) 13%, var(--surface, #fff)), var(--surface, #fff));
+}
+
+.catalog-room-card--friction {
+  background: linear-gradient(140deg, color-mix(in srgb, #c36b3f 9%, var(--surface, #fff)), var(--surface, #fff));
+}
+
+.catalog-room-card span {
+  margin-bottom: auto;
+  color: var(--op-frame-color, #087f83);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.catalog-room-card strong,
+.catalog-wander-grid strong {
+  font-size: 1.15rem;
+}
+
+.catalog-room-card em,
+.catalog-wander-grid span {
+  color: var(--ink-soft, #586564);
+  font-size: 0.86rem;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.catalog-bucket-nav {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding: 0.25rem 0 0.7rem;
+  scrollbar-width: thin;
+}
+
+.catalog-bucket-nav a {
+  flex: 0 0 auto;
+  display: inline-flex;
+  gap: 0.45rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--line, #ccd1cf);
+  border-radius: 999px;
+  color: inherit;
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.72rem;
+  text-decoration: none;
+}
+
+.catalog-bucket-nav span {
+  color: var(--ink-soft, #586564);
+}
+
+.catalog-asset-bucket {
+  scroll-margin-top: 10rem;
+}
+
+.catalog-asset-bucket__header h2,
+.catalog-asset-bucket__header p {
+  margin: 0;
+}
+
+.catalog-index-group {
+  scroll-margin-top: 10rem;
+}
+
+.catalog-index-group > summary {
+  min-height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  font-weight: 800;
+}
+
+.catalog-index-group > summary strong {
+  color: var(--ink-soft, #586564);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.82rem;
+}
+
+.catalog-index-group > .catalog-entries {
+  margin-top: 1rem;
+}
+
+.catalog-friction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 0.75rem;
+}
+
+.catalog-friction-grid details {
+  padding: 1rem;
+  border: 1px solid var(--line, #ccd1cf);
+  border-radius: 0.75rem;
+  background: var(--surface, #fff);
+}
+
+.catalog-friction-grid summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.catalog-friction-grid p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.catalog-main[data-catalog-density="compact"] .catalog-asset-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+}
+
+.catalog-main[data-catalog-density="compact"] .catalog-entry__description,
+.catalog-main[data-catalog-density="compact"] .catalog-entry__routes {
+  display: none;
+}
+
+.catalog-main :where(a, button, input, summary):focus-visible {
+  outline: 3px solid var(--focus-ring, color-mix(in srgb, var(--op-frame-color, #087f83) 70%, white));
+  outline-offset: 3px;
+}
+
+@media (max-width: 52rem) {
+  .catalog-masthead,
+  .catalog-section__header--split {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-masthead {
+    min-height: auto;
+  }
+
+  .catalog-study-card,
+  .catalog-study-card:nth-child(1),
+  .catalog-study-card:nth-child(2),
+  .catalog-study-card:nth-child(3),
+  .catalog-study-card:nth-child(4) {
+    grid-column: 1 / -1;
+    min-height: 16rem;
+  }
+
+  .catalog-room-card--visual,
+  .catalog-asset-grid--featured .catalog-entry--asset:first-child {
+    grid-column: auto;
+  }
+
+  .catalog-toolbar__filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .catalog-filter-group {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+  }
+
+  .catalog-density-group {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 34rem) {
+  .catalog-main {
+    padding-inline: 0.75rem;
+  }
+
+  .catalog-room-nav {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    border-radius: 0.8rem;
+  }
+
+  .catalog-masthead {
+    padding: 1.25rem;
+    border-radius: 1rem;
+  }
+
+  .catalog-masthead h1 {
+    font-size: clamp(3.2rem, 18vw, 5rem);
+  }
+
+  .catalog-counts div {
+    min-height: 5.5rem;
+  }
+
+  .catalog-toolbar {
+    top: 7.5rem;
+    padding: 0.7rem;
+  }
+
+  .catalog-toolbar__filters,
+  .catalog-filter-group {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 0.35rem;
+  }
+
+  .catalog-filter-chip,
+  .catalog-density-btn {
+    flex: 0 0 auto;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .catalog-room-nav a,
+  .catalog-filter-chip,
+  .catalog-density-btn,
+  .catalog-copy-btn,
+  .catalog-bucket-nav a,
+  .catalog-back-to-top {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalog-entry--asset .catalog-entry__preview img {
+    transition: none;
+  }
+}
+`;
+
+const CATALOG_JS = `
+const main = document.querySelector('.catalog-main');
+
+if (main) {
+  const searchInput = document.getElementById('catalog-search');
+  const clearButton = document.getElementById('catalog-search-clear');
+  const visibleCount = document.getElementById('catalog-visible-count');
+  const results = document.getElementById('catalog-search-results');
+  const backToTop = document.getElementById('catalog-back-to-top');
+  const page = main.dataset.catalogPage || 'overview';
+  const params = new URLSearchParams(window.location.search);
+  let query = params.get('q') || '';
+  let kind = params.get('kind') || 'all';
+  let state = params.get('state') || 'all';
+  let catalogIndex = null;
+  let renderSequence = 0;
+
+  function setPressed(selector, value, datasetKey) {
+    document.querySelectorAll(selector).forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset[datasetKey] === value));
+    });
+  }
+
+  function syncUrl() {
+    const next = new URL(window.location.href);
+    if (query) next.searchParams.set('q', query);
+    else next.searchParams.delete('q');
+    if (kind !== 'all') next.searchParams.set('kind', kind);
+    else next.searchParams.delete('kind');
+    if (state !== 'all') next.searchParams.set('state', state);
+    else next.searchParams.delete('state');
+    if (main.dataset.catalogDensity === 'compact') next.searchParams.set('density', 'compact');
+    else next.searchParams.delete('density');
+    window.history.replaceState({}, '', next);
+  }
+
+  function matchesEntry(entry) {
+    const entryKind = entry.dataset.spwCatalogKind || '';
+    const matchesKind = kind === 'all'
+      || entryKind === kind
+      || (kind === 'color' && entry.dataset.catalogColor === 'true');
+    const matchesState = state === 'all' || entry.dataset.catalogState === state;
+    const matchesQuery = !query || entry.textContent.toLowerCase().includes(query.toLowerCase());
+    return matchesKind && matchesState && matchesQuery;
+  }
+
+  function filterStaticEntries() {
+    const entries = Array.from(document.querySelectorAll('[data-catalog-entry]'));
+    let count = 0;
+    for (const entry of entries) {
+      const visible = matchesEntry(entry);
+      entry.hidden = !visible;
+      if (visible) count += 1;
+    }
+    document.querySelectorAll('[data-catalog-group]').forEach((group) => {
+      const hasVisible = Boolean(group.querySelector('[data-catalog-entry]:not([hidden])'));
+      group.hidden = !hasVisible;
+      if (hasVisible && (query || kind !== 'all' || state !== 'all') && group.tagName === 'DETAILS') group.open = true;
+    });
+    if (visibleCount) visibleCount.textContent = String(count);
+    syncUrl();
+  }
+
+  function flattenCatalog(data) {
+    const entries = [];
+    for (const attribute of Object.values(data.attributes || {})) {
+      entries.push({kind: 'attribute', title: attribute.name, meta: (attribute.htmlUsageCount || 0) + ' HTML uses · ' + attribute.cssSelectors.length + ' CSS readers', href: '/design/catalog/systems/#attr-' + attribute.name, search: [attribute.name, ...(attribute.valuesInHtml || []), ...(attribute.cssFiles || []), ...(attribute.jsFiles || [])].join(' ')});
+    }
+    for (const [file, info] of Object.entries(data.cssFiles || {})) {
+      entries.push({kind: 'css-file', title: file, meta: 'layer ' + (info.layer || 'unassigned') + ' · ' + info.attributesUsed.length + ' attributes', href: '/design/catalog/systems/#css-' + slug(file), search: [file, info.header || '', ...(info.attributesUsed || []), ...(info.tokensDefined || [])].join(' ')});
+    }
+    for (const token of data.tokens || []) {
+      entries.push({kind: 'token', title: token.name, meta: token.consumerCount + ' reads' + (token.initialValue ? ' · ' + token.initialValue : ''), href: '/design/catalog/tokens/#token-' + token.name, search: [token.name, token.initialValue || '', ...(token.consumerFiles || [])].join(' ')});
+    }
+    for (const [file, info] of Object.entries(data.docs || {})) {
+      entries.push({kind: 'doc', title: file, meta: info.attributesMentioned.length + ' attributes · ' + info.tokensMentioned.length + ' tokens', href: '/design/catalog/systems/#doc-' + slug(file), search: [file, info.title || '', ...(info.attributesMentioned || []), ...(info.tokensMentioned || [])].join(' ')});
+    }
+    for (const asset of data.imageAssets || []) {
+      const routes = [...new Set((asset.usages || []).map((usage) => usage.route))];
+      entries.push({kind: 'image-asset', title: asset.alt || asset.path, meta: asset.state + ' · ' + asset.bucket + (routes.length ? ' · ' + routes.length + ' routes' : ''), href: '/design/catalog/assets/#image-' + slug(asset.path), search: [asset.path, asset.alt || '', asset.bucket, asset.state, ...routes].join(' ')});
+    }
+    return entries;
+  }
+
+  function slug(value) {
+    return String(value).toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
+  function resultCard(entry) {
+    const link = document.createElement('a');
+    link.className = 'catalog-search-result';
+    link.href = entry.href;
+    const label = document.createElement('span');
+    label.textContent = entry.kind.replace('-', ' ');
+    const title = document.createElement('strong');
+    title.textContent = entry.title;
+    const meta = document.createElement('small');
+    meta.textContent = entry.meta;
+    link.append(label, title, meta);
+    return link;
+  }
+
+  async function searchOverview() {
+    const sequence = ++renderSequence;
+    const canBrowseKind = kind !== 'all';
+    if (!results || (query.trim().length < 2 && !canBrowseKind)) {
+      if (results) results.innerHTML = '<p class="catalog-search-prompt">Type two or more characters, or choose a kind, to search the canonical graph.</p>';
+      if (visibleCount) visibleCount.textContent = '0';
+      syncUrl();
+      return;
+    }
+    if (!catalogIndex) {
+      results.innerHTML = '<p class="catalog-search-prompt">Opening the design graph…</p>';
+      const response = await fetch('/design/catalog/catalog.json');
+      if (!response.ok) throw new Error('Catalog graph could not be loaded');
+      catalogIndex = flattenCatalog(await response.json());
+    }
+    if (sequence !== renderSequence) return;
+    const needle = query.trim().toLowerCase();
+    const matches = catalogIndex
+      .filter((entry) => (kind === 'all' || entry.kind === kind) && (!needle || entry.search.toLowerCase().includes(needle)))
+      .sort((left, right) => {
+        const leftStarts = needle && left.title.toLowerCase().startsWith(needle) ? 0 : 1;
+        const rightStarts = needle && right.title.toLowerCase().startsWith(needle) ? 0 : 1;
+        return leftStarts - rightStarts || left.title.localeCompare(right.title);
+      });
+    results.replaceChildren(...matches.slice(0, 48).map(resultCard));
+    if (!matches.length) results.innerHTML = '<p class="catalog-search-empty">No matching handle. Try a shorter stem or another room.</p>';
+    if (matches.length > 48) {
+      const note = document.createElement('p');
+      note.className = 'catalog-search-empty';
+      note.textContent = 'Showing 48 of ' + matches.length + ' matches. Refine the search or open a focused room.';
+      results.append(note);
+    }
+    if (visibleCount) visibleCount.textContent = String(matches.length);
+    syncUrl();
+  }
+
+  function update() {
+    if (page === 'overview') searchOverview().catch((error) => {
+      if (results) results.innerHTML = '<p class="catalog-search-empty">' + error.message + '.</p>';
+    });
+    else filterStaticEntries();
+  }
+
+  if (searchInput) {
+    searchInput.value = query;
+    clearButton.hidden = !query;
+    searchInput.addEventListener('input', () => {
+      query = searchInput.value.trim();
+      clearButton.hidden = !query;
+      update();
+    });
+  }
+
+  clearButton?.addEventListener('click', () => {
+    query = '';
+    searchInput.value = '';
+    clearButton.hidden = true;
+    searchInput.focus();
+    update();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    const tag = document.activeElement?.tagName?.toLowerCase();
+    if (event.key === '/' && !['input', 'textarea', 'select'].includes(tag)) {
+      event.preventDefault();
+      searchInput?.focus();
+    }
+    if (event.key === 'Escape' && document.activeElement === searchInput) {
+      query = '';
+      searchInput.value = '';
+      clearButton.hidden = true;
+      searchInput.blur();
+      update();
+    }
+  });
+
+  document.querySelectorAll('[data-catalog-filter]').forEach((button) => {
+    button.addEventListener('click', () => {
+      kind = button.dataset.catalogFilter || 'all';
+      setPressed('[data-catalog-filter]', kind, 'catalogFilter');
+      update();
+    });
+  });
+
+  document.querySelectorAll('[data-catalog-state-filter]').forEach((button) => {
+    button.addEventListener('click', () => {
+      state = button.dataset.catalogStateFilter || 'all';
+      setPressed('[data-catalog-state-filter]', state, 'catalogStateFilter');
+      update();
+    });
+  });
+
+  document.querySelectorAll('[data-catalog-density]').forEach((button) => {
+    button.addEventListener('click', () => {
+      main.dataset.catalogDensity = button.dataset.catalogDensity || 'standard';
+      setPressed('[data-catalog-density]', main.dataset.catalogDensity, 'catalogDensity');
+      syncUrl();
+    });
+  });
+
+  document.addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-copy-target]');
+    if (!button) return;
+    try {
+      await navigator.clipboard.writeText(button.dataset.copyTarget || '');
+      const prior = button.textContent;
+      button.textContent = 'Copied';
+      button.classList.add('copied');
+      window.setTimeout(() => { button.textContent = prior; button.classList.remove('copied'); }, 1400);
+    } catch {
+      button.textContent = 'Copy unavailable';
+    }
+  });
+
+  if (params.get('density') === 'compact') main.dataset.catalogDensity = 'compact';
+  setPressed('[data-catalog-filter]', kind, 'catalogFilter');
+  setPressed('[data-catalog-state-filter]', state, 'catalogStateFilter');
+  setPressed('[data-catalog-density]', main.dataset.catalogDensity, 'catalogDensity');
+  if (backToTop) {
+    const updateBackToTop = () => { backToTop.hidden = window.scrollY < 600; };
+    window.addEventListener('scroll', updateBackToTop, {passive: true});
+    backToTop.addEventListener('click', () => window.location.assign(backToTop.dataset.catalogTopHref || '/design/catalog/'));
+    updateBackToTop();
+  }
+  update();
 }
 `;
 
@@ -1442,6 +2898,7 @@ async function writeOutputs(outputDir, outputs, options) {
 
   for (const [filename, contents] of Object.entries(outputs)) {
     const filePath = path.join(outputDir, filename);
+    await fs.mkdir(path.dirname(filePath), {recursive: true});
     const differs = await writeOrCheckFile(filePath, contents, options);
 
     if (differs) {
@@ -1477,7 +2934,8 @@ async function main() {
     return (filePath.endsWith('.js') || filePath.endsWith('.mjs')) && !rel.startsWith('scripts/');
   });
   const spwFiles = allFiles.filter((filePath) => filePath.endsWith('.spw'));
-  const imageAssets = await collectImageAssets(allFiles);
+  const imageUsage = await collectImageUsage(htmlFiles);
+  const imageAssets = await collectImageAssets(allFiles, imageUsage);
 
   const {attributes, cssFiles: cssFileInfo, tokens} = await parseCss(cssFiles, fileToLayer);
   await scanHtml(htmlFiles, attributes);
@@ -1500,7 +2958,7 @@ async function main() {
   };
 
   const catalog = {
-    generatedAt: getGeneratedAt(),
+    generatedAt: await generatedAtForRun(options),
     counts,
     attributes: attrs,
     cssFiles: cssFileInfo,
@@ -1512,14 +2970,33 @@ async function main() {
 
   const outputs = {
     'catalog.json': `${JSON.stringify(catalog, null, 2)}\n`,
-    'catalog.css': `${CATALOG_CSS.trim()}\n`,
-    'index.html': renderIndexHtml({
+    'catalog.css': `${CATALOG_CSS.trim()}\n\n${CATALOG_FIELD_GUIDE_CSS.trim()}\n`,
+    'catalog.js': `${CATALOG_JS.trim()}\n`,
+    'index.html': renderCatalogOverview({
       attrs,
       cssFiles: cssFileInfo,
       tokens,
       docs,
       orphans,
       imageAssets,
+      generatedAt: catalog.generatedAt,
+      counts,
+    }),
+    'assets/index.html': renderAssetIndex({
+      imageAssets,
+      generatedAt: catalog.generatedAt,
+      counts,
+    }),
+    'tokens/index.html': renderTokenIndex({
+      tokens,
+      generatedAt: catalog.generatedAt,
+      counts,
+    }),
+    'systems/index.html': renderSystemsIndex({
+      attrs,
+      cssFiles: cssFileInfo,
+      docs,
+      orphans,
       generatedAt: catalog.generatedAt,
       counts,
     }),

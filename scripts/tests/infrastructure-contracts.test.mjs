@@ -51,7 +51,10 @@ import {
   ROOT,
 } from '../lib/spw-inventory-core.mjs';
 import {
+  catalogGeneratedAtFromText,
+  collectHtmlImageReferences,
   createLineLocator,
+  routeHrefForHtmlFile,
   shouldIgnoreRelativePath,
 } from '../generate-design-catalog.mjs';
 import {
@@ -78,7 +81,51 @@ test('design catalog line lookup indexes each source once without line drift', (
 test('design catalog scans authored CSS and ignores generated build copies', () => {
   assert.equal(shouldIgnoreRelativePath('dist-vite/assets/site.js'), true);
   assert.equal(shouldIgnoreRelativePath('public/css/bundles/core.css'), true);
+  assert.equal(shouldIgnoreRelativePath('design/catalog/catalog.css', 'dist/design/catalog'), true);
   assert.equal(shouldIgnoreRelativePath('public/css/components/cards.css'), false);
+});
+
+test('design catalog image references retain route, alt text, and responsive sources', () => {
+  const html = `<figure>
+    <picture>
+      <source srcset="/public/images/study-640.webp 640w, /public/images/study-1280.webp 1280w">
+      <img src="/public/images/study.webp?rev=2" alt="A card study in its route">
+    </picture>
+  </figure>`;
+
+  assert.deepEqual(collectHtmlImageReferences(html, 'design/components/index.html'), [
+    {
+      alt: '',
+      file: 'design/components/index.html',
+      line: 3,
+      path: 'public/images/study-640.webp',
+      route: '/design/components/',
+    },
+    {
+      alt: '',
+      file: 'design/components/index.html',
+      line: 3,
+      path: 'public/images/study-1280.webp',
+      route: '/design/components/',
+    },
+    {
+      alt: 'A card study in its route',
+      file: 'design/components/index.html',
+      line: 4,
+      path: 'public/images/study.webp',
+      route: '/design/components/',
+    },
+  ]);
+  assert.equal(routeHrefForHtmlFile('index.html'), '/');
+  assert.equal(routeHrefForHtmlFile('about/index.html'), '/about/');
+});
+
+test('design catalog checks reuse the authored generation instant', () => {
+  const generatedAt = '2026-09-03T12:34:56.000Z';
+
+  assert.equal(catalogGeneratedAtFromText(JSON.stringify({generatedAt})), generatedAt);
+  assert.equal(catalogGeneratedAtFromText('{not-json'), null);
+  assert.equal(catalogGeneratedAtFromText(JSON.stringify({generatedAt: 'eventually'})), null);
 });
 
 test('manifest semantic comparison ignores volatile fields and catches runtime drift', () => {

@@ -1,4 +1,4 @@
-# Review 2026-07-12 — rework around measured navigation cost; more routes are not automatically a better catalog.
+# Review 2026-09-03 — implement as a small set of purposeful rooms backed by one canonical scan.
 # Plan Index — catalog-demo-splits
 #
 # The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster lookup and less scrolling. The CSS and SVG experiment routes…
@@ -12,10 +12,10 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster lookup and less scrolling. The CSS and SVG experiment routes should also become thinner hubs that link to focused subpages for the rule bench, variable lab, diagram posture, tunability, and handoff guidance. The intent is not to multiply pages for its own sake; it is to make the existing structure easier to inspect, navigate, and review.`
+ goal = `Turn the generated design catalog into a visitor-readable field guide where curated stills support component, typography, layout, and trope study, while one canonical JSON scan feeds a small set of purposeful review rooms.`
  owner = `catalog-demo-splits`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `active_execution`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -59,10 +59,10 @@ dispatch: .{
 }[reg=facet]
 
 ^"review_disposition"{
- reviewed = `2026-07-12`
- disposition = `rework`
- note = `rework around measured navigation cost`
- rescope = `required`
+ reviewed = `2026-09-03`
+ disposition = `implement`
+ note = `One overview plus asset, token, and systems rooms; local capture pixels remain private review evidence.`
+ rescope = `complete`
  status = `active`
 }[reg=facet]
 
@@ -77,27 +77,29 @@ dispatch: .{
 ^"owner_claim"{
  claim_id = "plan-catalog_demo_splits-001"
  layer = "pragmatic"
- hypothesis = `The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster lookup and less scrolling. The CSS and SVG experiment routes should also become thinner hubs that link to focused subpages for the rule bench, variable lab, diagram posture, tunability, and handoff guidance. The intent is not to multiply pages for its own sake; it is to make the existing structure easier to inspect, navigate, and review.`
+ hypothesis = `A field-guide overview plus focused generated indexes makes the complete catalog easier for visitors, editors, and models to interpret without publishing uncurated capture packs.`
  spec_ref = ~"./PLAN.md"
  impl_ref = ~"../../../design/index.html"
  probe_ref = `git diff --check`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../design/index.html unchanged or untested.`
+ falsification = `The first viewport is still a raw inventory dump, still cards cannot name a live route or reusable brief, or the split pages drift from catalog.json.`
  status = "active"
 }[reg=facet]
 
 scope: .{
  in = #[
-  `In scope: design/catalog route splits for asset review and at least one other long catalog section, CSS experiment route splits, SVG experiment route splits, and hub links from design/index.html.`,
+  `Generated overview, asset, token, and systems rooms; route-use context for public images; local search/filter/copy behavior; route-local responsive CSS.`,
  ][reg=set]
  out = #[
-  `: broad copy rewrites, new media generation, runtime behavior changes, or a full redesign of the existing design hub.`,
+  `Uncurated capture publishing, image generation, global runtime changes, dependencies, CSS layer changes, or a redesign of the wider design hub.`,
  ][reg=set]
 }[reg=facet]
 
 validation: #[
  `git diff --check`,
- `npm run check`,
- `Manual route sanity for the new pages and their links back to the hub pages`,
+ `node --check scripts/generate-design-catalog.mjs`,
+ `npm run catalog && node scripts/generate-design-catalog.mjs --check`,
+ `npm run check:local`,
+ `Pocket and broadsheet review of all generated catalog rooms`,
 ][reg=set]
 
 editor_prompts: #[

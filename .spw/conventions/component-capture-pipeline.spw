@@ -143,7 +143,7 @@
     .{ pipeline = `template-pipeline`, prefers = #[`template`][reg=set], store = `snippets + compose.css; optional export zip later` },
     .{ pipeline = `agent-brief`, prefers = #[`component`, `page`][reg=set], store = `manifest.json semantics + alt text` },
     .{ pipeline = `layout-qa`, prefers = #[`component`][reg=set], store = `structural metrics (perf-matrix/layout-qa), not pixels` },
-    .{ pipeline = `design-catalog`, prefers = #[][reg=set], store = `attributes/tokens only — do not dump PNGs into catalog generator` },
+    .{ pipeline = `design-catalog`, prefers = #[`human-curated public image`, `route-anchored still`][reg=set], store = `generated image index with authored alt, route use, sidecars, and model brief — never ingest gitignored capture packs` },
     .{ pipeline = `external-art`, prefers = #[`template`, `component`][reg=set], store = `clip exports as stills for illustration tools` },
     .{ pipeline = `marketing-teaser`, prefers = #[`fit`, `region`][reg=set], store = `prompt + unique still; human-curated post` },
     .{ pipeline = `ecology-qa`, prefers = #[`region`][reg=set], store = `seat tropes at pocket/fold/broadsheet` }
@@ -203,6 +203,13 @@
     hypothesis = "manifest.json + alt + semantics lets an agent brief a component without opening the PNG."
     probe_ref = "Read design/components/captures/manifest.json after a capture run"
     falsification = "Manifest lacks selector, flow, or publish targets for each image."
+    status = "active"
+  }
+  claim #capture-pipeline-003 {
+    layer = "publishing"
+    hypothesis = "A public still becomes useful design evidence when the catalog keeps authored description and live-route context attached, while noisy capture packs remain local."
+    probe_ref = "npm run catalog; inspect /design/catalog/assets/ and catalog.json imageAssets[].usages"
+    falsification = "The public catalog dumps the local capture archive, or an image card offers no authored description, route context, or reusable study brief."
     status = "active"
   }
 }[reg=set]
