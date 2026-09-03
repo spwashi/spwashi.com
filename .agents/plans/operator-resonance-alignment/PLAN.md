@@ -74,6 +74,7 @@ Weak examples to normalize over time:
 - Candidate files: `public/css/effects/operator-resonance.css`, `public/css/shell/chrome.css`, `public/css/components/cards.css`.
 - Style families subtly: inquiry, potential/config, location/scope, action/resolution, resource/output, relation.
 - Avoid noisy one-color-per-sigil treatment except where the operator is the actual teaching surface.
+- 2026-09-03: landed the narrower "pinned resonance shares its family" version of this, in `public/css/effects/wonder.css` rather than a new file — `data-spw-operator-family` (already written by `applyOperatorMetadata`) was unread by any CSS. The resonance probe (`public/js/runtime/attention/resonance-probe.js`) now also writes `data-spw-resonance-family` on `<html>`, and wonder.css gives same-family kin a fainter `--spw-resonance` ring than an exact match gets. Covers the four multi-member families that OPERATOR_DEFINITIONS actually has (resonance, grounding, relational, conceptual) — the other ten families are singletons, so there is nothing to group yet. Broader per-family color/background treatment (the "location/scope", "action/resolution" style buckets above) stays open.
 
 ### Slice 5: Prompt and Evidence Integration
 

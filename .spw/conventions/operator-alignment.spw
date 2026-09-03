@@ -189,6 +189,7 @@
     required_authoring: "visible sigil + verb + target"
     recommended_attributes: "data-spw-operator, data-spw-action, data-spw-target"
     example: "<a class='operator-chip' href='/tools/midjourney/#prompt-mining-loop' data-spw-operator='~' data-spw-action='mine' data-spw-target='prompt-handles'>~ mine prompt handles</a>"
+    ~#now(landed 2026-09-03): `data-spw-target was authored 25 times (mostly on the home quick-start rail) and read by nothing. attention/resonance-probe.js now marks every element sharing the hovered/focused chip's target value with data-spw-target-kin, and wonder.css gives that a resonance ring — a reader hovering "publish RPG images" sees any other chip that leads to the same place. Matched in JS, not enumerated in CSS: target values are freeform and one-off, unlike the fixed operator vocabulary.`
   }[reg=facet]
 
   capacity_card: .{
@@ -222,6 +223,7 @@
     "change basic gestures unpredictably"
   ]
   additive_attributes: ["data-spw-operator-resolved", "data-spw-operator-family", "data-spw-operator-phase", "data-spw-operator-public-label", "data-spw-transformation"]
+  ~#now(landed 2026-09-03): "data-spw-operator-family was already written by applyOperatorMetadata in sigil-annotation.js, but nothing read it — pinning an operator via the resonance probe (attention/resonance-probe.js) only ever echoed its own exact type, never its OPERATOR_DEFINITIONS family kin. wonder.css now reads a matching html[data-spw-resonance-family] to give frame/layer/vibration, ground/binding, integration/subject, and concept-edge/concept a fainter shared echo. See AGENTS.md Resonance probe."
 }
 
 ^"compact_guide"{

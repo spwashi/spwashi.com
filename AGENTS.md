@@ -377,13 +377,15 @@ Mobile-first sticky chip that surfaces the current visible section by reading `d
 
 Pinned operator focus/hover state that sets `html[data-spw-resonance-probe="operator-name"]` to trigger soft echo glow on matching operators across the page.
 
-**Files:** `public/js/attention-architecture.js`, `public/css/effects/wonder.css`
+**Files:** `public/js/runtime/attention/resonance-probe.js` (mounted through `attention-architecture.js`), `public/css/effects/wonder.css`
 
 **Behavior:**
 - `focusin` on any `[data-spw-operator]` immediately pins that operator
 - `mouseover` with 260ms delay allows hovering without committing
 - `focusout` and `mouseleave` clear the pin
 - CSS `:has()` selector (with `@supports`) applies `--spw-resonance` to matching operators
+- Also sets `html[data-spw-resonance-family="family-name"]` from the pinned operator's `family` field in `operator-detection.js` (`OPERATOR_DEFINITIONS`). Kin operators that share a family — frame/layer/vibration ("resonance"), ground/binding ("grounding"), integration/subject ("relational"), concept-edge/concept ("conceptual") — get a fainter echo alongside the exact-match one. Regroup the CSS only if that `family` field changes; it is the source of truth, not the CSS.
+- Also marks every other element sharing the hovered/focused chip's `data-spw-target` (a freeform destination label authored on quick-move chips, e.g. `data-spw-target="rpg-images"`) with `data-spw-target-kin="true"`, so a reader can see which chips lead to the same place. Matched directly in JS rather than enumerated in CSS, because target values are numerous and one-off unlike the small, fixed operator/family vocabulary.
 
 **CSS contract** in `wonder.css`:
 ```css

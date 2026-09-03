@@ -1223,9 +1223,25 @@ html[data-spw-active-layers="core"] :where(
   }
 }
 
+/* Family resonance: OPERATOR_DEFINITIONS in operator-detection.js groups
+   sigils into families — frame/layer/vibration are all "resonance", ground/
+   binding are "grounding", integration/subject are "relational", concept-
+   edge/concept are "conceptual". Pinning one only ever echoed its own exact
+   type; this gives its kin a fainter echo too. Source of truth is the
+   `family` field on OPERATOR_DEFINITIONS — regroup here only if that field
+   changes. Declared before the exact-match block below, so a member that is
+   also the pinned type gets the stronger exact-match strength instead. */
+html[data-spw-resonance-family="resonance"] :where([data-spw-operator="frame"], [data-spw-operator="address"], [data-spw-operator="layer"], [data-spw-operator="vibration"]):not(:hover):not(:focus-visible),
+html[data-spw-resonance-family="grounding"] :where([data-spw-operator="ground"], [data-spw-operator="baseline"], [data-spw-operator="intrinsic"], [data-spw-operator="binding"]):not(:hover):not(:focus-visible),
+html[data-spw-resonance-family="relational"] :where([data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"], [data-spw-operator="subject"], [data-spw-operator="merge"]):not(:hover):not(:focus-visible),
+html[data-spw-resonance-family="conceptual"] :where([data-spw-operator="concept-edge"], [data-spw-operator="surface"], [data-spw-operator="route"], [data-spw-operator="concept"], [data-spw-operator="topic"]):not(:hover):not(:focus-visible) {
+  --spw-resonance: calc(var(--attention-field-radius, 0.4) * var(--attention-field-decay, 0.65) * 0.6);
+}
+
 /* Pinned resonance: when JS (or a future interaction) places
-   [data-spw-resonance-probe] on <html>, it acts as a sustained probe
-   across the whole page for that operator family. */
+   [data-spw-resonance-probe] on <html>, it acts as a sustained probe for
+   that exact operator (plus its authored aliases — a chip may still carry
+   the pre-alignment sigil name directly in data-spw-operator). */
 html:is([data-spw-resonance-probe="frame"], [data-spw-resonance-probe="address"]) :where([data-spw-operator="frame"], [data-spw-operator="address"]):not(:hover):not(:focus-visible),
 html:is([data-spw-resonance-probe="object"], [data-spw-resonance-probe="integration"]) :where([data-spw-operator="object"], [data-spw-operator="integration"]):not(:hover):not(:focus-visible),
 html:is([data-spw-resonance-probe="probe"], [data-spw-resonance-probe="wonder"]) :where([data-spw-operator="probe"], [data-spw-operator="wonder"]):not(:hover):not(:focus-visible),
@@ -1269,6 +1285,22 @@ html[data-spw-resonance-concept] :where([data-spw-concept]):not(:hover):not(:foc
 html[data-spw-resonance-ingredient] :where([data-spw-ingredient]):not(:hover):not(:focus-visible) {
   --spw-resonance: 0.75;
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 34%, transparent);
+}
+
+/* Navigation-target kinship: quick-move chips author data-spw-target as a
+   freeform destination label. Unlike concept/ingredient above, target values
+   are numerous and one-off, so exact matching happens in JS
+   (attention/resonance-probe.js finds every element sharing the hovered/
+   focused chip's target and marks it) rather than as an enumerated CSS
+   value list. This teaches "these chips lead to the same place" without
+   requiring the reader to read every href. Sets --spw-resonance rather than
+   drawing its own box-shadow, same as the operator/family/pinned rules
+   above — the shared :where([data-spw-operator]) rule (@supports block,
+   above) draws the actual ring in that element's own operator color, and
+   whichever resonance signal's rule is declared latest wins, matching this
+   file's existing compositing rule for the other resonance sources. */
+:where([data-spw-target-kin]):not(:hover):not(:focus-visible) {
+  --spw-resonance: 0.6;
 }
 /* ==========================================================================
    Transferable Spw Interactive Momentum & Genomic Resonance

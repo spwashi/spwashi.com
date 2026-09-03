@@ -19779,8 +19779,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   /* Hubs: more exploratory, combinatoric, layout sampling, collect-to-cauldron invitations. */
 }
 :where([data-spw-region="path"],
-       [data-spw-region-role="path-node"],
-       [data-spw-region-role="path"]) {
+       [data-spw-region-role="path-node"]) {
   /* Path nodes: grounded, stateful, traversable charge/cauldron, deeper notes. */
 }
 
@@ -20751,6 +20750,18 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   gap: var(--spw-grid-gap-active);
   align-items: stretch;
   min-width: 0;
+}
+
+/* These grid classes were authored for a plain <div>/<article> pack. None of
+   the base reset (reset/base.css) strips list-style for ordinary <ol>/<ul> —
+   it only zeroes padding-left there — so a route that reaches for one of
+   them on a semantically-correct <ol> (e.g. a sequence of steps that should
+   be an ordered list, not four unordered .frame-panel divs) gets a decimal
+   marker column fighting the grid's own columns. Defensive, not speculative:
+   contact/index.html's #contact-intake inquiry steps do exactly this. */
+:where(ol, ul):where(.frame-grid, .plans-grid, .contact-grid, .spec-grid, .directory-grid, .ref-grid) {
+  list-style: none;
+  padding-inline-start: 0;
 }
 
 :where(
@@ -28250,11 +28261,16 @@ html[data-spw-theme-pack="electric-studio"] {
    ornament, one warm accent against a cool field, and nothing blooms.
 
    Genome — states sensed: data-spw-liminality, data-spw-region,
-   data-spw-ingredient-phase, data-spw-expression-salience, .spw-grid, .spw-card
-   Genome — custom properties defined: 6; intent hooks consumed:
+   data-spw-ingredient-phase, data-spw-expression-salience, data-spw-canopy,
+   data-spw-extent, .spw-grid, .spw-card
+   Genome — custom properties defined: 7; intent hooks consumed:
    --spw-enhancement-factor, --spw-image-brightness
    Probe: put six cards in a grid and one card alone in a frame on the same
    page; the six should sit back. html[data-spw-debug-layers="on"] shows owners.
+   data-spw-canopy is written by region-profiler.js (public/js/runtime/
+   region-profiler.js): put a closed region right before a plain one and the
+   plain one's own cards should sit back too, without either being in the
+   same grid.
    Tier: enhancement — every surface here is legible with this file absent.
    ========================================================================== */
 
@@ -28265,6 +28281,13 @@ html[data-spw-theme-pack="electric-studio"] {
   --spw-canopy-depth: 0;
   /* Edge occlusion, projected by positioning-orchestration when it lands. */
   --spw-canopy-edge: 0;
+  /* Shade cast by the region immediately before this one, from its
+     data-spw-canopy receipt. Kept separate from --spw-canopy for the same
+     reason as --spw-canopy-depth: a property that reads its own inherited
+     value while a sibling rule also assigns it is fine, but folding a
+     cross-region signal into the same token a component's own grid sets
+     would make the two impossible to tell apart when debugging. */
+  --spw-canopy-sibling: 0;
   /* Presence accrued through age or traversal. 0 = new growth. */
   --spw-presence: 0;
 
@@ -28279,6 +28302,7 @@ html[data-spw-theme-pack="electric-studio"] {
         var(--spw-canopy)
         + var(--spw-canopy-depth)
         + var(--spw-canopy-edge)
+        + var(--spw-canopy-sibling)
         /* --spw-edge-proximity arrives 0..1 from the MEASURE pass; absent, the
            fallback contributes nothing and structural density stands alone. */
         + calc(var(--spw-edge-proximity, 0) * 0.14)
@@ -28340,9 +28364,36 @@ html[data-spw-theme-pack="electric-studio"] {
 :where([data-spw-extent="contained"]) { --spw-canopy-edge: 0.08; }
 :where([data-spw-extent="squat"]) { --spw-canopy-edge: 0; }
 
+/* Region occupancy is measured too, not only guessed from a class name.
+   region-profiler.js counts a profiled region's card-like children and
+   grandchildren (never deeper — a nested profiled sub-region's own cards
+   should not inflate its parent's count, and REGION_SELECTORS matches
+   <main> on most routes, which would otherwise tally every card on the
+   page) and writes data-spw-canopy — clearing / dappled / closed — using
+   the same 6/10 breakpoints as the structural :has() rules above, so a
+   cluster built without a `-grid` class still reports how crowded it is.
+   These rules sit after the structural ones and share their specificity,
+   so the measured reading wins wherever both apply. */
+:where([data-spw-canopy="dappled"]) { --spw-canopy: 0.5; }
+:where([data-spw-canopy="closed"]) { --spw-canopy: 0.72; }
+:where([data-spw-canopy="clearing"]) { --spw-canopy: 0; }
+
+/* Sibling canopy: a closed or dappled region casts shade forward onto
+   whatever sits right after it — canopy shading a neighbour, not only its
+   own descendants (component-biome.spw wonder 2). Adjacent-sibling only,
+   so the effect stays local instead of drifting down the whole page.
+   Budget: 2 selectors, per that wonder's probe. */
+:where([data-spw-canopy="closed"]) + .spw-frame {
+  --spw-canopy-sibling: 0.22;
+}
+
+:where([data-spw-canopy="dappled"]) + .spw-frame {
+  --spw-canopy-sibling: 0.1;
+}
+
 /* What shade actually does. Contrast and saturation fall; nothing moves, and
    nothing is hidden — understory is still legible, it is simply further off. */
-:where(.spw-card, .frame-card, .media-card):where(:not([data-spw-canopy="clearing"])) {
+:where(.spw-card, .frame-card, .media-card) {
   filter:
     saturate(calc(1 - var(--spw-biome-attenuation) * 0.22))
     contrast(calc(1 - var(--spw-biome-attenuation) * 0.06));
@@ -28370,7 +28421,7 @@ html[data-spw-theme-pack="electric-studio"] {
 /* Established growth holds a contour on its leading edge — the boonhonk plate's
    hard boundary rather than a halo. Inline-start only: a full outline reads as
    selection, and this is age, not state. */
-:where([data-spw-presence-contour], [data-spw-ingredient-phase], [data-spw-expression-salience]) {
+:where([data-spw-ingredient-phase], [data-spw-expression-salience]) {
   box-shadow: inset calc(2px * var(--spw-presence)) 0 0 -1px
     color-mix(in srgb, var(--spw-biome-warm) calc(var(--spw-presence) * 52%), transparent);
 }
@@ -28391,6 +28442,7 @@ html[data-spw-theme-pack="electric-studio"] {
   --spw-canopy: 0;
   --spw-canopy-depth: 0;
   --spw-canopy-edge: 0;
+  --spw-canopy-sibling: 0;
   --spw-presence: 0;
 }
 
@@ -28400,6 +28452,7 @@ html[data-spw-theme-pack="electric-studio"] {
   --spw-canopy: 0;
   --spw-canopy-depth: 0;
   --spw-canopy-edge: 0;
+  --spw-canopy-sibling: 0;
   --spw-presence: 0;
 }
 
@@ -28414,6 +28467,7 @@ html[data-spw-theme-pack="electric-studio"] {
     --spw-canopy: 0;
     --spw-canopy-depth: 0;
     --spw-canopy-edge: 0;
+    --spw-canopy-sibling: 0;
   }
 }
 }
@@ -30734,12 +30788,22 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .frame-card, .frame-panel) 
 }
 
 /* Channel: placing an acted terminal into a region multiplies hold.
-   Material lives in projection-attenuation.css. This only names the role. */
-:where([data-spw-region="hook"]) { --spw-channel: store; --spw-e-channel: 1.15; }
+   Material lives in projection-attenuation.css. This only names the role.
+   data-spw-region is seat-exclusive (region-component-ecology.spw) — it
+   names one of six page seats and only ever appears on a .spw-frame. Most
+   hero/entry seats site-wide are marked with the region-role alias alone
+   (204 of 212 entry-spine authorings carry no data-spw-region="hook" at
+   all), so a rule keyed only to the bare attribute misses the seat almost
+   every time it is asked to recognize one. data-spw-region-role has no such
+   restriction — region-seats.css and projection-attenuation.css already
+   read entry-spine/reading as hook/read for seat layout; path-node has no
+   seat equivalent (it marks a step inside a sequence, not a seat itself)
+   but still deserves a channel, so it is read here as an alias of path. */
+:where([data-spw-region="hook"], [data-spw-region-role="entry-spine"]) { --spw-channel: store; --spw-e-channel: 1.15; }
 :where([data-spw-region="hub"], [data-spw-region="wide"]) { --spw-channel: conduct; --spw-e-channel: 1; }
 :where([data-spw-region="cluster"]) { --spw-channel: couple; --spw-e-channel: 0.85; }
-:where([data-spw-region="path"]) { --spw-channel: leak; --spw-e-channel: 0.72; }
-:where([data-spw-region="read"]) { --spw-channel: resist; --spw-e-channel: 0.55; }
+:where([data-spw-region="path"], [data-spw-region-role="path-node"]) { --spw-channel: leak; --spw-e-channel: 0.72; }
+:where([data-spw-region="read"], [data-spw-region-role="reading"]) { --spw-channel: resist; --spw-e-channel: 0.55; }
 
 /* Multidimensional electrostatics: terminal × channel × nest. Edge is proximity, not a fourth field. */
 :where([data-spw-operator]) { --spw-e-terminal: 1; }
@@ -30753,10 +30817,14 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .frame-card, .frame-panel) 
   );
 }
 
-/* Induction: kin of a charged terminal echo without their own charge attr. */
+/* Induction: kin of a charged terminal echo without their own charge attr.
+   [data-spw-region-role] alongside the seat attribute for the same reason
+   as the channel rules above — most seats only carry the role alias. */
 :where(
   [data-spw-region]:has([data-spw-operator][data-spw-charge="charged"]),
-  [data-spw-region]:has([data-spw-operator][data-spw-charge-phase="charged"])
+  [data-spw-region]:has([data-spw-operator][data-spw-charge-phase="charged"]),
+  [data-spw-region-role]:has([data-spw-operator][data-spw-charge="charged"]),
+  [data-spw-region-role]:has([data-spw-operator][data-spw-charge-phase="charged"])
 ) {
   --spw-induced-field: calc(
     var(--spw-projected-field, var(--spw-charge-field, 0))
