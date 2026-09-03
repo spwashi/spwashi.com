@@ -49,9 +49,11 @@ expression = consumer[report]{defect.gap.built}<upstream>
 
 ^"parse_entry_points_disagree"{
   claim: "parseExpression truncates where parse structures, and reports success while doing it."
+  ~#resolved(2026-09-03, workbench 75d8f9d26253, commit f3061c5): "verified live: surfaces[route]{path.role.archetype}<publish> now consumes the full 45 characters under parseExpression and returns one Expression node — the same fix that binds same-line [frame]/{body}/<capsule> onto one noun for parse() too. The fix asked for below (`fix:`) landed. Kept this facet rather than deleting it: the cost line is the reason the gap mattered, and the site's own tooling (spw-runtime-parser.js, spw-block-association.js) still names entry: 'parse' as the default on principle, not because parseExpression is broken anymore."
   example = `surfaces[route]{path.role.archetype}<publish>`
   parse_result: "Capsule → Operation → ModifierChain → Frame → Parameter → Body"
-  parse_expression_result: "consumes 8 of 45 characters, returns success: true"
+  parse_expression_result_before_fix: "consumes 8 of 45 characters, returns success: true"
+  parse_expression_result_after_fix: "consumes 45 of 45 characters, returns one Expression with frame/body as its own fields"
   measured: .{
     authored_expressions = 461
     structuring_under_parse = 461
@@ -59,7 +61,17 @@ expression = consumer[report]{defect.gap.built}<upstream>
   }[reg=facet]
   ~#reading: `only sigil-led forms begin an operation in the standalone entry point`
   ~#cost: "an early consumer check used parseExpression and concluded the site's copy was malformed. The copy was correct and the API was not."
-  fix: "make parseExpression consume the full expression, or error rather than under-consume"
+  fix: "make parseExpression consume the full expression, or error rather than under-consume — DONE"
+}
+
+^"project_join_degrades_to_prose"{
+  ~#note: "Found re-verifying the corpus against the 2026-09-03 rebuild above, not present against 993c0994d016."
+  claim: "~> (project-join) inside a {body}, with nothing after it to close a <capsule>, now degrades the whole parse to Prose rather than structuring it — success:true, 0 errors, but a warnings entry names it explicitly."
+  example = `cauldron[garden]{sow ~> tend ~> harvest}`
+  warning_message = `Structured parse stopped at CAPSULE_CLOSE ">"; surface degraded to prose.`
+  ~#reading: `the same postfix-binding work that fixed parseExpression above appears to read the lone > in ~> as an unmatched capsule-close now, where 993c0994d016 read it as two ordinary characters`
+  ~#cost: "none measured on this site — every consumer here (readJoinChain, kernelJoinFromTokens) reads ~> at the string/token level and never trusted the assembled AST's node types beyond parse().success/errors.length, so all 14 authored project-join expressions still resolve correctly through the manifest and spw:integrity. A consumer that walks the AST instead of the tokens would see Prose/ProseChunk where it expected Sequence/Operation."
+  fix: "disambiguate ~> from a lone capsule-close, or lex ~> as one PROJECT token rather than OPERATOR '~' followed by CAPSULE_CLOSE '>'"
 }
 
 ^"lattice_reads_one_form"{

@@ -49,16 +49,41 @@ anything in the target. All 2480 citations currently resolve.
 - `spw lattice` reads only `~#name(body)` unit cells. Plain `~#name:` apposition
   — the form nearly every surface here uses — is invisible to it, so the
   corpus reported zero readings while carrying thousands.
-- **`parseExpression()` and `parse()` disagree.** The authored noun form
-  `subject[mode]{parts}<projection>` — used by every `expression = …`
-  declaration here and by all 441 `data-spw-semantic-expression` values in the
-  routes — becomes a full container sequence under `parse()`
-  (Capsule → Operation → ModifierChain → Frame → Parameter → Body). Under
-  `parseExpression()` the same text truncates at its leading identifier:
-  `surfaces[route]{path.role.archetype}<publish>` consumes 8 of 45 characters
-  and reports success. Only sigil-led expressions (`&` `~` `^` `$` `?`) start an
-  operation there. A consumer reaching for the obvious per-expression API gets a
-  silent truncation, so `npm run spw:integrity` checks with `parse()`.
+- **`parseExpression()` and `parse()` disagree** — RESOLVED at workbench
+  `75d8f9d26253` (2026-09-03 rebuild, `npm run build:spw-parser`; was pinned
+  to `993c0994d016`, 135 commits behind). The noun form `subject[mode]{parts}
+  <projection>` used to truncate under `parseExpression()` at its leading
+  identifier (`surfaces[route]{path.role.archetype}<publish>` consumed 8 of
+  45 characters and reported success); verified it now consumes the full 45
+  and returns one `Expression` node with `frame`/`body` as its own fields
+  (commit `f3061c5`, "bind same-line postfix containers onto one noun" — the
+  same fix unifies `parse()`'s output too: a bare noun form used to become
+  three sibling `Sequence` items, Identifier/Frame/Body juxtaposed with
+  nothing connecting them; it is now one `Expression` carrying `frame` and
+  `body` as named fields, plus a structured `identifier: {segments,
+  qualified}` on dotted tokens that `readBodyJoins`'s regex used to have to
+  re-derive). `npm run spw:integrity` still checks with `parse()` on
+  principle — the two entry points converging on real content is not a
+  reason to stop naming which one is canonical.
+- **`~>` (project-join) inside a body degrades to prose when nothing follows
+  it with a matching `<capsule>`.** Found while re-verifying the site's
+  corpus against the rebuild above. `cauldron[garden]{sow ~> tend ~> harvest}`
+  and the doc example a few lines up, `scrap ~> mill ~> temper`, both still
+  `parse()` with `success: true` and zero errors, but the AST's top node is
+  now `Prose` (with `ProseChunk` fragments), not `Sequence`/`Operation`, and
+  a `warnings` entry names it: `"Structured parse stopped at CAPSULE_CLOSE
+  '>'; surface degraded to prose."` The same postfix-binding work that fixed
+  the two gaps above appears to have made `>` bind more eagerly toward
+  capsule-closing, and an unmatched `>` from `~>` (no preceding `<`) now
+  falls outside what the structured grammar can place, rather than being
+  read as two ordinary characters the way `993c0994d016` read it. No impact
+  found on this site in practice: every consumer here reads `~>` at the
+  string/token level (`readJoinChain`, `kernelJoinFromTokens`), never by
+  trusting the assembled AST's node types beyond `parse().success` and
+  `errors.length`, so the manifest, `spw:integrity`, and all 655 authored
+  expressions with a `project` join still resolve correctly — this is
+  recorded because the *AST itself* is now unreliable for `~>`-bodies, and a
+  future consumer that walks the tree instead of the tokens would not be.
 
 This site is the use case meant to discover gaps like these; each is recorded
 here with the measurement that found it rather than worked around in silence.

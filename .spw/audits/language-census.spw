@@ -1,4 +1,4 @@
-# Language Census — generated 2026-07-11
+# Language Census — generated 2026-09-03
 #
 # GENERATED ARTIFACT — do not hand-edit. Regenerate: npm run census
 # (npm run census:json emits the full uncapped report for agent loops.)
@@ -7,7 +7,7 @@
 
 #>language_census
 #:audit #!language #!attributes #!events
-#:operation #!observe
+#:operation observe
 
 @generator: ~"../../scripts/language-census.mjs"
 @inventory_core: ~"../../scripts/lib/spw-inventory-core.mjs"
@@ -21,10 +21,10 @@ operation = "observe"
 fixity = "tending"
 
 audit_run: .{
-  at = `2026-07-11`
+  at = `2026-09-03`
   method = `collector scan of js/css/html/spw surfaces; word-boundary homonyms; SPW_*_CONTRACT block enumeration`
   generator_version = 2
-  files_scanned = `js:199 css:143 html:149 spw:170`
+  files_scanned = `js:260 css:170 html:492 spw:317`
 }[reg=facet]
 
 ^"dimensions"{
@@ -34,113 +34,132 @@ audit_run: .{
 }[reg=facet]
 
 ^"totals"{
-  attributes = 1312
-  attrs_full_trace_js_css_spw = 251
-  attrs_unregistered_in_spw = 725
-  attrs_js_only = 241
-  attrs_css_only = 222
-  attrs_contract_enumerated = 128
-  attrs_contract_and_convention = 74
-  contract_objects = 28
-  stem_families = 416
-  events_total = 185
-  events_broadcast_spw = 77
-  events_bus_local = 108
+  attributes = 1502
+  attrs_full_trace_js_css_spw = 357
+  attrs_unregistered_in_spw = 823
+  attrs_js_only = 200
+  attrs_css_only = 244
+  attrs_contract_enumerated = 163
+  attrs_contract_and_convention = 97
+  contract_objects = 46
+  stem_families = 470
+  events_total = 203
+  events_broadcast_spw = 86
+  events_bus_local = 117
 }[reg=facet]
 
 ^"suffix_taxonomy"{
-  state = 64
+  state = 69
   mode = 29
-  count = 22
+  active = 26
+  count = 24
   label = 22
-  active = 22
-  phase = 20
-  kind = 19
-  role = 16
-  posture = 14
+  phase = 21
+  kind = 20
+  role = 17
+  posture = 17
   source = 13
   resolved = 13
-  tier = 11
-  surface = 10
-  context = 10
+  surface = 12
+  context = 12
+  tier = 12
+  family = 11
   action = 10
-  status = 9
 }[reg=facet]
 
 ^"stem_families"{
-  page = "members:35 full:6 unreg:15 contract:1"
-  svg = "members:33 full:8 unreg:24 contract:16"
-  module = "members:32 full:4 unreg:22 contract:19"
-  cauldron = "members:26 full:5 unreg:17 contract:0"
-  query = "members:26 full:1 unreg:20 contract:2"
-  image = "members:24 full:3 unreg:18 contract:0"
-  sigil = "members:23 full:5 unreg:7 contract:0"
-  interaction = "members:19 full:5 unreg:6 contract:0"
-  discovery = "members:19 full:0 unreg:19 contract:0"
+  svg = "members:39 full:8 unreg:29 contract:16"
+  module = "members:38 full:5 unreg:25 contract:23"
+  page = "members:35 full:11 unreg:15 contract:1"
+  cauldron = "members:30 full:8 unreg:20 contract:0"
+  query = "members:26 full:2 unreg:20 contract:2"
+  image = "members:25 full:7 unreg:15 contract:0"
+  region = "members:25 full:8 unreg:10 contract:4"
+  sigil = "members:23 full:7 unreg:7 contract:0"
+  interaction = "members:20 full:7 unreg:7 contract:0"
+  discovery = "members:20 full:0 unreg:20 contract:0"
+  layout = "members:20 full:5 unreg:11 contract:6"
   state = "members:18 full:3 unreg:13 contract:0"
-  region = "members:18 full:5 unreg:8 contract:4"
-  layout = "members:17 full:4 unreg:11 contract:6"
-  operator = "members:15 full:5 unreg:5 contract:0"
-  feature = "members:15 full:6 unreg:5 contract:10"
+  operator = "members:17 full:7 unreg:5 contract:0"
+  handle = "members:17 full:3 unreg:14 contract:0"
+  active = "members:16 full:0 unreg:11 contract:0"
+  runtime = "members:16 full:0 unreg:12 contract:0"
+  feature = "members:16 full:7 unreg:5 contract:11"
+  scene = "members:16 full:7 unreg:7 contract:0"
   effect = "members:15 full:0 unreg:15 contract:0"
+  lens = "members:15 full:3 unreg:6 contract:0"
   semantic = "members:14 full:4 unreg:2 contract:0"
-  runtime = "members:14 full:0 unreg:11 contract:0"
-  handle = "members:14 full:2 unreg:11 contract:0"
-  component = "members:14 full:5 unreg:3 contract:0"
+  component = "members:14 full:4 unreg:3 contract:0"
   route = "members:14 full:0 unreg:9 contract:0"
-  scene = "members:14 full:5 unreg:5 contract:0"
   chrome = "members:14 full:1 unreg:2 contract:0"
-  palette = "members:13 full:6 unreg:5 contract:0"
-  shell = "members:13 full:1 unreg:11 contract:0"
 }[reg=facet]
 
 ^"homonym_spread"{
-  settle = "js:50f/356x css:58f/446x"
-  prime = "js:43f/237x css:16f/84x"
-  charge = "js:47f/423x css:41f/404x"
-  ground = "js:41f/208x css:24f/100x"
-  arc = "js:47f/132x css:23f/107x"
-  phase = "js:58f/596x css:37f/390x"
-  harmony = "js:9f/32x css:5f/12x"
-  tempo = "js:16f/60x css:9f/55x"
-  climate = "js:17f/197x css:12f/516x"
-  spell = "js:53f/473x css:17f/355x"
+  settle = "js:67f/434x css:76f/514x"
+  prime = "js:46f/347x css:25f/101x"
+  charge = "js:63f/514x css:58f/590x"
+  ground = "js:60f/309x css:38f/169x"
+  arc = "js:53f/246x css:34f/132x"
+  phase = "js:68f/702x css:49f/471x"
+  harmony = "js:13f/47x css:7f/36x"
+  tempo = "js:20f/69x css:13f/70x"
+  climate = "js:23f/236x css:20f/533x"
+  spell = "js:69f/560x css:24f/375x"
 }[reg=facet]
 
 contract_objects: #[
   `SPW_COMPOSITION_CONTRACT — public/js/compose.js`,
+  `SPW_CANVAS_ACCENTS_CONTRACT — public/js/interface/canvas-accents.js`,
+  `SPW_DEVELOPMENTAL_CLIMATE_CONTRACT — public/js/interface/developmental-climate.js`,
+  `SPW_WONDER_MEMORY_CONTRACT — public/js/interface/wonder-memory.js`,
   `SPW_DOM_RENDER_CONTRACT — public/js/kernel/dom-render.js`,
   `SPW_HYDRATION_CONTRACT — public/js/kernel/hydration.js`,
   `SPW_INSTRUMENTATION_CONTRACT — public/js/kernel/instrumentation.js`,
   `SPW_SVG_TUNABILITY_CONTRACT — public/js/media/svg-tunability.js`,
   `SPW_BEHAVIOR_SCOPES_CONTRACT — public/js/runtime/behavior-scopes.js`,
+  `SPW_CHARGE_FIELD_CONTRACT — public/js/runtime/charge-field.js`,
   `SPW_COMPONENT_COLLECTION_CONTRACT — public/js/runtime/component-collection.js`,
   `SPW_COMPOSITION_BOX_MODEL_CONTRACT — public/js/runtime/composition-box-model.js`,
+  `SPW_DEBUG_QA_CONTRACT — public/js/runtime/debug-qa-posture.js`,
   `SPW_FEATURE_DISCOVERY_CONTRACT — public/js/runtime/feature-discovery.js`,
+  `SPW_FEATURE_LAB_UI_CONTRACT — public/js/runtime/feature-lab-ui.js`,
   `SPW_FEATURE_LAB_CONTRACT — public/js/runtime/feature-lab.js`,
   `SPW_GESTURE_CONTRACT — public/js/runtime/gesture-contract.js`,
   `SPW_HYDRATION_PASSES_CONTRACT — public/js/runtime/hydration-passes.js`,
   `SPW_LAYOUT_ASSUMPTIONS_CONTRACT — public/js/runtime/layout-assumptions.js`,
+  `SPW_LAYOUT_QA_CONTRACT — public/js/runtime/layout-qa.js`,
   `SPW_LOADING_ECOLOGY_CONTRACT — public/js/runtime/loading-ecology.js`,
+  `SPW_MODULE_DESCRIBES_CONTRACT — public/js/runtime/module-describes-contract.js`,
   `SPW_MODULE_EXPORT_CONTRACT — public/js/runtime/module-export-contract.js`,
   `SPW_MODULE_LOADER_CONTRACT — public/js/runtime/module-loader.js`,
   `SPW_MODULE_UPDATES_CONTRACT — public/js/runtime/module-updates-contract.js`,
   `SPW_NAVIGATION_LOCOMOTION_CONTRACT — public/js/runtime/navigation-locomotion.js`,
   `SPW_PAGE_HOOK_CONTRACT — public/js/runtime/page-hooks.js`,
   `SPW_PAGE_STATE_CONTRACT — public/js/runtime/page-state.js`,
+  `SPW_PHYSICAL_MODEL_CONTRACT — public/js/runtime/physical-model.js`,
+  `SPW_PULSE_BEAT_TUNER_CONTRACT — public/js/runtime/pulse-beat-tuner.js`,
   `SPW_QUERY_COMPOSER_CONTRACT — public/js/runtime/query-link-composer.js`,
+  `SPW_REGION_KIN_CONTRACT — public/js/runtime/region-kin.js`,
   `SPW_REGION_PROFILER_CONTRACT — public/js/runtime/region-profiler.js`,
   `SPW_RUNTIME_HELPERS_CONTRACT — public/js/runtime/runtime-helpers.js`,
   `SPW_SETTINGS_MOMENTUM_CONTRACT — public/js/runtime/settings-momentum.js`,
   `SPW_SPATIAL_GRAVITY_CONTRACT — public/js/runtime/spatial-gravity.js`,
+  `SPW_HERO_KINETIC_STAGE_CONTRACT — public/js/runtime/spw-hero-kinetic-stage.js`,
+  `SPW_TUNING_CONTRACT — public/js/runtime/tuning-contract.js`,
+  `SPW_INTERACTION_EXPRESSION_CONTRACT — public/js/semantic/interaction-expression.js`,
   `SPW_NARRATIVE_INSTRUMENTATION_CONTRACT — public/js/semantic/narrative-instrumentation.js`,
   `SPW_PRETEXT_MEASUREMENT_BUS_CONTRACT — public/js/semantic/pretext-measurement-bus.js`,
-  `SPW_ROLE_INFERENCE_CONTRACT — public/js/semantic/role-inference.js`
+  `SPW_ROLE_INFERENCE_CONTRACT — public/js/semantic/role-inference.js`,
+  `SPW_BLOCK_ASSOCIATION_CONTRACT — public/js/semantic/spw-block-association.js`,
+  `SPW_COMPOSE_CONTRACT — public/js/semantic/spw-compose.js`,
+  `SPW_EXPRESSION_GEOMETRY_CONTRACT — public/js/semantic/spw-expression-geometry.js`,
+  `SPW_RUNTIME_PARSER_CONTRACT — public/js/semantic/spw-runtime-parser.js`
 ][reg=set]
 
 attrs_css_only_never_written_by_js: #[
   `data-spw-accent-concept`,
   `data-spw-active-layers`,
+  `data-spw-active-lens`,
   `data-spw-active-lens-mode`,
   `data-spw-allocation`,
   `data-spw-anatomy-state`,
@@ -161,13 +180,12 @@ attrs_css_only_never_written_by_js: #[
   `data-spw-breadcrumb-viewport`,
   `data-spw-brush-active`,
   `data-spw-brush-mode`,
+  `data-spw-cauldron-brew`,
   `data-spw-charge-direction`,
   `data-spw-charge-phase`,
-  `data-spw-charge-state`,
   `data-spw-child-active`,
   `data-spw-chrome-collapse`,
   `data-spw-chrome-fluid`,
-  `data-spw-chrome-island`,
   `data-spw-chrome-position`,
   `data-spw-chrome-tier`,
   `data-spw-circuit-role`,
@@ -187,59 +205,59 @@ attrs_css_only_never_written_by_js: #[
   `data-spw-content`,
   `data-spw-context-match`,
   `data-spw-controls-open`,
-  `… +174 more`
+  `… +196 more`
 ][reg=set]
 
 attrs_js_only_never_spent_or_registered: #[
-  `data-spw-active-beat`,
+  `data-spw-accent-count`,
   `data-spw-active-beat-reason`,
-  `data-spw-active-beat-state`,
-  `data-spw-active-sigil`,
-  `data-spw-active-sigil-operator`,
-  `data-spw-active-sigil-page`,
-  `data-spw-active-sigil-region`,
+  `data-spw-active-region-contrast`,
+  `data-spw-active-region-resonate`,
   `data-spw-age`,
   `data-spw-alignment-hint`,
+  `data-spw-anatomy-discoverability`,
+  `data-spw-arrival-shell`,
+  `data-spw-attention-context`,
   `data-spw-attention-panel-close`,
   `data-spw-attention-panel-global`,
   `data-spw-attention-panel-local`,
   `data-spw-attention-panel-self`,
   `data-spw-attention-panel-summary`,
-  `data-spw-attention-posture`,
   `data-spw-attention-posture-label`,
   `data-spw-author-mode`,
-  `data-spw-bare-spw-enhanced`,
+  `data-spw-beat-cadence`,
   `data-spw-bookmarks-root`,
-  `data-spw-bottom-lane-handle`,
-  `data-spw-brace-nesting`,
   `data-spw-brace-physics`,
   `data-spw-breadcrumb-action`,
   `data-spw-breadcrumb-selector`,
   `data-spw-cadence-day`,
   `data-spw-cast-form`,
+  `data-spw-cauldron-capacity`,
   `data-spw-cauldron-chip-count`,
   `data-spw-cauldron-chip-phase`,
   `data-spw-cauldron-remove`,
-  `data-spw-checkpoint`,
+  `data-spw-cauldron-visibility`,
   `data-spw-collected-kind`,
   `data-spw-collection-action`,
-  `data-spw-composition-stability-resolved`,
   `data-spw-confidence`,
   `data-spw-context-features`,
-  `data-spw-context-resolved`,
-  `data-spw-delimiter`,
-  `data-spw-design-ecology`,
+  `data-spw-crawl-close`,
+  `data-spw-crawl-open`,
+  `data-spw-debug-layout`,
   `data-spw-developmental-author-label`,
   `data-spw-developmental-label`,
   `data-spw-developmental-menu`,
+  `data-spw-deviation-state`,
+  `data-spw-discovery-cache`,
   `data-spw-discovery-credits`,
-  `data-spw-discovery-notice`,
-  `data-spw-discovery-notice-modal`,
   `data-spw-discovery-notice-module`,
-  `data-spw-discovery-notice-stack`,
   `data-spw-effect-axis`,
   `data-spw-effect-charge`,
-  `… +193 more`
+  `data-spw-effect-cues`,
+  `data-spw-effect-ledger-count`,
+  `data-spw-effect-ledger-last`,
+  `data-spw-effect-legend`,
+  `… +152 more`
 ][reg=set]
 
 events_emitted_never_heard: #[
@@ -248,7 +266,9 @@ events_emitted_never_heard: #[
   `canvas:painted`,
   `cauldron:ingredient-refreshed`,
   `cauldron:offer`,
+  `cauldron:vessel`,
   `copy:failed`,
+  `copy:succeeded`,
   `core:knowledge`,
   `design:ecology-state`,
   `electromagnetic:initialized`,
@@ -263,9 +283,15 @@ events_emitted_never_heard: #[
   `key:actualized`,
   `key:potentiated`,
   `key:released`,
+  `mode:seat-close`,
+  `mode:seat-open`,
+  `operator:grounded`,
+  `operator:ungrounded`,
   `page-anatomy:focus`,
   `page-anatomy:parallel`,
   `persona:projected`,
+  `positioning:mounted`,
+  `positioning:shifted`,
   `presets:measured`,
   `prompt:copied`,
   `recipe:complexity`,
@@ -279,19 +305,11 @@ events_emitted_never_heard: #[
   `semantic-crossref:cleared`,
   `semantic-crossref:focused`,
   `sequence:selected`,
+  `settings:density-changed`,
   `settings:deviations-changed`,
   `sigil:collected`,
   `sigil:transition`,
-  `spell:primed`,
-  `spw:achievement-unlocked`,
-  `spw:beat:flush`,
-  `spw:beat:start`,
-  `spw:chrome-interaction`,
-  `spw:collection-updated`,
-  `spw:core-refresh`,
-  `spw:discovery-notice-shown`,
-  `spw:hash-target`,
-  `… +27 more`
+  `… +44 more`
 ][reg=set]
 
 events_heard_never_emitted: #[
@@ -327,7 +345,6 @@ events_heard_never_emitted: #[
   `spw:layout-shift`,
   `spw:loading-ecology`,
   `spw:memory:recent-path`,
-  `spw:mode-change`,
   `spw:page-attention-state`,
   `spw:page-extended`,
   `spw:page-transition-state`,
@@ -340,8 +357,10 @@ events_heard_never_emitted: #[
   `spw:settings-momentum`,
   `spw:settings:changed`,
   `spw:shell-menu-state`,
+  `spw:variant-selected`,
   `stream:phase`,
-  `stream:pulse`
+  `stream:pulse`,
+  `wonder:memorized`
 ][reg=set]
 
 bus_local_event_domains: #[
@@ -364,9 +383,11 @@ bus_local_event_domains: #[
   `key`,
   `lattice`,
   `memory`,
+  `mode`,
   `operator`,
   `page-anatomy`,
   `persona`,
+  `positioning`,
   `presets`,
   `prime`,
   `prompt`,
@@ -388,7 +409,8 @@ bus_local_event_domains: #[
   `topic`,
   `topical`,
   `universe`,
-  `visitation`
+  `visitation`,
+  `wonder`
 ][reg=set]
 
 note "css-only attributes are either authored-HTML-driven (fine) or dead selectors; js-only attributes are unspent state or narration missing its convention registration. Both lists are the census's working surface — each entry either gains its missing trace legs or gets retired via the homonym-renaming / language-reclustering plans. attrs_contract_and_convention is the honest trace-rule floor: enumerated in a frozen JS contract AND registered in .spw."

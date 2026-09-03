@@ -238,7 +238,7 @@ export const SPW_BLOCK_ASSOCIATION_CONTRACT = Object.freeze({
   apply: applyExpressionSlots,
   challenge: challengeSpwDefinition,
   entry: 'parse',
-  refuse: 'parseExpression truncates identifier-led noun forms',
+  refuse: 'parse() is the general entry point; parseExpression() no longer truncates as of workbench 75d8f9d26253 (2026-09-03) but stays the narrower, single-expression form',
 });
 
 export const SPW_MODULE_EXPORT = Object.freeze({
