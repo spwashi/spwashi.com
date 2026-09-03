@@ -6,7 +6,12 @@
    - Uses subtle structural, spatial, and interaction cues.
    - Maintains full backward compatibility with older [data-spw-spirit-phase].
    - Consumes modern --climate-* variables when available.
+   Loaded with the climate runtime — weather, not first-paint structure.
    ========================================================================== */
+
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer effects {
 
 /* ==========================================================================
    1. Climate Interface + Legacy Aliases
@@ -678,3 +683,5 @@ body {
    earlier-layer-first across @layer boundaries, restating it here (effects
    layer, which loads after reset) had zero effect — reset's copy always
    won this contest regardless of specificity. */
+
+}

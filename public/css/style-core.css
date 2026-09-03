@@ -111,8 +111,7 @@
 /* grain, cinematic, circuit anatomy, metaphysical paper, and wonder
    idle-load through flourish-pack.css.
    Tokens stay here (flourish-defaults). Spend is atmosphere, not first paint. */
-@import url('/public/css/effects/developmental-climate.css') layer(effects);
-@import url('/public/css/effects/enrichment.css') layer(effects);
+/* developmental-climate.css and enrichment.css load with the climate runtime. */
 /* narrative.css loads with the opt-in narrative instrumentation module. */
 /* debug.css is loaded on demand by kernel/deferred-styles.js — every rule
    in it is gated behind data-spw-debug-mode / data-spw-debug, so it is pure

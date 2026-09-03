@@ -36,14 +36,16 @@ The literature is the selectors: `>` a child, `+` the next sibling, `:has()` a p
 - opt-in narrative token and drawer treatment loads with visible-stage narrative instrumentation
 - unmounted swipe ecology and its four forceful overrides were removed from `effects/enrichment.css`
 - theme-resonance paint loads with the cauldron when clustered kin exist; the QA bench keeps a static specimen
+- developmental-climate weather and enrichment inspection paint load with the climate runtime; coarse-pointer press stays in gesture-anatomy (first paint)
+- electromagnetic containers mount only on authored `[data-container-type]`; CSS owns the field, JS steps charge
 
 ## Remaining
 - Split route-local enhancement families further if the website route budget needs a hard ceiling; do not move their grid geometry into an idle sheet.
-- Developmental-climate and page-anatomy stay in core until a first-paint probe says they are atmosphere.
+- Page-anatomy stays in core until a first-paint probe says it is atmosphere.
 - Combinator literature is practice when touching ornament or wonder, not a new plan.
 
 ## Load-literate tolerance
-The 1638 KiB core line is a **soft** budget (`--strict-budget` to fail); current core is 1630 KiB. Named first-paint PE — `@property` interpolation, reading-groove tokens, no-JS section-handle focus / scroll-timeline, CSS `:has()` operator kinship — may sit over that line. An audience that already understands how assets load can live with the warning. Do not strip those names to go green. Still fail a late restyle that hides, moves, or resizes what they already read.
+The 1638 KiB core line is a **soft** budget (`--strict-budget` to fail); current core is under that line after climate/enrichment left. Named first-paint PE — `@property` interpolation, reading-groove tokens, no-JS section-handle focus / scroll-timeline, CSS `:has()` operator kinship — may sit over that line. An audience that already understands how assets load can live with the warning. Do not strip those names to go green. Still fail a late restyle that hides, moves, or resizes what they already read.
 
 ## Non-Goals & Boundaries
 - Do not reorder `@layer`.

@@ -358,3 +358,15 @@
 ) {
   transition: none;
 }
+
+@media (hover: none) and (pointer: coarse) {
+  :where(.frame-card:active, .spw-chip:active, .spec-pill:active, button:active) {
+    transform: scale(calc(1 - (0.008 * var(--spw-interaction-scale, 1))));
+    transition-duration: var(--touch-acknowledge, 90ms);
+    transition-timing-function: var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
+  }
+
+  :where(html[data-spw-interaction-tuner="calm"] .frame-card:active) {
+    transform: none;
+  }
+}

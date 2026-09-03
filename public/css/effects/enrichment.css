@@ -2,36 +2,17 @@
  * enrichment.css
  * --------------------------------------------------------------------------
  * Purpose:
- * - Coarse-pointer acknowledgement and enriched code block interactions.
- * - Opt-in perspective salience for developmental inspection.
+ * - Opt-in perspective salience and enriched code block interactions.
+ * - Coarse-pointer press lives in gesture-anatomy.css (first paint).
+ * Loaded with the climate runtime.
  * ========================================================================== */
 
-/* ==========================================================================
-   1. Mobile Touch Nuances
-   ========================================================================== */
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
 
-@media (hover: none) and (pointer: coarse) {
-    /* * On touch devices, 'hover' sticks. We rely on ':active' for 
-     * physical press feedback instead.
-     */
-    :where(
-        .frame-card:active,
-        .spw-chip:active,
-        .spec-pill:active,
-        button:active
-    ) {
-        transform: scale(calc(1 - (0.008 * var(--spw-interaction-scale, 1))));
-        transition-duration: var(--touch-acknowledge, 90ms);
-        transition-timing-function: var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
-    }
-
-    :where(html[data-spw-interaction-tuner="calm"] .frame-card:active) {
-        transform: none;
-    }
-}
+@layer effects {
 
 /* ==========================================================================
-   2. Perspective Posture Salience
+   1. Perspective Posture Salience
    ========================================================================== */
 
 :where(
@@ -217,4 +198,6 @@ html[data-spw-developmental-indicators="on"] :where(
     min-height: var(--touch-target-min, 2.75rem);
     min-width: var(--touch-target-min, 2.75rem);
     touch-action: manipulation;
+}
+
 }

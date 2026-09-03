@@ -167,3 +167,13 @@ export function ensureNarrativeStyles() {
 export function ensureThemeResonanceStyles() {
   return ensureDeferredStyles('spw-theme-resonance-styles', '/public/css/systems/theme-resonance.css');
 }
+
+/** Editorial climate weather, loaded with the climate runtime. */
+export function ensureDevelopmentalClimateStyles() {
+  return ensureDeferredStyles('spw-developmental-climate-styles', '/public/css/effects/developmental-climate.css');
+}
+
+/** Opt-in inspection salience and enriched code surfaces. */
+export function ensureEnrichmentStyles() {
+  return ensureDeferredStyles('spw-enrichment-styles', '/public/css/effects/enrichment.css');
+}

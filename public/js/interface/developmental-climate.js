@@ -53,6 +53,10 @@ import {
 } from '/public/js/kernel/site-settings.js';
 
 import { bus } from '/public/js/kernel/bus.js';
+import {
+  ensureDevelopmentalClimateStyles,
+  ensureEnrichmentStyles,
+} from '/public/js/kernel/deferred-styles.js';
 
 const DEVELOPMENTAL_CLIMATES = Object.freeze([
   {
@@ -514,6 +518,16 @@ const setupSettingsListener = () => {
 const initDevelopmentalClimate = () => {
   if (initialized) return;
   initialized = true;
+  ensureDevelopmentalClimateStyles();
+  const html = typeof document !== 'undefined' ? document.documentElement : null;
+  if (
+    html?.dataset?.spwDevelopmentalIndicators === 'on'
+    || html?.dataset?.spwOperationalVisibility === 'on'
+    || html?.dataset?.spwMetacognitiveStance
+    || document.querySelector?.('.frame-code-enrichment')
+  ) {
+    ensureEnrichmentStyles();
+  }
 
   const settings = getSiteSettings();
   const current = resolveCurrentClimateFromSettings(settings);
