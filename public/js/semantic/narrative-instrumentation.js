@@ -8,6 +8,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { ensureNarrativeStyles } from '/public/js/kernel/deferred-styles.js';
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 
 const NARRATIVE_PROSE_SELECTOR = [
@@ -666,6 +667,7 @@ function setNarrativeModeFromValue(value) {
 }
 
 export function initNarrativeInstrumentation() {
+  ensureNarrativeStyles();
   const html = document.documentElement;
   setNarrativeModeFromValue(html.dataset.spwNarrativeMode);
 

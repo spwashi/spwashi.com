@@ -1,0 +1,20 @@
+/* ==========================================================================
+   handles/living-motion-labels.css
+   --------------------------------------------------------------------------
+   First-paint discoverability for living-term geometry. The label participates
+   in flow, so it stays in core while additive motion arrives later.
+   ========================================================================== */
+
+:where(
+  html[data-spw-cognitive-handles="on"] .spw-living-term[data-spw-geometry],
+  html[data-spw-debug-mode="on"] .spw-living-term[data-spw-geometry]
+)::after {
+  content: attr(data-spw-geometry) " · " attr(data-spw-motion);
+  display: block;
+  margin-block-start: 0.35rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.62));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}

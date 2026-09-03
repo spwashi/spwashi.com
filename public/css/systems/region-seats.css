@@ -58,13 +58,26 @@
 }
 
 :where(.spw-frame[data-spw-region], .spw-frame[data-spw-region-role="entry-spine"]) {
+  /* Harmony/density biases plus grammar climate. Defaults (0.34 / 0.24 / 0.5)
+     cancel, so unset climate does not restyle the seat. */
   --spw-region-wash-spent: min(
     12%,
-    calc(var(--spw-region-wash, 0%) + var(--spw-harmony-wash-bias, 0%) + var(--spw-density-wash-bias, 0%))
+    calc(
+      var(--spw-region-wash, 0%)
+      + var(--spw-harmony-wash-bias, 0%)
+      + var(--spw-density-wash-bias, 0%)
+      + (6% * (var(--grammar-edge-softness, 0.24) - 0.24))
+    )
   );
   --spw-region-seam-spent: min(
     36%,
-    calc(var(--spw-region-seam, 16%) + var(--spw-harmony-seam-bias, 0%) + var(--spw-density-seam-bias, 0%))
+    calc(
+      var(--spw-region-seam, 16%)
+      + var(--spw-harmony-seam-bias, 0%)
+      + var(--spw-density-seam-bias, 0%)
+      + (8% * (var(--grammar-boundary-weight, 0.34) - 0.34))
+      + (4% * (var(--spw-pack-occupancy-weight, 0.5) - 0.5))
+    )
   );
   background:
     linear-gradient(

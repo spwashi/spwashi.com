@@ -13,6 +13,10 @@
    default one. Default (neutral-paper) visitors never fetch it at all.
    ========================================================================== */
 
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer tokens {
+
 /* Theme packs */
 html[data-spw-theme-pack="neutral-paper"] {
   --bg: hsl(42 28% 93%);
@@ -833,4 +837,5 @@ html[data-spw-theme-pack="electric-studio"] {
   --spw-image-tint: transparent;
   --spw-image-tint-strength: 0%;
   --spw-image-edge: color-mix(in srgb, var(--line-strong, #2aa) 46%, transparent);
+}
 }

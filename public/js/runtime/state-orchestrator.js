@@ -7,6 +7,8 @@
    mutable object wrapper.
    ========================================================================== */
 
+import { ensureRelationalStateStyles } from '/public/js/kernel/deferred-styles.js';
+
 const STATE_ATTR = 'data-state';
 const ATTENTION_ATTR = 'data-spw-attention';
 
@@ -63,6 +65,7 @@ export const orchestrator = Object.freeze({
 });
 
 export function bindGlobalInteractions() {
+  ensureRelationalStateStyles();
   document.addEventListener('click', (event) => {
     const frame = event.target.closest('.spw-frame, [data-spw-kind="frame"]');
     if (frame && !frame.matches('[data-state~="active"]')) {

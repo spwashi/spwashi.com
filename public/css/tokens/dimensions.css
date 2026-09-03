@@ -9,6 +9,7 @@
      to one teachable ladder without rewriting every route.
    - Owns pre-state / empty-state visibility and theme-diverse color stacks.
    - Does not spend layout rules; components and systems consume these tokens.
+   - --spw-pack-tier is an inspectable receipt. Pad/gap and --spw-pack-occupancy-weight spend.
 
    Dimension axes
    - spatial   : packing tiers, occupancy, room, measure

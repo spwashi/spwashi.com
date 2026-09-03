@@ -12,6 +12,10 @@
  * responds to. Ungated so any surface can opt a component in.
  * ========================================================================== */
 
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer systems {
+
 [data-spw-gravity] {
     --spw-edge-proximity: 0;
     --spw-proximity-top: 0;
@@ -326,4 +330,5 @@
     pointer-events: none;
     z-index: 120;
     opacity: 0.82;
+}
 }

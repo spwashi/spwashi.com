@@ -5,6 +5,10 @@
    Active when layout-assumptions.js finishes its settled pass.
    ========================================================================== */
 
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer ornament {
+
 :root {
   --spw-assumption-correction-accent: color-mix(in srgb, #c45c26 72%, #8a3b12 28%);
   --spw-assumption-correction-ink: color-mix(in srgb, #4a2b12 88%, #111 12%);
@@ -86,4 +90,5 @@ html[data-spw-debug-mode="on"][data-spw-layout-assumptions-active="true"]::befor
   text-transform: lowercase;
   pointer-events: none;
   opacity: 0.92;
+}
 }

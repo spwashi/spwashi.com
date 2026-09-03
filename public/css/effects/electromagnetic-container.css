@@ -7,6 +7,10 @@
  * Enhanced for dynamic text contrast and thematic resonance.
  * ========================================================================== */
 
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer effects {
+
 /* ==========================================================================
    1. Field Tokens & Matrix Mapping
    ========================================================================== */
@@ -323,4 +327,5 @@
 
 :where(html:not([data-spw-deviation-count="0"])) {
     --session-accumulation-resonance: 1.15;
+}
 }

@@ -10,12 +10,11 @@
  * graph, so the bundler never pulls them into core, and are appended on demand
  * instead.
  *
- * Two properties make this safe for everything registered here:
- *   1. Every rule in these files is gated behind a root attribute that is off
- *      by default, so their absence is indistinguishable from their presence
- *      until the visitor opts in.
- *   2. They only override; the :root defaults in tokens/core.css stand in
- *      until they arrive. Arriving late restyles, it never breaks layout.
+ * Two patterns make this safe for everything registered here:
+ *   1. Opt-in sheets are gated behind state that is off by default.
+ *   2. Runtime-owned sheets load with the module that creates or updates their
+ *      consumers. First-paint structure remains in core; late sheets add paint
+ *      or corrections at the lifecycle stage that owns them.
  *
  * Loads are idempotent and sheets are never removed — a visitor toggling debug
  * or switching palettes should not re-fetch.
@@ -142,4 +141,29 @@ export function ensureSpatialGravityStyles() {
  */
 export function ensureInteractionProgressionStyles() {
   return ensureDeferredStyles('spw-interaction-progression-styles', '/public/css/systems/interaction-progression.css');
+}
+
+/** Charged-paper container paint, loaded only with its optional runtime. */
+export function ensureElectromagneticContainerStyles() {
+  return ensureDeferredStyles('spw-electromagnetic-container-styles', '/public/css/effects/electromagnetic-container.css');
+}
+
+/** Settled-pass layout corrections, loaded with layout-assumptions.js. */
+export function ensureLayoutAssumptionStyles() {
+  return ensureDeferredStyles('spw-layout-assumption-styles', '/public/css/ornament/layout-assumptions.css');
+}
+
+/** Frame focus, arrival, and relation cues, loaded when interactions bind. */
+export function ensureRelationalStateStyles() {
+  return ensureDeferredStyles('spw-relational-state-styles', '/public/css/ornament/relational-state.css');
+}
+
+/** Token and drawer treatment, loaded with opt-in narrative instrumentation. */
+export function ensureNarrativeStyles() {
+  return ensureDeferredStyles('spw-narrative-styles', '/public/css/effects/narrative.css');
+}
+
+/** Theme-cluster waveform, loaded when the cauldron actually has kin to paint. */
+export function ensureThemeResonanceStyles() {
+  return ensureDeferredStyles('spw-theme-resonance-styles', '/public/css/systems/theme-resonance.css');
 }

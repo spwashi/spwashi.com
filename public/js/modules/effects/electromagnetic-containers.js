@@ -6,6 +6,7 @@
  */
 
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
+import { ensureElectromagneticContainerStyles } from '/public/js/kernel/deferred-styles.js';
 
 const CHARGE_STATES = ['conception', 'potential', 'kinetic', 'manifest'];
 const CHARGE_STATE_MAP = {
@@ -236,6 +237,7 @@ class FieldResonance {
 }
 
 export function initElectromagneticContainers(root = document) {
+    ensureElectromagneticContainerStyles();
     if (initialized) {
         return cleanupCurrent || (() => {});
     }

@@ -5,6 +5,10 @@
    Implements Attentional Cueing and Relational Resonance.
    ========================================================================== */
 
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer ornament {
+
 /* 1. Attentional Cueing (Environmental Dimming) — dim, don't mute. */
 :where(main:has(.spw-frame[data-spw-attention="focused"])) .spw-frame[data-spw-attention="dimmed"] {
   opacity: 0.62;
@@ -58,4 +62,5 @@
 
 :where(html[data-state~="preview"]) .svc-cta {
   display: flex !important;
+}
 }

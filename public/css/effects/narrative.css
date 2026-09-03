@@ -11,6 +11,10 @@
    Tier: enhancement — the prose reads correctly with this file absent.
    ========================================================================== */
 
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer effects {
+
 /* Inline grammar tokens */
 .grammar-token {
   display: inline-flex;
@@ -399,4 +403,5 @@ html[data-spw-narrative-mode="on"] :where([data-spw-narrative-copy])::selection 
   .drawer-metadata-list li {
     grid-template-columns: 1fr;
   }
+}
 }

@@ -1,7 +1,8 @@
 /* ==========================================================================
    effects/flourish-pack.css
    --------------------------------------------------------------------------
-   Idle delivery envelope for grain, texture-slice, cinematic, wonder, and ornament.
+   Idle delivery envelope for grain, texture-slice, cinematic, opt-in circuit
+   anatomy, metaphysical paper, wonder, and ornament.
    Tokens already live in tokens/flourish-defaults.css. These sheets restyle
    atmosphere only — no new layout.
 
@@ -14,5 +15,8 @@
 @import url('/public/css/effects/grain-texture.css') layer(effects);
 @import url('/public/css/effects/texture-slice.css') layer(effects);
 @import url('/public/css/effects/cinematic.css') layer(effects);
+@import url('/public/css/effects/circuit-anatomy.css') layer(effects);
+@import url('/public/css/effects/living-motions.css') layer(effects);
+@import url('/public/css/effects/metaphysical-paper.css') layer(effects);
 @import url('/public/css/effects/wonder.css') layer(effects);
 @import url('/public/css/ornament/ornament.css') layer(ornament);

@@ -15,6 +15,10 @@
    - Layer labels show diagnostic owner markers, not full CSS provenance.
    ========================================================================== */
 
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer effects {
+
 :where(
   html[data-spw-debug-mode="on"],
   [data-spw-debug~="css"],
@@ -39,7 +43,7 @@
   [data-spw-semantic-owner],
   [data-spw-layout-owner],
   [data-spw-floating-chrome="true"]
-) {
+):not(body) {
   --spw-css-debug-color: var(--active-op-color, var(--teal, #008080));
   outline: 1px dashed color-mix(in srgb, var(--spw-css-debug-color) 46%, transparent);
   outline-offset: 3px;
@@ -68,7 +72,7 @@
   [data-spw-semantic-owner],
   [data-spw-layout-owner],
   [data-spw-floating-chrome="true"]
-) {
+):not(body) {
   position: relative;
 }
 
@@ -95,11 +99,11 @@
   [data-spw-semantic-owner],
   [data-spw-layout-owner],
   [data-spw-floating-chrome="true"]
-)::before {
+):not(body)::before {
   position: absolute;
   z-index: 20;
   inset: auto auto calc(100% + 0.18rem) 0;
-  max-inline-size: min(32ch, calc(100vw - 2rem));
+  max-inline-size: min(32ch, 100%);
   overflow: hidden;
   padding: 0.16rem 0.36rem;
   border: 1px solid color-mix(in srgb, var(--spw-css-debug-color) 42%, transparent);
@@ -357,7 +361,7 @@
 )::after {
   /* Layout */
   display: inline-block;
-  max-inline-size: min(42ch, calc(100vw - 2rem));
+  max-inline-size: min(42ch, 100%);
   overflow: hidden;
   padding: 0.18rem 0.42rem;
   margin-block-start: 0.24rem;
@@ -410,4 +414,5 @@
     animation-duration: 0.01ms;
     animation-iteration-count: 1;
   }
+}
 }

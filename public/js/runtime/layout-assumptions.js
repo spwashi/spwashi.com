@@ -9,6 +9,7 @@ import {
   syncFloatingChromeState,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
+import { ensureLayoutAssumptionStyles } from '/public/js/kernel/deferred-styles.js';
 import { createSpwLogger, SPW_LOG_RELATIONSHIPS } from '/public/js/kernel/instrumentation.js';
 
 const logger = createSpwLogger('spw-layout-assumptions', {
@@ -296,6 +297,7 @@ export function snapshotLayoutAssumptions() {
 }
 
 export function initLayoutAssumptions(ctx) {
+  ensureLayoutAssumptionStyles();
   const doc = globalThis.document;
   const html = doc?.documentElement;
   if (!(html instanceof HTMLElement)) return () => {};

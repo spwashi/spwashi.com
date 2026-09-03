@@ -177,3 +177,15 @@ fixity = "tending"
   constraint = "Keep spacing, type size, DOM, route palettes, and interaction state unchanged; add no token while core remains at 1680 KiB against a 1638 KiB soft budget."
   probe = `npm run build:css:core && npm run visual:walk && node scripts/check-site.mjs && npm run check:runtime && git diff --check`
 }[reg=facet]
+
+^"core_delivery_alignment_2026_09_03"{
+  #:operation #!align
+  #:fixity #!tending
+  focus = "maintainability + first-paint spend"
+  owner = "style-core.css + scoped CSS manifest + deferred runtime styles"
+  evidence = "Core measured 1702 KiB against a 1638 KiB soft budget; several additive or route-specific sheets still shipped to every route."
+  alignment = "Flow-bearing labels and grid geometry remain synchronous; atmosphere idles, route-only grids follow route bundles, and runtime-owned paint loads with its module."
+  result = "Core 1702 → under the 1638 KiB soft line. Atmosphere idles; route-only grids follow route bundles; runtime-owned paint (containers, narrative, layout corrections, theme-resonance) loads with its module. Dormant swipe CSS and four forceful overrides were removed, and every direct deferred sheet restates its cascade owner."
+  constraint = "A late stylesheet may not insert readable content or alter first-paint packing."
+  probe = `npm run build:css -- --strict-budget --only core && npm run check:runtime && node scripts/check-site.mjs && git diff --check`
+}[reg=facet]

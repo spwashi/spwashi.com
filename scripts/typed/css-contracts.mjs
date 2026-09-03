@@ -15,6 +15,7 @@ const CSS_DIR = path.join(ROOT_DIR, 'public/css');
 const STYLE_SOURCE_DIR = path.join(ROOT_DIR, 'src/styles');
 const STYLE_MANIFEST = path.join(CSS_DIR, 'style.css');
 const STYLE_CORE_MANIFEST = path.join(CSS_DIR, 'style-core.css');
+const DEFERRED_STYLES_MODULE = path.join(ROOT_DIR, 'public/js/kernel/deferred-styles.js');
 const EXPECTED_LAYER_ORDER = 'reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament';
 const ALLOWED_ROOT_CSS_FILES = new Set([
     'compose.css',
@@ -41,31 +42,13 @@ const INTENTIONAL_STANDALONE_CSS = new Set([
     '/public/css/compose.css',
 ]);
 /**
- * Stylesheets deliberately kept out of style-core.css's import graph so the
- * bundler never pulls them into bundles/core.css. kernel/deferred-styles.js
- * appends them at runtime once the attribute that gates them is actually set.
- * Every rule inside must be gated, so absence is inert rather than broken.
- */
-/**
  * Component CSS that ships only in a route bundle, never in core. Listed in the
  * scope manifest (so the route bundle picks it up) but intentionally absent
  * from style-core.css's imports, because only one route mounts it.
  */
 const ROUTE_BUNDLE_ONLY_CSS = new Set([
     '/public/css/components/cards/profile-card.css',
-]);
-const DEFERRED_RUNTIME_CSS = new Set([
-    '/public/css/themes/packs.css',
-    '/public/css/effects/debug.css',
-    '/public/css/systems/spatial-gravity.css',
-    '/public/css/systems/interaction-progression.css',
-    '/public/css/effects/flourish-pack.css',
-    '/public/css/effects/grain-texture.css',
-    '/public/css/effects/texture-slice.css',
-    '/public/css/effects/cinematic.css',
-    '/public/css/effects/wonder.css',
-    '/public/css/ornament/ornament.css',
-    '/public/css/components/runtime-inspect.css',
+    '/public/css/effects/enhancements.css',
 ]);
 function relativeRepoPath(absolutePath) {
     return toPosixPath(path.relative(ROOT_DIR, absolutePath));
@@ -127,6 +110,95 @@ function parseStyleImports(source) {
         });
     }
     return imports;
+}
+/**
+ * Discover deferred CSS from the runtime that actually requests it. Imported
+ * pack members are followed recursively, so adding a sheet to flourish-pack
+ * does not require copying that fact into a second registry here.
+ */
+async function collectDeferredRuntimeCss(errors) {
+    const source = await fs.readFile(DEFERRED_STYLES_MODULE, 'utf8');
+    const registrationPattern = /ensureDeferredStyles\(\s*['"]([^'"]+)['"]\s*,\s*['"](\/public\/css\/[^'"]+\.css)['"]\s*\)/g;
+    const registrations = [...source.matchAll(registrationPattern)].map((match) => ({
+        id: match[1],
+        href: stripQueryHash(match[2]),
+    }));
+    const invocationCount = [...source.matchAll(/\bensureDeferredStyles\s*\(/g)].length - 1;
+    if (!registrations.length) {
+        errors.push('public/js/kernel/deferred-styles.js has no literal deferred stylesheet registrations.');
+        return new Set();
+    }
+    if (registrations.length !== invocationCount) {
+        errors.push('Every ensureDeferredStyles() call must use literal id and /public/css/*.css arguments '
+            + 'so deferred ownership remains statically inspectable.');
+    }
+    const hrefById = new Map();
+    const idByHref = new Map();
+    for (const { id, href } of registrations) {
+        const priorHref = hrefById.get(id);
+        if (priorHref && priorHref !== href) {
+            errors.push(`Deferred stylesheet id ${id} maps to both ${priorHref} and ${href}.`);
+        }
+        const priorId = idByHref.get(href);
+        if (priorId && priorId !== id) {
+            errors.push(`Deferred stylesheet ${href} is registered as both ${priorId} and ${id}.`);
+        }
+        hrefById.set(id, href);
+        idByHref.set(href, id);
+    }
+    const directlyRegistered = new Set(registrations.map(({ href }) => href));
+    const discovered = new Set();
+    const pending = registrations.map(({ href }) => href);
+    while (pending.length) {
+        const href = pending.pop();
+        if (!href || discovered.has(href))
+            continue;
+        discovered.add(href);
+        try {
+            const cssSource = await fs.readFile(path.join(ROOT_DIR, href.replace(/^\/+/, '')), 'utf8');
+            const deferredImports = parseStyleImports(cssSource);
+            if (directlyRegistered.has(href)) {
+                const expectedLayer = expectedLayerForCssPath(href);
+                const layerOrder = `@layer ${EXPECTED_LAYER_ORDER};`;
+                if (!cssSource.includes(layerOrder)) {
+                    errors.push(`${href} is directly deferred but does not restate the canonical cascade layer order.`);
+                }
+                const ownerBlockPattern = expectedLayer
+                    ? new RegExp(`@layer\\s+${expectedLayer}\\s*\\{`)
+                    : null;
+                const nonImportResidue = cssSource
+                    .replace(/\/\*[\s\S]*?\*\//g, '')
+                    .replace(/@layer\s+[^;{]+;/g, '')
+                    .replace(/@import\s+url\((['"]?)[^'")]+\1\)\s*(?:layer\([^)]+\))?\s*;/g, '')
+                    .trim();
+                if (!expectedLayer) {
+                    errors.push(`${href} is directly deferred from an unknown CSS ownership directory.`);
+                }
+                else if (nonImportResidue && !ownerBlockPattern?.test(cssSource)) {
+                    errors.push(`${href} is directly deferred and must contain its rules in @layer ${expectedLayer}.`);
+                }
+            }
+            for (const imported of deferredImports) {
+                const expectedLayer = expectedLayerForCssPath(imported.file);
+                if (!imported.layer) {
+                    errors.push(`${imported.file} is imported by deferred stylesheet ${href} without an explicit cascade layer.`);
+                }
+                else if (!expectedLayer) {
+                    errors.push(`${imported.file} is imported by deferred stylesheet ${href} from an unknown ownership directory.`);
+                }
+                else if (imported.layer !== expectedLayer) {
+                    errors.push(`${imported.file} lives under public/css/${getCssTopLevelDir(imported.file)}/ and must be imported `
+                        + `by deferred stylesheet ${href} in layer(${expectedLayer}), not layer(${imported.layer}).`);
+                }
+                if (!discovered.has(imported.file))
+                    pending.push(imported.file);
+            }
+        }
+        catch {
+            errors.push(`${href} is registered for deferred runtime delivery but does not exist.`);
+        }
+    }
+    return discovered;
 }
 async function collectLinkedStylesheets() {
     const stylesheets = new Set();
@@ -198,6 +270,7 @@ export async function collectCssContractReport() {
         ...parseStyleImports(coreSource),
     ];
     const linkedStylesheets = await collectLinkedStylesheets();
+    const deferredRuntimeCss = await collectDeferredRuntimeCss(errors);
     if (!styleSource.includes("/public/css/style-core.css")) {
         errors.push('public/css/style.css must import /public/css/style-core.css.');
     }
@@ -213,7 +286,7 @@ export async function collectCssContractReport() {
     const knownReferences = new Set([...importedFiles, ...linkedFiles]);
     knownReferences.add('/public/css/style.css');
     knownReferences.add('/public/css/style-core.css');
-    for (const href of DEFERRED_RUNTIME_CSS) {
+    for (const href of deferredRuntimeCss) {
         knownReferences.add(href);
     }
     for (const target of listBundleTargets()) {
@@ -237,6 +310,11 @@ export async function collectCssContractReport() {
         }
         catch {
             errors.push(`${item.file} is imported by the style manifest but does not exist.`);
+        }
+    }
+    for (const href of deferredRuntimeCss) {
+        if (importedFiles.has(href)) {
+            errors.push(`${href} is both deferred by the runtime and imported by style.css/style-core.css.`);
         }
     }
     const scopedRouteAndBehaviorFiles = new Set();
@@ -275,7 +353,7 @@ export async function collectCssContractReport() {
         }
     }
     for (const entry of buildPlan) {
-        if (!knownReferences.has(`/${entry.output}`) && !DEFERRED_RUNTIME_CSS.has(`/${entry.output}`)) {
+        if (!knownReferences.has(`/${entry.output}`) && !deferredRuntimeCss.has(`/${entry.output}`)) {
             errors.push(`${entry.source} generates ${entry.output}, but that output is not imported or linked.`);
         }
     }

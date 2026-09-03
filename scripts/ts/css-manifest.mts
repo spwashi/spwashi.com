@@ -103,6 +103,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/routes/surfaces/rpg-wednesday.css',
     '/public/css/systems/film-scene-composition.css',
     '/public/css/systems/scene-interaction.css',
+    '/public/css/effects/enhancements.css',
   ],
   services: [
     '/public/css/components/cards/seed-card.css',
@@ -127,6 +128,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/routes/surfaces/topics.css',
     '/public/css/systems/film-scene-composition.css',
     '/public/css/systems/scene-interaction.css',
+    '/public/css/effects/enhancements.css',
   ],
   town: [],
   tools: [],
@@ -140,6 +142,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/routes/surfaces/design.css',
     '/public/css/routes/surfaces/design-experiments.css',
     '/public/css/routes/surfaces/review-surfaces.css',
+    '/public/css/effects/enhancements.css',
   ],
 });
 

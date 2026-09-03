@@ -104,25 +104,20 @@
 @import url('/public/css/handles/phase-controls.css') layer(handles);
 @import url('/public/css/handles/logo.css') layer(handles);
 @import url('/public/css/handles/page-region-rail.css') layer(handles);
+@import url('/public/css/handles/living-motion-labels.css') layer(handles);
 
 /* Effects project semantic state; they must stay additive. */
 @import url('/public/css/effects/material.css') layer(effects);
-@import url('/public/css/effects/living-motions.css') layer(effects);
-@import url('/public/css/effects/enhancements.css') layer(effects);
-/* grain, cinematic, and wonder idle-load through flourish-pack.css.
+/* grain, cinematic, circuit anatomy, metaphysical paper, and wonder
+   idle-load through flourish-pack.css.
    Tokens stay here (flourish-defaults). Spend is atmosphere, not first paint. */
-@import url('/public/css/effects/electromagnetic-container.css') layer(effects);
-@import url('/public/css/effects/circuit-anatomy.css') layer(effects);
 @import url('/public/css/effects/developmental-climate.css') layer(effects);
 @import url('/public/css/effects/enrichment.css') layer(effects);
-@import url('/public/css/effects/metaphysical-paper.css') layer(effects);
-@import url('/public/css/effects/narrative.css') layer(effects);
+/* narrative.css loads with the opt-in narrative instrumentation module. */
 /* debug.css is loaded on demand by kernel/deferred-styles.js — every rule
    in it is gated behind data-spw-debug-mode / data-spw-debug, so it is pure
    weight for ordinary reading. */
 
 @import url('/public/css/ornament/whimsy.css') layer(ornament);
-@import url('/public/css/ornament/relational-state.css') layer(ornament);
 @import url('/public/css/ornament/canvas-accents.css') layer(ornament);
-@import url('/public/css/ornament/layout-assumptions.css') layer(ornament);
 /* ornament.css idle-loads with the flourish pack — visible grammar, not structure. */
