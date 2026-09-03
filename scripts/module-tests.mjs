@@ -27,4 +27,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/spw-key-wrap-physics.test.mjs',
   'scripts/tests/expression-query.test.mjs',
   'scripts/tests/physical-model.test.mjs',
+  'scripts/tests/cauldron-clusters.test.mjs',
+  'scripts/tests/cauldron-editorial.test.mjs',
+  'scripts/tests/interaction-story.test.mjs',
 ]);

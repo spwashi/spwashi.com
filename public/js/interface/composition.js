@@ -55,7 +55,7 @@ import {
   syncFloatingChip,
 } from './cauldron/chrome.js';
 import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from './cauldron/helpers.js';
-import { broadcastCauldronSync, escapeHtml, getCauldron, inferOperator, ingredientNiche, normalizeIngredient, readSigilPayload, toSpwExpression } from './cauldron/storage.js';
+import { broadcastCauldronSync, clusterIngredients, escapeHtml, getCauldron, inferOperator, ingredientNiche, normalizeIngredient, readSigilPayload, themeClusterCharge, toSpwExpression } from './cauldron/storage.js';
 import { readSpwHydration } from '../semantic/expression-query.js';
 import { cauldronTrace, recordGestureTrace, recordPlantedTrail } from './cauldron/trace.js';
 import {
@@ -1000,136 +1000,129 @@ function updateGardenCarriedDisplay(lastGesture, trace) {
   carriedValue.dataset.spwLastCarried = display;
 }
 
-function renderIngredientsList(ingredients) {
-  const container = document.querySelector('[data-cauldron-ingredients]');
-  if (!container) return;
+const CLUSTER_AXIS_ATTR = Object.freeze({
+  operator: 'data-spw-operator',
+  region: 'data-spw-region',
+  liminality: 'data-spw-liminality',
+  route: 'data-spw-source-route',
+});
 
-  if (!ingredients.length) {
-    container.innerHTML = '';
-    delete container.dataset.lastSignature;
-    return;
+function renderIngredientChip(ing, idx) {
+  const rawOp = ing.operator || inferOperator(ing.expression || '');
+  const opDef = rawOp ? (getOperatorDefinition(rawOp) || detectOperator(rawOp)) : null;
+  const opType = opDef?.type || rawOp || '';
+  const opSigil = opDef?.prefix || rawOp || '';
+  const op = opSigil && opType
+    ? `<span class="cauldron-ingredient-op" data-spw-operator="${escapeHtml(opType)}" title="${escapeHtml(opDef?.label || opType)}">${escapeHtml(opSigil)}</span>`
+    : '';
+
+  // Show the payload-aligned native form when capture managed to read one -
+  // `~orient[media-field-guide]{about.website.deep}` says where the fragment
+  // was taken from; the bare `~orient` it falls back to does not. The parse
+  // depth rides along so a reader can tell a grounding from a guess, which is
+  // the whole point of storage.js reporting naive vs integrated.
+  const nativeExpression = ing.spwExpression || ing.expression;
+  const parseDepth = ing.spwParse || 'naive';
+  const expr = `<span class="cauldron-ingredient-expr" data-spw-expression data-spw-expression-parse="${parseDepth}" title="${escapeHtml(ing.expression)}">${escapeHtml(nativeExpression)}</span>`;
+
+  const phase = computeIngredientPhase(ing);
+
+  // Breadcrumb anatomy. This was seven loose chips in one undifferentiated
+  // row - wonder, origin, age, primed, gesture, link, quantifiers, dimensions -
+  // which is the same wash problem the arrival work found, at component scale:
+  // everything present, nothing legible. They are the same three questions a
+  // reader actually has, so they are grouped as three named lanes and each
+  // lane is omitted entirely when it has nothing to say.
+  //
+  //   origin   where this came from and how long ago
+  //   gesture  what attention created it
+  //   reach    where it still points, and what it models
+  const lanes = { origin: [], gesture: [], reach: [] };
+
+  if (ing.wonder) {
+    lanes.origin.push(`<span class="cauldron-ingredient-meta" data-spw-wonder="${ing.wonder}">${ing.wonder}</span>`);
+  }
+  const originText = ing.originLabel || ing.origin || ing.context;
+  if (originText) {
+    lanes.origin.push(`<span class="cauldron-ingredient-meta cauldron-origin" data-spw-origin="${escapeHtml(originText)}">${escapeHtml(originText)}</span>`);
+  }
+  // The liminality shell the fragment stood in, when capture could read it.
+  // A fragment taken at `deep` was earned differently from one at `entry`.
+  if (ing.payload?.liminality) {
+    lanes.origin.push(`<span class="cauldron-ingredient-meta cauldron-shell" data-spw-liminality="${escapeHtml(ing.payload.liminality)}">${escapeHtml(ing.payload.liminality)}</span>`);
+  }
+  if (ing.capturedAt) {
+    const ageDays = Math.floor((Date.now() - Number(ing.capturedAt)) / (1000 * 60 * 60 * 24));
+    lanes.origin.push(`<span class="cauldron-ingredient-meta cauldron-age" data-spw-age="${ageDays}">${ageDays}d</span>`);
+  }
+  // The side the operator affords and the text never claimed — what this
+  // fragment can still accept. Absent when the form is complete.
+  const niche = ingredientNiche(ing);
+  if (niche) {
+    lanes.reach.push(`<span class="cauldron-ingredient-meta cauldron-niche" data-spw-niche="${escapeHtml(niche.open.join(' '))}" data-spw-operator-geometry="${escapeHtml(niche.geometry)}" title="open role — this fragment can still take a ${escapeHtml(niche.open.join(' or '))}">${escapeHtml(niche.open[0])}</span>`);
   }
 
-  const signature = ingredients.map(i => `${i.expression}|${i.deepLink || ''}|${i.capturedAt || 0}`).join('~');
-  const previousSignature = container.dataset.lastSignature || '';
-  if (previousSignature === signature) return;
-  const arrival = detectIngredientArrival(ingredients, previousSignature);
-  container.dataset.lastSignature = signature;
+  if (ing.primedBy) {
+    const primedLabel = ing.primedBy === 'brace-containment-charge' ? 'primed' : escapeHtml(ing.primedBy);
+    lanes.gesture.push(`<span class="cauldron-ingredient-meta cauldron-primed" data-spw-ingredient-primed="${escapeHtml(ing.primedBy)}">${primedLabel}</span>`);
+  }
+  if (ing.gestureHistory) {
+    lanes.gesture.push(`<span class="cauldron-ingredient-meta cauldron-gesture-trace" data-spw-gesture-trace title="Gesture chain that created this ingredient">${escapeHtml(ing.gestureHistory)}</span>`);
+  }
+  if (ing.payload?.cadence) {
+    const cadence = escapeHtml(ing.payload.cadence);
+    const motion = escapeHtml(ing.payload.cadenceMotion || '');
+    lanes.gesture.push(
+      `<span class="cauldron-ingredient-meta cauldron-cadence" data-spw-cadence="${cadence}"`
+      + (motion ? ` data-spw-cadence-motion="${motion}" title="Cadence motion: ${motion}"` : '')
+      + `>${cadence}</span>`,
+    );
+  }
 
-  const html = ingredients.map((ing, idx) => {
-    const rawOp = ing.operator || inferOperator(ing.expression || '');
-    const opDef = rawOp ? (getOperatorDefinition(rawOp) || detectOperator(rawOp)) : null;
-    const opType = opDef?.type || rawOp || '';
-    const opSigil = opDef?.prefix || rawOp || '';
-    const op = opSigil && opType
-      ? `<span class="cauldron-ingredient-op" data-spw-operator="${escapeHtml(opType)}" title="${escapeHtml(opDef?.label || opType)}">${escapeHtml(opSigil)}</span>`
-      : '';
+  /* Where it came from, as somewhere you can go.
+     This was a <span> labelled "hash anchor" or "route anchor" — it named the
+     KIND of link it held rather than the place, so a gathering of six
+     fragments showed six identical chips and none of them travelled. The
+     provenance route is both the useful label and a real destination, so the
+     chip now says "/design/#slots" and goes there. Falls back to the raw
+     deepLink for any ingredient whose link cannot be normalized. */
+  if (ing.provenance) {
+    const { route, anchor, href } = ing.provenance;
+    const label = anchor ? `${route}#${anchor}` : route;
+    const shown = label.length > 42 ? `${label.slice(0, 41)}…` : label;
+    lanes.reach.push(
+      `<a class="cauldron-ingredient-meta cauldron-deep-link"`
+      + ` href="${escapeHtml(href)}"`
+      + ` data-spw-deep-link="${escapeHtml(href)}"`
+      + ` data-spw-source-route="${escapeHtml(route)}"`
+      + (anchor ? ` data-spw-source-anchor="${escapeHtml(anchor)}"` : '')
+      + ` data-spw-affordance="navigate"`
+      + ` title="Gathered from ${escapeHtml(label)} — open where this fragment came from">`
+      + `${escapeHtml(shown)}</a>`,
+    );
+  } else if (ing.deepLink) {
+    const deepLinkLabel = ing.deepLinkLabel || 'saved link';
+    lanes.reach.push(`<a class="cauldron-ingredient-meta cauldron-deep-link" href="${escapeHtml(ing.deepLink)}" data-spw-deep-link="${escapeHtml(ing.deepLink)}" data-spw-affordance="navigate">${escapeHtml(deepLinkLabel)}</a>`);
+  }
+  if (ing.type === 'numerical' && Array.isArray(ing.quantifiers) && ing.quantifiers.length) {
+    const qList = ing.quantifiers.slice(0, 4).map(q => `<span class="cauldron-numericity-quantifier" data-spw-quantifier="${escapeHtml(q)}">${escapeHtml(q)}</span>`).join(' ');
+    lanes.reach.push(`<span class="cauldron-ingredient-meta cauldron-numericity">${qList}</span>`);
+  }
+  if (Array.isArray(ing.dimensions) && ing.dimensions.length) {
+    const dimList = ing.dimensions.slice(0, 5).map(d => `<span class="cauldron-dimension-chip" data-spw-dimension="${escapeHtml(d)}">${escapeHtml(d)}</span>`).join(' ');
+    lanes.reach.push(`<span class="cauldron-ingredient-meta cauldron-dimensions" data-higher-order="${ing.higherOrder ? 'true' : 'false'}">${dimList}</span>`);
+  }
 
-    // Show the payload-aligned native form when capture managed to read one -
-    // `~orient[media-field-guide]{about.website.deep}` says where the fragment
-    // was taken from; the bare `~orient` it falls back to does not. The parse
-    // depth rides along so a reader can tell a grounding from a guess, which is
-    // the whole point of storage.js reporting naive vs integrated.
-    const nativeExpression = ing.spwExpression || ing.expression;
-    const parseDepth = ing.spwParse || 'naive';
-    const expr = `<span class="cauldron-ingredient-expr" data-spw-expression data-spw-expression-parse="${parseDepth}" title="${escapeHtml(ing.expression)}">${escapeHtml(nativeExpression)}</span>`;
+  const meta = Object.entries(lanes)
+    .filter(([, chips]) => chips.length)
+    .map(([lane, chips]) => `<span class="cauldron-ingredient-lane" data-spw-breadcrumb="${lane}">${chips.join('')}</span>`)
+    .join('');
 
-    const phase = computeIngredientPhase(ing);
+  const title = `${ing.expression}${originText ? ` (from ${originText})` : ''}${ing.deepLink ? ` - ${ing.deepLink}` : ''}`;
+  const region = ing.payload?.region || '';
+  const liminality = ing.payload?.liminality || '';
 
-    // Breadcrumb anatomy. This was seven loose chips in one undifferentiated
-    // row - wonder, origin, age, primed, gesture, link, quantifiers, dimensions -
-    // which is the same wash problem the arrival work found, at component scale:
-    // everything present, nothing legible. They are the same three questions a
-    // reader actually has, so they are grouped as three named lanes and each
-    // lane is omitted entirely when it has nothing to say.
-    //
-    //   origin   where this came from and how long ago
-    //   gesture  what attention created it
-    //   reach    where it still points, and what it models
-    const lanes = { origin: [], gesture: [], reach: [] };
-
-    if (ing.wonder) {
-      lanes.origin.push(`<span class="cauldron-ingredient-meta" data-spw-wonder="${ing.wonder}">${ing.wonder}</span>`);
-    }
-    const originText = ing.originLabel || ing.origin || ing.context;
-    if (originText) {
-      lanes.origin.push(`<span class="cauldron-ingredient-meta cauldron-origin" data-spw-origin="${escapeHtml(originText)}">${escapeHtml(originText)}</span>`);
-    }
-    // The liminality shell the fragment stood in, when capture could read it.
-    // A fragment taken at `deep` was earned differently from one at `entry`.
-    if (ing.payload?.liminality) {
-      lanes.origin.push(`<span class="cauldron-ingredient-meta cauldron-shell" data-spw-liminality="${escapeHtml(ing.payload.liminality)}">${escapeHtml(ing.payload.liminality)}</span>`);
-    }
-    if (ing.capturedAt) {
-      const ageDays = Math.floor((Date.now() - Number(ing.capturedAt)) / (1000 * 60 * 60 * 24));
-      lanes.origin.push(`<span class="cauldron-ingredient-meta cauldron-age" data-spw-age="${ageDays}">${ageDays}d</span>`);
-    }
-    // The side the operator affords and the text never claimed — what this
-    // fragment can still accept. Absent when the form is complete.
-    const niche = ingredientNiche(ing);
-    if (niche) {
-      lanes.reach.push(`<span class="cauldron-ingredient-meta cauldron-niche" data-spw-niche="${escapeHtml(niche.open.join(' '))}" data-spw-operator-geometry="${escapeHtml(niche.geometry)}" title="open role — this fragment can still take a ${escapeHtml(niche.open.join(' or '))}">${escapeHtml(niche.open[0])}</span>`);
-    }
-
-    if (ing.primedBy) {
-      const primedLabel = ing.primedBy === 'brace-containment-charge' ? 'primed' : escapeHtml(ing.primedBy);
-      lanes.gesture.push(`<span class="cauldron-ingredient-meta cauldron-primed" data-spw-ingredient-primed="${escapeHtml(ing.primedBy)}">${primedLabel}</span>`);
-    }
-    if (ing.gestureHistory) {
-      lanes.gesture.push(`<span class="cauldron-ingredient-meta cauldron-gesture-trace" data-spw-gesture-trace title="Gesture chain that created this ingredient">${escapeHtml(ing.gestureHistory)}</span>`);
-    }
-    if (ing.payload?.cadence) {
-      const cadence = escapeHtml(ing.payload.cadence);
-      const motion = escapeHtml(ing.payload.cadenceMotion || '');
-      lanes.gesture.push(
-        `<span class="cauldron-ingredient-meta cauldron-cadence" data-spw-cadence="${cadence}"`
-        + (motion ? ` data-spw-cadence-motion="${motion}" title="Cadence motion: ${motion}"` : '')
-        + `>${cadence}</span>`,
-      );
-    }
-
-    /* Where it came from, as somewhere you can go.
-       This was a <span> labelled "hash anchor" or "route anchor" — it named the
-       KIND of link it held rather than the place, so a gathering of six
-       fragments showed six identical chips and none of them travelled. The
-       provenance route is both the useful label and a real destination, so the
-       chip now says "/design/#slots" and goes there. Falls back to the raw
-       deepLink for any ingredient whose link cannot be normalized. */
-    if (ing.provenance) {
-      const { route, anchor, href } = ing.provenance;
-      const label = anchor ? `${route}#${anchor}` : route;
-      const shown = label.length > 42 ? `${label.slice(0, 41)}…` : label;
-      lanes.reach.push(
-        `<a class="cauldron-ingredient-meta cauldron-deep-link"`
-        + ` href="${escapeHtml(href)}"`
-        + ` data-spw-deep-link="${escapeHtml(href)}"`
-        + ` data-spw-source-route="${escapeHtml(route)}"`
-        + (anchor ? ` data-spw-source-anchor="${escapeHtml(anchor)}"` : '')
-        + ` data-spw-affordance="navigate"`
-        + ` title="Gathered from ${escapeHtml(label)} — open where this fragment came from">`
-        + `${escapeHtml(shown)}</a>`,
-      );
-    } else if (ing.deepLink) {
-      const deepLinkLabel = ing.deepLinkLabel || 'saved link';
-      lanes.reach.push(`<a class="cauldron-ingredient-meta cauldron-deep-link" href="${escapeHtml(ing.deepLink)}" data-spw-deep-link="${escapeHtml(ing.deepLink)}" data-spw-affordance="navigate">${escapeHtml(deepLinkLabel)}</a>`);
-    }
-    if (ing.type === 'numerical' && Array.isArray(ing.quantifiers) && ing.quantifiers.length) {
-      const qList = ing.quantifiers.slice(0, 4).map(q => `<span class="cauldron-numericity-quantifier" data-spw-quantifier="${escapeHtml(q)}">${escapeHtml(q)}</span>`).join(' ');
-      lanes.reach.push(`<span class="cauldron-ingredient-meta cauldron-numericity">${qList}</span>`);
-    }
-    if (Array.isArray(ing.dimensions) && ing.dimensions.length) {
-      const dimList = ing.dimensions.slice(0, 5).map(d => `<span class="cauldron-dimension-chip" data-spw-dimension="${escapeHtml(d)}">${escapeHtml(d)}</span>`).join(' ');
-      lanes.reach.push(`<span class="cauldron-ingredient-meta cauldron-dimensions" data-higher-order="${ing.higherOrder ? 'true' : 'false'}">${dimList}</span>`);
-    }
-
-    const meta = Object.entries(lanes)
-      .filter(([, chips]) => chips.length)
-      .map(([lane, chips]) => `<span class="cauldron-ingredient-lane" data-spw-breadcrumb="${lane}">${chips.join('')}</span>`)
-      .join('');
-
-    const title = `${ing.expression}${originText ? ` (from ${originText})` : ''}${ing.deepLink ? ` - ${ing.deepLink}` : ''}`;
-
-    return `
+  return `
       <span class="cauldron-ingredient"
             data-spw-cauldron-ingredient
             data-spw-ingredient-state="collected"
@@ -1140,6 +1133,8 @@ function renderIngredientsList(ingredients) {
             data-spw-fixity="${escapeHtml(ing.fixity || ing.payload?.fixity || 'tending')}"
             data-spw-source-route="${escapeHtml(ing.provenance?.route || '')}"
             ${ing.provenance?.anchor ? `data-spw-source-anchor="${escapeHtml(ing.provenance.anchor)}"` : ''}
+            ${region ? `data-spw-region="${escapeHtml(region)}"` : ''}
+            ${liminality ? `data-spw-liminality="${escapeHtml(liminality)}"` : ''}
             data-spw-source-element="${escapeHtml(ing.sourceElement || ing.expression)}"
             ${ing.deepLink ? `data-spw-deep-link="${escapeHtml(ing.deepLink)}"` : ''}
             ${ing.deepLinkLabel ? `data-spw-deep-link-label="${escapeHtml(ing.deepLinkLabel)}"` : ''}
@@ -1157,9 +1152,53 @@ function renderIngredientsList(ingredients) {
         <button type="button" class="cauldron-ingredient-remove" data-spw-cauldron-remove="${idx}" aria-label="Remove ${escapeHtml(ing.expression)}">×</button>
       </span>
     `;
-  }).join('');
+}
 
-  container.innerHTML = html;
+function renderIngredientCluster(group, clusterOrdinal = 0) {
+  const chips = group.items.map(({ ingredient, index }) => renderIngredientChip(ingredient, index)).join('');
+  if (!group.clustered) return chips;
+
+  const count = group.items.length;
+  const density = count >= 4 ? 'high' : 'medium';
+  const attrName = CLUSTER_AXIS_ATTR[group.axis];
+  const key = escapeHtml(group.key);
+  const axisAttr = attrName && group.key ? ` ${attrName}="${key}"` : '';
+  const kicker = `${key} · ${count}`;
+  const themeCharge = themeClusterCharge(group.items);
+  const themeAttr = themeCharge ? ` data-spw-theme-cluster="${themeCharge}"` : '';
+
+  return `<span class="spw-ornament-cluster" role="group" data-spw-sibling-resonance="true" data-spw-ornament-density="${density}" data-spw-ornament-state="revealed"${axisAttr}${themeAttr} style="--spw-theme-cluster-index:${clusterOrdinal}" aria-label="${count} ${key} fragments"><span class="spw-ornament-kicker">${kicker}</span>${chips}</span>`;
+}
+
+function renderIngredientsList(ingredients) {
+  const container = document.querySelector('[data-cauldron-ingredients]');
+  if (!container) return;
+
+  if (!ingredients.length) {
+    container.innerHTML = '';
+    delete container.dataset.lastSignature;
+    delete container.dataset.spwChildActive;
+    return;
+  }
+
+  const signature = ingredients.map(i => `${i.expression}|${i.deepLink || ''}|${i.capturedAt || 0}`).join('~');
+  const previousSignature = container.dataset.lastSignature || '';
+  if (previousSignature === signature) return;
+  const arrival = detectIngredientArrival(ingredients, previousSignature);
+  container.dataset.lastSignature = signature;
+
+  const clustered = clusterIngredients(ingredients);
+  let clusterOrdinal = 0;
+  container.innerHTML = clustered.groups.map((group) => {
+    const html = renderIngredientCluster(group, clusterOrdinal);
+    if (group.clustered) clusterOrdinal += 1;
+    return html;
+  }).join('');
+  if (clustered.axis) {
+    container.dataset.spwChildActive = 'true';
+  } else {
+    delete container.dataset.spwChildActive;
+  }
 
   if (arrival?.expression) {
     pulseNewIngredient(container, arrival.expression);

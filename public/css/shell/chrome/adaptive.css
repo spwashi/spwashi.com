@@ -427,6 +427,25 @@
   align-items: flex-end; /* buttons/actions at bottom of footer cauldron layout */
 }
 
+/* Partial payload clusters reuse ornament cluster, compacted for footer chrome. */
+.site-footer__cauldron-ingredients .spw-ornament-cluster {
+  flex: 1 1 100%;
+  align-items: flex-end;
+  gap: 0.22rem 0.3rem;
+  padding: 0.18rem 0.28rem 0.22rem;
+  background: color-mix(in srgb, var(--ornament-local-accent, var(--component-accent, var(--teal))) 7%, transparent);
+}
+
+.site-footer__cauldron-ingredients .spw-ornament-cluster .spw-ornament-kicker {
+  flex: 1 0 100%;
+  font-size: 0.58rem;
+  letter-spacing: 0.05em;
+}
+
+.site-footer__cauldron-ingredients .spw-ornament-cluster .cauldron-ingredient {
+  margin: 0;
+}
+
 .site-footer__cauldron-status {
   margin: 0.18rem 0 0;
   max-inline-size: 58ch;

@@ -1,8 +1,8 @@
 import { CAULDRON_KEY } from './contract.js';
 import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from './helpers.js';
-import { splitOperatorExpression } from '/public/js/kernel/shared.js';
+import { getOperatorThresholdState, splitOperatorExpression } from '/public/js/kernel/shared.js';
 import { operatorSpaces } from '/public/js/semantic/operator-spaces.js';
-import { project } from './registers.js';
+import { CAULDRON_REGISTERS, project } from './registers.js';
 
 /* Delegates to the kernel's operator grammar (the old local regex required a
    literal backslash before ^ and ?, so those operators never matched). */
@@ -222,6 +222,227 @@ export function deriveProvenance(ingredient) {
 }
 
 /**
+ * Partial clustering — a reading of gathered payloads, not a second store.
+ *
+ * Only axes the ingredient already carries may group it. Groups of one stay
+ * unclustered. The winning axis is the one that clusters the most fragments
+ * without collapsing the whole gathering into a single blob.
+ */
+export const CLUSTER_AXES = Object.freeze(['operator', 'region', 'liminality', 'route']);
+
+/**
+ * Editorial axes — the idea-coordinates a picked living term carries (which
+ * topic it belongs to, which open question it touches, which page context it
+ * was moseyed from), distinct from the structural axes above (operator,
+ * region, liminality, route). Kept as a second, separately-named set rather
+ * than merged into CLUSTER_AXES: merging would change which axis
+ * clusterIngredients() picks by default, and resonance.js reads
+ * clusterIndexByExpression off exactly that default to stagger the live
+ * gather pulse — a felt change belongs behind its own demo, not a silent
+ * axis swap. clusterIngredientsByTheme below is the additive, opt-in path.
+ */
+export const EDITORIAL_CLUSTER_AXES = Object.freeze(['group', 'wonder', 'context']);
+
+export function readClusterKey(ingredient, axis = 'operator') {
+  if (!ingredient) return '';
+  if (axis === 'operator') {
+    const raw = ingredient.operator || inferOperator(ingredient.expression || '') || '';
+    if (!raw) return '';
+    return getOperatorThresholdState(raw)?.operator || String(raw).toLowerCase();
+  }
+  if (axis === 'region') return String(ingredient.payload?.region || '').trim();
+  if (axis === 'liminality') return String(ingredient.payload?.liminality || '').trim();
+  if (axis === 'route') return String(ingredient.provenance?.route || deriveProvenance(ingredient)?.route || '').trim();
+  return '';
+}
+
+/**
+ * Editorial reading of the same ingredient: what it is *about* rather than
+ * where it structurally sits. `group`/`wonder`/`context` are already carried
+ * on every gathered fragment — buildSemanticDetail in interface/haptics.js
+ * sets them from data-spw-ground-group/domain/vocab, data-spw-wonder, and
+ * data-spw-context at the moment a living term is primed — so this reads
+ * existing signal rather than inventing new markup.
+ */
+export function readEditorialClusterKey(ingredient, axis = 'group') {
+  if (!ingredient) return '';
+  if (axis === 'group') return String(ingredient.group || '').trim().toLowerCase();
+  if (axis === 'wonder') return String(ingredient.wonder || '').trim().toLowerCase();
+  if (axis === 'context') return String(ingredient.context || '').trim().toLowerCase();
+  return '';
+}
+
+/**
+ * Groups gathered ingredients along whichever `axes` entry clusters the most
+ * fragments (a reading of gathered payloads, not a second store). Only axes
+ * an ingredient already carries may group it; groups of one stay unclustered.
+ * `axes`/`keyFn` default to the structural reading so every existing caller
+ * (clusterIndexByExpression, and resonance.js's live pulse through it) keeps
+ * its exact prior behavior; pass EDITORIAL_CLUSTER_AXES/readEditorialClusterKey
+ * (or use clusterIngredientsByTheme) for the idea-level reading instead.
+ */
+export function clusterIngredients(ingredients = [], axes = CLUSTER_AXES, keyFn = readClusterKey) {
+  const items = Array.isArray(ingredients) ? ingredients.filter(Boolean) : [];
+  if (items.length < 2) {
+    return {
+      axis: null,
+      groups: items.length
+        ? [{
+          axis: null,
+          key: '',
+          clustered: false,
+          items: items.map((ingredient, index) => ({ ingredient, index })),
+        }]
+        : [],
+    };
+  }
+
+  let best = null;
+  for (const axis of axes) {
+    const buckets = new Map();
+    items.forEach((ingredient, index) => {
+      const key = keyFn(ingredient, axis);
+      if (!key) return;
+      const bucket = buckets.get(key);
+      if (bucket) bucket.push(index);
+      else buckets.set(key, [index]);
+    });
+    const clusteredBuckets = [...buckets.entries()].filter(([, indices]) => indices.length >= 2);
+    const clusteredCount = clusteredBuckets.reduce((n, [, indices]) => n + indices.length, 0);
+    const groupCount = clusteredBuckets.length;
+    if (clusteredCount < 2) continue;
+    if (
+      !best
+      || clusteredCount > best.clusteredCount
+      || (clusteredCount === best.clusteredCount && groupCount > best.groupCount)
+    ) {
+      best = { axis, buckets, clusteredCount, groupCount };
+    }
+  }
+
+  if (!best) {
+    return {
+      axis: null,
+      groups: [{
+        axis: null,
+        key: '',
+        clustered: false,
+        items: items.map((ingredient, index) => ({ ingredient, index })),
+      }],
+    };
+  }
+
+  const clusteredIndices = new Set();
+  const emittedKeys = new Set();
+  const groups = [];
+
+  items.forEach((ingredient) => {
+    const key = keyFn(ingredient, best.axis);
+    const bucket = key ? best.buckets.get(key) : null;
+    if (!bucket || bucket.length < 2 || emittedKeys.has(key)) return;
+    emittedKeys.add(key);
+    bucket.forEach((memberIndex) => clusteredIndices.add(memberIndex));
+    groups.push({
+      axis: best.axis,
+      key,
+      clustered: true,
+      items: bucket.map((memberIndex) => ({ ingredient: items[memberIndex], index: memberIndex })),
+    });
+  });
+
+  const remainder = items
+    .map((ingredient, index) => ({ ingredient, index }))
+    .filter(({ index }) => !clusteredIndices.has(index));
+  if (remainder.length) {
+    groups.push({
+      axis: best.axis,
+      key: '',
+      clustered: false,
+      items: remainder,
+    });
+  }
+
+  return { axis: best.axis, groups };
+}
+
+/** Idea-level reading: same algorithm, editorial axes and key reader. */
+export function clusterIngredientsByTheme(ingredients = []) {
+  return clusterIngredients(ingredients, EDITORIAL_CLUSTER_AXES, readEditorialClusterKey);
+}
+
+/**
+ * Signed charge of a cluster, as the theme-resonance sheet already paints:
+ * credit (wonder opens), spend (action/binding commits), or ambient.
+ */
+export function themeClusterCharge(items = []) {
+  const sum = items.reduce((total, entry) => {
+    const ingredient = entry?.ingredient || entry;
+    return total + (CAULDRON_REGISTERS.valence.read(ingredient) || 0);
+  }, 0);
+  if (sum > 0) return 'credit';
+  if (sum < 0) return 'spend';
+  return '';
+}
+
+/**
+ * One theme cluster's fragments read out as plain, comma-joined phrases — raw
+ * material for an external art tool (Midjourney, Grok Imagine), not a
+ * finished prompt. `text` (the moseyed prose) wins over `label` (a chip's
+ * name) because a picked word is closer to the source than its category is.
+ * Order follows capture order, not alphabetical — a mosey has its own order
+ * and an art tool reads left-to-right same as a person composing one does.
+ */
+export function composePromptDraft(groupItems = []) {
+  const phrases = groupItems
+    .map(({ ingredient }) => String(ingredient?.text || ingredient?.label || '').trim())
+    .filter(Boolean);
+  return [...new Set(phrases)].join(', ');
+}
+
+/**
+ * The gathering read as vision-bench material: one prompt draft per theme
+ * cluster the ingredients actually form, skipping the unclustered remainder
+ * (a fragment with nothing to combine with is not yet a prompt). This is the
+ * real backing for CAULDRON_CONTRACT.actions.vision — "Send the gathering to
+ * the Midjourney vision bench" — which has named the action since before
+ * anything computed what to send.
+ */
+export function composeVisionDrafts(ingredients = []) {
+  const themed = clusterIngredientsByTheme(ingredients);
+  return themed.groups
+    .filter((group) => group.clustered)
+    .map((group) => ({
+      axis: group.axis,
+      key: group.key,
+      prompt: composePromptDraft(group.items),
+    }));
+}
+
+/**
+ * Conceptual cluster ordinal per expression. Kin share an index so page-source
+ * twinkles fire together; unclustered fragments keep a unique later ordinal.
+ */
+export function clusterIndexByExpression(ingredients = []) {
+  const clustered = clusterIngredients(ingredients);
+  const map = new Map();
+  let ordinal = 0;
+  for (const group of clustered.groups) {
+    if (group.clustered) {
+      for (const { ingredient } of group.items) {
+        if (ingredient?.expression) map.set(ingredient.expression, ordinal);
+      }
+      ordinal += 1;
+    } else {
+      for (const { ingredient } of group.items) {
+        if (ingredient?.expression) map.set(ingredient.expression, ordinal);
+        ordinal += 1;
+      }
+    }
+  }
+  return map;
+}
+
+/**
  * Normalize any stored/captured item into an ingredient.
  * Mirror shape: SpwIngredient in types/spw.d.ts.
  */
@@ -314,8 +535,12 @@ export function getCauldron() {
 
 let cauldronChannel = null;
 try {
-  if (typeof BroadcastChannel !== 'undefined') {
-    cauldronChannel = new BroadcastChannel('spw-cauldron');
+  if (typeof window !== 'undefined' && typeof window.BroadcastChannel === 'function') {
+    cauldronChannel = new window.BroadcastChannel('spw-cauldron');
+    /* Node's BroadcastChannel (unlike a browser tab's) keeps the event loop
+       alive on its own; unref lets a Node process/test runner exit normally.
+       Browsers have no `unref`, so this is a no-op there. */
+    cauldronChannel.unref?.();
     cauldronChannel.onmessage = (event) => {
       if (event.data?.type === 'cauldron:sync' && typeof document !== 'undefined') {
         document.dispatchEvent(new CustomEvent('cauldron:updated', {

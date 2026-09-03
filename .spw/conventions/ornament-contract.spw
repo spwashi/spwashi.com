@@ -28,6 +28,15 @@ thesis: .{
  updated_shape = `A badge (or any ornament) should read: I am an operator. My current field state is warm, resonant, collected, or default. My contribution to the attentional field is this token set. Ornament is the canonical visualization layer, not decoration.`
 }[reg=facet]
 
+cauldron_payload_clusters: .{
+  definition = `Partial groupings of gathered fragments that share an operator, region, liminality, or provenance route. Ornament cluster is the display; the payload attrs already on the ingredients are the concept.`
+  state_source = `clusterIngredients() in public/js/interface/cauldron/storage.js — a reading of stored payloads, not a new family.`
+  visual_range = `.spw-ornament-cluster + .spw-ornament-kicker; operator clusters inherit operator accent; liminality clusters reuse the landmark seam colors (entry frame, threshold object, middle probe, return/exit ref).`
+  density = `data-spw-ornament-density medium at 2–3, high at 4+`
+  sibling_resonance = `data-spw-sibling-resonance=true on clustered groups only`
+  note = `Unclustered fragments remain a flat list. Ornament does not invent the grouping axis.`
+}[reg=facet]
+
 ornament_classes: .{
  note = `Each ornament class has a declared state source, a visual expression range, and an inspectable rationale.`
  guide_badge = .{

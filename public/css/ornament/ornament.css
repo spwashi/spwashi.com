@@ -578,6 +578,30 @@
   --ornament-local-accent: var(--op-pragma-color, var(--ink-soft));
 }
 
+.spw-ornament-cluster[data-spw-liminality="entry"],
+.spw-ornament-kicker[data-spw-liminality="entry"] {
+  --ornament-local-accent: var(--op-frame-color, #008080);
+}
+
+.spw-ornament-cluster[data-spw-liminality="threshold"],
+.spw-ornament-kicker[data-spw-liminality="threshold"] {
+  --ornament-local-accent: var(--op-object-color, #c68a22);
+}
+
+.spw-ornament-cluster[data-spw-liminality="middle"],
+.spw-ornament-cluster[data-spw-liminality="deep"],
+.spw-ornament-kicker[data-spw-liminality="middle"],
+.spw-ornament-kicker[data-spw-liminality="deep"] {
+  --ornament-local-accent: var(--op-probe-color, #6a3fb8);
+}
+
+.spw-ornament-cluster[data-spw-liminality="return"],
+.spw-ornament-cluster[data-spw-liminality="exit"],
+.spw-ornament-kicker[data-spw-liminality="return"],
+.spw-ornament-kicker[data-spw-liminality="exit"] {
+  --ornament-local-accent: var(--op-ref-color, #1d57a3);
+}
+
 :where(.spw-ornament-host, .spw-ornament-ribbon, .spw-ornament-kicker)[data-spw-stance="entry"] {
   opacity: var(--ornament-stage-entry-opacity);
 }

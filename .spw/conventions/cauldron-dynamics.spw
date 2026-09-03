@@ -57,6 +57,16 @@ vessel_join = `cauldron[garden]{sow.tend.harvest} — live vessel identifier. No
   ~#reading(sigil payload): `written on transition, zero in static markup — transient by nature and wrong to prefer`
 }
 
+^"partial_cluster"{
+  ~#note: "A gathering is a list until two fragments share a payload axis. Clustering is a reading, not a second store."
+  axes: #[`operator`, `region`, `liminality`, `route`][reg=set]
+  law: "groups of one stay unclustered"
+  pick: "the axis that clusters the most fragments, then the one that yields more groups — partial, not one blob"
+  display: `.spw-ornament-cluster with the winning axis stamped as an existing data-spw-* payload; kicker names the concept and count`
+  twinkle: `--spw-cluster-index is the cluster ordinal so kin fire together`
+  refuse: "a new clustering attribute family, or wrapping the whole cauldron when nothing is shared"
+}
+
 ^"expression_slots"{
   ~#law: "three slots, three questions"
   frame: `how it is read — role, and what it affords`

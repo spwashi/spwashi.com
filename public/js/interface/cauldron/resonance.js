@@ -4,6 +4,7 @@ import {
   computeIngredientPhase,
   publishCauldronCapacity,
 } from './contract.js';
+import { clusterIndexByExpression } from './storage.js';
 
 const GARDEN_PHASE_RANK = Object.freeze({
   empty: 0,
@@ -54,6 +55,8 @@ export function syncCollectedSourceMarks(ingredients = []) {
     }
   });
 
+  const clusterIndex = clusterIndexByExpression(ingredients);
+
   ingredients.forEach((item, index) => {
     const expr = item.expression;
     if (!expr) return;
@@ -74,11 +77,10 @@ export function syncCollectedSourceMarks(ingredients = []) {
       if (node.closest('.cauldron-ingredient, [data-spw-cauldron]')) return;
       node.dataset.spwCauldronCollected = 'true';
       node.dataset.spwPrimeState = 'collected';
-      /* Position in the gathering, not position on the page. field-physics.css
-         turns this into an animation-delay, so the twinkle travels through the
-         collection in the order it was gathered rather than firing at once —
-         the arc reads as one wave crossing the page instead of six blinks. */
-      node.style.setProperty('--spw-cluster-index', String(index));
+      /* Conceptual cluster ordinal, not gather-order. Kin share a delay so the
+         twinkle reads as sibling resonance; unclustered fragments keep unique
+         later ordinals. field-physics.css spends this as animation-delay. */
+      node.style.setProperty('--spw-cluster-index', String(clusterIndex.get(expr) ?? index));
     });
   });
 }
@@ -164,8 +166,8 @@ export function pulseNewIngredient(container, expression = '') {
   if (!(container instanceof HTMLElement) || !expression) return;
   const escaped = CSS.escape(expression);
   const chip = container.querySelector(
-    `[data-spw-semantic-expression="${escaped}"], [data-spw-cauldron-ingredient]:last-child`,
-  );
+    `[data-spw-cauldron-ingredient][data-spw-semantic-expression="${escaped}"]`,
+  ) || [...container.querySelectorAll('[data-spw-cauldron-ingredient]')].at(-1);
   if (!(chip instanceof HTMLElement)) return;
   chip.classList.add('is-cauldron-ingredient-new');
   chip.dataset.spwCauldronResonance = 'arrived';

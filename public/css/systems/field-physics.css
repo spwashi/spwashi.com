@@ -164,9 +164,10 @@
    The set is self-limiting by construction: MAX_INGREDIENTS is 6, so at most
    six concepts can ever be moving at once no matter how long someone browses.
 
-   The wave arcs across the gathering instead of firing in unison —
-   --spw-cluster-index is set per ingredient in capture order, so the wiggle
-   travels along the group in the sequence it was gathered.
+   The wave arcs across conceptual kin instead of firing in unison —
+   --spw-cluster-index is the cluster ordinal from storage.js. Kin that share
+   an operator, region, liminality, or route blink together; unclustered
+   fragments keep later unique ordinals.
 
    Amplitude rides the same presence field as everything else, so a collected
    concept that is also charged, or in a path region, wiggles slightly more.
