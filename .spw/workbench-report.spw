@@ -72,6 +72,15 @@ expression = consumer[report]{defect.gap.built}<upstream>
   ~#reading: `the same postfix-binding work that fixed parseExpression above appears to read the lone > in ~> as an unmatched capsule-close now, where 993c0994d016 read it as two ordinary characters`
   ~#cost: "none measured on this site — every consumer here (readJoinChain, kernelJoinFromTokens) reads ~> at the string/token level and never trusted the assembled AST's node types beyond parse().success/errors.length, so all 14 authored project-join expressions still resolve correctly through the manifest and spw:integrity. A consumer that walks the AST instead of the tokens would see Prose/ProseChunk where it expected Sequence/Operation."
   fix: "disambiguate ~> from a lone capsule-close, or lex ~> as one PROJECT token rather than OPERATOR '~' followed by CAPSULE_CLOSE '>'"
+  ~#superseded(2026-09-03, same day, workbench f2e5b61): "still open in the grammar — this was not what f2e5b61 fixed — but moot for this site's own 14 authorings: all 11 that used ~> for a plain ordered sequence (as opposed to a genuine directional path between distinct stations, like this file's own scrap ~> mill ~> temper) were converted to ; once ; became real (see sequence_separators_ranked below). ~> stays reserved for what compound-expressions.spw already called project — movement between distinct places — not for steps of one practice, which ; now names correctly and without the degradation."
+}
+
+^"sequence_separators_ranked"{
+  ~#note: "Landed same-day as the parseExpression/noun-form fixes above, in a separate commit — Claude-Session 01AxX96buLHeJocQJspdtELg, not this site's session."
+  claim: "; (sequential) and || (parallel) now rank as real sequence separators — expressionImpl stops its chain loop at them, Sequence.separators records which mark was written, and frame content accepts them beside comma. Verified live: cauldron[garden]{sow;tend;harvest} parses as Sequence with success:true, 0 errors, 0 warnings — clean, where the ~> form for the same content still degrades to Prose (see the facet above)."
+  ~#reading: `this is the exact gap this report itself named in the parse_entry_points_disagree facet's era: ";" is site ordinal until the default lexer emits it as a connector" (interaction-microstates.spw, compound-expressions.spw) — written the same day it landed`
+  ~#landed(2026-09-03, this site): "converted the 11 authored expressions that used ~> for a plain ordered sequence to ; — cauldron[garden]{sow;tend;harvest} and 10 more. readShape's existing fallback to body.parts (regex-captured, not token-scanned) already handled the ordinal case correctly with no further fix needed — the parts-scoping bug found for project/crawl did not apply here."
+  probe: `node -e "import('./public/js/semantic/spw-workbench-parser.js').then(m=>{const r=m.parse('cauldron[garden]{sow;tend;harvest}\\n');console.log(r.ast.expression.type,r.success,r.warnings.length)})"`
 }
 
 ^"lattice_reads_one_form"{

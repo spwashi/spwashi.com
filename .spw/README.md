@@ -66,12 +66,14 @@ anything in the target. All 2480 citations currently resolve.
   principle — the two entry points converging on real content is not a
   reason to stop naming which one is canonical.
 - **`~>` (project-join) inside a body degrades to prose when nothing follows
-  it with a matching `<capsule>`.** Found while re-verifying the site's
-  corpus against the rebuild above. `cauldron[garden]{sow ~> tend ~> harvest}`
-  and the doc example a few lines up, `scrap ~> mill ~> temper`, both still
-  `parse()` with `success: true` and zero errors, but the AST's top node is
-  now `Prose` (with `ProseChunk` fragments), not `Sequence`/`Operation`, and
-  a `warnings` entry names it: `"Structured parse stopped at CAPSULE_CLOSE
+  it with a matching `<capsule>`.** Found re-verifying the site's corpus
+  against the `75d8f9d26253` rebuild above; still open at `f2e5b61b9e3d`
+  (the `;`/`||` fix a few lines below is a different code path and did not
+  touch this). `cauldron[garden]{sow ~> tend ~> harvest}` and the doc
+  example a few lines up, `scrap ~> mill ~> temper`, both still `parse()`
+  with `success: true` and zero errors, but the AST's top node is now
+  `Prose` (with `ProseChunk` fragments), not `Sequence`/`Operation`, and a
+  `warnings` entry names it: `"Structured parse stopped at CAPSULE_CLOSE
   '>'; surface degraded to prose."` The same postfix-binding work that fixed
   the two gaps above appears to have made `>` bind more eagerly toward
   capsule-closing, and an unmatched `>` from `~>` (no preceding `<`) now
@@ -80,10 +82,24 @@ anything in the target. All 2480 citations currently resolve.
   found on this site in practice: every consumer here reads `~>` at the
   string/token level (`readJoinChain`, `kernelJoinFromTokens`), never by
   trusting the assembled AST's node types beyond `parse().success` and
-  `errors.length`, so the manifest, `spw:integrity`, and all 655 authored
-  expressions with a `project` join still resolve correctly — this is
-  recorded because the *AST itself* is now unreliable for `~>`-bodies, and a
-  future consumer that walks the tree instead of the tokens would not be.
+  `errors.length` — but this site converted its 11 authorings that used
+  `~>` for a plain ordered sequence to `;` once that became real (below)
+  rather than lean on the degradation; `~>` is still correct and still
+  used site-wide for what it actually means, movement between distinct
+  places, not steps of one practice.
+- **`;` and `||` promoted to real sequence separators — RESOLVED same day,
+  workbench `f2e5b61b9e3d` (a different commit than the rebuild above, from
+  a different session).** `;` used to lex as a plain CONNECTOR that chained
+  into one term rather than separating siblings, exactly matching this
+  site's own `readBodyJoins`/`kernelJoinFromTokens`, which had treated `;`
+  as "ordinal" since before the grammar recognized it — the site's tooling
+  was built ahead of the language on purpose, and the language caught up.
+  Verified: `cauldron[garden]{sow;tend;harvest}` now parses as `Sequence`
+  with `success: true`, zero errors, *zero warnings* — clean, unlike `~>`
+  above. Converted the 11 site expressions that used `~>` for a plain
+  sequence to `;`; no fix needed in `readShape` for the ordinal case, since
+  its existing fallback to the regex-captured body content was already
+  correctly scoped.
 
 This site is the use case meant to discover gaps like these; each is recorded
 here with the measurement that found it rather than worked around in silence.
