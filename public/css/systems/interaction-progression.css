@@ -4,6 +4,10 @@
    Interaction phase tokens and microinteraction pulses for progressive states.
    ========================================================================== */
 
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer systems {
+
 :root {
   --spw-microinteraction-pulse-scale: 1;
   --spw-microinteraction-pulse-duration: 280ms;
@@ -115,6 +119,44 @@
     background-color var(--spw-variant-selection-duration, 280ms) var(--ease-settle, ease);
 }
 
+:where(html[data-spw-microinteraction-pulse="discover"] :where(
+  :target,
+  .spw-page-landmarks a[data-spw-loop-state="activated"],
+  .spw-page-landmarks a[aria-current="location"]
+)) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--landmark-mark, var(--active-op-color, var(--teal, #008080))) 30%, transparent),
+    var(--spw-local-shadow, var(--component-shadow, none));
+}
+
+:where(html[data-spw-microinteraction-pulse="inspect"] :where(
+  .cauldron-ingredient[data-spw-ingredient-inspect="active"],
+  .is-cauldron-jump-target
+)) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, transparent),
+    var(--spw-local-shadow, var(--component-shadow, none));
+}
+
+:where(html[data-spw-microinteraction-pulse="charge"] :where(
+  [data-spw-cauldron],
+  .cauldron-ingredient.is-cauldron-ingredient-new
+)) {
+  --spw-ecology-twinkle: max(var(--spw-ecology-twinkle, 0), 0.5);
+}
+
+:where(html[data-spw-interaction-phase="charge"] [data-spw-motion="discharge"]),
+:where(html[data-spw-interaction-phase="discover"] [data-spw-motion="discharge"]) {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--op-action-color, #0f6b6b) 28%, transparent),
+    var(--spw-local-shadow, none);
+}
+
+:where(html[data-spw-interaction-phase="inspect"] [data-spw-motion="collapse"]),
+:where(html[data-spw-interaction-phase="prime"] [data-spw-motion="lift"]) {
+  --spw-electrode-ring: max(var(--spw-electrode-ring, 0), 0.45);
+}
+
 :where(html[data-spw-microinteraction-pulse="prime"] :where([data-spw-image-interaction-state="primed"])) {
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent),
@@ -224,7 +266,9 @@
   :where(
     [data-spw-interaction-contract]:active,
     [data-spw-gesture-contract]:active,
-    .spw-chip:active
+    .spw-chip:active,
+    .spw-page-landmarks a:active,
+    .spw-section-handle-step:active
   ) {
     --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.42);
     transform: scale(0.992);
@@ -329,4 +373,5 @@
 :where(html[data-spw-reduce-motion="on"][data-spw-freshness-pulse]) {
   --spw-ecology-beat-align: 0;
   --spw-ecology-twinkle: 0;
+}
 }

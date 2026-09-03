@@ -56,6 +56,7 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
     `pinch-scale.js — data-spw-pinch-scaling during text scale preview`
     `variant-selection.js — spw:variant-selected → prime + selection pulse`
     `layout selection — settings layoutTuner change → approach + layout-selection-pulse`
+    `hashchange / landmark hop — discover; cauldron gather → charge, inspect → inspect, release → settle`
   ][reg=set]
   resting: #[`idle`, `settle`][reg=set]
   resting_rule: `settle and idle do not pin the ladder; a new interaction may start a fresh arc`
@@ -165,6 +166,17 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
   hold: .{ phase: charge, spend: "brace armed/sustained, cauldron prime" }[reg=facet]
   pinch: .{ phase: approach, spend: "font scale preview + palette-depth-strength bump" }[reg=facet]
   swipe: .{ phase: discover, spend: "horizontal scroll rails, vocabulary underline pulse" }[reg=facet]
+}
+
+^"cross_component_hops"{
+  claim: "A hop between components is an interaction arc, not a silent URL change."
+  landmark: `nav.spw-page-landmarks a — hashchange writes discover, aria-current=location, and data-spw-loop-state=activated on the landed room`
+  cauldron: `gather writes charge; inspect writes inspect and jumps to the source; release writes settle`
+  selector: `IN_PAGE_HOP_SELECTOR in interaction-vocabulary.js — landmarks and cauldron provenance links`
+  tap: `phaseFromContractKind(contract, "tap") — tap:travel on landmarks and the section handle becomes discover; toggle stays prime`
+  swipe: `landmark swipe cycles rooms; handle swipe cycles kin; scroll-rail swipe still discover. swipe:cycle maps to discover without inheriting tap.`
+  story: `readInteractionStory() joins phase + pulse + liminality + loop + hash + handle-phase. The section handle current-form is the documentation vehicle during the pulse.`
+  rule: "Do not invent a parallel phase attr. Document-level data-spw-interaction-phase plus local loop-state is the hop residue."
 }
 
 ^"contract_layers"{

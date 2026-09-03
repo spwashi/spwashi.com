@@ -34,6 +34,7 @@ import {
   PAGE_SECTION_EVENT,
   PAGE_SECTION_INDEX_ATTR,
   PAGE_SECTION_PHASE_ATTR,
+  PROBE_ATTR,
   SECTION_INDEX_ATTR,
   SECTION_STATE_ATTR,
   SECTION_TIER_ATTR,
@@ -49,6 +50,7 @@ import {
   writeSectionProgressStyle,
 } from './shared.js';
 import { applyAttentionCapturePins } from './capture-pins.js';
+import { PHASE_EVENT, readInteractionStory } from '/public/js/runtime/interaction-story.js';
 
 let lastSectionLogKey = '';
 let lastSectionIndex = 0;
@@ -137,7 +139,7 @@ function resolveHandleScan(info) {
   });
 }
 
-function syncHandleContent(parts, info, activeIndex, sectionCount) {
+function syncHandleContent(parts, info, activeIndex, sectionCount, storyOverlay = '') {
   const {
     opNode,
     labelNode,
@@ -160,11 +162,17 @@ function syncHandleContent(parts, info, activeIndex, sectionCount) {
   if (currentToken) currentToken.textContent = scan.token || '#>';
   if (currentLabel) currentLabel.textContent = scan.label || 'section';
   if (currentForm instanceof HTMLElement) {
-    currentForm.textContent = info.syntaxWake || '';
-    currentForm.title = info.syntaxDescription
-      ? `Spw geometry: ${info.syntaxDescription}`
-      : '';
-    currentForm.hidden = !info.syntaxWake;
+    if (storyOverlay) {
+      currentForm.textContent = storyOverlay;
+      currentForm.title = storyOverlay;
+      currentForm.hidden = false;
+    } else {
+      currentForm.textContent = info.syntaxWake || '';
+      currentForm.title = info.syntaxDescription
+        ? `Spw geometry: ${info.syntaxDescription}`
+        : '';
+      currentForm.hidden = !info.syntaxWake;
+    }
   }
   if (currentCadence instanceof HTMLElement) {
     currentCadence.textContent = info.cadence || '';
@@ -521,6 +529,8 @@ function createSectionHandleState() {
     travelTargetId: '',
     compact: window.matchMedia(HANDLE_COMPACT_QUERY).matches,
     manualCompact: false,
+    storyOverlay: '',
+    storyTimer: 0,
   };
 }
 
@@ -680,12 +690,20 @@ function syncSectionHandleAttributes(handle, shell, info, activeIndex, sectionCo
   writeSectionProgressStyle(shell, progress, step);
 }
 
-function syncSectionHandleSections(sections, activeIndex) {
+function syncSectionHandleSections(sections, activeIndex, approach = '') {
+  const locomotionApproach = approach === 'approaching' || approach === 'arrival';
   sections.forEach((section, index) => {
     writeAttributes(section, {
       [SECTION_STATE_ATTR]: getSectionLifecycleState(index, activeIndex),
       [SECTION_TIER_ATTR]: getSectionTier(section),
     });
+    const current = index === activeIndex && locomotionApproach;
+    const existing = section.getAttribute(APPROACH_ATTR);
+    if (current) {
+      section.setAttribute(APPROACH_ATTR, approach);
+    } else if (!current && (existing === 'approaching' || existing === 'arrival' || existing === 'distant')) {
+      section.removeAttribute(APPROACH_ATTR);
+    }
   });
 }
 
@@ -700,9 +718,9 @@ function resolveHandleApproach(visible, phase, sectionCount) {
   return 'arrival';
 }
 
-/** Wonder invitation + expressive approach on the handle shell only.
-    Reach, return, and invitation copy use existing page_locomotion_handle datasets
-    (availability, page-section-*, section-handle-label) — no parallel root attrs. */
+/** Wonder invitation + expressive approach on the handle and the current room.
+    Registers already spend data-spw-approach; electrostatics reads it as edge magnetism.
+    Reach/return copy still use page_locomotion_handle datasets — no parallel root attrs. */
 function syncRootFieldBalance(visible, activeIndex, sectionCount) {
   const root = document.documentElement;
   if (root.dataset.spwWonderMemoryState === 'active') return;
@@ -794,20 +812,21 @@ function updateSectionHandleState({
     },
     info,
     state.activeIndex,
-    sections.length
+    sections.length,
+    state.storyOverlay
   );
 
   syncSectionHandleAttributes(handle, shell, info, state.activeIndex, sections.length, snapshot, source);
-  syncSectionHandleSections(sections, state.activeIndex);
-  syncSectionHandleAvailability(refs, state.activeIndex, sections.length);
-  syncRegionKinTravel(refs, sections, state.activeIndex);
-
   const compactViewport = window.matchMedia?.(HANDLE_COMPACT_QUERY).matches;
   const scrollThreshold = compactViewport
     ? Math.min(HANDLE_VISIBILITY_SCROLL, Math.max(160, (window.innerHeight || 800) * 0.18))
     : Math.max(HANDLE_VISIBILITY_SCROLL, (window.innerHeight || 800) * 0.34);
   const scrolledPast = window.scrollY > scrollThreshold;
   const visible = sections.length > 1 && (scrolledPast || state.activeIndex > 0);
+  const approach = resolveHandleApproach(visible, state.phase, sections.length);
+  syncSectionHandleSections(sections, state.activeIndex, approach);
+  syncSectionHandleAvailability(refs, state.activeIndex, sections.length);
+  syncRegionKinTravel(refs, sections, state.activeIndex);
   syncSectionHandleVisibility(handle, shell, visible);
   syncBottomLaneHandlePressure(state, shell, refs.toggleButton);
 
@@ -1214,6 +1233,54 @@ function createSectionHandleController({
     attributeFilter: ['data-spw-interaction-context'],
   });
 
+  const STORY_SOURCES = new Set([
+    'in-page-hop',
+    'hash-hop',
+    'landmark-swipe',
+    'section-travel',
+    'cauldron-gather',
+    'cauldron-inspect',
+    'cauldron-release',
+    'swipe-rail',
+    'cross-page-hop',
+  ]);
+  const onInteractionPhase = (event) => {
+    const detail = event?.detail || {};
+    const source = detail.source || '';
+    if (!STORY_SOURCES.has(source)) return;
+    const story = readInteractionStory(document);
+    state.storyOverlay = story.reading;
+    if (detail.phase === 'discover' || detail.phase === 'charge' || detail.phase === 'inspect') {
+      syncSectionHandlePhase(shell, handle, 'traveling');
+    }
+    if (refs.liveRegion) {
+      refs.liveRegion.textContent = story.reading;
+      window.setTimeout(() => {
+        if (refs.liveRegion?.textContent === story.reading) refs.liveRegion.textContent = '';
+      }, 1200);
+    }
+    const activeSection = sections[state.activeIndex];
+    const html = document.documentElement;
+    if (!html.getAttribute(PROBE_ATTR) && activeSection instanceof HTMLElement) {
+      const op = activeSection.getAttribute('data-spw-operator')
+        || activeSection.querySelector('[data-spw-operator]')?.getAttribute('data-spw-operator')
+        || '';
+      if (op) {
+        html.setAttribute(PROBE_ATTR, op);
+        window.setTimeout(() => {
+          if (html.getAttribute(PROBE_ATTR) === op) html.removeAttribute(PROBE_ATTR);
+        }, 1400);
+      }
+    }
+    updateActiveState('interaction-story');
+    window.clearTimeout(state.storyTimer);
+    state.storyTimer = window.setTimeout(() => {
+      state.storyOverlay = '';
+      updateActiveState('interaction-story-clear');
+    }, 1400);
+  };
+  document.addEventListener(PHASE_EVENT, onInteractionPhase);
+
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onResize, { passive: true });
   window.addEventListener('orientationchange', onResize);
@@ -1238,6 +1305,8 @@ function createSectionHandleController({
     document.removeEventListener('spw:scene-exit', onWrapContext);
     document.removeEventListener('spw:variant-selected', onWrapContext);
     contextObserver.disconnect();
+    document.removeEventListener(PHASE_EVENT, onInteractionPhase);
+    window.clearTimeout(state.storyTimer);
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onResize);
     window.removeEventListener('orientationchange', onResize);
@@ -1250,7 +1319,7 @@ function createSectionHandleController({
     handle.hidden = false;
     clearAttributes(handle, [HANDLE_ENHANCED_ATTR, HANDLE_PHASE_ATTR, HANDLE_AVAILABILITY_ATTR, WONDER_ENTRY_ATTR, APPROACH_ATTR]);
     sections.forEach((section) => {
-      clearAttributes(section, [SECTION_STATE_ATTR, SECTION_INDEX_ATTR, SECTION_TIER_ATTR]);
+      clearAttributes(section, [SECTION_STATE_ATTR, SECTION_INDEX_ATTR, SECTION_TIER_ATTR, APPROACH_ATTR]);
     });
     [document.documentElement, document.body].forEach((node) => {
       clearAttributes(node, [

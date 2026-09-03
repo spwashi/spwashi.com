@@ -5,12 +5,15 @@
  * gestures, pinch scaling, ecology settle, and link contracts.
  */
 
+import { bus } from '../kernel/bus.js';
+import { bindInteractionHops, readHopHash } from './interaction-hops.js';
 import {
   GESTURE_TARGET_SELECTOR,
   IMAGE_STATE_TO_PHASE,
+  IN_PAGE_HOP_SELECTOR,
   SCROLL_RAIL_SELECTOR,
+  phaseFromContractKind,
   phaseFromGesture,
-  phaseFromGestureContract,
   phaseFromInteractionContract,
   phaseFromLoopState,
   strongestPhase,
@@ -26,6 +29,7 @@ let initialized = false;
 let pulseTimer = null;
 let currentPhase = 'idle';
 let swipeCooldown = 0;
+let lastCauldronCount = null;
 
 function writePhase(html, phase, detail = {}) {
   if (!html || !phase) return;
@@ -72,18 +76,16 @@ function readContractPhase(target) {
   return phaseFromInteractionContract(host.dataset.spwInteractionContract);
 }
 
-function readGestureContractPhase(target) {
-  if (!(target instanceof HTMLElement)) return '';
-  const host = target.closest('[data-spw-gesture-contract]');
-  if (!host) return '';
-  return phaseFromGestureContract(host.dataset.spwGestureContract);
-}
-
 function readLoopPhase(target) {
   if (!(target instanceof HTMLElement)) return '';
   const host = target.closest('[data-spw-loop-state]');
   if (!host) return '';
   return phaseFromLoopState(host.dataset.spwLoopState);
+}
+
+function readGestureContractHost(target) {
+  if (!(target instanceof Element)) return null;
+  return target.closest('[data-spw-gesture-contract]');
 }
 
 // 'settle' is the top of the phase ladder and the ecology drives it shortly
@@ -112,6 +114,7 @@ export function initInteractionProgression(root = document) {
   const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   writePhase(html, 'idle', { source: 'boot', force: true });
+  const hops = bindInteractionHops({ html, root, writePhase, signal });
 
   const onImageLens = (event) => {
     writePhase(html, 'charge', { source: 'image-lens', lens: event.detail?.lens, force: true });
@@ -142,6 +145,25 @@ export function initInteractionProgression(root = document) {
       return;
     }
 
+    if (event.target instanceof Element && event.target.closest(IN_PAGE_HOP_SELECTOR)) {
+      const href = event.target.closest('a')?.getAttribute('href') || '';
+      const hopHash = readHopHash(event.target);
+      if (hopHash && !href.startsWith('#')) hops.hop('cross-page-hop', hopHash);
+      return;
+    }
+
+    if (event.target instanceof Element) {
+      if (event.target.closest('[data-spw-handle-target="toggle"]')) {
+        bumpPhase(html, 'prime', { source: 'handle-toggle', force: true });
+        return;
+      }
+      const ingredient = event.target.closest('.cauldron-ingredient');
+      if (ingredient && !event.target.closest('[data-spw-cauldron-remove]')) {
+        bumpPhase(html, 'inspect', { source: 'cauldron-inspect', force: true });
+        return;
+      }
+    }
+
     const loopPhase = readLoopPhase(event.target);
     if (loopPhase) {
       bumpPhase(html, loopPhase, { source: 'loop-state', force: true });
@@ -154,10 +176,13 @@ export function initInteractionProgression(root = document) {
       return;
     }
 
-    const gestureContractPhase = readGestureContractPhase(event.target);
-    if (gestureContractPhase) {
-      bumpPhase(html, gestureContractPhase, { source: 'gesture-contract', force: true });
-      return;
+    const tapHost = readGestureContractHost(event.target);
+    if (tapHost) {
+      const tapPhase = phaseFromContractKind(tapHost.dataset.spwGestureContract, 'tap');
+      if (tapPhase) {
+        bumpPhase(html, tapPhase, { source: 'tap-contract', force: true });
+        return;
+      }
     }
 
     const gesturePhase = readGesturePhase(event.target);
@@ -295,7 +320,13 @@ export function initInteractionProgression(root = document) {
     const now = Date.now();
     if (now - swipeCooldown < SWIPE_COOLDOWN_MS) return;
     swipeCooldown = now;
-    writePhase(html, 'discover', { source: 'swipe-rail', force: true });
+    const swipeHost = event.target instanceof Element
+      ? event.target.closest('[data-spw-gesture-contract]')
+      : null;
+    const swipePhase = swipeHost
+      ? (phaseFromContractKind(swipeHost.dataset.spwGestureContract, 'swipe') || 'discover')
+      : 'discover';
+    writePhase(html, swipePhase, { source: 'swipe-rail', force: true });
   };
 
   const onVariantSelected = (event) => {
@@ -310,6 +341,25 @@ export function initInteractionProgression(root = document) {
   };
 
   let lastLayoutTuner = html?.dataset?.spwLayoutTuner || '';
+  const onCauldronUpdated = (event) => {
+    const detail = event?.detail || event || {};
+    const count = Number(detail.count ?? detail.items?.length ?? 0);
+    const prev = lastCauldronCount;
+    lastCauldronCount = count;
+    if (prev === null) return;
+    if (count > prev) writePhase(html, 'charge', { source: 'cauldron-gather', count, force: true });
+    else if (count < prev) writePhase(html, 'settle', { source: 'cauldron-release', count, force: true });
+    else if (count > 0) writePhase(html, 'prime', { source: 'cauldron-refresh', count, force: true });
+  };
+
+  const onCauldronInspected = (event) => {
+    writePhase(html, 'inspect', {
+      source: 'cauldron-inspect',
+      expression: event?.detail?.expression || event?.expression,
+      force: true,
+    });
+  };
+
   const onSettingsLayoutSelection = () => {
     const nextTuner = html?.dataset?.spwLayoutTuner || '';
     if (!nextTuner || nextTuner === lastLayoutTuner) {
@@ -345,6 +395,14 @@ export function initInteractionProgression(root = document) {
   document.addEventListener('pointerup', onRailPointerUp, { signal, capture: true });
   document.addEventListener('pointercancel', onRailPointerUp, { signal, capture: true });
 
+  if (typeof bus?.on === 'function') {
+    bus.on('cauldron:updated', onCauldronUpdated, { signal });
+    bus.on('cauldron:ingredient-inspected', onCauldronInspected, { signal });
+  } else {
+    document.addEventListener('cauldron:updated', onCauldronUpdated, { signal });
+    document.addEventListener('cauldron:ingredient-inspected', onCauldronInspected, { signal });
+  }
+
   onPinchAttr();
 
   controller.signal.addEventListener('abort', () => {
@@ -359,6 +417,7 @@ export function initInteractionProgression(root = document) {
     delete html.dataset.spwLayoutSelectionPulse;
     initialized = false;
     currentPhase = 'idle';
+    lastCauldronCount = null;
   }, { once: true });
 
   return () => controller.abort();

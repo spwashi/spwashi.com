@@ -61,6 +61,12 @@ export const GESTURE_VERB_TO_PHASE = Object.freeze({
   charge: 'charge',
   ground: 'prime',
   navigate: 'settle',
+  travel: 'discover',
+  swipe: 'discover',
+  cycle: 'discover',
+  tap: 'prime',
+  hold: 'charge',
+  preview: 'prime',
 });
 
 export const GESTURE_TARGET_SELECTOR = [
@@ -68,10 +74,18 @@ export const GESTURE_TARGET_SELECTOR = [
   '[data-spw-interaction-contract]',
   '[data-spw-operator]',
   '.spw-chip',
-  '[data-spw-operator]',
   '.frame-sigil',
   '.spw-route-menu-link',
   '.spw-link-expression',
+  '.spw-page-landmarks a',
+  '.cauldron-ingredient',
+  '.cauldron-ingredient-meta.cauldron-deep-link',
+].join(', ');
+
+export const IN_PAGE_HOP_SELECTOR = [
+  '.spw-page-landmarks a[href]',
+  'a.cauldron-deep-link',
+  '.cauldron-ingredient-meta.cauldron-deep-link',
 ].join(', ');
 
 export const SCROLL_RAIL_SELECTOR = '[data-spw-scroll-rail], .spw-visual-link-board__grid, .frame-grid--media';
@@ -101,6 +115,22 @@ export function phaseFromGestureContract(contract = '', verb = '') {
     if (mapped) phase = strongestPhase(phase || 'idle', mapped);
   });
   return phase;
+}
+
+/**
+ * Tap, hold, and swipe are different verbs on the same contract.
+ * Reading only the matching kind keeps a toggle tap from inheriting swipe:cycle.
+ */
+export function phaseFromContractKind(contract = '', kind = 'tap') {
+  const prefix = `${String(kind || 'tap').trim().toLowerCase()}:`;
+  const token = String(contract || '')
+    .trim()
+    .toLowerCase()
+    .split(/\s+/)
+    .find((part) => part.startsWith(prefix));
+  if (!token) return GESTURE_VERB_TO_PHASE[kind] || '';
+  const verb = token.slice(prefix.length);
+  return GESTURE_VERB_TO_PHASE[verb] || GESTURE_VERB_TO_PHASE[kind] || '';
 }
 
 
