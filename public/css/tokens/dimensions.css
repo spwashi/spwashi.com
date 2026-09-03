@@ -142,7 +142,9 @@
 
 :where(
   [data-spw-packing-state="compact"],
+  [data-spw-density="compact"],
   [data-spw-density="dense"],
+  [data-spw-component-density="compact"],
   [data-spw-component-density="dense"],
   [data-spw-pack="compact"],
   [data-spw-pack="dense"],
@@ -157,6 +159,9 @@
 
 :where(
   [data-spw-packing-state="balanced"],
+  [data-spw-density="balanced"],
+  [data-spw-density="medium"],
+  [data-spw-component-density="balanced"],
   [data-spw-pack="balanced"],
   [data-spw-pack-occupancy="balanced"],
   html[data-spw-design-ecology-packing="balanced"]
@@ -173,6 +178,7 @@
   [data-spw-packing-state="spacious"],
   [data-spw-density="soft"],
   [data-spw-density="roomy"],
+  [data-spw-density="reading"],
   [data-spw-component-density="roomy"],
   [data-spw-pack="roomy"],
   html[data-spw-design-ecology-packing="spacious"],
@@ -185,8 +191,9 @@
   --spw-pack-gap-active: var(--pack-tier-roomy-gap, var(--component-gap-loose, 1.2rem));
 }
 
-/* Frame occupancy from region-profiler. Not data-spw-pack-fill (card-local). */
-:where([data-spw-pack-occupancy="sparse"]) {
+/* Frame occupancy from region-profiler. Not data-spw-pack-fill (card-local).
+   compact is a leftover density word; treat it as sparse. */
+:where([data-spw-pack-occupancy="sparse"], [data-spw-pack-occupancy="compact"]) {
   --spw-pack-tier: compact;
   --spw-pack-occupancy-weight: 0.22;
 }

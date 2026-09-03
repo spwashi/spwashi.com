@@ -1045,14 +1045,43 @@
 
 :where(.spw-frame[data-spw-harmony="indexed"]) {
   --grammar-boundary-weight: 0.5;
+  --grammar-edge-softness: 0.1;
 }
 
 :where(.spw-frame[data-spw-harmony="structured"]) {
+  --grammar-boundary-weight: 0.46;
   --grammar-edge-softness: 0.12;
 }
 
 :where(.spw-frame[data-spw-harmony="responsive"]) {
   --grammar-motion-budget: 0.32;
+  --grammar-edge-softness: 0.2;
+}
+
+:where(.spw-frame[data-spw-harmony="measured"]) {
+  --grammar-boundary-weight: 0.42;
+  --grammar-motion-budget: 0.18;
+}
+
+:where(.spw-frame[data-spw-harmony="anchored"]) {
+  --grammar-boundary-weight: 0.48;
+  --grammar-edge-softness: 0.08;
+  --grammar-motion-budget: 0.16;
+}
+
+:where(.spw-frame[data-spw-harmony="editorial"]) {
+  --grammar-edge-softness: 0.3;
+  --grammar-motion-budget: 0.22;
+}
+
+:where(.spw-frame[data-spw-harmony="modular"]) {
+  --grammar-boundary-weight: 0.38;
+  --grammar-motion-budget: 0.28;
+}
+
+:where(.spw-frame[data-spw-harmony="ambient"]) {
+  --grammar-boundary-weight: 0.28;
+  --grammar-edge-softness: 0.26;
 }
 
 /* Region tempo shapes local cascade offsets without overriding page-level arrival steps. */

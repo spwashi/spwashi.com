@@ -7,7 +7,7 @@
 
    Vocabulary (canonical + aliases) lives in tokens/dimensions.css:
    compact | balanced | roomy
-   Aliases: dense→compact, soft/spacious→roomy
+   Aliases: dense→compact, medium→balanced, soft/spacious/reading→roomy
    Occupancy: sparse→compact, full→roomy
    ========================================================================== */
 
@@ -36,7 +36,9 @@
    -------------------------------------------------------------------------- */
 
 :where(
+  [data-spw-density="compact"],
   [data-spw-density="dense"],
+  [data-spw-component-density="compact"],
   [data-spw-component-density="dense"],
   [data-spw-pinch-variant="compact"],
   html[data-spw-component-density="dense"] :where(.spw-frame, .frame-panel, .frame-card),
@@ -61,6 +63,7 @@
 :where(
   [data-spw-density="soft"],
   [data-spw-density="roomy"],
+  [data-spw-density="reading"],
   [data-spw-component-density="roomy"],
   [data-spw-pinch-variant="roomy"],
   html[data-spw-component-density="roomy"] :where(.spw-frame, .frame-panel, .frame-card),

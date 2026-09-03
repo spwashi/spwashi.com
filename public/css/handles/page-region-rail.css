@@ -99,6 +99,22 @@
     border-inline-start: 2px solid color-mix(in srgb, var(--op-action-color, #006b6b) 44%, transparent);
   }
 
+  :where(.spw-page-region-rail__link[data-spw-harmony="indexed"]) {
+    letter-spacing: 0.03em;
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-harmony="editorial"]) {
+    color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 78%, var(--op-object-color, #a67c00));
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-density="compact"], .spw-page-region-rail__link[data-spw-density="dense"]) {
+    padding-block: 0.14rem;
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-density="roomy"], .spw-page-region-rail__link[data-spw-density="reading"]) {
+    padding-block: 0.3rem;
+  }
+
   :where(.spw-page-region-rail:is([data-spw-palette-resonance="lattice"], [data-spw-palette-resonance="software"]) .spw-page-region-rail__link) {
     --active-op-color: var(--op-frame-color, #0f7f7d);
   }

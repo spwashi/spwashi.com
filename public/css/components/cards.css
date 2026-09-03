@@ -31,6 +31,36 @@
   --card-rhythm: clamp(0.58rem, 1.8cqi, 0.85rem);
 }
 
+:where(
+  .spw-card,
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .ref-card,
+  .compare-card
+):is([data-spw-density="compact"], [data-spw-density="dense"]) {
+  --card-rhythm: clamp(0.4rem, 1.4cqi, 0.62rem);
+}
+
+:where(
+  .spw-card,
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .ref-card,
+  .compare-card
+):is([data-spw-density="roomy"], [data-spw-density="soft"], [data-spw-density="reading"]) {
+  --card-rhythm: clamp(0.7rem, 2.1cqi, 1.05rem);
+}
+
 :where(.spw-card, .frame-card, .frame-card > a:first-child, .spw-card > a:first-child) {
   /* Layout & container query */
   justify-items: start;

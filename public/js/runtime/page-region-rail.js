@@ -131,6 +131,9 @@ function collectRegions(root = document) {
     consequence: regionConsequence(node),
     wonder: regionWonder(node),
     lens: regionLens(node),
+    harmony: node.getAttribute('data-spw-harmony') || '',
+    density: node.getAttribute('data-spw-density') || '',
+    occupancy: node.getAttribute('data-spw-pack-occupancy') || '',
     tune: node.getAttribute('data-spw-affordance') === 'tune',
     element: node,
   }));
@@ -214,6 +217,9 @@ function renderRail(regions) {
     if (region.consequence) link.dataset.spwConsequence = region.consequence;
     if (region.wonder) link.dataset.spwWonder = region.wonder;
     if (region.lens) link.dataset.spwLens = region.lens;
+    if (region.harmony) link.dataset.spwHarmony = region.harmony;
+    if (region.density) link.dataset.spwDensity = region.density;
+    if (region.occupancy) link.dataset.spwPackOccupancy = region.occupancy;
     if (region.tune) link.dataset.spwAffordance = 'tune';
     if (region.meta) link.dataset.spwRegionMeta = region.meta;
     if (region.componentSummary) link.dataset.spwAccentConcept = region.componentSummary;
@@ -286,6 +292,8 @@ function bindActiveRegion(regions, rail) {
           spwActiveRegionOperator: activeRegion.operator || null,
           spwActiveRegionConsequence: activeRegion.consequence || null,
           spwActiveRegionWonder: activeRegion.wonder || null,
+          spwActiveRegionHarmony: activeRegion.harmony || null,
+          spwActiveRegionDensity: activeRegion.density || null,
         });
         writeActiveKin(activeRegion, regions, links);
       }

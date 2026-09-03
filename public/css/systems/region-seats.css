@@ -10,6 +10,10 @@
 :where(main > .spw-frame[data-spw-region], main > .spw-frame[data-spw-region-role]) {
   --spw-region-wash: 0%;
   --spw-region-seam: 16%;
+  --spw-harmony-wash-bias: 0%;
+  --spw-harmony-seam-bias: 0%;
+  --spw-density-wash-bias: 0%;
+  --spw-density-seam-bias: 0%;
   --spw-region-track: 16rem;
   --spw-region-prose: min(100%, var(--shell-reading-measure, 68ch));
   container-type: inline-size;
@@ -54,16 +58,24 @@
 }
 
 :where(.spw-frame[data-spw-region], .spw-frame[data-spw-region-role="entry-spine"]) {
+  --spw-region-wash-spent: min(
+    12%,
+    calc(var(--spw-region-wash, 0%) + var(--spw-harmony-wash-bias, 0%) + var(--spw-density-wash-bias, 0%))
+  );
+  --spw-region-seam-spent: min(
+    36%,
+    calc(var(--spw-region-seam, 16%) + var(--spw-harmony-seam-bias, 0%) + var(--spw-density-seam-bias, 0%))
+  );
   background:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-wash), transparent),
+      color-mix(in srgb, var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-wash-spent), transparent),
       transparent 28%
     ),
     color-mix(in srgb, var(--component-surface, var(--surface, #fff)) 97%, var(--component-accent, var(--active-op-color, #008080)) 3%);
   --site-frame-seam-color: color-mix(
     in srgb,
-    var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-seam),
+    var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-seam-spent),
     transparent
   );
 }
@@ -98,6 +110,54 @@
 :where(.spw-frame[data-spw-region="wide"]) {
   --spw-region-wash: 4%;
   --spw-region-seam: 20%;
+}
+
+/* Profiler climate. Paint only — packing stays on the density ladder. */
+:where(.spw-frame[data-spw-harmony="indexed"]) {
+  --spw-harmony-seam-bias: 6%;
+}
+
+:where(.spw-frame[data-spw-harmony="structured"]) {
+  --spw-harmony-seam-bias: 4%;
+  --spw-harmony-wash-bias: 1%;
+}
+
+:where(.spw-frame[data-spw-harmony="responsive"]) {
+  --spw-harmony-wash-bias: 2%;
+}
+
+:where(.spw-frame[data-spw-harmony="measured"]) {
+  --spw-harmony-seam-bias: 3%;
+}
+
+:where(.spw-frame[data-spw-harmony="anchored"]) {
+  --spw-harmony-seam-bias: 5%;
+  --spw-harmony-wash-bias: 1%;
+}
+
+:where(.spw-frame[data-spw-harmony="editorial"]) {
+  --spw-harmony-wash-bias: 2%;
+}
+
+:where(.spw-frame[data-spw-harmony="modular"]) {
+  --spw-harmony-wash-bias: 2%;
+  --spw-harmony-seam-bias: 2%;
+}
+
+:where(
+  .spw-frame[data-spw-density="compact"],
+  .spw-frame[data-spw-density="dense"]
+) {
+  --spw-density-seam-bias: 3%;
+  --spw-density-wash-bias: 1%;
+}
+
+:where(
+  .spw-frame[data-spw-density="roomy"],
+  .spw-frame[data-spw-density="reading"],
+  .spw-frame[data-spw-density="soft"]
+) {
+  --spw-density-seam-bias: -2%;
 }
 
 /*

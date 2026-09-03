@@ -8,12 +8,12 @@
    17. Meaningful card utilities
    ========================================================================== */
 
-:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="soft"]) {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="soft"], :is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="reading"]) {
   --component-pad: 1rem;
   --component-gap-tight: 0.65rem;
 }
 
-:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="dense"]) {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="dense"], :is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="compact"]) {
   --component-pad: 0.75rem;
   --component-gap-tight: 0.4rem;
 }

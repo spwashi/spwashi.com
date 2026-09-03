@@ -34,7 +34,7 @@ tiers: .{
 }
 
 routing: .{
-  density = `data-spw-density or data-spw-component-density on frame/panel/card (dense→compact, roomy/soft→roomy)`
+  density = `data-spw-density or data-spw-component-density on frame/panel/card. Canonical compact|balanced|roomy. Aliases: dense→compact, medium→balanced, roomy/soft/spacious/reading→roomy. region-profiler writes the canonical ladder.`
   packing_state = `data-spw-packing-state compact|balanced|roomy|spacious on measured specimens`
   occupancy = `data-spw-pack-occupancy sparse|balanced|full maps to tier ladder via dimensions.css`
   line_spacing = `html[data-spw-line-spacing] from settings (compact|normal|loose)`

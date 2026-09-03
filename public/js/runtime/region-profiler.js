@@ -25,8 +25,34 @@ export const REGION_STATES = Object.freeze({
   SETTLING: 'settling',
 });
 
+export const REGION_DENSITY_TIERS = Object.freeze(['compact', 'balanced', 'roomy']);
+export const REGION_OCCUPANCY_TIERS = Object.freeze(['sparse', 'balanced', 'full']);
+export const REGION_HARMONY_VALUES = Object.freeze([
+  'indexed',
+  'structured',
+  'responsive',
+  'measured',
+  'anchored',
+  'editorial',
+  'modular',
+  'ambient',
+]);
+
 export const SPW_REGION_PROFILER_CONTRACT = Object.freeze({
   states: REGION_STATES,
+  densityTiers: REGION_DENSITY_TIERS,
+  occupancyTiers: REGION_OCCUPANCY_TIERS,
+  harmonyValues: REGION_HARMONY_VALUES,
+  densityAliases: Object.freeze({
+    dense: 'compact',
+    medium: 'balanced',
+    soft: 'roomy',
+    spacious: 'roomy',
+    reading: 'roomy',
+  }),
+  occupancyAliases: Object.freeze({
+    compact: 'sparse',
+  }),
   diversityTiers: Object.freeze(['singular', 'paired', 'varied', 'rich', 'teeming']),
   diversityAttributes: Object.freeze({
     kindField: 'data-spw-region-kind-field',
@@ -38,6 +64,7 @@ export const SPW_REGION_PROFILER_CONTRACT = Object.freeze({
     'Import this module when a page needs region harmony, tempo, and density without booting site.js. '
     + 'Read the region-diversity tier (or subscribe to spw:regions-profiled) to reward surfaces that '
     + 'reveal a wider spread of component kinds — the substrate for collection/achievement systems. '
+    + 'Density writes the typography-packing ladder (compact|balanced|roomy). Occupancy stays sparse|balanced|full — never a density word. '
     + 'Voice and copy personality stay in component-region-personality.spw; do not stamp a parallel data-spw-* family.',
 });
 
@@ -123,6 +150,20 @@ export function setRegionState(el, state) {
   writeDatasetValue(el, 'spwRegionState', state);
 }
 
+function normalizeRegionDensity(value = '') {
+  const token = String(value || '').trim().toLowerCase();
+  if (!token) return '';
+  const aliased = SPW_REGION_PROFILER_CONTRACT.densityAliases[token] || token;
+  return REGION_DENSITY_TIERS.includes(aliased) ? aliased : '';
+}
+
+function normalizeRegionOccupancy(value = '') {
+  const token = String(value || '').trim().toLowerCase();
+  if (!token) return '';
+  const aliased = SPW_REGION_PROFILER_CONTRACT.occupancyAliases[token] || token;
+  return REGION_OCCUPANCY_TIERS.includes(aliased) ? aliased : '';
+}
+
 function inferRegionHarmony(el, profile) {
   if (el?.dataset?.spwHarmony) return el.dataset.spwHarmony;
   const { role, kind, context } = profile;
@@ -156,20 +197,19 @@ function inferRegionTempo(el, profile) {
 }
 
 function inferRegionDensity(el, profile) {
-  if (el?.dataset?.spwDensity) return el.dataset.spwDensity;
+  const authored = normalizeRegionDensity(el?.dataset?.spwDensity);
+  if (authored) return authored;
   const measureBand = el?.dataset?.spwMeasureBand;
   const extent = el?.dataset?.spwExtent;
 
   if (measureBand === 'compact' || extent === 'squat') return 'compact';
   if (measureBand === 'wide' || extent === 'overtall') {
-    return profile.role === 'schema' ? 'dense' : 'reading';
+    return profile.role === 'schema' ? 'compact' : 'roomy';
   }
 
-  if (profile.kind === 'card') return 'compact';
-  if (profile.kind === 'panel') return 'medium';
-  if (profile.role === 'reference') return 'reading';
-  if (profile.role === 'schema') return 'dense';
-  return 'medium';
+  if (profile.role === 'reference') return 'roomy';
+  if (profile.role === 'schema') return 'compact';
+  return 'balanced';
 }
 
 function normalizeAttentionalWeight(value, fallback = '1') {
@@ -257,7 +297,8 @@ function inferRegionCanopy(el) {
 }
 
 function inferRegionPackOccupancy(el, profile) {
-  if (el.dataset.spwPackOccupancy) return el.dataset.spwPackOccupancy;
+  const authored = normalizeRegionOccupancy(el.dataset.spwPackOccupancy);
+  if (authored) return authored;
 
   const slotNodes = Array.from(el.querySelectorAll?.(':scope > [data-spw-slot]') || []);
   const declaredSlots = new Set();
@@ -278,7 +319,7 @@ function inferRegionPackOccupancy(el, profile) {
   const ratio = declaredCount ? filledCount / declaredCount : 0;
 
   if (profile.kind === 'hook') return 'balanced';
-  if (!declaredCount) return profile.kind === 'card' || profile.kind === 'panel' ? 'compact' : 'sparse';
+  if (!declaredCount) return profile.kind === 'card' || profile.kind === 'panel' ? 'balanced' : 'sparse';
   if (ratio <= 0.34) return 'sparse';
   if (ratio <= 0.8) return 'balanced';
   return 'full';

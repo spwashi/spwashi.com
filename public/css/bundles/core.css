@@ -3154,7 +3154,9 @@ html[data-spw-reduce-motion="on"] {
 
 :where(
   [data-spw-packing-state="compact"],
+  [data-spw-density="compact"],
   [data-spw-density="dense"],
+  [data-spw-component-density="compact"],
   [data-spw-component-density="dense"],
   [data-spw-pack="compact"],
   [data-spw-pack="dense"],
@@ -3169,6 +3171,9 @@ html[data-spw-reduce-motion="on"] {
 
 :where(
   [data-spw-packing-state="balanced"],
+  [data-spw-density="balanced"],
+  [data-spw-density="medium"],
+  [data-spw-component-density="balanced"],
   [data-spw-pack="balanced"],
   [data-spw-pack-occupancy="balanced"],
   html[data-spw-design-ecology-packing="balanced"]
@@ -3185,6 +3190,7 @@ html[data-spw-reduce-motion="on"] {
   [data-spw-packing-state="spacious"],
   [data-spw-density="soft"],
   [data-spw-density="roomy"],
+  [data-spw-density="reading"],
   [data-spw-component-density="roomy"],
   [data-spw-pack="roomy"],
   html[data-spw-design-ecology-packing="spacious"],
@@ -3197,8 +3203,9 @@ html[data-spw-reduce-motion="on"] {
   --spw-pack-gap-active: var(--pack-tier-roomy-gap, var(--component-gap-loose, 1.2rem));
 }
 
-/* Frame occupancy from region-profiler. Not data-spw-pack-fill (card-local). */
-:where([data-spw-pack-occupancy="sparse"]) {
+/* Frame occupancy from region-profiler. Not data-spw-pack-fill (card-local).
+   compact is a leftover density word; treat it as sparse. */
+:where([data-spw-pack-occupancy="sparse"], [data-spw-pack-occupancy="compact"]) {
   --spw-pack-tier: compact;
   --spw-pack-occupancy-weight: 0.22;
 }
@@ -13744,14 +13751,43 @@ html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .
 
 :where(.spw-frame[data-spw-harmony="indexed"]) {
   --grammar-boundary-weight: 0.5;
+  --grammar-edge-softness: 0.1;
 }
 
 :where(.spw-frame[data-spw-harmony="structured"]) {
+  --grammar-boundary-weight: 0.46;
   --grammar-edge-softness: 0.12;
 }
 
 :where(.spw-frame[data-spw-harmony="responsive"]) {
   --grammar-motion-budget: 0.32;
+  --grammar-edge-softness: 0.2;
+}
+
+:where(.spw-frame[data-spw-harmony="measured"]) {
+  --grammar-boundary-weight: 0.42;
+  --grammar-motion-budget: 0.18;
+}
+
+:where(.spw-frame[data-spw-harmony="anchored"]) {
+  --grammar-boundary-weight: 0.48;
+  --grammar-edge-softness: 0.08;
+  --grammar-motion-budget: 0.16;
+}
+
+:where(.spw-frame[data-spw-harmony="editorial"]) {
+  --grammar-edge-softness: 0.3;
+  --grammar-motion-budget: 0.22;
+}
+
+:where(.spw-frame[data-spw-harmony="modular"]) {
+  --grammar-boundary-weight: 0.38;
+  --grammar-motion-budget: 0.28;
+}
+
+:where(.spw-frame[data-spw-harmony="ambient"]) {
+  --grammar-boundary-weight: 0.28;
+  --grammar-edge-softness: 0.26;
 }
 
 /* Region tempo shapes local cascade offsets without overriding page-level arrival steps. */
@@ -16398,7 +16434,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 
    Vocabulary (canonical + aliases) lives in tokens/dimensions.css:
    compact | balanced | roomy
-   Aliases: dense→compact, soft/spacious→roomy
+   Aliases: dense→compact, medium→balanced, soft/spacious/reading→roomy
    Occupancy: sparse→compact, full→roomy
    ========================================================================== */
 
@@ -16427,7 +16463,9 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
    -------------------------------------------------------------------------- */
 
 :where(
+  [data-spw-density="compact"],
   [data-spw-density="dense"],
+  [data-spw-component-density="compact"],
   [data-spw-component-density="dense"],
   [data-spw-pinch-variant="compact"],
   html[data-spw-component-density="dense"] :where(.spw-frame, .frame-panel, .frame-card),
@@ -16452,6 +16490,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 :where(
   [data-spw-density="soft"],
   [data-spw-density="roomy"],
+  [data-spw-density="reading"],
   [data-spw-component-density="roomy"],
   [data-spw-pinch-variant="roomy"],
   html[data-spw-component-density="roomy"] :where(.spw-frame, .frame-panel, .frame-card),
@@ -17388,6 +17427,36 @@ html[data-spw-color-mode="dark"] :where(
   --card-secondary-shift: calc(var(--component-card-detail-shift, 0) * 1px);
   --card-secondary-weight: var(--component-card-detail-weight, 0);
   --card-rhythm: clamp(0.58rem, 1.8cqi, 0.85rem);
+}
+
+:where(
+  .spw-card,
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .ref-card,
+  .compare-card
+):is([data-spw-density="compact"], [data-spw-density="dense"]) {
+  --card-rhythm: clamp(0.4rem, 1.4cqi, 0.62rem);
+}
+
+:where(
+  .spw-card,
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .ref-card,
+  .compare-card
+):is([data-spw-density="roomy"], [data-spw-density="soft"], [data-spw-density="reading"]) {
+  --card-rhythm: clamp(0.7rem, 2.1cqi, 1.05rem);
 }
 
 :where(.spw-card, .frame-card, .frame-card > a:first-child, .spw-card > a:first-child) {
@@ -20674,12 +20743,12 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
    17. Meaningful card utilities
    ========================================================================== */
 
-:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="soft"]) {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="soft"], :is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="reading"]) {
   --component-pad: 1rem;
   --component-gap-tight: 0.65rem;
 }
 
-:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="dense"]) {
+:where(:is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="dense"], :is(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="compact"]) {
   --component-pad: 0.75rem;
   --component-gap-tight: 0.4rem;
 }
@@ -29952,6 +30021,10 @@ html[data-spw-theme-pack="electric-studio"] {
 :where(main > .spw-frame[data-spw-region], main > .spw-frame[data-spw-region-role]) {
   --spw-region-wash: 0%;
   --spw-region-seam: 16%;
+  --spw-harmony-wash-bias: 0%;
+  --spw-harmony-seam-bias: 0%;
+  --spw-density-wash-bias: 0%;
+  --spw-density-seam-bias: 0%;
   --spw-region-track: 16rem;
   --spw-region-prose: min(100%, var(--shell-reading-measure, 68ch));
   container-type: inline-size;
@@ -29996,16 +30069,24 @@ html[data-spw-theme-pack="electric-studio"] {
 }
 
 :where(.spw-frame[data-spw-region], .spw-frame[data-spw-region-role="entry-spine"]) {
+  --spw-region-wash-spent: min(
+    12%,
+    calc(var(--spw-region-wash, 0%) + var(--spw-harmony-wash-bias, 0%) + var(--spw-density-wash-bias, 0%))
+  );
+  --spw-region-seam-spent: min(
+    36%,
+    calc(var(--spw-region-seam, 16%) + var(--spw-harmony-seam-bias, 0%) + var(--spw-density-seam-bias, 0%))
+  );
   background:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-wash), transparent),
+      color-mix(in srgb, var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-wash-spent), transparent),
       transparent 28%
     ),
     color-mix(in srgb, var(--component-surface, var(--surface, #fff)) 97%, var(--component-accent, var(--active-op-color, #008080)) 3%);
   --site-frame-seam-color: color-mix(
     in srgb,
-    var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-seam),
+    var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-seam-spent),
     transparent
   );
 }
@@ -30040,6 +30121,54 @@ html[data-spw-theme-pack="electric-studio"] {
 :where(.spw-frame[data-spw-region="wide"]) {
   --spw-region-wash: 4%;
   --spw-region-seam: 20%;
+}
+
+/* Profiler climate. Paint only — packing stays on the density ladder. */
+:where(.spw-frame[data-spw-harmony="indexed"]) {
+  --spw-harmony-seam-bias: 6%;
+}
+
+:where(.spw-frame[data-spw-harmony="structured"]) {
+  --spw-harmony-seam-bias: 4%;
+  --spw-harmony-wash-bias: 1%;
+}
+
+:where(.spw-frame[data-spw-harmony="responsive"]) {
+  --spw-harmony-wash-bias: 2%;
+}
+
+:where(.spw-frame[data-spw-harmony="measured"]) {
+  --spw-harmony-seam-bias: 3%;
+}
+
+:where(.spw-frame[data-spw-harmony="anchored"]) {
+  --spw-harmony-seam-bias: 5%;
+  --spw-harmony-wash-bias: 1%;
+}
+
+:where(.spw-frame[data-spw-harmony="editorial"]) {
+  --spw-harmony-wash-bias: 2%;
+}
+
+:where(.spw-frame[data-spw-harmony="modular"]) {
+  --spw-harmony-wash-bias: 2%;
+  --spw-harmony-seam-bias: 2%;
+}
+
+:where(
+  .spw-frame[data-spw-density="compact"],
+  .spw-frame[data-spw-density="dense"]
+) {
+  --spw-density-seam-bias: 3%;
+  --spw-density-wash-bias: 1%;
+}
+
+:where(
+  .spw-frame[data-spw-density="roomy"],
+  .spw-frame[data-spw-density="reading"],
+  .spw-frame[data-spw-density="soft"]
+) {
+  --spw-density-seam-bias: -2%;
 }
 
 /*
@@ -30496,7 +30625,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame[data-spw-region], .spw-frame
   --squeeze-occupancy: 0.4;
 }
 
-:where(.spw-frame[data-spw-pack-occupancy="sparse"]) {
+:where(.spw-frame[data-spw-pack-occupancy="sparse"], .spw-frame[data-spw-pack-occupancy="compact"]) {
   --squeeze-ceiling-occupancy: 0.2;
 }
 
@@ -42942,6 +43071,22 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
 
   :where(.spw-page-region-rail__link[data-spw-affordance="tune"]) {
     border-inline-start: 2px solid color-mix(in srgb, var(--op-action-color, #006b6b) 44%, transparent);
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-harmony="indexed"]) {
+    letter-spacing: 0.03em;
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-harmony="editorial"]) {
+    color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 78%, var(--op-object-color, #a67c00));
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-density="compact"], .spw-page-region-rail__link[data-spw-density="dense"]) {
+    padding-block: 0.14rem;
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-density="roomy"], .spw-page-region-rail__link[data-spw-density="reading"]) {
+    padding-block: 0.3rem;
   }
 
   :where(.spw-page-region-rail:is([data-spw-palette-resonance="lattice"], [data-spw-palette-resonance="software"]) .spw-page-region-rail__link) {

@@ -89,17 +89,24 @@ test("physical model contract holds layer references and contracts", () => {
   assert.equal(SPW_PHYSICAL_MODEL_CONTRACT.layers.climate, "developmental-climate");
 });
 
-test("region profiler describes seats without a personality attribute family", () => {
-  const fakeEl = {
-    id: "hero-frame",
-    dataset: {},
-    classList: { contains: (cls) => cls === "site-hero" },
-    getAttribute: () => null,
+function fakeRegionEl(overrides = {}) {
+  const dataset = { ...(overrides.dataset || {}) };
+  return {
+    id: overrides.id || "hero-frame",
+    dataset,
+    classList: { contains: (cls) => cls === (overrides.heroClass || "site-hero") },
+    getAttribute: (name) => dataset[name] || null,
     querySelector: () => null,
-    querySelectorAll: () => [],
+    querySelectorAll: () => overrides.slotNodes || [],
     matches: (sel) => sel === "section",
     closest: () => null,
+    ...overrides,
+    dataset,
   };
+}
+
+test("region profiler describes seats without a personality attribute family", () => {
+  const fakeEl = fakeRegionEl();
 
   const profile = buildRegionProfile(fakeEl, 0);
   assert.equal(profile.personality, undefined);
@@ -111,6 +118,31 @@ test("region profiler describes seats without a personality attribute family", (
   assert.ok(desc.kind);
   assert.equal(desc.personality, undefined);
   assert.equal(SPW_REGION_PROFILER_CONTRACT.personalityAttributes, undefined);
+});
+
+test("region profiler writes packing density and occupancy ladders", () => {
+  const hero = buildRegionProfile(fakeRegionEl(), 0);
+  assert.equal(hero.density, "balanced");
+  assert.equal(hero.packOccupancy, "sparse");
+  assert.ok(SPW_REGION_PROFILER_CONTRACT.densityTiers.includes(hero.density));
+  assert.ok(SPW_REGION_PROFILER_CONTRACT.occupancyTiers.includes(hero.packOccupancy));
+  assert.ok(SPW_REGION_PROFILER_CONTRACT.harmonyValues.includes(hero.harmony));
+
+  const denseAlias = buildRegionProfile(fakeRegionEl({
+    dataset: { spwDensity: "reading", spwPackOccupancy: "compact" },
+  }), 1);
+  assert.equal(denseAlias.density, "roomy");
+  assert.equal(denseAlias.packOccupancy, "sparse");
+
+  const card = buildRegionProfile(fakeRegionEl({
+    id: "card-frame",
+    dataset: { spwKind: "card", spwRole: "routing" },
+    heroClass: "",
+  }), 2);
+  assert.equal(card.kind, "card");
+  assert.equal(card.density, "balanced");
+  assert.equal(card.packOccupancy, "balanced");
+  assert.notEqual(card.packOccupancy, "compact");
 });
 
 test("region kin describes kin relations and exports contract", () => {

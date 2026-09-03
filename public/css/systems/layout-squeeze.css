@@ -78,7 +78,7 @@
   --squeeze-occupancy: 0.4;
 }
 
-:where(.spw-frame[data-spw-pack-occupancy="sparse"]) {
+:where(.spw-frame[data-spw-pack-occupancy="sparse"], .spw-frame[data-spw-pack-occupancy="compact"]) {
   --squeeze-ceiling-occupancy: 0.2;
 }
 
