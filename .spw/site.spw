@@ -168,6 +168,8 @@
 @component_packing: ~"./conventions/component-packing.spw"
 @spatial_gravity: ~"./conventions/spatial-gravity.spw"
 @region_component_ecology: ~"./conventions/region-component-ecology.spw"
+@projection_attenuation: ~"./conventions/projection-attenuation.spw"
+@expression_card: ~"./conventions/expression-card.spw"
 
 @operational_semantics: ~"./conventions/operational-semantics.spw"
 @measurement_contract: ~"./conventions/measurement-contract.spw"
@@ -237,7 +239,7 @@ translations: .{
  page_template_authoring = #[@page_template_authoring, @template_renderer, @route_template_migrate, @page_model, @component_region_personality][reg=set]
  site_starter_component_kit = #[@site_starter_component_kit, @composition_box_model, @component_taxonomy, @modular_experience_slices][reg=set]
  expressive_registers = #[@expressive_registers, @attention_field, @approach_topography, @style_development][reg=set]
- component_harmony = #[@component_philosophy_harmony_audit, @component_anatomy_device_packing_audit, @component_taxonomy, @component_packing, @spatial_gravity, @composition_box_model, @attention_field, @ornament_contract, @expressive_registers, @region_component_ecology, @naming_structured_values, @data_spw_attribute_governance][reg=set]
+ component_harmony = #[@component_philosophy_harmony_audit, @component_anatomy_device_packing_audit, @component_taxonomy, @component_packing, @spatial_gravity, @composition_box_model, @attention_field, @ornament_contract, @expressive_registers, @region_component_ecology, @projection_attenuation, @expression_card, @naming_structured_values, @data_spw_attribute_governance][reg=set]
  codebase_perusal = #[@codebase_perusal, @spw_maintenance_2026_06, @semantic_capacity, @planning_ecology][reg=set]
  spw_maintenance = #[@spw_maintenance_2026_06, @semantic_capacity, @planning_ecology][reg=set]
  public_routes = #[@surfaces, @surface_registry][reg=set]

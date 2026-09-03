@@ -112,6 +112,9 @@
 @component_philosophy_harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 @composition_box_model: ~"./composition-box-model.spw"
 @region_component_ecology: ~"./region-component-ecology.spw"
+@projection_attenuation: ~"./projection-attenuation.spw"  # page → region → slot field hold; live CSS
+@literary_operational_motifs: ~"./literary-operational-motifs.spw"  # cookbook/magazine/research discharge registers
+@expression_card: ~"./expression-card.spw"  # one primitive under lab, toolmaker, and cauldron expression hosts
 @kernel_rhizosphere: ~"./kernel-rhizosphere.spw"
 @text_token_normalization: ~"./text-token-normalization.spw"
 @route_transit_memory: ~"./route-transit-memory.spw"
