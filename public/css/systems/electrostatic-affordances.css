@@ -97,15 +97,26 @@
 :where([data-spw-region="path"], [data-spw-region-role="path-node"]) { --spw-channel: leak; --spw-e-channel: 0.72; }
 :where([data-spw-region="read"], [data-spw-region-role="reading"]) { --spw-channel: resist; --spw-e-channel: 0.55; }
 
-/* Multidimensional electrostatics: terminal × channel × nest. Edge is proximity, not a fourth field. */
+/* Multidimensional electrostatics: terminal × channel × nest. Edge is
+   magnetism on that product, not a fourth field — proximity raises impact,
+   absence leaves it unchanged. */
 :where([data-spw-operator]) { --spw-e-terminal: 1; }
-:where(.spw-frame, .frame-card, [data-spw-form="brace"]) {
+:where(
+  .spw-frame,
+  .frame-card,
+  [data-spw-form="brace"],
+  .spw-page-landmarks,
+  .spw-section-handle,
+  .spw-section-handle-shell,
+  .spw-ornament-cluster
+) {
   --spw-e-nest: var(--spw-nest-attenuate, 1);
   --spw-e-edge: var(--spw-edge-proximity, 0);
   --spw-impact-scale: calc(
     var(--spw-e-terminal, 1)
     * var(--spw-e-channel, 1)
     * var(--spw-e-nest, 1)
+    * (1 + (0.22 * var(--spw-e-edge, 0)))
   );
 }
 
@@ -125,8 +136,151 @@
   );
 }
 
+/* Room-level arming. interaction-progression writes the phase; this is how
+   the terminal becomes an electrode without a second charge sticker. */
+html[data-spw-interaction-phase="approach"] { --spw-electrode-room: armed; }
+html[data-spw-interaction-phase="prime"],
+html[data-spw-interaction-phase="charge"] { --spw-electrode-room: preview; }
+html[data-spw-interaction-phase="inspect"],
+html[data-spw-interaction-phase="discover"] { --spw-electrode-room: acted; }
+
+html[data-spw-interaction-phase="discover"] :where(.spw-frame, .frame-card),
+html[data-spw-interaction-phase="inspect"] :where(.spw-frame, .frame-card),
+html[data-spw-interaction-phase="charge"] :where(.spw-frame, .frame-card) {
+  --spw-projected-field: max(
+    var(--spw-projected-field, 0),
+    calc(var(--spw-interaction-phase-weight, 0) * 0.48)
+  );
+}
+
+/* Edge magnetism: the current room and the handle are closer, not louder. */
+:where([data-spw-section-state="active"], :target) {
+  --spw-e-edge: max(var(--spw-e-edge, 0), 0.72);
+}
+
+:where(
+  .spw-page-landmarks a[aria-current="location"],
+  .spw-page-landmarks a[data-spw-loop-state="activated"],
+  .spw-section-handle-shell[data-spw-handle-phase="traveling"],
+  .spw-section-handle[data-spw-handle-phase="traveling"]
+) {
+  --spw-e-edge: max(var(--spw-e-edge, 0), 0.86);
+}
+
+:where([data-spw-approach="approaching"]) {
+  --spw-e-edge: max(var(--spw-e-edge, 0), 0.55);
+}
+
+:where([data-spw-approach="arrival"]) {
+  --spw-e-edge: max(var(--spw-e-edge, 0), 0.82);
+}
+
+/* Attention chrome is material too: landmarks leak (a path), the handle stores. */
+.spw-page-landmarks {
+  --spw-channel: leak;
+  --spw-e-channel: 0.72;
+}
+
+.spw-section-handle-shell,
+.spw-section-handle {
+  --spw-channel: store;
+  --spw-e-channel: 1.05;
+}
+
+.spw-ornament-cluster[data-spw-sibling-resonance="true"] {
+  --spw-channel: couple;
+  --spw-e-channel: 0.85;
+}
+
+/* Induction from the current room, not only an explicit charge sticker. */
+:where(
+  [data-spw-region]:has([data-spw-section-state="active"]),
+  [data-spw-region]:has(:target),
+  [data-spw-region-role]:has([data-spw-section-state="active"]),
+  [data-spw-region-role]:has(:target)
+) {
+  --spw-induced-field: max(
+    var(--spw-induced-field, 0),
+    calc(var(--spw-interaction-phase-weight, 0) * 0.42 * var(--spw-impact-scale, 1))
+  );
+}
+
+/* Induced field and electrode ring spend into --spw-resonance.
+   wonder.css paints the ring; this file does not resticker box-shadow. */
+:where([data-spw-operator]) {
+  --spw-electrode-ring: 0;
+  --spw-resonance: max(
+    var(--spw-resonance, 0),
+    var(--spw-induced-field, 0),
+    var(--spw-electrode-ring, 0)
+  );
+}
+
+:where([data-spw-operator][data-spw-charge="armed"]),
+:where([data-spw-operator][data-spw-charge-phase="arming"]),
+html[data-spw-interaction-phase="approach"] :where([data-spw-operator]:is(:hover, :focus-visible)) {
+  --spw-electrode: armed;
+  --spw-electrode-ring: 0.55;
+}
+
+:where([data-spw-operator][data-spw-charge="charged"]),
+:where([data-spw-operator][data-spw-charge-phase="charged"]),
+html[data-spw-interaction-phase="inspect"] :where([data-spw-section-state="active"] [data-spw-operator]),
+html[data-spw-interaction-phase="discover"] :where([data-spw-section-state="active"] [data-spw-operator]) {
+  --spw-electrode: acted;
+  --spw-electrode-ring: max(var(--spw-electrode-ring, 0), 0.72);
+}
+
+/* Lifecycle beats already resolved on components — they join the same field. */
+:where([data-spw-lifecycle-beat-resolved="approach"], [data-spw-lifecycle-beat-resolved="gather"]) {
+  --spw-electrode: armed;
+  --spw-e-edge: max(var(--spw-e-edge, 0), 0.42);
+}
+
+:where([data-spw-lifecycle-beat-resolved="commit"]) {
+  --spw-electrode: acted;
+  --spw-e-edge: max(var(--spw-e-edge, 0), 0.7);
+}
+
+:where([data-spw-lifecycle-beat-resolved="release"], [data-spw-lifecycle-beat-resolved="settle"]) {
+  --spw-electrode: preview;
+}
+
+/* Paper containers and living terms read the room electrode without a second
+   charge sticker. JS may still write data-charge; CSS carries the hop. */
+html[data-spw-interaction-phase="approach"] :where([data-container-type]),
+html[data-spw-interaction-phase="prime"] :where([data-container-type]) {
+  --field-intensity: max(var(--field-intensity, 0.5), 0.66);
+  --coherence: max(var(--coherence, 0.8), 0.78);
+}
+
+html[data-spw-interaction-phase="charge"] :where([data-container-type]) {
+  --field-intensity: max(var(--field-intensity, 0.5), 0.8);
+  --charge-accent: var(--kinetic-color, var(--op-merge-color, #2a8a8a));
+}
+
+html[data-spw-interaction-phase="discover"] :where([data-container-type]),
+html[data-spw-interaction-phase="inspect"] :where([data-container-type]) {
+  --field-intensity: max(
+    var(--field-intensity, 0.5),
+    0.9,
+    calc(0.42 + (var(--spw-charge-field, 0) * 0.48))
+  );
+  --coherence: max(var(--coherence, 0.8), 0.92);
+  --charge-accent: var(--manifest-color, var(--active-op-color, #008080));
+}
+
+html[data-spw-microinteraction-pulse] :where(
+  .spw-living-term[data-spw-motion],
+  [data-spw-living-term][data-spw-motion],
+  [data-spw-form="brace"][data-spw-motion]
+) {
+  --spw-motion-duration: var(--spw-microinteraction-pulse-duration, 280ms);
+}
+
 @media (prefers-reduced-motion: reduce) {
   :where([data-spw-operator]) {
     --spw-electrode: latent;
+    --spw-electrode-ring: 0;
   }
 }

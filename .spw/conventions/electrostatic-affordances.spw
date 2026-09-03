@@ -37,6 +37,9 @@ fixity = "experimental"
   preview: "Dwell without commit. The visitor can still leave. Discharge has not happened."
   acted: "Commit (click, hold-prime, explicit charge). Phase = charged. Then the operator's inferred discharge kind fires: release | transfer | ground | project."
   channeled: "If the acted handle sits in a region, hold and echo are multiplied by that region's material (--spw-wonder-hold) and slot (--spw-slot-attenuate). The same `?` in a hook lingers; in a read seat it fades."
+  room_arming: "html[data-spw-interaction-phase] is the room-level electrode. A landmark hop, handle travel, or cauldron gather writes discover/charge/inspect; electrostatics mix that into --spw-projected-field and --spw-e-edge. Do not resticker data-spw-charge on every landmark."
+  attention: "The section handle writes data-spw-approach on the current room (approaching|arrival). Registers already spend that topography; --spw-e-edge reads it as magnetism. Induced field spends into --spw-resonance so wonder.css paints the ring."
+  ecology: "Paper containers ([data-container-type]), living-term motions, and resolved lifecycle beats read the same room electrode. CSS carries the hop without rewriting data-charge on every node. That is progressive enhancement: JS may intensify; the field is already there."
 }
 
 ^"electrostatics"{
@@ -46,7 +49,7 @@ fixity = "experimental"
   grounding = "`#>` / binding. Charge sediments into address or pinned constraint."
   induction = "`~` / `@`. Charge moves to another register without loss of meaning. Palette facet is a transformer on `@`, not a second charge."
   field = "--spw-charge-field / --spw-field-intensity on html. One room loudness. Do not author a second field per card."
-  dimensions = "terminal × channel × nest. --spw-e-terminal, --spw-e-channel, --spw-e-nest compose --spw-impact-scale. Edge proximity is magnetism, not a fourth field."
+  dimensions = "terminal × channel × nest. --spw-e-terminal, --spw-e-channel, --spw-e-nest compose --spw-impact-scale. --spw-e-edge (from --spw-edge-proximity) multiplies that product as magnetism — 1 + 0.22×proximity — not a fourth field. --spw-induced-field spends into --spw-resonance on kin operators."
   nest = "Inner braces leak: --spw-nest-attenuate 1 → 0.62 → 0.38. Nested charge should not shout as loud as the outer wall."
 }
 

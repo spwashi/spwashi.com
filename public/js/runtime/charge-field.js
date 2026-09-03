@@ -311,10 +311,39 @@ function createChargeFieldInstance(ctx = null) {
     }),
   ];
 
+  const HOP_FIELD_SOURCES = new Set([
+    'in-page-hop',
+    'hash-hop',
+    'landmark-swipe',
+    'section-travel',
+    'cauldron-gather',
+    'cauldron-inspect',
+    'swipe-rail',
+  ]);
+  const onInteractionPhase = (event) => {
+    const source = event?.detail?.source || '';
+    if (!HOP_FIELD_SOURCES.has(source)) return;
+    const interactionPhase = event?.detail?.phase || '';
+    const chargePhase = interactionPhase === 'discover' || interactionPhase === 'inspect'
+      ? 'charged'
+      : interactionPhase === 'charge'
+        ? 'preview'
+        : interactionPhase === 'approach' || interactionPhase === 'prime'
+          ? 'armed'
+          : '';
+    if (!chargePhase) return;
+    const hash = event?.detail?.hash || '';
+    const el = (hash && document.getElementById(hash))
+      || document.querySelector('[data-spw-section-state="active"]');
+    onChargePhase(chargePhase, { target: el, detail: event.detail || {} });
+  };
+  document.addEventListener('spw:interaction-phase', onInteractionPhase);
+
   syncRoot({ field: 'quiet', intensity: 0 });
 
   const cleanup = () => {
     unsubscribers.forEach((off) => off?.());
+    document.removeEventListener('spw:interaction-phase', onInteractionPhase);
     if (decayTimer) window.clearTimeout(decayTimer);
     syncRoot({});
     document.documentElement.style.removeProperty('--spw-charge-field');

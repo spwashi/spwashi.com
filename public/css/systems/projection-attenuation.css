@@ -88,13 +88,21 @@
   --brace-open-color: color-mix(
     in srgb,
     var(--spw-operator-color, var(--component-accent, var(--active-op-color, #008080)))
-      calc(22% + (var(--spw-projected-field, 0) * 36%)),
+      calc(
+        22%
+        + (var(--spw-projected-field, 0) * 36%)
+        + (10% * (var(--grammar-boundary-weight, 0.34) - 0.34))
+      ),
     transparent
   );
   --brace-close-color: color-mix(
     in srgb,
     var(--spw-operator-color, var(--component-accent, var(--active-op-color, #008080)))
-      calc(16% + (var(--spw-projected-field, 0) * 28%)),
+      calc(
+        16%
+        + (var(--spw-projected-field, 0) * 28%)
+        + (8% * (var(--grammar-edge-softness, 0.24) - 0.24))
+      ),
     transparent
   );
 }
@@ -107,17 +115,21 @@
 }
 
 /* Clustered salience: kin in the same region share the projected field. */
-:where(.spw-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"], [data-spw-charge="preview"]))) {
+:where(.spw-frame[data-spw-region]:has(:is(:hover, :focus-within, :target, [data-spw-section-state="active"], [data-spw-charge="charged"], [data-spw-charge="preview"]))) {
   --spw-field-intensity: max(var(--spw-field-intensity, 0), 0.42);
 }
 
 :where(
-  .spw-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"]))
+  .spw-frame[data-spw-region]:has(:is(:hover, :focus-within, :target, [data-spw-section-state="active"], [data-spw-charge="charged"]))
   [data-spw-operator],
-  .spw-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"]))
+  .spw-frame[data-spw-region]:has(:is(:hover, :focus-within, :target, [data-spw-section-state="active"], [data-spw-charge="charged"]))
   [data-spw-motif]
 ) {
-  --spw-resonance: max(var(--spw-resonance, 0), calc(var(--spw-projected-field, 0.42) * 0.8));
+  --spw-resonance: max(
+    var(--spw-resonance, 0),
+    calc(var(--spw-projected-field, 0.42) * 0.8),
+    var(--spw-induced-field, 0)
+  );
   opacity: calc(0.86 + (var(--spw-resonance, 0) * 0.14));
 }
 
