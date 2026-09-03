@@ -54,7 +54,7 @@
 import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { kernelJoinFromTokens, readBodyJoins, readJoinChain } from '../public/js/semantic/expression-query.js';
+import { kernelJoinFromTokens, readBodyJoins, readCompoundJoin, readJoinChain } from '../public/js/semantic/expression-query.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'public/js/generated/spw-expressions.js');
@@ -64,6 +64,14 @@ const SKIP = new Set([
   'coverage', 'tmp', 'scripts', 'src',
 ]);
 
+const HTML_ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", '#39': "'" };
+
+/** Only the entities an attribute value can legally contain. Not a general
+ *  HTML decoder — this file reads raw bytes, the one place in the pipeline
+ *  that has to undo what every other consumer (DOM parsing) does for free. */
+function decodeHtmlEntities(value = '') {
+  return value.replace(/&(amp|lt|gt|quot|apos|#39);/g, (_, name) => HTML_ENTITIES[name]);
+}
 
 async function collectRoutes(dir = ROOT, out = []) {
   let entries;
@@ -90,8 +98,27 @@ async function collectRoutes(dir = ROOT, out = []) {
  * re-deriving them from the tree. The parse is what proves the expression is
  * well-formed; these are the fields the runtime actually wants, and reading
  * them off the source keeps the manifest small enough to ship.
+ *
+ * A declared compound (`A ~ B`, `A & B`, `A ^ B`, `A @ B`) is two full
+ * operand expressions, not one — compound-expressions.spw's own plan named
+ * this exact gap ("readShape does not yet look"). `tokens` covers the whole
+ * wrapped `expression = A ~ B` parse, so kernelJoinFromTokens on it would mix
+ * identifiers from both operands; the compound case is handled string-only
+ * (readJoinChain per operand), matching shapeFromExpression's runtime
+ * behavior, before the token-based kernel path ever runs.
  */
 function readShape(expression, tokens) {
+  const compound = readCompoundJoin(expression);
+  if (compound) {
+    return {
+      ...readShape(compound.left, []),
+      compound: {
+        operator: compound.operator,
+        bond: compound.bond,
+        right: readShape(compound.right, []),
+      },
+    };
+  }
   const kernel = kernelJoinFromTokens(tokens);
   const chain = readJoinChain(expression);
   const match = expression.match(/^([^[{<]+)(?:\[([^\]]*)\])?(?:\{([^}]*)\})?(?:<([^>]*)>)?/);
@@ -100,9 +127,21 @@ function readShape(expression, tokens) {
     return { subject: expression, mode: '', parts: join.parts, projection: '', join: join.kind };
   }
   const body = readBodyJoins(match[3] || '');
-  const parts = join.kind === 'crawl' || join.kind === 'project' || join.kind === 'ident'
-    ? join.parts
-    : body.parts;
+  // kernelJoinFromTokens scans every IDENTIFIER in the whole wrapped
+  // `expression = subject[mode]{body}` parse, not just the body — for
+  // crawl/project its returned .parts is that whole token stream (caught
+  // 2026-09-03: cauldron[garden]{sow ~> tend ~> harvest} produced
+  // ["expression","cauldron","garden","sow","tend","harvest"], not
+  // ["sow","tend","harvest"]). chain (readJoinChain, string-only) captures
+  // just the {...} body via captureGroup before splitting, so it is body-
+  // scoped by construction regardless of which of kernel/chain won the kind
+  // above. ident is unaffected — it finds the one dotted identifier among
+  // the tokens rather than returning the whole scan — so it keeps kernel.
+  const parts = join.kind === 'crawl' || join.kind === 'project'
+    ? chain.parts
+    : join.kind === 'ident'
+      ? join.parts
+      : body.parts;
   return {
     subject: (match[1] || '').trim(),
     mode: (match[2] || '').trim(),
@@ -176,7 +215,15 @@ async function main() {
   for (const file of files) {
     const source = await readFile(file, 'utf8');
     for (const match of source.matchAll(/data-spw-semantic-expression="([^"]+)"/g)) {
-      const expression = match[1];
+      // The browser decodes attribute entities before any DOM/runtime code ever
+      // sees this string, so parsing the raw file bytes without decoding first
+      // is a build-only bug, not a real one — but it is a real one here. Two
+      // authored expressions escape their <projection> as &lt;...&gt; rather
+      // than a bare <...>, which both drops the projection from the shape
+      // (the regex looks for a literal <) and, worse, feeds the literal `;`
+      // inside &lt;/&gt; to kernelJoinFromTokens as if it were a real ordinal
+      // connector — false-classifying a plain dot-joined body as "ordinal".
+      const expression = decodeHtmlEntities(match[1]);
       if (!seen.has(expression)) seen.set(expression, new Set());
       seen.get(expression).add(`/${path.relative(ROOT, file).replace(/index\.html$/, '')}`);
     }

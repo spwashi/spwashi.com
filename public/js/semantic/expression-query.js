@@ -25,6 +25,26 @@ const TIGHT_IDENT = /^[A-Za-z_][\w-]*(?:\.[A-Za-z_][\w-]*)+$/;
 
 const BRACED_CRAWL = /^(?:\{[^{}]+\}\s*\.\s*)+\{[^{}]+\}$/;
 
+/**
+ * Declared compound bonds — .spw/conventions/compound-expressions.spw
+ * #the_grammar_already_holds verified these against the parser: `A ~ B`
+ * is induction, `A & B` names B as A's subject, `A ^ B` is a project-join,
+ * `viewer@subject` is a lens. `;` is excluded on purpose — it is a body-
+ * internal ordinal separator (readBodyJoins), not an infix operator
+ * between two whole operand expressions.
+ */
+export const COMPOUND_JOIN_OPERATORS = Object.freeze({
+  '~': 'induct',
+  '&': 'subject',
+  '^': 'project',
+  '@': 'lens',
+});
+
+/** `~` immediately followed by `>` is the project-join body form
+ *  (`scrap ~> mill`), already read by readBodyJoins/readJoinChain — not
+ *  a compound operator between two operand expressions. */
+const COMPOUND_JOIN = /^(.+?)\s+([~&^@])\s+(.+)$/;
+
 function trim(value = '') {
   return String(value || '').trim();
 }
@@ -202,8 +222,44 @@ export function readJoinChain(source = '') {
   return { ...readBodyJoins(raw), raw };
 }
 
+/**
+ * `A ~ B` (or `& ^ @`) split into its two operand expressions plus the bond
+ * the operator names. Null for anything that is not a two-operand compound —
+ * including a bare project-join body (`scrap ~> mill`), which COMPOUND_JOIN
+ * does not match because `~` there is immediately followed by `>`, not
+ * whitespace. compound-expressions.spw's own count (2026-08 vintage) found
+ * 441 authored expressions and exactly 0 compound-joined; as of 2026-09 the
+ * corpus has grown to 660 and still only 2 use this form — the manifest
+ * builder read neither's second operand until this landed.
+ */
+export function readCompoundJoin(expression = '') {
+  const raw = trim(expression);
+  const match = raw.match(COMPOUND_JOIN);
+  if (!match) return null;
+  const [, left, operator, right] = match;
+  if (!trim(left) || !trim(right)) return null;
+  return {
+    operator,
+    bond: COMPOUND_JOIN_OPERATORS[operator] || 'unknown',
+    left: trim(left),
+    right: trim(right),
+  };
+}
+
 export function shapeFromExpression(expression = '') {
   const raw = String(expression || '').trim();
+  const compound = readCompoundJoin(raw);
+  if (compound) {
+    const leftShape = shapeFromExpression(compound.left);
+    return {
+      ...leftShape,
+      compound: {
+        operator: compound.operator,
+        bond: compound.bond,
+        right: shapeFromExpression(compound.right),
+      },
+    };
+  }
   const chain = readJoinChain(raw);
   const match = raw.match(/^([^[{<]+)(?:\[([^\]]*)\])?(?:\{([^}]*)\})?(?:<([^>]*)>)?/);
   if (!match) {

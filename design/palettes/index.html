@@ -439,7 +439,7 @@
                     data-spw-interaction-hold="prime local value"
                     data-spw-interaction-drag="project charge"
                     data-spw-interaction-double-click="inspect and prime">
-                    Use these as prompt handles for students of Spw semantics. A <strong data-spw-semantic-expression="spell[behavior]{repeat.move}">spell</strong> names a replayable, inspectable move. A <strong data-spw-semantic-expression="cauldron[mix]{gather.mix.cast}">cauldron</strong> is the holding space for ingredients before the move solidifies. The gesture copy should be plain: tap inspects, hold primes, drag projects, double-click inspects and primes, and keyboard commit follows the same primed path.
+                    Use these as prompt handles for students of Spw semantics. A <strong data-spw-semantic-expression="spell[behavior]{repeat.move}">spell</strong> names a replayable, inspectable move. A <strong data-spw-semantic-expression="cauldron[mix]{gather ~> mix ~> cast}">cauldron</strong> is the holding space for ingredients before the move solidifies. The gesture copy should be plain: tap inspects, hold primes, drag projects, double-click inspects and primes, and keyboard commit follows the same primed path.
                     These hooks make abstract operators concrete and discoverable: curious visitors get immediate reasons to engage; active learners see the progression from gathering (cauldron) to casting (spell).
                     Each hook should still point to a route, component, state, or HTML owner so the learning transfers back into the surface. A concept-cluster frame from an older interface, a generated image, or a small data hash can enter here as ingredients: lighting, palette, material, sensory cue, culinary verb, research domain, dream posture, and the consequence the story or interface should communicate.
                 </p>
@@ -471,7 +471,7 @@
                         </p>
                         <p data-spw-textual-role="note"><code data-spw-assignment="prompt-cauldron-ingredients">concept_cluster[render]{light.color.semantic}</code> · <a href="/play/rpg-wednesday/#story-trope-forge">story forge</a> · dimensional imagination</p>
                     </article>
-                    <article class="frame-panel" id="dimension-rail-feedback" data-spw-context="interface" data-spw-attention="scan" data-spw-behavior="filter" data-spw-assignment="prompt-cauldron-ingredients" data-spw-concept="dimension-rail" data-spw-grounding="selected-perspective" data-spw-semantic-expression="rail[dimension]{select.read.shift}">
+                    <article class="frame-panel" id="dimension-rail-feedback" data-spw-context="interface" data-spw-attention="scan" data-spw-behavior="filter" data-spw-assignment="prompt-cauldron-ingredients" data-spw-concept="dimension-rail" data-spw-grounding="selected-perspective" data-spw-semantic-expression="rail[dimension]{select.read.shift} ~ dimension_rail[concept]{select.read.shift}">
                         <h3><a href="#dimension-rail-feedback">Dimension Rail Feedback</a></h3>
                         <p>
                             A vertical rail of modes can turn one concept through several readable passes: spw,
@@ -517,10 +517,10 @@
                         aria-label="Primed brace cauldron demo: tap to inspect, hold or double-click to prime"
                         data-spw-form="brace"
                         data-spw-brace="subjective"
-                        data-spw-semantic-expression="cauldron[primed]{gather.mix.cast}"
+                        data-spw-semantic-expression="cauldron[primed]{gather ~> mix ~> cast}"
                         data-spw-interaction-contract="tap inspect hold prime drag project double-click inspect-prime keyboard commit">
                         <span class="spw-delimiter" aria-hidden="true">{</span>
-                        <span class="spw-interactive-expression spw-interaction-demo__copy" data-spw-interactive-expression="true" data-spw-expression-key="palette-cauldron-expression" title="Click to edit Spw expression or open Geometry HUD">cauldron[primed]{gather.mix.cast}</span>
+                        <span class="spw-interactive-expression spw-interaction-demo__copy" data-spw-interactive-expression="true" data-spw-expression-key="palette-cauldron-expression" title="Click to edit Spw expression or open Geometry HUD">cauldron[primed]{gather ~> mix ~> cast}</span>
                         <span class="spw-interaction-demo__hint">tap inspect · hold prime · drag preview · double-click prime now</span>
                         <span class="spw-delimiter" aria-hidden="true">}</span>
                     </div>
