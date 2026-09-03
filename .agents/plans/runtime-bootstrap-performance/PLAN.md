@@ -173,7 +173,8 @@ If a patch introduces a new reusable semantic family or runtime state contract, 
 - [x] Phase 0 cross-references added (listed in `.agents/plans/README.md` under high-signal runtime items; pointer added to `agent-optimization/PLAN.md`; discoverable via existing `@plans` / `@agent_optimization` dispatch in `.spw`)
 - [x] Light `spw-plan-maintenance` sweep recorded (indexes + agent-optimization cross-link landed; no new durable semantic family yet so no immediate `.spw` dispatch change required)
 - [x] Phase 1 patch (parallel immediate mounts) implemented; source/runtime validation passed, with `check:local` still reporting the refreshed generated core CSS bundle until that output is staged
-- [x] Phase 2a patch (selected module reclassification) implemented; `site-settings` cold-path split remains future Phase 2b work
+- [x] Phase 2a patch (selected module reclassification) implemented
+- [x] Phase 2b patch: `kernel/site-settings.js` is now a 15-line re-export shell over `site-settings-profiles.js` + `site-settings-engine.js` (CORE, immediate). `site-settings-ui.js` (1452 lines: forms, readouts, recipes) loads only when `apply()` finds a settings scope/form on the page, the settings-page catalog module mounts, or a console caller touches a bind/init/recipe method — confirmed 2026-09-03, no code change needed, this plan's checklist was stale
 - [x] Phase 2a follow-up landed: event-only settings momentum deferred; cache probes bounded with a forced out-of-order concurrency/order contract test
 - [x] Phase 2a follow-up: feature-gated console diagnostics deferred to `idle-chrome`
 - [x] Static before/after census captured (37→36 immediate; 23→22 immediate enhancements) and build evidence recorded in the existing BRP audit; representative route timing remains a follow-up once the browser harness settle/target lifecycle is hardened
@@ -187,6 +188,8 @@ If a patch introduces a new reusable semantic family or runtime state contract, 
 - Long-term: a tiny build-time or catalog-time report of per-route "immediate module cost" (derived from the manifest + static analysis of defs) could live in the design catalog or a private editor surface — only if it proves low-maintenance.
 - Long-term: a cache posture report could distinguish cold boot, warm return, restored posture, restored checkpoint, and debug/audit posture without requiring analytics or network services.
 - Any canvas/SVG/image work that remains immediate for visual reasons can be further optimized inside those modules (e.g., rAF batching, off-main-thread where safe) as separate craft passes.
+
+**2026-09-03 Phase 3 baseline (not acted on):** a static census found 27 separate `new MutationObserver` call sites and 10 `new IntersectionObserver` call sites across `public/js/`, against 4 modules already on the shared `observeIntersections()` lane in `runtime-helpers.js`. Consolidation was not attempted this pass — each observer watches a different host/attribute (route/device/host state, nav overflow, settings changes, image capture, etc.), and this plan's own Phase 3 gate ("only if Phase 1+2 data shows observer setup ... as a measurable secondary contributor") has no live profiling data behind it yet. Merging them blind risks real behavioral regressions for a cost this plan hasn't measured. The census is left here as the starting point for whoever picks Phase 3 up with a profiler in hand.
 
 This plan stays faithful to the site's values: hand-authored, inspectable, progressive, semantically rich, and measured with the tools the runtime already provides.
 
