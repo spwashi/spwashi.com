@@ -222,6 +222,40 @@ function inferResolvedRegionCompositionStability(el, profile) {
   return 'loose';
 }
 
+/**
+ * How many card-like occupants a region actually holds. component-biome.css
+ * already shades a `.spw-grid`/`.frame-grid` container structurally with
+ * `:has(> :nth-child(6|10))`, but that only fires when a region happens to
+ * wrap its cards in one of those grid classes. This counts real DOM
+ * occupancy on any profiled region, so a cluster built without a grid class
+ * still reports how crowded it is — and, written as data-spw-canopy on the
+ * region, becomes a receipt component-biome.css can use to shade a
+ * neighbouring region, not only a region's own children. Breakpoints match
+ * the CSS file's existing 6/10 thresholds.
+ *
+ * Scoped to children and grandchildren only (region -> grid wrapper -> card
+ * is the realistic shape), never a deep querySelectorAll. REGION_SELECTORS
+ * matches `[data-spw-role]`, which `<main>` itself carries on ~120 routes —
+ * an unscoped count would tally every card on the whole page onto <main>,
+ * and since --spw-canopy inherits, a lone card sitting outside any grid
+ * anywhere on the page would pick up "closed" shade from an ancestor it has
+ * nothing to do with. Same reasoning applies to a nested profiled
+ * sub-region (REGION_SELECTORS also matches [data-spw-kind="panel"] etc.
+ * wherever it sits): its own occupants should not inflate its parent's count.
+ */
+const CANOPY_OCCUPANT_SELECTOR = [
+  ':scope > .spw-card', ':scope > .frame-card', ':scope > .media-card', ':scope > .frame-panel',
+  ':scope > * > .spw-card', ':scope > * > .frame-card', ':scope > * > .media-card', ':scope > * > .frame-panel',
+].join(', ');
+
+function inferRegionCanopy(el) {
+  if (el?.dataset?.spwCanopy) return el.dataset.spwCanopy;
+  const count = el.querySelectorAll?.(CANOPY_OCCUPANT_SELECTOR)?.length || 0;
+  if (count >= 10) return 'closed';
+  if (count >= 6) return 'dappled';
+  return 'clearing';
+}
+
 function inferRegionPackOccupancy(el, profile) {
   if (el.dataset.spwPackOccupancy) return el.dataset.spwPackOccupancy;
 
@@ -271,6 +305,7 @@ function buildRegionGenome(profile = {}) {
     ['boundary', profile.gradientBoundary],
     ['stability', profile.compositionStability],
     ['occupancy', profile.packOccupancy],
+    ['canopy', profile.canopy],
   ]);
 }
 
@@ -303,6 +338,7 @@ export function buildRegionProfile(el, index = 0, options = {}) {
     compositionStabilitySource: '',
     resolvedCompositionStability: '',
     packOccupancy: '',
+    canopy: '',
     genome: '',
     features: readSet(
       ...parseFeatureList(el.dataset.spwFeatures).values?.() || [],
@@ -323,6 +359,7 @@ export function buildRegionProfile(el, index = 0, options = {}) {
     : profile.resolvedCompositionStability;
   profile.compositionStabilitySource = el.dataset.spwCompositionStability ? 'authored' : '';
   profile.packOccupancy = inferRegionPackOccupancy(el, profile);
+  profile.canopy = inferRegionCanopy(el);
   profile.genome = buildRegionGenome(profile);
 
   return profile;
@@ -340,6 +377,7 @@ export function describeRegionProfile(profile) {
     density: profile.density,
     stability: profile.compositionStability,
     occupancy: profile.packOccupancy,
+    canopy: profile.canopy,
     genome: profile.genome,
   };
 }
@@ -362,6 +400,7 @@ export function applyRegionProfile(el, profile) {
   writeDatasetValue(el, 'spwResolvedCompositionStability', profile.resolvedCompositionStability);
   writeDatasetValue(el, 'spwResolvedCompositionStabilitySource', 'region-profiler');
   writeDatasetValue(el, 'spwPackOccupancy', profile.packOccupancy);
+  writeDatasetValue(el, 'spwCanopy', profile.canopy);
   writeDatasetValue(el, 'spwRegionKey', profile.key);
   writeDatasetValue(el, 'spwRegionGenome', profile.genome);
   writeStyleValue(el, '--region-index', String(profile.index));

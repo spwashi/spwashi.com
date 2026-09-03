@@ -23,11 +23,16 @@
    ornament, one warm accent against a cool field, and nothing blooms.
 
    Genome — states sensed: data-spw-liminality, data-spw-region,
-   data-spw-ingredient-phase, data-spw-expression-salience, .spw-grid, .spw-card
-   Genome — custom properties defined: 6; intent hooks consumed:
+   data-spw-ingredient-phase, data-spw-expression-salience, data-spw-canopy,
+   data-spw-extent, .spw-grid, .spw-card
+   Genome — custom properties defined: 7; intent hooks consumed:
    --spw-enhancement-factor, --spw-image-brightness
    Probe: put six cards in a grid and one card alone in a frame on the same
    page; the six should sit back. html[data-spw-debug-layers="on"] shows owners.
+   data-spw-canopy is written by region-profiler.js (public/js/runtime/
+   region-profiler.js): put a closed region right before a plain one and the
+   plain one's own cards should sit back too, without either being in the
+   same grid.
    Tier: enhancement — every surface here is legible with this file absent.
    ========================================================================== */
 
@@ -38,6 +43,13 @@
   --spw-canopy-depth: 0;
   /* Edge occlusion, projected by positioning-orchestration when it lands. */
   --spw-canopy-edge: 0;
+  /* Shade cast by the region immediately before this one, from its
+     data-spw-canopy receipt. Kept separate from --spw-canopy for the same
+     reason as --spw-canopy-depth: a property that reads its own inherited
+     value while a sibling rule also assigns it is fine, but folding a
+     cross-region signal into the same token a component's own grid sets
+     would make the two impossible to tell apart when debugging. */
+  --spw-canopy-sibling: 0;
   /* Presence accrued through age or traversal. 0 = new growth. */
   --spw-presence: 0;
 
@@ -52,6 +64,7 @@
         var(--spw-canopy)
         + var(--spw-canopy-depth)
         + var(--spw-canopy-edge)
+        + var(--spw-canopy-sibling)
         /* --spw-edge-proximity arrives 0..1 from the MEASURE pass; absent, the
            fallback contributes nothing and structural density stands alone. */
         + calc(var(--spw-edge-proximity, 0) * 0.14)
@@ -113,9 +126,36 @@
 :where([data-spw-extent="contained"]) { --spw-canopy-edge: 0.08; }
 :where([data-spw-extent="squat"]) { --spw-canopy-edge: 0; }
 
+/* Region occupancy is measured too, not only guessed from a class name.
+   region-profiler.js counts a profiled region's card-like children and
+   grandchildren (never deeper — a nested profiled sub-region's own cards
+   should not inflate its parent's count, and REGION_SELECTORS matches
+   <main> on most routes, which would otherwise tally every card on the
+   page) and writes data-spw-canopy — clearing / dappled / closed — using
+   the same 6/10 breakpoints as the structural :has() rules above, so a
+   cluster built without a `-grid` class still reports how crowded it is.
+   These rules sit after the structural ones and share their specificity,
+   so the measured reading wins wherever both apply. */
+:where([data-spw-canopy="dappled"]) { --spw-canopy: 0.5; }
+:where([data-spw-canopy="closed"]) { --spw-canopy: 0.72; }
+:where([data-spw-canopy="clearing"]) { --spw-canopy: 0; }
+
+/* Sibling canopy: a closed or dappled region casts shade forward onto
+   whatever sits right after it — canopy shading a neighbour, not only its
+   own descendants (component-biome.spw wonder 2). Adjacent-sibling only,
+   so the effect stays local instead of drifting down the whole page.
+   Budget: 2 selectors, per that wonder's probe. */
+:where([data-spw-canopy="closed"]) + .spw-frame {
+  --spw-canopy-sibling: 0.22;
+}
+
+:where([data-spw-canopy="dappled"]) + .spw-frame {
+  --spw-canopy-sibling: 0.1;
+}
+
 /* What shade actually does. Contrast and saturation fall; nothing moves, and
    nothing is hidden — understory is still legible, it is simply further off. */
-:where(.spw-card, .frame-card, .media-card):where(:not([data-spw-canopy="clearing"])) {
+:where(.spw-card, .frame-card, .media-card) {
   filter:
     saturate(calc(1 - var(--spw-biome-attenuation) * 0.22))
     contrast(calc(1 - var(--spw-biome-attenuation) * 0.06));
@@ -143,7 +183,7 @@
 /* Established growth holds a contour on its leading edge — the boonhonk plate's
    hard boundary rather than a halo. Inline-start only: a full outline reads as
    selection, and this is age, not state. */
-:where([data-spw-presence-contour], [data-spw-ingredient-phase], [data-spw-expression-salience]) {
+:where([data-spw-ingredient-phase], [data-spw-expression-salience]) {
   box-shadow: inset calc(2px * var(--spw-presence)) 0 0 -1px
     color-mix(in srgb, var(--spw-biome-warm) calc(var(--spw-presence) * 52%), transparent);
 }
@@ -164,6 +204,7 @@
   --spw-canopy: 0;
   --spw-canopy-depth: 0;
   --spw-canopy-edge: 0;
+  --spw-canopy-sibling: 0;
   --spw-presence: 0;
 }
 
@@ -173,6 +214,7 @@
   --spw-canopy: 0;
   --spw-canopy-depth: 0;
   --spw-canopy-edge: 0;
+  --spw-canopy-sibling: 0;
   --spw-presence: 0;
 }
 
@@ -187,5 +229,6 @@
     --spw-canopy: 0;
     --spw-canopy-depth: 0;
     --spw-canopy-edge: 0;
+    --spw-canopy-sibling: 0;
   }
 }

@@ -114,8 +114,7 @@
   /* Hubs: more exploratory, combinatoric, layout sampling, collect-to-cauldron invitations. */
 }
 :where([data-spw-region="path"],
-       [data-spw-region-role="path-node"],
-       [data-spw-region-role="path"]) {
+       [data-spw-region-role="path-node"]) {
   /* Path nodes: grounded, stateful, traversable charge/cauldron, deeper notes. */
 }
 

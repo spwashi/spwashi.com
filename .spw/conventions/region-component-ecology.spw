@@ -67,6 +67,16 @@ fixity = "tending"
   occupancy = `data-spw-pack-occupancy on a frame ≠ data-spw-pack-fill on a pack-local card.`
 }[reg=facet]
 
+^"region_vs_region_role"{
+  ~#note: "Two attributes, two systems, one name collision that went unnoticed until it broke a resonance model."
+  region = `data-spw-region is seat-exclusive: the six values (hook|hub|cluster|path|read|wide), authored only on .spw-frame. region-seats.css and projection-attenuation.css both gate every selector on the .spw-frame class — a bare [data-spw-region] with no .spw-frame is inert for layout, full stop.`
+  region_role = `data-spw-region-role is the general-purpose companion: freeform job names (entry-spine, reading, path-node, settings-cluster, rpg-hub, design-hub, atlas...), authored anywhere — a seat, a nested panel, a single card, <body> itself. It is what foundation.css, electrostatic-affordances.css, and card-ecology.css read for the salience/channel system, which is a separate, lighter mechanism from seat layout and does not require .spw-frame.`
+  established_aliases = `entry-spine -> hook and reading -> read are wired in both systems: layout (region-seats.css, projection-attenuation.css) AND electrostatics (foundation.css [path only], electrostatic-affordances.css). path-node has no seat equivalent — it names a step inside a sequence, not a seat — so it is electrostatics-only (foundation.css, card-ecology.css, electrostatic-affordances.css).`
+  no_alias_yet = `hub, cluster, and wide have no generic non-seat alias. A bespoke region-role value (settings-cluster, rpg-hub, design-hub, atlas) is legitimate page-shell metadata, but it does not by itself drive the electrostatics system — only the literal strings hub/cluster/wide do, and only on a genuine seat. Do not invent a generic hub/cluster/wide alias speculatively; wait for an authoring need, same discipline as the six seats themselves.`
+  ~#fixed(2026-09-03): "12 authored data-spw-region instances with no .spw-frame class, found across about/, design/, index.html, play/rpg-wednesday/, settings/, tools/budgeting/. 7 already carried a region-role companion (design-hub, settings-cluster ×2, atlas, path-node ×2, rpg-hub) and the bare region was simply redundant — removed. 3 had no companion and no safe alias (a <main>, a .frame-grid card pack, a card packing div) — removed, since region-component-ecology already gives packing its own vocabulary (@component_packing) and page identity its own (data-spw-page-role/-family). 2 were genuine step-sequences with no region-role at all (about-years, and index.html's living-circulation panel) — migrated to data-spw-region-role=\"path-node\"."
+  ~#fixed(2026-09-03, electrostatic-affordances.css): "the electrostatics hook channel keyed only on the bare attribute — [data-spw-region=\"hook\"]. A census found 212 authored entry-spine region-roles site-wide and only 8 that also carried the bare data-spw-region=\"hook\" companion: the channel was firing for 8 hero seats out of 212. Added region-role companions (entry-spine, reading, path-node) to the channel rules and the induction :has() rule, matching the alias set layout already honors."
+}[reg=facet]
+
 ^"copy_seats"{
   lede = `p.page-lede / .site-lede — one breath. Measure, not columns.`
   narration = `.spw-narration — column-width 32ch only when the region container is wide.`
@@ -98,10 +108,23 @@ fixity = "tending"
   squeeze = `layout-squeeze.css spends box-measure, pack-occupancy, pack-layout, and space-variant. It does not invent a fourth placement axis.`
 }[reg=facet]
 
+^"seat_graduation_2026_09_03"{
+  operation = "align"
+  fixity = "tending"
+  dated = `2026-09-03`
+  census = `230 authored data-spw-region occurrences across 94 distinct names before this pass; 126 in the six seats, 104 nicknamed. Repeat-offender nicknames (used 2+ times: specimen, grammar, tuning, studies, spells, notes, map, loops, garden, demos, cards) covered 27 of those occurrences across 9 routes.`
+  reading = `Each occurrence was read in its own markup, not renamed by string match — the same nickname meant different things on different routes. "garden" on recipes/index.html split into cluster (garden-register, a card grid) and read (production-season, a long prose narrative with one ordered list). "cards" on services/index.html became read, because each was a single embedded specimen, not a browsing grid.`
+  landed = `specimen -> read (blog, reference/prose sections); grammar -> cluster (design/components, recipes, topics/math — all card grids); tuning -> hub (services, topics — control widgets, not cards or prose); studies -> cluster; spells -> cluster (topics/search, a frame-grid of concept panels) or read (settings, ambient reference); notes/map -> read; loops -> cluster (membership, a wisdom-card deck) or path (topics/search arc-search-loop, a literal step sequence); demos -> cluster.`
+  fixed = `services/index.html payment-card__header/__footer carried data-spw-region="header"/"footer" — the exact pack_collision this file's own facet names as wrong. Changed to data-spw-slot, matching the sibling body slot.`
+  remaining = `~86 single-occurrence nicknames stay open (settings/index.html alone still carries presets, preferences, state, storage, tokens, structures, trace, payment as one-offs). Graduate a name when it repeats, per @authored_vs_runtime; do not batch single uses into a nickname sweep.`
+  validation = `rg 'data-spw-region="(hook|hub|cluster|path|read|wide)"' --glob '*.html' | wc -l  # 153 after, up from 126`
+}[reg=facet]
+
 validation: #[
   `rg 'data-spw-region="(hook|hub|cluster|path|read|wide)"' --glob '*.html'`,
   `rg 'data-spw-region=' public/css/systems/region-seats.css`,
   `rg 'spw-region-resonance|page_layout_theory' public/css/systems/region-seats.css .spw/conventions/region-component-ecology.spw`,
   `node --check public/js/runtime/region-profiler.js public/js/runtime/page-region-rail.js public/js/semantic/spw-block-association.js`,
-  `rg 'REGION_ENHANCER_SELECTOR|shell-0' public/js .spw/caches/arrival-perceptibility-2026-08.spw`
+  `rg 'REGION_ENHANCER_SELECTOR|shell-0' public/js .spw/caches/arrival-perceptibility-2026-08.spw`,
+  `npm run audit:region-seats  # catches #region_vs_region_role drift: data-spw-region authored without .spw-frame`
 ][reg=set]

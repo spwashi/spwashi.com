@@ -80,12 +80,22 @@
 }
 
 /* Channel: placing an acted terminal into a region multiplies hold.
-   Material lives in projection-attenuation.css. This only names the role. */
-:where([data-spw-region="hook"]) { --spw-channel: store; --spw-e-channel: 1.15; }
+   Material lives in projection-attenuation.css. This only names the role.
+   data-spw-region is seat-exclusive (region-component-ecology.spw) — it
+   names one of six page seats and only ever appears on a .spw-frame. Most
+   hero/entry seats site-wide are marked with the region-role alias alone
+   (204 of 212 entry-spine authorings carry no data-spw-region="hook" at
+   all), so a rule keyed only to the bare attribute misses the seat almost
+   every time it is asked to recognize one. data-spw-region-role has no such
+   restriction — region-seats.css and projection-attenuation.css already
+   read entry-spine/reading as hook/read for seat layout; path-node has no
+   seat equivalent (it marks a step inside a sequence, not a seat itself)
+   but still deserves a channel, so it is read here as an alias of path. */
+:where([data-spw-region="hook"], [data-spw-region-role="entry-spine"]) { --spw-channel: store; --spw-e-channel: 1.15; }
 :where([data-spw-region="hub"], [data-spw-region="wide"]) { --spw-channel: conduct; --spw-e-channel: 1; }
 :where([data-spw-region="cluster"]) { --spw-channel: couple; --spw-e-channel: 0.85; }
-:where([data-spw-region="path"]) { --spw-channel: leak; --spw-e-channel: 0.72; }
-:where([data-spw-region="read"]) { --spw-channel: resist; --spw-e-channel: 0.55; }
+:where([data-spw-region="path"], [data-spw-region-role="path-node"]) { --spw-channel: leak; --spw-e-channel: 0.72; }
+:where([data-spw-region="read"], [data-spw-region-role="reading"]) { --spw-channel: resist; --spw-e-channel: 0.55; }
 
 /* Multidimensional electrostatics: terminal × channel × nest. Edge is proximity, not a fourth field. */
 :where([data-spw-operator]) { --spw-e-terminal: 1; }
@@ -99,10 +109,14 @@
   );
 }
 
-/* Induction: kin of a charged terminal echo without their own charge attr. */
+/* Induction: kin of a charged terminal echo without their own charge attr.
+   [data-spw-region-role] alongside the seat attribute for the same reason
+   as the channel rules above — most seats only carry the role alias. */
 :where(
   [data-spw-region]:has([data-spw-operator][data-spw-charge="charged"]),
-  [data-spw-region]:has([data-spw-operator][data-spw-charge-phase="charged"])
+  [data-spw-region]:has([data-spw-operator][data-spw-charge-phase="charged"]),
+  [data-spw-region-role]:has([data-spw-operator][data-spw-charge="charged"]),
+  [data-spw-region-role]:has([data-spw-operator][data-spw-charge-phase="charged"])
 ) {
   --spw-induced-field: calc(
     var(--spw-projected-field, var(--spw-charge-field, 0))

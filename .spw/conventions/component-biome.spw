@@ -51,9 +51,10 @@ expression = component[biome]{light.exchange.succession}<land>
 
 ^"light"{
   present: theme[pack]{brightness.contrast.saturation.tint} ~ substrate[motif]{opacity.blend}
-  missing: canopy[position]{density.depth.occlusion}
   ~#symptom: "a card in a dense cluster and a card alone read identically"
-  ~#now(landed in @css): density ^ shade
+  ~#now(landed in @css): density ^ shade ^ occlusion
+  ~#now(landed 2026-09-03): public/js/runtime/region-profiler.js counts card-like children and grandchildren of a profiled region and writes data-spw-canopy (clearing/dappled/closed) — canopy is measured, not only guessed from a `-grid` class. The dead data-spw-canopy="clearing" per-card escape this file once half-wired is gone; canopy still carries no per-card override.
+  ~#fixed(same day): the first landing counted with an unscoped querySelectorAll. REGION_SELECTORS matches [data-spw-role], which <main> itself carries on ~120 routes, so <main> was getting profiled as one region spanning the whole page — its canopy count was every card on the route, almost always "closed", inherited by any lone card anywhere that had no closer override. Rescoped to :scope children/grandchildren only.
   refuse: `no light token per component — canopy is position, not a setting a card carries`
 }
 
@@ -118,6 +119,7 @@ expression = component[biome]{light.exchange.succession}<land>
   ~#hypothesis: "expressible through the parent, at one selector per relationship, which is why nobody writes it"
   !probe{ "write sibling attenuation for one real cluster and count the selectors. more than three means the mechanism is wrong, not the idea." }
   $%[region.density, region.depth, sibling.attenuation]
+  ~#now(landed 2026-09-03): `component-biome.css reads +.spw-frame off a data-spw-canopy closed/dappled predecessor into a dedicated --spw-canopy-sibling token, adjacent-sibling only. 2 selectors, under the 3-selector budget. Answer: a region shades its immediate neighbour, not the whole page — the effect does not chain past one hop, because --spw-canopy-sibling is not itself read back into the next comparison.`
 }
 
 ^"validation"{
