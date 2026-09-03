@@ -1,0 +1,98 @@
+/* ==========================================================================
+   theme-resonance.css
+   --------------------------------------------------------------------------
+   Theme-cohesion waveform for gathered kin. Live cauldron clusters stamp
+   data-spw-theme-cluster and --spw-theme-cluster-index; this sheet paints
+   them after the cauldron module asks for it. The design experiment at
+   /design/experiments/theme-resonance/ remains a static specimen of the
+   same contract.
+
+   Loaded by deferred-styles.js (ensureThemeResonanceStyles) — not core.
+   Late restyle is paint only: no display, measure, or packing change.
+
+   Two site vocabularies already exist for the two things a theme cluster
+   needs to say, and this reuses both rather than inventing a third:
+
+     resonant waveform     field-physics.css's spw-concept-twinkle already
+                            arcs kin across a page instead of firing in
+                            unison, staggered by --spw-cluster-index.
+                            Theme cohesion uses --spw-theme-cluster-index
+                            on a tighter timing channel so gather-arrival
+                            and theme-kinship stay two meanings.
+
+     electrostatic charge  registers.js valence sums signed operator
+                            charge. Credit uses --op-probe-color; spend
+                            uses --op-binding-color — the room's field.
+   ========================================================================== */
+
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer systems {
+
+@property --spw-theme-resonance-amplitude {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
+:where([data-spw-theme-cluster]) {
+  /* Neutral/zero valence: same baseline accent expression-resonance.css
+     already falls back to, so a balanced cluster reads as "the room's
+     ambient charge" rather than a third invented hue. */
+  --spw-theme-charge-color: var(--spw-charge-field-color, var(--active-op-color, #008080));
+}
+
+:where([data-spw-theme-cluster="credit"]) {
+  --spw-theme-charge-color: var(--op-probe-color, #8f5cff);
+}
+
+:where([data-spw-theme-cluster="spend"]) {
+  --spw-theme-charge-color: var(--op-binding-color, #8a5a35);
+}
+
+/* Tighter and shorter than the 14s/900ms gather wave on purpose: theme
+   cohesion is a faster, tighter pulse than gather-arrival. Amplitude stays
+   sub-visible at rest. No display rewrite — a late gather must not shove
+   first-paint packing. */
+@keyframes spw-theme-resonance {
+  0%, 92%, 100% { box-shadow: var(--spw-local-shadow, none); }
+  94% {
+    box-shadow:
+      var(--spw-local-shadow, none),
+      0 0 0 1px color-mix(
+        in srgb,
+        var(--spw-theme-charge-color) calc(var(--spw-theme-resonance-amplitude, 1) * 55%),
+        transparent
+      );
+  }
+  96% {
+    box-shadow:
+      var(--spw-local-shadow, none),
+      0 0 0 2px color-mix(
+        in srgb,
+        var(--spw-theme-charge-color) calc(var(--spw-theme-resonance-amplitude, 1) * 30%),
+        transparent
+      );
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :where([data-spw-theme-cluster]) {
+    animation: spw-theme-resonance 9s var(--ease-settle, ease-in-out) infinite;
+    animation-delay: calc(var(--spw-theme-cluster-index, 0) * -700ms);
+  }
+
+  :where(:hover, :focus-within) > :where([data-spw-theme-cluster]),
+  :where([data-spw-theme-cluster]):is(:hover, :focus-visible) {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-theme-cluster]) {
+    outline: 1px dashed color-mix(in srgb, var(--spw-theme-charge-color, currentColor) 60%, transparent);
+    outline-offset: 2px;
+  }
+}
+
+}

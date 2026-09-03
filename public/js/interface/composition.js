@@ -28,6 +28,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { ensureThemeResonanceStyles } from '/public/js/kernel/deferred-styles.js';
 import {
   composeOpBundle,
   detectOperator,
@@ -1189,6 +1190,7 @@ function renderIngredientsList(ingredients) {
 
   const clustered = clusterIngredients(ingredients);
   let clusterOrdinal = 0;
+  if (clustered.axis) ensureThemeResonanceStyles();
   container.innerHTML = clustered.groups.map((group) => {
     const html = renderIngredientCluster(group, clusterOrdinal);
     if (group.clustered) clusterOrdinal += 1;
