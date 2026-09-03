@@ -113,11 +113,11 @@
                     <a class="operator-chip" href="#topics-register" data-spw-operator="mode" data-spw-action="sit" data-spw-semantic-expression="topics[mode]{open.sit}<display>" aria-label="Sit a lens to change what this room shows"><span data-spw-copy-depth="entry">change view</span><span data-spw-copy-depth="normal">[lane] sit lens</span><span data-spw-copy-depth="technical">topics[mode]{open.sit}&lt;display&gt;</span></a>
                     <a class="operator-chip" href="#topic-cards" data-spw-operator="direction" data-spw-action="travel" data-spw-semantic-expression="rooms{travel}<navigate>" aria-label="Move to the next frame on this page"><span data-spw-copy-depth="entry">next room</span><span data-spw-copy-depth="normal">{rooms} next frame</span><span data-spw-copy-depth="technical">rooms{travel}&lt;navigate&gt;</span></a>
                     <a class="operator-chip" href="#topics-description" data-spw-operator="scene" data-spw-action="enter" data-spw-semantic-expression="(look){stage}<learn>" aria-label="Look closer at this room"><span data-spw-copy-depth="entry">look closer</span><span data-spw-copy-depth="normal">(look) learn more</span><span data-spw-copy-depth="technical">(look{stage}&lt;learn&gt;</span></a>
-                    <a class="operator-chip" href="/topics/search/?q=%5Blane%5D" data-spw-operator="wonder" data-spw-action="inspect" data-spw-semantic-expression="?lane{kin}<learn>" aria-label="Search expressions that sit in [lane]"><span data-spw-copy-depth="entry">find related</span><span data-spw-copy-depth="normal">?[lane]</span><span data-spw-copy-depth="technical">?lane{kin}&lt;learn&gt;</span></a>
+                    <a class="operator-chip" href="/about/" data-spw-operator="wonder" data-spw-action="inspect" data-spw-semantic-expression="?about{kin}<learn>" aria-label="Open About, the person behind this atlas">About</a>
                 </nav>
             </section>
 
-            <p id="topics-description" data-spw-textual-role="note" data-spw-copy-depth="normal">You can read the cards, or scroll the rooms and work the components.</p>
+            <p id="topics-description" data-spw-textual-role="note" data-spw-copy-depth="normal">Read a card for one domain. The header rooms — About, Play, Art, Services — stay the same, so a topic can hand off without inventing a second map.</p>
             <p class="inline-note">Collected fragments should lead back to their source — that's why <span class="spw-living-term" data-spw-living-term data-spw-concept="cauldron-vessel" tabindex="0">cauldron</span> language lives here.</p>
 
             <div class="spw-reason-strip" aria-label="Topic atlas reasons" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-feature="topic-attention-reasons">
@@ -315,6 +315,28 @@
                 </a>
             </div>
         </aside>
+
+        <nav class="spw-page-landmarks" aria-label="Rooms on this page" data-spw-feature="page-landmarks" data-spw-anatomy="index" data-spw-vocabulary="reference-document">
+            <p class="spw-page-landmarks__kicker">Stay on this page</p>
+            <ol>
+                <li data-spw-liminality="entry"><a href="#topics-register">Hook</a></li>
+                <li data-spw-liminality="threshold"><a href="#topic-cards">Cards</a></li>
+                <li data-spw-liminality="middle"><a href="#cross-linked-surfaces">Lattice</a></li>
+                <li data-spw-liminality="return"><a href="#topics-reading-tools">Tools</a></li>
+            </ol>
+        </nav>
+        <div class="spw-room-path" data-spw-feature="nav-spine-echo" data-spw-referentiality="editorial" data-spw-anatomy="index" data-spw-vocabulary="reference-document" aria-labelledby="topics-nav-spine-title">
+            <h3 id="topics-nav-spine-title">Hand off without a second map</h3>
+            <p>Skip a shelf if you already know the domain. The numbers are order of arrival, not rank.</p>
+            <ol class="spw-room-path--sequence">
+                <li data-spw-liminality="entry">Start with <a href="/about/" data-spw-operator="wonder">About</a> if you need the person before the shelf.</li>
+                <li data-spw-liminality="threshold">Cross to <a href="/play/" data-spw-operator="potential">Play</a> when a topic wants a table test instead of another card.</li>
+                <li data-spw-liminality="middle">Open <a href="/design/folios/" data-spw-operator="value">Art</a> when the next evidence is a still.</li>
+                <li data-spw-liminality="threshold">Use <a href="/services/" data-spw-operator="perspective">Services</a> when the topic wants a commission, not another leaf.</li>
+                <li data-spw-liminality="return">Check <a href="/now/" data-spw-operator="substrate">Now</a> for this week’s sprint on the same header map.</li>
+                <li data-spw-liminality="middle">Name the part on the <a href="/design/" data-spw-operator="frame">design worktable</a> if the atlas is already using it.</li>
+            </ol>
+        </div>
 
         <footer class="frame-actions" data-spw-slot="actions">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>

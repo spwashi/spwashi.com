@@ -133,6 +133,7 @@ fixity = "tending"
     `progressive clarity via heading order, aria landmarks, skip links, section-handle — not label noise`
   ][reg=set]
   accessibility_rule: "Liminality must remain navigable when labels are suppressed: color/register shifts, focus order, and section handles carry progression."
+  landmark_rule: "Flagship hubs keep a compact `nav.spw-page-landmarks` of stable fragment ids (Hook, Index, Return). Copy inside those rooms may change; the ids and liminality order should not. Header rooms use a *different* HTML shape per vocabulary (dl host-stand, ol sequence, ul place-settings, anatomy-strip) so the same destinations do not clone one scaffold. A landmark hop is a discover pulse plus aria-current=location — the rooms teach themselves by remaining the same place."
   spw_expression: "Compact labels like surface[readable]{interact} stay in data-spw-semantic-expression; human invitation stays in visible hook-lede."
 }
 
@@ -244,6 +245,7 @@ fixity = "tending"
     chip_jump: .{ class = "operator-chip", when = "cross-route jump with operator semantics" }[reg=facet]
     prose_reference: .{ class = "plain a", when = "in-sentence human reference" }[reg=facet]
     visual_card: .{ class = "spw-visual-link-card | home-discovery-card", when = "hub → major child with figure" }[reg=facet]
+    header_echo: .{ class = "spw-route-bridge[data-spw-feature=nav-spine-echo]", when = "flagship hub restates the header rooms with a reason, not a second chip row" }[reg=facet]
     taxonomy_pill: .{ class = "spec-pill href", when = "plan/topic taxonomy hop" }[reg=facet]
     query_tune: .{ attr = "data-spw-link-intent=query", when = "tunable reading surface" }[reg=facet]
     glossary_anchor: .{ href = "/design/components/#...", when = "technical term first use" }[reg=facet]
