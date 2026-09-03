@@ -1438,4 +1438,14 @@ frame #interaction_timing_as_premium_verify
   usage = "Click a theme swatch or resonance dial on palettes (or any data-site-setting-set control); watch the probe/operator cluster update instantly (responsive), then receive the short crafted verify cue on the readouts (premium confirmation). Use the copy button to capture the exact combination as ?themePack=...&paletteResonance=... — the aliases make common names work. The same pattern can be adopted by other labs for consistent 'I changed it, I see why it matters, I can come back' loop."
   note "Direct response to 'improve query string wiring, discoverability; visual feedback on settings application, mind UX, favor communicability; consider timing of interaction as a feature meant to offer a \"premium\" feel to verify and communicate feature application and styling benefits'. Implemented on the palettes surface (the aesthetics instrument shown in the reference image) while expanding the kernel wiring so it benefits design links, direct ? visits, and future share flows. No new runtime surface; reuses bus, datasets, copy helper, and existing immediate/live update paths."
 
+frame #living_concept_circulation
+  role contract
+  operation align
+  fixity tending
+  surface index.html (#living-concepts), topics/index.html, topics/search/index.html, play/index.html, cards/index.html, coordination/index.html
+  concept a metacognitive circulation model in which a concept moves through notice, name, connect, practice, and return; links act as vessels, semantic landmarks make the route perceivable, and a public artifact lets the next visit begin with evidence rather than recall alone
+  usage = "Use ordinary headings, links, ordered lists, and existing living-term behavior to expose the loop. A route should contribute a distinct transformation instead of repeating the same invitation in different words."
+  validation = "Read the Living Concepts sequence without JavaScript; follow each linked stage; confirm every destination performs the named job and retains a visible return path."
+  falsification = "The vascular metaphor adds atmosphere but a reader still cannot tell where a concept entered, changed, became practice, or returned as evidence."
+
 # Also update wonder-vocabulary for AI/pragmatic/liminal/venue if space, but site-semantics dispatch covers.

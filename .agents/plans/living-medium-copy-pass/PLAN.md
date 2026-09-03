@@ -22,3 +22,23 @@ Update the public copy across spwashi.com so major routes read more clearly as l
 ## Follow-up
 - Revisit any route whose cards still read like labels instead of entry points.
 - Keep the editorial microformats reusable so future pages can borrow the same structure.
+
+## Active refinement — living concept circulation
+
+### Public goal
+Help readers recognize each major route's distinct job, then follow a concept through noticing, naming, connection, practice, and return.
+
+### Boundaries
+- Treat vascular language as a navigation and learning model, not a biological claim.
+- Prefer headings, links, ordered lists, and existing component slots over new attributes or runtime behavior.
+- Keep creator identity, canonical routes, and the current operator grammar fixed.
+
+### Minimal surfaces
+- `index.html`: explain the living-concept circulation loop beside the existing interaction gestures.
+- `contact/index.html`: turn inquiry guidance into a genuinely ordered sequence and remove stale date-bound copy.
+- `.spw/conventions/site-semantics.spw`: retain the public model and its falsification rule.
+
+### Validation
+1. Run `npm run audit:copy`.
+2. Run targeted link, heading, and duplicate-id checks on edited routes.
+3. Run `npm run check:local` and `git diff --check`.
