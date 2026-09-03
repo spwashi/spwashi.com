@@ -153,3 +153,11 @@ export function unmountModuleEffects() {
 }
 
 export { unmountModuleEffects as unmount };
+
+export const spwModule = {
+  updates: [
+    'attr:data-spw-module-effects-active',
+    'attr:data-spw-module-effect-pulse',
+  ],
+  mount: (mod, ctx, root) => initModuleEffects(ctx, root),
+};

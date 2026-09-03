@@ -347,6 +347,23 @@ export const ENHANCEMENT_DEFS = [
     load: () => import('../interface/canvas-accents.js'),
   },
   {
+    id: 'electromagnetic-containers',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.VISIBLE,
+    costClass: COST_CLASS.PAINT_COMPOSITE,
+    selector: '[data-container-type]',
+    rootMode: 'single',
+    describes: 'container[charge]{conception.potential.kinetic.manifest}',
+    updates: [
+      'flourish:data-charge',
+      'flourish:data-charge-index',
+    ],
+    evaluates: 'paper-machine charge coherence authored containers',
+    timingArc: 'visible-visual',
+    effectScope: 'local-dom css-vars',
+    load: () => import('../modules/effects/electromagnetic-containers.js'),
+  },
+  {
     id: 'image-metaphysics',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.VISIBLE,

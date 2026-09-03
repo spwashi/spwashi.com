@@ -42,7 +42,7 @@
     
     /* Default state: Potential */
     --charge-state: var(--charge-potential);
-    --field-intensity: 0.5;
+    --field-intensity: calc(0.5 * var(--spw-container-density, 1));
     --coherence: 0.8;
     
     /* Dynamic Resonance Variables */

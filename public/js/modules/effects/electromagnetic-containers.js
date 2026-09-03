@@ -1,343 +1,106 @@
-/* modules/effects/electromagnetic-containers.js
- * Charged Paper Container System
- * Containers expose charge states through data attributes and quiet crease cues.
- * Progression: conception → potential → kinetic → manifest
- * Metaphor: charge as cognitive potential, rendered as paper-machine state.
+/**
+ * Charged paper containers.
+ * CSS owns the field (crease, wash, room electrode). JS owns discrete
+ * charge steps on authored [data-container-type] only — not every card.
  */
 
+import { bus } from '/public/js/kernel/bus.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 import { ensureElectromagneticContainerStyles } from '/public/js/kernel/deferred-styles.js';
 
-const CHARGE_STATES = ['conception', 'potential', 'kinetic', 'manifest'];
-const CHARGE_STATE_MAP = {
-    conception: 0,
-    potential: 1,
-    kinetic: 2,
-    manifest: 3,
-};
+const CHARGE_STATES = Object.freeze(['conception', 'potential', 'kinetic', 'manifest']);
+const CHARGE_INDEX = Object.freeze(Object.fromEntries(CHARGE_STATES.map((name, index) => [name, index])));
 
-const SLICE_LEVELS = ['conception', 'potential', 'kinetic', 'manifest'];
-
-let initialized = false;
-let cleanupCurrent = null;
-
-class ElectromagneticContainer {
-    constructor(element) {
-        this.element = element;
-        this.charge = element.dataset.charge || 'potential';
-        this.slice = element.dataset.containerSlice || 'potential';
-        this.fieldIntensity = 0.5;
-        this.coherence = 0.8;
-        this.semanticDensityMultiplier = 1;
-        this.isHovered = false;
-        this.isFocused = false;
-
-        this.onEnter = this.onEnter.bind(this);
-        this.onLeave = this.onLeave.bind(this);
-        this.onFocus = this.onFocus.bind(this);
-        this.onBlur = this.onBlur.bind(this);
-        this.onClick = this.onClick.bind(this);
-
-        this.initEventListeners();
-        this.applyInitialState();
-    }
-
-    initEventListeners() {
-        this.element.addEventListener('mouseenter', this.onEnter);
-        this.element.addEventListener('mouseleave', this.onLeave);
-        this.element.addEventListener('focusin', this.onFocus);
-        this.element.addEventListener('focusout', this.onBlur);
-        this.element.addEventListener('click', this.onClick);
-    }
-
-    destroy() {
-        this.element.removeEventListener('mouseenter', this.onEnter);
-        this.element.removeEventListener('mouseleave', this.onLeave);
-        this.element.removeEventListener('focusin', this.onFocus);
-        this.element.removeEventListener('focusout', this.onBlur);
-        this.element.removeEventListener('click', this.onClick);
-    }
-
-    applyInitialState() {
-        this.updateCharge(this.charge);
-        this.updateFieldDisplay();
-    }
-
-    updateCharge(newCharge) {
-        if (!CHARGE_STATES.includes(newCharge)) {
-            console.warn(`Invalid charge state: ${newCharge}`);
-            return;
-        }
-
-        const oldCharge = this.charge;
-        this.charge = newCharge;
-        this.element.dataset.charge = newCharge;
-        this.element.dataset.chargeIndex = String(CHARGE_STATE_MAP[newCharge]);
-        this.element.dataset.chargeLabel = `#{${newCharge}}`;
-
-        if (oldCharge !== newCharge) {
-            this.element.dataset.chargeTransitioning = 'true';
-            window.setTimeout(() => {
-                delete this.element.dataset.chargeTransitioning;
-            }, 800);
-        }
-
-        document.dispatchEvent(new CustomEvent('electromagnetic:charge-change', {
-            detail: {
-                element: this.element,
-                oldCharge,
-                newCharge,
-                chargeIndex: CHARGE_STATE_MAP[newCharge],
-            },
-        }));
-
-        this.updateFieldDisplay();
-    }
-
-    advanceCharge() {
-        const currentIndex = CHARGE_STATE_MAP[this.charge];
-        if (currentIndex < CHARGE_STATES.length - 1) {
-            const nextCharge = CHARGE_STATES[currentIndex + 1];
-            this.updateCharge(nextCharge);
-        }
-    }
-
-    retreatCharge() {
-        const currentIndex = CHARGE_STATE_MAP[this.charge];
-        if (currentIndex > 0) {
-            const prevCharge = CHARGE_STATES[currentIndex - 1];
-            this.updateCharge(prevCharge);
-        }
-    }
-
-    setCharge(charge) {
-        this.updateCharge(charge);
-    }
-
-    updateFieldDisplay() {
-        const chargeIndex = CHARGE_STATE_MAP[this.charge];
-        const baseFieldIntensity = 0.3 + (chargeIndex * 0.2);
-        const baseCoherence = 0.6 + (chargeIndex * 0.08);
-        const interactionFieldBoost = (this.isHovered ? 0.15 : 0) + (this.isFocused ? 0.2 : 0);
-        const interactionCoherenceBoost = this.isFocused ? 0.1 : 0;
-
-        this.fieldIntensity = Math.min(
-            1,
-            (baseFieldIntensity * this.semanticDensityMultiplier) + interactionFieldBoost
-        );
-        this.coherence = Math.min(1, baseCoherence + interactionCoherenceBoost);
-
-        this.element.style.setProperty('--field-intensity', this.fieldIntensity);
-        this.element.style.setProperty('--coherence', this.coherence);
-    }
-
-    onEnter() {
-        this.isHovered = true;
-        this.updateFieldDisplay();
-    }
-
-    onLeave() {
-        this.isHovered = false;
-        this.updateFieldDisplay();
-    }
-
-    onFocus() {
-        this.isFocused = true;
-        this.updateFieldDisplay();
-    }
-
-    onBlur() {
-        this.isFocused = false;
-        this.updateFieldDisplay();
-    }
-
-    onClick() {
-        this.advanceCharge();
-    }
-
-    setSemanticDensityMultiplier(multiplier = 1) {
-        this.semanticDensityMultiplier = multiplier;
-        this.updateFieldDisplay();
-    }
-
-    updateSlice(newSlice) {
-        if (!SLICE_LEVELS.includes(newSlice)) {
-            console.warn(`Invalid slice: ${newSlice}`);
-            return;
-        }
-
-        this.slice = newSlice;
-        this.element.dataset.containerSlice = newSlice;
-
-        document.dispatchEvent(new CustomEvent('electromagnetic:slice-change', {
-            detail: {
-                element: this.element,
-                slice: newSlice,
-                sliceIndex: SLICE_LEVELS.indexOf(newSlice),
-            },
-        }));
-    }
+function normalizeCharge(value = '') {
+  const key = String(value || '').trim();
+  return CHARGE_STATES.includes(key) ? key : 'potential';
 }
 
-class FieldResonance {
-    constructor() {
-        this.containers = new WeakMap();
-        this.resonanceMap = new Map();
-        this.chargeListeners = [];
-    }
+function writeCharge(element, charge, { emit = true } = {}) {
+  const next = normalizeCharge(charge);
+  const previous = element.dataset.charge || 'potential';
+  element.dataset.charge = next;
+  element.dataset.chargeIndex = String(CHARGE_INDEX[next]);
+  element.dataset.chargeLabel = `#{${next}}`;
+  const density = getSiteSettings()?.semanticDensity || 'normal';
+  const densityWeight = density === 'minimal' ? 0.86 : density === 'rich' ? 1.12 : 1;
+  element.style.setProperty('--spw-container-density', String(densityWeight));
 
-    register(container) {
-        this.containers.set(container.element, container);
-    }
+  if (previous !== next) {
+    element.dataset.chargeTransitioning = 'true';
+    window.setTimeout(() => {
+      if (element.dataset.chargeTransitioning === 'true') delete element.dataset.chargeTransitioning;
+    }, 800);
+  }
 
-    createResonance(sourceContainer, targetElements) {
-        const key = sourceContainer.element.id || sourceContainer.element;
-        this.resonanceMap.set(key, targetElements);
+  if (emit) {
+    bus.emit?.('field:charged', {
+      element,
+      oldCharge: previous,
+      newCharge: next,
+      chargeIndex: CHARGE_INDEX[next],
+    });
+  }
+}
 
-        const listener = (event) => {
-            if (event.detail.element !== sourceContainer.element) return;
+function stepCharge(element, delta) {
+  const current = CHARGE_INDEX[normalizeCharge(element.dataset.charge)] ?? 1;
+  const next = CHARGE_STATES[Math.max(0, Math.min(CHARGE_STATES.length - 1, current + delta))];
+  if (next) writeCharge(element, next);
+}
 
-            targetElements.forEach((targetElement) => {
-                const targetContainer = this.containers.get(targetElement);
-                if (!targetContainer) return;
-                if (event.detail.chargeIndex >= 2) {
-                    targetContainer.advanceCharge();
-                }
-            });
-        };
+function bindContainer(element) {
+  if (!(element instanceof HTMLElement)) return () => {};
+  if (!element.dataset.charge) writeCharge(element, 'potential', { emit: false });
+  else writeCharge(element, element.dataset.charge, { emit: false });
 
-        document.addEventListener('electromagnetic:charge-change', listener);
-        this.chargeListeners.push(listener);
-    }
-
-    entangle(container1, container2) {
-        const sync = (sourceElement, targetElement) => {
-            const listener = (event) => {
-                if (event.detail.element !== sourceElement) return;
-                const targetContainer = this.containers.get(targetElement);
-                if (!targetContainer) return;
-                targetContainer.setCharge(event.detail.newCharge);
-            };
-
-            document.addEventListener('electromagnetic:charge-change', listener);
-            this.chargeListeners.push(listener);
-        };
-
-        sync(container1.element, container2.element);
-        sync(container2.element, container1.element);
-    }
-
-    destroy() {
-        this.chargeListeners.forEach((listener) => {
-            document.removeEventListener('electromagnetic:charge-change', listener);
-        });
-        this.chargeListeners = [];
-        this.resonanceMap.clear();
-    }
+  const onClick = () => stepCharge(element, 1);
+  element.addEventListener('click', onClick);
+  return () => element.removeEventListener('click', onClick);
 }
 
 export function initElectromagneticContainers(root = document) {
-    ensureElectromagneticContainerStyles();
-    if (initialized) {
-        return cleanupCurrent || (() => {});
+  ensureElectromagneticContainerStyles();
+  const scope = root?.querySelectorAll ? root : document;
+  const nodes = [...scope.querySelectorAll('[data-container-type]')];
+  if (!nodes.length) return () => {};
+
+  const unbind = nodes.map(bindContainer);
+  const onKey = (event) => {
+    const target = event.target instanceof Element
+      ? event.target.closest('[data-container-type]')
+      : null;
+    if (!target) return;
+    if (event.key === '+' || event.key === '=') {
+      event.preventDefault();
+      stepCharge(target, 1);
+    } else if (event.key === '-') {
+      event.preventDefault();
+      stepCharge(target, -1);
     }
+  };
+  const onSettings = () => {
+    nodes.forEach((node) => writeCharge(node, node.dataset.charge || 'potential', { emit: false }));
+  };
 
-    initialized = true;
+  document.addEventListener('keydown', onKey);
+  const offSettings = typeof bus?.on === 'function'
+    ? bus.on('settings:changed', onSettings)
+    : null;
 
-    const resonance = new FieldResonance();
-    const containers = new WeakMap();
-    const containerList = [];
-
-    root.querySelectorAll('[data-container-type]').forEach((element) => {
-        const container = new ElectromagneticContainer(element);
-        containers.set(element, container);
-        containerList.push(container);
-        resonance.register(container);
-    });
-
-    root.querySelectorAll('.frame-card').forEach((card) => {
-        if (!card.dataset.containerType) card.dataset.containerType = 'frame-card';
-        if (!card.dataset.charge) card.dataset.charge = 'potential';
-
-        if (containers.get(card)) return;
-
-        const container = new ElectromagneticContainer(card);
-        containers.set(card, container);
-        containerList.push(container);
-        resonance.register(container);
-    });
-
-    const keydownHandler = (event) => {
-        const target = event.target instanceof Element
-            ? event.target.closest('[data-container-type]')
-            : null;
-
-        if (!target) return;
-
-        const activeContainer = containers.get(target);
-        if (!activeContainer) return;
-
-        if (event.key === '+' || event.key === '=') {
-            event.preventDefault();
-            activeContainer.advanceCharge();
-        } else if (event.key === '-') {
-            event.preventDefault();
-            activeContainer.retreatCharge();
-        }
-    };
-
-    const applySemanticDensity = (semanticDensity = 'normal') => {
-        const multiplier = semanticDensity === 'minimal'
-            ? 0.5
-            : semanticDensity === 'rich'
-                ? 1.5
-                : 1;
-
-        containerList.forEach((container) => {
-            container.setSemanticDensityMultiplier(multiplier);
-        });
-    };
-
-    const settingsHandler = (event) => {
-        applySemanticDensity(event.detail?.semanticDensity);
-    };
-
-    document.addEventListener('keydown', keydownHandler);
-    document.addEventListener('spw:settings-change', settingsHandler);
-
-    applySemanticDensity(getSiteSettings().semanticDensity);
-
-    window.ElectromagneticField = {
-        resonance,
-        setCharge: (element, charge) => {
-            const container = containers.get(element);
-            if (container) container.setCharge(charge);
-        },
-        advanceCharge: (element) => {
-            const container = containers.get(element);
-            if (container) container.advanceCharge();
-        },
-        getContainer: (element) => containers.get(element),
-    };
-
-    document.dispatchEvent(new CustomEvent('electromagnetic:initialized', {
-        detail: { containerCount: containerList.length },
-    }));
-
-    cleanupCurrent = () => {
-        document.removeEventListener('keydown', keydownHandler);
-        document.removeEventListener('spw:settings-change', settingsHandler);
-
-        resonance.destroy();
-        containerList.forEach((container) => container.destroy());
-
-        if (window.ElectromagneticField?.resonance === resonance) {
-            delete window.ElectromagneticField;
-        }
-
-        cleanupCurrent = null;
-        initialized = false;
-    };
-
-    return cleanupCurrent;
+  return () => {
+    document.removeEventListener('keydown', onKey);
+    if (typeof offSettings === 'function') offSettings();
+    unbind.forEach((off) => off());
+  };
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'electromagnetic-containers',
+  mount: (_ctx, root) => initElectromagneticContainers(root),
+  describes: 'container[charge]{conception.potential.kinetic.manifest}',
+  timingArc: 'visible-visual',
+  effectScope: 'local-dom css-vars',
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
