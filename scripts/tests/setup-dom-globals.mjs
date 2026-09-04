@@ -11,8 +11,20 @@ if (!globalThis.document) {
     ...eventTarget,
     body: { dataset: {}, style: { setProperty() {}, getPropertyValue() { return ''; }, removeProperty() {} } },
     documentElement: { dataset: {}, style: { setProperty() {}, getPropertyValue() { return ''; }, removeProperty() {} } },
+    head: {
+      append() {},
+      appendChild() {},
+      querySelector() { return null; },
+      querySelectorAll() { return []; },
+    },
     querySelectorAll() {
       return [];
+    },
+    querySelector() {
+      return null;
+    },
+    getElementById() {
+      return null;
     },
     createElement(tag) {
       return {
