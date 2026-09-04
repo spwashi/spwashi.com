@@ -1480,3 +1480,49 @@ html[data-spw-enhancement-level="rich"] .spw-ornament-cluster {
   font-size: 0.92em;
   padding: var(--ornament-pad-1, 0.16rem) var(--ornament-pad-2, 0.28rem);
 }
+
+/* ==========================================================================
+   17. Embedded setting / mode rails
+   --------------------------------------------------------------------------
+   Mode-switch stays the lens. These rails host site-setting and preset
+   chips as ornament anatomy so a still can name climate without opening
+   Settings. No new attribute family: data-site-setting-set, data-preset,
+   aria-pressed, and data-site-setting-active already exist.
+   ========================================================================== */
+
+.spw-ornament-rail:has(.spw-chip, .frame-sigil, [data-site-setting-set], [data-preset]) {
+  flex-wrap: wrap;
+  max-inline-size: 100%;
+  white-space: normal;
+  gap: var(--ornament-gap-1, 0.22rem) var(--ornament-gap-2, 0.38rem);
+}
+
+.spw-ornament-rail:has(.spw-chip, [data-site-setting-set], [data-preset]) .spw-ornament-kicker {
+  opacity: 0.86;
+}
+
+.spw-ornament-rail :is(.spw-chip, .frame-sigil) {
+  min-height: 1.7rem;
+  padding: 0.1rem 0.48rem;
+  border-color: color-mix(in srgb, var(--ornament-local-accent, var(--ornament-accent)) 32%, var(--line, rgba(14, 18, 20, 0.14)) 68%);
+  background: color-mix(in srgb, var(--ornament-local-surface, var(--ornament-surface)) 88%, transparent);
+  color: color-mix(in srgb, var(--ornament-local-accent, var(--ornament-accent)) 70%, var(--ink, #161c1d) 30%);
+  font-size: 0.68rem;
+}
+
+.spw-ornament-rail :is(.spw-chip, .frame-sigil):is([data-site-setting-active="true"], [aria-pressed="true"]) {
+  background: color-mix(in srgb, var(--ornament-local-accent, var(--ornament-accent)) 18%, var(--ornament-local-surface, #fff) 82%);
+  box-shadow: var(--ornament-node-ring, 0 0 0 1px color-mix(in srgb, currentColor 28%, transparent));
+  font-weight: 750;
+}
+
+.spw-frame > .spw-ornament-rail,
+.frame-topline > .spw-ornament-rail,
+.hook-call > .spw-ornament-rail {
+  margin-block: 0.42rem 0.15rem;
+}
+
+html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) .spw-ornament-rail {
+  outline: 1px dashed color-mix(in srgb, var(--ornament-local-accent, var(--ornament-accent)) 24%, transparent);
+  outline-offset: 3px;
+}
