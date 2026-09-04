@@ -114,6 +114,7 @@ High-signal active owners:
 - `design-hub/PLAN.md`
 - `site-starter-component-kit/PLAN.md` - make compose.css, compose.js, design specimens, and component promotion rules usable for spawning new sites without copying the full Spwashi shell.
 - `css-architecture-readability/PLAN.md`
+- `compositional-css-electrostatics/PLAN.md` - active satellite for CSS/runtime parity, five-channel compositional tokens, gesture electrostatics, expression topology, rule-use theater, and raw-image integration; vocabulary decisions remain with their owner tracks.
 - `site-color-tuning/PLAN.md`
 - `chrome-navigation-wonder/PLAN.md` - shared shell, menu containment, floating chrome, and navigation wonder ownership.
 - `shell-model-vocabulary-consolidation/PLAN.md` - census-then-glossary consolidation of shell/chrome/edge/overlay words and the 1,049-name `data-spw-*` attribute vocabulary; model and grammar choices gate on human review.

@@ -59,6 +59,7 @@ intent: .{
 @topics_index_html: ~"../../../topics/index.html"
 @topics_software_index_html: ~"../../../topics/software/index.html"
 @craft: ~"../../../topics/craft/"
+@compositional_css_electrostatics: ~"../compositional-css-electrostatics/index.spw"
 
 dispatch: .{
  plan = @plan
@@ -71,6 +72,12 @@ dispatch: .{
  topics_index_html = @topics_index_html
  topics_software_index_html = @topics_software_index_html
  craft = @craft
+ compositional_css_electrostatics = @compositional_css_electrostatics
+}[reg=facet]
+
+^"connection_points"{
+  incoming = `The compositional CSS plan may propose semantic image seats and contact-sheet studies; this plan retains asset selection, naming, optimization, sidecar, and route-promotion authority.`
+  related_plans = #[`compositional-css-electrostatics`, `unsorted-image-rollout`, `relational-attention-media`][reg=set]
 }[reg=facet]
 
 ^"research_bridge"{

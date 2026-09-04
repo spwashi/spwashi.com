@@ -1,0 +1,167 @@
+# Review 2026-09-04 — hot morning prime; test the specimen matrix before promoting tokens, attributes, names, or grammar.
+# wip - compositional CSS electrostatics
+#
+# Morning architecture prime: CSS delivery, interaction fields, component
+# variants, expression topology, and image/collaborator handoffs.
+
+#>plan_compositional_css_electrostatics_wip
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@css_instruction: ~"../../../.spw/conventions/css-instruction.spw"
+@stylesheet_ecology: ~"../../../.spw/conventions/stylesheet-ecology.spw"
+@component_packing: ~"../../../.spw/conventions/component-packing.spw"
+@attention_field: ~"../../../.spw/conventions/attention-field.spw"
+@electrostatics: ~"../../../.spw/conventions/electrostatic-affordances.spw"
+@interaction_combinatorics: ~"../../../.spw/conventions/surface-interaction-combinatorics.spw"
+@compound_expressions: ~"../../../.spw/conventions/compound-expressions.spw"
+@expression_consequence: ~"../../../.spw/conventions/semantic-expression-consequence.spw"
+@hydration: ~"../../../.spw/conventions/spw-serialization-hydration.spw"
+@language_plan: ~"../spw-metaphysical-language/PLAN.md"
+@shell_vocabulary: ~"../shell-model-vocabulary-consolidation/PLAN.md"
+@image_cohesion: ~"../style-image-cohesion/PLAN.md"
+
+operation = "prime"
+fixity = "experimental"
+
+^"daily_kernel"{
+  focus = `compositional CSS as the visible conductor between authored semantics and runtime state`
+  discipline_pair = `CSS architecture × notation/metaphysics`
+  region = `component and attention-handle ecology`
+  brand_physics = `charge / discharge`
+  intensity = `ultra planning; zero public-runtime mutation`
+  semantic_operation = `prime`
+  output = `owner plan, AST hypotheses, bundle theater, collaborator handoff`
+  validation = `payload census + plan/index integrity`
+  do_not_touch = `public HTML, source CSS, runtime JS, or raw image files in this session`
+}[reg=facet]
+
+^"measured_baseline"{
+  core = `1595 KiB / 1638 KiB soft budget — 43 KiB nominal headroom`
+  full = `2518 KiB across all bundles`
+  scoped_range = `1622–1819 KiB on observed surfaces`
+  authored = `170 sheets / ~2.85 MB / ~9871 rule clusters / 7572 custom-property declarations / 11868 data-spw references`
+  reading = `Route scoping trims the tail; core vocabulary remains the dominant delivery problem.`
+  caution = `Static counts describe source weight, not browser usefulness. Dynamic coverage describes one performance, not universal dead code.`
+}[reg=facet]
+
+^"reclustering_hypothesis"{
+  claim = `Recluster by semantic owner and sensed state, then let bundle membership express arrival tier. Do not group unrelated rules merely because they share a property or breakpoint.`
+  file_chapters = #[
+    `seed tokens and inherited channels`,
+    `structural anatomy and container ownership`,
+    `variant information hierarchy`,
+    `interaction and ARIA state projection`,
+    `responsive/container and reduced-motion policy`,
+    `debug probe and arrival tier`
+  ][reg=set]
+  likely_studies = #[
+    `tokens/core.css — separate primitive vocabulary, authored postures, and reduced-motion overrides without breaking first paint`,
+    `grammar/syntax.css — distinguish lexical grammar from route/lab demonstrations`,
+    `shell/chrome/navigation.css + adaptive.css — gather behavior by chrome organelle after naming review`,
+    `components/runtime-states.css — align state families with runtime writers and ARIA`,
+    `effects/wonder.css — separate baseline kinship from deferred atmosphere`,
+    `route home/design/topics sheets — detect shared component rules stranded in route owners`
+  ][reg=set]
+  split_gate = `Each child sheet names owner, states sensed, arrival tier, standalone probe, and bundle consumers.`
+}[reg=facet]
+
+^"compositional_token_lattice"{
+  authored_semantics = `operator, role, slot, lens, expression, copy depth`
+  environment = `container inline size, owned region topology, available block room, pointer/hover capability`
+  interaction = `idle, preview, active, committed, resolving; tap/hold/swipe tendency`
+  attention = `terminal × channel × nest × edge proximity; familiarity alters decay, not meaning`
+  material = `surface, canopy, palette, climate, enhancement and reduced-motion posture`
+  outputs = `local accent, measure, packing, disclosure depth, motion envelope, residue`
+  theory = `Inputs stay independent. Component-local output tokens compose them once. A measured axis spends itself only on that axis; a narrated state tunes tokens but never assigns root geometry.`
+  parity_probe = `For every output token, list its HTML seed, CSS composer, optional JS writer, inspector read, and no-JS fallback.`
+}[reg=facet]
+
+^"current_spec_alignment"{
+  checked = `2026-09-04`
+  format = `DTCG Format Module 2025.10 — typed tokens and aliases carry meaning; arbitrary group nesting is organization, not a semantic inference surface.`
+  composite_rule = `Use a composite token only when its named child values are consumed together. Keep space, interaction, attention, material, and authored semantics independently overridable until local resolution.`
+  resolver = `DTCG Resolver Module 2025.10 — model alternate contexts as sparse, preferably orthogonal modifiers to avoid combinatorial expansion and order-sensitive collisions.`
+  CSS = `CSS Containment Level 3 — container size/style queries and cqi/cqb units are local inputs; define a non-container fallback and do not treat pseudo-elements as query containers.`
+  Spw_consequence = `A rendered <{ drop cap belongs to the originating element and parsed expression role. It is not an autonomous token, group, container, or DOM-state writer.`
+  sources = #[`https://www.designtokens.org/tr/2025.10/format/`, `https://www.designtokens.org/tr/2025.10/resolver/`, `https://www.w3.org/TR/css-contain-3/`][reg=set]
+}[reg=facet]
+
+^"interaction_electrostatics"{
+  tap = `short impulse: preview then commit on activation; keyboard activation has the same consequence`
+  hold = `capacitance: dwell accumulates charge; crossing a named threshold primes rather than secretly commits`
+  swipe = `directed transfer: vector and velocity choose a neighboring pole or lens; cancellation returns charge to origin`
+  focus = `accessible arming: immediate resonance without timing dependency`
+  release = `discharge: release, transfer, ground, project, or cancel; residue says what changed`
+  multidimensional_payload = .{
+    origin = `component id, operator, region, slot, route`
+    gesture = `channel, input modality, duration, repeat count`
+    vector = `x/y direction, distance, velocity when meaningful`
+    field = `phase, charge, attention context, interaction tendency`
+    intent = `preview, inspect, select, collect, navigate, transform`
+    consequence = `target, result, discharge kind, residue, cancellation reason`
+  }[reg=facet]
+  rule = `The payload is primarily an event/inspection record. Do not project every dimension into a DOM attribute.`
+  progressive = `Click and focus remain complete; pointer richness adds accumulation/vector detail; reduced motion changes rendering, not consequence.`
+}[reg=facet]
+
+^"component_information_variance"{
+  claim = `A variant earns its name by changing what information is foregrounded for the present situation, not by swapping decoration.`
+  inputs = #[`container size`, `owned slots`, `lens priority`, `available space`, `interaction posture`, `session familiarity`, `copy depth`][reg=set]
+  compact = `identity + state + next action; provenance and secondary relations remain reachable`
+  balanced = `identity + evidence + one relation + next action`
+  expansive = `provenance, relationships, inspection handles, alternate lenses, and richer image/caption context`
+  session_rule = `Familiarity may reduce repeated instruction and raise inspectability; it must not hide an essential action or authored claim.`
+  CSS_first = `@container and semantic selectors choose hierarchy. JS mirrors and narrates; it does not become the layout engine.`
+}[reg=facet]
+
+^"expression_topology_prime"{
+  linear = `An ordered traversal: prefix primes, operands sequence, postfix discharges; suited to prose, breadcrumbs, and replay.`
+  polar = `A center with radial operands or lenses: relation is angle/distance/field, not only left-to-right order; suited to comparison, cauldron, constellation, and attention maps.`
+  hybrid_open = `A drop cap may visually combine concept-open < with definition/direction-open { to say “enter this concept as a held definition.” Treat <{ as a composed display role, not a new canonical operator, until AST fixtures and accessibility copy agree.`
+  terminal_period = `A colored terminal period may render discharge residue: the held context settled here. It must remain punctuation in text and receive meaning from the containing AST/component, never become a freestanding decorative operator.`
+  AST_shape = `topology(linear|polar) + boundaries(open/close) + operands + lenses + center/poles + discharge/residue`
+  integration = `Extend parser fixtures and geometry projection first; generate CSS hooks from resolved roles only after parser round-trip and no-JS text remain true.`
+  falsifier = `If the hybrid or terminal coloring cannot be explained from parsed structure—or changes reading when CSS is absent—it is ornament, not grammar.`
+}[reg=facet]
+
+^"bundle_and_rule_theater"{
+  build_scene = `CLI and design-runtime specimen show core/route/behavior/deferred weight, budget delta, and top source owners.`
+  browser_scene = `Headless route matrix records matched/unmatched bytes after first paint, interaction, idle flourish, and one invited feature.`
+  categories = #[`used now`, `used after state`, `route-exclusive`, `deferred atmosphere`, `unobserved in this trace`][reg=set]
+  warning = `Never label a selector dead from one viewport or one route. Require static zero-host evidence plus multiple route/posture traces before removal.`
+  posture_matrix = #[`narrow touch`, `wide pointer`, `keyboard focus`, `reduced motion`, `high contrast`, `no-JS baseline`, `screenshot/inspect`][reg=set]
+  output = `JSON evidence + compact human table + optional design/runtime meter; no analytics beacon.`
+}[reg=facet]
+
+^"raw_midjourney_integration"{
+  sources = #[`public/images/renders/_raw/`, `public/images/renders/_raw-2x2/`, `public/images/renders/_raw/2026-08-31-morning/`][reg=set]
+  semantic_seats = #[`substrate`, `figure`, `operator constellation`, `polar field`, `component anatomy plate`, `punctuation/discharge study`][reg=set]
+  selection = `Choose by route claim, crop resilience, palette/material compatibility, and whether the image demonstrates a relation rather than filling space.`
+  promotion = `image-naming-magic → image-optimize → public derivative + alt/caption + sidecar/provenance → route specimen`
+  boundary = `No raw asset is referenced directly by public HTML; no image establishes canonical sigil meaning.`
+}[reg=facet]
+
+^"collaborator_handoff"{
+  Grok = `visual variance brief: polar/linear studies, <{ drop-cap silhouettes, terminal discharge period, device/component crops, bundle-meter theater`
+  Claude = `copy/a11y brief: plain-language names, focus/touch parity, punctuation reading, no-JS truth, shell vocabulary alternatives`
+  shared_specimen = `one card family + one attention handle + one expression card across the posture matrix`
+  conflict_rule = `Visual and copy experiments return as named alternatives with screenshots and falsifiers; they do not directly rename shared attributes or operators.`
+}[reg=facet]
+
+^"next_slices"{
+  one = `CSS source census with arrival tier, route hosts, state readers, and top owners`
+  two = `Gesture payload contract and attention electrostatics audit—documentation/tests before listener changes`
+  three = `AST fixtures for linear/polar/hybrid-open/terminal-discharge`
+  four = `One component variant pilot using five independent channels`
+  five = `Raw Midjourney contact sheet grouped by semantic seat`
+  stop = `After the specimen matrix, review with Spwashi/Grok/Claude before promoting tokens, attributes, names, or grammar.`
+}[reg=facet]
+
+validation = #[`npm run css:payload`, `npm run check:runtime`, `npm run ecology:language`, `npm run plans:index:check`, `npm run spw:integrity`, `git diff --check`][reg=set]
+status = "primed_for_collaborative_refinement"

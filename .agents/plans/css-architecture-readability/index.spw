@@ -58,6 +58,7 @@ intent: .{
  owner_rail = `css-architecture-readability`
  related_plans = #[
   `core-css-spend-cut`,
+  `compositional-css-electrostatics`,
   `public-entrance-runtime-payload`,
   `semantic-classname-layers`,
  ][reg=set]
@@ -82,6 +83,7 @@ intent: .{
 @stylesheet_ecology: ~"../../../.spw/conventions/stylesheet-ecology.spw"
 @css_instruction: ~"../../../.spw/conventions/css-instruction.spw"
 @core_css_spend_cut: ~"../core-css-spend-cut/PLAN.md"
+@compositional_css_electrostatics: ~"../compositional-css-electrostatics/index.spw"
 @home: ~"../../../public/css/routes/surfaces/home.css"
 @settings: ~"../../../public/css/routes/surfaces/settings.css"
 @settings_forms: ~"../../../public/css/routes/surfaces/settings-forms.css"
@@ -96,6 +98,7 @@ dispatch: .{
  stylesheet_ecology = @stylesheet_ecology
  css_instruction = @css_instruction
  core_css_spend_cut = @core_css_spend_cut
+ compositional_css_electrostatics = @compositional_css_electrostatics
  home = @home
  settings = @settings
  settings_forms = @settings_forms

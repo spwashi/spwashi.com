@@ -61,6 +61,7 @@ intent: .{
 @sigil_physics_research: ~"./sigil-physics-research.spw"
 @workbench: ~"../../../.spw/_workbench/"
 @conventions: ~"../../../.spw/conventions/"
+@compositional_css_electrostatics: ~"../compositional-css-electrostatics/index.spw"
 
 dispatch: .{
  plan = @plan
@@ -70,6 +71,7 @@ dispatch: .{
  sigil_physics_research = @sigil_physics_research
  workbench = @workbench
  conventions = @conventions
+ compositional_css_electrostatics = @compositional_css_electrostatics
 }[reg=facet]
 
 ^"research_bridge"{
@@ -83,6 +85,8 @@ dispatch: .{
 
 ^"connection_points"{
  owner_rail = `self`
+ related_plans = #[`compositional-css-electrostatics`, `operator-semantics-refinement`, `spw-operator-pages`][reg=set]
+ handoff = `Linear/polar topology, <{ hybrid opening, and terminal-period discharge remain experimental fixtures in the compositional CSS plan until this language owner arbitrates their canonical status.`
 }[reg=facet]
 
 ^"owner_claim"{

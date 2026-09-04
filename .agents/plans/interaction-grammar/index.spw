@@ -49,15 +49,19 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @interaction_grammar: ~"./interaction-grammar.spw"
+@compositional_css_electrostatics: ~"../compositional-css-electrostatics/index.spw"
 
 dispatch: .{
  plan = @plan
  wip = @wip
  interaction_grammar = @interaction_grammar
+ compositional_css_electrostatics = @compositional_css_electrostatics
 }[reg=facet]
 
 ^"connection_points"{
  owner_rail = `model-guided-refinement`
+ related_plans = #[`compositional-css-electrostatics`, `interaction-loop-contract`, `gesture-state-refinement`][reg=set]
+ handoff = `Tap/hold/swipe electrostatic payload experiments route here for semantic and accessibility review before runtime vocabulary changes.`
 }[reg=facet]
 
 ^"absorbs"{

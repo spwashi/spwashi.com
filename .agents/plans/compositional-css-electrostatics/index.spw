@@ -1,0 +1,90 @@
+# Review 2026-09-04 — active experimental satellite; owner plans retain vocabulary, canon, and asset-promotion authority.
+# Plan Index - Compositional CSS Electrostatics
+#
+# Routes the CSS/runtime/AST planning prime without claiming language canon.
+
+#>plan_compositional_css_electrostatics_index
+#:index #!plan
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "experimental"
+
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@plans_root: ~"../index.spw"
+@css_owner: ~"../css-architecture-readability/index.spw"
+@spend_owner: ~"../core-css-spend-cut/PLAN.md"
+@interaction_owner: ~"../interaction-loop-contract/index.spw"
+@language_owner: ~"../spw-metaphysical-language/index.spw"
+@shell_owner: ~"../shell-model-vocabulary-consolidation/index.spw"
+@image_owner: ~"../style-image-cohesion/index.spw"
+@stylesheet_ecology: ~"../../../.spw/conventions/stylesheet-ecology.spw"
+@attention_field: ~"../../../.spw/conventions/attention-field.spw"
+@compound_expressions: ~"../../../.spw/conventions/compound-expressions.spw"
+
+intent: .{
+  goal = `Align CSS clustering, compositional tokens, runtime interaction fields, AST projections, bundle evidence, and image integration through one bounded execution plan.`
+  owner = `compositional-css-electrostatics`
+  kind = `plan`
+  bucket = `css_layout_interaction`
+  artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+  practice_depth = "observation | design | tending"
+  semantic_layer = "pragmatics | semantics"
+  collaboration_phase = "prime | exchange"
+  memory_tier = "hot"
+  bucket = "css_layout_interaction"
+}[reg=facet]
+
+^"conceptual_model"{
+  thesis = `CSS composes independent semantic, environmental, interaction, attention, and material channels into local component outputs; the AST explains topology and the runtime supplies optional evidence.`
+  concepts = #[`compositional-token-lattice`, `electrostatic-gesture-payload`, `linear-polar-expression`, `information-bearing-variants`, `bundle-rule-theater`, `raw-image-seats`][reg=set]
+  surfaces = #[`public/css/`, `public/js/runtime/attention/`, `public/js/semantic/spw-expression-geometry.js`, `scripts/ts/css-*.mts`, `public/images/renders/_raw/`][reg=set]
+  fixity_tier = `experimental`
+}[reg=facet]
+
+^"owner_boundaries"{
+  owns = `cross-surface execution sequence and specimen matrix`
+  routes_to_css = @css_owner
+  routes_to_language = @language_owner
+  routes_to_shell_naming = @shell_owner
+  routes_to_images = @image_owner
+  rule = `This plan may propose; owner tracks approve vocabulary, canon, and asset promotion.`
+}[reg=facet]
+
+^"owner_claim"{
+  claim_id = "plan-compositional-css-electrostatics-001"
+  layer = "pragmatic"
+  hypothesis = `A five-channel token model plus measured rule-use theater can reduce CSS ambiguity and spend while making interaction and expression consequences more legible.`
+  spec_ref = ~"./PLAN.md"
+  impl_ref = ~"../../../public/css/style-core.css"
+  probe_ref = `One card and one attention handle can trace HTML seed → CSS composition → optional JS payload → AST/inspector consequence across the posture matrix.`
+  falsification = `The pilot requires new global attributes, JS-owned geometry, or more CSS coupling than the current component rules.`
+  status = "active"
+}[reg=facet]
+
+dispatch: .{
+  plan = @plan
+  wip = @wip
+  plans_root = @plans_root
+  css_owner = @css_owner
+  spend_owner = @spend_owner
+  interaction_owner = @interaction_owner
+  language_owner = @language_owner
+  shell_owner = @shell_owner
+  image_owner = @image_owner
+  stylesheet_ecology = @stylesheet_ecology
+  attention_field = @attention_field
+  compound_expressions = @compound_expressions
+}[reg=facet]
+
+editor_prompts: #[
+  .{ ask = `What is the first bounded specimen?` ; see = @wip#next_slices }[reg=facet],
+  .{ ask = `Which ideas are experimental rather than canonical?` ; see = @wip#expression_topology_prime }[reg=facet],
+  .{ ask = `Where does naming or image promotion belong?` ; see = @index#owner_boundaries }[reg=facet]
+][reg=set]

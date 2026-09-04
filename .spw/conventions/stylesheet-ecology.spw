@@ -26,6 +26,7 @@
 @core_css_spend_cut: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
 @flourish_pack: ~"../../public/css/effects/flourish-pack.css"
 @public_entrance: ~"../../.agents/plans/public-entrance-runtime-payload/PLAN.md"
+@compositional_css_plan: ~"../../.agents/plans/compositional-css-electrostatics/index.spw"
 
 operation = "align"
 fixity = "tending"
@@ -61,13 +62,13 @@ fixity = "tending"
 
 ^"progressive_enhancement"{
   claim: "This is where the ecology actually fails, and no amount of file hygiene fixes it."
-  measured: "core.css is 1623 KiB after the flourish eviction (soft budget 1638). Named first-paint tokens, @property interpolation, no-JS handle CSS, and :has() operator kinship belong in core even when that warning trips. Every visitor still downloads core on every route. @payload_report: 'Core dominates (~1.5 MiB). Route scoping mainly drops other-route CSS (~0.4-0.6 MiB).' Route scoping trims the tail; the trunk is the remaining work."
+  measured: "2026-09-04: core.css is 1595 KiB against a 1638 KiB soft budget; observed scoped routes carry roughly 1622–1819 KiB and the all-bundle graph is 2518 KiB. Named first-paint tokens, @property interpolation, no-JS handle CSS, and :has() operator kinship belong in core when first paint depends on them. Route scoping trims the tail; the trunk remains the dominant delivery problem."
   weight: #[
-    `tokens/core.css ~86KB`,
-    `grammar/syntax.css ~83KB`,
-    `shell/chrome/navigation.css ~61KB`,
-    `components/runtime-states.css (inspect overlays extracted)`,
-    `shell/chrome/adaptive.css ~53KB`
+    `tokens/core.css ~91 KiB`,
+    `grammar/syntax.css ~85 KiB`,
+    `shell/chrome/navigation.css ~61 KiB`,
+    `components/runtime-states.css ~49 KiB (inspect overlays extracted)`,
+    `shell/chrome/adaptive.css ~54 KiB`
   ][reg=set]
   rule: "A sheet belongs in core only if a first paint without it is wrong rather than merely plainer. Ornament, wonder, and cinematic now idle-load. Metaphysical-paper still dresses a surface that is already legible."
   audience: "Editors, agents, and returning readers who already know how assets load may treat the soft budget warning as a delivery note. Do not evict named PE substrate (tokens, @property, no-JS :has() / focus / scroll-timeline) just to go green."
@@ -91,6 +92,14 @@ fixity = "tending"
   balance: "Differential salience is allowed and useful. Complexity is managed by making the addressed subject clearer while neighboring regions stay coherent, not by raising every visible surface to the same intensity."
   capture: "Non-default capture mode freezes transient passage. A still must remain attractive and legible at rest rather than depending on an animation midpoint."
   probe: `rg -n "scroll-passage|capture-mode" public/css/effects/material.css public/css/effects/living-motions.css`
+}
+
+^"compositional_parity_handoff"{
+  status: "Experimental execution work routes through @compositional_css_plan; this convention remains the stable stylesheet/document and cascade/delivery owner."
+  token_rule: "Compose independent authored, environmental, interaction, attention, and material channels into component-local outputs. A state-reporting channel does not own carrier geometry."
+  runtime_parity: "Audit catalog updates/effectScope against CSS readers and ARIA state before adding selectors. Parity is a trace, not a requirement that every JS field become a CSS token."
+  rule_usage: "Pair static host/source evidence with multiple browser route/posture traces. One coverage capture may call a rule unobserved in that scene; it may not call it dead."
+  theater: "Budgets should be appreciable through compact tables or design-runtime specimens, but never through visitor telemetry or debug chrome required for comprehension."
 }
 
 ^"breakpoints"{
@@ -134,4 +143,5 @@ fixity = "tending"
   flourish_pack = @flourish_pack
   public_entrance = @public_entrance
   payload_report = @payload_report
+  compositional_css_plan = @compositional_css_plan
 }

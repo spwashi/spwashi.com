@@ -61,6 +61,7 @@ intent: .{
 @plan_symphonic_loading_layered_editions: ~"../symphonic-loading-layered-editions/index.spw"
 @readme: ~"../../../public/css/README.md"
 @dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
+@compositional_css_electrostatics: ~"../compositional-css-electrostatics/index.spw"
 
 dispatch: .{
  plan = @plan
@@ -69,6 +70,7 @@ dispatch: .{
  plan_symphonic_loading_layered_editions = @plan_symphonic_loading_layered_editions
  readme = @readme
  dom_contracts = @dom_contracts
+ compositional_css_electrostatics = @compositional_css_electrostatics
 }[reg=facet]
 
 ^"research_bridge"{
@@ -84,8 +86,10 @@ dispatch: .{
  related_plans = #[
   `floating-chrome-stack`,
   `navigation-header-disclosure`,
+  `compositional-css-electrostatics`,
   `symphonic-loading-layered-editions`,
- ][reg=set]
+][reg=set]
+ handoff = `Any replacement for shell-disclosure must be chosen here after the census. The compositional CSS plan supplies behavior, device, and component evidence but does not perform the rename.`
 }[reg=facet]
 
 ^"owner_claim"{
