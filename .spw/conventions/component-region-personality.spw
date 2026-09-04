@@ -278,6 +278,7 @@ fixity = "tending"
   avoids: #[`proof card as default noun`, `chip-only navigation with no prose anchors`, `duplicate scaffolds that confuse model summary`][reg=set]
   supports: #[`copy-unit ids in catalog`, `page-anatomy vocabulary`, `emphasis tiers data-spw-emphasis`, `regional figures with study-summary`][reg=set]
   blog_bridge: "Blog routes may cite capture artifacts and name which component regions were intentional."
+  capture_grooves: "Under data-spw-capture-mode=screenshot|study, slot names, lens/form axis labels, and aria-pressed mode handles stay visible; floating chrome stays hidden. Niche routes should carry a labeled SVG a model can name without hover."
 }
 
 ^"component_ecology_audit"{

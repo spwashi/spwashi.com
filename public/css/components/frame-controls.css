@@ -14,7 +14,12 @@
   background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 90%, var(--spw-control-axis-color) 10%);
 }
 
-:where(html[data-spw-tuning-discoverability="ambient"], html[data-spw-tuning-discoverability="revealed"])
+:where(
+  html[data-spw-tuning-discoverability="ambient"],
+  html[data-spw-tuning-discoverability="revealed"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"]
+)
   :where(.frame-topline .mode-switch, .frame-heading .mode-switch)[aria-label]::before {
   content: "lens";
   display: block;
@@ -36,14 +41,18 @@
 
 :where(
   html[data-spw-tuning-discoverability="ambient"],
-  html[data-spw-tuning-discoverability="revealed"]
+  html[data-spw-tuning-discoverability="revealed"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"]
 ) :where(.spw-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header)) {
   box-shadow: inset 3px 0 0 color-mix(in srgb, var(--spw-control-axis-color) 42%, transparent);
 }
 
 :where(
   html[data-spw-tuning-discoverability="ambient"],
-  html[data-spw-tuning-discoverability="revealed"]
+  html[data-spw-tuning-discoverability="revealed"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"]
 ) :where(.spw-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header))::after {
   content: "form";
   display: inline-flex;

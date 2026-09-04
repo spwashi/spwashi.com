@@ -18,9 +18,18 @@
   --gesture-anatomy-ease: var(--ease-settle, ease);
 }
 
-:where(html[data-spw-cognitive-handles="on"], html[data-spw-tuning-discoverability="revealed"]) {
+:where(
+  html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
+  html[data-spw-tuning-discoverability="revealed"]
+) {
   --gesture-anatomy-opacity: 0.72;
   --gesture-anatomy-size: 0.58rem;
+}
+
+:where(html[data-spw-capture-mode="screenshot"], html[data-spw-capture-mode="study"]) {
+  --gesture-anatomy-opacity: 0.88;
 }
 
 :where(html[data-spw-tuning-discoverability="ambient"]) {
@@ -73,6 +82,8 @@
 /* Slot role labels on framed components */
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
@@ -85,6 +96,8 @@
 
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
   .spw-frame [data-spw-slot]:not([data-spw-slot=""]),
@@ -98,6 +111,8 @@
 
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where([data-spw-slot-label])::before {
@@ -128,9 +143,44 @@
   transition: opacity var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
+:where(
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"]
+) :where(
+  .spw-frame [data-spw-slot]:not([data-spw-slot=""]):not([data-spw-slot-label]),
+  .frame-card [data-spw-slot]:not([data-spw-slot=""]):not([data-spw-slot-label])
+)::before {
+  content: attr(data-spw-slot);
+  position: absolute;
+  inset-block-start: -0.55rem;
+  inset-inline-start: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: min(100%, 16rem);
+  overflow: hidden;
+  padding: 0.08rem 0.34rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--gesture-anatomy-accent) 20%, transparent);
+  background: color-mix(in srgb, var(--gesture-anatomy-surface) 90%, var(--gesture-anatomy-accent) 10%);
+  color: color-mix(in srgb, var(--gesture-anatomy-accent) 62%, var(--gesture-anatomy-ink-soft) 38%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--gesture-anatomy-size, 0.56rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  opacity: var(--gesture-anatomy-opacity, 0.88);
+  pointer-events: none;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 /* Vertical anatomy stack rail on multi-slot frames */
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
   .spw-frame[data-spw-anatomy-stack="true"],
@@ -166,6 +216,8 @@
 
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(.spw-anatomy-stack-rail) {
   display: flex;
@@ -217,6 +269,8 @@
 
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where([data-spw-gesture-hint]:is(:hover, :focus-visible, [data-spw-gesture="charging"], [data-spw-gesture="armed"], [data-spw-gesture="sustained"]))::after {

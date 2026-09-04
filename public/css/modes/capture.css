@@ -54,3 +54,19 @@ html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .
 html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-note {
   opacity: 1 !important;
 }
+
+/* Still-readable interaction: pressed lens and landmark path stay visible
+   after chrome is hidden. Slot/lens labels live in gesture-anatomy and
+   frame-controls; this only thickens the pressed groove. */
+html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
+  :where(.mode-switch .frame-sigil[aria-pressed="true"]) {
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--spw-control-axis-color, var(--active-op-color, #008080)) 70%, transparent);
+  font-weight: 750;
+}
+
+html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
+  :where(.spw-page-landmarks) {
+  outline: 1px dashed color-mix(in srgb, var(--active-op-color, #008080) 28%, transparent);
+  outline-offset: 4px;
+}
