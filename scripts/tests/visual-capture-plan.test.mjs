@@ -36,6 +36,7 @@ import {
   assessCaptureOccupancy,
   assessViewportSubject,
   isBlankStill,
+  isStarvedClip,
   formatCaptureExpression,
   buildViewportStillJobs,
   errorFile,
@@ -644,6 +645,20 @@ test('failure kinds distinguish miss from gone, and index names the recapture co
   assert.equal(index.chapters.page.length, 1);
   assert.equal(index.errors.miss[0].id, 'operator-chip');
   assert.equal(index.next.command, 'npm run visual:stabilize');
+  assert.deepEqual(index.next.ids, ['operator-chip']);
+});
+
+test('starved clips are misses, and recapture ids skip generic page blanks', () => {
+  assert.equal(isStarvedClip({ flow: 'region' }, { width: 18, height: 800 }), true);
+  assert.equal(isStarvedClip({ flow: 'page', still: true }, { width: 18, height: 800 }), false);
+  assert.equal(isStarvedClip({ flow: 'component' }, { width: 320, height: 180 }, { occupancy: 'balanced' }), false);
+  const index = buildCaptureIndex({
+    captures: [],
+    errorArtifacts: [
+      { kind: 'blank', id: 'page-home', fixtureId: 'home-hook', file: 'captures/errors/pocket--blank--page-home.jpg' },
+      { kind: 'miss', id: 'operator-chip', fixtureId: 'operator-chip', file: 'captures/errors/pocket--miss--operator-chip.txt' },
+    ],
+  });
   assert.deepEqual(index.next.ids, ['operator-chip']);
 });
 

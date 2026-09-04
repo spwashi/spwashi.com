@@ -42,7 +42,7 @@ export const COMPONENT_FIXTURES = Object.freeze([
     {
         id: 'operator-chip',
         label: 'Operator chip',
-        selector: '#components-glossary-hook .spw-chip',
+        selector: '#components-glossary-hook [data-spw-feature="wrap-jobs"] .spw-chip',
         regionSelector: '#components-glossary-hook',
         specimenRoute: '/design/components/#components-glossary-hook',
         cssOwner: 'public/css/handles/operators/sigils-and-chips.css',
@@ -63,7 +63,7 @@ export const COMPONENT_FIXTURES = Object.freeze([
         id: 'tuning-strip',
         label: 'Tuning strip',
         selector: '#structural-vocabulary .tuning-strip',
-        regionSelector: '#structural-vocabulary',
+        regionSelector: '#structural-vocabulary .tuning-strip',
         specimenRoute: '/design/components/#structural-vocabulary',
         cssOwner: 'public/css/components/controls.css',
         snippet: 'design/components/snippets/tuning-strip.html',

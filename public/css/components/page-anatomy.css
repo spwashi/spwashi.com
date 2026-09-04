@@ -174,10 +174,15 @@ html[data-spw-theme-biome="glasshouse"] {
 /* Learnable page rooms. IDs stay; copy inside the rooms may change. */
 .spw-page-landmarks {
   --landmark-mark: var(--op-frame-color, #008080);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.38rem;
   margin: 0.7rem 0 0.35rem;
 }
 
 .spw-page-landmarks__kicker {
+  flex: 1 0 100%;
   margin: 0 0 0.28rem;
   color: var(--ink-soft, rgba(14, 18, 20, 0.62));
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
@@ -190,10 +195,17 @@ html[data-spw-theme-biome="glasshouse"] {
 .spw-page-landmarks ol {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.38rem;
+  gap: inherit;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.hook-invitation[data-spw-feature="wrap-jobs"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.38rem;
+  align-items: center;
 }
 
 .spw-page-landmarks a {

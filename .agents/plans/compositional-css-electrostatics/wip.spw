@@ -154,6 +154,15 @@ fixity = "experimental"
   conflict_rule = `Visual and copy experiments return as named alternatives with screenshots and falsifiers; they do not directly rename shared attributes or operators.`
 }[reg=facet]
 
+^"capture_review_2026_09_04"{
+  source = `explore pack 11-26-19--b65cc8`
+  keep = `home-opening, entrance-closed, entry-loops pin, about-opening-dark, join-specimens, years path`
+  public_fixes = `years overflow-wrap; dark section-handle uses surface-strong; landmarks flex without requiring ol; hook chips as wrap-jobs`
+  capture_fixes = `starved clips miss; theme wait; capture-mode on the URL; cluster fixtures aim at the frame, not an empty wrapper`
+  specimen_for_plan = `about-opening-dark + years path + glossary landmarks are the first posture-matrix trio for slice four (component variant / climate electrode / path packing)`
+  drop_cap_prep = `Do not invent <{ on public pages yet. Join-specimens already photographs brace openings; terminal-period coloring waits for AST fixtures.`
+}[reg=facet]
+
 ^"next_slices"{
   one = `CSS source census with arrival tier, route hosts, state readers, and top owners`
   two = `Gesture payload contract and attention electrostatics audit—documentation/tests before listener changes`

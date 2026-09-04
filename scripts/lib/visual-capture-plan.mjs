@@ -206,8 +206,9 @@ export function buildCaptureIndex({ captures = [], errorArtifacts = [] } = {}) {
   }
   const recaptureIds = [...new Set(
     errorArtifacts
+      .filter((artifact) => artifact.kind === 'miss' || artifact.kind === 'gone' || artifact.kind === 'failed')
       .map((artifact) => artifact.fixtureId || artifact.id)
-      .filter(Boolean),
+      .filter((id) => id && !String(id).startsWith('page-')),
   )];
   return {
     kind: 'visual-capture-index',
@@ -560,6 +561,18 @@ export function assessViewportSubject(job = {}, snapshot = {}, viewport = null) 
     };
   }
   return { fit: 'in-frame', viewportsTall, hint: null };
+}
+
+/** A clip too thin or vacant to be a specimen. Page stills stay device frames. */
+export function isStarvedClip(job = {}, box = null, occupancy = null) {
+  if (job?.flow === 'page' || job?.still || job?.canvas === 'card') return false;
+  const width = Number(box?.width || 0);
+  const height = Number(box?.height || 0);
+  if (width < 96 || height < 40) return true;
+  if (occupancy?.occupancy === 'empty') return true;
+  const textLength = Number(box?.textLength || 0);
+  if (occupancy?.occupancy === 'light' && !(occupancy.mediaCount > 0) && textLength < 24) return true;
+  return false;
 }
 
 /** Compositor blanks compress hard. A small real clip can be well under 40KB. */

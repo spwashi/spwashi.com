@@ -111,7 +111,7 @@
 
 ^"failure_kinds"{
   kinds = #[`miss`, `blank`, `gone`, `collision`, `failed`][reg=set]
-  miss = `Selector absent or empty. Fail before a screenshot.`
+  miss = `Selector absent, empty, or starved (clip thinner than a chip). Fail before a screenshot.`
   blank = `Compressor-empty still. Keep the named glitch.`
   gone = `Tab closed. Recreate the page once, then skip the rest of that nav group.`
   collision = `Identical hash to another still.`

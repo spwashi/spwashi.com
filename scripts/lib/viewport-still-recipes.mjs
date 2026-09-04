@@ -66,7 +66,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     fixtureId: 'home-hook',
     label: 'Home entrance open',
     specimenRoute: '/',
-    selector: '#choose-your-entrance',
+    selector: '#choose-your-entrance .home-depth-disclosure',
     prepare: Object.freeze({
       open: Object.freeze(['.home-depth-disclosure']),
     }),

@@ -49,6 +49,7 @@ import {
   assessCaptureOccupancy,
   assessViewportSubject,
   isBlankStill,
+  isStarvedClip,
   formatCaptureExpression,
   errorFile,
   captureSearchParams,
@@ -366,6 +367,7 @@ function captureQuery(url, job = null) {
   const u = new URL(url);
   if (!u.searchParams.has('interaction')) u.searchParams.set('interaction', 'calm');
   if (!u.searchParams.has('precipitate')) u.searchParams.set('precipitate', 'print');
+  if (!u.searchParams.has('capture-mode')) u.searchParams.set('capture-mode', 'screenshot');
   const lens = job?.lens;
   if (lens?.query && lens?.value) u.searchParams.set(lens.query, lens.value);
   const extra = captureSearchParams(job?.conditions || {}, job?.attention || {});
@@ -385,11 +387,36 @@ async function emulateCaptureEnvironment(session, conditions = {}) {
   if (conditions.reducedMotion === 'reduce' || conditions.reducedMotion === true) {
     features.push({ name: 'prefers-reduced-motion', value: 'reduce' });
   }
-  if (!features.length) return;
+  if (features.length) {
+    try {
+      await session.send('Emulation.setEmulatedMedia', { features });
+    } catch {
+      // optional on older Chrome
+    }
+  }
+  const pack = conditions.themePack || '';
+  const mode = conditions.colorMode || '';
+  if (!pack && !mode) return;
   try {
-    await session.send('Emulation.setEmulatedMedia', { features });
+    await session.send('Runtime.evaluate', {
+      expression: `(() => new Promise((resolve) => {
+        const deadline = Date.now() + 1800;
+        const wantPack = ${JSON.stringify(pack)};
+        const wantMode = ${JSON.stringify(mode)};
+        const tick = () => {
+          const html = document.documentElement;
+          const packOk = !wantPack || html.getAttribute('data-spw-theme-pack') === wantPack;
+          const modeOk = !wantMode || html.getAttribute('data-spw-color-mode') === wantMode;
+          if ((packOk && modeOk) || Date.now() > deadline) resolve({ packOk, modeOk });
+          else requestAnimationFrame(tick);
+        };
+        tick();
+      }))()`,
+      awaitPromise: true,
+      returnByValue: true,
+    }, CAPTURE_MEASURE.evaluateTimeoutMs);
   } catch {
-    // optional on older Chrome
+    // theme wait is best-effort
   }
 }
 
@@ -876,6 +903,10 @@ async function captureJob(session, job, {
       box = await measureSelector(session, job.selector);
       if (!box || box.width < 2 || box.height < 2) {
         throw new Error(`selector-miss: ${job.selector} not found or empty`);
+      }
+      const occupancy = assessCaptureOccupancy(job, box);
+      if (isStarvedClip(job, box, occupancy)) {
+        throw new Error(`selector-miss: ${job.selector} starved clip ${Math.round(box.width)}×${Math.round(box.height)}`);
       }
     }
   }
