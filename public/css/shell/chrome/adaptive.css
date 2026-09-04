@@ -205,6 +205,22 @@
     max-width: none;
   }
 
+  /* Closed toggle header: vertical page scroll stays native; horizontal swipe
+     is the sibling-hub hop owned by interaction-hops.js. */
+  :where(
+    .site-header[data-spw-menu-mode="toggle"]:not([data-spw-menu="open"]),
+    body > header[data-spw-menu-mode="toggle"]:not([data-spw-menu="open"])
+  ) {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  :where(
+    .site-header[data-spw-menu-mode="toggle"]:not([data-spw-menu="open"]) .spw-nav-toggle,
+    body > header[data-spw-menu-mode="toggle"]:not([data-spw-menu="open"]) .spw-nav-toggle
+  ) {
+    touch-action: pan-y pinch-zoom;
+  }
+
   :where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] nav,
          body > header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] nav) {
     display: none;

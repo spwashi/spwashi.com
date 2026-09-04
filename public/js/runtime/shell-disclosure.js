@@ -18,6 +18,7 @@ import {
   getNextFontScale,
   syncUtilityRow,
 } from './shell/utility-row.js';
+import { bindInteractionHops } from './interaction-hops.js';
 
 const EVENT_NAMES = Object.freeze({
   INTENT: 'spw:shell-menu-intent',
@@ -809,6 +810,14 @@ export function initSpwShellDisclosure(options = {}) {
 
   writeDatasetValue(header, 'spwShellDisclosureInit', 'true');
   nav.id ||= 'spw-shell-nav';
+  bindInteractionHops({
+    html: document.documentElement,
+    root: document,
+    writePhase: (node, phase) => {
+      if (!node || !phase) return;
+      node.dataset.spwInteractionPhase = phase;
+    },
+  });
 
   let toggle = header.querySelector('.spw-nav-toggle');
   if (!toggle) {
