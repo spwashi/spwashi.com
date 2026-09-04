@@ -32,6 +32,7 @@
   motif_storage: "Use body data-spw-copy-motifs, JSON-LD about lists, meta keywords, or compact motif strips to surface the repeated vocabulary."
   referentiality_rule: "Meta-documentation and agent instructions belong in referentiality-tier components (technical, agent) — not in public hero voice. See component-region-personality.spw."
   collectible_rule: "Frame-notes and page-ledes should be copy collectibles with data-spw-copy-unit ids when an editing team will audit or translate them."
+  magazine_return: "Landing copy should read like a magazine someone would reopen: an issue has a close, a shelf stays, a fragment can return. Tone is return-visit, edition, season, serial reading — not a marketplace subscribe CTA. A fragment URL must still make a sentence if the visitor lands mid-page. Examples name one object, one relation, and one next touch that would still be true on a later visit. A-cycle closes on the 13th, B-cycle on the 26th. Typographic and timing tropes stay behind enhancement-level=rich and reduced-motion; do not name neighboring animation IPs in public HTML."
 }
 
 ^"consideration_physics"{
