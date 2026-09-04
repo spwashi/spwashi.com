@@ -1352,7 +1352,6 @@ html[data-spw-reduce-motion="on"] *::after {
     0.72,
     calc(
       var(--spw-reading-rest-opacity, 0.86)
-      - ((var(--spw-pack-occupancy-weight, 0.5) - 0.5) * 0.08)
       + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-resonance, 0))
       + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-charge, 0) * 0.45)
       + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention, 0) * 0.25)
@@ -12696,10 +12695,15 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
     box-shadow 420ms var(--ease-settle, ease);
 }
 
-/* A frame you are in should not stay dim. Inheritance spends the lift
-   without enumerating route × region selectors. */
-:where(html[data-spw-reading-groove="on"] .spw-frame:has(:is(:hover, :focus-within, [data-spw-reading-beat="lead"]))) {
+/* A frame you are in should not stay dim. Do not wait for reading-groove
+   JS; groove-off still forces full ink below. */
+:where(.spw-frame:is(:hover, :focus-within, :has([data-spw-reading-beat="lead"]))) {
   --spw-reading-rest-opacity: var(--spw-reading-near-opacity, 0.96);
+  --spw-attention-opacity: var(--spw-reading-near-opacity, 0.96);
+}
+
+:where(html[data-spw-reading-groove="off"] .spw-frame) {
+  --spw-reading-rest-opacity: 1;
 }
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]) {

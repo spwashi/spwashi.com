@@ -43,7 +43,9 @@ Same still, four readings: mosey (notice the size), search (findable words), age
 
 Default QA and ecology viewports are named device-reasons: `pocket`, `fold`, `broadsheet`. `phablet` is opt-in density. Agent briefs name the layout stack (posture → seat → pack → gravity → resonance → still).
 
-Each precipitated still records physical composition, optional Pretext evidence, capture occupancy, an authored component expression when present, and a generated `still[mode]{flow.size-reason.occupancy}<subject>` annotation.
+Each precipitated still records physical composition, optional Pretext evidence, capture occupancy, an attention receipt when the job asked, an authored component expression when present, and a generated `still[mode]{flow.size-reason.occupancy}<subject>` annotation.
+
+Attention stills are tests, not goldens. `assessStillAttention` fails a check when a pin is unmarked, a probe leaves operator resonance at rest, or rest ink stays at `--spw-reading-rest-opacity` (0.86) while charge, resonance, or `:focus-within` is live. Curriculum / software / math openings are named viewport stills; memory pin, frame probe, and hero focus are pocket checks.
 
 Region/component clips use the element's document box, not the visible viewport origin. A capture retry keeps that clip. Header-only hits are `miss--` artifacts, not specimen stills.
 
@@ -66,4 +68,5 @@ Explore/stabilize are the fuzz-shaped capture profiles: cheap walk, then recaptu
 
 1. `npm run component:check`
 2. `node --test scripts/tests/visual-capture-plan.test.mjs`
-3. `npm run check:local`
+3. `npm run visual:checks` when Chrome is available (attention receipts fail the job, not the JPEG hash)
+4. `npm run check:local`

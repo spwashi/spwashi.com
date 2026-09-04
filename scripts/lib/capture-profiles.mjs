@@ -48,7 +48,7 @@ export const CAPTURE_PROFILES = Object.freeze({
     checks: true,
     walk: false,
     viewports: Object.freeze(['pocket']),
-    description: 'Deep-link pin, explicit dark, reduced motion.',
+    description: 'Deep-link pin, operator probe, focus spend, explicit dark, reduced motion.',
   }),
   survey: Object.freeze({
     id: 'survey',

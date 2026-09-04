@@ -34,6 +34,9 @@ import {
   looksLikeShellChrome,
   isMissedSpecimen,
   assessCaptureOccupancy,
+  assessStillAttention,
+  attentionAssertKind,
+  STILL_ATTENTION_READ_EXPRESSION,
   assessViewportSubject,
   isBlankStill,
   isStarvedClip,
@@ -461,7 +464,145 @@ test('capture conditions split route, theme, and attention into separate still f
   assert.ok(checks.some((job) => job.id === 'home-entry-loops-pin' && job.attention?.section === 'entry-loops'));
   assert.ok(checks.some((job) => job.file.startsWith('captures/pocket--dark-mode/')));
   assert.ok(checks.some((job) => job.id === 'home-entry-loops-pin' && job.file.startsWith('captures/pocket--section-pin/')));
+  assert.ok(checks.some((job) => job.id === 'software-frame-probe' && job.attention?.probe === 'frame'));
+  assert.ok(checks.some((job) => job.id === 'software-frame-probe' && job.file.startsWith('captures/pocket--operator-probe/')));
+  assert.ok(checks.some((job) => job.id === 'curriculum-memory-pin' && job.attention?.section === 'memory-buffers'));
+  assert.ok(checks.some((job) => job.id === 'curriculum-hero-focus' && job.assertAttention === 'spend'));
   assert.equal(VIEWPORT_STILL_CHECKS.length >= 3, true);
+});
+
+test('named stills cover curriculum, software, and math openings', () => {
+  const { jobs } = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeStills: true,
+    viewports: [VIEWPORTS.pocket],
+  });
+  assert.ok(jobs.some((job) => job.id === 'curriculum-opening' && job.selector === '#curriculum-hero'));
+  assert.ok(jobs.some((job) => job.id === 'software-opening' && job.selector === '#software-surface'));
+  assert.ok(jobs.some((job) => job.id === 'math-opening' && job.selector === '#math-hero'));
+});
+
+test('still attention receipts fail when ink stays at rest while charge is live', () => {
+  assert.equal(attentionAssertKind({ attention: { section: 'memory-buffers' } }), 'pin');
+  assert.equal(attentionAssertKind({ attention: { probe: 'frame' } }), 'probe');
+  assert.equal(attentionAssertKind({ prepare: { focus: '[data-spw-operator="frame"]' } }), 'spend');
+  assert.equal(attentionAssertKind({ still: true }), null);
+
+  const skip = assessStillAttention({ still: true }, { attention: { attentionOpacity: '0.86' } });
+  assert.equal(skip.verdict, 'skip');
+
+  const unmeasured = assessStillAttention({ assertAttention: 'spend' }, {});
+  assert.equal(unmeasured.ok, false);
+  assert.equal(unmeasured.reason, 'attention-unmeasured');
+
+  const inkRest = assessStillAttention(
+    { assertAttention: 'spend' },
+    {
+      attention: {
+        attentionCharge: '0.6',
+        attentionOpacity: '0.86',
+        restOpacity: '0.86',
+        attentionLight: '0.67',
+      },
+    },
+  );
+  assert.equal(inkRest.ok, false);
+  assert.equal(inkRest.reason, 'ink-ignores-attention');
+
+  const lightRest = assessStillAttention(
+    { assertAttention: 'spend' },
+    {
+      attention: {
+        attentionCharge: '0.6',
+        restFloor: '0.96',
+        attentionOpacity: '0.92',
+        restOpacity: '0.96',
+        attentionLight: '0.48',
+      },
+    },
+  );
+  assert.equal(lightRest.ok, false);
+  assert.equal(lightRest.reason, 'light-ignores-attention');
+
+  const focusMiss = assessStillAttention(
+    { assertAttention: 'spend', prepare: { focus: '[data-spw-operator="frame"]' } },
+    { attention: { attentionOpacity: '0.86', restOpacity: '0.86', attentionLight: '0.48' } },
+  );
+  assert.equal(focusMiss.ok, false);
+  assert.equal(focusMiss.reason, 'focus-not-held');
+
+  const focusFloorMiss = assessStillAttention(
+    { assertAttention: 'spend', prepare: { focus: true } },
+    {
+      attention: {
+        focusWithin: true,
+        restFloor: '0.86',
+        attentionOpacity: '0.86',
+        attentionLight: '0.48',
+      },
+    },
+  );
+  assert.equal(focusFloorMiss.ok, false);
+  assert.equal(focusFloorMiss.reason, 'rest-floor-ignores-focus');
+
+  const focusInkOnly = assessStillAttention(
+    { assertAttention: 'spend', prepare: { focus: true } },
+    {
+      attention: {
+        focusWithin: true,
+        restFloor: '0.96',
+        attentionOpacity: '0.96',
+        restOpacity: '0.96',
+        attentionLight: '0.48',
+        attentionCharge: '0',
+      },
+    },
+  );
+  assert.equal(focusInkOnly.ok, true);
+
+  const spendPass = assessStillAttention(
+    { assertAttention: 'spend' },
+    {
+      attention: {
+        attentionCharge: '0.6',
+        attentionOpacity: '0.92',
+        restFloor: '0.96',
+        restOpacity: '0.96',
+        attentionLight: '0.67',
+        focusWithin: true,
+      },
+    },
+  );
+  assert.equal(spendPass.ok, true);
+  assert.equal(spendPass.verdict, 'pass');
+
+  const pinPass = assessStillAttention(
+    { attention: { section: 'memory-buffers' } },
+    { attention: { regionMark: 'capture' } },
+  );
+  assert.equal(pinPass.ok, true);
+
+  const pinMiss = assessStillAttention(
+    { attention: { section: 'memory-buffers' } },
+    { attention: { regionMark: '' } },
+  );
+  assert.equal(pinMiss.ok, false);
+  assert.equal(pinMiss.reason, 'pin-not-marked');
+
+  const probeMiss = assessStillAttention(
+    { attention: { probe: 'frame' } },
+    { attention: { resonanceProbe: 'frame', operatorResonance: '0', attentionResonance: '0' } },
+  );
+  assert.equal(probeMiss.ok, false);
+  assert.equal(probeMiss.reason, 'resonance-report-rest');
+
+  const probePass = assessStillAttention(
+    { attention: { probe: 'frame' } },
+    { attention: { resonanceProbe: 'frame', operatorResonance: '0.4' } },
+  );
+  assert.equal(probePass.ok, true);
+  assert.match(STILL_ATTENTION_READ_EXPRESSION, /--spw-attention-opacity/);
 });
 
 test('capture runs nest readable profile folders under the day', () => {
@@ -582,6 +723,8 @@ test('live capture measure evaluate is bounded and races font wait', async () =>
   assert.ok(CAPTURE_MEASURE.evaluateTimeoutMs < 60000);
   assert.match(source, /CAPTURE_MEASURE\.evaluateTimeoutMs/);
   assert.match(source, /CAPTURE_MEASURE\.fontWaitMs/);
+  assert.match(source, /readStillAttention/);
+  assert.match(source, /attention-miss/);
   assert.match(source, /fonts\.ready[\s\S]{0,180}race\(/);
   assert.doesNotMatch(
     source,
@@ -607,6 +750,7 @@ test('review chapters walk linguistics before climate', () => {
   assert.equal(reviewChapterFor({ id: 'home-hook', seat: 'hook', flow: 'region' }), 'region');
   assert.equal(reviewChapterFor({ id: 'home-cluster', seat: 'cluster', flow: 'region' }), 'personality');
   assert.equal(reviewChapterFor({ id: 'home-opening', still: true, flow: 'page' }), 'page');
+  assert.equal(reviewChapterFor({ id: 'curriculum-hero-focus', assertAttention: 'spend' }), 'climate');
   assert.equal(reviewChapterFor({
     id: 'home-hook-dark',
     still: true,
@@ -635,6 +779,7 @@ test('combination budget keeps theme checks on pocket and caps navs', () => {
 
 test('failure kinds distinguish miss from gone, and index names the recapture command', () => {
   assert.equal(classifyCaptureFailure(new Error('selector-miss: .spw-chip not found or empty')), 'miss');
+  assert.equal(classifyCaptureFailure(new Error('attention-miss: ink-ignores-attention')), 'miss');
   assert.equal(classifyCaptureFailure(new Error('Inspected target navigated or closed')), 'gone');
   const index = buildCaptureIndex({
     captures: [{ id: 'home-opening', file: 'captures/pocket/01-home-opening.jpg', flow: 'page', still: true }],

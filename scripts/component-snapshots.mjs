@@ -48,6 +48,7 @@ import {
   isMissedSpecimen,
   assessCaptureOccupancy,
   assessViewportSubject,
+  assessStillAttention,
   isBlankStill,
   isStarvedClip,
   formatCaptureExpression,
@@ -59,6 +60,7 @@ import {
   classifyCaptureFailure,
   reviewChapterFor,
   buildCaptureIndex,
+  STILL_ATTENTION_READ_EXPRESSION,
 } from './lib/visual-capture-plan.mjs';
 import { VIEWPORT_STILL_CHECKS, VIEWPORT_STILL_RECIPES } from './lib/viewport-still-recipes.mjs';
 import {
@@ -333,7 +335,7 @@ Options:
   --lenses a,b       density,enhancement,tangibility,labels (opt-in visibility/tangibility)
   --ecology          Include region-ecology seats
   --stills           Named viewport stills (device frame after scroll/prepare). Default flow is page.
-  --checks           Route/env/theme/attention pin stills (deep link, dark, reduced motion).
+  --checks           Route/env/theme/attention pin stills (deep link, probe, focus spend, dark, reduced motion).
   --walk             Viewport-tall slices to the bottom of core routes.
   --profile name     explore | stabilize | ambient | walk | checks | survey
   --budget N         Cap specimen navs (explore default 12). Drops lowest-priority combinations.
@@ -436,6 +438,7 @@ async function measureSelector(session, selector) {
         promise,
         new Promise((resolve) => setTimeout(resolve, ms)),
       ]);
+      ${STILL_ATTENTION_READ_EXPRESSION}
       const el = document.querySelector(${JSON.stringify(selector)});
       if (!el) return null;
       const html = document.documentElement;
@@ -557,6 +560,7 @@ async function measureSelector(session, selector) {
           operator: ds.spwOperator || el.getAttribute('data-spw-operator') || null,
         },
         componentExpression: ds.spwSemanticExpression || el.getAttribute('data-spw-semantic-expression') || null,
+        attention: readStillAttention(el),
         composition,
         pretext,
         measurementError,
@@ -587,6 +591,7 @@ function galleryHtml(manifest) {
         ${c.media ? `<br/><code>${c.media}</code>` : ''}
         ${c.captureExpression ? `<br/><code>${c.captureExpression}</code>` : ''}
         ${c.captureOccupancy?.occupancy ? `<br/><span class="meta">occupancy: ${c.captureOccupancy.occupancy}${c.captureOccupancy.reason ? ` · ${c.captureOccupancy.reason}` : ''}</span>` : ''}
+        ${c.attention?.verdict && c.attention.verdict !== 'skip' ? `<br/><span class="meta">attention: ${c.attention.verdict}${c.attention.reason ? ` · ${c.attention.reason}` : ''}${c.attention.opacity != null ? ` · opacity ${c.attention.opacity}` : ''}</span>` : ''}
         ${c.textPreview ? `<br/><span class="meta">${String(c.textPreview).replace(/</g, '&lt;').slice(0, 160)}</span>` : ''}
       </figcaption>
     </figure>`).join('\n');
@@ -841,7 +846,8 @@ async function applyCapturePrepare(session, job) {
   const attention = job?.attention || {};
   const close = Array.isArray(prepare?.close) ? prepare.close : (prepare?.close ? [prepare.close] : []);
   const open = Array.isArray(prepare?.open) ? prepare.open : (prepare?.open ? [prepare.open] : []);
-  const needsPrepare = close.length || open.length || attention.section || attention.probe;
+  const focus = prepare?.focus;
+  const needsPrepare = close.length || open.length || attention.section || attention.probe || Boolean(focus);
   await evaluateProbe(session, `(async () => {
     const html = document.documentElement;
     if (html) html.setAttribute('data-spw-capture-mode', 'screenshot');
@@ -852,6 +858,17 @@ async function applyCapturePrepare(session, job) {
     }
     for (const sel of ${JSON.stringify(open)}) {
       document.querySelectorAll(sel).forEach((el) => { if ('open' in el) el.open = true; });
+    }
+    const focusWant = ${JSON.stringify(focus === true ? '' : String(focus || ''))};
+    const focusHostSel = ${JSON.stringify(job.selector || '')};
+    if (${JSON.stringify(Boolean(focus))}) {
+      const host = focusHostSel ? document.querySelector(focusHostSel) : null;
+      let target = focusWant && host ? host.querySelector(focusWant) : host;
+      if (!target && focusWant) target = document.querySelector(focusWant);
+      if (target) {
+        if (target.tabIndex < 0) target.tabIndex = 0;
+        try { target.focus({ preventScroll: true }); } catch { target.focus(); }
+      }
     }
     const pins = {
       section: ${JSON.stringify(attention.section || '')},
@@ -871,6 +888,14 @@ async function applyCapturePrepare(session, job) {
       if (pins.probe) html.setAttribute('data-spw-resonance-probe', pins.probe);
     }
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    if (${JSON.stringify(Boolean(job.assertAttention === 'spend' || job.prepare?.focus))}) {
+      const deadline = Date.now() + 1800;
+      while (Date.now() < deadline) {
+        const groove = html.getAttribute('data-spw-reading-groove');
+        if (groove === 'on' || groove === 'off') break;
+        await new Promise((r) => requestAnimationFrame(r));
+      }
+    }
     return true;
   })()`, CAPTURE_MEASURE.evaluateTimeoutMs);
 }
@@ -926,6 +951,21 @@ async function captureJob(session, job, {
   const snapshot = { ...(box?.pretext || {}), ...(box || {}) };
   const captureOccupancy = assessCaptureOccupancy(job, snapshot);
   const subjectFit = assessViewportSubject(job, snapshot, viewport);
+  const stillAttention = assessStillAttention(job, snapshot);
+  if (!stillAttention.ok) {
+    throw new Error(
+      `attention-miss: ${stillAttention.reason}`
+      + ` opacity=${stillAttention.opacity}`
+      + ` restFloor=${stillAttention.restFloor}`
+      + ` rest=${stillAttention.restOpacity}`
+      + ` charge=${stillAttention.charge}`
+      + ` resonance=${stillAttention.resonance}`
+      + ` light=${stillAttention.light}`
+      + ` opRes=${stillAttention.operatorResonance}`
+      + ` probe=${snapshot.attention?.resonanceProbe || ''}`
+      + ` focus=${snapshot.attention?.focusWithin === true}`,
+    );
+  }
   return {
     buffer,
     clip,
@@ -939,6 +979,7 @@ async function captureJob(session, job, {
     pretext: box?.pretext || null,
     measurementError: box?.measurementError || null,
     captureOccupancy,
+    stillAttention,
     subjectFit,
     captureExpression: formatCaptureExpression(job, {
       ...snapshot,
@@ -1294,6 +1335,7 @@ async function main() {
               measurementError: shot.measurementError,
               composition: shot.composition,
               captureOccupancy: shot.captureOccupancy,
+              attention: shot.stillAttention || null,
               subjectFit: shot.subjectFit || null,
               still: Boolean(job.still),
               chapter: job.chapter || reviewChapterFor(job),
@@ -1455,6 +1497,7 @@ async function main() {
       pretext: c.pretext,
       measurementError: c.measurementError,
       occupancy: c.captureOccupancy,
+      attention: c.attention,
       wonder: c.wonder,
       prompt: c.prompt || c.wonder,
       prompts: c.prompts,
@@ -1488,6 +1531,8 @@ async function main() {
         widthClass: c.pretext?.widthClass || null,
         occupancy: c.captureOccupancy?.occupancy || null,
         occupancyReason: c.captureOccupancy?.reason || null,
+        attention: c.attention?.verdict || null,
+        attentionReason: c.attention?.reason || null,
         expression: c.captureExpression,
         hint: c.hint,
         prompt: c.prompt || c.wonder,

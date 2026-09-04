@@ -165,7 +165,7 @@ expression = attention[field]{gradient.uptake.scarcity}<spend>
     channel = `channel ::before spends --spw-attention-light; do not calc --charge on the pseudo`
     cards = `--card-secondary-opacity mixes occupancy-weight, reports, and --component-card-detail-opacity; hover/focus-within = 1`
   }[reg=facet]
-  neighbors = `wonder.css :has() writes --spw-resonance on matching operators (ring). Frame :has(:hover|:focus-within|lead) lifts --spw-reading-rest-opacity to near so rest copy in the attended frame is not left dim.`
+  neighbors = `wonder.css :has() writes --spw-resonance on matching operators (ring). Frame :is(:hover, :focus-within, :has(lead)) lifts rest opacity to near so rest copy in the attended frame is not left dim.`
   region_relative = `Seats (hook/hub/cluster/path/read) spend wash/seam via --spw-region-*-spent plus harmony/density/occupancy biases. Do not factorial route × region selectors for ink.`
   anti = `Do not redeclare --spw-attention-charge or --spw-attention-resonance on cards or ::before — var(--charge, 0) on a child is the registered initial 0 and wipes the frame report.`
   impl_ref = `public/css/tokens/core.css + typography/typesetting.css + components/cards.css + systems/electrostatic-roles.css + effects/wonder.css + systems/region-seats.css + tokens/dimensions.css`

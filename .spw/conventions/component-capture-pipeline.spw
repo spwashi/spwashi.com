@@ -71,6 +71,7 @@
   css = `Container queries own component packing. Runtime attributes report the chosen state and must not become a second layout engine.`
   occupancy = #[`empty`, `light`, `balanced`, `dense`, `visual-led`, `unknown`][reg=set]
   occupancy_rule = `Media contributes presence. Low character density alone must not classify an image-led card as vacant.`
+  attention = `Named still checks read inheriting --spw-attention-* reports. Pin requires region-mark=capture; probe requires operator resonance > 0; spend/focus fails if rest ink stays at 0.86 while charge, resonance, or :focus-within is live. Pixel goldens stay out of git.`
   expressions = `precipitate stills keep generated capture expression and authored componentExpression as separate fields.`
 }[reg=facet]
 

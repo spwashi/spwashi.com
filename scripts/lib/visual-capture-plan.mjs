@@ -107,7 +107,7 @@ const PERSONALITY_SEATS = new Set(['cluster']);
 
 export function reviewChapterFor(job = {}) {
   if (job.chapter && REVIEW_CHAPTERS.includes(job.chapter)) return job.chapter;
-  if (job.conditions || job.attention) return 'climate';
+  if (job.conditions || job.attention || job.assertAttention) return 'climate';
   if (job.walk || job.still || job.flow === 'page') return 'page';
   if (job.seat && PERSONALITY_SEATS.has(job.seat)) return 'personality';
   if (job.seat && REGION_SEATS.includes(job.seat)) return 'region';
@@ -175,7 +175,7 @@ export function prioritizeCaptureJobs(jobs = [], {
 
 export function classifyCaptureFailure(error, job = {}) {
   const message = String(error?.message || error || '');
-  if (/selector-miss|not found or empty/i.test(message)) return 'miss';
+  if (/selector-miss|not found or empty|attention-miss/i.test(message)) return 'miss';
   if (/navigated or closed|session closed|websocket|target closed/i.test(message)) return 'gone';
   if (/blank/i.test(message)) return 'blank';
   if (/collision|identical to/i.test(message)) return 'collision';
@@ -481,6 +481,131 @@ export function assessCaptureOccupancy(job = {}, snapshot = {}) {
     interactiveCount,
   };
 }
+
+/** Rest ink floor from tokens/core.css --spw-reading-rest-opacity. */
+export const STILL_REST_OPACITY = 0.86;
+export const STILL_REST_LIGHT = 0.48;
+
+export function parseCssNumber(value, fallback = 0) {
+  const n = Number.parseFloat(String(value ?? '').trim());
+  return Number.isFinite(n) ? n : fallback;
+}
+
+export function attentionAssertKind(job = {}) {
+  if (job.assertAttention) return job.assertAttention;
+  if (job.prepare?.focus) return 'spend';
+  if (job.attention?.probe) return 'probe';
+  if (job.attention?.section) return 'pin';
+  return null;
+}
+
+/**
+ * Judge a still's attention receipt. Pixel goldens stay out of git; this is
+ * the test stills can fail. Skip when the job did not ask.
+ */
+export function assessStillAttention(job = {}, snapshot = {}) {
+  const expect = attentionAssertKind(job);
+  if (!expect) return { ok: true, verdict: 'skip', reason: 'no-attention-assert' };
+
+  const attention = snapshot.attention;
+  if (!attention || typeof attention !== 'object') {
+    return { ok: false, verdict: 'miss', reason: 'attention-unmeasured' };
+  }
+
+  const charge = parseCssNumber(attention.attentionCharge ?? attention.charge, 0);
+  const resonance = parseCssNumber(attention.attentionResonance, 0);
+  const opacity = parseCssNumber(attention.attentionOpacity, STILL_REST_OPACITY);
+  const restRaw = attention.restOpacity;
+  const hasRestBeat = restRaw !== '' && restRaw != null;
+  const restOpacity = hasRestBeat ? parseCssNumber(restRaw, STILL_REST_OPACITY) : null;
+  const light = parseCssNumber(attention.attentionLight, STILL_REST_LIGHT);
+  const occupancy = parseCssNumber(attention.occupancyWeight, 0.5);
+  const restFloor = parseCssNumber(attention.restFloor, STILL_REST_OPACITY);
+  const operatorResonance = parseCssNumber(attention.operatorResonance, 0);
+  const probe = String(attention.resonanceProbe || job.attention?.probe || '').trim();
+  const regionMark = String(attention.regionMark || '').trim();
+  const receipt = { charge, resonance, opacity, restOpacity, restFloor, light, occupancy, operatorResonance };
+
+  if ((expect === 'pin' || job.attention?.section) && job.attention?.section && regionMark !== 'capture') {
+    return { ok: false, verdict: 'miss', reason: 'pin-not-marked', ...receipt };
+  }
+
+  if (expect === 'probe' || job.attention?.probe) {
+    if (!probe) return { ok: false, verdict: 'miss', reason: 'probe-not-pinned', ...receipt };
+    if (operatorResonance <= 0 && resonance <= 0) {
+      return { ok: false, verdict: 'miss', reason: 'resonance-report-rest', ...receipt };
+    }
+  }
+
+  if (expect === 'spend' || expect === 'focus') {
+    if (job.prepare?.focus && attention.focusWithin !== true) {
+      return { ok: false, verdict: 'miss', reason: 'focus-not-held', ...receipt };
+    }
+    if (
+      attention.focusWithin === true
+      && attention.restFloor !== ''
+      && attention.restFloor != null
+      && restFloor <= STILL_REST_OPACITY + 0.005
+    ) {
+      return { ok: false, verdict: 'failed', reason: 'rest-floor-ignores-focus', ...receipt };
+    }
+    const attended = charge > 0.15
+      || resonance > 0.15
+      || attention.focusWithin === true
+      || attention.restLifted === true;
+    const inkLifted = opacity > STILL_REST_OPACITY + 0.005
+      || restFloor > STILL_REST_OPACITY + 0.005
+      || (restOpacity != null && restOpacity > STILL_REST_OPACITY + 0.005);
+    if (attended && !inkLifted) {
+      return { ok: false, verdict: 'failed', reason: 'ink-ignores-attention', ...receipt };
+    }
+    if (charge > 0.15 && light <= STILL_REST_LIGHT + 0.005) {
+      return { ok: false, verdict: 'failed', reason: 'light-ignores-attention', ...receipt };
+    }
+  }
+
+  return { ok: true, verdict: 'pass', reason: null, ...receipt };
+}
+
+/** Injected into the capture evaluate. Reads inheriting reports, not --charge on descendants. */
+export const STILL_ATTENTION_READ_EXPRESSION = `function readStillAttention(el) {
+  const token = (node, name) => node ? getComputedStyle(node).getPropertyValue(name).trim() : '';
+  const frame = el.closest('.spw-frame, [data-spw-kind="frame"]') || el;
+  const rest = el.querySelector('[data-spw-reading-beat="rest"]');
+  const lead = el.querySelector('[data-spw-reading-beat="lead"]');
+  const html = document.documentElement;
+  const probeName = html.getAttribute('data-spw-resonance-probe') || '';
+  const operators = [...el.querySelectorAll('[data-spw-operator]')];
+  const probed = probeName
+    ? operators.filter((node) => node.getAttribute('data-spw-operator') === probeName
+      || (probeName === 'frame' && node.getAttribute('data-spw-operator') === 'address'))
+    : operators;
+  const sample = probed[0] || operators[0] || null;
+  const maxResonance = (probed.length ? probed : operators).reduce((max, node) => {
+    const a = Number.parseFloat(token(node, '--spw-resonance')) || 0;
+    const b = Number.parseFloat(token(node, '--spw-attention-resonance')) || 0;
+    return Math.max(max, a, b);
+  }, 0);
+  const focused = el.contains(document.activeElement) || el === document.activeElement;
+  const restOpacity = rest ? getComputedStyle(rest).opacity : '';
+  return {
+    charge: token(frame, '--charge'),
+    attentionCharge: token(frame, '--spw-attention-charge'),
+    attentionResonance: token(frame, '--spw-attention-resonance'),
+    attentionOpacity: token(frame, '--spw-attention-opacity'),
+    attentionLight: token(frame, '--spw-attention-light'),
+    occupancyWeight: token(frame, '--spw-pack-occupancy-weight'),
+    restFloor: token(frame, '--spw-reading-rest-opacity'),
+    restOpacity,
+    leadOpacity: lead ? getComputedStyle(lead).opacity : '',
+    operatorResonance: maxResonance ? String(maxResonance) : (sample ? token(sample, '--spw-resonance') : ''),
+    resonanceProbe: html.getAttribute('data-spw-resonance-probe') || '',
+    readingGroove: html.getAttribute('data-spw-reading-groove') || '',
+    regionMark: el.getAttribute('data-spw-region-mark') || frame.getAttribute('data-spw-region-mark') || '',
+    focusWithin: focused,
+    restLifted: rest ? Number.parseFloat(restOpacity) > 0.90 : false,
+  };
+}`;
 
 function expressionToken(value = '', fallback = 'unknown') {
   const token = String(value || '')
@@ -879,6 +1004,7 @@ export function conditionClusterKey(conditions = {}, attention = {}) {
   if (hc) return 'high-contrast';
   if (dark) return 'dark-mode';
   if (conditions?.reducedMotion === 'reduce' || conditions?.reducedMotion === true) return 'reduced-motion';
+  if (attention?.probe && !attention?.section) return 'operator-probe';
   if (attention?.section || attention?.probe) return 'section-pin';
   return '';
 }
@@ -1208,8 +1334,9 @@ function stillJobFromRecipe(recipe, viewport, format) {
     prepare: recipe.prepare || null,
     conditions: recipe.conditions || null,
     attention: recipe.attention || null,
+    assertAttention: recipe.assertAttention || null,
     publish: ['layout-qa', 'design-review', 'agent-brief'],
-    chapter: recipe.conditions || recipe.attention ? 'climate' : 'page',
+    chapter: recipe.conditions || recipe.attention || recipe.assertAttention ? 'climate' : 'page',
   };
 }
 
