@@ -100,6 +100,28 @@ anything in the target. All 2480 citations currently resolve.
   sequence to `;`; no fix needed in `readShape` for the ordinal case, since
   its existing fallback to the regex-captured body content was already
   correctly scoped.
+- **`spw graph`/`spw census`'s `brokenTargets` over-reports — `spw:integrity`
+  is the authoritative resolver, not this list.** `npm run spw:graph`
+  (workbench `f2e5b61b9e3d`) named 43 "broken" targets against this corpus;
+  spot-checked a representative sample against source and every one is a
+  live reference, not a rename this consumer's tooling failed to follow.
+  Three distinct causes, none of them a site content problem: (1) absolute
+  `~"https://..."` citations (`sidecar-references.spw`, `dregg-lineage.spw`)
+  get prefixed with their containing directory as if they were relative
+  paths, producing nonsense like `.spw/conventions/https:/github.com/…`; (2)
+  `^"quoted_name"{…}` frame anchors (the majority of the list —
+  `site-semantics.spw#metaphysics_model`, `operator-semantics.spw#positional_grammar`,
+  `semantic-hierarchy.spw#composition_ladder`, and similar) resolve fine
+  under `parse()` but this detector's anchor extractor does not recognize
+  the quoted form, only bare `#>identifier` anchors; (3) CSS/HTML fragments
+  (`gesture-anatomy.css#gesture-state-anatomy`, `about/index.html#about-production-note-title`)
+  name a real `id="…"` attribute or `/* Section comment */` rather than a
+  `.spw` anchor token, which this detector does not check but
+  `spw:integrity`'s resolver does (or intentionally skips for non-`.spw`
+  targets — either way, correctly). Use `npm run spw:integrity` to decide
+  whether a citation is actually broken; treat `spw graph`'s `brokenTargets`
+  as a hub/degree signal only until its anchor extractor learns quoted
+  frames and absolute URLs.
 
 This site is the use case meant to discover gaps like these; each is recorded
 here with the measurement that found it rather than worked around in silence.

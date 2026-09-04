@@ -138,7 +138,7 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
     `operator-interactions.js — reads page anatomy/topical payload plus nearest region profile`
     `operators.css — spends phase, tempo, and payload scope as local outline/filter/translate motion`
   ][reg=set]
-  api: `window.__SPW_SIGIL_TRANSITIONS__.snapshot()` 
+  api: `window.__SPW_SIGIL_TRANSITIONS__.snapshot()`
   event: `spw:sigil-transition`
   bus_event: `sigil:transition`
   expression: `event detail.expression uses the experimental microinteraction expression grammar; it is narration, not layout authority or persisted spell state`

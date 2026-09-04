@@ -38,7 +38,7 @@
     examples: ["# annotation text", "? boundary test"]
     note: "These are the INLINE_PAYLOAD_OPERATORS."
   }[reg=facet]
-  
+
   string_subject: .{
     rule: "The ^ and ? operators can accept a quoted string subject."
     operators: ["^", "?"]
