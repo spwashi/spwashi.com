@@ -43,9 +43,9 @@ intent: .{
 }[reg=facet]
 
 
-@plans_root: ~"../../../.agents/plans/index.spw"
-@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
-@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @cinematic_handles: ~"./cinematic-handles.spw"
@@ -75,9 +75,9 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `The desired end state is a motion system where every transition has a name derived from the site's own vocabulary, every reveal has a quality that matches its semantic role, and every motion has a reduced-motion safe contract. Instead of anonymous milliseconds and bezier curves, transitions carry names like "boon-settle," "pivot-arc," or "threshold-cross" — names that connect motion to meaning and make timing decisions auditable, not incidental. The wider aim includes layers and lighting as an attention model: depth should feel like depth (not just z-index), and surfaces should carry ambient lighting states that shift as attention moves. Together these give the site a cinematic quality — the sense that spatial and temporal transitions are authored rather than defaulted. The taste note is earned motion + semantic depth: every animation should be the right animation for that semantic state, authored from the site's own grammar rather than borrowed from a design trend.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../.agents/plans/cinematic-handles/cinematic-handles.spw"
+ impl_ref = ~"./cinematic-handles.spw"
  probe_ref = `Hypotheses: named timing tokens will make motion decisions auditable and consistent; token-level reduced-motion overrides will produce more complete safety than per-rule approaches; layer depth vocabulary will make z-stacking decisions semantically legible.`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../.agents/plans/cinematic-handles/cinematic-handles.spw unchanged or untested.`
+ falsification = `A patch cannot satisfy the public goal while leaving the retained cinematic-handles evidence unchanged or untested.`
  status = "superseded"
 }[reg=facet]
 

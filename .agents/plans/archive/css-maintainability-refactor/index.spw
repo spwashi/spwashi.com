@@ -46,21 +46,21 @@ intent: .{
 }[reg=facet]
 
 
-@plans_root: ~"../../../.agents/plans/index.spw"
-@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
-@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
-@plan_css_state_legibility: ~"../css-state-legibility/index.spw"
-@plan_component_box_model_responsive_audit: ~"../component-box-model-responsive-audit/index.spw"
-@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
-@about_index_html: ~"../../../about/index.html"
-@about_plans_index_html: ~"../../../about/plans/index.html"
-@topics_index_html: ~"../../../topics/index.html"
-@topics_software_index_html: ~"../../../topics/software/index.html"
-@topics_software_parsers_index_html: ~"../../../topics/software/parsers/index.html"
-@topics_math_index_html: ~"../../../topics/math/index.html"
-@topics_math_category_theory_index_html: ~"../../../topics/math/category-theory/index.html"
+@plan_css_state_legibility: ~"../../css-state-legibility/index.spw"
+@plan_component_box_model_responsive_audit: ~"../../component-box-model-responsive-audit/index.spw"
+@play_rpg_wednesday_index_html: ~"../../../../play/rpg-wednesday/index.html"
+@about_index_html: ~"../../../../about/index.html"
+@about_plans_index_html: ~"../../../../about/plans/index.html"
+@topics_index_html: ~"../../../../topics/index.html"
+@topics_software_index_html: ~"../../../../topics/software/index.html"
+@topics_software_parsers_index_html: ~"../../../../topics/software/parsers/index.html"
+@topics_math_index_html: ~"../../../../topics/math/index.html"
+@topics_math_category_theory_index_html: ~"../../../../topics/math/category-theory/index.html"
 
 dispatch: .{
  plan = @plan
@@ -108,9 +108,9 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `Reduce CSS brittleness in the highest-leverage shared contracts so route work can compose from explicit structure instead of relying on inferred DOM shape or over-broad semantic selectors.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../play/rpg-wednesday/index.html"
+ impl_ref = ~"../../../../play/rpg-wednesday/index.html"
  probe_ref = `git diff --check`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../play/rpg-wednesday/index.html unchanged or untested.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../../play/rpg-wednesday/index.html unchanged or untested.`
  status = "superseded"
 }[reg=facet]
 

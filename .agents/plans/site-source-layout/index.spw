@@ -52,7 +52,7 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @plan_semantic_html_normalization: ~"../semantic-html-normalization/index.spw"
-@plan_css_maintainability_refactor: ~"../css-maintainability-refactor/index.spw"
+@plan_css_maintainability_refactor: ~"../archive/css-maintainability-refactor/index.spw"
 @plan_runtime_module_fluency: ~"../runtime-module-fluency/index.spw"
 @plan_spw_surface_normalization: ~"../spw-surface-normalization/index.spw"
 @scripts: ~"../../../scripts/"
