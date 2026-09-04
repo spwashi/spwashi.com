@@ -39,6 +39,7 @@
 @plan_ecology_semantics: ~"./plan-ecology-semantics-2026-07.spw"
 @html_component_audit: ~"./html-component-audit-2026-07.spw"
 @module_impact_audit: ~"./module-impact-audit-2026-07.spw"
+@module_ecology_kinship: ~"./module-ecology-kinship-2026-09.spw"
 @component_anatomy_theme_module: ~"./component-anatomy-theme-module-2026-07.spw"
 @module_granularity_lifecycle: ~"./module-granularity-lifecycle-2026-07/index.spw"
 @layout_qa_measurement: ~"./layout-qa-measurement-2026-07/index.spw"
@@ -66,6 +67,7 @@ fixity = "tending"
     plan_ecology_semantics = ~"./plan-ecology-semantics-2026-07.spw"
     html_component_audit = ~"./html-component-audit-2026-07.spw"
     module_impact_audit = ~"./module-impact-audit-2026-07.spw"
+    module_ecology_kinship = ~"./module-ecology-kinship-2026-09.spw"
     component_anatomy_theme_module = ~"./component-anatomy-theme-module-2026-07.spw"
     component_anatomy_device_packing = ~"./component-anatomy-device-packing-2026-07.spw"
     component_philosophy_harmony = ~"./component-philosophy-harmony-2026-07.spw"
@@ -117,7 +119,14 @@ fixity = "tending"
   session_2026_07_component_module_impact: .{
     reading_order = `html_component_audit → module_impact_audit → component_anatomy_theme_module → timing/effect token alignment`
     keys = #[`html_component_audit`, `module_impact_audit`, `component_anatomy_theme_module`, `page_component_census`, `javascript_module_census`][reg=set]
-    note = `2026-07-12: slot anatomy sparse; effectScope complete; pulse durations tokenized; anatomy↔theme↔semantics wired`
+    note = `2026-07-12: slot anatomy sparse; effectScope complete; pulse durations tokenized; anatomy↔theme↔semantics wired. 2026-09 successor: @module_ecology_kinship (113 defs, kinship/standalone, not a field fill).`
+  }[reg=facet]
+
+  session_2026_09_module_ecology: .{
+    reading_order = `module_impact_audit → module_ecology_kinship → module_load_contract`
+    keys = #[`module_ecology_kinship`, `module_impact_audit`, `javascript_module_census`, `module_granularity_lifecycle`][reg=set]
+    hub = @module_ecology_kinship
+    note = `2026-09-04: 113 MODULE_DEFS clustered by impact/kinship/standalone. Do not fill all electrostatics. July IMMEDIATE 43 is now 6.`
   }[reg=facet]
 
   session_2026_07_module_lifecycle_granularity: .{

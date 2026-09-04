@@ -16,7 +16,7 @@ intent: .{
  owner = `module-export-uniformity`
  kind = `plan`
  bucket = `semantic_rails`
- artifact_shape = `PLAN.md | index.spw`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
@@ -50,6 +50,8 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@kinship_audit: ~"../../../.spw/audits/module-ecology-kinship-2026-09.spw"
 @plan_runtime_module_decomposition: ~"../runtime-module-decomposition/index.spw"
 @plan_javascript_standalone_utility: ~"../javascript-standalone-utility/index.spw"
 @module_export_standalone_2026_07: ~"../../../.spw/audits/module-export-standalone-2026-07.spw"
@@ -60,6 +62,8 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+ wip = @wip
+ kinship_audit = @kinship_audit
  plan_runtime_module_decomposition = @plan_runtime_module_decomposition
  plan_javascript_standalone_utility = @plan_javascript_standalone_utility
  module_export_standalone_2026_07 = @module_export_standalone_2026_07

@@ -16,7 +16,7 @@ intent: .{
  owner = `runtime-module-decomposition`
  kind = `plan`
  bucket = `active_backlog`
- artifact_shape = `PLAN.md | index.spw`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
@@ -50,6 +50,8 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@kinship_audit: ~"../../../.spw/audits/module-ecology-kinship-2026-09.spw"
 @dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
 @bus: ~"../../../public/js/kernel/bus.js"
 @public_js_interface_state_inspector_js: ~"../../../public/js/interface/state-inspector.js"
@@ -58,6 +60,8 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+ wip = @wip
+ kinship_audit = @kinship_audit
  dom_contracts = @dom_contracts
  bus = @bus
  public_js_interface_state_inspector_js = @public_js_interface_state_inspector_js

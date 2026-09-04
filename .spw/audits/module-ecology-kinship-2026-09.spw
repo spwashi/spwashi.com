@@ -1,0 +1,334 @@
+# Module Ecology Kinship Audit (2026-09-04)
+#
+# operation: audit
+# fixity: tending
+# method: read all 113 MODULE_DEFS; index by layer/when/cost/describes;
+#         cross-check electrostatics + capability completeness + public HTML hosts
+
+#>module_ecology_kinship_2026_09
+#:audit #!runtime #!modules #!electrostatics #!kinship #!standalone
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@module_load_contract: ~"../conventions/module-load-contract.spw"
+@electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
+@module_impact_audit: ~"./module-impact-audit-2026-07.spw"
+@javascript_module_census: ~"./javascript-module-census-2026-07.spw"
+@module_granularity_lifecycle: ~"./module-granularity-lifecycle-2026-07/index.spw"
+@export_uniformity_wip: ~"../../.agents/plans/module-export-uniformity/wip.spw"
+@decomposition_wip: ~"../../.agents/plans/runtime-module-decomposition/wip.spw"
+@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@module_catalog_constants: ~"../../public/js/runtime/module-catalog-constants.js"
+@module_catalog_normalize: ~"../../public/js/runtime/module-catalog-normalize.js"
+
+operation = "audit"
+fixity = "tending"
+
+audit_run: .{
+  at = `2026-09-04`
+  catalog = `113 MODULE_DEFS (core 4 / feature 20 / region 1 / enhancement 88)`
+  when = `immediate 6 · visible 57 · idle 40 · interaction 4 · invited 3 · region 1 · settled 2`
+  method = `listModuleCatalogIndex + family-file read + rg of public hosts`
+  posture = `kinship reading, not a 113-field fill. Impact is dimensional. Relationship is organelle. Standalone is whether a visitor gets an affordance if the module mounts alone.`
+  supersedes = `July impact audit counted 95 defs and IMMEDIATE 43. Schedule hygiene landed; remaining debt is kinship, unspent catalog fields, and overlapping html writers.`
+}[reg=facet]
+
+^"thesis"{
+  claim: "The catalog is a living-electricity ecology, not 113 independent widgets. A module earns its keep by naming an affordance and occupying one organelle role. Filling every catalog field is not the reading; spending the field on the cluster that already conducts is."
+  expected: "Boot climate is four core mounts. Route widgets stay selector-gated. Electrode modules share one phase/charge story. Atmosphere idles on html only after first paint. Lab modules stay invited or debugOnly."
+  risk: "html/body selectors that project flourish without an affordance look like features. Duplicate writers of phase, charge, kind, and gravity fight. Catalog electrostatics that no loader reads become stickers."
+}
+
+^"grades"{
+  definition: "Standalone value is not Node-portability (that is the July export audit). Here it is visitor affordance if this module is the only enhancement awake."
+  A_cold = "Authored markup + this module = a new thing the visitor can do or see."
+  B_organelle = "Needs a sibling module or a shared electrode (phase, charge, brace, cauldron) to mean anything."
+  C_atmosphere = "Writes root pulse/loader state. No visitor affordance alone. Legitimate only as idle paint."
+  D_unspent = "No public authored host, or a writer nobody reads, or a duplicate of a sibling's job."
+}[reg=facet]
+
+^"field_hygiene"{
+  electrostatics_authored = 11
+  electrostatics_valid_enum = 10
+  spark_invalid = `spw-hero-kinetic-stage discharge=spark — DISCHARGE_KIND is release|transfer|project|ground|resonate|settle`
+  capability_complete = 10
+  capability_incomplete = 103
+  visual_authored = 6
+  html_or_body_selectors = 16
+  no_selector_enhancements = #[`cauldron`, `cauldron-fluency`, `observation-beats`, `pwa-update-handler`][reg=set]
+  complete_ids = #[
+    `charge-field`, `texture-slice`, `spatial-gravity`, `attention-section-handle`,
+    `variant-selection`, `navigation-locomotion`, `brace-actions`,
+    `toolmaker-submissions`, `interactive-expression-lab`, `spw-hero-kinetic-stage`
+  ][reg=set]
+  visual_ids = #[
+    `frame-navigator inspect`, `texture-slice express`, `page-anatomy inspect`,
+    `contextual-ui annotate`, `console inspect`, `navigation-spells annotate`
+  ][reg=set]
+  note = `complete = subfeatures + triggers + affordances + electrostatics. attention-resonance-probe has electrostatics and affordances but no subfeatures, so it is not complete. Do not fill the other 103 to make the count pretty.`
+  describes_subject_leak = `media-cauldron lists subject attention; cauldron index only lists cauldron + query-link-composer (fluency, media-cauldron, ingredient-lab, expression-resonance missing).`
+  file_vs_layer = `module-catalog-feature.js hosts seven enhancement-layer defs: narrative-instrumentation, brace-physics, region-menu, pronunciation-hints, sigil-anatomy, effect-ledger, cauldron. Family file is not layer.`
+}[reg=facet]
+
+^"impact_dimensions"{
+  boot = "First-paint climate. Must stay four core mounts. Early spend is the job, not a bug."
+  room = "Region packing, anatomy, gravity. Authored seats; JS narrates."
+  route = "One-route widgets. Selector- or feature-gated. High standalone, low sitewide blast."
+  electrode = "Charge, phase, attention, gesture, brace. Shared field. Low standalone, high kinship."
+  gather = "Cauldron, collection, spells, rewards. Residue. Needs intake elsewhere."
+  inspect = "Console, labs, probes. Editor/visitor-opt-in. Must not restyle first paint."
+  atmosphere = "Idle html paint: ecology, hydration, pulse, module-effects. C unless a named affordance appears."
+}[reg=facet]
+
+^"boot_climate"{
+  count = 4
+  impact = "boot"
+  ids = #[`site-settings`, `shell-disclosure`, `interactive-medium`, `site-core-minimal`][reg=set]
+  relationship = "Four-stage boot: settings climate → shell disclosure → device/play medium → frame lens/hash. Each writes html structural state the rest of the catalog reads. Not interchangeable."
+  standalone = "B as a set. A visitor with only site-settings gets color/density; without shell-disclosure the header has no attention-posture; without site-core-minimal mode-switch and hash are dead. Do not idle these."
+  spend = "project/early — legitimate premature commitment."
+}[reg=facet]
+
+^"region_packing"{
+  count = 1
+  impact = "room"
+  ids = #[`region-enhancer`][reg=set]
+  relationship = "The only REGION-when mount. Writes harmony/density/motion-family/genome onto seats matching REGION_ENHANCER_SELECTOR (shell chrome excluded). spatial-gravity and layout-assumptions settle after it. page-region-rail reads the seats it tagged."
+  standalone = "B. Needs authored .site-frame / [data-spw-kind]. Without it, packing receipts have no writer."
+}[reg=facet]
+
+^"route_blog"{
+  count = 3
+  impact = "route"
+  ids = #[`blog-interpreter`, `blog-specimens`, `attn-register`][reg=set]
+  relationship = "One blog host. Interpreter owns input/lens; specimens own demos; attn-register charges terms across both selectors."
+  standalone = "A per widget when markup exists (blog/index.html authors data-blog-interpreter). attn-register is B on the other two."
+}[reg=facet]
+
+^"route_offer"{
+  count = 5
+  impact = "route"
+  ids = #[`seed-cards`, `payment-cards`, `services-configurators`, `payment-settings`, `settings-page`][reg=set]
+  relationship = "Services/cards/settings forms. Residue/follow except settings-page keep. settings-page is the public form for the boot climate site-settings already applied."
+  standalone = "A on their routes. settings-page is B with site-settings (form without engine is a dead control)."
+}[reg=facet]
+
+^"route_play"{
+  count = 2
+  impact = "route"
+  ids = #[`rpg-wednesday`, `boonhonk-mixer`][reg=set]
+  relationship = "Play-surface kits. rpg-wednesday feature-gates rpg-gameplay; mixer is a local widget. Neither should leak onto editorial hubs."
+  standalone = "A on authored hosts."
+}[reg=facet]
+
+^"route_home_promo_media"{
+  count = 4
+  impact = "route"
+  ids = #[`home-section-index`, `promo-wonder-cycle`, `media-publishing`, `media-cauldron`][reg=set]
+  relationship = "Home/promo/media publishing cluster. media-cauldron describes attention + artifact — kinship leak into the attention family. Host lives in _partials/media-cauldron.html, not a public index."
+  standalone = "promo-wonder-cycle and media-publishing A on publishing routes. media-cauldron D until the partial is composed onto a public route. home-section-index D — selector [data-home-section-index] still has zero HTML (July orphan, still true)."
+}[reg=facet]
+
+^"route_notes_pivots"{
+  count = 2
+  impact = "route"
+  ids = #[`local-notes`, `brace-pivots`][reg=set]
+  relationship = "local-notes is residue/keep browser memory. brace-pivots cycles settings on [data-spw-pivot] and writes root-state — a tiny transformer sitting next to site-settings, not next to brace-actions."
+  standalone = "A if authored. brace-pivots is B with site-settings."
+}[reg=facet]
+
+^"route_pretext_lab"{
+  count = 4
+  impact = "inspect"
+  ids = #[`pretext-lab`, `pretext-physics`, `typography-measurement-preview`, `frame-metrics`][reg=set]
+  relationship = "Copy-flow lab. pretext-lab sandbox; pretext-physics live-host only (PRETEXT_LIVE_SELECTOR); typography-measurement-preview invited; frame-metrics invited bus consumer."
+  standalone = "A in the lab. Do not broaden pretext-physics to sitewide copy — the catalog already forbids it."
+}[reg=facet]
+
+^"electrode_charge"{
+  count = 7
+  impact = "electrode"
+  ids = #[
+    `charge-field`, `electromagnetic-containers`, `interaction-progression`,
+    `pulse-beat-tuner`, `module-effects`, `canvas-accents`, `texture-slice`
+  ][reg=set]
+  relationship = "This is the living-electricity spine from the recent trajectory. interaction-progression writes html phase (idle|approach|prime|charge|inspect|discover|settle) at visible/early. charge-field writes discharge/consequence on interaction. canvas-accents and texture-slice are capacitors on authored surfaces. electromagnetic-containers steps data-charge on [data-container-type]. module-effects and pulse-beat-tuner are html paint metronomes other modules pulse into."
+  overlap = "charge-field (interaction, terminal discharge) and interaction-progression (visible, room electrode) are complementary if phase is the room and charge is the spark. They fight if both treat html flourish as the same sticker. module-effects is a pulse board: no value opened cold."
+  standalone = "canvas-accents A (data-spw-accent is authored on home, research, curriculum, newyear). texture-slice A on authored slices. charge-field B (needs operators/gestures). interaction-progression B (the room electrode; CSS spends it). pulse-beat-tuner and module-effects C. electromagnetic-containers D — zero public HTML authors; experiment CSS in design/experiments/load-symphony only."
+  electrostatics = "charge-field channel/transfer (complete). texture-slice capacitor/settle (complete). Missing on this cluster: interaction-progression, electromagnetic-containers, module-effects, canvas-accents, pulse-beat-tuner."
+}[reg=facet]
+
+^"attention"{
+  count = 6
+  impact = "electrode"
+  ids = #[
+    `attention-section-handle`, `attention-resonance-probe`, `attention-reading-groove`,
+    `attention-pinch-scale`, `attention-scroll-cadence`, `page-region-rail`
+  ][reg=set]
+  relationship = "module-load-contract act 2. Handle is locomotion + cauldron nudge (idle residue, complete inductor). Probe is visible :has() echo (inductor, incomplete — no subfeatures). Groove is idle wide listen. Pinch is interaction. Cadence projects section-state into ornament. page-region-rail is the desktop kin rail that reads what the handle writes."
+  standalone = "Handle A on long sectioned routes (needs the .spw-section-handle element). Probe B with operators. Groove/pinch/cadence B. Rail B with region-enhancer."
+  electrostatics = "handle + probe inductor/resonate. Groove, pinch, cadence, rail unspent — leave them until they grow a distinct discharge."
+}[reg=facet]
+
+^"cauldron_gather"{
+  count = 9
+  impact = "gather"
+  ids = #[
+    `cauldron`, `cauldron-fluency`, `query-link-composer`, `expression-resonance`,
+    `guide-badge`, `ingredient-lab`, `interactive-expression-lab`,
+    `spw-hero-kinetic-stage`, `effect-ledger`
+  ][reg=set]
+  relationship = "Intake/digestion/absorption/return. cauldron is the garden (feature console, no selector). cauldron-fluency is idle coaching with no selector. query-link-composer is the query intake. expression-resonance and interactive-expression-lab edit/compare expressions into ingredients. guide-badge collects chips. ingredient-lab is the bench. hero-kinetic-stage drops payload. effect-ledger is the precipitated residue list on html."
+  standalone = "cauldron B (needs gather sources). fluency C without cauldron. query-link-composer A on authored composer. hero-kinetic-stage and interactive-expression-lab A on lab hosts, transformer electrostatics already attached. effect-ledger C atmosphere with residue. guide-badge B with operators — do not confuse with guide."
+  describes_gap = "byDescribesSubject.cauldron = cauldron, query-link-composer. Fluency, media-cauldron, ingredient-lab, expression-resonance, hero-kinetic-stage do not share the subject token."
+}[reg=facet]
+
+^"spell_motion"{
+  count = 7
+  impact = "gather"
+  ids = #[
+    `spells`, `haptics`, `experiential`, `navigation-spells`,
+    `navigation-locomotion`, `settings-momentum`, `frame-navigator`
+  ][reg=set]
+  relationship = "module-load-contract act 4. experiential listens tap/hold/swipe and talks to cauldron. haptics grounds collection. spells checkpoint/replay. navigation-spells annotate header links. navigation-locomotion is the channel for section-travel (complete). settings-momentum replays climate as html paint. frame-navigator is the inspect surface-map."
+  standalone = "spells A if a spell board exists. experiential B (gesture story). navigation-locomotion B with section handle. settings-momentum C. frame-navigator A as inspect chrome."
+}[reg=facet]
+
+^"gesture_brace_ops"{
+  count = 8
+  impact = "electrode"
+  ids = #[
+    `gesture-anatomy`, `brace-physics`, `brace-actions`, `region-menu`,
+    `operators`, `sigil-anatomy`, `pronunciation-hints`, `spw-key-events`
+  ][reg=set]
+  relationship = "Terminals and walls. operators + sigil-anatomy both IMMEDIATE on .frame-sigil — closest duplicate in the catalog. pronunciation-hints idles on the same chips. brace-physics and brace-actions split inspect vs entry/projection on [data-spw-form=brace]. gesture-anatomy resolves authored contracts. region-menu is the inspect popover on delimiters. spw-key-events is visible/early html key potentiation."
+  standalone = "operators A (chips are everywhere). brace-actions A on authored braces. gesture-anatomy B with contracts. sigil-anatomy B with operators — hydrate fused text, do not restyle chips twice. pronunciation-hints C/B learning layer. spw-key-events B (scene/selection thread)."
+  fight = "operators vs sigil-anatomy: same selector, both immediate. Keep operators as grammar projection; keep sigil-anatomy as split/hydrate. Do not merge; do not let both write the same flourish."
+}[reg=facet]
+
+^"image_media_svg"{
+  count = 9
+  impact = "route"
+  ids = #[
+    `image-metaphysics`, `image-utilization`, `image-interaction`,
+    `image-discovery-rewards`, `effect-interpretation`, `svg-filters`,
+    `svg-tunability`, `logo-runtime`, `reactive-spine`
+  ][reg=set]
+  relationship = "Image seats and SVG hosts. metaphysics manages state/memory. utilization lazy-priority. interaction + effect-interpretation share .topic-photo-card / .image-study — gesture vs legend. discovery-rewards invited. svg-filters/tunability on figures. logo-runtime shell identity. reactive-spine is a one-diagram instrument."
+  standalone = "A on authored image-study / svg hosts. interaction vs effect-interpretation are B siblings (do not merge). logo-runtime D if .spw-logo stays unauthored on public routes."
+}[reg=facet]
+
+^"layout_settle"{
+  count = 10
+  impact = "room"
+  ids = #[
+    `spatial-gravity`, `layout-assumptions`, `layout-shift-audit`,
+    `composition-box-model`, `fit-report`, `positioning-orchestration`,
+    `component-semantics`, `semantic-chrome`, `page-anatomy`, `variant-selection`
+  ][reg=set]
+  relationship = "module-load-contract act 5 plus packing grammar. spatial-gravity and layout-assumptions both authored/fight @settled — two settlers. positioning-orchestration visible paint on the same gravity/box-model hosts. component-semantics, semantic-chrome, and guide (chrome_utils) all select [data-spw-kind]. page-anatomy inspects vocabulary/landmarks. variant-selection is the transformer for mode/lens (complete)."
+  standalone = "page-anatomy A (hubs now author data-spw-anatomy). variant-selection A on frames with mode-switch. composition-box-model A on authored box-model. spatial-gravity A on data-spw-gravity. layout-assumptions B/D relative to gravity — second settler. semantic-chrome B with component-semantics."
+  fight = "spatial-gravity vs layout-assumptions: both fight spend. Gravity owns room/edge geometry; assumptions own chrome clearance / correction receipts. Keep the split; do not add a third settler."
+}[reg=facet]
+
+^"inspect_lab"{
+  count = 11
+  impact = "inspect"
+  ids = #[
+    `console`, `state-inspector`, `design-experiments`, `design-review-surfaces`,
+    `toolmaker-submissions`, `observation-beats`, `learnability-ledger`,
+    `annotation-layer`, `dom-probes`, `spw-block-association`, `narrative-instrumentation`
+  ][reg=set]
+  relationship = "Editor and lab surfaces. observation-beats is debugOnly. console and state-inspector are body floating-chrome. toolmaker-submissions already has transformer electrostatics. narrative-instrumentation is feature-file / enhancement-layer."
+  standalone = "A on their hosts. observation-beats C/debug. learnability-ledger inspect-only (B). Do not promote labs onto editorial hubs."
+}[reg=facet]
+
+^"discovery_reward"{
+  count = 8
+  impact = "gather"
+  ids = #[
+    `feature-discovery`, `reward-ui`, `discovery-notices`, `palette-treat-discovery`,
+    `component-collection`, `concept-salience`, `topic-discovery`, `tuning-discovery`
+  ][reg=set]
+  relationship = "Encounter memory. feature-discovery walks [data-spw-feature]. component-collection + reward-ui share site-frame selectors (kinds vs toasts). discovery-notices is body chrome. palette-treat-discovery mixes .palette-probe with html. concept-salience and topic-discovery are vocabulary popovers. tuning-discovery is hypermedia extension surfaces."
+  standalone = "reward-ui B with collection. feature-discovery A as field-guide if features are authored. topic-discovery A on .spw-topic. palette-treat C on html, A on probe chips."
+}[reg=facet]
+
+^"atmosphere_html"{
+  count = 4
+  impact = "atmosphere"
+  ids = #[`loading-ecology`, `hydration-passes`, `precipitation-request`, `topical-payload`][reg=set]
+  relationship = "Idle or early html projectors. loading-ecology and hydration-passes are paint. precipitation-request and topical-payload are premature_commitment on html. They narrate work the loader already did. Companion pulse boards live in electrode_charge (module-effects, pulse-beat-tuner) and cauldron_gather (effect-ledger)."
+  standalone = "C. Legitimate only after first paint. Do not move them to immediate. Do not give them electrostatics until they unlock a visitor affordance."
+  early = #[`topical-payload`, `precipitation-request`, `interaction-progression`, `spw-key-events`][reg=set]
+}[reg=facet]
+
+^"chrome_utils"{
+  count = 9
+  impact = "route"
+  ids = #[
+    `site-search`, `contextual-ui`, `prompt-utils`, `local-memory-controls`,
+    `guide`, `pwa-update-handler`, `scene-interaction`, `bare-spw-markup`, `semantic-crossrefs`
+  ][reg=set]
+  relationship = "site-search is idle body chord. contextual-ui annotates main. prompt-utils copy/serialize. local-memory-controls residue/keep. guide is subtle kind/role/slot coaching — sibling of semantic-chrome and component-semantics, not of guide-badge. pwa-update-handler has no selector. scene-interaction is play-bed residue. bare-spw-markup hydrates parser-compatible stubs. semantic-crossrefs is listen/wide cluster linking."
+  standalone = "site-search A. prompt-utils A on authored hosts. guide B (and overlapping). pwa A as toast when SW updates. scene-interaction A on scene beds."
+}[reg=facet]
+
+^"overlap_fights"{
+  phase_vs_charge = "interaction-progression writes data-spw-interaction-phase; charge-field writes data-spw-charge-*. Keep phase as room electrode, charge as terminal spark. CSS already mixes phase into --spw-projected-field."
+  two_settlers = "spatial-gravity + layout-assumptions both fight @settled. Third settler would be positioning-orchestration if it starts correcting geometry instead of measuring."
+  three_kind_readers = "component-semantics, semantic-chrome, guide all select [data-spw-kind]. Split: semantics = role lifecycle; chrome = presentational projection; guide = threshold copy. If a fourth appears, stop."
+  two_sigil_immediates = "operators + sigil-anatomy both immediate on .frame-sigil."
+  two_guides = "guide vs guide-badge. Badge is collectible residue; guide is coaching."
+  image_trio = "image-metaphysics, image-interaction, effect-interpretation share image-study / topic-photo-card."
+}[reg=facet]
+
+^"unspent_hosts"{
+  electromagnetic_containers = "D. Catalog + JS + experiment CSS. Zero public index.html authors of data-container-type. Do not stamp it onto every card (already refused). Keep gated; author one seat when a paper container is actually wanted."
+  home_section_index = "D. July orphan still true. Archive or retarget; do not broaden the selector."
+  media_cauldron = "Partial-only. Compose onto a publishing route or keep as lab readiness at VISIBLE."
+  logo_runtime = "Confirm .spw-logo authorship before treating as sitewide identity."
+}[reg=facet]
+
+^"do_not"{
+  items = #[
+    `Fill electrostatics on all 113 defs in one pass`,
+    `Invent a new data-spw-* family to express kinship`,
+    `Merge expression-card / interactive-expression-lab modules`,
+    `Author data-container-type on every frame-card just to occupy electromagnetic-containers`,
+    `Move atmosphere html mounts to immediate`,
+    `Treat costClass as a kind of module`,
+    `Treat family file (module-catalog-feature.js) as layer`
+  ][reg=set]
+}[reg=facet]
+
+^"expansion_prime"{
+  smallest_align = "Spend electrostatics only on the living-electricity cluster still missing a role, and fix the invalid spark token. Do not fill visual or capabilities on the other 103."
+  attach = #{
+    `interaction-progression` = `transformer / project — room electrode already writes phase`
+    `electromagnetic-containers` = `capacitor / release — only after an authored host exists, or attach the field now as documentation of intent`
+    `canvas-accents` = `capacitor / resonate`
+    `module-effects` = `inductor / resonate — pulse board, not a terminal`
+    `pulse-beat-tuner` = `inductor / resonate`
+    `cauldron` = `capacitor / ground`
+    `operators` = `terminal / resonate`
+    `layout-assumptions` = `ground / settle — sibling of spatial-gravity`
+    `site-settings` = `transformer / project`
+  }[reg=map]
+  hygiene = "spw-hero-kinetic-stage discharge spark → release (or add spark to DISCHARGE_KIND if the metaphor is load-bearing — prefer release; the contract already says spark as prose for release)."
+  describes = "When next touching cauldron-fluency, media-cauldron, ingredient-lab, expression-resonance: share subject cauldron so the index kinship matches the ecology."
+  archive_candidate = "home-section-index"
+}[reg=facet]
+
+^"validation"{
+  probe = #[
+    `node --import ./scripts/lib/register-public-imports.mjs -e 'import { listModuleCatalogIndex } from "./public/js/runtime/module-catalog.js"; console.log(listModuleCatalogIndex().count)'`,
+    `rg -l 'data-container-type' --glob '*.html'`,
+    `rg -l 'data-home-section-index' --glob '*.html'`,
+    `npm run check:runtime`
+  ][reg=set]
+  falsify = "If a module in a C cluster grows a visitor affordance, promote it. If electromagnetic-containers gains a public authored host, it leaves D. If IMMEDIATE climbs back toward the July 43, this audit is stale."
+  related = #[@module_impact_audit, @module_load_contract, @javascript_module_census, @module_granularity_lifecycle, @export_uniformity_wip, @decomposition_wip][reg=set]
+}[reg=facet]

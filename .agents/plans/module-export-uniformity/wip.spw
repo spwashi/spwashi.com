@@ -1,0 +1,109 @@
+# Review 2026-09-04 — active tending memory; export contracts precede decomposition and portability promotion.
+# wip - module impact, coupling, and standalone utility
+#
+# Hot planning memory for the next module-improvement pass. This note keeps
+# the review actionable without promoting every observation into a convention.
+
+#>plan_module_export_uniformity_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@module_census: ~"../../../.spw/audits/javascript-module-census-2026-07.spw"
+@kinship_audit: ~"../../../.spw/audits/module-ecology-kinship-2026-09.spw"
+@impact_audit: ~"../../../.spw/audits/module-impact-audit-2026-07.spw"
+@standalone_audit: ~"../../../.spw/audits/module-export-standalone-2026-07.spw"
+@decomposition_plan: ~"../runtime-module-decomposition/PLAN.md"
+@compose_plan: ~"../javascript-standalone-utility/PLAN.md"
+@catalog: ~"../../../public/js/runtime/module-catalog.js"
+@loader: ~"../../../public/js/runtime/module-loader.js"
+@compose: ~"../../../public/js/compose.js"
+
+operation = "cache"
+fixity = "tending"
+source = "module-by-module review, catalog ecology, import census, and npm run check:runtime"
+
+^"review_reading"{
+  claim = `The improvement target is not more modules. It is clearer impact altitude: protect the boot spine, stabilize shared contracts, make portable value explicit, and keep route experiments local until they earn promotion.`
+  evidence = #[
+    `251 non-generated public/js modules; 113 catalog entries; 148 ecology bodies`,
+    `runtime contract passes: modules=63, ownerDirs=8, rootEntrypoints=2, topLevelModuleFiles=0`,
+    `six immediate modules and 57 visible catalog entries in the current ecology output`,
+    `import hubs include attention/shared, module-catalog-constants, runtime-helpers, dom-contracts, and query-composer`,
+    `existing audits already identify export-shape debt, gate/selector drift, and route-local ad hoc modules`
+  ][reg=set]
+  pattern_consideration = #[
+    `compare kernel contracts with runtime browser modules before extracting`,
+    `compare compose exports with catalog mount targets before calling a module portable`,
+    `compare two sibling routes before promoting a route-local module`,
+    `compare dataset writers by altitude before reducing or merging them`
+  ][reg=set]
+}[reg=facet]
+
+^"impact_bands"{
+  spine = #['site.js', 'module-loader.js', 'module-catalog*.js', 'dom-contracts.js', 'shared.js', 'site-settings-engine.js'][reg=set]
+  high_coupling = #['attention/shared.js', 'runtime-helpers.js', 'module-catalog-constants.js', 'query-composer.js', 'page-state.js', 'region-profiler.js'][reg=set]
+  feature_families = #['attention', 'anatomy', 'media', 'spatial', 'workshop', 'discovery', 'rpg-wednesday'][reg=set]
+  route_local = #['care-intake.js', 'tools/budgeting.js', 'math/diagrams.js', 'profile/builder.js', 'profile/tool.js'][reg=set]
+  standalone_candidates = #['compose.js', 'behavior-scopes.js', 'interaction-vocabulary.js', 'pretext-utils.js', 'semantic-utils.js', 'feed-utils.js', 'query-composer.js', 'runtime-environment.js', 'svg-tunability.js', 'image-store.js'][reg=set]
+  rule = `High-impact or high-coupling files need contract extraction before decomposition; low-impact route files need promotion evidence before catalog registration.`
+}[reg=facet]
+
+^"improvement_queue"{
+  P1_export_contract = .{
+    owner = @plan
+    move = `Add a loader adapter accepting SPW_MODULE_EXPORT, spwModule, and init*; preserve aliases during migration.`
+    first_targets = #['brace-gestures.js', 'region-menu.js', 'page-anatomy.js', 'spw-key-events.js', 'scene-interaction.js'][reg=set]
+    value = `reduces dual mount knowledge and makes impact/updates inspectable`
+    validation = #['npm run check:runtime', 'node --check public/js/runtime/module-export-contract.js', 'catalog mount smoke'][reg=set]
+  }[reg=facet]
+  P1_projection = .{
+    owner = @decomposition_plan
+    move = `Define projection tiers in dom-contracts and migrate the next high-write modules without changing public dataset names.`
+    targets = #['shell-disclosure.js', 'brace-gestures.js', 'region-menu.js', 'spw-key-events.js'][reg=set]
+    value = `contains root-state blast radius and clarifies structural, transient, and inspection writes`
+    validation = #['rg '\\.dataset|writeDataset public/js/runtime public/js/interface', 'npm run check:runtime', 'debug module update inspection'][reg=set]
+  }[reg=facet]
+  P2_portability = .{
+    owner = @compose_plan
+    move = `Promote Grade B contract surfaces to compose in guild-sized batches; keep browser-only modules browser-only.`
+    targets = #['runtime/interaction-loop.js', 'runtime/composition-box-model.js', 'media/svg-tunability.js', 'kernel/query-composer.js'][reg=set]
+    value = `increases standalone utility without pretending full site modules are Node utilities`
+    validation = #['npm run test:modules', 'starter:inventory -- --check', 'import each new compose export in isolation'][reg=set]
+  }[reg=facet]
+  P2_gate_alignment = .{
+    owner = @impact_audit
+    move = `Audit selector/feature mismatches before changing scheduling; promote only stable route-local modules.`
+    targets = #['svg-tunability', 'topic-discovery', 'spatial-gravity', 'home-section-index', 'media-cauldron'][reg=set]
+    value = `prevents silent no-op mounts and avoids inflating global runtime cost`
+    validation = #['npm run ecology:json', 'rg data-spw-features topics craft recipes --glob **/index.html', 'route smoke on affected pages'][reg=set]
+  }[reg=facet]
+  P3_decomposition = .{
+    owner = @decomposition_plan
+    move = `After contract and projection work, thin shell-disclosure, experiential, haptics, and image-metaphysics around generalizable primitives.`
+    constraint = `No split is justified by line count alone; each extracted module needs reuse, contract, projection, event path, and catalog honesty.`
+    validation = #['two-adopter generalizability smoke', 'npm run check:local', 'no surviving orchestrator over 600 lines where the boundary is proven'][reg=set]
+  }[reg=facet]
+}[reg=facet]
+
+^"open_questions"{
+  questions = #['Which Grade B contracts deserve compose exposure first by actual starter-site demand?', 'Which root dataset writers are genuinely competing, versus merely projecting different altitudes?', 'Which route-local modules have stable ownership and enough second-surface reuse to enter the catalog?', 'Can selector/gate drift be checked automatically without broadening lab modules?'][reg=set]
+  next_probe = `Read the export contract and decomposition plans together, then select one low-blast-radius contract adapter and two standalone adopters.`
+}[reg=facet]
+
+^"guardrails"{
+  do_not = #[
+    `split site.js, module-loader.js, or catalog barrels before their contracts change`,
+    `move browser modules into compose merely because they export functions`,
+    `reclassify immediate grammar modules as idle without boot evidence`,
+    `broaden selectors or feature gates to improve hit counts`,
+    `rename state-inspector surfaces before the vocabulary gate clears`,
+    `introduce npm dependencies`
+  ][reg=set]
+  promotion_rule = `Promote a repeated improvement into PLAN.md or a convention only after two sibling examples and a falsifiable validation path.`
+}[reg=facet]
+
+validation = #['git diff --check', 'npm run check:runtime', 'npm run ecology:json', 'npm run test:modules'][reg=set]
+
+status = "ready_for_first_slice"

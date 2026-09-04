@@ -1,0 +1,121 @@
+# Review 2026-09-04 — active tending memory; split only after reusable contracts and two-adopter evidence.
+# wip - top runtime decomposition targets
+#
+# Hot memory for decomposing high-impact modules after contract boundaries are
+# proven. This is a tending queue, not a mandate to split every large file.
+
+#>plan_runtime_module_decomposition_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@impact_wip: ~"../module-export-uniformity/wip.spw"
+@kinship_audit: ~"../../../.spw/audits/module-ecology-kinship-2026-09.spw"
+@impact_audit: ~"../../../.spw/audits/module-impact-audit-2026-07.spw"
+@standalone_audit: ~"../../../.spw/audits/module-export-standalone-2026-07.spw"
+@dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
+@loader: ~"../../../public/js/runtime/module-loader.js"
+@catalog: ~"../../../public/js/runtime/module-catalog.js"
+
+operation = "cache"
+fixity = "tending"
+source = "top-line module census, impact/coupling review, decomposition plan, and runtime contract check"
+
+^"selection_thesis"{
+  claim = `The best decomposition targets are high-impact orchestrators whose internal organs already have distinct state, event, projection, or persistence responsibilities. Extract only when the new boundary improves reuse, inspection, or blast-radius control.`
+  evidence = #[
+    `shell-disclosure.js and experiential.js are the largest sitewide browser modules`,
+    `haptics.js and page-anatomy.js combine visible behavior with shared state/projection concerns`,
+    `kernel/shared.js is a high-coupling hub and must be deferred until lower-risk contracts prove the boundary model`,
+    `runtime check currently passes and catalog ownership remains stable`
+  ][reg=set]
+  falsifier = `A proposed split only moves private helpers, increases cross-imports, or requires more catalog knowledge than the original file.`
+}[reg=facet]
+
+^"target_matrix"{
+  shell_disclosure = .{
+    impact = "sitewide / core / high blast radius"
+    relation = "owns shell disclosure, viewport bands, nav fit, utility controls, and floating chrome"
+    standalone = "low; extracted measurement and utility contracts can become reusable"
+    first_extract = "shell-measurement.js"
+    later_extract = #['shell-utilities.js', 'mode-switch contract'][reg=set]
+    risk = "core timing and root dataset contention"
+    gate = "projection tiers plus bus/floating-chrome audit"
+  }[reg=facet]
+  experiential = .{
+    impact = "sitewide / enhancement / high behavioral reach"
+    relation = "coordinates spells, sample surfaces, memos, operator learning, and posture"
+    standalone = "medium by organ; low as a whole"
+    first_extract = "context-memos.js or breadcrumb-spell.js, whichever has two consumers"
+    later_extract = #['sample-dock.js', 'operator-learning.js'][reg=set]
+    risk = "hidden lifecycle coupling and duplicated bus state"
+    gate = "interaction-loop and event-emission audit"
+  }[reg=facet]
+  haptics = .{
+    impact = "sitewide / enhancement / user-state sensitive"
+    relation = "joins gesture feedback, charge state, persistence, and reduced-motion behavior"
+    standalone = "medium for storage/checkpoint helpers; low for browser feedback"
+    first_extract = "storage/checkpoint slice into kernel/storage.js"
+    later_extract = "gesture/charge only after interaction-loop boundary is stable"
+    risk = "feedback timing and persistence regressions"
+    gate = "storage contract, reduced-motion smoke, checkpoint restore test"
+  }[reg=facet]
+  image_metaphysics = .{
+    impact = "medium / media feature / route-selective"
+    relation = "combines image visit memory, effect controls, and media interpretation"
+    standalone = "high for image memory/effect utilities when DOM assumptions are removed"
+    first_extract = "image-visit-memory.js"
+    later_extract = "image-effect-controls.js"
+    risk = "interaction-loop registration and media state drift"
+    gate = "two image hosts plus persistence reset path"
+  }[reg=facet]
+  shared = .{
+    impact = "very high / kernel / highest coupling"
+    relation = "owns operator definitions, feature helpers, climate/token reads, and shared resolution"
+    standalone = "high for operator registry; medium for environment helpers"
+    first_extract = "kernel/operators.js"
+    later_extract = #['kernel/climate-tokens.js', 'kernel/feature-helpers.js'][reg=set]
+    risk = "large transitive import change and semantic naming drift"
+    gate = "all current importers, compose exports, and operator contract tests"
+  }[reg=facet]
+}[reg=facet]
+
+^"sequence"{
+  phase_0 = #['export adapter for catalog mounts', 'projection-tier helpers in dom-contracts', 'bus event audit', 'floating-chrome sync audit'][reg=set]
+  phase_1 = #['image-visit-memory from image-metaphysics', 'storage/checkpoint slice from haptics', 'mode-switch generalization'][reg=set]
+  phase_2 = #['shell-measurement from shell-disclosure', 'first experiential organ with two consumers'][reg=set]
+  phase_3 = #['remaining shell utilities', 'remaining experiential organs', 'gesture/charge haptics'][reg=set]
+  phase_4 = #['operator registry from shared.js', 'climate and feature helper extraction'][reg=set]
+  rule = `Do not begin a later phase while the prior extracted contract lacks two adopters, catalog honesty, and regression evidence.`
+}[reg=facet]
+
+^"extraction_contract"{
+  every_new_module = #['explicit named export or SPW_MODULE_EXPORT', 'SPW_*_CONTRACT when vocabulary is durable', 'writeDatasetValue(s) or projection-tier helper for DOM state', 'bus.emit for outward events', 'catalog describes/evaluates/updates/effectScope when mounted', 'reduced-motion and no-DOM behavior where relevant'][reg=set]
+  orchestrator_rule = `The original catalog id remains on the orchestrator until the extracted organ is stable; avoid scheduling churn during decomposition.`
+  portability_rule = `A module is standalone only when it can be imported without site.js and its browser assumptions are explicit; compose exposure is earned separately.`
+}[reg=facet]
+
+^"targeted_probes"{
+  shell = #['rg writeDataset|\.dataset public/js/runtime/shell-disclosure.js', 'trace shell disclosure bus events and root datasets', 'mobile + desktop nav disclosure smoke'][reg=set]
+  experiential = #['rg bus\.emit|CustomEvent|localStorage public/js/runtime/experiential.js', 'replay spell/memo/returning-reader paths', 'verify no duplicate lifecycle listeners'][reg=set]
+  haptics = #['trace storage keys and checkpoint restore', 'test reduced motion and no vibration support', 'verify gesture state remains unchanged'][reg=set]
+  image = #['two distinct image hosts', 'clear and restore local memory', 'verify effect controls do not own persistence'][reg=set]
+  shared = #['build importer list before extraction', 'operator registry parity test', 'npm run test:modules + compose import smoke'][reg=set]
+}[reg=facet]
+
+^"guardrails"{
+  do_not = #[
+    `split by line count alone`,
+    `rename state-inspector surfaces before the vocabulary gate clears`,
+    `change public data-spw names during an extraction`,
+    `move core modules to idle to hide their cost`,
+    `make a new catalog id for every private helper`,
+    `add dependencies`
+  ][reg=set]
+  success = `Each split leaves a thinner owner, a clearer contract, equal or lower coupling, and a tested second consumer or explicit route boundary.`
+}[reg=facet]
+
+validation = #['git diff --check', 'node --check on new modules', 'npm run check:runtime', 'npm run test:modules', 'npm run check:local'][reg=set]
+
+status = "ready_for_phase_0"
