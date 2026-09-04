@@ -18,7 +18,7 @@
     wonder="belonging locality consequence"
     route_family="membership coordination support"
     layout="wide"
-    features="operators navigator console route-discovery"
+    features="operators navigator console route-discovery svg-surfaces"
     related_routes="/|/now/|/cards/|/coordination/|/services/|/contact/"
     stylesheet_mode="scoped"
 ></spw-page>
@@ -28,7 +28,7 @@
     <spw-site-head></spw-site-head>
 </head>
 <body data-spw-surface="membership"
-    data-spw-stylesheet-mode="scoped" data-spw-hydration="static" data-spw-display-layer="reader" data-spw-capture-mode="default" data-spw-features="operators navigator console route-discovery" data-spw-route-family="membership coordination support" data-spw-context="participation" data-spw-wonder="belonging locality consequence" data-spw-page-family="membership" data-spw-page-modes="read join support collaborate" data-spw-page-role="membership-register" data-spw-layout="wide" data-spw-copy-motifs="return loop role issue belong" data-spw-page-seed="page_membership_register" data-spw-context-relevance="membership observer reference working sponsor collaborator roles coordination card" data-spw-related-routes="/|/now/|/cards/|/coordination/|/services/|/contact/">
+    data-spw-stylesheet-mode="scoped" data-spw-hydration="static" data-spw-display-layer="reader" data-spw-capture-mode="default" data-spw-features="operators navigator console route-discovery svg-surfaces" data-spw-route-family="membership coordination support" data-spw-context="participation" data-spw-wonder="belonging locality consequence" data-spw-page-family="membership" data-spw-page-modes="read join support collaborate" data-spw-page-role="membership-register" data-spw-layout="wide" data-spw-copy-motifs="return loop role issue belong" data-spw-page-seed="page_membership_register" data-spw-context-relevance="membership observer reference working sponsor collaborator roles coordination card" data-spw-related-routes="/|/now/|/cards/|/coordination/|/services/|/contact/">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <spw-site-header
@@ -47,6 +47,10 @@
         data-spw-semantic-expression="membership[hook]{belong}<register>" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="entry" data-spw-promptability="visible" data-spw-collectability="index" data-spw-feature="membership-entry" data-spw-attentional-weight="1.25" data-spw-gradient-boundary="hard" data-spw-composition-stability="anchored" data-spw-context-relevance="membership observer reference working sponsor collaborator roles coordination card" data-spw-related-routes="/cards/#card-types|/coordination/|/now/|/services/|/contact/" data-spw-seed="page_membership_register__hero" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
             <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#membership-frame">#&gt;membership</a>
+                <div class="mode-switch" role="group" aria-label="Membership working view" data-spw-operator="mode" data-spw-kind="lens">
+                    <button class="frame-sigil" type="button" data-mode-group="membership-lens" data-set-mode="read" aria-pressed="true" data-spw-operator="ground"><span>Read</span></button>
+                    <button class="frame-sigil" type="button" data-mode-group="membership-lens" data-set-mode="join" aria-pressed="false" data-spw-operator="perspective"><span>Join</span></button>
+                </div>
                 <div class="spec-strip">
                     <span class="spec-pill">observer</span>
                     <span class="spec-pill">reference</span>
@@ -57,6 +61,60 @@
             </div>
             <p data-spw-textual-role="kicker">membership as coordination</p>
             <h1 id="membership-title">Membership means helping the work hold shape.</h1>
+            <div class="mode-panels">
+                <section class="mode-panel" data-mode-group="membership-lens" data-mode-panel="read" data-spw-kind="lens">
+                    <p class="hook-lede">Read view: stay near the next issue without taking a lane yet.</p>
+                </section>
+                <section class="mode-panel" data-mode-group="membership-lens" data-mode-panel="join" data-spw-kind="lens" hidden>
+                    <p class="hook-lede">Join view: pick a role, name an offer, return on the 13th or the 26th with a card.</p>
+                </section>
+            </div>
+            <figure class="spw-svg-figure" data-spw-slot="figure" data-spw-svg-host="membership-roles" data-spw-svg-kind="addressable-diagram" data-spw-svg-scale="wide">
+                <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 960 220" role="img" aria-labelledby="membership-roles-svg-title membership-roles-svg-desc" xmlns="http://www.w3.org/2000/svg">
+                    <title id="membership-roles-svg-title">Membership roles as a shared field</title>
+                    <desc id="membership-roles-svg-desc">Five labeled roles around one cauldron: observer, reference, working, sponsor, collaborator.</desc>
+                    <rect class="spw-svg-frame" x="16" y="16" width="928" height="188" rx="16"></rect>
+                    <circle class="spw-svg-node spw-svg-node--frame" cx="480" cy="110" r="40"></circle>
+                    <text class="spw-svg-label" x="452" y="106">#&gt;bed</text>
+                    <text class="spw-svg-note" x="444" y="124">issue</text>
+                    <g>
+                        <circle class="spw-svg-node spw-svg-node--ref" cx="140" cy="110" r="34"></circle>
+                        <text class="spw-svg-label" x="108" y="106">~ observe</text>
+                        <text class="spw-svg-note" x="112" y="124">near</text>
+                    </g>
+                    <g>
+                        <rect class="spw-svg-node spw-svg-node--object" x="236" y="74" width="108" height="72" rx="14"></rect>
+                        <text class="spw-svg-label" x="250" y="108">^ cite</text>
+                        <text class="spw-svg-note" x="248" y="126">reference</text>
+                    </g>
+                    <g>
+                        <rect class="spw-svg-node spw-svg-node--stream" x="616" y="74" width="108" height="72" rx="14"></rect>
+                        <text class="spw-svg-label" x="632" y="108">* work</text>
+                        <text class="spw-svg-note" x="636" y="126">make</text>
+                    </g>
+                    <g>
+                        <circle class="spw-svg-node spw-svg-node--action" cx="820" cy="110" r="34"></circle>
+                        <text class="spw-svg-label" x="792" y="106">@ join</text>
+                        <text class="spw-svg-note" x="788" y="124">sponsor</text>
+                    </g>
+                </svg>
+            </figure>
+            <nav class="spw-page-landmarks" aria-label="Rooms on this page" data-spw-feature="page-landmarks" data-spw-anatomy="path">
+                <p class="spw-page-landmarks__kicker">Beds on this page</p>
+                <ol>
+                    <li data-spw-liminality="entry"><a href="#membership-frame">Hook</a></li>
+                    <li data-spw-liminality="threshold"><a href="#levels">Levels</a></li>
+                    <li data-spw-liminality="middle"><a href="#returning-member-loops">Loops</a></li>
+                    <li data-spw-liminality="return"><a href="#join-card">Card</a></li>
+                </ol>
+            </nav>
+            <div class="spw-ornament-rail" data-spw-ornament-state="revealed" data-spw-slot="meta" data-spw-operator="mode" role="group" aria-label="Membership climate">
+                <span class="spw-ornament-kicker">climate</span>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="colorMode:auto" data-spw-operator="mode">[auto]</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="colorMode:dark" data-spw-operator="mode">[dark]</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="wonderMemory:nearby" data-spw-operator="mode">[nearby]</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="wonderMemory:sitewide" data-spw-operator="mode">[carry]</button>
+            </div>
             <p id="membership-description" data-spw-textual-role="lede" data-spw-copy-unit="membership.hook.lede">Spwashi is becoming a working field for people who care about art, software, learning, records, local systems, publishing, research, and real-world care. Membership is how you stay near the next issue without pretending every visit needs the same introduction.</p>
             <p>You do not need to use AI intentionally to belong here. Make, read, support, test, share, organize, or remember something clearly. Some members read. Some scroll the rooms. Both count. Come back on the 13th and the 26th the way you would open an issue.</p>
             <div class="spw-reason-strip" aria-label="Membership reasons" data-spw-feature="membership-role-reasons" data-spw-box-model="reason-strip" data-spw-composition-flow="grid">

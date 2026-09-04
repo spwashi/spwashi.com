@@ -18,7 +18,7 @@
     wonder="orientation comparison consequence"
     route_family="editorial story atlas"
     layout="atlas"
-    features="operators navigator console route-discovery"
+    features="operators navigator console route-discovery svg-surfaces"
     related_routes="/|/play/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/cards/|/services/|/research/|/topics/|/about/domains/lore.land/"
     stylesheet_mode="scoped"
 ></spw-page>
@@ -30,7 +30,7 @@
 <body
     data-spw-surface="town"
     data-spw-stylesheet-mode="scoped"
-    data-spw-features="operators navigator console route-discovery"
+    data-spw-features="operators navigator console route-discovery svg-surfaces"
     data-spw-route-family="editorial story atlas"
     data-spw-context="reading"
     data-spw-wonder="orientation comparison consequence"
@@ -62,6 +62,10 @@
             <section class="spw-frame" data-spw-region-role="entry-spine" id="town-atlas-frame" aria-labelledby="town-atlas-title" aria-describedby="town-atlas-description" data-spw-frame="hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-context="reading" data-spw-form="brace" data-spw-wonder="orientation comparison consequence" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="visible" data-spw-collectability="some" data-spw-feature="town-atlas-entry" data-spw-attentional-weight="1.25" data-spw-gradient-boundary="hard" data-spw-composition-stability="anchored" data-spw-seed="page_town_atlas__hero" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#town-atlas-frame">#&gt;town_atlas</a>
+                    <div class="mode-switch" role="group" aria-label="Town atlas working view" data-spw-operator="mode" data-spw-kind="lens">
+                        <button class="frame-sigil" type="button" data-mode-group="town-lens" data-set-mode="visitor" aria-pressed="true" data-spw-operator="ground"><span>Visit</span></button>
+                        <button class="frame-sigil" type="button" data-mode-group="town-lens" data-set-mode="world" aria-pressed="false" data-spw-operator="perspective"><span>World</span></button>
+                    </div>
                     <div class="spec-strip">
                         <span class="spec-pill">story substrate</span>
                         <span class="spec-pill">world bible</span>
@@ -77,6 +81,67 @@
                     can stop at the route links and leave. World-builders can use the atlas to keep guides, districts,
                     factions, objects, and sessions retrievable without scattering the canon across flavor text.
                 </p>
+
+                <div class="mode-panels" data-spw-slot="body" data-spw-feature="town-perspective-panels">
+                    <section class="mode-panel" data-mode-group="town-lens" data-mode-panel="visitor" data-spw-kind="lens">
+                        <p class="hook-lede">Visitor view: the library, the table, and the card that lets you leave with a receipt.</p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="town-lens" data-mode-panel="world" data-spw-kind="lens" hidden>
+                        <p class="hook-lede">World view: districts, factions, objects, and sessions as a memory system a model can still name from a still.</p>
+                    </section>
+                </div>
+
+                <figure class="spw-svg-figure" data-spw-slot="figure" data-spw-svg-host="town-atlas" data-spw-svg-kind="addressable-diagram" data-spw-svg-scale="wide" data-spw-svg-persona="visitor worldbuilder librarian">
+                    <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 960 280" role="img" aria-labelledby="town-atlas-svg-title town-atlas-svg-desc" xmlns="http://www.w3.org/2000/svg">
+                        <title id="town-atlas-svg-title">Town atlas rooms</title>
+                        <desc id="town-atlas-svg-desc">A labeled path from the library through districts and factions to sessions, with the market as a side exchange.</desc>
+                        <rect class="spw-svg-frame" x="16" y="16" width="928" height="248" rx="18"></rect>
+                        <path class="spw-svg-flow" d="M128 140 H832"></path>
+                        <g>
+                            <circle class="spw-svg-node spw-svg-node--frame" cx="128" cy="140" r="42"></circle>
+                            <text class="spw-svg-label" x="98" y="136">#&gt;lib</text>
+                            <text class="spw-svg-note" x="86" y="156">library</text>
+                        </g>
+                        <g>
+                            <rect class="spw-svg-node spw-svg-node--object" x="248" y="92" width="120" height="96" rx="16"></rect>
+                            <text class="spw-svg-label" x="268" y="134">^ district</text>
+                            <text class="spw-svg-note" x="272" y="156">place</text>
+                        </g>
+                        <g>
+                            <rect class="spw-svg-node spw-svg-node--probe" x="424" y="92" width="120" height="96" rx="16"></rect>
+                            <text class="spw-svg-label" x="448" y="134">? faction</text>
+                            <text class="spw-svg-note" x="452" y="156">pressure</text>
+                        </g>
+                        <g>
+                            <rect class="spw-svg-node spw-svg-node--stream" x="600" y="92" width="120" height="96" rx="16"></rect>
+                            <text class="spw-svg-label" x="620" y="134">* session</text>
+                            <text class="spw-svg-note" x="628" y="156">table</text>
+                        </g>
+                        <g>
+                            <circle class="spw-svg-node spw-svg-node--action" cx="832" cy="140" r="42"></circle>
+                            <text class="spw-svg-label" x="806" y="136">@ card</text>
+                            <text class="spw-svg-note" x="798" y="156">receipt</text>
+                        </g>
+                    </svg>
+                    <figcaption>Rooms a still can name: library, district, faction, session, card.</figcaption>
+                </figure>
+
+                <nav class="spw-page-landmarks" aria-label="Rooms on this page" data-spw-feature="page-landmarks" data-spw-anatomy="path">
+                    <p class="spw-page-landmarks__kicker">Beds on this page</p>
+                    <ol>
+                        <li data-spw-liminality="entry"><a href="#town-atlas-frame">Hook</a></li>
+                        <li data-spw-liminality="threshold"><a href="#town-index">Index</a></li>
+                        <li data-spw-liminality="middle"><a href="#town-origin">Origin</a></li>
+                        <li data-spw-liminality="return"><a href="#town-market">Market</a></li>
+                    </ol>
+                </nav>
+                <div class="spw-ornament-rail" data-spw-ornament-state="revealed" data-spw-slot="meta" data-spw-operator="mode" role="group" aria-label="Atlas climate">
+                    <span class="spw-ornament-kicker">climate</span>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-preset="hearth" data-spw-operator="mode" aria-label="Cozy preset">[cozy]</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-preset="access" data-spw-operator="mode" aria-label="Readable preset">[readable]</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="explorePosture:reading" data-spw-operator="mode">[read]</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="explorePosture:workshop" data-spw-operator="mode">[workshop]</button>
+                </div>
 
                 <div class="spw-narration" data-spw-textual-role="narration" data-spw-form="brace">
                     <p class="spw-narration__cue" data-spw-textual-role="cue">Landing surface</p>

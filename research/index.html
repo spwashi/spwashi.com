@@ -18,7 +18,7 @@
     wonder="evidence provenance learning"
     route_family="research insights records"
     layout="wide"
-    features="operators navigator console"
+    features="operators navigator console svg-surfaces"
     related_routes="/|/cards/|/topics/math/#consequence-arcs|/topics/knowledge-bases/#versioned-holdings|/recipes/#soil-companions|/now/|/membership/|/topics/|/services/"
     stylesheet_mode="scoped"
 ></spw-page>
@@ -28,7 +28,7 @@
     <spw-site-head></spw-site-head>
 </head>
 <body data-spw-surface="research"
-    data-spw-stylesheet-mode="scoped" data-spw-hydration="static" data-spw-display-layer="reader" data-spw-capture-mode="default" data-spw-features="operators navigator console" data-spw-route-family="research insights records" data-spw-context="analysis" data-spw-wonder="evidence provenance learning" data-spw-page-family="research" data-spw-page-modes="read cite decide build" data-spw-page-role="decision-engine" data-spw-layout="wide" data-spw-page-seed="page_research_insights" data-spw-context-relevance="research insights local-first provenance learning creative economy publishing security AI infrastructure" data-spw-related-routes="/|/cards/|/now/|/membership/|/topics/|/services/">
+    data-spw-stylesheet-mode="scoped" data-spw-hydration="static" data-spw-display-layer="reader" data-spw-capture-mode="default" data-spw-features="operators navigator console svg-surfaces" data-spw-route-family="research insights records" data-spw-context="analysis" data-spw-wonder="evidence provenance learning" data-spw-page-family="research" data-spw-page-modes="read cite decide build" data-spw-page-role="decision-engine" data-spw-layout="wide" data-spw-page-seed="page_research_insights" data-spw-context-relevance="research insights local-first provenance learning creative economy publishing security AI infrastructure" data-spw-related-routes="/|/cards/|/now/|/membership/|/topics/|/services/">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <spw-site-header
@@ -46,6 +46,10 @@
         <section class="spw-frame" data-spw-region-role="entry-spine" id="research-frame" aria-labelledby="research-title" aria-describedby="research-description" data-spw-frame="hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-form="brace" data-spw-context="analysis" data-spw-wonder="evidence provenance learning" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="decision" data-spw-promptability="visible" data-spw-collectability="index" data-spw-feature="research-decision-entry" data-spw-attentional-weight="1.25" data-spw-gradient-boundary="hard" data-spw-composition-stability="anchored" data-spw-context-relevance="research insights local-first provenance learning creative economy publishing security AI infrastructure" data-spw-related-routes="/cards/|/now/|/membership/|/topics/|/services/" data-spw-seed="page_research_insights__hero" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
             <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#research-frame">?research</a>
+                <div class="mode-switch" role="group" aria-label="Research working view" data-spw-operator="mode" data-spw-kind="lens">
+                    <button class="frame-sigil" type="button" data-mode-group="research-lens" data-set-mode="cite" aria-pressed="true" data-spw-operator="wonder"><span>Cite</span></button>
+                    <button class="frame-sigil" type="button" data-mode-group="research-lens" data-set-mode="decide" aria-pressed="false" data-spw-operator="action"><span>Decide</span></button>
+                </div>
                 <div class="spec-strip" data-spw-box-model="spec-strip" data-spw-composition-flow="inline-wrap">
                     <span class="spec-pill">local first</span>
                     <span class="spec-pill">provenance</span>
@@ -56,7 +60,68 @@
             </div>
             <p data-spw-textual-role="kicker">research as a decision engine</p>
             <h1 id="research-title">Research &amp; Insights</h1>
-            <p id="research-description" data-spw-textual-role="lede" data-spw-semantic-expression="research[claim]{relation;condition;consequence}&lt;receipt&gt;">Wisdom becomes useful when it changes what we build, fund, teach, or preserve—and leaves enough of a receipt to check why.</p>
+            <div class="mode-panels" data-spw-slot="body">
+                <section class="mode-panel" data-mode-group="research-lens" data-mode-panel="cite" data-spw-kind="lens">
+                    <p id="research-description" data-spw-textual-role="lede" data-spw-semantic-expression="research[claim]{relation;condition;consequence}&lt;receipt&gt;">Wisdom becomes useful when it changes what we build, fund, teach, or preserve—and leaves enough of a receipt to check why.</p>
+                </section>
+                <section class="mode-panel" data-mode-group="research-lens" data-mode-panel="decide" data-spw-kind="lens" hidden>
+                    <p class="hook-lede">Decide view: the ladder is the still — signal, evidence, source, interpretation, prototype, public record. A proxy is not silently promoted.</p>
+                </section>
+            </div>
+            <figure class="spw-svg-figure" data-spw-svg-host="research-ladder" data-spw-svg-kind="addressable-diagram" data-spw-svg-scale="wide" aria-label="Insight ladder">
+                <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 960 220" role="img" aria-labelledby="research-ladder-svg-title research-ladder-svg-desc" xmlns="http://www.w3.org/2000/svg">
+                    <title id="research-ladder-svg-title">How insight is weighed</title>
+                    <desc id="research-ladder-svg-desc">Six labeled rungs from lived signal to public record.</desc>
+                    <rect class="spw-svg-frame" x="16" y="16" width="928" height="188" rx="16"></rect>
+                    <path class="spw-svg-flow" d="M88 110 H872"></path>
+                    <g>
+                        <circle class="spw-svg-node spw-svg-node--probe" cx="88" cy="110" r="36"></circle>
+                        <text class="spw-svg-label" x="58" y="106">? live</text>
+                        <text class="spw-svg-note" x="52" y="124">signal</text>
+                    </g>
+                    <g>
+                        <rect class="spw-svg-node spw-svg-node--ref" x="168" y="74" width="100" height="72" rx="14"></rect>
+                        <text class="spw-svg-label" x="184" y="108">~ work</text>
+                        <text class="spw-svg-note" x="178" y="126">evidence</text>
+                    </g>
+                    <g>
+                        <rect class="spw-svg-node spw-svg-node--object" x="312" y="74" width="100" height="72" rx="14"></rect>
+                        <text class="spw-svg-label" x="328" y="108">^ source</text>
+                        <text class="spw-svg-note" x="330" y="126">primary</text>
+                    </g>
+                    <g>
+                        <rect class="spw-svg-node spw-svg-node--surface" x="456" y="74" width="108" height="72" rx="14"></rect>
+                        <text class="spw-svg-label" x="470" y="108">&gt; craft</text>
+                        <text class="spw-svg-note" x="468" y="126">interpret</text>
+                    </g>
+                    <g>
+                        <rect class="spw-svg-node spw-svg-node--stream" x="608" y="74" width="108" height="72" rx="14"></rect>
+                        <text class="spw-svg-label" x="624" y="108">* proto</text>
+                        <text class="spw-svg-note" x="628" y="126">result</text>
+                    </g>
+                    <g>
+                        <circle class="spw-svg-node spw-svg-node--frame" cx="872" cy="110" r="36"></circle>
+                        <text class="spw-svg-label" x="844" y="106">#&gt; pub</text>
+                        <text class="spw-svg-note" x="838" y="124">record</text>
+                    </g>
+                </svg>
+            </figure>
+            <nav class="spw-page-landmarks" aria-label="Rooms on this page" data-spw-feature="page-landmarks" data-spw-anatomy="path">
+                <p class="spw-page-landmarks__kicker">Beds on this page</p>
+                <ol>
+                    <li data-spw-liminality="entry"><a href="#research-frame">Hook</a></li>
+                    <li data-spw-liminality="threshold"><a href="#wisdom-ladder">Ladder</a></li>
+                    <li data-spw-liminality="middle"><a href="#research-categories">Categories</a></li>
+                    <li data-spw-liminality="return"><a href="#source-language">Sources</a></li>
+                </ol>
+            </nav>
+            <div class="spw-ornament-rail" data-spw-ornament-state="revealed" data-spw-slot="meta" data-spw-operator="mode" role="group" aria-label="Research still tropes">
+                <span class="spw-ornament-kicker">tropes</span>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="enhancementLevel:minimal" data-spw-operator="mode" aria-label="Minimal enhancement">[quiet]</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="enhancementLevel:rich" data-spw-operator="mode" aria-label="Rich enhancement">[rich]</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="semanticDensity:minimal" data-spw-operator="mode">[minimal]</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="semanticDensity:rich" data-spw-operator="mode">[field]</button>
+            </div>
             <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="landscape" data-spw-image-lens-cues="probe|frame|ref" data-spw-image-lens-active="probe" data-spw-gesture-contract="tap:prime swipe:toggle-lens hold:inspect" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor evidence ladder" data-spw-accent-anchor="research evidence provenance signal field learning" data-spw-accent-operator="probe" data-spw-visual-cues="teal lattice amber nodes proof pressure inspectable field">
                 <img src="/public/images/routes/math-signal-field-hero.webp" alt="A cool signal field with teal lattice lines and amber proof nodes, reading like evidence arranged for inspection." width="1600" height="960">
                 <figcaption class="study-summary">
