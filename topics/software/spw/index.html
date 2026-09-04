@@ -6,7 +6,7 @@
     og_description="Operator philosophy for Spw: operators as semantic actors, braces as structural facts, and projections as deterministic manifestations of readable source."
     og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
     og_image_alt="Spw Operator Atlas illustrated metadata card on Spwashi."
-    keywords="Spw operators, operator philosophy, brace semantics, readable source, semantic actors, deterministic projection, language design"
+    keywords="Spw operators, operator philosophy, brace semantics, readable source, semantic actors, deterministic projection, language design, spw-workbench, language server, LSP, VS Code extension, IntelliJ plugin, CLI tooling"
     breadcrumb_label="Spw Operator Atlas"
     header_current="Spw Operator Atlas"
     header_current_href="/topics/software/spw/"
@@ -1103,7 +1103,7 @@
             </section>
 
             <!-- SPW AS A LIVING MEDIUM: PROVEN USAGE & OPEN HORIZONS -->
-            <section class="spw-frame" id="spw-living-medium" data-spw-kind="frame" data-spw-role="orientation" data-spw-form="brace" data-spw-climate="analytic" data-spw-phase="lattice" data-spw-tangibility="0.90" data-spw-coherence="0.95" data-spw-fixity="stable" data-spw-biome="workshop" data-spw-charge-state="charge" data-spw-definition="#>spw_living_medium[market]{existing_proof.open_horizons.collaborative_offers} #:fixity #!stable" data-spw-feature="spw-living-medium" data-spw-wonder="projection consequence locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_topics_topics_software_spw__living_medium" data-spw-related-routes="/tools/spw-parser/|/topics/software/|/services/systems/|/services/creator/|/about/">
+            <section class="spw-frame" id="spw-living-medium" data-spw-kind="frame" data-spw-role="orientation" data-spw-form="brace" data-spw-climate="analytic" data-spw-phase="lattice" data-spw-tangibility="0.90" data-spw-coherence="0.95" data-spw-fixity="stable" data-spw-biome="workshop" data-spw-charge-state="charge" data-spw-definition="#>spw_living_medium[market]{existing_proof.mounted_tool.open_horizons.collaborative_offers} #:fixity #!stable" data-spw-feature="spw-living-medium" data-spw-wonder="projection consequence locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_topics_topics_software_spw__living_medium" data-spw-related-routes="/tools/spw-parser/|/topics/software/|/services/systems/|/services/creator/|/about/|https://github.com/spwashi/spw-workbench">
                 <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#spw-living-medium">#&gt;spw_living_medium</a>
                     <div class="spec-strip">
@@ -1131,7 +1131,7 @@
                         <div class="frame-card" data-spw-form="square" data-spw-operator="object">
                             <span class="frame-card-sigil">^"knowledge_architecture"</span>
                             <strong>Executable Knowledge Architecture</strong>
-                            <span>279 authored <code>.spw</code> convention surfaces, 3,688 verified cross-references, and zero-dependency audit scripts (<a href="/tools/spw-parser/"><code>spw-integrity</code></a>, <code>wonder.mjs</code>, <code>spw-precipitate</code>) proving semantic claims instead of merely asserting them.</span>
+                            <span>306 authored <code>.spw</code> convention surfaces, 4,130 verified cross-references (100% resolve, checked 2026-09-04), and zero-dependency audit scripts (<a href="/tools/spw-parser/"><code>spw-integrity</code></a>, <code>wonder.mjs</code>, <code>spw-precipitate</code>) proving semantic claims instead of merely asserting them.</span>
                         </div>
                         <div class="frame-card" data-spw-form="circle" data-spw-operator="probe">
                             <span class="frame-card-sigil">?interactive_projections</span>
@@ -1141,9 +1141,33 @@
                     </div>
                 </div>
 
-                <!-- 2. FUTURE HORIZONS -->
+                <!-- 2. THE MOUNTED TOOL -->
+                <div class="frame-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" id="spw-workbench-tool" data-spw-feature="spw-workbench-tool" data-spw-semantic-expression="workbench[mounted]{cli.lsp.editors}">
+                    <h3>02. The Mounted Tool: <code>spw-workbench</code></h3>
+                    <p>Spw is not display-only prose dressed up as a language. <a href="https://github.com/spwashi/spw-workbench" data-spw-operator="ref"><code>spw-workbench</code></a> is a separate, open-source parser and tooling project Spwashi built and maintains; this site mounts it as a git submodule at <code>.spw/_workbench</code> and reads it, rather than re-implementing a second parser inline. The same package that produces this page's operator chips backs a CLI, a language server, and two editor clients:</p>
+                    <div class="frame-grid">
+                        <div class="frame-card" data-spw-form="brace" data-spw-operator="frame">
+                            <span class="frame-card-sigil">&amp;"spw_cli"</span>
+                            <strong><code>spw</code> CLI</strong>
+                            <span><code>doctor</code> checks the mount and submodule pin; <code>format</code> enforces one canonical <code>.spw</code> profile; <code>lattice</code>, <code>census</code>, and <code>graph</code> read hub degree, familiarity strands, and reference topology across a corpus; <code>mount</code>, <code>query</code>, and <code>select</code> resolve citations and selectors directly.</span>
+                        </div>
+                        <div class="frame-card" data-spw-form="square" data-spw-operator="object">
+                            <span class="frame-card-sigil">@"spw_lsp"</span>
+                            <strong>Language server</strong>
+                            <span>A real <code>textDocument/*</code> implementation — definition, references, rename, hover, document/workspace symbols, completion, code actions, semantic tokens, formatting, and diagnostics — plus custom <code>spw/*</code> probes for reference graphs, register snapshots, and operator frequency.</span>
+                        </div>
+                        <div class="frame-card" data-spw-form="circle" data-spw-operator="probe">
+                            <span class="frame-card-sigil">~"editor_clients"</span>
+                            <strong>VS&nbsp;Code, IntelliJ, Neovim</strong>
+                            <span>A VS&nbsp;Code extension (preview thin client, decorations for path refs / annotations / braces), an IntelliJ/WebStorm plugin with native rename backed by the same LSP, and an <code>nvim-lspconfig</code> entry — one shared vocabulary projected through each host's own idioms.</span>
+                        </div>
+                    </div>
+                    <p data-spw-textual-role="note"><strong>Reflection, not a press release</strong> — this is what running the tool against this exact repository turned up on 2026-09-04: <code>spw doctor</code> caught a real drift (<code>.spw/mount.spw</code> still declared the submodule at a commit one behind its actual, cleanly-checked-out HEAD) and it was repinned the same session; <code>spw format --check</code> found 65 of 323 <code>.spw</code> files off the canonical profile (trailing whitespace, missing final newlines) and reformatting brought that to zero; <code>spw:integrity</code>, this site's own resolver built on the mounted parser's citation extraction, confirmed all 4,130 cross-references above still resolve. Not every signal was trustworthy as-is: <code>spw graph</code>'s heuristic <code>brokenTargets</code> list named 43 "broken" citations that, spot-checked against source, were all live — an anchor-extractor gap in the tool itself (it doesn't yet recognize quoted <code>^"name"{}</code> frames or absolute <code>https://</code> citations), now logged in <code>.spw/README.md</code> rather than quietly patched around. The bundled LSP smoke suite (<code>npm run lsp:smoke</code>, run against the workbench's own doc corpus) currently passes 15 of 22 checks; the misses are open <code>@root</code>-resolution edges the workbench itself tracks, not gaps in this site's content. A tool worth mounting should be legible about what it gets wrong, not just what it catches.</p>
+                </div>
+
+                <!-- 3. FUTURE HORIZONS -->
                 <div class="frame-panel" data-spw-brace="subjective" data-spw-kind="panel" data-spw-role="reference">
-                    <h3>02. The Open Horizon: What Spw Unlocks Next</h3>
+                    <h3>03. The Open Horizon: What Spw Unlocks Next</h3>
                     <p>As software systems and artificial intelligence co-evolve, Spw provides the durable foundation for human-agent collaboration and long-term craft:</p>
                     <div class="operator-detail-grid">
                         <div class="frame-panel">
@@ -1161,9 +1185,9 @@
                     </div>
                 </div>
 
-                <!-- 3. COLLABORATIVE OFFERS -->
+                <!-- 4. COLLABORATIVE OFFERS -->
                 <div class="frame-panel" data-spw-brace="direction" data-spw-kind="panel" data-spw-role="call">
-                    <h3>03. Partner, Build, or Commission</h3>
+                    <h3>04. Partner, Build, or Commission</h3>
                     <p>Whether you are designing a specialized domain-specific language, building a high-craft local-first web application, or establishing a durable knowledge architecture for your organization, Spw offers a proven blueprint.</p>
                     <div class="frame-grid">
                         <a class="frame-card" href="/services/systems/" data-spw-operator="action">
