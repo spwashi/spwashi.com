@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the interaction semantics owner; skill, feedback, reversibility, and accessibility are the stable core.
+# Review 2026-09-04 — keep as the interaction semantics owner; the per-interaction phase ladder and boon/bane bridge both landed under interaction-microstates.spw and site-semantics.spw. Remaining scope is cross-session familiarity, vocabulary taste calls, and multi-language framing — see PLAN.md Status and wip.spw.
 # Plan Index — interaction-grammar
 #
 # The desired end state is a site interaction system that rewards familiarity: repeated use builds skill and fluency, interactions have a recognizable grammar, and the underlying…
@@ -50,18 +50,22 @@ intent: .{
 @wip: ~"./wip.spw"
 @interaction_grammar: ~"./interaction-grammar.spw"
 @compositional_css_electrostatics: ~"../compositional-css-electrostatics/index.spw"
+@interaction_microstates: ~"../../../.spw/conventions/interaction-microstates.spw"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
 
 dispatch: .{
  plan = @plan
  wip = @wip
  interaction_grammar = @interaction_grammar
  compositional_css_electrostatics = @compositional_css_electrostatics
+ interaction_microstates = @interaction_microstates
+ site_semantics = @site_semantics
 }[reg=facet]
 
 ^"connection_points"{
  owner_rail = `model-guided-refinement`
- related_plans = #[`compositional-css-electrostatics`, `interaction-loop-contract`, `gesture-state-refinement`][reg=set]
- handoff = `Tap/hold/swipe electrostatic payload experiments route here for semantic and accessibility review before runtime vocabulary changes.`
+ related_plans = #[`compositional-css-electrostatics`, `interaction-loop-contract`, `gesture-state-refinement`, `microinteraction-motion-lifecycle`][reg=set]
+ handoff = `Tap/hold/swipe electrostatic payload experiments route here for semantic and accessibility review before runtime vocabulary changes. The per-interaction phase ladder itself now lives in interaction-microstates.spw (.spw/conventions/), which this plan cites but does not own — this plan owns cross-session familiarity, brace-physics vocabulary taste calls, and multi-language framing on top of it.`
 }[reg=facet]
 
 ^"absorbs"{

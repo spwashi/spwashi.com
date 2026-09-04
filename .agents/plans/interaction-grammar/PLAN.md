@@ -2,6 +2,56 @@
 
 Develop practical interactive circuits that become satisfying and familiar over time, and rethink brace physics toward vocabulary that is more cognitively accessible — while using Spw to exercise spatial relationship and let other languages and notations shine through it.
 
+## Status — 2026-09-04
+
+This plan's first commit-sequence (April 2026) was never run; the two halves of its
+scope landed through other owners instead, and this file drifted out of sync with a
+much larger implemented system. Reconciling that drift:
+
+- **Brace physics vocabulary — resolved elsewhere.** `site-semantics.spw` and
+  `operator-semantics.spw` settled the question this plan raised: the objective →
+  subjective gradient is the primary brace-physics naming, and boon/bane survives
+  only as optional valence coloring layered on top, never the left/right physics
+  itself (`site-semantics.spw#brace_physics`, `operator-semantics.spw` caution note).
+  That is a bridge, not a replacement — the taste note in this plan's Goal held.
+- **Circuit/familiarity ladder — landed as `interaction-microstates.spw`, not the
+  planned files.** `public/js/spw-component-semantics.js` and
+  `public/js/spw-interaction-runtime.js` (listed below under Files) were never
+  written under those names; the runtime reorganized into `public/js/runtime/` and
+  `public/js/semantic/`. The actual circuit grammar is a phase ladder —
+  `idle → approach → prime → charge → inspect → discover → settle`
+  (`data-spw-interaction-phase`, owned by `interaction-progression.js`,
+  `interaction-vocabulary.js`, `interaction-hops.js`, `interaction-story.js`) — plus
+  a stated **reward contract**: every interaction resolves into feedback or reveals
+  reachable arcs; silent absorption is a contract violation, not a neutral outcome
+  (`.spw/conventions/interaction-microstates.spw#reward_contract`). Landmark hops,
+  cauldron gather/inspect/release, and tap:travel / swipe:cycle verbs are cross-
+  component instances of the same ladder (`#cross_component_hops`,
+  landed 2026-09-03 in `724caa1b`).
+- **Entry-level accessibility — held, and enforced by audit rather than by design
+  review.** The 2026-09-03 reward-contract probe found the ladder's real failure
+  mode was not gamification (the risk this plan worried about) but silent gates —
+  13 of 37 gesture-contract authorings (every route's hero hook) were wired to a
+  CSS rule that had no matching selector in `brace-gestures.js`, so tapping or
+  holding a hook did nothing. Fixed by adding the missing selector clause, not by
+  redesigning the ladder. This is the shape of scrutiny this plan should keep
+  asking for: audit *whether the contract is held*, not just whether it is stated.
+- **Still open, and now the actual scope of this plan:** everything here is a
+  *per-interaction* phase arc (idle to settle within one gesture). Nothing yet
+  distinguishes a first-time visitor's arc from a returning visitor's — the
+  "practiced → fluent → habitual" cross-session ladder from the Goal below is
+  unbuilt. So is the multi-language-surface work (Spw framing other notations in
+  the Pretext lab) and the 24 of 37 gesture contracts the 2026-09-03 probe left
+  unaudited (see `interaction-microstates.spw#wonder_interaction_microstates_1`).
+  See `wip.spw` for the refreshed open-question list and probe queue.
+
+The Goal, Scope, and Craft guard below are still the right target; the Files list
+and Commits sequence describe a 2026-04 implementation path that a different,
+better-documented path already superseded. Route new work through
+`interaction-microstates.spw` first, and land here only what that convention
+cannot own (cross-session familiarity, vocabulary taste calls, multi-language
+framing).
+
 ## Goal
 
 The desired end state is a site interaction system that rewards familiarity: repeated use builds skill and fluency, interactions have a recognizable grammar, and the underlying physics metaphor is legible enough to discuss, teach, and play with. A secondary aim is to make Spw useful as a substrate for exercising cognition and spatial relationship — where the grammar can illuminate how other languages, notations, and structures work rather than replacing them. The immediate task is twofold: design a progression ladder for interactive circuits (how interactions become familiar, then fluent, then habitual); and rethink whether the boon/bane vocabulary that names brace physics is cognitively accessible or whether it needs a bridge, supplement, or replacement. The taste note is **practiced grammar + honest physics**: interactions should feel learnable the way a musical instrument is learnable — rewarding fluency without requiring it — and the physics should work at the level of ordinary physical intuition before it becomes Spw doctrine.

@@ -1,4 +1,4 @@
-# Review 2026-07-12 — historical planning notebook; promote only tested vocabulary into the distilled semantic note.
+# Review 2026-09-04 — reconciled against the landed interaction-microstates.spw system; see PLAN.md Status.
 # wip — interaction-grammar
 #
 #>plan_interaction_grammar_wip
@@ -39,6 +39,12 @@ fixity = "tending"
  @cinematic_plan: ~".agents/plans/cinematic-handles/wip.spw"
  @components: ~"public/js/spw-component-semantics.js"
  @software: ~"topics/software/index.html"
+ @interaction_microstates: ~".spw/conventions/interaction-microstates.spw"
+ @interaction_progression: ~"public/js/runtime/interaction-progression.js"
+ @interaction_vocabulary: ~"public/js/runtime/interaction-vocabulary.js"
+ @interaction_hops: ~"public/js/runtime/interaction-hops.js"
+ @interaction_story: ~"public/js/runtime/interaction-story.js"
+ @site_semantics: ~".spw/conventions/site-semantics.spw"
 }
 
 ^["intent"]{
@@ -79,17 +85,25 @@ fixity = "tending"
  >>[2026-04-09] observe - Spw's potential as a spatial cognition exercise is most visible in the Pretext lab: line metrics become spatial relationships, constraints become visible forces, and the grammar of the measurement becomes something you can feel before you can name it.
  >>[2026-04-09] taste - Multi-language surfaces should feel like a generous host showing off a guest: the guest language teaches something about itself, the Spw framing provides the stage and the vocabulary for reflection, neither dominates.
  >>[2026-04-09] style - The brace physics vocabulary decision is a significant taste choice — it affects the operator atlas, the Pretext lab, the site-semantics, and every future description of how brace surfaces behave. Log it explicitly at commit 2.
+ >>[2026-09-04] observe - Neither of this plan's own commits ran. The boon/bane question and the circuit ladder both landed anyway, through site-semantics.spw/operator-semantics.spw and interaction-microstates.spw respectively — owned by other plans that were closer to the runtime reorg. Reconciled in PLAN.md Status; this file's @roots and open questions below are refreshed to point at the real surfaces.
+ >>[2026-09-04] decide - Boon/bane vocabulary question: resolved as a bridge, not a replacement. Objective/subjective is the primary brace-physics axis; boon/bane is optional valence coloring on top. Matches this plan's original taste note (physical intuition first, Spw doctrine second) — no further action needed unless a future audit finds the bridge is not holding.
+ >>[2026-09-04] observe - The 2026-09-03 reward-contract probe (interaction-microstates.spw#wonder_interaction_microstates_1) is the closest thing this plan has had to its own "test brace physics vocabulary with a user unfamiliar with Spw" validation step, except it tested contract-holding rather than vocabulary legibility: 13 of 37 gesture-contract authorings (every route's hero hook) were silently unwired. The failure mode this plan should watch for is not "too Spw-coded to learn" but "declared and not actually reachable" — a different, more mechanical risk than the one this plan anticipated in 2026-04.
+ >>[2026-09-04] observe - The per-interaction phase ladder (idle/approach/prime/charge/inspect/discover/settle) is thorough and cross-component (landmark hops, cauldron gather/inspect/release, tap:travel, swipe:cycle all resolve into it). It is still exactly one visit's arc. Nothing in interaction-microstates.spw distinguishes a first encounter from a tenth — the "practiced → fluent → habitual" half of this plan's Goal is the one piece of the original scope that is still genuinely open, not landed-elsewhere.
 }
 
 ^["open"]{
- ?[circuit_inventory]: "What circuits already exist implicitly — frame traversal, operator inspect, mode switch, keyboard path? What is the entry and fluency form of each?"
- ?[boon_bane_test]: "How should the legibility of boon/bane be tested — user observation, think-aloud session, or something else? What would make them clearly work or clearly need bridging?"
- ?[bridge_vocabulary]: "What physical-intuition vocabulary could bridge toward boon/bane — attract/release, gather/disperse, anchor/float, weight/lift, or something more specifically tied to the brace geometry?"
- ?[familiarity_signals]: "What signals does the site give when a circuit is being practiced — and how can those signals be subtle enough to feel reflective rather than gamified?"
- ?[multi_language_surfaces]: "Which other languages or notations have the most to teach about spatial relationship when framed by Spw — mathematical notation, musical notation, programming languages, natural language structure?"
+ ?[cross_session_familiarity]: "interaction-microstates.spw's phase ladder (idle/approach/prime/charge/inspect/discover/settle) is a per-visit circuit arc, not a per-visitor one. What would a returning-visitor signal look like without persisted-per-reader storage — interaction-microstates.spw#wonder_interaction_microstates_2 already commits to 'senses far more than it remembers, and remembers nothing about who touched it' as a stated privacy property. Is aggregate residue (effect ledger, visited-surfaces memory) enough to build the practiced→fluent→habitual arc on, or does that arc require crossing the privacy line this plan should not cross?"
+ ?[circuit_completion_moment]: "Given the ladder now resolves into settle every time, what marks fluency across repeat visits rather than completion within one? A subjective feeling of ease, a shortened phase arc (skipping approach/prime on a known landmark), or a piece of vocabulary suddenly making sense?"
+ ?[unaudited_contracts]: "24 of 37 gesture-contract authorings were not walked element-by-element in the 2026-09-03 probe (gather-search-term, toggle-lens, expand-trail, cycle-nearby, surface-current, open-companion, cycle-variant). Re-run the probe per-verb before assuming the reward contract holds for them."
+ ?[multi_language_surfaces]: "Which other languages or notations have the most to teach about spatial relationship when framed by Spw — mathematical notation, musical notation, programming languages, natural language structure? Still unstarted; topics/software/index.html is the named venue."
  ?[cognitive_exercise]: "What does it mean to exercise spatial cognition through this site — what spatial relationships does the site's grammar make legible, and which are still hidden?"
  ?[wonder_physics]: "How should the site create wonder about physics specifically — through the Pretext lab, through brace animation, through a dedicated physics surface, or through the texture of every interaction?"
- ?[circuit_completion_moment]: "What marks the transition from practiced to fluent in a circuit — a subjective feeling of ease, a new affordance becoming available, or a piece of vocabulary suddenly making sense?"
+}
+
+^["resolved"]{
+ boon_bane_vocabulary: "Resolved 2026-09-04 (landed earlier, elsewhere): objective/subjective is the primary brace-physics axis; boon/bane survives only as optional valence coloring. See site-semantics.spw#brace_physics and operator-semantics.spw. Bridge, not replacement — matches this plan's original taste note."
+ circuit_ladder: "Resolved 2026-09-04 (landed earlier, elsewhere): the per-interaction phase ladder plus reward contract in interaction-microstates.spw is the circuit grammar this plan asked for — landmark hops, cauldron gather/inspect/release, and tap:travel/swipe:cycle are its cross-component instances. What remains open is cross-session familiarity, tracked above."
+ entry_level_accessibility: "Held, but by mechanical audit rather than design review: the 2026-09-03 reward-contract probe found 13 of 37 gesture contracts silently unwired (hero hooks site-wide) and fixed the missing selector clause. Keep auditing whether the contract is held, not just whether it is declared."
 }
 
 ^["commits"]{
@@ -101,14 +115,14 @@ fixity = "tending"
 }
 
 ^["cache"]{
- ~#status: "planning"
- ~#base_ref: "main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22"
+ ~#status: "tending"
+ ~#base_ref: "main@0b458f40"
  ~#hygiene_split: "none"
- ~#files_hot: "public/js/spw-component-semantics.js, public/js/spw-interaction-runtime.js (planned), .spw/conventions/site-semantics.spw, public/css/style.css?v=0.0.2"
- ~#next_commit: "1"
- ~#open_count: "8"
- ~#last_stream: "2026-04-09"
- ~#taste_debt: "Brace physics vocabulary is a significant commitment — test legibility before deciding, then log the decision explicitly. Multi-language surfaces must remain honest: the guest language teaches itself; Spw provides the frame without subordinating the guest."
+ ~#files_hot: ".spw/conventions/interaction-microstates.spw, public/js/runtime/interaction-progression.js, public/js/runtime/interaction-vocabulary.js, public/js/runtime/interaction-hops.js, public/js/runtime/interaction-story.js, public/js/runtime/brace-gestures.js"
+ ~#next_commit: "n/a — this plan's own 5-commit sequence was superseded; route new work through interaction-microstates.spw and land here only cross-session familiarity, vocabulary taste calls, and multi-language framing"
+ ~#open_count: "6"
+ ~#last_stream: "2026-09-04"
+ ~#taste_debt: "Multi-language surfaces must remain honest: the guest language teaches itself; Spw provides the frame without subordinating the guest. Cross-session familiarity must not cross the stated privacy property (senses without remembering who) without a deliberate, logged decision to do so."
 }
 
 ^["done"]{

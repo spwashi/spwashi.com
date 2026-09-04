@@ -41,6 +41,60 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.
 
+## Maintenance Snapshot - 2026-09-04
+
+Trajectory review of the 29 commits ahead of `origin/main` (interaction runtime,
+electrostatics, climate-deferred CSS, screenshot/capture, and the pocket-frame
+plan wave). Two findings:
+
+**Interaction semantics reconciled.** `interaction-grammar/` — the named owner of
+"a site interaction system that rewards familiarity... a recognizable grammar" —
+had not been touched since 2026-04-09 despite both halves of its scope landing
+under other owners since: the boon/bane vocabulary question resolved in
+`site-semantics.spw`/`operator-semantics.spw` (objective/subjective is the primary
+brace-physics axis; boon/bane is optional valence coloring), and the circuit/
+familiarity ladder it asked for landed as `.spw/conventions/interaction-microstates.spw`
+(phase ladder `idle → approach → prime → charge → inspect → discover → settle`,
+a stated reward contract — "never silent absorption" — and cross-component hops
+for landmarks, cauldron gather/inspect/release, `tap:travel`/`swipe:cycle`).
+`interaction-grammar/PLAN.md`, `wip.spw`, and `index.spw` are now reconciled
+against that reality: what landed is cited back to its real owner, and what is
+genuinely still open — cross-session familiarity (practiced → fluent → habitual
+*across visits*, not within one interaction arc), the multi-language Pretext
+surface, and 24 of 37 gesture contracts the 2026-09-03 reward-contract probe left
+unaudited — is the plan's real remaining scope. `microinteraction-motion-lifecycle/`
+(the plan that actually landed this week's hop/cluster work) got its missing
+`index.spw` so it is inspectable the same way its siblings are.
+
+**Index drift: 16 active plans are not yet cited above.** Commits from
+2026-08-16 through 2026-09-04 landed real work owned by `module-export-uniformity/`,
+`runtime-module-decomposition/`, `operator-resonance-alignment/`,
+`microinteraction-motion-lifecycle/`, `creator-pathways/`, `core-css-spend-cut/`,
+`layout-seat-squeeze/`, `resume-record/`, `deploy-module-graph/`,
+`dimensional-expression-navigation/`, `css-scroll-dark-regression/`,
+`data-attribute-css-token-refinement/`, `semantic-classname-layers/`,
+`public-entrance-runtime-payload/`, `wrap-job-utility/`, and
+`alignment-content-fit/` — none of them named in this file's active-owner
+lists. All 16 have real `PLAN.md`/`FIX.md` content (none are zombie folders);
+`data-attribute-css-token-refinement/` and `module-export-uniformity/` already
+carry a full `index.spw`, but `microinteraction-motion-lifecycle/`,
+`creator-pathways/`, `core-css-spend-cut/`, `layout-seat-squeeze/`,
+`resume-record/`, `deploy-module-graph/`, `dimensional-expression-navigation/`,
+`semantic-classname-layers/`, `public-entrance-runtime-payload/`,
+`wrap-job-utility/`, and `alignment-content-fit/` still do not, which breaks the
+plan-index convention's `standalone_rule` (an index must be readable without
+opening `PLAN.md` first). Author those on next touch rather than in a batch —
+each needs an accurate `conceptual_model` and `connection_points`, which this
+pass did not have standing to guess for plans it did not implement.
+
+Separately, a smaller pattern worth watching: several older plans (confirmed in
+`interaction-loop-contract/PLAN.md`) still name pre-reorg flat paths
+(`public/js/spw-state-inspector.js`, `public/js/spw-image-metaphysics.js`) for
+work that landed under `public/js/runtime/` (`interaction-loop.js`,
+`state-inspector.js`) instead. Treat any plan citing a bare `public/js/spw-*.js`
+path as a stale-path candidate until confirmed against the current tree, the
+same way `interaction-grammar/` was reconciled here.
+
 ## Maintenance Snapshot - 2026-07-12
 
 Plan indexes now expose standalone semantics: `conceptual_model`, `plan_refinement` (tone, accuracy, direction, inspiration, alignment), `research_bridge`, `connection_points`, and `archive_status` (see `.spw/conventions/plan-index.spw`). Hand-refined plans live in `scripts/plan-refinements-data.mjs`. Validate reviewed indexes with `npm run plans:index:check`; rebuilding them requires an explicit `--force-generated` review. Local research routes through 2026-07 audits and appendices via `planning-ecology.spw#research_bridge_map`.

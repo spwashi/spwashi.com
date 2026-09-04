@@ -1,0 +1,86 @@
+# Review 2026-09-04 — keep as the cross-hop interaction-arc owner; landed alongside its own implementation commit (831f52a1), unlike most plans in this tree.
+# Plan Index — microinteraction-motion-lifecycle
+#
+# Make component interaction arcs visible across hops — landmark rooms,
+# cauldron gather/inspect/release — and spend the existing ornament cluster
+# as a partial reading of gathered conceptual payloads.
+
+#>plan_microinteraction_motion_lifecycle_index
+#:index #!plan
+#:operation #!contract
+#:layer #!pragmatics
+
+operation = "contract"
+fixity = "stable"
+
+intent: .{
+  goal = `Make component interaction arcs visible across hops — landmark rooms, cauldron gather/inspect/release — and spend the existing ornament cluster as a partial reading of gathered conceptual payloads. No new data-spw-* families; clustering is a display reading of the existing store, not a reordering of it.`
+  owner = `microinteraction-motion-lifecycle`
+  kind = `plan`
+  bucket = `active_backlog`
+  artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+  practice_depth = "observation | tending"
+  semantic_layer = "pragmatics"
+  collaboration_phase = "tending"
+  memory_tier = "hot"
+  bucket = "active_backlog"
+}[reg=facet]
+
+@plan: ~"./PLAN.md"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@interaction_grammar: ~"../interaction-grammar/index.spw"
+@interaction_microstates: ~"../../../.spw/conventions/interaction-microstates.spw"
+@cauldron_dynamics: ~"../../../.spw/conventions/cauldron-dynamics.spw"
+@component_region_personality: ~"../../../.spw/conventions/component-region-personality.spw"
+@cauldron_storage: ~"../../../public/js/interface/cauldron/storage.js"
+@interaction_hops: ~"../../../public/js/runtime/interaction-hops.js"
+@interaction_story: ~"../../../public/js/runtime/interaction-story.js"
+@cauldron_clusters_test: ~"../../../scripts/tests/cauldron-clusters.test.mjs"
+
+dispatch: .{
+  plan = @plan
+  interaction_grammar = @interaction_grammar
+  interaction_microstates = @interaction_microstates
+  cauldron_dynamics = @cauldron_dynamics
+  component_region_personality = @component_region_personality
+}[reg=facet]
+
+^"connection_points"{
+  owner_rail = `interaction-grammar`
+  related_plans = #[`interaction-grammar`, `interaction-loop-contract`, `compositional-css-electrostatics`][reg=set]
+  handoff = `This plan spends the per-interaction phase ladder interaction-microstates.spw owns — landmark hop, cauldron gather/inspect/release, tap:travel, swipe:cycle — into a visible cross-hop story (section-handle overlay, cluster ornament, charge-field bump). It does not define new phases; new phase vocabulary routes through interaction-microstates.spw and interaction-grammar first.`
+}[reg=facet]
+
+^"owner_claim"{
+  claim_id = "plan-microinteraction_motion_lifecycle-001"
+  layer = "pragmatic"
+  hypothesis = `A landmark hop, handle travel, or cauldron gather reads as one continuous interaction arc — not a silent state or URL change — when the section handle documents phase+pulse+liminality+loop+hash as a live story and existing ornament clusters group gathered chips by their winning shared axis.`
+  spec_ref = ~"./PLAN.md"
+  impl_ref = ~"../../../public/js/runtime/interaction-hops.js"
+  probe_ref = `node --test --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs scripts/tests/cauldron-clusters.test.mjs`
+  falsification = `A patch cannot satisfy the public goal while leaving cauldron-clusters.test.mjs failing or interaction-hops.js/interaction-story.js unchanged for a new hop kind.`
+  status = "active"
+}[reg=facet]
+
+validation: #[
+  `node --test --test-force-exit --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs scripts/tests/cauldron-clusters.test.mjs`,
+  `git diff --check`,
+  `node --check on edited JS`,
+  `npm run smoke:nav -- --routes /,/about/ --require-settled --fail-on-console-error --fail-on-overflow-x`,
+][reg=set]
+
+editor_prompts: #[
+  .{ ask = `What does microinteraction-motion-lifecycle own, and what should stay out of scope?`, see = @plan }[reg=facet],
+  .{ ask = `What phase ladder does this plan spend rather than define?`, see = @interaction_microstates }[reg=facet],
+  .{ ask = `What command falsifies whether cluster/hop wiring still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+  `Owner intent: interaction arcs stay visible across hops without inventing new data-spw-* families or reordering the stored cauldron.`,
+  `PLAN.md sequences; index.spw routes inspection and selection.`,
+  `New phase vocabulary is interaction-microstates.spw's to define; this plan only spends it.`,
+][reg=set]
