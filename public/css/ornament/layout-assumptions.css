@@ -45,14 +45,14 @@ html[data-spw-layout-assumptions-active="true"][data-spw-layout-correction*="cle
 }
 
 html[data-spw-layout-assumptions-active="true"] :where(
-  [data-spw-layout-assumption-correction]
+  [data-spw-layout-assumption-correction]:not([data-spw-floating-chrome="true"])
 ) {
   position: relative;
   box-shadow: var(--spw-assumption-correction-ring);
 }
 
 html[data-spw-layout-assumptions-active="true"] :where(
-  [data-spw-layout-assumption-correction]
+  [data-spw-layout-assumption-correction]:not([data-spw-floating-chrome="true"])
 )::after {
   content: "";
   position: absolute;

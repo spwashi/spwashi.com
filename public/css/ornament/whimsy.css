@@ -30,11 +30,19 @@
    ========================================================================== */
 
 :where(.frame-sigil, [data-spw-operator], .spw-chip) {
-    position: relative;
     transition:
         color var(--spw-fold-duration) var(--spw-fold-ease),
         background-color var(--spw-fold-duration) var(--spw-fold-ease),
         border-color var(--spw-fold-duration) var(--spw-fold-ease);
+}
+
+/* Ornament may tint operator chrome; its layout remains with the chrome owner. */
+:where(
+    .frame-sigil:not([data-spw-floating-chrome="true"]),
+    [data-spw-operator]:not([data-spw-floating-chrome="true"]),
+    .spw-chip:not([data-spw-floating-chrome="true"])
+) {
+    position: relative;
 }
 
 :where(.frame-sigil:hover, .frame-sigil:focus-visible,
@@ -384,7 +392,13 @@
 @media (max-width: 48rem) {
     :where(button, .spw-chip, label) {
         min-height: var(--touch-target-min, 2.75rem);
-        display: flex;
-        align-items: center;
     }
+}
+
+/* Operator-handle paint in handles/operators/primitive.css is display:inline-flex.
+   Collapsed page-travel must keep advanced kin steps out of the pocket row. */
+:where(
+    [data-spw-floating-chrome="true"][data-spw-handle-shell-state="collapsed"]
+) :where([data-spw-handle-advanced="true"]) {
+    display: none;
 }

@@ -62,10 +62,18 @@
   --spw-role-edge: color-mix(in oklab, var(--spw-role-accent) 34%, transparent);
   --spw-role-settle: var(--duration-base, 220ms);
 
-  position: relative;
   transition:
     box-shadow var(--spw-role-settle) var(--ease-smooth, ease),
     border-color var(--spw-role-settle) var(--ease-smooth, ease);
+}
+
+/* Floating chrome owns fixed positioning in components/floating-chrome.css.
+   Runtime operator resolution must not pull those controls back into page flow. */
+:where(
+  [data-spw-electrostatic-role]:not([data-spw-floating-chrome="true"]),
+  [data-spw-operator]:not([data-spw-floating-chrome="true"])
+) {
+  position: relative;
 }
 
 /* --------------------------------------------------------------------------

@@ -1188,14 +1188,14 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 
 /* Region profiler + deferred enrichment: reserve outline budget before harmony rails activate.
 
-   `body` and the shell header are excluded. The region profiler writes
-   data-spw-region-state onto <body> as well as onto in-page regions, so without
-   the exclusion `contain: layout` applied to the body box — establishing a
+   The document roots and shell header are excluded. The region profiler writes
+   data-spw-region-state onto <html>/<body> as well as onto in-page regions, so
+   without the exclusion `contain: layout` applied to a full-document box — establishing a
    containing block for EVERY `position: fixed` descendant in the document.
    Console, state-inspector, discovery toasts, region-menu and site-search all
    append themselves to document.body, so all of them were being contained by
    the full-height body box instead of the viewport. */
-:where([data-spw-region-state]:not(body):not(.site-header)) {
+:where([data-spw-region-state]:not(html):not(body):not(.site-header)) {
   contain: layout style;
   min-width: 0;
   outline: var(--spw-layout-shift-guard, 1px) solid transparent;

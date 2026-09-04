@@ -85,6 +85,37 @@
   overflow-wrap: normal;
 }
 
+/* The section rail is a shrinking flex row. Preserve real button targets while
+   allowing its current-room sentence to yield before the next-room control. */
+:where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) {
+  min-inline-size: 0;
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) :where(button) {
+  min-inline-size: var(--touch-target-compact, 2.25rem);
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) :where(.spw-section-handle-current) {
+  min-inline-size: 8ch;
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+/* Later layers restyle operator buttons as flex; collapsed advanced travel
+   must stay out of the pocket row so the current-room sentence can yield. */
+:where(
+  [data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"][data-spw-handle-shell-state="collapsed"]
+) :where([data-spw-handle-advanced="true"]) {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) :where(button) {
+    min-inline-size: var(--touch-target-min, 2.75rem);
+  }
+}
+
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="floating"]) {
   --spw-floating-tier-z: var(--z-floating, var(--layer-floating, 100));
 }
