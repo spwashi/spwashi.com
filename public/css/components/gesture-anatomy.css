@@ -105,7 +105,8 @@
   .vibe-widget [data-spw-slot]:not([data-spw-slot=""])
 ) {
   outline: 1px dashed color-mix(in srgb, var(--gesture-anatomy-accent) 14%, transparent);
-  outline-offset: 3px;
+  outline-offset: -2px;
+  padding-block-start: 0.62rem;
   transition: outline-color var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
