@@ -1291,6 +1291,12 @@ html[data-spw-reduce-motion="on"] *::after {
   --spw-reading-rest-opacity: 0.86;
   --spw-reading-near-opacity: 0.96;
   --spw-reading-lead-opacity: 1;
+  /* Catalog recipe only. --charge and --spw-resonance do not inherit, so
+     this :root calc resolves at rest. Frames restate it from reports. */
+  --spw-attention-charge: 0;
+  --spw-attention-resonance: 0;
+  --spw-attention-opacity: var(--spw-reading-rest-opacity, 0.86);
+  --spw-attention-light: 0.48;
   --spw-reading-near-shift: 0.035rem;
   --spw-reading-lead-shift: 0.06rem;
   --spw-reading-rest-color: color-mix(in oklab, var(--ink-soft, rgba(14, 18, 20, 0.74)) 96%, var(--ink, rgba(14, 18, 20, 0.92)) 4%);
@@ -1334,6 +1340,39 @@ html[data-spw-reduce-motion="on"] *::after {
   --shape-surface: var(--radius-md);
   --shape-floating: var(--radius-lg);
   --shape-cinematic: var(--radius-xl);
+}
+
+/* Local-first channels → inheriting reports. Spend ink/light from these,
+   not from --charge / --spw-resonance, or descendants stay at rest.
+   Do not redeclare the reports on cards or pseudos — that zeros them. */
+:where(.spw-frame, [data-spw-kind="frame"]) {
+  --spw-attention-charge: var(--charge);
+  --spw-attention-resonance: var(--spw-resonance);
+  --spw-attention-opacity: clamp(
+    0.72,
+    calc(
+      var(--spw-reading-rest-opacity, 0.86)
+      - ((var(--spw-pack-occupancy-weight, 0.5) - 0.5) * 0.08)
+      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-resonance, 0))
+      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-charge, 0) * 0.45)
+      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention, 0) * 0.25)
+    ),
+    1
+  );
+  --spw-attention-light: clamp(
+    0.32,
+    calc(
+      0.48
+      + (var(--spw-attention-charge, 0) * 0.32)
+      + (var(--spw-attention-resonance, 0) * 0.22)
+      + (var(--spw-attention, 0) * 0.12)
+    ),
+    0.95
+  );
+}
+
+:where([data-spw-operator]) {
+  --spw-attention-resonance: var(--spw-resonance);
 }
 
 
@@ -12657,10 +12696,20 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
     box-shadow 420ms var(--ease-settle, ease);
 }
 
+/* A frame you are in should not stay dim. Inheritance spends the lift
+   without enumerating route × region selectors. */
+:where(html[data-spw-reading-groove="on"] .spw-frame:has(:is(:hover, :focus-within, [data-spw-reading-beat="lead"]))) {
+  --spw-reading-rest-opacity: var(--spw-reading-near-opacity, 0.96);
+}
+
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]) {
-  opacity: var(--spw-reading-rest-opacity, 0.86);
+  opacity: var(--spw-attention-opacity, var(--spw-reading-rest-opacity, 0.86));
   color: var(--spw-reading-rest-color, inherit);
   filter: saturate(0.98);
+}
+
+:where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]:is(:hover, :focus-within)) {
+  opacity: var(--spw-reading-near-opacity, 0.96);
 }
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="near"]) {
@@ -17485,8 +17534,18 @@ html[data-spw-color-mode="dark"] :where(
   --spw-debug-layer-owner: "components";
   --spw-debug-layer-color: #9933cc;
 
-  /* Card detail tokens */
-  --card-secondary-opacity: var(--component-card-detail-opacity, 0.86);
+  /* Card detail tokens. Occupancy recedes secondary when the host is full;
+     resonance/charge lift it. Hover below still wins at 1. */
+  --card-secondary-opacity: clamp(
+    0.7,
+    calc(
+      var(--component-card-detail-opacity, 0.86)
+      + ((var(--spw-pack-occupancy-weight, 0.5) - 0.5) * 0.32)
+      + (var(--spw-attention-resonance, 0) * 0.16)
+      + (var(--spw-attention-charge, 0) * 0.08)
+    ),
+    1
+  );
   --card-secondary-shift: calc(var(--component-card-detail-shift, 0) * 1px);
   --card-secondary-weight: var(--component-card-detail-weight, 0);
   --card-rhythm: clamp(0.58rem, 1.8cqi, 0.85rem);
@@ -17520,6 +17579,21 @@ html[data-spw-color-mode="dark"] :where(
   .compare-card
 ):is([data-spw-density="roomy"], [data-spw-density="soft"], [data-spw-density="reading"]) {
   --card-rhythm: clamp(0.7rem, 2.1cqi, 1.05rem);
+}
+
+:where(
+  .spw-card,
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .ref-card,
+  .compare-card
+):is(:hover, :focus-within, [data-spw-gesture="armed"], [data-spw-card-state="active"], [data-spw-card-state="expanded"]) {
+  --card-secondary-opacity: 1;
 }
 
 :where(.spw-card, .frame-card, .frame-card > a:first-child, .spw-card > a:first-child) {
@@ -33347,7 +33421,7 @@ html[data-spw-page-section-phase="idle"] {
     var(--spw-role-accent),
     transparent
   );
-  opacity: 0.55;
+  opacity: var(--spw-attention-light, 0.48);
   pointer-events: none;
 }
 

@@ -147,6 +147,30 @@ expression = attention[field]{gradient.uptake.scarcity}<spend>
   validation: "Any new resonance, collection, or attention-bearing surface must declare the data attributes it writes and the events it emits, then survive the two claims above."
 }
 
+^"ink_and_light_spend"{
+  operation = "contract"
+  fixity = "tending"
+  claim = `Opacity and light follow attention by composing inherited reports, not by reading --charge or --spw-resonance on descendants.`
+  why = `--charge and --spw-resonance are @property inherits:false (local JS/CSS writes). A :root calc resolves at rest (resonance 0) and children inherit that number, so ink ignores the place you are looking.`
+  reports = .{
+    charge = `--spw-attention-charge, set on .spw-frame from local --charge`
+    resonance = `--spw-attention-resonance, set on .spw-frame from local --spw-resonance and on [data-spw-operator] from the neighbor echo`
+    attention = `--spw-attention already inherits; approach/register surfaces lift without a proxy`
+    occupancy = `--spw-pack-occupancy-weight from density/occupancy; full recedes rest and secondary, sparse lifts`
+  }[reg=facet]
+  spend = .{
+    ink = `--spw-attention-opacity on the frame: rest floor minus occupancy nudge, plus resonance, charge×0.45, attention×0.25, clamp 0.72–1`
+    light = `--spw-attention-light on the frame: 0.48 + charge×0.32 + resonance×0.22 + attention×0.12, clamp 0.32–0.95`
+    rest_beats = `[data-spw-reading-beat=rest] spends --spw-attention-opacity; hover/focus-within still wins at near`
+    channel = `channel ::before spends --spw-attention-light; do not calc --charge on the pseudo`
+    cards = `--card-secondary-opacity mixes occupancy-weight, reports, and --component-card-detail-opacity; hover/focus-within = 1`
+  }[reg=facet]
+  neighbors = `wonder.css :has() writes --spw-resonance on matching operators (ring). Frame :has(:hover|:focus-within|lead) lifts --spw-reading-rest-opacity to near so rest copy in the attended frame is not left dim.`
+  region_relative = `Seats (hook/hub/cluster/path/read) spend wash/seam via --spw-region-*-spent plus harmony/density/occupancy biases. Do not factorial route × region selectors for ink.`
+  anti = `Do not redeclare --spw-attention-charge or --spw-attention-resonance on cards or ::before — var(--charge, 0) on a child is the registered initial 0 and wipes the frame report.`
+  impl_ref = `public/css/tokens/core.css + typography/typesetting.css + components/cards.css + systems/electrostatic-roles.css + effects/wonder.css + systems/region-seats.css + tokens/dimensions.css`
+}
+
 ^"practice_and_resonance_rhythms"{
   definition: "Attention-bearing features should support a cycle of noticing, adjustment, resonance, and sedimentation without making every interaction loud."
   notice: .{

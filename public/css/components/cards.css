@@ -24,8 +24,18 @@
   --spw-debug-layer-owner: "components";
   --spw-debug-layer-color: #9933cc;
 
-  /* Card detail tokens */
-  --card-secondary-opacity: var(--component-card-detail-opacity, 0.86);
+  /* Card detail tokens. Occupancy recedes secondary when the host is full;
+     resonance/charge lift it. Hover below still wins at 1. */
+  --card-secondary-opacity: clamp(
+    0.7,
+    calc(
+      var(--component-card-detail-opacity, 0.86)
+      + ((var(--spw-pack-occupancy-weight, 0.5) - 0.5) * 0.32)
+      + (var(--spw-attention-resonance, 0) * 0.16)
+      + (var(--spw-attention-charge, 0) * 0.08)
+    ),
+    1
+  );
   --card-secondary-shift: calc(var(--component-card-detail-shift, 0) * 1px);
   --card-secondary-weight: var(--component-card-detail-weight, 0);
   --card-rhythm: clamp(0.58rem, 1.8cqi, 0.85rem);
@@ -59,6 +69,21 @@
   .compare-card
 ):is([data-spw-density="roomy"], [data-spw-density="soft"], [data-spw-density="reading"]) {
   --card-rhythm: clamp(0.7rem, 2.1cqi, 1.05rem);
+}
+
+:where(
+  .spw-card,
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .ref-card,
+  .compare-card
+):is(:hover, :focus-within, [data-spw-gesture="armed"], [data-spw-card-state="active"], [data-spw-card-state="expanded"]) {
+  --card-secondary-opacity: 1;
 }
 
 :where(.spw-card, .frame-card, .frame-card > a:first-child, .spw-card > a:first-child) {

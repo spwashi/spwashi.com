@@ -198,10 +198,20 @@
     box-shadow 420ms var(--ease-settle, ease);
 }
 
+/* A frame you are in should not stay dim. Inheritance spends the lift
+   without enumerating route × region selectors. */
+:where(html[data-spw-reading-groove="on"] .spw-frame:has(:is(:hover, :focus-within, [data-spw-reading-beat="lead"]))) {
+  --spw-reading-rest-opacity: var(--spw-reading-near-opacity, 0.96);
+}
+
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]) {
-  opacity: var(--spw-reading-rest-opacity, 0.86);
+  opacity: var(--spw-attention-opacity, var(--spw-reading-rest-opacity, 0.86));
   color: var(--spw-reading-rest-color, inherit);
   filter: saturate(0.98);
+}
+
+:where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]:is(:hover, :focus-within)) {
+  opacity: var(--spw-reading-near-opacity, 0.96);
 }
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="near"]) {
