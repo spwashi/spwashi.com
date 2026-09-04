@@ -35,6 +35,7 @@ cauldron_payload_clusters: .{
   density = `data-spw-ornament-density medium at 2–3, high at 4+`
   sibling_resonance = `data-spw-sibling-resonance=true on clustered groups only`
   note = `Unclustered fragments remain a flat list. Ornament does not invent the grouping axis.`
+  issue_hint = `Route-clustered gatherings and same-page kin may label as this issue / this page in the kicker. That is a reading of provenance, not a new family. Seasonal collectibles stay imagined in copy until a later store earns them.`
 }[reg=facet]
 
 ornament_classes: .{

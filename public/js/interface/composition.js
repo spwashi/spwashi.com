@@ -1155,6 +1155,18 @@ function renderIngredientChip(ing, idx) {
     `;
 }
 
+function clusterIssueHint(group) {
+  if (!group?.clustered) return '';
+  if (group.axis === 'route') return ' · this issue';
+  const routes = new Set(
+    group.items
+      .map(({ ingredient }) => String(ingredient?.provenance?.route || '').trim())
+      .filter(Boolean),
+  );
+  if (routes.size === 1) return ' · this page';
+  return '';
+}
+
 function renderIngredientCluster(group, clusterOrdinal = 0) {
   const chips = group.items.map(({ ingredient, index }) => renderIngredientChip(ingredient, index)).join('');
   if (!group.clustered) return chips;
@@ -1164,11 +1176,12 @@ function renderIngredientCluster(group, clusterOrdinal = 0) {
   const attrName = CLUSTER_AXIS_ATTR[group.axis];
   const key = escapeHtml(group.key);
   const axisAttr = attrName && group.key ? ` ${attrName}="${key}"` : '';
-  const kicker = `${key} · ${count}`;
+  const issueHint = clusterIssueHint(group);
+  const kicker = `${key} · ${count}${issueHint}`;
   const themeCharge = themeClusterCharge(group.items);
   const themeAttr = themeCharge ? ` data-spw-theme-cluster="${themeCharge}"` : '';
 
-  return `<span class="spw-ornament-cluster" role="group" data-spw-sibling-resonance="true" data-spw-ornament-density="${density}" data-spw-ornament-state="revealed"${axisAttr}${themeAttr} style="--spw-theme-cluster-index:${clusterOrdinal}" aria-label="${count} ${key} fragments"><span class="spw-ornament-kicker">${kicker}</span>${chips}</span>`;
+  return `<span class="spw-ornament-cluster" role="group" data-spw-sibling-resonance="true" data-spw-ornament-density="${density}" data-spw-ornament-state="revealed"${axisAttr}${themeAttr} style="--spw-theme-cluster-index:${clusterOrdinal};--spw-cluster-index:${clusterOrdinal}" aria-label="${count} ${key} fragments${issueHint}"><span class="spw-ornament-kicker">${kicker}</span>${chips}</span>`;
 }
 
 function renderIngredientsList(ingredients) {

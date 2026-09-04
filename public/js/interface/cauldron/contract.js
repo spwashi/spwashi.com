@@ -156,7 +156,7 @@ export const CAULDRON_VESSEL_KEY = 'spw:cauldron-vessel';
 /** Open set. Named demos first; any other id still writes cauldron[id]{gather.mix.cast}. */
 export const CAULDRON_VESSELS = Object.freeze({
   garden: {
-    kicker: 'garden bed',
+    kicker: 'garden bed · this issue',
     expression: 'cauldron[garden]{sow.tend.harvest}',
     phases: ['sow', 'tend', 'mix', 'harvest'],
     mix: '!mix[harvest]',
@@ -322,7 +322,7 @@ export function getCauldronStatusCopy(count, phase) {
     ? `${available} prime sources are visible on this page.`
     : 'No prime sources are visible in this viewport yet.';
   if (phase === 'empty') {
-    return `Hold a living term or brace to save it as a fragment. ${availabilityCopy}`;
+    return `Hold a living term or brace to save it as a fragment. Kin from this page can cluster into this issue's gathering. ${availabilityCopy}`;
   }
   if (phase === 'primed') {
     return '1 saved fragment. Add another fragment to compose an extension, or nourish this one for later.';
