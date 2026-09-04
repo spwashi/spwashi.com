@@ -176,6 +176,12 @@ export function nextKinRelation(current = 'similar') {
   return KIN_CYCLE[(index + 1) % KIN_CYCLE.length];
 }
 
+export function prevKinRelation(current = 'similar') {
+  const index = KIN_CYCLE.indexOf(current);
+  const from = index >= 0 ? index : 0;
+  return KIN_CYCLE[(from + KIN_CYCLE.length - 1) % KIN_CYCLE.length];
+}
+
 export const SPW_REGION_KIN_CONTRACT = Object.freeze({
   moves: KIN_MOVES,
   cycle: KIN_CYCLE,

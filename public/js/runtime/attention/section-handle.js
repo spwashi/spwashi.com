@@ -6,7 +6,7 @@ import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import { computeLocomotionFieldBalance } from '/public/js/interface/wonder-memory.js';
 import { describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 import { describeWrapScan } from '/public/js/semantic/spw-compose.js';
-import { kinIds, nextKinRelation, pickRegionKin } from '/public/js/runtime/region-kin.js';
+import { kinIds, nextKinRelation, pickRegionKin, prevKinRelation } from '/public/js/runtime/region-kin.js';
 import {
   AUTO_HANDLE_MIN_SECTIONS,
   APPROACH_ATTR,
@@ -914,6 +914,37 @@ function travelSectionHandleToIndex({
   updateActiveState(source);
 }
 
+export const SECTION_HANDLE_SWIPE_DELTA_PX = 48;
+
+/**
+ * Collapsed pocket rail: swipe cycles the visible ‹ › rooms.
+ * Expanded rail: swipe cycles kin, because those controls are on-screen.
+ * A sub-threshold drag is not a swipe.
+ */
+export function resolveSectionHandleSwipe({
+  compact = false,
+  dx = 0,
+  activeIndex = 0,
+  sectionCount = 0,
+  kinFocus = 'similar',
+} = {}) {
+  if (!Number.isFinite(dx) || Math.abs(dx) < SECTION_HANDLE_SWIPE_DELTA_PX) return null;
+  const forward = dx < 0;
+  if (compact) {
+    const nextIndex = activeIndex + (forward ? 1 : -1);
+    if (nextIndex < 0 || nextIndex >= sectionCount) return null;
+    return {
+      mode: 'section',
+      nextIndex,
+      source: forward ? 'next' : 'prev',
+    };
+  }
+  return {
+    mode: 'kin',
+    relation: forward ? nextKinRelation(kinFocus) : prevKinRelation(kinFocus),
+  };
+}
+
 function setSectionHandleCompactMode(state, shell, toggleButton) {
   syncSectionHandleShellState(shell, toggleButton, state.compact);
 }
@@ -968,6 +999,10 @@ function createSectionHandleController({
   };
 
   const handleButtonClick = (event) => {
+    if (suppressClick) {
+      event.preventDefault();
+      return;
+    }
     const button = event.target.closest?.('[data-spw-handle-target]');
     if (!(button instanceof HTMLButtonElement)) return;
     const target = button.dataset.spwHandleTarget || '';
@@ -1104,6 +1139,13 @@ function createSectionHandleController({
 
   let swipeStartX = 0;
   let swipeArmed = false;
+  let suppressClick = false;
+  const armClickSuppress = () => {
+    suppressClick = true;
+    window.setTimeout(() => {
+      suppressClick = false;
+    }, 40);
+  };
   const handleShellPointerDown = (event) => {
     if (event.pointerType === 'mouse' && event.button !== 0) return;
     swipeStartX = event.clientX || 0;
@@ -1113,32 +1155,51 @@ function createSectionHandleController({
     if (!swipeArmed) return;
     swipeArmed = false;
     const dx = (event.clientX || 0) - swipeStartX;
-    if (Math.abs(dx) < 48) return;
-    const current = shell.dataset.spwRegionKinFocus || 'similar';
-    const next = dx < 0 ? nextKinRelation(current) : (
-      current === 'similar' ? 'resonate' : current === 'resonate' ? 'contrast' : 'similar'
-    );
-    shell.dataset.spwRegionKinFocus = next;
-    const button = refs[`${next}Button`];
-    const kinId = button?.dataset.spwRegionTarget || '';
-    const nextIndex = sections.findIndex((section, index) => (
-      (section.id || ensureSectionId(section, index)) === kinId
-    ));
-    if (nextIndex >= 0) {
-      event.preventDefault();
+    const intent = resolveSectionHandleSwipe({
+      compact: state.compact,
+      dx,
+      activeIndex: state.activeIndex,
+      sectionCount: sections.length,
+      kinFocus: shell.dataset.spwRegionKinFocus || 'similar',
+    });
+    if (!intent) return;
+    armClickSuppress();
+    event.preventDefault();
+    if (intent.mode === 'section') {
       travelSectionHandleToIndex({
         sections,
         state,
         shell,
         handle,
         updateActiveState,
-        nextIndex,
-        source: next,
+        nextIndex: intent.nextIndex,
+        source: intent.source,
       });
+      return;
     }
+    shell.dataset.spwRegionKinFocus = intent.relation;
+    const button = refs[`${intent.relation}Button`];
+    const kinId = button?.dataset.spwRegionTarget || '';
+    const nextIndex = sections.findIndex((section, index) => (
+      (section.id || ensureSectionId(section, index)) === kinId
+    ));
+    if (nextIndex < 0) return;
+    travelSectionHandleToIndex({
+      sections,
+      state,
+      shell,
+      handle,
+      updateActiveState,
+      nextIndex,
+      source: intent.relation,
+    });
   };
 
-  const handleCurrentClick = () => {
+  const handleCurrentClick = (event) => {
+    if (suppressClick) {
+      event.preventDefault();
+      return;
+    }
     state.phase = 'traveling';
     syncSectionHandlePhase(shell, handle, 'traveling');
     window.clearTimeout(state.travelTimer);
@@ -1214,6 +1275,11 @@ function createSectionHandleController({
     runUpdate('resize');
   };
 
+  shell.addEventListener('click', (event) => {
+    if (!suppressClick) return;
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
   shell.addEventListener('click', handleButtonClick);
   shell.addEventListener('keydown', handleShellKeydown);
   shell.addEventListener('pointerdown', handleKinPointerDown);

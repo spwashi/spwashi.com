@@ -6,6 +6,8 @@ import {
   pickKinLabel,
   pickRegionKin,
   wonderOverlap,
+  nextKinRelation,
+  prevKinRelation,
   KIN_MOVES,
 } from '../../public/js/runtime/region-kin.js';
 
@@ -69,4 +71,12 @@ test('pickRegionKin prefers the next region in document order', () => {
   assert.equal(kin.similar.id, 'cluster-b');
   assert.equal(kin.contrast.id, 'read');
   assert.equal(kin.resonate.id, 'cluster-b');
+});
+
+test('kin cycle walks similar → contrast → resonate both ways', () => {
+  assert.equal(nextKinRelation('similar'), 'contrast');
+  assert.equal(nextKinRelation('resonate'), 'similar');
+  assert.equal(prevKinRelation('similar'), 'resonate');
+  assert.equal(prevKinRelation('resonate'), 'contrast');
+  assert.equal(prevKinRelation('contrast'), 'similar');
 });
