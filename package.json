@@ -104,6 +104,8 @@
     "visual:ecology": "node scripts/component-snapshots.mjs --ecology --no-components --flows region --viewports pocket,fold,broadsheet",
     "visual:stills": "node scripts/component-snapshots.mjs --stills --viewports pocket",
     "visual:checks": "node scripts/component-snapshots.mjs --stills --checks --viewports pocket",
+    "visual:explore": "node scripts/component-snapshots.mjs --profile explore --ecology",
+    "visual:stabilize": "node scripts/component-snapshots.mjs --profile stabilize --ecology --retry-errors",
     "visual:walk": "node scripts/component-snapshots.mjs --profile walk --viewports pocket",
     "visual:survey": "node scripts/component-snapshots.mjs --profile survey --viewports pocket",
     "visual:social": "node scripts/component-snapshots.mjs --social-only --precipitate --aspects fit,square,portrait",

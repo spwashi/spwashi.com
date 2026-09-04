@@ -91,6 +91,34 @@
   refuse = `Do not require authentication or remote services to inspect specimens.`
 }[reg=facet]
 
+^"review_arc"{
+  claim = `A capture pack is a walk, not a dump. Stills inherit a chapter from fixture role so iteration can follow one progression: linguistics → physics → region → personality → page → climate.`
+  chapters = #[`linguistics`, `physics`, `region`, `personality`, `page`, `climate`][reg=set]
+  mapping = `operators/chips/braces = linguistics; packing/occupancy/metamaterial = physics; seats = region; cluster leftover desks = personality; named stills and walks = page; theme/env/attention pins = climate.`
+  refuse = `Do not invent a data-spw-chapter family. Chapter is capture-catalog metadata.`
+}[reg=facet]
+
+^"combination_budget"{
+  claim = `Theme × viewport × flow is a factorial. Priority score plus a nav budget keep growth linear.`
+  rule = `Theme and env checks stay on pocket unless a profile widens them. Drop lowest-priority navs when --budget / profile maxNavs is set.`
+  profiles = #{
+    explore = `pocket stills + ecology + pocket climate; 12 navs. Cheap iteration.`
+    stabilize = `recapture latest named misses at pocket+fold.`
+    survey = `named stills, checks, and walks on core routes.`
+  }[reg=map]
+  next = `index.json names recapture ids and the stabilize command.`
+}[reg=facet]
+
+^"failure_kinds"{
+  kinds = #[`miss`, `blank`, `gone`, `collision`, `failed`][reg=set]
+  miss = `Selector absent or empty. Fail before a screenshot.`
+  blank = `Compressor-empty still. Keep the named glitch.`
+  gone = `Tab closed. Recreate the page once, then skip the rest of that nav group.`
+  collision = `Identical hash to another still.`
+  failed = `Anything else. Do not retry the whole pack to chase one miss.`
+  iterate = `npm run visual:stabilize reads the latest pack's errorArtifacts.`
+}[reg=facet]
+
 ^"visibility_lenses"{
   claim = `Some design dimensions make a still more or less visible or tangible. Those stills are lenses into sizing and Spw relationships — not extra chrome.`
   lenses = #[`density`, `enhancement`, `tangibility`, `labels`][reg=set]

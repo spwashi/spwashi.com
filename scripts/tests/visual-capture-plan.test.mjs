@@ -43,11 +43,19 @@ import {
   captureSearchParams,
   specimenNavigationKey,
   CAPTURE_MEASURE,
+  REVIEW_CHAPTERS,
+  reviewChapterFor,
+  prioritizeCaptureJobs,
+  classifyCaptureFailure,
+  buildCaptureIndex,
+  capturePriorityScore,
 } from '../lib/visual-capture-plan.mjs';
 import { VIEWPORT_STILL_CHECKS, VIEWPORT_STILL_RECIPES } from '../lib/viewport-still-recipes.mjs';
 import { archiveImageRel } from '../lib/visual-capture-archive.mjs';
 import { VIEWPORTS } from '../lib/chrome-headless-harness.mjs';
 import {
+  CAPTURE_PROFILES,
+  applyCaptureProfile,
   captureRunLayout,
   formatCaptureRunId,
   walkFileName,
@@ -587,4 +595,63 @@ test('PERF_PROBE_EXPRESSION instruments capture, font readiness, and section han
   assert.match(PERF_PROBE_EXPRESSION, /activeSection/);
   assert.match(PERF_PROBE_EXPRESSION, /sectionHandleState/);
   assert.match(PERF_PROBE_EXPRESSION, /captureMode/);
+});
+
+test('review chapters walk linguistics before climate', () => {
+  assert.deepEqual([...REVIEW_CHAPTERS], [
+    'linguistics', 'physics', 'region', 'personality', 'page', 'climate',
+  ]);
+  assert.equal(reviewChapterFor({ id: 'operator-chip', flow: 'component' }), 'linguistics');
+  assert.equal(reviewChapterFor({ id: 'frame-card', flow: 'component' }), 'physics');
+  assert.equal(reviewChapterFor({ id: 'home-hook', seat: 'hook', flow: 'region' }), 'region');
+  assert.equal(reviewChapterFor({ id: 'home-cluster', seat: 'cluster', flow: 'region' }), 'personality');
+  assert.equal(reviewChapterFor({ id: 'home-opening', still: true, flow: 'page' }), 'page');
+  assert.equal(reviewChapterFor({
+    id: 'home-hook-dark',
+    still: true,
+    flow: 'page',
+    conditions: { colorMode: 'dark' },
+  }), 'climate');
+  assert.ok(capturePriorityScore({ id: 'operator-chip', viewportId: 'pocket' })
+    < capturePriorityScore({ id: 'home-hook-dark', viewportId: 'fold', conditions: { colorMode: 'dark' } }));
+});
+
+test('combination budget keeps theme checks on pocket and caps navs', () => {
+  const jobs = [
+    { id: 'chip', fixtureId: 'operator-chip', specimenRoute: '/design/components/', viewportId: 'pocket', flow: 'component' },
+    { id: 'chip-fold', fixtureId: 'operator-chip', specimenRoute: '/design/components/', viewportId: 'fold', flow: 'component' },
+    { id: 'ember-pocket', fixtureId: 'home-hook', specimenRoute: '/', viewportId: 'pocket', flow: 'page', still: true, conditions: { themePack: 'banked-ember' } },
+    { id: 'ember-fold', fixtureId: 'home-hook', specimenRoute: '/', viewportId: 'fold', flow: 'page', still: true, conditions: { themePack: 'banked-ember' } },
+    { id: 'home', fixtureId: 'home-hook', specimenRoute: '/', viewportId: 'pocket', flow: 'region', seat: 'hook' },
+  ];
+  const kept = prioritizeCaptureJobs(jobs, { maxNavs: 4, themeViewport: 'pocket' });
+  assert.equal(kept.some((job) => job.id === 'ember-fold'), false);
+  assert.ok(kept.some((job) => job.id === 'ember-pocket'));
+  const navs = new Set(kept.map((job) => specimenNavigationKey(job)));
+  assert.ok(navs.size <= 4);
+  assert.equal(kept[0].chapter, 'linguistics');
+});
+
+test('failure kinds distinguish miss from gone, and index names the recapture command', () => {
+  assert.equal(classifyCaptureFailure(new Error('selector-miss: .spw-chip not found or empty')), 'miss');
+  assert.equal(classifyCaptureFailure(new Error('Inspected target navigated or closed')), 'gone');
+  const index = buildCaptureIndex({
+    captures: [{ id: 'home-opening', file: 'captures/pocket/01-home-opening.jpg', flow: 'page', still: true }],
+    errorArtifacts: [
+      { kind: 'miss', id: 'operator-chip', fixtureId: 'operator-chip', file: 'captures/errors/pocket--miss--operator-chip.txt' },
+    ],
+  });
+  assert.equal(index.chapters.page.length, 1);
+  assert.equal(index.errors.miss[0].id, 'operator-chip');
+  assert.equal(index.next.command, 'npm run visual:stabilize');
+  assert.deepEqual(index.next.ids, ['operator-chip']);
+});
+
+test('explore and stabilize profiles cap combinations the way fuzz explore/stabilize do', () => {
+  assert.equal(CAPTURE_PROFILES.explore.maxNavs, 12);
+  assert.equal(CAPTURE_PROFILES.stabilize.retryErrors, true);
+  const applied = applyCaptureProfile({ viewports: null, maxNavs: null, themeViewport: null, retryErrors: null }, CAPTURE_PROFILES.explore);
+  assert.deepEqual(applied.viewports, ['pocket']);
+  assert.equal(applied.maxNavs, 12);
+  assert.equal(applied.themeViewport, 'pocket');
 });

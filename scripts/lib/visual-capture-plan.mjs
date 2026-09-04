@@ -84,6 +84,145 @@ export const COST_BANDS = Object.freeze({
 });
 
 export const SEAT_PRIORITY = Object.freeze(['hook', 'path', 'cluster', 'hub', 'read', 'wide']);
+export const VIEWPORT_PRIORITY = Object.freeze(['pocket', 'fold', 'phablet', 'broadsheet']);
+export const CAPTURE_FAILURE_KINDS = Object.freeze(['miss', 'blank', 'gone', 'collision', 'failed']);
+
+/**
+ * Review progression for stills. Not a new attribute family — jobs inherit
+ * chapter from fixture/recipe role so a gallery can walk linguistics →
+ * physics → region → personality → page → climate without factorial grids.
+ */
+export const REVIEW_CHAPTERS = Object.freeze([
+  'linguistics',
+  'physics',
+  'region',
+  'personality',
+  'page',
+  'climate',
+]);
+
+const LINGUISTICS_RE = /operator|chip|sigil|brace|expression|join-specimen|boonhonk/;
+const PHYSICS_RE = /frame-card|site-frame|tuning-strip|box-model|gravity|occupancy/;
+const PERSONALITY_SEATS = new Set(['cluster']);
+
+export function reviewChapterFor(job = {}) {
+  if (job.chapter && REVIEW_CHAPTERS.includes(job.chapter)) return job.chapter;
+  if (job.conditions || job.attention) return 'climate';
+  if (job.walk || job.still || job.flow === 'page') return 'page';
+  if (job.seat && PERSONALITY_SEATS.has(job.seat)) return 'personality';
+  if (job.seat && REGION_SEATS.includes(job.seat)) return 'region';
+  const token = `${job.id || ''} ${job.fixtureId || ''} ${job.label || ''}`.toLowerCase();
+  if (LINGUISTICS_RE.test(token)) return 'linguistics';
+  if (PHYSICS_RE.test(token)) return 'physics';
+  if (job.kind === 'ecology') return 'region';
+  return 'physics';
+}
+
+export function capturePriorityScore(job = {}) {
+  const chapter = REVIEW_CHAPTERS.indexOf(reviewChapterFor(job));
+  const viewport = VIEWPORT_PRIORITY.indexOf(job.viewportId);
+  const seat = SEAT_PRIORITY.indexOf(job.seat);
+  const climateOffPocket = reviewChapterFor(job) === 'climate' && job.viewportId && job.viewportId !== 'pocket' ? 80 : 0;
+  return (
+    (chapter < 0 ? 50 : chapter) * 100
+    + (viewport < 0 ? 9 : viewport) * 10
+    + (seat < 0 ? 6 : seat)
+    + climateOffPocket
+  );
+}
+
+export function compareCapturePriority(a, b) {
+  const score = capturePriorityScore(a) - capturePriorityScore(b);
+  if (score) return score;
+  return String(a?.id || '').localeCompare(String(b?.id || ''));
+}
+
+/**
+ * Keep combination growth linear. Theme/env checks stay on one viewport
+ * unless a profile explicitly widens them. Nav budget drops the cheapest
+ * remaining jobs rather than sampling randomly.
+ */
+export function prioritizeCaptureJobs(jobs = [], {
+  maxJobs = 0,
+  maxNavs = 0,
+  themeViewport = 'pocket',
+} = {}) {
+  let next = jobs.map((job) => {
+    const chapter = reviewChapterFor(job);
+    return { ...job, chapter, priority: capturePriorityScore({ ...job, chapter }) };
+  });
+  if (themeViewport) {
+    next = next.filter((job) => {
+      if (job.chapter !== 'climate') return true;
+      return job.viewportId === themeViewport;
+    });
+  }
+  next.sort(compareCapturePriority);
+  if (maxNavs > 0) {
+    const kept = [];
+    const navs = new Set();
+    for (const job of next) {
+      const key = specimenNavigationKey(job);
+      if (!navs.has(key) && navs.size >= maxNavs) continue;
+      navs.add(key);
+      kept.push(job);
+    }
+    next = kept;
+  }
+  if (maxJobs > 0 && next.length > maxJobs) next = next.slice(0, maxJobs);
+  return next;
+}
+
+export function classifyCaptureFailure(error, job = {}) {
+  const message = String(error?.message || error || '');
+  if (/selector-miss|not found or empty/i.test(message)) return 'miss';
+  if (/navigated or closed|session closed|websocket|target closed/i.test(message)) return 'gone';
+  if (/blank/i.test(message)) return 'blank';
+  if (/collision|identical to/i.test(message)) return 'collision';
+  if (job.flow === 'page' && /timeout/i.test(message)) return 'gone';
+  return 'failed';
+}
+
+export function buildCaptureIndex({ captures = [], errorArtifacts = [] } = {}) {
+  const chapters = Object.fromEntries(REVIEW_CHAPTERS.map((id) => [id, []]));
+  for (const capture of captures) {
+    const chapter = capture.chapter || reviewChapterFor(capture);
+    (chapters[chapter] ||= []).push({
+      id: capture.id,
+      file: capture.file,
+      viewport: capture.viewport || capture.viewportId,
+      flow: capture.flow,
+    });
+  }
+  const errors = Object.fromEntries(CAPTURE_FAILURE_KINDS.map((kind) => [kind, []]));
+  for (const artifact of errorArtifacts) {
+    const kind = CAPTURE_FAILURE_KINDS.includes(artifact.kind) ? artifact.kind : 'failed';
+    errors[kind].push({
+      id: artifact.id,
+      fixtureId: artifact.fixtureId || null,
+      file: artifact.file,
+      message: artifact.message || kind,
+    });
+  }
+  const recaptureIds = [...new Set(
+    errorArtifacts
+      .map((artifact) => artifact.fixtureId || artifact.id)
+      .filter(Boolean),
+  )];
+  return {
+    kind: 'visual-capture-index',
+    chapters,
+    errors,
+    counts: {
+      stills: captures.length,
+      errors: errorArtifacts.length,
+      recapture: recaptureIds.length,
+    },
+    next: recaptureIds.length
+      ? { command: 'npm run visual:stabilize', ids: recaptureIds }
+      : { command: 'npm run visual:explore', ids: [] },
+  };
+}
 
 /**
  * Tooling across a range of intelligence. Same still, four readings.
@@ -911,6 +1050,8 @@ function pushPageJob(jobs, seen, fixture, viewport, format) {
     sizeToken: sizeTokenFor(fixture),
     media: reason?.media || null,
     publish: ['design-review', 'agent-brief', 'page-pipeline'],
+    chapter: 'page',
+    liminality: fixture.liminality || null,
   };
   job.file = jobFile(job, format);
   jobs.push(job);
@@ -962,6 +1103,8 @@ export function buildComponentJobs(fixtures, {
           sizeToken: sizeTokenFor(fixture),
           media: deviceReasonFor(viewport.id)?.media || null,
           publish: fixture.publishTargets || ['design-review', 'agent-brief'],
+          chapter: fixture.chapter || null,
+          liminality: fixture.liminality || null,
         };
         job.file = jobFile(job, format);
         jobs.push(job);
@@ -1014,6 +1157,8 @@ export function buildEcologyJobs(fixtures, {
         sizeToken: sizeTokenFor(fixture),
         media: reason?.media || null,
         publish: ['layout-qa', 'design-review', 'agent-brief'],
+        chapter: fixture.chapter || (fixture.seat === 'cluster' ? 'personality' : 'region'),
+        liminality: fixture.liminality || null,
       };
       job.file = jobFile(job, format);
       jobs.push(job);
@@ -1051,6 +1196,7 @@ function stillJobFromRecipe(recipe, viewport, format) {
     conditions: recipe.conditions || null,
     attention: recipe.attention || null,
     publish: ['layout-qa', 'design-review', 'agent-brief'],
+    chapter: recipe.conditions || recipe.attention ? 'climate' : 'page',
   };
 }
 
@@ -1223,6 +1369,7 @@ export function summarizePlan(jobs) {
   const groups = groupJobsByNavigation(jobs);
   const specimenNavs = groups.filter((group) => group.canvas === 'specimen').length;
   const cardNavs = groups.filter((group) => group.canvas === 'card').length;
+  const byChapter = Object.fromEntries(REVIEW_CHAPTERS.map((id) => [id, jobs.filter((job) => reviewChapterFor(job) === id).length]));
   return {
     jobs: jobs.length,
     groups: groups.length,
@@ -1237,6 +1384,7 @@ export function summarizePlan(jobs) {
       ecology: jobs.filter((job) => job.kind === 'ecology').length,
     },
     byFlow: Object.fromEntries(FLOWS.map((flow) => [flow, jobs.filter((job) => job.flow === flow).length])),
+    byChapter,
   };
 }
 
@@ -1261,6 +1409,9 @@ export function buildCapturePlan({
   format = 'jpeg',
   changedFiles = null,
   lenses = [],
+  maxJobs = 0,
+  maxNavs = 0,
+  themeViewport = null,
 } = {}) {
   const idFilter = ids?.length ? new Set(ids) : null;
   const components = includeComponents
@@ -1302,6 +1453,7 @@ export function buildCapturePlan({
   }
   if (lenses.length) jobs = applyVisibilityLenses(jobs, lenses);
   if (changedFiles?.length) jobs = jobs.filter((job) => jobTouchesChanged(job, changedFiles));
+  jobs = prioritizeCaptureJobs(jobs, { maxJobs, maxNavs, themeViewport });
   assignBrowsePaths(jobs, format);
   const groups = groupJobsByNavigation(jobs);
   return { jobs, groups, summary: summarizePlan(jobs) };
@@ -1367,6 +1519,14 @@ export function parseSpwCaptureTokens(tokens = [], knownIds = []) {
       wantChecks = true;
       wantWalk = true;
     }
+    else if (token === 'explore' || token === 'iterate') {
+      wantStills = true;
+      wantChecks = true;
+    }
+    else if (token === 'stabilize') {
+      wantStills = true;
+      wantChecks = true;
+    }
     else if (token === 'ambient') wantStills = true;
     else if (REGION_SEATS.includes(token)) seats.push(token);
     else if (SOCIAL_ASPECTS[token]) aspects.push(token);
@@ -1400,11 +1560,18 @@ export function formatCapturePlanSpw(plan, { cost = null } = {}) {
     '#:plan #!situation #!print',
     `cost = \`${estimate.learn}\``,
     `priority = ${SEAT_PRIORITY.join(' > ')}`,
+    `chapters = ${REVIEW_CHAPTERS.join(' > ')}`,
     `stack = \`${LAYOUT_STACK.join(' > ')}\``,
-    'learn = `Situation sets share a nav. Prints skip the shell. Lenses multiply. Do not open Chrome to learn the plan.`',
+    'learn = `Walk chapters, not factorials. Theme checks stay pocket unless a profile widens them. Prints skip the shell.`',
     '',
   ];
+  let currentChapter = '';
   for (const job of jobs) {
+    const chapter = reviewChapterFor(job);
+    if (chapter !== currentChapter) {
+      currentChapter = chapter;
+      lines.push(`^"${chapter}"`);
+    }
     const kind = assetKindFor(job);
     const seat = job.seat || job.aspect || 'seat';
     const where = job.viewportId || job.aspect || '';

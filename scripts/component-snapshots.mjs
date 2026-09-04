@@ -53,6 +53,11 @@ import {
   errorFile,
   captureSearchParams,
   CAPTURE_MEASURE,
+  REVIEW_CHAPTERS,
+  CAPTURE_FAILURE_KINDS,
+  classifyCaptureFailure,
+  reviewChapterFor,
+  buildCaptureIndex,
 } from './lib/visual-capture-plan.mjs';
 import { VIEWPORT_STILL_CHECKS, VIEWPORT_STILL_RECIPES } from './lib/viewport-still-recipes.mjs';
 import {
@@ -126,6 +131,9 @@ function parseArgs(argv) {
     walk: false,
     walkRoutes: null,
     maxSlices: 8,
+    maxNavs: null,
+    themeViewport: null,
+    retryErrors: null,
     profile: null,
     timeoutMs: 45000,
     viewports: null,
@@ -143,6 +151,9 @@ function parseArgs(argv) {
     else if (arg === '--walk') options.walk = true;
     else if (arg === '--profile' && argv[i + 1]) options.profile = argv[++i];
     else if (arg.startsWith('--profile=')) options.profile = arg.slice(10);
+    else if (arg === '--budget' && argv[i + 1]) options.maxNavs = Number(argv[++i]) || 0;
+    else if (arg.startsWith('--budget=')) options.maxNavs = Number(arg.slice(9)) || 0;
+    else if (arg === '--retry-errors') options.retryErrors = true;
     else if (arg === '--no-components') options.noComponents = true;
     else if (arg === '--social') options.social = true;
     else if (arg === '--social-only') {
@@ -229,6 +240,12 @@ function parseArgs(argv) {
     }
     if (parsed.walk) options.walk = true;
     if (parsed.seats.length && !parsed.ids.length) options.noComponents = true;
+    if (options.tokens.includes('explore') || options.tokens.includes('iterate')) {
+      options.profile = options.profile || 'explore';
+    }
+    if (options.tokens.includes('stabilize')) {
+      options.profile = options.profile || 'stabilize';
+    }
   }
 
   if (options.profile) {
@@ -244,9 +261,15 @@ function parseArgs(argv) {
     options.noComponents = true;
   }
   const flowsPassed = argv.some((arg) => arg === '--flows' || arg.startsWith('--flows='));
-  if ((options.stills || options.walk) && !flowsPassed) {
+  const iterateProfile = options.profile === 'explore' || options.profile === 'stabilize';
+  if ((options.stills || options.walk) && !flowsPassed && !iterateProfile) {
     options.flows = ['page'];
     options.noComponents = true;
+  }
+  if (iterateProfile && !flowsPassed) {
+    options.flows = ['page', 'region', 'component'];
+    options.ecology = true;
+    options.noComponents = false;
   }
 
   if (options.quick) {
@@ -266,7 +289,13 @@ function parseArgs(argv) {
       ? [...DEFAULT_ECOLOGY_VIEWPORTS]
       : [...DEFAULT_QA_VIEWPORTS];
   }
-  if (options.ecology && !options.noComponents && !argv.some((arg) => arg === '--viewports' || arg.startsWith('--viewports='))) {
+  const profileViewports = Boolean(options.profile && CAPTURE_PROFILES[options.profile]?.viewports);
+  if (
+    options.ecology
+    && !options.noComponents
+    && !profileViewports
+    && !argv.some((arg) => arg === '--viewports' || arg.startsWith('--viewports='))
+  ) {
     options.viewports = [...DEFAULT_ECOLOGY_VIEWPORTS];
   }
   return options;
@@ -305,7 +334,9 @@ Options:
   --stills           Named viewport stills (device frame after scroll/prepare). Default flow is page.
   --checks           Route/env/theme/attention pin stills (deep link, dark, reduced motion).
   --walk             Viewport-tall slices to the bottom of core routes.
-  --profile name     ambient | walk | checks | survey
+  --profile name     explore | stabilize | ambient | walk | checks | survey
+  --budget N         Cap specimen navs (explore default 12). Drops lowest-priority combinations.
+  --retry-errors     Recapture fixture ids from the latest pack's named misses into a new run.
   --out PATH         Pack root (default design/components/captures). Runs nest as runs/<day>/<profile>/<clock>--<hash>/
   --no-components    Skip component fixtures
   --social           Emit unique/social cards on top of QA
@@ -519,10 +550,10 @@ async function measureSelector(session, selector) {
 
 function galleryHtml(manifest) {
   const cards = (manifest.captures || []).map((c) => `
-    <figure class="card" data-flow="${c.flow}" data-track="${c.track || 'qa'}" data-aspect="${c.aspect || 'qa'}" data-fixture="${c.fixtureId || c.id || ''}">
+    <figure class="card" data-flow="${c.flow}" data-track="${c.track || 'qa'}" data-aspect="${c.aspect || 'qa'}" data-chapter="${c.chapter || ''}" data-fixture="${c.fixtureId || c.id || ''}">
       <img src="${c.file}" alt="${c.alt || ''}" loading="lazy" width="${c.clip?.width || ''}" height="${c.clip?.height || ''}"/>
       <figcaption>
-        <strong>${c.fixtureId || c.id}</strong> · ${c.track || 'qa'} · ${c.flow} · ${c.aspect || c.viewport || ''}
+        <strong>${c.fixtureId || c.id}</strong> · ${c.chapter || 'page'} · ${c.track || 'qa'} · ${c.flow} · ${c.aspect || c.viewport || ''}
         <br/><span class="meta">${c.wonder || c.label || ''}</span>
         ${c.ratioLabel ? `<br/><code>${c.ratioLabel}</code>` : ''}
         ${c.clip?.coordinateSpace ? `<br/><code>${c.clip.coordinateSpace} ${Math.round(c.clip.x)},${Math.round(c.clip.y)} ${Math.round(c.clip.width)}×${Math.round(c.clip.height)}</code>` : ''}
@@ -577,29 +608,31 @@ function galleryHtml(manifest) {
 <body>
   <header>
     <h1>Visual capture pack</h1>
-    <p class="meta">Generated ${manifest.at || ''} · ${manifest.captures?.length || 0} stills · qa device-reasons + social content-fit cards</p>
-    <p class="meta">QA answers “does it pack?” Social precipitates answer “is this combination worth posting?” Pixels stay gitignored.</p>
-    <p class="meta"><a href="${manifest.archiveIndex || 'archive/index.html'}">Archive skim</a> — stills cluster as <code>captures/&lt;viewport&gt;/NN-id.jpg</code> for arrow-key preview. JSON lives at pack root; blanks go in <code>captures/errors/</code>.</p>
+    <p class="meta">Generated ${manifest.at || ''} · ${manifest.captures?.length || 0} stills · ${manifest.errors?.length || 0} named misses · chapters ${REVIEW_CHAPTERS.join(' → ')}</p>
+    <p class="meta">Walk the review arc, then recapture misses with <code>npm run visual:stabilize</code>. Theme checks stay pocket unless a profile widens them. Pixels stay gitignored.</p>
+    <p class="meta"><a href="${manifest.archiveIndex || 'archive/index.html'}">Archive skim</a> · <a href="index.json">index.json</a> — stills cluster as <code>captures/&lt;viewport&gt;/NN-id.jpg</code>. Blanks, misses, and gone tabs live in <code>captures/errors/</code>.</p>
     <div class="filters" role="group" aria-label="Filter stills">
       <button type="button" data-filter="all" aria-pressed="true">all</button>
+      ${REVIEW_CHAPTERS.map((chapter) => `<button type="button" data-filter="${chapter}">${chapter}</button>`).join('\n      ')}
       <button type="button" data-filter="qa">qa</button>
-      <button type="button" data-filter="social">social</button>
       <button type="button" data-filter="region">region</button>
       <button type="button" data-filter="component">component</button>
-      <button type="button" data-filter="fit">fit</button>
-      <button type="button" data-filter="square">square</button>
     </div>
   </header>
   <div class="grid" id="grid">${cards || '<p class="meta">No stills in this pack.</p>'}</div>
-  ${errorCards ? `<section class="errors"><h2>Errors</h2><p class="meta">Named glitches. Keep them; they diagnose later stills.</p><div class="grid">${errorCards}</div></section>` : ''}
+  ${errorCards ? `<section class="errors"><h2>Errors</h2><p class="meta">Named glitches: ${CAPTURE_FAILURE_KINDS.join(', ')}. Recapture with <code>npm run visual:stabilize</code>.</p><div class="grid">${errorCards}</div></section>` : ''}
   <script>
     document.querySelectorAll('.filters button').forEach((btn) => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filters button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
         const f = btn.dataset.filter;
         document.querySelectorAll('.card').forEach((card) => {
+          if (card.dataset.error) {
+            card.hidden = f !== 'all' && card.dataset.error !== f;
+            return;
+          }
           card.hidden = f !== 'all'
-            && !card.dataset.error
+            && card.dataset.chapter !== f
             && card.dataset.track !== f
             && card.dataset.flow !== f
             && card.dataset.aspect !== f;
@@ -642,6 +675,21 @@ async function writeErrorArtifact(outDir, kind, job, { buffer, message, twin } =
     viewport: job.viewportId,
     flow: job.flow,
   };
+}
+
+async function loadLatestErrorIds(packRoot) {
+  try {
+    const latest = JSON.parse(await readFile(path.join(packRoot, 'runs', 'latest.json'), 'utf8'));
+    const manifestPath = path.join(packRoot, latest.path, 'manifest.json');
+    const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+    return [...new Set(
+      (manifest.errorArtifacts || [])
+        .map((artifact) => artifact.fixtureId || artifact.id)
+        .filter(Boolean),
+    )];
+  } catch {
+    return [];
+  }
 }
 
 async function readPriorManifest(outDir) {
@@ -827,7 +875,7 @@ async function captureJob(session, job, {
     if (job.selector) {
       box = await measureSelector(session, job.selector);
       if (!box || box.width < 2 || box.height < 2) {
-        throw new Error(`${job.selector} not found or empty`);
+        throw new Error(`selector-miss: ${job.selector} not found or empty`);
       }
     }
   }
@@ -941,6 +989,18 @@ async function main() {
     process.stderr.write(`[visual:capture] run ${runLayout.rel}\n`);
   }
 
+  if (options.retryErrors) {
+    const retryIds = await loadLatestErrorIds(packRoot);
+    if (!retryIds.length) {
+      process.stderr.write('[visual:capture] no named misses in the latest pack\n');
+      return 0;
+    }
+    options.ids = options.ids?.length
+      ? options.ids.filter((id) => retryIds.includes(id))
+      : retryIds;
+    process.stderr.write(`[visual:capture] retry ${options.ids.join(', ')}\n`);
+  }
+
   const qaViewports = pickViewports(options.viewports, { fallback: [...DEFAULT_QA_VIEWPORTS] });
   const changedFiles = options.changed ? gitChangedFiles() : null;
   const plan = buildCapturePlan({
@@ -950,6 +1010,8 @@ async function main() {
     viewports: qaViewports,
     aspects: options.aspects,
     ids: options.ids,
+    maxNavs: options.maxNavs || 0,
+    themeViewport: options.themeViewport || null,
     seats: options.seats,
     includeComponents: !options.noComponents,
     includeEcology: options.ecology,
@@ -1035,9 +1097,18 @@ async function main() {
 
     userDataDir = await createChromeProfileDir('spw-visual-cap-');
     chromeChild = await openChrome(chromePath, userDataDir, debugPort);
-    const target = await newPageTarget(debugPort);
-    const session = new CdpSession(target.webSocketDebuggerUrl);
+    let target = await newPageTarget(debugPort);
+    let session = new CdpSession(target.webSocketDebuggerUrl);
     await session.open();
+
+    async function recoverPage(reason = 'target closed') {
+      process.stderr.write(`  ~ ${reason}, new page target\n`);
+      try { session.close(); } catch { /* ignore */ }
+      try { await closePageTarget(debugPort, target); } catch { /* ignore */ }
+      target = await newPageTarget(debugPort);
+      session = new CdpSession(target.webSocketDebuggerUrl);
+      await session.open();
+    }
 
     try {
       const runnableSet = new Set(runnable);
@@ -1117,15 +1188,15 @@ async function main() {
               });
             } catch (firstErr) {
               if (!isTargetGoneError(firstErr) || group.canvas !== 'specimen') throw firstErr;
-              process.stderr.write(`  ~ target closed, re-nav ${group.key}\n`);
+              await recoverPage('target closed');
               const specimenUrl = captureQuery(new URL(routeHref(group.route, base), `${base}/`).href, job);
               await navigateAndProbe(session, {
                 url: specimenUrl,
                 viewport: jobViewport,
-                settleMs: options.settleMs,
+                settleMs: Math.min(options.settleMs, 1800),
                 timeoutMs: options.timeoutMs,
                 retries: 1,
-                partialGraceMs: 2000,
+                partialGraceMs: 1200,
               });
               await emulateCaptureEnvironment(session, job.conditions || {});
               shot = await captureJob(session, job, {
@@ -1194,6 +1265,7 @@ async function main() {
               captureOccupancy: shot.captureOccupancy,
               subjectFit: shot.subjectFit || null,
               still: Boolean(job.still),
+              chapter: job.chapter || reviewChapterFor(job),
               captureExpression: shot.captureExpression,
               componentExpression: shot.componentExpression,
               hint: shot.hint,
@@ -1218,12 +1290,26 @@ async function main() {
             });
             process.stderr.write(`  ${job.track} ${job.id} ${job.aspect || job.viewportId} ${job.flow} ${shot.ms}ms -> ${job.file}\n`);
           } catch (err) {
-            const artifact = await writeErrorArtifact(options.out, 'failed', job, {
+            const kind = classifyCaptureFailure(err, job);
+            const artifact = await writeErrorArtifact(options.out, kind, job, {
               message: `${job.id}@${job.viewportId}/${job.aspect || 'qa'} ${job.flow}: ${err.message}`,
             });
             errorArtifacts.push(artifact);
             errors.push(artifact.message);
-            process.stderr.write(`  ! failed ${artifact.file}\n`);
+            process.stderr.write(`  ! ${kind} ${artifact.file}\n`);
+            if (kind === 'gone' && group.canvas === 'specimen') {
+              const remaining = group.jobs.slice(group.jobs.indexOf(job) + 1);
+              for (const skippedJob of remaining) {
+                const skip = await writeErrorArtifact(options.out, 'gone', skippedJob, {
+                  message: `${skippedJob.id}@${skippedJob.viewportId} skipped after closed tab`,
+                });
+                errorArtifacts.push(skip);
+                errors.push(skip.message);
+                process.stderr.write(`  ! gone ${skip.file}\n`);
+              }
+              try { await recoverPage('group abandoned'); } catch { /* ignore */ }
+              break;
+            }
           }
         }
       }
@@ -1263,8 +1349,11 @@ async function main() {
       },
     };
 
+    const captureIndex = buildCaptureIndex({ captures, errorArtifacts });
+    manifest.index = captureIndex;
     await mkdir(options.out, { recursive: true });
     await writeFile(path.join(options.out, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
+    await writeFile(path.join(options.out, 'index.json'), `${JSON.stringify(captureIndex, null, 2)}\n`);
     await writeFile(path.join(options.out, 'index.html'), galleryHtml(manifest));
     if (runLayout) {
       await writeFile(

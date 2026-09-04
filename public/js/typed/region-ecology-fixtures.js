@@ -9,6 +9,8 @@ export const REGION_ECOLOGY_FIXTURES = Object.freeze([
         layoutScenarios: ['pocket', 'fold', 'broadsheet'],
         socialAspects: ['fit', 'landscape', 'og'],
         captureValue: 'Entry spine — one breath before the atlas opens.',
+        chapter: 'region',
+        liminality: 'entry',
         wonder: 'Does the hook still hold when the crop is a link preview?',
     },
     {
@@ -23,6 +25,8 @@ export const REGION_ECOLOGY_FIXTURES = Object.freeze([
         captureValue: 'Cluster desk where leftover frames wrap at fold.',
         wonder: 'Fold leftover tracks should look like a desk, not a forced two-column main.',
         synergy: { with: '[data-spw-cluster="entry-orientation"]', reason: 'cluster + leftover packing' },
+        chapter: 'personality',
+        liminality: 'middle',
     },
     {
         id: 'about-hook',
@@ -34,6 +38,8 @@ export const REGION_ECOLOGY_FIXTURES = Object.freeze([
         layoutScenarios: ['pocket', 'fold', 'broadsheet'],
         socialAspects: ['fit', 'og'],
         captureValue: 'Person-first entry. Hospitality before the years list.',
+        chapter: 'region',
+        liminality: 'entry',
         wonder: 'The person leads. A short crop must not turn identity into a tag list.',
     },
     {
@@ -48,6 +54,8 @@ export const REGION_ECOLOGY_FIXTURES = Object.freeze([
         captureValue: 'Cluster wrapper that leftover-track packing actually spends.',
         wonder: 'At fold, leftover frames wrap inside this desk — the intrigue is the wrap, not a 1fr 1fr main.',
         synergy: { with: '#systems-register', reason: 'hub inside a cluster desk' },
+        chapter: 'personality',
+        liminality: 'middle',
     },
     {
         id: 'about-years',

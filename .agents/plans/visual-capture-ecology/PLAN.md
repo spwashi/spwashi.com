@@ -52,11 +52,15 @@ The dated archive is one folder of `YYYY-MM-DD_HHmmss--name.jpg` files plus `arc
 ## Commands
 
 ```bash
+npm run visual:explore          # pocket iteration: chapters, not factorials
+npm run visual:stabilize        # recapture latest named misses
 npm run visual:plan -- --ecology --social --ids frame-card,about-years
 npm run visual:ecology
 npm run visual:social -- --ids frame-card --lenses density,labels
 npm run visual:review
 ```
+
+Explore/stabilize are the fuzz-shaped capture profiles: cheap walk, then recapture misses. Survey remains the thorough core-route stills+checks+walk. Theme checks stay on pocket unless a profile widens them. Packs write `index.json` with chapter buckets and recapture ids.
 
 ## Validation
 

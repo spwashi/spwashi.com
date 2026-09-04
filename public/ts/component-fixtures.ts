@@ -26,6 +26,10 @@ export type ComponentFixture = Readonly<{
   /** Combination this still is meant to show, when the intrigue is synergy not isolation. */
   synergy?: Readonly<{ with: string; reason: string }>;
   wonder?: string;
+  /** Review-arc chapter for capture galleries. Existing vocabulary, not a new attribute family. */
+  chapter?: 'linguistics' | 'physics' | 'region' | 'personality' | 'page' | 'climate';
+  /** Authored liminality of the live specimen, when the host already carries it. */
+  liminality?: 'entry' | 'threshold' | 'middle' | 'return' | 'exit';
 }>;
 
 export const COMPONENT_FIXTURES = Object.freeze([
@@ -44,12 +48,14 @@ export const COMPONENT_FIXTURES = Object.freeze([
     captureValue: 'Primary structural vessel — slot anatomy and packing posture.',
     socialAspects: ['fit', 'landscape'],
     sizeToken: 'measure-reading',
+    chapter: 'physics',
+    liminality: 'return',
     wonder: 'Slot anatomy as a still — the frame is the physics, not the chrome around it.',
   },
   {
     id: 'frame-card',
     label: 'Frame card',
-    selector: '.frame-card',
+    selector: '#entry-loops .frame-card',
     regionSelector: '#entry-loops',
     specimenRoute: '/',
     cssOwner: 'public/css/components/cards.css',
@@ -63,14 +69,16 @@ export const COMPONENT_FIXTURES = Object.freeze([
     socialAspects: ['fit', 'square', 'portrait'],
     sizeToken: 'measure-card',
     synergy: { with: '#entry-loops', reason: 'card sitting in the home loop, not a studio void' },
+    chapter: 'physics',
+    liminality: 'entry',
     wonder: 'A unique content-fit card of one loop is more postable than a full-page home dump.',
   },
   {
     id: 'operator-chip',
     label: 'Operator chip',
-    selector: '#component-anatomy-slots .spw-chip',
-    regionSelector: '#component-anatomy-slots',
-    specimenRoute: '/design/components/#component-anatomy-slots',
+    selector: '#components-glossary-hook .spw-chip',
+    regionSelector: '#components-glossary-hook',
+    specimenRoute: '/design/components/#components-glossary-hook',
     cssOwner: 'public/css/handles/operators/sigils-and-chips.css',
     snippet: 'design/components/snippets/operator-chip.html',
     requiredSlots: [],
@@ -81,6 +89,8 @@ export const COMPONENT_FIXTURES = Object.freeze([
     captureValue: 'Operator handle density — small clip more valuable than full page.',
     socialAspects: ['fit', 'square'],
     sizeToken: 'measure-compact',
+    chapter: 'linguistics',
+    liminality: 'entry',
     wonder: 'The unique ratio is the chip itself. A 1/1 still asks whether the sigil still reads.',
   },
   {
@@ -99,6 +109,8 @@ export const COMPONENT_FIXTURES = Object.freeze([
     captureValue: 'Compact control grouping — wrapping and label clarity matter more than route context.',
     socialAspects: ['fit', 'landscape'],
     sizeToken: 'measure-card',
+    chapter: 'physics',
+    liminality: 'threshold',
     wonder: 'Wrapping is the physics. A landscape still should show the strip turning, not a single button.',
   },
 ] as const satisfies readonly ComponentFixture[]);

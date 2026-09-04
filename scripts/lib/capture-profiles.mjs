@@ -61,6 +61,29 @@ export const CAPTURE_PROFILES = Object.freeze({
     maxSlices: 8,
     description: 'Named stills, checks, and page walks on core routes.',
   }),
+  explore: Object.freeze({
+    id: 'explore',
+    label: 'explore',
+    stills: true,
+    checks: true,
+    walk: false,
+    viewports: Object.freeze(['pocket']),
+    maxNavs: 12,
+    themeViewport: 'pocket',
+    description: 'Cheap iteration: pocket stills, ecology, and theme checks. Walk chapters, not factorials.',
+  }),
+  stabilize: Object.freeze({
+    id: 'stabilize',
+    label: 'stabilize',
+    stills: true,
+    checks: true,
+    walk: false,
+    viewports: Object.freeze(['pocket', 'fold']),
+    maxNavs: 24,
+    themeViewport: 'pocket',
+    retryErrors: true,
+    description: 'Recapture the latest pack\'s named misses at pocket+fold. Keep successful stills.',
+  }),
 });
 
 export function readableSlug(value, fallback = 'ad-hoc') {
@@ -130,6 +153,9 @@ export function applyCaptureProfile(options, profile) {
   if (profile.routes) next.walkRoutes = [...profile.routes];
   if (profile.maxSlices) next.maxSlices = profile.maxSlices;
   if (profile.viewports && !options.viewports) next.viewports = [...profile.viewports];
+  if (profile.maxNavs && options.maxNavs == null) next.maxNavs = profile.maxNavs;
+  if (profile.themeViewport && !options.themeViewport) next.themeViewport = profile.themeViewport;
+  if (profile.retryErrors && options.retryErrors == null) next.retryErrors = true;
   return next;
 }
 
