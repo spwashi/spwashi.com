@@ -23,6 +23,7 @@
 @internal_external_vocabulary_clusters: ~"../audits/internal-external-vocabulary-clusters-2026-07.spw"
 @vocabulary_metaphor_growth_synthesis: ~"../audits/vocabulary-metaphor-growth-synthesis-2026-07.spw"
 @metaphor_primitive_research_branching: ~"../audits/metaphor-primitive-research-branching-2026-07.spw"
+@consequential_editorial: ~"../../.agents/plans/model-guided-refinement/caches/consequential-ecosystem-editorial-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -55,11 +56,22 @@ fixity = "tending"
   compost = "Remove marks that no longer change navigation, parse demand, or reader literacy."
   harvest = "Open combinatorics go to /topics/software/spw/#concept-form-lab and /tools/spw-parser/?spw_sample=beans. Practice, language-sync, film, and year-mix specimens: ?spw_sample=practices|sync|film|year."
   seats = "<stem> conceptual · [stem] variant · {stem} practice · (stem) scene · postfix pairs stay hypotheses"
-  soil_harvest = "Beans open soil work, companion planting, and two microbial stories (rhizobia vs PNSB). Keep those as facts on /recipes/#soil-companions — not as a reason to blend kitchen, parser, and garden into one metaphor."
-  named_source = "One public sentence for a named living source: /recipes/#plants-and-sorcery (copy-unit recipes.soilCompanions.plantsAndSorcery). Satellites link. One shop isn't a template for the next name."
-  flux = "Sales counts and named copy change. Update the copy-unit and .spw/conventions/what-im-learning.spw."
-  dregg_harvest = "Current attention: Dregg.Net. Cite the existing author spec (docs/CONTENT-AND-ASSET-SPEC.md) and art guide (docs/CONTRIBUTING-ASSETS.md). Public home: /topics/knowledge-bases/#dregg-contribution. Frame tracks as what a crew can share (same seed, scene, table version), not a solo portfolio ask. Do not invent a parallel contribution taxonomy."
+  soil_harvest = "Beans open soil work, companion planting, and distinct microbial jobs (root-nodule nitrogen exchange vs light-fed soil and pond cultures). Keep mechanism, payload class, conditions, dose, and observed outcome separate on /recipes/#soil-companions — not as a reason to blend kitchen, parser, and garden into one metaphor."
+  source_boundary = "Named biological sources and research lineage live in @consequential_editorial and plant-ecology-operations.spw. General public copy carries the mechanism and uncertainty without becoming a shop referral or borrowing a grower's identity."
+  flux = "Biological claims and source context change. Update the research cache, the relevant copy-unit, and .spw/conventions/what-im-learning.spw together."
+  lineage_harvest = "Current attention is on deterministic identity, versioned expansion, semantic verification, conserving turns, and receipts. Named provenance stays in @consequential_editorial and dregg-lineage.spw; general public copy carries the mechanics without turning a neighboring project into a sitewide brand."
   theme_chips = "A chip rail is a theme: linked chips navigate to rich HTML; a still of the rail conveys breadth. Living terms emphasize the words in the still. Tap on a living term inspects; chips navigate. data-spw-feature=theme-chips is the capture seat."
+}[reg=facet]
+
+^"consequential_route_arcs_2026_09"{
+  operation = `align`
+  fixity = `tending`
+  source = @consequential_editorial
+  grammar = `input → relation → consequence → receipt`
+  link_rule = `A neighboring route link should name why it is adjacent: compare a structure, test a threshold, preserve an invariant, apply a practice, inspect evidence, or carry a result. “Related” alone is not an arc.`
+  payload_rule = `A cauldron-ready term should answer what changes if it is gathered. If it only adds a noun, leave it ordinary prose.`
+  tool_timing = `Product history can remain on specialist history pages. Current-direction, home, blog, and general knowledge-base copy should lead with durable mechanics rather than a once-salient tool.`
+  voice = `Keep the creator and the ordinary room visible. Proof language should sharpen care and consequence, not turn every paragraph into protocol documentation.`
 }[reg=facet]
 
 ^"reader_theory"{
@@ -88,4 +100,5 @@ dispatch: .{
  vocabulary_clusters = @internal_external_vocabulary_clusters
  vocabulary_synthesis = @vocabulary_metaphor_growth_synthesis
  primitive_research = @metaphor_primitive_research_branching
+ consequential_editorial = @consequential_editorial
 }[reg=facet]

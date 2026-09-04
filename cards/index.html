@@ -1,9 +1,9 @@
 <spw-page
     title="Spwashi · Local Proof Cards"
-    description="Local Proof Cards are screenshot-native records for asks, offers, pledges, references, membership, and group decisions."
+    description="Local Proof Cards are screenshot-native receipts for claims, asks, offers, pledges, references, membership, and group decisions."
     canonical="https://spwashi.com/cards/"
     og_title="Spwashi · Local Proof Cards"
-    og_description="Screenshot-native records for asks, offers, pledges, references, membership, and group decisions."
+    og_description="Screenshot-native receipts for claims, asks, offers, pledges, references, membership, and group decisions."
     og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
     og_image_alt="Local Proof Cards metadata card on Spwashi."
     keywords="local proof cards, screenshot records, ask card, offer card, pledge card, consensus card, membership card"
@@ -19,7 +19,7 @@
     route_family="proof records screenshots coordination"
     layout="wide"
     features="operators navigator console route-discovery"
-    related_routes="/|/now/|/membership/|/coordination/|/research/|/services/"
+    related_routes="/|/now/|/membership/|/coordination/|/research/|/topics/math/#consequence-arcs|/topics/knowledge-bases/#versioned-holdings|/services/"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -45,7 +45,7 @@
     <article>
         <div data-spw-cluster="cards-orientation">
         <section class="spw-frame" id="local-proof-cards" aria-labelledby="cards-title" aria-describedby="cards-description" data-spw-frame="hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-form="brace" data-spw-context="reference" data-spw-wonder="locality provenance consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-region="hook"
-        data-spw-semantic-expression="cards[hook]{proof}<register>" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="model" data-spw-promptability="visible" data-spw-collectability="index" data-spw-feature="local-proof-card-entry" data-spw-attentional-weight="1.25" data-spw-gradient-boundary="hard" data-spw-composition-stability="anchored" data-spw-context-relevance="local proof cards screenshot records asks offers pledges consensus membership references" data-spw-related-routes="/now/|/membership/|/coordination/|/research/|/services/#ask-card" data-spw-seed="page_cards_local_proof__hero" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+        data-spw-semantic-expression="card[receipt]{claim;state;evidence}&lt;next&gt;" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="model" data-spw-promptability="visible" data-spw-collectability="index" data-spw-feature="local-proof-card-entry" data-spw-attentional-weight="1.25" data-spw-gradient-boundary="hard" data-spw-composition-stability="anchored" data-spw-context-relevance="local proof cards screenshot records asks offers pledges consensus membership references" data-spw-related-routes="/now/|/membership/|/coordination/|/research/|/topics/math/#consequence-arcs|/topics/knowledge-bases/#versioned-holdings|/services/#ask-card" data-spw-seed="page_cards_local_proof__hero" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
             <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#local-proof-cards">^local_proof_cards</a>
                 <div class="spec-strip">
@@ -57,8 +57,8 @@
             </div>
             <p data-spw-textual-role="kicker">records people can point at</p>
             <h1 id="cards-title">Local Proof Cards</h1>
-            <p id="cards-description" data-spw-textual-role="lede">Screenshot-native records for asks, offers, pledges, references, and decisions. Read a card, or scroll the rooms.</p>
-            <p>A Local Proof Card is a small, readable record you can keep. It can describe what someone needs, what someone offers, what a group agreed to, what a project is asking for, or what insight should be remembered. It is also a way to catch the work while it is still becoming itself.</p>
+            <p id="cards-description" data-spw-textual-role="lede">Screenshot-native receipts for asks, offers, pledges, references, and decisions. Read a card, or scroll the rooms.</p>
+            <p>A Local Proof Card is a small, readable record you can keep. It can describe what someone needs, what someone offers, what a group agreed to, what a project is asking for, or what insight should be remembered. Its strongest form binds four things: the claim or input, the conditions and prior state, the evidence for what changed, and the next authorized state.</p>
             <p>The card stays useful as a screenshot, a copied seed, a link, or a later archived record. No wallet required. No platform lock-in required. The first version is local, readable, and shareable. The screenshot matters because it freezes a state without pretending the process is over.</p>
             <div class="spw-reason-strip" aria-label="Proof card reasons" data-spw-feature="proof-card-reasons" data-spw-box-model="reason-strip" data-spw-composition-flow="grid">
                 <div data-spw-emphasis="primary">
@@ -86,6 +86,7 @@
                     <li><a href="/topics/search/#spell-ingredients"><strong>Spell ingredients</strong><span>Turn anchors, term clusters, component kinds, settings, and data attributes into reusable card material.</span></a></li>
                     <li><a href="/settings/#semantic-settings"><strong>Semantic settings</strong><span>Tune density, labels, and the amount of context the surface carries.</span></a></li>
                     <li><a href="/research/"><strong>Research</strong><span>Promote a card into a source-backed decision or note.</span></a></li>
+                    <li><a href="/topics/math/#consequence-arcs"><strong>Consequence arcs</strong><span>Check state, constraint, response, invariant, and refusal before treating a card as proof.</span></a></li>
                 </ul>
             </aside>
             <nav class="frame-operators" aria-label="Local Proof Card actions">
@@ -206,7 +207,7 @@
                 <a class="frame-sigil" href="#definition" data-spw-operator="wonder">?definition</a>
                 <h2 id="definition-title">What A Card Does</h2>
             </header>
-            <p>A card makes a claim. A screenshot preserves it. A URL or seed lets someone revisit it. A later version can supersede it. Between those states is where a lot of useful understanding happens.</p>
+            <p>A card makes a claim and binds it to a visible state. A screenshot preserves it. Evidence records the declared consequence. A URL or seed lets someone revisit it. A later version can supersede it. Between those states is where a lot of useful understanding happens.</p>
             <p data-spw-textual-role="note">These are NFT-like in the narrow sense that each card is a distinct object with its own context. They are not speculative assets. They are local records first.</p>
         </section>
 
@@ -215,7 +216,7 @@
                 <a class="frame-sigil" href="#safety">?safety</a>
                 <h2 id="safety-title">Keep The Record Honest</h2>
             </header>
-            <p>A card is not proof that a claim is true. It is proof that a claim was made in a readable form at a specific moment.</p>
+            <p>A card is not proof that a claim is true. It is proof that a claim was made in a readable form at a specific moment. A verification receipt may support the relation or refuse it; evidence for a nearby proxy should not be used to rescue the wrong claim.</p>
             <p><strong>If a card changes, make a new version. Do not silently overwrite the record.</strong></p>
         </section>
 
@@ -245,6 +246,7 @@
                 <li><a href="/coordination/"><strong>Coordination</strong><span>Use cards to stabilize roles, proposals, and consensus.</span></a></li>
                 <li><a href="/membership/"><strong>Membership</strong><span>Turn interest into a readable role, offer, or support path.</span></a></li>
                 <li><a href="/research/"><strong>Research</strong><span>Promote notes into evidence, source language, and decisions.</span></a></li>
+                <li><a href="/topics/math/#consequence-arcs"><strong>Math</strong><span>Connect the record to state transitions, thresholds, invariants, and composition.</span></a></li>
                 <li><a href="/play/rpg-wednesday/sessions/"><strong>RPG sessions</strong><span>Use recap cards to protect table memory before lore hardens.</span></a></li>
             </ul>
         </aside>

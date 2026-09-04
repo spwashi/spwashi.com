@@ -1,0 +1,118 @@
+# Review 2026-09-04 — active tending cache; named sources stay editorial provenance while public copy carries their mechanisms without becoming an endorsement or imitation.
+# Consequential ecosystem editorial
+#
+# Research-to-copy plan for moving the public site from tool-centered notes
+# toward relations whose inputs, constraints, consequences, and receipts read.
+
+#>cache_consequential_ecosystem_editorial_2026_09
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"../PLAN.md"
+@plan_index: ~"../index.spw"
+@dregg_lineage: ~"../../../../.spw/conventions/dregg-lineage.spw"
+@plant_ecology: ~"../../../../.spw/conventions/plant-ecology-operations.spw"
+@cauldron: ~"../../../../.spw/conventions/cauldron-dynamics.spw"
+@compound_expressions: ~"../../../../.spw/conventions/compound-expressions.spw"
+@copy_ecology: ~"../../../../.spw/conventions/copy-ecology.spw"
+@math: ~"../../../../topics/math/index.html"
+@research: ~"../../../../research/index.html"
+@knowledge: ~"../../../../topics/knowledge-bases/index.html"
+
+operation = "align"
+fixity = "tending"
+date = "2026-09-04"
+
+^"public_goal"{
+  claim = `Refresh the public direction so routes feel like a consequential ecology: a reader can see what enters, what relation acts, what is constrained, what changes, and what artifact or next route carries the result.`
+  focus_dimension = `copy and route arcs`
+  primary_element = `wood — growth through small consequential transfers`
+  secondary_element = `metal — receipts, invariants, and refusal boundaries`
+  reader = `A visitor should be able to follow one adjacent mathematical principle or gather one cauldron-ready term without knowing the private research lineage.`
+}[reg=facet]
+
+^"research_findings"{
+  biological = #[
+    `B vitamins and cofactors, IAA/auxin, 5-aminolevulinic acid, PQQ, nutrient mobilization, and cell fractions are distinct payload classes; “B vitamin growth hormones” would collapse unlike mechanisms.`,
+    `Plant-growth effects are strain- and condition-dependent; a category label does not guarantee one result.`,
+    `IAA and 5-aminolevulinic acid can alter germination, root/shoot growth, photosynthesis, mineral uptake, and stress response; the metabolite is a catalyst with a downstream consequence, not merely cargo.`,
+    `Dose matters. A low concentration may promote growth while a higher concentration may produce stress or reverse the benefit.`,
+    `Measured production of a promising compound is not equivalent to a measured plant outcome; proxy, mechanism, and consequence remain separate claims.`,
+    `Cell fractions can retain consequential activity, so a payload may outlive its originating organism while still needing a bounded claim.`
+  ][reg=set]
+  mathematical = #[
+    `State a relation in its native symbols, then verify that relation rather than flattening every domain into one machine story.`,
+    `Identity is extensional: what survives every admissible experiment matters more than the current storage box.`,
+    `A shared receipt binds exact meaning, prior state, evidence, next state, authorized result, and sequence position.`,
+    `Composition requires continuity and conservation; adjacent outputs and inputs must agree, and multi-party action either closes one shared equation or does not happen.`,
+    `A useful claim names acceptance and refusal. Proof of the stated relation cannot rescue a badly chosen relation.`
+  ][reg=set]
+}[reg=facet]
+
+^"source_record"{
+  checked = `2026-09-04`
+  proof_system = #[
+    `https://www.dregg.net/why/ — semantic relations, extensional objects, compact certificates, inspectable trust boundaries`,
+    `https://www.dregg.net/receipt/ — exact identity, state continuity, authorized result, recursive receipts`,
+    `https://www.dregg.net/worlds/ — law, state, action, evidence, view`,
+    `https://www.dregg.net/operations/ — allocation, conservation, authority, refusal, atomic shared acts`
+  ][reg=set]
+  microbial = #[
+    `https://pubmed.ncbi.nlm.nih.gov/18092464/ — Rhodopseudomonas KL9, IAA/ALA, tomato germination and growth`,
+    `https://pubmed.ncbi.nlm.nih.gov/28040468/ — 235 isolates; strain-level growth substances and environmental effects`,
+    `https://pmc.ncbi.nlm.nih.gov/articles/PMC9031236/ — cell fractions and lipopolysaccharide as a growth-promoting principle`,
+    `https://pmc.ncbi.nlm.nih.gov/articles/PMC10531626/ — PQQ, phosphorus solubilization, oxidative response, and proxy/outcome caution`
+  ][reg=set]
+}[reg=facet]
+
+^"public_translation"{
+  arc = `input → relation → consequence → receipt`
+  growth = `substrate + condition + bounded catalyst → changed capacity; more is not automatically better`
+  proof = `claim + witness + check → a result another route can rely on`
+  composition = `different pages keep their native subjects while sharing a legible handoff boundary`
+  math_neighbors = #[
+    `graphs and hyperedges — which components participate in one act`,
+    `invariants and conservation — what survives or must balance`,
+    `dynamical systems — how state changes under local conditions`,
+    `constrained optimization — what counts as better under an explicit limit`,
+    `category-theory composition — whether two route paths agree at the handoff`
+  ][reg=set]
+  public_refusal = `Do not name the motivating organism, project, collaborator, or note-taking product in refreshed general-purpose copy. Specialist history may retain factual provenance.`
+}[reg=facet]
+
+^"minimal_touch"{
+  entry = #[`index.html`, `about/index.html`, `now/index.html`, `coordination/index.html`][reg=set]
+  editorial = #[`research/index.html`, `blog/index.html`, `curriculum/index.html`, `cards/index.html`][reg=set]
+  domain = #[`topics/math/index.html`, `topics/software/index.html`, `topics/knowledge-bases/index.html`, `topics/nutrition/index.html`, `recipes/index.html`][reg=set]
+  offers = #[`services/ecosystem/index.html`, `services/creator/index.html`, `about/domains/lore.land/index.html`, `about/domains/spw.quest/index.html`][reg=set]
+  supporting = #[`topics/site-design/index.html`, `topics/software/text-editing/index.html`, `topics/software/text-editing/history/index.html`, `topics/software/text-editing/note-taking/index.html`, `recipes/fermentation/index.html`][reg=set]
+  metadata = `Reuse data-spw-semantic-expression, data-spw-consequence, data-spw-related-routes, and living terms. No new data-spw family, CSS, or JS.`
+}[reg=facet]
+
+^"expression_primes"{
+  relation_arc = `arc[relation]{input;transform;consequence}<receipt>`
+  growth_arc = `culture[context]{substrate;threshold;response}<residue>`
+  verification_arc = `claim[meaning]{witness;check}<receipt>`
+  route_arc = `route[neighbor]{principle;practice;return}<transfer>`
+  compound = `culture[context]{substrate;threshold;response}<residue> ~ arc[relation]{input;transform;consequence}<receipt>`
+  gate = `Author only where visible copy names both operands or the full sequence. Regenerate the expression manifest after edits.`
+}[reg=facet]
+
+^"decision_gate"{
+  decision = `BUILD — editorial HTML and adjacent .spw only.`
+  success = `Current-direction surfaces no longer center one tool or named neighboring project; at least five route bridges explain why the next page is adjacent; gathered terms carry a readable consequence; general copy survives without the research names.`
+  stop = `No runtime behavior, visual restyle, new ontology, or claim that microbial compounds behave uniformly.`
+  validation = #[`npm run audit:copy`, `npm run manifest:expressions`, `npm run ecology:language`, `npm run spw:integrity`, `npm run check:local`, `git diff --check`][reg=set]
+}[reg=facet]
+
+^"implementation_record_2026_09_04"{
+  html = `23 routes refreshed; 32 bounded HTML/.spw source artifacts including this cache, plus the regenerated search and expression manifests.`
+  public_name_census = `No general-purpose HTML mention remains for the motivating biological or proof-system names. The former editor name remains only on text-editing history surfaces and is explicitly dated as earlier context.`
+  anchors = #[`/topics/math/#consequence-arcs`, `/topics/knowledge-bases/#authorable-tracks`, `/topics/knowledge-bases/#versioned-holdings`, `/topics/knowledge-bases/#scene-receipts`, `/recipes/#payload-boundaries`][reg=set]
+  expression = `culture[context]{substrate;threshold;response}<residue> ~ arc[relation]{input;condition;consequence}<receipt>`
+  manifest = `668 expressions; 14 declared compounds; 103 projections after regeneration.`
+  stop_observed = `No CSS, JS runtime, new data-spw family, or dependency change.`
+  validation_passed = #[`page-copy inventory: 148 pages / 7,764 blocks`, `copy variety: 527 hosts / 13% rich forms`, `route/runtime manifest fresh`, `site syntax + CSS + runtime + JSON contracts`, `static deploy build: 152 rendered HTML files`, `Spw integrity: 306 surfaces / 4,128 refs / zero missing anchors`, `ecology:language`, `plans:index:check`, `git diff --check`][reg=set]
+  inherited_failure = `npm run check:local reaches test:modules and fails in scripts/tests/physical-model.test.mjs because the existing DOM fixture omits document.getElementById while unchanged public/js/kernel/deferred-styles.js auto-initializes. Reproduced directly; outside this HTML/.spw slice.`
+}[reg=facet]

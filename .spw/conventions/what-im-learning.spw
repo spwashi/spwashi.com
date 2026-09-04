@@ -17,6 +17,7 @@
 @recipes: ~"../../recipes/index.html"
 @about: ~"../../about/index.html"
 @resume_record: ~"./resume-record.spw"
+@consequential_editorial: ~"../../.agents/plans/model-guided-refinement/caches/consequential-ecosystem-editorial-2026-09.spw"
 
 operation = "prime"
 fixity = "tending"
@@ -31,20 +32,30 @@ fixity = "tending"
 ^"how_i_think"{
   start = `/coordination/#what-im-learning`
   facts = `/recipes/#soil-companions` # garden compare
-  source = `/recipes/#plants-and-sorcery` # copy-unit recipes.soilCompanions.plantsAndSorcery
+  source = @consequential_editorial
   kitchen = `/recipes/#grower-start`
   trajectory = `/about/#current-direction`
-  seats = `Lede for invitation. Reason-strip for distinct learning seats. One source aside. One model prompt, in details. Site-ops in details.`
-  flux = `Sales counts and named copy change. I keep them in one public sentence so I can revise without restacking.`
+  seats = `Lede for invitation. Reason-strip for distinct learning seats. One mechanism boundary aside. One model prompt, in details. Site-ops in details.`
+  flux = `Research claims and source context change. I keep provenance in one cache and revise the public mechanism without restacking the route.`
   paths = `These .spw files are for editors. Public pages don't need the filepath.`
 }[reg=facet]
 
-^"one_named_source"{
+^"current_direction_2026_09"{
+  operation = `align`
+  fixity = `tending`
+  source = @consequential_editorial
+  focus = `How a small input changes capacity: substrate, condition, threshold, relation, consequence, residue.`
+  mathematical = `How a claim survives interrogation: native meaning, invariant, witness, refusal, state continuity, receipt.`
+  public = `Write these as mechanics a reader can use, with links into math, research, recipes, cards, and cauldrons. Do not turn the motivating names into the current-direction headline.`
+  old_tool_posture = `File-first note tools remain part of editor history and substrate comparison. They no longer organize the public present tense.`
+}[reg=facet]
+
+^"source_provenance_2026_08"{
   who = `Plants & Sorcery (@worm.folk)`
   relation = `I'm learning PNSB from them.`
   shop = `https://www.tiktok.com/@worm.folk`
-  sales = `more than 1,200` # public once, as of 2026-08
-  note = `This is one person I'm learning from, not a pattern to stamp on everyone later.`
+  status = `editorial provenance, no longer general public copy as of 2026-09-04`
+  note = `This is one person I'm learning from, not a pattern to stamp on everyone later. Public transfer names the mechanism and boundary; this record preserves the source relationship.`
 }[reg=facet]
 
 ^"questions_i_sit_with"{
@@ -57,7 +68,7 @@ fixity = "tending"
 
 validation: #[
   `rg 'what-im-learning' coordination/index.html`,
-  `rg 'recipes.soilCompanions.plantsAndSorcery' recipes/index.html`,
-  `rg '1,200' recipes/index.html coordination/index.html`,
+  `rg 'recipes.soilCompanions.payloadBoundaries' recipes/index.html`,
+  `rg 'consequence-arcs' coordination/index.html recipes/index.html`,
   `rg 'what-im-learning' .spw/conventions/index.spw`,
 ][reg=set]

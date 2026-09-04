@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as a canonical decision rail; one focus dimension, one fixity tier, and one validation path per patch.
+# Review 2026-09-04 — active consequential-editorial slice landed across HTML and .spw; keep one focus dimension, one fixity tier, and one validation path per patch.
 # Plan Index — Model-Guided Refinement Rails
 #
 # Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but should not be expected to improvise…
@@ -16,7 +16,7 @@ intent: .{
  owner = `model-guided-refinement`
  kind = `plan`
  bucket = `semantic_rails`
- artifact_shape = `PLAN.md | motif-table-cache.spw | operator-curriculum-physics-cache.spw | rpg-analog-worldbuilding-cache.spw | rpg-note-interaction-cache.spw | voice-flow-cache.spw | index.spw`
+ artifact_shape = `PLAN.md | bounded caches and templates | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
@@ -62,6 +62,7 @@ intent: .{
 @rpg_note_interaction_cache: ~"./rpg-note-interaction-cache.spw"
 @voice_flow_cache: ~"./voice-flow-cache.spw"
 @home_notice_circulation: ~"./caches/home-notice-circulation.spw"
+@consequential_ecosystem_editorial: ~"./caches/consequential-ecosystem-editorial-2026-09.spw"
 @semantic_capacity: ~"../../../.spw/conventions/semantic-capacity.spw"
 @daily_kernel: ~"../../../.spw/conventions/daily-kernel.spw"
 @site: ~"../../../.spw/site.spw"
@@ -79,6 +80,7 @@ dispatch: .{
  rpg_note_interaction_cache = @rpg_note_interaction_cache
  voice_flow_cache = @voice_flow_cache
  home_notice_circulation = @home_notice_circulation
+ consequential_ecosystem_editorial = @consequential_ecosystem_editorial
  semantic_capacity = @semantic_capacity
  daily_kernel = @daily_kernel
  site = @site
@@ -97,6 +99,13 @@ dispatch: .{
   .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
  ][reg=set]
  rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"active_editorial_slice"{
+  cache = @consequential_ecosystem_editorial
+  direction = `Translate named biological and proof-system research into unnamed, consequence-bearing public arcs; keep provenance in the cache and specialist history.`
+  boundary = `HTML and .spw only; no new attributes, CSS, JS, or public endorsement.`
+  status = `landed; semantic, copy, link, manifest, and site contracts pass. Full check retains one unrelated physical-model DOM-fixture failure recorded in the cache.`
 }[reg=facet]
 
 ^"connection_points"{

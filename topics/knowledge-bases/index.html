@@ -1,12 +1,12 @@
 <spw-page
     title="Spwashi • Knowledge Bases"
-    description="Knowledge bases, linked notes, Markdown archives, local-first authoring, and paths from private working memory to public guides and documentation."
+    description="Knowledge bases, linked notes, inspectable relations, and paths from private working memory to public claims with portable receipts."
     canonical="https://spwashi.com/topics/knowledge-bases/"
     og_title="Spwashi • Knowledge Bases"
-    og_description="Knowledge bases, linked notes, Markdown archives, local-first authoring, and paths from private working memory to public guides and documentation."
+    og_description="Knowledge bases, linked notes, inspectable relations, and paths from private working memory to public claims with portable receipts."
     og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
     og_image_alt="Knowledge base topic card on Spwashi."
-    keywords="knowledge bases, linked notes, markdown, local-first authoring, Obsidian, documentation, codebase documentation, research archives, personal knowledge management"
+    keywords="knowledge bases, linked notes, markdown, local-first authoring, inspectable relations, versioned records, documentation, research archives, personal knowledge management"
     breadcrumb_label="Knowledge Bases"
     header_current="Knowledge Bases"
     header_current_href="/topics/knowledge-bases/"
@@ -19,7 +19,7 @@
     route_family="topics software editorial systems"
     context="analysis"
     features="operators metrics navigator"
-    related_routes="/|/topics/|/topics/software/|/topics/software/text-editing/|/topics/knowledge-bases/markdown/|/blog/|/about/website/"
+    related_routes="/|/topics/|/topics/software/|/topics/software/text-editing/|/topics/knowledge-bases/markdown/|/topics/math/#consequence-arcs|/research/|/cards/|/blog/|/about/website/"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -38,15 +38,15 @@
     data-spw-page-modes="reading inspect compare"
     data-spw-page-role="topic-register"
     data-spw-page-seed="page_topics_knowledge_bases"
-    data-spw-related-routes="/|/topics/|/topics/software/|/topics/software/text-editing/|/topics/knowledge-bases/markdown/|/blog/|/about/website/">
+    data-spw-related-routes="/|/topics/|/topics/software/|/topics/software/text-editing/|/topics/knowledge-bases/markdown/|/topics/math/#consequence-arcs|/research/|/cards/|/blog/|/about/website/">
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <spw-site-header
         current="Topics"
         current_href="/topics/"
         indicator="knowledge"
-        related_routes="/|/topics/|/topics/software/|/topics/software/text-editing/|/topics/knowledge-bases/markdown/|/blog/|/about/website/|/services/systems/"
-        context_relevance="knowledge bases linked notes markdown archives local-first authoring documentation"
+        related_routes="/|/topics/|/topics/software/|/topics/software/text-editing/|/topics/knowledge-bases/markdown/|/topics/math/#consequence-arcs|/research/|/cards/|/blog/|/about/website/|/services/systems/"
+        context_relevance="knowledge bases linked notes inspectable relations versioned receipts local-first authoring documentation"
         nav_items="Home:/|About:/about/|Topics:/topics/|Software:/topics/software/|Blog:/blog/|Settings:/settings/"
     ></spw-site-header>
 
@@ -57,14 +57,14 @@
                 <span class="frame-kind">topic hub</span>
             </div>
             <h1 id="knowledge-bases-title">Knowledge Bases</h1>
-            <p>This hub is for tools and methods that treat notes as working memory rather than as a single final document. The useful distinction is not just "editor" versus "not editor." It is whether the system supports retrieval, cross-reference, staged drafting, and long-lived accumulation in a way that changes how you think and write.</p>
+            <p>This hub is for tools and methods that treat notes as working memory rather than as a single final document. The useful distinction is not just "editor" versus "not editor." It is whether a system can preserve a relation across retrieval, revision, rendering, and handoff—and show enough evidence that another reader can verify the result.</p>
             <p><a href="/topics/software/spw/">Spw</a> is the knowledge base I actually keep: readable source, named stems, and routes that project the same notes into HTML. Other local-first writing tools exist; they are neighbors, not the substrate this site is built from.</p>
-            <p data-spw-textual-role="note">This site is itself a public knowledge surface: routes carry <code>data-spw-*</code> semantics, the runtime can snapshot <span class="spw-topic" data-spw-topic="topical-payloads">topical payloads</span> for handoff, and Spw stays readable beside HTML. Compare private notes with how <a href="/about/website/">this field guide</a> exposes inspectable contracts.</p>
+            <p data-spw-textual-role="note" data-spw-semantic-expression="claim[relation]{source;state;witness}&lt;receipt&gt;">This site is itself a public knowledge surface: routes carry <code>data-spw-*</code> semantics, the runtime can snapshot <span class="spw-topic" data-spw-topic="topical-payloads">topical payloads</span> for handoff, and Spw stays readable beside HTML. The goal is a compact receipt—source, relation, state change, witness—not a transcript of every step. Compare private notes with how <a href="/about/website/">this field guide</a> exposes inspectable contracts.</p>
             <nav class="frame-operators" aria-label="Knowledge base topic routes">
                 <a class="spw-chip" data-spw-handle="true" href="#knowledge-base-value" data-spw-operator="frame" data-spw-action="address">#&gt;value_model</a>
                 <a class="spw-chip" data-spw-handle="true" href="#spw-as-knowledge-base" data-spw-operator="frame" data-spw-action="address">#&gt;spw_as_kb</a>
-                <a class="spw-chip" data-spw-handle="true" href="#dregg-contribution" data-spw-operator="potential" data-spw-action="explore">~dregg_tracks</a>
-                <a class="spw-chip" data-spw-handle="true" href="#dregg-tokenomics" data-spw-operator="substrate">$holdings</a>
+                <a class="spw-chip" data-spw-handle="true" href="#authorable-tracks" data-spw-operator="potential" data-spw-action="explore">~authorable_tracks</a>
+                <a class="spw-chip" data-spw-handle="true" href="#versioned-holdings" data-spw-operator="substrate">$versioned_holdings</a>
                 <a class="spw-chip" data-spw-handle="true" href="/topics/knowledge-bases/markdown/" data-spw-operator="potential" data-spw-action="explore">~markdown_knowledge_bases</a>
                 <a class="spw-chip" data-spw-handle="true" href="/topics/software/text-editing/" data-spw-operator="potential" data-spw-action="explore">~text_editing</a>
                 <a class="spw-chip" data-spw-handle="true" href="/topics/software/#curricular-codebase" data-spw-operator="potential" data-spw-action="explore">~curricular_codebase</a>
@@ -125,70 +125,70 @@
             </div>
             <h2>Spw as a knowledge base</h2>
             <p>A knowledge base is useful when a later reader — human or model — can find a claim, follow a link, and tell source from projection. Spw is that layer here: <code>.spw</code> files and route HTML stay dual-readable; operators and topics are retrieval handles; the <a href="/topics/software/spw/">atlas</a> and the <a href="/tools/spw-parser/">literal parser</a> show what the marks actually parse.</p>
-            <p>In spring 2026 I saw a small-team role on a local-first writing tool and <a href="https://x.com/spwashi/status/2060139165434380509">said so in public</a> instead of spraying silent applications. I have since sat with that product’s principles and community: keep the files, put rare features in plugins, teach agents the open formats rather than replacing the notebook with a chat window. The work that remained mine was to make this site a knowledge base that those principles can still recognize.</p>
-            <p>The four months after that declaration were mostly infrastructure that a knowledge base needs in order to stay honest: a page template so routes share a shell, a browser parser that is the same kernel as the workbench, operator names aligned with that parser, a module catalog that can unmount as well as mount, and site search that can find a stem. Copy still has to earn its keep as facts a reader can use, not as a plea to imagine more blends.</p>
+            <p>Earlier passes concentrated on the application that held the notes. The durable lessons were narrower and more useful: keep the files, put rare behavior at the edge, teach agents an open format, and let a reader leave without surrendering the corpus. The current work begins one layer deeper: state the semantic relation before asking software to transform it.</p>
+            <p>The infrastructure a knowledge base needs in order to stay honest is now visible here: a page template so routes share a shell, a browser parser that is the same kernel as the workbench, operator names aligned with that parser, a module catalog that can unmount as well as mount, and site search that can find a stem. Copy still has to earn its keep as a checkable claim, not as a plea to imagine more integrations.</p>
             <div class="frame-grid">
                 <div class="frame-panel">
-                    <h3>What a neighboring product taught</h3>
-                    <p>File-first tools that grew Bases, a CLI, and <a href="https://github.com/kepano/obsidian-skills" target="_blank" rel="noopener">agent skills</a> over Markdown, canvases, and tables are a live experiment in letting models read owned files. The useful lesson is not to copy a vault UI. It is that agents get more powerful when the corpus has a grammar they can be taught, and weaker when they are asked to invent structure inside a blob.</p>
+                    <h3>What file-first tools taught</h3>
+                    <p>Agents get more useful when the corpus has a grammar they can be taught, and less trustworthy when they must invent structure inside a blob. Owned files, explicit links, and narrow extensions matter more than copying a particular vault interface.</p>
                 </div>
                 <div class="frame-panel">
                     <h3>What AI changes now</h3>
-                    <p>A language model can traverse named stems, propose a scene, or draft a weight table. It should not become the owner of the files. The constraint I want to keep is the same one a careful notes community already lives by: the human-readable source stays the trust surface; the model is a temporary reader with a receipt, not a second vault.</p>
+                    <p>A language model can traverse named stems, propose a scene, or draft a weight table. It should not become the owner of the files. Human-readable source stays the trust surface; the model is a temporary reader whose work leaves a receipt, not a second memory silo.</p>
                 </div>
                 <div class="frame-panel">
                     <h3>Where attention moved</h3>
-                    <p>Attention is now on <a href="https://www.dregg.net/" target="_blank" rel="noopener">Dregg.Net</a> — verified cells, capabilities, and pre-web hypermedia so an agent can inhabit a world without owning the machine. <a href="https://x.com/DreggNet/status/2086556344337735895">@DreggNet</a> credited a thread of mine on that lineage, and has used art from this practice on their timeline. The honest next question is not how to blend Spw into Dregg. It is which of their already-named tracks a crew can actually share.</p>
+                    <p>Attention is now on semantic identity, admissible transformations, and compact evidence. The honest question is whether a claim stays the same claim across its native shapes—and whether a crew can inspect the authorized result without replaying the whole search.</p>
                 </div>
             </div>
         </section>
 
-        <section class="spw-frame" id="dregg-contribution" data-spw-kind="frame" data-spw-role="reference">
+        <section class="spw-frame" id="authorable-tracks" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="track[authorable]{shape;rule;witness}&lt;receipt&gt;">
             <div class="frame-topline" data-spw-slot="header">
-                <a class="frame-sigil" href="#dregg-contribution">~dregg_tracks</a>
-                <span class="frame-kind">contribution guide</span>
+                <a class="frame-sigil" href="#authorable-tracks">~authorable_tracks</a>
+                <span class="frame-kind">composition guide</span>
             </div>
-            <h2>What Dregg already asks of this practice</h2>
-            <p>The Dregg codebase includes a concrete content-authoring spec written for this name: it names three tracks, what is built, and what still needs a surface. Read it in the repo: <a href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" target="_blank" rel="noopener">CONTENT-AND-ASSET-SPEC.md</a>. Hand-drawn or generated stills have a shorter sibling: <a href="https://github.com/emberian/dregg/blob/main/docs/CONTRIBUTING-ASSETS.md" target="_blank" rel="noopener">CONTRIBUTING-ASSETS.md</a>.</p>
+            <h2>Four authorable ways to keep meaning inspectable</h2>
+            <p>A contribution becomes easier to share when its native shape, transformation rule, and witness are explicit. These four tracks are useful across games, publications, software, and learning systems because each can produce a compact receipt without collapsing into one universal format.</p>
             <div class="frame-grid">
                 <div class="frame-panel">
-                    <h3>Track A — deterministic sprites</h3>
-                    <p>The visual pipeline is already live: a committed seed draws traits, then a pure function renders layered SVG. The work they named for me is the weight tables and new sprite kinds — still a <code>render(traits) → SVG</code> with no hidden randomness, so a stranger can re-derive the same image. That is closer to a craft constraint than to a style prompt.</p>
+                    <h3>Track A — deterministic renderings</h3>
+                    <p>A committed seed selects traits, then a pure function renders layered SVG. The contract is <code>render(traits) → SVG</code> with no hidden randomness, so another reader can re-derive the same image. That is closer to a craft constraint than to a style prompt. Continue in the <a href="/design/experiments/svg/">SVG experiments</a>.</p>
                 </div>
                 <div class="frame-panel">
-                    <h3>Track B — <code>.scene</code> files</h3>
-                    <p>The Descent’s daily run consumes <span class="spw-topic" data-spw-topic="spween">spween</span> text: rooms, gates, effects, a win condition. No Rust required to author. The open seam they named is a publish command that accepts a raw scene so a handwritten universe can hit the no-cheat board. This is the closest track to how I already write branching public pages. Syntax lives in <a href="#spween-scene">the cheat-sheet below</a>.</p>
+                    <h3>Track B — readable scene files</h3>
+                    <p>A scene can remain handwritten text—rooms, conditions, effects, exits, and a declared win—while an executor checks the same marks later. The source stays authorable without runtime expertise. The compact pattern lives in <a href="#scene-receipts">the scene receipt below</a>.</p>
                 </div>
                 <div class="frame-panel">
                     <h3>Track C — seasonal tables</h3>
-                    <p>Procgen biomes and monster lists are versioned tables. Appending mid-season re-buckets every seed, so expansion is a season boundary, not a silent edit. The high-leverage text work is thickening the daily template so it actually uses the monsters, loot, and NPCs the tables already model.</p>
+                    <p>Generated biomes, ingredients, or encounter lists can live in versioned tables. If an addition re-buckets every seed, expansion belongs at a named season boundary rather than inside a silent edit. The table version is part of the result.</p>
                 </div>
                 <div class="frame-panel">
                     <h3>Hand art, separately</h3>
-                    <p>Procedural sprites stay seed-derived. Hand or Midjourney stills are a new layer: 128×128 board slots, transparent backgrounds, navy palette, one asset per PR. Brand and token art can land immediately; in-game <code>art:</code> handles are designed and not yet wired. Do not block a file on the wiring.</p>
+                    <p>Procedural assets should stay seed-derived. Hand-drawn or generated stills are another layer with their own provenance, crop, palette, and review path. A missing integration should not erase the asset’s native identity. Continue in the <a href="/design/folios/">folios</a> or <a href="/tools/midjourney/">depiction bench</a>.</p>
                 </div>
             </div>
-            <p data-spw-textual-role="note">The tracks are useful when a crew can share them: the same seed, the same scene, the same table version. A stranger should be able to re-run what you held. That is group behavior, not a portfolio ask. <a href="/about/domains/lore.land/">lore.land</a> is where long-form from those scenes can become public without pretending the vault and the game are the same room.</p>
-            <nav class="frame-operators" data-spw-feature="theme-chips" aria-label="Crew handles">
-                <a class="spw-chip" data-spw-handle="true" href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" target="_blank" rel="noopener" data-spw-operator="potential">~content_spec</a>
-                <a class="spw-chip" data-spw-handle="true" href="https://github.com/emberian/dregg/blob/main/docs/CONTRIBUTING-ASSETS.md" target="_blank" rel="noopener" data-spw-operator="potential">~assets_guide</a>
-                <a class="spw-chip" data-spw-handle="true" href="#spween-scene" data-spw-operator="scene">(spween_scene</a>
-                <a class="spw-chip" data-spw-handle="true" href="https://github.com/emberian/dragons-clutch/tree/main/.spw" target="_blank" rel="noopener" data-spw-operator="concept-edge">&gt;sidecar</a>
+            <p data-spw-textual-role="note">The tracks become consequential when a crew can share the same seed, scene, and table version. A stranger should be able to re-run the authorized transformation and compare the result. <a href="/about/domains/lore.land/">lore.land</a> is where long-form scenes can become public without pretending source notes and reading surfaces are the same room.</p>
+            <nav class="frame-operators" data-spw-feature="theme-chips" aria-label="Authorable track handles">
+                <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/" data-spw-operator="potential">~deterministic_render</a>
+                <a class="spw-chip" data-spw-handle="true" href="/design/folios/" data-spw-operator="potential">~asset_provenance</a>
+                <a class="spw-chip" data-spw-handle="true" href="#scene-receipts" data-spw-operator="scene">(scene_receipt</a>
+                <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/" data-spw-operator="concept-edge">&gt;sidecar</a>
                 <a class="spw-chip" data-spw-handle="true" href="/about/domains/lore.land/" data-spw-operator="concept-edge">&gt;lore.land</a>
-                <a class="spw-chip" data-spw-handle="true" href="#dregg-tokenomics" data-spw-operator="substrate">$holdings</a>
+                <a class="spw-chip" data-spw-handle="true" href="#versioned-holdings" data-spw-operator="substrate">$versioned_holdings</a>
             </nav>
             <p>
-                Some Dregg repos also keep <code>.spw</code> as sidecar curriculum — notes a crew can hold beside the code, not the Descent’s <code>.scene</code> grammar. <a href="https://github.com/emberian/dragons-clutch/tree/main/.spw" target="_blank" rel="noopener">dragons-clutch/.spw</a> is one of those trees: canon, index, mount. This site is a different consumer, and a place to challenge how those notes parse.
+                A <code>.spw</code> sidecar can hold curriculum beside code without becoming the executable scene grammar. Canon, index, and mount remain readable to a crew; the parser can challenge whether their references resolve. Different consumers may project the notes differently while preserving the same relation.
             </p>
         </section>
 
-        <section class="spw-frame" id="dregg-tokenomics" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="hold[seed.season.table]{identity.boundary.ledger}<policy>">
+        <section class="spw-frame" id="versioned-holdings" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="hold[seed.season.table]{identity.boundary.ledger}&lt;policy&gt;">
             <div class="frame-topline" data-spw-slot="header">
-                <a class="frame-sigil" href="#dregg-tokenomics">$dregg_holdings</a>
+                <a class="frame-sigil" href="#versioned-holdings">$versioned_holdings</a>
                 <span class="frame-kind">holdings</span>
             </div>
-            <h2>Holdings, not a single ticker</h2>
-            <p data-spw-copy-unit="knowledge.dregg.holdings.lede">Token talk stays abstract when it pretends value is one coin. Three holdings a crew can share — identity, boundary, ledger — are already named. Other systems can reuse the policy without copying a brand.</p>
+            <h2>Identity, boundary, ledger</h2>
+            <p data-spw-copy-unit="knowledge.versioned-holdings.lede">Value gets vague when identity, supply boundary, and history collapse into one number. These are three separate holdings a crew can share. Other systems can reuse the policy without copying the surrounding world.</p>
             <div class="frame-grid">
                 <div class="frame-panel">
                     <h3>Seed</h3>
@@ -203,23 +203,23 @@
                     <p>The ledger is the versioned table. A stranger should be able to name which table they played.</p>
                 </div>
             </div>
-            <p>Keep the three in relation. Collapsing them into one price is the singular-currency move. Five boonhonk voices work the same way: you do not spend all at once. Count the dummy, then return to a <a href="/services/ecosystem/#regions">region</a>.</p>
-            <p data-spw-textual-role="note">Other coins that need “the same object stays the same across a season” can use these primitives. This page does not sell a token. Color and emphasis change how a holding is seen; they do not mint it.</p>
+            <p>Keep the three in relation. Collapsing them into one score hides the mechanism. Five boonhonk voices work the same way: you do not spend all at once. Count the dummy, then return to a <a href="/services/ecosystem/#regions">region</a>.</p>
+            <p data-spw-textual-role="note">Any system that needs “the same object stays the same across a season” can use these primitives. Color and emphasis change how a holding is seen; they do not create its identity.</p>
             <nav class="frame-operators" aria-label="Holdings next">
-                <a class="spw-chip" data-spw-handle="true" href="#dregg-contribution" data-spw-operator="potential">~dregg_tracks</a>
+                <a class="spw-chip" data-spw-handle="true" href="#authorable-tracks" data-spw-operator="potential">~authorable_tracks</a>
                 <a class="spw-chip" data-spw-handle="true" href="/topics/math/combinatorics/#combinatorics-lab" data-spw-operator="wonder">? count_lab</a>
                 <a class="spw-chip" data-spw-handle="true" href="/services/ecosystem/#regions" data-spw-operator="frame">#&gt;regions</a>
                 <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_sample=holdings#literal-parser" data-spw-operator="wonder">? parse[holdings]</a>
             </nav>
         </section>
 
-        <section class="spw-frame" id="spween-scene" data-spw-kind="frame" data-spw-role="reference">
+        <section class="spw-frame" id="scene-receipts" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="scene[condition]{effect;exit}&lt;receipt&gt;">
             <div class="frame-topline" data-spw-slot="header">
-                <a class="frame-sigil" href="#spween-scene" data-spw-operator="scene">(spween_scene</a>
+                <a class="frame-sigil" href="#scene-receipts" data-spw-operator="scene">(scene_receipt</a>
                 <span class="frame-kind">cheat-sheet</span>
             </div>
-            <h2>Spween <code>.scene</code> marks</h2>
-            <p>Track B is handwritten text. The Descent compiles it to executor teeth; the no-cheat board re-runs the same teeth. This is Dregg’s grammar, not Spw. A site <code>(scene)</code> can later project onto <code>$scene</code> — it is not this file format.</p>
+            <h2>Scene marks and executable prose</h2>
+            <p>A compact scene file can keep prose, conditions, effects, and exits in one readable shape. An executor may compile and re-run those marks, but the authorable source remains the receipt. This is a neighboring scene pattern, not Spw syntax: a site <code>(scene)</code> may project onto <code>$scene</code> without claiming the two file formats are identical.</p>
             <pre><code>---
 id: salt-vault
 title: The Salt Vault
@@ -252,12 +252,12 @@ The vault door hangs open.
                 </article>
                 <article class="frame-panel">
                     <h3>Win and publish</h3>
-                    <p>A declared win condition is what the board re-executes. Hand-authored publish (<code>/gallery publish-scene</code>) is still the open seam. Until it exists, a <code>.scene</code> file is a draft, not a board entry.</p>
+                    <p>A declared win condition is what a verifier re-executes. Until the publish path accepts and checks the same source, a <code>.scene</code> file is a draft rather than an authorized board entry.</p>
                 </article>
             </div>
-            <nav class="frame-operators" aria-label="Spween next">
-                <a class="spw-chip" data-spw-handle="true" href="#dregg-contribution" data-spw-operator="potential">~dregg_tracks</a>
-                <a class="spw-chip" data-spw-handle="true" href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" data-spw-operator="potential">~content_spec</a>
+            <nav class="frame-operators" aria-label="Scene receipt next">
+                <a class="spw-chip" data-spw-handle="true" href="#authorable-tracks" data-spw-operator="potential">~authorable_tracks</a>
+                <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/" data-spw-operator="potential">~sidecar_grammar</a>
                 <a class="spw-chip" data-spw-handle="true" href="/about/domains/lore.land/" data-spw-operator="concept-edge">&gt;lore.land</a>
             </nav>
         </section>
@@ -270,8 +270,8 @@ The vault door hangs open.
             <h2>Starting references</h2>
             <div class="frame-grid">
                 <div class="frame-panel">
-                    <h3><a href="https://help.obsidian.md/obsidian" target="_blank" rel="noopener">Obsidian Help</a></h3>
-                    <p>A clear current reference for how one popular product describes the overlap between Markdown editing and knowledge-base behavior. Useful when you want to compare the site’s own file-and-link habits with a larger tool ecosystem.</p>
+                    <h3><a href="/tools/spw-parser/">Spw literal parser</a></h3>
+                    <p>The local substrate check: author an expression, inspect how it parses, and compare the literal relation with its HTML projection. Useful before asking a runtime or agent to infer more than the source says.</p>
                 </div>
                 <div class="frame-panel">
                     <h3><a href="https://commonmark.org/" target="_blank" rel="noopener">CommonMark</a></h3>
@@ -302,9 +302,9 @@ The vault door hangs open.
                 <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="/topics/software/#curricular-codebase" data-spw-action="address">#&gt;curricular_codebase</a>
                 <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="/services/systems/#curricularize" data-spw-action="address">#&gt;systems_offer</a>
                 <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="/topics/software/spw/" data-spw-action="address">#&gt;spw_operator_atlas</a>
-                <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="#dregg-contribution" data-spw-action="address">#&gt;dregg_tracks</a>
-                <a class="spw-chip" data-spw-handle="true" data-spw-operator="scene" href="#spween-scene" data-spw-action="address">(spween_scene</a>
-                <a class="spw-chip" data-spw-handle="true" data-spw-operator="potential" href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" data-spw-action="explore">~content_spec</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="#authorable-tracks" data-spw-action="address">#&gt;authorable_tracks</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="scene" href="#scene-receipts" data-spw-action="address">(scene_receipt</a>
+                <a class="spw-chip" data-spw-handle="true" data-spw-operator="potential" href="/topics/math/#consequence-arcs" data-spw-action="explore">~consequence_arcs</a>
             </div>
         </section>
     </main>

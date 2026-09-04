@@ -15,6 +15,7 @@
 @composition: ~"../../public/js/interface/composition.js"
 @resonance: ~"../../public/js/runtime/expression-resonance.js"
 @dot_join: ~"../language/dot-join.spw"
+@consequential_editorial: ~"../../.agents/plans/model-guided-refinement/caches/consequential-ecosystem-editorial-2026-09.spw"
 
 operation = "contract"
 fixity = "tending"
@@ -105,6 +106,17 @@ vessel_join = `cauldron[garden]{sow.tend.harvest} — live vessel identifier. No
   ][reg=set]
   cadence_boundary = `Cadence stays in the ingredient payload and breadcrumb. It does not claim a fourth rendered Spw slot, infer a due date, or give the cauldron its own clock.`
 }
+
+^"consequence_bearing_payloads_2026_09"{
+  operation = `align`
+  fixity = `tending`
+  source = @consequential_editorial
+  claim = `An ingredient becomes useful when gathering it changes the next composition, not when the cauldron merely remembers another noun.`
+  minimum = #[`origin or substrate`, `condition or threshold`, `relation or operation`, `named consequence`, `receipt or return path`][reg=set]
+  dose_rule = `Charge and repetition are bounded inputs. More gathered instances may saturate, conflict, or discharge; do not imply monotonic benefit.`
+  receipt = `A cast result should expose which ingredients participated, what register composition changed, what remained invariant, and what can be replayed after ingredients compost.`
+  authoring = `Prefer existing data-spw-consequence and semantic-expression projection. Do not mirror the full research payload into DOM attributes.`
+}[reg=facet]
 
 #>wonder_cauldron_dynamics_1
 ?["Should a region be able to refuse capture?"]{

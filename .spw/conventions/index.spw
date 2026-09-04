@@ -94,6 +94,7 @@
 @component_region_personality: ~"./component-region-personality.spw"
 @component_capture_pipeline: ~"./component-capture-pipeline.spw"
 @plant_ecology_operations: ~"./plant-ecology-operations.spw"
+@dregg_lineage: ~"./dregg-lineage.spw"
 @what_im_learning: ~"./what-im-learning.spw"
 @resume_record: ~"./resume-record.spw"
 @spw_architecture_ecology: ~"./spw-architecture-ecology.spw"
@@ -206,6 +207,7 @@ dispatch: .{
  component_region_personality = @component_region_personality
  component_capture_pipeline = @component_capture_pipeline
  plant_ecology_operations = @plant_ecology_operations
+ dregg_lineage = @dregg_lineage
  what_im_learning = @what_im_learning
  spw_architecture_ecology = @spw_architecture_ecology
  relational_design_graph = @relational_design_graph

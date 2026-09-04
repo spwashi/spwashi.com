@@ -21,6 +21,7 @@
 @what_im_learning: ~"./what-im-learning.spw"
 @curriculum: ~"../../curriculum/index.html"
 @hospitality: ~"../../about/index.html"
+@editorial_cache: ~"../../.agents/plans/model-guided-refinement/caches/consequential-ecosystem-editorial-2026-09.spw"
 
 operation = "prime"
 fixity = "tending"
@@ -74,11 +75,23 @@ fixity = "tending"
   }[reg=facet]
 }[reg=facet]
 
+^"growth_payloads_2026_09"{
+  operation = `align`
+  fixity = `tending`
+  source = @editorial_cache
+  distinction = `B vitamins, IAA/auxin, 5-aminolevulinic acid, PQQ, mineral solubilization, and cell-envelope fractions are different candidate mechanisms. Do not compress them into “growth hormones.”`
+  context = `Strain, light, oxygen, substrate, dose, plant, and stress posture change the outcome. Presence of a metabolite is evidence about a pathway, not yet evidence of the final plant response.`
+  dose = `A catalytic payload can help at one concentration and stress at another. More charge, more detail, more motion, or more links are not automatically more useful by analogy.`
+  editorial_transfer = `A component or route arc earns ecological language when a small input produces a named downstream change under stated conditions and the copy also names where the analogy breaks.`
+  public_boundary = `The general site carries substrate, threshold, response, residue, and return. Named organisms and people stay on factual or provenance surfaces only when naming is the subject.`
+}[reg=facet]
+
 ^"if_someone_points_a_model"{
   start = `/recipes/#grower-start`
-  named_source = `/recipes/#soil-companions` # aside #plants-and-sorcery
-  also = #[`/curriculum/`, `/about/#nutrition-register`, `/coordination/#what-im-learning`][reg=set]
-  process = `Kitchen grid stays kitchen language. Stills and code live in details. Shop stats stay in the one public sentence.`
+  mechanism_note = `/recipes/#soil-companions` # aside #payload-boundaries
+  provenance = @editorial_cache
+  also = #[`/topics/math/#consequence-arcs`, `/research/`, `/curriculum/`, `/about/#nutrition-register`, `/coordination/#what-im-learning`][reg=set]
+  process = `Kitchen grid stays kitchen language. Stills and code live in details. Public copy distinguishes payload class, conditions, dose, pathway evidence, and observed outcome; named source lineage stays in the cache.`
 }[reg=facet]
 
 validation: #[

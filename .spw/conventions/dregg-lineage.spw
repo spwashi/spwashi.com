@@ -23,6 +23,7 @@
 @measurement: ~"./measurement-contract.spw"
 @sidecar: ~"./sidecar-references.spw"
 @clutch: ~"https://github.com/emberian/dragons-clutch/tree/main/.spw"
+@editorial_cache: ~"../../.agents/plans/model-guided-refinement/caches/consequential-ecosystem-editorial-2026-09.spw"
 
 operation = "prime"
 fixity = "experimental"
@@ -105,7 +106,22 @@ expression = lineage[dregg]{determinism.verification.hypermedia}<topics>
   memable = `Track A / B / C, sidecar, lore.land — named chips a group can call out loud.`
   record = `A record compiled for whoever finds it, not a solo contribution theater.`
   refuse = `Do not edit cloned .references/dregg or dragons-clutch. Do not speak for Dregg.`
-  public = `/topics/knowledge-bases/#dregg-contribution`
+  public_transfer = `/topics/knowledge-bases/#authorable-tracks — generic authorable shapes and receipts; named lineage stays here`
+}[reg=facet]
+
+^"editorial_transfer_2026_09"{
+  operation = `align`
+  fixity = `tending`
+  sources_checked = `2026-09-04 — official idea, receipt, worlds, and operations records; see @editorial_cache for URLs and bounded biological comparison.`
+  keep_private_to_research = `The project name, collaborator lineage, contribution tracks, and implementation claims remain in this provenance surface or specialist history.`
+  public_mechanics = #[
+    `state the relation before narrating machinery`,
+    `preserve native domain shapes`,
+    `bind before-state, consequence, evidence, and next-state in a receipt`,
+    `compose only when adjacent boundaries agree`,
+    `name invariants, conserved quantities, authorized output, and refusal tests`
+  ][reg=set]
+  public_rule = `General editorial routes should embody these mechanics without naming this source. A source link belongs in a research note when provenance is the subject, not in every component that inherits the idea.`
 }[reg=facet]
 
 #>wonder_dregg_lineage_1
