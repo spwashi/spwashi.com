@@ -10181,6 +10181,17 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0);
 }
 
+html[data-spw-color-mode="dark"] :where(.spw-section-handle, .spw-section-handle-shell) {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong, #1a1f22) 88%, transparent), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, #1a1f22) 92%, var(--active-op-color, #008080) 8%);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--ink, #eee) 12%, transparent) inset,
+    0 8px 24px -4px color-mix(in srgb, var(--active-op-color, #008080) 22%, rgba(0, 0, 0, 0.42)),
+    0 2px 6px -1px rgba(0, 0, 0, 0.28),
+    var(--spw-handle-direction-glow);
+}
+
 .spw-section-handle[data-spw-handle-state="visible"]:is(:hover, :focus-visible, :focus-within),
 .spw-section-handle-shell[data-spw-handle-state="visible"]:is(:hover, :focus-visible, :focus-within) {
   opacity: 1;
@@ -11624,6 +11635,22 @@ html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .
 html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-label,
 html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .spw-svg-note {
   opacity: 1 !important;
+}
+
+/* Still-readable interaction: pressed lens and landmark path stay visible
+   after chrome is hidden. Slot/lens labels live in gesture-anatomy and
+   frame-controls; this only thickens the pressed groove. */
+html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
+  :where(.mode-switch .frame-sigil[aria-pressed="true"]) {
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--spw-control-axis-color, var(--active-op-color, #008080)) 70%, transparent);
+  font-weight: 750;
+}
+
+html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
+  :where(.spw-page-landmarks) {
+  outline: 1px dashed color-mix(in srgb, var(--active-op-color, #008080) 28%, transparent);
+  outline-offset: 4px;
 }
 }
 
@@ -23142,9 +23169,18 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   --gesture-anatomy-ease: var(--ease-settle, ease);
 }
 
-:where(html[data-spw-cognitive-handles="on"], html[data-spw-tuning-discoverability="revealed"]) {
+:where(
+  html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
+  html[data-spw-tuning-discoverability="revealed"]
+) {
   --gesture-anatomy-opacity: 0.72;
   --gesture-anatomy-size: 0.58rem;
+}
+
+:where(html[data-spw-capture-mode="screenshot"], html[data-spw-capture-mode="study"]) {
+  --gesture-anatomy-opacity: 0.88;
 }
 
 :where(html[data-spw-tuning-discoverability="ambient"]) {
@@ -23197,6 +23233,8 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
 /* Slot role labels on framed components */
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
@@ -23209,6 +23247,8 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
 
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
   .spw-frame [data-spw-slot]:not([data-spw-slot=""]),
@@ -23216,12 +23256,15 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   .vibe-widget [data-spw-slot]:not([data-spw-slot=""])
 ) {
   outline: 1px dashed color-mix(in srgb, var(--gesture-anatomy-accent) 14%, transparent);
-  outline-offset: 3px;
+  outline-offset: -2px;
+  padding-block-start: 0.62rem;
   transition: outline-color var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where([data-spw-slot-label])::before {
@@ -23252,9 +23295,44 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   transition: opacity var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
+:where(
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"]
+) :where(
+  .spw-frame [data-spw-slot]:not([data-spw-slot=""]):not([data-spw-slot-label]),
+  .frame-card [data-spw-slot]:not([data-spw-slot=""]):not([data-spw-slot-label])
+)::before {
+  content: attr(data-spw-slot);
+  position: absolute;
+  inset-block-start: -0.55rem;
+  inset-inline-start: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: min(100%, 16rem);
+  overflow: hidden;
+  padding: 0.08rem 0.34rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--gesture-anatomy-accent) 20%, transparent);
+  background: color-mix(in srgb, var(--gesture-anatomy-surface) 90%, var(--gesture-anatomy-accent) 10%);
+  color: color-mix(in srgb, var(--gesture-anatomy-accent) 62%, var(--gesture-anatomy-ink-soft) 38%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--gesture-anatomy-size, 0.56rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  opacity: var(--gesture-anatomy-opacity, 0.88);
+  pointer-events: none;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 /* Vertical anatomy stack rail on multi-slot frames */
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
   .spw-frame[data-spw-anatomy-stack="true"],
@@ -23290,6 +23368,8 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
 
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(.spw-anatomy-stack-rail) {
   display: flex;
@@ -23341,6 +23421,8 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
 
 :where(
   html[data-spw-cognitive-handles="on"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"],
   html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where([data-spw-gesture-hint]:is(:hover, :focus-visible, [data-spw-gesture="charging"], [data-spw-gesture="armed"], [data-spw-gesture="sustained"]))::after {
@@ -23674,10 +23756,15 @@ html[data-spw-theme-biome="glasshouse"] {
 /* Learnable page rooms. IDs stay; copy inside the rooms may change. */
 .spw-page-landmarks {
   --landmark-mark: var(--op-frame-color, #008080);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.38rem;
   margin: 0.7rem 0 0.35rem;
 }
 
 .spw-page-landmarks__kicker {
+  flex: 1 0 100%;
   margin: 0 0 0.28rem;
   color: var(--ink-soft, rgba(14, 18, 20, 0.62));
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
@@ -23690,10 +23777,17 @@ html[data-spw-theme-biome="glasshouse"] {
 .spw-page-landmarks ol {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.38rem;
+  gap: inherit;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.hook-invitation[data-spw-feature="wrap-jobs"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.38rem;
+  align-items: center;
 }
 
 .spw-page-landmarks a {
@@ -27433,7 +27527,12 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 90%, var(--spw-control-axis-color) 10%);
 }
 
-:where(html[data-spw-tuning-discoverability="ambient"], html[data-spw-tuning-discoverability="revealed"])
+:where(
+  html[data-spw-tuning-discoverability="ambient"],
+  html[data-spw-tuning-discoverability="revealed"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"]
+)
   :where(.frame-topline .mode-switch, .frame-heading .mode-switch)[aria-label]::before {
   content: "lens";
   display: block;
@@ -27455,14 +27554,18 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 
 :where(
   html[data-spw-tuning-discoverability="ambient"],
-  html[data-spw-tuning-discoverability="revealed"]
+  html[data-spw-tuning-discoverability="revealed"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"]
 ) :where(.spw-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header)) {
   box-shadow: inset 3px 0 0 color-mix(in srgb, var(--spw-control-axis-color) 42%, transparent);
 }
 
 :where(
   html[data-spw-tuning-discoverability="ambient"],
-  html[data-spw-tuning-discoverability="revealed"]
+  html[data-spw-tuning-discoverability="revealed"],
+  html[data-spw-capture-mode="screenshot"],
+  html[data-spw-capture-mode="study"]
 ) :where(.spw-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header))::after {
   content: "form";
   display: inline-flex;

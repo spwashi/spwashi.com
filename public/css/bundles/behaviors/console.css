@@ -127,7 +127,7 @@
 }
 
 .site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-kicker::after {
-  content: " · hold or double-tap to stash";
+  content: " · hold to stash";
   color: var(--ink-muted, rgba(14, 18, 20, 0.58));
   font-weight: 500;
   letter-spacing: normal;
