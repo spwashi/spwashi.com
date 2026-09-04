@@ -70,6 +70,12 @@ Fuzz strategy:
 - **Soft**: journey token markers add visual noise to the default state instead of emerging quietly under attention.
 - **Non-negotiable**: all visual markers for screenshot state must be accessible, reduced-motion safe, and legible without color as the only channel.
 
+## Active refinement — 2026-09-04 pocket density
+
+Niche hook stills (`town-opening`, `research-opening`, `membership-opening`, `svg-storytelling-opening`, `about-opening`) are now named recipes. The keepers are the diagrams and pressed lenses. The miss is cloned extras: do not ship lens + spec + climate rail + SVG + landmarks as one pocket subject on the next hubs.
+
+Owned with `component-region-personality` wave 5: one extra dense object per first frame; route families disagree about which. Recapture with `npm run visual:capture -- --stills --ids <opening> --viewports pocket`.
+
 ## Validation
 
 - **Hypotheses**: persistent data attributes and CSS-driven selection states will make screenshots legible without runtime context; priming states will be achievable through all input modes; journey tokens will feel like earned marks rather than tracking labels.

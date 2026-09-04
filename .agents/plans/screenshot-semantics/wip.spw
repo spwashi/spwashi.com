@@ -81,6 +81,9 @@ fixity = "tending"
  >>[2026-04-09] taste - Journey tokens should feel like earned marks on a surface — a signature of where the user has been — not breadcrumbs or browser history. The right register is closer to underlining in a notebook than to a navigation trail.
  >>[2026-04-09] style - Screenshot-legible states are a personal style question: what does this site look like when it has been used? Does it develop visual character through engagement, or reset to the same ambient surface every time? The answer shapes how priming and selection are implemented.
  >>[2026-04-09] observe - The operator atlas pages are the strongest existing example of screenshot-worthy state: they're designed to be legible in a still image. The rest of the site should approach that quality in its addressed/primed states.
+ >>[2026-09-04] observe - Pocket stills of the new niche hooks proved labeled diagrams and pressed lenses photograph. They also proved a cloned extra stack (climate rail + landmarks + diagram on every hook) makes the still name the scaffold.
+ >>[2026-09-04] decide - First pocket frame: identity + lens + one extra. Figure slots on non-hero-split frames stay in document order. Climate rails live in the topline as a wrap row, not slot=meta.
+ >>[2026-09-04] taste - Research keeps the ladder; town the atlas path; membership the role field; svg the motif kit; about must not clip the person. Next hubs must pick a different extra.
 }
 
 ^["open"]{
@@ -109,7 +112,7 @@ fixity = "tending"
  ~#files_hot: "public/css/style.css, public/js/spw-component-semantics.js, public/js/spw-shared.js, .spw/conventions/site-semantics.spw"
  ~#next_commit: "1"
  ~#open_count: "8"
- ~#last_stream: "2026-04-09"
+ ~#last_stream: "2026-09-04"
  ~#taste_debt: "Priming is the underrepresented axis — make it legible without making it loud. Journey tokens should feel earned and sparse, not tracked and comprehensive. Log the visual form decision as a taste choice at commit 2."
 }
 

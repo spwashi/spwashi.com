@@ -92,6 +92,28 @@
   browse = `runs/<day>/<profile>/<clock>--<hash>/<viewport>/ — readable names first (survey, pocket, pocket--dark-mode). Clock+hash lets parallel agents coexist. Walk slices are home--00000.jpg, home--00844.jpg down the page.`
 }
 
+^"pocket_frame_variety"{
+  operation = "prime"
+  fixity = "tending"
+  observed = `2026-09-04 pocket stills of town-opening, research-opening, membership-opening, svg-storytelling-opening, about-opening.`
+  keepers = #[
+    `research: Cite lens + named ladder rungs`,
+    `membership: Read/Join + role-field SVG + Hook/Levels/Loops/Card`,
+    `svg storytelling: motif kit as the subject`,
+    `town after fold repair: Visit lens + library→card diagram`
+  ][reg=set]
+  misses = #[
+    `data-spw-slot="figure" on a non-hero-split frame flex-orders the diagram below unslotted copy`,
+    `data-spw-slot="meta" on a climate rail order:-1 jumps it into a sparse header`,
+    `ornament-rail ::before/::after plus wrap stacks chips into a dashed column`,
+    `about identity lede still clips at overflow:clip`
+  ][reg=set]
+  density_rule = `One extra dense object in the first pocket frame besides identity and the lens.`
+  variety_rule = `Do not give Play, Services, Recipes, or Coordination the same lens+spec+rail+svg+landmarks order. Change which extra photographs first.`
+  recapture = `npm run visual:capture -- --stills --ids town-opening,research-opening,membership-opening,svg-storytelling-opening,about-opening --viewports pocket`
+  recipes = #[`town-opening`, `research-opening`, `membership-opening`, `svg-storytelling-opening`, `about-opening`][reg=set]
+}
+
 ^["viewport_passage_contract"]{
  automatic_viewport: "Scroll position may compose a candidate still through low-amplitude edge light and material continuity. It does not know what the reader considers important."
  attention_precedence: #[

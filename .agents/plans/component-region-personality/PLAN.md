@@ -83,6 +83,25 @@ Develop meaningful component real estate and region personality across spwashi.c
 | Region motifs | Assign `data-spw-vocabulary` + `data-spw-copy-motifs` per hub family |
 | Component audit | Run design catalog + rg audit dimensions from `.spw` |
 
+### Wave 5 — Pocket-frame density and variety (2026-09-04 stills)
+
+Niche hooks (Town, Research, Membership, SVG Storytelling) proved a labeled diagram and a pressed lens photograph. They also cloned the same extra stack: spec pills + climate rail + landmarks + diagram. A pocket crop then names the scaffold, not the route.
+
+**Rule:** the first pocket still gets **one** extra dense object besides identity and the lens — a diagram, a climate rail, **or** a landmark path, not all three. Route families should disagree about which extra they keep.
+
+| Family | First-frame extra | Do not clone |
+|--------|-------------------|--------------|
+| research | insight ladder diagram | climate tropes in the same crop |
+| town | atlas path diagram | a second settings row competing with the lens |
+| membership | role-field diagram | repeating the research tropes rail |
+| craft / svg | motif kit | long lede before the kit |
+| about | identity copy surviving the crop | anatomy rail stealing the lede |
+| home | identity + working view | another climate rail on the opening |
+
+**Next routes:** Play, Services, Recipes, Coordination — pick a different extra before adding SVG + rail + landmarks together. Audit `rg 'spw-ornament-rail' **/index.html` and `rg 'spw-page-landmarks' **/index.html` for cloned order.
+
+**Validation:** `npm run visual:capture -- --stills --ids <opening> --viewports pocket` and write one sentence naming the subject. If two reviewers name the scaffold instead of the route, drop an extra.
+
 ## Risks
 
 | Risk | Mitigation |
@@ -109,3 +128,4 @@ npm run catalog   # after copy-unit + component catalog updates
 - `chrome-navigation-wonder/` — navigation contour
 - `modular-experience-slices/` — durable slice ownership for partials
 - `relational-attention-media/` — capture seeds (reframe away from proof-card tone)
+- `screenshot-semantics/` — pocket still recipes and the one-extra-per-frame density rule
