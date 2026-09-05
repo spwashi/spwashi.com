@@ -1,5 +1,34 @@
 # Chrome, Navigation, and Metaphysical Wonder (2026 review)
 
+## Status — 2026-09-04: mobile edge/chrome swipe, 3 of 4 rooms done
+
+"On a phone, a visitor can leave the current room in more than one direction
+from existing edges and chrome" landed for three of the four named edges,
+each reusing the existing tap:travel/swipe:cycle contract rather than a new
+gesture family — verify with `grep -n swipe public/js/runtime/interaction-hops.js
+public/js/runtime/attention/section-handle.js`:
+
+- **Header rooms (closed toggle-header)** — `resolveHeaderRoomHop` cycles
+  primary nav hrefs on swipe when menu-mode is toggle and the drawer is
+  closed (`02c7757a`).
+- **Section-handle rail (collapsed)** — `resolveSectionHandleSwipe` sends
+  compact swipes through prev/next section travel, matching the visible
+  ‹ › hop (`c7da1438`).
+- **Landmark rail** — already `swipe:cycle` via `LANDMARK_CONTRACT` in
+  `interaction-hops.js` (landed earlier, `724caa1b`).
+
+**Open**: shell disclosure (the drawer/menu once it's *open*) has zero swipe
+handling — `grep -c swipe public/js/runtime/shell-disclosure.js` is 0. The
+header commit's own note: "An open drawer keeps tap-to-choose." That's the
+one remaining edge from the four named in this goal, and the natural next
+bounded slice: extend swipe-to-cycle to the open drawer's room list,
+following the same pattern as `resolveHeaderRoomHop`/
+`resolveSectionHandleSwipe` (swipe left/right cycles the primary nav links,
+suppress the trailing click, verify live via pocket CDP before/after —
+`/about/` is the route both prior commits checked against). Do not invent a
+new gesture vocabulary or a parallel drawer-only contract; the closed-header
+and section-handle commits are the reference implementations.
+
 ## Public Goal
 Improve the primary navigation (header via `<spw-site-header>`), section handles, breadcrumbs, and footer so they are genuinely pleasant on mobile, encourage curiosity/discovery/wonder, and feel like part of the Spw attentional field rather than administrative chrome.
 
