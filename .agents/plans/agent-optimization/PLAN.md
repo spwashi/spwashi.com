@@ -33,6 +33,8 @@ The site should remain hand-authored and human-primary. Agent optimization is an
 - The public `/about/plans/` page is a significant hand-maintenance tax; plan cards and status are not derived from the filesystem or a machine-readable index.
 - Network-call DX needed clarification more than new tooling: `check:local` and the dependency-surface audit rule already existed, but future agents needed clearer instruction to prefer local validation and local repo evidence before `npm audit`, dependency installs, or web lookups.
 
+**2026-09 agent adapters (relative strengths):** Root `CLAUDE.md` / `GROK.md` / `GEMINI.md` / `GPT.md` emphasize constitutional / anti-bloat / tool-mastery / exactness. They do not exclusive-own those disciplines. GPT.md also states the computer-use posture (verify-first, one named patch, stop). `npm run check:agents` requires the shared emphasis sentence and **git-tracked** files — a green check on untracked adapters was a lie. Sense instruments now include `audit:copy:accessor`, `audit:module-selectors`, `visual:checks`. Contract: `.spw/conventions/skill-invocation.spw#focuses`. No new `index.spw`.
+
 **2026-09 failure ledger (do not relearn in session):**
 - Catalog `selector` nouns lag public HTML (`.site-frame` vs `.spw-frame`; sibling `~` vs cluster cousins). Open `.spw/audits/module-selector-depth-2026-09.spw` and run `npm run audit:module-selectors`.
 - `--charge` / `--spw-resonance` do not inherit; `:root` opacity calcs sit at rest. Open `attention-field.spw#ink_and_light_spend`. Prove with `npm run visual:checks`, not JPEG goldens.
@@ -131,6 +133,15 @@ The site should remain hand-authored and human-primary. Agent optimization is an
   Validation: check passed.
 - **Offline-first agent validation clarification (2026-06)**: The repo already had the core mechanism (`npm run check:local`) and the dependency-surface rule for `npm audit`. This pass made the intended usage explicit in `AGENTS.md`, the shared site workflow, and the skills README: use local repo evidence first; use `check:local` for ordinary non-dependency patches; reserve `npm run check`, `npm run audit`, package installs, and external web searches for dependency-sensitive work, explicitly current external facts, or cases where local context cannot answer. No new script was added because the tooling was already present; the improvement is discoverability and future-agent decision quality.
 - **CSS/JS ownership contract hardening (2026-06)**: Tightened the executable architecture checks instead of moving files. `scripts/ts/css-contracts.mts` now rejects cascade-layer drift by requiring each `public/css/<layer>/...` import in `style.css` to use the matching layer, and keeps root CSS limited to `style.css` / `compose.css`. `scripts/ts/runtime-contracts.mts` now names the allowed top-level JS owner folders and rejects accidental new module families unless the runtime contract changes with them. Public CSS/JS READMEs and `.spw/conventions/model-guided-refinement.spw` now carry the corresponding ownership claim. Validation path: `npm run check:css`, `npm run check:runtime`, `npm run check:local`.
+- **Multi-Model Agent Infrastructure (Claude, Grok, Gemini, GPT) (2026-09)**:
+  - Created dedicated root-level instruction entry points tailored to the specific strengths and discovery conventions of the four primary coding agents:
+    - `CLAUDE.md`: Claude Code CLI / Anthropic models (Constitutional Rigor, WCAG AA a11y, semantic HTML, offline-first verification, minimal honest patches).
+    - `GROK.md`: xAI Grok (Anti-Bloat & Signal, immediate Spw operation declaration, hard stop-conditions, zero framework toleration).
+    - `GEMINI.md`: Google Gemini / Antigravity / Gemini Code Assist (Progressive Mastery, deep semantic context traversing `.spw` graphs, reactive non-polling task management, visual checks via `npm run visual:checks`).
+    - `GPT.md`: OpenAI Codex / ChatGPT / Cursor / Copilot (Contract Exactness, strict negative constraints against hallucinating frameworks/dependencies, explicit ESM `.js` imports, 11-tier CSS cascade order).
+    - `.cursorrules` and `.github/copilot-instructions.md`: Editor adapters for Cursor and GitHub Copilot.
+  - Implemented executable contract checker `scripts/check-agent-contracts.mjs` and wired it into `package.json` (`npm run check:agents`) and `scripts/check-local.mjs` so all future runs of `check:local` fail fast if agent instruction surfaces drift or break.
+  - Documented in `AGENTS.md` and `.agents/README.md`.
 - Limited agent memory/state beyond the route manifest (one SVG memo, poll history).
 - Cross-surface citations exist in spots but are not systematic (plans cite plans; .spw cites some plans; public page cites GitHub; skills are isolated).
 - No routine cadence or lightweight automation for plan hygiene, archive sweeps, or syncing editor surfaces.

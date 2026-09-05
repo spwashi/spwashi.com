@@ -28,6 +28,17 @@ fixity = "stable"
   rule: "Declare the operation before starting. If a task is really two operations, it is really two patches."
 }
 
+^"focuses"{
+  claim: "Adapters emphasize relative strengths. They do not exclusive-own a discipline. Any model still follows AGENTS.md Open first."
+  anti_bloat = `Stop-conditions, one named slice, no kitchen-sink. GROK.md emphasizes this.`
+  constitutional = `Negative bounds, a11y, no new data-spw-* family, smallest honest surface. CLAUDE.md emphasizes this.`
+  exactness = `ESM .js imports, CSS layer order, typed/runtime contracts. GPT.md emphasizes this.`
+  tool_mastery = `Mounted CLI, visual:checks, wonder/lattice, no background-task polling. GEMINI.md emphasizes this.`
+  computer_use = `A posture, not a fifth model lock: verify-first (audit:module-selectors, visual:checks, one pocket route), one named patch, stop. GPT.md states it because Codex computer-use is where kitchen-sink sessions started.`
+  shared = `This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follows Open first.`
+  prove = `npm run check:agents — adapters must be git-tracked; a green check on untracked files is a lie.`
+}[reg=facet]
+
 ^"shape"{
   claim: "A gate that only runs after the work is half a workflow. Every skill should name what to measure BEFORE it acts, not only what proves it finished."
   sense: "The measurement that grounds the work. Run it first; if it says the premise is wrong, stop — that is a finding, not a failure."
@@ -45,6 +56,10 @@ fixity = "stable"
   operator_usage = "npm run spw:lattice — apposition cells; npm run spw:analyze — selector densities"
   stylesheet_weight = "npm run css:payload — per-route bundle cost"
   breakpoint_drift = "node scripts/normalize-breakpoints.mjs — dry run reports without writing"
+  copy_accessor = "npm run audit:copy:accessor — dotted copy-unit vs Spw handle, topic clusters, voice seams"
+  module_hosts = "npm run audit:module-selectors — catalog selector vs public HTML hosts"
+  attention_ink = "npm run visual:checks — ink/light spend receipts, not JPEG goldens"
+  agent_adapters = "npm run check:agents — tracked model adapters + focus emphasis"
 }
 
 ^"measurement_before_invariant"{
@@ -71,7 +86,7 @@ fixity = "stable"
 }
 
 ^"validation"{
-  probe: `npm run spw:integrity`
+  probe: `npm run spw:integrity && npm run check:agents`
   falsification: #[
     `A skill file states an invariant with no probe that could falsify it.`,
     `A skill runs, produces a finding, and records it nowhere.`,

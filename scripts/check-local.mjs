@@ -33,6 +33,7 @@ const VALIDATORS = [
   },
   { label: 'component-contracts', script: 'scripts/component-contracts.mjs' },
   { label: 'check-observation-locality', script: 'scripts/check-observation-locality.mjs' },
+  { label: 'check-agents', script: 'scripts/check-agent-contracts.mjs' },
   {
     label: 'test:modules',
     script: 'scripts/run-module-tests.mjs',

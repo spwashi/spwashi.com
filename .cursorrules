@@ -1,0 +1,10 @@
+# Cursor rules for spwashi.com
+
+This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follows Open first.
+
+- Claude → `CLAUDE.md` (Constitutional Rigor)
+- Grok → `GROK.md` (Anti-Bloat & Signal)
+- Gemini → `GEMINI.md` (Progressive Mastery)
+- GPT / Codex → `GPT.md` (Contract Exactness + computer-use verify-first)
+
+No React/Vue/Svelte/Tailwind. CSS layers as in AGENTS.md. Browser ESM uses `.js` extensions. `npm run check:local`. Commits close with `#[episode]{ ~[scene]{} ![change]{} *[verify]{} }`.

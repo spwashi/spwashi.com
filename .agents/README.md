@@ -13,6 +13,17 @@ are discoverable from this repository without forking the workbench canon.
 - State conventions: `.spw/_workbench/.agents/state/*`
 - Knowledge base: `.spw/_workbench/.agents/kb/*`
 
+## Multi-Model Entrypoints
+
+The repository provides targeted root-level adapters tailored for the four primary AI coding tools, backed by canonical `AGENTS.md`:
+
+- **`CLAUDE.md`** — Claude Code CLI / Anthropic models (Constitutional Rigor)
+- **`GROK.md`** — xAI Grok (Anti-Bloat & Signal)
+- **`GEMINI.md`** — Google Gemini / Antigravity / Gemini Code Assist (Progressive Mastery)
+- **`GPT.md`** — OpenAI Codex / ChatGPT / Cursor / Copilot (Contract Exactness)
+- Editor rules: `.cursorrules`, `.github/copilot-instructions.md`
+- Verification script: `npm run check:agents`
+
 ## Command translation
 
 When a mounted skill assumes the workbench repo is the current project, use

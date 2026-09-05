@@ -28,12 +28,17 @@ Every skill invocation follows an ordered 4-part lifecycle:
 
 ---
 
-## 3. The Four Agent Disciplines
+## 3. Focuses (adapters emphasize; any model may use any)
 
-* ⚡ **Grok:** Anti-bloat, minimum ceremony, ruthless signal-to-noise ratio. Stop when the public outcome is reached.
-* 🛡️ **Claude:** Strict negative bounds, accessible semantic HTML, WCAG AA contrast, and zero-JS reading calm.
-* 📐 **Codex:** Exact file maps, strict CSS layer order, TypeScript boundaries, and deterministic validation outputs.
-* 🌌 **Antigravity:** Proactive tool mastery, mounted CLI inspections, subagent collaboration, and progressive enhancement.
+These are relative strengths, not exclusive owners. `AGENTS.md` is the gate. Declare a Spw operation (`cache | audit | align | prime | contract | archive`) before editing.
+
+* ⚡ **Anti-bloat** (GROK.md emphasizes): minimum ceremony, hard stop-conditions, one named slice.
+* 🛡️ **Constitutional** (CLAUDE.md emphasizes): negative bounds, semantic HTML, WCAG AA, no new `data-spw-*` families. Verify live before shipping a hypothesis.
+* 📐 **Contract exactness** (GPT.md emphasizes): ESM `.js` imports, CSS layer order, typed/runtime contracts.
+* 🌌 **Tool mastery** (GEMINI.md emphasizes): mounted CLI, `visual:checks`, wonder/lattice, no background-task polling.
+* 🖥 **Computer-use** (GPT.md states the posture): verify-first (`audit:module-selectors`, `visual:checks`, one pocket route). One named patch. Stop. Do not “implement from plans.”
+
+Prove adapters with `npm run check:agents` (files must be git-tracked).
 
 ---
 
@@ -80,5 +85,9 @@ reset
 | **Typed Tools (`scripts/ts/`)** | `npm run build:tools` | Successful compile to `scripts/typed/` |
 | **Typed Runtime (`public/ts/`)** | `npm run build:runtime` | Successful compile to `public/js/typed/` |
 | **Runtime Contracts** | `npm run check:runtime` | Catalog and import boundaries verified |
-| **Full Local Verification** | `npm run check:local` | Manifest, syntax, CSS, runtime, PWA, components green |
+| **Full Local Verification** | `npm run check:local` | Manifest, syntax, CSS, runtime, PWA, components, agent adapters green |
+| **Agent adapters** | `npm run check:agents` | Tracked CLAUDE/GROK/GEMINI/GPT + editor stubs; focuses are emphases |
+| **Copy-unit census** | `npm run audit:copy:accessor` | Dotted keys vs Spw handles, topic clusters, voice seams |
+| **Catalog hosts** | `npm run audit:module-selectors` | MODULE_DEFS.selector vs public HTML |
+| **Attention stills** | `npm run visual:checks` | Ink/light spend receipts, not JPEG goldens |
 | **Route Manifest Refresh** | `npm run manifest` | Updated `.agents/state/runtime/route-runtime-manifest.json` |

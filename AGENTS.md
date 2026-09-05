@@ -40,7 +40,10 @@ AGENTS is the always-on gate. Open the matching plan or contract instead of inve
 | agent / editor environment | `.agents/plans/agent-optimization/PLAN.md` and `spw-plan-maintenance` |
 | PWA / service worker | `.agents/plans/pwa-experience/` plus `npm run check:pwa` |
 | page-copy / pretext measure | `.spw/conventions/copy-flow.spw` plus `npm run audit:copy` |
+| copy-unit / voice tone / clustered copy update | `.spw/conventions/copy-accessor.spw` plus `npm run audit:copy:accessor` |
+| model instructions (Claude, Grok, Gemini, GPT) | `CLAUDE.md`, `GROK.md`, `GEMINI.md`, `GPT.md` (backed by `AGENTS.md`). No file for your model yet: `AGENTS.md` alone is the reliable gate — do not write yourself a speculative `<MODEL>.md`; add one later, from observed behavior, not assumption. |
 | skill wrappers vs workbench | `.agents/README.md` |
+| repo gotchas another agent already found | `.agents/MEMORY.md` — verified misses (stale selectors, commit grammar, collision risk), not a general note-dump |
 
 ## Commits
 
@@ -95,6 +98,18 @@ Default decision rule:
 - For content edits, sanity-check surrounding markup for balanced tags and broken relative/root-relative links.
 - If a local preview step is needed, use a simple static server; otherwise avoid adding tooling just for validation.
 
+## Model adapters (relative strengths, not exclusive owners)
+
+`AGENTS.md` is the gate. Root adapters emphasize one focus so a model leans into what it is good at. Any model still follows Open first. A skill that needs four models in the room is unusable by the person holding one.
+
+- **`GROK.md`** — anti-bloat: declare `cache|audit|align|prime|contract|archive`, one named slice, stop.
+- **`CLAUDE.md`** — constitutional rigor: a11y, no new `data-spw-*` families, smallest honest surface.
+- **`GPT.md`** — contract exactness plus **computer-use verify-first**: ESM `.js` imports, CSS layers, `audit:module-selectors` / `visual:checks`, one named patch, stop. Do not “implement from plans.”
+- **`GEMINI.md`** — tool mastery: `.spw` graph, `visual:checks` / `wonder` / `lattice`, no background-task polling.
+- **`.cursorrules`** and **`.github/copilot-instructions.md`** point at those adapters.
+
+Shared sentence in every adapter: *This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follows Open first.* Prove with `npm run check:agents` (adapters must be git-tracked; a green check on untracked files is a lie). Contract: `.spw/conventions/skill-invocation.spw#focuses`.
+
 ## Scope
 - These instructions apply to the entire repository unless a nested `AGENTS.md` overrides them.
 
@@ -116,6 +131,7 @@ As of 2026-04, the site publishes through a local build step rather than serving
 | `npm run manifest` | Regenerates the route runtime manifest. |
 | `npm run sitemap` | Generates `dist/sitemap.xml` from tracked route canonicals. |
 | `npm run check:local` | Default offline/local validation: compile, CSS, runtime/site contracts, generated checks. Does not copy `dist/`, and does not validate commit grammar. |
+| `npm run check:agents` | Tracked model adapters + shared emphasis sentence. Focuses are relative strengths, not exclusive owners. |
 | `npm run build:site:run` | Static deploy builder into `dist/`. Registers `scripts/lib/register-public-imports.mjs` so the catalog can load `/public/js` specifiers under Node. |
 | `npm run check:pwa` | Service-worker, manifest, offline, and PWA runtime contracts. |
 | `npm run check:runtime` | Validates JS runtime architecture contracts: module definition shape, import ownership, generated typed outputs, and root entrypoint boundaries. |

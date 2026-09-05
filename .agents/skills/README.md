@@ -24,12 +24,15 @@ A skill invocation is an ordered operational sequence that measures before it ac
 └────────────────────────────────────┴─────────────────────────────────────┘
 ```
 
-### The Four Agent Disciplines in Spw Context
+### Focuses in Spw context (adapters emphasize; not exclusive)
 
-* ⚡ **Grok (Anti-Bloat & Signal):** Strip away ceremonial preambles. Enforce hard stop-conditions and minimum-edit boundaries.
-* 🛡️ **Claude (Constitutional Rigor):** Enforce strict negative constraints, WCAG AA accessibility, semantic HTML, and reading-path calm.
-* 📐 **Codex (Contract Exactness):** Verify CSS layer cascades, exact TypeScript-to-JS compilation paths, and deterministic validation outputs.
-* 🌌 **Antigravity (Progressive Mastery):** Leverage mounted CLI tools (`spw:census`, `spw:lattice`, `css:payload`), subagents, and layered progressive enhancement.
+Root adapters (`GROK.md`, `CLAUDE.md`, `GPT.md`, `GEMINI.md`) remind a model of its relative strength. They do not replace `AGENTS.md`. A session that only has one model still uses every focus the task needs.
+
+* ⚡ **Anti-bloat** (GROK.md): stop-conditions, one named slice, declare `cache|audit|align|prime|contract|archive`.
+* 🛡️ **Constitutional** (CLAUDE.md): negative bounds, WCAG AA, semantic HTML, no new `data-spw-*` families; verify live before shipping a hypothesis.
+* 📐 **Contract exactness** (GPT.md): CSS layers, ESM `.js` imports, `check:runtime` / `check:css`.
+* 🌌 **Tool mastery** (GEMINI.md): `visual:checks`, `wonder`, `spw:lattice`, no background-task polling.
+* 🖥 **Computer-use** (GPT.md posture): verify-first, one named patch, stop. Do not “implement from plans.”
 
 ---
 
@@ -40,6 +43,7 @@ A skill invocation is an ordered operational sequence that measures before it ac
 | [`spw-craft-quality`](file:///Users/spwashi/air/spwashi.com/.agents/skills/spw-craft-quality/SKILL.md) | `align` | CSS / HTML / JS | `npm run css:payload` | [`.spw/skills/craft-quality.spw`](file:///Users/spwashi/air/spwashi.com/.spw/skills/craft-quality.spw) |
 | [`spw-ui-containment-audit`](file:///Users/spwashi/air/spwashi.com/.agents/skills/spw-ui-containment-audit/SKILL.md) | `audit` | Layout / Components | `node scripts/normalize-breakpoints.mjs` | [`.spw/skills/ui-containment.spw`](file:///Users/spwashi/air/spwashi.com/.spw/skills/ui-containment.spw) |
 | [`spw-semantics-rigor`](file:///Users/spwashi/air/spwashi.com/.agents/skills/spw-semantics-rigor/SKILL.md) | `align` | Data attrs / .spw | `npm run spw:integrity && npm run spw:lattice` | [`.spw/skills/semantics-rigor.spw`](file:///Users/spwashi/air/spwashi.com/.spw/skills/semantics-rigor.spw) |
+| copy collectibles | `audit` | `data-spw-copy-unit` / expression | `npm run audit:copy:accessor` | [`.spw/conventions/copy-accessor.spw`](file:///Users/spwashi/air/spwashi.com/.spw/conventions/copy-accessor.spw) |
 | [`spw-feature-planning`](file:///Users/spwashi/air/spwashi.com/.agents/skills/spw-feature-planning/SKILL.md) | `prime` | `.agents/plans/` | `npm run reasons` | `.agents/plans/<slug>/PLAN.md` |
 | [`spw-fix-planning`](file:///Users/spwashi/air/spwashi.com/.agents/skills/spw-fix-planning/SKILL.md) | `audit` | `.agents/plans/` | Browser repro + route check | `.agents/plans/<slug>/FIX.md` |
 | [`spw-interactive-medium`](file:///Users/spwashi/air/spwashi.com/.agents/skills/spw-interactive-medium/SKILL.md) | `contract` | Play / Scenes / JS | `npm run check:runtime` | [`.spw/conventions/interaction-microstates.spw`](file:///Users/spwashi/air/spwashi.com/.spw/conventions/interaction-microstates.spw) |
