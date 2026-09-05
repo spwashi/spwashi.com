@@ -12,6 +12,20 @@ import {
 
 export const FEATURE_DEFS = [
   {
+    id: 'operator-symmetry',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
+    selector: '[data-spw-feature="operator-symmetry"]',
+    rootMode: 'each',
+    describes: 'operator[square]{rotate.reflect.compare} invariant[labels|links]',
+    updates: ['structural:childList', 'structural:hidden', 'structural:textContent'],
+    evaluates: 'square identity composition-order authored-link preservation',
+    timingArc: 'visible-feature',
+    effectScope: 'local-dom listeners',
+    load: () => import('../modules/tools/operator-symmetry.js'),
+  },
+  {
     id: 'blog-interpreter',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,
@@ -308,7 +322,7 @@ export const FEATURE_DEFS = [
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.INTERACTION,
     costClass: COST_CLASS.DEMAND_COUPLED,
-    selector: '.spw-delimiter, .frame-sigil, .operator-chip, [data-spw-semantic-expression]',
+    selector: '.spw-delimiter, .frame-sigil, .spw-chip, [data-spw-semantic-expression]',
     rootMode: 'single',
     describes: 'region-menu[inspect|mark|focus] semantic popover',
     updates: [
@@ -327,7 +341,7 @@ export const FEATURE_DEFS = [
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
     pageModes: 'reading inspect compare teach practice',
-    selector: '.frame-sigil, .operator-chip, .syntax-token, .spw-delimiter',
+    selector: '.frame-sigil, .spw-chip, .syntax-token, .spw-delimiter',
     rootMode: 'single',
     describes: 'pronunciation[operator|sigil] learning hints',
     evaluates: 'semantics learning interaction',
@@ -346,7 +360,7 @@ export const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     costClass: COST_CLASS.DEMAND_COUPLED,
     features: ['operators'],
-    selector: '.frame-sigil, .operator-chip, .syntax-token, .spw-delimiter, [data-spw-operator], [data-spw-sigil]',
+    selector: '.frame-sigil, .spw-chip, .syntax-token, .spw-delimiter, [data-spw-operator], [data-spw-sigil]',
     rootMode: 'single',
     describes: 'sigil[anatomy]{hydrate.split} raw fused text -> operand elements',
     updates: [

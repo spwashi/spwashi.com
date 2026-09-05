@@ -1,0 +1,49 @@
+#>hypermedia_geometry_2026_09
+#:cache #!hypermedia #!geometry #!attention
+#:operation #!audit
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/agent-optimization/HYPERMEDIA.md"
+@geometry: ~"../_workbench/docs/theory/spw/form-geometry.spw"
+@wonder: ~"../conventions/wonder-architecture.spw"
+@attention: ~"../conventions/attention-field.spw"
+@report: ~"../workbench-report.spw"
+@atlas: ~"../../topics/software/spw/index.html"
+
+operation = "audit"
+fixity = "experimental"
+
+^"cognitive_model"{
+  claim = `A labeled hypermedia graph with local response laws is the operational model. Metamaterial is a useful analogy when arrangement changes response; it does not establish physical units, conservation, or a mathematical field.`
+  html = `Addresses, containment, native actions and accessible names.`
+  css = `Local response to state: emphasis, contrast, spacing and boundary.`
+  javascript = `Explicit transitions and reversible lifecycles.`
+  spw = `Inspectable hypotheses, ownership, evidence and counterexamples.`
+  probe_ref = `Trace one atlas control through its HTML host, CSS response, JS transition and this claim.`
+  falsification = `A metaphor cannot predict a visible consequence, or hides the action's native meaning.`
+}[reg=facet]
+
+^"symmetry_boundary"{
+  claim = `D4 describes permutations of four labeled positions on a square. Four quarter-turns and two identical reflections restore the arrangement. Reflection and rotation need not commute.`
+  boundary = `Permuting operator cards preserves their labels and definitions. It does not prove the operators are interchangeable, semantically equivalent, or themselves a group.`
+  source = @geometry
+  probe_ref = `Square permutation identity, inverse and composition-order tests; repeat with keyboard and touch.`
+  question = `Which relation survives: adjacency, orientation, reading order, destination, or meaning? Name the relation before claiming symmetry.`
+}[reg=facet]
+
+^"baseline"{
+  module_hosts = `Catalog and the modules it mounts on this atlas now use .spw-frame / .spw-chip. Other idle modules may still name the retired nouns — that is a later slice, not a reason to keep aliases in the catalog.`
+  route_context = `Navigator preserves URL search and hash on internal route entries.`
+  lifecycle = `Navigator destroy aborts listeners and observers.`
+  workbench = `Pin f2e5b61: doctor passes. Query already excludes _workbench, yet pathRefs count exceeded a 15-second cap. Shared walker counts 681 files, 374 mounted; exclusion leaves 307. Enumeration is not the proven timeout cause.`
+}[reg=facet]
+
+#>wonder_hypermedia_query
+?["If query already excludes the mount, which specimen still makes pathRefs miss a 15-second bound?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @report
+  ~#hypothesis: "parse cost of a few large files, not directory walk. Instrument discovery vs per-file parse before writing a workbench RFC."
+  !probe{ "time query --from .spw --selector pathRefs --count with per-file timings. if the slow file is not under _workbench, isolation is not the next patch." }
+  $%[cli.parseMs, specimen.path, walk.exclusion]
+}

@@ -121,6 +121,8 @@
                     <a class="spw-chip" data-spw-handle="true" href="#operator-ring" data-spw-operator="frame" data-spw-action="address">#&gt;operator_ring</a>
                     <a class="spw-chip" data-spw-handle="true" href="#language-evolution-v04" data-spw-operator="frame" data-spw-action="address">#&gt;language_v0_4</a>
                     <a class="spw-chip" data-spw-handle="true" href="#spw-alchemistry" data-spw-operator="frame" data-spw-action="address">#&gt;spw_alchemistry</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#operator-symmetry" data-spw-operator="frame" data-spw-action="address">#&gt;symmetry experiment</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#workbench-improvements" data-spw-operator="frame" data-spw-action="address">#&gt;improve the workbench</a>
                     <a class="spw-chip" data-spw-handle="true" href="#cauldron-workbench" data-spw-operator="frame" data-spw-action="address">#&gt;cauldron_workbench</a>
                     <a class="spw-chip" data-spw-handle="true" href="/topics/software/differential-lambda-calculus/" data-spw-operator="potential" data-spw-action="explore">~differential_lambda_calculus</a>
                     <a class="spw-chip" data-spw-handle="true" href="/topics/math/calculus/#integration-structural-reading" data-spw-operator="potential" data-spw-action="explore">~calculus_bridge</a>
@@ -132,6 +134,45 @@
                     <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_sample=beans#literal-parser" data-spw-operator="probe" data-spw-action="enter">?parse[beans]</a>
                     <a class="spw-chip" data-spw-handle="true" href="#spw-living-medium" data-spw-operator="frame" data-spw-action="address">#&gt;living_medium</a>
                 </nav>
+            </section>
+
+            <section class="spw-frame operator-symmetry" id="operator-symmetry" aria-labelledby="operator-symmetry-title" data-spw-kind="frame" data-spw-role="practice" data-spw-feature="operator-symmetry" data-spw-semantic-expression="operators[square]{rotate.reflect.compare}" data-spw-context="analysis">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#operator-symmetry" data-spw-operator="frame">#&gt;symmetry</a>
+                    <span class="spec-kicker">A small experiment in hypermedia geometry</span>
+                </div>
+                <h2 id="operator-symmetry-title">What survives a change of position?</h2>
+                <p data-spw-copy-unit="spw.symmetry.lede" data-spw-semantic-expression="symmetry[positions]{preserve.relations}">I use these operators as handles for thinking. Turn the square, then reflect it. The arrangement changes; each handle keeps its meaning and destination. Which neighbors stayed neighbors?</p>
+                <div class="operator-symmetry__layout">
+                    <ol class="operator-symmetry__board" aria-label="Operator square, read by rows from top left">
+                        <li><a href="/topics/software/spw/operators/frame/" data-spw-operator="frame"><span aria-hidden="true">#&gt;</span><strong>Address</strong><small>Find a named handle</small></a></li>
+                        <li><a href="/topics/software/spw/operators/probe/" data-spw-operator="wonder"><span aria-hidden="true">?</span><strong>Question</strong><small>Open an inquiry</small></a></li>
+                        <li><a href="/topics/software/spw/operators/ref/" data-spw-operator="potential"><span aria-hidden="true">~</span><strong>Possibility</strong><small>Hold an available path</small></a></li>
+                        <li><a href="/topics/software/spw/operators/action/" data-spw-operator="action"><span aria-hidden="true">!</span><strong>Action</strong><small>Commit a move</small></a></li>
+                    </ol>
+                    <div class="operator-symmetry__reading">
+                        <div class="operator-symmetry__controls" hidden>
+                            <div class="operator-symmetry__moves" role="group" aria-label="Transform the current square">
+                                <button type="button" name="square-move" value="rotate">Rotate 90° <span aria-hidden="true">↻</span></button>
+                                <button type="button" name="square-move" value="reflect">Reflect left / right</button>
+                                <button type="button" name="square-move" value="reset">Reset</button>
+                            </div>
+                            <div class="operator-symmetry__moves" role="group" aria-label="Compare two sequences, each from the original arrangement">
+                                <button type="button" name="square-move" value="rotate-reflect">From start: R → M</button>
+                                <button type="button" name="square-move" value="reflect-rotate">From start: M → R</button>
+                            </div>
+                        </div>
+                        <output aria-live="polite" aria-atomic="true">Start. Reading order: Address, Question, Possibility, Action. Original arrangement.</output>
+                        <p>Four quarter-turns return to the start: <code>R⁴ = I</code>. Two reflections do too: <code>M² = I</code>. Try the two sequences: <code>RM ≠ MR</code>. Here arrows read left to right.</p>
+                        <p>These moves generate the eight symmetries of a square, called <strong>D4</strong>. Side adjacency survives; orientation and reading order can change. This is a symmetry of positions, not a claim that Spw operators have interchangeable meanings.</p>
+                    </div>
+                </div>
+                <details>
+                    <summary>Is “metamaterial” a useful way to think about a language?</summary>
+                    <p>For my own thinking, a metamaterial is a useful analogy when arrangement changes how something responds. HTML gives a component an address and boundaries. CSS tunes its response to focus, selection and neighboring structure. JavaScript makes a state change explicit. Spw holds the claim I can return to and test.</p>
+                    <p>For navigation, a graph with local response rules is more precise: nodes have addresses, links connect them, and a gesture follows an edge. A rotation can preserve neighbors without preserving an argument. I want the metaphor to help me notice that difference.</p>
+                    <p><a href="/design/components/#metamaterial-states">Compare component material states</a> · <a href="/tools/spw-parser/?spw_source=operators%5Bsquare%5D%7Brotate%3Breflect%3Bcompare%7D">Inspect an expression in the parser</a> · <a href="#workbench-improvements">Follow the tooling questions</a></p>
+                </details>
             </section>
 
             <section class="spw-frame" id="concept-form-lab" data-spw-kind="frame" data-spw-role="probe" data-spw-form="angle" data-spw-context="analysis" data-spw-feature="concept-form-lab" data-spw-semantic-expression="beans[form]{wrap.edge}" data-spw-affordance="inspect" data-spw-liminality="deep" data-spw-consequence="model" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_topics_topics_software_spw__concept_form_lab" data-spw-related-routes="/tools/spw-parser/|/recipes/|/topics/nutrition/|/topics/search/|/play/">
@@ -1144,7 +1185,7 @@
                 <!-- 2. THE MOUNTED TOOL -->
                 <div class="frame-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" id="spw-workbench-tool" data-spw-feature="spw-workbench-tool" data-spw-semantic-expression="workbench[mounted]{cli.lsp.editors}">
                     <h3>02. The Mounted Tool: <code>spw-workbench</code></h3>
-                    <p>Spw is not display-only prose dressed up as a language. <a href="https://github.com/spwashi/spw-workbench" data-spw-operator="ref"><code>spw-workbench</code></a> is a separate, open-source parser and tooling project Spwashi built and maintains; this site mounts it as a git submodule at <code>.spw/_workbench</code> and reads it, rather than re-implementing a second parser inline. The same package that produces this page's operator chips backs a CLI, a language server, and two editor clients:</p>
+                    <p>Spw is not display-only prose dressed up as a language. <a href="https://github.com/spwashi/spw-workbench" data-spw-operator="ref"><code>spw-workbench</code></a> is a separate, open-source parser and tooling project Spwashi built and maintains; this site mounts it as a git submodule at <code>.spw/_workbench</code> and reads it, rather than re-implementing a second parser inline. The mounted parser powers the literal parser tool; the site projects operator chips through its own HTML and runtime. The workbench also provides a CLI, a language server, and editor integrations:</p>
                     <div class="frame-grid">
                         <div class="frame-card" data-spw-form="brace" data-spw-operator="frame">
                             <span class="frame-card-sigil">&amp;"spw_cli"</span>
@@ -1165,6 +1206,23 @@
                     <p data-spw-textual-role="note"><strong>Reflection, not a press release</strong> — this is what running the tool against this exact repository turned up on 2026-09-04: <code>spw doctor</code> caught a real drift (<code>.spw/mount.spw</code> still declared the submodule at a commit one behind its actual, cleanly-checked-out HEAD) and it was repinned the same session; <code>spw format --check</code> found 65 of 323 <code>.spw</code> files off the canonical profile (trailing whitespace, missing final newlines) and reformatting brought that to zero; <code>spw:integrity</code>, this site's own resolver built on the mounted parser's citation extraction, confirmed all 4,130 cross-references above still resolve. Not every signal was trustworthy as-is: <code>spw graph</code>'s heuristic <code>brokenTargets</code> list named 43 "broken" citations that, spot-checked against source, were all live — an anchor-extractor gap in the tool itself (it doesn't yet recognize quoted <code>^"name"{}</code> frames or absolute <code>https://</code> citations), now logged in <code>.spw/README.md</code> rather than quietly patched around. The bundled LSP smoke suite (<code>npm run lsp:smoke</code>, run against the workbench's own doc corpus) currently passes 15 of 22 checks; the misses are open <code>@root</code>-resolution edges the workbench itself tracks, not gaps in this site's content. A tool worth mounting should be legible about what it gets wrong, not just what it catches.</p>
                 </div>
 
+                <div class="frame-panel" id="workbench-improvements" data-spw-kind="panel" data-spw-role="reference" data-spw-semantic-expression="workbench[improvement]{reproduce.measure.repair}">
+                    <h3>Where I want the workbench to improve</h3>
+                    <p data-spw-copy-unit="spw.workbench.lede">The website is my test corpus. A useful improvement makes one act of reading, navigating or changing a <code>.spw</code> file easier to trust.</p>
+                    <ol>
+                        <li><strong>Make query cost visible.</strong> At the checked revision <code>f2e5b61</code>, mount checks pass and query excludes the mounted workbench, yet a whole-corpus citation query exceeded a 15-second cap. Measure discovery and per-file parsing separately before blaming the directory walk.</li>
+                        <li><strong>Resolve a citation once.</strong> Share path, fragment, target kind and failure reason between CLI and LSP. The language server already resolves references; the opportunity is a reusable result that also distinguishes a missing file from a missing anchor.</li>
+                        <li><strong>Show what a change preserves.</strong> A geometry action should preview the actual source, name possible loss and offer a reliable return. Recovering the same text does not by itself prove semantic equivalence.</li>
+                        <li><strong>Let questions guide the editor.</strong> Filters for operation and fixity could surface open questions beside stable contracts. Keep the distinction visible and let the author decide when a finding is ready to settle.</li>
+                    </ol>
+                    <details>
+                        <summary>Reproduce a finding and carry a fix back here</summary>
+                        <p>Start with <code>npm run spw:doctor</code>. Reduce the slow or incorrect input to a fixture in the workbench. Test the smallest fix there, update this site's pinned revision, then rerun the original consumer probe. Enumeration, parse health and semantic validity are separate measurements.</p>
+                        <p>The shared walker currently finds 681 files under this site's <code>.spw</code>, including 374 mounted files; excluding the mount leaves 307. Query already adds that exclusion itself. Aligning scan policy is still useful, but it does not establish the cause of the query timeout.</p>
+                        <p>The consumer evidence lives in this repository at <code>.spw/workbench-report.spw</code>. <a href="https://github.com/spwashi/spw-workbench">Open the workbench repository</a> · <a href="#operator-symmetry">Try the symmetry question</a></p>
+                    </details>
+                </div>
+
                 <!-- 3. FUTURE HORIZONS -->
                 <div class="frame-panel" data-spw-brace="subjective" data-spw-kind="panel" data-spw-role="reference">
                     <h3>03. The Open Horizon: What Spw Unlocks Next</h3>
@@ -1172,7 +1230,7 @@
                     <div class="operator-detail-grid">
                         <div class="frame-panel">
                             <strong>AI &amp; Agentic Pair-Programming</strong>
-                            <p>A compact, deterministic grammar with zero prompt fluff. Language models can read high-level architecture through <code>spw summarize</code>, verify AST fingerprints instantly with <code>spw fingerprint</code>, and co-author codebases without context window bloat or hallucinated imports.</p>
+                            <p>A compact notation can help an author or agent follow references and test claims. Corpus summaries and AST fingerprints are improvement proposals; they need measured usefulness, implemented commands and fixtures before this page can promise them.</p>
                         </div>
                         <div class="frame-panel">
                             <strong>Modular Experience Slices ("Painting Over Years")</strong>

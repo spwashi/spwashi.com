@@ -1466,6 +1466,70 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
     transform: none;
   }
 }
+
+/* Operator square: 2×2 reading order. Positions permute; labels stay on the cards. */
+.operator-symmetry__layout {
+  display: grid;
+  gap: var(--space-m, 1rem);
+  margin-block: 1rem;
+}
+
+@container (min-width: 40rem) {
+  .operator-symmetry__layout {
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.operator-symmetry__board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xs, 0.4rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-inline-size: 22rem;
+}
+
+.operator-symmetry__board a {
+  display: grid;
+  gap: 0.15rem;
+  min-block-size: 6.5rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--op-frame-color, teal) 28%, transparent);
+  border-radius: 0.4rem;
+  text-decoration: none;
+  color: inherit;
+  background: color-mix(in srgb, var(--matte-surface, #f4efe6) 88%, transparent);
+}
+
+.operator-symmetry__board a:focus-visible {
+  outline: 2px solid var(--spw-operator-color, var(--op-frame-color, teal));
+  outline-offset: 2px;
+}
+
+.operator-symmetry__board span[aria-hidden="true"] {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: var(--spw-operator-color, var(--op-frame-color, teal));
+}
+
+.operator-symmetry__moves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-block: 0.4rem;
+}
+
+.operator-symmetry__moves button {
+  font: inherit;
+}
+
+.operator-symmetry__reading output {
+  display: block;
+  margin-block: 0.6rem;
+  padding: 0.5rem 0.65rem;
+  background: color-mix(in srgb, var(--topics-surface-panel, #fff) 80%, transparent);
+}
 }
 
 /* /public/css/systems/film-scene-composition.css */

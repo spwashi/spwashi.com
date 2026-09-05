@@ -2,6 +2,9 @@
 
 ## Public Goal
 
+Active implementation: [Hypermedia geometry](./HYPERMEDIA.md) — canonical module
+hosts, reversible navigation, local attention, and an operator symmetry instrument.
+
 Make the full agent operating environment for this repository (`.agents/`, skills, planning ecology, `.spw` bridges, public editor surfaces, and validation contracts) itself a first-class, low-friction, inspectable surface. The outcome: AI agents, human editors, and future collaborators can answer "how do I work on this site effectively?" and "did my change preserve the intended contracts?" with minimal repeated discovery or tribal knowledge.
 
 **Induction audit (2026-07):** Nested Spw at `.spw/audits/commit-skill-induction-2026-07/` analyzes commit history and skill phrasing for long-term pain (plan inflation, attribute sprawl, IMMEDIATE width, meta-track competition). Success includes stop-conditions and archive quotas, not only more inspectability.

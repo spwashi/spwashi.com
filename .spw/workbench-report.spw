@@ -46,6 +46,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   fix: "exclude node_modules, .git and a mounted _workbench by default; --include-infrastructure to opt back in"
   ~#consequence: "every consumer script here shells find with -not -path '*_workbench*' rather than using --from"
   history = `Named as consumer[walk]{roots} ^ workbench[mount]{node_modules}<isolation> in @history_strands#workbench_explore. Explore the workbench after a pruned walk, not before.`
+  2026_09_astra = `At pin f2e5b61, query already excludes _workbench; a pathRefs count still exceeded 15s. Shared walker: 681 files, 374 mounted, 307 without the mount. Isolation is still useful; it is not the proven timeout cause. Instrument discovery vs per-file parse next.`
   probe: `spw query --from .spw/conventions,.spw/language --selector pathRefs --count` vs `spw query --from .spw --selector pathRefs --count`
 }
 
