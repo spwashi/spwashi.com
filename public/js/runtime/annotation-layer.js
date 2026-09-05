@@ -114,6 +114,17 @@ function isOwnAffordanceTarget(handle, target) {
   return !interactive || interactive === handle;
 }
 
+/* A handle can be a whole landmark (header[data-spw-header-annotation]) or a
+   dedicated control (button.header-annotation). aria-pressed asserts a
+   toggle-button affordance; asserting it on a non-interactive, unfocusable
+   landmark tells assistive tech the header can be "pressed" when it cannot
+   be reached by keyboard at all — only real buttons/[role="button"] handles
+   get the attribute. */
+function isPressableHandle(handle) {
+  return handle instanceof HTMLElement
+    && (handle.tagName === 'BUTTON' || handle.getAttribute('role') === 'button');
+}
+
 function scoreRegion(region, annotation, activeSectionId = '') {
   const tokens = readRegionTokens(region);
   let score = tokens.includes(annotation) ? 4 : 0;
@@ -153,7 +164,9 @@ function writeHandleState(handles, activeHandle, snapshot) {
     handle.dataset.spwInteractionContext = isActive
       ? (snapshot.state === 'pinned' ? 'inspecting' : 'browsing')
       : 'reading';
-    handle.setAttribute('aria-pressed', isActive && snapshot.state === 'pinned' ? 'true' : 'false');
+    if (isPressableHandle(handle)) {
+      handle.setAttribute('aria-pressed', isActive && snapshot.state === 'pinned' ? 'true' : 'false');
+    }
     markInstrumented(handle, 'annotation-layer', { tags: ['annotation', 'gesture'] });
   });
 }
@@ -269,7 +282,7 @@ export function initSpwAnnotationLayer(ctx = {}) {
     handles.forEach((handle) => {
       handle.dataset.spwAnnotationState = 'idle';
       handle.dataset.spwInteractionContext = 'reading';
-      handle.setAttribute('aria-pressed', 'false');
+      if (isPressableHandle(handle)) handle.setAttribute('aria-pressed', 'false');
     });
     regions.forEach((region) => {
       delete region.dataset.spwAnnotationMatch;
@@ -355,7 +368,7 @@ export function initSpwAnnotationLayer(ctx = {}) {
 
   handles.forEach((handle) => {
     handle.dataset.spwAnnotationState ||= 'idle';
-    handle.setAttribute('aria-pressed', 'false');
+    if (isPressableHandle(handle)) handle.setAttribute('aria-pressed', 'false');
     handle.addEventListener('pointerenter', onPointerEnter);
     handle.addEventListener('pointerleave', onPointerLeave);
     handle.addEventListener('focus', onFocus);
