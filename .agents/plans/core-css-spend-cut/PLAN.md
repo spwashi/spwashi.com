@@ -29,6 +29,7 @@ The literature is the selectors: `>` a child, `+` the next sibling, `:has()` a p
 - `deferred-styles.js` `ensureFlourishStyles` / `ensureInspectStyles`; `html[data-spw-flourish="ready"]` marks arrival
 - `css-contracts.mts` derives deferred ownership from literal runtime registrations and follows pack imports recursively; duplicate IDs, missing files, layer drift, and core/deferred overlap fail validation
 - direct deferred sheets restate the canonical layer order and wrap declarations in their ownership layer; the CSS contract rejects unlayered late rules
+- Holiday / seasonal tropes (`ornament/holiday-tropes.css`) and the papergami plate (`effects/paper-motif-plate.css`, image-set URLs) idle-load with the flourish pack. Core `systems/paper-motif.css` keeps family → tangibility/viscosity/coherence only — no raster URLs in first paint. Theatrical timing stays behind `enhancement-level=rich`.
 - `effects/metaphysical-paper.css` and feature-gated `effects/circuit-anatomy.css` now arrive in the idle flourish envelope
 - `handles/living-motion-labels.css` keeps flow-bearing labels in core while `effects/living-motions.css` idles
 - `effects/enhancements.css` follows the website, topics, and RPG route bundles

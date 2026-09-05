@@ -1,0 +1,219 @@
+/* ==========================================================================
+   effects/paper-motif-plate.css
+   --------------------------------------------------------------------------
+   Idle flourish: the papergami plate on html::before. Authored image URLs
+   (AVIF/WebP illustrations, not CSS-embedded rasters). First-paint family
+   physics stay in systems/paper-motif.css.
+
+   Imported by flourish-pack.css in layer(effects). Late restyle is atmosphere:
+   position:fixed, pointer-events:none, no flow.
+   ========================================================================== */
+
+html:has(body[data-spw-page-family])::before {
+  content: '';
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  inline-size: var(--spw-paper-motif-size);
+  aspect-ratio: 1;
+  z-index: 0;
+  pointer-events: none;
+
+  background-image: var(--spw-paper-motif-image);
+  background-size: contain;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+
+  opacity: var(--spw-paper-motif-opacity);
+  mix-blend-mode: var(--spw-paper-motif-blend);
+
+  mask-image: radial-gradient(
+    120% 120% at 100% 100%,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.72) 42%,
+    transparent 78%
+  );
+}
+
+:where(html:has(body[data-spw-page-family="spec"]),
+       html:has(body[data-spw-page-family="runtime-observatory"]),
+       html:has(body[data-spw-page-family="design"]),
+       html:has(body[data-spw-page-family="switchboard"]),
+       html:has(body[data-spw-page-family="observatory"]),
+       html:has(body[data-spw-page-family="coordination"]),
+       html:has(body[data-spw-page-family="policy"]),
+       html:has(body[data-spw-page-family="membership"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-architecture-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-architecture-display.webp') type('image/webp')
+    );
+}
+
+:where(html:has(body[data-spw-page-family="atlas"]),
+       html:has(body[data-spw-page-family="register"]),
+       html:has(body[data-spw-page-family="research"]),
+       html:has(body[data-spw-page-family="constellation"]),
+       html:has(body[data-spw-page-family="kernel-atlas"]),
+       html:has(body[data-spw-page-family="kitchen-atlas"]),
+       html:has(body[data-spw-page-family="operator-atlas"]),
+       html:has(body[data-spw-page-family="syntax-atlas"]),
+       html:has(body[data-spw-page-family="folio-archive"]),
+       html:has(body[data-spw-page-family="town-library"]),
+       html:has(body[data-spw-page-family="roadmap"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-collage-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-collage-display.webp') type('image/webp')
+    );
+}
+
+:where(html:has(body[data-spw-page-family="toolbench"]),
+       html:has(body[data-spw-page-family="laboratory"]),
+       html:has(body[data-spw-page-family="lab"]),
+       html:has(body[data-spw-page-family="experiment-lab"]),
+       html:has(body[data-spw-page-family="workshop"]),
+       html:has(body[data-spw-page-family="proof-cards"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-cubes-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-cubes-display.webp') type('image/webp')
+    );
+}
+
+:where(html:has(body[data-spw-page-family="recipe-book"]),
+       html:has(body[data-spw-page-family="seasonal"]),
+       html:has(body[data-spw-page-family="curriculum"]),
+       html:has(body[data-spw-page-family="care-interface"]),
+       html:has(body[data-spw-page-family="practice-bed"]),
+       html:has(body[data-spw-page-family="studio"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-botanical-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-botanical-display.webp') type('image/webp')
+    );
+}
+
+:where(html:has(body[data-spw-page-family="campaign"]),
+       html:has(body[data-spw-page-family="field-guide"]),
+       html:has(body[data-spw-page-family="playfield"]),
+       html:has(body[data-spw-page-family="menu"]),
+       html:has(body[data-spw-page-family="kernel-portrait"]),
+       html:has(body[data-spw-page-family="funding"]),
+       html:has(body[data-spw-page-family="topic"]),
+       html:has(body[data-spw-page-family="topic-hub"]),
+       html:has(body[data-spw-page-family="topic-stub"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-kinetic-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-kinetic-display.webp') type('image/webp')
+    );
+}
+
+:where(html:has(body[data-spw-page-family="memory"]),
+       html:has(body[data-spw-page-family="ontology"]),
+       html:has(body[data-spw-page-family="logic"]),
+       html:has(body[data-spw-page-family="concept"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-cognitive-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-cognitive-display.webp') type('image/webp')
+    );
+}
+
+:where(html:has(body[data-spw-page-family="wireframe"]),
+       html:has(body[data-spw-page-family="interface"]),
+       html:has(body[data-spw-page-family="surface"]),
+       html:has(body[data-spw-page-family="canvas"]),
+       html:has(body[data-spw-page-family="grid"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-layout-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-layout-display.webp') type('image/webp')
+    );
+}
+
+html[data-spw-theme-pack="neutral-paper"] { --spw-paper-motif-opacity: 0.08; }
+html[data-spw-theme-pack="ritual-vellum"] {
+  --spw-paper-motif-opacity: 0.11;
+  --spw-paper-motif-blend: multiply;
+}
+html[data-spw-theme-pack="oxide-ledger"] {
+  --spw-paper-motif-opacity: 0.07;
+  --spw-paper-motif-blend: multiply;
+}
+html[data-spw-theme-pack="copper-brace"] { --spw-paper-motif-opacity: 0.09; }
+
+html[data-spw-theme-pack="banked-ember"] {
+  --spw-paper-motif-opacity: 0.16;
+  --spw-paper-motif-blend: screen;
+}
+html[data-spw-theme-pack="glass-console"] {
+  --spw-paper-motif-opacity: 0.13;
+  --spw-paper-motif-blend: screen;
+}
+html[data-spw-theme-pack="electric-studio"] {
+  --spw-paper-motif-opacity: 0.1;
+  --spw-paper-motif-blend: screen;
+}
+
+:where(html:has(body[data-spw-context="fluid"]),
+       html:has(body[data-spw-context="resonance"]),
+       html:has(body[data-spw-page-family="playfield"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/boonhonk-attentional-fluid-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/boonhonk-attentional-fluid-display.webp') type('image/webp')
+    );
+}
+
+:where(html:has(body[data-spw-context="electrostatics"]),
+       html:has(body[data-spw-context="boundary"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/charge-wall-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/charge-wall-display.webp') type('image/webp')
+    );
+}
+
+:where(html[data-spw-enhancement-level="minimal"]) {
+  --spw-paper-motif-image: none;
+}
+
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"])) {
+  --spw-paper-motif-opacity: 0;
+}
+
+@media (max-width: 48rem) {
+  html {
+    --spw-paper-motif-size: min(128vw, 560px);
+    --spw-paper-motif-opacity: 0.045;
+  }
+
+  html:has(body[data-spw-page-family])::before {
+    inset-inline: -14vw auto;
+    background-position: bottom center;
+    mask-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.5) 34%,
+      transparent 72%
+    );
+  }
+}
+
+@media (max-width: 48rem) {
+  html[data-spw-theme-pack="banked-ember"],
+  html[data-spw-theme-pack="glass-console"],
+  html[data-spw-theme-pack="electric-studio"] {
+    --spw-paper-motif-opacity: 0.1;
+  }
+}
+
+@media (max-width: 26.25rem) {
+  html { --spw-paper-motif-size: min(140vw, 420px); }
+}
+
+@media print {
+  html { --spw-paper-motif-image: none; }
+}
