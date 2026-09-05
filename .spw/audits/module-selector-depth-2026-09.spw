@@ -93,9 +93,10 @@ audit_run: .{
 }[reg=facet]
 
 ^"orphans"{
-  lab_or_opt_in = #[`design-experiments`, `design-review-surfaces`, `dom-probes`, `annotation-layer`, `bare-spw-markup`, `local-memory-controls`, `electromagnetic-containers`, `logo-runtime`, `narrative-instrumentation`, `brace-pivots`, `spw-hero-kinetic-stage`][reg=set]
-  missing_public_host = #[`home-section-index`, `media-cauldron`][reg=set]
-  note = `Lab orphans are allowed. frame-navigator resolved 2026-09-04 (see f1_site_frame_noun). home-section-index and media-cauldron remain, and are two different shapes of the same not-a-selector-bug: [data-media-cauldron] is authored in _partials/media-cauldron.html, a partial no live route/index.html currently includes. [data-home-section-index] (public/js/modules/home/section-index.js) has no host anywhere in the tree, partials included — the module ships and never finds its element on any route. Neither is a stale-noun rename; both are features awaiting markup. Wiring the partial in, or retiring the unbound module, is a separate slice from this audit.`
+  lab_or_opt_in = #[`design-experiments`, `design-review-surfaces`, `dom-probes`, `annotation-layer`, `bare-spw-markup`, `local-memory-controls`, `electromagnetic-containers`, `logo-runtime`, `narrative-instrumentation`, `brace-pivots`][reg=set]
+  scanner_false_positive = #[`media-cauldron`, `spw-hero-kinetic-stage`][reg=set]
+  missing_public_host = #[`home-section-index`][reg=set]
+  note = `Lab orphans are allowed. frame-navigator resolved 2026-09-04 (see f1_site_frame_noun). media-cauldron and spw-hero-kinetic-stage were never actually orphaned — this audit's walker reads raw source index.html, and both are wired via <spw-include src="..."> in play/index.html (scripts/template.mjs), a build-time expansion the source scan can't see. Confirmed present in dist/play/index.html (data-media-cauldron at line 754). The audit script should walk build output for this class of module, or the false orphan will keep getting rediscovered. home-section-index (public/js/modules/home/section-index.js) is the one real case: [data-home-section-index] has no host anywhere, partials included, on any of 124 routes or the partials directory. Its filter/jump-index behavior looks superseded by the newer .spw-page-landmarks system (interaction-hops.js) already covering "jump to a room" on the same route — a product call on retire-vs-wire, not a selector fix, so left open rather than guessed at.`
 }[reg=facet]
 
 ^"validation"{
