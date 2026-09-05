@@ -70,7 +70,6 @@ export const OPERATOR_SIGNAL_SELECTORS = Object.freeze([
   '.frame-card-sigil',
   '.frame-panel-sigil',
   '.syntax-token',
-  '.operator-chip',
   '.spec-pill',
   '.header-sigil',
   '.site-footer__brand',
@@ -172,7 +171,7 @@ export const SEMANTIC_CHROME_SELECTOR = SEMANTIC_CHROME_SELECTORS.join(', ');
 export const FRAME_SELECTOR = '.spw-frame, [data-spw-kind="frame"]';
 export const REGION_HOST_SELECTOR = '.spw-frame, [data-spw-kind="frame"], .spw-panel, .frame-panel, .spw-card, .frame-card, [data-spw-kind], [data-spw-role]';
 export const ENTRY_SPINE_SELECTOR = '[data-spw-region-role="entry-spine"]';
-export const CHIP_SELECTOR = '[data-spw-operator], .spw-chip, .operator-chip, .frame-sigil';
+export const CHIP_SELECTOR = '[data-spw-operator], .spw-chip, .frame-sigil';
 
 export const ANNOTATION_LAYER_REGION_SELECTORS = Object.freeze([
   'main [data-spw-kind]',

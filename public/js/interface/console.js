@@ -47,15 +47,15 @@ const getBusDiagnostics = () => {
 };
 
 const getActiveFrame = () =>
-    document.querySelector('.site-frame[data-state~="active"], .site-frame[data-spw-active="true"]')
-    || document.querySelector('.site-frame');
+    document.querySelector('.spw-frame[data-state~="active"], .spw-frame[data-spw-active="true"]')
+    || document.querySelector('.spw-frame');
 
 const createConsoleInterface = () => ({
     getActiveFrame,
     getFrameMeta,
     activateFrame(frame, options = {}) {
         if (!(frame instanceof HTMLElement)) return;
-        document.querySelectorAll('.site-frame').forEach((candidate) => {
+        document.querySelectorAll('.spw-frame').forEach((candidate) => {
             const active = candidate === frame;
             candidate.dataset.spwActive = active ? 'true' : 'false';
             if (active) candidate.dataset.state = 'active';

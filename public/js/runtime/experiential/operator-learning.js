@@ -24,7 +24,7 @@ export function initOperatorLearning(options = {}) {
 
   const onOperatorLearn = (event) => {
     const target = event.target instanceof Element
-      ? event.target.closest('.frame-sigil, .operator-chip, [data-spw-operator], .spw-delimiter')
+      ? event.target.closest('.frame-sigil, .spw-chip, [data-spw-operator], .spw-delimiter')
       : null;
 
     if (!target) return;

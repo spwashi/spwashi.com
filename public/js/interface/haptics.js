@@ -52,7 +52,7 @@ const couplingKeyForPath = (path = normalizePathname(window.location.pathname)) 
 const COUPLING_KEY = couplingKeyForPath;
 
 const GROUND_SELECTORS = [
-  '.operator-chip',
+  '.spw-chip',
   '.syntax-token',
   '.frame-sigil',
   '.spec-pill',
@@ -81,7 +81,7 @@ const CAULDRON_CANDIDATE_SELECTORS = [
 
 const CHARGE_SELECTORS = [
   GROUND_SELECTORS,
-  '.site-frame',
+  '.spw-frame',
   '.frame-card',
   '.frame-panel',
   '.mode-panel',
@@ -1077,7 +1077,7 @@ function inferSubstrate(el, overrides = {}) {
 }
 
 function getFieldRoot(el) {
-  return el.closest('[data-spw-field-root], .site-frame, main, body') || document.body;
+  return el.closest('[data-spw-field-root], .spw-frame, main, body') || document.body;
 }
 
 function getElementKey(el) {
@@ -1169,7 +1169,7 @@ function shouldIgnoreGroundToggle(target, event) {
   // Living terms stash on hold or double-tap. A tap should inspect, not latch.
   if (
     target.matches('[data-spw-living-term], .spw-living-term')
-    && !target.matches('.operator-chip, .frame-sigil, a.spw-chip')
+    && !target.matches('.spw-chip, .frame-sigil, a.spw-chip')
   ) {
     return true;
   }

@@ -18,7 +18,7 @@ export const GESTURE_TARGET_SELECTOR = [
   '.frame-sigil',
   '.frame-card-sigil',
   '.frame-panel-sigil',
-  '.operator-chip',
+  '.spw-chip',
   '.spw-route-menu-link',
   '.spw-link-expression',
   '.syntax-token',
@@ -187,7 +187,7 @@ export function inferGestureIntents(element) {
     gestures.add('project');
     gestures.add('settle');
   }
-  if (element.matches('.operator-chip, .spw-route-menu-link, .spw-link-expression, a[href], button, [data-set-mode], [data-site-setting-set]')) {
+  if (element.matches('.spw-chip, .spw-route-menu-link, .spw-link-expression, a[href], button, [data-set-mode], [data-site-setting-set]')) {
     gestures.add('ground');
   }
   if (element.matches('.spw-route-menu-link, [data-spw-interaction-contract]')) {
@@ -252,7 +252,7 @@ export function describeGestureContract() {
 export function describeComponentSample(target, siteSurface = '') {
   if (!(target instanceof HTMLElement)) return null;
 
-  const frame = target.closest('.site-frame, [data-spw-kind], [data-spw-feature]');
+  const frame = target.closest('.spw-frame, [data-spw-kind], [data-spw-feature]');
   const elementalContext = describeElementContext(target);
   const body = document.body;
 

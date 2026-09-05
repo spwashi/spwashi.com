@@ -126,7 +126,7 @@ export function initResonanceProbe(root) {
 
   function onFocusOut(event) {
     const next = event.relatedTarget?.closest?.(PROBE_TARGET_SELECTOR);
-    if (!next) {
+    if (!next || !root.contains(next)) {
       probeFocus = null;
       scheduleApply();
     }
@@ -159,6 +159,12 @@ export function initResonanceProbe(root) {
     root.addEventListener('mouseout', onMouseLeave, { signal });
   }
   if (readPinnedProbe(doc)) scheduleApply();
+  // Visible/idle mounts may happen after the reader has already focused a chip.
+  const focused = doc.activeElement?.closest?.(PROBE_TARGET_SELECTOR);
+  if (focused && root.contains(focused)) {
+    probeFocus = readResonanceState(focused);
+    scheduleApply();
+  }
 
   return () => {
     abort.abort();

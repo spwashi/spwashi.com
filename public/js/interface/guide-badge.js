@@ -43,7 +43,7 @@ import {
 const COLLECTION_KEY = 'spw-badge-collection';
 
 const AMBIENT_SELECTOR = [
-  '.operator-chip',
+  '.spw-chip',
   '.frame-sigil',
   '.frame-card-sigil',
   '.spec-pill',

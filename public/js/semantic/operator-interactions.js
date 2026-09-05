@@ -17,7 +17,7 @@ const SIGIL_TRANSITION_SELECTOR = [
   '.frame-card-sigil',
   '.frame-panel-sigil',
   '.syntax-token',
-  '.operator-chip',
+  '.spw-chip',
   '.spec-pill',
   '.header-sigil',
   '.site-footer__brand',
@@ -448,7 +448,7 @@ export function wireProbeSigils(root = document) {
   for (const sigil of probeSigils) {
     if (sigil.dataset.spwProbeWired === 'true') continue;
 
-    const frame = sigil.closest('.site-frame');
+    const frame = sigil.closest('.spw-frame');
     if (!frame) continue;
 
     const panels = Array.from(frame.querySelectorAll('[data-mode-panel]'));

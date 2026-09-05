@@ -16,7 +16,7 @@ import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 const MEMORY_TARGET_SELECTOR = [
     '.topic-photo-card',
     '.page-index a',
-    '.operator-chip',
+    '.spw-chip',
     '.frame-sigil',
     '.spec-pill',
     '.intent-cluster',

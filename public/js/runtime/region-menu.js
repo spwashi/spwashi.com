@@ -20,7 +20,7 @@ const TARGET_SELECTOR = [
   '.frame-sigil',
   '.frame-card-sigil',
   '.frame-panel-sigil',
-  '.operator-chip',
+  '.spw-chip',
   '[data-spw-feature]',
   '[data-spw-semantic-expression]',
   '[data-spw-semantic-root]',
@@ -392,7 +392,7 @@ function openMenu(target) {
   writeDatasetValue(document.documentElement, 'spwRegionPreviewing', 'true');
 
   const semantic = resolveSemantic(target);
-  const frame = target.closest('.site-frame, [data-spw-kind], [data-spw-role]') || document.body;
+  const frame = target.closest('.spw-frame, [data-spw-kind], [data-spw-role]') || document.body;
   activeMatches = semantic.family ? collectRegionMatches(document, semantic.family) : [];
   activeIndex = Math.max(0, activeMatches.indexOf(target));
 
@@ -853,7 +853,7 @@ function moveMatch(direction) {
 }
 
 function toggleRegionMark(target) {
-  const frame = target.closest('.site-frame, [data-spw-kind], [data-spw-role]');
+  const frame = target.closest('.spw-frame, [data-spw-kind], [data-spw-role]');
   if (!(frame instanceof HTMLElement)) return;
   const next = frame.dataset.spwRegionMark === 'active' ? null : 'active';
   writeDatasetValue(frame, 'spwRegionMark', next);

@@ -107,7 +107,7 @@ export const ENHANCEMENT_DEFS = [
     triggers: ['pointer-approach', 'operator-touch', 'brace-interact'],
     affordances: ['inspect-charge-potential', 'preview-discharge-kind', 'trigger-consequence-live'],
     electrostatics: { role: 'channel', discharge: 'transfer', dielectric: true, field: '--spw-charge-field' },
-    selector: '[data-spw-gesture-contract], .operator-chip, .frame-sigil, .spw-living-term, [data-spw-operator]',
+    selector: '[data-spw-gesture-contract], .spw-chip, .frame-sigil, .spw-living-term, [data-spw-operator]',
     rootMode: 'single',
     describes: 'charge[field]{discharge.consequence} html[projection]',
     updates: [
@@ -230,7 +230,7 @@ export const ENHANCEMENT_DEFS = [
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
     features: ['navigator'],
-    selector: '.spw-frame, .site-frame',
+    selector: '.spw-frame',
     rootMode: 'single',
     describes: 'surface-map[frames|routes] keyboard-spells[g|traverse|filter] navigator chrome',
     updates: [
@@ -624,7 +624,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'guide-badge',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
-    selector: '.operator-chip, .frame-sigil, .frame-card-sigil, .spec-pill, [data-spw-guide-badge]',
+    selector: '.spw-chip, .frame-sigil, .frame-card-sigil, .spec-pill, [data-spw-guide-badge]',
     rootMode: 'single',
     describes: 'guide[badge|collect] operator[resonance]',
     updates: [
@@ -1370,7 +1370,7 @@ export const ENHANCEMENT_DEFS = [
     triggers: ['operator-touch', 'keyboard-chord'],
     affordances: ['toggle-lens-state', 'switch-content-layer', 'compare-variants', 'inspect-from-to-edge'],
     electrostatics: { role: 'transformer', discharge: 'project', dielectric: false },
-    selector: '.site-frame, .frame-card, [data-spw-feature], [data-spw-semantic-variant], [data-spw-content-variant]',
+    selector: '.spw-frame, .frame-card, [data-spw-feature], [data-spw-semantic-variant], [data-spw-content-variant]',
     rootMode: 'single',
     describes: 'component[variant]{mode|semantic|content} edge[from-to] query override',
     updates: [
@@ -1412,7 +1412,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'navigation-spells',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
-    selector: 'header nav a[href], .site-header nav a[href], body > header nav a[href], .site-footer__nav a[href], .spw-route-menu-link[href], .operator-chip[href], .frame-sigil[href]',
+    selector: 'header nav a[href], .site-header nav a[href], body > header nav a[href], .site-footer__nav a[href], .spw-route-menu-link[href], .spw-chip[href], .frame-sigil[href]',
     rootMode: 'single',
     describes: 'navigation[spell|grounding] route[replay]',
     updates: [
@@ -1455,7 +1455,7 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     costClass: COST_CLASS.DEMAND_COUPLED,
     features: ['operators'],
-    selector: '.frame-sigil, .frame-card-sigil, .frame-panel-sigil, .syntax-token, .operator-chip, .spec-pill, .header-sigil, .site-footer__brand, .spw-delimiter, [data-spw-charge-key], a[data-spw-operator], button[data-spw-operator], [data-spw-sigil]',
+    selector: '.frame-sigil, .frame-card-sigil, .frame-panel-sigil, .syntax-token, .spw-chip, .spec-pill, .header-sigil, .site-footer__brand, .spw-delimiter, [data-spw-charge-key], a[data-spw-operator], button[data-spw-operator], [data-spw-sigil]',
     rootMode: 'single',
     describes: 'operators[sigil.detect.annotate.transition] grammar projection with page-region payload handoff',
     // structural = operator grammar identity; flourish = active/transition pulse;
@@ -1490,7 +1490,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'haptics',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
-    selector: '[data-spw-groundable=\"true\"], [data-spw-living-term], [data-spw-concept], [data-spw-cauldron-candidate], .spw-living-term, .operator-chip, .syntax-token, .frame-sigil',
+    selector: '[data-spw-groundable=\"true\"], [data-spw-living-term], [data-spw-concept], [data-spw-cauldron-candidate], .spw-living-term, .spw-chip, .syntax-token, .frame-sigil',
     rootMode: 'single',
     describes: 'grounding[collection|resonance] spell[grounded|checkpoint]',
     updates: [

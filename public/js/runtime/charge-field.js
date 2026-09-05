@@ -85,7 +85,7 @@ const READOUT_KEYS = Object.freeze({
   carrier: 'spwChargeCarrier',
 });
 
-const FRAME_SELECTOR = 'main section.site-frame, main .site-frame, section.site-frame';
+const FRAME_SELECTOR = 'main section.spw-frame, main .spw-frame, section.spw-frame';
 const RELATION_STYLE_PROPERTIES = Object.freeze([
   '--spw-curiosity-reward',
   '--spw-relationship-reward',

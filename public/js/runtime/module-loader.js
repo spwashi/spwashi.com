@@ -576,7 +576,7 @@ function getEffectiveMountWhen(def, ctx) {
 function resolveCategoryMountWhen(def, baseWhen, category, ctx) {
   if (isOrientationOnlyPage(category) && def.layer === moduleLayers.ENHANCEMENT && baseWhen === mountWhen.IMMEDIATE) {
     const selector = String(def.selector || '');
-    const broad = !selector || /html|body|\.frame-sigil|\.operator-chip|\.spw-delimiter/.test(selector);
+    const broad = !selector || /html|body|\.frame-sigil|\.spw-chip|\.spw-delimiter/.test(selector);
     if (broad && def.id !== 'sigil-anatomy') return mountWhen.VISIBLE;
   }
   if (isLiteracyPage(category) && def.id === 'pronunciation-hints' && baseWhen === mountWhen.IDLE) {

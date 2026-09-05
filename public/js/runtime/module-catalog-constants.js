@@ -229,7 +229,6 @@ export const PRETEXT_LIVE_SELECTOR =
  */
 export const REGION_SELECTOR = [
   '.spw-frame',
-  '.site-frame',
   '[data-spw-kind="frame"]',
   '[data-spw-kind="panel"]',
   '[data-spw-kind="card"]',

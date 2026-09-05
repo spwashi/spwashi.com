@@ -4,8 +4,8 @@
  * Raw authored HTML keeps the fused, readable form ("$ now"); hydration
  * wraps the sigil and operand in distinct elements so CSS, capture, and
  * gesture code can address them separately:
- *   <a class="operator-chip">$ now</a>
- *     -> <a class="operator-chip" data-spw-sigil-anatomy="hydrated"
+ *   <a class="spw-chip">$ now</a>
+ *     -> <a class="spw-chip" data-spw-sigil-anatomy="hydrated"
  *           data-spw-op="operator:substrate operand:now position:prefix dispatch:forward">
  *          <span class="spw-sigil">$</span><span class="spw-operand"> now</span></a>
  * The no-JS reading is the fused text — that IS the graceful degradation
@@ -15,7 +15,7 @@
 
 import { composeOpBundle, splitOperatorExpression } from '/public/js/kernel/shared.js';
 
-const HOST_SELECTOR = '.operator-chip:not([data-spw-sigil-anatomy])';
+const HOST_SELECTOR = '.spw-chip:not([data-spw-sigil-anatomy])';
 
 function hydrateHost(host) {
   /* Only anatomize simple hosts: a single fused text node. Nested markup

@@ -1,33 +1,4 @@
-/**
- * Frame Navigator (Enhanced)
- *
- * JetBrains-inspired surface map / tool window for navigating frames and routes.
- * Keyboard spells (global, non-input context):
- *   g          → toggle surface map
- *   { / }      → previous / next frame (direction wrap)
- *   /          → open + focus filter
- *   Escape     → close
- *
- * [ / ] open and close a mode seat. That physics lives in spw-key-events.js.
- *
- * Fully backward-compatible — call `initFrameNavigator()` exactly as before.
- * All original behavior, DOM structure, CSS classes, data attributes, and emitted
- * Spw actions remain identical.
- *
- * Major enhancements:
- * • Architecture: Encapsulated in SpwFrameNavigator class (clean state, easier testing/extending)
- * • Dynamic frames: Re-collects .site-frame elements live on every refresh (supports runtime-added frames)
- * • 100% programmatic DOM creation — zero innerHTML (more secure, consistent with other enhanced modules)
- * • Performance: Efficient re-rendering, cached frame list, lightweight per-frame observers
- * • Accessibility: Full keyboard navigation (arrows, Home, End), improved ARIA, focus management, live counter
- * • Resilience: Graceful degradation if no frames, try/catch around DOM/observer ops, idempotent init
- * • UX polish: Subtle debounce on search, better empty state, auto-scroll to active item
- * • Extensibility: window.spwNavigator API exposed for manual control/debugging
- * • Bug fixes: Stale frame references eliminated, duplicate listeners prevented, route clicks no longer trigger double navigation
- * • Code quality: Fully sectioned, modern JS patterns, detailed comments, consistent error handling
- *
- * To extend: add new spell handlers in the keydown listener or extend renderList/appendEntry.
- */
+/** Surface map: native route links, visible frames, and reversible keyboard navigation. */
 import {
     annotateFloatingChromeElement,
     syncFloatingChromeState,
@@ -49,11 +20,23 @@ const NAV_ROUTE_SELECTOR = [
     'main .operator-card[href]',
     'main .operator-ring-nav a[href]',
     'main .syntax-token[href]',
+    'main .spw-chip[href]',
     'main .frame-list a[href]',
     'main p a[href]'
 ].join(', ');
 
-const getCompactInternalHref = (url) => `${url.pathname || '/'}${url.hash}`;
+const getCompactInternalHref = (url) => `${url.pathname || '/'}${url.search}${url.hash}`;
+const scrollBehavior = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+const collectFrames = () => Array.from(document.querySelectorAll('main .spw-frame'))
+    .filter(frame => !frame.closest('[hidden], [inert]'));
+const focusFrame = (frame) => {
+    if (!frame.hasAttribute('tabindex')) {
+        frame.setAttribute('tabindex', '-1');
+        frame.addEventListener('blur', () => frame.removeAttribute('tabindex'), { once: true });
+    }
+    frame.focus({ preventScroll: true });
+    frame.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+};
 
 const isNavigatorHidden = () => getSiteSettings().navigatorDisplay === 'hidden';
 
@@ -82,16 +65,16 @@ const collectRouteEntries = () => {
         if (url.origin !== window.location.origin) return routes;
 
         const nextPath = normalizePathname(url.pathname);
-        if (nextPath === currentPath) return routes;
+        if (nextPath === currentPath && url.search === window.location.search) return routes;
 
-        const normalizedHref = `${nextPath}${url.hash}`;
+        const normalizedHref = `${nextPath}${url.search}${url.hash}`;
         if (seen.has(normalizedHref)) return routes;
         seen.add(normalizedHref);
 
         const label = getRouteLabel(link);
         if (!label) return routes;
 
-        const sourceFrame = link.closest('.site-frame');
+        const sourceFrame = link.closest('.spw-frame');
         const sourceHeading = sourceFrame ? getFrameMeta(sourceFrame).headingText : '';
         const sigilText = normalizeText(link.querySelector('.frame-card-sigil')?.textContent || label);
         const detected = detectOperator(sigilText) || detectOperator(label);
@@ -116,7 +99,7 @@ const activateFrame = (target) => {
         window.spwInterface.activateFrame(target, { source: 'navigator', force: true });
         return;
     }
-    document.querySelectorAll('.site-frame').forEach(frame => {
+    collectFrames().forEach(frame => {
         if (frame === target) {
             frame.dataset.state = 'active';
         } else {
@@ -126,7 +109,7 @@ const activateFrame = (target) => {
 };
 
 const getActiveFrame = () =>
-    window.spwInterface?.getActiveFrame?.() || document.querySelector('.site-frame[data-state~="active"]');
+    window.spwInterface?.getActiveFrame?.() || document.querySelector('.spw-frame[data-state~="active"]');
 
 // ─── Core Navigator Class ───────────────────────────────────────────────────
 class SpwFrameNavigator {
@@ -142,13 +125,15 @@ class SpwFrameNavigator {
         this.filterText = '';
         this.counts = { visibleFrames: 0, visibleRoutes: 0 };
         this.frameObserver = null;
+        this.abort = new AbortController();
+        this.refreshRaf = 0;
         this.initialized = false;
         this.isOpen = () => this.panel && !this.panel.hidden;
     }
 
     init() {
         if (this.initialized) return;
-        const siteFrameEls = document.querySelectorAll('.site-frame');
+        const siteFrameEls = collectFrames();
         if (!siteFrameEls.length) return;
 
         this.initialized = true;
@@ -296,18 +281,31 @@ class SpwFrameNavigator {
         this.root.appendChild(this.panel);
     }
 
+    listen(target, type, handler) {
+        target.addEventListener(type, handler, { signal: this.abort.signal });
+    }
+
+    destroy() {
+        this.abort.abort();
+        this.frameObserver?.disconnect();
+        cancelAnimationFrame(this.refreshRaf);
+        this.close();
+        this.root?.remove();
+        this.initialized = false;
+    }
+
     attachListeners() {
         // Trigger & close
-        this.triggerBtn.addEventListener('click', () => this.toggle());
-        this.closeBtn.addEventListener('click', () => this.close());
+        this.listen(this.triggerBtn, 'click', () => this.toggle());
+        this.listen(this.closeBtn, 'click', () => this.close({ restoreFocus: true }));
 
         // Search
-        this.searchInput.addEventListener('input', () => {
+        this.listen(this.searchInput, 'input', () => {
             this.filterText = this.searchInput.value;
             this.refresh();
         });
 
-        this.searchInput.addEventListener('keydown', (e) => {
+        this.listen(this.searchInput, 'keydown', (e) => {
             const buttons = Array.from(this.list.querySelectorAll('.spw-nav-item-btn'));
             if (e.key === 'ArrowDown') {
                 e.preventDefault();
@@ -321,7 +319,7 @@ class SpwFrameNavigator {
         });
 
         // List keyboard navigation
-        this.list.addEventListener('keydown', (e) => {
+        this.listen(this.list, 'keydown', (e) => {
             const current = e.target.closest('.spw-nav-item-btn');
             if (!current) return;
             const buttons = Array.from(this.list.querySelectorAll('.spw-nav-item-btn'));
@@ -340,14 +338,19 @@ class SpwFrameNavigator {
         });
 
         // Click outside panel
-        this.root.addEventListener('click', (e) => {
+        this.listen(this.root, 'click', (e) => {
             if (e.target === this.root) this.close();
         });
 
         // Global keyboard spells
-        window.addEventListener('keydown', (e) => {
-            if (e.defaultPrevented) return;
-            if (isInputFocused()) return;
+        this.listen(window, 'keydown', (e) => {
+            if (e.defaultPrevented || e.isComposing) return;
+            if (e.key === 'Escape' && this.isOpen()) {
+                e.preventDefault();
+                this.close({ restoreFocus: true });
+                return;
+            }
+            if (isInputFocused() || e.ctrlKey || e.metaKey || e.altKey) return;
 
             if (e.key === 'g' && !e.ctrlKey && !e.metaKey && !isNavigatorHidden()) {
                 e.preventDefault();
@@ -376,21 +379,30 @@ class SpwFrameNavigator {
         });
 
         // Dynamic frame tracking
-        this.frameObserver = new MutationObserver(() => {
-            if (this.isOpen()) {
-                this.refresh(); // full refresh when panel is visible (handles new frames + active changes)
+        this.frameObserver = new MutationObserver((records) => {
+            if (!this.isOpen()) return;
+            if (records.every(record => record.attributeName === 'data-state')) {
+                this.syncActiveItem(this.list, this.frames, this.counter, this.counts);
+                return;
             }
+            cancelAnimationFrame(this.refreshRaf);
+            this.refreshRaf = requestAnimationFrame(() => this.refresh());
+        });
+        const main = document.querySelector('main');
+        if (main) this.frameObserver.observe(main, {
+            childList: true, subtree: true, attributes: true,
+            attributeFilter: ['hidden', 'inert', 'data-state'],
         });
 
         // Initial frames will be observed after first refresh
-        document.addEventListener('spw:mode-change', () => this.refresh());
-        document.addEventListener('spw:settings-change', (e) => {
+        this.listen(document, 'spw:mode-change', () => this.refresh());
+        this.listen(document, 'spw:settings-change', (e) => {
             if (e.detail?.navigatorDisplay === 'hidden') this.close();
         });
     }
 
     updateFrames() {
-        this.frames = Array.from(document.querySelectorAll('.site-frame'))
+        this.frames = collectFrames()
             .map((frame, index) => ({
                 frame,
                 index,
@@ -413,7 +425,7 @@ class SpwFrameNavigator {
         this.counts = this.renderList(this.list, frames, routes, this.filterText, (entry) => {
             if (entry.kind === 'frame') {
                 activateFrame(entry.frame);
-                entry.frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                focusFrame(entry.frame);
                 emitSpwAction('@navigator.select', entry.meta.headingText);
                 this.close();
                 return;
@@ -424,16 +436,7 @@ class SpwFrameNavigator {
 
         this.syncActiveItem(this.list, frames, this.counter, this.counts);
 
-        // Re-attach observers to current frames (supports dynamic addition)
-        if (this.frameObserver) {
-            this.frameObserver.disconnect();
-            this.frames.forEach(f => {
-                this.frameObserver.observe(f.frame, {
-                    attributes: true,
-                    attributeFilter: ['class']
-                });
-            });
-        }
+
     }
 
     renderList(list, frames, routes, filterText, onActivate) {
@@ -531,7 +534,7 @@ class SpwFrameNavigator {
         }
 
         control.appendChild(body);
-        control.addEventListener('click', () => onActivate(entry));
+        this.listen(control, 'click', () => onActivate(entry));
 
         item.appendChild(control);
         list.appendChild(item);
@@ -577,18 +580,19 @@ class SpwFrameNavigator {
         // Only chase the active item into view while the panel is actually open —
         // refresh() also runs on mode/settings changes when the map is closed.
         if (this.isOpen()) {
-            activeButton?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            activeButton?.scrollIntoView({ block: 'nearest', behavior: scrollBehavior() });
         }
     }
 
     navigateFrames(dir) {
-        const all = Array.from(document.querySelectorAll('.site-frame'));
+        const all = collectFrames();
         const active = getActiveFrame();
         const idx = active ? all.indexOf(active) : -1;
-        const next = all.at((idx + dir + all.length) % all.length);
+        const nextIndex = idx < 0 ? (dir > 0 ? 0 : all.length - 1) : (idx + dir + all.length) % all.length;
+        const next = all[nextIndex];
         if (next) {
             activateFrame(next);
-            next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            focusFrame(next);
             emitSpwAction(dir > 0 ? '@sequence.next' : '@sequence.prev', getFrameMeta(next).headingText);
         }
     }
@@ -602,7 +606,7 @@ class SpwFrameNavigator {
         this.searchInput.value = '';
         this.filterText = '';
         this.refresh();
-        requestAnimationFrame(() => this.searchInput.focus());
+        requestAnimationFrame(() => { if (this.isOpen()) this.searchInput.focus(); });
         emitSpwAction('#>map.open', 'surface map');
         syncFloatingChromeState(document, {
             source: 'frame-navigator',
@@ -611,6 +615,7 @@ class SpwFrameNavigator {
     }
 
     close(options = {}) {
+        if (!this.panel) return;
         const wasOpen = !this.panel.hidden;
         this.panel.hidden = true;
         this.root.classList.remove('is-open');
@@ -653,7 +658,7 @@ const initFrameNavigator = () => {
 
 const unmountFrameNavigator = () => {
     if (!navigatorInstance) return;
-    try { navigatorInstance.close(); } catch (_) {}
+    navigatorInstance.destroy();
     navigatorInstance = null;
     if (typeof window !== 'undefined' && window.spwNavigator) {
         delete window.spwNavigator;

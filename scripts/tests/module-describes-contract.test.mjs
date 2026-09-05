@@ -7,6 +7,16 @@ import {
   parseModuleDescribes,
 } from '../../public/js/runtime/module-describes-contract.js';
 
+test('catalog hosts use current public nouns without compatibility aliases', () => {
+  for (const def of MODULE_DEFS) {
+    assert.doesNotMatch(def.selector || '', /\.(?:site-frame|operator-chip)\b/, def.id);
+  }
+  for (const id of ['frame-navigator', 'variant-selection', 'navigation-spells']) {
+    const def = MODULE_DEFS.find((entry) => entry.id === id);
+    assert.match(def.selector, /\.spw-(?:frame|chip)\b/, id);
+  }
+});
+
 test('describes dialect splits expression clauses from trailing gloss', () => {
   const expression = parseModuleDescribes(
     'cauldron[gather|mix|garden] force[operator] emergence[composition]',
