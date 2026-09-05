@@ -498,6 +498,36 @@ test('named stills cover curriculum, software, and math openings', () => {
   assert.ok(jobs.some((job) => job.id === 'math-opening' && job.selector === '#math-hero'));
 });
 
+test('folio probes and prices are named still recipes, not catalog components', () => {
+  assert.equal(COMPONENT_FIXTURES.some((fixture) => fixture.id.startsWith('folio-')), false);
+  assert.ok(REGION_ECOLOGY_FIXTURES.some((fixture) => fixture.id === 'folio-fold-probe'));
+  assert.ok(REGION_ECOLOGY_FIXTURES.some((fixture) => fixture.id === 'folio-growth-probe'));
+  assert.ok(REGION_ECOLOGY_FIXTURES.some((fixture) => fixture.id === 'folio-prices'));
+
+  const { jobs } = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeStills: true,
+    includeChecks: true,
+    viewports: [VIEWPORTS.pocket],
+    ids: ['folio-fold-rest', 'folio-fold-open', 'folio-growth-rest', 'folio-growth-branch', 'folio-prices', 'folio-fold-open-reduced'],
+  });
+  const rest = jobs.find((job) => job.id === 'folio-fold-rest');
+  const open = jobs.find((job) => job.id === 'folio-fold-open');
+  const growthRest = jobs.find((job) => job.id === 'folio-growth-rest');
+  const branch = jobs.find((job) => job.id === 'folio-growth-branch');
+  const prices = jobs.find((job) => job.id === 'folio-prices');
+  const reduced = jobs.find((job) => job.id === 'folio-fold-open-reduced');
+  assert.deepEqual(rest?.prepare?.check, ['#folio-fold-probe input[value="rest"]']);
+  assert.equal(open?.selector, '#folio-fold-probe');
+  assert.deepEqual(open?.prepare?.check, ['#folio-fold-probe input[value="open"]']);
+  assert.deepEqual(growthRest?.prepare?.check, ['#folio-growth-probe input[value="rest"]']);
+  assert.equal(branch?.selector, '#folio-growth-probe');
+  assert.deepEqual(branch?.prepare?.check, ['#folio-growth-probe input[value="branch"]']);
+  assert.equal(prices?.selector, '#folio-prices');
+  assert.equal(reduced?.conditions?.reducedMotion, 'reduce');
+});
+
 test('still attention receipts fail when ink stays at rest while charge is live', () => {
   assert.equal(attentionAssertKind({ attention: { section: 'memory-buffers' } }), 'pin');
   assert.equal(attentionAssertKind({ attention: { probe: 'frame' } }), 'probe');

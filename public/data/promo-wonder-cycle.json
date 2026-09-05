@@ -167,18 +167,33 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
-        "title": "Offer an entry path for a serious first conversation",
-        "summary": "The first answer should help someone decide whether they are in the right place before they spend more time.",
-        "href": "/contact/",
-        "cta": "Start contact"
+        "title": "See the laminated folio worktable",
+        "summary": "Originals, prints, and custom collages are being minted from printer-paper-sized laminated art. lore.land is the pantry; RPG Wednesday is the shared practice. Sales are not open yet.",
+        "href": "/design/folios/#collect-a-folio",
+        "cta": "Open the folio worktable",
+        "why": "The Art room names formats, working original-price bands, and how a scan becomes a release.",
+        "presentation": "modal",
+        "promotion": {
+          "kind": "release",
+          "audience": "collectors, homebrew players, and people who already follow lore.land or RPG Wednesday",
+          "offer": "Look at folio formats and talk about a custom collage or story-led piece before sales open",
+          "proof": "The folio page names originals, prints, collages, and planning ranges without checkout.",
+          "objection": "It should be obvious that nothing is for sale yet.",
+          "urgency": "Scans and the first documented release are the next public step.",
+          "tone": "inviting",
+          "theme": "glass",
+          "handles": ["folio", "lore.land", "rpg-wednesday", "art"],
+          "ctaStyle": "primary",
+          "presentation": "modal"
+        }
       },
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
-        "title": "Which part of the site is a living specimen today?",
-        "summary": "A daily change makes the surface feel maintained, not merely published.",
-        "href": "/blog/",
-        "cta": "Inspect blog"
+        "title": "What if a homebrew pantry also had a physical object?",
+        "summary": "A character, place, or motif from lore.land can become a laminated original, a print, or a collage.",
+        "href": "/about/domains/lore.land/",
+        "cta": "Visit lore.land"
       }
     },
     {
@@ -318,6 +333,39 @@
         "summary": "This is the place for a slightly stranger question than the daily slot.",
         "href": "/blog/",
         "cta": "Read blog"
+      }
+    },
+    {
+      "promo": {
+        "label": "Weekly promo",
+        "operator": "@",
+        "title": "RPG Wednesday makes art around the lore.land canon",
+        "summary": "Some TikTok group chats with streaks spend Wednesday making art and telling stories from that pantry. My laminated folios grow alongside that play — originals, prints, and custom collages in development.",
+        "href": "/play/rpg-wednesday/",
+        "cta": "Sit at the table",
+        "why": "The table is the practice; the Art room is where a scene can become an object.",
+        "presentation": "modal",
+        "promotion": {
+          "kind": "event",
+          "audience": "players, streak chats, and people who want a physical piece from the world",
+          "offer": "Join the weekly art-and-story practice, then look at the folio worktable",
+          "proof": "RPG Wednesday is the live table; lore.land is the pantry; Art holds the minting path.",
+          "objection": "Community art is not automatically folio inventory.",
+          "urgency": "Wednesday is the repeating door; the folio page is the object door.",
+          "tone": "inviting",
+          "theme": "glass",
+          "handles": ["rpg-wednesday", "lore.land", "folio", "art"],
+          "ctaStyle": "primary",
+          "presentation": "modal"
+        }
+      },
+      "wonder": {
+        "label": "Weekly wonder",
+        "operator": "?",
+        "title": "Which scene wants a physical folio?",
+        "summary": "Bring a motif. The folio worktable can become a custom collage or a new source piece. Sales are not open yet.",
+        "href": "/design/folios/#collect-a-folio",
+        "cta": "Ask about a custom piece"
       }
     }
   ]

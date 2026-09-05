@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
 
 import { clampIndex, getWeekIndex } from '../../public/js/typed/feed-utils.js';
 import {
@@ -511,6 +514,27 @@ test('promo wonder selection remains data driven', () => {
   assert.equal(feedLocale(promoFeed), 'fr');
   assert.equal(daily.promo.title, 'Tuesday promo');
   assert.equal(weekly.promo.title, promoFeed.weekly[weeklyIndex].promo.title);
+});
+
+test('live promo feed can pick the folio worktable on a known weekday', () => {
+  const liveFeed = JSON.parse(readFileSync(
+    join(dirname(fileURLToPath(import.meta.url)), '../../public/data/promo-wonder-cycle.json'),
+    'utf8',
+  ));
+  const thursday = new Date(2026, 8, 3, 12, 0, 0);
+  assert.equal(thursday.getDay(), 4);
+
+  const daily = pickDaily(liveFeed, thursday);
+  assert.match(daily.promo.title, /folio worktable/i);
+  assert.equal(daily.promo.href, '/design/folios/#collect-a-folio');
+  assert.equal(daily.promo.promotion?.kind, 'release');
+  assert.match(daily.wonder.href, /lore\.land/);
+
+  const weeklyFolio = liveFeed.weekly.find((entry) => /lore\.land canon/i.test(entry.promo.title));
+  assert.ok(weeklyFolio, 'weekly feed should keep the RPG Wednesday / lore.land promo');
+  assert.equal(weeklyFolio.promo.href, '/play/rpg-wednesday/');
+  assert.equal(weeklyFolio.promo.promotion?.kind, 'event');
+  assert.equal(weeklyFolio.wonder.href, '/design/folios/#collect-a-folio');
 });
 
 test('module loader unmount and remount round-trips correctly', async () => {

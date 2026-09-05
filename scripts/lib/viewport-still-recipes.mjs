@@ -195,6 +195,88 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
       'public/css/tokens/core.css',
     ]),
   }),
+  Object.freeze({
+    id: 'folio-fold-rest',
+    fixtureId: 'folio-fold-probe',
+    label: 'Folio fold rest',
+    specimenRoute: '/design/folios/#folio-fold-probe',
+    selector: '#folio-fold-probe',
+    prepare: Object.freeze({
+      check: Object.freeze(['#folio-fold-probe input[value="rest"]']),
+    }),
+    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    wonder: 'At rest the fold is only an edge. The radio row must remain a 44px instrument.',
+    captureValue: 'Kinetic study component probe, rest state, JavaScript off.',
+    sourceFiles: Object.freeze([
+      'design/folios/index.html',
+      'public/css/routes/surfaces/design.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'folio-fold-open',
+    fixtureId: 'folio-fold-probe',
+    label: 'Folio fold open',
+    specimenRoute: '/design/folios/#folio-fold-probe',
+    selector: '#folio-fold-probe',
+    prepare: Object.freeze({
+      check: Object.freeze(['#folio-fold-probe input[value="open"]']),
+    }),
+    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    wonder: 'Checking Open must change the still. If rest and open match, the probe is decoration.',
+    captureValue: 'Kinetic study component probe after the open radio is checked.',
+    sourceFiles: Object.freeze([
+      'design/folios/index.html',
+      'public/css/routes/surfaces/design.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'folio-growth-rest',
+    fixtureId: 'folio-growth-probe',
+    label: 'Folio growth rest',
+    specimenRoute: '/design/folios/#folio-growth-probe',
+    selector: '#folio-growth-probe',
+    prepare: Object.freeze({
+      check: Object.freeze(['#folio-growth-probe input[value="rest"]']),
+    }),
+    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    wonder: 'A repeated unit, still. Outer rings should recede until Branch is chosen.',
+    captureValue: 'Botanical metabiology probe, rest state.',
+    sourceFiles: Object.freeze([
+      'design/folios/index.html',
+      'public/css/routes/surfaces/design.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'folio-growth-branch',
+    fixtureId: 'folio-growth-probe',
+    label: 'Folio growth branch',
+    specimenRoute: '/design/folios/#folio-growth-probe',
+    selector: '#folio-growth-probe',
+    prepare: Object.freeze({
+      check: Object.freeze(['#folio-growth-probe input[value="branch"]']),
+    }),
+    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    wonder: 'Branching should occupy room. If the organism looks unchanged, the growth rule is not visible.',
+    captureValue: 'Botanical metabiology probe after Branch is checked.',
+    sourceFiles: Object.freeze([
+      'design/folios/index.html',
+      'public/css/routes/surfaces/design.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'folio-prices',
+    fixtureId: 'folio-prices',
+    label: 'Folio price ladder',
+    specimenRoute: '/design/folios/#folio-prices',
+    selector: '#folio-prices',
+    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    wonder: 'Planning amounts must read as a ladder, not as a live cart.',
+    captureValue: 'Visible $35 / $75 / $150 asks with Seed 3-for-$95 and quoted prints.',
+    sourceFiles: Object.freeze([
+      'design/folios/index.html',
+      'public/css/routes/surfaces/design.css',
+    ]),
+  }),
 ]);
 
 export const VIEWPORT_STILL_CHECKS = Object.freeze([
@@ -490,6 +572,24 @@ export const VIEWPORT_STILL_CHECKS = Object.freeze([
       'curriculum/index.html',
       'public/css/tokens/core.css',
       'public/css/typography/typesetting.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'folio-fold-open-reduced',
+    fixtureId: 'folio-fold-probe',
+    label: 'Folio fold open reduced motion',
+    specimenRoute: '/design/folios/#folio-fold-probe',
+    selector: '#folio-fold-probe',
+    conditions: Object.freeze({ reducedMotion: 'reduce' }),
+    prepare: Object.freeze({
+      check: Object.freeze(['#folio-fold-probe input[value="open"]']),
+    }),
+    layoutScenarios: Object.freeze(['pocket']),
+    wonder: 'Open still has a decisive edge without relying on the slide.',
+    captureValue: 'Environment check: prefers-reduced-motion on the open fold probe.',
+    sourceFiles: Object.freeze([
+      'design/folios/index.html',
+      'public/css/routes/surfaces/design.css',
     ]),
   }),
 ]);

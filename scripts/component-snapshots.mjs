@@ -847,8 +847,9 @@ async function applyCapturePrepare(session, job) {
   const attention = job?.attention || {};
   const close = Array.isArray(prepare?.close) ? prepare.close : (prepare?.close ? [prepare.close] : []);
   const open = Array.isArray(prepare?.open) ? prepare.open : (prepare?.open ? [prepare.open] : []);
+  const check = Array.isArray(prepare?.check) ? prepare.check : (prepare?.check ? [prepare.check] : []);
   const focus = prepare?.focus;
-  const needsPrepare = close.length || open.length || attention.section || attention.probe || Boolean(focus);
+  const needsPrepare = close.length || open.length || check.length || attention.section || attention.probe || Boolean(focus);
   await evaluateProbe(session, `(async () => {
     const html = document.documentElement;
     if (html) html.setAttribute('data-spw-capture-mode', 'screenshot');
@@ -859,6 +860,15 @@ async function applyCapturePrepare(session, job) {
     }
     for (const sel of ${JSON.stringify(open)}) {
       document.querySelectorAll(sel).forEach((el) => { if ('open' in el) el.open = true; });
+    }
+    for (const sel of ${JSON.stringify(check)}) {
+      document.querySelectorAll(sel).forEach((el) => {
+        if (el instanceof HTMLInputElement) {
+          el.checked = true;
+          el.dispatchEvent(new Event('input', { bubbles: true }));
+          el.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
     }
     const focusWant = ${JSON.stringify(focus === true ? '' : String(focus || ''))};
     const focusHostSel = ${JSON.stringify(job.selector || '')};
