@@ -5,7 +5,7 @@
  * on horizontal swipe, discovered sync with reward surfaces.
  */
 
-import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
+import { isOwnAffordanceTarget, observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
 import { resolveOwnerDocument } from '/public/js/runtime/runtime-helpers.js';
 import { syncEffectInterpretation } from './effect-interpretation.js';
 
@@ -159,6 +159,7 @@ function bindFigure(figure, controller) {
 
   figure.addEventListener('pointerdown', (event) => {
     if (event.button !== 0) return;
+    if (!isOwnAffordanceTarget(figure, event.target)) return;
     pointerId = event.pointerId;
     startX = event.clientX;
     startY = event.clientY;

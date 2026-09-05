@@ -43,6 +43,7 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import {
+  isOwnAffordanceTarget,
   writeDatasetValue,
   writeStyleValue,
 } from '/public/js/kernel/dom-contracts.js';
@@ -776,7 +777,7 @@ function capturePrimedContainment(meta, chargeContext = 'committed') {
 function onPointerEnter(event) {
   if (isCoarsePointerEvent(event)) return;
   const target = braceTarget(event.target);
-  if (!target) return;
+  if (!target || !isOwnAffordanceTarget(target, event.target)) return;
   if (event.relatedTarget instanceof Node && target.contains(event.relatedTarget)) return;
   if (target.dataset.spwGesture) return;
 
@@ -849,7 +850,7 @@ function onPointerLeave(event) {
 function onPointerDown(event) {
   if (!event.isPrimary || event.button !== 0) return;
   const target = braceTarget(event.target);
-  if (!target) return;
+  if (!target || !isOwnAffordanceTarget(target, event.target)) return;
 
   const meta = classifyTarget(target);
   setGesture(target, meta, 'active', { source: 'pointer', button: 0 });
@@ -1037,7 +1038,8 @@ function onPointerCancel(event) {
 
 function onDoubleClick(event) {
   const target = braceTarget(event.target);
-  if (!target || !isSemanticTapTarget(target)) return;
+  if (!target || !isOwnAffordanceTarget(target, event.target)) return;
+  if (!isSemanticTapTarget(target)) return;
 
   const meta = classifyTarget(target);
   if (!meta.semantic?.family && !meta.semantic?.expression) return;
@@ -1145,7 +1147,7 @@ function onKeyDown(event) {
   if (event.repeat) return;
 
   const target = braceTarget(event.target);
-  if (!target) return;
+  if (!target || !isOwnAffordanceTarget(target, event.target)) return;
 
   event.preventDefault();
 
@@ -1194,7 +1196,7 @@ function onKeyUp(event) {
   if (event.key !== 'Enter' && event.key !== ' ') return;
 
   const target = braceTarget(event.target);
-  if (!target) return;
+  if (!target || !isOwnAffordanceTarget(target, event.target)) return;
 
   const meta = classifyTarget(target);
   setGesture(target, meta, 'charging', { source: 'keyboard' });

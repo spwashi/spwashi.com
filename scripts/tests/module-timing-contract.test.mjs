@@ -223,6 +223,18 @@ test('feature catalog modules mount through portable exports', () => {
   assert.equal(FEATURE_DEFS.find((entry) => entry.id === 'payment-cards')?.rootMode, 'each');
 });
 
+test('first-gesture modules are not INTERACTION-mounted', () => {
+  // INTERACTION imports on the loader's own pointerdown/touchstart, so the
+  // module never sees that first event. Same class as attention-pinch-scale.
+  const charge = ENHANCEMENT_DEFS.find((entry) => entry.id === 'charge-field');
+  const locomotion = ENHANCEMENT_DEFS.find((entry) => entry.id === 'navigation-locomotion');
+  const regionMenu = FEATURE_DEFS.find((entry) => entry.id === 'region-menu');
+  assert.equal(charge?.when, MOUNT_WHEN.VISIBLE);
+  assert.equal(locomotion?.when, MOUNT_WHEN.VISIBLE);
+  assert.equal(regionMenu?.when, MOUNT_WHEN.VISIBLE);
+  assert.notEqual(charge?.when, MOUNT_WHEN.INTERACTION);
+});
+
 test('pinch scaling does not retain listeners on pointer-only devices', () => {
   assert.equal(supportsPinchTextScaleInput({
     navigator: { maxTouchPoints: 0 },

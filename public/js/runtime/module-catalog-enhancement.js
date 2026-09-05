@@ -101,7 +101,11 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'charge-field',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.INTERACTION,
+    // INTERACTION misses the first pointer: the loader's own pointerdown is
+    // what imports this module, so the phase event from that tap has nowhere
+    // to land. VISIBLE attaches before a gesture, matching brace-physics.
+    // See .spw/audits/touch-gesture-contracts-2026-09.spw#f5.
+    when: MOUNT_WHEN.VISIBLE,
     costClass: COST_CLASS.DEMAND_COUPLED,
     subfeatures: ['charge-accumulator', 'discharge-router', 'consequence-live-projector', 'resonance-echo'],
     triggers: ['pointer-approach', 'operator-touch', 'brace-interact'],
@@ -1396,7 +1400,10 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'navigation-locomotion',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.INTERACTION,
+    // INTERACTION misses first focusin / in-page hop. VISIBLE on main is
+    // present before the first Tab or section travel.
+    // See .spw/audits/touch-gesture-contracts-2026-09.spw#f5.
+    when: MOUNT_WHEN.VISIBLE,
     costClass: COST_CLASS.DEMAND_COUPLED,
     subfeatures: ['section-travel', 'spell-momentum', 'bottom-lane-sync'],
     triggers: ['scroll-boundary', 'operator-touch', 'spell-cast'],

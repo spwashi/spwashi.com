@@ -582,6 +582,39 @@ export function supportsHoverEnvironment(view = globalThis) {
   return view?.matchMedia?.('(hover: hover)')?.matches === true;
 }
 
+/* Native activation that gesture machines must not steal. summary is the
+   details disclosure; contenteditable is an editor. tabindex is omitted —
+   chips and living terms use it and ARE the affordance. See
+   .spw/audits/touch-gesture-contracts-2026-09.spw. */
+export const NATIVE_CONTROL_SELECTOR = [
+  'a[href]',
+  'button',
+  'input',
+  'select',
+  'textarea',
+  'summary',
+  '[role="button"]',
+  '[role="switch"]',
+  '[contenteditable="true"]',
+].join(', ');
+
+export function isNativeControl(node) {
+  return Boolean(node?.matches?.(NATIVE_CONTROL_SELECTOR));
+}
+
+/* True when `target` is the handle itself, or no native control sits between
+   them. A nested link/button/summary keeps its own click; the handle's
+   hold/arm machine must not run. Lifted from annotation-layer.js after the
+   header-nav steal; brace-gestures and region-menu had the same closest()
+   shape on hooks and feature hosts. */
+export function isOwnAffordanceTarget(handle, target) {
+  if (!handle) return false;
+  if (!target || target === handle) return true;
+  if (typeof target.closest !== 'function') return true;
+  const interactive = target.closest(NATIVE_CONTROL_SELECTOR);
+  return !interactive || interactive === handle;
+}
+
 /**
  * Inline room actually available to floating chrome.
  *

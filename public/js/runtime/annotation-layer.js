@@ -4,6 +4,7 @@ import {
   markInstrumented,
 } from '/public/js/kernel/instrumentation.js';
 import { humanizeToken, semanticToken as normalizeToken } from '/public/js/kernel/text-normalization.js';
+import { isOwnAffordanceTarget } from '/public/js/kernel/dom-contracts.js';
 import { collectAnnotationRegions } from '/public/js/semantic/role-inference.js';
 
 const ROOT = document.documentElement;
@@ -96,22 +97,6 @@ function collectHandles(root = document) {
     if (handle instanceof HTMLElement && annotationForHandle(handle)) handles.add(handle);
   });
   return [...handles];
-}
-
-/* A handle can be a whole landmark (header[data-spw-header-annotation]), not
-   just a dedicated button. pointerdown/click bubble, so a press or click on
-   any real control nested inside that landmark — a nav link, the menu
-   toggle — reaches this handler too, with currentTarget the landmark and
-   target the nested control. Only the landmark's own surface (or a handle
-   that IS the clicked element, e.g. button.header-annotation) is this
-   feature's business; a distinct interactive descendant is not, and must be
-   left alone so its own default action (navigation, its own click handler)
-   still runs. Without this guard every click bubbling up through an
-   annotated header called preventDefault() and ate the nav. */
-function isOwnAffordanceTarget(handle, target) {
-  if (!(target instanceof Element) || target === handle) return true;
-  const interactive = target.closest('a[href], button, input, select, textarea, [role="button"], [contenteditable="true"]');
-  return !interactive || interactive === handle;
 }
 
 /* A handle can be a whole landmark (header[data-spw-header-annotation]) or a

@@ -21,6 +21,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/spw-expression-geometry.test.mjs',
   'scripts/tests/spw-literal-parser-tool.test.mjs',
   'scripts/tests/module-timing-contract.test.mjs',
+  'scripts/tests/native-affordance.test.mjs',
   'scripts/tests/module-describes-contract.test.mjs',
   'scripts/tests/lens-modes.test.mjs',
   'scripts/tests/production-season-runtime.test.mjs',

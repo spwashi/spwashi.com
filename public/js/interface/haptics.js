@@ -30,7 +30,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { COMPONENT_KIND_MIRROR_SELECTOR, writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import { COMPONENT_KIND_MIRROR_SELECTOR, isOwnAffordanceTarget, writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { guardCall } from '/public/js/kernel/dom-render.js';
 import { normalizePathname } from '/public/js/kernel/route-utils.js';
 import {
@@ -341,6 +341,7 @@ function shouldIgnorePrimeCandidate(target, event) {
   if (!(target instanceof Element)) return true;
   if (target.closest('[data-spw-groundable="false"], input, textarea, select, button[data-spw-cauldron-action]')) return true;
   if (event?.pointerType === 'mouse' && target.closest('a[href]')) return true;
+  if (!isOwnAffordanceTarget(target, event?.target)) return true;
   return false;
 }
 

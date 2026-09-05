@@ -1,6 +1,7 @@
 import {
   annotateFloatingChromeElement,
   isMobileBottomLane,
+  isOwnAffordanceTarget,
   positionFloatingChromePopover,
   syncFloatingChromeState,
   writeDatasetValue,
@@ -155,7 +156,7 @@ function onClick(event) {
   if (menu?.contains(event.target)) return;
 
   const target = resolveTarget(event.target);
-  if (!target) {
+  if (!target || !isOwnAffordanceTarget(target, event.target)) {
     if (isRegionMenuOpen()) closeMenu({ restoreFocus: false });
     return;
   }
@@ -175,7 +176,7 @@ function onClick(event) {
 
 function onContextMenu(event) {
   const target = resolveTarget(event.target);
-  if (!target) return;
+  if (!target || !isOwnAffordanceTarget(target, event.target)) return;
 
   event.preventDefault();
   openMenu(target);
@@ -184,7 +185,7 @@ function onContextMenu(event) {
 function onPointerEnter(event) {
   if (isCoarsePointer(event)) return;
   const target = resolveTarget(event.target);
-  if (!target) return;
+  if (!target || !isOwnAffordanceTarget(target, event.target)) return;
 
   clearPreviewTimer();
   previewTimer = window.setTimeout(() => {
@@ -210,7 +211,7 @@ function onPointerLeave(event) {
 function onPointerDown(event) {
   if (!event.isPrimary || event.button !== 0) return;
   const target = resolveTarget(event.target);
-  if (!target || !shouldArmHoldOpen(target, event)) return;
+  if (!target || !isOwnAffordanceTarget(target, event.target) || !shouldArmHoldOpen(target, event)) return;
 
   clearHoldState();
   holdState = {
@@ -272,7 +273,7 @@ function onKeyDown(event) {
   }
 
   const target = resolveTarget(event.target);
-  if (!target) return;
+  if (!target || !isOwnAffordanceTarget(target, event.target)) return;
 
   if ((event.key === 'Enter' && event.altKey) || event.key === '?') {
     event.preventDefault();

@@ -1,0 +1,167 @@
+# Touch verbs, module contracts, and effects (2026-09-05)
+#
+# operation: audit
+# Sibling to pointer-device-detection-2026-09 (how JS classifies the device).
+# This one asks what tap / swipe / hold are supposed to mean, which modules
+# actually honor the authored contract, and where unique design should deepen
+# without stealing web fundamentals.
+
+#>touch_gesture_contracts_2026_09
+#:audit #!runtime #!gesture #!touch #!modules #!effects #!learnability
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@pointer_device_detection: ~"./pointer-device-detection-2026-09.spw"
+@module_selector_depth: ~"./module-selector-depth-2026-09.spw"
+@gesture_contract_js: ~"../../public/js/runtime/gesture-contract.js"
+@interaction_vocabulary: ~"../../public/js/runtime/interaction-vocabulary.js"
+@brace_gestures: ~"../../public/js/runtime/brace-gestures.js"
+@image_interaction: ~"../../public/js/semantic/image-interaction.js"
+@pinch_scale: ~"../../public/js/runtime/attention/pinch-scale.js"
+@haptics: ~"../../public/js/interface/haptics.js"
+@gesture_anatomy: ~"../../public/js/runtime/gesture-anatomy.js"
+@charge_field: ~"../../public/js/runtime/charge-field.js"
+@gesture_anatomy_css: ~"../../public/css/components/gesture-anatomy.css"
+
+operation = "audit"
+fixity = "tending"
+
+audit_run: .{
+  at = `2026-09-05`
+  method = `census data-spw-gesture-contract authorings; read brace-gestures / image-interaction / pinch-scale / haptics / gesture-anatomy / gesture-contract.js; npm run audit:module-selectors`
+  scope = `80 authored contracts, 15 unique strings, five verbs (tap/hold/swipe/double-click/drag), four overlapping ladders, three INTERACTION-mounted modules still in the first-gesture miss class`
+  posture = `Audit, not a new engine. Unique design should deepen the verbs that already have an owner. Web fundamentals (link, button, details, scroll, pinch-zoom, text select) remain the tap/swipe/hold of the page when JS is off or late.`
+}[reg=facet]
+
+^"thesis"{
+  claim: "Tap, swipe, and hold are authored as one HTML contract language, executed by several engines that do not share a parser, and taught by a hint layer most readers never see. Breadth is a copied template. Depth already exists in three honest places: image lens swipe, pinch text-scale, and hold-to-cauldron."
+  expected: "A named verb on data-spw-gesture-contract is either owned by one module that implements it, or it is documentation that does not arm a generic state machine on a container that already has native controls."
+  risk: "Copying tap:prime hold:inspect onto sections, articles, and hooks that wrap real buttons makes the unique layer look like a broken control instead of an extra one."
+}[reg=facet]
+
+^"census"{
+  authorings = 80
+  unique_strings = 15
+  verbs = .{ tap = 80 ; hold = 74 ; swipe = 19 ; double_click = 5 ; drag = 2 }
+  dominant_template = `tap:prime hold:inspect × 26, then tap:inspect hold:gather-search-term × 14, then tap:prime swipe:toggle-lens hold:inspect × 12`
+  host_tags = .{ section = 22 ; article = 16 ; figure = 12 ; details = 9 ; span = 9 ; button = 3 ; p = 2 ; div = 1 }
+  native_hosts_with_own_activation = #[`button`, `details`, `a` inside hooks, `summary`][reg=set]
+  ladders = #[
+    `HTML data-spw-gesture-contract tap:prime hold:inspect swipe:toggle-lens`,
+    `gesture-contract.js GESTURE_VOCABULARY ground/charge/flow/rotate/travel/stage/project/settle`,
+    `brace-gestures.js states charging/active/armed/projecting/committed`,
+    `interaction-vocabulary.js phases idle/approach/prime/charge/inspect/discover/settle`
+  ][reg=set]
+  engines = #[
+    .{ owner = `brace-gestures.js` ; verbs = `generic pointer hold 420ms + 8px drag` ; parses_contract = false }[reg=facet],
+    .{ owner = `image-interaction.js` ; verbs = `tap prime, hold inspect, swipe toggle-lens` ; parses_contract = `hardcodes STUDY_GESTURE_CONTRACT / DISCOVERY_GESTURE_CONTRACT` }[reg=facet],
+    .{ owner = `haptics.js` ; verbs = `hold to cauldron-capture on living terms` ; parses_contract = false }[reg=facet],
+    .{ owner = `pinch-scale.js` ; verbs = `two-finger pinch, not in the HTML contract language` }[reg=facet],
+    .{ owner = `section-handle.js` ; verbs = `tap travel, hold preview, swipe cycle on generated chrome` }[reg=facet]
+  ][reg=set]
+  module_hosts_2026_09_05 = .{
+    image_interaction = `55 routes / 129 hits — honest, figures only`
+    haptics = `124 / 2802`
+    attention_pinch_scale = `124 / 124 main`
+    annotation_layer = `0 / 0 — data-spw-header-annotation and data-spw-annotation-handle are gone from public HTML after the header-click fix`
+    interaction_progression = `124 / html`
+  }
+}[reg=facet]
+
+^"findings"{
+  f1_contract_is_not_a_parser {
+    severity = "high"
+    claim = `brace-gestures.js never reads data-spw-gesture-contract. It closest()-matches BRACE_TARGET_SELECTOR and runs the same hold/drag machine. gesture-anatomy.js is the only consumer that parses the string, and it only writes data-spw-gesture-hint.`
+    evidence = `braceTarget() in brace-gestures.js:205; parseGestureContract() in gesture-anatomy.js:66; GESTURE_ACTION_LABELS omits travel, preview, cycle, discover, cycle-variant, surface-current, open-companion, cycle-nearby`
+    gap = `A host can promise swipe:cycle-nearby or drag:cycle and still only get the generic brace arming (or nothing).`
+    falsify = `rg 'dataset.spwGestureContract|getAttribute\\(.data-spw-gesture-contract' public/js/runtime/brace-gestures.js public/js/interface/haptics.js`
+  }
+  f2_four_ladders_one_touch {
+    severity = "medium"
+    claim = `A reader cannot learn one verb list. Console/spell copy teaches ground/charge/flow. HTML teaches tap:prime. Runtime writes data-spw-gesture=armed. Progression writes data-spw-interaction-phase=prime. Mapping exists in GESTURE_VERB_TO_PHASE but is one-way and incomplete.`
+    evidence = `gesture-contract.js:30 GESTURE_VOCABULARY; interaction-vocabulary.js:56 GESTURE_VERB_TO_PHASE; two different GESTURE_TARGET_SELECTOR lists (interaction-vocabulary includes [data-spw-gesture-contract]; gesture-contract.js does not)`
+    gap = `Inspect helpers and authored HTML do not name the same gestures.`
+    falsify = `diff the two GESTURE_TARGET_SELECTOR arrays; ask a settings-page reader to perform 'charge' vs 'hold:inspect'`
+  }
+  f3_tap_on_containers_that_already_click {
+    severity = "high"
+    resolved = "2026-09-05"
+    claim = `Most tap: contracts sit on section/article/figure, not on button/a. The home hook (role=group, tap:prime hold:inspect) wraps real mode-switch buttons. braceTarget() closest()s to the hook, so every button tap also arms the group. Buttons still navigate (no preventDefault) — native meaning survives — but the unique layer fires as side-effect chrome.`
+    evidence = `index.html #home-hook; host census 22 section / 16 article / 3 button; brace-gestures onPointerDown:849 does not check event.target against interactive descendants the way annotation-layer.js now does`
+    gap = `Tap as enhancement on a container that already contains buttons teaches 'this whole card is a control' while the web already taught 'the button is the control'.`
+    pattern = `Same wide-container class as pointer-device-detection annotation_layer_header_click_hijack, minus preventDefault — quieter, still a learnability leak.`
+    falsify = `On / at pocket, tap Study/Build/Play/Studio and record whether the hook also takes data-spw-gesture=active/armed`
+    fix = `Lifted annotation-layer's nested-control guard into dom-contracts.js as isOwnAffordanceTarget (NATIVE_CONTROL_SELECTOR includes summary). brace-gestures, region-menu, haptics, image-interaction, and annotation-layer skip when a nested link/button/summary is the real target. brace onKeyDown no longer preventDefault on Enter/Space aimed at those controls.`
+  }
+  f4_hold_and_swipe_mostly_respect_scroll {
+    severity = "info"
+    claim = `The distinctive verbs are implemented with some native-first care: brace skips pointer capture on coarse pointers; 8px move cancels hold; image swipe needs 48px and 1.45× horizontal dominance and does not preventDefault; pinch-scale is the only non-passive touchmove, gated on capability + setting.`
+    evidence = `brace-gestures.js:910 isCoarsePointerEvent skip capture; image-interaction.js:25-26 SWIPE_MIN_PX/SWIPE_DOMINANCE; pinch-scale.js touchmove passive:false`
+    gap = `Three different move thresholds (8 / 28 interaction-progression / 48 image). iOS long-press callout is not suppressed on figures, so hold:inspect and the native callout can both fire.`
+    falsify = `Coarse pointer: start a vertical scroll on an image-study figure; lens must not cycle. Hold 420ms without moving: inspect state should set.`
+  }
+  f5_interaction_mount_still_eats_first_gesture {
+    severity = "medium"
+    resolved = "2026-09-05"
+    claim = `pinch-scale left INTERACTION mount after f5 in the pointer audit. charge-field, region-menu, and navigation-locomotion still mount on MOUNT_WHEN.INTERACTION. A first tap/hold that is supposed to prime charge or open inspect can be the event that only starts the import.`
+    evidence = `module-catalog-enhancement.js charge-field:104, navigation-locomotion:1399; module-catalog-feature.js region-menu:323`
+    gap = `tap:prime as a learnable promise is false on a cold page for anything those modules own.`
+    next = `Same move as pinch-scale: IDLE or VISIBLE for any module whose own pointer/touch listener must see the first gesture. region-menu may stay INTERACTION if inspect is defined as a second move — say so in the catalog comment.`
+    falsify = `Cold load, first pointerdown on a charge-field selector host, confirm module status still idle when the pointer goes up`
+    fix = `charge-field, region-menu, and navigation-locomotion now MOUNT_WHEN.VISIBLE. module-timing-contract.test.mjs asserts they are not INTERACTION.`
+  }
+  f6_hints_do_not_teach_ordinary_readers {
+    severity = "medium"
+    claim = `gesture-anatomy hints are gated on cognitiveHandles, debug, non-quiet tuning discoverability, or composer/overflow stance. Default witness readers never see tap/hold/swipe labels. The one public teaching line that works without that gate is the living-concepts title: 'tap: inspect • hold to prime'.`
+    evidence = `gesture-anatomy.js shouldAnnotate():46; index.html living-concepts span title; css/components/gesture-anatomy.css gated on html[data-spw-cognitive-handles=on] and capture/study`
+    gap = `Learnability for unique verbs is opt-in inspect chrome, not the reading surface.`
+    expansion = `Teach only the distinctive trio in situ (image swipe, pinch, hold-to-cauldron). Do not badge tap:prime on every hook.`
+  }
+  f7_breadth_is_a_copied_template {
+    severity = "low"
+    claim = `26 of 80 authorings are the same tap:prime hold:inspect string. swipe:cycle-nearby, drag:cycle, double-click:expand-trail, tap:cycle-variant / surface-current / open-companion have little or no dedicated engine. Growing more strings is not more design.`
+    evidence = `census unique_strings=15; interaction-microstates.spw#reward_contract still marks gather-search-term / cycle-nearby / cycle-variant as not element-audited`
+    do_not_build = `A unified gesture interpreter, a fourth ladder, or new data-spw-* families.`
+    deepen = #[
+      `image-interaction lens swipe — already unique, keyboard arrows already mirror it`,
+      `pinch-scale text size — reversible setting, now IDLE-mounted`,
+      `haptics hold-to-cauldron on living terms — native tap still inspects via title/tabindex; hold is the extra`
+    ][reg=set]
+  }
+  f8_effects_follow_armed_state_not_the_verb {
+    severity = "low"
+    claim = `Wonder/ornament/gesture-anatomy spend on data-spw-gesture and charge attributes. They cannot tell tap:prime from a swallowed container arming. Reading-groove rest opacity 0.86 still makes nearby prose look less tappable — the earlier opacity report is an effect/learnability seam, not a new token.`
+    evidence = `gesture-anatomy.css html[data-spw-gesture-anatomy=active][data-spw-module-effects-active]; typesetting.css --spw-reading-rest-opacity: 0.86`
+    next = `Do not add effect types for swipe/hold until f1/f3 stop arming the wrong host.`
+  }
+}[reg=facet]
+
+^"fundamentals_first"{
+  rule = "JS-off, a tap is a click on a link or button, a swipe is scroll, a hold is select or the browser callout. Unique design is what remains after those still work."
+  already_good = #[
+    `living-concept <details> cards: native tap opens; hold-to-cauldron is extra via haptics on data-spw-cauldron-candidate`,
+    `mode-switch buttons inside the home hook still click (brace does not preventDefault)`,
+    `image swipe is axis-gated and does not preventDefault, so vertical pan survives`,
+    `pinch-scale is capability-gated and settings-reversible`
+  ][reg=set]
+  still_fights_the_web = #[
+    `tap:prime on the hook group that contains the buttons`,
+    `hold:inspect on figures that also want the native long-press callout`,
+    `INTERACTION-mounted charge-field missing the first tap`
+  ][reg=set]
+}[reg=facet]
+
+^"decision_gate"{
+  build = true
+  landed = `2026-09-05 — f3 native-control guard + f5 VISIBLE mount. No new gesture interpreter (f1/f7 remain open).`
+  rationale = `Do not add a gesture framework. The honest next patches are small and already named: stop INTERACTION-mounting listeners that must see the first pointer (f5); stop closest()-arming containers that wrap native controls (f3, same guard as annotation-layer); stop authoring verbs with no engine (f7).`
+  safe_first_patch = `f3 and f5 landed together as one align: native activation plus first-gesture mount. Vocabulary rewrite still out.`
+  validation = #[
+    `python census of data-spw-gesture-contract (80 / 15 as of this run)`,
+    `npm run audit:module-selectors`,
+    `cold-load first pointerdown against charge-field / pinch-scale / a home-hook button`
+  ][reg=set]
+}[reg=facet]

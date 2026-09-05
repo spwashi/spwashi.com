@@ -320,7 +320,10 @@ export const FEATURE_DEFS = [
   {
     id: 'region-menu',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.INTERACTION,
+    // Hold-to-inspect is a first gesture on cold pages. INTERACTION would
+    // import on the same pointerdown this module needs to see. VISIBLE
+    // matches brace-physics. See .spw/audits/touch-gesture-contracts-2026-09.spw#f5.
+    when: MOUNT_WHEN.VISIBLE,
     costClass: COST_CLASS.DEMAND_COUPLED,
     selector: '.spw-delimiter, .frame-sigil, .spw-chip, [data-spw-semantic-expression]',
     rootMode: 'single',
