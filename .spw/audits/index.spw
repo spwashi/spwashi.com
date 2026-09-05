@@ -47,6 +47,7 @@
 @page_pretext_measurement: ~"./page-pretext-measurement-2026-08/index.spw"
 @copy_accessor_cluster: ~"./copy-accessor-cluster-2026-09.spw"
 @progressive_css_module_scopes: ~"./progressive-css-module-scopes-2026-07/index.spw"
+@pointer_device_detection: ~"./pointer-device-detection-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -80,6 +81,7 @@ fixity = "tending"
     js_feature_connectivity_css_vars = ~"./js-feature-connectivity-css-vars-2026-07/index.spw"
     component_device_sizing = ~"./component-device-sizing-2026-07/index.spw"
     css_specificity_pe = ~"./css-specificity-pe-2026-07/index.spw"
+    pointer_device_detection = ~"./pointer-device-detection-2026-09.spw"
     module_export_standalone = ~"./module-export-standalone-2026-07.spw"
     naming_grammar_js_types = ~"./naming-grammar-js-types-2026-07/index.spw"
     page_region_hydration_memory = ~"./page-region-hydration-memory-2026-07/index.spw"
@@ -240,7 +242,8 @@ fixity = "tending"
     @css_specificity_pe,
     @component_anatomy_device_packing,
     @component_philosophy_harmony,
-    @alignment_shell_lifecycle
+    @alignment_shell_lifecycle,
+    @pointer_device_detection
   >[reg=stream]
 
   page_spacing_cascade = ?<

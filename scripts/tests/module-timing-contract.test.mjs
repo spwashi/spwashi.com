@@ -95,7 +95,10 @@ test('attention children own independent progressive schedules', () => {
   assert.equal(attention['attention-section-handle'].when, MOUNT_WHEN.IDLE);
   assert.equal(attention['attention-resonance-probe'].when, MOUNT_WHEN.VISIBLE);
   assert.equal(attention['attention-reading-groove'].when, MOUNT_WHEN.IDLE);
-  assert.equal(attention['attention-pinch-scale'].when, MOUNT_WHEN.INTERACTION);
+  // IDLE, not INTERACTION: the loader's own interaction listener is what
+  // would import this module, so an INTERACTION mount misses the very
+  // touchstart that begins a two-finger pinch (see 2026-09-05 fix).
+  assert.equal(attention['attention-pinch-scale'].when, MOUNT_WHEN.IDLE);
   assert.equal(attention['attention-scroll-cadence'].when, MOUNT_WHEN.IDLE);
   assert.equal(ENHANCEMENT_DEFS.some((definition) => definition.id === 'attention-architecture'), false);
 

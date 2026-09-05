@@ -1,0 +1,114 @@
+# Pointer, Touch, and Device Capability Detection (2026-09-05)
+#
+# operation: audit
+# JS-side counterpart to component-device-sizing-2026-07 (that audit measures
+# CSS breakpoints/packing; this one measures how runtime JS classifies
+# pointer/touch capability before attaching listeners).
+
+#>pointer_device_detection_2026_09
+#:audit #!runtime #!listeners #!touch #!pointer #!devices
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@component_device_sizing: ~"./component-device-sizing-2026-07/index.spw"
+@module_export_contract: ~"../conventions/module-export-contract.spw"
+@dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
+@pinch_scale: ~"../../public/js/runtime/attention/pinch-scale.js"
+@shell_disclosure: ~"../../public/js/runtime/shell-disclosure.js"
+@contextual_ui: ~"../../public/js/interface/contextual-ui.js"
+@svg_tunability: ~"../../public/js/media/svg-tunability.js"
+@experiential: ~"../../public/js/runtime/experiential.js"
+@layout_assumptions: ~"../../public/js/runtime/layout-assumptions.js"
+@region_menu: ~"../../public/js/runtime/region-menu.js"
+
+operation = "audit"
+fixity = "tending"
+
+audit_run: .{
+  at = `2026-09-05`
+  method = `rg for '(pointer:|hover:|any-pointer|ontouchstart|maxTouchPoints)' across public/js, cross-referenced against touchstart/touchmove/pointerdown listener sites`
+  scope = `16 files author their own coarse/fine/hover classification instead of calling a shared helper; kernel/dom-contracts.js — the file named as the shared contracts home — holds one raw literal, not an exported function`
+  posture = `Not a correctness bug today — every local usage works standalone. This is a duplication/drift audit: the same three device questions get answered slightly differently in different files, which is exactly the kind of split that goes unnoticed until one branch is "fixed" and the others are not.`
+}[reg=facet]
+
+^"thesis"{
+  claim: "Three device questions repeat across the runtime with no shared answer: (1) is the primary pointer coarse, (2) is any available pointer coarse (multi-input laptops), (3) does the device support hover. Each file re-derives its own answer inline instead of importing one."
+  expected: "One module (naturally kernel/dom-contracts.js, since that is where BOTTOM_LANE_MOBILE_QUERY already lives) exports named predicates — isCoarsePrimaryPointer(), isAnyCoarsePointer(), supportsHover() — and every listener-attaching module imports from it."
+  risk: "A future change to the mobile threshold, or to what counts as 'coarse', has to be hunted down through free-text matchMedia strings in 13+ files instead of one export. Two files (svg-tunability.js, shell-disclosure.js, contextual-ui.js) already disagree on the label vocabulary for the same three-way split (hover/touch vs hover/hoverless/coarse)."
+}[reg=facet]
+
+^"census"{
+  same_literal_query = `'(max-width: 720px), (pointer: coarse)'` authored independently in 4 places: dom-contracts.js:511 (BOTTOM_LANE_MOBILE_QUERY), layout-assumptions.js:20 (MOBILE_QUERY), region-menu.js:779 (inline), state-inspector.js:200+204 (inline, twice in one file)
+  raw_pointer_coarse_only = #[`contextual-ui.js:376`, `haptics.js:122`, `image-metaphysics.js:114`, `svg-tunability.js:668,711`, `texture-slice.js:80,264`, `experiential.js:49,57`, `layout-qa.js:135`, `shell-disclosure.js:134,619`][reg=set]
+  three_way_classifiers = #[
+    .{ file = `contextual-ui.js:374-390` ; tiers = `coarse / hover / touch` }[reg=facet],
+    .{ file = `svg-tunability.js:665-670` ; tiers = `hoverless / coarse / (unnamed fallback)` }[reg=facet],
+    .{ file = `shell-disclosure.js:132-140` ; tiers = `coarse / hover / (unnamed fallback)` }[reg=facet]
+  ][reg=set]
+  fine_hover_combo = #[`resonance-probe.js:43`, `interaction-progression.js:114`][reg=facet] `both write '(hover: hover) and (pointer: fine)' verbatim`
+  any_pointer_outlier = `pinch-scale.js:47 is the only caller of (any-pointer: coarse) — correct for multi-touch (any-pointer catches a touchscreen on a mouse-primary laptop) but the divergence from every other file's plain (pointer: coarse) is not documented anywhere, so it reads as an inconsistency rather than a deliberate choice on first pass`
+  touch_event_fallback = `experiential.js:57 is the only site that also checks 'ontouchstart' in window as a matchMedia fallback; no other coarse-pointer check in the codebase has that fallback`
+  ipad_as_mac = `pwa-update-handler.js:55 checks navigator.platform === 'MacIntel' && maxTouchPoints > 1 — a distinct, correctly scoped iPadOS-masquerading-as-desktop-Safari check, not part of this duplication (kept out of findings below)`
+}[reg=facet]
+
+^"findings"{
+  f1_mobile_query_quadruplicated {
+    severity = "medium"
+    claim = `The exact string '(max-width: 720px), (pointer: coarse)' is typed out independently in dom-contracts.js, layout-assumptions.js, region-menu.js, and twice in state-inspector.js. dom-contracts.js is the one that names it (BOTTOM_LANE_MOBILE_QUERY) but does not export it.`
+    evidence = `rg "(max-width: 720px), (pointer: coarse)" public/js -l → 4 files, 5 sites`
+    next = `Export BOTTOM_LANE_MOBILE_QUERY from dom-contracts.js; import it in the other three call sites. Pure string dedup, no behavior change.`
+  }
+  f2_three_way_classifier_vocabulary_drift {
+    severity = "medium"
+    ids = #[`contextual-ui`, `svg-tunability`, `shell-disclosure`][reg=set]
+    claim = `Three files each write their own if-coarse/if-hover cascade to classify the pointer environment into a string, and land on different label sets for the same three physical cases (fine+hover, coarse+no-hover, everything else).`
+    evidence = `contextual-ui.js:376,389 returns 'coarse' | 'hover' | 'touch'; svg-tunability.js:667-668 returns 'hoverless' | 'coarse' | unnamed; shell-disclosure.js:134,139 returns 'coarse' | 'hover' | unnamed.`
+    next = `Not urgent to unify the output vocabulary (each caller's labels feed different data-spw-* attributes with their own downstream CSS). Urgent enough to name once: a shared classifyPointerEnvironment() in dom-contracts.js that returns a stable three-way token, with each caller mapping that token to its own attribute vocabulary if it must differ.`
+  }
+  f3_fine_hover_combo_duplicated {
+    severity = "low"
+    claim = `resonance-probe.js and interaction-progression.js both hardcode '(hover: hover) and (pointer: fine)' rather than sharing a supportsHover() / isFinePointer() predicate.`
+    evidence = `resonance-probe.js:43, interaction-progression.js:114 — identical query string, no shared import.`
+    next = `Fold into the same dom-contracts.js export as f1/f2 when that lands. Not worth a standalone patch.`
+  }
+  f4_any_pointer_undocumented_divergence {
+    severity = "info"
+    claim = `pinch-scale.js is the only module answering "is a coarse pointer available at all" (any-pointer) instead of "is the primary pointer coarse" (pointer) — correct for a multi-touch gesture that should still fire on a touchscreen laptop with a mouse as primary input, but nothing marks this as deliberate.`
+    evidence = `pinch-scale.js:47 supportsPinchTextScaleInput() — 'matchMedia(any-pointer: coarse)' combined with 'navigator.maxTouchPoints >= 2'.`
+    next = `Leave the code as-is; add one code comment at the definition noting why any-pointer (not pointer) is correct here, so a future pass does not "fix" it into the majority pattern and silently break pinch-scale on touchscreen laptops.`
+  }
+  f5_pinch_scale_never_saw_its_own_gesture {
+    severity = "high"
+    resolved = "2026-09-05"
+    claim = `attention-pinch-scale mounted on MOUNT_WHEN.INTERACTION — but the loader's own interaction listener (window touchstart/pointerdown/keydown, module-loader.js mountInteractionFeatures) is what imports the module, and that import is async. The two-finger touchstart that begins a pinch is the same event that triggers the import, so pinch-scale's own touchstart handler was never attached in time to see it. Every first pinch on a fresh page load failed silently; only a second attempt (after the module had loaded from some earlier touch) could work.`
+    evidence = `Reproduced live: dispatched a synthetic 2-touch touchstart+touchmove on a freshly loaded page (capability-gated matchMedia/maxTouchPoints patched to pass) — module status went defined -> idle in the same tick, data-spw-pinch-scaling stayed null, --spw-pinch-factor stayed at its default. A second gesture after the module reached status mounted set data-spw-pinch-scaling=true and --spw-pinch-factor=4.5 correctly.`
+    fix = `module-catalog-enhancement.js: attention-pinch-scale when changed from MOUNT_WHEN.INTERACTION to MOUNT_WHEN.IDLE (matches its attention/ siblings — reading-groove, scroll-cadence, section-handle — which all attach listeners before a gesture is attempted, not because of one). timingArc updated interaction-attention -> idle-attention + timingChunk idle-residue to match. scripts/tests/module-timing-contract.test.mjs updated to assert IDLE.`
+    reported_by = `User: "pinching to change font size wasn't working."`
+  }
+}[reg=facet]
+
+^"related_but_not_pointer_specific"{
+  note = `Found while chasing the pinch report: a second, unrelated bug in the same "silent interaction failure" family, in event propagation rather than device detection. Logged here because it surfaced from the same user report and shares the fix session; the durable home for click/propagation findings is a future audit, not this file.`
+  annotation_layer_header_click_hijack {
+    severity = "high"
+    resolved = "2026-09-05"
+    file = `public/js/runtime/annotation-layer.js`
+    claim = `initSpwAnnotationLayer() attaches click/pointerdown/keydown listeners directly on every element matching '[data-spw-annotation-handle], [data-spw-header-annotation]' — and the whole site-header carries data-spw-header-annotation, not just its dedicated button.header-annotation. click/pointerdown/keydown bubble; onClick() called event.preventDefault() unconditionally, with no check on the real event.target. Any click bubbling up through the header — every top-nav link, the mobile menu toggle, the logo — reached the header's own onClick and had its default action (navigation) cancelled, even though the click had nothing to do with the header's own annotation affordance. onKeydown() had the matching bug for Enter/Space on a focused link.`
+    evidence = `Reproduced live: instrumented Event.prototype.preventDefault, clicked the top-nav "About" link (a real a[href="/about/"], confirmed via elementFromPoint) — captured a real call at annotation-layer.js:309, HTMLElement.onClick, target A (event.target), currentTarget the site-header. Navigation did not occur. After the fix, the same click produces zero preventDefault calls and navigates to /about/.`
+    fix = `Added isOwnAffordanceTarget(handle, target): true only when target is the handle itself, or no real interactive element (a[href], button, input, select, textarea, [role="button"], [contenteditable]) sits between target and the handle. Guarded onPointerDown (the 420ms hold-to-pin timer), onClick, and onKeydown's Enter/Space branch with it. button.header-annotation itself is unaffected (target === handle there); every other interactive descendant of an annotated landmark now passes its click/keydown through untouched.`
+    reported_by = `User: "links or buttons seem to also be broken consistently on mobile" — reproduced with a plain mouse click, not touch-specific, so this affects every input type, not only coarse pointers.`
+    pattern_note = `Systemic risk class, not just this one file: any module that attaches a bubbling click/pointerdown/keydown listener to a wide container (a landmark, a whole header, a whole card) and acts unconditionally on event.currentTarget without checking event.target against it can silently eat clicks on every interactive descendant. haptics.js, brace-gestures.js, semantic-chrome.js, and section-handle.js all attach similar document/body/header-level capture-or-bubble listeners; each was checked in this session and found to scope correctly to its own target (via closest()/braceTarget()-style guards) — annotation-layer.js was the one that didn't.`
+  }
+}[reg=facet]
+
+^"non_findings"{
+  note = `attention-* module family (section-handle, resonance-probe, reading-groove, pinch-scale, scroll-cadence) mounts cleanly on all 124 public routes per npm run audit:module-selectors (2026-09-05 rerun matches the 2026-09-04 census in .spw/audits/module-selector-depth-2026-09.spw — no regression). Touch listeners in that family (pinch-scale.js touchstart/touchmove/touchend/touchcancel) are correctly passive except touchmove (needs preventDefault to block native pinch-zoom while previewing), correctly scoped with one AbortController per mount, and correctly gated behind both a capability check (supportsPinchTextScaleInput) and a settings check (isPinchTextScaleEnabled/spwPinchTextScale) that is reachable from settings/index.html (radio group name="pinchTextScale"). reading-groove has the equivalent settings round-trip (readingGrooveMode / data-spw-reading-groove). Neither module needed a fix.`
+}[reg=facet]
+
+^"validation"{
+  command = `rg "pointer: coarse|any-pointer|hover: hover|hover: none|ontouchstart|maxTouchPoints" public/js --glob '*.js' -l`
+  falsification = `A shared dom-contracts.js predicate exists and one of the 13 files above still authors its own matchMedia literal instead of importing it.`
+}[reg=facet]

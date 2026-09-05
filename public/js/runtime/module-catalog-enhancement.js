@@ -987,7 +987,15 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'attention-pinch-scale',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.INTERACTION,
+    // Was MOUNT_WHEN.INTERACTION: the loader's own interaction listener
+    // (touchstart/pointerdown/keydown) is what imports this module, and that
+    // import is async — so the very touchstart that starts a two-finger pinch
+    // is never seen by this module's own touchstart handler, and the first
+    // pinch on a fresh page always failed silently. IDLE matches the rest of
+    // the attention/ family (reading-groove, scroll-cadence, section-handle)
+    // and attaches listeners before a gesture is attempted instead of because
+    // of one. See .spw/audits/pointer-device-detection-2026-09.spw.
+    when: MOUNT_WHEN.IDLE,
     costClass: COST_CLASS.DEMAND_COUPLED,
     selector: 'main',
     rootMode: 'single',
@@ -1001,7 +1009,8 @@ export const ENHANCEMENT_DEFS = [
       'measure:--spw-pinch-origin-x',
       'measure:--spw-pinch-origin-y',
     ],
-    timingArc: 'interaction-attention',
+    timingArc: 'idle-attention',
+    timingChunk: 'idle-residue',
     effectScope: 'conditional-touch-listeners root-css-vars settings-api',
     evaluates: 'multi-touch text scale direction device posture',
     load: () => import('./attention/pinch-scale.js'),

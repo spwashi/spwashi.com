@@ -98,6 +98,22 @@ function collectHandles(root = document) {
   return [...handles];
 }
 
+/* A handle can be a whole landmark (header[data-spw-header-annotation]), not
+   just a dedicated button. pointerdown/click bubble, so a press or click on
+   any real control nested inside that landmark — a nav link, the menu
+   toggle — reaches this handler too, with currentTarget the landmark and
+   target the nested control. Only the landmark's own surface (or a handle
+   that IS the clicked element, e.g. button.header-annotation) is this
+   feature's business; a distinct interactive descendant is not, and must be
+   left alone so its own default action (navigation, its own click handler)
+   still runs. Without this guard every click bubbling up through an
+   annotated header called preventDefault() and ate the nav. */
+function isOwnAffordanceTarget(handle, target) {
+  if (!(target instanceof Element) || target === handle) return true;
+  const interactive = target.closest('a[href], button, input, select, textarea, [role="button"], [contenteditable="true"]');
+  return !interactive || interactive === handle;
+}
+
 function scoreRegion(region, annotation, activeSectionId = '') {
   const tokens = readRegionTokens(region);
   let score = tokens.includes(annotation) ? 4 : 0;
@@ -294,6 +310,7 @@ export function initSpwAnnotationLayer(ctx = {}) {
 
   const onPointerDown = (event) => {
     const handle = event.currentTarget;
+    if (!isOwnAffordanceTarget(handle, event.target)) return;
     clearHoldTimer();
     holdTimer = window.setTimeout(() => {
       apply(handle, 'pinned', 'hold');
@@ -306,8 +323,9 @@ export function initSpwAnnotationLayer(ctx = {}) {
   };
 
   const onClick = (event) => {
-    event.preventDefault();
     const handle = event.currentTarget;
+    if (!isOwnAffordanceTarget(handle, event.target)) return;
+    event.preventDefault();
     if (activeHandle === handle && currentSnapshot?.state === 'pinned') {
       release('click-release');
       return;
@@ -322,6 +340,7 @@ export function initSpwAnnotationLayer(ctx = {}) {
       return;
     }
     if ((event.key === 'Enter' || event.key === ' ') && !event.repeat) {
+      if (!isOwnAffordanceTarget(event.currentTarget, event.target)) return;
       event.preventDefault();
       onClick(event);
     }
