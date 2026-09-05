@@ -545,8 +545,41 @@ function ensureBottomLaneListeners() {
   globalThis.window.addEventListener('scroll', resync, { passive: true });
 }
 
-function isMobileBottomLane() {
+/* The one canonical answer to "is this a small/coarse-pointer viewport",
+   shared instead of re-authored — layout-assumptions.js, region-menu.js, and
+   state-inspector.js each used to carry their own copy of this exact query
+   string. See .spw/audits/pointer-device-detection-2026-09.spw. */
+export function isMobileBottomLane() {
   return globalThis.matchMedia?.(BOTTOM_LANE_MOBILE_QUERY)?.matches ?? false;
+}
+
+/* The shared answer to "does the primary pointer both hover and resolve
+   finely" — resonance-probe.js and interaction-progression.js each carried
+   their own copy of this exact query. Takes a view (not just reads
+   globalThis) so a root in another document/defaultView still resolves
+   against its own window, not the top-level one. */
+export function supportsFinePointerHover(view = globalThis) {
+  return view?.matchMedia?.('(hover: hover) and (pointer: fine)')?.matches === true;
+}
+
+/* The two single-axis environment reads underneath contextual-ui.js,
+   shell-disclosure.js, and svg-tunability.js's own pointer/hover
+   classifiers — each authored the same '(pointer: coarse)' / '(hover:
+   hover)' queries independently and combined them into a three-way token
+   with its own vocabulary and precedence. Sharing these two booleans lets
+   each caller keep its own output tokens (coarse/fine, hover/touch,
+   hoverless/coarse/fine, ...) without re-typing the query. Named to match
+   image-metaphysics.js's existing isCoarsePointerEnvironment rather than
+   adding a third naming style; that file and the *Event(event) variants in
+   region-menu.js/brace-gestures.js (per-interaction pointerType, not an
+   environment query) are a separate consolidation, out of scope here — see
+   .spw/audits/pointer-device-detection-2026-09.spw. */
+export function isCoarsePointerEnvironment(view = globalThis) {
+  return view?.matchMedia?.('(pointer: coarse)')?.matches === true;
+}
+
+export function supportsHoverEnvironment(view = globalThis) {
+  return view?.matchMedia?.('(hover: hover)')?.matches === true;
 }
 
 /**

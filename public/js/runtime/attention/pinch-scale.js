@@ -42,6 +42,12 @@ function isPinchTextScaleEnabled(doc = document) {
   return getRootPreference('spwPinchTextScale', 'on', doc) !== 'off';
 }
 
+/* Deliberately any-pointer, not the plain pointer/hover check most of the
+   runtime uses elsewhere (see dom-contracts.js isMobileBottomLane /
+   supportsFinePointerHover): a touchscreen laptop reports pointer:fine
+   because the mouse is primary, but any-pointer:coarse still holds because a
+   coarse pointer is available at all — exactly the device a two-finger
+   pinch needs to reach. Do not "fix" this to match the majority pattern. */
 export function supportsPinchTextScaleInput(environment = globalThis) {
   const touchPoints = Number(environment.navigator?.maxTouchPoints) || 0;
   const coarsePointer = environment.matchMedia?.('(any-pointer: coarse)').matches === true;

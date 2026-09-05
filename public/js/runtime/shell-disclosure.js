@@ -1,6 +1,8 @@
 import { emitSpwAction } from '/public/js/kernel/shared.js';
 import {
+  isCoarsePointerEnvironment,
   removeDatasetValues,
+  supportsHoverEnvironment,
   syncFloatingChromeState,
   writeDatasetValues,
   writeDatasetValue,
@@ -131,13 +133,11 @@ function getViewportTier(width = window.innerWidth, config = DEFAULTS) {
 }
 
 function getPointerMode() {
-  if (window.matchMedia('(pointer: coarse)').matches) return 'coarse';
-  return 'fine';
+  return isCoarsePointerEnvironment(window) ? 'coarse' : 'fine';
 }
 
 function getHoverMode() {
-  if (window.matchMedia('(hover: hover)').matches) return 'hover';
-  return 'touch';
+  return supportsHoverEnvironment(window) ? 'hover' : 'touch';
 }
 
 function syncDeviceContext(state) {
@@ -616,7 +616,7 @@ function syncScrollState(header, state, nextScrollY = getScrollY()) {
 
 function isCoarsePointerMode() {
   return document.documentElement.dataset.spwPointerMode === 'coarse'
-    || window.matchMedia?.('(pointer: coarse)')?.matches === true;
+    || isCoarsePointerEnvironment(window);
 }
 
 function describeToggleState(snapshot) {

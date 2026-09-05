@@ -39,7 +39,9 @@ import {
   writeTuningAttributes,
 } from '../kernel/instrumentation.js';
 import {
+  isCoarsePointerEnvironment,
   removeDatasetValues,
+  supportsHoverEnvironment,
   writeDatasetValues,
   writeStyleValue,
 } from '../kernel/dom-contracts.js';
@@ -664,8 +666,8 @@ const clearPointerHost = (host) => {
 
 const getDeviceMode = () => {
   if (typeof window === 'undefined' || !window.matchMedia) return 'fine';
-  if (window.matchMedia('(hover: none)').matches) return 'hoverless';
-  if (window.matchMedia('(pointer: coarse)').matches) return 'coarse';
+  if (!supportsHoverEnvironment(window)) return 'hoverless';
+  if (isCoarsePointerEnvironment(window)) return 'coarse';
   return 'fine';
 };
 

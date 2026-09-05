@@ -1,5 +1,6 @@
 import {
   annotateFloatingChromeElement,
+  isMobileBottomLane,
   syncFloatingChromeState,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
@@ -197,11 +198,11 @@ function getFloatingChromeBottomReserve() {
 }
 
 function shouldSnapSatchelOnRelease() {
-  return window.matchMedia('(max-width: 720px), (pointer: coarse)').matches;
+  return isMobileBottomLane();
 }
 
 function isMobileSatchelViewport() {
-  return window.matchMedia('(max-width: 720px), (pointer: coarse)').matches;
+  return isMobileBottomLane();
 }
 
 function clearSatchelInlinePosition(root) {

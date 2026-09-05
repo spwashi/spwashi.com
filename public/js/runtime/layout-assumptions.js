@@ -6,6 +6,7 @@
  */
 
 import {
+  isMobileBottomLane,
   syncFloatingChromeState,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
@@ -17,7 +18,6 @@ const logger = createSpwLogger('spw-layout-assumptions', {
   metaphor: 'surveyor-pass',
 });
 
-const MOBILE_QUERY = '(max-width: 720px), (pointer: coarse)';
 const OVERLAP_GUTTER_PX = 6;
 const CLEARANCE_TOLERANCE_PX = 18;
 
@@ -49,10 +49,6 @@ export const SPW_LAYOUT_ASSUMPTIONS_CONTRACT = Object.freeze({
 });
 
 let lastReport = null;
-
-function isMobileViewport() {
-  return globalThis.matchMedia?.(MOBILE_QUERY)?.matches ?? false;
-}
 
 function rectsOverlap(a, b, gutter = OVERLAP_GUTTER_PX) {
   if (!a || !b) return false;
@@ -161,7 +157,7 @@ function runAlignmentChecks(ctx, doc) {
   }
 
   const { handle, launch, inspector } = findTravelRowNodes(doc);
-  if (isMobileViewport() && handle && launch) {
+  if (isMobileBottomLane() && handle && launch) {
     const handleRect = handle.getBoundingClientRect();
     const launchRect = launch.getBoundingClientRect();
     if (rectsOverlap(handleRect, launchRect)) {

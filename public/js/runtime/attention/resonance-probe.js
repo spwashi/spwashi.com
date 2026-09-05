@@ -1,4 +1,5 @@
 import { getOperatorDefinition } from '/public/js/kernel/operator-detection.js';
+import { supportsFinePointerHover } from '/public/js/kernel/dom-contracts.js';
 import {
   PROBE_ATTR,
   PROBE_TARGET_SELECTOR,
@@ -40,7 +41,7 @@ export function initResonanceProbe(root) {
   if (!root?.addEventListener) return () => {};
   const doc = root.ownerDocument || document;
   const html = doc.documentElement;
-  const hoverCapable = doc.defaultView?.matchMedia?.('(hover: hover) and (pointer: fine)').matches === true;
+  const hoverCapable = supportsFinePointerHover(doc.defaultView);
   let probeFocus = null;
   let probeHover = null;
   let hoverTimer = 0;

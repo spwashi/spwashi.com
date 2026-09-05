@@ -1,5 +1,6 @@
 import {
   annotateFloatingChromeElement,
+  isMobileBottomLane,
   positionFloatingChromePopover,
   syncFloatingChromeState,
   writeDatasetValue,
@@ -776,7 +777,7 @@ function getRegionMenuBottomReserve() {
 }
 
 function isCompactRegionViewport() {
-  return window.matchMedia('(max-width: 720px), (pointer: coarse)').matches;
+  return isMobileBottomLane();
 }
 
 function positionMenu(menu, target) {

@@ -18,6 +18,8 @@
 import {
   MODULE_SELECTOR,
   inferTopographyKind,
+  isCoarsePointerEnvironment,
+  supportsHoverEnvironment,
   writeDatasetValue,
   writeDatasetValueIfMissing,
   writeStyleValue,
@@ -373,8 +375,7 @@ function computeViewportTier(width = window.innerWidth) {
 }
 
 function computePointerMode() {
-  if (window.matchMedia('(pointer: coarse)').matches) return 'coarse';
-  return 'fine';
+  return isCoarsePointerEnvironment(window) ? 'coarse' : 'fine';
 }
 
 function layoutReasonForTier(tier = 'regular') {
@@ -386,7 +387,7 @@ function layoutReasonForTier(tier = 'regular') {
 function applyDeviceContext() {
   const tier = computeViewportTier(window.innerWidth);
   const pointer = computePointerMode();
-  const hover = window.matchMedia('(hover: hover)').matches ? 'hover' : 'touch';
+  const hover = supportsHoverEnvironment(window) ? 'hover' : 'touch';
   const reason = layoutReasonForTier(tier);
 
   writeDatasetValue(HTML, 'spwViewportTier', tier);

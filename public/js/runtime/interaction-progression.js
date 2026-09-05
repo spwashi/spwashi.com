@@ -6,6 +6,7 @@
  */
 
 import { bus } from '../kernel/bus.js';
+import { supportsFinePointerHover } from '../kernel/dom-contracts.js';
 import { bindInteractionHops, readHopHash } from './interaction-hops.js';
 import {
   GESTURE_TARGET_SELECTOR,
@@ -111,7 +112,7 @@ export function initInteractionProgression(root = document) {
   if (!html) return () => {};
   const controller = new AbortController();
   const { signal } = controller;
-  const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const supportsHover = supportsFinePointerHover(window);
 
   writePhase(html, 'idle', { source: 'boot', force: true });
   const hops = bindInteractionHops({ html, root, writePhase, signal });

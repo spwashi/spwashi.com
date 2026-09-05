@@ -36,8 +36,9 @@ audit_run: .{
 
 ^"thesis"{
   claim: "Three device questions repeat across the runtime with no shared answer: (1) is the primary pointer coarse, (2) is any available pointer coarse (multi-input laptops), (3) does the device support hover. Each file re-derives its own answer inline instead of importing one."
-  expected: "One module (naturally kernel/dom-contracts.js, since that is where BOTTOM_LANE_MOBILE_QUERY already lives) exports named predicates — isCoarsePrimaryPointer(), isAnyCoarsePointer(), supportsHover() — and every listener-attaching module imports from it."
-  risk: "A future change to the mobile threshold, or to what counts as 'coarse', has to be hunted down through free-text matchMedia strings in 13+ files instead of one export. Two files (svg-tunability.js, shell-disclosure.js, contextual-ui.js) already disagree on the label vocabulary for the same three-way split (hover/touch vs hover/hoverless/coarse)."
+  expected: "One module (kernel/dom-contracts.js, since that is where BOTTOM_LANE_MOBILE_QUERY already lived) exports named predicates and every listener-attaching module imports from it."
+  landed_2026_09_05: "dom-contracts.js now exports isMobileBottomLane(), isCoarsePointerEnvironment(view), supportsHoverEnvironment(view), and supportsFinePointerHover(view) — four exports rather than the three guessed above, because the (any-pointer: coarse) case (f4) stayed a documented one-off in pinch-scale.js rather than becoming a fifth shared export; it answers a genuinely different question (is any pointer coarse, not the primary one) with exactly one caller. contextual-ui.js, shell-disclosure.js, and svg-tunability.js still each return their own three-way vocabulary (f2's fix) — that part of the risk below is intentionally unresolved, just no longer duplicated at the matchMedia layer."
+  risk: "f6 names what remains: isCoarsePointer/isCoarsePointerEvent/isCoarsePointerMode/isCoarsePointerEnvironment still exist as separate local names in haptics.js, region-menu.js, brace-gestures.js, shell-disclosure.js, texture-slice.js, and image-metaphysics.js, not yet migrated onto the shared exports."
 }[reg=facet]
 
 ^"census"{
@@ -57,28 +58,38 @@ audit_run: .{
 ^"findings"{
   f1_mobile_query_quadruplicated {
     severity = "medium"
+    resolved = "2026-09-05"
     claim = `The exact string '(max-width: 720px), (pointer: coarse)' is typed out independently in dom-contracts.js, layout-assumptions.js, region-menu.js, and twice in state-inspector.js. dom-contracts.js is the one that names it (BOTTOM_LANE_MOBILE_QUERY) but does not export it.`
     evidence = `rg "(max-width: 720px), (pointer: coarse)" public/js -l → 4 files, 5 sites`
-    next = `Export BOTTOM_LANE_MOBILE_QUERY from dom-contracts.js; import it in the other three call sites. Pure string dedup, no behavior change.`
+    fix = `Exported isMobileBottomLane() from dom-contracts.js. layout-assumptions.js's local MOBILE_QUERY/isMobileViewport() removed in favor of it; region-menu.js's isCompactRegionViewport() and state-inspector.js's shouldSnapSatchelOnRelease()/isMobileSatchelViewport() now delegate to it instead of re-authoring the literal. Pure string dedup — every call site kept its own name, only the query moved.`
   }
   f2_three_way_classifier_vocabulary_drift {
     severity = "medium"
+    resolved = "2026-09-05"
     ids = #[`contextual-ui`, `svg-tunability`, `shell-disclosure`][reg=set]
     claim = `Three files each write their own if-coarse/if-hover cascade to classify the pointer environment into a string, and land on different label sets for the same three physical cases (fine+hover, coarse+no-hover, everything else).`
     evidence = `contextual-ui.js:376,389 returns 'coarse' | 'hover' | 'touch'; svg-tunability.js:667-668 returns 'hoverless' | 'coarse' | unnamed; shell-disclosure.js:134,139 returns 'coarse' | 'hover' | unnamed.`
-    next = `Not urgent to unify the output vocabulary (each caller's labels feed different data-spw-* attributes with their own downstream CSS). Urgent enough to name once: a shared classifyPointerEnvironment() in dom-contracts.js that returns a stable three-way token, with each caller mapping that token to its own attribute vocabulary if it must differ.`
+    fix = `Exported the two single-axis booleans instead of one combined three-way classifier — isCoarsePointerEnvironment(view) and supportsHoverEnvironment(view) in dom-contracts.js — so each file keeps its own output vocabulary and precedence exactly as before (svg-tunability.js still checks hover first, then coarse) while the underlying matchMedia calls are shared. Named isCoarsePointerEnvironment to match the existing (untouched) image-metaphysics.js helper of the same name rather than adding a third naming style. Zero behavior change; verified each caller's three-way output is identical pre/post via read-through, not just node --check.`
   }
   f3_fine_hover_combo_duplicated {
     severity = "low"
+    resolved = "2026-09-05"
     claim = `resonance-probe.js and interaction-progression.js both hardcode '(hover: hover) and (pointer: fine)' rather than sharing a supportsHover() / isFinePointer() predicate.`
     evidence = `resonance-probe.js:43, interaction-progression.js:114 — identical query string, no shared import.`
-    next = `Fold into the same dom-contracts.js export as f1/f2 when that lands. Not worth a standalone patch.`
+    fix = `Exported supportsFinePointerHover(view) from dom-contracts.js, accepting a view so resonance-probe.js (which resolves against doc.defaultView, not always the top window) keeps that behavior; interaction-progression.js passes window.`
   }
   f4_any_pointer_undocumented_divergence {
     severity = "info"
+    resolved = "2026-09-05"
     claim = `pinch-scale.js is the only module answering "is a coarse pointer available at all" (any-pointer) instead of "is the primary pointer coarse" (pointer) — correct for a multi-touch gesture that should still fire on a touchscreen laptop with a mouse as primary input, but nothing marks this as deliberate.`
     evidence = `pinch-scale.js:47 supportsPinchTextScaleInput() — 'matchMedia(any-pointer: coarse)' combined with 'navigator.maxTouchPoints >= 2'.`
-    next = `Leave the code as-is; add one code comment at the definition noting why any-pointer (not pointer) is correct here, so a future pass does not "fix" it into the majority pattern and silently break pinch-scale on touchscreen laptops.`
+    fix = `Added the code comment at the definition, per this finding's own next=.`
+  }
+  f6_broader_duplication_footprint_deferred {
+    severity = "info"
+    claim = `Wiring f1-f3 surfaced a wider footprint than this audit's original census: isCoarsePointer/isCoarsePointerEvent/isCoarsePointerMode/isCoarsePointerEnvironment each exist as separate local names across haptics.js, region-menu.js, brace-gestures.js, shell-disclosure.js, texture-slice.js, and image-metaphysics.js. Two genuinely different concepts share near-identical names: an environment query (is the device's primary pointer coarse, right now) vs. a per-event check (was THIS pointer/touch event's pointerType coarse) — region-menu.js's isCoarsePointer(event) and brace-gestures.js's isCoarsePointerEvent(event) are the event-based family; the rest are environment-based.`
+    evidence = `rg 'function isCoarsePointer' public/js -n → 4 distinct local definitions (haptics.js:121, region-menu.js:1090, texture-slice.js:78, shell-disclosure.js:617 as isCoarsePointerMode) plus isCoarsePointerEvent (brace-gestures.js:1116) and isCoarsePointerEnvironment (image-metaphysics.js:112, pre-existing, not written by this session).`
+    next = `Not fixed in this pass — deliberately out of scope. Consolidating the environment-based family (haptics.js, texture-slice.js, shell-disclosure.js's isCoarsePointerMode, image-metaphysics.js) onto the new isCoarsePointerEnvironment/supportsHoverEnvironment exports is safe mechanical follow-up. Consolidating the two event-based functions (region-menu.js, brace-gestures.js) is a separate, smaller task — they already agree in shape (check event.pointerType) and could share one export, but neither this file's care nor session verified their exact pointerType semantics are identical, so that one needs its own read-through before merging.`
   }
   f5_pinch_scale_never_saw_its_own_gesture {
     severity = "high"
@@ -110,5 +121,6 @@ audit_run: .{
 
 ^"validation"{
   command = `rg "pointer: coarse|any-pointer|hover: hover|hover: none|ontouchstart|maxTouchPoints" public/js --glob '*.js' -l`
-  falsification = `A shared dom-contracts.js predicate exists and one of the 13 files above still authors its own matchMedia literal instead of importing it.`
+  ran_2026_09_05 = `node --check on all 11 touched files; npm run check:local (246/246); npm run check:runtime; npm run audit:module-selectors (124-host census unchanged); npx tsc --noEmit; git diff --check — all clean`
+  falsification = `A shared dom-contracts.js predicate exists (isMobileBottomLane, isCoarsePointerEnvironment, supportsHoverEnvironment, supportsFinePointerHover) and layout-assumptions.js, region-menu.js, state-inspector.js, contextual-ui.js, shell-disclosure.js, svg-tunability.js, resonance-probe.js, or interaction-progression.js still authors its own matchMedia literal instead of calling it. f6's six remaining files (haptics.js, brace-gestures.js, texture-slice.js, image-metaphysics.js, plus the two isCoarsePointer(event) sites) are not covered by this falsification — they are the deferred scope.`
 }[reg=facet]
