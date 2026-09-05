@@ -1,0 +1,101 @@
+# Module Selector Specificity and HTML Depth (2026-09-04)
+#
+# operation: audit
+# Start from MODULE_DEFS.selector, then measure specificity, combinator
+# depth, and host nesting on public index.html routes.
+
+#>module_selector_depth_2026_09
+#:audit #!runtime #!modules #!selectors #!html #!specificity
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@module_ecology_kinship: ~"./module-ecology-kinship-2026-09.spw"
+@javascript_module_census: ~"./javascript-module-census-2026-07.spw"
+@css_specificity_pe: ~"./css-specificity-pe-2026-07/index.spw"
+@html_component_audit: ~"./html-component-audit-2026-07.spw"
+@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@region_selector: ~"../../public/js/runtime/module-catalog-constants.js"
+@audit_script: ~"../../scripts/module-selector-depth-audit.mjs"
+@css_instruction: ~"../conventions/css-instruction.spw"
+
+operation = "audit"
+fixity = "tending"
+
+audit_run: .{
+  at = `2026-09-04`
+  catalog = `113 MODULE_DEFS`
+  routes = `124 public index.html (design/, dist/, public/ skipped)`
+  method = `npm run audit:module-selectors — parse catalog selectors, W3C specificity, combinator count, tokenize route HTML, match hosts`
+  posture = `Start from modules, not from CSS files. Schedule gates (route/features) are not applied; this is host coverage of the selector string.`
+}[reg=facet]
+
+^"thesis"{
+  claim: "A module's selector is a depth claim. Combinators assume sibling/child shape. Public routes wrap frames in cluster divs and renamed .site-frame to .spw-frame, so catalog queries that still speak the old noun or demand siblings miss the room they were written for."
+  expected: "Mount queries use the same nouns as CORE_COMPONENT_SELECTORS (.spw-frame, data-spw-kind) and do not need a descendant combinator to find a seat."
+  risk: "Idle navigator chrome, region rail kin, and similar enhancements look scheduled (features/when) but never find a host."
+}[reg=facet]
+
+^"census"{
+  gated = 105
+  no_selector = 8
+  orphan_selectors = 14
+  legacy_site_frame = 6
+  combinator_ge_2 = 5
+  html_body_main = 21
+  module_hosts_depth_ge_10 = 40
+  deepest_route = `/topics/software/ depth 15, 1082 elements`
+  typical_spec = `(0,1,0) class or attribute — catalog queries are not the CSS cascade problem`
+  css_where = `:where() lives in CSS layers, not in MODULE_DEFS.selector. JS querySelector specificity is almost all (0,1,0) or (0,0,1).`
+}[reg=facet]
+
+^"findings"{
+  f1_site_frame_noun {
+    severity = "high"
+    ids = #[`frame-navigator`, `page-region-rail`, `region-enhancer`, `component-collection`, `reward-ui`, `variant-selection`][reg=set]
+    claim = `Six catalog selectors still name .site-frame. Public routes author .spw-frame + data-spw-kind=frame. kernel/dom-contracts CORE_COMPONENT_SELECTORS already lists .spw-frame first.`
+    evidence = `frame-navigator selector is only .site-frame → 0 hosts / 0 hits on 124 routes. region-enhancer / collection / reward keep matching because they also list [data-spw-kind=frame] (2896 hits). variant-selection still matches 55 routes via .frame-card and data-spw-feature, not via .site-frame.`
+    next = `Alias .spw-frame beside .site-frame in REGION_SELECTOR and frame-navigator. Do not delete .site-frame until design/experiments beds move.`
+  }
+  f2_sibling_combinator_vs_cluster_wrap {
+    severity = "high"
+    id = `page-region-rail`
+    spec = `(0,2,1)`
+    combinators = 2
+    claim = `main .site-frame ~ .site-frame and main [data-spw-region-role] ~ [data-spw-region-role] require sibling seats under a shared parent. Cluster wrappers (div[data-spw-cluster]) put frames at depth 5+ as cousins, not siblings.`
+    evidence = `1 host route, 8 hits, depth 5–5. Curriculum/software/about hooks are wrapped; the rail does not see the second seat.`
+    next = `Prefer main .spw-frame + main [data-spw-region-role] (descendant, combinator depth 1) or query seats from region-enhancer receipts. Do not factorial route × region selectors.`
+  }
+  f3_main_as_feature_host {
+    severity = "medium"
+    ids = #[`settings-page`, `rpg-wednesday`][reg=set]
+    claim = `Selector strings include main, so HTML matching reports 124/124 routes. Mount is actually route-gated (settings, rpg-wednesday + rpg-gameplay). The selector overstates blast; the schedule is honest.`
+    evidence = `settings-page "[data-spw-surface=settings], main" → 125 hits. rpg-wednesday "main" + route/features. Audit must not treat selector orphans and selector floods as the same class of bug.`
+    next = `Drop the main fallback from settings-page; keep the surface attribute. rpg-wednesday can stay main on its gated route.`
+  }
+  f4_operator_depth {
+    severity = "medium"
+    claim = `Chip/sigil/gesture modules ride HTML depth, they do not create it. Software is the deepest public tree (15). Hosts at d14–15 are .frame-sigil / [data-spw-operator] / living terms, not new wrappers invented by JS.`
+    evidence = `brace-physics, sigil-anatomy, charge-field, gesture-anatomy, operators, haptics, concept-salience, navigation-spells max host depth 14–15 on /topics/software/. attention-reading-groove hits 4299 p/li nodes at d5–13 — combinator depth 2, type specificity (0,0,3).`
+    next = `Do not flatten software HTML to make chips shallower. If a module needs the frame, select the frame ([data-spw-kind=frame], .spw-frame), not every sigil inside it.`
+  }
+  f5_specificity_is_not_the_race {
+    severity = "info"
+    claim = `Catalog selectors are low-specificity on purpose. The 2026-07 PE audit's :where() vs handles-layer race is CSS cascade, not querySelector. JS will match .spw-frame at (0,1,0) even when CSS :where(.spw-frame) loses to a later attribute rule.`
+    evidence = `Highest catalog specs: pretext-physics (0,3,0), navigation-spells / attention-section-handle (0,2,2), page-region-rail (0,2,1). No catalog selector uses :where. html/body modules are (0,0,1).`
+    next = `Keep CSS in :where() + layers. Fix catalog nouns and combinators, not specificity inflation.`
+  }
+}[reg=facet]
+
+^"orphans"{
+  lab_or_opt_in = #[`design-experiments`, `design-review-surfaces`, `dom-probes`, `annotation-layer`, `bare-spw-markup`, `local-memory-controls`, `electromagnetic-containers`, `logo-runtime`, `narrative-instrumentation`, `brace-pivots`, `spw-hero-kinetic-stage`][reg=set]
+  missing_public_host = #[`frame-navigator`, `home-section-index`, `media-cauldron`][reg=set]
+  note = `Lab orphans are allowed. frame-navigator is not — it is feature-gated navigator chrome with no public class to bind.`
+}[reg=facet]
+
+^"validation"{
+  command = `npm run audit:module-selectors`
+  tests = `scripts/tests/module-selector-audit.test.mjs`
+  falsification = `frame-navigator hosts > 0 on /topics/software/ while selector remains only .site-frame; or page-region-rail hosts stay 1 after seats are sibling under main.`
+}[reg=facet]

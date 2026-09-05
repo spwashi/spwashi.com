@@ -40,6 +40,7 @@
 @html_component_audit: ~"./html-component-audit-2026-07.spw"
 @module_impact_audit: ~"./module-impact-audit-2026-07.spw"
 @module_ecology_kinship: ~"./module-ecology-kinship-2026-09.spw"
+@module_selector_depth: ~"./module-selector-depth-2026-09.spw"
 @component_anatomy_theme_module: ~"./component-anatomy-theme-module-2026-07.spw"
 @module_granularity_lifecycle: ~"./module-granularity-lifecycle-2026-07/index.spw"
 @layout_qa_measurement: ~"./layout-qa-measurement-2026-07/index.spw"
@@ -68,6 +69,7 @@ fixity = "tending"
     html_component_audit = ~"./html-component-audit-2026-07.spw"
     module_impact_audit = ~"./module-impact-audit-2026-07.spw"
     module_ecology_kinship = ~"./module-ecology-kinship-2026-09.spw"
+    module_selector_depth = ~"./module-selector-depth-2026-09.spw"
     component_anatomy_theme_module = ~"./component-anatomy-theme-module-2026-07.spw"
     component_anatomy_device_packing = ~"./component-anatomy-device-packing-2026-07.spw"
     component_philosophy_harmony = ~"./component-philosophy-harmony-2026-07.spw"
@@ -194,7 +196,9 @@ fixity = "tending"
     @module_granularity_lifecycle,
     @build_runtime_performance,
     @alignment_shell_lifecycle,
-    @javascript_module_census
+    @javascript_module_census,
+    @module_ecology_kinship,
+    @module_selector_depth
   >[reg=stream]
 
   page_memory_features = ?<
