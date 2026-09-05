@@ -80,7 +80,7 @@ export const ENHANCEMENT_DEFS = [
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.VISIBLE,
     costClass: COST_CLASS.DEMAND_COUPLED,
-    selector: 'main .site-frame ~ .site-frame, main [data-spw-region-role] ~ [data-spw-region-role]',
+    selector: 'main .spw-frame, main [data-spw-region-role]',
     rootMode: 'single',
     describes: 'rail[region-index]{desktop.kin.similar.contrast.resonate}',
     updates: [
@@ -230,7 +230,7 @@ export const ENHANCEMENT_DEFS = [
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
     features: ['navigator'],
-    selector: '.site-frame',
+    selector: '.spw-frame, .site-frame',
     rootMode: 'single',
     describes: 'surface-map[frames|routes] keyboard-spells[g|traverse|filter] navigator chrome',
     updates: [

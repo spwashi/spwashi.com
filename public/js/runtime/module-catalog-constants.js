@@ -228,6 +228,7 @@ export const PRETEXT_LIVE_SELECTOR =
  * Duplicated here so catalog families stay Node-importable without the bus/DOM chain.
  */
 export const REGION_SELECTOR = [
+  '.spw-frame',
   '.site-frame',
   '[data-spw-kind="frame"]',
   '[data-spw-kind="panel"]',

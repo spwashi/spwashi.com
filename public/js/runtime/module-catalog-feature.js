@@ -149,7 +149,7 @@ export const FEATURE_DEFS = [
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,
     route: 'settings',
-    selector: '[data-spw-surface="settings"], main',
+    selector: '[data-spw-surface="settings"]',
     describes: 'settings[form|preset|deviation-register] local defaults UI',
     evaluates: 'settings form presets deviation-register local defaults',
     timingArc: 'visible-settings',

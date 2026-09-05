@@ -44,6 +44,7 @@ audit_run: .{
   legacy_site_frame = 6
   combinator_ge_2 = 5
   html_body_main = 21
+  census_at_2026_09_04_resolution = `orphan_selectors 14 -> 13 (frame-navigator matched); legacy_site_frame count unchanged at 6 by design — .spw-frame was added beside .site-frame, not swapped, so the alias still reads as legacy until design/experiments beds move; combinator_ge_2 5 -> 4 (page-region-rail dropped its sibling combinator). See f1/f2/f3 resolved fields.`
   module_hosts_depth_ge_10 = 40
   deepest_route = `/topics/software/ depth 15, 1082 elements`
   typical_spec = `(0,1,0) class or attribute — catalog queries are not the CSS cascade problem`
@@ -57,6 +58,7 @@ audit_run: .{
     claim = `Six catalog selectors still name .site-frame. Public routes author .spw-frame + data-spw-kind=frame. kernel/dom-contracts CORE_COMPONENT_SELECTORS already lists .spw-frame first.`
     evidence = `frame-navigator selector is only .site-frame → 0 hosts / 0 hits on 124 routes. region-enhancer / collection / reward keep matching because they also list [data-spw-kind=frame] (2896 hits). variant-selection still matches 55 routes via .frame-card and data-spw-feature, not via .site-frame.`
     next = `Alias .spw-frame beside .site-frame in REGION_SELECTOR and frame-navigator. Do not delete .site-frame until design/experiments beds move.`
+    resolved = `2026-09-04 — .spw-frame added beside .site-frame in REGION_SELECTOR (module-catalog-constants.js) and frame-navigator's selector (module-catalog-enhancement.js). frame-navigator: 0/0 → 124 hosts/695 hits. .site-frame kept for design/experiments beds, unresolved for the other five ids since their [data-spw-kind=frame]/.frame-card branches already carried the real match.`
   }
   f2_sibling_combinator_vs_cluster_wrap {
     severity = "high"
@@ -66,6 +68,7 @@ audit_run: .{
     claim = `main .site-frame ~ .site-frame and main [data-spw-region-role] ~ [data-spw-region-role] require sibling seats under a shared parent. Cluster wrappers (div[data-spw-cluster]) put frames at depth 5+ as cousins, not siblings.`
     evidence = `1 host route, 8 hits, depth 5–5. Curriculum/software/about hooks are wrapped; the rail does not see the second seat.`
     next = `Prefer main .spw-frame + main [data-spw-region-role] (descendant, combinator depth 1) or query seats from region-enhancer receipts. Do not factorial route × region selectors.`
+    resolved = `2026-09-04 — catalog selector simplified to 'main .spw-frame, main [data-spw-region-role]' (combinator depth 2 → 1). The sibling-count business rule was never this selector's to enforce: page-region-rail.js's own collectRegions() already walks main via collectRoleRegions, excludes cousins nested under a further REGION_SELECTOR ancestor, and refreshPageRegionRail() bails under MIN_REGIONS before rendering. The catalog string only gates whether the loader attempts a mount; 1 host/8 hits → 124 hosts/699 hits.`
   }
   f3_main_as_feature_host {
     severity = "medium"
@@ -73,6 +76,7 @@ audit_run: .{
     claim = `Selector strings include main, so HTML matching reports 124/124 routes. Mount is actually route-gated (settings, rpg-wednesday + rpg-gameplay). The selector overstates blast; the schedule is honest.`
     evidence = `settings-page "[data-spw-surface=settings], main" → 125 hits. rpg-wednesday "main" + route/features. Audit must not treat selector orphans and selector floods as the same class of bug.`
     next = `Drop the main fallback from settings-page; keep the surface attribute. rpg-wednesday can stay main on its gated route.`
+    resolved = `2026-09-04 — settings-page selector dropped to '[data-spw-surface="settings"]' alone. 125 hits (main catch-all counted every route) → 1 host/1 hit, the honest count for a route-gated module. rpg-wednesday left unchanged per the note.`
   }
   f4_operator_depth {
     severity = "medium"
@@ -90,12 +94,13 @@ audit_run: .{
 
 ^"orphans"{
   lab_or_opt_in = #[`design-experiments`, `design-review-surfaces`, `dom-probes`, `annotation-layer`, `bare-spw-markup`, `local-memory-controls`, `electromagnetic-containers`, `logo-runtime`, `narrative-instrumentation`, `brace-pivots`, `spw-hero-kinetic-stage`][reg=set]
-  missing_public_host = #[`frame-navigator`, `home-section-index`, `media-cauldron`][reg=set]
-  note = `Lab orphans are allowed. frame-navigator is not — it is feature-gated navigator chrome with no public class to bind.`
+  missing_public_host = #[`home-section-index`, `media-cauldron`][reg=set]
+  note = `Lab orphans are allowed. frame-navigator resolved 2026-09-04 (see f1_site_frame_noun). home-section-index and media-cauldron remain, and are two different shapes of the same not-a-selector-bug: [data-media-cauldron] is authored in _partials/media-cauldron.html, a partial no live route/index.html currently includes. [data-home-section-index] (public/js/modules/home/section-index.js) has no host anywhere in the tree, partials included — the module ships and never finds its element on any route. Neither is a stale-noun rename; both are features awaiting markup. Wiring the partial in, or retiring the unbound module, is a separate slice from this audit.`
 }[reg=facet]
 
 ^"validation"{
   command = `npm run audit:module-selectors`
   tests = `scripts/tests/module-selector-audit.test.mjs`
   falsification = `frame-navigator hosts > 0 on /topics/software/ while selector remains only .site-frame; or page-region-rail hosts stay 1 after seats are sibling under main.`
+  resolved_2026_09_04 = `Both original falsification conditions were true before the fix (frame-navigator: 0 hosts; page-region-rail: 1 host, combinator depth 2) and are false after it (124 hosts each). New falsification for the current state: frame-navigator or page-region-rail hosts regress to 0/1 on a re-run of npm run audit:module-selectors without a corresponding selector change recorded here.`
 }[reg=facet]
