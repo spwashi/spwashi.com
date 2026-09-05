@@ -35,6 +35,8 @@ description: Clean up naming and meaning across copy, data-spw attributes, CSS t
 * 🚫 **No Attribute Proliferation:** Never add a `data-spw-*` attribute to HTML unless there is an active CSS rule, JS consumer, or inspectable `.spw` contract depending on it.
 * 🚫 **No Ad-Hoc Stems:** Do not invent synonyms for existing operators (use canonical `#>`, `?`, `^`, `~`, `@`, `!`, `%`).
 * 🚫 **Preserve Creator Truth:** Never rephrase author copy into mechanical machine-speak. Spwashi is a creator first.
+* 🚫 **Public nouns:** `.spw-frame` / `.spw-chip`. Do not author `site-frame` or `operator-chip` on public routes. Catalog `selector` strings must name the same nouns (`npm run audit:module-selectors`).
+* 🚫 **Migration tools:** `scripts/rewrite-semantic-nouns.mjs` can empty `class=""` via a 500-char lookahead. Diff for dropped `data-spw-textual-role` before committing a bulk rename.
 
 ---
 

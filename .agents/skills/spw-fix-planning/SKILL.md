@@ -22,6 +22,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 * 🚫 **No Symptom Band-Aids:** Do not slap `!important`, inline CSS styles, or random `z-index: 9999` onto elements to mask underlying cascade or positioning errors.
 * 🚫 **No Over-Generalizing Fixes:** Scope the fix strictly to the broken surface. Do not rewrite surrounding stable components during a bugfix.
 * 🚫 **No Silent Contract Breaks:** Verify that fixing one route does not break shared component contracts across other routes.
+* 🚫 **Stills can fail now:** If the bug is ink, resonance, or a pin, reproduce with `npm run visual:checks` and read the `attention-miss` receipt before guessing CSS.
 
 ---
 

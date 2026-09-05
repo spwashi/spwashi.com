@@ -46,6 +46,7 @@ description: Find and fix overflow, measure, and packing issues. Structural CSS 
 | **Card Measure Blowout** | Viewport media query collision | Use container queries: `@container (max-width: ...)` |
 | **Coarse Pointer Clipping** | Fixed heights on buttons/chips | Use `min-height: 44px;` with fluid padding |
 | **Scrollbar Layout Shift** | Dynamic content appearance | Set `scrollbar-gutter: stable;` where appropriate |
+| **Fixed chrome off-screen** | `contain:layout` / `position:relative` on `html` or ancestors of `[data-spw-floating-chrome]` | Exclude document roots and floating chrome from region-state contain and hatch translates |
 
 ---
 

@@ -76,6 +76,12 @@ topical_trails: .{
   search = `rg "data-spw-|spw:" public/js public/ts`
   opinion_to_form = `Whether the state is authored truth, inferred projection, browser-local preference, or diagnostic residue.`
  }[reg=facet]
+ module_host_trail = .{
+  question = `Does this catalog selector still find a public seat?`
+  read = #[@agents, @css_instruction, @attention_field][reg=set]
+  search = `npm run audit:module-selectors`
+  opinion_to_form = `Whether the miss is a stale noun (.site-frame), a sibling combinator vs cluster wrap, a route gate hidden behind main, or a lab orphan that may stay unbound.`
+ }[reg=facet]
  cache_performance_trail = .{
   question = `Is this optimization reducing load cost, mental reparse cost, or both?`
   read = #[@js_readme, @semantic_capacity, @planning_ecology][reg=set]

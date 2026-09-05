@@ -27,6 +27,7 @@ audit_run: .{
   scope = `95 catalog modules + 198 source files under public/js/ (typed/ excluded from line census)`
   method = `parse module-catalog-{core,feature,region,enhancement}.js load paths; per-mount-file export shape, line count, writeDataset density; HTML selector coverage counts on 149 routes`
   posture = `module-by-module inventory through catalog; support files classified by guild, not treated as orphans`
+  do_not_quote_as_current = `2026-09 kinship + selector-depth: 113 MODULE_DEFS; boot IMMEDIATE is four core mounts, not 43. Open those audits before citing these layer/when counts.`
 }[reg=facet]
 
 ^"catalog_overview"{

@@ -14,6 +14,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 * **The Golden Rule:** Maintenance that does not **archive** landed or abandoned plans is just compounding bloat.
 * **Success Metric:** The next census has *fewer* active plans, *zero* empty `index.spw` files, and clean link paths.
 * **Stop Condition:** Do not run this skill after small single-file commits. Reserve it for real multi-surface landings.
+* **After catalog or public class-noun landings:** `npm run audit:module-selectors`. Do not add a new `index.spw` to record the run.
 
 ---
 

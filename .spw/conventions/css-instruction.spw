@@ -28,7 +28,17 @@
   ]
   selector_rule: "Prefer semantic scope -> component noun -> slot/state. Avoid long child-order selectors unless the child order is itself the contract."
   combinator_literature: "The readable physics lives in the selectors. `>` is a child. `+` is the next sibling. `:has()` is a parent that knows what it holds. An observant reader should hear kinship, not only a patch recipe. Banner comments are not the worldbuilding."
+  combinator_vs_wrap: "`~` and `>` describe the authored tree. Cluster wrappers (div[data-spw-cluster]) make seats cousins. A catalog or CSS sibling combinator that assumed main > frame ~ frame will miss public routes. Prefer a descendant seat noun (.spw-frame, [data-spw-region-role]) and let the module's own collect() enforce sibling business rules."
+  focus_within: "To lift a frame you are in, use .spw-frame:focus-within (or :hover), not .spw-frame:has(:focus-within). Live stills at 4771b685 showed the nested :has form left rest ink at 0.86 while focus was held."
   comment_rule: "Comments should be concise and scannable; prefer one-line guardrails near semantic boundaries."
+}
+
+^"inherited_channel_spend"{
+  rule: "--charge and --spw-resonance are @property inherits:false. A :root calc resolves at rest and descendants inherit that number."
+  reports: "Frames report inheriting --spw-attention-charge / --spw-attention-resonance. Spend --spw-attention-opacity and --spw-attention-light from those, or from a higher-layer restatement on :focus-within."
+  anti: "Do not redeclare the reports on cards or ::before — var(--charge, 0) on a child is the registered initial 0 and wipes the frame report."
+  verify: "npm run visual:checks — curriculum-hero-focus / software-frame-probe / curriculum-memory-pin. An attention-miss receipt is the test, not a JPEG hash."
+  contract: ~"./attention-field.spw"
 }
 
 ^"semantic_normalization"{
@@ -66,6 +76,7 @@
   floating_chrome_contract: "Use annotateFloatingChromeElement(...) for runtime-created chrome, or data-spw-floating-chrome='true' with data-spw-layout-owner='floating-chrome' for authored viewport-pinned affordances that should stay outside normal component flow."
   anatomy_rule: "Slot-bearing card anatomy owns readable content. Floating chrome and overlays are separate roles even when they borrow the same material tokens."
   failure_mode: "A generic > * selector assigns position or min-width to a fixed affordance, then debugging starts by guessing which broad rule stole layout ownership."
+  containing_block: "Do not put contain:layout or position:relative on html, body, or [data-spw-floating-chrome]. 95a2bf2f: html[data-spw-region-state] contain:layout plus ornament position:relative parked the pocket travel rail thousands of pixels off-screen while AT still announced it."
 }
 
 ^"spacing_contract"{

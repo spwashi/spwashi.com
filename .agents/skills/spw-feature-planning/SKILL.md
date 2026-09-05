@@ -14,6 +14,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 * **When to Plan:** ONLY when work touches multiple routes, introduces a shared CSS/JS layer, or establishes a durable sitewide contract.
 * **When to Skip:** Single-route copy, isolated bug fixes, or routine styling tweaks. Just make the edit and validate.
 * **Anti-Bloat Tripwire:** If a plan document exceeds 80 lines before writing a single line of code, prune it. A plan is an execution map, not an essay.
+* **Computer-use models:** Verify first (`npm run audit:module-selectors`, `npm run visual:checks`, one pocket route). One named patch. Stop. Do not “implement from plans.”
 
 ---
 
@@ -31,7 +32,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 Phase 1: Public Intent    → Name the exact outcome in one sentence (who benefits and how).
 Phase 2: Negative Scope   → Explicitly list non-goals and boundaries (what NOT to build).
 Phase 3: File Blueprint   → Enumerate minimal touch files across HTML / CSS / JS / .spw.
-Phase 4: Contract Gate    → Verify catalog mount schedules, CSS layers, and check:local.
+Phase 4: Contract Gate    → Verify catalog selectors find public hosts (`audit:module-selectors`), CSS layers, and check:local.
 ```
 
 ### Minimal `PLAN.md` Structure:

@@ -36,6 +36,13 @@ fixity = "tending"
   refuse: "Do not let a stylesheet become a fragment that only makes sense once bundled. If a rule cannot be explained without naming three other files, the cluster is in the wrong document."
 }
 
+^"combinator_vs_authored_tree"{
+  claim: "Combinators are literature about the HTML that exists, not the HTML we remember."
+  cluster_wrap = "div[data-spw-cluster] makes frames cousins. Sibling `~` under main is a false kinship."
+  public_noun = ".spw-frame, .spw-chip. site-frame / operator-chip are retired public class tokens."
+  prove = "npm run audit:module-selectors after catalog selector edits. npm run visual:checks after ink/light token edits."
+}
+
 ^"file_form"{
   banner: "`/* ===` … `=== */` at the head. 151 of 155 files use it; 1 uses a `---` dialect and 3 have neither. The dialect is not decoration — it is how a reader knows the file declares itself rather than starting mid-thought."
   reads_as: "One line naming the surface and the state it dresses."

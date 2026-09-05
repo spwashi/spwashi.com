@@ -22,6 +22,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 * 🚫 **No Core Bundle Pollution:** Never import experimental lab CSS into `style-core.css` or shared tokens "just in case".
 * 🚫 **No Breaking Base Styles:** Experiments must be strictly additive and contained within a single class or element scope.
 * 🚫 **No Immediate Mounts:** If JS is needed for the experiment, mount it on `interaction` or `visible`, never `immediate`.
+* 🚫 **No :root spend of local channels:** `@property --charge` / `--spw-resonance` are `inherits: false`. A lab calc on `:root` will not lift with hover.
 
 ---
 

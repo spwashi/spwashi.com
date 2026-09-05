@@ -33,6 +33,8 @@ description: Improve visual hierarchy, accessibility (a11y), device parity, and 
 * 🚫 **No Cosmetic Attribute Sprawl:** Never invent one-off `data-spw-*` attributes for visual-only tweaks.
 * 🚫 **No Hover-Only Disclosures:** Critical navigation and controls must work on touch/coarse pointers.
 * 🚫 **A11y Baselines:** Ensure 44px+ touch targets, clear `:focus-visible` rings, and WCAG AA contrast (4.5:1 minimum).
+* 🚫 **No inherited rest calcs:** `--charge` / `--spw-resonance` do not inherit. Spend `--spw-attention-opacity` from frame reports or `:focus-within`, not a `:root` calc. Lift with `.spw-frame:focus-within`, not `:has(:focus-within)`.
+* 🚫 **No html containing-block:** Do not `contain:layout` or `position:relative` on `html` / `[data-spw-floating-chrome]`.
 
 ---
 
@@ -58,3 +60,4 @@ description: Improve visual hierarchy, accessibility (a11y), device parity, and 
    npm run check:runtime
    npm run check:local
    ```
+5. **If ink, resonance, or pocket chrome moved:** `npm run visual:checks` (attention-miss receipts) and a pocket smoke of the changed route.

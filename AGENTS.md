@@ -34,6 +34,9 @@ AGENTS is the always-on gate. Open the matching plan or contract instead of inve
 | multi-route / shared layer | `.agents/plans/<slug>/` |
 | CSS first-paint spend or `@layer` vs load | `.agents/plans/core-css-spend-cut/PLAN.md` plus `.spw/conventions/css-instruction.spw` and `stylesheet-ecology.spw` |
 | literate CSS / selector kinship | `.agents/plans/css-architecture-readability/PLAN.md` |
+| catalog selector vs public HTML hosts | `.spw/audits/module-selector-depth-2026-09.spw` plus `npm run audit:module-selectors` |
+| opacity / lighting ignoring attention | `.spw/conventions/attention-field.spw#ink_and_light_spend` plus `npm run visual:checks` |
+| pocket chrome missing or off-screen | `.spw/conventions/css-instruction.spw#flow_ownership` — do not `contain` or `position:relative` html/floating chrome |
 | agent / editor environment | `.agents/plans/agent-optimization/PLAN.md` and `spw-plan-maintenance` |
 | PWA / service worker | `.agents/plans/pwa-experience/` plus `npm run check:pwa` |
 | page-copy / pretext measure | `.spw/conventions/copy-flow.spw` plus `npm run audit:copy` |

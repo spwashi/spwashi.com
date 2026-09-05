@@ -33,6 +33,14 @@ The site should remain hand-authored and human-primary. Agent optimization is an
 - The public `/about/plans/` page is a significant hand-maintenance tax; plan cards and status are not derived from the filesystem or a machine-readable index.
 - Network-call DX needed clarification more than new tooling: `check:local` and the dependency-surface audit rule already existed, but future agents needed clearer instruction to prefer local validation and local repo evidence before `npm audit`, dependency installs, or web lookups.
 
+**2026-09 failure ledger (do not relearn in session):**
+- Catalog `selector` nouns lag public HTML (`.site-frame` vs `.spw-frame`; sibling `~` vs cluster cousins). Open `.spw/audits/module-selector-depth-2026-09.spw` and run `npm run audit:module-selectors`.
+- `--charge` / `--spw-resonance` do not inherit; `:root` opacity calcs sit at rest. Open `attention-field.spw#ink_and_light_spend`. Prove with `npm run visual:checks`, not JPEG goldens.
+- `contain:layout` / `position:relative` on `html` steals floating chrome (95a2bf2f).
+- Kitchen-sink “implement from plans” plus computer-use models. Verify one pocket route, one named patch, stop.
+- `check:local` can be green with stale committed CSS bundles (d26dbbdf) and with fixture hosts that a capture commit retargeted (918b3daa). Trace bundle hunks to the source commit; update fixture tests in the same commit as the host change.
+- July `javascript-module-census` counts (95 modules, IMMEDIATE 43) are not current. Quote 2026-09 kinship / selector-depth (113 defs; boot four).
+
 **Recent improvement (operator-site-projection):**
 - New convention `.spw/conventions/operator-site-projection.spw` turns operators from symbolic labels into practical codebase handles.
 - Projections now exist for: `?` (probe), `@` (action), `#>` (frame), `~` (ref), `%` (measure), `^` (integration), `!` (pragma), `*` (value), `&` (subject), and `.` (ground).

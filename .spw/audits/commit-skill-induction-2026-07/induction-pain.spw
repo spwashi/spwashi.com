@@ -71,6 +71,47 @@
     cost_class = `interference`
   }[reg=facet]
 
+  case_catalog_noun_lag = .{
+    force = `Rename the public class, keep the old token in MODULE_DEFS.selector "for experiments"`
+    evidence = #[
+      `b0a04492 / 9d798913 site-frame → spw-frame; frame-navigator stayed .site-frame → 0 hosts on 124 routes (b82c7aa5, 2a6c884f)`,
+      `page-region-rail sibling ~ vs div[data-spw-cluster] cousins`,
+      `rewrite-semantic-nouns.mjs 500-char lookahead emptied class="" and dropped a textual-role`
+    ][reg=set]
+    pain = `Feature-gated chrome looks scheduled and never mounts; migration tools can delete attributes while check:local stays green`
+    cost_class = `interference`
+    prove = `npm run audit:module-selectors after catalog selector or public class noun edits`
+  }[reg=facet]
+
+  case_inherited_rest_calc = .{
+    force = `Name an attention opacity token on :root that reads --charge / --spw-resonance`
+    evidence = #[
+      `@property inherits:false; :root calc resolves at rest (ef5119a6)`,
+      `.spw-frame:has(:focus-within) left rest 0.86 while focus held (4771b685 stills)`
+    ][reg=set]
+    pain = `Ink ignores the place you are looking; JPEG stills cannot fail; agents retune glow instead of spend`
+    cost_class = `working_memory_pressure`
+    prove = `npm run visual:checks — attention-miss receipts, not pixel goldens`
+  }[reg=facet]
+
+  case_containing_block_chrome = .{
+    force = `contain:layout or position:relative on html / region-state as a packing receipt`
+    evidence = #[`95a2bf2f pocket travel rail translated thousands of pixels while AT announced it`][reg=set]
+    pain = `Visible chrome is a lie; swipe/click hit the wrong layer; CDP is the only honest probe`
+    cost_class = `premature_commitment`
+  }[reg=facet]
+
+  case_kitchen_sink_session = .{
+    force = `Computer-use models plus “implement from plans” without a stop`
+    evidence = #[
+      `Slice A (mobile edge chrome) was the honest next after a kitchen-sink brief`,
+      `check:local fixtures drifted from 60402f20 host retarget; committed CSS bundles lagged source (d26dbbdf)`
+    ][reg=set]
+    pain = `Unreviewable mixed trees; tests assert yesterday's host; green check:local with stale bundles`
+    cost_class = `premature_commitment`
+    prove = `Verify-first: audit:module-selectors + visual:checks + one pocket route. One named patch. Stop.`
+  }[reg=facet]
+
   case_generated_bundle_noise = .{
     force = `CSS architecture craft + catalog/check skills encourage regenerate artifacts in-tree`
     evidence = #[

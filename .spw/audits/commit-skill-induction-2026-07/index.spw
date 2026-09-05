@@ -30,6 +30,7 @@ audit_run: .{
   posture = `hypotheses not blame; skill text is one force among human taste, product ambition, and tooling`
   scope = `site skills under .agents/skills + AGENTS.md rails; commit subjects since 2026-04`
   complements = @commit_history_deep
+  extended = `2026-09: induction-pain.spw adds catalog-noun-lag, inherited-rest-calc, containing-block-chrome, kitchen-sink-session from 95a2bf2f…9d798913`
 }[reg=facet]
 
 ^"thesis"{

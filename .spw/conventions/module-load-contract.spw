@@ -25,6 +25,15 @@
 operation = "contract"
 fixity = "settled"
 
+^"selector_host_nouns"{
+  rule: "A catalog `selector` is a depth claim. It must name the same public nouns as CORE_COMPONENT_SELECTORS in kernel/dom-contracts.js."
+  public_frame = `.spw-frame and [data-spw-kind=frame]. 9d798913 finished the site-frame class migration; catalog selectors that still name only .site-frame miss public seats.`
+  public_chip = `.spw-chip with data-spw-handle. operator-chip is the retired class.`
+  combinator = "Sibling `~` under main fails when cluster wrappers make frames cousins. The catalog string is a mount gate; collectRegions() / MIN_REGIONS own the sibling business rule."
+  audit = `npm run audit:module-selectors — .spw/audits/module-selector-depth-2026-09.spw`
+  anti = "Do not add , main to a route-gated module to 'be safe'. settings-page did that and reported 124 hosts."
+}
+
 ^"thesis"{
   claim: "The site's JavaScript runtime is a living, magical ecology. Modules do not load as an undifferentiated heap; they awaken in response to interaction, conduct charge through material regions, and unlock concrete subfeature affordances for the reader. Perceptibility is potential difference; action is electrostatic discharge; memory is grounded residue."
   subfeatures: "Subfeatures are discrete capability units within a module (e.g. section-handle-locomotion, resonance-echo, probe-elevation). They stay dormant until the reader's attention or interaction activates their circuit."
