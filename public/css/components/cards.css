@@ -238,7 +238,7 @@
   align-items: stretch;
 }
 
-:where(.spw-card, .frame-card, .frame-panel) :where(.spw-chip, .operator-chip, .frame-sigil) {
+:where(.spw-card, .frame-card, .frame-panel) :where(.spw-chip, .spw-chip, .frame-sigil) {
   white-space: nowrap;
   max-inline-size: 100%;
   overflow: hidden;

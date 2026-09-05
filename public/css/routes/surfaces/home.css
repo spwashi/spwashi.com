@@ -612,7 +612,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   line-height: 1.48;
 }
 
-:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"] :is(.operator-chip, .spw-chip)) {
+:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"] :is(.spw-chip, .spw-chip)) {
   flex: 1 1 9rem;
   min-inline-size: 0;
 }

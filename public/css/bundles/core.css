@@ -17752,7 +17752,7 @@ html[data-spw-color-mode="dark"] :where(
   align-items: stretch;
 }
 
-:where(.spw-card, .frame-card, .frame-panel) :where(.spw-chip, .operator-chip, .frame-sigil) {
+:where(.spw-card, .frame-card, .frame-panel) :where(.spw-chip, .spw-chip, .frame-sigil) {
   white-space: nowrap;
   max-inline-size: 100%;
   overflow: hidden;
@@ -36315,7 +36315,7 @@ body[data-spw-micro-world="true"]::before {
   margin-block: 0.42rem 0.08rem;
 }
 
-:where([data-spw-feature="wrap-jobs"] :is(.operator-chip, .spw-chip)) {
+:where([data-spw-feature="wrap-jobs"] :is(.spw-chip, .spw-chip)) {
   --spw-control-min-height: 1.7rem;
   --spw-control-padding-block: 0.16rem;
   --spw-control-padding-inline: 0.5rem;
@@ -36330,17 +36330,17 @@ body[data-spw-micro-world="true"]::before {
   max-inline-size: 100%;
 }
 
-:where([data-spw-feature="wrap-jobs"] .operator-chip[aria-current="true"]) {
+:where([data-spw-feature="wrap-jobs"] .spw-chip[aria-current="true"]) {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--op-mode-color, var(--op-probe-color, #4a2180)) 38%, transparent);
 }
 
-html[data-spw-color-mode="dark"] :where([data-spw-feature="wrap-jobs"] :is(.operator-chip, .spw-chip)) {
+html[data-spw-color-mode="dark"] :where([data-spw-feature="wrap-jobs"] :is(.spw-chip, .spw-chip)) {
   background: color-mix(in srgb, var(--surface-panel-strong, var(--surface-strong)) 86%, var(--active-op-color, var(--teal)) 10%);
   color: var(--ink-strong, CanvasText);
   border-color: color-mix(in srgb, var(--line-strong) 65%, var(--active-op-color, var(--teal)) 35%);
 }
 
-html[data-spw-color-mode="dark"] [data-spw-surface="about"] :where([data-spw-feature="wrap-jobs"] :is(.operator-chip, .spw-chip)) {
+html[data-spw-color-mode="dark"] [data-spw-surface="about"] :where([data-spw-feature="wrap-jobs"] :is(.spw-chip, .spw-chip)) {
   background: var(--about-surface-strong, hsl(24 11% 18%));
   color: var(--about-ink, var(--ink-strong));
   border-color: var(--about-line-strong, var(--line-strong));
@@ -39272,7 +39272,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
    ========================================================================== */
 
 .spw-chip,
-.operator-chip {
+.spw-chip {
   --operator-chip-border-width: 1px;
   --operator-chip-border-style: solid;
   --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 92%, var(--active-op-color, var(--teal)) 8%);
@@ -39322,8 +39322,8 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 
 .spw-chip:hover,
 .spw-chip:focus-visible,
-.operator-chip:hover,
-.operator-chip:focus-visible {
+.spw-chip:hover,
+.spw-chip:focus-visible {
   background: var(--operator-chip-hover-bg);
   border-color: var(--operator-chip-hover-border);
   color: var(--operator-chip-hover-ink);
@@ -39336,28 +39336,28 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
    When the page was loaded in a "quiet" or "defer" posture (user or editor choice),
    tone down the physical feedback (lift, shadow) for calmer feel.
    This is rule refinement using the explicit load attrs we added for discovery/customization. */
-html[data-spw-load-posture="quiet"] :is(.spw-chip, .operator-chip):hover,
-html[data-spw-load-posture="quiet"] :is(.spw-chip, .operator-chip):focus-visible,
-html[data-spw-load-timing="quiet"] :is(.spw-chip, .operator-chip):hover,
-html[data-spw-load-timing="quiet"] :is(.spw-chip, .operator-chip):focus-visible,
-html[data-spw-load-timing="defer"] :is(.spw-chip, .operator-chip):hover,
-html[data-spw-load-timing="defer"] :is(.spw-chip, .operator-chip):focus-visible {
+html[data-spw-load-posture="quiet"] :is(.spw-chip, .spw-chip):hover,
+html[data-spw-load-posture="quiet"] :is(.spw-chip, .spw-chip):focus-visible,
+html[data-spw-load-timing="quiet"] :is(.spw-chip, .spw-chip):hover,
+html[data-spw-load-timing="quiet"] :is(.spw-chip, .spw-chip):focus-visible,
+html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):hover,
+html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):focus-visible {
   transform: none;
   box-shadow: var(--operator-chip-hover-shadow, 0 1px 3px rgba(0,0,0,0.06));
 }
 
 /* Probe and pragma chips should not feel interchangeable.
    Probe stays open/reversible; pragma reads as a stronger local constraint. */
-:is(.spw-chip, .operator-chip)[data-spw-operator="probe"],
-:is(.spw-chip, .operator-chip)[data-spw-operator="wonder"] {
+:is(.spw-chip, .spw-chip)[data-spw-operator="probe"],
+:is(.spw-chip, .spw-chip)[data-spw-operator="wonder"] {
   --operator-chip-border-style: dashed;
   --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 95%, var(--op-probe-color, var(--active-op-color, var(--teal))) 5%);
   --operator-chip-border: color-mix(in oklab, var(--op-probe-color, var(--active-op-color, var(--teal))) 28%, transparent);
   --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--op-probe-color, var(--active-op-color, var(--teal))) 10%);
 }
 
-:is(.spw-chip, .operator-chip)[data-spw-operator="pragma"],
-:is(.spw-chip, .operator-chip)[data-spw-operator="action"] {
+:is(.spw-chip, .spw-chip)[data-spw-operator="pragma"],
+:is(.spw-chip, .spw-chip)[data-spw-operator="action"] {
   --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 12%);
   --operator-chip-border: color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 34%, transparent);
   --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 84%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%);
@@ -39365,7 +39365,7 @@ html[data-spw-load-timing="defer"] :is(.spw-chip, .operator-chip):focus-visible 
     inset 0 0 0 1px color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%, transparent);
 }
 
-:where(.spw-chip, .operator-chip, .spec-pill, .syntax-token)[data-spw-collected="true"] {
+:where(.spw-chip, .spw-chip, .spec-pill, .syntax-token)[data-spw-collected="true"] {
   --operator-chip-border-style: solid;
   --operator-chip-hover-lift: -1px;
   box-shadow:
@@ -39374,7 +39374,7 @@ html[data-spw-load-timing="defer"] :is(.spw-chip, .operator-chip):focus-visible 
     0 0 calc(0.7rem + var(--spw-collection-strength, 0) * 0.4rem) color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 14%, transparent);
 }
 
-:where(.spw-chip, .operator-chip):is([aria-pressed="true"], [aria-current="true"], [data-site-setting-active="true"]) {
+:where(.spw-chip, .spw-chip):is([aria-pressed="true"], [aria-current="true"], [data-site-setting-active="true"]) {
   background: var(--operator-chip-active-bg);
   border-color: var(--operator-chip-active-border);
   color: var(--operator-chip-active-ink);
@@ -39384,7 +39384,7 @@ html[data-spw-load-timing="defer"] :is(.spw-chip, .operator-chip):focus-visible 
   animation: var(--operator-chip-active-animation);
 }
 
-html[data-spw-color-mode="dark"] :is(.spw-chip, .operator-chip) {
+html[data-spw-color-mode="dark"] :is(.spw-chip, .spw-chip) {
   --operator-chip-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
   --operator-chip-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%);
   --operator-chip-ink: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
@@ -39438,7 +39438,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .operator-chip) {
 }
 
 @media (prefers-color-scheme: dark) {
-  html[data-spw-color-mode="auto"] :is(.spw-chip, .operator-chip) {
+  html[data-spw-color-mode="auto"] :is(.spw-chip, .spw-chip) {
     --operator-chip-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
     --operator-chip-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%);
     --operator-chip-ink: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
