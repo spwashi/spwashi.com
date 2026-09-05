@@ -165,3 +165,10 @@ audit_run: .{
     `cold-load first pointerdown against charge-field / pinch-scale / a home-hook button`
   ][reg=set]
 }[reg=facet]
+
+^"next_session_verified"{
+  ~#verified(2026-09-05): `Ran the two checks the handoff named, by direct import against the live home route rather than automation scroll — MOUNT_WHEN.VISIBLE's IntersectionObserver does not fire reliably under this session's CDP-driven automation (see reference_module_mount_verification.md); catalog-driven mount of brace-physics/region-menu/charge-field/navigation-locomotion could not be observed to complete in that harness even after 10s+, while a direct initBraceGestures()/initSpwRegionMenu() call against the same DOM exercises the real fix path.`
+  ~#result_1: `Dispatched a real pointerdown+pointerup on button[data-set-mode="reading"] (Study) inside #home-hook. #home-hook's data-spw-gesture stayed null through both events — f3's isOwnAffordanceTarget guard holds. The button itself still armed (data-spw-gesture="active" on the button, expected: it also matches .frame-sigil and sigils keep their own gesture feedback) and its native click was not prevented.`
+  ~#result_2: `Dispatched a pointerType:'touch' pointerdown on that same Study button (also a .frame-sigil, so shouldArmHoldOpen's selector list matches) and held 700ms > HOLD_OPEN_MS.calm (560ms). isRegionMenuOpen() became true and the button got data-spw-region-preview="true" — a first hold on a cold mount reaches region-menu, confirming f5 for this module without relying on the flaky IO harness.`
+  ~#open: `Did not repeat this for charge-field or navigation-locomotion specifically — same VISIBLE-mount class as region-menu/brace-physics, same f5 fix shape, not independently direct-import-verified this pass.`
+}[reg=facet]
