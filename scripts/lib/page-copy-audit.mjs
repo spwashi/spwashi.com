@@ -93,9 +93,120 @@ export function classifyExpressionShape(expression = '') {
   return 'other';
 }
 
+export function decodeSpwAttr(value = '') {
+  return String(value || '')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&amp;/gi, '&');
+}
+
+export function readSpwAttr(attrs = '', name) {
+  const key = String(name || '').replace(/^data-spw-/i, '');
+  if (!key) return '';
+  const match = new RegExp(`data-spw-${key}\\s*=\\s*"([^"]*)"`, 'i').exec(String(attrs));
+  return match ? decodeSpwAttr(match[1].trim()) : '';
+}
+
 export function readSemanticExpression(attrs = '') {
-  const match = /data-spw-semantic-expression\s*=\s*"([^"]+)"/i.exec(String(attrs));
-  return match ? match[1].trim() : '';
+  return readSpwAttr(attrs, 'semantic-expression');
+}
+
+export function parseCopyUnit(id = '') {
+  const value = String(id || '').trim();
+  const parts = value ? value.split('.').filter((part) => part.length > 0) : [];
+  const valid = parts.length >= 3 && parts.every((part) => /^[A-Za-z][A-Za-z0-9_-]*$/.test(part));
+  let shape = 'empty';
+  if (parts.length === 1 || parts.length === 2) shape = 'short';
+  else if (parts.length === 3) shape = 'triple';
+  else if (parts.length > 3) shape = 'nested';
+  return {
+    id: value,
+    parts,
+    arity: parts.length,
+    namespace: parts[0] || '',
+    cluster: parts[1] || '',
+    slot: parts.slice(2).join('.') || '',
+    shape,
+    valid,
+  };
+}
+
+export function extractPageMeta(html = '') {
+  const body = /<body\b([^>]*)>/i.exec(String(html));
+  const attrs = body ? body[1] : '';
+  const related = readSpwAttr(attrs, 'related-routes');
+  return {
+    surface: readSpwAttr(attrs, 'surface'),
+    pageFamily: readSpwAttr(attrs, 'page-family'),
+    pageRole: readSpwAttr(attrs, 'page-role'),
+    relatedRoutes: related
+      ? related.split('|').map((route) => route.trim()).filter(Boolean)
+      : [],
+  };
+}
+
+export function extractCopyUnitHosts(html) {
+  const pageMeta = extractPageMeta(html);
+  const main = extractMainHtml(html);
+  const blocks = [];
+  const seen = new Set();
+
+  const push = (tag, attrs, inner, { requireUnit = true } = {}) => {
+    const copyUnit = readSpwAttr(attrs, 'copy-unit');
+    if (requireUnit && !copyUnit) return;
+    const text = stripMarkup(inner);
+    const key = `${copyUnit || 'gap'}::${tag}::${text.slice(0, 80)}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    const parsed = parseCopyUnit(copyUnit);
+    const className = /\bclass\s*=\s*"([^"]*)"/i.exec(String(attrs))?.[1] || '';
+    blocks.push({
+      tag,
+      kind: copyUnit ? kindForTag(tag) : 'gap',
+      text,
+      chars: text.length,
+      html: inner,
+      copyUnit,
+      expression: readSpwAttr(attrs, 'semantic-expression'),
+      copyDepth: readSpwAttr(attrs, 'copy-depth'),
+      textualRole: readSpwAttr(attrs, 'textual-role'),
+      locale: readSpwAttr(attrs, 'locale'),
+      className,
+      ...parsed,
+      ...pageMeta,
+    });
+  };
+
+  for (const match of main.matchAll(/<([a-z][a-z0-9]*)\b([^>]*data-spw-copy-unit\s*=\s*"[^"]+"[^>]*)>([\s\S]*?)<\/\1>/gi)) {
+    push(match[1].toLowerCase(), match[2], match[3], { requireUnit: true });
+  }
+
+  for (const match of main.matchAll(/<([a-z][a-z0-9]*)\b([^>]*\bclass\s*=\s*"[^"]*\bhook-lede\b[^"]*"[^>]*)>([\s\S]*?)<\/\1>/gi)) {
+    if (/data-spw-copy-unit\s*=/i.test(match[2])) continue;
+    push(match[1].toLowerCase(), match[2], match[3], { requireUnit: false });
+  }
+
+  if (!blocks.length) {
+    blocks.push({
+      tag: 'body',
+      kind: 'meta',
+      text: '',
+      chars: 0,
+      html: '',
+      copyUnit: '',
+      expression: '',
+      copyDepth: '',
+      textualRole: '',
+      locale: '',
+      className: '',
+      ...parseCopyUnit(''),
+      ...pageMeta,
+    });
+  }
+
+  return blocks;
 }
 
 export function extractExpressionHosts(html) {

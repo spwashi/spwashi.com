@@ -1,0 +1,93 @@
+# Copy Accessor
+#
+# The dotted copy-unit is the flat localization projection of a Spw handle.
+# Spw is the multidimensional version of a 3-part i18n constant tag.
+# operation: contract
+
+#>copy_accessor
+#:convention #!copy #!localization #!voice #!information-architecture
+#:operation #!contract
+#:fixity #!stable
+#:layer #!pragmatics
+
+@copy_localization: ~"./copy-localization.spw"
+@living_medium_copy: ~"./living-medium-copy.spw"
+@copy_flow: ~"./copy-flow.spw"
+@page_copy_audit: ~"./page-copy-audit.spw"
+@semantic_expression_consequence: ~"./semantic-expression-consequence.spw"
+@component_region_personality: ~"./component-region-personality.spw"
+@copy_ecology: ~"./copy-ecology.spw"
+@audit: ~"../audits/copy-accessor-cluster-2026-09.spw"
+@runner: ~"../../scripts/page-copy-audit.mjs"
+
+operation = "contract"
+fixity = "stable"
+
+^"thesis"{
+  claim = `A 3-part dotted accessor (namespace.cluster.slot) is a localization constant: it names where a string lives in a flat catalog. Spw is the same tag with orthogonal dimensions — subject[mode]{direction}<capsule> — so tone, posture, and projection can change without minting a new key family.`
+  projection = `data-spw-copy-unit is the flat i18n projection. data-spw-semantic-expression is the multidimensional handle. They sit on the same host. Do not invent a fourth accessor family.`
+  why = `Templating shops use home.hero.title so translators can find a string. That tree cannot hold voice register, first-use gloss policy, or a magazine return-visit without either exploding the keyspace or flattening the writing. Spw keeps the tree for lookup and the braces for meaning.`
+}[reg=facet]
+
+^"two_projections"{
+  copy_unit = .{
+    attr = `data-spw-copy-unit`
+    shape = `namespace.cluster.slot`
+    example = `curriculum.hook.lede`
+    nested_ok = `A fourth dot (home.promoWonderCycle.daily.promo, math.combinatorics.hero.lede) nests a category inside the cluster. Extra dots are still a tree, not a new dimension.`
+    job = `Stable semantic id for audit, translation, and clustered edit. Never raw English.`
+  }[reg=facet]
+  expression = .{
+    attr = `data-spw-semantic-expression`
+    shape = `subject[mode]{direction}<capsule>`
+    example = `about[reading]{person}`
+    job = `Multidimensional handle: who, in what lens, toward what, projecting which channel. Kinship and packing read this, not the dotted key.`
+  }[reg=facet]
+  voice = .{
+    attrs = #[`data-spw-copy-depth`, `data-spw-textual-role`, `data-spw-living-term`, `data-spw-copy-motifs`][reg=set]
+    job = `Register and first-use gloss. Depth and term_policy answer density complaints; they are not extra dotted segments.`
+  }[reg=facet]
+  mapping = `namespace ≈ subject or route. cluster ≈ surface or mode. slot ≈ textual role (lede, note, promo). Mode, direction, and capsule stay in the expression.`
+}[reg=facet]
+
+^"voice_register"{
+  complaint = `X, 2026-05-25, @grok on https://spwashi.com/ (2058778452581396958): unique cookbook/boonhonk voice, but dense poetic style risks first-time visitors. Asks: plain-English opener (who you are + what people get), first-use definitions, scannable subheads, one concrete outcome per entrance card.`
+  broader = `Public voice complaints that are not site-specific still apply as tests: "voicey" sales-pitch ("in a world torn by X and Y", "dynamic"), AI-sounding "it's like x, y, and z", confident tone read as rude.`
+  answer = `Do not flatten the magic to generic product copy. Answer on the existing registers: creator-first opener on landings, pair_with_gloss / living-term on first use, copy-depth entry vs dense, magazine return-visit instead of subscribe CTA, one concrete outcome on entrance cards.`
+  opener_rule = `Home and about already lead with "I'm Spwashi. I build software and make art." Neighbor landings may keep the rooms-as-map lede if that sentence is visible in the same fold.`
+  gloss_rule = `Boonhonk, cauldron, lattice, pretext, semantic resonance: wrap first use in a living term or define in the same block. A definition block whose copy-unit cluster is the term is the gloss.`
+  refuse = `Do not add data-spw-voice or data-spw-tone. Do not split a lede into i18n fragments to "fix" density.`
+}[reg=facet]
+
+^"clustered_update"{
+  claim = `Page copy and topic should be revised as a working set, not as isolated strings. The dotted prefix is one grouping. The stronger grouping for development is the topic cluster already authored as data-spw-related-routes / data-spw-page-family.`
+  why = `An issue that retunes curriculum numericity also retunes math hook, software grammar neighbor links, and recipes dose/culture counts. A localization table keyed only by route hides that. The audit lists the working set so an editor can open every collectible in the cluster.`
+  seeds = #{
+    curriculum-numericity = `/curriculum/ /topics/math/ /topics/software/ /recipes/`
+    person-magazine = `/ /about/ /now/ /membership/`
+    services-offer = `/services/`
+    topics-shelf = `/topics/`
+    design-surface = `/design/`
+  }
+  rule = `When a cluster update changes a mechanism or a term, edit every copy-unit in that cluster's working set in the same pass — or name why a sibling was left. Related_routes is the IA graph; copy-units are the collectibles on it.`
+  not_runtime = `This is a reference grouping for editors and agents. It is not a client lookup table and not a new data-spw-* family.`
+}[reg=facet]
+
+^"authoring"{
+  collectible = `Frame-notes and page-ledes get both ids when an editing team will audit or translate them: copy-unit for the catalog, expression when kinship or packing should read the host.`
+  lens_panels = `Mode-switch hook-ledes (read view / join view) are not automatically collectibles. Address the canonical lede; leave lens variants unkeyed unless they will be translated separately.`
+  no_fourth = `Do not add data-spw-copy-key, data-spw-i18n, or a second dotted scheme. If a host needs more meaning, enrich the expression or the living term.`
+}[reg=facet]
+
+^"do_not"{
+  runtime = `No client i18n framework. Localization stays build-time static HTML per copy-localization.spw.`
+  flatten = `Do not answer density complaints by deleting cookbook/magazine voice.`
+  new_family = `No new data-spw-* accessor family.`
+  rewrite_now = `This contract does not rewrite public copy. Voice flags in the audit are a working list for a later copy pass.`
+}[reg=facet]
+
+validation: #[
+  `npm run audit:copy:accessor`
+  `node --test scripts/tests/page-copy-audit.test.mjs`
+  `rg 'copy_accessor|data-spw-copy-unit' .spw/conventions/copy-accessor.spw .spw/conventions/copy-localization.spw`
+][reg=set]

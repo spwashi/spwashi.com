@@ -7,6 +7,8 @@
 #:semantics #!conventions
 #:layer #!pragmatics
 
+@copy_accessor: ~"./copy-accessor.spw"
+
 ^"thesis"{
  claim: "Localization on this site should be an authored projection from canonical copy units into locale-specific public language, not a late-stage string-replacement layer. The route HTML remains the structural source of truth, while translation policy, glosses, and unresolved seams stay inspectable through site-local conventions."
  why: "This site is concept-heavy, tone-sensitive, and Spw-adjacent. A generic i18n table would preserve keys but lose the reasons certain phrases exist, why some operator terms should stay literal, and where a translation must become a restatement instead of a direct substitution."
@@ -25,6 +27,12 @@
  rule: "Route HTML remains the source of page structure, reading order, and semantic grouping."
  consequence: "Localization should bind into existing headings, paragraphs, labels, and metadata fields; it should not force route structure into opaque external blobs."
  copy_rule: "Translatable content may be addressed from HTML by stable copy-unit ids, but the surrounding markup remains hand-authored and reviewable."
+}
+
+^"accessor_projection"{
+  rule: "The dotted copy-unit is the flat localization projection of a Spw handle. Extra dots nest categories; they do not add dimensions. subject[mode]{direction}<capsule> is the multidimensional tag. Voice lives on copy-depth, living terms, and term_policy — not on a fourth accessor family."
+  see: @copy_accessor
+  census: `npm run audit:copy:accessor`
 }
 
 ^"copy_unit_shape"{

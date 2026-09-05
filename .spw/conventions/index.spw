@@ -19,6 +19,7 @@
 @semantic_braces: ~"./semantic-braces.spw"
 @asset_management: ~"./asset-management.spw"
 @copy_localization: ~"./copy-localization.spw"
+@copy_accessor: ~"./copy-accessor.spw"  # dotted copy-unit is the flat i18n projection; Spw expression is the handle
 @living_medium_copy: ~"./living-medium-copy.spw"
 @operator_semantics: ~"./operator-semantics.spw"
 @operator_alignment: ~"./operator-alignment.spw"
@@ -155,6 +156,7 @@ dispatch: .{
  composable_art = @composable_art
  assets = @asset_management
  localization = @copy_localization
+ copy_accessor = @copy_accessor
  living_medium_copy = @living_medium_copy
  operators = @operator_semantics
  operator_alignment = @operator_alignment

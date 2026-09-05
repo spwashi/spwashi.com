@@ -45,6 +45,7 @@
 @module_granularity_lifecycle: ~"./module-granularity-lifecycle-2026-07/index.spw"
 @layout_qa_measurement: ~"./layout-qa-measurement-2026-07/index.spw"
 @page_pretext_measurement: ~"./page-pretext-measurement-2026-08/index.spw"
+@copy_accessor_cluster: ~"./copy-accessor-cluster-2026-09.spw"
 @progressive_css_module_scopes: ~"./progressive-css-module-scopes-2026-07/index.spw"
 
 operation = "align"
@@ -62,6 +63,7 @@ fixity = "tending"
     module_granularity_lifecycle = ~"./module-granularity-lifecycle-2026-07/index.spw"
     layout_qa_measurement = ~"./layout-qa-measurement-2026-07/index.spw"
     page_pretext_measurement = ~"./page-pretext-measurement-2026-08/index.spw"
+    copy_accessor_cluster = ~"./copy-accessor-cluster-2026-09.spw"
     progressive_css_module_scopes = ~"./progressive-css-module-scopes-2026-07/index.spw"
     commit_skill_induction = ~"./commit-skill-induction-2026-07/index.spw"
     commit_history_deep = ~"./commit-history-deep-2026-07/index.spw"
@@ -129,6 +131,13 @@ fixity = "tending"
     keys = #[`module_ecology_kinship`, `module_impact_audit`, `javascript_module_census`, `module_granularity_lifecycle`][reg=set]
     hub = @module_ecology_kinship
     note = `2026-09-04: 113 MODULE_DEFS clustered by impact/kinship/standalone. Do not fill all electrostatics. July IMMEDIATE 43 is now 6.`
+  }[reg=facet]
+
+  session_2026_09_copy_accessor: .{
+    reading_order = `copy-localization → copy-accessor → copy-accessor-cluster-2026-09`
+    keys = #[`copy_accessor_cluster`, `page_pretext_measurement`][reg=set]
+    hub = @copy_accessor_cluster
+    note = `2026-09-04: dotted copy-unit as i18n projection of Spw handle; voice vs X density complaints; clustered update IA. No new data-spw-* family.`
   }[reg=facet]
 
   session_2026_07_module_lifecycle_granularity: .{

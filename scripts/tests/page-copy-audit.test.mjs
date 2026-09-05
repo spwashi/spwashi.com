@@ -7,9 +7,13 @@ import {
   classifyWrap,
   extractBlocks,
   classifyExpressionShape,
+  extractCopyUnitHosts,
   extractExpressionHosts,
+  extractPageMeta,
   kindForTag,
+  parseCopyUnit,
   readSemanticExpression,
+  readSpwAttr,
   matchesRouteFilter,
   parseAuditArgs,
   previewText,
@@ -18,6 +22,10 @@ import {
   toRoutePath,
 } from '../lib/page-copy-audit.mjs';
 import { PAGE_COPY_AUDITS } from '../page-copy-audit.mjs';
+import {
+  assignDevelopmentClusters,
+  flagCopyVoice,
+} from '../lib/page-copy-audits/accessor.mjs';
 import { inventoryAudit } from '../lib/page-copy-audits/inventory.mjs';
 import { pretextAudit } from '../lib/page-copy-audits/pretext.mjs';
 
@@ -126,7 +134,7 @@ test('inventory audit summarizes without a browser', () => {
 });
 
 test('dispatcher registry names the two starter audits', () => {
-  assert.deepEqual(PAGE_COPY_AUDITS.map((audit) => audit.id), ['inventory', 'variety', 'pretext', 'align', 'expr']);
+  assert.deepEqual(PAGE_COPY_AUDITS.map((audit) => audit.id), ['inventory', 'variety', 'pretext', 'align', 'expr', 'accessor']);
 });
 
 test('resolveCompareWidth picks the farther reference band', async () => {
@@ -182,4 +190,87 @@ test('parseAuditArgs and previewText stay small', () => {
   assert.equal(previewText('abcdefghij', 6), 'abcdef…');
   assert.equal(matchesRouteFilter('about/index.html', '/about/', 'about'), true);
   assert.equal(matchesRouteFilter('play/index.html', '/play/', 'about'), false);
+});
+
+test('parseCopyUnit splits the dotted localization projection', () => {
+  assert.deepEqual(parseCopyUnit('curriculum.hook.lede'), {
+    id: 'curriculum.hook.lede',
+    parts: ['curriculum', 'hook', 'lede'],
+    arity: 3,
+    namespace: 'curriculum',
+    cluster: 'hook',
+    slot: 'lede',
+    shape: 'triple',
+    valid: true,
+  });
+  assert.equal(parseCopyUnit('home.promoWonderCycle.daily.promo').shape, 'nested');
+  assert.equal(parseCopyUnit('home.promoWonderCycle.daily.promo').slot, 'daily.promo');
+  assert.equal(parseCopyUnit('lede').shape, 'short');
+  assert.equal(parseCopyUnit('').shape, 'empty');
+  assert.equal(readSpwAttr(' data-spw-copy-unit="about.hook.lede" ', 'copy-unit'), 'about.hook.lede');
+});
+
+test('extractCopyUnitHosts joins the dotted key to the Spw handle', () => {
+  const html = `
+    <body data-spw-page-family="curriculum" data-spw-related-routes="/curriculum/|/topics/math/|/recipes/">
+      <main>
+        <p class="hook-lede" data-spw-copy-unit="curriculum.hook.lede" data-spw-semantic-expression="curriculum[reading]{memory}">
+          A module names a technical mechanism.
+        </p>
+        <p class="hook-lede">Lens variant without a copy-unit.</p>
+        <article data-spw-copy-unit="home.promoWonderCycle.daily.promo" data-spw-locale="en">
+          <p>Daily promo card.</p>
+        </article>
+      </main>
+    </body>
+  `;
+  const hosts = extractCopyUnitHosts(html);
+  const units = hosts.filter((block) => block.copyUnit);
+  const gaps = hosts.filter((block) => !block.copyUnit && block.kind === 'gap');
+  assert.equal(units.length, 2);
+  assert.equal(units[0].copyUnit, 'curriculum.hook.lede');
+  assert.equal(units[0].expression, 'curriculum[reading]{memory}');
+  assert.equal(units[0].namespace, 'curriculum');
+  assert.deepEqual(units[0].relatedRoutes, ['/curriculum/', '/topics/math/', '/recipes/']);
+  assert.equal(units[1].shape, 'nested');
+  assert.equal(gaps.length, 1);
+  const meta = extractPageMeta(html);
+  assert.equal(meta.pageFamily, 'curriculum');
+});
+
+test('flagCopyVoice and development clusters stay conservative', () => {
+  assert.deepEqual(
+    flagCopyVoice({
+      text: 'Boonhonk is five transforms on one beat.',
+      html: '',
+      copyUnit: 'about.boonhonk.lede',
+      textualRole: 'note',
+    }),
+    [],
+  );
+  assert.ok(flagCopyVoice({
+    text: 'Hold the count into the cauldron if you want the number.',
+    html: '<p>Hold the count into the cauldron if you want the number.</p>',
+    copyUnit: 'recipes.soilCompanions.lede',
+    textualRole: 'note',
+    className: '',
+  }).includes('unglossed:cauldron'));
+  assert.ok(flagCopyVoice({
+    text: "It's like x, y, and z for your workflow.",
+    html: '',
+    copyUnit: 'home.hook.lede',
+    textualRole: 'lede',
+  }).includes('ai-like'));
+  assert.deepEqual(
+    assignDevelopmentClusters('curriculum.memory.lede', { route: '/curriculum/' }),
+    ['curriculum-numericity'],
+  );
+  assert.deepEqual(
+    assignDevelopmentClusters('recipes.soilCompanions.lede', { route: '/recipes/' }),
+    ['curriculum-numericity'],
+  );
+  assert.deepEqual(
+    assignDevelopmentClusters('about.hook.lede', { route: '/about/' }),
+    ['person-magazine'],
+  );
 });

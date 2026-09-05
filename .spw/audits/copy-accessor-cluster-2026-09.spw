@@ -1,0 +1,130 @@
+# Copy Accessor, Voice, and Clustered Update (2026-09-04)
+#
+# operation: audit
+# Scripts hold numbers. This file holds judgments.
+# Contract: .spw/conventions/copy-accessor.spw
+
+#>copy_accessor_cluster_2026_09
+#:audit #!copy #!localization #!voice #!information-architecture
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@copy_localization: ~"../conventions/copy-localization.spw"
+@living_medium_copy: ~"../conventions/living-medium-copy.spw"
+@page_copy_audit: ~"../conventions/page-copy-audit.spw"
+@copy_flow: ~"../conventions/copy-flow.spw"
+@semantic_expression_consequence: ~"../conventions/semantic-expression-consequence.spw"
+@runner: ~"../../scripts/page-copy-audit.mjs"
+@plugin: ~"../../scripts/lib/page-copy-audits/accessor.mjs"
+
+operation = "audit"
+fixity = "tending"
+
+audit_run: .{
+  at = `2026-09-04`
+  command = `npm run audit:copy:accessor`
+  pages = 148
+  content_blocks = 52
+  copy_units = 23
+  unique = 23
+  with_expression = 2
+  triple = 16
+  nested = 7
+  short = 0
+  hook_ledes_unaddressed = 29
+  method = `extract data-spw-copy-unit hosts plus hook-lede gaps from rendered source routes; parse namespace.cluster.slot; join semantic-expression; cluster by prefix; flag voice seams offline`
+}[reg=facet]
+
+^"thesis"{
+  claim = `The site already has the 3-part localization tag. It does not yet use Spw as the multidimensional version of that tag. 23 copy-units, 2 with a Spw handle. Voice complaints on X are about density and missing first-use gloss, not about the dotted key.`
+  expected = `Collectible ledes carry both projections. Topic clusters list a working set so a curriculum/numericity issue can open math, software, and recipes copy together.`
+}[reg=facet]
+
+^"accessor"{
+  f1_flat_projection_exists {
+    severity = "info"
+    claim = `data-spw-copy-unit is already the i18n-style accessor: namespace.cluster.slot. 16 triples (about.hook.lede), 7 nested (home.promoWonderCycle.daily.promo, math.combinatorics.hero.lede, services.creator.seriesHome.lede). Nested dots are categories, not dimensions.`
+    evidence = `23 unique keys, 0 short/invalid ids, 11 namespaces. Namespaces track routes: home, about, curriculum, math, recipes, services, topics, knowledge, membership, now, design.`
+    next = `Keep the dotted tree. Do not add data-spw-copy-key or a second scheme.`
+  }
+  f2_spw_handle_is_rare {
+    severity = "medium"
+    claim = `The multidimensional handle is almost unused on collectibles. Only about.hook.lede → about[reading]{person} and recipes.soilCompanions.lede → culture[context]{substrate;threshold;response}<residue>.`
+    evidence = `with-expression=2 of 23. variety/expr audits count many expressions sitewide; they are not joined to copy-units. 11 hook/page ledes are flat-only.`
+    next = `When a later copy pass touches a collectible lede, add the expression on that host. Do not backfill 21 keys in one kitchen-sink.`
+  }
+}[reg=facet]
+
+^"voice"{
+  source = `X 2026-05-25 @grok on https://spwashi.com/ (2058778452581396958): unique cookbook/boonhonk voice; dense poetic style risks first-time visitors. Asks for a plain-English opener (who + what), first-use definitions, scannable subheads, one concrete outcome per entrance card.`
+  broader = `Public complaints that still apply as tests: sales-pitch ("in a world", "dynamic"), AI-sounding "it's like x, y, and z", confident tone read as rude.`
+  f3_opener_already_landed {
+    severity = "info"
+    claim = `Home and about already answer the plain opener. Home h1 is "I'm Spwashi." / tagline "I build software and make art." About hook wraps that sentence as a living term. Do not flatten the rooms-as-map lede.`
+    evidence = `home.hook.lede is the map of header rooms, not a second identity paragraph. services-description still restates the creator sentence.`
+  }
+  f4_first_use_gloss {
+    severity = "low"
+    claim = `Four first-use seams remain. They are local, not a sitewide jargon dump.`
+    evidence = #[
+      `about.hook.lede — "lattice" unglossed next to a living-term kernel`,
+      `math.combinatorics.lab.lede — "boonhonk counts beats" without a living term or pointer to about.boonhonk.lede`,
+      `recipes.soilCompanions.lede — "cauldron" as the inspectable-number destination, unwrapped`,
+      `/play/ hook-lede — "cauldron" on an unaddressed lens line`
+    ][reg=set]
+    next = `Pair those four with living terms or a same-block gloss. Do not gloss every operator word.`
+  }
+  f5_density {
+    severity = "low"
+    claim = `Two collectible ledes run long enough to fail the scannable-opener test. Serial comma lists are not AI cadence here — they name rooms.`
+    evidence = `curriculum.hook.lede 352c; recipes.soilCompanions.lede 359c. Threshold 320. No sales-pitch or it's-like-x-y-and-z hits in the census.`
+    next = `Split the neighbor-link sentence from the mechanism sentence on those two. Keep cookbook/magazine voice.`
+  }
+  refuse = `Do not rewrite public copy from this audit. Do not flatten magic to generic product copy. Confirm with a human before a voice pass.`
+}[reg=facet]
+
+^"clustered_update"{
+  claim = `A development cluster is a working set of copy-units plus the related_routes graph, not a runtime table.`
+  curriculum_numericity = .{
+    units = 9
+    hosts = #[`/curriculum/`, `/topics/math/`, `/topics/math/combinatorics/`, `/recipes/`][reg=set]
+    copy_units = #[`curriculum.hook.lede`, `curriculum.memory.lede`, `curriculum.memory.boundary`, `math.hook.lede`, `math.combinatorics.hero.lede`, `math.combinatorics.lab.lede`, `recipes.soilCompanions.lede`, `recipes.soilCompanions.payloadBoundaries`, `recipes.season.lede`][reg=set]
+    seed_gap = `/topics/software/ has no copy-unit. The software grammar surface is in the related_routes of curriculum and math but cannot be revised as a collectible.`
+  }[reg=facet]
+  person_magazine = .{
+    units = 7
+    hosts = #[`/`, `/about/`, `/now/`, `/membership/`][reg=set]
+  }[reg=facet]
+  services_offer = .{
+    units = 4
+    hosts = #[`/services/`, `/services/creator/`, `/services/ecosystem/`][reg=set]
+  }[reg=facet]
+  neighbor_graph = `related_routes already links these hosts. Home's neighbor copy-unit hosts: /about/ /now/ /membership/ /services/ /recipes/ /curriculum/. Curriculum's: /topics/math/ /recipes/. That is the IA a clustered issue should open.`
+  f6_software_gap {
+    severity = "medium"
+    claim = `The curriculum-numericity cluster is missing its software collectible. An issue that retunes buffer-trace / week-step / dose-trace cannot name the software hook in the same working set.`
+    next = `On a later copy pass, add topics.software.hook.lede (or software.hook.lede) on /topics/software/ — do not flatten that route's HTML to do it.`
+  }
+  f7_unaddressed_hooks {
+    severity = "info"
+    claim = `29 hook-ledes without copy-units are mostly lens-panel variants (membership read/join, town visitor/world, research decide) and experiment beds. They are not missing collectibles.`
+    next = `Address a lens variant only when it will be translated separately from the canonical lede.`
+  }
+}[reg=facet]
+
+^"decision"{
+  text = `Name the projection, measure it, stop. No localization runtime. No new data-spw-* family. No public copy rewrite in this pass.`
+  later = #[
+    `voice pass: four glosses + two dense ledes, human-confirmed`,
+    `software hook copy-unit so curriculum-numericity has a complete working set`,
+    `add expressions onto hook ledes as those ledes are touched`
+  ][reg=set]
+}[reg=facet]
+
+validation: #[
+  `npm run audit:copy:accessor`
+  `node --test scripts/tests/page-copy-audit.test.mjs`
+  `rg 'copy_accessor_cluster|audit:copy:accessor' .spw/audits/index.spw package.json`
+][reg=set]

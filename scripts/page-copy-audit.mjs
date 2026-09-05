@@ -18,6 +18,7 @@ import {
   printAuditHelp,
   runPageCopyAudit,
 } from './lib/page-copy-audit.mjs';
+import { accessorAudit } from './lib/page-copy-audits/accessor.mjs';
 import { alignAudit } from './lib/page-copy-audits/align.mjs';
 import { exprAudit } from './lib/page-copy-audits/expr.mjs';
 import { inventoryAudit } from './lib/page-copy-audits/inventory.mjs';
@@ -30,6 +31,7 @@ export const PAGE_COPY_AUDITS = Object.freeze([
   pretextAudit,
   alignAudit,
   exprAudit,
+  accessorAudit,
 ]);
 
 const AUDITS_BY_ID = new Map(PAGE_COPY_AUDITS.map((audit) => [audit.id, audit]));

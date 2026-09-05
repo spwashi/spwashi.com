@@ -107,6 +107,7 @@ Naming rules:
 - copy-unit ids should be semantic and route-aware, for example `home.hero.title` or `about.identity.summary`
 - ids should not encode raw English text
 - ids should be stable across wording changes when the semantic role remains the same
+- The dotted key is the **flat localization projection**. Spw `subject[mode]{direction}<capsule>` on `data-spw-semantic-expression` is the multidimensional handle for the same collectible. Extra dots nest categories; they do not add dimensions. Contract: `.spw/conventions/copy-accessor.spw`. Census: `npm run audit:copy:accessor`. Do not invent a fourth accessor family.
 
 ## Validation
 

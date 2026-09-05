@@ -58,6 +58,7 @@
     "audit:copy:align": "node scripts/page-copy-audit.mjs align",
     "audit:copy:expr": "node scripts/page-copy-audit.mjs expr",
     "audit:copy:variety": "node scripts/page-copy-audit.mjs variety",
+    "audit:copy:accessor": "node scripts/page-copy-audit.mjs accessor",
     "audit:region-seats": "node scripts/spw-region-seat-audit.mjs",
     "audit:module-selectors": "node --import ./scripts/lib/register-public-imports.mjs scripts/module-selector-depth-audit.mjs",
     "ecology": "node scripts/spw-ecology-inventory.mjs",

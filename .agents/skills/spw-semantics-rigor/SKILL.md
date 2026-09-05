@@ -51,6 +51,7 @@ When concept names collide across layers, use explicit coordinates rather than i
 | **`settle`** | Box/layout reflow settle phase | Transition end / event debounce | Cognitive agreement / equilibrium |
 | **`resonance`** | CSS `:has()` operator echo glow | Attention probe focus tracking | Topic/concept relational affinity |
 | **`density`** | Typographic line-height & packing | UI widget spacing mode | Semantic information density |
+| **`copy`** | `data-spw-copy-unit` (flat i18n projection) | `data-spw-semantic-expression` (multidimensional handle) | term_policy / copy-depth voice register |
 
 ---
 

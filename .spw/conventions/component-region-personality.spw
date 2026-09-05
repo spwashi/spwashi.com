@@ -182,10 +182,10 @@ fixity = "tending"
 ^"copy_collectible"{
   definition: "Named prose unit (frame-note, page-lede, inline-note) that an editing team can audit, swap, and translate."
   html_contract: .{
-    copy_unit = `data-spw-copy-unit="route.surface.block_id" stable semantic id — never raw English text`
+    copy_unit = `data-spw-copy-unit="route.surface.block_id" stable semantic id — never raw English text. Extra dots nest categories; they are not extra dimensions. See copy-accessor.spw.`
     locale = `data-spw-locale when emitted; source locale implicit until /es/ rollout`
     copy_depth = `data-spw-copy-depth per coloring_depth ladder`
-    semantic_expression = `data-spw-semantic-expression optional compact Spw label`
+    semantic_expression = `data-spw-semantic-expression is the multidimensional handle (subject[mode]{direction}<capsule>) for the same collectible`
     collectible_role = `data-spw-textual-role="lede|note|aside|kicker|invitation|narration"`
   }[reg=facet]
   team_workflow: #[

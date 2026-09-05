@@ -13,6 +13,8 @@
 @component_region_personality: ~"./component-region-personality.spw"
 @living_medium_copy: ~"./living-medium-copy.spw"
 @copy_localization: ~"./copy-localization.spw"
+@copy_accessor: ~"./copy-accessor.spw"
+@copy_accessor_cluster: ~"../audits/copy-accessor-cluster-2026-09.spw"
 @coloring_depth: ~"./coloring-depth.spw"
 @semantic_copy_depth_plan: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
 @component_region_plan: ~"../../.agents/plans/component-region-personality/PLAN.md"
@@ -41,11 +43,11 @@ fixity = "tending"
   `component-region-personality — referentiality, templates, voice surgery, copy-units`
  ][reg=set]
  satellite_plans: #[`hook-region-anatomy`, `audience-onboarding-copy`, `copy-localization`, `resume-record`][reg=set]
- conventions: #[`living-medium-copy`, `copy-localization`, `coloring-depth`, `component-region-personality`, `metaphor-dimensional-lexicon`, `resume-record`][reg=set]
- audits: #[`internal-external-vocabulary-clusters-2026-07`, `vocabulary-metaphor-growth-synthesis-2026-07`, `metaphor-primitive-research-branching-2026-07`][reg=set]
+ conventions: #[`living-medium-copy`, `copy-localization`, `copy-accessor`, `coloring-depth`, `component-region-personality`, `metaphor-dimensional-lexicon`, `resume-record`][reg=set]
+ audits: #[`internal-external-vocabulary-clusters-2026-07`, `vocabulary-metaphor-growth-synthesis-2026-07`, `metaphor-primitive-research-branching-2026-07`, `copy-accessor-cluster-2026-09`][reg=set]
  register_disambiguation: `expressive_registers "register" = depth/valence channel; product-lines audience_register = offer taxonomy; viewing_reason = cross-media lens/persona axis — see @metaphor_dimensional_lexicon lexicon_registers.viewing_reason`
  conflict_rule: "Public route copy contracts beat plan prose; data-spw-copy-unit ids beat raw English strings."
- first_read: "component-region-personality for voice/templates; semantic-copy-depth for depth tiers; vocabulary_metaphor_growth_synthesis for cluster audit + promotion waves."
+ first_read: "copy-accessor for dotted key vs Spw handle and clustered-update working sets; component-region-personality for voice/templates; semantic-copy-depth for depth tiers; vocabulary_metaphor_growth_synthesis for metaphor cluster audit + promotion waves."
 }
 
 ^"embedding_garden"{

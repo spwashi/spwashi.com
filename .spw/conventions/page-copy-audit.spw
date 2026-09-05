@@ -45,6 +45,7 @@ fixity = "stable"
   align = `npm run audit:copy:align`
   expr = `npm run audit:copy:expr`
   variety = `npm run audit:copy:variety`
+  accessor = `npm run audit:copy:accessor`
   one_route = `node scripts/page-copy-audit.mjs pretext --route /about/`
   json = `node scripts/page-copy-audit.mjs inventory --json --out /tmp/copy-inventory.json`
 }[reg=facet]
@@ -72,6 +73,7 @@ validation: #[
   `node --check scripts/lib/page-copy-audit.mjs scripts/page-copy-audit.mjs scripts/measure-page-pretext.mjs`
   `node --test scripts/tests/page-copy-audit.test.mjs`
   `node scripts/page-copy-audit.mjs list`
+  `node scripts/page-copy-audit.mjs accessor --route /about/`
   `node scripts/page-copy-audit.mjs inventory --route /about/domains/bane.land/`
   `rg 'page_copy_audit|audit:copy' .spw/conventions/page-copy-audit.spw package.json`
 ][reg=set]
