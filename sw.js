@@ -33,18 +33,27 @@ const LEGACY_CACHE_PREFIXES = [
   'spw-pages',
   'spw-assets',
   'spw-v',
-  'spw-v2',
 ];
 
 const OFFLINE_URL = '/offline/';
 const FALLBACK_IMAGE_URL = '/public/images/icon-192.png';
 
+// Kept in sync with PUBLIC_NAV_ITEMS in scripts/template.mjs (the top-level
+// header nav) plus a few high-value content hubs. /now/ is deliberately
+// excluded — its own nav note calls it "current sprint, asks, and live
+// notes"; hard-precaching it would let an install serve a stale snapshot
+// offline as if it were current, which the plan's trust/containment taste
+// note (.agents/plans/pwa-experience/PLAN.md) rules out. It still becomes
+// available offline the ordinary way once visited once, same as any route.
 const CORE_ROUTES = [
   '/',
   '/about/',
-  '/blog/',
-  '/settings/',
+  '/topics/',
   '/play/',
+  '/design/folios/',
+  '/services/',
+  '/settings/',
+  '/blog/',
   '/topics/craft/',
   '/topics/software/',
   OFFLINE_URL,

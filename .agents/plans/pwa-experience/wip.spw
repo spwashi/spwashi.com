@@ -114,6 +114,8 @@ fixity = "tending"
  >>[2026-04-17 16:53] observe — The manifest still declares `orientation: any`, which makes the installed Android shell rotate too eagerly for a reading-first site.
  >>[2026-04-17 16:53] decide — Lock the installed shell to `portrait-primary`; wide and landscape exploration can still happen in the normal browser surface without fighting phone orientation preferences.
  >>[2026-08-16 00:44] implement — Added a service-worker status handshake so the client can inspect the active worker version, cache roles, entry counts, offline URL, and precache posture without changing page structure.
+ >>[2026-09-05 00:00] observe — Hygiene pass against PUBLIC_NAV_ITEMS (scripts/template.mjs, the current top-level nav: Home/About/Topics/Play/Art/Services/Now/Settings) found CORE_ROUTES in sw.js had drifted: it precached /topics/craft/ and /topics/software/ but never /topics/ itself, and never /design/folios/ (Art) or /services/ at all — three real nav destinations. offline/index.html had drifted further and independently: its nav_items, related_routes, and "Cached routes" chips still named a pre-restructure nav (Plans/Software/Craft as top-level items), unlike every other route's index.html, which template.mjs already keeps synced to PUBLIC_NAV_ITEMS. LEGACY_CACHE_PREFIXES carried a 'spw-v2' entry made redundant by the existing generic 'spw-v' prefix (same array) since the schema-versioning scheme landed. manifest.webmanifest carried a "version" field left over from the pre-schema manual-bump scheme this file's own 2026-04-17 entries record moving away from — not a real manifest field, read by nothing in the codebase. pwa-update-handler.js's toast hardcoded font-family: 'JetBrains Mono' instead of var(--site-mono-font, ...), the pattern every other font-family declaration site-wide uses, so the toast would not follow a reader's chosen monospace variant.
+ >>[2026-09-05 00:00] fixed — sw.js CORE_ROUTES now lists /, /about/, /topics/, /play/, /design/folios/, /services/, /settings/, /blog/, /topics/craft/, /topics/software/ (deliberately not /now/ — its own nav note calls it "current sprint, asks, and live notes"; hard-precaching it would let an install serve a stale snapshot offline as if current, against this plan's own trust/containment taste note. It still becomes available offline the ordinary way once visited). offline/index.html's nav_items now matches the canonical string every other route carries; its related_routes and chip list now name the routes actually precached instead of the old nav. Dropped the redundant spw-v2 legacy prefix. Removed manifest.webmanifest's dead version field. pwa-update-handler.js's toast font-family now reads var(--site-mono-font, ...).
 }
 
 ^["open"]{
@@ -134,7 +136,7 @@ fixity = "tending"
  ~#files_hot: "manifest.webmanifest, public/js/pwa-update-handler.js, sw.js, offline/index.html"
  ~#next_commit: "4"
  ~#open_count: "0"
- ~#last_stream: "2026-08-16 00:44"
+ ~#last_stream: "2026-09-05 00:00"
  ~#taste_debt: ""
 }
 

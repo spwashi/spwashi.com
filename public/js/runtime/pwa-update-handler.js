@@ -114,7 +114,7 @@ class ToastManager {
                 background: var(--pwa-toast-bg, ${APP_THEME_COLOR});
                 color: var(--pwa-toast-text, #ffffff);
                 box-shadow: 0 10px 28px rgba(14, 18, 20, 0.18);
-                font-family: 'JetBrains Mono', monospace;
+                font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
                 font-size: 0.9rem;
                 line-height: 1.5;
                 overflow-wrap: anywhere;
