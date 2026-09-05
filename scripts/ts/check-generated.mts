@@ -15,6 +15,13 @@ type GeneratedGroup = {
 const GENERATED_TS_GROUPS: GeneratedGroup[] = [
   { label: 'tools-ts', paths: ['scripts/typed'] },
   { label: 'runtime-ts', paths: ['public/js/typed'] },
+  {
+    label: 'copy-manifests',
+    paths: [
+      'public/data/site-search-index.json',
+      'public/js/generated/spw-expressions.js',
+    ],
+  },
 ];
 
 function runGit(args: string[]) {

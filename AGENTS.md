@@ -118,7 +118,7 @@ Default decision rule:
 - `check:local` can be green with stale committed CSS bundles and with fixture hosts a capture commit retargeted. Trace bundle hunks to the source commit; update fixture tests in the same commit as the host change. It does **not** validate commit grammar.
 - After catalog selector or public class-noun edits: `npm run audit:module-selectors`.
 - After ink, resonance, or pocket chrome: `npm run visual:checks` (attention-miss receipts, not JPEG goldens).
-- After copy-unit / collectible lede work: `npm run audit:copy:accessor`.
+- After copy-unit / collectible lede / `data-spw-semantic-expression` HTML: `npm run audit:copy:accessor` and `npm run manifest`. Commit `public/data/site-search-index.json` and `public/js/generated/spw-expressions.js` if they moved — pre-push `check:local` fails on a stale agent route cache otherwise.
 - After model-adapter edits: `npm run check:agents` (adapters must be git-tracked).
 - When touching `sw.js`, `manifest.webmanifest`, offline routes, or PWA runtime, also run `npm run check:pwa`.
 - When proposing or writing a commit message, read one recent full body and include a closing `#[episode]{}`. Local check scripts do not catch a missing episode.

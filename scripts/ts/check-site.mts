@@ -61,6 +61,7 @@ export async function main(): Promise<void> {
     for (const detail of manifestCache.details.slice(0, 12)) {
       console.log(`  manifest-cache: ${detail}`);
     }
+    console.log('  hint: copy or body metadata can stale this cache; commit public/data/site-search-index.json and public/js/generated/spw-expressions.js if they moved');
   }
 
   if (manifestIssues.errors.length) {
