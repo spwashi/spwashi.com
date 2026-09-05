@@ -85,16 +85,16 @@ source = "chat 2026-09-05 after folio invitation commits"
   id = "hk-004"
   operation = "cache"
   fixity = "tending"
-  claim = `Shop-talk is a sentence that names a system nearby controls do not enact. Example: "Glass and matte keep their jobs" on #home-reason-why. Cut it or attach a control; do not explain the materials system in the why paragraph. Do not replace it with generated whimsy.`
+  claim = `A sentence earns its keep if this component can use it: identity, or a control the nearby surface actually enacts. Cut copy that only names a system you cannot try here. Do not replace it with generated whimsy. Do not mint a phrase-grep as the contract.`
   evidence = #[
-    `index.html #home-reason-why`,
+    `First-fold and component notes on Home, About, Now, Membership, and the folio worktable`,
     `@hypermedia_geometry cognitive_model falsification: a metaphor cannot predict a visible consequence`,
     `@copy_ecology consequential_route_arcs`
   ][reg=set]
-  pattern_consideration = `@accessor_cluster refuse: no public copy rewrite from that audit without a human confirm. This cache names the fail; HTML align is a later named patch.`
-  expansion_prime = `First HTML: #home-reason-why only, after the consequence ledger lists it.`
-  validation = `rg 'Glass and matte' index.html`
-  do_not_promote_until = `Human confirms the cut or a Settings link.`
+  pattern_consideration = `Judge the fold, not a retired sentence. Verbosity and leftover metaphors from the last room are the usual fail, not one materials phrase.`
+  expansion_prime = `When a sentence names a system, the same component should let you try it — or the sentence should go.`
+  validation = `Read the first fold on / and the linked hook on the destination; npm run audit:copy:accessor`
+  do_not_promote_until = `Never promote a string-match test into a copy contract.`
 }
 
 ^"hk-005_packs_not_copy_keys"{
