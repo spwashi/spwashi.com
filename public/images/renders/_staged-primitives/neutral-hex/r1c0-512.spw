@@ -3,19 +3,23 @@
 #:fixity #!experimental
 
 ^"spirit"{
-  whimsy_name: "REPLACE_ME"
-  description: "REPLACE_ME — algorithmic crop, not yet named or judged"
-  visual_qualities: "REPLACE_ME"
+  whimsy_name: "hex-fold-edge"
+  description: "One hard hex crease against blush paper — the best primitive in this set."
+  visual_qualities: "sharp fold, cream vs blush, geometric edge"
 }
 
 ^"staging"{
   source = ~"00.unsorted/tiles/spwashi_neutral_aesthetic_for_a_tiling_web_background_having__53de2ebc-078a-4257-9a9c-56356424376a_1.png"
-  method = "slice-render-primitives.mjs grid crop, no manual framing yet"
-  theme_pack_candidate = "REPLACE_ME | none"
-  component_genre_candidate = "REPLACE_ME | none"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
+  theme_pack_candidate = "ritual-vellum"
+  component_genre_candidate = "frame-card"
+  theme_set = "vellum-hex"
+  trope = "paper climate: a fold as a state marker"
+  icon_candidate = "true"
+  replace_later = "true"
   promoted = "false"
 }[reg=facet]
 
 ^"discovery"{
-  tags: ["staged", "unreviewed"]
+  tags: ["staged", "theme-set", "vellum-hex", "icon"]
 }

@@ -105,6 +105,12 @@
         { spirit_name: "boon-dough-pearl-skin", variants: ["thumb", "display", "hero"], formats: ["avif", "webp"],
           note: "Pearl under dumpling dough — culinary valence on /recipes/." }
       ]},
+      { date: "2026-09-04", name: "staged-theme-sets", status: "staged-primitives", images: 8, content: [
+        { spirit_name: "vellum-hex", variants: ["r0c0-ground", "r0c1-recess", "r1c0-fold-edge", "r1c1-blush"], formats: ["webp"],
+          note: "Cream hex climate. ritual-vellum / frame-card. Icons ask 'paper pack?' Crops are tropes; replace_later." },
+        { spirit_name: "algorithm-lattice", variants: ["r0c0-ember-well", "r0c1-score-curtain", "r1c0-copper-orb", "r1c1-asterisk-gate"], formats: ["webp"],
+          note: "Teal-oxide + copper glyph climate. oxide-ledger / software-card. Icons ask 'algorithm pack?' Opposite of vellum-hex." }
+      ]},
       { date: "2026-08-22", name: "recovered-gold-study", status: "archived-source", images: 3, content: [
         { spirit_name: "recovered-gold-voyager", variants: ["source"], formats: ["jpg"],
           note: "Grok Imagine. Faceless gold traveler descending into a deserted bowl. Situating image for the 2024–2028 mix window. Not a ceremony-costume replica and not a performer likeness. Cache: .spw/caches/golden-voyager-window.spw." },

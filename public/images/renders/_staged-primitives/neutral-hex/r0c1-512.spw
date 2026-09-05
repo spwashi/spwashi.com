@@ -3,19 +3,23 @@
 #:fixity #!experimental
 
 ^"spirit"{
-  whimsy_name: "REPLACE_ME"
-  description: "REPLACE_ME — algorithmic crop, not yet named or judged"
-  visual_qualities: "REPLACE_ME"
+  whimsy_name: "hex-corner-recess"
+  description: "Three hex planes meeting — spatial, not a card face. Keep as set context."
+  visual_qualities: "cream recess, corner join, blush haze"
 }
 
 ^"staging"{
   source = ~"00.unsorted/tiles/spwashi_neutral_aesthetic_for_a_tiling_web_background_having__53de2ebc-078a-4257-9a9c-56356424376a_1.png"
-  method = "slice-render-primitives.mjs grid crop, no manual framing yet"
-  theme_pack_candidate = "REPLACE_ME | none"
-  component_genre_candidate = "REPLACE_ME | none"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
+  theme_pack_candidate = "ritual-vellum"
+  component_genre_candidate = "none"
+  theme_set = "vellum-hex"
+  trope = "paper climate: the room around the card, not the card"
+  icon_candidate = "false"
+  replace_later = "true"
   promoted = "false"
 }[reg=facet]
 
 ^"discovery"{
-  tags: ["staged", "unreviewed"]
+  tags: ["staged", "theme-set", "vellum-hex"]
 }

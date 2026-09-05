@@ -16,6 +16,8 @@ render inspiration -> extract design principle -> prototype in CSS/HTML -> valid
 
 Do not paste generated imagery into routes just because it looks good. Every promoted asset needs a role, alt text, sidecar metadata, optimization, and route fit.
 
+**Staging (2026-09-04):** `scripts/slice-render-primitives.mjs` grid-crops a `--tile` render and writes wash / edge / icon / nucleus WebPs plus a `.spw` sidecar. Sidecars name `theme_set`, `theme_pack_candidate`, `component_genre_candidate`, `trope`, `icon_candidate`, `replace_later`. Approximate tropes on `/design/materials/#staged-theme-sets` are allowed because stills interpret; they are not a shortcut into core CSS or a live theme pack. Two judged sets: `vellum-hex` (ritual-vellum, frame-card) and `algorithm-lattice` (oxide-ledger, software-card). A still of the 64px icons is the wonder: which climate?
+
 Generated imagery should be translated into CSS, tokens, layout, or ornament before asset promotion is considered.
 
 ## UX Development Rule

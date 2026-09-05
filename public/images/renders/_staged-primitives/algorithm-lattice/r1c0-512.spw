@@ -1,0 +1,25 @@
+#>asset_metadata
+#:layer #!design
+#:fixity #!experimental
+
+^"spirit"{
+  whimsy_name: "copper-orb-vector"
+  description: "Two copper orbs and a chevron — object scale, compare-card or media-card."
+  visual_qualities: "hammered copper spheres, teal void, vector stroke"
+}
+
+^"staging"{
+  source = ~"00.unsorted/tiles/spwashi_algorithms_--chaos_20_--tile_--profile_3q5khel_--hd_-_bff081de-a68e-4184-b2ac-fb1f4ba8e9ab_1.png"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
+  theme_pack_candidate = "banked-ember"
+  component_genre_candidate = "media-card"
+  theme_set = "algorithm-lattice"
+  trope = "algorithm climate: two weights in relation"
+  icon_candidate = "false"
+  replace_later = "true"
+  promoted = "false"
+}[reg=facet]
+
+^"discovery"{
+  tags: ["staged", "theme-set", "algorithm-lattice"]
+}

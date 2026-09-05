@@ -1,0 +1,25 @@
+#>asset_metadata
+#:layer #!design
+#:fixity #!experimental
+
+^"spirit"{
+  whimsy_name: "lattice-ember-well"
+  description: "Teal shaft with amber grid — oxide climate, software-card scale."
+  visual_qualities: "teal depth, copper grid, ember nucleus, glyph scratches"
+}
+
+^"staging"{
+  source = ~"00.unsorted/tiles/spwashi_algorithms_--chaos_20_--tile_--profile_3q5khel_--hd_-_bff081de-a68e-4184-b2ac-fb1f4ba8e9ab_1.png"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
+  theme_pack_candidate = "oxide-ledger"
+  component_genre_candidate = "software-card"
+  theme_set = "algorithm-lattice"
+  trope = "algorithm climate: a well you read, not a poster"
+  icon_candidate = "true"
+  replace_later = "true"
+  promoted = "false"
+}[reg=facet]
+
+^"discovery"{
+  tags: ["staged", "theme-set", "algorithm-lattice", "icon"]
+}

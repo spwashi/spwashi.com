@@ -3,13 +3,14 @@
  * slice-render-primitives.mjs
  * ---------------------------------------------------------------------------
  * Turn one raw Midjourney render into a small set of candidate primitives:
- * a grid of square crops at a target tile size, each with a "wash" variant
- * (desaturated + lightened, for use as a very quiet full-bleed background
- * rather than a loud illustration). Output is optimized WebP, staged next
- * to a draft .spw sidecar per derivative — nothing here writes into a
- * live route or theme pack. That promotion step stays human-judged, per
- * midjourney-design-concepts/PLAN.md ("Midjourney output is reference
- * material unless explicitly promoted").
+ * a grid of square crops at a target tile size, plus algorithmic variants:
+ *   wash     — desaturated/lightened full-bleed (type stays readable)
+ *   edge     — gray edge map (structure / icon wonder)
+ *   icon     — 64px high-contrast punch (motif-tier, a still of a set)
+ *   nucleus  — center 55% crop (the tile's heart, often the better primitive)
+ * Approximate tropes are allowed: screenshots now interpret well enough that
+ * a crop can stage a theme-set and be replaced later. Promotion to a live
+ * theme pack or card family still needs a named sidecar judgment.
  *
  * Uses ImageMagick (`magick`), already present, matching this repo's
  * no-new-deps discipline (see .agents/skills/image-optimize/SKILL.md).
@@ -80,13 +81,51 @@ async function main() {
     // lighten, and drop contrast so type stays readable on top of it.
     run([
       cropPng,
-      '-modulate', '112,38,100', // brightness,saturation,hue
+      '-modulate', '112,38,100',
       '-brightness-contrast', '6x-18',
       '-quality', '72',
       washWebp,
     ]);
+    const edgeWebp = path.join(OUT_DIR, `${cropBase}-edge.webp`);
+    const iconWebp = path.join(OUT_DIR, `${cropBase}-icon.webp`);
+    const nucleusWebp = path.join(OUT_DIR, `${cropBase}-nucleus.webp`);
+    run([
+      cropPng,
+      '-colorspace', 'gray',
+      '-edge', '1',
+      '-negate',
+      '-normalize',
+      '-quality', '72',
+      edgeWebp,
+    ]);
+    run([
+      cropPng,
+      '-colorspace', 'gray',
+      '-edge', '2',
+      '-negate',
+      '-normalize',
+      '-resize', '64x64',
+      '-quality', '68',
+      iconWebp,
+    ]);
+    run([
+      cropPng,
+      '-gravity', 'center',
+      '-crop', '55%x55%+0+0',
+      '+repage',
+      '-resize', `${tile}x${tile}`,
+      '-quality', '72',
+      nucleusWebp,
+    ]);
     await fs.unlink(cropPng);
-    manifest.push({ id, x, y, tile, webp: path.relative(process.cwd(), cropWebp), wash: path.relative(process.cwd(), washWebp) });
+    manifest.push({
+      id, x, y, tile,
+      webp: path.relative(process.cwd(), cropWebp),
+      wash: path.relative(process.cwd(), washWebp),
+      edge: path.relative(process.cwd(), edgeWebp),
+      icon: path.relative(process.cwd(), iconWebp),
+      nucleus: path.relative(process.cwd(), nucleusWebp),
+    });
   }
 
   const sidecarStub = () => `#>asset_metadata
@@ -101,14 +140,18 @@ async function main() {
 
 ^"staging"{
   source = ~"${path.relative(process.cwd(), SRC)}"
-  method = "slice-render-primitives.mjs grid crop, no manual framing yet"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
   theme_pack_candidate = "REPLACE_ME | none"
   component_genre_candidate = "REPLACE_ME | none"
+  theme_set = "REPLACE_ME — a named climate a still of 3–4 tiles can ask about"
+  trope = "approximate crop; screenshots interpret; replace_later allowed"
+  icon_candidate = "false"
+  replace_later = "true"
   promoted = "false"
 }[reg=facet]
 
 ^"discovery"{
-  tags: ["staged", "unreviewed"]
+  tags: ["staged", "unreviewed", "theme-set"]
 }
 `;
 
@@ -118,8 +161,8 @@ async function main() {
   }
 
   console.log(`sliced ${manifest.length} candidate(s) from ${path.relative(process.cwd(), SRC)} -> ${path.relative(process.cwd(), OUT_DIR)}`);
-  for (const m of manifest) console.log(`  ${m.webp}  (+ wash, + .spw stub)`);
-  console.log('\nStaged only — nothing wired into a route or theme pack. Review, name, and promote by hand.');
+  for (const m of manifest) console.log(`  ${m.webp}  (+ wash/edge/icon/nucleus, + .spw stub)`);
+  console.log('\nStaged tropes — a still can ask which climate. Name the sidecar before promoting to a pack.');
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

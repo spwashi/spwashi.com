@@ -134,7 +134,7 @@
 
   method: {
     tool: ~"../../scripts/slice-render-primitives.mjs"
-    approach: "ImageMagick grid-crop a source render into N square candidates at a target tile size, plus a desaturated/lightened 'wash' variant of each crop for use as a quiet full-bleed background rather than a loud illustration. No new npm dependency — same discipline as image-optimize's existing sips/ImageMagick usage."
+    approach: "ImageMagick grid-crop a source render into N square candidates at a target tile size, plus wash (quiet bleed), edge (structure map), icon (64px punch), and nucleus (center 55%). No new npm dependency. Approximate tropes are allowed because stills now interpret; replace_later stays true until a human names the sidecar and a route actually uses the crop."
     output: "public/images/renders/_staged-primitives/<slug>/ — draft .spw sidecar per derivative, fixity=experimental, promoted=false. Never a route or theme-pack reference; that edit stays human-judged."
     source_pools: [
       "00.unsorted/tiles/ — renders authored with MJ's --tile flag; the intended source for background-texture candidates",
@@ -145,9 +145,13 @@
 
   affinity_fields: {
     ~#note: "Added to a staged sidecar's own facet, alongside spirit/thematic_mapping — a hypothesis to test against real routes, not a rule that binds the asset."
-    theme_pack_candidate: "One of neutral-paper | ritual-vellum | oxide-ledger | electric-studio | copper-brace | glass-console | none — which public/css/themes/packs.css token palette the render's color/material reads closest to, if any."
+    theme_pack_candidate: "One of neutral-paper | ritual-vellum | oxide-ledger | electric-studio | copper-brace | glass-console | banked-ember | none — which public/css/themes/packs.css token palette the render's color/material reads closest to, if any."
     component_genre_candidate: "One of frame-card | media-card | software-card | operator-card | plan-card | compare-card | none — which card family (public/css/components/cards.css) the crop's scale and material suit, if any."
-    rule: "A candidate is a note for a human to confirm on a real route, in real light/dark and theme-pack states, before it becomes a live background — per the sensation-review-gate: pacing/feel decisions get a demo before implementation, not just a passing check."
+    theme_set: "A named climate (vellum-hex, algorithm-lattice, …). A still of 3–4 icons from one set should ask which pack you are in. That is the reason to wonder."
+    trope: "Approximate visual story. Screenshots interpret tropes; the crop may be replaced later without renaming the spirit."
+    icon_candidate: "true when the 64px edge-punch is legible as a glyph in a set."
+    replace_later: "true until a human demo on a real route. Staging on /design/materials/ is allowed as a replace-later bed."
+    rule: "Do not embed these rasters in core CSS. Flourish/idle plates and design-lab figures only. Sensation-review-gate still applies before a pack or card family consumes a crop."
   }[reg=facet]
 }[reg=facet]
 

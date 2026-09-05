@@ -1,0 +1,25 @@
+#>asset_metadata
+#:layer #!design
+#:fixity #!experimental
+
+^"spirit"{
+  whimsy_name: "asterisk-orb-gate"
+  description: "Amber asterisk over a marked teal orb — the set's strongest icon."
+  visual_qualities: "asterisk, inscribed sphere, orange wedge, teal field"
+}
+
+^"staging"{
+  source = ~"00.unsorted/tiles/spwashi_algorithms_--chaos_20_--tile_--profile_3q5khel_--hd_-_bff081de-a68e-4184-b2ac-fb1f4ba8e9ab_1.png"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
+  theme_pack_candidate = "oxide-ledger"
+  component_genre_candidate = "operator-card"
+  theme_set = "algorithm-lattice"
+  trope = "algorithm climate: a mark that names the field"
+  icon_candidate = "true"
+  replace_later = "true"
+  promoted = "false"
+}[reg=facet]
+
+^"discovery"{
+  tags: ["staged", "theme-set", "algorithm-lattice", "icon"]
+}
