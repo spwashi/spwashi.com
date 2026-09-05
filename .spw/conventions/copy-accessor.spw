@@ -18,6 +18,7 @@
 @component_region_personality: ~"./component-region-personality.spw"
 @copy_ecology: ~"./copy-ecology.spw"
 @audit: ~"../audits/copy-accessor-cluster-2026-09.spw"
+@copy_hypermedia_key: ~"../caches/copy-hypermedia-key-2026-09.spw"
 @runner: ~"../../scripts/page-copy-audit.mjs"
 
 operation = "contract"
@@ -75,6 +76,7 @@ fixity = "stable"
 
 ^"authoring"{
   collectible = `Frame-notes and page-ledes get both ids when an editing team will audit or translate them: copy-unit for the catalog, expression when kinship or packing should read the host.`
+  hypermedia_key = `A copy-unit that will be audited should sit on a host with an id so the key is a place (route + hash). That is the hypermedia localization key — not a fourth family. See @copy_hypermedia_key#hk-001.`
   lens_panels = `Mode-switch hook-ledes (read view / join view) are not automatically collectibles. Address the canonical lede; leave lens variants unkeyed unless they will be translated separately.`
   no_fourth = `Do not add data-spw-copy-key, data-spw-i18n, or a second dotted scheme. If a host needs more meaning, enrich the expression or the living term.`
 }[reg=facet]

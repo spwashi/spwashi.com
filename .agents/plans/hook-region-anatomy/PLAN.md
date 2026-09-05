@@ -13,6 +13,8 @@ The hook is **not** the stable hero frame, not a generic page-hook landmark, and
 
 Outcome for visitors: the top of a landing page feels like a deliberate threshold you *do something with* (relate, gesture, move) rather than only read past.
 
+Copy constraint: first-fold sentences must pass a no-context clicker test (identity, or a named control plus a visible receipt). Shop-talk such as “Glass and matte keep their jobs” is a fail. Collectible hook ledes should carry a host `id` so the copy-unit is a place. See `.spw/caches/copy-hypermedia-key-2026-09.spw` and the person-magazine cluster in `copy-accessor.spw`. Do not invent whimsy here.
+
 ## Why This Now
 
 - Homepage scrolling + rich kernel-entry hero with lenses, living terms, gesture contracts, and cauldron priming is already appreciated. Other landings (topics, about, services, play, design) have solid but more static site-hero frames.

@@ -1,0 +1,147 @@
+# Copy Hypermedia Key (2026-09)
+#
+# operation: cache
+# Insights from the folio-landing copy pass: how to verify 140+ routes,
+# treat copy-units as places, and keep workbench/build questions off the
+# HTML family. Scripts still hold numbers. This file holds judgments.
+
+#>copy_hypermedia_key_2026_09
+#:cache #!copy #!hypermedia #!localization #!audit
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@copy_localization: ~"../conventions/copy-localization.spw"
+@copy_ecology: ~"../conventions/copy-ecology.spw"
+@page_copy_audit: ~"../conventions/page-copy-audit.spw"
+@accessor_cluster: ~"../audits/copy-accessor-cluster-2026-09.spw"
+@hypermedia_2d: ~"../conventions/hypermedia-2d.spw"
+@hypermedia_geometry: ~"./hypermedia-geometry-2026-09.spw"
+@feature_utilization: ~"../conventions/feature-utilization.spw"
+@stylesheet_ecology: ~"../conventions/stylesheet-ecology.spw"
+@workbench_report: ~"../workbench-report.spw"
+@dual_path: ~"../language/feature-utilization.spw"
+@copy_localization_plan: ~"../../.agents/plans/copy-localization/PLAN.md"
+@audience_onboarding: ~"../../.agents/plans/audience-onboarding-copy/PLAN.md"
+@core_css_spend: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
+@agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
+@insight_template: ~"../../.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
+
+operation = "cache"
+fixity = "tending"
+source = "chat 2026-09-05 after folio invitation commits"
+
+^"hk-001_hypermedia_localization_key"{
+  id = "hk-001"
+  operation = "cache"
+  fixity = "tending"
+  claim = `The existing copy-unit is the localization key. It becomes a hypermedia key only when it is also a place: copy-unit → host id/fragment → route → clickable control → visible receipt.`
+  evidence = #[
+    `@copy_accessor two_projections`,
+    `@copy_localization accessor_projection`,
+    `@hypermedia_2d edges`,
+    `home.hook.lede on #home-frame-note vs unkeyed #home-reason-why`
+  ][reg=set]
+  pattern_consideration = `Do not add data-spw-copy-key. A spreadsheet id without a fragment is not hypermedia.`
+  expansion_prime = `When minting a collectible, require a host id so /#id is the key's address.`
+  validation = `npm run audit:copy:accessor; rg 'data-spw-copy-unit' index.html`
+  do_not_promote_until = `A collectible with copy-unit, id, claim line, and a click receipt exists on home.`
+}
+
+^"hk-002_no_route_twins"{
+  id = "hk-002"
+  operation = "cache"
+  fixity = "stable"
+  claim = `Do not twin public routes or hubs with .spw/<route>/index.spw. Layer indexes dispatch; surfaces.spw lists hubs; slices own cross-layer work; copy-units own collectibles.`
+  evidence = #[
+    `AGENTS.md Open first; agent-optimization: smaller census, not more index.spw`,
+    `.spw/surfaces.spw#public_routes`,
+    `.spw/slices/index.spw`
+  ][reg=set]
+  pattern_consideration = `A person-magazine slice is allowed only after a first-fold align proves the cluster is more than one paragraph.`
+  expansion_prime = `Keep clustered_update working sets as the editor map.`
+  validation = `rg 'person-magazine' .spw/conventions/copy-accessor.spw`
+  do_not_promote_until = `Never promote a per-URL twin.`
+}
+
+^"hk-003_scale_verification"{
+  id = "hk-003"
+  operation = "prime"
+  fixity = "experimental"
+  claim = `140+ routes are audited by a runner that lists dark matter (unkeyed first-fold, mechanism-without-receipt, missing id). Judgments and tone_intent live in .spw for fails and collectibles only — not a committed JSON of every paragraph.`
+  evidence = #[
+    `@accessor_cluster census: 23 copy-units, 29 unaddressed hook-ledes`,
+    `@page_copy_audit similar_audit`,
+    `flagCopyVoice in scripts/lib/page-copy-audits/accessor.mjs`
+  ][reg=set]
+  pattern_consideration = `Next plugin: scripts/lib/page-copy-audits/consequence.mjs. Reuse collectRoutePages. Do not fork a walker.`
+  expansion_prime = `Fill a join table for person-magazine first. Tone_intent values: identity | mechanism | invitation | magazine-return | shop-talk.`
+  validation = `node scripts/page-copy-audit.mjs list; npm run audit:copy:accessor`
+  do_not_promote_until = `The consequence plugin exists, has tests, and a dated audit file holds person-magazine fails.`
+}
+
+^"hk-004_shop_talk"{
+  id = "hk-004"
+  operation = "cache"
+  fixity = "tending"
+  claim = `Shop-talk is a sentence that names a system nearby controls do not enact. Example: "Glass and matte keep their jobs" on #home-reason-why. Cut it or attach a control; do not explain the materials system in the why paragraph. Do not replace it with generated whimsy.`
+  evidence = #[
+    `index.html #home-reason-why`,
+    `@hypermedia_geometry cognitive_model falsification: a metaphor cannot predict a visible consequence`,
+    `@copy_ecology consequential_route_arcs`
+  ][reg=set]
+  pattern_consideration = `@accessor_cluster refuse: no public copy rewrite from that audit without a human confirm. This cache names the fail; HTML align is a later named patch.`
+  expansion_prime = `First HTML: #home-reason-why only, after the consequence ledger lists it.`
+  validation = `rg 'Glass and matte' index.html`
+  do_not_promote_until = `Human confirms the cut or a Settings link.`
+}
+
+^"hk-005_packs_not_copy_keys"{
+  id = "hk-005"
+  operation = "cache"
+  fixity = "tending"
+  claim = `Copy-units select prose collectibles (locale, stills, timed feeds). body[data-spw-features] selects CSS/JS capability packs. Do not gate material.css or a behavior bundle from a copy-unit.`
+  evidence = #[
+    `@feature_utilization thesis`,
+    `@stylesheet_ecology cascade_vs_delivery`,
+    `public/js/runtime/behavior-scopes.js BEHAVIOR_SCOPE_KEYS`,
+    `@core_css_spend`
+  ][reg=set]
+  pattern_consideration = `Spw may claim which pack a collectible needs the way module catalog features already do. Spw is not a bundler.`
+  expansion_prime = `Partial HTML generation (locale routes, ?precipitate=print) can walk copy-units; pack graphs stay on feature tokens.`
+  validation = `rg 'BEHAVIOR_SCOPE_KEYS' public/js/runtime/behavior-scopes.js`
+  do_not_promote_until = `A locale or still pipeline actually reads copy-units as an inclusion set.`
+}
+
+^"hk-006_precipitate_not_binary"{
+  id = "hk-006"
+  operation = "cache"
+  fixity = "tending"
+  claim = `A .spw "binary" is a precipitate: Spw card + product JSON, content-addressed. Workbench cache.layer/1 names four planes (editor_probe_cache, lsp_session_reflection, runtime_cache, corpus_memo). Site analog: .spw/gen/session/corpus-memo, public/js/generated/spw-expressions.js, CSS bundles. Do not commit ASTs as source.`
+  evidence = #[
+    `.spw/_workbench/packages/spw-seed/src/ir/cache-layer.ts`,
+    `.spw/gen/session/corpus-memo/`,
+    `@workbench_report`
+  ][reg=set]
+  pattern_consideration = `Memo a consequence census under corpus_memo, keyed by tree + plugin version, gitignored. Invalidation must name source files.`
+  expansion_prime = `After the consequence plugin exists, write /tmp JSON and optionally a gen product — not a tracked inventory.`
+  validation = `ls .spw/gen/session/corpus-memo | head`
+  do_not_promote_until = `A named invalidation path exists for a copy-census product.`
+}
+
+^"hk-007_workbench_pin"{
+  id = "hk-007"
+  operation = "cache"
+  fixity = "tending"
+  claim = `No workbench pin bump is in order for copy verification. Mount is f2e5b61 (workbench origin/main): parseExpression full noun, ; / || sequences, cache.layer/1, progressive-product, consumer-relative doctor. Dual-path: consume that pin XOR site copy experiment — not both in one patch. Do not RFC ~> vs capsule-close from this work.`
+  evidence = #[
+    `git submodule status .spw/_workbench`,
+    `@dual_path`,
+    `@workbench_report walk_cost 2026_09_astra`
+  ][reg=set]
+  pattern_consideration = `Caches index still recorded pin 66ed9a2; that line is stale relative to f2e5b61.`
+  expansion_prime = `Update caches/index.spw workbench_align pin when touching this family.`
+  validation = `git -C .spw/_workbench rev-parse --short HEAD`
+  do_not_promote_until = `A real grammar gap requires a pin, measured with spw:doctor.`
+}

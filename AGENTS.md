@@ -39,6 +39,7 @@ AGENTS is the always-on gate. Open the matching plan or contract instead of inve
 |---|---|
 | page-copy / pretext measure | `.spw/conventions/copy-flow.spw` plus `npm run audit:copy` |
 | copy-unit / voice tone / clustered copy update | `.spw/conventions/copy-accessor.spw` plus `npm run audit:copy:accessor` |
+| copy-unit as place / first-fold shop-talk / 140-route verification | `.spw/caches/copy-hypermedia-key-2026-09.spw` plus `copy-accessor.spw` — do not twin routes with `.spw/<route>/index.spw` |
 | Spw language (operators, braces, v04) vs runtime packs | `.spw/language/feature-utilization.spw` plus `npm run ecology:language` — do not conflate with `body[data-spw-features]` |
 | creative capacity / dual-path language / agent preference | `.spw/caches/creative-capacity-2026-09.spw` plus `skill-invocation.spw#introspection` |
 

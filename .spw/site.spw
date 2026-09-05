@@ -24,6 +24,8 @@
 @style_development: ~"./conventions/style-development.spw"
 @asset_management: ~"./conventions/asset-management.spw"
 @copy_localization: ~"./conventions/copy-localization.spw"
+@copy_accessor: ~"./conventions/copy-accessor.spw"
+@copy_hypermedia_key: ~"./caches/copy-hypermedia-key-2026-09.spw"
 @living_medium_copy: ~"./conventions/living-medium-copy.spw"
 @assets: ~"./assets.spw"
 @composable_art: ~"./conventions/composable-art-system.spw"
@@ -216,7 +218,7 @@ translations: .{
  labels_and_tokens = #[@naming, @selection][reg=set]
  installation = #[@submodule, @local_mount, @workbench_mount, @mounted_docs][reg=set]
  site_semantics = #[@conventions, @site_semantics][reg=set]
- localization = #[@conventions, @copy_localization, @site_semantics][reg=set]
+ localization = #[@conventions, @copy_localization, @copy_accessor, @copy_hypermedia_key, @site_semantics][reg=set]
  timing_and_data = #[@timing_data_localization, @copy_localization, @site_semantics][reg=set]
  style_development = #[@css_instruction, @style_development, @composable_art, @site_semantics][reg=set]
  philosophy = #[@philosophy][reg=set]
@@ -296,6 +298,8 @@ dispatch: .{
  conventions = @conventions
  site_semantics = @site_semantics
  localization = @copy_localization
+ copy_accessor = @copy_accessor
+ copy_hypermedia_key = @copy_hypermedia_key
  living_medium_copy = @living_medium_copy
  style_development = @style_development
  composable_art = @composable_art

@@ -19,7 +19,8 @@
 @semantic_braces: ~"./semantic-braces.spw"
 @asset_management: ~"./asset-management.spw"
 @copy_localization: ~"./copy-localization.spw"
-@copy_accessor: ~"./copy-accessor.spw"  # dotted copy-unit is the flat i18n projection; Spw expression is the handle
+@copy_accessor: ~"./copy-accessor.spw"  # dotted copy-unit is the flat i18n projection; host id makes it a hypermedia key
+@copy_ecology: ~"./copy-ecology.spw"  # dispatch: accessor, localization, hypermedia-key cache, clustered working sets
 @living_medium_copy: ~"./living-medium-copy.spw"
 @operator_semantics: ~"./operator-semantics.spw"
 @operator_alignment: ~"./operator-alignment.spw"
@@ -160,6 +161,7 @@ dispatch: .{
  assets = @asset_management
  localization = @copy_localization
  copy_accessor = @copy_accessor
+ copy_ecology = @copy_ecology
  living_medium_copy = @living_medium_copy
  operators = @operator_semantics
  operator_alignment = @operator_alignment

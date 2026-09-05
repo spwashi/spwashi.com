@@ -12,6 +12,7 @@
 
 @page_copy_audit: ~"./page-copy-audit.spw"
 @copy_accessor: ~"./copy-accessor.spw"
+@copy_hypermedia_key: ~"../caches/copy-hypermedia-key-2026-09.spw"
 @measurement: ~"./measurement-contract.spw"
 @pretext_run: ~"../audits/page-pretext-measurement-2026-08/index.spw"
 @bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
@@ -29,7 +30,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"three_legs"{
-  analysis = `scripts/page-copy-audit.mjs. align = titles/hooks. expr = data-spw-semantic-expression hosts. accessor = dotted copy-unit vs Spw handle, topic clusters, voice seams. Do not mount a live engine to answer an audit question.`
+  analysis = `scripts/page-copy-audit.mjs. align = titles/hooks. expr = data-spw-semantic-expression hosts. accessor = dotted copy-unit vs Spw handle, topic clusters, voice seams. Consequence (planned): unkeyed first-fold, missing host id, mechanism-without-receipt — see @copy_hypermedia_key#hk-003. Do not mount a live engine to answer an audit question.`
   lifecycle = `Measurement is visible-lab or invited. Never IMMEDIATE. A page may settle without a pretext-measurement event.`
   orchestration = `pretext-measurement-bus publishes optional objective snapshots. loading-ecology and page-state may consume them; they must not wait for them.`
 }[reg=facet]

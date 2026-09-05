@@ -41,6 +41,7 @@
     html: #[`a[href]`, `[data-spw-interaction-contract]`, `[data-spw-deep-link]`][reg=set]
     spells: "route + hash + settings checkpoint — hypermedia extensions"
     sigil_vs_id: "sigil labels the edge grammar; identifier names the anchor node"
+    copy_unit: "A data-spw-copy-unit on a host with an id is a hypermedia localization key (route + hash), not only a spreadsheet row. See copy-accessor.spw#authoring and ../caches/copy-hypermedia-key-2026-09.spw#hk-001."
   }
 
   @page_frame_sizing: ~"./page-frame-sizing.spw"

@@ -37,9 +37,11 @@ intent: .{
   `topics`,
  ][reg=set]
  surfaces = #[
+  `index.html`,
   `about/index.html`,
   `topics/index.html`,
   `.agents/plans/audience-onboarding-copy/PLAN.md`,
+  `.spw/caches/copy-hypermedia-key-2026-09.spw`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -51,15 +53,22 @@ intent: .{
 @plan: ~"./PLAN.md"
 @about_index_html: ~"../../../about/index.html"
 @topics_index_html: ~"../../../topics/index.html"
+@home_index_html: ~"../../../index.html"
+@copy_accessor: ~"../../../.spw/conventions/copy-accessor.spw"
+@copy_hypermedia_key: ~"../../../.spw/caches/copy-hypermedia-key-2026-09.spw"
 
 dispatch: .{
  plan = @plan
  about_index_html = @about_index_html
  topics_index_html = @topics_index_html
+ home_index_html = @home_index_html
+ copy_accessor = @copy_accessor
+ copy_hypermedia_key = @copy_hypermedia_key
 }[reg=facet]
 
 ^"connection_points"{
  owner_rail = `model-guided-refinement`
+ related_plans = #[`copy-localization`, `folio-worktable`, `hook-region-anatomy`][reg=set]
 }[reg=facet]
 
 ^"absorbs"{

@@ -21,6 +21,8 @@
 @inventory_plugin: ~"../../scripts/lib/page-copy-audits/inventory.mjs"
 @pretext_bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
 @copy_flow: ~"./copy-flow.spw"
+@copy_hypermedia_key: ~"../caches/copy-hypermedia-key-2026-09.spw"
+@accessor_plugin: ~"../../scripts/lib/page-copy-audits/accessor.mjs"
 
 operation = "contract"
 fixity = "stable"
@@ -60,6 +62,7 @@ fixity = "stable"
     `5. Write .spw/audits/<id>-<date>/index.spw with the run, claim, and decision`
     `6. Wire the audit into .spw/audits/index.spw`
   ][reg=set]
+  next_named = `consequence — first-fold keyed vs unkeyed, host id, mechanism-without-receipt. Cache: @copy_hypermedia_key#hk-003. Do not implement from that cache until this similar_audit path is followed.`
   !anti = `Do not fork a second route walker or a second wrap classifier. Do not mount data-spw-flow=pretext sitewide to answer an audit question.`
 }[reg=facet]
 

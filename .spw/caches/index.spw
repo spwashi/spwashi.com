@@ -32,6 +32,7 @@
 @creative_capacity_2026_09: ~"./creative-capacity-2026-09.spw"
 @hypermedia_geometry_2026_09: ~"./hypermedia-geometry-2026-09.spw"
 @history_conflict_strands_2026_09: ~"./history-conflict-strands-2026-09.spw"
+@copy_hypermedia_key_2026_09: ~"./copy-hypermedia-key-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -58,6 +59,7 @@ fixity = "tending"
   creative_capacity_2026_09 = @creative_capacity_2026_09
   hypermedia_geometry_2026_09 = @hypermedia_geometry_2026_09
   history_conflict_strands_2026_09 = @history_conflict_strands_2026_09
+  copy_hypermedia_key_2026_09 = @copy_hypermedia_key_2026_09
 }[reg=facet]
 
 ^"cache_rules"{
@@ -69,7 +71,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"workbench_align_2026_07"{
-  pin = `submodule at 66ed9a2 (CLI/LSP dual-read, lattice, pulse --delta, RuntimeMedium)`
+  pin = `submodule at f2e5b61 (parseExpression full noun, ; / || sequences, cache.layer/1, progressive-product, consumer-relative doctor). Prior note 66ed9a2 is stale. Copy verification does not need a further bump — @copy_hypermedia_key_2026_09#hk-007.`
   bridge_files = #[
     `mount.spw engage + orientation_contract`,
     `workspace.spw boundary + LSP roots`,

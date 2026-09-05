@@ -134,10 +134,10 @@ fixity = "tending"
   }[reg=facet]
 
   session_2026_09_copy_accessor: .{
-    reading_order = `copy-localization → copy-accessor → copy-accessor-cluster-2026-09`
+    reading_order = `copy-localization → copy-accessor → copy-accessor-cluster-2026-09 → copy-hypermedia-key-2026-09`
     keys = #[`copy_accessor_cluster`, `page_pretext_measurement`][reg=set]
     hub = @copy_accessor_cluster
-    note = `2026-09-04: dotted copy-unit as i18n projection of Spw handle; voice vs X density complaints; clustered update IA. No new data-spw-* family.`
+    note = `2026-09-04: dotted copy-unit as i18n projection of Spw handle; voice vs X density complaints; clustered update IA. 2026-09-05: copy-unit + host id is the hypermedia key; 140-route verification is a runner + judgments, not per-route index.spw. Cache: ../caches/copy-hypermedia-key-2026-09.spw. No new data-spw-* family.`
   }[reg=facet]
 
   session_2026_07_module_lifecycle_granularity: .{

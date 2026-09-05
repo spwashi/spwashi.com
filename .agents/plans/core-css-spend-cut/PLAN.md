@@ -17,7 +17,7 @@ First paint ships structure. Wonder, grain, cinematic, and ornament arrive after
 - Putting a file in a later layer does not delay its download.
 - A late `<link>` that forgets to redeclare the layer list dumps unlayered rules on top of the stack.
 
-Delivery is what file is requested, when, and how it is cached (`style-core`, route/behavior bundles, `deferred-styles.js`). Each deferred sheet stays in the same layer it already occupied.
+Delivery is what file is requested, when, and how it is cached (`style-core`, route/behavior bundles, `deferred-styles.js`). Each deferred sheet stays in the same layer it already occupied. A `data-spw-copy-unit` selects prose collectibles; it is not a delivery key and must not gate `material.css` or a behavior bundle. Pack graphs stay on `body[data-spw-features]`. See `.spw/caches/copy-hypermedia-key-2026-09.spw#hk-005`.
 
 ## Readable CSS
 The literature is the selectors: `>` a child, `+` the next sibling, `:has()` a parent that knows what it holds. Banner comments are not a substitute.

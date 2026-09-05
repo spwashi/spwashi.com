@@ -40,6 +40,8 @@ The site should remain hand-authored and human-primary. Agent optimization is an
 
 **2026-09 agent adapters (relative strengths):** Root `CLAUDE.md` / `GROK.md` / `GEMINI.md` / `GPT.md` emphasize constitutional / anti-bloat / tool-mastery / exactness. They do not exclusive-own those disciplines. GPT.md also states the computer-use posture (verify-first, one named patch, stop). `npm run check:agents` requires the shared emphasis sentence and **git-tracked** files — a green check on untracked adapters was a lie. Sense instruments now include `audit:copy:accessor`, `audit:module-selectors`, `visual:checks`. Contract: `.spw/conventions/skill-invocation.spw#focuses`. No new `index.spw`.
 
+**2026-09 copy verification (do not twin routes):** 140+ routes are not audited by `.spw/<route>/index.spw`. Copy-units are hypermedia keys when they have host ids; claims and tone_intent live in `.spw` judgments; a planned `consequence` page-copy plugin lists dark matter. Workbench pin `f2e5b61` needs no bump for this. Copy-units select prose; `data-spw-features` selects CSS/JS packs. Cache: `.spw/caches/copy-hypermedia-key-2026-09.spw`.
+
 **2026-09 failure ledger (do not relearn in session):**
 - Catalog `selector` nouns lag public HTML (`.site-frame` vs `.spw-frame`; sibling `~` vs cluster cousins). Open `.spw/audits/module-selector-depth-2026-09.spw` and run `npm run audit:module-selectors`.
 - `--charge` / `--spw-resonance` do not inherit; `:root` opacity calcs sit at rest. Open `attention-field.spw#ink_and_light_spend`. Prove with `npm run visual:checks`, not JPEG goldens.

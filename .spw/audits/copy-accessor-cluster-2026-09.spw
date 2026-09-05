@@ -15,6 +15,7 @@
 @living_medium_copy: ~"../conventions/living-medium-copy.spw"
 @page_copy_audit: ~"../conventions/page-copy-audit.spw"
 @copy_flow: ~"../conventions/copy-flow.spw"
+@copy_hypermedia_key: ~"../caches/copy-hypermedia-key-2026-09.spw"
 @semantic_expression_consequence: ~"../conventions/semantic-expression-consequence.spw"
 @runner: ~"../../scripts/page-copy-audit.mjs"
 @plugin: ~"../../scripts/lib/page-copy-audits/accessor.mjs"
@@ -119,7 +120,8 @@ audit_run: .{
   later = #[
     `voice pass: four glosses + two dense ledes, human-confirmed`,
     `software hook copy-unit so curriculum-numericity has a complete working set`,
-    `add expressions onto hook ledes as those ledes are touched`
+    `add expressions onto hook ledes as those ledes are touched`,
+    `consequence plugin + person-magazine join table — @copy_hypermedia_key#hk-003; do not rewrite public copy from this file`
   ][reg=set]
 }[reg=facet]
 

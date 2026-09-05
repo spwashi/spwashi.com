@@ -62,6 +62,7 @@ fixity = "tending"
 ^"cascade_vs_delivery"{
   claim: "@layer decides which rule wins. It does not decide which file is requested, when it is requested, or how it is cached."
   refuse: "Do not treat the cascade layer list as a load-optimization technique. That misconception keeps spend in core because 'it already lives in effects/ornament'."
+  copy_units: "A copy-unit is not a delivery key. Prose collectibles do not decide which stylesheet is requested; feature packs and deferred-styles.js do. See .spw/caches/copy-hypermedia-key-2026-09.spw#hk-005."
   delivery: "Core vs deferred is a request schedule. Flourish spend (wonder, grain, cinematic, ornament) stays in the same layers and arrives through effects/flourish-pack.css after interactive."
   late_link: "A late <link> that omits the layer list is unlayered and beats the stack. flourish-pack restates the geology so idle arrival is restyle, not a cascade coup."
   visitor: "The schedule is for the person, not the cascade. First paint is already a complete page. Idle flourish may only make that page more itself. A shift that hides or shoves what they already read will make them angry."

@@ -44,20 +44,26 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@copy_accessor: ~"../../../.spw/conventions/copy-accessor.spw"
+@copy_hypermedia_key: ~"../../../.spw/caches/copy-hypermedia-key-2026-09.spw"
 
 dispatch: .{
  plan = @plan
+ copy_accessor = @copy_accessor
+ copy_hypermedia_key = @copy_hypermedia_key
 }[reg=facet]
 
 ^"research_bridge"{
  local_research = #[
   .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `copy_hypermedia_key` ; path = `.spw/caches/copy-hypermedia-key-2026-09.spw` }[reg=facet],
  ][reg=set]
  rule = `Repo-local audits/appendices/conventions — not external web.`
 }[reg=facet]
 
 ^"connection_points"{
  owner_rail = `model-guided-refinement`
+ related_plans = #[`audience-onboarding-copy`, `folio-worktable`][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{

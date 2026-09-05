@@ -15,6 +15,7 @@ The desired end state is a site that can publish multiple language variants with
 
 [NEW] .agents/plans/copy-localization/PLAN.md
 [NEW] .spw/conventions/copy-localization.spw
+[REF] .spw/caches/copy-hypermedia-key-2026-09.spw — copy-unit + host id is the hypermedia key; no per-route `.spw/<url>/index.spw`
 [MOD] .spw/conventions/index.spw — expose copy-localization as a first-class site convention
 [MOD?] .spw/site.spw — reference localization as part of the site translation bridge
 [MOD?] scripts/template.mjs — support locale-scoped copy includes or translation projection hooks
@@ -81,6 +82,7 @@ Craft guard:
 
 1. **Phase 0: semantic preparation**
    Define stable copy-unit ids, locale naming rules, and Spw translation vocabulary.
+   A copy-unit becomes a **hypermedia localization key** when its host has an `id` (route + hash). Track claims and intended tone in `.spw` audits, not a fourth HTML family. Do not twin routes with `.spw/<route>/index.spw`. See `.spw/caches/copy-hypermedia-key-2026-09.spw` and `.spw/conventions/copy-accessor.spw#authoring`.
 
 2. **Phase 1: build seam**
    Add locale-aware template/build support without changing every route. Prove it on one route such as `/` or `/about/`.

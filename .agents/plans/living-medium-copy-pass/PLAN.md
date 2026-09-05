@@ -8,6 +8,7 @@ Update the public copy across spwashi.com so major routes read more clearly as l
 - Add reason copy to cards, banners, and landing surfaces.
 - Use lightweight disclosure only when the full explanation is still present in HTML.
 - Preserve semantic HTML, route structure, and keyboard/reduced-motion safety.
+- Reason copy must name a control the nearby surface actually enacts. Shop-talk and unkeyed first-fold fails are tracked in `.spw/caches/copy-hypermedia-key-2026-09.spw`. Whimsy stays with the human team.
 
 ## Surfaces
 - Home

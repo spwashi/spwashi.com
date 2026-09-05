@@ -44,7 +44,7 @@ The current site already has rich route surfaces, but the rotating layer is not 
 ## Validation
 - Confirm day/week selection is deterministic for a given date.
 - Confirm static fallback renders without the feed.
-- Confirm route copy still reads cleanly for human visitors.
+- Confirm route copy still reads cleanly for human visitors. Promo/wonder sentences on landings belong to person-magazine / design-surface; do not invent whimsy. Shop-talk and unkeyed first-fold fails: `.spw/caches/copy-hypermedia-key-2026-09.spw`.
 - Run `git diff --check` after edits.
 - Run `node --check` for any edited JS modules.
 

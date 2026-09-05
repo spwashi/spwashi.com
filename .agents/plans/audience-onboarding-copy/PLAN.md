@@ -28,12 +28,14 @@ Make the home, about, services, topics, and tools surfaces read like a credible 
 - Include a light ramp for college-freshman curiosity without talking down to the reader.
 - Preserve the site’s professional register and avoid generic “for everyone” language.
 - The site is the résumé. `/about/#about-years` and `/about/#career-register` host walkable year and practice records; they do not replace other component families. See `.agents/plans/resume-record/PLAN.md`.
+- First-fold copy should pass a no-context clicker test: a sentence either names a control and a receipt, or is identity that does not pretend to be a mechanism. Shop-talk (“Glass and matte keep their jobs”) is a fail. Whimsy stays with the human team. Cluster: person-magazine. Cache: `.spw/caches/copy-hypermedia-key-2026-09.spw`.
 
 ## Validation
 
 - `git diff --check`
 - targeted `rg` for the updated route labels and links
 - visual spot check in a browser if the diff shifts hierarchy or nav density
+- After a person-magazine copy pass: `npm run audit:copy:accessor`. First-fold shop-talk and unkeyed mechanism lines are named in `.spw/caches/copy-hypermedia-key-2026-09.spw`, not rewritten from that cache.
 
 ## Risks
 

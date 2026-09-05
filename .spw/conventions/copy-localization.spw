@@ -8,6 +8,7 @@
 #:layer #!pragmatics
 
 @copy_accessor: ~"./copy-accessor.spw"
+@copy_hypermedia_key: ~"../caches/copy-hypermedia-key-2026-09.spw"
 
 ^"thesis"{
  claim: "Localization on this site should be an authored projection from canonical copy units into locale-specific public language, not a late-stage string-replacement layer. The route HTML remains the structural source of truth, while translation policy, glosses, and unresolved seams stay inspectable through site-local conventions."
@@ -31,6 +32,7 @@
 
 ^"accessor_projection"{
   rule: "The dotted copy-unit is the flat localization projection of a Spw handle. Extra dots nest categories; they do not add dimensions. subject[mode]{direction}<capsule> is the multidimensional tag. Voice lives on copy-depth, living terms, and term_policy — not on a fourth accessor family."
+  hypermedia: "When the host also has an id, the copy-unit is a hypermedia localization key: a place (route + hash), not only a spreadsheet row. See copy-accessor.spw#authoring and @copy_hypermedia_key#hk-001."
   see: @copy_accessor
   census: `npm run audit:copy:accessor`
 }

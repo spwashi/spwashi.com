@@ -23,6 +23,7 @@ fixity = "tending"
   this_file = `SITE RUNTIME packs: body[data-spw-features] (capability gates)`
   language = `Spw LANGUAGE features: operators, braces, claims — see ../language/feature-utilization.spw`
   note = `Token "operators" here means a runtime pack including operator chips, not the Spw operator alphabet.`
+  copy_units = `data-spw-copy-unit selects prose collectibles (locale, stills, timed feeds). It does not gate CSS/JS packs. See ../caches/copy-hypermedia-key-2026-09.spw#hk-005.`
 }[reg=facet]
 
 ^"thesis"{

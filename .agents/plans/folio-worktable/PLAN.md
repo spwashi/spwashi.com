@@ -52,3 +52,4 @@ Operation: align; fixity: tending. Public goal: a reader arriving at Home, About
 Owner: those route HTML files plus `public/data/promo-wonder-cycle.json`.
 Do not open sales. Do not mix working folio bands into live commission prices. Do not publish chat identities or treat community art as inventory.
 Proof: Art chip, collect-a-folio links, and one promo/wonder pair that names originals, prints, collages, the lore.land pantry, and RPG Wednesday.
+Landing copy is in the person-magazine / design-surface clusters. Do not let a model rewrite it for whimsy; shop-talk and unkeyed first-fold fails are tracked in `.spw/caches/copy-hypermedia-key-2026-09.spw`.

@@ -71,6 +71,7 @@ intent: .{
 @experiential: ~"../../../public/js/runtime/experiential.js"
 @shared: ~"../../../public/js/kernel/shared.js"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+@copy_hypermedia_key: ~"../../../.spw/caches/copy-hypermedia-key-2026-09.spw"
 
 dispatch: .{
  plan = @plan
@@ -88,6 +89,7 @@ dispatch: .{
  experiential = @experiential
  shared = @shared
  site_semantics = @site_semantics
+ copy_hypermedia_key = @copy_hypermedia_key
 }[reg=facet]
 
 ^"research_bridge"{
@@ -95,6 +97,7 @@ dispatch: .{
   .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
   .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
   .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+  .{ label = `copy_hypermedia_key` ; path = `.spw/caches/copy-hypermedia-key-2026-09.spw` }[reg=facet],
  ][reg=set]
  rule = `Repo-local audits/appendices/conventions — not external web.`
 }[reg=facet]
