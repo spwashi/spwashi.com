@@ -50,10 +50,9 @@ The new D4 unit tests are included in the normal module test list. Regenerated
 search and expression manifests make the new handles discoverable.
 
 The initial 30-still pocket run produced 29 stills and one software resonance
-miss. An isolated `visual:checks -- --ids software-frame-probe` rerun passed,
-but a second full run reproduced the miss. This remains unresolved; the cache
-names a paired same-route capture probe and the runtime/style evidence to collect.
-It is not evidence that the full visual gate passes.
+miss. Cause: `specimenNavigationKey` omitted `job.attention`, so the opening
+still and frame probe shared a page loaded without `?probe=frame`. Grouping now
+matches `browseCluster`. Isolated pass was never the full-run proof.
 
 `check:local`, runtime/language ecology and `.spw` integrity pass. All 4,272
 citations across 313 surfaces resolve; five existing expression parse warnings

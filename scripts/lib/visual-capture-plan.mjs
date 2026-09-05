@@ -1024,8 +1024,8 @@ export function captureSearchParams(conditions = {}, attention = {}) {
 
 export function specimenNavigationKey(job) {
   const lens = job?.lens ? `${job.lens.id}:${job.lens.value}` : 'plain';
-  const env = conditionClusterKey(job?.conditions);
-  const pin = job?.attention?.section || '';
+  const env = conditionClusterKey(job?.conditions, job?.attention);
+  const pin = job?.attention?.section || job?.attention?.probe || '';
   return `${job?.specimenRoute || '/'}|${job?.viewportId || ''}|${env}|${pin}|${lens}`;
 }
 

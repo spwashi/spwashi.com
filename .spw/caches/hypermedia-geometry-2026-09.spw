@@ -49,11 +49,13 @@ fixity = "experimental"
 }[reg=facet]
 
 ^"visual_capture_followup"{
-  state = "unresolved"
-  observed = `Two full visual runs miss software-frame-probe with probe=frame but charge=0, resonance=0 and operatorResonance=0. The isolated software-frame-probe run passes. The later full run also recovered a closed page target.`
-  owner = `scripts/component-snapshots.mjs: same-route capture grouping and page recovery; public/js/runtime/attention/capture-pins.js`
-  action = `Compare software-opening followed by software-frame-probe against the isolated probe. Record the actual root probe attribute, loaded stylesheets and local resonance before assessing the still.`
-  exit = `A paired capture preserves the requested probe and measures nonzero resonance, or identifies the missing runtime/style prerequisite. The isolated pass alone does not close this finding.`
+  state = "aligned"
+  observed = `Full visual runs missed software-frame-probe with probe=frame and charge=resonance=operatorResonance=0. Isolated --ids software-frame-probe passed. A later full run recovered a closed page before the same miss.`
+  cause = `specimenNavigationKey called conditionClusterKey without job.attention, so operator-probe did not enter the key. software-opening and software-frame-probe shared one specimen group. Group navigate used jobs[0] (no ?probe=frame). applyCapturePrepare then set data-spw-resonance-probe, but resonance-probe.js readPinnedProbe reads the URL and the still was measured on the unprobed document. Isolated and file folders already used conditionClusterKey(conditions, attention); grouping did not.`
+  owner = `scripts/lib/visual-capture-plan.mjs#specimenNavigationKey`
+  action = `Pass job.attention into conditionClusterKey and keep probe in the pin segment so grouping matches browseCluster/captureQuery.`
+  reproduce = `node --test scripts/tests/visual-capture-plan.test.mjs; npm run visual:checks -- --ids software-opening,software-frame-probe`
+  remaining = `Page-recovery still shortens settle to 1800ms after a closed target. That path was not the grouping bug and is not closed here. Other idle modules may still name retired nouns.`
 }[reg=facet]
 
 ^"next_workbench_probe"{

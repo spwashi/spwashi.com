@@ -466,6 +466,13 @@ test('capture conditions split route, theme, and attention into separate still f
   assert.ok(checks.some((job) => job.id === 'home-entry-loops-pin' && job.file.startsWith('captures/pocket--section-pin/')));
   assert.ok(checks.some((job) => job.id === 'software-frame-probe' && job.attention?.probe === 'frame'));
   assert.ok(checks.some((job) => job.id === 'software-frame-probe' && job.file.startsWith('captures/pocket--operator-probe/')));
+  const opening = checks.find((job) => job.id === 'software-opening');
+  const frameProbe = checks.find((job) => job.id === 'software-frame-probe');
+  assert.ok(opening && frameProbe);
+  assert.notEqual(specimenNavigationKey(opening), specimenNavigationKey(frameProbe));
+  assert.match(specimenNavigationKey(frameProbe), /operator-probe/);
+  const softwareGroups = groupJobsByNavigation([opening, frameProbe]);
+  assert.equal(softwareGroups.length, 2);
   assert.ok(checks.some((job) => job.id === 'curriculum-memory-pin' && job.attention?.section === 'memory-buffers'));
   assert.ok(checks.some((job) => job.id === 'curriculum-hero-focus' && job.assertAttention === 'spend'));
   assert.equal(VIEWPORT_STILL_CHECKS.length >= 3, true);
