@@ -556,7 +556,19 @@ function dismissNotice(notice, root, dismissals) {
 }
 
 export function normalizeNotice(raw, cadence, scheduleKey, index, locale) {
-  const source = raw?.source || raw || {};
+  /* `source` means two different things depending on the caller.
+     selectScheduleItems() wraps a feed's real notice fields as
+     raw.source = dailyRow.promo (an object) — that unwrap is load-bearing,
+     not incidental. But several runtime dispatchers (state-inspector.js,
+     query-link-composer.js, this file's own handleFeatureLearningToast)
+     already pass a flat payload with their own source: '<string>' field for
+     plain provenance. `raw?.source || raw` treated that string as the
+     wrapper too, read title/href/summary off a String primitive (always
+     undefined), and silently dropped the notice — those three callers never
+     actually rendered anything. Only unwrap when raw.source is genuinely an
+     object; a string (or anything else) means raw itself already carries
+     the real fields. See .spw/conventions/interaction-microstates.spw. */
+  const source = (raw?.source && typeof raw.source === 'object') ? raw.source : (raw || {});
   const promotion = getPromotionDetails(source);
   const href = cleanText(source.href || '');
   const title = cleanText(source.title || promotion.offer || source.summary || 'Featured route');

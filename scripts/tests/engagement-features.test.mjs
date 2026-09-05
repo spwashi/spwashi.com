@@ -355,6 +355,65 @@ test('discovery notice selection stays deterministic', () => {
   assert.equal(selected[1].source.title, noticeFeed.weekly[weeklyIndex].promo.title);
 });
 
+test('discovery notices normalize a flat payload that carries its own string source', () => {
+  // Regression: state-inspector.js, query-link-composer.js, and this file's
+  // own handleFeatureLearningToast all dispatch a flat payload with a plain
+  // source: '<string>' provenance field. normalizeNotice() used to treat
+  // any truthy raw.source as a nested object to unwrap (real for
+  // selectScheduleItems()'s feed rows, see the next test) — reading
+  // title/href/summary off a String primitive instead, which is always
+  // undefined, silently returning null. All three callers' toasts never
+  // rendered until this was fixed.
+  const normalized = normalizeNotice(
+    {
+      label: 'Gesture noticed',
+      title: 'Pinch-to-resize text is off',
+      summary: 'That two-finger pinch would step the text size, but the setting is off right now.',
+      href: '/settings/#typography-settings',
+      cta: 'Open Settings',
+      why: 'attention[pinch-scale] recognized the gesture instead of doing nothing.',
+      presentation: 'toast',
+      source: 'pinch-scale-hint',
+    },
+    'learning',
+    'pinch-scale-hint',
+    0,
+    'en',
+  );
+
+  assert.ok(normalized, 'a flat payload with a string source field must still normalize');
+  assert.equal(normalized.title, 'Pinch-to-resize text is off');
+  assert.equal(normalized.href, '/settings/#typography-settings');
+});
+
+test('discovery notices still unwrap a feed row whose source is the real promo object', () => {
+  // selectScheduleItems() wraps a feed row as { source: dailyRow.promo, ... }
+  // — that raw.source IS the object carrying title/href/summary, and this
+  // unwrap is load-bearing (see "discovery notice selection stays
+  // deterministic" above, which exercises the same shape end to end).
+  const normalized = normalizeNotice(
+    {
+      cadence: 'daily',
+      scheduleKey: '2026-04-13',
+      label: 'monday promo',
+      source: {
+        title: 'Feed-wrapped promo',
+        summary: 'This lives under raw.source, not at the top level.',
+        href: '/services/#support',
+      },
+      index: 0,
+    },
+    'daily',
+    '2026-04-13',
+    0,
+    'en',
+  );
+
+  assert.ok(normalized, 'a feed row wrapping its fields under source must still normalize');
+  assert.equal(normalized.title, 'Feed-wrapped promo');
+  assert.equal(normalized.href, '/services/#support');
+});
+
 test('discovery notices keep dismiss keys and suppression rules stable', () => {
   const normalized = normalizeNotice(
     {
