@@ -54,6 +54,7 @@ import {
   formatCaptureExpression,
   errorFile,
   captureSearchParams,
+  captureRecoverSettleMs,
   CAPTURE_MEASURE,
   REVIEW_CHAPTERS,
   CAPTURE_FAILURE_KINDS,
@@ -874,6 +875,15 @@ async function applyCapturePrepare(session, job) {
       section: ${JSON.stringify(attention.section || '')},
       probe: ${JSON.stringify(attention.probe || '')},
     };
+    if (pins.section || pins.probe) {
+      const params = new URLSearchParams(location.search.replace(/^\\?/, ''));
+      if (pins.section) params.set('pin', pins.section);
+      if (pins.probe) params.set('probe', pins.probe);
+      const next = '?' + params.toString();
+      if (next !== location.search) {
+        history.replaceState(null, '', location.pathname + next + location.hash);
+      }
+    }
     try {
       const mod = await import('/public/js/runtime/attention/capture-pins.js');
       mod.applyAttentionCapturePins(document, pins);
@@ -888,6 +898,14 @@ async function applyCapturePrepare(session, job) {
       if (pins.probe) html.setAttribute('data-spw-resonance-probe', pins.probe);
     }
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    if (pins.probe) {
+      const deadline = Date.now() + 2500;
+      while (Date.now() < deadline) {
+        if (html.getAttribute('data-spw-flourish') === 'ready'
+          && html.getAttribute('data-spw-resonance-probe') === pins.probe) break;
+        await new Promise((r) => requestAnimationFrame(r));
+      }
+    }
     if (${JSON.stringify(Boolean(job.assertAttention === 'spend' || job.prepare?.focus))}) {
       const deadline = Date.now() + 1800;
       while (Date.now() < deadline) {
@@ -1265,10 +1283,10 @@ async function main() {
               await navigateAndProbe(session, {
                 url: specimenUrl,
                 viewport: jobViewport,
-                settleMs: Math.min(options.settleMs, 1800),
+                settleMs: captureRecoverSettleMs(options.settleMs),
                 timeoutMs: options.timeoutMs,
                 retries: 1,
-                partialGraceMs: 1200,
+                partialGraceMs: 2000,
               });
               await emulateCaptureEnvironment(session, job.conditions || {});
               shot = await captureJob(session, job, {

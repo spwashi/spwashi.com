@@ -1022,6 +1022,29 @@ export function captureSearchParams(conditions = {}, attention = {}) {
   return params;
 }
 
+/** Recovery must wait as long as the first specimen nav — flourish CSS is idle. */
+export function captureRecoverSettleMs(settleMs, { floorMs = 2500 } = {}) {
+  const requested = Number(settleMs);
+  if (!Number.isFinite(requested) || requested <= 0) return floorMs;
+  return Math.max(requested, floorMs);
+}
+
+export function mergeAttentionIntoSearch(search = '', attention = {}) {
+  const params = new URLSearchParams(String(search || '').replace(/^\?/, ''));
+  captureSearchParams({}, attention).forEach((value, key) => {
+    params.set(key, value);
+  });
+  const qs = params.toString();
+  return qs ? `?${qs}` : '';
+}
+
+export function captureSearchNeedsAttention(search = '', attention = {}) {
+  const params = new URLSearchParams(String(search || '').replace(/^\?/, ''));
+  if (attention.probe && params.get('probe') !== String(attention.probe)) return true;
+  if (attention.section && params.get('pin') !== String(attention.section)) return true;
+  return false;
+}
+
 export function specimenNavigationKey(job) {
   const lens = job?.lens ? `${job.lens.id}:${job.lens.value}` : 'plain';
   const env = conditionClusterKey(job?.conditions, job?.attention);

@@ -55,7 +55,7 @@ fixity = "experimental"
   owner = `scripts/lib/visual-capture-plan.mjs#specimenNavigationKey`
   action = `Pass job.attention into conditionClusterKey and keep probe in the pin segment so grouping matches browseCluster/captureQuery.`
   reproduce = `node --test scripts/tests/visual-capture-plan.test.mjs; npm run visual:checks -- --ids software-opening,software-frame-probe`
-  remaining = `Page-recovery still shortens settle to 1800ms after a closed target. That path was not the grouping bug and is not closed here. Other idle modules may still name retired nouns.`
+  remaining = `Recovery now uses the same settle floor as the first specimen nav and writes probe/pin onto the live search string so readPinnedProbe agrees with the html attribute. Probe prepare also waits for data-spw-flourish=ready rather than a capped 1800ms recover. Other idle modules may still name retired nouns.`
 }[reg=facet]
 
 ^"next_workbench_probe"{

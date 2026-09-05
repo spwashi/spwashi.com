@@ -52,7 +52,9 @@ search and expression manifests make the new handles discoverable.
 The initial 30-still pocket run produced 29 stills and one software resonance
 miss. Cause: `specimenNavigationKey` omitted `job.attention`, so the opening
 still and frame probe shared a page loaded without `?probe=frame`. Grouping now
-matches `browseCluster`. Isolated pass was never the full-run proof.
+matches `browseCluster`. Recovery no longer caps settle at 1800ms; prepare writes
+the probe onto the live search string and waits for flourish ready. Isolated pass
+was never the full-run proof.
 
 `check:local`, runtime/language ecology and `.spw` integrity pass. All 4,272
 citations across 313 surfaces resolve; five existing expression parse warnings

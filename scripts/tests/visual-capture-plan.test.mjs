@@ -45,6 +45,9 @@ import {
   errorFile,
   browseCluster,
   captureSearchParams,
+  captureRecoverSettleMs,
+  mergeAttentionIntoSearch,
+  captureSearchNeedsAttention,
   specimenNavigationKey,
   CAPTURE_MEASURE,
   REVIEW_CHAPTERS,
@@ -473,6 +476,11 @@ test('capture conditions split route, theme, and attention into separate still f
   assert.match(specimenNavigationKey(frameProbe), /operator-probe/);
   const softwareGroups = groupJobsByNavigation([opening, frameProbe]);
   assert.equal(softwareGroups.length, 2);
+  assert.equal(captureSearchNeedsAttention('?interaction=calm', { probe: 'frame' }), true);
+  assert.equal(captureSearchNeedsAttention('?interaction=calm&probe=frame', { probe: 'frame' }), false);
+  assert.match(mergeAttentionIntoSearch('?interaction=calm', { probe: 'frame' }), /probe=frame/);
+  assert.equal(captureRecoverSettleMs(1800), 2500);
+  assert.equal(captureRecoverSettleMs(10000), 10000);
   assert.ok(checks.some((job) => job.id === 'curriculum-memory-pin' && job.attention?.section === 'memory-buffers'));
   assert.ok(checks.some((job) => job.id === 'curriculum-hero-focus' && job.assertAttention === 'spend'));
   assert.equal(VIEWPORT_STILL_CHECKS.length >= 3, true);
