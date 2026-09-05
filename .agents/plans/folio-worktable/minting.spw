@@ -1,0 +1,68 @@
+#>folio_minting
+#:operation #!cache
+#:fixity #!tending
+
+^"source_material"{
+  source = "Creator clarification, 2026-09-05"
+  claim = "Laminated folios use standard printer paper; the creator often uses 3M lamination sheets."
+  public_copy = "Printer-paper-sized laminated originals; supplier brand is not needed in the offer."
+  unknown = "Exact measured dimensions, laminate thickness and product variant, sidedness, and materials of each individual folio."
+  validation = "Measure and inspect each source during scan intake; do not infer archival quality, waterproofing, or uniform brand usage."
+}
+
+^"lineage"{
+  source_record = "One physical folio with stable ID, scan master, material history and verified provenance."
+  release_record = "An original, print, or derivative collage with its own ID, source ID(s), format, edition policy, price and availability."
+  distinction = "A collage can draw on several sources; a sold original remains in the source archive."
+  price_posture = "User-supplied original tiers are provisional. Print and collage prices await format and production decisions."
+  owner = "design/folios/index.html and adjacent PLAN.md"
+  validation = "Every eventual offer identifies the physical deliverable and its source; no seed-study render is represented as a scanned original."
+}
+
+^"new_work"{
+  source = "Creator clarification, 2026-09-05"
+  claim = "Creator welcomes custom collages and makes new art responding to developing stories across the RPGs of lore.land."
+  entry_paths = "Existing source → original/print/collage release; evolving RPG story → new artwork → new source record."
+  commission = "Discuss scene or motif, format, scope and quote before making a custom piece. No rate or turnaround has been supplied."
+  provenance = "Record the actual story/session reference where available; do not assign a chapter or character without evidence."
+  validation = "Public page distinguishes archive-derived collage from newly created story-responsive art."
+}
+
+^"lore_land_role"{
+  source = "Creator clarification, 2026-09-05"
+  claim = "lore.land serves as something like a pantry for homebrew RPG campaigns."
+  public_projection = "Characters, places, motifs and scenes are ingredients for play; developing stories can feed new art."
+  boundary = "Do not flatten lore.land into one campaign or imply every folio corresponds to one weekly episode."
+  validation = "Read the folio invitation against the creator's pantry framing."
+}
+
+^"rpg_wednesday_participation"{
+  source = "Creator clarification, 2026-09-05"
+  claim = "Some TikTok group chats with streaks participate in RPG Wednesday by making art and telling stories around the canon on lore.land."
+  relation = "lore.land pantry/canon → group-chat art and storytelling → shared RPG Wednesday practice; creator's own artwork develops alongside it."
+  boundary = "Community participation does not establish sales rights over others' contributions. Do not imply all chat art is folio inventory or all participant stories are canon."
+  validation = "Public copy describes participation without publishing chat identities, private messages or contributor works."
+}
+
+^"price_ladder"{
+  source = "User request to make pricing more tangible, 2026-09-05"
+  public_projection = "Visible planning asks: Seed $35, Chapter $75, Landmark $150, Relic $200-275 or hold, three selected Seeds $95, prints/collages/custom quoted."
+  boundary = "Planning ranges, not live offers. Do not mix into /services/#pricing. Shipping remains unset."
+  validation = "design/folios/index.html#folio-prices names amounts beside the formats."
+}
+
+^"study_probes"{
+  source = "User request for component/metabiology interactivity, 2026-09-05"
+  component = "Kinetic study rest/open radios. One fold becomes a reveal. Native form, no new JS module."
+  metabiology = "Botanical study rest/branch/fold/stop radios. One rule: every new branch needs room. Artistic, not biological."
+  reduced_motion = "Open-state translation and growth transitions disable under prefers-reduced-motion."
+  validation = "Probes remain usable with JavaScript off; radio groups are labeled fieldsets."
+}
+
+^"landing_access"{
+  source = "Creator request, 2026-09-05"
+  claim = "The folio offer, lore.land pantry, and RPG Wednesday practice should be reachable from key landing pages and promotional features."
+  projection = "Home, About, Services, Now, Play, RPG Wednesday, lore.land, Design hub, and promo-wonder-cycle."
+  boundary = "Invitation only. No checkout. Working original-price bands stay on /design/folios/#collect-a-folio, not in live commission ladders."
+  validation = "Each landing names the Art route or collect-a-folio; promo copy does not claim a live sale."
+}

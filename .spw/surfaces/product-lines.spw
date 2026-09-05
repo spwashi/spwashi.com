@@ -168,6 +168,34 @@ product_lines: .{
    next_step = `Define the session card shape and collectibility rules.`
   }[reg=facet]
  }[reg=facet]
+ folio_editions = .{
+  pitch = `Printer-paper-sized laminated originals, with prints and custom collages minted from the same source record. lore.land is the pantry; RPG Wednesday is the shared art-and-story practice.`
+  feature_shape = `One source folio → original, print, or collage release, plus new story-led art that becomes a new source.`
+  collectible_unit = `A minted original, a numbered or open print, a handmade or printed collage, a provenance card.`
+  audience_primary = illustrator
+  audience_bridge = #[
+   `homebrew players read it as a physical ingredient`,
+   `collectors read it as a lore object`,
+   `commissioners read it as a custom collage or story-led piece`
+  ][reg=set]
+  integration_contract = .{
+   audience = `art collectors, bridging to homebrew players and component designers.`
+   offer = `Look at formats and working original-price bands; talk about a custom piece before sales open.`
+   proof = `/design/folios/#collect-a-folio names originals, prints, collages, and planning ranges without checkout.`
+   resonance = `A still from play can become an object you can hold.`
+   extension = `lore.land pantry → RPG Wednesday practice → folio worktable.`
+   next_action = `/design/folios/#collect-a-folio → /contact/ → /services/#pricing for existing commissions.`
+  }[reg=facet]
+  current_state = .{
+   summary = `Invitation live; sales not open. Landing pages and promo-wonder-cycle now point at the worktable.`
+   evidence = #[
+    `route copy at /design/folios/#collect-a-folio`,
+    `promo pair in public/data/promo-wonder-cycle.json`,
+    `landing invitations on home, about, services, now, play, RPG Wednesday, lore.land, design hub`
+   ][reg=set]
+   next_step = `First scan census, then a small named release. Do not list live folio prices on /services/#pricing.`
+  }[reg=facet]
+ }[reg=facet]
  skill_os = .{
   pitch = `A professional development simulator disguised as a worldbuilding platform: character sheets, budgeting, RPG Wednesday, Town Library quests, and proof cards form one loop for turning imagination into operational capacity.`
   feature_shape = `Cross-route loop: choose/build character -> define pressure -> fund sprint -> simulate/practice -> log evidence -> publish/reuse artifact -> choose next quest.`
