@@ -42,6 +42,31 @@ function isPinchTextScaleEnabled(doc = document) {
   return getRootPreference('spwPinchTextScale', 'on', doc) !== 'off';
 }
 
+/* interaction-microstates.spw's reward_contract: a gesture that moves
+   nothing should reveal potential instead of being silently absorbed. A
+   real two-finger pinch over readable content is a deliberate, legible
+   gesture — if the setting is off, say so and point at the switch, rather
+   than doing nothing. Routes through the existing discovery-notice toast
+   (autoDismissMs default ~4.6s, pauses on hover/focus, dismissible) instead
+   of building a parallel hint surface. See .spw/conventions/
+   interaction-microstates.spw#reward_contract. */
+function announcePinchDisabledHint(doc) {
+  doc.dispatchEvent(new CustomEvent('spw:discovery-reward', {
+    detail: {
+      label: 'Gesture noticed',
+      title: 'Pinch-to-resize text is off',
+      summary: 'That two-finger pinch would step the text size, but the setting is off right now.',
+      cta: 'Open Settings',
+      href: '/settings/#typography-settings',
+      why: 'attention[pinch-scale] recognized the gesture and is naming the switch instead of doing nothing.',
+      presentation: 'toast',
+      source: 'pinch-scale-hint',
+      cadence: 'learning',
+    },
+    bubbles: true,
+  }));
+}
+
 /* Deliberately any-pointer, not the plain pointer/hover check most of the
    runtime uses elsewhere (see dom-contracts.js isMobileBottomLane /
    supportsFinePointerHover): a touchscreen laptop reports pointer:fine
@@ -98,9 +123,12 @@ export function initPinchTextScale(root) {
   };
 
   const handleTouchStart = (event) => {
-    if (!isPinchTextScaleEnabled(doc)) return;
     if (event.touches.length !== 2) return;
     if (!isAllowedTarget(event.target)) return;
+    if (!isPinchTextScaleEnabled(doc)) {
+      announcePinchDisabledHint(doc);
+      return;
+    }
 
     state.active = true;
     state.startDistance = getTouchDistance(event.touches);
