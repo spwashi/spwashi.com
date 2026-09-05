@@ -234,20 +234,6 @@
   box-shadow: var(--spw-reading-lead-glow);
 }
 
-/* Opacity composites through ancestors: a list item and its paragraph are one
-   reading seat, not two successive dimmers. Keep focused controls at full ink. */
-:where(html[data-spw-reading-groove="on"] [data-spw-reading-beat] [data-spw-reading-beat]) {
-  opacity: 1;
-}
-
-:where(html[data-spw-reading-groove="on"] [data-spw-reading-beat]:focus-within) {
-  opacity: var(--spw-reading-lead-opacity, 1);
-}
-
-:where(.spw-frame:focus-within) {
-  --spw-attention-opacity: var(--spw-reading-lead-opacity, 1);
-}
-
 :where(
   html[data-spw-reading-groove="on"] [data-spw-reading-beat-role="heading"][data-spw-reading-beat="lead"],
   html[data-spw-reading-groove="on"] [data-spw-reading-beat-role="note"][data-spw-reading-beat="lead"]
@@ -283,6 +269,21 @@
   :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]) {
     opacity: 0.92;
   }
+}
+
+/* Opacity composites through ancestors: a list item and its paragraph are one
+   reading seat, not two successive dimmers. These rules follow the reduced-motion
+   rest floor so focused controls retain full ink in either motion preference. */
+:where(html[data-spw-reading-groove="on"] [data-spw-reading-beat] [data-spw-reading-beat]) {
+  opacity: 1;
+}
+
+:where(html[data-spw-reading-groove="on"] [data-spw-reading-beat]:focus-within) {
+  opacity: var(--spw-reading-lead-opacity, 1);
+}
+
+:where(.spw-frame:focus-within) {
+  --spw-attention-opacity: var(--spw-reading-lead-opacity, 1);
 }
 
 :where(html[data-spw-pinch-scaling="true"], body[data-spw-pinch-scaling="true"]) {

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" data-spw-reading-groove="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hypermedia interaction regression fixture</title>
+  <link rel="stylesheet" href="/public/css/bundles/core.css">
+</head>
+<body>
+<button id="outside" data-spw-operator="potential">Outside the attention root</button>
+<main>
+  <section class="spw-frame" id="first" data-spw-kind="frame">
+    <h2>First frame</h2>
+    <button id="probe" data-spw-operator="frame">Frame probe</button>
+    <ul><li data-spw-reading-beat="rest"><p id="nested" data-spw-reading-beat="rest"><button id="nested-focus">Read nested detail</button></p></li></ul>
+    <nav class="frame-operators">
+      <a class="spw-chip" href="/settings/?spw-physics=calm#settings">Calm settings</a>
+      <a class="spw-chip" href="/settings/?spw-physics=tactile#settings">Tactile settings</a>
+    </nav>
+  </section>
+  <div hidden><section class="spw-frame" id="hidden"><h2>Hidden frame</h2></section></div>
+  <section class="spw-frame" id="last" data-spw-kind="frame"><h2>Last frame</h2></section>
+</main>
+</body>
+</html>

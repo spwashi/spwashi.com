@@ -39,6 +39,34 @@ fixity = "experimental"
   workbench = `Pin f2e5b61: doctor passes. Query already excludes _workbench, yet pathRefs count exceeded a 15-second cap. Shared walker counts 681 files, 374 mounted; exclusion leaves 307. Enumeration is not the proven timeout cause.`
 }[reg=facet]
 
+^"browser_receipt"{
+  state = "verified"
+  probe_ref = `node scripts/check-hypermedia.mjs (requires npm run dev)`
+  observed = `Current public frames mount, query variants retain distinct URLs, hidden frames stay out, Escape restores focus from search, remount leaves one map, and late-mounted resonance follows focus.`
+  opacity = `Reduced-motion rest opacity overrode the first nested-ink repair. Moving the nested/focus rules after that floor restores full focused ink; the browser probe verifies both ancestor and child.`
+  symmetry = `Touch rotates; Enter resets. D4 permutations preserve authored links. Equal grid seats make the displayed geometry agree with the claimed square.`
+  boundary = `Site experiment only. No workbench grammar or editor implementation was changed.`
+}[reg=facet]
+
+^"visual_capture_followup"{
+  state = "unresolved"
+  observed = `Two full visual runs miss software-frame-probe with probe=frame but charge=0, resonance=0 and operatorResonance=0. The isolated software-frame-probe run passes. The later full run also recovered a closed page target.`
+  owner = `scripts/component-snapshots.mjs: same-route capture grouping and page recovery; public/js/runtime/attention/capture-pins.js`
+  action = `Compare software-opening followed by software-frame-probe against the isolated probe. Record the actual root probe attribute, loaded stylesheets and local resonance before assessing the still.`
+  exit = `A paired capture preserves the requested probe and measures nonzero resonance, or identifies the missing runtime/style prerequisite. The isolated pass alone does not close this finding.`
+}[reg=facet]
+
+^"next_workbench_probe"{
+  operation = "audit"
+  fixity = "experimental"
+  owner = `spw-workbench/packages/spw-cli/src/query.ts: collectFiles, readText, spwq.fromSource`
+  trigger = `A consumer pathRefs count exceeds 15 seconds even with _workbench excluded.`
+  action = `Measure discovery, read and parse separately; log the slowest source with byte count and parse outcome. Reduce that source to a fixture before changing traversal or parser behavior.`
+  check = `Run the same query against the fixture and the mounted consumer; compare scanned paths, match count, parse warnings and elapsed time.`
+  exit = `A specific source or stage accounts for the delay, and its regression fixture preserves expected references. Otherwise retain the finding as unresolved.`
+  boundary = `Do not attribute a parse stall to filesystem enumeration, add an editor lens to conceal it, or promote this site's operator vocabulary into grammar.`
+}[reg=facet]
+
 #>wonder_hypermedia_query
 ?["If query already excludes the mount, which specimen still makes pathRefs miss a 15-second bound?"]{
   #:depth #!computational ~#lens(constraint)

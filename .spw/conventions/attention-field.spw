@@ -165,6 +165,7 @@ expression = attention[field]{gradient.uptake.scarcity}<spend>
     ink = `--spw-attention-opacity on the frame: rest floor minus occupancy nudge, plus resonance, charge×0.45, attention×0.25, clamp 0.72–1`
     light = `--spw-attention-light on the frame: 0.48 + charge×0.32 + resonance×0.22 + attention×0.12, clamp 0.32–0.95`
     rest_beats = `[data-spw-reading-beat=rest] spends --spw-attention-opacity; hover/focus-within still wins at near`
+    nested_ink = `Nested reading beats compose opacity only once. Focused beats reach lead ink. Place these rules after the reduced-motion rest floor so that motion preference cannot dim a focused control twice.`
     channel = `channel ::before spends --spw-attention-light; do not calc --charge on the pseudo`
     cards = `--card-secondary-opacity mixes occupancy-weight, reports, and --component-card-detail-opacity; hover/focus-within = 1`
   }[reg=facet]
@@ -172,6 +173,7 @@ expression = attention[field]{gradient.uptake.scarcity}<spend>
   region_relative = `Seats (hook/hub/cluster/path/read) spend wash/seam via --spw-region-*-spent plus harmony/density/occupancy biases. Do not factorial route × region selectors for ink.`
   anti = `Do not redeclare --spw-attention-charge or --spw-attention-resonance on cards or ::before — var(--charge, 0) on a child is the registered initial 0 and wipes the frame report.`
   impl_ref = `public/css/tokens/core.css + typography/typesetting.css + components/cards.css + systems/electrostatic-roles.css + effects/wonder.css + systems/region-seats.css + tokens/dimensions.css`
+  probe_ref = `With npm run dev active: node scripts/check-hypermedia.mjs — real Chrome, pocket and desktop, nested focus and reduced motion.`
 }
 
 ^"practice_and_resonance_rhythms"{

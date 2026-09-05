@@ -1484,6 +1484,9 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
 .operator-symmetry__board {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  aspect-ratio: 1;
+  inline-size: min(100%, 22rem);
   gap: var(--space-xs, 0.4rem);
   list-style: none;
   margin: 0;
@@ -1491,10 +1494,19 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
   max-inline-size: 22rem;
 }
 
+.operator-symmetry__board li {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .operator-symmetry__board a {
   display: grid;
   gap: 0.15rem;
-  min-block-size: 6.5rem;
+  box-sizing: border-box;
+  block-size: 100%;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
   padding: 0.7rem 0.8rem;
   border: 1px solid color-mix(in srgb, var(--op-frame-color, teal) 28%, transparent);
   border-radius: 0.4rem;
@@ -1522,6 +1534,7 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
 
 .operator-symmetry__moves button {
   font: inherit;
+  min-block-size: 2.75rem;
 }
 
 .operator-symmetry__reading output {
