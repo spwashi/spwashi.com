@@ -1,0 +1,25 @@
+#>asset_metadata
+#:layer #!design
+#:fixity #!experimental
+
+^"spirit"{
+  whimsy_name: "REPLACE_ME"
+  description: "REPLACE_ME — algorithmic crop, not yet named or judged"
+  visual_qualities: "REPLACE_ME"
+}
+
+^"staging"{
+  source = ~"00.unsorted/tiles/spwashi_boonhonk_for_abstract_web_design_--chaos_20_--tile_--_22f3c7dc-40b1-4eb8-8527-83c8aea219e4_1.png"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
+  theme_pack_candidate = "REPLACE_ME | none"
+  component_genre_candidate = "REPLACE_ME | none"
+  theme_set = "boonhonk-abstract — teal thread-line curves over cream/maroon circular forms, high chaos tile source"
+  trope = "genuinely striking abstract wash/background candidate; fine curved linework is the whole appeal and does not survive edge-detect + 64px at all"
+  icon_candidate = "false — edge-detect on fine linework produces scribble noise, not a glyph; treat as texture/wash tier only, not icon tier"
+  replace_later = "true"
+  promoted = "false"
+}[reg=facet]
+
+^"discovery"{
+  tags: ["staged", "unreviewed", "theme-set"]
+}

@@ -1,0 +1,25 @@
+#>asset_metadata
+#:layer #!design
+#:fixity #!experimental
+
+^"spirit"{
+  whimsy_name: "REPLACE_ME"
+  description: "REPLACE_ME — algorithmic crop, not yet named or judged"
+  visual_qualities: "REPLACE_ME"
+}
+
+^"staging"{
+  source = ~"public/images/renders/papergami/papergami-cubes.jpg"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
+  theme_pack_candidate = "REPLACE_ME | none"
+  component_genre_candidate = "REPLACE_ME | none"
+  theme_set = "papergami-cubes — folded-paper architectural facets, teal/gold/cream, torn-paper collage light"
+  trope = "cube/architectural fold forms read clearly at 512 and hold up as a nucleus crop; a woodcut-like structure survives edge-detect better than painterly sources do"
+  icon_candidate = "true — the closest of the sampled sources to a legible 64px glyph, though still busy; a posterize pass before edge-detect would likely sharpen it further"
+  replace_later = "true"
+  promoted = "false"
+}[reg=facet]
+
+^"discovery"{
+  tags: ["staged", "unreviewed", "theme-set"]
+}

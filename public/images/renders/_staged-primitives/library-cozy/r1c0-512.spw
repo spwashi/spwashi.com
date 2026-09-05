@@ -1,0 +1,25 @@
+#>asset_metadata
+#:layer #!design
+#:fixity #!experimental
+
+^"spirit"{
+  whimsy_name: "REPLACE_ME"
+  description: "REPLACE_ME — algorithmic crop, not yet named or judged"
+  visual_qualities: "REPLACE_ME"
+}
+
+^"staging"{
+  source = ~"00.unsorted/tiles/spwashi_cozy_background_for_a_library_CMS_elegant_and_inviting_6361412f-0420-48c7-b54e-5de5f15bbbd8.png"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
+  theme_pack_candidate = "REPLACE_ME | none"
+  component_genre_candidate = "REPLACE_ME | none"
+  theme_set = "library-cozy — painterly book-spine texture, teal/gold/rust/gray, reads strongly as reading/library climate"
+  trope = "strong theme-pack-adjacent candidate for a reading/library card genre; same icon limitation as boonhonk — painterly source, busy 64px edge output"
+  icon_candidate = "false — busy/scribbly at 64px; base crop is the useful primitive here, not the icon derivative"
+  replace_later = "true"
+  promoted = "false"
+}[reg=facet]
+
+^"discovery"{
+  tags: ["staged", "unreviewed", "theme-set"]
+}

@@ -1,0 +1,25 @@
+#>asset_metadata
+#:layer #!design
+#:fixity #!experimental
+
+^"spirit"{
+  whimsy_name: "REPLACE_ME"
+  description: "REPLACE_ME — algorithmic crop, not yet named or judged"
+  visual_qualities: "REPLACE_ME"
+}
+
+^"staging"{
+  source = ~"00.unsorted/tiles/spwashi_cozy_background_for_a_library_CMS_elegant_and_inviting_6361412f-0420-48c7-b54e-5de5f15bbbd8.png"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
+  theme_pack_candidate = "REPLACE_ME | none"
+  component_genre_candidate = "REPLACE_ME | none"
+  theme_set = "REPLACE_ME — a named climate a still of 3–4 tiles can ask about"
+  trope = "approximate crop; screenshots interpret; replace_later allowed"
+  icon_candidate = "false"
+  replace_later = "true"
+  promoted = "false"
+}[reg=facet]
+
+^"discovery"{
+  tags: ["staged", "unreviewed", "theme-set"]
+}
