@@ -128,10 +128,36 @@
   }
 }
 
+^"staging"{
+  ~#note: "Algorithmic pre-processing for raw renders that are candidates for a theme pack or a component-genre primitive, not yet a named/optimized asset. This is upstream of naming and optimization, not a replacement for them — a staged primitive still needs image-naming-magic and image-optimize before it can be promoted."
+  ~#thesis: "midjourney-design-concepts/PLAN.md already governs promotion: render inspiration -> extract design principle -> prototype in CSS/HTML -> validate on real routes -> optionally promote optimized image asset. Staging is the first arrow. A staged primitive is reference material, same as any other unpromoted render — do not treat 'sliced' as a shortcut past that pipeline."
+
+  method: {
+    tool: ~"../../scripts/slice-render-primitives.mjs"
+    approach: "ImageMagick grid-crop a source render into N square candidates at a target tile size, plus a desaturated/lightened 'wash' variant of each crop for use as a quiet full-bleed background rather than a loud illustration. No new npm dependency — same discipline as image-optimize's existing sips/ImageMagick usage."
+    output: "public/images/renders/_staged-primitives/<slug>/ — draft .spw sidecar per derivative, fixity=experimental, promoted=false. Never a route or theme-pack reference; that edit stays human-judged."
+    source_pools: [
+      "00.unsorted/tiles/ — renders authored with MJ's --tile flag; the intended source for background-texture candidates",
+      "00.unsorted/aesthetics/, 00.unsorted/hero-images/ — untapped candidates for hero/card promotion, same review gate as public/images/renders/unsorted-curation/",
+      "public/images/renders/_raw/, renders/papergami/ — larger archives; sample deliberately, do not batch-process the whole folder in one pass"
+    ]
+  }[reg=facet]
+
+  affinity_fields: {
+    ~#note: "Added to a staged sidecar's own facet, alongside spirit/thematic_mapping — a hypothesis to test against real routes, not a rule that binds the asset."
+    theme_pack_candidate: "One of neutral-paper | ritual-vellum | oxide-ledger | electric-studio | copper-brace | glass-console | none — which public/css/themes/packs.css token palette the render's color/material reads closest to, if any."
+    component_genre_candidate: "One of frame-card | media-card | software-card | operator-card | plan-card | compare-card | none — which card family (public/css/components/cards.css) the crop's scale and material suit, if any."
+    rule: "A candidate is a note for a human to confirm on a real route, in real light/dark and theme-pack states, before it becomes a live background — per the sensation-review-gate: pacing/feel decisions get a demo before implementation, not just a passing check."
+  }[reg=facet]
+}[reg=facet]
+
 ^"documentation_references"{
   @asset_discovery: ~"../assets.spw"
   @naming_skill: ~"../../.agents/skills/image-naming-magic/SKILL.md"
   @optimization_skill: ~"../../.agents/skills/image-optimize/SKILL.md"
   @naming_vocabulary: ~"../../.agents/skills/image-naming-magic/references/naming-lexicon.spw"
   @size_tiers: ~"../../.agents/skills/image-optimize/references/size-tiers.spw"
+  @slicing_script: ~"../../scripts/slice-render-primitives.mjs"
+  @midjourney_promotion_rule: ~"../../.agents/plans/midjourney-design-concepts/PLAN.md"
+  @style_cohesion: ~"../../.agents/plans/style-image-cohesion/PLAN.md"
 }
