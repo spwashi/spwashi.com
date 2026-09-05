@@ -217,16 +217,18 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 }
 
 :where(
-  :is(.spw-frame, .spw-frame) > .frame-heading + p,
-  :is(.spw-frame, .spw-frame) > header.frame-heading + p,
-  :is(.spw-frame, .spw-frame) > h1 + p,
-  :is(.spw-frame, .spw-frame) > h2 + p,
-  :is(.spw-frame, .spw-frame) > h3 + p,
-  :is(.spw-frame, .spw-frame) > .spec-kicker + h1 + p,
-  :is(.spw-frame, .spw-frame) > .spec-kicker + h2 + p,
-  :is(.spw-frame, .spw-frame) > .frame-topline + .spec-kicker + h1 + p,
-  :is(.spw-frame, .spw-frame) > .frame-topline + .spec-kicker + h2 + p
-):not([data-spw-textual-role="note"]):not(.inline-note):not([data-spw-textual-role="lede"]):not([data-spw-textual-role="lede"]):not(.spec-kicker):not([data-spw-textual-role="kicker"]) {
+  .spw-frame > :is(
+    .frame-heading + p,
+    header.frame-heading + p,
+    h1 + p,
+    h2 + p,
+    h3 + p,
+    .spec-kicker + h1 + p,
+    .spec-kicker + h2 + p,
+    .frame-topline + .spec-kicker + h1 + p,
+    .frame-topline + .spec-kicker + h2 + p
+  )
+):not([data-spw-textual-role="note"]):not(.inline-note):not([data-spw-textual-role="lede"]):not(.spec-kicker):not([data-spw-textual-role="kicker"]) {
   font-size: clamp(1.01rem, 0.96rem + 0.34cqi, 1.12rem);
   font-weight: 500;
   line-height: 1.62;

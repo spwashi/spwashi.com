@@ -12936,14 +12936,8 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
 /* Lift ordinary flow content above generated braces, rails, and ornaments.
    Out-of-flow roles keep their own geometry contract. */
 :where(
-  .spw-frame > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
-  .frame-panel > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
-  .frame-card > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
-  .software-card > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
-  .mode-panel > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
-  .plan-card > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
-  .compare-card > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
-  .spec-column > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"])
+  :is(.spw-frame, .frame-panel, .frame-card, .software-card, .mode-panel, .plan-card, .compare-card, .spec-column)
+    > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"])
 ) {
   position: relative;
   z-index: var(--z-content, 1);
@@ -15799,20 +15793,22 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
    overrode the nav's own `position: fixed` menu topologies and inverted the
    surface's `z-index: -1`. */
 :where(
-  [data-spw-component-kind]:not(.site-header) > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  [data-spw-kind]:not(.site-header) > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .spw-frame > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .frame-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .media-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .media-focus-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .software-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .operator-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .frame-panel > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .mode-panel > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .plan-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .compare-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .spec-column > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  .ref-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell)
+  :is(
+    [data-spw-component-kind]:not(.site-header),
+    [data-spw-kind]:not(.site-header),
+    .spw-frame,
+    .frame-card,
+    .media-card,
+    .media-focus-card,
+    .software-card,
+    .operator-card,
+    .frame-panel,
+    .mode-panel,
+    .plan-card,
+    .compare-card,
+    .spec-column,
+    .ref-card
+  ) > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell)
 ) {
   position: relative;
   z-index: 1;
@@ -20326,16 +20322,18 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 }
 
 :where(
-  :is(.spw-frame, .spw-frame) > .frame-heading + p,
-  :is(.spw-frame, .spw-frame) > header.frame-heading + p,
-  :is(.spw-frame, .spw-frame) > h1 + p,
-  :is(.spw-frame, .spw-frame) > h2 + p,
-  :is(.spw-frame, .spw-frame) > h3 + p,
-  :is(.spw-frame, .spw-frame) > .spec-kicker + h1 + p,
-  :is(.spw-frame, .spw-frame) > .spec-kicker + h2 + p,
-  :is(.spw-frame, .spw-frame) > .frame-topline + .spec-kicker + h1 + p,
-  :is(.spw-frame, .spw-frame) > .frame-topline + .spec-kicker + h2 + p
-):not([data-spw-textual-role="note"]):not(.inline-note):not([data-spw-textual-role="lede"]):not([data-spw-textual-role="lede"]):not(.spec-kicker):not([data-spw-textual-role="kicker"]) {
+  .spw-frame > :is(
+    .frame-heading + p,
+    header.frame-heading + p,
+    h1 + p,
+    h2 + p,
+    h3 + p,
+    .spec-kicker + h1 + p,
+    .spec-kicker + h2 + p,
+    .frame-topline + .spec-kicker + h1 + p,
+    .frame-topline + .spec-kicker + h2 + p
+  )
+):not([data-spw-textual-role="note"]):not(.inline-note):not([data-spw-textual-role="lede"]):not(.spec-kicker):not([data-spw-textual-role="kicker"]) {
   font-size: clamp(1.01rem, 0.96rem + 0.34cqi, 1.12rem);
   font-weight: 500;
   line-height: 1.62;
