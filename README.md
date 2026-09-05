@@ -1,20 +1,24 @@
 # spwashi.com
 
-`spwashi.com` is my personal studio site and a working demo of the kind of public-facing site I can build for a client. It combines hand-authored HTML, a shared CSS system, progressive JavaScript, and editor-facing inspection surfaces so the site stays readable as it grows.
+I'm Spwashi. I build software and make art.
 
-I’m Spwashi. I build software and make art.
+This repository is my studio site and a working sample of the public surfaces I can build: hand-authored HTML, layered CSS, progressive ES modules, and editor-facing `.spw` inspection. No React, Vue, Svelte, or Tailwind. The site is meant to be read as it grows — by a visitor, a collaborator, or an agent.
 
-## What This Shows
+The site is a surface for the work. Spwashi is the person.
 
-- Route-specific pages with a shared runtime and design system.
-- A content model that supports returning visitors instead of treating every visit like a first impression.
-- Image curation, route-specific imagery, and light editorial variety across the site.
-- Spell-like navigation, checkpoints, local memory, and other small replayable interactions.
-- A codebase that is meant to be inspected, extended, and adapted rather than hidden behind a framework.
+## What this shows
+
+- Directory-routed pages (`<route>/index.html`) with a shared runtime and design system.
+- A magazine rhythm rather than a first-impression funnel: A-cycle closes the 13th, B-cycle the 26th. Return visits are the point.
+- Image curation, route-specific imagery, and editorial variety.
+- Small replayable interactions: spells, checkpoints, local memory, living terms.
+- A codebase that stays inspectable — tokens, `data-spw-*` attributes, and `.spw` contracts — instead of hiding behind a framework.
+
+Live: [spwashi.com](https://spwashi.com/). Current issue: [`/now/`](https://spwashi.com/now/).
 
 ## Services
 
-The site also serves as a live sample of the services I can provide:
+The site is also a live sample of work I can do:
 
 - site and surface design
 - content and information architecture
@@ -22,62 +26,75 @@ The site also serves as a live sample of the services I can provide:
 - image selection, promotion, and curation
 - small-site maintenance and iterative improvement
 
-If you are evaluating me for client work, this repository is a practical map of the range I can cover and the pace I work at.
+If you are evaluating me for client work, this repository is a practical map of range and pace.
 
 ## Pace
 
-This project develops in steady, public increments. The goal is not to ship a flashy one-off and stop. The goal is to keep improving the surface, keep the structure legible, and keep the site useful as the work evolves.
+Steady public increments. The goal is not a flashy one-off. Keep the surface useful, the structure legible, and the next issue possible.
 
 ## Support
 
-Contribution via sponsorship is appreciated if the site or the approach is useful to you.
+Sponsorship is appreciated if the site or the approach is useful to you.
 
-## Local Development
+## Local development
 
 ```bash
-npm install
+npm ci --ignore-scripts
+npm run hooks:install   # optional: versioned git hooks
 npm run dev
 ```
 
-Other useful commands:
+Default offline gate (no registry call):
 
-- `npm run build`
-- `npm run build:local`
-- `npm run build -- --help`
-- `npm run check`
-- `npm run test:engagement`
+```bash
+npm run check:local
+```
 
-## Cloning This As A Starter
+`npm run check` is the full pre-landing sweep. It includes `npm audit` and needs the network. Use it when dependencies change.
 
-The codebase is built to be re-derived, not just read. Two models carry most of
-the transferable value:
+Other commands worth knowing:
 
-**The material model.** Surfaces behave like materials: glass cards, matte
-panels, grain, brace-form containers, and an operator color grammar, all driven
-by tokens in `public/css/tokens/core.css` and composed through CSS layers
-(`reset → tokens → … → ornament`). `public/css/compose.css` and
-`public/js/compose.js` are standalone entrypoints that carry the material
-system without the site shell — `npm run starter:inventory` prints the exact
-boundary between what is portable and what is this site's own identity.
+| Command | Use |
+|---|---|
+| `npm run build` | Typecheck, CSS bundles, static deploy into `dist/` |
+| `npm run build:local` | Same builder with local flags (`npm run build -- --local`) |
+| `npm run catalog` | Regenerates the in-tree design catalog (`design/catalog/`, gitignored) |
+| `npm run visual:checks` | Pocket stills that fail when ink/light ignore attention |
+| `npm run audit:copy:accessor` | Copy-unit census (dotted keys vs Spw handles) |
+| `npm run audit:module-selectors` | Catalog selectors vs public HTML hosts |
+| `npm run ecology` / `npm run ecology:language` | Runtime packs vs Spw language (do not conflate) |
+| `npm run test:engagement` | Engagement/runtime tests after compile |
 
-**The metacognitive model.** Pages describe themselves: `data-spw-*` attribute
-families name each component's role, slots, gestures, and learnable dimensions;
-`.spw/` files keep the concepts inspectable beyond any one patch; and the
-runtime narrates its own mounting, attention, and memory so a reader (or an
-agent) can see how the page became meaningful. `npm run catalog` generates a
-cross-reference of every attribute, token, stylesheet, and philosophy doc —
-including orphans — so drift is visible.
+PWA: `npm run check:pwa` when touching `sw.js`, `manifest.webmanifest`, or offline routes.
+
+## For agents and editors
+
+`AGENTS.md` is the always-on gate. Model adapters (`GROK.md`, `CLAUDE.md`, `GPT.md`, `GEMINI.md`) emphasize relative strengths; they do not replace it. Prove adapters with `npm run check:agents` (files must be git-tracked).
+
+Open first:
+
+- copy / voice / localization keys → `.spw/conventions/copy-accessor.spw`
+- CSS layers / first-paint → `.spw/conventions/css-instruction.spw`
+- agent environment → `.agents/plans/agent-optimization/PLAN.md`
+- commit wording → `.agents/plans/history-reflow/PLAN.md` plus `git log -1 --format=%B`
+
+Creator-first copy: _"I'm Spwashi. I build software and make art."_
+
+## Cloning this as a starter
+
+The codebase is built to be re-derived, not just read. Two models carry most of the transferable value:
+
+**The material model.** Surfaces behave like materials: glass cards, matte panels, grain, brace-form containers, and an operator color grammar, all driven by tokens in `public/css/tokens/core.css` and composed through CSS layers (`reset → tokens → … → ornament`). `public/css/compose.css` and `public/js/compose.js` are standalone entrypoints that carry the material system without the site shell. `npm run starter:inventory` prints the boundary between what is portable and what is this site's identity.
+
+**The metacognitive model.** Pages describe themselves: `data-spw-*` families name role, slots, gestures, and learnable dimensions; `.spw/` files keep concepts inspectable beyond one patch; the runtime narrates mounting, attention, and memory. `npm run catalog` cross-references attributes, tokens, stylesheets, and philosophy docs — including orphans — so drift is visible.
 
 Practical starting points:
 
 - `design/composition/` — standalone bundles that teach composition and theming
-- `design/components/` — the component glossary, with copyable recipes and a
-  capture workflow for verifying your adaptation at phone and desktop widths
-- `AGENTS.md` — the working contract for humans and agents editing the system
-- `npm run icons:pwa` — derive the full launcher icon set from one artwork
+- `design/components/` — component glossary, copyable recipes, capture workflow
+- `AGENTS.md` — working contract for humans and agents
+- `npm run icons:pwa` — derive the launcher icon set from one artwork
 - `.agents/plans/` — how work stays traceable across sessions
+- `/tools/spw-parser/` — public proof that authored Spw parses
 
-The same structure that runs this studio site runs lore: RPG Wednesday
-(`/play/rpg-wednesday/`) uses the identical card grammar, session traces, and
-inspection surfaces — a worked example of the starter carrying a world instead
-of a portfolio.
+The same structure that runs this studio site runs lore: RPG Wednesday (`/play/rpg-wednesday/`) uses the identical card grammar, session traces, and inspection surfaces — a worked example of the starter carrying a world instead of a portfolio.

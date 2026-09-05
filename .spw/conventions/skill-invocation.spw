@@ -39,6 +39,17 @@ fixity = "stable"
   prove = `npm run check:agents — adapters must be git-tracked; a green check on untracked files is a lie.`
 }[reg=facet]
 
+^"introspection"{
+  claim: "A session may name its relative strength without becoming a fifth model. Lean on one focus, do not fake another, precipitate the preference."
+  lean = `Which focus this session actually used (anti-bloat | constitutional | exactness | tool-mastery | computer-use).`
+  gap = `Which focus the task needed that this session did not pretend to own.`
+  reach = `Which sense instrument was run. If none, say so — that is a finding.`
+  avoid = `What was correctly not built.`
+  ledger = ~"../../.agents/state/agent-preference.spw"
+  when = `End of a session that changed contracts, copy, or adapters. One entry, not a report.`
+  refuse = `Do not treat a preference as a new discipline lock. Do not write this ledger into runtime/ snapshots.`
+}[reg=facet]
+
 ^"shape"{
   claim: "A gate that only runs after the work is half a workflow. Every skill should name what to measure BEFORE it acts, not only what proves it finished."
   sense: "The measurement that grounds the work. Run it first; if it says the premise is wrong, stop — that is a finding, not a failure."
@@ -60,6 +71,7 @@ fixity = "stable"
   module_hosts = "npm run audit:module-selectors — catalog selector vs public HTML hosts"
   attention_ink = "npm run visual:checks — ink/light spend receipts, not JPEG goldens"
   agent_adapters = "npm run check:agents — tracked model adapters + focus emphasis"
+  wonder_architecture = "open .spw/conventions/wonder-architecture.spw; rg 'data-spw-wonder-type' --glob '*.html' — expect 0"
 }
 
 ^"measurement_before_invariant"{

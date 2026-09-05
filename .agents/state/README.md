@@ -8,3 +8,6 @@ Source of truth for state conventions:
 
 Persistent docs may live here later. Generated runtime snapshots should stay in
 `.agents/state/runtime/` and remain untracked.
+
+`agent-preference.spw` is a hand-appended introspection ledger (lean / gap / reach / avoid).
+It is not generated. Ritual: `.spw/conventions/skill-invocation.spw#introspection`.

@@ -15,6 +15,7 @@
 @dom_probes: ~"../../.agents/debugging/dom-probes.md"
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 @naming_structured: ~"./naming-and-structured-values.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"
 
 claim: "data-spw-* attributes are an authoring and runtime language. Authored values must remain legible, inferred values must identify themselves, and interaction state must name whether it is transient, selected, marked, grounded, or collected. Temporal shape, altitude, and register (see rhythm below) make the language learnable dimension by dimension; the settle-declaration-contract in @site_semantics and the reward_contract in @interaction_microstates are its two anchor applications."
 
@@ -31,6 +32,15 @@ inference: .{
   suffix = `Runtime-inferred semantic values use a Resolved dataset key, projected in HTML as data-spw-*-resolved.`
   base_rule = `Do not overwrite an authored base data-spw-* attribute with an inferred value. A runtime may backfill the base key only when it is absent and existing CSS or JS still reads that base key.`
   preferred_key = `When resonance or matching needs a stable handle, prefer an explicit data-spw-resonance-key over scraping copy.`
+}[reg=facet]
+
+^"wonder_coordinates"{
+  claim = `Four uses of "wonder" must not share one attribute. Authored page questions, inferred field residue, the probe operator, and the doctrine test are different altitudes of @wonder_architecture.`
+  authored = `body[data-spw-wonder] — space-separated subset of the seven types.`
+  inferred = `data-spw-wonder-state, data-spw-field-wonder, data-spw-wonder-memory — runtime writes; authors do not invent parallel keys.`
+  operator = `data-spw-operator="probe" is the inquiry sigil, not a type list.`
+  doctrine = `wonder-doctrine.spw is a falsification, not an attribute.`
+  refuse = `Do not add data-spw-wonder-type.`
 }[reg=facet]
 
 rhythm: .{

@@ -29,6 +29,8 @@
 @thinking_dreaming_runtime: ~"./thinking-dreaming-runtime.spw"
 @producer_media_studio: ~"./producer-media-studio-2026-08.spw"
 @layout_resonance_ecology_loop: ~"./layout-resonance-ecology-loop-2026-08.spw"
+@creative_capacity_2026_09: ~"./creative-capacity-2026-09.spw"
+@history_conflict_strands_2026_09: ~"./history-conflict-strands-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -52,6 +54,8 @@ fixity = "tending"
   thinking_dreaming_runtime = @thinking_dreaming_runtime
   producer_media_studio_2026_08 = @producer_media_studio
   layout_resonance_ecology_loop_2026_08 = @layout_resonance_ecology_loop
+  creative_capacity_2026_09 = @creative_capacity_2026_09
+  history_conflict_strands_2026_09 = @history_conflict_strands_2026_09
 }[reg=facet]
 
 ^"cache_rules"{

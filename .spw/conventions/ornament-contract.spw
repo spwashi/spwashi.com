@@ -13,6 +13,7 @@
 @site_semantics: ~"./site-semantics.spw"
 @style_development: ~"./style-development.spw"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"
 @wonder_memory_runtime: ~"../../public/js/interface/wonder-memory.js"
 @accent_palette_runtime: ~"../../public/js/interface/accent-palette.js"
 @settings_runtime: ~"../../public/js/kernel/site-settings.js"
@@ -23,7 +24,7 @@
 @circuit_components: ~"./circuit-components.spw"
 
 thesis: .{
- claim = `An ornament is the visual projection layer of the attentional field. It renders semantic state + field state (resonance, collection, deviation, wonder trail) into inspectable, tunable visuals.`
+ claim = `An ornament is the visual projection layer of the attentional field. It renders semantic state + field state (resonance, collection, deviation, wonder trail) into inspectable, tunable visuals. This is the ornament altitude of @wonder_architecture — not a new wonder family.`
  naive_shape = `The current guide badge reads: I am an operator — here is my name. It does not show whether that operator is warm in the current field, explicitly collected, or deviating from default state.`
  updated_shape = `A badge (or any ornament) should read: I am an operator. My current field state is warm, resonant, collected, or default. My contribution to the attentional field is this token set. Ornament is the canonical visualization layer, not decoration.`
 }[reg=facet]

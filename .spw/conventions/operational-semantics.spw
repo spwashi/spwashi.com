@@ -13,6 +13,7 @@
 @operator_site_projection: ~"./operator-site-projection.spw"
 @attention_field: ~"./attention-field.spw"
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"
 @semantic_braces: ~"./semantic-braces.spw"
 @ornament_contract: ~"./ornament-contract.spw"
 @query_disposition: ~"./query-disposition.spw"
@@ -35,7 +36,13 @@
 
   wonder_vocabulary: .{
     file: ~"./wonder-vocabulary.spw#operational_semantics"
-    focus: "Words as tokens that bias the attention field; both cognitive toolkit and computational surface."
+    focus: "Words as tokens that bias the attention field; both cognitive toolkit and computational surface. Copy tokens, not a second type list and not custom events."
+    key_claims: #[`wonder-vocabulary-field-001`][reg=set]
+  }[reg=facet]
+
+  wonder_architecture: .{
+    file: ~"./wonder-architecture.spw"
+    focus: "Dispatch for doctrine, types, copy tokens, field, ornament, and engaged-wonder loop. Align, not a new contract — keeps the others from inventing a seventh type."
     key_claims: #[`wonder-vocabulary-field-001`][reg=set]
   }[reg=facet]
 

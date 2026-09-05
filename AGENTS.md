@@ -2,15 +2,18 @@
 
 ## Project Overview
 - This repository is a hand-authored site for `spwashi.com`: static routes, shared CSS/JS runtime, and editor-facing `.spw` inspection surfaces.
+- Public nouns on routes: `.spw-frame`, `.spw-chip`. Do not author `.site-frame` or `.operator-chip` on public HTML.
 - The main edit surfaces are:
   - route HTML in directory `index.html` files
-  - shared CSS under `public/css/`
-  - shared JavaScript modules under `public/js/`
+  - shared CSS under `public/css/` (layer folders; `style.css` is the import registry)
+  - shared JavaScript under `public/js/` (`kernel/`, `runtime/`, `interface/`, `semantic/`, `modules/`)
   - `.spw/` conventions and `.agents/plans/` notes when a concept should stay inspectable beyond one patch
-- Treat `.spw/_workbench` as optional reference/tooling, not the default source of truth for site changes.
+- Treat `.spw/_workbench` as optional reference/tooling, not the default source of truth for site changes. Consume it (parser, lattice, doctor); do not fork grammar here.
+- Creator-first copy: _"I'm Spwashi. I build software and make art."_
 
 ## Working Guidelines
 - Clarify the public goal first: copy, route flow, interaction, semantic naming, or editor inspectability.
+- Declare the Spw operation before editing: `cache` | `audit` | `align` | `prime` | `contract` | `archive`. If the task is two operations, it is two patches.
 - Patch the smallest honest surface:
   - route HTML for copy, structure, and semantic attributes
   - shared CSS tokens/components/surfaces before page-local CSS
@@ -19,31 +22,49 @@
 - Prefer minimal, surgical edits that preserve the existing hand-written HTML structure.
 - Keep pages framework-free unless explicitly requested; do not introduce runtime frameworks or client-side dependencies. A local-only build pipeline (`scripts/build.mjs`) and zero-dep introspection scripts are permitted — see the **Build pipeline** section below.
 - Preserve existing copy, links, analytics snippets, and metadata unless the task requires changing them.
+- Computer-use / Codex sessions: verify first (`npm run audit:module-selectors`, `npm run visual:checks`, one pocket route). One named patch. Stop. Do not “implement from plans.”
+- Concurrent sessions share this tree. Never `git stash`. Check `git status` / `git log` before assuming a regression is yours.
 - If work spans multiple routes or shared layers, add or update a plan under `.agents/plans/<slug>/`.
 - If a new reusable semantic family, runtime state, or sitewide contract is introduced, update the relevant `.spw` surface and wire it into `.spw/site.spw` when needed.
-- If the work improves the agent/editor operating environment itself, use `.agents/plans/agent-optimization/PLAN.md` as the tracking document and invoke `spw-plan-maintenance` for plan, skill, `.spw`, and public editor-surface wiring.
+- If the work improves the agent/editor operating environment itself, use `.agents/plans/agent-optimization/PLAN.md` as the tracking document and invoke `spw-plan-maintenance` for plan, skill, `.spw`, and public editor-surface wiring. Success is a smaller next census, not more `index.spw` files.
 - For repository-local questions, inspect local files, plans, and `.spw` surfaces before reaching for external web lookups. Use the network only when the user asks for external/current information, dependency installation/audit requires it, or local context cannot answer the question.
 
 ## Open first
 
 AGENTS is the always-on gate. Open the matching plan or contract instead of inventing a parallel rule here.
 
+**Copy, language, voice**
+
 | If the task is… | Open first |
 |---|---|
-| commit / history wording | `.agents/plans/history-reflow/PLAN.md` plus one full recent commit body (`git log -1 --format=%B`) |
-| multi-route / shared layer | `.agents/plans/<slug>/` |
+| page-copy / pretext measure | `.spw/conventions/copy-flow.spw` plus `npm run audit:copy` |
+| copy-unit / voice tone / clustered copy update | `.spw/conventions/copy-accessor.spw` plus `npm run audit:copy:accessor` |
+| Spw language (operators, braces, v04) vs runtime packs | `.spw/language/feature-utilization.spw` plus `npm run ecology:language` — do not conflate with `body[data-spw-features]` |
+| creative capacity / dual-path language / agent preference | `.spw/caches/creative-capacity-2026-09.spw` plus `skill-invocation.spw#introspection` |
+
+**CSS, attention, chrome**
+
+| If the task is… | Open first |
+|---|---|
 | CSS first-paint spend or `@layer` vs load | `.agents/plans/core-css-spend-cut/PLAN.md` plus `.spw/conventions/css-instruction.spw` and `stylesheet-ecology.spw` |
 | literate CSS / selector kinship | `.agents/plans/css-architecture-readability/PLAN.md` |
 | catalog selector vs public HTML hosts | `.spw/audits/module-selector-depth-2026-09.spw` plus `npm run audit:module-selectors` |
 | opacity / lighting ignoring attention | `.spw/conventions/attention-field.spw#ink_and_light_spend` plus `npm run visual:checks` |
-| pocket chrome missing or off-screen | `.spw/conventions/css-instruction.spw#flow_ownership` — do not `contain` or `position:relative` html/floating chrome |
+| wonder types / field / ornament / doctrine | `.spw/conventions/wonder-architecture.spw` — six altitudes; do not add `data-spw-wonder-type` |
+| pocket chrome missing or off-screen | `.spw/conventions/css-instruction.spw#flow_ownership` — do not `contain` or `position:relative` `html` / floating chrome |
+
+**Plans, agents, commits**
+
+| If the task is… | Open first |
+|---|---|
+| commit / history wording | `.agents/plans/history-reflow/PLAN.md` plus one full recent commit body (`git log -1 --format=%B`) |
+| multi-route / shared layer | `.agents/plans/<slug>/` |
+| recurring repo bond / unresolved historical churn | `.spw/caches/history-conflict-strands-2026-09.spw` plus `npm run wonder -- --surface history-conflict` |
 | agent / editor environment | `.agents/plans/agent-optimization/PLAN.md` and `spw-plan-maintenance` |
-| PWA / service worker | `.agents/plans/pwa-experience/` plus `npm run check:pwa` |
-| page-copy / pretext measure | `.spw/conventions/copy-flow.spw` plus `npm run audit:copy` |
-| copy-unit / voice tone / clustered copy update | `.spw/conventions/copy-accessor.spw` plus `npm run audit:copy:accessor` |
-| model instructions (Claude, Grok, Gemini, GPT) | `CLAUDE.md`, `GROK.md`, `GEMINI.md`, `GPT.md` (backed by `AGENTS.md`). No file for your model yet: `AGENTS.md` alone is the reliable gate — do not write yourself a speculative `<MODEL>.md`; add one later, from observed behavior, not assumption. |
+| model adapters (Claude, Grok, Gemini, GPT) | `CLAUDE.md`, `GROK.md`, `GEMINI.md`, `GPT.md` (backed by this file). No adapter for your model yet: this file alone is the gate — do not write a speculative `<MODEL>.md` |
 | skill wrappers vs workbench | `.agents/README.md` |
-| repo gotchas another agent already found | `.agents/MEMORY.md` — verified misses (stale selectors, commit grammar, collision risk), not a general note-dump |
+| repo gotchas another agent already found | `.agents/MEMORY.md` — verified misses, not a note dump |
+| PWA / service worker | `.agents/plans/pwa-experience/` plus `npm run check:pwa` |
 
 ## Commits
 
@@ -64,6 +85,9 @@ Use these rails before broad creative, semantic, CSS, JS, or marketing work:
 - **Daily kernel:** Use `.spw/conventions/daily-kernel.spw` and `.agents/plans/daily-kernel-development/PLAN.md` when engineering work intersects animators, illustrators, designers, musicians, artists, or other collaborators. A daily kernel must name one focus, one discipline pair, one region, one brand-physics variable, one intensity, one semantic operation, one output, one validation path, and what not to touch.
 - **Creative marketing engine:** Use `.spw/surfaces/product-lines.spw` plus `.spw/conventions/model-guided-refinement.spw#creative_marketing_engine` before changing promo/wonder, artist, musician, commission, or collaborator-facing offers. Each offer should name audience, offer, proof, resonance, extension, and next action.
 - **Experience slices:** Use `.agents/plans/modular-experience-slices/PLAN.md` and `.spw/slices/` contracts when work needs durable ownership across route HTML, CSS, JS, `.spw`, validation, and practice beds.
+- **Copy accessor:** Use `.spw/conventions/copy-accessor.spw` when naming or translating collectible copy. The dotted `data-spw-copy-unit` is the flat localization projection; `data-spw-semantic-expression` is the multidimensional handle. Extra dots nest categories; they are not extra dimensions. Do not invent a fourth accessor family.
+- **Linguistic dual-path:** Consume the pinned workbench (v04, lattice, `/tools/spw-parser/`) or experiment through web semantics (HTML expressions, operator chips, CSS kinship). Walk one path per patch. See `.spw/language/feature-utilization.spw#dual_path`.
+- **Wonder architecture:** Use `.spw/conventions/wonder-architecture.spw` before adding a wonder type, token, or attribute. Doctrine, the seven types, copy vocabulary, field state, ornament, and the engaged-wonder loop are six altitudes of one architecture. Astra planning/creativity/implementation primes on that file; harvest LSP questions with `npm run wonder`. Recurring bonds from this repo's history live in `.spw/caches/history-conflict-strands-2026-09.spw`. Do not add `data-spw-wonder-type`. Do not implement a lens from the prime.
 
 Default decision rule:
 
@@ -89,14 +113,19 @@ Default decision rule:
 - Run `node --check <file>` for edited JS modules. TypeScript uses `npm run typecheck` (pre-commit does not `node --check` `.ts` / `.mts`).
 - For **site runtime** feature packs (`data-spw-features`) or multi-audit work, run `npm run ecology`. Thoroughness: `.spw/audits/index.spw`. Loop: `.spw/conventions/recursive-improvement.spw`.
 - For **Spw language** features (operators, braces, claims, v04 pillars), run `npm run ecology:language`. Entry: `.spw/language/feature-utilization.spw`. Loop: `.spw/language/recursive-improvement.spw`. Do not conflate language operators with the runtime pack token `operators`.
-- For ordinary HTML/CSS/JS/`.spw` work that does not touch dependencies, prefer `npm run check:local`; it runs the local build, CSS/runtime/site contracts, generated-output checks, and `git diff --check` without the network-backed npm audit. Versioned git hooks in `scripts/githooks/` run a fast staged syntax/whitespace gate on commit and `npm run check:local` on push (`SKIP_GIT_HOOKS=1` to skip). `npm run hooks:install` sets `core.hooksPath`.
+- For ordinary HTML/CSS/JS/`.spw` work that does not touch dependencies, prefer `npm run check:local`; it runs the local build, CSS/runtime/site contracts, generated-output checks, `check:agents`, module tests, and `git diff --check` without the network-backed npm audit. Versioned git hooks in `scripts/githooks/` run a fast staged syntax/whitespace gate on commit and `npm run check:local` on push (`SKIP_GIT_HOOKS=1` to skip). `npm run hooks:install` sets `core.hooksPath`.
+- `check:local` can be green with stale committed CSS bundles and with fixture hosts a capture commit retargeted. Trace bundle hunks to the source commit; update fixture tests in the same commit as the host change. It does **not** validate commit grammar.
+- After catalog selector or public class-noun edits: `npm run audit:module-selectors`.
+- After ink, resonance, or pocket chrome: `npm run visual:checks` (attention-miss receipts, not JPEG goldens).
+- After copy-unit / collectible lede work: `npm run audit:copy:accessor`.
+- After model-adapter edits: `npm run check:agents` (adapters must be git-tracked).
 - When touching `sw.js`, `manifest.webmanifest`, offline routes, or PWA runtime, also run `npm run check:pwa`.
 - When proposing or writing a commit message, read one recent full body and include a closing `#[episode]{}`. Local check scripts do not catch a missing episode.
 - Run `npm run audit` (or `npm run check`, which includes it) before landing changes that touch dependencies: `devDependencies`, `dependencies`, `package-lock.json`, install tooling, or any package resolution surface. A script-only `package.json` edit may use `check:local` plus targeted review unless the dependency graph changes.
 - Agents must not introduce new npm packages (via `npm install`, `npx`, etc.) without an accompanying plan note under `.agents/plans/` (or `agent-optimization/`) and human review. Prefer `npm ci --ignore-scripts` for any temporary installs.
-- Use targeted `rg` checks for anchors, asset paths, and semantic data attributes.
+- Use targeted `rg` checks for anchors, asset paths, and semantic data attributes. `el.dataset.spwFooBar =` writers do not show up in a literal `data-spw-*` grep — check both forms.
 - For content edits, sanity-check surrounding markup for balanced tags and broken relative/root-relative links.
-- If a local preview step is needed, use a simple static server; otherwise avoid adding tooling just for validation.
+- If a local preview step is needed, use `npm run dev`; otherwise avoid adding tooling just for validation.
 
 ## Model adapters (relative strengths, not exclusive owners)
 
@@ -130,8 +159,12 @@ As of 2026-04, the site publishes through a local build step rather than serving
 | `npm run catalog` | Regenerates the in-tree design catalog at `design/catalog/` (gitignored). |
 | `npm run manifest` | Regenerates the route runtime manifest. |
 | `npm run sitemap` | Generates `dist/sitemap.xml` from tracked route canonicals. |
-| `npm run check:local` | Default offline/local validation: compile, CSS, runtime/site contracts, generated checks. Does not copy `dist/`, and does not validate commit grammar. |
-| `npm run check:agents` | Tracked model adapters + shared emphasis sentence. Focuses are relative strengths, not exclusive owners. |
+| `npm run check:local` | Default offline/local validation: compile, CSS, runtime/site contracts, generated checks, `check:agents`, module tests. Does not copy `dist/`, and does not validate commit grammar. |
+| `npm run check:agents` | Tracked model adapters + shared emphasis sentence. Focuses are relative strengths, not exclusive owners. A green check on untracked adapters is a lie. |
+| `npm run audit:copy:accessor` | Census of `data-spw-copy-unit` vs Spw handles, topic clusters, voice seams. |
+| `npm run audit:module-selectors` | MODULE_DEFS.selector vs public HTML hosts. |
+| `npm run visual:checks` | Pocket stills; fail when ink/light ignore attention. |
+| `npm run ecology` / `ecology:language` | Runtime feature packs vs Spw language. Do not merge inventories. |
 | `npm run build:site:run` | Static deploy builder into `dist/`. Registers `scripts/lib/register-public-imports.mjs` so the catalog can load `/public/js` specifiers under Node. |
 | `npm run check:pwa` | Service-worker, manifest, offline, and PWA runtime contracts. |
 | `npm run check:runtime` | Validates JS runtime architecture contracts: module definition shape, import ownership, generated typed outputs, and root entrypoint boundaries. |
@@ -146,6 +179,10 @@ As of 2026-04, the site publishes through a local build step rather than serving
 ## Spw Design System - Agent Reference
 
 This site uses a layered CSS architecture and an ES module JavaScript system built around the **Spw language**: a readable plain-text grammar projected into HTML, CSS, JS, and `.spw` inspection surfaces.
+
+Public HTML nouns: `.spw-frame` + `data-spw-kind="frame"`; chips are `.spw-chip`. Catalog `MODULE_DEFS.selector` strings must name the same nouns (`npm run audit:module-selectors`).
+
+JS reading order: `public/js/README.md` (`site.js` → `runtime/module-catalog.js` → `module-loader.js` → `kernel/dom-contracts.js` → `kernel/shared.js` → `kernel/site-settings.js`).
 
 ### CSS layer order (lowest -> highest priority)
 ```text
@@ -162,14 +199,16 @@ New styles override lower layers. Add to `ornament` only if you need to override
 | Change brace forms or structural grammar | `public/css/grammar/syntax.css` |
 | Change shared surface layout or feature-gated component layout | `public/css/systems/surfaces/*.css` or `public/css/components/*.css` |
 | Change route-only surface layout | `public/css/routes/*.css` or `public/css/routes/surfaces/*.css` |
-| Change wonder-memory propagation, accent memory, or ornament response | `public/js/wonder-memory.js` + `public/css/effects/wonder.css` + `public/css/ornament/ornament.css` |
-| Change settings defaults, root data attributes, or deviation handling | `public/js/site-settings.js` + `settings/index.html` |
-| Change navigation tokenization or grounded route behavior | `public/js/navigation-spells.js` + `public/js/frame-navigator.js` |
-| Change spell, checkpoint, or bookmark behavior | `public/js/spells.js` + `public/js/haptics.js` + `public/js/experiential.js` |
-| Change guide badge, interaction-context, or collection behavior | `public/js/guide-badge.js` + `public/css/ornament/ornament.css` |
+| Change wonder-memory propagation, accent memory, or ornament response | `public/js/interface/wonder-memory.js` + `public/css/effects/wonder.css` + `public/css/ornament/ornament.css` |
+| Change settings defaults, root data attributes, or deviation handling | `public/js/kernel/site-settings.js` (profiles + engine re-export) + `public/js/kernel/site-settings-engine.js` + `settings/index.html` |
+| Change navigation tokenization or grounded route behavior | `public/js/runtime/navigation-spells.js` + `public/js/runtime/frame-navigator.js` |
+| Change spell, checkpoint, or bookmark behavior | `public/js/runtime/spells.js` + `public/js/interface/haptics.js` + `public/js/runtime/experiential.js` |
+| Change guide badge, interaction-context, or collection behavior | `public/js/interface/guide-badge.js` + `public/css/ornament/ornament.css` |
+| Change section-handle / resonance probe | `public/js/runtime/attention-architecture.js` + `public/js/runtime/attention/` |
 | Add a canvas accent to a frame | add `data-spw-accent="wave|vortex|crystal|lattice|flow"` to the element and tune shared accent CSS/JS only if needed |
-| Add a new operator type | `public/js/shared.js` (`OPERATOR_DEFINITIONS`) + `public/css/tokens/core.css` + any relevant shared CSS projection files |
+| Add a new operator type | `public/js/kernel/shared.js` + `public/js/kernel/operator-detection.js` (`OPERATOR_DEFINITIONS`) + `public/css/tokens/core.css` |
 | Add or rename a reusable feature cluster | route HTML + `.spw/surfaces/page-model.spw` when the model matters beyond one patch |
+| Name or translate a collectible lede | `data-spw-copy-unit` + optional `data-spw-semantic-expression` on the same host; `.spw/conventions/copy-accessor.spw` |
 
 ### Page shell metadata
 
@@ -218,9 +257,12 @@ Example:
 ### Common component and interaction primitives
 
 ```html
-<!-- Operator chips -->
-<a class="operator-chip" href="..." data-spw-operator="probe">?[topic]</a>
-<a class="operator-chip" href="..." data-spw-operator="frame">#>name</a>
+<!-- Operator chips (public noun: .spw-chip) -->
+<a class="spw-chip" href="..." data-spw-operator="probe">?[topic]</a>
+<a class="spw-chip" href="..." data-spw-operator="frame">#>name</a>
+
+<!-- Collectible lede: dotted localization key + optional Spw handle -->
+<p data-spw-copy-unit="about.hook.lede" data-spw-semantic-expression="about[reading]{person}">…</p>
 
 <!-- Inline topic markers -->
 <span class="spw-topic" data-spw-topic>concept</span>
@@ -234,12 +276,12 @@ Example:
 <section data-spw-accent="vortex" data-spw-accent-palette="warm">
 
 <!-- Opt-in collectible guide badge behavior -->
-<a class="operator-chip" data-spw-guide-badge="collect" href="/topics/software/spw/">
+<a class="spw-chip" data-spw-guide-badge="collect" href="/topics/software/spw/">
 ```
 
 ### Root runtime state
 
-`public/js/site-settings.js` is the canonical source for root-level settings state and deviation handling. Do not introduce direct localStorage writes for canonical settings outside that module.
+`public/js/kernel/site-settings.js` re-exports profiles + engine. `setDatasetEntries(...)` lives in `public/js/kernel/site-settings-engine.js`. Do not introduce direct localStorage writes for canonical settings outside that module.
 
 Common runtime attributes written to `<html>` include:
 
@@ -256,7 +298,7 @@ Common runtime attributes written to `<html>` include:
 - `data-spw-deviations`
 - `data-spw-deviation-state`
 
-If you need the full current list, inspect `setDatasetEntries(...)` in `public/js/site-settings.js`.
+If you need the full current list, inspect `setDatasetEntries(...)` in `public/js/kernel/site-settings-engine.js`.
 
 ### Interaction, grounding, and collection state
 
@@ -273,6 +315,7 @@ Prefer these existing names over inventing parallel state unless the distinction
 
 ### Wonder, ornament, and spell direction
 
+- Dispatch: `.spw/conventions/wonder-architecture.spw`. Authored types live on `body[data-spw-wonder]`. Runtime writes `data-spw-wonder-state`, `data-spw-field-wonder`, `data-spw-wonder-memory`. The probe operator (`?` / `data-spw-operator="probe"`) is not a synonym for the type list.
 - `data-spw-wonder-state`, `data-spw-field-wonder`, and related memory-match state drive shared accent/ornament behavior.
 - The ornament contract lives across `public/css/tokens/core.css`, `public/css/effects/wonder.css`, `public/css/ornament/ornament.css`, `.spw/conventions/ornament-contract.spw`, and `.spw/conventions/attention-field.spw`.
 - Spells should be treated as **small replayable outcomes**, not merely collectible traces. Useful examples are restoring checkpoints or resuming a pinned working set.
@@ -329,7 +372,7 @@ header -> meta -> body -> figure -> actions -> footer
 - Mode-specific operator colors are usually scoped through `--active-op-color` in the relevant route surface CSS.
 
 #### Frame anatomy axes
-A `site-frame` can have two independent interaction axes:
+A `.spw-frame` can have two independent interaction axes:
 1. **Lens** (`mode-switch`): filters content type.
 2. **Form** (`data-spw-form-options`): changes structural presentation.
 
@@ -357,8 +400,13 @@ Add or update a plan under `.agents/plans/<slug>/` when:
 - Use `!important` outside the `ornament` layer.
 - Add inline styles except for JS-driven dynamic values.
 - Rename or move CSS files without updating the `@import` in `style.css`.
-- Bypass `public/js/site-settings.js` with direct localStorage writes for canonical settings.
-- Introduce one-off `data-spw-*` names when an existing family already fits.
+- Bypass `public/js/kernel/site-settings-engine.js` with direct localStorage writes for canonical settings.
+- Introduce one-off `data-spw-*` names when an existing family already fits. No `data-spw-voice`, `data-spw-style`, or fourth copy-accessor family.
+- Author `.site-frame` or `.operator-chip` on public routes. Catalog selectors must match public nouns (`.spw-frame`, `.spw-chip`).
+- `contain:layout` or `position:relative` on `html` or `[data-spw-floating-chrome]` (steals pocket chrome).
+- Spend `--spw-attention-opacity` from a `:root` calc of `--charge` / `--spw-resonance` (they do not inherit). Restate spend on the frame; lift with `.spw-frame:focus-within`, not `:has(:focus-within)`.
+- Kitchen-sink “implement from plans.” Verify one pocket route, one named patch, stop.
+- `git stash` in this tree. Concurrent sessions lose work that way.
 
 ---
 
@@ -370,7 +418,7 @@ Progressive-enhancement system for section-context awareness and operator resona
 
 Mobile-first sticky chip that surfaces the current visible section by reading `data-spw-operator` and heading text.
 
-**Files:** `public/js/attention-architecture.js`, `public/css/chrome.css`
+**Files:** `public/js/runtime/attention-architecture.js`, `public/js/runtime/attention/section-handle.js`, `public/css/shell/chrome/section-context.css`
 
 **HTML contract:**
 
@@ -441,26 +489,11 @@ Desktop-aware layout system with flex/grid containers for better space utilizati
 
 ---
 
-## Conceptual Resonance
+## Conceptual Resonance (no-JS echo)
 
-CSS-only operator linking via `:has()` selector. Creates soft visual echo when any instance of an operator is focused/hovered.
+CSS `:has()` in `public/css/effects/wonder.css` still echoes matching operators on hover/focus-visible when JS has not pinned `html[data-spw-resonance-probe]`. Treat the **Resonance probe** section above as the authored contract (operator + family + `data-spw-target` kin). Regroup CSS only if `OPERATOR_DEFINITIONS.family` in `operator-detection.js` changes.
 
-**Files:** `public/css/effects/wonder.css`
-
-**Mechanism:**
-```css
-:where(main, body):has(:where([data-spw-operator="frame"]:is(:hover, :focus-visible)))
-  :where([data-spw-operator="frame"]:not(:hover):not(:focus-visible)) {
-  --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
-}
-```
-
-Covers 7 operators: frame, object, probe, ref, action, stream, surface.
-
-**Physics tokens** in `tokens/core.css`:
-- `--attention-field-radius`: decay multiplier (0.4 default)
-- `--attention-field-decay`: cascade falloff (0.65 default)
-- `--attention-echo-duration`: animation duration (480ms)
+Physics tokens in `tokens/core.css`: `--attention-field-radius` (0.4), `--attention-field-decay` (0.65), `--attention-echo-duration` (480ms). Ink/light spend: `.spw/conventions/attention-field.spw#ink_and_light_spend`. Prove with `npm run visual:checks`.
 
 ---
 

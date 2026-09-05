@@ -9,10 +9,17 @@
 #:fixity #!stable
 #:layer #!pragmatics
 
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+
 operation = "contract"
 fixity = "stable"
 
 expression = wonder[doctrine]{structural.honest.earned}<falsify>
+
+^"altitude"{
+  dispatch = @wonder_architecture
+  job = `This file is the doctrine test. Types, copy tokens, field state, and ornament live elsewhere. Do not treat this document as a type list or as a new attribute family.`
+}[reg=facet]
 
 ^"thesis"{
   claim: "Wonder is a state of attention, not a property of a surface. A surface earns wonder by becoming more legible under examination — by revealing structure that the visitor could not have predicted but can verify after the fact. Decoration produces surprise; structure produces wonder. The difference is whether the revelation could have been derived."

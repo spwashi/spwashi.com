@@ -14,6 +14,8 @@
 @plan_index: ~"./plan-index.spw"
 @wip_notebook: ~"./wip-notebook.spw"
 @codebase_perusal: ~"./codebase-perusal.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"
+@history_strands: ~"../caches/history-conflict-strands-2026-09.spw"
 @plans_root: ~"../../.agents/plans/index.spw"
 @agent_optimization_plan: ~"../../.agents/plans/agent-optimization/PLAN.md"
 @agentic_contracts_plan: ~"../../.agents/plans/agentic-dev-contracts/PLAN.md"
@@ -27,10 +29,10 @@ fixity = "tending"
 ^"routing"{
  owner_plan: "agent-optimization"
  satellite_plans: #[`agentic-dev-contracts`, `plan-wip-index-conventions`, `context-sensitive-variants-and-agent-qa`][reg=set]
- conventions: #[`planning-ecology`, `plan-index`, `wip-notebook`, `codebase-perusal`][reg=set]
- precipitates: #[`.agents/state/plans-index.json`, `.agents/state/skills-index.json`][reg=set]
- invalidation_rule: "Regenerate precipitates when plan index, SKILL.md, or owner-registry changes."
- first_read: "planning-ecology.spw for buckets; plans/index.spw for dispatch; agentic-dev-contracts for check/manifest."
+ conventions: #[`planning-ecology`, `plan-index`, `wip-notebook`, `codebase-perusal`, `skill-invocation`][reg=set]
+ precipitates: #[`.agents/state/plans-index.json`, `.agents/state/skills-index.json`, `.agents/state/agent-preference.spw`, `.spw/caches/history-conflict-strands-2026-09.spw`][reg=set]
+ invalidation_rule: "Regenerate precipitates when plan index, SKILL.md, or owner-registry changes. Preference ledger is hand-appended, not generated."
+ first_read: "planning-ecology.spw for buckets; skill-invocation.spw#focuses and #introspection for relative strength; wonder-architecture.spw for Astra planning/creativity/implementation (prime) and harvestable LSP questions; history-conflict-strands-2026-09.spw for recurring bonds from this repo's history; creative-capacity-2026-09.spw for wonder/language primes."
  plan_ecology_pass: @plan_ecology_semantics
 }
 

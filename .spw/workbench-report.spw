@@ -24,6 +24,7 @@
 @wonder: ~"../scripts/wonder.mjs"
 @precipitate: ~"../scripts/spw-precipitate.mjs"
 @recommendations: ~"./reviews/upstream-workbench-recommendations.spw"
+@history_strands: ~"./caches/history-conflict-strands-2026-09.spw"
 
 operation = "audit"
 fixity = "tending"
@@ -44,6 +45,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   ~#reading: `naming the parent costs four orders of magnitude more than naming its children`
   fix: "exclude node_modules, .git and a mounted _workbench by default; --include-infrastructure to opt back in"
   ~#consequence: "every consumer script here shells find with -not -path '*_workbench*' rather than using --from"
+  history = `Named as consumer[walk]{roots} ^ workbench[mount]{node_modules}<isolation> in @history_strands#workbench_explore. Explore the workbench after a pruned walk, not before.`
   probe: `spw query --from .spw/conventions,.spw/language --selector pathRefs --count` vs `spw query --from .spw --selector pathRefs --count`
 }
 

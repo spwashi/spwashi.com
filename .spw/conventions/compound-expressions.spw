@@ -18,6 +18,7 @@
 @region_ecology: ~"./region-component-ecology.spw"
 @kernel_rhizosphere: ~"./kernel-rhizosphere.spw"
 @operator_semantics: ~"./operator-semantics.spw"
+@history_strands: ~"../caches/history-conflict-strands-2026-09.spw"
 @manifest: ~"../../public/js/generated/spw-expressions.js"
 @builder: ~"../../scripts/build-expression-manifest.mjs"
 
@@ -61,6 +62,7 @@ expression = expression[compound]{bond.operand.kind}<declared>
   }[reg=facet]
   also_parse: #[`& subject-join`, `^ project-join`, `@ lens (viewer@subject)`, `#> ground`, `nested bodies`][reg=set]
   consequence: "Compound expressions are available today. Nothing in the workbench needs to change for the site to start writing them."
+  history_example = `History-conflict-strands names recurring repo bonds as compounds (consumer[walk] ^ workbench[mount], taxonomy ^ biome exchange). That is the corpus use this file asked for — declared relation, not inferred kinship. See @history_strands.`
 }
 
 ^"declared_bond_versus_inferred_kinship"{

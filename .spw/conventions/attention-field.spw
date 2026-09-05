@@ -18,6 +18,8 @@
 @attention_catalog: ~"../../public/js/runtime/module-catalog-enhancement.js"
 @accent_palette_runtime: ~"../../public/js/interface/accent-palette.js"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"
+@wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
 @expressive_registers: ~"./expressive-registers.spw"
 @circuit_components: ~"./circuit-components.spw"
@@ -30,6 +32,7 @@ thesis: .{
  why_this_model = `The metaphor captures something the click/event model does not: attention has weight, direction, and neighborhood effects. Hovering near a concept for a moment should do something different from navigating directly to it.`
  limitation = `The fully continuous local-hormonal model is O(n²) in components. The register-diffusion model is a tractable approximation that preserves the neighborhood structure.`
  coordinate = `This field model is the 'field' lexicon_register over @metaphor_dimensional_lexicon#coordinate_space express_channel (charge/resonance/attention/field_intensity). Circuit (@circuit_components) and expressive registers (@expressive_registers) reproject the same coordinate — one physics, three dictionaries.`
+ wonder_altitude = `This file is the field altitude of @wonder_architecture. Runtime writes data-spw-wonder-state / data-spw-field-wonder / data-spw-wonder-memory. Authors name page questions on body data-spw-wonder (@wonder_vocabulary). Do not author a parallel wonder-type key.`
 }[reg=facet]
 
 local_hormonal_model: .{

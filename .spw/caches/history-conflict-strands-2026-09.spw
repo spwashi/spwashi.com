@@ -1,0 +1,151 @@
+# History Conflict Strands (2026-09)
+#
+# operation: prime
+# From this repository's history: compelling ideas that stalled, churn that
+# did not resolve cleanly, and conflict trends that recur. Connected as
+# declared Spw bonds and harvestable wonders — not a new type list, not a
+# new data-spw-* family, not a kitchen-sink.
+#
+# Complements commit-history-deep-2026-07 (epochs/churn census). This file
+# names the *relations* the census could not; it does not rewrite epochs.
+
+#>history_conflict_strands_2026_09
+#:cache #!prime #!history #!wonder #!workbench #!components #!design
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@commit_history: ~"../audits/commit-history-deep-2026-07/index.spw"
+@theme_churn: ~"../audits/commit-history-deep-2026-07/theme-churn.spw"
+@workbench_report: ~"../workbench-report.spw"
+@workbench_alignment: ~"../reviews/workbench-alignment-audit.spw"
+@upstream_recs: ~"../reviews/upstream-workbench-recommendations.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@compound_expressions: ~"../conventions/compound-expressions.spw"
+@component_taxonomy: ~"../conventions/component-taxonomy.spw"
+@component_biome: ~"../conventions/component-biome.spw"
+@expression_card: ~"../conventions/expression-card.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@arrival: ~"../conventions/arrival-electrostatics.spw"
+@depth_perspectives: ~"../conventions/depth-perspectives.spw"
+@dual_path: ~"../language/feature-utilization.spw"
+@chrome_wonder: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
+@slices_plan: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
+@memory: ~"../../.agents/MEMORY.md"
+@creative_capacity: ~"./creative-capacity-2026-09.spw"
+@codebase_perusal: ~"../conventions/codebase-perusal.spw"
+
+operation = "prime"
+fixity = "experimental"
+source = "repo history 2026-04→2026-09 plus wonder-architecture/Astra prime: compelling ideas, unresolved churn, conflict trends"
+
+expression = history[strand]{workbench.component.design.churn}<bond>
+
+^"thesis"{
+  claim = `This tree's history is not a list of files that moved. It is a small set of recurring bonds: consume XOR experiment, name XOR exchange, structure XOR atmosphere, authored noun XOR catalog selector. Naming the bond lets Astra and a returning editor pick one strand instead of kitchen-sinking the renaissance.`
+  refuse = `Do not add a data-spw-* family. Do not merge expression-card modules. Do not flatten /topics/software/. Do not retune named last commits unless a named check fails. Do not touch components/surfaces.css speculatively. Do not upstream site slices as workbench canon.`
+  archive_note = `cc-003 introspection already landed in skill-invocation.spw#introspection — the close @creative_capacity#cc-005 named. This cache does not revive js-architecture-aerodynamics.`
+}[reg=facet]
+
+^"workbench_explore"{
+  id = "hs-001"
+  claim = `Explore the workbench as a consumer first. Improvement RFCs that skip walk isolation are spectacle.`
+  bond = `consumer[walk]{roots} ^ workbench[mount]{node_modules}<isolation>`
+  compelling = `Pinned workbench is the grammar instrument: doctor, lattice, /tools/spw-parser/, ; as sequence, parseExpression now consumes the full noun. Dual-path: consume XOR experiment.`
+  churn = `Submodule sat 135 commits behind its checkout, then rebuilt (7d7923e4, eeb5cfdc). --from .spw still times out on the mount. Site scripts shell find -not -path '*_workbench*'.`
+  conflict = `Workbench "slice" is a mount/pipeline stage. Site "slice" is years-long experience ownership (@slices_plan). Same English word, two altitudes. Volleyball stays downstream.`
+  explore = ?<
+    `npm run spw:doctor`,
+    `npm run spw:roots`,
+    `read @workbench_report#walk_cost`,
+    `one v04 pillar XOR one public expression host — never both`
+  >[reg=stream]
+  first_patch = `Time a pruned consumer-root query. If unpruned still times out, refuse new LSP lenses and new workbench RFCs until isolation is the ask.`
+  validation = `rg 'walk_cost' .spw/workbench-report.spw`
+}[reg=facet]
+
+^"component_define"{
+  id = "hs-002"
+  claim = `Components are already named. They have not evolved exchange. Definition now means succession, not a fifth primitive.`
+  bond = `component[taxonomy]{frame.card.panel.chip.prose} ^ biome[exchange]{has.sibling}<succession>`
+  compelling = `Four public primitives plus prose (9d798913 finished site-frame/operator-chip). Slot anatomy header→footer. Expression-card names one primitive under lab, toolmaker, and cauldron — and must not merge those modules.`
+  churn = `@component_biome measured 33:1 inheritance to :has(). Channels are parent-reads-descendants; none is sibling exchange. Compound expressions: grammar holds them, 14 of 668 authored. Depth-perspectives arrows stall because beginner is not a subset of advanced.`
+  conflict = `A catalog selector citing an old class is a silent miss, not a syntax error (@memory). Expression-card duplication is three honest applications of one unnamed thing — keep them unmerged until a second consumer of the primitive appears.`
+  first_patch = `When a component change is proposed, name which primitive it is. If the answer is "a new one," stop. If the answer is exchange, the probe is a sibling :has() or a declared compound, not a fifth class.`
+  validation = `rg 'rederived_surface_primitives' .spw/conventions/component-taxonomy.spw`
+}[reg=facet]
+
+^"design_develop"{
+  id = "hs-003"
+  claim = `Site design develops by promoting a staged still into a pack that a route actually consumes — and by keeping first paint structural.`
+  bond = `paint[first]{structure} ; restyle[late]{atmosphere}<delivery>`
+  compelling = `Paper-motif physics in core, plates idle. Flourish-pack / holiday tropes late. Theme-set icons are comparison+inquiry (vellum-hex vs algorithm-lattice). Magazine tone is return-visit/issue/season. Pocket-frame density: identity + lens + one extra.`
+  churn = `Bundles fell behind committed source (d26dbbdf). Kitchen-sink sessions keep trying to restyle atmosphere as structure. Staged Midjourney sidecars stay replace_later until a human names them and a route consumes the crop. Open chrome edge: shell disclosure once the drawer is open (5a408dc2 / chrome-navigation-wonder).`
+  conflict = `@wonder_doctrine#earned_depth wants prior engagement; @arrival fires on first encounter and grounds away. Both are defensible; the code implements one. Depth arrows promise a total order the copy cannot deliver.`
+  first_patch = `Promote at most one staged icon set onto one real route in light/dark, or land the open-drawer swipe — not both, and not a new theme-pack family in core CSS.`
+  validation = `rg 'replace_later' .spw/conventions/asset-management.spw ; rg 'Open' .agents/plans/chrome-navigation-wonder/PLAN.md`
+}[reg=facet]
+
+^"churn_unresolved"{
+  id = "hs-004"
+  claim = `The expensive churn is silent: a rename that does not travel, a check that is green on untracked files, a concurrent session that stashes a sibling's tree.`
+  bond = `noun[public]{spw-frame.spw-chip} ~ catalog[selector]{stale.site-frame}<silent_miss>`
+  evidence = #[
+    `site-frame → spw-frame left MODULE_DEFS and live-route classes stale for weeks`,
+    `check:agents originally passed on untracked adapters`,
+    `never git stash — concurrent Claude/Grok/Codex commit to main (@memory)`,
+    `components/surfaces.css is the highest-collision file; do not touch it speculatively`,
+    `public/css bundles dominate numstat — review signal drowns in regenerated core.css`
+  ][reg=set]
+  astra_fit = `Cross-file review is Astra's reported strength. Point it at a rename, a catalog selector, and the HTML host — not at a greenfield empty folder.`
+  first_patch = `Before trusting a selector, grep current HTML. npm run audit:module-selectors for catalog; it does not catch <spw-include> partials.`
+  validation = `npm run audit:module-selectors`
+}[reg=facet]
+
+# Harvestable wonders. Inquiry, not a backlog. `npm run wonder -- --surface history-conflict`
+
+#>wonder_history_workbench
+?["Is the next honest workbench improvement a consumer-root default, or a new lens on a walk that still times out?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @workbench_report
+  ~#hypothesis: "walk isolation is still the first RFC. Lenses, wonder harvest of body types, and go-to-owner are second. A lens on a 120s walk fails @wonder_doctrine ambient_decoration from the timing side."
+  !probe{ "time a pruned spw query against --from .spw. if unpruned still times out, the next workbench note is isolation, not a feature." }
+  $%[cli.walkMs, workbench.isolation, rfc.order]
+}
+
+#>wonder_history_exchange
+?["When the four primitives are already named, is a fifth component a failure of succession rather than a gap in the taxonomy?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @component_biome
+  ~#hypothesis: "biome exchange never evolved because inheritance is free and :has() is scarce. A new class is the tempting wrong fix — the same shape as adding a wonder-type."
+  ~#tension: "expression-card wants one primitive under three hosts and forbids merging them. Definition without exchange produces three notations for one idea."
+  !probe{ "if the proposed class is not frame, card, panel, chip, or prose, name the sibling :has() or the declared compound it would have been. if neither exists, cache the idea; do not add the class." }
+  $%[taxonomy.primitives, biome.exchange, expression.card]
+}
+
+#>wonder_history_earned
+?["Can first-encounter arrival and earned-depth wonder share one visit, or must a return path spend a different discharge?"]{
+  #:depth #!experiential ~#lens(memory)
+  ~#with: @arrival
+  ~#hypothesis: "the code implements first-encounter fire. doctrine wants prior engagement. a visitor who returns most currently gets least — the opposite of magazine return-visit tone."
+  !probe{ "on a second visit to /about/ or /design/, does arrival still spend, or has visitation-memory / wonder-memory changed the discharge? if the second visit is identical, earned_depth is still failing in public." }
+  $%[arrival.discharge, doctrine.earned, visit.return]
+}
+
+#>wonder_history_promote
+?["Which staged still has earned a route, and which is still a comparison question posing as a theme pack?"]{
+  #:depth #!computational ~#lens(inquiry)
+  ~#hypothesis: "vellum-hex and algorithm-lattice are comparison+inquiry. promoting both is kitchen-sink. one icon set on one route in light/dark is the design development step."
+  !probe{ "grep replace_later on staged sidecars vs routes that actually reference the crop. if a sidecar is named and no route consumes it, it has not been promoted." }
+  $%[still.replace_later, route.consumes, theme.pack]
+}
+
+#>wonder_history_drawer
+?["Is the open disclosure drawer the last chrome edge, or a new gesture family in disguise?"]{
+  #:depth #!computational ~#lens(orientation)
+  ~#with: @chrome_wonder
+  ~#hypothesis: "three of four rooms reuse tap:travel/swipe:cycle. the open drawer has zero swipe. extending the same contract is succession; a drawer-only vocabulary is a seventh type."
+  !probe{ "grep swipe in shell-disclosure.js. if the count is still 0, the next chrome slice is that file, following resolveHeaderRoomHop, verified on /about/ pocket CDP." }
+  $%[chrome.swipe, disclosure.open, gesture.family]
+}

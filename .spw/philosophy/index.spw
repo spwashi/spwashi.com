@@ -11,6 +11,7 @@
 @one_physics: ~"./one-physics.spw"
 @pacing: ~"./pacing.spw"
 @wonder_doctrine: ~"./wonder-doctrine.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
 @cognitive_surface: ~"./cognitive-surface.spw"
 @spatial_grammar: ~"./spatial-grammar.spw"
 @timing_data_localization: ~"./timing-data-localization.spw"
@@ -29,6 +30,7 @@ dispatch: .{
  operator_typography = @operator_typography
  alignment = @alignment_audit
  wonder = @wonder_doctrine
+ wonder_architecture = @wonder_architecture
  cognition = @cognitive_surface
  spatial = @spatial_grammar
  timing_data_localization = @timing_data_localization
@@ -47,6 +49,7 @@ reading_order: .{
   `brace_physics makes the spatial grammar physically intuitive`,
   `one_physics states the single rule the whole site runs on, and separates the five metaphor registers that describe it`,
   `wonder_doctrine clarifies what this system is for`,
+  `wonder_architecture is the dispatch for how those tests spend as types, copy, field, and ornament — not a sixth philosophy document`,
   `spirit_cycle shows how engagement arcs over time`,
   `pacing shows how that arc is distributed — duration, latency, cadence, arc — and why duration is the least of the four`,
   `cognitive_surface integrates the prior surfaces into a design model`,
@@ -59,7 +62,7 @@ reading_order: .{
 
 open_across_documents: #[
  .{ ask = `How does the valence pentad (boon, bane, bone, bonk, honk) map onto the spirit-cycle phases?`, answered = @one_physics, answer = `It does not, and should not. The pentad is a sign on charge — what kind of difference this is. The arc is a position along distance — how far through the visit. Different terms of the one rule, so a mapping between them is a category error; any valence can occur at any arc position.` },
- .{ ask = `Is wonder a property of the surface, the visitor, or the relationship between them?`, see = @wonder_doctrine, note = `The doctrine carries the probe at #>wonder_doctrine_1. Its five tests all measure the reader derivation rather than the designer intent, which is itself an argument for the third option.` },
+ .{ ask = `Is wonder a property of the surface, the visitor, or the relationship between them?`, see = @wonder_doctrine, note = `The doctrine carries the probe at #>wonder_doctrine_1. Its five tests all measure the reader derivation rather than the designer intent, which is itself an argument for the third option. Four English uses — page questions, runtime field, probe operator, doctrine test — stay distinct: @wonder_architecture#coordinates.` },
  .{ ask = `What is the relationship between spatial grammar and accessibility — does the spatial model make the site more or less accessible?` },
  .{ ask = `How does the cognitive-surface model change when the visitor is the author rather than the reader?` },
  .{ ask = `When the site hosts another language through Spw, is the resulting surface more or less cognitively demanding?` },

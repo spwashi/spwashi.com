@@ -26,6 +26,7 @@ fixity = "stable"
 @feature_utilization: ~"./feature-utilization.spw"
 @recursive_improvement: ~"./recursive-improvement.spw"
 @utilization_cache: ~"../caches/spw-language-utilization-2026-07.spw"
+@creative_capacity: ~"../caches/creative-capacity-2026-09.spw"  # dual-path: workbench consumer vs web experiment
 @operator_semantics: ~"../conventions/operator-semantics.spw"
 @sigil_geometry_lore: ~"./sigil-geometry-lore.spw"
 @operator_typography: ~"./operator-typography.spw"
@@ -50,6 +51,7 @@ dispatch: .{
  feature_utilization = @feature_utilization
  recursive_improvement = @recursive_improvement
  utilization_cache = @utilization_cache
+ creative_capacity = @creative_capacity
  operator_semantics = @operator_semantics
  sigil_geometry_lore = @sigil_geometry_lore
  operator_typography = @operator_typography

@@ -18,6 +18,7 @@
 @material_projection: ~"./material-projection.spw"
 @region_passes: ~"./region-passes.spw"
 @interaction_reward: ~"./interaction-microstates.spw"
+@history_strands: ~"../caches/history-conflict-strands-2026-09.spw"
 
 operation = "contract"
 fixity = "experimental"

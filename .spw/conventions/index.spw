@@ -27,6 +27,7 @@
 @annotation_layer: ~"./annotation-layer.spw"
 @query_disposition: ~"./query-disposition.spw"
 @planning_ecology: ~"./planning-ecology.spw"
+@skill_invocation: ~"./skill-invocation.spw"  # operation is the lens; focuses are emphases; introspection ledger
 @wip_notebook: ~"./wip-notebook.spw"
 @plan_index: ~"./plan-index.spw"
 @plans_root: ~"../../.agents/plans/index.spw"
@@ -74,6 +75,8 @@
 @material_physics: ~"./material-physics.spw"  # what a surface does with the light canopy delivers
 @cauldron_dynamics: ~"./cauldron-dynamics.spw"  # intake, digestion, absorption, return — and what an editor writes to feed it
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"  # doctrine/types/field/ornament/loop; no new wonder-type
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
 @page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
 @page_template_authoring: ~"./page-template-authoring.spw"
 @codebase_perusal: ~"./codebase-perusal.spw"
@@ -214,6 +217,9 @@ dispatch: .{
  spw_architecture_ecology = @spw_architecture_ecology
  relational_design_graph = @relational_design_graph
  chrome_navigation_wonder = @chrome_navigation_wonder
+ wonder_architecture = @wonder_architecture
+ wonder_vocabulary = @wonder_vocabulary
+ wonder_doctrine = @wonder_doctrine
  language = @language
  language_v04 = @language_v04
  runtime_medium_ecology = @runtime_medium_ecology

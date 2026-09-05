@@ -13,6 +13,7 @@
 @site_semantics: ~"./site-semantics.spw"
 @style_development: ~"./style-development.spw"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"
 @approach_topography: ~"../surfaces/approach-topography.spw"
 @page_model: ~"../surfaces/page-model.spw"
 
@@ -20,6 +21,7 @@ thesis: .{
  claim = `Every word in the visible copy is a token. The word chosen motivates a specific kind of attention and can bias what the visitor wonders about next. Copy is not prose around the interface — copy is the interface's receptor surface.`
  corollary = `A site that repeats the same seven operator words will teach those seven and then plateau. A site that chooses its words with care earns a combinatoric vocabulary in which the visitor can notice new arrangements without being taught each one.`
  stakes = `Non-coding visitors will only wonder about C-style grammar if the surrounding copy gives them permission. The vocabulary is the permission.`
+ engaged_loop = `Engaged wonder is a tool loop: living term → copy-unit / Spw handle → kin or parser. Do not add a wonder-type to feel richer. Dispatch: @wonder_architecture. Loop: .spw/caches/creative-capacity-2026-09.spw#cc-001_engaged_wonder.`
 }[reg=facet]
 
 current_wonder_types: .{
@@ -46,14 +48,12 @@ expanded_vocabulary: .{
 
   computational_use: .{
     selectors = #[
-      `[data-spw-wonder-type]`
+      `body[data-spw-wonder]`
+      `[data-spw-wonder-state]`, `[data-spw-field-wonder]`, `[data-spw-wonder-memory]`
       `.spw-living-term[data-spw-concept]`
       `text nodes containing wonder tokens (for field analysis)`
     ][reg=set]
-    events = #[
-      `spw:wonder-token-emitted`
-      `spw:vocabulary-bias-updated`
-    ][reg=set]
+    events = `Do not emit spw:wonder-token-emitted or spw:vocabulary-bias-updated. Copy tokens bias the field by existing in copy; runtime already writes wonder-state / field-wonder / wonder-memory.`
     ownership = "semantic (copy as tokens) + runtime (attention-field + wonder-memory) + effects (ornament)"
   }[reg=facet]
 
@@ -242,9 +242,5 @@ production_ecology_garden_apparatus: .{
 }[reg=facet]
 
 open_questions: #[
- .{ ask = `Which of the expanded vocabulary words should become data-spw-* tokens, and which should remain copy-only?` },
- .{ ask = `Should the word list be finite and curated, or open and organically extended as copy is written?` },
- .{ ask = `What is the right weight for a copy-derived token compared to an authored data-spw token?` },
- .{ ask = `Can the audience doors be surfaced as a wonder-trail overlay — showing which words the visitor has already encountered?` },
- .{ ask = `Does the combinatoric space need any explicit pruning, or is the natural decay of the field enough to keep it navigable?` }
+ .{ ask = `Closed 2026-09 — see wonder-architecture.spw#closed_questions. Expanded words stay copy-only. The seven types stay finite on body data-spw-wonder. No data-spw-wonder-type.` }
 ][reg=set]

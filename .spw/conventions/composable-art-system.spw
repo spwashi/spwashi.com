@@ -9,6 +9,7 @@
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 @expressive_registers: ~"./expressive-registers.spw"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"
 
 ^"thesis"{
   claim: "The site's visual presentation is a composable narrative stage where CSS layers function as atmospheric strata that pace, contextualize, and project the story of Spwashi's software and art."
@@ -20,7 +21,7 @@
   operation = "prime"
   fixity = "tending"
   source = @harmony_audit
-  claim = `Atmospheric strata must stay additive (effects/ornament) and wonder-safe: structural revelation over ambient spectacle (@wonder_doctrine).`
+  claim = `Atmospheric strata must stay additive (effects/ornament) and wonder-safe: structural revelation over ambient spectacle (@wonder_doctrine). Wonder paint is the ornament altitude of @wonder_architecture; it idle-loads and may not hide first-paint structure.`
   channel_rule = `Affect layers read expressive register channels and field ornaments — they do not invent a parallel emotion token set (@expressive_registers).`
   lab = `/design/composition/ and /design/components/ refine atmosphere with inspectable state; public hubs keep invitation tone while ornaments project quietly.`
   safe_first_patch = `When adding a canvas accent or grain step, bind it to an existing wonder/charge/register state or document why it is static climate.`

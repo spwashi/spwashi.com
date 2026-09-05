@@ -18,6 +18,10 @@
 @site_semantics: ~"./site-semantics.spw"
 @attention_field: ~"./attention-field.spw"
 @ornament_contract: ~"./ornament-contract.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@wonder_vocabulary: ~"./wonder-vocabulary.spw"
+@history_strands: ~"../caches/history-conflict-strands-2026-09.spw"
 @planning_ecology: ~"./planning-ecology.spw"
 @runtime_audit: ~"../reviews/runtime-audit/index.spw"
 @spw_maintenance_2026_06: ~"../reviews/spw-maintenance-2026-06.spw"
@@ -82,6 +86,12 @@ topical_trails: .{
   search = `npm run audit:module-selectors`
   opinion_to_form = `Whether the miss is a stale noun (.site-frame), a sibling combinator vs cluster wrap, a route gate hidden behind main, or a lab orphan that may stay unbound.`
  }[reg=facet]
+ symbolic_architecture_trail = .{
+  question = `Why would a returning editor open this construct instead of an adjacent one?`
+  read = #[@semantic_capacity, @planning_ecology, @agents][reg=set]
+  search = `rg "operation =|fixity =" .spw/conventions .spw/caches .spw/language`
+  opinion_to_form = `Whether the file answers a navigable question, names a probe that would falsify it, and points to a next construct — or should be archived.`
+ }[reg=facet]
  cache_performance_trail = .{
   question = `Is this optimization reducing load cost, mental reparse cost, or both?`
   read = #[@js_readme, @semantic_capacity, @planning_ecology][reg=set]
@@ -111,6 +121,18 @@ css_projection_trail = .{
   read = #[@attention_field, @ornament_contract, @site_semantics][reg=set]
   search = `rg "palette|wonder|resonance|shadow|light|theme|biome|species" .spw public/css public/js`
   opinion_to_form = `Whether the palette should persist, accumulate, answer a page disposition, or remain a local treatment.`
+ }[reg=facet]
+ wonder_architecture_trail = .{
+  question = `Which altitude of wonder am I about to edit — doctrine, types, copy tokens, field, ornament, or the engaged-wonder loop?`
+  read = #[@wonder_architecture, @wonder_doctrine, @wonder_vocabulary, @attention_field, @ornament_contract][reg=set]
+  search = `rg "data-spw-wonder" --glob '*.html' | head; rg 'data-spw-wonder-type' --glob '*.html'`
+  opinion_to_form = `Whether the change belongs on body data-spw-wonder, copy vocabulary, runtime field residue, idle ornament, or the doctrine test — and that it is not a new type or a new data-spw-* family.`
+ }[reg=facet]
+ history_conflict_trail = .{
+  question = `Which historical bond am I about to re-enact — consume/experiment, name/exchange, structure/atmosphere, or noun/selector?`
+  read = #[@history_strands, @wonder_architecture][reg=set]
+  search = `node scripts/wonder.mjs --surface history-conflict`
+  opinion_to_form = `Whether this is a new idea or a recurrence of a named strand, and which first_patch the cache already named.`
  }[reg=facet]
  slice_extension_trail = .{
   question = `Is this change a one-off patch, a feature cluster, or a durable experience slice?`
@@ -172,4 +194,6 @@ dispatch: .{
  runtime_audit = @runtime_audit
  spw_maintenance_2026_06 = @spw_maintenance_2026_06
  slices = @slices
+ wonder_architecture = @wonder_architecture
+ history_strands = @history_strands
 }[reg=facet]

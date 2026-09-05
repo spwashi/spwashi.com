@@ -16,6 +16,7 @@
 @interaction_microstates: ~"./interaction-microstates.spw"
 @attention_field: ~"./attention-field.spw"
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"
 @charge_cycle: ~"./charge-cycle.spw"
 @module_updates_contract: ~"../../public/js/runtime/module-updates-contract.js"
 @module_catalog_constants: ~"../../public/js/runtime/module-catalog-constants.js"

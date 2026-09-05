@@ -24,6 +24,7 @@
 @measure: ~"../../scripts/page-reasons.mjs"
 @file_physics: ~"../_workbench/.spw/conventions/file-physics.spw"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"
 @ornament_contract: ~"./ornament-contract.spw"
 
 operation = "prime"

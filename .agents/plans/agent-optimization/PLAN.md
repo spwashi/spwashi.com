@@ -33,6 +33,8 @@ The site should remain hand-authored and human-primary. Agent optimization is an
 - The public `/about/plans/` page is a significant hand-maintenance tax; plan cards and status are not derived from the filesystem or a machine-readable index.
 - Network-call DX needed clarification more than new tooling: `check:local` and the dependency-surface audit rule already existed, but future agents needed clearer instruction to prefer local validation and local repo evidence before `npm audit`, dependency installs, or web lookups.
 
+**2026-09 creative capacity prime:** `.spw/caches/creative-capacity-2026-09.spw` — engaged wonder as tool loop (living term → copy-unit → parser), linguistic dual-path (workbench consumer XOR web-semantics experiment), agent introspection ledger (`.agents/state/agent-preference.spw`), symbolic-architecture trail in codebase-perusal. No new `data-spw-*`, no public copy rewrite, no new `index.spw`.
+
 **2026-09 agent adapters (relative strengths):** Root `CLAUDE.md` / `GROK.md` / `GEMINI.md` / `GPT.md` emphasize constitutional / anti-bloat / tool-mastery / exactness. They do not exclusive-own those disciplines. GPT.md also states the computer-use posture (verify-first, one named patch, stop). `npm run check:agents` requires the shared emphasis sentence and **git-tracked** files — a green check on untracked adapters was a lie. Sense instruments now include `audit:copy:accessor`, `audit:module-selectors`, `visual:checks`. Contract: `.spw/conventions/skill-invocation.spw#focuses`. No new `index.spw`.
 
 **2026-09 failure ledger (do not relearn in session):**

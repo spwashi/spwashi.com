@@ -23,6 +23,7 @@ fixity = "tending"
 @site_starter_component_kit: ~"./site-starter-component-kit.spw"
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 @plan: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
+@history_strands: ~"../caches/history-conflict-strands-2026-09.spw"
 
 ^"dimensions"{
  temporal_rhythm = "sedimentation | observation"

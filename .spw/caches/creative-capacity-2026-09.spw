@@ -1,0 +1,164 @@
+# Creative Capacity, Linguistic Dual-Path, Agent Introspection (2026-09)
+#
+# operation: prime
+# Broad idea held as named expansion paths. Not a kitchen-sink. Not a new
+# data-spw-* family. Public copy is not rewritten in this pass.
+
+#>creative_capacity_2026_09
+#:cache #!prime #!wonder #!language #!agents #!style
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@model_guided_refinement: ~"../conventions/model-guided-refinement.spw"
+@daily_kernel: ~"../conventions/daily-kernel.spw"
+@wonder_vocabulary: ~"../conventions/wonder-vocabulary.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@history_strands: ~"./history-conflict-strands-2026-09.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@living_medium_copy: ~"../conventions/living-medium-copy.spw"
+@skill_invocation: ~"../conventions/skill-invocation.spw"
+@language_utilization: ~"../language/feature-utilization.spw"
+@language_v04: ~"../language/v04/index.spw"
+@workbench_alignment: ~"../reviews/workbench-alignment-audit.spw"
+@codebase_perusal: ~"../conventions/codebase-perusal.spw"
+@agent_ecology: ~"../conventions/agent-ecology.spw"
+@parser_tool: ~"../../tools/spw-parser/index.html"
+@operator_atlas: ~"../../topics/software/spw/index.html"
+@agent_preference: ~"../../.agents/state/agent-preference.spw"
+
+operation = "prime"
+fixity = "experimental"
+source = "chat 2026-09-04: creative capacity, engaged wonder, unique style, Spw linguistic development, agent introspection, .spw workspace over time"
+
+^"thesis"{
+  claim = `Creative capacity here is not more tropes. It is a deeper relationship to constructs that already exist: Spw as multidimensional handle, wonder as permission-vocabulary, .spw as a navigable symbolic architecture, and agents that can name what they are good at without locking a discipline to a model.`
+  unique_style = `Depth and nuance come from combinatoric reuse of operators, copy-depth, living terms, and literary motifs as registers — not from inventing a fourth accessor or a new wonder-type list.`
+  refuse = `Do not kitchen-sink public HTML. Do not upstream site collaboration patterns into the workbench. Do not add data-spw-voice or data-spw-style.`
+}[reg=facet]
+
+^"cc-001_engaged_wonder"{
+  id = "cc-001"
+  operation = "prime"
+  claim = `Engaged wonder is a tool loop, not a mood word. A visitor or agent should be able to touch a living term, read its copy-unit, open a kin expression, and if they want the grammar, land in the literal parser — without being taught C-style as the price of entry.`
+  evidence = #[
+    `wonder-architecture.spw: six altitudes, one architecture; no new type`,
+    `wonder-vocabulary.spw: copy is the receptor surface; seven wonder types are stable`,
+    `copy-accessor.spw: dotted key vs subject[mode]{direction}<capsule>`,
+    `/tools/spw-parser/ is already the workbench-parser proof in the browser`,
+    `expression-resonance mounts at IDLE from a build-time manifest`
+  ][reg=set]
+  pattern_consideration = `Do not add a wonder-type. Teach the existing seven by pairing first-use gloss (living-term) with a next tool (parser, cauldron, atlas).`
+  first_patch = `When a later copy pass touches a collectible, add the Spw handle and one kin link or parser specimen — not a new vocabulary family.`
+  validation = `npm run audit:copy:accessor && npm run ecology:language`
+}[reg=facet]
+
+^"cc-002_linguistic_dual_path"{
+  id = "cc-002"
+  operation = "prime"
+  claim = `Spw linguistic development has two honest paths that must not collapse: consume the workbench (v04 pillars, parser, lattice, doctor) aspirationally; experiment through web semantics (HTML expressions, CSS grammar projection, copy-unit, operator chips) locally.`
+  workbench_consumer = `Read v04/index.spw, run npm run spw:doctor / spw:lattice / ecology:language, treat /tools/spw-parser/ as the public proof that the pinned submodule parses. Do not fork grammar in site .spw.`
+  web_experiment = `Author subject[mode]{direction}<capsule> on collectibles; let CSS :has() resonance and expression-kinship spend it; keep claims with probe_ref. This is application semantics, not an upstream RFC.`
+  evidence = #[
+    `workbench-alignment-audit.spw: one-way bridges; slices stay downstream`,
+    `language/v04/index.spw: traversable pillars before parser work lands upstream`,
+    `feature-utilization.spw: operators as positional force, not hue`
+  ][reg=set]
+  first_patch = `Name the dual path in feature-utilization.spw. Next language session walks one v04 pillar XOR one public expression host, never both as one patch.`
+  validation = `npm run ecology:language && npm run spw:doctor`
+}[reg=facet]
+
+^"cc-003_agent_introspection"{
+  id = "cc-003"
+  operation = "prime"
+  claim = `An agent can introspect on strength and preference without minting a fifth model-lock. Declare one focus you will lean on, one you will not fake, and precipitate that preference so the next session does not re-derive it.`
+  evidence = #[
+    `skill-invocation.spw#focuses: anti-bloat, constitutional, exactness, tool-mastery, computer-use`,
+    `GROK.md / CLAUDE.md / GPT.md / GEMINI.md emphasize; AGENTS.md remains the gate`,
+    `check:agents requires the shared emphasis sentence and git-tracked adapters`
+  ][reg=set]
+  shape = #[
+    `lean`: "which focus this session actually used",
+    `gap`: "which focus the task needed that this session did not fake",
+    `reach`: "which sense instrument was run",
+    `avoid`: "what was correctly not built"
+  ][reg=set]
+  first_patch = `.agents/state/agent-preference.spw as a persistent ledger (not runtime/ snapshots). skill-invocation#introspection names the ritual.`
+  this_session = `lean=anti-bloat+naming; gap=computer-use visual:checks not run; reach=audit:copy:accessor + check:agents; avoid=public copy rewrite, new data-spw-*`
+  validation = `rg 'introspection|agent-preference' .spw/conventions/skill-invocation.spw .agents/state/agent-preference.spw`
+}[reg=facet]
+
+^"cc-004_symbolic_architecture"{
+  id = "cc-004"
+  operation = "prime"
+  claim = `A .spw file earns its keep when it gives a reason to navigate: a construct, a question it answers, a probe that would falsify it, and a next construct. Symbolic architecture is that graph, not a larger conventions folder.`
+  evidence = #[
+    `codebase-perusal.spw already walks trails (page truth, module host, CSS proof)`,
+    `semantic-capacity: cache/audit/align/prime/contract/archive — operations are the walk verbs`,
+    `plan-maintenance success is a smaller next census, not more index.spw`
+  ][reg=set]
+  walk = `Pick one construct. Name why a returning editor would open it. Name what they should not open instead. Tend that file or archive it. That is the deeper relationship.`
+  first_patch = `Add symbolic_architecture_trail to codebase-perusal.spw. Do not add a conventions/symbolic-architecture.spw until three walks have used the trail.`
+  validation = `rg 'symbolic_architecture_trail' .spw/conventions/codebase-perusal.spw`
+}[reg=facet]
+
+^"cc-005_workspace_over_time"{
+  id = "cc-005"
+  operation = "prime"
+  claim = `The .spw workspace deepens by sedimentation: caches that get promoted or archived, dual-path language notes that survive submodule bumps, agent preferences that stay one line. Growth that cannot name an archive is bloat.`
+  evidence = #[
+    `caches/index.spw r3: promote to convention, mark landed`,
+    `caches/index.spw r4: after workbench bump, re-check pathRefs`,
+    `agent-optimization: no new empty index.spw`
+  ][reg=set]
+  cadence = `A-cycle 13th / B-cycle 26th is the magazine rhythm for public copy; .spw tends on the same closes: one cache promoted or archived, one preference line, one language ecology run.`
+  first_patch = `Register this cache. Next close: either promote cc-003 introspection to skill-invocation (this pass) or archive a stale July language count.`
+  landed = `cc-003 introspection is in skill-invocation.spw#introspection. History-conflict-strands-2026-09 is the next sedimentation, not a second creative-capacity file.`
+  validation = `rg 'creative_capacity_2026_09' .spw/caches/index.spw`
+}[reg=facet]
+
+^"cc-006_astra_wonder_tooling"{
+  id = "cc-006"
+  operation = "prime"
+  claim = `Astra plans, creates, and implements against wonder-architecture. Sedimentation is occasional. Local mutation stays on the site path. Compelling questions about LSP and tooling are harvestable wonders, not a feature backlog.`
+  evidence = #[
+    `wonder-architecture.spw#astra_prime: planning / creativity / implementation / sedimentation / mutation`,
+    `wonder-architecture.spw#wonder_architecture_lsp_owner and siblings — npm run wonder harvests them`,
+    `language/v04/pillars/lsp-editor-lenses.spw: site-local mutation, not an upstream RFC`,
+    `workbench-report.spw#walk_cost: a lens on a 120s walk is spectacle`
+  ][reg=set]
+  pattern_consideration = `Do not add ASTRA.md. Do not implement go-to-owner, rename-refuse, or an altitude lens from this prime. Dual-path still holds: consume workbench XOR mutate site .spw.`
+  first_patch = `Keep the wonders harvestable. Next Astra session: pick one probe (walk isolation, go-to-owner, or operation|fixity lens) — not all three.`
+  history = `Longer-horizon Astra work points at @history_strands: cross-file silent misses, arrival vs earned, one staged still, open-drawer swipe — coordinator over a bounded implementer.`
+  validation = `node scripts/wonder.mjs --surface wonder-architecture && rg 'astra_prime|wonder_architecture_lsp_' .spw/conventions/wonder-architecture.spw`
+}[reg=facet]
+
+^"cc-007_astra_theming_climates"{
+  id = "cc-007"
+  operation = "prime"
+  claim = `Theming has the same shape as wonder: a small finite set of altitudes (theme_set climate, theme_pack token palette, component_genre card family), not a growing sticker sheet. Astra's highest-value theming move is judging whether a staged theme_set is a variant of an existing pack or a genuinely new climate — then naming that, not inventing a new pack reflexively.`
+  evidence = #[
+    `asset-management.spw#staging: theme_pack_candidate/component_genre_candidate/theme_set/icon_candidate are hypotheses on a sidecar, not a binding rule`,
+    `design/materials/#staged-theme-sets: vellum-hex and algorithm-lattice already sit side by side as a live "which climate?" still, wired to real sidecars`,
+    `boonhonk-abstract and library-cozy (2026-09-04 sample): both painterly sources whose -icon derivative (edge-detect -> 64px) is scribble noise, not a glyph — papergami-cubes' harder paper-fold edges are the one sampled source where -icon reads as a legible motif`,
+    `library-cozy specifically reads as a reading/library climate with no existing theme-pack home among the six named packs — a real candidate for a seventh, not a forced fit`,
+    `spwashi-alchemy-token.png (public/images/assets/motifs/): the site's one clearly successful icon-tier asset was a dedicated coin/emblem prompt, not an algorithmic crop of a background render`
+  ][reg=set]
+  pattern_consideration = `Do not add a seventh theme-pack, a new card-family, or a data-spw-theme-set attribute from this prime alone. A theme_set sidecar staying "REPLACE_ME" is the honest default until a human judges it on /design/materials/.`
+  first_patch = `Astra picks one of: (a) judge library-cozy — name it a variant of an existing pack or make the case for a seventh with @midjourney_promotion_rule's review gate, (b) improve slice-render-primitives.mjs's -icon step (e.g. posterize/quantize before edge-detect) so painterly sources stop producing scribble, or (c) add one more theme_set sample and extend the /design/materials/#staged-theme-sets row — not all three in one patch.`
+  validation = `ls public/images/renders/_staged-primitives/ && rg 'theme_set|icon_candidate' public/images/renders/_staged-primitives/*/*.spw | head`
+}[reg=facet]
+
+^"do_not"{
+  new_family = `No data-spw-style, data-spw-voice, data-spw-wonder-type beyond the seven already inferred`
+  upstream = `Do not propose site slices/volleyball as workbench canon`
+  essay = `Do not add an index.spw for this cache`
+  copy = `Do not rewrite public landings from this prime`
+}[reg=facet]
+
+validation: #[
+  `rg 'creative_capacity_2026_09|cc-00' .spw/caches/creative-capacity-2026-09.spw .spw/caches/index.spw`
+  `rg 'introspection' .spw/conventions/skill-invocation.spw`
+  `rg 'dual_path|workbench_consumer' .spw/language/feature-utilization.spw`
+][reg=set]

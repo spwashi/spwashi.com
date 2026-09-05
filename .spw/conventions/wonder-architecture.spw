@@ -1,0 +1,179 @@
+# Wonder Architecture
+#
+# Dispatch for how wonder is named, authored, spent, and falsified.
+# operation: align | prime
+# Align keeps the six altitudes distinct. Prime prepares Astra to plan,
+# create, and implement against them — with occasional sedimentation and
+# local mutation, not a new type list.
+# Does not add a wonder-type. Does not add a data-spw-* family.
+
+#>wonder_architecture
+#:convention #!wonder #!attention #!copy #!tooling
+#:operation #!align #!prime
+#:fixity #!stable
+#:layer #!pragmatics
+
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@wonder_vocabulary: ~"./wonder-vocabulary.spw"
+@attention_field: ~"./attention-field.spw"
+@ornament_contract: ~"./ornament-contract.spw"
+@approach_topography: ~"../surfaces/approach-topography.spw"
+@copy_accessor: ~"./copy-accessor.spw"
+@creative_capacity: ~"../caches/creative-capacity-2026-09.spw"
+@attribute_governance: ~"./data-spw-attribute-governance.spw"
+@codebase_perusal: ~"./codebase-perusal.spw"
+@graph: ~"../graph.spw"
+@flourish_pack: ~"../../public/css/effects/flourish-pack.css"
+@wonder_css: ~"../../public/css/effects/wonder.css"
+@wonder_memory: ~"../../public/js/interface/wonder-memory.js"
+@lsp_editor_lenses: ~"../language/v04/pillars/lsp-editor-lenses.spw"
+@workbench_report: ~"../workbench-report.spw"
+@wonder_script: ~"../../scripts/wonder.mjs"
+@language_v04: ~"../language/v04/index.spw"
+@agent_ecology: ~"./agent-ecology.spw"
+@history_strands: ~"../caches/history-conflict-strands-2026-09.spw"
+
+operation = "align prime"
+fixity = "stable"
+
+^"thesis"{
+  claim = `Wonder is one architecture with six altitudes. Mixing them invents a seventh type or a new attribute. Keeping them distinct lets copy, CSS, and runtime spend the same seven questions.`
+  refuse = `Do not add data-spw-wonder-type. Do not add a wonder-type beyond the seven. Do not put holiday/seasonal tropes in core CSS — they idle with flourish-pack.`
+}[reg=facet]
+
+^"altitudes"{
+  doctrine = .{
+    file = @wonder_doctrine
+    job = `What earns the name. Structural revelation you can derive after the fact. Spectacle, hidden mechanics, borrowed vocabulary, and ambient decoration fail.`
+  }[reg=facet]
+  types = .{
+    file = @wonder_vocabulary
+    job = `The seven questions on body data-spw-wonder: orientation, constraint, memory, resonance, inquiry, projection, comparison.`
+    authoring = `Space-separated on <body>. A page names the questions it will actually ask, not a mood.`
+  }[reg=facet]
+  vocabulary = .{
+    file = @wonder_vocabulary
+    job = `Copy tokens (arrival, dwell, settle, …) that bias the field. Words are receptors, not a second type list.`
+  }[reg=facet]
+  field = .{
+    file = @attention_field
+    job = `Charge, resonance, decay, neighborhood. Runtime writes data-spw-wonder-state, data-spw-field-wonder, data-spw-wonder-memory.`
+  }[reg=facet]
+  ornament = .{
+    file = @ornament_contract
+    job = `Visual spend of field state. Guide badges, motif strips, cluster kickers. Idle delivery via @flourish_pack / @wonder_css.`
+  }[reg=facet]
+  loop = .{
+    file = @creative_capacity
+    job = `Engaged wonder is a tool loop: living term → copy-unit / Spw handle → kin or /tools/spw-parser/. A theme-set of icons (vellum-hex vs algorithm-lattice) is comparison+inquiry, not a new type.`
+  }[reg=facet]
+}[reg=facet]
+
+^"coordinates"{
+  note = `Four uses of the English word "wonder". Do not collapse them. Attribute-side owner: @attribute_governance#wonder_coordinates.`
+  page_questions = `data-spw-wonder on body — authored, the seven types.`
+  runtime_field = `data-spw-wonder-state, data-spw-field-wonder, data-spw-wonder-memory — inferred/residue. Runtime writes; authors do not invent parallel keys.`
+  operator = `data-spw-operator="probe" / ? — the inquiry sigil. Not a synonym for the page type list.`
+  doctrine_test = `wonder-doctrine.spw — a falsification, not an attribute.`
+}[reg=facet]
+
+^"authoring"{
+  page = `Name 1–3 of the seven types on body data-spw-wonder. If a type is not on the body, do not fake it in copy.`
+  copy = `Deposit vocabulary words that match those types. Pair first-use jargon with a living term. Collectible ledes get data-spw-copy-unit; add data-spw-semantic-expression when kinship should fire.`
+  still = `A still of a theme-set (four 64px icons) is a comparison question. Mark replace_later on the sidecar until a pack actually consumes the crop.`
+  css = `Wonder paint is atmosphere. It idle-loads. Late restyle may not hide, move, or resize first-paint structure.`
+}[reg=facet]
+
+^"closed_questions"{
+  from = @wonder_vocabulary
+  q_new_tokens = `Which expanded words become data-spw-*? None. They stay copy tokens. Authored types live on data-spw-wonder. Runtime state already has wonder-state / field-wonder / wonder-memory.`
+  q_finite_list = `The seven types are finite. The expanded vocabulary may grow as copy, not as attributes.`
+  q_copy_weight = `Copy-derived tokens are weaker than authored data-spw-wonder and weaker than an explicit living-term concept. Field math in attention-field.spw already weights explicit keys higher.`
+  q_trail_overlay = `Wonder-trail overlay is ornament of existing memory-match / visited / grounded state — not a new family.`
+  q_pruning = `Natural field decay plus the seven-type cap is enough. Do not prune by inventing a meta-type.`
+}[reg=facet]
+
+^"astra_prime"{
+  operation = "prime"
+  partner = `Astra plans, creates, and implements against this architecture. Not a fifth model lock. AGENTS.md remains the gate.`
+  planning = `Open this file. Name the altitude. Name the operation. If the work would add a type or a data-spw-* family, stop.`
+  creativity = `Combinatoric reuse of the seven types, copy tokens, living terms, and literary motifs. Permission vocabulary, not a mood.`
+  implementation = `Smallest honest surface. Dual-path: workbench consume XOR web experiment. Wonder paint idle-loads.`
+  sedimentation = `Occasional. A cache insight that survives two sessions may promote. Growth that cannot name an archive is bloat. See @creative_capacity#cc-005_workspace_over_time.`
+  mutation = `Local reaction stays on the site path (.spw/conventions, caches, language/v04 site pillars). Do not fork workbench grammar. Do not upstream site wonder as LSP canon until a consumer probe exists.`
+  history = `Point Astra at a named strand in @history_strands (cross-file rename, catalog host, arrival vs earned, staged still vs route) — not at an empty folder. Coordinator over a bounded implementer.`
+  first_patch = `Keep the tooling/LSP wonders below harvestable. Do not implement a lens from this prime.`
+}[reg=facet]
+
+# Tooling / LSP questions kept harvestable. They are inquiry, not a backlog.
+# `npm run wonder` should print them. Do not implement the implied features here.
+
+#>wonder_architecture_lsp_owner
+?["When HTML carries data-spw-wonder, which owner should go-to-definition jump to — vocabulary, architecture, or doctrine?"]{
+  #:depth #!computational ~#lens(inquiry)
+  ~#with: @lsp_editor_lenses
+  ~#hypothesis: "architecture is the dispatch, so a jump that lands in vocabulary or doctrine without a choice collapses the four homonyms"
+  ~#tension: "editors want one jump; the attribute is four altitudes. A picker that names altitude is honest; a silent default is a seventh type in the IDE."
+  !probe{ "from a public index.html body[data-spw-wonder], follow the LSP go-to-owner path in @lsp_editor_lenses. if it has no owner, the lens is incomplete; if it has one owner, name which altitude it stole." }
+  $%[html.dataSpwWonder, lsp.goToOwner, wonder.altitude]
+}
+
+#>wonder_architecture_lsp_rename
+?["Should rename-stem on a wonder type be refused, because the seven are finite, rather than completed across HTML/CSS/JS/.spw?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @lsp_editor_lenses
+  ~#hypothesis: "a successful rename of orientation|constraint|memory|resonance|inquiry|projection|comparison is how a seventh type gets born in the tooling layer"
+  !probe{ "attempt a rename of one of the seven in a scratch buffer. if the LSP offers workspace rename, the finite-list contract is unenforced where it would matter most." }
+  $%[wonder.types, lsp.renameStem, type.cap]
+}
+
+#>wonder_architecture_harvest
+?["Should npm run wonder harvest body[data-spw-wonder] types, or would mixing script-wonder with page-wonder collapse coordinates?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @wonder_script
+  ~#hypothesis: "script-wonder is the harvestable question-plus-probe form; page-wonder is authored types on the body. Harvesting both in one list teaches the wrong identity."
+  ~#tension: "a planner (Astra) wants one inventory of what is asked. two inventories that refuse to merge are more honest than one that lies."
+  !probe{ "run node scripts/wonder.mjs --surface wonder-architecture and compare its output to rg 'data-spw-wonder=' --glob '**/index.html'. if a reader cannot tell which list they are in, the harvest mixed altitudes." }
+  $%[wonder.script, body.dataSpwWonder, harvest.identity]
+}
+
+#>wonder_architecture_walk
+?["Is a wonder-aware LSP query worth building before --from .spw prunes the mounted workbench by default?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @workbench_report
+  ~#hypothesis: "walk cost dominates; a lens on a 120s walk is spectacle. @workbench_report#walk_cost already measured four orders of magnitude."
+  !probe{ "time spw query --from .spw --selector pathRefs --count against a pruned consumer-root walk. if unpruned still times out, refuse new lenses until isolation lands." }
+  $%[cli.walkMs, workbench.isolation, lens.worth]
+}
+
+#>wonder_architecture_sediment
+?["When Astra mutates a local .spw file, can tooling tell a cache that should promote from a one-session reaction that should stay experimental?"]{
+  #:depth #!experiential ~#lens(memory)
+  ~#hypothesis: "fixity and operation are already authored; the gap is that the LSP does not show them as a lens, so sedimentation is a human ritual rather than an editor gesture"
+  ~#tension: "automating promotion would archive too early; showing operation|fixity would let Astra choose. Showing is enablement; auto-promoting is design."
+  !probe{ "open a cache and a convention side by side in the editor. if operation and fixity are not visible without reading the file, the sedimentation ritual cannot run from the lens @lsp_editor_lenses already named." }
+  $%[spw.operation, spw.fixity, lsp.operationLens, astra.mutation]
+}
+
+dispatch: .{
+  doctrine = @wonder_doctrine
+  types_and_copy = @wonder_vocabulary
+  field = @attention_field
+  ornament = @ornament_contract
+  loop = @creative_capacity
+  attributes = @attribute_governance
+  trail = @codebase_perusal
+  graph = @graph
+  lsp = @lsp_editor_lenses
+  tooling_report = @workbench_report
+  history = @history_strands
+}[reg=facet]
+
+validation: #[
+  `rg 'data-spw-wonder-type' --glob '*.html'  # expect 0 public hosts`
+  `rg 'data-spw-wonder=' --glob '**/index.html' | head`
+  `rg 'wonder_architecture' .spw/conventions/index.spw .spw/site.spw .spw/graph.spw AGENTS.md`
+  `rg 'wonder_architecture_trail' .spw/conventions/codebase-perusal.spw`
+  `rg 'wonder_architecture_lsp_' .spw/conventions/wonder-architecture.spw`
+  `node scripts/wonder.mjs --surface wonder-architecture`
+][reg=set]

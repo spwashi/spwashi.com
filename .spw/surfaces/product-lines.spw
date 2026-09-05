@@ -13,6 +13,7 @@
 @approach_topography: ~"./approach-topography.spw"
 @attention_field: ~"../conventions/attention-field.spw"
 @wonder_vocabulary: ~"../conventions/wonder-vocabulary.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
 @ornament_contract: ~"../conventions/ornament-contract.spw"
 @site_semantics: ~"../conventions/site-semantics.spw"
 @model_guided_refinement: ~"../conventions/model-guided-refinement.spw"

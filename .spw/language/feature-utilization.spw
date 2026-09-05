@@ -34,6 +34,7 @@
 @semantic_navigation_plan: ~"../../.agents/plans/semantic-navigation-geometry/PLAN.md"
 @site_feature_utilization: ~"../conventions/feature-utilization.spw"
 @language_cache: ~"../caches/spw-language-utilization-2026-07.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
 
 operation = "contract"
 fixity = "tending"
@@ -58,6 +59,16 @@ fixity = "tending"
   !rule {
     anti = `Do not conflate Spw operator "operators" with the runtime feature token "operators". The first is language; the second is a page capability pack.`
   }
+}[reg=facet]
+
+^"dual_path"{
+  claim: `Linguistic development has two honest paths. They must not collapse into one patch.`
+  workbench_consumer = `Aspirational: consume pinned workbench grammar (v04 pillars, lattice, doctor, /tools/spw-parser/). Do not fork operators or braces in site .spw.`
+  web_experiment = `Experimental: project the same grammar through web semantics — data-spw-semantic-expression, data-spw-operator, copy-unit, CSS :has() kinship, claims with probe_ref. This is application, not an upstream RFC.`
+  session_rule = `Walk one v04 pillar XOR one public expression host. Never both as one patch.`
+  astra_rule = `Astra planning/creativity/implementation follows the same XOR. Local mutation of a site v04 pillar (lsp-editor-lenses) is the web-experiment path. Consuming workbench LSP docs is the other path. Not both in one patch.`
+  see = ~"../caches/creative-capacity-2026-09.spw#cc-002_linguistic_dual_path"
+  probe_ref = `npm run ecology:language && npm run spw:doctor`
 }[reg=facet]
 
 ^"thesis"{

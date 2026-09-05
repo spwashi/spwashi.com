@@ -13,16 +13,18 @@ are discoverable from this repository without forking the workbench canon.
 - State conventions: `.spw/_workbench/.agents/state/*`
 - Knowledge base: `.spw/_workbench/.agents/kb/*`
 
-## Multi-Model Entrypoints
+## Multi-model adapters
 
-The repository provides targeted root-level adapters tailored for the four primary AI coding tools, backed by canonical `AGENTS.md`:
+Root adapters emphasize one focus. They do not replace `AGENTS.md`. Shared sentence: *This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follows Open first.*
 
-- **`CLAUDE.md`** — Claude Code CLI / Anthropic models (Constitutional Rigor)
-- **`GROK.md`** — xAI Grok (Anti-Bloat & Signal)
-- **`GEMINI.md`** — Google Gemini / Antigravity / Gemini Code Assist (Progressive Mastery)
-- **`GPT.md`** — OpenAI Codex / ChatGPT / Cursor / Copilot (Contract Exactness)
-- Editor rules: `.cursorrules`, `.github/copilot-instructions.md`
-- Verification script: `npm run check:agents`
+- **`GROK.md`** — anti-bloat (declare operation, one named slice, stop)
+- **`CLAUDE.md`** — constitutional rigor (a11y, no new `data-spw-*` families)
+- **`GPT.md`** — contract exactness + computer-use verify-first
+- **`GEMINI.md`** — tool mastery (`visual:checks`, wonder, lattice, no polling)
+- Editor stubs: `.cursorrules`, `.github/copilot-instructions.md`
+- Prove with `npm run check:agents` (adapters must be git-tracked)
+
+Introspection ledger: `.agents/state/agent-preference.spw` (`skill-invocation.spw#introspection`).
 
 ## Command translation
 
@@ -44,17 +46,6 @@ SPW_TOOL_ROOT_OVERRIDE="$PWD/.spw/_workbench"
 The existing local workflow note at `.agents/workflows/commit-review.md`
 remains the site-specific commit-gate adapter.
 
-## Active Plan Tracks
+## Plans
 
-The current stable planning set lives under `.agents/plans/`:
-
-- `css-architecture-readability/PLAN.md`
-- `color-motion/PLAN.md`
-- `midjourney-design-concepts/PLAN.md`
-- `reference-assignment-template/PLAN.md`
-
-For the directory index and handoff notes, see `.agents/plans/README.md`.
-Historical notes that have been superseded live under `.agents/plans/archive/`.
-
-Use these as the starting points for UX development through literate CSS, repeated site behaviors, color and motion tuning, Midjourney-inspired concept studies, and intern-sized reference assignments.
-The plan index also separates the broader active backlog from archived notes so legacy workstreams stay visible without competing with the canonical tracks.
+Canonical tracks and the active backlog live under `.agents/plans/`. Index: `.agents/plans/README.md`. Archive: `.agents/plans/archive/`. Agent/editor environment track: `agent-optimization/PLAN.md`. Commit grammar: `history-reflow/PLAN.md`.

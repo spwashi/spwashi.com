@@ -1,0 +1,60 @@
+# Agent Preference Ledger
+#
+# Persistent, one-line-per-session introspection. Not a model lock.
+# Generated snapshots still belong in runtime/ and stay untracked.
+# operation: cache
+
+#>agent_preference_ledger
+#:state #!agents #!introspection
+#:operation #!cache
+#:fixity #!tending
+#:layer #!editor_inspectability
+
+@skill_invocation: ~"../../.spw/conventions/skill-invocation.spw"
+@creative_capacity: ~"../../.spw/caches/creative-capacity-2026-09.spw"
+@check_agents: ~"../../scripts/check-agent-contracts.mjs"
+
+operation = "cache"
+fixity = "tending"
+
+^"ritual"{
+  when = `End of a session that changed contracts, copy, or agent adapters`
+  write = `one entry: date, model-if-known, lean, gap, reach, avoid`
+  refuse = `Do not treat a preference as a new discipline. Do not write runtime/ snapshots here.`
+}[reg=facet]
+
+^"entries"{
+  e2026_09_04_grok = .{
+    at = `2026-09-04`
+    model = `grok-4.6`
+    lean = `anti-bloat + naming (copy-accessor prime, adapter focuses as emphases)`
+    gap = `computer-use visual:checks not run this session`
+    reach = `npm run audit:copy:accessor; npm run check:agents; node --test scripts/tests/agent-contracts.test.mjs`
+    avoid = `public copy rewrite; new data-spw-* family; kitchen-sink from plans`
+  }[reg=facet]
+  e2026_09_04_grok_docs = .{
+    at = `2026-09-04`
+    model = `grok-4.6`
+    lean = `anti-bloat + exactness (stale AGENTS/README paths and class nouns)`
+    gap = `computer-use visual:checks not run`
+    reach = `rg public JS tree, package.json scripts, git log -1`
+    avoid = `rewriting AGENTS.md as a novel; public HTML copy`
+  }[reg=facet]
+  e2026_09_04_grok_wonder = .{
+    at = `2026-09-04`
+    model = `grok-4.6`
+    lean = `anti-bloat + naming (wonder-architecture align/prime; harvestable LSP questions)`
+    gap = `computer-use visual:checks not run; live LSP session not probed`
+    reach = `npm run wonder -- --surface wonder-architecture; rg data-spw-wonder-type; git diff --check`
+    avoid = `data-spw-wonder-type; ASTRA.md; implementing go-to-owner or rename-refuse; public HTML copy`
+    partner = `Astra as planning/creativity/implementation partner — not a model lock`
+  }[reg=facet]
+  e2026_09_04_grok_history = .{
+    at = `2026-09-04`
+    model = `grok-4.6`
+    lean = `anti-bloat + naming (history-conflict strands as declared bonds + wonders)`
+    gap = `computer-use visual:checks not run; no workbench CLI timed walk this pass`
+    reach = `git log; commit-history-deep; workbench-report; npm run wonder -- --surface history-conflict`
+    avoid = `new data-spw family; merging expression-card; surfaces.css; promoting Midjourney dumps; implementing open-drawer swipe`
+  }[reg=facet]
+}[reg=facet]

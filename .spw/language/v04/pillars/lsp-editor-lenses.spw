@@ -8,6 +8,8 @@
 #:fixity #!tending
 #:layer #!editor_inspectability
 
+@wonder_architecture: ~"../../../conventions/wonder-architecture.spw"
+
 operation = "prime"
 fixity = "tending"
 
@@ -37,3 +39,15 @@ fixity = "tending"
   impl_ref = ~"../../../_workbench/.agents/plans/vscode-workspace-atlas/PLAN.md"
  status = "active"
 }[reg=facet]
+
+# Local mutation: wonder altitudes are a live consumer of these lenses.
+# Do not implement; harvest via npm run wonder. See @wonder_architecture#astra_prime.
+
+#>wonder_lsp_altitude_lens
+?["Can an operation|fixity lens also filter by wonder altitude without collapsing page-questions, field residue, probe operator, and doctrine test?"]{
+  #:depth #!computational ~#lens(inquiry)
+  ~#with: @wonder_architecture
+  ~#hypothesis: "the four English uses of wonder are coordinates, not tags. A lens that filters 'wonder' as one bucket would be the seventh type."
+  !probe{ "if a lens UI offers a single chip labelled wonder, it failed. if it offers doctrine|types|field|ornament|loop, it spent @wonder_architecture#altitudes." }
+  $%[lsp.lenses, wonder.coordinates, altitude.filter]
+}

@@ -76,6 +76,7 @@ priority_stack: ?<
 editor_prompts: #[
  .{ ask = `Which pillar should I read for indexing strength vs executable claims?`, see = @roadmap }[reg=facet],
  .{ ask = `What is the upstream/submodule handoff for this pillar set?`, see = @submodule_bridge }[reg=facet],
+ .{ ask = `Which owner should go-to-definition choose for body[data-spw-wonder], and should rename of a wonder type be refused?`, see = @lsp_editor_lenses }[reg=facet],
 ][reg=set]
 
 invariants: #[

@@ -10,6 +10,7 @@
 @visitation_runtime: ~"../../public/js/runtime/visitation.js"
 @image_metaphysics: ~"../../public/js/media/image-metaphysics.js"
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
+@wonder_architecture: ~"./wonder-architecture.spw"
 @ornament_contract: ~"./ornament-contract.spw"
 @interaction_microstates: ~"./interaction-microstates.spw"
 
@@ -17,7 +18,7 @@ operation = "contract"
 fixity = "tending"
 
 ^"thesis"{
-  claim: "Visitation is surface memory, not just a boolean. Raster and vector surfaces record medium, pages[], and visitedAt; page-level datasets summarize count and on-page presence for ornament."
+  claim: "Visitation is surface memory, not just a boolean. Raster and vector surfaces record medium, pages[], and visitedAt; page-level datasets summarize count and on-page presence for ornament. Trail marks are ornament of existing visited/grounded/memory-match state — the trail overlay altitude of @wonder_architecture, not a new family."
 }
 
 ^"surface_types"{

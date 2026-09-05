@@ -13,6 +13,7 @@
 @arrival_electrostatics: ~"./arrival-electrostatics.spw"
 @electrostatic_affordances: ~"./electrostatic-affordances.spw"
 @component_taxonomy: ~"./component-taxonomy.spw"
+@history_strands: ~"../caches/history-conflict-strands-2026-09.spw"
 @operator_spaces: ~"../../public/js/semantic/operator-spaces.js"
 @css: ~"../../public/css/systems/component-biome.css"
 @image_theming: ~"../../public/css/systems/image-theming.css"
@@ -23,6 +24,7 @@ operation = "prime"
 fixity = "experimental"
 
 expression = component[biome]{light.exchange.succession}<land>
+history_bond = `component[taxonomy]{frame.card.panel.chip.prose} ^ biome[exchange]{has.sibling}<succession>`
 
 ^"soil"{
   ~#law(conditional symbiosis): "rich soil, no association"

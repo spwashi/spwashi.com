@@ -25,6 +25,7 @@ fixity = "stable"
 @attention_field: ~"./conventions/attention-field.spw"
 @spatial_grammar: ~"./philosophy/spatial-grammar.spw"
 @wonder: ~"./philosophy/wonder-doctrine.spw"
+@wonder_architecture: ~"./conventions/wonder-architecture.spw"
 @cognitive_surface: ~"./philosophy/cognitive-surface.spw"
 @one_physics: ~"./philosophy/one-physics.spw"
 @pacing: ~"./philosophy/pacing.spw"
@@ -214,6 +215,14 @@ fixity = "stable"
     fixity = "stable"
     status = "active"
   }[reg=facet]
+  wonder_architecture = .{
+    id = "wonder_architecture"
+    ref = @wonder_architecture
+    role = `Aligns doctrine, types, copy tokens, field, ornament, and loop so they are not a seventh type.`
+    layer = "pragmatics"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
   cognitive_surface = .{
     id = "cognitive_surface"
     ref = @cognitive_surface
@@ -304,6 +313,15 @@ fixity = "stable"
     evidence = @cognitive_surface
     status = "active"
   }[reg=facet]
+  wonder_architecture_routes_wonder = .{
+    id = "wonder_architecture_routes_wonder"
+    source = @wonder_architecture
+    relation = "routes"
+    target = @wonder
+    consequence = `Doctrine stays the falsification test; types, copy, field, and ornament spend it without inventing data-spw-wonder-type.`
+    evidence = @wonder_architecture
+    status = "active"
+  }[reg=facet]
   operator_semantics_projects_attention = .{
     id = "operator_semantics_projects_attention"
     source = @operator_semantics
@@ -360,7 +378,7 @@ fixity = "stable"
     @operational_semantics
   >[reg=stream]
   architecture_confluence = &[@architecture, @semantic_capacity, @typed_references]
-  cognition_confluence = &[@wonder, @cognitive_surface, @attention_field]
+  cognition_confluence = &[@wonder, @wonder_architecture, @cognitive_surface, @attention_field]
   rule = `Streams encode intentional reading order; confluences encode peers that must be considered together without inventing a false sequence.`
 }[reg=facet]
 
