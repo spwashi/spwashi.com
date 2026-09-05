@@ -92,7 +92,10 @@
 
   :where(.frame-heading > :is(h1, h2, h3)) {
     flex: 0 1 auto;
+    inline-size: 100%;
+    min-inline-size: 0;
     max-inline-size: 100%;
+    text-wrap: wrap;
   }
 
   :where(.frame-topline > [data-spw-slot="meta"], .frame-heading > [data-spw-slot="meta"]) {

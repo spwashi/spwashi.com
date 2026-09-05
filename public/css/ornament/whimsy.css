@@ -72,7 +72,8 @@
 
 :where(.frame-heading) {
     display: flex;
-    align-items: baseline;
+    /* Alignment stays with foundation/adaptive — baseline + wrap on a
+       column heading packed titles into extra columns at pocket width. */
     gap: var(--space-md, 1rem);
     margin-bottom: var(--space-lg, 1.5rem);
     position: relative;

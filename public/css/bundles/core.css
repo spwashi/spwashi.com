@@ -42193,7 +42193,10 @@ html[data-spw-cognitive-handles="off"] :where(
 
   :where(.frame-heading > :is(h1, h2, h3)) {
     flex: 0 1 auto;
+    inline-size: 100%;
+    min-inline-size: 0;
     max-inline-size: 100%;
+    text-wrap: wrap;
   }
 
   :where(.frame-topline > [data-spw-slot="meta"], .frame-heading > [data-spw-slot="meta"]) {
@@ -44075,7 +44078,8 @@ html[data-spw-color-mode="dark"] :where(.spw-frame, .frame-card, .mode-panel, .o
 
 :where(.frame-heading) {
     display: flex;
-    align-items: baseline;
+    /* Alignment stays with foundation/adaptive — baseline + wrap on a
+       column heading packed titles into extra columns at pocket width. */
     gap: var(--space-md, 1rem);
     margin-bottom: var(--space-lg, 1.5rem);
     position: relative;

@@ -1558,10 +1558,12 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 }
 
 :where(body[data-spw-surface="home"] .spw-frame .frame-heading h2) {
+  /* text-wrap:balance sizes to max-content and overflowed the sigil row. */
   flex: 1 1 12rem;
   min-width: 0;
-  max-inline-size: none;
-  text-wrap: balance;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+  text-wrap: wrap;
 }
 
 :where(body[data-spw-surface="home"] .spw-frame .frame-heading) {
@@ -1598,11 +1600,17 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
   :where(body[data-spw-surface="home"] .spw-frame .frame-heading) {
     padding-block-end: 0.3rem;
     margin-block-end: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
   }
 
   :where(body[data-spw-surface="home"] .spw-frame .frame-heading h2) {
     flex: 0 1 auto;
+    inline-size: 100%;
+    min-inline-size: 0;
     max-inline-size: 100%;
+    text-wrap: wrap;
   }
 }
 
