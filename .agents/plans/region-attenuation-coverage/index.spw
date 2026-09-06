@@ -1,7 +1,9 @@
-# Review 2026-09-06 — keep owner; generated via --only, new plan, Wave 0 tooling not yet built.
+# Review 2026-09-06 — keep owner; reverted from a generator --only draft back to this hand-authored version. The generated concepts/research_bridge/scope were thinner and one scope bullet truncated mid-sentence; semantic depth here beats mechanical generation. Wave 0 tooling not yet built.
 # Plan Index — Region Attenuation Coverage
 #
-# Give every .spw-frame region on the public site an honest, read-and-judged seat (data-spw-region="hook|hub|cluster|path|read|wide", or an authored decision that it deliberately…
+# Give every .spw-frame region an honest, read-and-judged seat (or a recorded
+# decision that it needs none) so --spw-wonder-hold attenuation reflects real
+# spatial relationships site-wide, not only the routes touched by hand.
 
 #>plan_region_attenuation_coverage_index
 #:index #!plan
@@ -12,7 +14,7 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Give every .spw-frame region on the public site an honest, read-and-judged seat (data-spw-region="hook|hub|cluster|path|read|wide", or an authored decision that it deliberately carries none) so --spw-wonder-hold attenuation in projection-attenuation.css reflects real spatial and reading relationships everywhere, not only on the handful of routes that happen to have been touched by hand. Six seats stay six; this plan populates the existing ladder, it does not retune or extend it.`
+ goal = `Give every .spw-frame region on the public site an honest, read-and-judged seat (hook|hub|cluster|path|read|wide), or an authored decision that it deliberately carries none, so --spw-wonder-hold attenuation in projection-attenuation.css reflects real spatial and reading relationships everywhere. Six seats stay six; this plan populates the existing ladder, it does not extend it.`
  owner = `region-attenuation-coverage`
  kind = `plan`
  bucket = `active_backlog`
@@ -23,64 +25,70 @@ intent: .{
  practice_depth = "reading | observation | tending"
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
- memory_tier = "hot"
+ memory_tier = "warm"
  bucket = "active_backlog"
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Give every .spw-frame region on the public site an honest, read-and-judged seat (data-spw-region="hook|hub|cluster|path|…`
+ thesis = `A region seat is authored, not inferred — 60% of .spw-frame sections site-wide carry no seat, and closing that gap is per-section judgment against the six-seat vocabulary, not a scripted fill.`
  concepts = #[
-  `region`,
-  `attenuation`,
-  `six`,
-  `coverage`,
-  `give`,
+  `region-seat`,
+  `wonder-hold-attenuation`,
+  `seat-vs-region-role`,
+  `per-section-judgment`,
+  `coverage-audit`,
  ][reg=set]
  surfaces = #[
   `.spw/conventions/region-component-ecology.spw`,
   `.spw/conventions/projection-attenuation.spw`,
-  `css/systems/projection-attenuation.css`,
-  `.spw/_workbench`,
+  `public/css/systems/projection-attenuation.css`,
+  `route HTML .spw-frame sections`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
 
+^"plan_refinement"{
+ tone = `Measured and falsifiable — cite the actual seat count, not an impression of coverage.`
+ accuracy = `487 of 816 .spw-frame elements measured untagged this session (one-off script); Wave 0's audit script is the number to trust going forward.`
+ direction = `Build the missing-direction audit script, then take the worst-coverage route one wave at a time, starting with topics/software/spw/.`
+ inspiration = `A page that never names its own regions cannot let a reader feel where the quiet parts are.`
+ alignment = `region-component-ecology, projection-attenuation`
+}[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
-@plan_component_region_personality: ~"../component-region-personality/index.spw"
-@plan_page_region_discoverability: ~"../page-region-discoverability/index.spw"
-@plan_hook_region_anatomy: ~"../hook-region-anatomy/index.spw"
-@plan_component_rhythm_variety: ~"../component-rhythm-variety/index.spw"
 @region_component_ecology: ~"../../../.spw/conventions/region-component-ecology.spw"
-@spw_conventions_projection_attenuation_spw: ~"../../../.spw/conventions/projection-attenuation.spw"
-@public_css_systems_projection_attenuation_css: ~"../../../public/css/systems/projection-attenuation.css"
-@workbench: ~"../../../.spw/_workbench"
-@index: ~"../../../design/folios/index.html"
-@spw: ~"../../../topics/software/spw/"
-@rpg_wednesday: ~"../../../play/rpg-wednesday/"
-@website: ~"../../../about/website/"
+@projection_attenuation: ~"../../../.spw/conventions/projection-attenuation.spw"
+@region_seat_audit: ~"../../../scripts/spw-region-seat-audit.mjs"
+@folios_index_html: ~"../../../design/folios/index.html"
+@component_region_personality_plan: ~"../component-region-personality/PLAN.md"
+@page_region_discoverability_plan: ~"../page-region-discoverability/PLAN.md"
+@hook_region_anatomy_plan: ~"../hook-region-anatomy/PLAN.md"
 
 dispatch: .{
  plan = @plan
- plan_component_region_personality = @plan_component_region_personality
- plan_page_region_discoverability = @plan_page_region_discoverability
- plan_hook_region_anatomy = @plan_hook_region_anatomy
- plan_component_rhythm_variety = @plan_component_rhythm_variety
  region_component_ecology = @region_component_ecology
- spw_conventions_projection_attenuation_spw = @spw_conventions_projection_attenuation_spw
- public_css_systems_projection_attenuation_css = @public_css_systems_projection_attenuation_css
- workbench = @workbench
- index = @index
- spw = @spw
- rpg_wednesday = @rpg_wednesday
- website = @website
+ projection_attenuation = @projection_attenuation
+ region_seat_audit = @region_seat_audit
+ folios_index_html = @folios_index_html
+ component_region_personality_plan = @component_region_personality_plan
+ page_region_discoverability_plan = @page_region_discoverability_plan
+ hook_region_anatomy_plan = @hook_region_anatomy_plan
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `region_component_ecology` ; path = `.spw/conventions/region-component-ecology.spw` }[reg=facet],
+  .{ label = `projection_attenuation` ; path = `.spw/conventions/projection-attenuation.spw` }[reg=facet],
+  .{ label = `component_philosophy_harmony` ; path = `.spw/audits/component-philosophy-harmony-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local conventions and audits — not external web.`
 }[reg=facet]
 
 ^"connection_points"{
- owner_rail = `model-guided-refinement`
+ owner_rail = `self`
  related_plans = #[
   `component-region-personality`,
   `page-region-discoverability`,
@@ -92,34 +100,22 @@ dispatch: .{
 ^"owner_claim"{
  claim_id = "plan-region_attenuation_coverage-001"
  layer = "pragmatic"
- hypothesis = `Give every .spw-frame region on the public site an honest, read-and-judged seat (data-spw-region="hook|hub|cluster|path|read|wide", or an authored decision that it deliberately carries none) so --spw-wonder-hold attenuation in projection-attenuation.css reflects real spatial and reading relationships everywhere, not only on the handful of routes that happen to have been touched by hand. Six seats stay six; this plan populates the existing ladder, it does not retune or extend it.`
+ hypothesis = `487 of 816 .spw-frame elements site-wide carry no data-spw-region or established region-role alias; per-section review (not bulk assignment) can close a meaningful share of that gap without inventing a seventh seat.`
  spec_ref = ~"./PLAN.md"
  impl_ref = ~"../../../.spw/conventions/region-component-ecology.spw"
- probe_ref = `rg 'region-attenuation-coverage' .agents/plans/region-attenuation-coverage`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/region-component-ecology.spw unchanged or untested.`
+ probe_ref = `node scripts/spw-region-seat-audit.mjs && rg 'region-attenuation-coverage' .agents/plans`
+ falsification = `A wave lands a data-spw-region value on a frame that was not actually read for content/role, or a seventh seat value appears anywhere in route HTML.`
  status = "active"
-}[reg=facet]
-
-next_action: .{
- step = `Write scripts/spw-region-coverage-audit.mjs (sibling to spw-region-seat-audit.mjs, same file-listing approach, opposite direction) and an npm script for it.`
-}[reg=facet]
-
-scope: .{
- in = #[
-  `Add a durable, reporting-only audit for the missing direction. scripts/spw-region-seat-audit.mjs already checks one direction (data-spw-region authored without .spw-frame); it does not check the other (.spw-frame authored without data-spw-region or an established region-role alias). Add a sibling script, not a rewrite of that file's single-purpose check.`,
-  `Work route-family by route-family, in the order of the table above. For every untagged .spw-frame in the wave's route(s): read its actual content and role, then either`,
-  `assign one of the six seats, matching the same reasoning as folios (a coupled kin-set of siblings is cluster; prose/reference sections are read; a nav bridge to other routes is path; an entry/hero is hook; a landing/conducting point is hub; a two-level flex desk is wide), or`,
-  `record that the frame is deliberately regionless (a leftover/pack-body/component-container seat per region-component-ecology.spw#seats.leftover), or`,
- ][reg=set]
 }[reg=facet]
 
 editor_prompts: #[
  .{ ask = `What does region-attenuation-coverage own, and what should stay out of scope?`, see = @plan }[reg=facet],
- .{ ask = `Which file should I open first to implement the next slice of region-attenuation-coverage?`, see = @index }[reg=facet],
+ .{ ask = `Which route should I take next for the region-seat pass?`, see = @plan }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for region-attenuation-coverage?`, see = @index#plan_refinement }[reg=facet],
 ][reg=set]
 
 invariants: #[
- `Owner intent: Give every .spw-frame region on the public site an honest, read-and-judged seat (data-spw-region="hook|hub|cluster|path|read|wide", or an…`,
- `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
- `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+ `Owner intent: give every .spw-frame an honest seat or a recorded decision that it needs none — six seats stay six.`,
+ `PLAN.md sequences; index.spw routes inspection and selection.`,
+ `Do not bulk-assign data-spw-region without reading the section; the 2026-09-03 note in region-component-ecology.spw records that failure already happening once, in the opposite direction.`,
 ][reg=set]
