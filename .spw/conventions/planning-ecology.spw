@@ -9,6 +9,7 @@
 @agents: ~"../../.agents/README.md"
 @plans: ~"../../.agents/plans/README.md"
 @agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
+@markdown_spend: ~"../caches/agent-markdown-spend-2026-09.spw"
 @agentic_contracts: ~"../../.agents/plans/agentic-dev-contracts/PLAN.md"
 @plan_maintenance: ~"../../.agents/skills/spw-plan-maintenance/SKILL.md"
 @plan_maintenance_sweep_2026_06_19: ~"../../.agents/plans/archive/2026-06-19-plan-maintenance.md"
@@ -58,6 +59,7 @@ dispatch: .{
  agents = @agents
  plans = @plans
  agent_optimization = @agent_optimization
+ markdown_spend = @markdown_spend
  agent_contracts = @agentic_contracts
  plan_maintenance = @plan_maintenance
  plan_maintenance_sweep_2026_06_19 = @plan_maintenance_sweep_2026_06_19

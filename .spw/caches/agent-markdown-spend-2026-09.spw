@@ -34,7 +34,7 @@ do_not = `Do not rewrite AGENTS.md from this cache. Do not invent a markdown lin
   active_plan_md = 199
   archived_plan_md = 5
   active_plan_words = 196818
-  always_on = `AGENTS.md was 4509w / 531L; gate now word-budgeted in @check_agents`
+  always_on = `AGENTS.md 2951/3200w; MEMORY 650/1200w; optimization PLAN 383/1500w 54/120L — @check_agents`
   note = `.references/ is gitignored; HORIZONLOG-scale dumps are not in the tracked agent load. Tracked spend is .agents/ + root adapters.`
 }[reg=facet]
 

@@ -343,11 +343,13 @@ export {
   GESTURE_SPELL_SEEDS,
   GESTURE_VOCABULARY,
   SPW_GESTURE_CONTRACT,
+  TOUCH_COMPACT_EXCLUSION_SELECTOR,
   collectRelatedRouteSamples,
   describeComponentSample,
   describeCurrentPageSample,
   describeGestureContract,
   describeGestureTarget,
+  isTouchFloorHost,
   snapshotFeatureClusters,
   snapshotGestureTargets,
 } from './runtime/gesture-contract.js';

@@ -75,7 +75,7 @@ Open first:
 
 - copy / voice / localization keys → `.spw/conventions/copy-accessor.spw`
 - CSS layers / first-paint → `.spw/conventions/css-instruction.spw`
-- agent environment → `.agents/plans/agent-optimization/PLAN.md`
+- agent environment → `.agents/plans/agent-optimization/PLAN.md` (gate, not diary)
 - commit wording → `.agents/plans/history-reflow/PLAN.md` plus `git log -1 --format=%B`
 
 Creator-first copy: _"I'm Spwashi. I build software and make art."_

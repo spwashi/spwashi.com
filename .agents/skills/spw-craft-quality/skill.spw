@@ -34,6 +34,7 @@ expression = craft[align]{clarity.hierarchy.weight}<one-slice>
   r1: `Do not add inspectability where removing weight would serve better. Serialization is good for real runtime state and a poor substitute for calmer HTML.`
   r2: `Do not update .spw unless a reusable contract changed. Polish passes do not earn a convention edit.`
   r3: `Do not write an invariant without running the probe that would falsify it. "!important lives only in ornament" reads as reasonable and is contradicted 160 times — see @measures.`
+  r4: `Do not apply --touch-target-min to every button from the components layer. That floor beats shell compact chrome. Exclude [data-spw-floating-chrome] *. An audit P1 list of later compact sizes is packing altitude, not a missed 44px patch.`
 }
 
 ^"extends"{

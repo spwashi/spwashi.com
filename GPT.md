@@ -11,6 +11,6 @@ This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follow
 
 ## Computer-use (verify-first)
 
-Codex / GPT computer-use sessions: verify-first (`npm run audit:module-selectors`, `npm run visual:checks`, one pocket route). One named patch. Stop. Do not “implement from plans.”
+Codex / GPT computer-use sessions: verify-first (`npm run audit:module-selectors`, `npm run visual:checks`, one pocket route). One named patch. Stop. Do not “implement from plans.” An audit P1 list is not a patch list — later compact sizes are packing altitude, not missed 44px. User “skip visuals” is a finding; `check:local` green is not pocket-chrome proof. Do not Read a PLAN.md over ~200 lines unless Open first named it. `check:agents` word budgets are the block.
 
 Commits close with `#[episode]{ ~[scene]{} ![change]{} *[verify]{} }`. Grammar: `.agents/plans/history-reflow/PLAN.md`.

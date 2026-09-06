@@ -32,7 +32,7 @@ description: Improve visual hierarchy, accessibility (a11y), device parity, and 
 * 🚫 **No Cascade Disruption:** Honor the CSS layer order; never use `!important` in component or route CSS.
 * 🚫 **No Cosmetic Attribute Sprawl:** Never invent one-off `data-spw-*` attributes for visual-only tweaks.
 * 🚫 **No Hover-Only Disclosures:** Critical navigation and controls must work on touch/coarse pointers.
-* 🚫 **A11y Baselines:** Ensure 44px+ touch targets, clear `:focus-visible` rings, and WCAG AA contrast (4.5:1 minimum).
+* 🚫 **A11y Baselines:** Ground controls (chips, sigils, native buttons outside floating chrome) stay at `--touch-target-min` (2.75rem / 44px) on coarse pointers. Pocket chrome keeps `--touch-target-compact`. Clear `:focus-visible` rings. WCAG AA contrast (4.5:1 minimum).
 * 🚫 **No inherited rest calcs:** `--charge` / `--spw-resonance` do not inherit. Spend `--spw-attention-opacity` from frame reports or `:focus-within`, not a `:root` calc. Lift with `.spw-frame:focus-within`, not `:has(:focus-within)`.
 * 🚫 **No html containing-block:** Do not `contain:layout` or `position:relative` on `html` / `[data-spw-floating-chrome]`.
 
@@ -42,7 +42,7 @@ description: Improve visual hierarchy, accessibility (a11y), device parity, and 
 
 | Target Dimension | Implementation Contract | CSS Layer / Selector |
 | :--- | :--- | :--- |
-| **Touch Targets** | `min-height: 44px; min-width: 44px;` on coarse pointers | `components/*.css` via `:where(...)` |
+| **Touch Targets** | `--touch-target-min` on chips/sigils and native buttons **outside** `[data-spw-floating-chrome]`. Compact chrome keeps `--touch-target-compact`. Do not set `min-inline-size` on every `button` from the components layer — that layer beats shell packing. | `components/foundation.css` via `:where(...)` with floating-chrome exclusion |
 | **Contrast & Ink** | Use `--ink-on-matte*` and `--material-ink-*` tokens on matte surfaces | `tokens/core.css` tokens |
 | **Focus Rings** | Clear `:focus-visible` outline using `--focus-ring` token | `shell/chrome.css` & component styles |
 | **Fluid Responsiveness**| Container queries (`@container`) and CSS `clamp()` over scattered `@media` | `components/*.css`, `shell/layout.css` |

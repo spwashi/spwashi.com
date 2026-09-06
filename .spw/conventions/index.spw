@@ -28,7 +28,7 @@
 @annotation_layer: ~"./annotation-layer.spw"
 @query_disposition: ~"./query-disposition.spw"
 @planning_ecology: ~"./planning-ecology.spw"
-@skill_invocation: ~"./skill-invocation.spw"  # operation is the lens; focuses are emphases; introspection ledger
+@skill_invocation: ~"./skill-invocation.spw"  # operation is the lens; focuses are emphases; #shunt is the word-budget block
 @wip_notebook: ~"./wip-notebook.spw"
 @plan_index: ~"./plan-index.spw"
 @plans_root: ~"../../.agents/plans/index.spw"

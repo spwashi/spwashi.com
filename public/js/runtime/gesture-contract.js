@@ -38,13 +38,25 @@ export const TOUCH_TARGET_SELECTOR = [
   '.frame-sigil',
 ].join(', ');
 
+export const TOUCH_COMPACT_EXCLUSION_SELECTOR = [
+  '[data-spw-floating-chrome]',
+  '.spw-section-handle-shell',
+].join(', ');
+
 export const TOUCH_SEMANTICS = Object.freeze({
   targetSelector: TOUCH_TARGET_SELECTOR,
+  compactExclusion: TOUCH_COMPACT_EXCLUSION_SELECTOR,
   minimumTarget: '2.75rem',
+  compactTarget: '2.15rem',
   touchAction: 'manipulation',
   stateParity: 'focus-visible | active | pressed',
-  note: 'Coarse-pointer controls receive the shared target and direct-tap contract in components/foundation.css.',
+  note: 'Ground controls (chips, sigils, native buttons outside floating chrome) take --touch-target-min. Pocket chrome keeps --touch-target-compact; inspect reports touch:null there.',
 });
+
+export function isTouchFloorHost(element) {
+  if (!(element instanceof Element) || !element.matches(TOUCH_TARGET_SELECTOR)) return false;
+  return !element.closest(TOUCH_COMPACT_EXCLUSION_SELECTOR);
+}
 
 export const GESTURE_VOCABULARY = Object.freeze({
   ground: Object.freeze({
@@ -235,7 +247,7 @@ export function describeGestureTarget(target) {
   const element = resolveGestureTarget(target);
   if (!(element instanceof HTMLElement)) return null;
   const context = describeElementContext(element);
-  const touchTarget = element.matches(TOUCH_TARGET_SELECTOR);
+  const touchTarget = isTouchFloorHost(element);
   return {
     target: context?.target || '',
     label: context?.label || '',

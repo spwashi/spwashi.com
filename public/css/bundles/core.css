@@ -15611,9 +15611,9 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 }
 
 @media (pointer: coarse) {
-  /* Touch semantics: controls own a predictable target and a direct tap
-     gesture. Ordinary anchors remain content-shaped; chips and sigils are
-     the site's explicit interaction vocabulary. */
+  /* Ground-control class. This components-layer floor beats shell compact
+     sizes, so floating chrome must be excluded rather than enlarged.
+     Chips and sigils take both axes; native buttons take block size only. */
   :where(
     button,
     summary,
@@ -15623,10 +15623,22 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
     [role="button"],
     .spw-chip,
     .frame-sigil
-  ) {
+  ):not(:where(
+    [data-spw-floating-chrome] *,
+    .spw-section-handle-shell *
+  )) {
     min-block-size: var(--touch-target-min, 2.75rem);
-    min-inline-size: var(--touch-target-min, 2.75rem);
     touch-action: manipulation;
+  }
+
+  :where(
+    .spw-chip,
+    .frame-sigil
+  ):not(:where(
+    [data-spw-floating-chrome] *,
+    .spw-section-handle-shell *
+  )) {
+    min-inline-size: var(--touch-target-min, 2.75rem);
   }
 
   :where(

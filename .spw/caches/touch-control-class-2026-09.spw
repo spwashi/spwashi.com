@@ -65,6 +65,7 @@ expression = touch[class]{control.chrome.content}<floor>
     `foundation.css comment already says ordinary anchors stay content-shaped; chips and sigils are the interaction vocabulary — the selector also listing every button is the seam`
   ][reg=set]
   expansion_prime = `If the uncommitted floor lands, exclude pocket chrome hosts or restate compact in a layer after components. Do not raise phase-menu, footer links, or RPG line inputs to 2.75rem.`
+  landed = `2026-09-06 — foundation.css excludes [data-spw-floating-chrome] * and .spw-section-handle-shell * from the coarse floor; inspect reports touch:null there. min-inline-size stays on chips/sigils only.`
   validation = `On a coarse-pointer pocket viewport, measure .spw-section-handle-shell button min-block-size before and after the foundation rule; it must not steal the floating-handle slot.`
   do_not_promote_until = `A packing-tier token (--pack-hit-min) is actually consumed by leaf chrome, as @device_packing already asked, rather than another :where(button) blanket.`
 }[reg=facet]
