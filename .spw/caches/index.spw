@@ -33,6 +33,7 @@
 @hypermedia_geometry_2026_09: ~"./hypermedia-geometry-2026-09.spw"
 @history_conflict_strands_2026_09: ~"./history-conflict-strands-2026-09.spw"
 @copy_hypermedia_key_2026_09: ~"./copy-hypermedia-key-2026-09.spw"
+@post_nut_clarity_2026_09: ~"./post-nut-clarity-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -60,6 +61,7 @@ fixity = "tending"
   hypermedia_geometry_2026_09 = @hypermedia_geometry_2026_09
   history_conflict_strands_2026_09 = @history_conflict_strands_2026_09
   copy_hypermedia_key_2026_09 = @copy_hypermedia_key_2026_09
+  post_nut_clarity_2026_09 = @post_nut_clarity_2026_09
 }[reg=facet]
 
 ^"cache_rules"{

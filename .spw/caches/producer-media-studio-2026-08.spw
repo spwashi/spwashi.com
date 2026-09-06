@@ -17,6 +17,7 @@
 @sidecar: ~"../conventions/sidecar-references.spw"
 @copy_ecology: ~"../conventions/copy-ecology.spw"
 @workbench_report: ~"../workbench-report.spw"
+@pnc_grounding: ~"./post-nut-clarity-2026-09.spw"
 
 operation = "cache"
 fixity = "tending"
@@ -44,6 +45,30 @@ expression = producer[media]{studio,theater,workshop}<disciplines>
   puppeteer: "operator as hand, brace as joint, score as string"
   fashion: "grain, cut, collection, season boundary"
   patron: "proof, next action, edition"
+}[reg=facet]
+
+^"world"{
+  operation = "prime"
+  claim = `Production infrastructure here assumes the studio system, the model, and the software-training pipeline no longer hold a career. Each collaborator still needs a room, a season, and bits that can iterate.`
+  post_hollywood = `No studio as container. A series home, a plate, a session — not a development deal.`
+  post_ai = `Models were trained on the work. Tools may be used. Extraction is not the offer. Human continuity of a bit is the scarce thing.`
+  post_software_training = `Learn-to-code and the agency pipeline stopped being a life. Owned surfaces, small contracts, iterable bits.`
+  grounding = `Private introspective return-pass (@pnc_grounding) grounds other projects. Continuity is familiar bits. Iteration is the lights-on test.`
+  refuse_html = `Do not name that grounding-show title on public HTML. Public copy may say studio, model, training pipeline, season, bit, and room.`
+}[reg=facet]
+
+^"collaborator_world"{
+  ~#note: "Imagine each collaborator in this world. Needs stay in @disciplines. This is production posture, not a new audience taxonomy."
+  engineer: `Ship owned surfaces with tests. Do not train a life on a vanished product org. AI output is heat until a contract names what landed.`
+  animator: `Time and consequence still have to be blocked. Generative motion without a beat is sludge. Reduced-motion is ethics, not a fallback skin.`
+  illustrator: `Edition and substrate. A plate is a signed instance, not a prompt exhaust. Training-data extraction is the crisis; the offer is a holdable image.`
+  designer: `Anatomy and hierarchy for rooms people return to. Not another design system for a company that will not staff it.`
+  musician: `Cadence, motif, session. Score the collaboration. Streaming and studio audio pipelines are not the career container.`
+  writer: `Notes or a manuscript are enough. A series home is a room the public can open. You keep the world.`
+  actor: `Blocking, beat, recoverable rehearsal. Not a call sheet for a dead pipeline, and not an extra the model can replace.`
+  puppeteer: `The hand, the joint, the string. Operator and brace are the contract. Do not costume this as mocap replacement.`
+  fashion: `Grain, cut, collection. Season boundary is a 13th/26th close, not fashion week as a career.`
+  patron: `Proof, next action, edition. Support a season you can point at — not a studio bet and not a training round.`
 }[reg=facet]
 
 ^"workbench_as_consumer_tool"{
@@ -81,6 +106,7 @@ expression = producer[media]{studio,theater,workshop}<disciplines>
 
 validation: #[
   `rg 'producer_media_studio_2026_08' .spw/caches/index.spw`,
-  `rg 'actor:|puppeteer:|fashion:' .spw/conventions/daily-kernel.spw`,
-  `rg 'kernelJoinFromTokens' public/js/semantic/expression-query.js`,
+  `rg 'collaborator_world|refuse_html' .spw/caches/producer-media-studio-2026-08.spw`,
+  `rg 'actor:|puppeteer:|fashion:|writer:' .spw/conventions/daily-kernel.spw`,
+  `rg 'Post-Nut|PNC' services/creator/index.html ; test $? -eq 1`,
 ][reg=set]

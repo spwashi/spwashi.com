@@ -22,6 +22,7 @@
 # function/cadence/evidence without predicting deployment form.
 @surface_archetypes: ~"./_workbench/.spw/surfaces/surface-archetypes.spw"
 @valence_architecture: ~"./_workbench/docs/theory/spw/valence-architecture.spw"
+@pnc_precipitate: ~"./caches/post-nut-clarity-2026-09.spw"
 
 operation = "contract"
 fixity = "stable"
@@ -80,7 +81,7 @@ active_surfaces: .{
    status = linked
    role = `show-and-book`
    note = `Thirteen chapters. Meant to feel like a show that is also a book — episodic pacing over durable structure, so neither reading nor watching is the lesser mode.`
-   production = `focused description of the production process`
+   production = `Make assets and story elements for the thirteen-chapter show-and-book. Post-Nut Clarity may precipitate from this making as from other projects — introspection as grounding, familiar bits iterated, not a lore.land sidecar. Prime: @pnc_precipitate.`
    channel = `@lore.land on TikTok`
    repo = `https://github.com/lore-land/lore.land`
    archetype = `installable_book`

@@ -1,0 +1,108 @@
+# Post-Nut Clarity as grounding practice (2026-09)
+#
+# operation: prime
+# Introspection grounds other projects. lore.land is one making-surface,
+# not the owner. Do not implement a public PNC route from this file.
+
+#>post_nut_clarity_2026_09
+#:cache #!prime #!producer #!show
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@model_guided_refinement: ~"../conventions/model-guided-refinement.spw"
+@daily_kernel: ~"../conventions/daily-kernel.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@domains: ~"../domains.spw"
+@producer_media_studio: ~"./producer-media-studio-2026-08.spw"
+@boonhonk: ~"./boonhonk-combinatoric-genre.spw"
+@lore_surface: ~"../../about/domains/lore.land/index.html"
+@series_home: ~"../../services/creator/index.html"
+
+operation = "prime"
+fixity = "experimental"
+source = "chat 2026-09-05..06: Post-Nut Clarity as a show; lore.land as one making-surface; introspection as grounding for other projects; continuity and iteration on familiar bits; cultural lust vs ultimate desire"
+
+expression = pnc[ground]{iterate.bit}<projects>
+
+^"thesis"{
+  claim = `Post-Nut Clarity is a project developed through introspection. That introspection grounds other projects. The point is continuity and iteration on familiar bits — not a lore.land-only calendar, and not a second bible that starves the making.`
+  heat = `Any project in making: lore.land chapters, plates, table tests, film, land writing, site work, commissions.`
+  after = `The return pass on a familiar bit. An episode if the bit earned another pass. Grounding for the next making, not a replacement for it.`
+  language = `Heat often speaks cultural lust — borrowed scripts of wanting. The after speaks what was actually desired. The title names that cut; it does not license the first language.`
+  unit = `A bit: a routine you already have (meeting, two languages, Boon/Bane/Bone physics, thirteen-year inventory). Continuity is returning to it. Iteration is running the lights-on test again.`
+  refuse = `Do not sit down to write thirteen years of unused episodes. Do not collapse other projects into this title. Do not make lore.land the only source. Do not invent a new bit every time to avoid iterating an old one. Do not add a public PNC route, product-line card, or data-spw family from this prime. Do not keep pre-clarity diction because it is hotter.`
+}[reg=facet]
+
+^"pnc-001_pipeline"{
+  id = "pnc-001"
+  operation = "prime"
+  status = "narrowed"
+  claim = `PNC precipitates from making, not from a parallel queue. lore.land is one making-surface, not the owner of the calendar.`
+  superseded_narrowing = `Earlier claim treated lore.land as the one calendar. That overfit the first example. Other projects get the same return pass.`
+  evidence = #[
+    `.spw/domains.spw lore.land.production names PNC as a possible precipitate, not a sidecar owner`,
+    `/about/domains/lore.land/: show that is also a book; thirteen chapters; process posted while still wrong`,
+    `producer-media-studio: Spwashi as producer across disciplines`,
+    `product-lines.spw#series_home: lore.land remains a series home, not the PNC studio`
+  ][reg=set]
+  pattern_consideration = #[
+    `series_home stays lore.land`,
+    `producer-media-studio is discipline ergonomics — this cache is the grounding practice`,
+    `daily-kernel: one focus, one output — a bit-pass can be a kernel without becoming the week's only project`
+  ][reg=set]
+  audience = `producer first; writer, actor, and collaborators on other projects as bridges`
+  offer = `Use introspection as a grounding exercise while making other work.`
+  proof = `A bit that returned and changed; a project that still moved; an episode only if the pass named something.`
+  resonance = `Familiar bits carry continuity. Iteration is the after. Other projects stay the making.`
+  extension = `An episode can be cut, posted, or held. It does not rewrite the project that produced the heat.`
+  next_action = `Make the next project asset. Return to a familiar bit. Name a PNC episode only after that pass.`
+  first_patch = `This cache plus a domains.spw production line that does not give lore.land exclusive ownership. Public HTML waits.`
+  validation = `rg 'familiar bits|grounding' .spw/caches/post-nut-clarity-2026-09.spw && rg 'production =' .spw/domains.spw`
+  do_not_promote_until = `At least one precipitated episode exists as a named artifact, and at least two projects have used the same bit without PNC swallowing either title.`
+}[reg=facet]
+
+^"pnc-002_meeting"{
+  id = "pnc-002"
+  operation = "cache"
+  claim = `The production meeting is three lines: a long plan spoken in heat, the title said back, a refusal. That refusal is the cut, not a cancellation of the making.`
+  specimen = #{
+    heat = `I have about 13 years of content planned out for this show`
+    title = `Post-Nut Clarity?`
+    after = `no thank you`
+  }
+  reading = `Thirteen years is inventory. A season is what a given project can actually hold. The no-thank-you keeps a project from swallowing the after, and keeps the after from pretending it was the season. This meeting is a bit: return to it, iterate it.`
+  expansion_prime = `Use the three lines as a cold open only if an episode is being cut. Do not put them on a project domain page as a gag.`
+}[reg=facet]
+
+^"pnc-003_two_languages"{
+  id = "pnc-003"
+  operation = "cache"
+  claim = `Language from before the title was often cultural lust, not a report of what was ultimately desired. Post-nut clarity is the cut between those languages.`
+  heat_language = `Scripts the culture already has for wanting: hotter, more generic, easier to perform, borrowed from porn, pitch, and romance inventory.`
+  after_language = `What remains when the performance drops: specific, quieter, sometimes a refusal, sometimes a land (arrival, cost, carrier) instead of a fantasy of the person.`
+  before_the_name = `Until the phrase was available, the first language had nowhere to be inspected. Naming the after does not make the earlier sentences true.`
+  production_test = `On any project draft or candidate episode: which sentences still want to be said with the lights on? Keep those. The rest was lust-inventory.`
+  pattern_consideration = #[
+    `copy-accessor voice_register: do not flatten magic to generic product copy — cultural lust is a different flattening, toward heat-scripts`,
+    `boonhonk production_bible_posture: jacket vs bible — lust-language is a false jacket`,
+    `Boon/Bane/Bone are physics, not moral scores; lust-language will try to score them anyway`
+  ][reg=set]
+  refuse = `Do not put this distinction on the public land pages. Do not add data-spw-voice. Do not treat the title as permission to stay in the first language.`
+  expansion_prime = `When cutting a PNC episode from any making, mark which lines were cultural lust and which survived the return pass. That mark is the episode.`
+}[reg=facet]
+
+^"pnc-004_bits"{
+  id = "pnc-004"
+  operation = "prime"
+  claim = `The collectible unit is the bit. Continuity is returning to a bit you already play. Iteration is the introspective pass that grounds the next project instead of replacing it.`
+  bit = `A familiar routine with a handle: the three-line meeting, the two languages, Boon/Bane/Bone as physics not scores, thirteen-year inventory vs a season, looking for a third and precipitating one.`
+  continuity = `Do not mint a new premise to avoid an old bit. The show is recognizable because the bits return.`
+  iteration = `Each return runs the lights-on test. The bit can tighten, refuse, or change land. That change is the grounding — it tells the other project what was actually desired.`
+  grounding = `Introspection here is a producer exercise, not a diary dump. It prepares the next making (lore.land, film, lands, site, commissions) so heat-scripts do not steer it.`
+  projects = `lore.land remains a making-surface. It is not the studio that owns PNC.`
+  refuse = `Do not stand up a public PNC route to hold bits. Do not expand boon.land / bane.land / bone.land off this prime. Do not treat every new project as a new bit.`
+  first_patch = `Keep iterating bits in notes and making. Public HTML waits until a bit has survived more than one project.`
+  validation = `rg 'pnc-004|familiar bits' .spw/caches/post-nut-clarity-2026-09.spw`
+}[reg=facet]

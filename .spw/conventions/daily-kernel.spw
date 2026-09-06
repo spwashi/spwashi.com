@@ -74,6 +74,11 @@
     best_entry = #[`tokens/core`, `material physics`, `product lines`, `inspect source tokens`][reg=set]
     risk = "wardrobe language that silently re-buckets a collection"
   }[reg=facet]
+  writer: .{
+    needs = #[`copy ecology`, `dual visitor path`, `series home`, `notes-as-start`][reg=set]
+    best_entry = #[`/services/creator/`, `copy-accessor`, `lore.land surface`, `living-medium-copy`][reg=set]
+    risk = "requiring Spw or a new format before a manuscript can have a room"
+  }[reg=facet]
 }
 
 ^"university_regions"{

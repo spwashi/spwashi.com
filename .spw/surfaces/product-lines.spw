@@ -67,7 +67,7 @@ product_lines: .{
    audience = `writer/worldbuilder; engineer/toolmaker is a bridge, not the public lead.`
    offer = `A reading home for a series, with notes or a manuscript as valid starts.`
    proof = `lore.land; the creator route's opening, chapter, and season shapes.`
-   resonance = `A serial gains a room people can return to, not only a file or a pitch.`
+   resonance = `A serial gains a room people can return to after the studio, the model, and the training pipeline — not only a file or a pitch.`
    extension = `A chapter, share image, cover, EPUB, or optional taste pass can be added without redefining the story.`
    next_action = `/services/creator/#series-home → /services/ecosystem/#taste → /contact/?subject=series-home.`
   }[reg=facet]
