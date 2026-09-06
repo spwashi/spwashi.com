@@ -25,6 +25,7 @@
 @gesture_anatomy: ~"../../public/js/runtime/gesture-anatomy.js"
 @charge_field: ~"../../public/js/runtime/charge-field.js"
 @gesture_anatomy_css: ~"../../public/css/components/gesture-anatomy.css"
+@touch_control_class: ~"../caches/touch-control-class-2026-09.spw"
 
 operation = "audit"
 fixity = "tending"
@@ -213,4 +214,12 @@ audit_run: .{
     formatting = `spw:format:check scanned 337 files; only untouched .spw/caches/history-conflict-strands-2026-09.spw needs formatting. This audit was not flagged. git diff --check passed.`
     browser = `Initial visual:checks could not bind localhost (EPERM). Authorized retry produced pocket captures but encountered curriculum-hero-focus target miss, folio-prices blank, and gone home targets; no visual pass is claimed. Inspected 03-home-entrance-closed.jpg in design/components/captures/runs/2026-09-05/checks/17-31-16--275148: wrapped cards/chips are visible, but a still cannot establish gesture behavior. No new live keyboard/pinch reproduction is claimed here.`
   }[reg=facet]
+}[reg=facet]
+
+^"control_class_not_event_floor"{
+  at = `2026-09-06`
+  operation = "cache"
+  judgment = @touch_control_class
+  claim = `A later compact size is not automatically a missed 2.75rem floor. --touch-target-min is the ground-control class; --touch-target-compact is pocket packing; ordinary anchors and writing inputs stay content-shaped. Unifying TOUCH / GESTURE / progression selectors would make inspect lie.`
+  do_not = `Do not raise phase-menu, section-handle, footer nav, or RPG line inputs to 2.75rem from this audit. The uncommitted foundation.css :where(button) rule is the real landing risk: it can enlarge shell-layer pocket chrome that cannot restate after components.`
 }[reg=facet]

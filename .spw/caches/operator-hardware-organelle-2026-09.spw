@@ -1,0 +1,156 @@
+# Original 13 as electrodes, regions as dielectric, clusters as organelles (2026-09)
+#
+# operation: prime
+# Read from operator-semantics original_set, electrostatics, and HTML that
+# has sat still: topology, algorithms, craft fragments, reduction, scene
+# composition, mental health, lore.land, operator atlas baseline.
+# Do not add a 14th physics table. Do not 1:1 map operators to organelles.
+
+#>operator_hardware_organelle_2026_09
+#:cache #!prime #!operators #!electrostatics #!regions #!organelle
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@model_guided_refinement: ~"../conventions/model-guided-refinement.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@operator_site_projection: ~"../conventions/operator-site-projection.spw"
+@electrostatic: ~"../conventions/electrostatic-affordances.spw"
+@circuit: ~"../conventions/circuit-components.spw"
+@biome: ~"../conventions/component-biome.spw"
+@folding_chrome: ~"../conventions/folding-chrome-organelle.spw"
+@region_ecology: ~"../conventions/region-component-ecology.spw"
+@taxonomy: ~"../conventions/component-taxonomy.spw"
+@comparison: ~"../conventions/comparison-differentials.spw"
+@one_physics: ~"../philosophy/one-physics.spw"
+@approach: ~"../surfaces/approach-topography.spw"
+@page_model: ~"../surfaces/page-model.spw"
+@operator_typography: ~"../language/operator-typography.spw"
+@module_kinship: ~"../audits/module-ecology-kinship-2026-09.spw"
+@touch_class: ~"./touch-control-class-2026-09.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@insight_template: ~"../../.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
+
+operation = "prime"
+fixity = "experimental"
+source = "chat 2026-09-06: original 13 onto regional physics / semiotic topography for interactive electrostatics; component as hardware; clusters as cells or organelles"
+focus_dimension = "designer"
+element = "metal"
+semantic_fixity = "experimental"
+do_not = `Do not invent data-spw-organelle. Do not assign each of the 13 operators its own organelle. Do not fill catalog electrostatics. Do not rename atlas aliases from this prime. Do not unify Seed's 13 (!^~?*=@#.&$%<>) with the site original_set by rewriting HTML.`
+
+expression = operator[terminal]{region.channel}<hardware> ~ cluster[organelle]{cell.tissue}
+
+^"thesis"{
+  claim = `The original 13 are electrode kinds. A component is hardware that can hold one electrode. A region is the dielectric the current runs through. A cluster of components is a cell or organelle only when it metabolizes — stores, couples, folds, or discharges — not when it merely repeats a card. Interactive electrostatics is the arming of a terminal through a channel, not a new verb list.`
+  refuse = `A sticker table of 13 organelles. @electrostatic already forbids restating physics on every node. @one_physics already forbids a fourth physics dictionary. @comparison wants a differential, not a blend.`
+  two_thirteens = .{
+    site_original = `~ # . ? ! * & @ ^ <> () [] {}  — @operator_semantics#lineage`
+    seed = `! ^ ~ ? * = @ # . & $ % <>  — workbench operator_reality`
+    site_runtime = `nineteen types in OPERATOR_DEFINITIONS, including #>, #:, $, %, = as later electrodes`
+    rule = `This prime uses the site original_set. Seed extras ($ % =) stay later electrodes. Brace pairs are one operator with two faces, not six extra kinds.`
+  }[reg=facet]
+}[reg=facet]
+
+^"hardware"{
+  note = `Read @taxonomy primitives as parts, not as pages.`
+  chip = .{ is = `electrode / pin` ; holds = `one data-spw-operator terminal` ; fail = `a chip with no operator, or a sigil whose text contradicts the terminal` }[reg=facet]
+  frame_sigil = .{ is = `named terminal on the chassis` ; holds = `#>` or another original prefix as address of this frame` }[reg=facet]
+  frame = .{ is = `chassis / Faraday cage of a seat` ; holds = `slots; region material; nested hardware` }[reg=facet]
+  card = .{ is = `packaged cell` ; holds = `one specimen, one optional terminal, collectability` }[reg=facet]
+  panel = .{ is = `local ground plane` ; holds = `matte register, no glass, low radiation` }[reg=facet]
+  prose = .{ is = `dielectric / PCB substrate` ; holds = `resistance so the essay stays quiet` }[reg=facet]
+  figure = .{ is = `transducer` ; holds = `image-study swipe, SVG, photograph — converts contact into inspect` }[reg=facet]
+  mode_switch = .{ is = `[] membrane channel` ; holds = `legal rotations, not a boolean` }[reg=facet]
+  details = .{ is = `{} hinge` ; holds = `bounded inside/outside` }[reg=facet]
+}[reg=facet]
+
+^"organelles"{
+  note = `A cluster is an organelle when it does a job no single part can do. @module_kinship B_organelle: needs a sibling or a shared electrode.`
+  receptor_rail = .{ cluster = `.frame-operators` ; job = `many electrodes on one membrane` ; sees = `home, algorithms, mental-health, topology` }[reg=facet]
+  contract_cell = .{ cluster = `.operator-detail-grid` of four `.frame-panel` ; job = `compartments of one operator (interaction, metaphysics, brace, symmetry)` ; sees = `topics/software/spw/operators/baseline/` }[reg=facet]
+  tissue = .{ cluster = `.frame-grid` of cards ; job = `coupled cells; inductance if kin operators :has() echo` ; sees = `reduction, scene-composition, mental-health` }[reg=facet]
+  capacitor_hook = .{ cluster = `[data-spw-region-role=entry-spine]` ; job = `stores arrival; same ? lingers here, fades in read` ; sees = `almost every templated route` }[reg=facet]
+  locomotion_organelle = .{ cluster = `.spw-section-handle` + floating chrome ; job = `indexes attention, folds travel; @folding_chrome` ; sees = `algorithms, home; missing on lore.land, topology, craft fragments` }[reg=facet]
+  gather_vacuole = .{ cluster = `cauldron` ; job = `gather → resonant → mature → decay; reduction without a handle back is death` }[reg=facet]
+  scene_bed = .{ cluster = `three cards under [practice_beds` ; job = `() stages three original terminals as distinct hardware` ; sees = `/topics/film/scene-composition/` }[reg=facet]
+}[reg=facet]
+
+^"oh-001_terminal_not_organelle"{
+  id = "oh-001"
+  operation = "prime"
+  fixity = "experimental"
+  claim = `Map the original 13 onto electrode physics, then let region + cluster decide organelle role. Do not give each sigil a cell type.`
+  evidence = #[
+    `@electrostatic#three_layers: terminal = operator, interaction = arming, channel = region/slot`,
+    `@circuit resistor/capacitor/inductor/transformer are module roles, not operator roles`,
+    `@operator_typography six geometry families already group the nineteen types; that is the honest reduction of 13`
+  ][reg=set]
+  mapping = .{
+    points = `#. @ . =  — location hardware: frame-sigil, ground panel, perspective seat, pin`
+    threads = `~ &  — distance hardware: related-route chip, subject bind`
+    planes = `#: $ ()  — extent hardware: layer field, substrate, scene bed`
+    edges = `<> {}  — inside/outside hardware: concept chips, brace form`
+    events = `! ^ ?  — time hardware: action commit, integration lift, wonder aperture`
+    quantities = `* % []  — compare hardware: value mass, normalize, mode switch`
+  }[reg=facet]
+  pattern_consideration = `A 13-row organelle table would be the sticker @electrostatic refuses. Circuit roles stay on modules. Operator roles stay on terminals.`
+  expansion_prime = `When a chip is authored, name its geometry family and its channel. Leave organelle to the cluster it sits in.`
+  validation = `rg data-spw-operator on one hook and one later frame of the same route; if both are only frame|potential, the 13 have collapsed.`
+  do_not_promote_until = `One stale field-guide later-frame uses a second original family as terminal, and the region channel is not still entry-spine.`
+}[reg=facet]
+
+^"oh-002_regional_differential"{
+  id = "oh-002"
+  operation = "prime"
+  fixity = "experimental"
+  claim = `Semiotic topography is the landscape (peak, path, valley, attractor). Regional physics is the dielectric (hook stores, cluster couples, path leaks, read resists, wide spreads, footer grounds). The original 13 are what spark. The interesting object is the same terminal in two channels.`
+  evidence = #[
+    `@page_model#attentional_topography peaks/paths/valleys/attractors`,
+    `@approach distant/approaching/arrival/return`,
+    `@electrostatic#electrostatics capacitance/inductance/resistance/grounding`,
+    `@region_ecology six seats: hook hub cluster path read wide`
+  ][reg=set]
+  html_read = .{
+    topology = `hero chips are all frame+potential; later frames keep the same two; .intuition_first is sigil text without data-spw-operator=ground — sticker, not terminal`
+    algorithms = `section-handle present (locomotion organelle); hero still #> ~ rail; attractor without a second electrode family`
+    lore_land = `one capacitor hook + four panels + ~signal_studies; almost no chips — chassis without pins`
+    mental_health = `many original families on the hook rail (^ ~ ? #> @ *) but every later section is still a reference frame; electrodes without a change of dielectric`
+    reduction = `% cards in a grid — quantity family in tissue; grammar panels use objective/subjective braces (edge family) without operator chips`
+    craft_fragments = `copyable cells; fragment itself carries no terminal; next-move rail is only ~`
+    scene_composition = `specimen: .mise_en_scene *reduction_beat ?fermentation_hold as three distinct terminals on one tissue`
+    baseline_atlas = `contract_cell of four panels is an organelle; public alias baseline vs runtime ground is a naming leak, not a physics leak`
+  }[reg=facet]
+  pattern_consideration = `@comparison: two placements plus a delta. The delta is channel, not a new operator. @touch_class: quality of attention at a control, not one event size — same rule at the electrode.`
+  expansion_prime = `Cite /topics/film/scene-composition/ as the teaching specimen. On one templated math/software leaf, move one later rail off #> ~ onto a second family and seat that frame as cluster or read.`
+  validation = `Same data-spw-operator="wonder" in entry-spine vs data-spw-region=read; --spw-e-channel / hold should differ without restickering the chip.`
+  do_not_promote_until = `A live pocket receipt of that differential, not a new attribute.`
+}[reg=facet]
+
+^"oh-003_interactive_electrostatics"{
+  id = "oh-003"
+  operation = "prime"
+  fixity = "experimental"
+  claim = `Tap, hold, and pinch are how a terminal arms, not extra operators. A cell fires when hardware, electrode, and channel agree. Silent absorption is a dead synapse.`
+  evidence = #[
+    `@electrostatic#latent_to_acted latent → armed → preview → acted → channeled`,
+    `@interaction_microstates reward_contract`,
+    `@folding_chrome reduction ladder: component → charge → expression → snippet → card → blob`,
+    `pinch-scale and brace-gestures as event engines that must not parse a fourth ladder`
+  ][reg=set]
+  cell_firing = `chip (electrode) in a frame (chassis) in a seat (dielectric), armed by contact. Kin :has() is inductance. Nested charge attenuates 1 → 0.62 → 0.38.`
+  dead_synapse = `Sigil text that does not match a terminal; a receptor rail of only #> ~; a domain specimen with panels and no pins; a fragment that cannot be gathered.`
+  pattern_consideration = `Modules occupy organelle roles (@module_kinship). HTML clusters occupy the same idea at the document layer. Do not duplicate the catalog table onto every section.`
+  expansion_prime = `Deepen image swipe, pinch, and hold-to-cauldron as the three honest extra verbs. Let the 13 stay electrodes.`
+  validation = `On scene-composition, hold a living term if present; on topology, confirm .intuition_first does not arm ground.`
+  do_not_promote_until = `The topology sigil either becomes a ground terminal or stops wearing a ground glyph.`
+}[reg=facet]
+
+#>wonder_operator_hardware_1
+?["Does a page that only sparks #> and ~ still have thirteen operators?"]{
+  #:depth #!computational ~#lens(collapse)
+  ~#hypothesis: "no — the original set is present only as unused geometry. a census of data-spw-operator on templated field-guides will show frame+potential dominating, with scene-composition as the outlier that still differentiates"
+  !probe{ "count unique data-spw-operator values on /topics/math/topology/, /topics/software/algorithms/, /topics/film/scene-composition/, /about/domains/lore.land/. if topology and algorithms share a two-value set, the 13 have collapsed to address+thread." }
+  $%[operator.unique, region.seat, cluster.organelle]
+}

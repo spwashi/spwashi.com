@@ -1,0 +1,142 @@
+# Touch as control class, not event class (2026-09)
+#
+# operation: cache
+# Mind-architecture judgment on the uncommitted 2.75rem floor and the
+# follow-up audit that treated compact chrome as a cascade miss.
+# Do not raise compact sizes from this file. Do not unify selector ladders.
+
+#>touch_control_class_2026_09
+#:cache #!touch #!gesture #!attention #!packing
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@model_guided_refinement: ~"../conventions/model-guided-refinement.spw"
+@cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@one_physics: ~"../philosophy/one-physics.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@touch_gesture_contracts: ~"../audits/touch-gesture-contracts-2026-09.spw"
+@device_packing: ~"../audits/component-anatomy-device-packing-2026-07.spw"
+@gesture_contract_js: ~"../../public/js/runtime/gesture-contract.js"
+@interaction_vocabulary: ~"../../public/js/runtime/interaction-vocabulary.js"
+@foundation_css: ~"../../public/css/components/foundation.css"
+@insight_template: ~"../../.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
+
+operation = "cache"
+fixity = "tending"
+source = "chat 2026-09-06 after a touch-floor audit of uncommitted foundation.css + gesture-contract.js TOUCH_SEMANTICS"
+focus_dimension = "designer"
+element = "metal"
+semantic_fixity = "tending"
+do_not = `Do not implement from this cache. Do not raise --touch-target-compact hosts to 2.75rem. Do not merge TOUCH / GESTURE / progression selector lists. Do not add a data-spw-* family or a fifth verb ladder.`
+
+expression = touch[class]{control.chrome.content}<floor>
+
+^"thesis"{
+  claim = `A cognitive surface models the quality of attention, not the occurrence of a tap. The 2.75rem floor is a ground-control class. Compact chrome and content-shaped links are other altitudes of the same physics. Treating later compact sizes as overrides of one event floor would flatten travel/flow residue into ground, which is interactive-surface thinking.`
+  distinction = .{
+    informational = `A tap is a click. Size follows type.`
+    interactive = `Every tappable thing is the same event, so every tappable thing wants 44px.`
+    cognitive = `Ground, travel, and writing are different attentional qualities. Hit-size follows class, not the fact of contact.`
+  }[reg=facet]
+  tokens = .{
+    control_floor = `--touch-target-min (2.75rem) — chips, sigils, primary buttons on coarse pointers`
+    packing_floor = `--touch-target-compact (2.15rem, tighter in dense packing queries) — pocket chrome that must live in a floating slot`
+    content_shaped = `ordinary anchors, RPG line inputs as writing, prose — no floor from this contract`
+  }[reg=facet]
+}[reg=facet]
+
+^"tc-001_three_classes"{
+  id = "tc-001"
+  operation = "cache"
+  fixity = "tending"
+  claim = `The follow-up P1 list mixed three facts: a real later-layer restatement, an independent compact token, and a shell size the new components-layer button rule would actually raise.`
+  evidence = #[
+    `phase-controls.css .phase-menu-trigger / .phase-menu-choice: calc(var(--touch-target-min) * 0.75) in the handles layer — later than components, so it restates the floor on purpose`,
+    `section-context.css .spw-section-handle-shell button: --touch-target-compact in the shell layer — earlier than components, so uncommitted :where(button) in foundation.css would enlarge pocket chrome on coarse pointers`,
+    `footer.css .site-footer__nav a: compact token on ordinary anchors, which the floor selector never claimed`,
+    `rpg.css .rpg-gameplay-line-input: writing surface, not input[type=button]; not in TOUCH_TARGET_SELECTOR`
+  ][reg=set]
+  pattern_consideration = #[
+    `@device_packing#touch_target_packing already named min vs compact as packing tiers, not a missed a11y patch`,
+    `@touch_gesture_contracts#f7_breadth_is_a_copied_template — more coverage is not more design`,
+    `foundation.css comment already says ordinary anchors stay content-shaped; chips and sigils are the interaction vocabulary — the selector also listing every button is the seam`
+  ][reg=set]
+  expansion_prime = `If the uncommitted floor lands, exclude pocket chrome hosts or restate compact in a layer after components. Do not raise phase-menu, footer links, or RPG line inputs to 2.75rem.`
+  validation = `On a coarse-pointer pocket viewport, measure .spw-section-handle-shell button min-block-size before and after the foundation rule; it must not steal the floating-handle slot.`
+  do_not_promote_until = `A packing-tier token (--pack-hit-min) is actually consumed by leaf chrome, as @device_packing already asked, rather than another :where(button) blanket.`
+}[reg=facet]
+
+^"tc-002_selector_ladders_are_questions"{
+  id = "tc-002"
+  operation = "cache"
+  fixity = "tending"
+  claim = `Three selector lists diverge because they answer three questions. Unifying them would make inspect claim a floor CSS does not grant, or a phase progression a host does not run.`
+  evidence = #[
+    `gesture-contract.js TOUCH_TARGET_SELECTOR — which hosts receive the coarse-pointer control floor`,
+    `gesture-contract.js GESTURE_TARGET_SELECTOR — which hosts are inspectable spell/gesture vocabulary`,
+    `interaction-vocabulary.js GESTURE_TARGET_SELECTOR — which hosts participate in interaction-phase progression`,
+    `@touch_gesture_contracts#f2_four_ladders_one_touch already forbids a fourth ladder; a merged touch list would be a fifth`
+  ][reg=set]
+  pattern_consideration = `Runtime coverage looking 'narrower' than CSS is correct if TOUCH names the control class. Route-menu links, section-handle controls, spell-path toggles, and cauldron remove controls may be gesture-capable or compact chrome without being floor hosts.`
+  expansion_prime = `Tighten TOUCH_SEMANTICS.note to name the three classes. Do not add those compact hosts to TOUCH_TARGET_SELECTOR unless they also take --touch-target-min.`
+  validation = `diff the three selector arrays; for each extra host ask: floor, inspect vocabulary, or phase host?`
+  do_not_promote_until = `describeGestureTarget reports touch:null on compact chrome and that matches computed min-size.`
+}[reg=facet]
+
+^"tc-003_pinch_is_quality_not_contact"{
+  id = "tc-003"
+  operation = "cache"
+  fixity = "tending"
+  claim = `Announcing 'pinch noticed' on two stationary contacts is false metacognition. The cognitive surface must not tell the visitor they performed a gesture they did not perform.`
+  evidence = #[
+    `@cognitive_surface#properties attentional_modeling and correctability`,
+    `@interaction_microstates#reward_contract — unavailable arcs may show potential, but the named verb must be true`,
+    `@touch_gesture_contracts#pinch_recognition — handleTouchStart announces before distance change`
+  ][reg=set]
+  pattern_consideration = `Two-finger rest or pan is contact, not pinch. Potential display for a disabled setting is allowed only after pinch evidence, or the notice must name two contacts.`
+  expansion_prime = `Require a distance delta before the disabled-gesture explanation. Do not add a new pinch verb to the HTML contract language.`
+  validation = `Pinch text scaling off; two fingers on allowed prose without changing separation; no pinch-specific reward until movement.`
+  do_not_promote_until = `A live pocket receipt, not only the source read.`
+}[reg=facet]
+
+^"tc-004_first_visit_is_cognitive"{
+  id = "tc-004"
+  operation = "cache"
+  fixity = "tending"
+  claim = `VISIBLE mount is scheduling eligibility, not first-event delivery. The first tap on a cold page is the cognitive-surface test (segmenting, first visit). A loader that sees the gesture only as an import trigger is interactive-late.`
+  evidence = #[
+    `@touch_gesture_contracts#f5_interaction_mount_still_eats_first_gesture`,
+    `@cognitive_surface#learning_science_alignment segmenting`,
+    `charge-field, region-menu, navigation-locomotion: VISIBLE in catalog; IntersectionObserver + queued mount remain async`
+  ][reg=set]
+  pattern_consideration = `Do not build a new mount engine. Verify cold-page first pointerdown on those three hosts. Keep INTERACTION only when the extra gesture is defined as a second move, and say so on the catalog comment.`
+  expansion_prime = `One cold-load receipt per named module. Stop.`
+  validation = `Fresh tab, first pointerdown on a charge-field host before any other interaction; module status must not still be idle when the pointer goes up.`
+  do_not_promote_until = `That receipt exists. Catalog enum change alone is not the receipt.`
+}[reg=facet]
+
+^"tc-005_nested_touch_action_is_composition"{
+  id = "tc-005"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `Nested touch-action is one-physics composition: inner none can shout over parent pan-y pinch-zoom the same way nested charge can shout over an outer wall. The parent contract is not sufficient.`
+  evidence = #[
+    `@one_physics#the_rule composition — sum with attenuation by nesting`,
+    `@touch_gesture_contracts#fundamentals_first — pinch-scale is the only non-passive touchmove`
+  ][reg=set]
+  pattern_consideration = `Device-verify nested descendants on image-study, brace, and pinch prose. Do not add a new touch-action token to paper over contention.`
+  expansion_prime = `One pocket route, nested scroll vs drag vs pinch. Record which descendant stole the parent contract.`
+  validation = `Coarse pointer: vertical pan on an image-study figure must not cycle lens; two-finger pinch on allowed prose must not be captured by a child with touch-action:none.`
+  do_not_promote_until = `A named descendant is shown to steal, then that descendant is the patch.`
+}[reg=facet]
+
+#>wonder_touch_control_class_1
+?["Does equalizing every tap target to 44px make the surface less cognitive?"]{
+  #:depth #!experiential ~#lens(attention)
+  ~#hypothesis: "yes — a page where footer travel, section locomotion, and a chip all occupy the same hit-size stops modelling the quality of the move and only records that a move occurred"
+  !probe{ "on a pocket viewport, screenshot chips, section-handle, footer nav, and a primary button at rest. if they are the same block size, the control class has collapsed." }
+  $%[touch.floor, chrome.compact, content.shaped]
+}

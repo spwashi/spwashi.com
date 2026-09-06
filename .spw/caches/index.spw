@@ -34,6 +34,8 @@
 @history_conflict_strands_2026_09: ~"./history-conflict-strands-2026-09.spw"
 @copy_hypermedia_key_2026_09: ~"./copy-hypermedia-key-2026-09.spw"
 @post_nut_clarity_2026_09: ~"./post-nut-clarity-2026-09.spw"
+@touch_control_class_2026_09: ~"./touch-control-class-2026-09.spw"
+@operator_hardware_organelle_2026_09: ~"./operator-hardware-organelle-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -62,6 +64,8 @@ fixity = "tending"
   history_conflict_strands_2026_09 = @history_conflict_strands_2026_09
   copy_hypermedia_key_2026_09 = @copy_hypermedia_key_2026_09
   post_nut_clarity_2026_09 = @post_nut_clarity_2026_09
+  touch_control_class_2026_09 = @touch_control_class_2026_09
+  operator_hardware_organelle_2026_09 = @operator_hardware_organelle_2026_09
 }[reg=facet]
 
 ^"cache_rules"{
