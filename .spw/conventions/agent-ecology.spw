@@ -22,6 +22,8 @@
 @wip_index_plan: ~"../../.agents/plans/plan-wip-index-conventions/PLAN.md"
 @maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"
 @plan_ecology_semantics: ~"../audits/plan-ecology-semantics-2026-07.spw"
+@markdown_spend: ~"../caches/agent-markdown-spend-2026-09.spw"
+@check_agents: ~"../../scripts/check-agent-contracts.mjs"
 
 operation = "align"
 fixity = "tending"
@@ -30,9 +32,9 @@ fixity = "tending"
  owner_plan: "agent-optimization"
  satellite_plans: #[`agentic-dev-contracts`, `plan-wip-index-conventions`, `context-sensitive-variants-and-agent-qa`][reg=set]
  conventions: #[`planning-ecology`, `plan-index`, `wip-notebook`, `codebase-perusal`, `skill-invocation`][reg=set]
- precipitates: #[`.agents/state/plans-index.json`, `.agents/state/skills-index.json`, `.agents/state/agent-preference.spw`, `.spw/caches/history-conflict-strands-2026-09.spw`][reg=set]
+ precipitates: #[`.agents/state/plans-index.json`, `.agents/state/skills-index.json`, `.agents/state/agent-preference.spw`, `.spw/caches/history-conflict-strands-2026-09.spw`, `.spw/caches/agent-markdown-spend-2026-09.spw`][reg=set]
  invalidation_rule: "Regenerate precipitates when plan index, SKILL.md, or owner-registry changes. Preference ledger is hand-appended, not generated."
- first_read: "planning-ecology.spw for buckets; skill-invocation.spw#focuses and #introspection for relative strength; wonder-architecture.spw for Astra planning/creativity/implementation (prime) and harvestable LSP questions; history-conflict-strands-2026-09.spw for recurring bonds from this repo's history; creative-capacity-2026-09.spw for wonder/language primes."
+ first_read: "planning-ecology.spw for buckets; skill-invocation.spw#focuses, #introspection, and #shunt for relative strength and the word-budget block; wonder-architecture.spw for Astra planning/creativity/implementation (prime) and harvestable LSP questions; history-conflict-strands-2026-09.spw for recurring bonds from this repo's history; creative-capacity-2026-09.spw for wonder/language primes; agent-markdown-spend-2026-09.spw for always-on I/O."
  plan_ecology_pass: @plan_ecology_semantics
 }
 

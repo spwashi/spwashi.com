@@ -22,7 +22,7 @@ Root adapters emphasize one focus. They do not replace `AGENTS.md`. Shared sente
 - **`GPT.md`** — contract exactness + computer-use verify-first
 - **`GEMINI.md`** — tool mastery (`visual:checks`, wonder, lattice, no polling)
 - Editor stubs: `.cursorrules`, `.github/copilot-instructions.md`
-- Prove with `npm run check:agents` (adapters must be git-tracked)
+- Prove with `npm run check:agents` (adapters must be git-tracked; always-on word budgets are the block)
 
 Introspection ledger: `.agents/state/agent-preference.spw` (`skill-invocation.spw#introspection`).
 
@@ -48,4 +48,4 @@ remains the site-specific commit-gate adapter.
 
 ## Plans
 
-Canonical tracks and the active backlog live under `.agents/plans/`. Index: `.agents/plans/README.md`. Archive: `.agents/plans/archive/`. Agent/editor environment track: `agent-optimization/PLAN.md`. Commit grammar: `history-reflow/PLAN.md`.
+Canonical tracks and the active backlog live under `.agents/plans/`. Index: `.agents/plans/README.md`. Archive: `.agents/plans/archive/`. Agent/editor environment track: `agent-optimization/PLAN.md` (gate, not diary). Commit grammar: `history-reflow/PLAN.md`.

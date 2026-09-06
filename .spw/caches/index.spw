@@ -36,6 +36,7 @@
 @post_nut_clarity_2026_09: ~"./post-nut-clarity-2026-09.spw"
 @touch_control_class_2026_09: ~"./touch-control-class-2026-09.spw"
 @operator_hardware_organelle_2026_09: ~"./operator-hardware-organelle-2026-09.spw"
+@agent_markdown_spend_2026_09: ~"./agent-markdown-spend-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -66,6 +67,7 @@ fixity = "tending"
   post_nut_clarity_2026_09 = @post_nut_clarity_2026_09
   touch_control_class_2026_09 = @touch_control_class_2026_09
   operator_hardware_organelle_2026_09 = @operator_hardware_organelle_2026_09
+  agent_markdown_spend_2026_09 = @agent_markdown_spend_2026_09
 }[reg=facet]
 
 ^"cache_rules"{

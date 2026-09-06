@@ -4,6 +4,9 @@
  * a focus without pretending one model owns the whole operating contract.
  *
  * AGENTS.md is the gate. Adapters are short relative-strength reminders.
+ *
+ * Word budgets are the block. Written rules in markdown are suggestions;
+ * a failing check is not. Always-on context is I/O, not thinking.
  */
 
 import { execFileSync } from 'node:child_process';
@@ -15,6 +18,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const REPO_ROOT = path.resolve(__dirname, '..');
 
 export const SHARED_EMPHASIS = 'This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follows Open first.';
+
+/** Do not Read a PLAN.md over this many lines unless Open first named that file. */
+export const SHUNT_MIN_LINES = 200;
 
 export const FOCUSES = Object.freeze({
   'anti-bloat': {
@@ -39,29 +45,35 @@ export const FOCUSES = Object.freeze({
   },
 });
 
+export const ADAPTER_MAX_WORDS = 280;
+
 export const MODEL_SPECS = Object.freeze([
   {
     name: 'Claude',
     file: 'CLAUDE.md',
     emphasize: 'constitutional',
+    maxWords: ADAPTER_MAX_WORDS,
     requiredPhrases: ['AGENTS.md', 'check:local', '#[episode]{', SHARED_EMPHASIS, 'Constitutional Rigor'],
   },
   {
     name: 'Grok',
     file: 'GROK.md',
     emphasize: 'anti-bloat',
+    maxWords: ADAPTER_MAX_WORDS,
     requiredPhrases: ['AGENTS.md', 'check:local', '#[episode]{', SHARED_EMPHASIS, 'Anti-Bloat & Signal', 'cache'],
   },
   {
     name: 'Gemini',
     file: 'GEMINI.md',
     emphasize: 'tool-mastery',
+    maxWords: ADAPTER_MAX_WORDS,
     requiredPhrases: ['AGENTS.md', 'check:local', '#[episode]{', SHARED_EMPHASIS, 'Progressive Mastery', 'visual:checks'],
   },
   {
     name: 'GPT',
     file: 'GPT.md',
     emphasize: 'exactness',
+    maxWords: ADAPTER_MAX_WORDS,
     requiredPhrases: [
       'AGENTS.md',
       'check:local',
@@ -75,14 +87,49 @@ export const MODEL_SPECS = Object.freeze([
   {
     name: 'Cursor',
     file: '.cursorrules',
+    maxWords: ADAPTER_MAX_WORDS,
     requiredPhrases: ['AGENTS.md', 'check:local', '#[episode]{', SHARED_EMPHASIS],
   },
   {
     name: 'GitHub Copilot',
     file: '.github/copilot-instructions.md',
+    maxWords: ADAPTER_MAX_WORDS,
     requiredPhrases: ['AGENTS.md', 'check:local', '#[episode]{', SHARED_EMPHASIS],
   },
 ]);
+
+export const ALWAYS_ON_SPECS = Object.freeze([
+  { file: 'AGENTS.md', maxWords: 3200, kind: 'gate' },
+  { file: '.agents/MEMORY.md', maxWords: 1200, kind: 'memory' },
+  {
+    file: '.agents/plans/agent-optimization/PLAN.md',
+    maxWords: 1500,
+    maxLines: 120,
+    kind: 'open-first-gate',
+  },
+]);
+
+export function countWords(text) {
+  return String(text).trim().split(/\s+/).filter(Boolean).length;
+}
+
+export function countLines(text) {
+  if (text == null || text === '') return 0;
+  return String(text).replace(/\n$/, '').split(/\n/).length;
+}
+
+export function inspectWordBudget(spec, content) {
+  const issues = [];
+  const words = countWords(content);
+  const lines = countLines(content);
+  if (spec.maxWords != null && words > spec.maxWords) {
+    issues.push(`${words} words exceeds budget ${spec.maxWords}`);
+  }
+  if (spec.maxLines != null && lines > spec.maxLines) {
+    issues.push(`${lines} lines exceeds budget ${spec.maxLines}`);
+  }
+  return { ok: issues.length === 0, issues, words, lines };
+}
 
 export function isGitTracked(relPath, root = REPO_ROOT) {
   try {
@@ -97,14 +144,21 @@ export function isGitTracked(relPath, root = REPO_ROOT) {
   }
 }
 
-export function inspectAgentAdapter(spec, { root = REPO_ROOT, requireTracked = true } = {}) {
+function readSpecFile(spec, root) {
   const filePath = path.join(root, spec.file);
-  const issues = [];
   if (!fs.existsSync(filePath)) {
-    issues.push(`missing file ${spec.file}`);
-    return { ok: false, issues, content: '' };
+    return { content: '', missing: true };
   }
-  const content = fs.readFileSync(filePath, 'utf8');
+  return { content: fs.readFileSync(filePath, 'utf8'), missing: false };
+}
+
+export function inspectAgentAdapter(spec, { root = REPO_ROOT, requireTracked = true } = {}) {
+  const issues = [];
+  const { content, missing } = readSpecFile(spec, root);
+  if (missing) {
+    issues.push(`missing file ${spec.file}`);
+    return { ok: false, issues, content: '', words: 0, lines: 0 };
+  }
   const haystack = content.toLowerCase();
   for (const phrase of spec.requiredPhrases || []) {
     if (!haystack.includes(String(phrase).toLowerCase())) {
@@ -114,15 +168,60 @@ export function inspectAgentAdapter(spec, { root = REPO_ROOT, requireTracked = t
   if (requireTracked && !isGitTracked(spec.file, root)) {
     issues.push(`untracked ${spec.file} — a green check on an untracked adapter is a lie`);
   }
-  return { ok: issues.length === 0, issues, content };
+  const budget = inspectWordBudget(spec, content);
+  issues.push(...budget.issues);
+  return { ok: issues.length === 0, issues, content, words: budget.words, lines: budget.lines };
 }
 
 export function inspectAgentAdapters(options = {}) {
   return MODEL_SPECS.map((spec) => ({ spec, ...inspectAgentAdapter(spec, options) }));
 }
 
+export function inspectAlwaysOnFile(spec, { root = REPO_ROOT, requireTracked = true } = {}) {
+  const issues = [];
+  const { content, missing } = readSpecFile(spec, root);
+  if (missing) {
+    issues.push(`missing file ${spec.file}`);
+    return { ok: false, issues, content: '', words: 0, lines: 0 };
+  }
+  if (requireTracked && !isGitTracked(spec.file, root)) {
+    issues.push(`untracked ${spec.file} — a green check on an untracked gate is a lie`);
+  }
+  const budget = inspectWordBudget(spec, content);
+  issues.push(...budget.issues);
+  return { ok: issues.length === 0, issues, content, words: budget.words, lines: budget.lines };
+}
+
+export function inspectAlwaysOnFiles(options = {}) {
+  return ALWAYS_ON_SPECS.map((spec) => ({ spec, ...inspectAlwaysOnFile(spec, options) }));
+}
+
+function formatSpendLine(reports) {
+  return reports
+    .map((report) => {
+      const cap = report.spec.maxWords;
+      return `${path.basename(report.spec.file)} ${report.words}/${cap}w`;
+    })
+    .join(' ');
+}
+
+function printSpendTable(adapterReports, alwaysOnReports) {
+  const rows = [...alwaysOnReports, ...adapterReports];
+  process.stdout.write('[check:agents] spend\n');
+  for (const report of rows) {
+    const wordCap = report.spec.maxWords != null ? String(report.spec.maxWords) : '—';
+    const lineCap = report.spec.maxLines != null ? String(report.spec.maxLines) : '—';
+    process.stdout.write(
+      `  ${report.spec.file}: ${report.words}/${wordCap}w ${report.lines}/${lineCap}L ${report.ok ? 'ok' : 'FAIL'}\n`,
+    );
+  }
+}
+
 function main() {
-  const reports = inspectAgentAdapters();
+  const spend = process.argv.includes('--spend');
+  const adapterReports = inspectAgentAdapters();
+  const alwaysOnReports = inspectAlwaysOnFiles();
+  const reports = [...adapterReports, ...alwaysOnReports];
   let failed = false;
   for (const report of reports) {
     if (report.ok) continue;
@@ -131,12 +230,15 @@ function main() {
       process.stderr.write(`[check:agents] ${report.spec.file}: ${issue}\n`);
     }
   }
+  if (spend) {
+    printSpendTable(adapterReports, alwaysOnReports);
+  }
   if (failed) {
     process.stderr.write('[check:agents] FAILED\n');
     process.exit(1);
   }
   process.stdout.write(
-    `[check:agents] PASSED (${MODEL_SPECS.length} adapters; focuses are emphases, not exclusive owners)\n`,
+    `[check:agents] PASSED (${MODEL_SPECS.length} adapters; always-on ${formatSpendLine(alwaysOnReports)})\n`,
   );
 }
 

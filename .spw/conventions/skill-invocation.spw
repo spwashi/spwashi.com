@@ -16,6 +16,8 @@
 @delegation_parcels: ~"../caches/delegation-parcels-2026-08.spw"
 @skills_readme: ~"../../.agents/skills/README.md"
 @integrity: ~"../../scripts/spw-integrity.mjs"
+@markdown_spend: ~"../caches/agent-markdown-spend-2026-09.spw"
+@check_agents: ~"../../scripts/check-agent-contracts.mjs"
 
 operation = "contract"
 fixity = "stable"
@@ -34,9 +36,20 @@ fixity = "stable"
   constitutional = `Negative bounds, a11y, no new data-spw-* family, smallest honest surface. CLAUDE.md emphasizes this.`
   exactness = `ESM .js imports, CSS layer order, typed/runtime contracts. GPT.md emphasizes this.`
   tool_mastery = `Mounted CLI, visual:checks, wonder/lattice, no background-task polling. GEMINI.md emphasizes this.`
-  computer_use = `A posture, not a fifth model lock: verify-first (audit:module-selectors, visual:checks, one pocket route), one named patch, stop. GPT.md states it because Codex computer-use is where kitchen-sink sessions started.`
+  computer_use = `A posture, not a fifth model lock: verify-first (audit:module-selectors, visual:checks, one pocket route), one named patch, stop. GPT.md states it because Codex computer-use is where kitchen-sink sessions started. An audit P1 list is not a patch list. User skip-visuals is a finding, not a packing waiver.`
   shared = `This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follows Open first.`
-  prove = `npm run check:agents — adapters must be git-tracked; a green check on untracked files is a lie.`
+  prove = `npm run check:agents — adapters must be git-tracked; always-on files must fit word budgets; a green check on untracked files is a lie.`
+}[reg=facet]
+
+^"shunt"{
+  claim = "Written rules are suggestions. A block is not."
+  always_on = `AGENTS.md, adapters, and MEMORY are I/O, not thinking. Loading them is token spend before any work starts.`
+  block = `npm run check:agents fails on word-budget overage. That is the Portal analogue: CLAUDE.md routing was advisory and ignored; a failing check is not.`
+  refuse_read = `Do not Read a PLAN.md over SHUNT_MIN_LINES (200) unless Open first named that file. Open-first gates themselves stay under the check:agents line budget.`
+  process = `Do not apply AI onto a contribution diary as if that were the operating process. Archive the diary; keep the gate.`
+  source = `spwashi RT 2026-09-06: Spotify Portal (stretchcloud / engineering.atspotify.com Portal); vasuman on applying AI in orgs.`
+  spend = @markdown_spend
+  probe = @check_agents
 }[reg=facet]
 
 ^"introspection"{
@@ -70,7 +83,7 @@ fixity = "stable"
   copy_accessor = "npm run audit:copy:accessor — dotted copy-unit vs Spw handle, topic clusters, voice seams"
   module_hosts = "npm run audit:module-selectors — catalog selector vs public HTML hosts"
   attention_ink = "npm run visual:checks — ink/light spend receipts, not JPEG goldens"
-  agent_adapters = "npm run check:agents — tracked model adapters + focus emphasis"
+  agent_adapters = "npm run check:agents — tracked adapters + always-on word budgets; --spend prints the table"
   wonder_architecture = "open .spw/conventions/wonder-architecture.spw; rg 'data-spw-wonder-type' --glob '*.html' — expect 0"
 }
 

@@ -69,7 +69,7 @@ PWA: `npm run check:pwa` when touching `sw.js`, `manifest.webmanifest`, or offli
 
 ## For agents and editors
 
-`AGENTS.md` is the always-on gate. Model adapters (`GROK.md`, `CLAUDE.md`, `GPT.md`, `GEMINI.md`) emphasize relative strengths; they do not replace it. Prove adapters with `npm run check:agents` (files must be git-tracked).
+`AGENTS.md` is the always-on gate. Model adapters (`GROK.md`, `CLAUDE.md`, `GPT.md`, `GEMINI.md`) emphasize relative strengths; they do not replace it. Prove adapters with `npm run check:agents` (files must be git-tracked; always-on word budgets are the block).
 
 Open first:
 

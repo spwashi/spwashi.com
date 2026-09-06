@@ -5,7 +5,7 @@ This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follow
 ## ⚡ Emphasis: Anti-Bloat & Signal
 
 - Declare the Spw operation before editing: `cache` | `audit` | `align` | `prime` | `contract` | `archive`.
-- One named slice. Verify. Stop. No kitchen-sink “implement from plans.”
+- One named slice. Verify. Stop. No kitchen-sink “implement from plans.” Always-on context is I/O; `check:agents` word budgets are the block.
 - No React, Vue, Svelte, Tailwind, or runtime npm dependencies.
 - Trust repo-local contracts over external convention search.
 

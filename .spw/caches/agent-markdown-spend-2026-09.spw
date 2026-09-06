@@ -1,0 +1,126 @@
+# Agent markdown spend (2026-09)
+#
+# operation: audit
+# Which markdown the next session actually loads is too long, defensive,
+# duplicated, or uncited. Do not rewrite AGENTS.md from this file.
+# Do not delete tracked copy dumps without a human archive pass.
+
+#>agent_markdown_spend_2026_09
+#:cache #!audit #!agents #!plans #!skills
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@skill_invocation: ~"../conventions/skill-invocation.spw"
+@induction_pain: ~"../audits/commit-skill-induction-2026-07/induction-pain.spw"
+@agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
+@agents_md: ~"../../AGENTS.md"
+@memory: ~"../../.agents/MEMORY.md"
+@site_workflow: ~"../../.agents/skills/_shared/site-workflow.md"
+@craft_quality: ~"../../.agents/skills/spw-craft-quality/SKILL.md"
+@team_orientation: ~"../../.agents/plans/archive/team-orientation-reading.md"
+@check_agents: ~"../../scripts/check-agent-contracts.mjs"
+@optimization_diary: ~"../../.agents/plans/archive/2026-09-06-agent-optimization-diary.md"
+
+operation = "audit"
+fixity = "tending"
+source = "chat 2026-09-06: which markdown is too verbose or counterproductive; which rules are brittle; which copy is defensive, expensive, or orphaned"
+measured_at = `2026-09-06`
+do_not = `Do not rewrite AGENTS.md from this cache. Do not invent a markdown linter skill. Do not glob .references/ into agent context. Do not paint AI onto a diary PLAN.`
+
+^"census"{
+  active_agent_md = 264
+  active_plan_md = 199
+  archived_plan_md = 5
+  active_plan_words = 196818
+  always_on = `AGENTS.md was 4509w / 531L; gate now word-budgeted in @check_agents`
+  note = `.references/ is gitignored; HORIZONLOG-scale dumps are not in the tracked agent load. Tracked spend is .agents/ + root adapters.`
+}[reg=facet]
+
+^"ms-001_always_on_gate"{
+  id = "ms-001"
+  claim = `AGENTS.md is load-bearing and still too long for a gate every session must swallow. Open-first tables earn their keep. The second-half design-system dump (layers, chips, attention, JSON hydration) restates skills and conventions the Open-first table already names.`
+  evidence = #[
+    `4509 words, 25 do-not/never`,
+    `Working Guidelines already say implement-from-plans, git stash, smallest surface`,
+    `Do not list at the end repeats kitchen-sink and html containing-block`
+  ][reg=set]
+  verdict = `Keep Open first + operations + validation commands. Prime a later split of the design-system appendix into the conventions Open first already cites. Do not split in this pass.`
+  landed = `2026-09-06: design-system dump cut; @check_agents fails AGENTS.md over 3200 words. Written rules were the suggestion; the budget is the block.`
+}[reg=facet]
+
+^"ms-002_tracking_diary"{
+  id = "ms-002"
+  claim = `agent-optimization/PLAN.md is the Open-first target for agent-environment work and is a 11945-word contribution diary. Opening it to add one harvest line costs more than the harvest.`
+  evidence = #[
+    `11945w / 612L — largest active PLAN.md`,
+    `AGENTS.md Open first sends agent/editor environment work here`,
+    `induction-pain case_plan_ecology_inflation: ~174 PLAN.md then; 199 now, 5 archived`
+  ][reg=set]
+  verdict = `Keep a short Current Baseline + failure ledger at the top. Archive or fold the Recent contribution blocks into dated caches. Success is a smaller next open of this file.`
+  landed = `2026-09-06: diary moved to @optimization_diary. Live PLAN.md is the gate (1500w / 120L). Do not append harvests that grow the gate past the budget.`
+}[reg=facet]
+
+^"ms-003_orphaned_copy_dump"{
+  id = "ms-003"
+  claim = `team-orientation-reading.md is 28227 words of compiled route copy, git-tracked, and uncited.`
+  evidence = #[
+    `was .agents/plans/team-orientation-reading.md 3816 lines`,
+    `rg of the filename and of team-orientation against md/html/spw: extract-site-copy.mjs was the only writer`
+  ][reg=set]
+  verdict = `Archive candidate. Useful as a human reading aid only if a person opens it on purpose. Agents globbing .agents/plans/** pay it. Do not delete without a human look; do not leave it in the active plan tree.`
+  landed = `2026-09-06: moved to @team_orientation. extract-site-copy.mjs now writes into archive/. Not deleted.`
+}[reg=facet]
+
+^"ms-004_skill_wrapper_tax"{
+  id = "ms-004"
+  claim = `Every local SKILL.md restates the gate: 60-second / constitutional / matrix / validation ladder, plus Read first site-workflow. skills/README restates focuses, tunability, and CSS layers again.`
+  evidence = #[
+    `16 SKILL.md files, 245–546 words each, most 3–5 do-nots`,
+    `site-workflow.md already holds invocation, focuses, layers, validation`,
+    `skills/README.md duplicates tunability + Core Invariants`
+  ][reg=set]
+  verdict = `Keep the 60-second stop condition and the one refuse unique to that skill. Point at site-workflow for layers and focuses. Do not grow README as a third AGENTS.`
+}[reg=facet]
+
+^"ms-005_brittle_rules"{
+  id = "ms-005"
+  claim = `A rule is brittle when it is cheaper to follow the letter than the altitude, and check:local still passes.`
+  keep = #[
+    `Never git stash — concurrent main is real`,
+    `No new data-spw family without mapping stems`,
+    `Adapters git-tracked or check:agents is a lie`,
+    `Open first instead of a parallel rule`
+  ][reg=set]
+  brittle = #[
+    `44px on every coarse button in components/*.css — craft-quality table, now corrected; check:local green while pocket chrome grew`,
+    `!important only in ornament — contradicted ~160 times; already measured in craft-quality.spw`,
+    `implement from plans — restated in AGENTS, GPT, GROK, site-workflow; Codex still did it when the user said to`,
+    `audit P1 = must patch — severity without altitude`
+  ][reg=set]
+  defensive_expensive = #[
+    `Repeating the same do-not in AGENTS Working Guidelines, Do not list, adapter, skill, and MEMORY`,
+    `User skip-visuals then a paragraph of packing waiver in three adapters — necessary once, not in five homes`
+  ][reg=set]
+}[reg=facet]
+
+^"ms-006_plan_archive_quota"{
+  id = "ms-006"
+  claim = `The archive quota is not held. 199 active PLAN.md vs 5 archived. Plan-maintenance success metric (smaller next census) is inverted.`
+  evidence = #[
+    `@induction_pain case_plan_ecology_inflation`,
+    `plans/README.md Current Semantic Rails lists ~20 tracks — already a second Open first`
+  ][reg=set]
+  verdict = `Next plan-maintenance pass archives uncited PLAN.md that are not in AGENTS Open first and not a canonical track. Do not generate more index.spw to record the census.`
+}[reg=facet]
+
+^"safe_first_cuts"{
+  order = #[
+    `Move team-orientation-reading.md out of the active plan tree after a human glance`,
+    `Cap agent-optimization/PLAN.md at Current Baseline + failure ledger; date-stamp contributions into caches`,
+    `Strip skills/README tunability/invariants; one dispatch table`,
+    `Do not touch AGENTS.md until a cold-load proves the appendix is the cost`
+  ][reg=set]
+  landed = `2026-09-06 align: archive dump + diary, slim skills README, cut AGENTS appendix, @check_agents word budgets. The last cut was the block, not another paragraph.`
+}[reg=facet]
