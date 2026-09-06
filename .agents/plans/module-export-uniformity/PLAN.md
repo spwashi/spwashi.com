@@ -53,6 +53,33 @@ Several organs now export `SPW_*_CONTRACT` + `describe*` without migrating to `S
 | field bed | `MODULE_LAYERS.FEATURE` route modules |
 | compost pass | `MOUNT_WHEN.SETTLED` / side-effect inits |
 
+## Teardown ownership alignment — 2026-09-06
+
+Operation: align; fixity: stable. Focus: component lifecycle composition.
+Public outcome: overlapping release and remount requests cannot dispose a
+component's listeners, observers or resources twice, or remount before release.
+
+Evidence: `unmountModuleRecord` awaits cleanup while its record still says
+mounted. Two callers can therefore enter cleanup before either removes the
+record. `mountDefinition` returns that same retiring record during the wait.
+The existing ownership contract promises one returned handle per mounted module;
+the loader must coordinate callers of that handle, rather than requiring each
+component to invent its own concurrent-disposal guard.
+
+Patch: loader-local in-flight teardown promises keyed by record. Single-module
+and whole-runtime unmounts join the same release; remount waits for it. Extend
+the existing export contract and regression tests. No scheduling, catalog gates,
+new DOM attribute families, component file splits or dependencies.
+
+Validation: deferred cleanup tests cover overlapping callers, remount ordering,
+cleanup failure and later fresh mounts; module suite, syntax, check:local and
+diff whitespace. No visual verification requested.
+
+Result: regression reproduced three cleanup calls and an early remount before
+the fix; now both successful and throwing cleanup paths pass. All 254 module
+tests, syntax and whitespace checks passed. `check:local` failed only its
+generated-output gate for the pre-existing uncommitted core CSS bundle.
+
 ## Out of scope
 
 - Renaming `state-inspector` files (tracked in `runtime-module-decomposition`)

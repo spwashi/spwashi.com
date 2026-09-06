@@ -126,6 +126,7 @@ export function createModuleLoader(config = {}) {
   let tokenFlushScheduled = false;
   let activeResourceProbes = 0;
   const queuedResourceProbes = [];
+  const pendingUnmounts = new WeakMap();
 
   function drainResourceProbeQueue() {
     while (activeResourceProbes < resourceProbeConcurrency && queuedResourceProbes.length) {
@@ -474,9 +475,21 @@ async function mountModuleById(id, ctx, options = {}) {
   return records;
 }
 
-async function unmountModuleRecord(record, ctx) {
+function unmountModuleRecord(record, ctx) {
+  if (pendingUnmounts.has(record)) return pendingUnmounts.get(record);
   if (!record || record.status !== 'mounted') return false;
 
+  record.status = 'unmounting';
+  // Publish ownership before invoking cleanup or emitting lifecycle events:
+  // either can synchronously request another release of the same component.
+  const pending = Promise.resolve()
+    .then(() => performModuleUnmount(record, ctx))
+    .finally(() => pendingUnmounts.delete(record));
+  pendingUnmounts.set(record, pending);
+  return pending;
+}
+
+async function performModuleUnmount(record, ctx) {
   pushModuleLifecycleStage(record, 'unmounting', { note: 'unmounting module' });
   emitModuleLifecycle(ctx, record, 'unmounting', {
     at: Math.round(performance.now()),
@@ -519,7 +532,8 @@ async function unmountModuleRecord(record, ctx) {
 async function unmountModuleById(id, ctx, options = {}) {
   if (!ctx || !id) return false;
   const records = Array.from(ctx.registry.values()).filter(
-    (record) => (record.baseId === id || record.id === id) && record.status === 'mounted'
+    (record) => (record.baseId === id || record.id === id)
+      && (record.status === 'mounted' || pendingUnmounts.has(record))
   );
   if (!records.length) return false;
 
@@ -534,7 +548,7 @@ async function unmountModuleById(id, ctx, options = {}) {
 async function unmountAllModules(ctx) {
   if (!ctx) return 0;
   const records = Array.from(ctx.registry.values()).filter(
-    (record) => record.status === 'mounted'
+    (record) => record.status === 'mounted' || pendingUnmounts.has(record)
   );
   let count = 0;
   for (const record of records) {
@@ -1054,6 +1068,10 @@ function initRuntimeResourceAwareness(ctx) {
 
 async function mountDefinition(def, ctx, root = null, index = 0) {
   const recordId = makeRecordId(def, root, index);
+  // A retiring instance cannot serve a new mount request. Wait for its owner
+  // to release resources, then let the registry deduplicate the fresh mount.
+  const retiring = ctx.registry.get(recordId);
+  if (pendingUnmounts.has(retiring)) await pendingUnmounts.get(retiring);
   const effectiveWhen = getEffectiveMountWhen(def, ctx);
   const reason = describeMountReason(def, ctx, root, effectiveWhen);
   const evaluates = inferModuleDimensions(def);

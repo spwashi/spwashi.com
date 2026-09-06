@@ -33,6 +33,7 @@
   mount_result: `mount may return void, one cleanup function, or { cleanup?, refresh? }. Cleanup owns only state/listeners/observers created by that mount and should be idempotent.`
   refresh_precedence: `A refresh returned by mount is instance-local and wins. When mount returns no refresh, module-loader attaches SPW_MODULE_EXPORT.refresh so the optional export field is operational rather than documentary.`
   cleanup_ownership: `A loader-mounted module returns its handle; it does not also register that same handle with ctx.addCleanup, which would run teardown twice.`
+  release_composition: `Overlapping single-module and whole-runtime unmounts join one pending cleanup per record. The record is unmounting until release completes; a remount waits before creating a fresh instance. Cleanup errors keep the existing log-and-release policy. This coordinates mounted handles, not cancellation of imports or unfinished mounts.`
   route_boundary: `Cross-route navigation replaces the document. Partial DOM replacement is handled by module refresh/untracking; pagehide teardown is not used because it breaks BFCache restoration.`
 
   legacy_mount_names: #[

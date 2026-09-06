@@ -716,3 +716,89 @@ test('shell scroll lock round-trips and unbinds its touch guard on release', asy
     globalThis.scrollTo = previousScrollTo;
   }
 });
+
+
+test('overlapping component releases share cleanup and remount waits for disposal', async () => {
+  for (const rejectCleanup of [false, true]) {
+    let release;
+    let started;
+    const cleanupStarted = new Promise((resolve) => { started = resolve; });
+    const cleanupGate = new Promise((resolve) => { release = resolve; });
+    let cleanups = 0;
+    let mounts = 0;
+    const testDef = {
+      id: 'test-release-ownership',
+      layer: MODULE_LAYERS.FEATURE,
+      when: MOUNT_WHEN.IMMEDIATE,
+      load: async () => ({ SPW_MODULE_EXPORT: {
+        mount() {
+          mounts += 1;
+          return async () => {
+            cleanups += 1;
+            started();
+            await cleanupGate;
+            if (rejectCleanup) throw new Error('disposal failure');
+          };
+        },
+      } }),
+    };
+    const loader = createModuleLoader({
+      moduleDefs: [testDef],
+      html: document.documentElement,
+      body: document.body,
+      matchesRoute: () => true,
+      matchesFeatures: () => true,
+      hasSelector: () => true,
+      getRoots: () => [],
+      hasDebugOrQAMode: () => false,
+      readConnectionPosture: () => 'fast',
+      shouldPrefetchRuntimeResources: () => true,
+      extractDynamicImportSpecifier: (def) => def.specifier,
+      moduleSpecifierToUrl: (spec) => spec,
+      ensureResourceHint: () => true,
+      isRuntimeResourceCached: async () => false,
+      requestServiceWorkerPrefetch: () => false,
+      requestServiceWorkerCacheSummary: () => false,
+      refreshRegionProfiles: () => {},
+      setPageState: () => {},
+    });
+
+    const ctx = {
+      registry: createRegistry(),
+      runtimePolicy: readRuntimePolicy(),
+      moduleAudit: [],
+      bus: { emit() {} },
+      html: document.documentElement,
+      body: document.body,
+      now: () => performance.now(),
+    };
+
+    const initial = await loader.mountModuleById(testDef.id, ctx);
+    const first = loader.unmountModuleById(testDef.id, ctx);
+    await cleanupStarted;
+    const second = loader.unmountModuleById(testDef.id, ctx);
+    const all = loader.unmountAllModules(ctx);
+    let remountFinished = false;
+    const remount = loader.mountModuleById(testDef.id, ctx).then((record) => {
+      remountFinished = true;
+      return record;
+    });
+    // Give every caller a chance to enter the pending cleanup before releasing it.
+    await new Promise((resolve) => setImmediate(resolve));
+    const duringRelease = { cleanups, mounts, remountFinished, status: initial.status };
+    release();
+    const [firstResult, secondResult, allResult, replacement] = await Promise.all([first, second, all, remount]);
+    assert.deepEqual(duringRelease, { cleanups: 1, mounts: 1, remountFinished: false, status: 'unmounting' });
+    assert.equal(firstResult, true);
+    assert.equal(secondResult, true);
+    assert.equal(allResult, 1);
+    assert.notEqual(replacement, initial);
+    assert.equal(initial.status, 'unmounted');
+    assert.equal(replacement.status, 'mounted');
+    assert.equal(mounts, 2);
+    assert.equal(ctx.registry.get(testDef.id), replacement);
+    assert.equal(await loader.unmountModuleById(testDef.id, ctx), true);
+    assert.equal(cleanups, 2, 'a fresh instance owns its own cleanup');
+    assert.equal(await loader.unmountModuleById(testDef.id, ctx), false);
+  }
+});

@@ -43,7 +43,7 @@ export const SPW_MODULE_EXPORT_CONTRACT = Object.freeze({
   mountResult:
     'mount() returns void, a cleanup function, or { cleanup?, refresh? }. A mount-returned refresh wins over the export-level refresh.',
   cleanupOwnership:
-    'Loader-mounted modules return their handle and do not register that same cleanup with ctx.addCleanup.',
+    'Loader-mounted modules return their handle and do not register that same cleanup with ctx.addCleanup. Overlapping loader unmounts share one pending release per record; remount waits for that release.',
   routeBoundary:
     'Routes replace the document; partial DOM replacement uses refresh/untracking. Do not tear down on pagehide because BFCache may restore the same document.',
   catalogParity:
