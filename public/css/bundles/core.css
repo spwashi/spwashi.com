@@ -1284,6 +1284,16 @@ html[data-spw-reduce-motion="on"] *::after {
   --attention-field-radius: 0.4;
   --attention-field-decay: 0.65;
   --attention-echo-duration: 480ms;
+  /* Shared field weights: semantic surfaces can tune emphasis without
+     rewriting the state machine or inventing route-specific selectors. */
+  --attention-ink-resonance-weight: 1;
+  --attention-ink-charge-weight: 0.45;
+  --attention-ink-awareness-weight: 0.25;
+  --attention-light-charge-weight: 0.32;
+  --attention-light-resonance-weight: 0.22;
+  --attention-light-awareness-weight: 0.12;
+  --attention-region-wash-weight: 0.08;
+  --attention-region-seam-weight: 0.14;
 
   /* -- Reading Groove & Typographic Attention --
      Named here so first paint and no-JS can interpolate. typesetting.css
@@ -1352,9 +1362,9 @@ html[data-spw-reduce-motion="on"] *::after {
     0.72,
     calc(
       var(--spw-reading-rest-opacity, 0.86)
-      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-resonance, 0))
-      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-charge, 0) * 0.45)
-      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention, 0) * 0.25)
+      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-resonance, 0) * var(--attention-ink-resonance-weight, 1))
+      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-charge, 0) * var(--attention-ink-charge-weight, 0.45))
+      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention, 0) * var(--attention-ink-awareness-weight, 0.25))
     ),
     1
   );
@@ -1362,9 +1372,9 @@ html[data-spw-reduce-motion="on"] *::after {
     0.32,
     calc(
       0.48
-      + (var(--spw-attention-charge, 0) * 0.32)
-      + (var(--spw-attention-resonance, 0) * 0.22)
-      + (var(--spw-attention, 0) * 0.12)
+      + (var(--spw-attention-charge, 0) * var(--attention-light-charge-weight, 0.32))
+      + (var(--spw-attention-resonance, 0) * var(--attention-light-resonance-weight, 0.22))
+      + (var(--spw-attention, 0) * var(--attention-light-awareness-weight, 0.12))
     ),
     0.95
   );
@@ -30216,6 +30226,15 @@ html {
   --spw-harmony-seam-bias: 0%;
   --spw-density-wash-bias: 0%;
   --spw-density-seam-bias: 0%;
+  /* Regional geometry reads the frame's inherited reports. These are small
+     bounded spends: a live region becomes more articulate without turning
+     every descendant into a glow. */
+  --spw-region-attention-wash: calc(
+    (var(--spw-attention-light, 0.48) - 0.48) * 100% * var(--attention-region-wash-weight, 0.08)
+  );
+  --spw-region-attention-seam: calc(
+    var(--spw-attention-resonance, 0) * 100% * var(--attention-region-seam-weight, 0.14)
+  );
   --spw-region-track: 16rem;
   --spw-region-prose: min(100%, var(--shell-reading-measure, 68ch));
   container-type: inline-size;
@@ -30268,6 +30287,7 @@ html {
       var(--spw-region-wash, 0%)
       + var(--spw-harmony-wash-bias, 0%)
       + var(--spw-density-wash-bias, 0%)
+      + var(--spw-region-attention-wash, 0%)
       + (6% * (var(--grammar-edge-softness, 0.24) - 0.24))
     )
   );
@@ -30277,6 +30297,7 @@ html {
       var(--spw-region-seam, 16%)
       + var(--spw-harmony-seam-bias, 0%)
       + var(--spw-density-seam-bias, 0%)
+      + var(--spw-region-attention-seam, 0%)
       + (8% * (var(--grammar-boundary-weight, 0.34) - 0.34))
       + (4% * (var(--spw-pack-occupancy-weight, 0.5) - 0.5))
     )

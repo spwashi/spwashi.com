@@ -604,6 +604,16 @@
   --attention-field-radius: 0.4;
   --attention-field-decay: 0.65;
   --attention-echo-duration: 480ms;
+  /* Shared field weights: semantic surfaces can tune emphasis without
+     rewriting the state machine or inventing route-specific selectors. */
+  --attention-ink-resonance-weight: 1;
+  --attention-ink-charge-weight: 0.45;
+  --attention-ink-awareness-weight: 0.25;
+  --attention-light-charge-weight: 0.32;
+  --attention-light-resonance-weight: 0.22;
+  --attention-light-awareness-weight: 0.12;
+  --attention-region-wash-weight: 0.08;
+  --attention-region-seam-weight: 0.14;
 
   /* -- Reading Groove & Typographic Attention --
      Named here so first paint and no-JS can interpolate. typesetting.css
@@ -672,9 +682,9 @@
     0.72,
     calc(
       var(--spw-reading-rest-opacity, 0.86)
-      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-resonance, 0))
-      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-charge, 0) * 0.45)
-      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention, 0) * 0.25)
+      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-resonance, 0) * var(--attention-ink-resonance-weight, 1))
+      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention-charge, 0) * var(--attention-ink-charge-weight, 0.45))
+      + ((1 - var(--spw-reading-rest-opacity, 0.86)) * var(--spw-attention, 0) * var(--attention-ink-awareness-weight, 0.25))
     ),
     1
   );
@@ -682,9 +692,9 @@
     0.32,
     calc(
       0.48
-      + (var(--spw-attention-charge, 0) * 0.32)
-      + (var(--spw-attention-resonance, 0) * 0.22)
-      + (var(--spw-attention, 0) * 0.12)
+      + (var(--spw-attention-charge, 0) * var(--attention-light-charge-weight, 0.32))
+      + (var(--spw-attention-resonance, 0) * var(--attention-light-resonance-weight, 0.22))
+      + (var(--spw-attention, 0) * var(--attention-light-awareness-weight, 0.12))
     ),
     0.95
   );
