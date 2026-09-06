@@ -751,7 +751,7 @@
                 <header class="frame-topline" data-spw-slot="header">
                     <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
                     <a class="frame-sigil" href="#spw-syntax-surface" data-spw-operator="address">#&gt;spw_syntax_surface</a>
-                    <div class="mode-switch" role="group" aria-label="Syntax lens" data-spw-operator="mode" data-spw-semantic-expression="syntax[source]{open.sit}">
+                    <div class="mode-switch" role="group" aria-label="Syntax lens" data-spw-kind="lens" data-spw-operator="mode" data-spw-semantic-expression="syntax[source]{open.sit}">
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="source" aria-pressed="true" data-spw-operator="select">.source</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="syntax" aria-pressed="false" data-spw-operator="select">^syntax</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="surface" aria-pressed="false" data-spw-operator="select">&gt;surface</button>
@@ -989,7 +989,7 @@ Files should remain legible.
                 <header class="frame-topline" data-spw-slot="header">
                     <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
                     <a class="frame-sigil" href="#spw-grammar-surface" data-spw-operator="address">#&gt;spw_grammar_surface</a>
-                    <div class="mode-switch" role="group" aria-label="Grammar lens" data-spw-operator="mode" data-spw-semantic-expression="grammar[operators]{open.sit}">
+                    <div class="mode-switch" role="group" aria-label="Grammar lens" data-spw-kind="lens" data-spw-operator="mode" data-spw-semantic-expression="grammar[operators]{open.sit}">
                         <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="operators" aria-pressed="true" data-spw-operator="select">.operators</button>
                         <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="principles" aria-pressed="false" data-spw-operator="select">^principles</button>
                         <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="workbench" aria-pressed="false" data-spw-operator="select">~workbench</button>
@@ -1005,7 +1005,7 @@ Files should remain legible.
                     <p data-spw-textual-role="note" data-spw-copy-depth="normal">Spw prefixes are functional syntax rather than decoration. The parser and runtime detect semantic types directly from the sigil (such as <code>#&gt;</code> for frame handles or <code>?</code> for wonder probes), ensuring consistent type detection across routes and tools.</p>
 
                 <div class="mode-panels">
-                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="operators" data-spw-role="schema">
+                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="operators" data-spw-role="schema" data-spw-kind="lens">
                         <table class="spw-operator-table" aria-label="Spw operator reference">
                             <tbody>
                                 <tr>
@@ -1080,7 +1080,7 @@ Files should remain legible.
                         </table>
                     </section>
 
-                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="principles" data-spw-role="reference" hidden>
+                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="principles" data-spw-role="reference" data-spw-kind="lens" hidden>
                         <p data-spw-textual-role="note">Adapted through <code>.spw/site.spw</code> from installed canon surfaces such as <code>.spw/_workbench/.spw/patterns/literate-ui.spw</code>, <code>.spw/_workbench/.spw/applications/symmetry/symmetry-ui-design.spw</code>, and <code>.spw/_workbench/.spw/biome/ocean/ux.spw</code>.</p>
                         <ul class="source-list">
                             <li>
@@ -1106,7 +1106,7 @@ Files should remain legible.
                         </ul>
                     </section>
 
-                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="workbench" data-spw-role="reference" hidden>
+                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="workbench" data-spw-role="reference" data-spw-kind="lens" hidden>
                         <p data-spw-textual-role="note">The local <code>.spw/</code> bridge now routes through <code>.spw/surfaces.spw</code> and <code>.spw/conventions/site-semantics.spw</code> before it reaches the installed workbench canon, so the same operator map that shapes this page also informs <a href="/play/rpg-wednesday/">/play/rpg-wednesday/</a> through shared naming, selection, liminality, and interface-pattern surfaces.</p>
                         <pre><code>#&gt;interaction_model
 #:surface #!ux
