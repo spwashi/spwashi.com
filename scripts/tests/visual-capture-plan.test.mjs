@@ -50,6 +50,8 @@ import {
   captureSearchNeedsAttention,
   specimenNavigationKey,
   CAPTURE_MEASURE,
+  evaluateTimeoutMsFor,
+  screenshotTimeoutMsFor,
   REVIEW_CHAPTERS,
   reviewChapterFor,
   prioritizeCaptureJobs,
@@ -767,6 +769,9 @@ test('live capture measure evaluate is bounded and races font wait', async () =>
   const source = await readFile(new URL('../component-snapshots.mjs', import.meta.url), 'utf8');
   assert.ok(CAPTURE_MEASURE.evaluateTimeoutMs < 60000);
   assert.match(source, /CAPTURE_MEASURE\.evaluateTimeoutMs/);
+  assert.match(source, /evaluateTimeoutMsFor/);
+  assert.match(source, /blank, recapture/);
+  assert.doesNotMatch(source, /skipped after closed tab/);
   assert.match(source, /CAPTURE_MEASURE\.fontWaitMs/);
   assert.match(source, /readStillAttention/);
   assert.match(source, /attention-miss/);
@@ -826,6 +831,14 @@ test('failure kinds distinguish miss from gone, and index names the recapture co
   assert.equal(classifyCaptureFailure(new Error('selector-miss: .spw-chip not found or empty')), 'miss');
   assert.equal(classifyCaptureFailure(new Error('attention-miss: ink-ignores-attention')), 'miss');
   assert.equal(classifyCaptureFailure(new Error('Inspected target navigated or closed')), 'gone');
+  assert.equal(
+    classifyCaptureFailure(new Error('CDP call timeout: Runtime.evaluate (8000ms)'), { flow: 'page' }),
+    'failed',
+  );
+  assert.equal(
+    classifyCaptureFailure(new Error('CDP call timeout: Page.captureScreenshot (12000ms)'), { flow: 'page' }),
+    'failed',
+  );
   const index = buildCaptureIndex({
     captures: [{ id: 'home-opening', file: 'captures/pocket/01-home-opening.jpg', flow: 'page', still: true }],
     errorArtifacts: [
@@ -850,6 +863,43 @@ test('starved clips are misses, and recapture ids skip generic page blanks', () 
     ],
   });
   assert.deepEqual(index.next.ids, ['operator-chip']);
+});
+
+test('page stills get their own nav and a longer evaluate budget', () => {
+  assert.ok(evaluateTimeoutMsFor({ flow: 'page' }) > evaluateTimeoutMsFor({ flow: 'component' }));
+  assert.ok(screenshotTimeoutMsFor({ flow: 'page' }) > screenshotTimeoutMsFor({ flow: 'component' }));
+  const homeA = {
+    id: 'home-opening',
+    flow: 'page',
+    still: true,
+    specimenRoute: '/',
+    viewportId: 'pocket',
+  };
+  const homeB = {
+    id: 'home-reasons',
+    flow: 'page',
+    still: true,
+    specimenRoute: '/',
+    viewportId: 'pocket',
+  };
+  const clipA = {
+    id: 'chip-a',
+    flow: 'component',
+    specimenRoute: '/design/components/',
+    viewportId: 'pocket',
+  };
+  const clipB = {
+    id: 'chip-b',
+    flow: 'component',
+    specimenRoute: '/design/components/',
+    viewportId: 'pocket',
+  };
+  const pageGroups = groupJobsByNavigation([homeA, homeB]);
+  assert.equal(pageGroups.length, 2);
+  assert.equal(pageGroups[0].jobs.length, 1);
+  const clipGroups = groupJobsByNavigation([clipA, clipB]);
+  assert.equal(clipGroups.length, 1);
+  assert.equal(clipGroups[0].jobs.length, 2);
 });
 
 test('explore and stabilize profiles cap combinations the way fuzz explore/stabilize do', () => {

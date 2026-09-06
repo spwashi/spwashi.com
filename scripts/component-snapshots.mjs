@@ -56,6 +56,8 @@ import {
   captureSearchParams,
   captureRecoverSettleMs,
   CAPTURE_MEASURE,
+  evaluateTimeoutMsFor,
+  screenshotTimeoutMsFor,
   REVIEW_CHAPTERS,
   CAPTURE_FAILURE_KINDS,
   classifyCaptureFailure,
@@ -380,7 +382,7 @@ function captureQuery(url, job = null) {
   return u.href;
 }
 
-async function emulateCaptureEnvironment(session, conditions = {}) {
+async function emulateCaptureEnvironment(session, conditions = {}, timeoutMs = CAPTURE_MEASURE.evaluateTimeoutMs) {
   const features = [];
   if (conditions.colorMode === 'dark' || conditions.colorScheme === 'dark') {
     features.push({ name: 'prefers-color-scheme', value: 'dark' });
@@ -417,7 +419,7 @@ async function emulateCaptureEnvironment(session, conditions = {}) {
       }))()`,
       awaitPromise: true,
       returnByValue: true,
-    }, CAPTURE_MEASURE.evaluateTimeoutMs);
+    }, timeoutMs);
   } catch {
     // theme wait is best-effort
   }
@@ -432,7 +434,7 @@ function gitChangedFiles() {
   return result.stdout.split('\n').map((line) => line.trim()).filter(Boolean);
 }
 
-async function measureSelector(session, selector) {
+async function measureSelector(session, selector, timeoutMs = CAPTURE_MEASURE.evaluateTimeoutMs) {
   const { result, exceptionDetails } = await session.send('Runtime.evaluate', {
     expression: `(async () => {
       const race = (promise, ms) => Promise.race([
@@ -575,7 +577,7 @@ async function measureSelector(session, selector) {
     })()`,
     returnByValue: true,
     awaitPromise: true,
-  }, CAPTURE_MEASURE.evaluateTimeoutMs);
+  }, timeoutMs);
   if (exceptionDetails) throw new Error(exceptionDetails.text || 'measureSelector failed');
   return result?.value || null;
 }
@@ -925,7 +927,7 @@ async function applyCapturePrepare(session, job) {
       }
     }
     return true;
-  })()`, CAPTURE_MEASURE.evaluateTimeoutMs);
+  })()`, evaluateTimeoutMsFor(job));
 }
 
 function isTargetGoneError(error) {
@@ -948,12 +950,12 @@ async function captureJob(session, job, {
       : '';
     snippetCache.set(job.snippet, snippet);
     await renderCardDocument(session, base, snippet, job.aspect || 'fit', viewport, job.sizeToken, job.lens);
-    box = await measureSelector(session, job.selector)
-      || await measureSelector(session, '[data-spw-capture-host="template"]');
+    box = await measureSelector(session, job.selector, evaluateTimeoutMsFor(job))
+      || await measureSelector(session, '[data-spw-capture-host="template"]', evaluateTimeoutMsFor(job));
   } else {
     await applyCapturePrepare(session, job);
     if (job.selector) {
-      box = await measureSelector(session, job.selector);
+      box = await measureSelector(session, job.selector, evaluateTimeoutMsFor(job));
       if (!box || box.width < 2 || box.height < 2) {
         throw new Error(`selector-miss: ${job.selector} not found or empty`);
       }
@@ -968,12 +970,13 @@ async function captureJob(session, job, {
   let clip = null;
   let buffer;
   const deviceFrame = job.still || job.flow === 'page' || !box;
+  const shotTimeoutMs = screenshotTimeoutMsFor(job);
   if (deviceFrame) {
-    buffer = await screenshotBuffer(session, { format, quality });
+    buffer = await screenshotBuffer(session, { format, quality, timeoutMs: shotTimeoutMs });
   } else {
     const space = clipSpaceForJob(job) || 'document';
     clip = clipForBox(box, viewport, padding, job.aspect || 'fit', { space });
-    buffer = await screenshotBuffer(session, { format, quality, clip });
+    buffer = await screenshotBuffer(session, { format, quality, clip, timeoutMs: shotTimeoutMs });
   }
   const sha256 = createHash('sha256').update(buffer).digest('hex');
   const snapshot = { ...(box?.pretext || {}), ...(box || {}) };
@@ -1219,18 +1222,41 @@ async function main() {
 
       for (const group of groups) {
         const viewport = resolveJobViewport(group.jobs[0], qaViewports);
-        if (group.canvas === 'specimen') {
-          const specimenUrl = captureQuery(new URL(routeHref(group.route, base), `${base}/`).href, group.jobs[0]);
-          process.stderr.write(`[visual:capture] nav ${group.key}\n`);
+
+        async function navSpecimen(job, jobViewport) {
+          const specimenUrl = captureQuery(new URL(routeHref(group.route || job.specimenRoute, base), `${base}/`).href, job);
           await navigateAndProbe(session, {
             url: specimenUrl,
-            viewport,
-            settleMs: options.settleMs,
+            viewport: jobViewport,
+            settleMs: captureRecoverSettleMs(options.settleMs),
             timeoutMs: options.timeoutMs,
             retries: 1,
             partialGraceMs: 2000,
           });
-          await emulateCaptureEnvironment(session, group.jobs[0]?.conditions || {});
+          await emulateCaptureEnvironment(session, job.conditions || {}, evaluateTimeoutMsFor(job));
+        }
+
+        async function shotWithRecover(job, jobViewport) {
+          const run = () => captureJob(session, job, {
+            base,
+            viewport: jobViewport,
+            format: options.format,
+            quality: options.quality,
+            snippetCache,
+          });
+          try {
+            return await run();
+          } catch (firstErr) {
+            if (!isTargetGoneError(firstErr) || group.canvas !== 'specimen') throw firstErr;
+            await recoverPage('target closed');
+            await navSpecimen(job, jobViewport);
+            return await run();
+          }
+        }
+
+        if (group.canvas === 'specimen') {
+          process.stderr.write(`[visual:capture] nav ${group.key}\n`);
+          await navSpecimen(group.jobs[0], viewport);
         }
 
         for (const job of group.jobs) {
@@ -1277,28 +1303,11 @@ async function main() {
               }
               continue;
             }
-            let shot;
-            try {
-              shot = await captureJob(session, job, {
-                base,
-                viewport: jobViewport,
-                format: options.format,
-                quality: options.quality,
-                snippetCache,
-              });
-            } catch (firstErr) {
-              if (!isTargetGoneError(firstErr) || group.canvas !== 'specimen') throw firstErr;
-              await recoverPage('target closed');
-              const specimenUrl = captureQuery(new URL(routeHref(group.route, base), `${base}/`).href, job);
-              await navigateAndProbe(session, {
-                url: specimenUrl,
-                viewport: jobViewport,
-                settleMs: captureRecoverSettleMs(options.settleMs),
-                timeoutMs: options.timeoutMs,
-                retries: 1,
-                partialGraceMs: 2000,
-              });
-              await emulateCaptureEnvironment(session, job.conditions || {});
+            let shot = await shotWithRecover(job, jobViewport);
+            if (isBlankStill(shot.buffer, job, shot.clip) && group.canvas === 'specimen') {
+              process.stderr.write(`  ~ blank, recapture ${job.id}\n`);
+              await recoverPage('blank still');
+              await navSpecimen(job, jobViewport);
               shot = await captureJob(session, job, {
                 base,
                 viewport: jobViewport,
@@ -1398,18 +1407,8 @@ async function main() {
             errorArtifacts.push(artifact);
             errors.push(artifact.message);
             process.stderr.write(`  ! ${kind} ${artifact.file}\n`);
-            if (kind === 'gone' && group.canvas === 'specimen') {
-              const remaining = group.jobs.slice(group.jobs.indexOf(job) + 1);
-              for (const skippedJob of remaining) {
-                const skip = await writeErrorArtifact(options.out, 'gone', skippedJob, {
-                  message: `${skippedJob.id}@${skippedJob.viewportId} skipped after closed tab`,
-                });
-                errorArtifacts.push(skip);
-                errors.push(skip.message);
-                process.stderr.write(`  ! gone ${skip.file}\n`);
-              }
-              try { await recoverPage('group abandoned'); } catch { /* ignore */ }
-              break;
+            if (group.canvas === 'specimen' && (kind === 'gone' || kind === 'failed')) {
+              try { await recoverPage(kind === 'gone' ? 'target closed' : 'capture failed'); } catch { /* ignore */ }
             }
           }
         }

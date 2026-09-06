@@ -26,10 +26,24 @@ export const DEFAULT_SOCIAL_ASPECTS = Object.freeze(['fit', 'square']);
 /** Live capture must not inherit the 60s CDP default. Font/image waits race these caps. */
 export const CAPTURE_MEASURE = Object.freeze({
   evaluateTimeoutMs: 8000,
+  pageEvaluateTimeoutMs: 16000,
+  screenshotTimeoutMs: 12000,
+  pageScreenshotTimeoutMs: 20000,
   fontWaitMs: 1200,
   imageWaitMs: 2000,
   importWaitMs: 2500,
 });
+
+/** Page stills of `/` measured 9–12s; the clip budget is too tight for that flow. */
+export function evaluateTimeoutMsFor(job = {}) {
+  if (job?.flow === 'page' || job?.still) return CAPTURE_MEASURE.pageEvaluateTimeoutMs;
+  return CAPTURE_MEASURE.evaluateTimeoutMs;
+}
+
+export function screenshotTimeoutMsFor(job = {}) {
+  if (job?.flow === 'page' || job?.still) return CAPTURE_MEASURE.pageScreenshotTimeoutMs;
+  return CAPTURE_MEASURE.screenshotTimeoutMs;
+}
 export const REGION_SEATS = Object.freeze(['hook', 'hub', 'cluster', 'path', 'read', 'wide']);
 export const SIZE_REASONS = Object.freeze(['device-reason', 'pretext-fit', 'social-crop']);
 export const SIZE_TOKENS = Object.freeze(['measure-compact', 'measure-card', 'measure-reading']);
@@ -179,7 +193,8 @@ export function classifyCaptureFailure(error, job = {}) {
   if (/navigated or closed|session closed|websocket|target closed/i.test(message)) return 'gone';
   if (/blank/i.test(message)) return 'blank';
   if (/collision|identical to/i.test(message)) return 'collision';
-  if (job.flow === 'page' && /timeout/i.test(message)) return 'gone';
+  // A CDP timeout is a stuck evaluate, not a closed tab. Calling it `gone`
+  // used to skip every remaining job that shared the nav.
   return 'failed';
 }
 
@@ -1169,6 +1184,18 @@ export function groupJobsByNavigation(jobs) {
         route: null,
         viewportId: job.viewportId,
         canvas: 'card',
+        jobs: [job],
+      });
+      continue;
+    }
+    // Full-page stills do not share a tab. Home + theme packs killed the
+    // shared target and the old `gone` path skipped the rest of the group.
+    if (job.flow === 'page') {
+      groups.push({
+        key: `page|${job.id}|${specimenNavigationKey(job)}`,
+        route: job.specimenRoute,
+        viewportId: job.viewportId,
+        canvas: 'specimen',
         jobs: [job],
       });
       continue;

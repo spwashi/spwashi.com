@@ -691,7 +691,7 @@ export async function evaluateProbe(session, expression = PERF_PROBE_EXPRESSION,
  * fallback that survives headless blanks. Shared by visual:capture and
  * ad-hoc viewport still scripts so they cannot drift.
  */
-export async function screenshotBuffer(session, { format = 'png', quality = 70, clip = null } = {}) {
+export async function screenshotBuffer(session, { format = 'png', quality = 70, clip = null, timeoutMs = 12000 } = {}) {
   const cssClip = clip
     ? {
       x: Math.max(0, clip.x),
@@ -717,7 +717,7 @@ export async function screenshotBuffer(session, { format = 'png', quality = 70, 
     const params = { ...attempts[i] };
     if (format === 'jpeg') params.quality = quality;
     try {
-      const { data } = await session.send('Page.captureScreenshot', params, 12000);
+      const { data } = await session.send('Page.captureScreenshot', params, timeoutMs);
       if (data) return Buffer.from(data, 'base64');
     } catch (err) {
       lastErr = err;
