@@ -105,7 +105,7 @@ audit_run: .{
   }
   f5_interaction_mount_still_eats_first_gesture {
     severity = "medium"
-    resolved = "2026-09-05"
+    status = "Scheduling fix landed 2026-09-05; cold-page first-event delivery remains unverified"
     claim = `pinch-scale left INTERACTION mount after f5 in the pointer audit. charge-field, region-menu, and navigation-locomotion still mount on MOUNT_WHEN.INTERACTION. A first tap/hold that is supposed to prime charge or open inspect can be the event that only starts the import.`
     evidence = `module-catalog-enhancement.js charge-field:104, navigation-locomotion:1399; module-catalog-feature.js region-menu:323`
     gap = `tap:prime as a learnable promise is false on a cold page for anything those modules own.`
@@ -148,9 +148,9 @@ audit_run: .{
     `pinch-scale is capability-gated and settings-reversible`
   ][reg=set]
   still_fights_the_web = #[
-    `tap:prime on the hook group that contains the buttons`,
+    `Enter/Space on a native button that itself matches .frame-sigil still reaches brace onKeyDown preventDefault; the nested-container guard does not exclude the handle itself`,
     `hold:inspect on figures that also want the native long-press callout`,
-    `INTERACTION-mounted charge-field missing the first tap`
+    `First-event delivery before VISIBLE import/mount completion remains unverified; INTERACTION scheduling was removed`
   ][reg=set]
 }[reg=facet]
 
@@ -169,6 +169,48 @@ audit_run: .{
 ^"next_session_verified"{
   ~#verified(2026-09-05): `Ran the two checks the handoff named, by direct import against the live home route rather than automation scroll — MOUNT_WHEN.VISIBLE's IntersectionObserver does not fire reliably under this session's CDP-driven automation (see reference_module_mount_verification.md); catalog-driven mount of brace-physics/region-menu/charge-field/navigation-locomotion could not be observed to complete in that harness even after 10s+, while a direct initBraceGestures()/initSpwRegionMenu() call against the same DOM exercises the real fix path.`
   ~#result_1: `Dispatched a real pointerdown+pointerup on button[data-set-mode="reading"] (Study) inside #home-hook. #home-hook's data-spw-gesture stayed null through both events — f3's isOwnAffordanceTarget guard holds. The button itself still armed (data-spw-gesture="active" on the button, expected: it also matches .frame-sigil and sigils keep their own gesture feedback) and its native click was not prevented.`
-  ~#result_2: `Dispatched a pointerType:'touch' pointerdown on that same Study button (also a .frame-sigil, so shouldArmHoldOpen's selector list matches) and held 700ms > HOLD_OPEN_MS.calm (560ms). isRegionMenuOpen() became true and the button got data-spw-region-preview="true" — a first hold on a cold mount reaches region-menu, confirming f5 for this module without relying on the flaky IO harness.`
+  ~#result_2: `Dispatched a pointerType:'touch' pointerdown on that same Study button (also a .frame-sigil, so shouldArmHoldOpen's selector list matches) and held 700ms > HOLD_OPEN_MS.calm (560ms). isRegionMenuOpen() became true and the button got data-spw-region-preview="true". This verifies hold behavior after direct initialization; it does not verify f5's cold-page catalog scheduling or first-event delivery.`
   ~#open: `Did not repeat this for charge-field or navigation-locomotion specifically — same VISIBLE-mount class as region-menu/brace-physics, same f5 fix shape, not independently direct-import-verified this pass.`
+}[reg=facet]
+
+^"recent_change_review"{
+  operation = "audit"
+  fixity = "tending"
+  at = `2026-09-05`
+  head = `36e86c84`
+  scope = `Recent interaction changes 40dd95c8, d2677f7b, ecf221e6 and verification receipt 36e86c84; component-to-module review, not certification of every JS file. Adjacent copy/CSS/PWA commits were inventoried, not behavior-reviewed here.`
+  theory = `A component preserves native activation, owns its extra gesture, and exposes a consequence only after that gesture is recognized. Selector coverage, scheduling eligibility, initialized behavior, and cold-page behavior are distinct evidence levels.`
+  module_alignment = #[
+    .{ owner = `kernel/dom-contracts.js` ; result = `Shared nested-control ownership guard is reused by five consumers; handle === target deliberately returns true. This is an ownership predicate, not a guarantee of native default behavior.` }[reg=facet],
+    .{ owner = `runtime/brace-gestures.js` ; result = `Nested hook arming is guarded. Unmodified Enter/Space on native handles now leave both press and release before preventDefault, via isNativeControl from dom-contracts. Authored gesture strings still are not parsed.` }[reg=facet],
+    .{ owner = `runtime/annotation-layer.js` ; result = `Uses the shared guard in place of its local copy. Public selector census remains zero hosts; absence of public activation is not evidence of a runtime failure.` }[reg=facet],
+    .{ owner = `runtime/region-menu.js` ; result = `Hold/contextmenu entry points use the guard. Previous direct-init receipt proves hold on the Study button after listeners exist, not loader readiness.` }[reg=facet],
+    .{ owner = `interface/haptics.js` ; result = `Prime-candidate filtering now rejects nested native targets; retained mouse-link exclusion. No new end-to-end hold-to-cauldron receipt in this review.` }[reg=facet],
+    .{ owner = `semantic/image-interaction.js` ; result = `Shared ownership guard adds nested-control protection to the existing figure interaction. Swipe/scroll and long-press coexistence still need device verification.` }[reg=facet],
+    .{ owner = `runtime/charge-field.js + runtime/navigation-locomotion.js` ; result = `Implementation unchanged by ecf221e6; catalog scheduling changes to VISIBLE. Their first-event delivery has not been independently verified.` }[reg=facet],
+    .{ owner = `runtime/module-loader.js + module-catalog-feature.js + module-catalog-enhancement.js` ; result = `VISIBLE removes the event-triggered import dependency, but IntersectionObserver, queued tasks and awaited mount remain asynchronous. No before-first-input guarantee follows from the enum.` }[reg=facet],
+    .{ owner = `interface/discovery-notices.js` ; result = `40dd95c8 distinguishes object-wrapped notice source from flat string provenance. This aligns payload normalization with the reward contract; visual cadence after restored delivery remains a separate question.` }[reg=facet],
+    .{ owner = `runtime/attention/pinch-scale.js` ; result = `d2677f7b exposes the disabled setting through the existing reward event. Recognition wording exceeds the current two-contact detector; see pinch_recognition below.` }[reg=facet]
+  ][reg=set]
+  keyboard_native_handle = .{
+    severity = `resolved-tending`
+    evidence = `ownsNativeKeyboard() in brace-gestures.js returns before preventDefault when isNativeControl(event.target) or contentEditable. Capture-phase listeners remain at keydown/keyup. native-affordance.test.mjs mounts initBraceGestures and asserts button, a[href], summary, input, select, and textarea do not preventDefault on Enter/Space press or release. This covers every authored button.frame-sigil mode-switch, not only folio.`
+    gap = `The listener-boundary test does not itself prove a live click + aria-pressed change on a cold page. Pinch recognition and VISIBLE-mount first-event delivery remain open below.`
+    falsify = `With brace-physics mounted, focus an inactive home, about, or folio lens button and press Enter, then Space. Record defaultPrevented, click delivery and aria-pressed/panel change; compare with JS gesture enhancement absent.`
+    next = `Keep live Enter/Space receipts on more than one route when this file is next reviewed. Do not reintroduce a parallel native-control selector in brace-gestures.js.`
+  }[reg=facet]
+  pinch_recognition = .{
+    severity = `medium`
+    evidence = `pinch-scale.js handleTouchStart checks touches.length === 2 and readable target, then immediately announces the disabled hint. It checks no distance change before claiming a pinch was noticed.`
+    gap = `Two stationary contacts or a two-finger pan can be described as a recognized pinch. Notification delivery is repaired, but gesture recognition and consequence still differ.`
+    falsify = `Turn pinch text scaling off; place two fingers on allowed prose without changing their separation. Check whether the pinch-specific reward appears before movement.`
+    next = `Require pinch movement evidence before the disabled-gesture explanation, or accurately describe the contact that was detected.`
+  }[reg=facet]
+  verification = .{
+    targeted = `native-affordance + module-timing-contract: 14 tests passed. These prove predicate cases and timing declarations, not browser default activation or first-event delivery.`
+    selectors = `114 catalog definitions; 124 public source routes; 106 selector-gated, 8 ungated; 13 zero-host selectors; no legacy .site-frame catalog selectors. Source-template false positives remain as documented in module-selector-depth.`
+    local = `check:local passed (251 tests); component:check passed (4 fixtures + 15 ecology seats); ecology completed; spw:integrity reported all citations resolve. Lattice did not produce a completed report during the review.`
+    formatting = `spw:format:check scanned 337 files; only untouched .spw/caches/history-conflict-strands-2026-09.spw needs formatting. This audit was not flagged. git diff --check passed.`
+    browser = `Initial visual:checks could not bind localhost (EPERM). Authorized retry produced pocket captures but encountered curriculum-hero-focus target miss, folio-prices blank, and gone home targets; no visual pass is claimed. Inspected 03-home-entrance-closed.jpg in design/components/captures/runs/2026-09-05/checks/17-31-16--275148: wrapped cards/chips are visible, but a still cannot establish gesture behavior. No new live keyboard/pinch reproduction is claimed here.`
+  }[reg=facet]
 }[reg=facet]

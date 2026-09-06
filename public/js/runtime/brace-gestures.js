@@ -43,6 +43,7 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import {
+  isNativeControl,
   isOwnAffordanceTarget,
   writeDatasetValue,
   writeStyleValue,
@@ -1142,12 +1143,22 @@ function isSemanticTapTarget(target) {
    Keyboard lifecycle
    ========================================================================== */
 
+// Native controls already own Enter/Space (and their modified variants).
+// A button can itself be a .frame-sigil, so the nested-affordance guard alone
+// does not protect its click. Keep both press and release out of this machine.
+// Shared selector lives in dom-contracts so every route's lens/button/link
+// is covered the same way.
+function ownsNativeKeyboard(event) {
+  return isNativeControl(event.target) || event.target?.isContentEditable;
+}
+
 function onKeyDown(event) {
   if (event.key !== 'Enter' && event.key !== ' ') return;
   if (event.repeat) return;
 
   const target = braceTarget(event.target);
   if (!target || !isOwnAffordanceTarget(target, event.target)) return;
+  if (ownsNativeKeyboard(event)) return;
 
   event.preventDefault();
 
@@ -1197,6 +1208,7 @@ function onKeyUp(event) {
 
   const target = braceTarget(event.target);
   if (!target || !isOwnAffordanceTarget(target, event.target)) return;
+  if (ownsNativeKeyboard(event)) return;
 
   const meta = classifyTarget(target);
   setGesture(target, meta, 'charging', { source: 'keyboard' });

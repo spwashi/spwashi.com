@@ -6,6 +6,7 @@ import {
   isNativeControl,
   isOwnAffordanceTarget,
 } from '../../public/js/kernel/dom-contracts.js';
+import { initBraceGestures } from '../../public/js/runtime/brace-gestures.js';
 
 function mockNode(label, parent = null) {
   const node = {
@@ -43,4 +44,33 @@ test('isOwnAffordanceTarget leaves nested buttons and summaries to themselves', 
   assert.equal(isOwnAffordanceTarget(button, button), true);
   assert.equal(isNativeControl(button), true);
   assert.equal(isNativeControl(prose), false);
+});
+
+test('mounted brace keyboard listeners preserve native handle activation on press and release', () => {
+  // Mode-switch lenses are button.frame-sigil on home, about, software, folio, and the footer.
+  const previousBody = document.body;
+  const listeners = new Map();
+  document.body = {
+    dataset: {},
+    addEventListener(type, listener) { listeners.set(type, listener); },
+  };
+  try {
+    initBraceGestures();
+    for (const tag of ['button', 'a[href]', 'summary', 'input', 'select', 'textarea']) {
+      const handle = {
+        matches(selector) { return selector.split(',').map((s) => s.trim()).includes(tag); },
+        closest(selector) { return selector.includes('.frame-sigil') ? handle : null; },
+        getAttribute() { assert.fail('native activation must not enter brace semantic classification'); },
+      };
+      for (const key of ['Enter', ' ']) {
+        for (const type of ['keydown', 'keyup']) {
+          let prevented = false;
+          listeners.get(type)({ target: handle, key, preventDefault() { prevented = true; } });
+          assert.equal(prevented, false, `${tag} ${type} ${key}`);
+        }
+      }
+    }
+  } finally {
+    document.body = previousBody;
+  }
 });

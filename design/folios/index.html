@@ -87,7 +87,7 @@
                 </nav>
             </section>
 
-            <section class="spw-frame" id="seed-studies" data-spw-kind="frame" data-spw-role="register">
+            <section class="spw-frame" id="seed-studies" data-spw-kind="frame" data-spw-role="register" data-spw-region="cluster">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#seed-studies">^seed_studies</a>
                     <h2>Seed Studies for the Folio Archive</h2>
@@ -101,13 +101,6 @@
                         <p class="frame-card-kicker">Folio Study 01 • seed study</p>
                         <h3>Kinetic folding study</h3>
 
-                        <div class="mode-switch folio-lens-switcher" role="group" aria-label="Folio reading lens" data-spw-operator="mode" data-spw-semantic-expression="folio[art]{open.sit}">
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="art" aria-pressed="true">.art</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="design" aria-pressed="false">^design</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="skill" aria-pressed="false">#skill</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="community" aria-pressed="false">~community</button>
-                        </div>
-
                         <figure class="image-study topic-photo-card">
                             <img src="/public/images/renders/papergami/papergami-kinetic.webp" alt="A kinetic papergami artwork with geometric folds and shadows." loading="lazy" width="600" height="400">
                             <figcaption>
@@ -115,28 +108,35 @@
                                 <span>Geometric relief showing sharp light-and-shadow facets on a neutral cream substrate.</span>
                             </figcaption>
                         </figure>
+
+                        <div class="mode-switch folio-lens-switcher" data-spw-kind="lens" data-spw-lens-chrome="silent quiet" role="group" aria-label="Folio reading lens" data-spw-operator="mode" data-spw-semantic-expression="folio[art]{crease.open}">
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="art" aria-pressed="true">.art</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="design" aria-pressed="false">^design</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="skill" aria-pressed="false">#skill</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="community" aria-pressed="false">~community</button>
+                        </div>
                         <dl class="folio-card__readings">
-                            <div data-mode-group="folio-study-01" data-mode-panel="art">
+                            <div data-mode-group="folio-study-01" data-mode-panel="art" data-spw-kind="lens">
                                 <dt>Art reading</dt>
                                 <dd>Faceted shadows, crisp paper creases, dynamic lighting balance.</dd>
                             </div>
-                            <div data-mode-group="folio-study-01" data-mode-panel="design" hidden>
+                            <div data-mode-group="folio-study-01" data-mode-panel="design" data-spw-kind="lens" hidden>
                                 <dt>Design reading</dt>
                                 <dd>Structural repeat grid, modular component alignment.</dd>
                             </div>
-                            <div data-mode-group="folio-study-01" data-mode-panel="skill" hidden>
+                            <div data-mode-group="folio-study-01" data-mode-panel="skill" data-spw-kind="lens" hidden>
                                 <dt>Skill reading</dt>
                                 <dd>Practice rhythm: translate 3D physical depth into 2D interface layering.</dd>
                             </div>
-                            <div data-mode-group="folio-study-01" data-mode-panel="community" hidden>
+                            <div data-mode-group="folio-study-01" data-mode-panel="community" data-spw-kind="lens" hidden>
                                 <dt>Community reading</dt>
                                 <dd>Seed specimen for testing how dimensional paper studies become design-system references.</dd>
                             </div>
                         </dl>
                         <p data-spw-textual-role="note">Try it: find one fold that could become a card edge, a divider, or an opening gesture.</p>
                         <div class="folio-probe" id="folio-fold-probe" data-folio-probe="fold" role="group" aria-label="Try a fold as a component">
-                            <fieldset>
-                                <legend>Component: rest or open</legend>
+                            <fieldset aria-describedby="folio-fold-result">
+                                <legend>Try opening the fold</legend>
                                 <label>
                                     <input type="radio" name="folio-fold" value="rest" checked>
                                     Rest
@@ -146,7 +146,7 @@
                                     Open
                                 </label>
                             </fieldset>
-                            <div class="folio-probe__stage">
+                            <div class="folio-probe__stage" id="folio-fold-result">
                                 <div class="folio-probe__card">
                                     <span class="folio-probe__edge" aria-hidden="true"></span>
                                     <p class="folio-probe__rest">Quiet at rest. The fold is only an edge.</p>
@@ -160,13 +160,6 @@
                         <p class="frame-card-kicker">Folio Study 02 • seed study</p>
                         <h3>Botanical structure study</h3>
 
-                        <div class="mode-switch folio-lens-switcher" role="group" aria-label="Folio reading lens" data-spw-operator="mode" data-spw-semantic-expression="folio[art]{open.sit}">
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="art" aria-pressed="true">.art</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="design" aria-pressed="false">^design</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="skill" aria-pressed="false">#skill</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="community" aria-pressed="false">~community</button>
-                        </div>
-
                         <figure class="image-study topic-photo-card">
                             <img src="/public/images/renders/papergami/papergami-botanical.webp" alt="A papergami design resembling organized botanical patterns." loading="lazy" width="600" height="400">
                             <figcaption>
@@ -174,20 +167,27 @@
                                 <span>Layered concentric folds mimicking organic growth structures and natural curves.</span>
                             </figcaption>
                         </figure>
+
+                        <div class="mode-switch folio-lens-switcher" data-spw-kind="lens" data-spw-lens-chrome="silent quiet" role="group" aria-label="Folio reading lens" data-spw-operator="mode" data-spw-semantic-expression="folio[art]{branch.open}">
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="art" aria-pressed="true">.art</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="design" aria-pressed="false">^design</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="skill" aria-pressed="false">#skill</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="community" aria-pressed="false">~community</button>
+                        </div>
                         <dl class="folio-card__readings">
-                            <div data-mode-group="folio-study-02" data-mode-panel="art">
+                            <div data-mode-group="folio-study-02" data-mode-panel="art" data-spw-kind="lens">
                                 <dt>Art reading</dt>
                                 <dd>Organic curves blended with mechanical folding constraints.</dd>
                             </div>
-                            <div data-mode-group="folio-study-02" data-mode-panel="design" hidden>
+                            <div data-mode-group="folio-study-02" data-mode-panel="design" data-spw-kind="lens" hidden>
                                 <dt>Design reading</dt>
                                 <dd>Concentric radial grid, progressive scale scaling.</dd>
                             </div>
-                            <div data-mode-group="folio-study-02" data-mode-panel="skill" hidden>
+                            <div data-mode-group="folio-study-02" data-mode-panel="skill" data-spw-kind="lens" hidden>
                                 <dt>Skill reading</dt>
                                 <dd>Practice rhythm: design responsive layouts using biological scaling ratios.</dd>
                             </div>
-                            <div data-mode-group="folio-study-02" data-mode-panel="community" hidden>
+                            <div data-mode-group="folio-study-02" data-mode-panel="community" data-spw-kind="lens" hidden>
                                 <dt>Community reading</dt>
                                 <dd>Seed specimen for connecting organic form, layout rhythm, and future curriculum notes.</dd>
                             </div>
@@ -234,13 +234,6 @@
                         <p class="frame-card-kicker">Folio Study 03 • seed study</p>
                         <h3>Cubes & perspective study</h3>
 
-                        <div class="mode-switch folio-lens-switcher" role="group" aria-label="Folio reading lens" data-spw-operator="mode" data-spw-semantic-expression="folio[art]{open.sit}">
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="art" aria-pressed="true">.art</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="design" aria-pressed="false">^design</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="skill" aria-pressed="false">#skill</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="community" aria-pressed="false">~community</button>
-                        </div>
-
                         <figure class="image-study topic-photo-card">
                             <img src="/public/images/renders/papergami/papergami-cubes.webp" alt="An isometric papergami structure of interlocking cubes." loading="lazy" width="600" height="400">
                             <figcaption>
@@ -248,20 +241,27 @@
                                 <span>Isometric block alignment exploring spatial depth and perspective grid mechanics.</span>
                             </figcaption>
                         </figure>
+
+                        <div class="mode-switch folio-lens-switcher" data-spw-kind="lens" data-spw-lens-chrome="silent quiet" role="group" aria-label="Folio reading lens" data-spw-operator="mode" data-spw-semantic-expression="folio[art]{stack.open}">
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="art" aria-pressed="true">.art</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="design" aria-pressed="false">^design</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="skill" aria-pressed="false">#skill</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="community" aria-pressed="false">~community</button>
+                        </div>
                         <dl class="folio-card__readings">
-                            <div data-mode-group="folio-study-03" data-mode-panel="art">
+                            <div data-mode-group="folio-study-03" data-mode-panel="art" data-spw-kind="lens">
                                 <dt>Art reading</dt>
                                 <dd>Isometric projection, stark high-contrast angles, geometric density.</dd>
                             </div>
-                            <div data-mode-group="folio-study-03" data-mode-panel="design" hidden>
+                            <div data-mode-group="folio-study-03" data-mode-panel="design" data-spw-kind="lens" hidden>
                                 <dt>Design reading</dt>
                                 <dd>Three-axis coordinate alignment, structured visual containment.</dd>
                             </div>
-                            <div data-mode-group="folio-study-03" data-mode-panel="skill" hidden>
+                            <div data-mode-group="folio-study-03" data-mode-panel="skill" data-spw-kind="lens" hidden>
                                 <dt>Skill reading</dt>
                                 <dd>Practice rhythm: translate spatial coordinate projections to canvas rendering.</dd>
                             </div>
-                            <div data-mode-group="folio-study-03" data-mode-panel="community" hidden>
+                            <div data-mode-group="folio-study-03" data-mode-panel="community" data-spw-kind="lens" hidden>
                                 <dt>Community reading</dt>
                                 <dd>Seed specimen for translating perspective studies into rendering and SVG experiments.</dd>
                             </div>
@@ -271,7 +271,7 @@
                 </div>
             </section>
 
-            <section class="spw-frame" id="collect-a-folio" data-spw-kind="frame" data-spw-role="reference">
+            <section class="spw-frame" id="collect-a-folio" data-spw-kind="frame" data-spw-role="reference" data-spw-region="read">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#collect-a-folio">#&gt;collect_a_folio</a>
                     <h2>From my worktable to yours.</h2>
@@ -337,7 +337,7 @@
                 <p><a href="/contact/">Talk to me about a folio →</a> · <a href="/services/#pricing">Explore current commission prices →</a> · <a href="/design/interaction-design/">Interaction design →</a></p>
             </section>
 
-            <section class="spw-frame" id="how-to-read" data-spw-kind="frame" data-spw-role="reference">
+            <section class="spw-frame" id="how-to-read" data-spw-kind="frame" data-spw-role="reference" data-spw-region="read">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#how-to-read">?how_to_read</a>
                     <h2>How to Read a Folio</h2>
@@ -365,7 +365,7 @@
                 </div>
             </section>
 
-            <section class="spw-frame" id="processing-loop" data-spw-kind="frame" data-spw-role="reference">
+            <section class="spw-frame" id="processing-loop" data-spw-kind="frame" data-spw-role="reference" data-spw-region="read">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#processing-loop">~processing_loop</a>
                     <h2>How a folio becomes a release</h2>
@@ -401,7 +401,7 @@
                 </div>
             </section>
 
-            <section class="spw-frame" id="training-value" data-spw-kind="frame" data-spw-role="reference">
+            <section class="spw-frame" id="training-value" data-spw-kind="frame" data-spw-role="reference" data-spw-region="read">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#training-value">#training_value</a>
                     <h2>Training Value</h2>
@@ -411,7 +411,7 @@
                 </p>
             </section>
 
-            <section class="spw-frame" id="community-value" data-spw-kind="frame" data-spw-role="reference">
+            <section class="spw-frame" id="community-value" data-spw-kind="frame" data-spw-role="reference" data-spw-region="read">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#community-value">~community_value</a>
                     <h2>Community and Brand Value</h2>
@@ -424,7 +424,7 @@
                 </p>
             </section>
 
-            <section class="spw-frame" id="adjacent-routes" data-spw-kind="frame" data-spw-role="routing">
+            <section class="spw-frame" id="adjacent-routes" data-spw-kind="frame" data-spw-role="routing" data-spw-region="path">
                 <aside class="spw-route-bridge" aria-labelledby="folios-adjacent-title">
                     <header>
                         <h3 id="folios-adjacent-title">Next stops</h3>

@@ -552,6 +552,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   gap: 0.12rem;
   min-inline-size: 0;
   min-block-size: var(--touch-target-min, 2.75rem);
+  min-height: var(--touch-target-min, 2.75rem);
   padding: 0.38rem 0.24rem;
   border-radius: calc(var(--home-radius-sm) - 2px);
   font-family: var(--site-ui-font, system-ui, sans-serif);
@@ -835,7 +836,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   letter-spacing: -0.02em;
 }
 
-:where(body[data-spw-surface="home"] .frame-sigil) {
+:where(body[data-spw-surface="home"] :not(.mode-switch) > .frame-sigil) {
   display: inline-flex;
   align-items: center;
   justify-content: center;

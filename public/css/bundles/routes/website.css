@@ -2218,12 +2218,13 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
 
 :where(body[data-spw-page-seed="page_design_folios"]) .folio-probe {
   display: grid;
-  gap: 0.55rem;
-  margin-block-start: 0.2rem;
-  padding: 0.62rem;
-  border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
-  border-radius: var(--shape-small, 0.55rem);
-  background: color-mix(in srgb, var(--matte-surface, #f4efe6) 88%, transparent);
+  gap: 0.8rem;
+  margin-block-start: 0.4rem;
+  padding: 0.8rem 0;
+  border: 0;
+  border-block-start: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
 }
 
 :where(body[data-spw-page-seed="page_design_folios"]) .folio-probe fieldset {
@@ -2255,6 +2256,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   background: color-mix(in srgb, var(--surface-strong, #fff) 88%, transparent);
   cursor: pointer;
   font-size: 0.84rem;
+  color: var(--ink);
 }
 
 :where(body[data-spw-page-seed="page_design_folios"]) .folio-probe label:has(:focus-visible) {
@@ -2281,7 +2283,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
   border-radius: var(--shape-small, 0.55rem);
   background: color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
-  transition: transform 280ms ease, box-shadow 280ms ease;
+  transition: box-shadow 280ms ease;
 }
 
 :where(body[data-spw-page-seed="page_design_folios"]) .folio-probe__edge {
@@ -2306,8 +2308,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
 }
 
 :where(body[data-spw-page-seed="page_design_folios"]) .folio-probe[data-folio-probe="fold"]:has([value="open"]:checked) .folio-probe__card {
-  transform: translateX(0.4rem);
-  box-shadow: 0 0.45rem 1.1rem color-mix(in srgb, var(--op-object-color, #c58b2a) 22%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #c58b2a) 45%, transparent);
 }
 
 :where(body[data-spw-page-seed="page_design_folios"]) .folio-probe[data-folio-probe="fold"]:has([value="open"]:checked) .folio-probe__edge {
@@ -2389,11 +2390,6 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
 @media (prefers-reduced-motion: reduce) {
   :where(body[data-spw-page-seed="page_design_folios"]) :is(.folio-probe__card, .folio-probe__edge, .folio-probe__unit, .folio-probe__branches, .folio-probe__branches circle) {
     transition: none;
-  }
-
-  :where(body[data-spw-page-seed="page_design_folios"]) .folio-probe[data-folio-probe="fold"]:has([value="open"]:checked) .folio-probe__card {
-    transform: none;
-    box-shadow: none;
   }
 }
 }

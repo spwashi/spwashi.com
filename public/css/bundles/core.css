@@ -40318,11 +40318,13 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   }
 }
 
-/* Cluster F — phone density; 2×2 for multi-option tracks (not row) */
+/* Cluster F — phone density; 2×2 for multi-option tracks (not row).
+   Keep the 44px floor. Compact type is fine; shrinking the tap height is not. */
 @media (max-width: 48rem) {
   .mode-switch .frame-sigil {
     min-inline-size: 0;
-    min-block-size: max(2.15rem, var(--touch-target-compact, 2.15rem));
+    min-block-size: var(--touch-target-min, 2.75rem);
+    min-height: var(--touch-target-min, 2.75rem);
     padding-inline: 0.4rem;
     font-size: clamp(0.68rem, 3.2vw, 0.8rem);
   }
@@ -40422,7 +40424,10 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   inline-size: auto;
   width: auto;
   max-width: 100%;
-  min-height: calc(var(--spw-control-min-height, 2.1rem) - 0.22rem);
+  min-height: max(
+    var(--touch-target-min, 2.75rem),
+    calc(var(--spw-control-min-height, 2.1rem) - 0.22rem)
+  );
   padding: calc(var(--spw-control-padding-block, 0.24rem) - 0.04rem) calc(var(--spw-control-padding-inline, 0.72rem) - 0.08rem);
   border: var(--mode-switch-border-width) solid var(--mode-switch-idle-border);
   border-radius: var(--spw-control-radius, var(--shape-control, 0.68rem));
@@ -42142,7 +42147,10 @@ html[data-spw-cognitive-handles="off"] :where(
   }
 
   .mode-switch .frame-sigil {
-    min-height: calc(var(--spw-control-min-height, 2.02rem) - 0.06rem);
+    min-height: max(
+      var(--touch-target-min, 2.75rem),
+      calc(var(--spw-control-min-height, 2.02rem) - 0.06rem)
+    );
     padding-inline: var(--spw-control-padding-inline, 0.6rem);
   }
 

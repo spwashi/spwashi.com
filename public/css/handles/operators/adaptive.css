@@ -41,7 +41,10 @@
   }
 
   .mode-switch .frame-sigil {
-    min-height: calc(var(--spw-control-min-height, 2.02rem) - 0.06rem);
+    min-height: max(
+      var(--touch-target-min, 2.75rem),
+      calc(var(--spw-control-min-height, 2.02rem) - 0.06rem)
+    );
     padding-inline: var(--spw-control-padding-inline, 0.6rem);
   }
 
