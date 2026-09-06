@@ -5,10 +5,20 @@
  * Usage:
  *   node scripts/maintain-plan-directory-indexes.mjs --check
  *   node scripts/maintain-plan-directory-indexes.mjs --force-generated
+ *   node scripts/maintain-plan-directory-indexes.mjs --only <slug> [--check]
  *
  * Reviewed plan trees are authored surfaces. The default write path refuses to
  * replace file-local review decisions; --force-generated is intentionally
  * destructive and exists only for an explicit, human-reviewed rebuild.
+ *
+ * --only <slug> onboards exactly one new plan directory (matched by its
+ * relative path or basename under .agents/plans/) without touching the rest
+ * of the reviewed tree: it writes that directory's index.spw only if the
+ * file does not already exist, and never rewrites an existing index.spw, a
+ * named .spw file, wip.spw, or the root plans/index.spw. A directory whose
+ * index.spw already exists must go through review + --force-generated like
+ * everything else. Root-index wiring for the new plan still waits on that
+ * next reviewed rebuild.
  */
 
 import fs from 'node:fs';
@@ -22,6 +32,10 @@ const PLANS_ROOT = path.join(REPO_ROOT, '.agents', 'plans');
 const PLANS_INDEX = path.join(PLANS_ROOT, 'index.spw');
 const CHECK = process.argv.includes('--check');
 const FORCE_GENERATED = process.argv.includes('--force-generated');
+const ONLY = (() => {
+  const flagIndex = process.argv.indexOf('--only');
+  return flagIndex === -1 ? null : process.argv[flagIndex + 1] || null;
+})();
 const REVIEW_MARKER = /^# Review \d{4}-\d{2}-\d{2} — /;
 
 const ARTIFACT_NAMES = new Set(['PLAN.md', 'FIX.md', 'wip.spw', 'index.spw']);
@@ -1096,7 +1110,58 @@ function buildPlansRootIndex(planEntries) {
   return `${lines.join('\n')}\n`;
 }
 
+/**
+ * Onboard exactly one new plan directory without a --force-generated rebuild
+ * of the reviewed tree. Safe by construction: it can only ever create a file
+ * that does not exist yet. It never rewrites an existing index.spw, a named
+ * .spw file, wip.spw, or the root plans/index.spw — those still need review
+ * plus a normal --force-generated pass, same as everything else.
+ */
+function runOnlyMode(only) {
+  const planDirs = listPlanDirectories(PLANS_ROOT).sort();
+  const matches = planDirs.filter((dir) => dir === only || path.basename(dir) === only);
+
+  if (matches.length > 1) {
+    console.error(`--only ${only}: matched more than one directory (${matches.join(', ')}). Pass the full relative path to disambiguate.`);
+    process.exit(1);
+  }
+
+  const relDir = matches[0];
+  if (!relDir) {
+    console.error(`--only ${only}: no plan directory matched under .agents/plans (looked for a PLAN.md, FIX.md, or named .spw file).`);
+    process.exit(1);
+  }
+
+  const absDir = path.join(PLANS_ROOT, relDir);
+  const files = fs.readdirSync(absDir);
+  const indexPath = path.join(absDir, 'index.spw');
+
+  if (files.includes('index.spw')) {
+    console.error(
+      `--only ${relDir}: index.spw already exists. --only never overwrites an existing file — ` +
+        'edit it directly, or run a reviewed --force-generated rebuild if it needs regenerating.',
+    );
+    process.exit(1);
+  }
+
+  const slug = path.basename(relDir);
+  const meta = parsePlanArtifact(absDir, slug, files, relDir);
+  const content = buildIndexContent(slug, relDir, files, meta);
+
+  if (CHECK) {
+    console.error(`--only ${relDir}: index.spw missing (would create; --check makes no changes).`);
+    process.exit(1);
+  }
+
+  fs.writeFileSync(indexPath, content.endsWith('\n') ? content : `${content}\n`);
+  console.log(
+    `Created ${path.relative(REPO_ROOT, indexPath)}. ` +
+      'The root plans/index.spw was not touched — wire this plan into it on the next reviewed --force-generated pass.',
+  );
+}
+
 function main() {
+  if (ONLY) return runOnlyMode(ONLY);
   if (guardReviewedPlanTree()) return;
 
   const planDirs = listPlanDirectories(PLANS_ROOT).sort();

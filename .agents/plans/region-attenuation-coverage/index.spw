@@ -1,0 +1,125 @@
+# Review 2026-09-06 — keep owner; generated via --only, new plan, Wave 0 tooling not yet built.
+# Plan Index — Region Attenuation Coverage
+#
+# Give every .spw-frame region on the public site an honest, read-and-judged seat (data-spw-region="hook|hub|cluster|path|read|wide", or an authored decision that it deliberately…
+
+#>plan_region_attenuation_coverage_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Give every .spw-frame region on the public site an honest, read-and-judged seat (data-spw-region="hook|hub|cluster|path|read|wide", or an authored decision that it deliberately carries none) so --spw-wonder-hold attenuation in projection-attenuation.css reflects real spatial and reading relationships everywhere, not only on the handful of routes that happen to have been touched by hand. Six seats stay six; this plan populates the existing ladder, it does not retune or extend it.`
+ owner = `region-attenuation-coverage`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Give every .spw-frame region on the public site an honest, read-and-judged seat (data-spw-region="hook|hub|cluster|path|…`
+ concepts = #[
+  `region`,
+  `attenuation`,
+  `six`,
+  `coverage`,
+  `give`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/region-component-ecology.spw`,
+  `.spw/conventions/projection-attenuation.spw`,
+  `css/systems/projection-attenuation.css`,
+  `.spw/_workbench`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@plan_component_region_personality: ~"../component-region-personality/index.spw"
+@plan_page_region_discoverability: ~"../page-region-discoverability/index.spw"
+@plan_hook_region_anatomy: ~"../hook-region-anatomy/index.spw"
+@plan_component_rhythm_variety: ~"../component-rhythm-variety/index.spw"
+@region_component_ecology: ~"../../../.spw/conventions/region-component-ecology.spw"
+@spw_conventions_projection_attenuation_spw: ~"../../../.spw/conventions/projection-attenuation.spw"
+@public_css_systems_projection_attenuation_css: ~"../../../public/css/systems/projection-attenuation.css"
+@workbench: ~"../../../.spw/_workbench"
+@index: ~"../../../design/folios/index.html"
+@spw: ~"../../../topics/software/spw/"
+@rpg_wednesday: ~"../../../play/rpg-wednesday/"
+@website: ~"../../../about/website/"
+
+dispatch: .{
+ plan = @plan
+ plan_component_region_personality = @plan_component_region_personality
+ plan_page_region_discoverability = @plan_page_region_discoverability
+ plan_hook_region_anatomy = @plan_hook_region_anatomy
+ plan_component_rhythm_variety = @plan_component_rhythm_variety
+ region_component_ecology = @region_component_ecology
+ spw_conventions_projection_attenuation_spw = @spw_conventions_projection_attenuation_spw
+ public_css_systems_projection_attenuation_css = @public_css_systems_projection_attenuation_css
+ workbench = @workbench
+ index = @index
+ spw = @spw
+ rpg_wednesday = @rpg_wednesday
+ website = @website
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `component-region-personality`,
+  `page-region-discoverability`,
+  `hook-region-anatomy`,
+  `component-rhythm-variety`,
+ ][reg=set]
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-region_attenuation_coverage-001"
+ layer = "pragmatic"
+ hypothesis = `Give every .spw-frame region on the public site an honest, read-and-judged seat (data-spw-region="hook|hub|cluster|path|read|wide", or an authored decision that it deliberately carries none) so --spw-wonder-hold attenuation in projection-attenuation.css reflects real spatial and reading relationships everywhere, not only on the handful of routes that happen to have been touched by hand. Six seats stay six; this plan populates the existing ladder, it does not retune or extend it.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/region-component-ecology.spw"
+ probe_ref = `rg 'region-attenuation-coverage' .agents/plans/region-attenuation-coverage`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/region-component-ecology.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+next_action: .{
+ step = `Write scripts/spw-region-coverage-audit.mjs (sibling to spw-region-seat-audit.mjs, same file-listing approach, opposite direction) and an npm script for it.`
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `Add a durable, reporting-only audit for the missing direction. scripts/spw-region-seat-audit.mjs already checks one direction (data-spw-region authored without .spw-frame); it does not check the other (.spw-frame authored without data-spw-region or an established region-role alias). Add a sibling script, not a rewrite of that file's single-purpose check.`,
+  `Work route-family by route-family, in the order of the table above. For every untagged .spw-frame in the wave's route(s): read its actual content and role, then either`,
+  `assign one of the six seats, matching the same reasoning as folios (a coupled kin-set of siblings is cluster; prose/reference sections are read; a nav bridge to other routes is path; an entry/hero is hook; a landing/conducting point is hub; a two-level flex desk is wide), or`,
+  `record that the frame is deliberately regionless (a leftover/pack-body/component-container seat per region-component-ecology.spw#seats.leftover), or`,
+ ][reg=set]
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does region-attenuation-coverage own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of region-attenuation-coverage?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Give every .spw-frame region on the public site an honest, read-and-judged seat (data-spw-region="hook|hub|cluster|path|read|wide", or an…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
