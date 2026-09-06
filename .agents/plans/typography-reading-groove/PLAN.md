@@ -33,6 +33,37 @@ Shipped as `initReadingGroove()` in `attention/reading-groove.js`. The leading b
 
 ## Validation
 
+### Touch ownership alignment — 2026-09-06
+
+Operation: align; fixity: stable. Named slice: pinch ownership.
+Review of attention-cue-gestures, typography-reading-groove, chrome-navigation-wonder,
+folio-worktable and microinteraction-motion-lifecycle found a concrete gap in the
+shipped touch-safety requirement: pinch-scale checked only TouchEvent.target,
+so a second contact on a control or outside main could still resize text. A
+third contact left the previous gesture active; disabling the preference during
+a move left preview attributes behind.
+
+Require both Touch targets to originate in eligible reading content, including
+respect for inherited contenteditable. Observe document touch events so a third
+contact outside main cancels ownership too. Invalid touch counts and a disabled
+preference release preview state before preventing default or changing settings.
+Existing canonical settings remain the sole persistence owner.
+
+Regression: `scripts/tests/pinch-scale.test.mjs` exercises mixed reading/control,
+editable and outside contacts, normal scaling, third-touch interruption,
+preference disable on move, end/cancel and cleanup. Visual verification omitted
+at user request; this is a gesture ownership correction, not a motion taste change.
+Validation result: all 253 module tests passed; JS syntax and diff whitespace
+passed. `check:local` stopped only at the generated-output gate reporting the
+pre-existing uncommitted `public/css/bundles/core.css`; that concurrent CSS work
+was preserved.
+
+Orphan census context: module-selector audit still reports 13 zero-host entries.
+`local-memory-controls` has a real Clear visits host in `_partials/site-footer.html`;
+source-only route matching misses it. Do not remove or reactivate those entries
+based on that count alone. Open drawer swipe remains a proposed chrome feature,
+not evidence of a broken tap path; no new gesture is added here.
+
 - `git diff --check`
 - `node --check public/js/runtime/attention/reading-groove.js public/js/runtime/attention/pinch-scale.js`
 - targeted `rg` checks for the reading-groove attributes

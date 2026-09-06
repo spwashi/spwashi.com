@@ -118,13 +118,18 @@ export function initPinchTextScale(root) {
     if (!(target instanceof Element)) return false;
     if (!main.contains(target)) return false;
     return !target.closest(
-      'a, button, input, select, textarea, label, summary, details, video, audio, iframe, [contenteditable="true"]'
-    );
+      'a, button, input, select, textarea, label, summary, details, video, audio, iframe'
+    ) && !target.isContentEditable;
   };
 
   const handleTouchStart = (event) => {
-    if (event.touches.length !== 2) return;
-    if (!isAllowedTarget(event.target)) return;
+    // TouchEvent.target names only one contact. Every contact must belong to
+    // the reading surface before this enhancement can take over native zoom.
+    if (event.touches.length !== 2
+      || !Array.from(event.touches).every((touch) => isAllowedTarget(touch.target))) {
+      if (state.active) clearPinchState();
+      return;
+    }
     if (!isPinchTextScaleEnabled(doc)) {
       announcePinchDisabledHint(doc);
       return;
@@ -154,8 +159,11 @@ export function initPinchTextScale(root) {
   };
 
   const handleTouchMove = (event) => {
-    if (!state.active || event.touches.length !== 2) return;
-    if (!isPinchTextScaleEnabled(doc)) return;
+    if (!state.active) return;
+    if (event.touches.length !== 2 || !isPinchTextScaleEnabled(doc)) {
+      clearPinchState();
+      return;
+    }
 
     const distance = getTouchDistance(event.touches);
     if (!(distance > 0) || !(state.startDistance > 0)) return;
@@ -197,10 +205,11 @@ export function initPinchTextScale(root) {
     clearPinchState();
   };
 
-  main.addEventListener('touchstart', handleTouchStart, { passive: true, signal });
-  main.addEventListener('touchmove', handleTouchMove, { passive: false, signal });
-  main.addEventListener('touchend', handleTouchEnd, { passive: true, signal });
-  main.addEventListener('touchcancel', handleTouchEnd, { passive: true, signal });
+  // Observe the full touch set, including a third contact outside main.
+  doc.addEventListener('touchstart', handleTouchStart, { passive: true, signal });
+  doc.addEventListener('touchmove', handleTouchMove, { passive: false, signal });
+  doc.addEventListener('touchend', handleTouchEnd, { passive: true, signal });
+  doc.addEventListener('touchcancel', handleTouchEnd, { passive: true, signal });
 
   return () => {
     abort.abort();
