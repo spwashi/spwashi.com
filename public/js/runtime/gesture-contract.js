@@ -27,6 +27,25 @@ export const GESTURE_TARGET_SELECTOR = [
   '[data-spw-interaction-contract]',
 ].join(', ');
 
+export const TOUCH_TARGET_SELECTOR = [
+  'button',
+  'summary',
+  'input[type="button"]',
+  'input[type="submit"]',
+  'input[type="reset"]',
+  '[role="button"]',
+  '.spw-chip',
+  '.frame-sigil',
+].join(', ');
+
+export const TOUCH_SEMANTICS = Object.freeze({
+  targetSelector: TOUCH_TARGET_SELECTOR,
+  minimumTarget: '2.75rem',
+  touchAction: 'manipulation',
+  stateParity: 'focus-visible | active | pressed',
+  note: 'Coarse-pointer controls receive the shared target and direct-tap contract in components/foundation.css.',
+});
+
 export const GESTURE_VOCABULARY = Object.freeze({
   ground: Object.freeze({
     label: 'Ground',
@@ -93,6 +112,7 @@ export const GESTURE_SPELL_SEEDS = Object.freeze([
 
 export const SPW_GESTURE_CONTRACT = Object.freeze({
   selector: GESTURE_TARGET_SELECTOR,
+  touch: TOUCH_SEMANTICS,
   vocabulary: GESTURE_VOCABULARY,
   seeds: GESTURE_SPELL_SEEDS,
 });
@@ -215,6 +235,7 @@ export function describeGestureTarget(target) {
   const element = resolveGestureTarget(target);
   if (!(element instanceof HTMLElement)) return null;
   const context = describeElementContext(element);
+  const touchTarget = element.matches(TOUCH_TARGET_SELECTOR);
   return {
     target: context?.target || '',
     label: context?.label || '',
@@ -226,6 +247,12 @@ export function describeGestureTarget(target) {
     semanticExpression: element.dataset.spwSemanticExpression || '',
     semanticKey: element.dataset.spwSemanticKey || '',
     operator: element.dataset.spwOperator || '',
+    touch: touchTarget ? {
+      target: 'coarse-pointer control',
+      minimumTarget: TOUCH_SEMANTICS.minimumTarget,
+      touchAction: TOUCH_SEMANTICS.touchAction,
+      stateParity: TOUCH_SEMANTICS.stateParity,
+    } : null,
   };
 }
 
@@ -245,7 +272,9 @@ export function describeGestureContract() {
       'Charge previews without navigation.',
       'Project opens a tray or semantic menu on purpose.',
       'Settle closes the nearest charged or projected layer.',
+      `Coarse-pointer controls use ${TOUCH_SEMANTICS.minimumTarget} targets and ${TOUCH_SEMANTICS.touchAction} touch handling.`,
     ],
+    touch: TOUCH_SEMANTICS,
   };
 }
 

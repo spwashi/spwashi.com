@@ -15611,6 +15611,24 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 }
 
 @media (pointer: coarse) {
+  /* Touch semantics: controls own a predictable target and a direct tap
+     gesture. Ordinary anchors remain content-shaped; chips and sigils are
+     the site's explicit interaction vocabulary. */
+  :where(
+    button,
+    summary,
+    input[type="button"],
+    input[type="submit"],
+    input[type="reset"],
+    [role="button"],
+    .spw-chip,
+    .frame-sigil
+  ) {
+    min-block-size: var(--touch-target-min, 2.75rem);
+    min-inline-size: var(--touch-target-min, 2.75rem);
+    touch-action: manipulation;
+  }
+
   :where(
     .frame-card,
     .media-card,
