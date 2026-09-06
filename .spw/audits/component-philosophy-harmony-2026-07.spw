@@ -44,6 +44,49 @@
 @js_architecture_cognition: ~"../conventions/js-architecture-cognition.spw"
 @metaphor_dimensional_lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"
 @build_runtime_performance_audit: ~"./build-runtime-performance-2026-07/index.spw"
+@expression_consequence: ~"../conventions/semantic-expression-consequence.spw"
+@electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
+@expression_runtime: ~"../../public/js/runtime/expression-resonance.js"
+@target_runtime: ~"../../public/js/runtime/attention/resonance-probe.js"
+
+^"stills_local_resonance_review_2026_09_05"{
+  operation = "audit"
+  fixity = "tending"
+  focus = `Component expectation and relation legibility; primary element fire (local consequence), secondary air (readable separation). Opportunities are experimental, not implementation instructions.`
+  source_head = `36e86c84; review preserves the separate working-tree touch-gesture audit.`
+  receipts = .{
+    current_pack = `design/components/captures/runs/2026-09-05/checks/17-31-16--275148/captures/pocket/`
+    viewed = `03-home-entrance-closed.jpg (preceding review), 05-about-opening.jpg, 13-folio-fold-rest.jpg, 14-folio-fold-open.jpg, 16-folio-growth-branch.jpg`
+    comparison_pack = `design/components/captures/runs/2026-09-04/checks/23-23-39--184f46/; viewed pocket/01-software-opening.jpg and pocket--operator-probe/01-software-frame-probe.jpg; manifest records software overflowX=true, presence=overfull, inlineSize=357.`
+    excluded = `2026-09-04/checks/10-48-18--fb4e0b/captures/pocket/19-frame-card.jpg and 21-operator-chip.jpg were opened and visually blank. File existence and a non-error filename do not establish a usable specimen.`
+    limits = `Pocket only; no desktop parity or gesture timing proof. Capture runner sets capture-mode=screenshot; anatomy labels and pinned probes are not evidence of default reader appearance. Folio pair also differs in adjacent lens caption visibility, so it is not an isolated pixel comparison.`
+  }[reg=facet]
+  component_expectations = #[
+    .{ component = `Home entrance cards` ; observed = `Clear audience heading, short reason, wrapping route chips. Repeated teal borders give destinations similar visual weight.` ; expected = `Card explains a choice; individual link performs it. Focusing a child link should identify its destination without making the whole list item look like another activation target.` ; owner = `index.html#choose-your-entrance; .spw-role-hooks and .spw-role-hooks__routes` }[reg=facet],
+    .{ component = `About opening` ; observed = `Lens controls, kernel/lattice/hospitality chips and anatomy controls precede clipped body prose in this capture.` ; expected = `Person and readable proposition remain easy to find; lens changes content, anatomy changes presentation. Those two axes need distinguishable weight.` ; owner = `about/index.html; shared mode-switch/frame anatomy; verify default capture-off posture before attributing inspector density to public design` }[reg=facet],
+    .{ component = `Software opening and frame probe` ; observed = `The probe frame contains broad edge/ring changes around multiple containers; the prose is clipped on the right in both images.` ; expected = `A reader can identify source and related destination before interpreting the field. Same operator demonstrates a grammatical relation, not necessarily shared topic.` ; owner = `topics/software/index.html; effects/wonder.css; runtime/attention/resonance-probe.js` }[reg=facet],
+    .{ component = `Folio fold` ; observed = `Rest/Open radios, changed edge and adjacent explanatory sentence form a legible local consequence. Nested teal outlines remain strong even at rest.` ; expected = `Selected radio is the decision; edge is the demonstration; readout explains the consequence. Enclosing borders should not compete with that difference.` ; owner = `design/folios/index.html#folio-fold-probe; public/css/routes/surfaces/design.css :has([value="open"]:checked)` }[reg=facet],
+    .{ component = `Folio growth` ; observed = `Branch selection, concentric diagram and room constraint readout share one panel; the next study starts below it.` ; expected = `Show what changed, why room constrains it, and a reversible next choice. The diagram is an explanatory projection; the still does not prove measured collision avoidance.` ; owner = `design/folios/index.html#folio-growth-probe; public/css/routes/surfaces/design.css checked-state rules` }[reg=facet]
+  ][reg=set]
+  relation_coordinates = .{
+    grammatical = `Same operator or operator family: existing wonder.css + resonance-probe. A faint shared accent is appropriate; it must not imply identical content or destination.`
+    semantic = `Same authored subject/mode/part/projection or living-term concept: expression-resonance. Source should be strongest, exact subject stronger than incidental shared part. Do not infer equivalence from matching color or a broad word such as open.`
+    pragmatic = `Same destination: existing data-spw-target/target-kin. Useful next step: explicit anchor or local checked-state result. Sequence and similarity are different relations; a commission link is a next move from a study, not a synonym for the study.`
+    local_arc = `Source → nearby counterpart → understandable consequence → settle/return. Prefer edge, underline and adjacent explanation within the region. A cross-page lightning line is not required, and distant/offscreen glow alone cannot explain a relation.`
+  }[reg=facet]
+  opportunities = #[
+    .{ priority = `first` ; place = `Folio fold study` ; relation = `Pragmatic: material fold → component edge → rest/open behavior` ; candidate = `Keep native radio/CSS ownership; echo only the studied edge and its nearby explanation after selection, then return to the quiet rest. Add a descriptive local anchor only if a later example helps apply the rule.` ; benefit = `The physical study teaches a reusable interface decision.` ; gate = `The reader can name what changed without relying on motion or color; native radio keyboard operation and no-JS result survive. No shared runtime needed.` }[reg=facet],
+    .{ priority = `second` ; place = `Home entrance sorter` ; relation = `Pragmatic: repeated destination across audience cards` ; candidate = `Where two links really share a destination, author the same existing data-spw-target value and let target-kin expose that bridge. Current entrance links at index.html:395-425 lack target keys; href alone does not drive applyTargetKin(). Keep distinct anchors distinct when they offer different outcomes.` ; benefit = `A visitor sees that interests can share a next stop without collapsing audience identity.` ; gate = `Focus one link; matching destination gets a restrained cue; a same-sigil unrelated link is not mistaken for the same destination. Focus-out clears the cue; navigation remains native.` }[reg=facet],
+    .{ priority = `third` ; place = `Folio study lenses` ; relation = `Semantic: one study practice across distinct artifacts` ; candidate = `Decide whether matching lens controls should resonate at all before changing authoring. All three groups currently carry folio[art]{open.sit}; kinOf() excludes other === expression, so identical groups do not light each other through that expression path. Distinct meaningful study expressions with shared subject can support comparison, but do not invent differences merely to force an effect.` ; benefit = `A reader can compare the same design question across different artifacts.` ; gate = `Choose a meaningful relation and a nearby visible comparison; related study is indicated without changing its selected lens. Regenerate expression manifest if authoring changes.` }[reg=facet],
+    .{ priority = `after containment` ; place = `Software concept explanation` ; relation = `Semantic: term → corresponding explanation or working example` ; candidate = `Use an existing authored concept/expression pair to highlight one useful explanation before widening to all operator peers. Keep a plain anchor for travel; a glow should reveal where the example lives.` ; benefit = `Grammar becomes an available next action rather than an ambient outline system.` ; gate = `Repair/recheck clipped prose in a current default pocket view first; compare rest/source/kin/cleared states, with an unrelated same-operator control as negative evidence.` }[reg=facet]
+  ][reg=set]
+  source_alignment_gaps = .{
+    projection_priority = `semantic-expression-consequence.spw orders subject > mode > projection > part. kinStrength agrees (1 / 0.7 / 0.55 / 0.45), but kinOf() visits parts before projection and keeps the first relation per expression. A pair sharing both can be labeled weaker part kin. Verify with a dual-match fixture before claiming ranked coupling is aligned.`
+    scope = `Expression indexing and destination matching are document-wide, not nearest-region-limited. Region attenuation can reduce paint; it does not itself make the relation local. Local selection/capping would be a separate runtime design decision.`
+    capture = `systems/expression-resonance.css suppresses non-living transient kin shadows in non-default capture mode. Ordinary screenshot stills can under-report live expression resonance; use an explicit capture-off interaction receipt before concluding the runtime is inert.`
+  }[reg=facet]
+  validation_gate = `No HTML/CSS/JS changed. Review uses existing captures plus source/manifest traces. Next experiment: one folio panel, rest → focus → selected → rest, pocket and wide, keyboard and touch, reduced motion and JS off. Photograph source and consequence together; require unrelated neighbors to remain quiet. Prior local test passes are not new visual proof.`
+}[reg=facet]
 
 audit_run: .{
   at = `2026-07-09`
