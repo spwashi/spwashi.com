@@ -85,32 +85,33 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
-        "title": "Package the work as a readable offer",
-        "summary": "If you are hiring, commissioning, or comparing, the page should say what happens next without making people decode it.",
-        "href": "/services/",
-        "cta": "Review services",
-        "presentation": "toast",
+        "title": "Keep a configuration that fits how you read",
+        "summary": "Presets, workflow, and climate stay in this browser. One change is enough to feel the page answer.",
+        "href": "/settings/#presets",
+        "cta": "Open presets",
+        "why": "Quick Start is the fastest useful control surface on the site.",
+        "presentation": "inline",
         "promotion": {
           "kind": "service",
-          "audience": "people deciding whether the service fits the current problem",
-          "offer": "A readable way to understand the work before a call",
-          "proof": "The service page already names the routes, artifacts, and support path.",
-          "objection": "It should be obvious what happens after the first click.",
-          "urgency": "A clear decision path reduces the chance of stalling.",
-          "tone": "direct",
+          "audience": "people who want the site to match how they actually read",
+          "offer": "A browser-local preset, workflow, and climate you can keep",
+          "proof": "Settings saves in this browser and the rest of the site already listens.",
+          "objection": "It should change the page, not just document the knobs.",
+          "urgency": "The first useful change is a preset.",
+          "tone": "clear",
           "theme": "signal",
-          "handles": ["service", "clarity", "route", "direct"],
-          "ctaStyle": "secondary",
-          "presentation": "toast"
+          "handles": ["settings", "presets", "climate", "workflow"],
+          "ctaStyle": "primary",
+          "presentation": "inline"
         }
       },
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
-        "title": "Which route feels like a doorway instead of a destination?",
-        "summary": "Some pages are anchors, some are invitations, and some are thresholds. This slot gives the threshold a name.",
-        "href": "/topics/software/",
-        "cta": "Enter topics"
+        "title": "What if this page had a different climate?",
+        "summary": "Climate is the attention posture. Try one, then leave — the site keeps it.",
+        "href": "/settings/#climate-settings",
+        "cta": "Try climate"
       }
     },
     {
@@ -200,18 +201,33 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
-        "title": "Keep the work visible enough to trust",
-        "summary": "People tend to trust a site more when the structure says what it is doing and what it is for.",
-        "href": "/about/website/",
-        "cta": "Inspect the site"
+        "title": "See the layers the pages are built from",
+        "summary": "Design is the public map of the same surfaces Settings tunes: slots, palettes, and reading weather.",
+        "href": "/design/",
+        "cta": "Open design",
+        "why": "The design surface is how the site markets its own layers without a separate brochure.",
+        "presentation": "inline",
+        "promotion": {
+          "kind": "service",
+          "audience": "people who want to see how the site is actually built",
+          "offer": "A readable map of slots, palettes, and the same layers Settings can tune",
+          "proof": "Design and Settings already share workflow, climate, and material language.",
+          "objection": "It should feel like a usable system, not a style guide dump.",
+          "urgency": "The layers are already live on the page you are reading.",
+          "tone": "clear",
+          "theme": "glass",
+          "handles": ["design", "layers", "settings", "slots"],
+          "ctaStyle": "primary",
+          "presentation": "inline"
+        }
       },
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
-        "title": "What does this week want to teach?",
-        "summary": "A weekly frame can carry a larger theme, while daily details keep the site fresh and human.",
-        "href": "/topics/craft/",
-        "cta": "Study craft"
+        "title": "Which layer would you keep if you had to choose one?",
+        "summary": "Workflow, climate, and attention posture are separate levers. The point is to pick one and feel it.",
+        "href": "/settings/#author-workflow-settings",
+        "cta": "Open workflow"
       }
     },
     {
@@ -238,33 +254,33 @@
       "promo": {
         "label": "Weekly promo",
         "operator": "@",
-        "title": "Keep the release rhythm steady",
-        "summary": "Development costs are around $250 per month. The A cycle closes on the 13th and the B cycle closes on the 26th, so direct support keeps the public cadence open.",
-        "href": "/now/",
-        "cta": "Review funding",
-        "why": "One steady contribution helps keep A-cycle and B-cycle releases moving.",
-        "presentation": "modal",
+        "title": "Configure the site you are already on",
+        "summary": "Appearance, density, and chrome are the same layers the pages use. Settings is where you keep a configuration.",
+        "href": "/settings/",
+        "cta": "Open settings",
+        "why": "A kept configuration is more useful than a tour.",
+        "presentation": "inline",
         "promotion": {
           "kind": "service",
-          "audience": "people assessing whether to fund the work",
-          "offer": "A transparent way to keep the A/B release rhythm steady",
-          "proof": "The work costs about $250 per month to keep moving.",
-          "objection": "It should be easy to know where the money goes.",
-          "urgency": "The next A or B release depends on steady support.",
+          "audience": "people deciding whether the site is theirs to tune",
+          "offer": "A browser-local configuration that the rest of the site already honors",
+          "proof": "Presets, workflow, climate, and attention posture are named surfaces, not hidden flags.",
+          "objection": "It should be obvious that a setting changes the page under you.",
+          "urgency": "The first pass is a preset; deeper registers wait until something still feels off.",
           "tone": "direct",
           "theme": "signal",
-          "handles": ["funding", "cadence", "modal", "transparent"],
+          "handles": ["settings", "configuration", "layers", "presets"],
           "ctaStyle": "primary",
-          "presentation": "modal"
+          "presentation": "inline"
         }
       },
       "wonder": {
         "label": "Weekly wonder",
         "operator": "?",
-        "title": "What if a media site could cook its own vocabulary?",
-        "summary": "A route can collect ingredients, reduce a theme, emulsify disciplines, ferment a pattern, and serve a screenshot-ready artifact.",
-        "href": "/design/components/",
-        "cta": "Inspect components"
+        "title": "What would you turn down first?",
+        "summary": "Attention posture is the quiet lever: how much the page asks of you at once.",
+        "href": "/settings/#attention-posture-settings",
+        "cta": "Tune attention"
       }
     },
     {

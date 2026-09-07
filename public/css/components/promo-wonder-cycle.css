@@ -37,17 +37,22 @@
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__meta {
   margin: 0;
   color: var(--ink-soft, rgba(27, 31, 35, 0.68));
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   letter-spacing: 0.02em;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__static-fallback, .promo-wonder-cycle__live) {
+  display: grid;
+  gap: var(--home-gap-md);
+  min-width: 0;
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
   gap: var(--home-gap-md);
-  align-items: start;
+  align-items: stretch;
   min-width: 0;
-  perspective: 900px;
   justify-items: stretch;
 }
 
@@ -58,6 +63,13 @@
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) > * {
   width: 100%;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__weekly-kicker {
+  grid-column: 1 / -1;
+  margin: 0;
+  width: auto;
+  justify-self: start;
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card {
@@ -81,15 +93,7 @@
   transition:
     transform var(--home-transition-base),
     box-shadow var(--home-transition-base),
-    border-color var(--home-transition-base),
-    opacity 220ms var(--ease-settle, ease);
-}
-
-@starting-style {
-  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card {
-    opacity: 0;
-    transform: translateY(0.72rem);
-  }
+    border-color var(--home-transition-base);
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card::after {
@@ -140,21 +144,21 @@
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--home-accent-secondary) 9%, transparent), transparent 52%),
     var(--home-surface-bg-muted);
-  z-index: 1;
-  transform: translateY(0.18rem) rotate(0.18deg);
 }
 
-:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--promo {
-  z-index: 2;
-  transform: translateY(-0.08rem) rotate(-0.14deg);
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--compact {
+  padding: 0.78rem 0.86rem 0.86rem;
+  gap: 0.48rem;
 }
 
-:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card:is(:hover, :focus-within) {
-  border-color: var(--home-accent-line-strong);
-  box-shadow:
-    0 14px 30px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.38);
-  transform: translateY(-0.55rem) rotate(0deg);
+@media (hover: hover) and (pointer: fine) {
+  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card:is(:hover, :focus-within) {
+    border-color: var(--home-accent-line-strong);
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.07),
+      inset 0 1px 0 rgba(255, 255, 255, 0.38);
+    transform: translateY(-2px);
+  }
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card:is(:hover, :focus-within)::after {
@@ -193,7 +197,22 @@
   margin: 0;
   color: color-mix(in srgb, var(--ink, #1b1f23) 88%, transparent);
   line-height: 1.56;
-  max-inline-size: 36ch;
+  max-inline-size: 42ch;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--compact .promo-wonder-cycle__summary {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  font-size: 0.92em;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--compact .promo-wonder-cycle__title-row h3 {
+  font-size: 1rem;
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__why {
@@ -206,34 +225,15 @@
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__handles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  align-items: center;
-}
-
-:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__handle {
-  font-size: 0.72rem;
-}
-
-:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card[data-spw-presentation="modal"] {
-  border-color: color-mix(in srgb, var(--home-accent-line-strong) 60%, transparent);
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.055),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
-}
-
-:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card[data-spw-presentation="modal"] .promo-wonder-cycle__title-row h3 {
-  color: color-mix(in srgb, var(--home-accent-ink) 92%, var(--home-accent-primary) 8%);
+  display: none;
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__cta {
   justify-self: start;
+  align-self: end;
   margin-top: auto;
-}
-
-:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__fallback {
-  margin: 0;
+  display: inline-flex;
+  align-items: center;
 }
 
 @supports (container-type: inline-size) {
@@ -241,7 +241,6 @@
     :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) {
       grid-template-columns: 1fr;
       gap: var(--home-gap-md);
-      perspective: none;
     }
 
     :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) > * {
@@ -250,12 +249,16 @@
       justify-self: stretch;
     }
 
-    :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__card--promo, .promo-wonder-cycle__card--wonder) {
+    :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card:is(:hover, :focus-within) {
       transform: none;
     }
+  }
+}
 
-    :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card:is(:hover, :focus-within) {
-      transform: translateY(-1px);
-    }
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card,
+  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card:is(:hover, :focus-within) {
+    transform: none;
+    transition: border-color var(--home-transition-base), box-shadow var(--home-transition-base);
   }
 }

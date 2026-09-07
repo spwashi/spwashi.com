@@ -901,31 +901,33 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body" data-spw-hydration="ready">
-            <p data-spw-textual-role="note" data-spw-copy-depth="normal">
-                One card makes the work easy to start. One card gives the page a reason to change tomorrow. Both work without JavaScript.
+            <p class="promo-wonder-cycle__intro" data-spw-textual-role="note" data-spw-copy-depth="normal">
+                One card is a next step. One card is a question. The configuration lives in this browser.
             </p>
 
             <!-- Time-forward defaults for crawlers / first paint: kept in sync with promo-wonder-cycle DEFAULT_FEED. -->
             <div class="promo-wonder-cycle__static-fallback" data-spw-copy-source="static-default" data-spw-static-for="promo-wonder-cycle">
-                <article class="promo-wonder-cycle__card" data-spw-cadence="daily" data-spw-copy-unit="home.promoWonderCycle.daily.promo" data-spw-locale="en">
-                    <p class="spec-kicker promo-wonder-cycle__label">Daily promo</p>
-                    <div class="promo-wonder-cycle__title-row">
-                        <span class="frame-card-sigil promo-wonder-cycle__operator" aria-hidden="true">@</span>
-                        <h3>Help the next release land</h3>
-                    </div>
-                    <p class="promo-wonder-cycle__summary">Closes land on the 13th and the 26th. Small support makes the next page easier to ship.</p>
-                    <p class="promo-wonder-cycle__why">A direct contribution keeps the monthly cadence steady.</p>
-                    <a class="spw-chip promo-wonder-cycle__cta" data-spw-handle="true" href="/services/#support" data-spw-operator="perspective">@support</a>
-                </article>
-                <article class="promo-wonder-cycle__card promo-wonder-cycle__card--wonder" data-spw-cadence="daily" data-spw-copy-unit="home.promoWonderCycle.daily.wonder" data-spw-locale="en">
-                    <p class="spec-kicker promo-wonder-cycle__label">Daily wonder</p>
-                    <div class="promo-wonder-cycle__title-row">
-                        <span class="frame-card-sigil promo-wonder-cycle__operator" aria-hidden="true">?</span>
-                        <h3>What changes if the page has a reason to return tomorrow?</h3>
-                    </div>
-                    <p class="promo-wonder-cycle__summary">This slot changes on a schedule so the page has a reason to reopen.</p>
-                    <a class="spw-chip promo-wonder-cycle__cta" data-spw-handle="true" href="/about/website/" data-spw-operator="potential" data-spw-action="explore">~system</a>
-                </article>
+                <div class="promo-wonder-cycle__grid">
+                    <article class="promo-wonder-cycle__card promo-wonder-cycle__card--promo" data-spw-cadence="daily" data-spw-copy-unit="home.promoWonderCycle.daily.promo" data-spw-locale="en">
+                        <p class="spec-kicker promo-wonder-cycle__label">Daily promo</p>
+                        <div class="promo-wonder-cycle__title-row">
+                            <span class="frame-card-sigil promo-wonder-cycle__operator" aria-hidden="true">@</span>
+                            <h3>Keep a configuration that fits how you read</h3>
+                        </div>
+                        <p class="promo-wonder-cycle__summary">Presets, workflow, and climate stay in this browser. One change is enough to feel the page answer.</p>
+                        <p class="promo-wonder-cycle__why">Quick Start is the fastest useful control surface on the site.</p>
+                        <a class="spw-chip promo-wonder-cycle__cta" data-spw-handle="true" href="/settings/#presets" data-spw-operator="perspective">Open presets</a>
+                    </article>
+                    <article class="promo-wonder-cycle__card promo-wonder-cycle__card--wonder" data-spw-cadence="daily" data-spw-copy-unit="home.promoWonderCycle.daily.wonder" data-spw-locale="en">
+                        <p class="spec-kicker promo-wonder-cycle__label">Daily wonder</p>
+                        <div class="promo-wonder-cycle__title-row">
+                            <span class="frame-card-sigil promo-wonder-cycle__operator" aria-hidden="true">?</span>
+                            <h3>What if this page had a different climate?</h3>
+                        </div>
+                        <p class="promo-wonder-cycle__summary">Climate is the attention posture. Try one, then leave — the site keeps it.</p>
+                        <a class="spw-chip promo-wonder-cycle__cta" data-spw-handle="true" href="/settings/#climate-settings" data-spw-operator="probe">Try climate</a>
+                    </article>
+                </div>
             </div>
 
             <noscript>

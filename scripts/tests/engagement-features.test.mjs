@@ -583,6 +583,12 @@ test('live promo feed can pick the folio worktable on a known weekday', () => {
   const thursday = new Date(2026, 8, 3, 12, 0, 0);
   assert.equal(thursday.getDay(), 4);
 
+  const monday = new Date(2026, 8, 7, 12, 0, 0);
+  assert.equal(monday.getDay(), 1);
+  const settingsDay = pickDaily(liveFeed, monday);
+  assert.match(settingsDay.promo.href, /\/settings\//);
+  assert.match(settingsDay.wonder.href, /\/settings\//);
+
   const daily = pickDaily(liveFeed, thursday);
   assert.match(daily.promo.title, /folio worktable/i);
   assert.equal(daily.promo.href, '/design/folios/#collect-a-folio');
@@ -594,6 +600,15 @@ test('live promo feed can pick the folio worktable on a known weekday', () => {
   assert.equal(weeklyFolio.promo.href, '/play/rpg-wednesday/');
   assert.equal(weeklyFolio.promo.promotion?.kind, 'event');
   assert.equal(weeklyFolio.wonder.href, '/design/folios/#collect-a-folio');
+
+  const renderer = readFileSync(
+    join(dirname(fileURLToPath(import.meta.url)), '../../public/js/typed/promo-wonder-cycle.js'),
+    'utf8',
+  );
+  assert.doesNotMatch(renderer, /\bsite-frame\b/);
+  assert.doesNotMatch(renderer, /\boperator-chip\b/);
+  assert.match(renderer, /spw-chip promo-wonder-cycle__cta/);
+  assert.match(renderer, /data-spw-static-for/);
 });
 
 test('module loader unmount and remount round-trips correctly', async () => {

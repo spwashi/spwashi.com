@@ -1,6 +1,5 @@
 import {
   createCardSigil,
-  createFrameHeading,
 } from './kernel-dom-contracts.js';
 import {
   cleanText,
@@ -79,51 +78,51 @@ const DEFAULT_FEED = Object.freeze({
       promo: {
         label: 'Daily promo',
         operator: '@',
-        title: 'Help the next release land',
-        summary: 'Releases are scheduled for the 13th and 26th of each month. The A cycle closes on the 13th, and the B cycle closes on the 26th. Small support keeps the work moving and makes the next page easier to ship.',
-        href: '/services/#support',
-        cta: 'Open support',
-        why: 'A direct contribution keeps the monthly cadence steady.',
-        presentation: 'modal' as PromoPresentation,
+        title: 'Keep a configuration that fits how you read',
+        summary: 'Presets, workflow, and climate stay in this browser. One change is enough to feel the page answer.',
+        href: '/settings/#presets',
+        cta: 'Open presets',
+        why: 'Quick Start is the fastest useful control surface on the site.',
+        presentation: 'inline' as PromoPresentation,
         promotion: {
-          kind: 'support' as PromotionKind,
-          audience: 'people deciding whether to support the work',
-          offer: 'Help the release cadence stay dependable',
-          proof: 'The public cadence ships on the 13th and 26th: A closes mid-month, B closes near month end.',
-          objection: 'It should be obvious what support changes.',
-          urgency: 'The next release window is already on the calendar.',
+          kind: 'service' as PromotionKind,
+          audience: 'people who want the site to match how they actually read',
+          offer: 'A browser-local preset, workflow, and climate you can keep',
+          proof: 'Settings saves in this browser and the rest of the site already listens.',
+          objection: 'It should change the page, not just document the knobs.',
+          urgency: 'The first useful change is a preset.',
           tone: 'clear',
-          theme: 'glass',
-          handles: ['support', 'cadence', 'modal', 'clear'],
+          theme: 'signal',
+          handles: ['settings', 'presets', 'climate', 'workflow'],
           ctaStyle: 'primary',
-          presentation: 'modal' as PromoPresentation,
+          presentation: 'inline' as PromoPresentation,
         },
       },
       wonder: {
         label: 'Daily wonder',
         operator: '?',
-        title: 'What changes if the page has a reason to return tomorrow?',
-        summary: 'A site can feel alive when one small surface changes on a schedule. This slot is here to make that return legible.',
-        href: '/about/website/',
-        cta: 'See the system',
+        title: 'What if this page had a different climate?',
+        summary: 'Climate is the attention posture. Try one, then leave — the site keeps it.',
+        href: '/settings/#climate-settings',
+        cta: 'Try climate',
       },
     },
     {
       promo: {
         label: 'Daily promo',
         operator: '@',
-        title: 'Make collaboration easy to imagine',
-        summary: 'Keep the call to action low friction: a card, a button, a short route, or a clear email path to follow.',
-        href: '/contact/',
-        cta: 'Send a note',
+        title: 'See the layers the pages are built from',
+        summary: 'Design is the public map of the same surfaces Settings tunes: slots, palettes, and reading weather.',
+        href: '/design/',
+        cta: 'Open design',
       },
       wonder: {
         label: 'Daily wonder',
         operator: '?',
-        title: 'Who would be surprised by the breadth of this site?',
-        summary: 'Developers, illustrators, authors, and executives all need different cues. A rotating surface can bridge those expectations.',
-        href: '/about/',
-        cta: 'Read about',
+        title: 'Which layer would you keep if you had to choose one?',
+        summary: 'Workflow, climate, and attention posture are separate levers. The point is to pick one and feel it.',
+        href: '/settings/#author-workflow-settings',
+        cta: 'Open workflow',
       },
     },
   ],
@@ -132,33 +131,33 @@ const DEFAULT_FEED = Object.freeze({
       promo: {
         label: 'Weekly promo',
         operator: '@',
-        title: 'Keep the release rhythm steady',
-        summary: 'Development costs are around $250 per month. The A cycle closes on the 13th and the B cycle closes on the 26th, so direct support keeps the public cadence open.',
-        href: '/now/',
-        cta: 'Review funding',
-        why: 'One steady contribution helps keep A-cycle and B-cycle releases moving.',
-        presentation: 'modal' as PromoPresentation,
+        title: 'Configure the site you are already on',
+        summary: 'Appearance, density, and chrome are the same layers the pages use. Settings is where you keep a configuration.',
+        href: '/settings/',
+        cta: 'Open settings',
+        why: 'A kept configuration is more useful than a tour.',
+        presentation: 'inline' as PromoPresentation,
         promotion: {
           kind: 'service' as PromotionKind,
-          audience: 'people assessing whether to fund the work',
-          offer: 'A transparent way to keep the A/B release rhythm steady',
-          proof: 'The work costs about $250 per month to keep moving.',
-          objection: 'It should be easy to know where the money goes.',
-          urgency: 'The next A or B release depends on steady support.',
+          audience: 'people deciding whether the site is theirs to tune',
+          offer: 'A browser-local configuration that the rest of the site already honors',
+          proof: 'Presets, workflow, climate, and attention posture are named surfaces, not hidden flags.',
+          objection: 'It should be obvious that a setting changes the page under you.',
+          urgency: 'The first pass is a preset; deeper registers wait until something still feels off.',
           tone: 'direct',
           theme: 'signal',
-          handles: ['funding', 'cadence', 'modal', 'transparent'],
+          handles: ['settings', 'configuration', 'layers', 'presets'],
           ctaStyle: 'primary',
-          presentation: 'modal' as PromoPresentation,
+          presentation: 'inline' as PromoPresentation,
         },
       },
       wonder: {
         label: 'Weekly wonder',
         operator: '?',
-        title: 'What structure would make this week feel worth revisiting?',
-        summary: 'Weekly wonder should feel like a theme, not a slogan.',
-        href: '/about/website/',
-        cta: 'Read the site map',
+        title: 'What would you turn down first?',
+        summary: 'Attention posture is the quiet lever: how much the page asks of you at once.',
+        href: '/settings/#attention-posture-settings',
+        cta: 'Tune attention',
       },
     },
     {
@@ -214,11 +213,11 @@ function fallbackOperator(kind: PromoWonderKind): string {
 }
 
 function cardOperatorType(kind: PromoWonderKind): string {
-  return kind === 'promo' ? 'action' : 'probe';
+  return kind === 'promo' ? 'perspective' : 'probe';
 }
 
-function getPresentation(item: PromoWonderCard): PromoPresentation {
-  return cleanText(item.presentation || item.promotion?.presentation || 'toast') as PromoPresentation;
+function getInlinePresentation(): PromoPresentation {
+  return 'inline';
 }
 
 function getPromotionHandles(item: PromoWonderCard): string[] {
@@ -240,11 +239,12 @@ function renderCard(
   kind: PromoWonderKind = 'promo',
   cadence: TemporalCadence = 'daily',
   locale: LocaleCode = SOURCE_LOCALE,
+  compact = false,
 ): HTMLElement {
-  const article = el('article', `promo-wonder-cycle__card promo-wonder-cycle__card--${kind}`, {
+  const article = el('article', `promo-wonder-cycle__card promo-wonder-cycle__card--${kind}${compact ? ' promo-wonder-cycle__card--compact' : ''}`, {
     'data-spw-cadence': cadence,
     'data-spw-copy-unit': item.copyUnit || `home.promoWonderCycle.${cadence}.${kind}`,
-    'data-spw-presentation': getPresentation(item),
+    'data-spw-presentation': getInlinePresentation(),
     'data-spw-locale': item.locale || locale,
     lang: item.locale || locale,
   });
@@ -257,7 +257,9 @@ function renderCard(
   if (promotionHandles.length) article.dataset.spwPromotionHandles = promotionHandles.join(' ');
 
   const label = el('p', 'spec-kicker promo-wonder-cycle__label');
-  label.textContent = cleanText(item.label || fallbackLabel(kind));
+  label.textContent = compact
+    ? fallbackLabel(kind)
+    : cleanText(item.label || fallbackLabel(kind));
 
   const titleRow = el('div', 'promo-wonder-cycle__title-row');
   const operator = createCardSigil(cleanText(item.operator || fallbackOperator(kind)), {
@@ -281,25 +283,17 @@ function renderCard(
   }
 
   const why = cleanText(item.why || '');
-  if (why) {
+  if (why && !compact) {
     const note = el('p', 'promo-wonder-cycle__why');
     note.textContent = why;
     article.append(note);
   }
 
-  if (promotionHandles.length) {
-    const handles = el('div', 'promo-wonder-cycle__handles');
-    promotionHandles.forEach((handle) => {
-      const pill = el('span', 'spec-pill promo-wonder-cycle__handle');
-      pill.textContent = handle;
-      handles.append(pill);
-    });
-    article.append(handles);
-  }
-
   if (item.href) {
-    const link = el('a', 'operator-chip promo-wonder-cycle__cta', {
+    const link = el('a', 'spw-chip promo-wonder-cycle__cta', {
       href: cleanText(item.href),
+      'data-spw-handle': 'true',
+      'data-spw-operator': cardOperatorType(kind),
     });
     link.textContent = cleanText(item.cta || 'Open');
     article.append(link);
@@ -308,52 +302,54 @@ function renderCard(
   return article;
 }
 
-function renderFeed(host: Element, feed: PromoWonderFeed, date = new Date()): void {
+function resolveMount(host: Element): Element {
+  return host.querySelector('[data-spw-static-for="promo-wonder-cycle"], .promo-wonder-cycle__static-fallback')
+    || host;
+}
+
+export function renderFeed(host: Element, feed: PromoWonderFeed, date = new Date()): void {
   const daily = pickDaily(feed, date);
   const weekly = pickWeekly(feed, date);
   const locale = feedLocale(feed);
   const dayLabel = cleanText(date.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' }));
-  const weekLabel = `Week ${String(getWeekIndex(date) + 1)}`;
+  const dayStamp = [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, '0'),
+    String(date.getDate()).padStart(2, '0'),
+  ].join('-');
 
-  const section = el('section', 'site-frame promo-wonder-cycle', {
-    'data-spw-feature': 'promo-wonder-cycle',
-    'data-spw-locale': locale,
-    'data-spw-timing-model': 'daily weekly',
-    'aria-labelledby': 'promo-wonder-cycle-title',
-  });
-
-  const top = createFrameHeading({
-    href: '#promo-wonder-cycle',
-    sigilText: '#>promo_wonder_cycle',
-    title: 'A reason to wonder today',
-    operator: 'frame',
-    headingId: 'promo-wonder-cycle-title',
-  });
-
-  const intro = el('p', 'inline-note promo-wonder-cycle__intro');
-  intro.textContent = 'One card stays promotional and one stays curious. Both can change by day or week, and both have accessible links if JavaScript is unavailable.';
+  if (host instanceof HTMLElement) {
+    host.dataset.spwLocale = locale;
+    host.lang = locale;
+  }
 
   const meta = el('p', 'promo-wonder-cycle__meta');
   const dayTime = el('time');
-  dayTime.dateTime = date.toISOString();
+  dayTime.dateTime = dayStamp;
   dayTime.textContent = dayLabel;
-  const weekSpan = el('span');
-  weekSpan.textContent = weekLabel;
-  meta.append('Updated for ', dayTime, ' · ', weekSpan);
+  meta.append(dayTime);
 
   const grid = el('div', 'promo-wonder-cycle__grid');
   grid.dataset.spwRegionFlow = 'overlay';
-  grid.append(renderCard(daily.promo, 'promo', 'daily', locale), renderCard(daily.wonder, 'wonder', 'daily', locale));
+  grid.append(
+    renderCard(daily.promo, 'promo', 'daily', locale),
+    renderCard(daily.wonder, 'wonder', 'daily', locale),
+  );
 
   const weeklyGrid = el('div', 'promo-wonder-cycle__weekly');
   weeklyGrid.dataset.spwRegionFlow = 'overlay';
-  weeklyGrid.append(renderCard(weekly.promo, 'promo', 'weekly', locale), renderCard(weekly.wonder, 'wonder', 'weekly', locale));
+  weeklyGrid.setAttribute('aria-label', 'This week');
+  const weeklyKicker = el('p', 'spec-kicker promo-wonder-cycle__weekly-kicker');
+  weeklyKicker.textContent = 'This week';
+  weeklyGrid.append(
+    weeklyKicker,
+    renderCard(weekly.promo, 'promo', 'weekly', locale, true),
+    renderCard(weekly.wonder, 'wonder', 'weekly', locale, true),
+  );
 
-  const fallback = el('p', 'frame-note promo-wonder-cycle__fallback');
-  fallback.textContent = 'If the feed is unavailable, the site falls back to the embedded daily and weekly structures in code.';
-
-  section.append(top, intro, meta, grid, weeklyGrid, fallback);
-  host.replaceChildren(section);
+  const mount = resolveMount(host);
+  mount.classList.add('promo-wonder-cycle__live');
+  mount.replaceChildren(meta, grid, weeklyGrid);
 }
 
 export async function initPromoWonderCycle(): Promise<void> {
