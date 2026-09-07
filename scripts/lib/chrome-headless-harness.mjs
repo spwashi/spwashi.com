@@ -66,6 +66,11 @@ export const DEFAULT_ROUTES = Object.freeze([
   '/topics/software/',
 ]);
 
+export function isChromeSessionError(error) {
+  const message = String(error?.message || error || '');
+  return /CDP call timeout: Page\.(enable|bringToFront)|CDP websocket open timeout|CDP session closed|Chrome debug port|No CDP page target|WebSocket is closed|socket hang up/i.test(message);
+}
+
 export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -191,9 +196,13 @@ export class CdpSession {
     this._onMessage = null;
   }
 
-  async open() {
+  async open(timeoutMs = 10000) {
     this.ws = new WebSocket(this.wsUrl);
     await new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        cleanup();
+        reject(new Error(`CDP websocket open timeout (${timeoutMs}ms)`));
+      }, timeoutMs);
       const onOpen = () => {
         cleanup();
         resolve();
@@ -203,6 +212,7 @@ export class CdpSession {
         reject(err instanceof Error ? err : new Error(String(err)));
       };
       const cleanup = () => {
+        clearTimeout(timer);
         this.ws.removeEventListener('open', onOpen);
         this.ws.removeEventListener('error', onError);
       };
@@ -773,8 +783,9 @@ export async function navigateAndProbe(session, {
     const diagnostics = [];
     const offs = [];
     try {
-      await session.send('Page.enable');
-      await session.send('Runtime.enable');
+      const sessionTimeoutMs = Math.min(8000, Math.max(3000, timeoutMs));
+      await session.send('Page.enable', {}, sessionTimeoutMs);
+      await session.send('Runtime.enable', {}, sessionTimeoutMs);
       try {
         await session.send('Network.enable');
       } catch {

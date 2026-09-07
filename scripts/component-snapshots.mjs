@@ -61,6 +61,7 @@ import {
   REVIEW_CHAPTERS,
   CAPTURE_FAILURE_KINDS,
   classifyCaptureFailure,
+  recaptureJobIds,
   reviewChapterFor,
   buildCaptureIndex,
   STILL_ATTENTION_READ_EXPRESSION,
@@ -89,6 +90,7 @@ import {
   closePageTarget,
   createChromeProfileDir,
   installShutdown,
+  isChromeSessionError,
   killProcessTree,
   navigateAndProbe,
   newPageTarget,
@@ -100,6 +102,7 @@ import {
   spawnDevServer,
   waitForHttp,
   evaluateProbe,
+  sleep,
   ROOT,
 } from './lib/chrome-headless-harness.mjs';
 
@@ -330,7 +333,7 @@ Usage:
 Options:
   --base URL         Server base (optional: auto-spawn dev-server)
   --out PATH         Review pack directory (default design/components/captures)
-  --ids a,b          Fixture ids (component or ecology)
+  --ids a,b          Job or fixture ids (still recipe id, component, or ecology)
   --seats hook,cluster
   --flows a,b        page,region,component,template (default region,component)
   --viewports a,b    phone,fold,desktop,pocket,broadsheet,…
@@ -342,7 +345,7 @@ Options:
   --walk             Viewport-tall slices to the bottom of core routes.
   --profile name     explore | stabilize | ambient | walk | checks | survey
   --budget N         Cap specimen navs (explore default 12). Drops lowest-priority combinations.
-  --retry-errors     Recapture fixture ids from the latest pack's named misses into a new run.
+  --retry-errors     Recapture job ids from the latest pack's named misses into a new run.
   --out PATH         Pack root (default design/components/captures). Runs nest as runs/<day>/<profile>/<clock>--<hash>/
   --no-components    Skip component fixtures
   --social           Emit unique/social cards on top of QA
@@ -717,11 +720,7 @@ async function loadLatestErrorIds(packRoot) {
     const latest = JSON.parse(await readFile(path.join(packRoot, 'runs', 'latest.json'), 'utf8'));
     const manifestPath = path.join(packRoot, latest.path, 'manifest.json');
     const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
-    return [...new Set(
-      (manifest.errorArtifacts || [])
-        .map((artifact) => artifact.fixtureId || artifact.id)
-        .filter(Boolean),
-    )];
+    return recaptureJobIds(manifest.errorArtifacts || []);
   } catch {
     return [];
   }
@@ -1204,13 +1203,47 @@ async function main() {
     let session = new CdpSession(target.webSocketDebuggerUrl);
     await session.open();
 
+    async function recoverChrome(reason = 'chrome wedged') {
+      process.stderr.write(`  ~ ${reason}, restart chrome\n`);
+      try { session.close(); } catch { /* ignore */ }
+      try { await closePageTarget(debugPort, target); } catch { /* ignore */ }
+      killProcessTree(chromeChild);
+      await sleep(400);
+      try {
+        chromeChild = await openChrome(chromePath, userDataDir, debugPort);
+      } catch {
+        userDataDir = await createChromeProfileDir('spw-visual-cap-');
+        chromeChild = await openChrome(chromePath, userDataDir, debugPort);
+      }
+      target = await newPageTarget(debugPort);
+      session = new CdpSession(target.webSocketDebuggerUrl);
+      await session.open();
+    }
+
     async function recoverPage(reason = 'target closed') {
       process.stderr.write(`  ~ ${reason}, new page target\n`);
       try { session.close(); } catch { /* ignore */ }
       try { await closePageTarget(debugPort, target); } catch { /* ignore */ }
-      target = await newPageTarget(debugPort);
-      session = new CdpSession(target.webSocketDebuggerUrl);
-      await session.open();
+      try {
+        target = await newPageTarget(debugPort);
+        session = new CdpSession(target.webSocketDebuggerUrl);
+        await session.open();
+      } catch (err) {
+        if (!isChromeSessionError(err)) throw err;
+        await recoverChrome('page target failed');
+      }
+    }
+
+    async function failJobs(jobs, err) {
+      for (const job of jobs) {
+        const kind = classifyCaptureFailure(err, job);
+        const artifact = await writeErrorArtifact(options.out, kind, job, {
+          message: `${job.id}@${job.viewportId}/${job.aspect || 'qa'} ${job.flow}: ${err.message}`,
+        });
+        errorArtifacts.push(artifact);
+        errors.push(artifact.message);
+        process.stderr.write(`  ! ${kind} ${artifact.file}\n`);
+      }
     }
 
     try {
@@ -1221,6 +1254,7 @@ async function main() {
       })).filter((group) => group.jobs.length);
 
       for (const group of groups) {
+        try {
         const viewport = resolveJobViewport(group.jobs[0], qaViewports);
 
         async function navSpecimen(job, jobViewport) {
@@ -1247,6 +1281,11 @@ async function main() {
           try {
             return await run();
           } catch (firstErr) {
+            if (isChromeSessionError(firstErr) && group.canvas === 'specimen') {
+              await recoverChrome('chrome wedged');
+              await navSpecimen(job, jobViewport);
+              return await run();
+            }
             if (!isTargetGoneError(firstErr) || group.canvas !== 'specimen') throw firstErr;
             await recoverPage('target closed');
             await navSpecimen(job, jobViewport);
@@ -1256,7 +1295,26 @@ async function main() {
 
         if (group.canvas === 'specimen') {
           process.stderr.write(`[visual:capture] nav ${group.key}\n`);
-          await navSpecimen(group.jobs[0], viewport);
+          try {
+            await navSpecimen(group.jobs[0], viewport);
+          } catch (navErr) {
+            process.stderr.write(`  ! nav ${group.key}: ${navErr.message}\n`);
+            if (isChromeSessionError(navErr)) {
+              try { await recoverChrome('chrome wedged'); } catch (restartErr) {
+                await failJobs(group.jobs, restartErr);
+                continue;
+              }
+              try {
+                await navSpecimen(group.jobs[0], viewport);
+              } catch (retryErr) {
+                await failJobs(group.jobs, retryErr);
+                continue;
+              }
+            } else {
+              await failJobs(group.jobs, navErr);
+              continue;
+            }
+          }
         }
 
         for (const job of group.jobs) {
@@ -1408,9 +1466,20 @@ async function main() {
             errors.push(artifact.message);
             process.stderr.write(`  ! ${kind} ${artifact.file}\n`);
             if (group.canvas === 'specimen' && (kind === 'gone' || kind === 'failed')) {
-              try { await recoverPage(kind === 'gone' ? 'target closed' : 'capture failed'); } catch { /* ignore */ }
+              try {
+                if (isChromeSessionError(err)) await recoverChrome('chrome wedged');
+                else await recoverPage(kind === 'gone' ? 'target closed' : 'capture failed');
+              } catch { /* ignore */ }
             }
           }
+        }
+        } catch (groupErr) {
+          process.stderr.write(`[visual:capture] group ${group.key}: ${groupErr.message}\n`);
+          if (isChromeSessionError(groupErr)) {
+            try { await recoverChrome('group crashed'); } catch { /* ignore */ }
+          }
+          const pending = group.jobs.filter((job) => !captures.some((c) => c.id === job.id && c.viewport === job.viewportId));
+          await failJobs(pending, groupErr);
         }
       }
     } finally {

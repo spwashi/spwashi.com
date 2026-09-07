@@ -187,6 +187,17 @@ export function prioritizeCaptureJobs(jobs = [], {
   return next;
 }
 
+/** Job ids to recapture. Prefer the still that failed, not its fixture family. */
+export function recaptureJobIds(errorArtifacts = []) {
+  const kinds = new Set(['miss', 'gone', 'failed', 'blank']);
+  return [...new Set(
+    errorArtifacts
+      .filter((artifact) => kinds.has(artifact.kind))
+      .map((artifact) => artifact.id)
+      .filter((id) => id && !String(id).startsWith('page-')),
+  )];
+}
+
 export function classifyCaptureFailure(error, job = {}) {
   const message = String(error?.message || error || '');
   if (/selector-miss|not found or empty|attention-miss/i.test(message)) return 'miss';
@@ -219,12 +230,7 @@ export function buildCaptureIndex({ captures = [], errorArtifacts = [] } = {}) {
       message: artifact.message || kind,
     });
   }
-  const recaptureIds = [...new Set(
-    errorArtifacts
-      .filter((artifact) => artifact.kind === 'miss' || artifact.kind === 'gone' || artifact.kind === 'failed')
-      .map((artifact) => artifact.fixtureId || artifact.id)
-      .filter((id) => id && !String(id).startsWith('page-')),
-  )];
+  const recaptureIds = recaptureJobIds(errorArtifacts);
   return {
     kind: 'visual-capture-index',
     chapters,

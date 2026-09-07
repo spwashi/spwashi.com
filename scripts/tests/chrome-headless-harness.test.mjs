@@ -5,6 +5,7 @@ import {
   BROWSER_DIAGNOSTIC_LIMIT,
   cellFromProbe,
   evaluateProbe,
+  isChromeSessionError,
   evaluateHardOk,
   formatBrowserDiagnostic,
   inspectHtmlShell,
@@ -14,6 +15,12 @@ import {
   probeHttpRoutes,
   withDebugQuery,
 } from '../lib/chrome-headless-harness.mjs';
+
+test('chrome session errors include Page.enable timeouts, not evaluate timeouts', () => {
+  assert.equal(isChromeSessionError(new Error('CDP call timeout: Page.enable (8000ms)')), true);
+  assert.equal(isChromeSessionError(new Error('CDP websocket open timeout (10000ms)')), true);
+  assert.equal(isChromeSessionError(new Error('CDP call timeout: Runtime.evaluate (16000ms)')), false);
+});
 
 test('evaluateProbe forwards a bounded CDP timeout', async () => {
   const calls = [];

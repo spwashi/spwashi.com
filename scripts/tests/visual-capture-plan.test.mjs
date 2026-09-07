@@ -56,6 +56,7 @@ import {
   reviewChapterFor,
   prioritizeCaptureJobs,
   classifyCaptureFailure,
+  recaptureJobIds,
   buildCaptureIndex,
   capturePriorityScore,
 } from '../lib/visual-capture-plan.mjs';
@@ -771,6 +772,8 @@ test('live capture measure evaluate is bounded and races font wait', async () =>
   assert.match(source, /CAPTURE_MEASURE\.evaluateTimeoutMs/);
   assert.match(source, /evaluateTimeoutMsFor/);
   assert.match(source, /blank, recapture/);
+  assert.match(source, /recoverChrome/);
+  assert.match(source, /recaptureJobIds/);
   assert.doesNotMatch(source, /skipped after closed tab/);
   assert.match(source, /CAPTURE_MEASURE\.fontWaitMs/);
   assert.match(source, /readStillAttention/);
@@ -849,6 +852,14 @@ test('failure kinds distinguish miss from gone, and index names the recapture co
   assert.equal(index.errors.miss[0].id, 'operator-chip');
   assert.equal(index.next.command, 'npm run visual:stabilize');
   assert.deepEqual(index.next.ids, ['operator-chip']);
+  assert.deepEqual(
+    recaptureJobIds([
+      { kind: 'gone', id: 'home-opening', fixtureId: 'home-hook' },
+      { kind: 'blank', id: 'math-opening', fixtureId: 'math-hook' },
+      { kind: 'gone', id: 'home-reasons', fixtureId: 'home-hook' },
+    ]),
+    ['home-opening', 'math-opening', 'home-reasons'],
+  );
 });
 
 test('starved clips are misses, and recapture ids skip generic page blanks', () => {
