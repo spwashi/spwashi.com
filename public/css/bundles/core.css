@@ -15442,12 +15442,12 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 
 /* `container-type` implies `contain: layout`, which establishes a containing
    block and removes intrinsic inline contribution. Shell chrome, anatomy slots,
-   and compact metadata tags are not component containers even when the runtime
+   lens controls, and compact metadata tags are not component containers even when the runtime
    annotates them with data-spw-kind; containing those labels collapses their
    max-content width to zero. */
 :where(
-  [data-spw-component-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag),
-  [data-spw-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag),
+  [data-spw-component-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch),
+  [data-spw-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch),
   .spw-frame,
   .frame-card,
   .media-card,

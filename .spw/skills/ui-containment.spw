@@ -156,6 +156,17 @@ fixity = "tending"
   $%[element.scrollWidth, element.clientWidth, target.hitArea, viewport.tier]
 }
 
+^"desktop_lens_alignment_2026_09_06"{
+  operation = "align"
+  fixity = "tending"
+  owner = "public/css/components/foundation.css"
+  cause = "Generic kind containment removed intrinsic width from mode-switch controls."
+  before = "At 1440px, About and Membership lens groups measured 7.109px."
+  after = "Membership group measures 311.227px; button scrollWidth equals clientWidth. About desktop capture shows readable wrapped controls; Home row remains intact."
+  rule = "Lens controls contribute intrinsic width; their mode panels remain query containers."
+  verify = "About pocket checks; About and Home broadsheet captures; CSS and site contracts."
+}
+
 ^"validation"{
   probe: `node scripts/normalize-breakpoints.mjs && node scripts/check-site.mjs`
   falsification: #[
