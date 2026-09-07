@@ -18,6 +18,8 @@
 @integrity: ~"../../scripts/spw-integrity.mjs"
 @markdown_spend: ~"../caches/agent-markdown-spend-2026-09.spw"
 @check_agents: ~"../../scripts/check-agent-contracts.mjs"
+@agent_ecology: ~"./agent-ecology.spw"
+@write_gate: ~"../../scripts/harness-write-gate.mjs"
 
 operation = "contract"
 fixity = "stable"
@@ -39,6 +41,17 @@ fixity = "stable"
   computer_use = `A posture, not a fifth model lock: verify-first (audit:module-selectors, visual:checks, one pocket route), one named patch, stop. GPT.md states it because Codex computer-use is where kitchen-sink sessions started. An audit P1 list is not a patch list. User skip-visuals is a finding, not a packing waiver.`
   shared = `This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follows Open first.`
   prove = `npm run check:agents — adapters must be git-tracked; always-on files must fit word budgets; a green check on untracked files is a lie.`
+}[reg=facet]
+
+^"roles"{
+  claim: "A session is one role. Explore/plan do not write. Patch writes one named slice. Review measures."
+  explore = `Read + sensors. Grok: spawn_subagent explore. Claude: plan mode.`
+  plan = `Read + write-deny. Propose; do not patch.`
+  patch = `Write the named slice after Sense first.`
+  review = `Run sensors after the patch. Cheap visual uses --ids.`
+  write_deny = `Explore/plan do not write.`
+  host = @write_gate
+  ecology = @agent_ecology
 }[reg=facet]
 
 ^"shunt"{

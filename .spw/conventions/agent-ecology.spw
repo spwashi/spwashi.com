@@ -5,7 +5,7 @@
 
 #>agent_ecology
 #:convention #!ecology #!agents #!plans
-#:operation #!align
+#:operation #!contract
 #:fixity #!tending
 #:layer #!editor_inspectability
 
@@ -24,17 +24,20 @@
 @plan_ecology_semantics: ~"../audits/plan-ecology-semantics-2026-07.spw"
 @markdown_spend: ~"../caches/agent-markdown-spend-2026-09.spw"
 @check_agents: ~"../../scripts/check-agent-contracts.mjs"
+@skill_invocation: ~"./skill-invocation.spw"
+@write_gate: ~"../../scripts/harness-write-gate.mjs"
+@claude_settings: ~"../../.claude/settings.json"
 
-operation = "align"
+operation = "contract"
 fixity = "tending"
 
 ^"routing"{
  owner_plan: "agent-optimization"
  satellite_plans: #[`agentic-dev-contracts`, `plan-wip-index-conventions`, `context-sensitive-variants-and-agent-qa`][reg=set]
- conventions: #[`planning-ecology`, `plan-index`, `wip-notebook`, `codebase-perusal`, `skill-invocation`][reg=set]
+ conventions: #[`planning-ecology`, `plan-index`, `wip-notebook`, `codebase-perusal`, `skill-invocation`, `harness`][reg=set]
  precipitates: #[`.agents/state/plans-index.json`, `.agents/state/skills-index.json`, `.agents/state/agent-preference.spw`, `.spw/caches/history-conflict-strands-2026-09.spw`, `.spw/caches/agent-markdown-spend-2026-09.spw`][reg=set]
  invalidation_rule: "Regenerate precipitates when plan index, SKILL.md, or owner-registry changes. Preference ledger is hand-appended, not generated."
- first_read: "planning-ecology.spw for buckets; skill-invocation.spw#focuses, #introspection, and #shunt for relative strength and the word-budget block; wonder-architecture.spw for Astra planning/creativity/implementation (prime) and harvestable LSP questions; history-conflict-strands-2026-09.spw for recurring bonds from this repo's history; creative-capacity-2026-09.spw for wonder/language primes; agent-markdown-spend-2026-09.spw for always-on I/O."
+ first_read: "planning-ecology.spw for buckets; skill-invocation.spw#focuses, #introspection, #roles, and #shunt; this file #harness for write-deny; wonder-architecture.spw for Astra (prime, not a fifth adapter); history-conflict-strands-2026-09.spw for recurring bonds; agent-markdown-spend-2026-09.spw for always-on I/O."
  plan_ecology_pass: @plan_ecology_semantics
 }
 
@@ -47,10 +50,32 @@ fixity = "tending"
  status = "active"
 }
 
+^"harness"{
+  claim: "A session is one role plus sensors plus a write policy. Emphasis copy is not a permission."
+  roles = #[`explore`, `plan`, `patch`, `review`][reg=set]
+  explore = `Read + sensors. Grok spawn_subagent explore. Claude permission-mode plan.`
+  plan = `Read + write-deny. Propose; do not patch public HTML/CSS/JS.`
+  patch = `Write one named slice after Sense first.`
+  review = `Sensors after the patch. Cheap visual uses --ids. Do not write.`
+  write_deny = `Explore/plan do not write.`
+  always_on_sense = #[`npm run audit:copy:accessor`, `npm run audit:module-selectors`, `npm run visual:checks -- --ids=<fixture>`][reg=set]
+  cheap_visual = `npm run visual:checks -- --ids=<fixture> — one pocket still, not the full pack.`
+  grok_sensors = #[`npm run wonder`, `npm run spw:lattice`, `npm run audit:copy:accessor`][reg=set]
+  claude_sensors = #[`npm run spw:integrity`, `npm run audit:copy:accessor`][reg=set]
+  gpt_sensors = #[`npm run audit:module-selectors`, `npm run visual:checks -- --ids=<fixture>`][reg=set]
+  gemini_sensors = #[`npm run visual:checks`, `npm run wonder`, `npm run spw:lattice`, `npm run reasons`][reg=set]
+  astra = `Coordinator, not a fifth adapter. Prime wonder-architecture.spw; harvest with npm run wonder. Do not write public HTML from a prime. Do not add ASTRA.md.`
+  host = @write_gate
+  claude_host = @claude_settings
+  prove = `npm run check:agents`
+  refuse = `Do not symlink adapters. Do not add ASTRA.md. Do not treat Open first as a substitute for running the instrument.`
+}[reg=facet]
+
 dispatch: .{
  architecture = @architecture_ecology
  planning = @planning_ecology
  plan_index = @plan_index
  wip = @wip_notebook
  plans_root = @plans_root
+ harness = @write_gate
 }[reg=facet]

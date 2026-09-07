@@ -22,7 +22,7 @@
 - Prefer minimal, surgical edits that preserve the existing hand-written HTML structure.
 - Keep pages framework-free unless explicitly requested; do not introduce runtime frameworks or client-side dependencies. A local-only build pipeline (`scripts/build.mjs`) and zero-dep introspection scripts are permitted — see the **Build pipeline** section below.
 - Preserve existing copy, links, analytics snippets, and metadata unless the task requires changing them.
-- Computer-use / Codex sessions: verify first (`npm run audit:module-selectors`, `npm run visual:checks`, one pocket route). One named patch. Stop. Do not “implement from plans.” Written rules are suggestions; `check:agents` word budgets are the block. Do not Read a PLAN.md over ~200 lines unless Open first named that file.
+- Computer-use / Codex sessions: Sense first, one named patch, stop. Do not “implement from plans.” Written rules are suggestions; `check:agents` word budgets are the block. Do not Read a PLAN.md over ~200 lines unless Open first named that file.
 - Concurrent sessions share this tree. Never `git stash`. Check `git status` / `git log` before assuming a regression is yours.
 - If work spans multiple routes or shared layers, add or update a plan under `.agents/plans/<slug>/`.
 - If a new reusable semantic family, runtime state, or sitewide contract is introduced, update the relevant `.spw` surface and wire it into `.spw/site.spw` when needed.
@@ -32,6 +32,18 @@
 ## Open first
 
 AGENTS is the always-on gate. Open the matching plan or contract instead of inventing a parallel rule here.
+
+**Sense first**
+
+Open first names the file. Sense first runs the instrument. Guides without sensors are suggestions.
+
+| Kind | Instrument |
+|---|---|
+| copy / voice | `npm run audit:copy:accessor` |
+| catalog nouns | `npm run audit:module-selectors` |
+| ink / chrome | `npm run visual:checks -- --ids=<fixture>` |
+
+Explore/plan do not write. Patch is the only write role. Host gate: `scripts/harness-write-gate.mjs`. Contract: `.spw/conventions/agent-ecology.spw#harness`.
 
 **Copy, language, voice**
 
@@ -63,6 +75,7 @@ AGENTS is the always-on gate. Open the matching plan or contract instead of inve
 | multi-route / shared layer | `.agents/plans/<slug>/` |
 | recurring repo bond / unresolved historical churn | `.spw/caches/history-conflict-strands-2026-09.spw` plus `npm run wonder -- --surface history-conflict` |
 | agent / editor environment | `.agents/plans/agent-optimization/PLAN.md` (gate, not diary) and `spw-plan-maintenance` |
+| harness / write-deny | `.spw/conventions/agent-ecology.spw#harness` plus `npm run check:agents` — no ASTRA.md |
 | model adapters (Claude, Grok, Gemini, GPT) | `CLAUDE.md`, `GROK.md`, `GEMINI.md`, `GPT.md` (backed by this file). No adapter for your model yet: this file alone is the gate — do not write a speculative `<MODEL>.md` |
 | skill wrappers vs workbench | `.agents/README.md` |
 | repo gotchas another agent already found | `.agents/MEMORY.md` — verified misses, not a note dump |

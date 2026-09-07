@@ -29,6 +29,7 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 ## Current Baseline
 
 - `AGENTS.md` is the always-on gate. Adapters emphasize; they do not exclusive-own.
+- Harness: roles explore|plan|patch|review. Explore/plan do not write (`scripts/harness-write-gate.mjs` + `.claude/settings.json`). Sense first is three cheap instruments; full `visual:checks` is dear. Contract: `.spw/conventions/agent-ecology.spw#harness`.
 - Skills are thin wrappers over the pinned workbench. Site-workflow holds layers and focuses.
 - `agentic-dev-contracts` landed the cheap "what is this route?" + "did I break it?" questions.
 - Public `/about/plans/` is still a hand-maintenance tax.
@@ -45,6 +46,8 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 - Compact vs min: `spw-craft-quality` used to say 44px on every coarse button in `components/*.css` and stole pocket chrome. Open `.spw/caches/touch-control-class-2026-09.spw`.
 - Generated plan `index.spw` that validates can still be thinner than hand-authored (Claude 9ba112ec).
 - Always-on context is I/O, not thinking (Spotify Portal analogue, RT 2026-09-06). Word budgets live in `scripts/check-agent-contracts.mjs`.
+- Guides without sensors are suggestions. Open first names the file; Sense first runs the instrument.
+- Full `visual:checks` is dear. Cheap proof is `npm run visual:checks -- --ids=<fixture>`.
 
 ## Do not
 
@@ -52,3 +55,4 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 - Add a harvest line to a PLAN.md that already exceeds the gate budget.
 - Generate more `index.spw` to record a census.
 - Paint AI onto inherited diary workflow.
+- Add `ASTRA.md` or symlink adapters. Astra primes `wonder-architecture.spw`; harvest with `npm run wonder`.

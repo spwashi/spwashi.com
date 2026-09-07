@@ -4,14 +4,17 @@ import test from 'node:test';
 import {
   ALWAYS_ON_SPECS,
   FOCUSES,
+  HARNESS_SPECS,
   MODEL_SPECS,
   SHARED_EMPHASIS,
+  SHARED_WRITE_DENY,
   SHUNT_MIN_LINES,
   countLines,
   countWords,
   inspectAgentAdapter,
   inspectAgentAdapters,
   inspectAlwaysOnFiles,
+  inspectHarnessFiles,
   inspectWordBudget,
 } from '../check-agent-contracts.mjs';
 
@@ -34,6 +37,12 @@ test('agent adapters emphasize named focuses without exclusive ownership', () =>
   assert.equal(byFile['GPT.md'].emphasize, 'exactness');
   assert.ok(byFile['GPT.md'].requiredPhrases.includes('verify-first'));
   assert.ok(byFile['GPT.md'].requiredPhrases.includes('one named patch'));
+  assert.ok(byFile['GPT.md'].requiredPhrases.includes('visual:checks -- --ids='));
+  assert.ok(byFile['GROK.md'].requiredPhrases.includes('npm run wonder'));
+  assert.ok(byFile['CLAUDE.md'].requiredPhrases.includes('spw:integrity'));
+  for (const spec of MODEL_SPECS) {
+    assert.ok(spec.requiredPhrases.includes(SHARED_WRITE_DENY), spec.file);
+  }
 });
 
 test('adapter files on disk carry the shared emphasis sentence', () => {
@@ -89,4 +98,21 @@ test('adapters on disk stay under the adapter word budget', () => {
     assert.ok(spec.maxWords > 0);
     assert.ok(report.words <= spec.maxWords, `${spec.file}: ${report.words}w`);
   }
+});
+
+test('harness files carry write-deny and cheap visual', () => {
+  assert.equal(SHARED_WRITE_DENY, 'Explore/plan do not write');
+  assert.equal(HARNESS_SPECS.length, 3);
+  const reports = inspectHarnessFiles({ requireTracked: false });
+  assert.equal(reports.length, 3);
+  for (const report of reports) {
+    assert.equal(report.ok, true, `${report.spec.file}: ${report.issues.join('; ')}`);
+  }
+});
+
+test('AGENTS.md Sense first is a failing check, not a suggestion', () => {
+  const agents = ALWAYS_ON_SPECS.find((spec) => spec.file === 'AGENTS.md');
+  assert.ok(agents.requiredPhrases.includes('Sense first'));
+  assert.ok(agents.requiredPhrases.includes(SHARED_WRITE_DENY));
+  assert.ok(agents.requiredPhrases.includes('visual:checks -- --ids'));
 });
