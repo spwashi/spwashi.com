@@ -278,7 +278,7 @@ body[data-spw-surface="about"] {
     linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 56%, transparent), transparent 18%),
     var(--about-surface);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    var(--material-highlight-inset),
     var(--about-frame-shadow);
   color: var(--about-ink);
 }
@@ -286,7 +286,7 @@ body[data-spw-surface="about"] {
 [data-spw-surface="about"] :is(.spw-frame, .spw-frame):is(:hover, :focus-within) {
   border-color: color-mix(in srgb, var(--about-accent) 18%, var(--about-line));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.46),
+    var(--material-highlight-inset),
     var(--about-frame-shadow-hover);
 }
 

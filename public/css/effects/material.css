@@ -141,6 +141,20 @@
    3. Material kinds (Refined with oklab)
    ========================================================================== */
 
+/* Palette-depth: a frame returns the light its canopy admits. Resolve on
+   the host: the root biome attenuation has already computed before local
+   canopy reports arrive. Only the inset changes; ink keeps its own budget. */
+:where(.spw-frame) {
+  --material-highlight-inset: inset 0 1px 0 color-mix(in oklch, white calc(
+    100% * clamp(0, var(--material-specular, 0.28), 1)
+    * (1 - clamp(0, (
+      var(--spw-canopy, 0) + var(--spw-canopy-depth, 0)
+      + var(--spw-canopy-edge, 0) + var(--spw-canopy-sibling, 0)
+      + var(--spw-edge-proximity, 0) * 0.14
+    ) * var(--spw-enhancement-factor, 1), 1))
+  ), transparent);
+}
+
 :where([data-spw-metamaterial="matte"]) {
   --material-local-background:
     linear-gradient(
