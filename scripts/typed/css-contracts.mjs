@@ -48,6 +48,7 @@ const INTENTIONAL_STANDALONE_CSS = new Set([
  */
 const ROUTE_BUNDLE_ONLY_CSS = new Set([
     '/public/css/components/cards/profile-card.css',
+    '/public/css/components/cards/payment-card.css',
     '/public/css/effects/enhancements.css',
 ]);
 function relativeRepoPath(absolutePath) {
