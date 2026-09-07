@@ -96,5 +96,5 @@ generated-output gate for the pre-existing uncommitted core CSS bundle.
 ## Relationship
 
 - `runtime-module-decomposition/PLAN.md` — split orchestrators after primitives
-- `javascript-standalone-utility/PLAN.md` — compose/console/portable trilogy
+- `archive/javascript-standalone-utility/PLAN.md` — compose/console/portable trilogy
 - `module-updates-contract.js` — nutrient declaration layer

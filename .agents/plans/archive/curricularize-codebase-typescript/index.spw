@@ -5,17 +5,17 @@
 
 #>plan_curricularize_codebase_typescript_index
 #:index #!plan
-#:operation #!prime
+#:operation #!archive
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "archive"
+fixity = "cold"
 
 intent: .{
  goal = `Make spwashi.com demonstrate the idea "curricularize your codebase": structure should be inspectable, teachable, and credible to experienced engineers while still supporting the public creator identity. TypeScript should trace the outline of the architecture people recognize: page data, event contracts, runtime phases, settings, and component ownership.`
  owner = `curricularize-codebase-typescript`
  kind = `plan`
- bucket = `runtime_js_validation`
+ bucket = `archive`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -45,13 +45,13 @@ intent: .{
 }[reg=facet]
 
 
-@plans_root: ~"../../../.agents/plans/index.spw"
-@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
-@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
-@public_js_typed: ~"../../../public/js/typed/"
-@scripts_typed: ~"../../../scripts/typed/"
-@site_contracts: ~"../../../scripts/ts/site-contracts"
+@public_js_typed: ~"../../../../public/js/typed/"
+@scripts_typed: ~"../../../../scripts/typed/"
+@site_contracts: ~"../../../../scripts/ts/site-contracts"
 
 dispatch: .{
  plan = @plan
@@ -83,9 +83,9 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `Make spwashi.com demonstrate the idea "curricularize your codebase": structure should be inspectable, teachable, and credible to experienced engineers while still supporting the public creator identity. TypeScript should trace the outline of the architecture people recognize: page data, event contracts, runtime phases, settings, and component ownership.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../public/js/typed/"
+ impl_ref = ~"../../../../public/js/typed/"
  probe_ref = `npm run build:runtime`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/typed/ unchanged or untested.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../../public/js/typed/ unchanged or untested.`
  status = "superseded"
 }[reg=facet]
 

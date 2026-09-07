@@ -5,17 +5,17 @@
 
 #>plan_site_copy_component_settings_june_2026_index
 #:index #!plan
-#:operation #!prime
+#:operation #!archive
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "archive"
+fixity = "cold"
 
 intent: .{
  goal = `Freshen and deepen site copy for June while improving component variety, conceptual clarity, topical discoverability (especially curriculum, operators, measurement, priming), the value of screenshots for different page regions, and the settings surface as the primary control + learning layer for the site's operational semantics, developmental climate, and new contracts. This continues the "living learning surface" direction: the site should feel more alive, more useful for active engagement (priming, measuring, studying), and more inspectable/coherent for both humans and agents.`
  owner = `site-copy-component-settings-june-2026`
  kind = `plan`
- bucket = `completed_reference`
+ bucket = `archive`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -40,9 +40,9 @@ intent: .{
 }[reg=facet]
 
 
-@plans_root: ~"../../../.agents/plans/index.spw"
-@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
-@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 
 dispatch: .{

@@ -7,7 +7,7 @@
 @expression_geometry: ~<runtime>"../../public/js/semantic/spw-expression-geometry.js"
 @section_handle: ~<runtime>"../../public/js/runtime/attention/section-handle.js"
 @section_context: ~<style>"../../public/css/shell/chrome/section-context.css"
-@semantic_navigation_plan: ~<plan>"../../.agents/plans/semantic-navigation-geometry/PLAN.md"
+@semantic_navigation_plan: ~<plan>"../../.agents/plans/archive/semantic-navigation-geometry/PLAN.md"
 @literal_parser_tool: ~<route>"../../tools/spw-parser/index.html"
 @literal_parser_runtime: ~<runtime>"../../public/js/modules/tools/spw-literal-parser.js"
 @literal_parser_bundle: ~<runtime>"../../public/js/semantic/spw-workbench-parser.js"

@@ -158,8 +158,8 @@ reading_order: .{
  ][reg=set]
 }[reg=facet]
 
-@plan_curricularize_codebase_typescript: ~"./curricularize-codebase-typescript/index.spw"
-@plan_javascript_standalone_utility: ~"./javascript-standalone-utility/index.spw"
+@plan_curricularize_codebase_typescript: ~"./archive/curricularize-codebase-typescript/index.spw"
+@plan_javascript_standalone_utility: ~"./archive/javascript-standalone-utility/index.spw"
 @plan_js_surface_ecology: ~"./js-surface-ecology/index.spw"
 @plan_js_taxonomy_cleanup: ~"./js-taxonomy-cleanup/index.spw"
 @plan_runtime_bootstrap_performance: ~"./runtime-bootstrap-performance/index.spw"
@@ -238,7 +238,7 @@ reading_order: .{
 @plan_floating_chrome_stack: ~"./floating-chrome-stack/index.spw"
 @plan_gesture_aria_hygiene: ~"./gesture-aria-hygiene/index.spw"
 @plan_settings_theme_wiring: ~"./settings-theme-wiring/index.spw"
-@plan_theme_palette_marketability: ~"./theme-palette-marketability/index.spw"
+@plan_theme_palette_marketability: ~"./archive/theme-palette-marketability/index.spw"
 ^"active_backlog"{
  label = "active backlog"
  count = 73
@@ -360,7 +360,7 @@ reading_order: .{
 @plan_learning_science_community_pass: ~"./learning-science-community-pass/index.spw"
 @plan_learning_science_enhancement: ~"./learning-science-enhancement/index.spw"
 @plan_living_learning_surface: ~"./living-learning-surface/index.spw"
-@plan_living_medium_copy_pass: ~"./living-medium-copy-pass/index.spw"
+@plan_living_medium_copy_pass: ~"./archive/living-medium-copy-pass/index.spw"
 @plan_locomotion_collapse_redistribution: ~"./locomotion-collapse-redistribution/index.spw"
 @plan_lore_land_marketing: ~"./lore-land-marketing/index.spw"
 @plan_math_topic_expansion: ~"./math-topic-expansion/index.spw"
@@ -400,10 +400,10 @@ reading_order: .{
 @plan_settings_discoverability_consolidation: ~"./settings-discoverability-consolidation/index.spw"
 @plan_settings_theme_packs: ~"./settings-theme-packs/index.spw"
 @plan_settings_widgets_low_friction: ~"./settings-widgets-low-friction/index.spw"
-@plan_shell_harmony_pass: ~"./shell-harmony-pass/index.spw"
+@plan_shell_harmony_pass: ~"./archive/shell-harmony-pass/index.spw"
 @plan_shell_logo_branding: ~"./shell-logo-branding/index.spw"
 @plan_shell_semantic_physics: ~"./shell-semantic-physics/index.spw"
-@plan_site_copy_component_settings_june_2026: ~"./site-copy-component-settings-june-2026/index.spw"
+@plan_site_copy_component_settings_june_2026: ~"./archive/site-copy-component-settings-june-2026/index.spw"
 @plan_site_starter_component_kit: ~"./site-starter-component-kit/index.spw"
 @plan_skill_folio_operating_system: ~"./skill-folio-operating-system/index.spw"
 @plan_spell_cauldron_lifecycle_memory_gardening: ~"./spell-cauldron-lifecycle-memory-gardening/index.spw"
@@ -428,7 +428,7 @@ reading_order: .{
 @plan_wonder_memory: ~"./wonder-memory/index.spw"
 ^"completed_reference"{
  label = "completed reference"
- count = 12
+ count = 11
  members = #[
   `author-craft-ramps`,
   `blog-input-interpreter`,
@@ -440,7 +440,6 @@ reading_order: .{
   `mobile-image-effects`,
   `overlay-layer-ownership`,
   `runtime-route-css-regressions`,
-  `site-copy-component-settings-june-2026`,
   `state-satchel-card-gesture-fixes`,
  ][reg=set]
 }[reg=facet]
@@ -453,13 +452,20 @@ reading_order: .{
 @plan_state_satchel_card_gesture_fixes: ~"./state-satchel-card-gesture-fixes/index.spw"
 ^"archive"{
  label = "archive"
- count = 5
+ count = 12
  members = #[
   `cinematic-handles`,
   `css-maintainability-refactor`,
   `css-progressive-ornaments`,
   `css-semantic-modules`,
+  `curricularize-codebase-typescript`,
+  `javascript-standalone-utility`,
+  `living-medium-copy-pass`,
+  `semantic-navigation-geometry`,
+  `shell-harmony-pass`,
+  `site-copy-component-settings-june-2026`,
   `spw-css-architecture`,
+  `theme-palette-marketability`,
  ][reg=set]
 }[reg=facet]
 
@@ -467,8 +473,8 @@ reading_order: .{
 @plan_spw_css_architecture: ~"./archive/spw-css-architecture/index.spw"
 ^"merged"{
  label = "merged"
- count = 36
- note = `2026-07-12 disposition=merge. Folders stay for citations. Route new work through the owner named in archive/2026-07-12-review-execution.md. Aliases already declared above.`
+ count = 31
+ note = `2026-07-12 disposition=merge, still citation-bound. Route new work through the owner named in archive/2026-07-12-review-execution.md. Citation-safe members moved to archive on 2026-09-07.`
  members = #[
   `attention-cue-gestures`,
   `author-rpg-notebooks`,
@@ -476,7 +482,6 @@ reading_order: .{
   `chrome-distribution-momentum-pass`,
   `component-box-model-responsive-audit`,
   `component-rhythm-variety`,
-  `curricularize-codebase-typescript`,
   `dark-contrast-pass`,
   `discovery-notice-popups`,
   `editable-page-shell`,
@@ -485,10 +490,8 @@ reading_order: .{
   `hook-region-anatomy`,
   `image-visit-metaphysics`,
   `instrumentation-legibility`,
-  `javascript-standalone-utility`,
   `js-taxonomy-cleanup`,
   `learning-science-community-pass`,
-  `living-medium-copy-pass`,
   `math-topic-expansion`,
   `mobile-brace-path-polish`,
   `palette-resonance`,
@@ -498,19 +501,17 @@ reading_order: .{
   `rpg-wednesday-kit-refactor`,
   `settings-discoverability-consolidation`,
   `settings-widgets-low-friction`,
-  `shell-harmony-pass`,
   `shell-semantic-physics`,
   `space-menu-arcs-electrical`,
   `spell-cauldron-microinteractions`,
   `svg-handoff-copy-alignment`,
   `symphonic-loading-layered-editions`,
-  `theme-palette-marketability`,
   `unsorted-image-rollout`,
  ][reg=set]
 }[reg=facet]
 ^"since_2026_07_12"{
  label = "since 2026-07-12"
- count = 28
+ count = 27
  note = `Live folders the 2026-07-12 root index never named. Not automatic backlog. Author index.spw on next touch; do not batch-generate. Open-first without index.spw: history-reflow, core-css-spend-cut, dimensional-expression-navigation.`
  members = #[
   `alignment-content-fit`,
@@ -537,7 +538,6 @@ reading_order: .{
   `region-attenuation-coverage`,
   `resume-record`,
   `semantic-classname-layers`,
-  `semantic-navigation-geometry`,
   `template-dimensional-editorial-refinement`,
   `visual-capture-ecology`,
   `wrap-job-utility`,

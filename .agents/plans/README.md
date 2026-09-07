@@ -47,7 +47,7 @@ Census and root-index truth: `.spw/audits/plan-spw-tree-2026-09.spw`.
 
 The 2026-07-12 review already said merge and completed-reference plans must not regain `active_backlog` status. This pass executed that rule on `.agents/plans/index.spw` only: 36 merge slugs and 12 completed-reference slugs left the live buckets; 5 physically archived folders are named in `archive`; 28 post-review folders sit in `since_2026_07_12` until they are touched. Folders did not move.
 
-Do not generate the 23 missing `index.spw` files in batch. Do not `--force-generated`. Next archive is citation-safe and one folder at a time (`site-copy-component-settings-june-2026` is the nearest).
+Do not generate the 23 missing `index.spw` files in batch. Do not `--force-generated`. 2026-09-07 archive moved seven citation-safe folders under `archive/`.
 
 Open-first plans still lacking `index.spw`: `history-reflow`, `core-css-spend-cut`, `dimensional-expression-navigation`. Author those on next touch.
 
@@ -141,7 +141,7 @@ Use virtual buckets before physical moves:
 - Semantic rails and editor operations: `model-guided-refinement/`, `daily-kernel-development/`, `modular-experience-slices/`, `spw-surface-normalization/`, `agent-optimization/`, `agentic-dev-contracts/`. Use `agentic-dev-contracts/` for generated route/runtime facts, future plan/skill indexes, validation posture memos, and other invalidatable agent-development caches.
 - CSS, layout, and interaction: `css-architecture-readability/`, `core-css-spend-cut/`, `css-state-legibility/`, `component-box-model-responsive-audit/`, `card-grid-density-audit/`, `floating-chrome-stack/`, `gesture-aria-hygiene/`, `attention-shell-contrast/`.
 - Runtime, JS, and validation: `runtime-bootstrap-performance/`, `runtime-load-instrumentation/`, `runtime-module-fluency/`, `js-surface-ecology/`, `js-taxonomy-cleanup/`, `site-source-layout/`, `typescript-integration/`. Use this bucket for cold/warm load posture, cache strata, module mount cost, and metacognitive inspection utility.
-- Media, image, and sensory material: `style-image-cohesion/`, `midjourney-design-concepts/`, `relational-attention-media/`, `site-color-tuning/`, `theme-palette-marketability/`.
+- Media, image, and sensory material: `style-image-cohesion/`, `midjourney-design-concepts/`, `relational-attention-media/`, `site-color-tuning/`.
 - Public route, proof, and genre systems: `design-hub/`, `webpage-trope-vocabulary/`, `professional-skill-development-worldbuilding/`, `rpg-portal-fantasy/`, `expressive-layout-tropes-fidget-manuscript/`.
 - Templates and tooling: `recent-plan-templates/` is a template source, not an active backlog item. Use its leaflet precipitation template for small .spw byproducts before promoting them into plans or conventions. `site-starter-component-kit/` owns the portable starter/component inventory boundary, not generated starter output yet.
 - Fix queue: `FIX.md`-only folders remain active tactical work unless a dated archive note says the fix has landed or been superseded. Completed/superseded FIX references from this sweep are `overlay-layer-ownership/`, `menu-containment-navigation/`, `mobile-image-effects/`, and `runtime-route-css-regressions/`.

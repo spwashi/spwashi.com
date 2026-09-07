@@ -34,7 +34,7 @@
 @plan_module_decomposition: ~"../runtime-module-decomposition/index.spw"
 @plan_css_sensitive_writes: ~"../css-sensitive-attribute-writes/index.spw"
 @plan_css_architecture: ~"../css-architecture-readability/index.spw"
-@plan_navigation_geometry: ~"../semantic-navigation-geometry/PLAN.md"
+@plan_navigation_geometry: ~"../archive/semantic-navigation-geometry/PLAN.md"
 
 @modules: ~"./modules.spw"
 @shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"

@@ -32,7 +32,7 @@ audit_run: .{
   at = `2026-09-07`
   method = `find + index.spw disposition parse + @ref counts + citation scan outside each plan folder`
   posture = `Do not rewrite every .spw file. Do not generate missing plan index.spw in batch. Do not physically move folders until a ref-safe pass names every remaining citation.`
-  this_patch = `Census + execute the 2026-07-12 root-index consequence: merged and completed_reference leave active_backlog.`
+  this_patch = `Census + root-index bucket truth. Follow-on archive: seven citation-safe folders moved 2026-09-07.`
 }[reg=facet]
 
 ^"thesis"{
@@ -117,7 +117,7 @@ audit_run: .{
     `card-anatomy-interactions 13 (maintain script, refinements, root index)`
     `site-copy-component-settings-june-2026 2 (root index + review execution)`
   ][reg=set]
-  citation_safe_if_index_and_ledger_updated = #[
+  archived_2026_09_07 = #[
     `site-copy-component-settings-june-2026`
     `javascript-standalone-utility`
     `curricularize-codebase-typescript`
@@ -146,9 +146,9 @@ audit_run: .{
 }
 
 ^"next_slices"{
-  done_here = `audit + root-index bucket truth + ecology coordinator status + planning-ecology census pointer`
+  done_here = `audit + root-index bucket truth; 2026-09-07 archive of seven citation-safe folders`
   later = #[
-    `archive: citation_safe_if_index_and_ledger_updated, one folder at a time, update maintain-script BUCKETS in the same patch`
+    `archive: remaining citation-bound merge folders only after sibling ~ paths are retargeted`
     `align: conventions/index.spw ecologies facet + wire the three unlisted coordinators`
     `align: add operation/fixity to owner conventions on touch, not as a batch rewrite`
     `archive: cold-mark the three 2026-07 caches`

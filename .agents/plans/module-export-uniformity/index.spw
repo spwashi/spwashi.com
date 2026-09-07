@@ -53,7 +53,7 @@ intent: .{
 @wip: ~"./wip.spw"
 @kinship_audit: ~"../../../.spw/audits/module-ecology-kinship-2026-09.spw"
 @plan_runtime_module_decomposition: ~"../runtime-module-decomposition/index.spw"
-@plan_javascript_standalone_utility: ~"../javascript-standalone-utility/index.spw"
+@plan_javascript_standalone_utility: ~"../archive/javascript-standalone-utility/index.spw"
 @module_export_standalone_2026_07: ~"../../../.spw/audits/module-export-standalone-2026-07.spw"
 @runtime_medium_ecology: ~"../../../.spw/conventions/runtime-medium-ecology.spw"
 @runtime_module_medium: ~"../../../.spw/surfaces/runtime-module-medium.spw"

@@ -26,6 +26,13 @@ Archived plan folders (moved here in ref-safe passes):
 - `css-progressive-ornaments/` - Archived 2026-08-18: absorbed by `css-architecture-readability`; live ornament delivery is `core-css-spend-cut`.
 - `cinematic-handles/` - Archived 2026-08-18: merged into `color-motion`.
 - `css-maintainability-refactor/` - Archived 2026-08-18: merged into `css-architecture-readability`.
+- `site-copy-component-settings-june-2026/` - Archived 2026-09-07: dated umbrella; remaining copy/component/settings work belongs to current owners.
+- `javascript-standalone-utility/` - Archived 2026-09-07: merged into `js-surface-ecology`; standalone usefulness stays an acceptance test.
+- `curricularize-codebase-typescript/` - Archived 2026-09-07: merged into `typescript-integration`.
+- `living-medium-copy-pass/` - Archived 2026-09-07: tone, not a copy owner; route through `voice-grounding-pass` and `webpage-trope-vocabulary`.
+- `shell-harmony-pass/` - Archived 2026-09-07: merged into `chrome-navigation-wonder`.
+- `theme-palette-marketability/` - Archived 2026-09-07: merged into `site-color-tuning`.
+- `semantic-navigation-geometry/` - Archived 2026-09-07: closed 2026-07-26; geometry lives in `cognitive-navigation.spw` and `public/js/semantic/spw-expression-geometry.js`.
 
 Census (not a folder move): `.spw/audits/plan-spw-tree-2026-09.spw` — 2026-09-07 root-index bucket truth. Physical archive still requires a citation-safe pass.
 
