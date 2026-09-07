@@ -326,6 +326,17 @@
   --spw-color-layer-fill-muted: color-mix(in srgb, var(--pigment-charcoal-fiber, #1a2024) 92%, var(--active-op-color, #008080) 8%);
 }
 
+@media (prefers-color-scheme: dark) {
+  :where(html[data-spw-color-mode="auto"]) :where(
+    [data-spw-empty="true"],
+    [data-spw-component-state="empty"],
+    [data-spw-hydration="loading"]
+  ) {
+    --spw-pre-state-fill-mix: calc(0.06 + (var(--spw-pre-state-visibility, 0.5) * 0.08));
+    --spw-color-layer-fill-muted: color-mix(in srgb, var(--pigment-charcoal-fiber, #1a2024) 92%, var(--active-op-color, #008080) 8%);
+  }
+}
+
 /* ==========================================================================
    5. Variant and content-variant selection
    ========================================================================== */

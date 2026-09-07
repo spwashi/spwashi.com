@@ -769,9 +769,9 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
    notices become opaque matte surfaces with --ink-on-matte-strong for legibility. */
 html[data-spw-color-mode="dark"] .spw-discovery-notice {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 62%),
-    color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.92)) 97%, transparent);
-  color: var(--ink, rgba(228, 235, 232, 0.92));
+    linear-gradient(180deg, var(--surface-sheen, rgba(255, 255, 255, 0.05)), transparent 62%),
+    color-mix(in srgb, var(--surface-strong) 97%, transparent);
+  color: var(--ink);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
 }
 html[data-spw-color-mode="dark"] .spw-discovery-notice--modal {
@@ -793,30 +793,32 @@ html[data-spw-color-mode="dark"] .spw-discovery-notice__meta-value {
   color: var(--ink, rgba(236, 241, 238, 0.95));
 }
 
-html[data-spw-color-mode="auto"] .spw-discovery-notice--modal {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--ink, rgba(236, 241, 238, 0.95)) 7%, transparent), transparent 48%),
-    color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.96)) 98%, transparent);
-  color: var(--ink, rgba(236, 241, 238, 0.95));
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, var(--line, rgba(246, 248, 248, 0.18)) 74%);
-  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.34);
-}
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] .spw-discovery-notice--modal {
+    background:
+      linear-gradient(180deg, var(--surface-sheen, rgba(255, 255, 255, 0.07)), transparent 48%),
+      color-mix(in srgb, var(--surface-strong) 98%, transparent);
+    color: var(--ink);
+    border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, var(--line) 74%);
+    box-shadow: var(--floating-shadow, 0 22px 46px rgba(0, 0, 0, 0.34));
+  }
 
-html[data-spw-color-mode="auto"] .spw-discovery-notice--modal :is(
-  .spw-discovery-notice__title,
-  .spw-discovery-notice__summary,
-  .spw-discovery-notice__offer,
-  .spw-discovery-notice__meta-value
-) {
-  color: var(--ink, rgba(236, 241, 238, 0.95));
-}
+  html[data-spw-color-mode="auto"] .spw-discovery-notice--modal :is(
+    .spw-discovery-notice__title,
+    .spw-discovery-notice__summary,
+    .spw-discovery-notice__offer,
+    .spw-discovery-notice__meta-value
+  ) {
+    color: var(--ink);
+  }
 
-html[data-spw-color-mode="auto"] .spw-discovery-notice--modal :is(
-  .spw-discovery-notice__label,
-  .spw-discovery-notice__dismiss,
-  .spw-discovery-notice__why
-) {
-  color: var(--ink-soft, rgba(202, 214, 210, 0.78));
+  html[data-spw-color-mode="auto"] .spw-discovery-notice--modal :is(
+    .spw-discovery-notice__label,
+    .spw-discovery-notice__dismiss,
+    .spw-discovery-notice__why
+  ) {
+    color: var(--ink-soft);
+  }
 }
 
 /* "Film credits" style ephemeral chrome for module / settings application.

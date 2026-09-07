@@ -1662,11 +1662,17 @@ html[data-spw-reduce-motion="on"] *::after {
   --shadow-subtle: var(--shadow-xs);
   --shadow-color: rgba(0, 0, 0, 0.08);
 
+  /* Specular spend. Light rooms get a paper glint; dark rooms keep a dim
+     rim so cards do not flash a white stripe. color-scheme selects the used value. */
+  --specular: rgba(255, 255, 255, 0.62);
+  --specular-soft: rgba(255, 255, 255, 0.28);
+  --surface-sheen: rgba(255, 255, 255, 0.10);
+
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04),
     0 6px 18px -3px rgba(0, 0, 0, 0.07);
   --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.06),
     0 16px 36px -4px rgba(0, 0, 0, 0.12);
-  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  --card-highlight: inset 0 1px 0 var(--specular);
 
   --floating-bg: var(--surface-strong);
   --floating-bg-warm: rgba(255, 251, 242, 0.92);
@@ -2087,9 +2093,9 @@ html[data-spw-reduce-motion="on"] *::after {
   --op-frame-bg-soft: color-mix(in srgb, var(--op-frame-color) 7%, transparent);
   --op-frame-glow: 0 0 12px color-mix(in srgb, var(--op-frame-color) 22%, transparent);
 
-  --op-layer-color: var(--ink-soft, rgba(14, 18, 20, 0.68));
-  --op-layer-border: rgba(14, 18, 20, 0.14);
-  --op-layer-bg-soft: rgba(255, 255, 255, 0.5);
+  --op-layer-color: var(--ink-soft);
+  --op-layer-border: var(--line);
+  --op-layer-bg-soft: color-mix(in srgb, var(--surface-strong) 50%, transparent);
   --op-layer-glow: 0 0 8px color-mix(in srgb, var(--ink-soft) 16%, transparent);
 
   --op-vibration-color: var(--op-frame-color);
@@ -2694,6 +2700,112 @@ html[data-spw-component-density="roomy"] {
   --spw-control-padding-inline: 0.76rem;
 }
 
+/* Color-scheme is the switch light-dark() reads. Prepaint also writes this
+   as an inline style; these rules cover first paint and no-JS. Default light
+   so a dark OS cannot invert tokens before auto is authored. */
+html {
+  color-scheme: light;
+}
+html[data-spw-color-mode="light"] {
+  color-scheme: light;
+}
+html[data-spw-color-mode="dark"] {
+  color-scheme: dark;
+}
+html[data-spw-color-mode="auto"] {
+  color-scheme: light dark;
+}
+
+/* Auto mode: the same dark substrate as explicit dark, selected by color-scheme
+   instead of a duplicated selector matrix. Explicit dark still restates below
+   so a missing color-scheme cannot leave dark mode on the light half. */
+@supports (color: light-dark(black, white)) {
+  :root {
+    --bg: light-dark(hsl(42 32% 90%), hsl(218 20% 8.5%));
+    --bg-deep: light-dark(hsl(42 26% 82%), hsl(220 24% 6%));
+    --bg-field: light-dark(hsl(44 34% 95%), hsl(216 16% 12%));
+    --bg-ritual: light-dark(hsl(40 36% 89%), hsl(218 18% 13.5%));
+
+    --paper: light-dark(hsl(42 34% 95%), hsl(216 14% 12.5%));
+    --paper-warm: light-dark(hsl(39 44% 93%), hsl(32 12% 14.5%));
+    --paper-cool: light-dark(hsl(210 24% 95%), hsl(214 14% 15.5%));
+    --paper-ink: light-dark(rgba(var(--charcoal-rgb), 0.92), rgba(232, 238, 236, 0.92));
+    --paper-rule: light-dark(rgba(var(--charcoal-rgb), 0.12), rgba(232, 238, 236, 0.14));
+
+    --surface: light-dark(rgba(255, 255, 255, 0.82), rgba(20, 26, 31, 0.82));
+    --surface-strong: light-dark(rgba(255, 255, 255, 0.94), rgba(28, 36, 42, 0.94));
+    --surface-soft: light-dark(rgba(255, 255, 255, 0.65), rgba(20, 26, 31, 0.62));
+    --surface-code: light-dark(rgba(18, 23, 27, 0.96), rgba(10, 14, 17, 0.98));
+    --surface-matte: light-dark(rgba(250, 248, 243, 0.96), rgba(26, 33, 39, 0.97));
+    --surface-matte-strong: light-dark(rgba(255, 253, 248, 0.99), rgba(33, 41, 48, 0.99));
+    --surface-contrast: light-dark(rgba(255, 255, 255, 0.99), rgba(36, 45, 52, 0.99));
+    --surface-contrast-soft: light-dark(rgba(248, 244, 236, 0.96), rgba(28, 36, 42, 0.97));
+    --surface-panel: light-dark(rgba(255, 255, 255, 0.88), rgba(26, 34, 40, 0.92));
+    --surface-panel-strong: light-dark(rgba(255, 255, 255, 0.96), rgba(33, 42, 49, 0.96));
+    --surface-glass: light-dark(rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.08));
+    --surface-shadowed: light-dark(rgba(255, 255, 255, 0.76), rgba(22, 28, 34, 0.76));
+
+    --ink-strong: light-dark(rgba(var(--charcoal-rgb), 0.96), rgba(236, 241, 238, 0.96));
+    --ink: light-dark(rgba(var(--charcoal-rgb), 0.92), rgba(228, 235, 232, 0.92));
+    --ink-soft: light-dark(rgba(var(--charcoal-rgb), 0.8), rgba(214, 224, 220, 0.90));
+    --ink-mid: light-dark(rgba(var(--charcoal-rgb), 0.68), rgba(214, 224, 220, 0.80));
+    --ink-muted: light-dark(rgba(var(--charcoal-rgb), 0.58), rgba(202, 214, 210, 0.72));
+    --ink-faint: light-dark(rgba(var(--charcoal-rgb), 0.42), rgba(202, 214, 210, 0.62));
+    --ink-speculative: light-dark(rgba(var(--charcoal-rgb), 0.24), rgba(190, 202, 198, 0.18));
+    --ink-disabled: light-dark(rgba(var(--charcoal-rgb), 0.24), rgba(190, 202, 198, 0.24));
+    --ink-on-matte: light-dark(rgba(var(--charcoal-rgb), 0.96), rgba(246, 250, 248, 0.97));
+    --ink-on-matte-soft: light-dark(rgba(var(--charcoal-rgb), 0.78), rgba(220, 230, 226, 0.84));
+    --ink-on-matte-strong: light-dark(rgba(var(--charcoal-rgb), 0.98), rgba(255, 255, 255, 0.98));
+    --ink-on-contrast: light-dark(rgba(var(--charcoal-rgb), 0.98), rgba(255, 255, 255, 0.98));
+    --ink-on-contrast-soft: light-dark(rgba(var(--charcoal-rgb), 0.86), rgba(240, 246, 245, 0.9));
+
+    --line: light-dark(rgba(var(--charcoal-rgb), 0.14), rgba(228, 235, 232, 0.14));
+    --line-strong: light-dark(rgba(0, 128, 128, 0.34), rgba(96, 210, 210, 0.34));
+    --line-matte: light-dark(rgba(var(--charcoal-rgb), 0.09), rgba(228, 235, 232, 0.09));
+    --line-quiet: light-dark(rgba(var(--charcoal-rgb), 0.07), rgba(228, 235, 232, 0.07));
+
+    --specular: light-dark(rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.10));
+    --specular-soft: light-dark(rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06));
+    --surface-sheen: light-dark(rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.04));
+    --shadow-color: light-dark(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.45));
+    --floating-bg-warm: light-dark(rgba(255, 251, 242, 0.92), rgba(36, 32, 28, 0.92));
+
+    --teal: light-dark(hsl(180 72% 30%), hsl(180 58% 58%));
+    --teal-deep: light-dark(hsl(180 70% 18%), hsl(180 52% 42%));
+    --teal-soft: light-dark(hsla(180, 72%, 30%, 0.7), hsla(180, 58%, 58%, 0.78));
+    --amber: light-dark(hsl(42 78% 48%), hsl(42 70% 62%));
+    --pink: light-dark(hsl(342 48% 46%), hsl(342 48% 68%));
+    --violet: light-dark(hsl(268 36% 42%), hsl(268 42% 70%));
+    --resonance-accent: light-dark(hsl(188 54% 45%), hsl(188 54% 62%));
+
+    --op-frame-color: light-dark(hsl(180 74% 28%), hsl(180 62% 62%));
+    --op-probe-color: light-dark(hsl(268 54% 44%), hsl(268 48% 72%));
+    --op-ref-color: light-dark(hsl(214 66% 40%), hsl(214 58% 68%));
+    --op-object-color: light-dark(hsl(36 82% 38%), hsl(36 70% 64%));
+    --op-merge-color: light-dark(hsl(188 42% 34%), hsl(188 42% 64%));
+    --op-binding-color: light-dark(hsl(24 48% 34%), hsl(24 48% 66%));
+    --op-action-color: light-dark(hsl(176 74% 24%), hsl(176 58% 58%));
+    --op-topic-color: light-dark(hsl(168 62% 30%), hsl(168 52% 62%));
+    --op-surface-color: light-dark(hsl(180 52% 30%), hsl(180 48% 62%));
+
+    --op-frame-bg-soft: light-dark(
+      color-mix(in srgb, var(--op-frame-color) 7%, transparent),
+      color-mix(in srgb, var(--op-frame-color) 16%, transparent)
+    );
+    --op-probe-bg-soft: light-dark(rgba(245, 238, 255, 0.72), color-mix(in srgb, var(--op-probe-color) 16%, transparent));
+    --op-ref-bg-soft: light-dark(rgba(235, 244, 255, 0.72), color-mix(in srgb, var(--op-ref-color) 16%, transparent));
+    --op-object-bg-soft: light-dark(rgba(255, 248, 235, 0.72), color-mix(in srgb, var(--op-object-color) 16%, transparent));
+    --op-merge-bg-soft: light-dark(rgba(232, 247, 250, 0.68), color-mix(in srgb, var(--op-merge-color) 16%, transparent));
+    --op-binding-bg-soft: light-dark(rgba(255, 242, 232, 0.68), color-mix(in srgb, var(--op-binding-color) 16%, transparent));
+    --op-action-bg-soft: light-dark(rgba(230, 248, 248, 0.72), color-mix(in srgb, var(--op-action-color) 16%, transparent));
+    --op-topic-bg-soft: light-dark(rgba(228, 248, 246, 0.72), color-mix(in srgb, var(--op-topic-color) 16%, transparent));
+    --op-surface-bg-soft: light-dark(rgba(230, 248, 248, 0.6), color-mix(in srgb, var(--op-surface-color) 16%, transparent));
+    --op-layer-color: var(--ink-soft);
+    --op-layer-border: var(--line);
+    --op-layer-bg-soft: light-dark(rgba(255, 255, 255, 0.5), color-mix(in srgb, var(--surface-strong) 70%, transparent));
+  }
+}
+
 /* Dark mode */
 html[data-spw-color-mode="dark"] {
   --bg: hsl(218 20% 8.5%);
@@ -2724,8 +2836,8 @@ html[data-spw-color-mode="dark"] {
   --ink: rgba(228, 235, 232, 0.92);
   --ink-soft: rgba(214, 224, 220, 0.90);
   --ink-mid: rgba(214, 224, 220, 0.80);
-  --ink-muted: rgba(202, 214, 210, 0.58);
-  --ink-faint: rgba(202, 214, 210, 0.52);
+  --ink-muted: rgba(202, 214, 210, 0.72);
+  --ink-faint: rgba(202, 214, 210, 0.62);
   --ink-speculative: rgba(190, 202, 198, 0.18);
   --ink-disabled: rgba(190, 202, 198, 0.24);
   --ink-on-matte: rgba(246, 250, 248, 0.97);
@@ -2756,15 +2868,74 @@ html[data-spw-color-mode="dark"] {
 
   --focus-ring: 0 0 0 3px rgba(96, 210, 210, 0.22);
 
+  --specular: rgba(255, 255, 255, 0.10);
+  --specular-soft: rgba(255, 255, 255, 0.06);
+  --surface-sheen: rgba(255, 255, 255, 0.04);
+
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.28);
   --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.32);
   --shadow-base: 0 2px 4px rgba(0, 0, 0, 0.28), 0 8px 24px -4px rgba(0, 0, 0, 0.44);
   --shadow-active: 0 4px 10px rgba(0, 0, 0, 0.34), 0 16px 38px -4px rgba(0, 0, 0, 0.54);
   --shadow-projecting: 0 8px 18px rgba(0, 0, 0, 0.38), 0 24px 54px -6px rgba(0, 0, 0, 0.62);
+  --shadow-color: rgba(0, 0, 0, 0.45);
+
+  --card-shadow: 0 2px 6px rgba(0, 0, 0, 0.28), 0 10px 28px -4px rgba(0, 0, 0, 0.44);
+  --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.34), 0 18px 40px -4px rgba(0, 0, 0, 0.54);
+  --card-highlight: inset 0 1px 0 var(--specular);
+  --floating-bg: var(--surface-strong);
+  --floating-bg-warm: rgba(36, 32, 28, 0.92);
+  --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.28);
+
+  --teal: hsl(180 58% 58%);
+  --teal-deep: hsl(180 52% 42%);
+  --teal-soft: hsla(180, 58%, 58%, 0.78);
+  --amber: hsl(42 70% 62%);
+  --pink: hsl(342 48% 68%);
+  --violet: hsl(268 42% 70%);
+  --resonance-accent: hsl(188 54% 62%);
+
+  --op-frame-color: hsl(180 62% 62%);
+  --op-probe-color: hsl(268 48% 72%);
+  --op-ref-color: hsl(214 58% 68%);
+  --op-object-color: hsl(36 70% 64%);
+  --op-merge-color: hsl(188 42% 64%);
+  --op-binding-color: hsl(24 48% 66%);
+  --op-action-color: hsl(176 58% 58%);
+  --op-topic-color: hsl(168 52% 62%);
+  --op-surface-color: hsl(180 48% 62%);
+  --op-frame-bg-soft: color-mix(in srgb, var(--op-frame-color) 16%, transparent);
+  --op-probe-bg-soft: color-mix(in srgb, var(--op-probe-color) 16%, transparent);
+  --op-ref-bg-soft: color-mix(in srgb, var(--op-ref-color) 16%, transparent);
+  --op-object-bg-soft: color-mix(in srgb, var(--op-object-color) 16%, transparent);
+  --op-merge-bg-soft: color-mix(in srgb, var(--op-merge-color) 16%, transparent);
+  --op-binding-bg-soft: color-mix(in srgb, var(--op-binding-color) 16%, transparent);
+  --op-action-bg-soft: color-mix(in srgb, var(--op-action-color) 16%, transparent);
+  --op-topic-bg-soft: color-mix(in srgb, var(--op-topic-color) 16%, transparent);
+  --op-surface-bg-soft: color-mix(in srgb, var(--op-surface-color) 16%, transparent);
+  --op-layer-color: var(--ink-soft);
+  --op-layer-border: var(--line);
+  --op-layer-bg-soft: color-mix(in srgb, var(--surface-strong) 70%, transparent);
 
   --climate-badge-bg: color-mix(in srgb, var(--climate-accent) 16%, var(--surface-strong));
-  --climate-badge-text: color-mix(in srgb, var(--climate-accent) 56%, white);
+  --climate-badge-text: color-mix(in srgb, var(--climate-accent) 56%, var(--ink-strong));
   --climate-menu-bg: color-mix(in srgb, var(--surface-strong) 90%, var(--climate-accent) 10%);
+}
+
+/* Shadows are not <color>, so light-dark() cannot carry them. Auto borrows
+   the explicit-dark stacks when the OS is dark; specular/ink already follow
+   color-scheme from the block above. */
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] {
+    --focus-ring: 0 0 0 3px rgba(96, 210, 210, 0.22);
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.28);
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.32);
+    --shadow-base: 0 2px 4px rgba(0, 0, 0, 0.28), 0 8px 24px -4px rgba(0, 0, 0, 0.44);
+    --shadow-active: 0 4px 10px rgba(0, 0, 0, 0.34), 0 16px 38px -4px rgba(0, 0, 0, 0.54);
+    --shadow-projecting: 0 8px 18px rgba(0, 0, 0, 0.38), 0 24px 54px -6px rgba(0, 0, 0, 0.62);
+    --card-shadow: 0 2px 6px rgba(0, 0, 0, 0.28), 0 10px 28px -4px rgba(0, 0, 0, 0.44);
+    --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.34), 0 18px 40px -4px rgba(0, 0, 0, 0.54);
+    --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.28);
+  }
 }
 
 /* Theme packs live in themes/packs.css, loaded on demand by
@@ -2879,13 +3050,13 @@ html[data-spw-pedagogical-flavor="runtime"] {
 
 /* High contrast */
 html[data-spw-high-contrast="on"] {
-  --ink-strong: rgba(var(--charcoal-rgb), 1);
-  --ink: rgba(var(--charcoal-rgb), 0.98);
-  --ink-soft: rgba(var(--charcoal-rgb), 0.9);
-  --ink-on-matte: rgba(var(--charcoal-rgb), 1);
-  --ink-on-matte-strong: rgba(var(--charcoal-rgb), 1);
-  --line: rgba(var(--charcoal-rgb), 0.28);
-  --line-strong: color-mix(in srgb, var(--active-op-color) 58%, black);
+  --ink-strong: light-dark(rgba(var(--charcoal-rgb), 1), rgba(255, 255, 255, 0.98));
+  --ink: light-dark(rgba(var(--charcoal-rgb), 0.98), rgba(246, 248, 248, 0.96));
+  --ink-soft: light-dark(rgba(var(--charcoal-rgb), 0.9), rgba(230, 238, 236, 0.88));
+  --ink-on-matte: light-dark(rgba(var(--charcoal-rgb), 1), rgba(255, 255, 255, 0.98));
+  --ink-on-matte-strong: light-dark(rgba(var(--charcoal-rgb), 1), rgba(255, 255, 255, 0.99));
+  --line: light-dark(rgba(var(--charcoal-rgb), 0.28), rgba(246, 248, 248, 0.26));
+  --line-strong: color-mix(in srgb, var(--active-op-color) 58%, light-dark(black, white));
   --focus-ring: 0 0 0 4px color-mix(in srgb, var(--active-op-color) 32%, transparent);
   --climate-outline-strength: max(var(--climate-outline-strength), 0.36);
 }
@@ -3384,6 +3555,17 @@ html[data-spw-reduce-motion="on"] {
 ) {
   --spw-pre-state-fill-mix: calc(0.06 + (var(--spw-pre-state-visibility, 0.5) * 0.08));
   --spw-color-layer-fill-muted: color-mix(in srgb, var(--pigment-charcoal-fiber, #1a2024) 92%, var(--active-op-color, #008080) 8%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(html[data-spw-color-mode="auto"]) :where(
+    [data-spw-empty="true"],
+    [data-spw-component-state="empty"],
+    [data-spw-hydration="loading"]
+  ) {
+    --spw-pre-state-fill-mix: calc(0.06 + (var(--spw-pre-state-visibility, 0.5) * 0.08));
+    --spw-color-layer-fill-muted: color-mix(in srgb, var(--pigment-charcoal-fiber, #1a2024) 92%, var(--active-op-color, #008080) 8%);
+  }
 }
 
 /* ==========================================================================
@@ -8442,9 +8624,9 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
    notices become opaque matte surfaces with --ink-on-matte-strong for legibility. */
 html[data-spw-color-mode="dark"] .spw-discovery-notice {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 62%),
-    color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.92)) 97%, transparent);
-  color: var(--ink, rgba(228, 235, 232, 0.92));
+    linear-gradient(180deg, var(--surface-sheen, rgba(255, 255, 255, 0.05)), transparent 62%),
+    color-mix(in srgb, var(--surface-strong) 97%, transparent);
+  color: var(--ink);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
 }
 html[data-spw-color-mode="dark"] .spw-discovery-notice--modal {
@@ -8466,30 +8648,32 @@ html[data-spw-color-mode="dark"] .spw-discovery-notice__meta-value {
   color: var(--ink, rgba(236, 241, 238, 0.95));
 }
 
-html[data-spw-color-mode="auto"] .spw-discovery-notice--modal {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--ink, rgba(236, 241, 238, 0.95)) 7%, transparent), transparent 48%),
-    color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.96)) 98%, transparent);
-  color: var(--ink, rgba(236, 241, 238, 0.95));
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, var(--line, rgba(246, 248, 248, 0.18)) 74%);
-  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.34);
-}
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] .spw-discovery-notice--modal {
+    background:
+      linear-gradient(180deg, var(--surface-sheen, rgba(255, 255, 255, 0.07)), transparent 48%),
+      color-mix(in srgb, var(--surface-strong) 98%, transparent);
+    color: var(--ink);
+    border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, var(--line) 74%);
+    box-shadow: var(--floating-shadow, 0 22px 46px rgba(0, 0, 0, 0.34));
+  }
 
-html[data-spw-color-mode="auto"] .spw-discovery-notice--modal :is(
-  .spw-discovery-notice__title,
-  .spw-discovery-notice__summary,
-  .spw-discovery-notice__offer,
-  .spw-discovery-notice__meta-value
-) {
-  color: var(--ink, rgba(236, 241, 238, 0.95));
-}
+  html[data-spw-color-mode="auto"] .spw-discovery-notice--modal :is(
+    .spw-discovery-notice__title,
+    .spw-discovery-notice__summary,
+    .spw-discovery-notice__offer,
+    .spw-discovery-notice__meta-value
+  ) {
+    color: var(--ink);
+  }
 
-html[data-spw-color-mode="auto"] .spw-discovery-notice--modal :is(
-  .spw-discovery-notice__label,
-  .spw-discovery-notice__dismiss,
-  .spw-discovery-notice__why
-) {
-  color: var(--ink-soft, rgba(202, 214, 210, 0.78));
+  html[data-spw-color-mode="auto"] .spw-discovery-notice--modal :is(
+    .spw-discovery-notice__label,
+    .spw-discovery-notice__dismiss,
+    .spw-discovery-notice__why
+  ) {
+    color: var(--ink-soft);
+  }
 }
 
 /* "Film credits" style ephemeral chrome for module / settings application.
@@ -16899,7 +17083,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   .ref-card
 ) {
   --component-text: var(--ink-strong, currentColor);
-  --component-text-soft: var(--ink-mid, currentColor);
+  --component-text-soft: light-dark(var(--ink-mid, currentColor), var(--ink-soft, currentColor));
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
 }
@@ -16956,6 +17140,23 @@ html[data-spw-color-mode="dark"] :where(
   --component-text-soft: var(--ink-soft, CanvasText);
 }
 
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] :where(
+    .frame-card,
+    .media-card,
+    .frame-panel,
+    .mode-panel,
+    .plan-card,
+    .compare-card,
+    .spec-column,
+    .ref-card,
+    .operator-card
+  ) {
+    --component-text: var(--ink-strong, CanvasText);
+    --component-text-soft: var(--ink-soft, CanvasText);
+  }
+}
+
 :where(
   .frame-card,
   .media-card,
@@ -16998,7 +17199,7 @@ html[data-spw-color-mode="dark"] :where(
   --spw-utility: 0.42;
   transform: translateY(0);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.28),
+    inset 0 1px 0 var(--specular-soft, rgba(255,255,255,0.28)),
     0 0 0 1px color-mix(in srgb, var(--component-accent) 18%, transparent),
     var(--component-shadow-quiet);
 }
@@ -38948,7 +39149,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   border-inline-start-width: var(--sigil-border-start-width);
   border-radius: var(--shape-control, 0.78rem);
   background: color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.24);
+  box-shadow: inset 0 1px 0 var(--specular-soft, rgba(255,255,255,0.24));
   color: color-mix(in srgb, var(--ink-soft) 88%, var(--active-op-color, var(--teal)) 12%);
   font-size: var(--text-size-label, 0.76rem);
   line-height: var(--spw-frame-sigil-line-height, 1);
@@ -39320,7 +39521,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .spw-chip) {
   border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--handle-line-soft) 82%);
   background: color-mix(in oklab, var(--surface-strong, #fff) 94%, var(--active-op-color, var(--teal)) 6%);
   border-radius: var(--shape-control, 0.78rem);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
+  box-shadow: inset 0 1px 0 var(--specular-soft, rgba(255, 255, 255, 0.34));
 }
 
 .spw-discovery-notice__handle.spec-pill {
@@ -39334,14 +39535,14 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .spw-chip) {
   padding: 0.08rem 0.34rem;
   border-radius: var(--shape-element, 4px);
   background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal)) 12%);
-  color: color-mix(in srgb, rgba(14, 18, 20, 0.96) 88%, var(--active-op-color, var(--teal)) 12%);
+  color: color-mix(in srgb, var(--ink-strong, rgba(14, 18, 20, 0.96)) 88%, var(--active-op-color, var(--teal)) 12%);
   font-family: var(--site-mono-font, monospace);
   font-size: 0.68rem;
   font-weight: 650;
   line-height: 1.1;
   letter-spacing: 0.025em;
   text-transform: none;
-  box-shadow: inset 0 1px 0 color-mix(in srgb, white 28%, transparent);
+  box-shadow: inset 0 1px 0 var(--specular-soft, color-mix(in srgb, white 28%, transparent));
 }
 
 :where(html[data-spw-color-mode="dark"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, .spec-strip) :where(.spw-component-tag, .spec-pill) {
@@ -39366,7 +39567,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .spw-chip) {
 
 .spw-discovery-notice__handle.spec-pill {
   background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal)) 12%);
-  color: color-mix(in srgb, rgba(14, 18, 20, 0.96) 88%, var(--active-op-color, var(--teal)) 12%);
+  color: color-mix(in srgb, var(--ink-strong, rgba(14, 18, 20, 0.96)) 88%, var(--active-op-color, var(--teal)) 12%);
 }
 
 :where(
@@ -39404,11 +39605,11 @@ a.spw-chip:visited {
 )[data-spw-grounded="true"]:not([aria-current="page"]) {
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.2), transparent 68%),
+    linear-gradient(180deg, var(--surface-sheen, rgba(255,255,255,0.2)), transparent 68%),
     color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--active-op-color, var(--teal)) 10%);
   border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--handle-line-soft));
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.24),
+    inset 0 1px 0 var(--specular-soft, rgba(255,255,255,0.24)),
     0 0 0 1px color-mix(in oklab, var(--active-op-color, var(--teal)) 8%, transparent);
 }
 
@@ -43659,7 +43860,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   --material-duration-deliberate: var(--duration-deliberate, 360ms);
 
   --material-prime-color:   var(--active-op-color, #008080);
-  --material-highlight-inset: inset 0 1px 0 color-mix(in oklch, white 52%, transparent);
+  --material-highlight-inset: inset 0 1px 0 var(--specular, color-mix(in oklch, white 52%, transparent));
 
   --material-depth-opacity-1: 0.88;
   --material-depth-opacity-2: 0.93;
@@ -43855,10 +44056,10 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   --material-local-background:
     linear-gradient(
       180deg,
-      color-mix(in oklab, #fff 12%, transparent) 0%,
+      color-mix(in oklab, var(--specular, white) 40%, transparent) 0%,
       color-mix(in oklab, var(--material-surface) 92%, transparent) 100%
     );
-  --material-local-border-color: color-mix(in oklab, #fff 14%, var(--material-line));
+  --material-local-border-color: color-mix(in oklab, var(--specular-soft, white) 50%, var(--material-line));
   --material-local-shadow:
     var(--material-shadow-rest),
     var(--material-highlight-inset);
@@ -43919,7 +44120,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
       var(--material-surface) 100%
     );
   --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 24%, var(--material-line));
-  --material-local-shadow: var(--material-shadow-rest), inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  --material-local-shadow: var(--material-shadow-rest), inset 0 1px 0 var(--specular-soft, rgba(255, 255, 255, 0.38));
 }
 
 /* ==========================================================================
@@ -43999,7 +44200,9 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     0 0 12px color-mix(in srgb, var(--delight-color, #008080) 18%, transparent);
 }
 
-/* Atmospheric Lighting: Ambient top-down specular highlight */
+/* Atmospheric Lighting: Ambient top-down specular highlight.
+   --surface-sheen follows color-scheme; do not restyle with a second
+   hardcoded white wash that ignores auto. */
 :where(.spw-frame, .frame-card, .mode-panel, .operator-card) {
   background-image:
     radial-gradient(
@@ -44009,22 +44212,8 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     ),
     linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.08) 0%,
+      var(--surface-sheen, rgba(255, 255, 255, 0.08)) 0%,
       transparent 32%
-    );
-}
-
-html[data-spw-color-mode="dark"] :where(.spw-frame, .frame-card, .mode-panel, .operator-card) {
-  background-image:
-    radial-gradient(
-      ellipse 80% 50% at 50% 0%,
-      color-mix(in srgb, var(--active-op-color, #008080) calc(8% * var(--spw-charge-field, 1)), transparent) 0%,
-      transparent 76%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.04) 0%,
-      transparent 28%
     );
 }
 

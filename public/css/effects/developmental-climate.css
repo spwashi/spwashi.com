@@ -660,12 +660,18 @@ body {
    10. Dark Mode + High Contrast + Reduced Motion
    ========================================================================== */
 
+html[data-spw-color-mode="dark"] {
+  --climate-badge-bg: color-mix(in srgb, var(--climate-accent) 16%, var(--surface-strong));
+  --climate-badge-text: color-mix(in srgb, var(--climate-accent) 56%, var(--ink-strong));
+  --climate-menu-bg: color-mix(in srgb, var(--surface-strong) 90%, var(--climate-accent) 10%);
+  --climate-menu-shadow: 0 12px 30px color-mix(in srgb, black 24%, transparent);
+}
+
 @media (prefers-color-scheme: dark) {
-  html[data-spw-color-mode="dark"],
-  html:not([data-spw-color-mode="light"]) {
-    --climate-badge-bg: color-mix(in srgb, var(--climate-accent) 16%, rgba(22, 24, 28, 0.92));
-    --climate-badge-text: color-mix(in srgb, var(--climate-accent) 56%, white);
-    --climate-menu-bg: color-mix(in srgb, rgba(18, 20, 24, 0.94) 90%, var(--climate-accent) 10%);
+  html[data-spw-color-mode="auto"] {
+    --climate-badge-bg: color-mix(in srgb, var(--climate-accent) 16%, var(--surface-strong));
+    --climate-badge-text: color-mix(in srgb, var(--climate-accent) 56%, var(--ink-strong));
+    --climate-menu-bg: color-mix(in srgb, var(--surface-strong) 90%, var(--climate-accent) 10%);
     --climate-menu-shadow: 0 12px 30px color-mix(in srgb, black 24%, transparent);
   }
 }

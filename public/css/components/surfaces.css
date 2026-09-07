@@ -87,7 +87,7 @@
   .ref-card
 ) {
   --component-text: var(--ink-strong, currentColor);
-  --component-text-soft: var(--ink-mid, currentColor);
+  --component-text-soft: light-dark(var(--ink-mid, currentColor), var(--ink-soft, currentColor));
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
 }
@@ -144,6 +144,23 @@ html[data-spw-color-mode="dark"] :where(
   --component-text-soft: var(--ink-soft, CanvasText);
 }
 
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] :where(
+    .frame-card,
+    .media-card,
+    .frame-panel,
+    .mode-panel,
+    .plan-card,
+    .compare-card,
+    .spec-column,
+    .ref-card,
+    .operator-card
+  ) {
+    --component-text: var(--ink-strong, CanvasText);
+    --component-text-soft: var(--ink-soft, CanvasText);
+  }
+}
+
 :where(
   .frame-card,
   .media-card,
@@ -186,7 +203,7 @@ html[data-spw-color-mode="dark"] :where(
   --spw-utility: 0.42;
   transform: translateY(0);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.28),
+    inset 0 1px 0 var(--specular-soft, rgba(255,255,255,0.28)),
     0 0 0 1px color-mix(in srgb, var(--component-accent) 18%, transparent),
     var(--component-shadow-quiet);
 }

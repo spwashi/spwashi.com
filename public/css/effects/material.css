@@ -29,7 +29,7 @@
   --material-duration-deliberate: var(--duration-deliberate, 360ms);
 
   --material-prime-color:   var(--active-op-color, #008080);
-  --material-highlight-inset: inset 0 1px 0 color-mix(in oklch, white 52%, transparent);
+  --material-highlight-inset: inset 0 1px 0 var(--specular, color-mix(in oklch, white 52%, transparent));
 
   --material-depth-opacity-1: 0.88;
   --material-depth-opacity-2: 0.93;
@@ -225,10 +225,10 @@
   --material-local-background:
     linear-gradient(
       180deg,
-      color-mix(in oklab, #fff 12%, transparent) 0%,
+      color-mix(in oklab, var(--specular, white) 40%, transparent) 0%,
       color-mix(in oklab, var(--material-surface) 92%, transparent) 100%
     );
-  --material-local-border-color: color-mix(in oklab, #fff 14%, var(--material-line));
+  --material-local-border-color: color-mix(in oklab, var(--specular-soft, white) 50%, var(--material-line));
   --material-local-shadow:
     var(--material-shadow-rest),
     var(--material-highlight-inset);
@@ -289,7 +289,7 @@
       var(--material-surface) 100%
     );
   --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 24%, var(--material-line));
-  --material-local-shadow: var(--material-shadow-rest), inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  --material-local-shadow: var(--material-shadow-rest), inset 0 1px 0 var(--specular-soft, rgba(255, 255, 255, 0.38));
 }
 
 /* ==========================================================================
@@ -369,7 +369,9 @@
     0 0 12px color-mix(in srgb, var(--delight-color, #008080) 18%, transparent);
 }
 
-/* Atmospheric Lighting: Ambient top-down specular highlight */
+/* Atmospheric Lighting: Ambient top-down specular highlight.
+   --surface-sheen follows color-scheme; do not restyle with a second
+   hardcoded white wash that ignores auto. */
 :where(.spw-frame, .frame-card, .mode-panel, .operator-card) {
   background-image:
     radial-gradient(
@@ -379,22 +381,8 @@
     ),
     linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.08) 0%,
+      var(--surface-sheen, rgba(255, 255, 255, 0.08)) 0%,
       transparent 32%
-    );
-}
-
-html[data-spw-color-mode="dark"] :where(.spw-frame, .frame-card, .mode-panel, .operator-card) {
-  background-image:
-    radial-gradient(
-      ellipse 80% 50% at 50% 0%,
-      color-mix(in srgb, var(--active-op-color, #008080) calc(8% * var(--spw-charge-field, 1)), transparent) 0%,
-      transparent 76%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.04) 0%,
-      transparent 28%
     );
 }
 
