@@ -19,6 +19,7 @@
 @copy_ecology: ~"./copy-ecology.spw"
 @audit: ~"../audits/copy-accessor-cluster-2026-09.spw"
 @copy_hypermedia_key: ~"../caches/copy-hypermedia-key-2026-09.spw"
+@copy_agentic_direction: ~"../caches/copy-agentic-direction-2026-09.spw"
 @runner: ~"../../scripts/page-copy-audit.mjs"
 
 operation = "contract"
@@ -66,6 +67,7 @@ fixity = "stable"
   seeds = #{
     curriculum-numericity = `/curriculum/ /topics/math/ /topics/software/ /recipes/`
     person-magazine = `/ /about/ /now/ /membership/`
+    quest-agentic = `/about/domains/spw.quest/ /topics/software/spw/`
     services-offer = `/services/`
     topics-shelf = `/topics/`
     design-surface = `/design/`

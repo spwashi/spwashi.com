@@ -273,4 +273,8 @@ test('flagCopyVoice and development clusters stay conservative', () => {
     assignDevelopmentClusters('about.hook.lede', { route: '/about/' }),
     ['person-magazine'],
   );
+  assert.deepEqual(
+    assignDevelopmentClusters('quest.hook.lede', { route: '/about/domains/spw.quest/' }),
+    ['quest-agentic'],
+  );
 });

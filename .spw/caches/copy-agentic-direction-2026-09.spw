@@ -1,0 +1,140 @@
+# Copy Agentic Direction (2026-09)
+#
+# operation: cache
+# Direction for public copy and for agents who crawl this site to build
+# something similar. Not a 140-route rewrite. Judgments live here;
+# the working-set HTML is the first align.
+
+#>copy_agentic_direction_2026_09
+#:cache #!copy #!agents #!quest #!harness
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@copy_flow: ~"../conventions/copy-flow.spw"
+@copy_ecology: ~"../conventions/copy-ecology.spw"
+@copy_hypermedia_key: ~"./copy-hypermedia-key-2026-09.spw"
+@creative_capacity: ~"./creative-capacity-2026-09.spw"
+@agent_markdown_spend: ~"./agent-markdown-spend-2026-09.spw"
+@agent_ecology: ~"../conventions/agent-ecology.spw"
+@skill_invocation: ~"../conventions/skill-invocation.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@feature_utilization: ~"../language/feature-utilization.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@quest_route: ~"../../about/domains/spw.quest/index.html"
+@atlas_route: ~"../../topics/software/spw/index.html"
+@home_route: ~"../../index.html"
+
+operation = "cache"
+fixity = "tending"
+source = "chat 2026-09-07: sitewide copy vs recent direction; TikTok on AI / developers / politicians; Grok+X synthesis; Spotify engineering; ungrounded metaphor; spw.quest agentic docs; crawl-agent prompts"
+
+^"thesis"{
+  claim = `Public copy leads with the person. Spw is the inspectable map. Agents who crawl this site should reuse constructs and sensors, not fork grammar or flatten the voice into a product pitch.`
+  opener = `I'm Spwashi. I build software and make art.`
+  density = `Answer density with copy-depth, living-term gloss, and one concrete outcome — not by deleting magic. @copy_accessor#voice_register.`
+  refuse = `Do not rewrite 140 routes in one pass. Do not add a fourth accessor. Do not advertise pretext-physics or electrostatics as a future product. Do not add ASTRA.md.`
+}[reg=facet]
+
+^"ad-001_working_set"{
+  id = "ad-001"
+  operation = "cache"
+  claim = `This direction retunes the person-magazine cluster plus the quest and atlas surfaces that name Spw to outsiders. Membership stays: it already says how to remain near the issue.`
+  seeds = #{
+    person-magazine = `/ /about/ /now/`
+    quest-agentic = `/about/domains/spw.quest/ /topics/software/spw/`
+    left = `/membership/ — lede still holds`
+  }
+  pattern_consideration = `@copy_accessor#clustered_update. Name why a sibling was left.`
+  validation = `npm run audit:copy:accessor`
+}[reg=facet]
+
+^"ad-002_ungrounded_metaphor"{
+  id = "ad-002"
+  operation = "audit"
+  claim = `A metaphor is grounded when a reader can refuse it. Shop-talk that promises a physics the runtime does not spend is stale.`
+  evidence = #[
+    `home Outputs card still says "Pretext physics" after @copy_flow retired pretext-physics as the text primitive`,
+    `atlas Open Horizon promises "electrostatic attention fields" as a replacement for utility CSS — @arrival_electrostatics is a prime about potential difference, not a marketing surface`,
+    `atlas spec-pills "brace physics" / "alchemistry" read as lifestyle when the page's job is operator contracts`
+  ][reg=set]
+  rule = `Name the construct, the sensor, and the refuse. Electrostatics stays as arrival/attention doctrine. It does not become a lede.`
+  expansion_prime = `When a later pass touches a route, grep the first fold for physics, alchemistry, particle, magic, and "in a world".`
+}[reg=facet]
+
+^"ad-003_spotify_engineering"{
+  id = "ad-003"
+  operation = "cache"
+  claim = `Spotify engineering is worth citing as a method, not as a partnership. Portal: always-on context is I/O; a cheap reader is not the writer; a check is the block. This site's analogue is check:agents word budgets and Sense first.`
+  evidence = #[
+    `X 2026-09-06 @spwashi asked @grok whether Spotify is doing relevant engineering, quoting the vibe-code vs rigor fight`,
+    `@skill_invocation#shunt already names Portal / stretchcloud / vasuman`,
+    `Honk-scale PR automation is Grok's reply, not a receipt we measured — do not paste those counts into public copy`
+  ][reg=set]
+  public_line = `Spotify's engineering writing on harnesses (Portal) is the analogue: guides without sensors are suggestions.`
+  refuse = `Do not claim Spotify uses Spw. Do not cite unverified user or PR counts.`
+}[reg=facet]
+
+^"ad-004_public_conversation"{
+  id = "ad-004"
+  operation = "cache"
+  claim = `A week's AI conversation — developers shipping, policymakers arguing, models synthesizing X — is a corpus. This site's job is to keep constructs inspectable so synthesis has a place to land.`
+  source_note = `Chat 2026-09-07: a TikTok from today on AI-space development and developer/politician talk; Grok or another X-connected model can synthesize. The video is not a site asset until a URL is authored.`
+  public_line = `An agent with access to X can summarize a week's talk. The test is whether the result cites a construct here — a copy-unit, an operator, a sensor — or only a mood.`
+  refuse = `Do not turn the first fold into political commentary. Policy talk is a neighboring corpus, not a new wonder type.`
+}[reg=facet]
+
+^"ad-005_quest_role"{
+  id = "ad-005"
+  operation = "prime"
+  claim = `spw.quest is the paced guide into Spw. While the remote is quiet, /about/domains/spw.quest/ is the public contract for agentic value: constructs, tooling, crawl discipline, and what not to fork.`
+  constructs = #[`copy-unit + expression`, `operator chips`, `operations cache|audit|align|prime|contract|archive`, `Sense first`, `Explore/plan do not write`, `dual-path language`][reg=set]
+  tooling = #[`spw-workbench parser/CLI/LSP`, `/tools/spw-parser/`, `npm run sense`, `npm run check:agents`, `npm run wonder`, `npm run spw:lattice`][reg=set]
+  neighbor = `texture.website is grain. lore.land is long-form. This site is the proving ground.`
+}[reg=facet]
+
+#>crawl_spwashi
+?[what can I reuse without forking]{
+  #:depth #!pragmatic
+  ~#audience: "an agent or person crawling spwashi.com to build a similar inspectable site"
+  ~#hypothesis: "constructs plus sensors travel; voice and grammar do not, unless consumed from the pinned workbench"
+  !probe{ "after one session, name the operation, the working set, the sensor run, and what was correctly not built" }
+  $%[op.declared, slice.named, sense.ran, grammar.unforked]
+}
+
+^"crawl_prompt"{
+  id = "ad-006"
+  operation = "prime"
+  claim = `A crawl prompt is a Spw block, not a system-prompt essay. Paste the block below. Walk one path.`
+  paste = `
+#>crawl_spwashi
+?[what is this site doing that I could reuse]{
+  open_first = #[`AGENTS.md`, `.spw/conventions/copy-accessor.spw`, `/about/domains/spw.quest/`, `/topics/software/spw/`][reg=set]
+  operation = `declare cache|audit|align|prime|contract|archive before editing`
+  sense = `npm run sense -- copy|nouns|ink   ink needs a fixture id`
+  person = `I'm Spwashi. I build software and make art.`
+  dual_path = `consume pinned workbench XOR experiment through web semantics — not both in one patch`
+  write_deny = `Explore/plan do not write. Patch is one named slice.`
+  refuse = #[
+    `fork Spw grammar`,
+    `kitchen-sink implement from plans`,
+    `fourth copy-accessor family`,
+    `data-spw-wonder-type`,
+    `git stash on a shared main`,
+    `advertise physics the runtime does not spend`
+  ][reg=set]
+  analog = `Spotify Portal: always-on markdown is I/O; a failing check is the block`
+  synthesis = `If you can read X, cite a construct here. Mood is not a receipt.`
+}
+`
+  strategies = #[
+    `Read Open first tables before inventing a parallel rule`,
+    `Copy as a working set, not isolated strings`,
+    `Prefer a cache when the idea is broad`,
+    `Prove ink with npm run sense -- ink <fixture>, not the full visual pack`
+  ][reg=set]
+  prove = `The next foreign agent names an operation and a refuse list before it edits.`
+}[reg=facet]

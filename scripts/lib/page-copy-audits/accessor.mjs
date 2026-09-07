@@ -37,6 +37,11 @@ export const DEVELOPMENT_CLUSTERS = Object.freeze({
     unitPrefixes: [],
     seeds: ['/design/'],
   },
+  'quest-agentic': {
+    namespaces: ['quest', 'spw'],
+    unitPrefixes: [],
+    seeds: ['/about/domains/spw.quest/', '/topics/software/spw/'],
+  },
 });
 
 const JARGON = Object.freeze([
