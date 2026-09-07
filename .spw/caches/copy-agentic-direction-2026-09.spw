@@ -153,11 +153,12 @@ source = "chat 2026-09-07: sitewide copy vs recent direction; TikTok on AI / dev
     `.[copy] Ground quest and the person-magazine cluster`,
     `.[about] Lead About with the person, then the lens`,
     `.[about] 2026-09-07 ink about-opening pocket: identity-first holds`,
-    `.[about] 2026-09-07 broadsheet: pin tagline in the identity column; lens labels spend 36ch at 61.25rem`
+    `.[about] 2026-09-07 broadsheet: pin tagline in the identity column; lens labels spend 36ch at 61.25rem`,
+    `&[css] Spend space from the rhythm unit, not restated pad — tuner quantum, density rung; ?pack= no longer implies spacing`
   ][reg=set]
   open = #[`this file`, `./still-recipe-agency-2026-09.spw`, `settings/index.html`][reg=set]
-  next_slice = `Settings hook copy names primitives, not weather. Still-recipe pair/press and folio-prices desk crop wait. Quest still waits.`
-  skip = #[`140-route copy`, `full visual:checks pack`, `ASTRA.md`, `PLAN.md diary`, `another harness essay`][reg=set]
+  next_slice = `Settings hook copy names primitives, not weather. Still-recipe pair/press and folio-prices desk crop wait. Quest still-recipe waits — quest copy does not.`
+  skip = #[`140-route copy`, `full visual:checks pack`, `ASTRA.md`, `PLAN.md diary`, `another harness essay`, `quest lede`, `spacing-theory redo`][reg=set]
   prove = `broadsheet openings 13-02-47--4d97f7; recapture about/town/research/membership 13-09-34--a22237`
   cli = `npm run harness · npm run sense -- copy|nouns|ink`
 }[reg=facet]

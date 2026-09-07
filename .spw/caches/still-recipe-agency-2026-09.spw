@@ -97,11 +97,39 @@ source = "chat 2026-09-07: still-recipe debt after broadsheet openings; Imagine/
   refuse = `Do not clone Grok Build onto the page. Do not treat ritual-vellum as an operator.`
 }[reg=facet]
 
+^"sr-005_quest_still_vs_copy"{
+  id = "sr-005"
+  operation = "cache"
+  dated = `2026-09-07`
+  claim = `Quest HTML is already the public contract. What waits is a still recipe, not a copy rewrite.`
+  evidence = #[
+    `about/domains/spw.quest/index.html #quest-lede data-spw-copy-unit=quest.hook.lede already names constructs, sensors, and grammar not to fork`,
+    `scripts/lib/viewport-still-recipes.mjs has about-opening and folio-prices — no quest id`
+  ][reg=set]
+  refuse = `Do not retune the quest lede. Do not treat "Quest still waits" as unpaid copy.`
+  expansion_prime = `One VIEWPORT_STILL_RECIPES id on #domain-frame / #quest-lede. Pair/press is still the schema miss (@sr-001).`
+}[reg=facet]
+
+^"sr-006_spacing_quantum_landed"{
+  id = "sr-006"
+  operation = "cache"
+  dated = `2026-09-07`
+  claim = `Spacing tuner is the rhythm quantum. Component density is the packing rung. They compose; they do not multiply.`
+  evidence = #[
+    `f067416b &[css] Spend space from the rhythm unit, not restated pad`,
+    `.spw/conventions/css-instruction.spw#spacing_contract`,
+    `html[data-spw-spacing-tuner] sets --spw-spacing-scale only`,
+    `?pack= no longer implies spacingTuner — use ?spacing=`
+  ][reg=set]
+  refuse = `Do not restore density-space-scale into --spw-rhythm-unit. Do not restate pad/gap on a quantum-factor selector.`
+}[reg=facet]
+
 ^"next_session"{
   claim = `Open this file. One named slice. Do not implement the loop.`
   open = #[`this file`, `settings/index.html`, `scripts/lib/viewport-still-recipes.mjs`, `.spw/caches/boonhonk-combinatoric-genre.spw`][reg=set]
-  next_slice = `Settings hook copy: drop the spell/weather lede. Name author mode, material, density, enhancement. One operator chip that already spends --active-op-color.`
-  skip = #[`Imagine pipeline`, `Grok TUI clone`, `recipe schema rewrite`, `140-route copy`, `hearth/loom rename sweep`, `ASTRA.md`][reg=set]
-  leftover = `Folio-prices desk crop. Pocket about overflowX. Quest still. Recipe pair/press field. Boonhonk component jobs: .spw/caches/boonhonk-combinatoric-genre.spw#component_jobs`
+  next_slice = `Settings hook copy only: .settings-note "cognitive workbench", .spw-playable-hook weather/spell, Atmosphere card "vellum weather". Name author mode, material, density, enhancement. One operator chip that already spends --active-op-color.`
+  skip = #[`Imagine pipeline`, `Grok TUI clone`, `recipe schema rewrite`, `140-route copy`, `hearth/loom rename sweep`, `ASTRA.md`, `quest lede`, `spacing-theory redo`][reg=set]
+  leftover = `Folio-prices desk crop. Pocket about overflowX. Quest still-recipe (not copy). Recipe pair/press field. Boonhonk component jobs: .spw/caches/boonhonk-combinatoric-genre.spw#component_jobs`
+  concurrent = `Primary main worktree may carry uncommitted payment-card / promo-wonder / settings payment-note. Never git stash.`
   cli = `npm run sense -- ink about-opening ; npm run sense -- copy`
 }[reg=facet]
