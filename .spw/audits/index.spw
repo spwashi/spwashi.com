@@ -37,6 +37,7 @@
 @working_tree_index: ~"./working-tree-index-2026-07.spw"
 @commit_history_deep: ~"./commit-history-deep-2026-07/index.spw"
 @plan_ecology_semantics: ~"./plan-ecology-semantics-2026-07.spw"
+@plan_spw_tree_2026_09: ~"./plan-spw-tree-2026-09.spw"
 @html_component_audit: ~"./html-component-audit-2026-07.spw"
 @module_impact_audit: ~"./module-impact-audit-2026-07.spw"
 @module_ecology_kinship: ~"./module-ecology-kinship-2026-09.spw"
@@ -70,6 +71,7 @@ fixity = "tending"
     commit_skill_induction = ~"./commit-skill-induction-2026-07/index.spw"
     commit_history_deep = ~"./commit-history-deep-2026-07/index.spw"
     plan_ecology_semantics = ~"./plan-ecology-semantics-2026-07.spw"
+    plan_spw_tree_2026_09 = ~"./plan-spw-tree-2026-09.spw"
     html_component_audit = ~"./html-component-audit-2026-07.spw"
     module_impact_audit = ~"./module-impact-audit-2026-07.spw"
     module_ecology_kinship = ~"./module-ecology-kinship-2026-09.spw"
@@ -179,10 +181,11 @@ fixity = "tending"
   }[reg=facet]
 
   plan_ecology: .{
-    reading_order = `plan_ecology_semantics`
-    hub = @plan_ecology_semantics
-    keys = #[`plan_ecology_semantics`, `commit_skill_induction`][reg=set]
+    reading_order = `plan_ecology_semantics → plan_spw_tree_2026_09`
+    hub = @plan_spw_tree_2026_09
+    keys = #[`plan_spw_tree_2026_09`, `plan_ecology_semantics`, `commit_skill_induction`][reg=set]
     plans_dispatch = `../../.agents/plans/index.spw`
+    note = `2026-09-07: live census and root-index bucket truth. 2026-07-12 remains the disposition review; do not regenerate it.`
   }[reg=facet]
 }
 

@@ -27,6 +27,8 @@ Archived plan folders (moved here in ref-safe passes):
 - `cinematic-handles/` - Archived 2026-08-18: merged into `color-motion`.
 - `css-maintainability-refactor/` - Archived 2026-08-18: merged into `css-architecture-readability`.
 
+Census (not a folder move): `.spw/audits/plan-spw-tree-2026-09.spw` — 2026-09-07 root-index bucket truth. Physical archive still requires a citation-safe pass.
+
 Maintenance sweeps:
 
 - `2026-07-12-plan-ecology-semantics-architecture.md` - Plan index.spw semantics pass: `conceptual_model`, `research_bridge`, `connection_points`, `archive_status`; `completed_reference` virtual bucket (6 landings); local research routing to 2026-07 audits/appendices; regenerate via `node scripts/maintain-plan-directory-indexes.mjs`.

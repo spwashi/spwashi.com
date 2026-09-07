@@ -13,7 +13,7 @@ fixity = "stable"
 
 intent: .{
  goal = `Route agents and editors through plan folders by reviewed disposition first, then by durable owner and virtual bucket. Generated owner claims and bucket labels are supporting metadata, not a substitute for reading the file-local review decision.`
- scope = `All 279 .spw files under .agents/plans/, including historical WIPs, semantic notes, archives, and explicitly labeled tooling templates.`
+ scope = `Live plan ecology under .agents/plans/. 2026-09-07 census: .spw/audits/plan-spw-tree-2026-09.spw. Tooling templates stay in templates_tooling.`
 }[reg=facet]
 
 ^"dimensions"{
@@ -32,12 +32,19 @@ intent: .{
  regeneration_rule = `Do not regenerate these decisions. Re-read the affected file and edit its disposition deliberately.`
 }[reg=facet]
 
+^"review_sweep_2026_09_07"{
+ census = `214 live dirs, 201 PLAN.md, 196 index.spw, 14 FIX.md; 30 dirs absent from this file; 36 merge + 12 completed_reference still treated as live work`
+ audit = ~"../../.spw/audits/plan-spw-tree-2026-09.spw"
+ action = `Execute the 2026-07-12 next_rule on this root index: merged and completed_reference leave active_backlog, fix_queue, and topic buckets. Folders stay. Do not --force-generated.`
+}[reg=facet]
+
 @readme: ~"./README.md"
 @planning_ecology: ~"../../.spw/conventions/planning-ecology.spw"
 @plan_index_convention: ~"../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../.spw/conventions/wip-notebook.spw"
 @maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"
 @plan_ecology_semantics: ~"../../.spw/audits/plan-ecology-semantics-2026-07.spw"
+@plan_spw_tree_2026_09: ~"../../.spw/audits/plan-spw-tree-2026-09.spw"
 @planning_ecology_convention: ~"../../.spw/conventions/planning-ecology.spw#research_bridge_map"
 
 reading_order: .{
@@ -103,22 +110,19 @@ reading_order: .{
 @plan_spw_surface_normalization: ~"./spw-surface-normalization/index.spw"
 ^"css_layout_interaction"{
  label = "css layout interaction"
- count = 15
+ count = 12
  members = #[
   `card-grid-density-audit`,
   `chrome-navigation-wonder`,
-  `component-box-model-responsive-audit`,
   `compositional-css-electrostatics`,
   `css-state-legibility`,
   `data-attribute-css-token-refinement`,
   `gesture-state-refinement`,
-  `hook-region-anatomy`,
   `interaction-loop-contract`,
   `landing-visual-hierarchy`,
   `navigation-header-disclosure`,
   `page-region-discoverability`,
   `shell-model-vocabulary-consolidation`,
-  `space-menu-arcs-electrical`,
   `vertical-rhythm-container-audit`,
  ][reg=set]
 }[reg=facet]
@@ -141,12 +145,9 @@ reading_order: .{
 @plan_vertical_rhythm_container_audit: ~"./vertical-rhythm-container-audit/index.spw"
 ^"runtime_js_validation"{
  label = "runtime js validation"
- count = 11
+ count = 8
  members = #[
-  `curricularize-codebase-typescript`,
-  `javascript-standalone-utility`,
   `js-surface-ecology`,
-  `js-taxonomy-cleanup`,
   `runtime-bootstrap-performance`,
   `runtime-load-instrumentation`,
   `runtime-module-fluency`,
@@ -170,15 +171,13 @@ reading_order: .{
 @plan_typescript_integration: ~"./typescript-integration/index.spw"
 ^"media_image_sensory"{
  label = "media image sensory"
- count = 7
+ count = 5
  members = #[
   `image-metaphysics-aesthetic-pass`,
-  `image-visit-metaphysics`,
   `palette-semantics-improvements`,
   `palette-theme-composability-instrumentability`,
   `site-color-tuning`,
   `style-image-cohesion`,
-  `unsorted-image-rollout`,
  ][reg=set]
 }[reg=facet]
 
@@ -222,15 +221,14 @@ reading_order: .{
 @plan_webpage_trope_vocabulary: ~"./webpage-trope-vocabulary/index.spw"
 ^"fix_queue"{
  label = "fix queue"
- count = 7
+ count = 6
  members = #[
   `attention-shell-contrast`,
   `chrome-copy-collision`,
-  `component-semantics-document-host`,
+  `css-scroll-dark-regression`,
   `floating-chrome-stack`,
   `gesture-aria-hygiene`,
   `settings-theme-wiring`,
-  `theme-palette-marketability`,
  ][reg=set]
 }[reg=facet]
 
@@ -243,63 +241,43 @@ reading_order: .{
 @plan_theme_palette_marketability: ~"./theme-palette-marketability/index.spw"
 ^"active_backlog"{
  label = "active backlog"
- count = 105
+ count = 73
  members = #[
   `algorithm-scale-statistics-rpg-bridges`,
-  `attention-cue-gestures`,
   `audience-onboarding-copy`,
-  `author-craft-ramps`,
-  `author-rpg-notebooks`,
   `blog-blob-spw`,
-  `blog-input-interpreter`,
-  `brace-cauldron-primed-collection`,
-  `brace-literacy-guides`,
   `cadence-text-resonance`,
   `calculus-trigonometry-field-guides`,
   `care-stats-notes-and-rpg-atlas`,
   `catalog-demo-splits`,
-  `chrome-distribution-momentum-pass`,
   `cognitive-navigation`,
-  `component-rhythm-variety`,
   `content-responsive-layout`,
   `context-sensitive-variants-and-agent-qa`,
   `copy-localization`,
   `css-sensitive-attribute-writes`,
   `culinary-excellence`,
-  `dark-contrast-pass`,
   `deep-link-feature-discovery`,
   `designer-conversation-canvas`,
-  `dev-hot-reload`,
-  `discovery-notice-popups`,
-  `editable-page-shell`,
   `explore-anatomy`,
   `fairytale-cookbook-theory`,
   `funding-proof-cards`,
-  `gesture-inspectability-metaphysics`,
-  `hero-image-whimsy`,
-  `instrumentation-legibility`,
   `interaction-grammar`,
   `js-runtime-composability`,
   `language-ladder-runtime-instrumentation`,
-  `learning-science-community-pass`,
   `learning-science-enhancement`,
   `living-learning-surface`,
-  `living-medium-copy-pass`,
   `locomotion-collapse-redistribution`,
   `lore-land-marketing`,
-  `math-topic-expansion`,
   `media-feature-brief`,
   `media-publishing`,
   `mindful-collection-controls`,
   `minimal-brace-disclosure`,
-  `mobile-brace-path-polish`,
   `mobile-runtime-foundation`,
   `narration-markup-cold-reads`,
   `narrative-grammar-infrastructure`,
   `nutrition-crop-language`,
   `operator-resonance-alignment`,
   `operator-semantics-refinement`,
-  `palette-resonance`,
   `pretext-whimsy-lab`,
   `production-demonstration-pass`,
   `profile-character-card-development`,
@@ -309,38 +287,26 @@ reading_order: .{
   `pwa-experience`,
   `reader-builder-entrances`,
   `return-visitor-surface-pass`,
-  `review-surfaces-babbling`,
   `rpg-asset-capture-frames`,
   `rpg-boonwap-fabric`,
   `rpg-character-hub`,
-  `rpg-live-session-atlas`,
   `rpg-playable-copy`,
-  `rpg-seed-metacognition-pass`,
   `rpg-session-notes`,
-  `rpg-wednesday-kit-refactor`,
   `runtime-module-decomposition`,
   `screenshot-semantics`,
   `semantic-html-normalization`,
-  `settings-discoverability-consolidation`,
   `settings-theme-packs`,
-  `settings-widgets-low-friction`,
-  `shell-harmony-pass`,
   `shell-logo-branding`,
-  `shell-semantic-physics`,
-  `site-copy-component-settings-june-2026`,
   `site-starter-component-kit`,
   `skill-folio-operating-system`,
   `spell-cauldron-lifecycle-memory-gardening`,
-  `spell-cauldron-microinteractions`,
   `spell-cognition-familiarity`,
   `spellbook-utility`,
   `spw-operator-pages`,
   `state-block-projections`,
   `story-prompt-surface-pass`,
   `svg-aesthetic-depth-pass`,
-  `svg-handoff-copy-alignment`,
   `svg-surface-integration`,
-  `symphonic-loading-layered-editions`,
   `team-orientation`,
   `template-shell-refactor`,
   `theming-icon-packs-public-versioning`,
@@ -462,13 +428,19 @@ reading_order: .{
 @plan_wonder_memory: ~"./wonder-memory/index.spw"
 ^"completed_reference"{
  label = "completed reference"
- count = 6
+ count = 12
  members = #[
+  `author-craft-ramps`,
+  `blog-input-interpreter`,
+  `brace-cauldron-primed-collection`,
   `card-anatomy-interactions`,
+  `component-semantics-document-host`,
+  `dev-hot-reload`,
   `menu-containment-navigation`,
   `mobile-image-effects`,
   `overlay-layer-ownership`,
   `runtime-route-css-regressions`,
+  `site-copy-component-settings-june-2026`,
   `state-satchel-card-gesture-fixes`,
  ][reg=set]
 }[reg=facet]
@@ -481,8 +453,11 @@ reading_order: .{
 @plan_state_satchel_card_gesture_fixes: ~"./state-satchel-card-gesture-fixes/index.spw"
 ^"archive"{
  label = "archive"
- count = 2
+ count = 5
  members = #[
+  `cinematic-handles`,
+  `css-maintainability-refactor`,
+  `css-progressive-ornaments`,
   `css-semantic-modules`,
   `spw-css-architecture`,
  ][reg=set]
@@ -490,6 +465,97 @@ reading_order: .{
 
 @plan_css_semantic_modules: ~"./archive/css-semantic-modules/index.spw"
 @plan_spw_css_architecture: ~"./archive/spw-css-architecture/index.spw"
+^"merged"{
+ label = "merged"
+ count = 36
+ note = `2026-07-12 disposition=merge. Folders stay for citations. Route new work through the owner named in archive/2026-07-12-review-execution.md. Aliases already declared above.`
+ members = #[
+  `attention-cue-gestures`,
+  `author-rpg-notebooks`,
+  `brace-literacy-guides`,
+  `chrome-distribution-momentum-pass`,
+  `component-box-model-responsive-audit`,
+  `component-rhythm-variety`,
+  `curricularize-codebase-typescript`,
+  `dark-contrast-pass`,
+  `discovery-notice-popups`,
+  `editable-page-shell`,
+  `gesture-inspectability-metaphysics`,
+  `hero-image-whimsy`,
+  `hook-region-anatomy`,
+  `image-visit-metaphysics`,
+  `instrumentation-legibility`,
+  `javascript-standalone-utility`,
+  `js-taxonomy-cleanup`,
+  `learning-science-community-pass`,
+  `living-medium-copy-pass`,
+  `math-topic-expansion`,
+  `mobile-brace-path-polish`,
+  `palette-resonance`,
+  `review-surfaces-babbling`,
+  `rpg-live-session-atlas`,
+  `rpg-seed-metacognition-pass`,
+  `rpg-wednesday-kit-refactor`,
+  `settings-discoverability-consolidation`,
+  `settings-widgets-low-friction`,
+  `shell-harmony-pass`,
+  `shell-semantic-physics`,
+  `space-menu-arcs-electrical`,
+  `spell-cauldron-microinteractions`,
+  `svg-handoff-copy-alignment`,
+  `symphonic-loading-layered-editions`,
+  `theme-palette-marketability`,
+  `unsorted-image-rollout`,
+ ][reg=set]
+}[reg=facet]
+^"since_2026_07_12"{
+ label = "since 2026-07-12"
+ count = 28
+ note = `Live folders the 2026-07-12 root index never named. Not automatic backlog. Author index.spw on next touch; do not batch-generate. Open-first without index.spw: history-reflow, core-css-spend-cut, dimensional-expression-navigation.`
+ members = #[
+  `alignment-content-fit`,
+  `canopy-material-depth`,
+  `core-css-spend-cut`,
+  `creator-pathways`,
+  `deploy-module-graph`,
+  `design-experiment-template-migration`,
+  `desktop-lens-alignment`,
+  `dimensional-expression-navigation`,
+  `domain-route-template-migration`,
+  `film-route-template-migration`,
+  `folio-worktable`,
+  `history-reflow`,
+  `landing-page-hierarchy-2026-08-21`,
+  `layout-seat-squeeze`,
+  `math-route-template-migration`,
+  `microinteraction-motion-lifecycle`,
+  `operator-route-template-migration`,
+  `page-frame-sizing`,
+  `portable-experiment-template-migration`,
+  `production-season-rhythm`,
+  `public-entrance-runtime-payload`,
+  `region-attenuation-coverage`,
+  `resume-record`,
+  `semantic-classname-layers`,
+  `semantic-navigation-geometry`,
+  `template-dimensional-editorial-refinement`,
+  `visual-capture-ecology`,
+  `wrap-job-utility`,
+ ][reg=set]
+}[reg=facet]
+@plan_landing_page_hierarchy_2026_08_21: ~"./landing-page-hierarchy-2026-08-21/index.spw"
+@plan_microinteraction_motion_lifecycle: ~"./microinteraction-motion-lifecycle/index.spw"
+@plan_production_season_rhythm: ~"./production-season-rhythm/index.spw"
+@plan_region_attenuation_coverage: ~"./region-attenuation-coverage/index.spw"
+@plan_visual_capture_ecology: ~"./visual-capture-ecology/index.spw"
+^"templates_tooling"{
+ label = "templates tooling"
+ count = 1
+ members = #[
+  `recent-plan-templates`,
+ ][reg=set]
+}[reg=facet]
+@plan_recent_plan_templates: ~"./recent-plan-templates/index.spw"
 dispatch: .{
  readme = @readme
  planning_ecology = @planning_ecology
@@ -497,6 +563,13 @@ dispatch: .{
  wip_notebook = @wip_notebook
  maintain_script = @maintain_script
  plan_ecology_semantics = @plan_ecology_semantics
+ plan_spw_tree_2026_09 = @plan_spw_tree_2026_09
+ plan_landing_page_hierarchy_2026_08_21 = @plan_landing_page_hierarchy_2026_08_21
+ plan_microinteraction_motion_lifecycle = @plan_microinteraction_motion_lifecycle
+ plan_production_season_rhythm = @plan_production_season_rhythm
+ plan_region_attenuation_coverage = @plan_region_attenuation_coverage
+ plan_visual_capture_ecology = @plan_visual_capture_ecology
+ plan_recent_plan_templates = @plan_recent_plan_templates
  plan_color_motion = @plan_color_motion
  plan_css_architecture_readability = @plan_css_architecture_readability
  plan_midjourney_design_concepts = @plan_midjourney_design_concepts

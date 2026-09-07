@@ -44,7 +44,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"thesis"{
- claim: "The plan tree is indexed; the .spw layer needs an explicit ecology: where artifacts live, how they promote, who owns concepts, and how agents/editors route without re-reading 182 folders or 92 site.spw refs."
+ claim: "The plan tree is indexed; the .spw layer needs an explicit ecology: where artifacts live, how they promote, who owns concepts, and how agents/editors route without re-reading 214 folders or 172 site.spw refs."
  audience: "Agents, human editors, media-company authoring team, language contributors."
  risk: "Parallel plans and duplicate reviews invent parallel vocabulary; site.spw becomes a junk drawer; conventions lack falsifiable claims; slices stay theoretical."
  rule: "Route through ecology coordinators and owner-registry before adding plan refs to site.spw or new convention prose."
@@ -159,44 +159,44 @@ fixity = "tending"
 
 ^"ecology_coordinators"{
  definition: "Thin convention dispatch files that route cross-plan work without new PLAN sprawl."
- status: "prime — files land in wave A"
+ status: "landed — six coordinator files exist; owner-registry, construct-codex, and site.spw hub slimness do not"
  coordinators: .{
   copy_ecology: .{
-    path = "~\"./copy-ecology.spw\" (planned)"
+    path = "~\"./copy-ecology.spw\""
     owner_plan = "semantic-copy-depth (sequence) + component-region-personality (voice/templates)"
     satellite_plans = #[`hook-region-anatomy`, `audience-onboarding-copy`, `copy-localization`][reg=set]
     conventions = #[`living-medium-copy`, `copy-localization`, `coloring-depth`, `component-region-personality`][reg=set]
     conflict_rule = "Public copy contracts beat plan prose; copy-unit ids beat raw English."
   }[reg=facet]
   region_component_ecology: .{
-    path = "~\"./region-component-ecology.spw\" (planned)"
+    path = "~\"./region-component-ecology.spw\""
     owner_plan = "page-region-discoverability"
     satellite_plans = #[`hook-region-anatomy`, `webpage-trope-vocabulary`, `component-region-personality`][reg=set]
     slice = "page-region-discoverability"
     conventions = #[`page-model`, `component-taxonomy`, `page-anatomy-vocabulary`, `component-region-personality`][reg=set]
   }[reg=facet]
   language_ecology: .{
-    path = "~\"./language-ecology.spw\" (planned)"
+    path = "~\"./language-ecology.spw\""
     owner_plan = "spw-metaphysical-language"
     satellite_plans = #[`language-reclustering`, `homonym-renaming`, `spw-language-v04`, `shell-model-vocabulary-consolidation`][reg=set]
     conventions = #[`data-spw-attribute-governance`, `naming-and-structured-values`, `operator-semantics`, `construct-codex (planned)`][reg=set]
     conflict_rule = "construct-codex drift ledger arbitrates glyph and operator disputes; reclustering assigns clusters; homonym-renaming executes word moves."
   }[reg=facet]
   interaction_ecology: .{
-    path = "~\"./interaction-ecology.spw\" (planned)"
+    path = "~\"./interaction-ecology.spw\""
     owner_plan = "interaction-loop-contract"
     satellite_plans = #[`gesture-state-refinement`, `navigation-header-disclosure`, `floating-chrome-stack`, `chrome-navigation-wonder`][reg=set]
     conventions = #[`interaction-microstates`, `attention-field`, `page-anatomy-vocabulary#floating_islands`][reg=set]
   }[reg=facet]
   capture_ecology: .{
-    path = "~\"./capture-ecology.spw\" (planned)"
+    path = "~\"./capture-ecology.spw\""
     owner_plan = "spellcraft-authoring"
     satellite_plans = #[`relational-attention-media`, `literacy-precipitation-press`, `rpg-asset-capture-frames`][reg=set]
     conventions = #[`relational-attention-media`, `component-region-personality#screenshot_literacy`][reg=set]
     note = "Unifies screenshot/model interpretability vocabulary; retires proof-card as default noun."
   }[reg=facet]
   agent_ecology: .{
-    path = "~\"./agent-ecology.spw\" (planned)"
+    path = "~\"./agent-ecology.spw\""
     owner_plan = "agent-optimization"
     satellite_plans = #[`agentic-dev-contracts`, `plan-wip-index-conventions`, `context-sensitive-variants-and-agent-qa`][reg=set]
     conventions = #[`planning-ecology`, `plan-index`, `wip-notebook`, `codebase-perusal`][reg=set]

@@ -41,6 +41,16 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.
 
+## Maintenance Snapshot - 2026-09-07
+
+Census and root-index truth: `.spw/audits/plan-spw-tree-2026-09.spw`.
+
+The 2026-07-12 review already said merge and completed-reference plans must not regain `active_backlog` status. This pass executed that rule on `.agents/plans/index.spw` only: 36 merge slugs and 12 completed-reference slugs left the live buckets; 5 physically archived folders are named in `archive`; 28 post-review folders sit in `since_2026_07_12` until they are touched. Folders did not move.
+
+Do not generate the 23 missing `index.spw` files in batch. Do not `--force-generated`. Next archive is citation-safe and one folder at a time (`site-copy-component-settings-june-2026` is the nearest).
+
+Open-first plans still lacking `index.spw`: `history-reflow`, `core-css-spend-cut`, `dimensional-expression-navigation`. Author those on next touch.
+
 ## Maintenance Snapshot - 2026-09-04
 
 Trajectory review of the 29 commits ahead of `origin/main` (interaction runtime,

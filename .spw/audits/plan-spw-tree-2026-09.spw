@@ -1,0 +1,183 @@
+# Plan and .spw Tree Census (2026-09-07)
+#
+# operation: audit
+# The 2026-07-12 review classified 73 plans and forbade merge slugs from
+# regaining active_backlog status. The root index still listed them as
+# live work. This census measures the trees and names the next slices.
+
+#>plan_spw_tree_2026_09
+#:audit #!plans #!agents #!ecology
+#:operation #!audit
+#:fixity #!tending
+#:layer #!editor_inspectability
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@planning_ecology: ~"../conventions/planning-ecology.spw"
+@plan_index_convention: ~"../conventions/plan-index.spw"
+@architecture_ecology: ~"../conventions/spw-architecture-ecology.spw"
+@plan_ecology_semantics: ~"./plan-ecology-semantics-2026-07.spw"
+@markdown_spend: ~"../caches/agent-markdown-spend-2026-09.spw"
+@agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
+@plans_root: ~"../../.agents/plans/index.spw"
+@plans_readme: ~"../../.agents/plans/README.md"
+@review_execution: ~"../../.agents/plans/archive/2026-07-12-review-execution.md"
+@surface_normalization: ~"../../.agents/plans/spw-surface-normalization/PLAN.md"
+@maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"
+
+operation = "audit"
+fixity = "tending"
+source = "chat 2026-09-07: deep revision of the .spw tree and plans"
+
+audit_run: .{
+  at = `2026-09-07`
+  method = `find + index.spw disposition parse + @ref counts + citation scan outside each plan folder`
+  posture = `Do not rewrite every .spw file. Do not generate missing plan index.spw in batch. Do not physically move folders until a ref-safe pass names every remaining citation.`
+  this_patch = `Census + execute the 2026-07-12 root-index consequence: merged and completed_reference leave active_backlog.`
+}[reg=facet]
+
+^"thesis"{
+  claim: "The trees grew after the last review, and the routing surfaces still treat merged work as backlog. A smaller next census needs truthful buckets first, then citation-safe archive, not more generated indexes."
+  complements: #[@plan_ecology_semantics, @markdown_spend, @architecture_ecology][reg=set]
+  falsification: `Root index still lists disposition=merge slugs in active_backlog, or this file's census counts no longer match find.`
+}
+
+^"census"{
+  measured_at = `2026-09-07`
+  prior_2026_07_12 = `183 folders, 174 PLAN.md, 187 index.spw, 13 FIX.md`
+  prior_2026_09_06 = `199 active PLAN.md, 5 archived plan md (@markdown_spend)`
+  live = .{
+    plan_dirs = 214
+    plan_md = 201
+    plan_index_spw = 196
+    fix_md = 14
+    dirs_without_plan_md = 13
+    plan_md_without_index = 23
+    live_dirs_absent_from_root_index = 30
+    dispositions = .{ merge = 36 ; completed_reference = 12 ; rework = 12 ; split = 7 ; idea_cache = 1 ; tooling = 1 }[reg=facet]
+    archive_status_indexes = 8
+    archive_dir = `5 plan folders + dated sweep notes; not 5 md files only`
+  }[reg=facet]
+  spw = .{
+    site_spw_files = 344
+    conventions = 117
+    audits = 77
+    caches = 31
+    reviews = 18
+    missing_anchor = 0
+    conventions_missing_operation = 29
+    conventions_missing_fixity = 30
+    site_spw_at_refs = 172
+    conventions_index_at_refs = 146
+    planning_ecology_at_refs = 48
+  }[reg=facet]
+  stale_plan_js_paths = `81 active plan files still cite public/js/spw-*.js`
+}[reg=facet]
+
+^"routing_lie"{
+  claim: `@plans_root active_backlog still named merge and completed_reference slugs, against @review_execution and the root index's own next_rule.`
+  evidence = #[
+    `attention-cue-gestures disposition=merge, bucket=merged in its index, listed in active_backlog`
+    `author-craft-ramps disposition=completed_reference, listed in active_backlog`
+    `theme-palette-marketability disposition=merge, listed in fix_queue`
+    `completed_reference bucket declared count=6; 12 live dispositions exist`
+    `archive bucket named 2 folders; 5 plan folders already live under archive/`
+  ][reg=set]
+  this_patch = `Move those slugs into merged, completed_reference, and archive buckets. Keep folders in place.`
+}
+
+^"architecture_gap"{
+  wave_a_coordinators = `copy, region-component, language, interaction, capture, agent ecology files exist; convention still said planned`
+  missing = #[
+    `owner-registry.spw`
+    `construct-codex.spw`
+    `surfaces/component-templates.spw`
+    `scripts/validate-conventions.mjs`
+    `.agents/state/plans-index.json`
+    `.agents/state/skills-index.json`
+  ][reg=set]
+  site_spw = `172 @refs; hub_rule wants translation hubs, not a junk drawer`
+  do_not = `Do not invent owner-registry in this audit patch. Do not slim site.spw here.`
+}
+
+^"open_first_unindexed"{
+  note = `AGENTS.md / plans README already name these as rails, but they have PLAN.md and no index.spw. Do not batch-generate indexes.`
+  members = #[
+    `history-reflow`
+    `core-css-spend-cut`
+    `dimensional-expression-navigation`
+  ][reg=set]
+  rule = `Author index.spw on next touch of that plan. Root index lists them under since_2026_07_12 until then.`
+}
+
+^"citation_safety"{
+  scan = `outside each plan folder, 4695 site files, skip _workbench/node_modules/dist`
+  sample = #[
+    `core-css-spend-cut 17 (AGENTS.md, expressions, refinements)`
+    `history-reflow 9 (adapters, README)`
+    `card-anatomy-interactions 13 (maintain script, refinements, root index)`
+    `site-copy-component-settings-june-2026 2 (root index + review execution)`
+  ][reg=set]
+  citation_safe_if_index_and_ledger_updated = #[
+    `site-copy-component-settings-june-2026`
+    `javascript-standalone-utility`
+    `curricularize-codebase-typescript`
+    `living-medium-copy-pass`
+    `shell-harmony-pass`
+    `theme-palette-marketability`
+    `semantic-navigation-geometry`
+  ][reg=set]
+  stay_in_place = #[
+    `author-craft-ramps (merge target)`
+    `brace-cauldron-primed-collection`
+    `dev-hot-reload (operational foundation)`
+    `unsorted-image-rollout (sibling plan cites)`
+  ][reg=set]
+  rule = `Physical archive only in a pass that updates every remaining citation, including scripts/maintain-plan-directory-indexes.mjs BUCKETS. Virtual buckets first.`
+}
+
+^"wave_a_wiring"{
+  files = `six ecology coordinators exist`
+  missing_hub = `conventions/index.spw has no ecologies facet; language-ecology, capture-ecology, and interaction-ecology are unlisted there and on site.spw`
+  july_caches_to_cold = #[
+    `caches/feature-wiring-timing-2026-07.spw`
+    `caches/recursive-improvement-2026-07.spw`
+    `caches/spw-language-utilization-2026-07.spw`
+  ][reg=set]
+}
+
+^"next_slices"{
+  done_here = `audit + root-index bucket truth + ecology coordinator status + planning-ecology census pointer`
+  later = #[
+    `archive: citation_safe_if_index_and_ledger_updated, one folder at a time, update maintain-script BUCKETS in the same patch`
+    `align: conventions/index.spw ecologies facet + wire the three unlisted coordinators`
+    `align: add operation/fixity to owner conventions on touch, not as a batch rewrite`
+    `archive: cold-mark the three 2026-07 caches`
+    `contract: owner-registry.spw (architecture-ecology wave B) before slimming site.spw`
+    `audit: stale public/js/spw-*.js plan paths on next touch of those plans`
+  ][reg=set]
+  never = #[
+    `rewrite every .spw file`
+    `generate 23 missing plan index.spw in one pass`
+    `rewrite AGENTS.md from this census`
+    `paint AI onto the archived optimization diary`
+    `--force-generated plan indexes`
+  ][reg=set]
+}
+
+^"owner_claim"{
+  claim #plan-spw-tree-2026-09-001 {
+    layer = "pragmatic"
+    hypothesis = `After this patch, grep of .agents/plans/index.spw active_backlog does not contain disposition=merge slugs, and find counts in this census stay the probe.`
+    spec_ref = ".spw/audits/plan-spw-tree-2026-09.spw#routing_lie"
+    impl_ref = ".agents/plans/index.spw"
+    probe_ref = `python3 -c "from pathlib import Path; print(sum(1 for _ in Path('.agents/plans').glob('*/PLAN.md')))"`
+    falsification = `A merge slug returns to active_backlog, or a generated --force-generated rebuild undoes the 2026-07-12 review first lines.`
+    status = "active"
+  }
+}
+
+validation: #[
+  `npm run plans:index:check`
+  `git diff --check`
+  `test -f .spw/audits/plan-spw-tree-2026-09.spw`
+][reg=set]

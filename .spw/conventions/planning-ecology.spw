@@ -4,6 +4,8 @@
 
 #>planning_ecology
 #:convention #!agents
+#:operation #!contract
+#:fixity #!stable
 #:layer #!editor_inspectability
 
 @agents: ~"../../.agents/README.md"
@@ -48,6 +50,7 @@
 @spw_architecture_ecology_plan: ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
 @agent_ecology: ~"./agent-ecology.spw"
 @plan_ecology_semantics_audit: ~"../audits/plan-ecology-semantics-2026-07.spw"
+@plan_spw_tree_2026_09: ~"../audits/plan-spw-tree-2026-09.spw"
 @commit_history_deep: ~"../audits/commit-history-deep-2026-07/index.spw"
 @commit_skill_induction: ~"../audits/commit-skill-induction-2026-07/index.spw"
 @appendices_index: ~"../audits/appendices/index.spw"
@@ -98,6 +101,7 @@ dispatch: .{
  spw_architecture_ecology_plan = @spw_architecture_ecology_plan
  agent_ecology = @agent_ecology
  plan_ecology_semantics_audit = @plan_ecology_semantics_audit
+ plan_spw_tree_2026_09 = @plan_spw_tree_2026_09
  commit_history_deep = @commit_history_deep
  commit_skill_induction = @commit_skill_induction
  appendices_index = @appendices_index
@@ -178,7 +182,8 @@ archive_policy: .{
 }
 
 tree_optimization: .{
-  observation = `As of 2026-07-12: 183 active top-level folders, 174 PLAN.md, 187 index.spw, 13 FIX.md; virtual buckets add completed_reference for landed work retained in place.`
+  observation = `As of 2026-09-07: 214 live plan dirs, 201 PLAN.md, 196 index.spw, 14 FIX.md, 117 conventions, 344 site .spw files. 2026-07-12: 183/174/187/13. Current census: @plan_spw_tree_2026_09.`
+  latest_census = @plan_spw_tree_2026_09
   latest_archive = @plan_maintenance_sweep_2026_07_12
   prior_archive = @plan_maintenance_sweep_2026_06_30
   virtual_buckets = `Canonical tracks, semantic rails, CSS/layout/interaction, runtime/JS/validation, media/image/sensory, public route/proof/genre, fix queue, active backlog, completed_reference, archive, templates/tooling.`
