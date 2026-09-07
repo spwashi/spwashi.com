@@ -7,6 +7,7 @@
  *
  * Word budgets are the block. Written rules in markdown are suggestions;
  * a failing check is not. Always-on context is I/O, not thinking.
+ * Spend prints by default; `--quiet` hides the table. `--spend` is kept as a no-op alias.
  */
 
 import { execFileSync } from 'node:child_process';
@@ -157,7 +158,7 @@ export const MODEL_SPECS = Object.freeze([
 export const HARNESS_SPECS = Object.freeze([
   {
     file: '.spw/conventions/agent-ecology.spw',
-    requiredPhrases: ['^"harness"', SHARED_WRITE_DENY, 'visual:checks -- --ids', 'Do not add ASTRA.md'],
+    requiredPhrases: ['^"harness"', SHARED_WRITE_DENY, 'visual:checks -- --ids', 'Do not add ASTRA.md', 'npm run sense'],
   },
   {
     file: '.claude/settings.json',
@@ -174,7 +175,7 @@ export const ALWAYS_ON_SPECS = Object.freeze([
     file: 'AGENTS.md',
     maxWords: 3200,
     kind: 'gate',
-    requiredPhrases: ['Sense first', SHARED_WRITE_DENY, 'visual:checks -- --ids'],
+    requiredPhrases: ['Sense first', SHARED_WRITE_DENY, 'visual:checks -- --ids', 'npm run sense'],
   },
   { file: '.agents/MEMORY.md', maxWords: 1200, kind: 'memory' },
   {
@@ -295,8 +296,8 @@ function formatSpendLine(reports) {
     .join(' ');
 }
 
-function printSpendTable(adapterReports, alwaysOnReports) {
-  const rows = [...alwaysOnReports, ...adapterReports];
+function printSpendTable(adapterReports, alwaysOnReports, harnessReports = []) {
+  const rows = [...alwaysOnReports, ...adapterReports, ...harnessReports];
   process.stdout.write('[check:agents] spend\n');
   for (const report of rows) {
     const wordCap = report.spec.maxWords != null ? String(report.spec.maxWords) : '—';
@@ -308,7 +309,7 @@ function printSpendTable(adapterReports, alwaysOnReports) {
 }
 
 function main() {
-  const spend = process.argv.includes('--spend');
+  const quiet = process.argv.includes('--quiet');
   const adapterReports = inspectAgentAdapters();
   const alwaysOnReports = inspectAlwaysOnFiles();
   const harnessReports = inspectHarnessFiles();
@@ -321,8 +322,8 @@ function main() {
       process.stderr.write(`[check:agents] ${report.spec.file}: ${issue}\n`);
     }
   }
-  if (spend) {
-    printSpendTable(adapterReports, alwaysOnReports);
+  if (!quiet) {
+    printSpendTable(adapterReports, alwaysOnReports, harnessReports);
   }
   if (failed) {
     process.stderr.write('[check:agents] FAILED\n');

@@ -43,7 +43,7 @@ Open first names the file. Sense first runs the instrument. Guides without senso
 | catalog nouns | `npm run audit:module-selectors` |
 | ink / chrome | `npm run visual:checks -- --ids=<fixture>` |
 
-Explore/plan do not write. Patch is the only write role. Host gate: `scripts/harness-write-gate.mjs`. Contract: `.spw/conventions/agent-ecology.spw#harness`.
+Explore/plan do not write. Patch is the only write role. `npm run harness` · `npm run sense`. Contract: `.spw/conventions/agent-ecology.spw#harness`.
 
 **Copy, language, voice**
 

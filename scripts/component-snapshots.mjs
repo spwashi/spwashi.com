@@ -1030,6 +1030,13 @@ async function main() {
     process.exit(0);
   }
 
+  if (options.stills && options.checks && !options.ids?.length && !options.dryPlan) {
+    process.stderr.write(
+      '[visual:checks] full pocket pack is dear. Cheap: npm run sense -- ink about-opening\n',
+    );
+    process.stderr.write('[visual:checks] list fixtures: npm run sense -- ids\n');
+  }
+
   if (isArchiveOnly(options)) {
     if (options.seal) {
       const sealed = await sealWipToCommit(options.out);

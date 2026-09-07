@@ -29,7 +29,7 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 ## Current Baseline
 
 - `AGENTS.md` is the always-on gate. Adapters emphasize; they do not exclusive-own.
-- Harness: roles explore|plan|patch|review. Explore/plan do not write (`scripts/harness-write-gate.mjs` + `.claude/settings.json`). Sense first is three cheap instruments; full `visual:checks` is dear. Contract: `.spw/conventions/agent-ecology.spw#harness`.
+- Harness: roles explore|plan|patch|review. Explore/plan do not write (`scripts/harness-write-gate.mjs` + `.claude/settings.json`). CLI: `npm run harness`, `npm run sense -- copy|nouns|ink`. Sense first is three cheap instruments; full `visual:checks` is dear. Contract: `.spw/conventions/agent-ecology.spw#harness`.
 - Skills are thin wrappers over the pinned workbench. Site-workflow holds layers and focuses.
 - `agentic-dev-contracts` landed the cheap "what is this route?" + "did I break it?" questions.
 - Public `/about/plans/` is still a hand-maintenance tax.

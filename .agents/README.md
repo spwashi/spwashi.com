@@ -22,7 +22,7 @@ Root adapters emphasize one focus. They do not replace `AGENTS.md`. Shared sente
 - **`GPT.md`** — contract exactness + computer-use verify-first
 - **`GEMINI.md`** — tool mastery (`visual:checks`, wonder, lattice, no polling)
 - Editor stubs: `.cursorrules`, `.github/copilot-instructions.md`
-- Prove with `npm run check:agents` (adapters must be git-tracked; always-on word budgets are the block). Roles: explore|plan|patch|review. Explore/plan do not write (`scripts/harness-write-gate.mjs`).
+- Prove with `npm run check:agents` (adapters must be git-tracked; always-on word budgets are the block). Roles: explore|plan|patch|review. Explore/plan do not write. CLI: `npm run harness`, `npm run sense`.
 
 Introspection ledger: `.agents/state/agent-preference.spw` (`skill-invocation.spw#introspection`).
 

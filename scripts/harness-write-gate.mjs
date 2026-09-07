@@ -10,6 +10,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 export const WRITE_DENY_REASON = 'Explore/plan do not write.';
+export const WRITE_DENY_HINT = 'Switch to patch: SPW_HARNESS_ROLE=patch, or leave plan mode.';
 export const STASH_DENY_REASON = 'Never git stash in this tree.';
 export const WRITE_DENIED_ROLES = Object.freeze(['explore', 'plan', 'review']);
 
@@ -63,13 +64,31 @@ export function decideHarnessWrite(event = {}, env = process.env) {
 }
 
 export function formatPreToolUseDeny(reason) {
+  const message = reason === WRITE_DENY_REASON ? `${WRITE_DENY_REASON} ${WRITE_DENY_HINT}` : reason;
   return JSON.stringify({
     hookSpecificOutput: {
       hookEventName: 'PreToolUse',
       permissionDecision: 'deny',
-      permissionDecisionReason: reason,
+      permissionDecisionReason: message,
     },
   });
+}
+
+export function wantsStatus(argv = process.argv.slice(2), stdin = process.stdin) {
+  if (argv.includes('--hook')) return false;
+  if (argv.includes('--status') || argv.includes('--help') || argv.includes('-h')) return true;
+  return Boolean(stdin.isTTY);
+}
+
+export function formatHarnessStatus({ role } = {}, env = process.env) {
+  const current = role || readHarnessRole(env);
+  const write = isWriteDeniedRole(current) ? 'deny' : 'allow';
+  return [
+    `[harness] role=${current} write=${write}`,
+    '[harness] sense: npm run sense -- copy|nouns|ink',
+    '[harness] fixtures: npm run sense -- ids',
+    `[harness] ${WRITE_DENY_REASON} ${WRITE_DENY_HINT}`,
+  ].join('\n');
 }
 
 async function readStdin() {
@@ -79,6 +98,10 @@ async function readStdin() {
 }
 
 async function main() {
+  if (wantsStatus()) {
+    process.stdout.write(`${formatHarnessStatus()}\n`);
+    process.exit(0);
+  }
   const raw = await readStdin();
   let event = {};
   if (raw.trim()) {
@@ -91,7 +114,9 @@ async function main() {
   const decision = decideHarnessWrite(event);
   if (!decision.allow) {
     process.stdout.write(`${formatPreToolUseDeny(decision.reason)}\n`);
-    process.stderr.write(`${decision.reason}\n`);
+    process.stderr.write(
+      `${decision.reason === WRITE_DENY_REASON ? `${WRITE_DENY_REASON} ${WRITE_DENY_HINT}` : decision.reason}\n`,
+    );
   }
   process.exit(0);
 }

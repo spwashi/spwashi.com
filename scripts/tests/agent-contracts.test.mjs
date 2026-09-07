@@ -115,4 +115,5 @@ test('AGENTS.md Sense first is a failing check, not a suggestion', () => {
   assert.ok(agents.requiredPhrases.includes('Sense first'));
   assert.ok(agents.requiredPhrases.includes(SHARED_WRITE_DENY));
   assert.ok(agents.requiredPhrases.includes('visual:checks -- --ids'));
+  assert.ok(agents.requiredPhrases.includes('npm run sense'));
 });

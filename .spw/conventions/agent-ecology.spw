@@ -60,6 +60,7 @@ fixity = "tending"
   write_deny = `Explore/plan do not write.`
   always_on_sense = #[`npm run audit:copy:accessor`, `npm run audit:module-selectors`, `npm run visual:checks -- --ids=<fixture>`][reg=set]
   cheap_visual = `npm run visual:checks -- --ids=<fixture> — one pocket still, not the full pack.`
+  dx = `npm run harness. npm run sense -- copy|nouns|ink. Ink without an id lists fixtures instead of starting the full pack.`
   grok_sensors = #[`npm run wonder`, `npm run spw:lattice`, `npm run audit:copy:accessor`][reg=set]
   claude_sensors = #[`npm run spw:integrity`, `npm run audit:copy:accessor`][reg=set]
   gpt_sensors = #[`npm run audit:module-selectors`, `npm run visual:checks -- --ids=<fixture>`][reg=set]

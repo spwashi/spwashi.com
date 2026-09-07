@@ -18,6 +18,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/page-copy-audit.test.mjs',
   'scripts/tests/agent-contracts.test.mjs',
   'scripts/tests/harness-write-gate.test.mjs',
+  'scripts/tests/harness-sense.test.mjs',
   'scripts/tests/region-kin.test.mjs',
   'scripts/tests/spw-expression-geometry.test.mjs',
   'scripts/tests/spw-literal-parser-tool.test.mjs',

@@ -3,10 +3,13 @@ import test from 'node:test';
 
 import {
   STASH_DENY_REASON,
+  WRITE_DENY_HINT,
   WRITE_DENY_REASON,
   decideHarnessWrite,
+  formatHarnessStatus,
   formatPreToolUseDeny,
   isGitStash,
+  wantsStatus,
 } from '../harness-write-gate.mjs';
 
 test('patch role may write', () => {
@@ -56,8 +59,20 @@ test('plan role may still run sensors', () => {
   assert.equal(decision.allow, true);
 });
 
-test('PreToolUse deny payload names the block', () => {
+test('PreToolUse deny payload names the block and the switch', () => {
   const payload = JSON.parse(formatPreToolUseDeny(WRITE_DENY_REASON));
   assert.equal(payload.hookSpecificOutput.permissionDecision, 'deny');
-  assert.equal(payload.hookSpecificOutput.permissionDecisionReason, WRITE_DENY_REASON);
+  assert.match(payload.hookSpecificOutput.permissionDecisionReason, /Explore\/plan do not write/);
+  assert.match(payload.hookSpecificOutput.permissionDecisionReason, /SPW_HARNESS_ROLE=patch/);
+});
+
+test('TTY and --status print the harness, piped JSON does not', () => {
+  assert.equal(wantsStatus(['--status'], { isTTY: false }), true);
+  assert.equal(wantsStatus([], { isTTY: true }), true);
+  assert.equal(wantsStatus([], { isTTY: false }), false);
+  assert.equal(wantsStatus(['--hook'], { isTTY: true }), false);
+  const status = formatHarnessStatus({ role: 'plan' });
+  assert.match(status, /role=plan write=deny/);
+  assert.match(status, /npm run sense -- copy\|nouns\|ink/);
+  assert.match(status, new RegExp(WRITE_DENY_HINT.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
 });
