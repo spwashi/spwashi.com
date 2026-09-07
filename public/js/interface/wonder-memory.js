@@ -15,6 +15,10 @@ import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 
 const MEMORY_TARGET_SELECTOR = [
     '.topic-photo-card',
+    '.image-study',
+    '.spw-svg-figure',
+    '.domain-visual',
+    '[data-spw-image-surface]',
     '.page-index a',
     '.spw-chip',
     '.frame-sigil',
@@ -25,7 +29,16 @@ const MEMORY_TARGET_SELECTOR = [
 ].join(', ');
 
 const SITEWIDE_ONLY_SELECTOR = '.intent-cluster, .context-edge-card, .math-lens-card';
-const RESONANT_BLOCK_SELECTOR = '.topic-photo-card, .intent-cluster, .context-edge-card, .math-lens-card';
+const RESONANT_BLOCK_SELECTOR = [
+    '.topic-photo-card',
+    '.image-study',
+    '.spw-svg-figure',
+    '.domain-visual',
+    '[data-spw-image-surface]',
+    '.intent-cluster',
+    '.context-edge-card',
+    '.math-lens-card'
+].join(', ');
 const LIMINALITY_CHARGE = Object.freeze({
     entry: 0.05,
     threshold: 0.1,

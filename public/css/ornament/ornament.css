@@ -755,6 +755,32 @@
 }
 
 :where(
+  .spw-svg-figure,
+  .image-study,
+  .topic-photo-card,
+  [data-spw-image-surface]
+)[data-spw-ornament-state="glowing"],
+:where(
+  .spw-svg-figure,
+  .image-study,
+  .topic-photo-card,
+  [data-spw-image-surface]
+)[data-spw-ornament-state="revealed"] {
+  box-shadow: var(--ornament-glow);
+}
+
+:where(
+  .spw-svg-figure,
+  .image-study,
+  .topic-photo-card,
+  [data-spw-image-surface]
+)[data-spw-ornament-state="active"] {
+  box-shadow:
+    var(--ornament-glow),
+    0 0 0 1px color-mix(in srgb, var(--ornament-local-accent, var(--wonder-accent-color, currentColor)) 22%, transparent);
+}
+
+:where(
   .spw-spirit-sequence,
   .spw-ornament-rail,
   .spw-ornament-ribbon,

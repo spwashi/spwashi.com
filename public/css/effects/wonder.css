@@ -40,6 +40,8 @@
   [data-spw-topic],
   .spw-delimiter,
   .spw-svg-surface,
+  .spw-svg-figure,
+  .image-study,
   .spw-metaphysics-host,
   .spw-wonder-block,
   .spw-scaffold,
@@ -210,6 +212,8 @@ html[data-spw-reduce-motion="on"] :where([data-spw-operator], [data-spw-sigil]) 
   .intent-cluster[data-spw-wonder-state="resonant"],
   .context-edge-card[data-spw-wonder-state="resonant"],
   .topic-photo-card[data-spw-wonder-state="resonant"],
+  .image-study[data-spw-wonder-state="resonant"],
+  .spw-svg-figure[data-spw-wonder-state="resonant"],
   .math-lens-card[data-spw-wonder-state="resonant"]
 ) {
   box-shadow:
@@ -231,6 +235,7 @@ html[data-spw-reduce-motion="on"] :where([data-spw-operator], [data-spw-sigil]) 
   .intent-cluster[data-spw-wonder-state="resonant"] .intent-cluster-kicker,
   .context-edge-card[data-spw-wonder-state="resonant"] .intent-cluster-kicker,
   .topic-photo-card[data-spw-wonder-state="resonant"] figcaption strong,
+  .image-study[data-spw-wonder-state="resonant"] figcaption strong,
   .math-lens-card[data-spw-wonder-state="resonant"] .frame-card-sigil
 ) {
   color: var(--wonder-accent-color) !important;

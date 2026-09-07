@@ -371,7 +371,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'image-metaphysics',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.VISIBLE,
-    selector: '.image-study, .spw-svg-figure, [data-spw-image-surface], .domain-visual, .spw-scaffold',
+    selector: '.image-study, .topic-photo-card, .spw-svg-figure, [data-spw-image-surface], .domain-visual, .spw-scaffold',
     rootMode: 'single',
     describes: 'image[managed|effect|memory|gesture] metaphysics',
     updates: [
@@ -379,6 +379,8 @@ export const ENHANCEMENT_DEFS = [
       'structural:data-spw-image-state',
       'structural:data-spw-contrast-state',
       'flourish:data-spw-image-effect',
+      'flourish:data-spw-ornament-state',
+      'flourish:--ornament-field-intensity',
       'residue:data-spw-visited',
       'residue:data-spw-image-key',
     ],

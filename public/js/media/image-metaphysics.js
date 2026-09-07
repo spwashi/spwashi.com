@@ -29,10 +29,22 @@ const PRIMED_DELAY_MS = 120;
 const HOST_SELECTOR = [
     '.spw-scaffold',
     '.image-study',
+    '.topic-photo-card',
     '.domain-visual',
     '.spw-svg-figure',
     '[data-spw-image-surface]'
 ].join(', ');
+const IMAGE_ORNAMENT_STATE = Object.freeze({
+    settled: 'settled',
+    preview: 'glowing',
+    primed: 'revealed',
+    engaged: 'active'
+});
+const CONTRAST_FIELD_INTENSITY = Object.freeze({
+    rest: '0.18',
+    raised: '0.46',
+    focused: '0.82'
+});
 const EFFECT_SEQUENCE = ['semantic', 'pixelize', 'watercolor', 'clarify'];
 const EFFECT_META = Object.freeze({
     semantic: {
@@ -188,6 +200,13 @@ function syncInteractionState(host) {
     host.dataset.spwImageLayout = imageLayout;
     host.dataset.spwImagePrimed = host.dataset.spwImagePrimed === 'true' ? 'true' : 'false';
     host.dataset.spwImageMemoryState = host.dataset.spwVisited === 'true' ? 'visited' : 'fresh';
+    host.dataset.spwOrnamentState = IMAGE_ORNAMENT_STATE[imageState] || 'idle';
+    const fieldIntensity = CONTRAST_FIELD_INTENSITY[contrastState] || CONTRAST_FIELD_INTENSITY.rest;
+    host.style.setProperty('--ornament-field-intensity', fieldIntensity);
+    host.style.setProperty(
+        '--ornament-resonance',
+        host.dataset.spwVisited === 'true' ? '0.55' : fieldIntensity
+    );
 
     const strip = host.querySelector('.spw-image-helper-strip');
     const button = host.querySelector('.spw-image-helper');
@@ -994,6 +1013,8 @@ export const SPW_MODULE_EXPORT = Object.freeze({
         'structural:data-spw-image-state',
         'structural:data-spw-contrast-state',
         'flourish:data-spw-image-effect',
+        'flourish:data-spw-ornament-state',
+        'flourish:--ornament-field-intensity',
         'residue:data-spw-visited',
         'residue:data-spw-image-key',
     ],
