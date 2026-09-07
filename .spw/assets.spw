@@ -69,7 +69,10 @@
         { name: "texture-paper-fiber", spirit: "morning-material-tiles", role: "css-slice-tile" },
         { name: "texture-linen-weave", spirit: "morning-material-tiles", role: "css-slice-tile" },
         { name: "texture-harlequin-diamonds", spirit: "morning-material-tiles", role: "css-slice-tile" },
-        { name: "texture-cream-ochre-wash", spirit: "morning-material-tiles", role: "css-slice-tile" }
+        { name: "texture-cream-ochre-wash", spirit: "morning-material-tiles", role: "css-slice-tile" },
+        { name: "ornament-scaffold-lattice", spirit: "ornament-scaffold", role: "css-scaffold-plate" },
+        { name: "ornament-scaffold-bone", spirit: "ornament-scaffold", role: "css-scaffold-plate" },
+        { name: "ornament-scaffold-flow", spirit: "ornament-scaffold", role: "css-scaffold-plate" }
       ]
     }
   }
@@ -78,6 +81,10 @@
     path: ~"../public/images/renders/"
     purpose: "Archived full-resolution AI renders (Midjourney, etc.) — source material for potential asset extraction"
     studies: [
+      { date: "2026-09-07", name: "scaffold-tiles", status: "optimized-and-named", images: 3, content: [
+        { spirit_name: "ornament-scaffold", variants: ["lattice", "bone", "flow"], formats: ["avif", "webp"],
+          note: "Paper maquettes for empty .spw-scaffold CSS plates. Consume via wonder.css. Display 768x432 in assets/motifs." }
+      ]},
       { date: "2026-03-10", name: "favicon-study", status: "optimized-and-named", images: 1, content: [
         { spirit_name: "threshold-poise", variants: ["icon", "display", "large"], formats: ["avif", "webp", "png"] }
       ]},

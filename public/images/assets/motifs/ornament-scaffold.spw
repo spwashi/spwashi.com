@@ -1,0 +1,38 @@
+#>asset_metadata
+#:layer #!motifs
+
+^"spirit"{
+  name: "ornament-scaffold"
+  title: "Paper scaffold tiles"
+  description: "Three cream-paper maquettes — lattice, bone chassis, flow clockwork — used as CSS plates on empty .spw-scaffold hosts."
+  visual_qualities: "handmade rag paper, teal grid ink, brass pins, linen table, morning side light"
+}
+
+^"provenance"{
+  generator: "Grok Imagine"
+  imported_on: "2026-09-07"
+  source_masters: #[
+    "public/images/renders/2026-09-07-scaffold-tiles/ornament-scaffold-lattice.jpg",
+    "public/images/renders/2026-09-07-scaffold-tiles/ornament-scaffold-bone.jpg",
+    "public/images/renders/2026-09-07-scaffold-tiles/ornament-scaffold-flow.jpg"
+  ][reg=set]
+}
+
+^"usage"{
+  surface: "motifs"
+  role: "css-scaffold-plate"
+  families: #[`lattice`, `bone`, `flow`][reg=set]
+  formats_available: ["avif", "webp"]
+  consume: `public/css/effects/wonder.css .spw-scaffold`
+  mapping: #{
+    default = `bone`
+    data-spw-accent="lattice" = `lattice`
+    data-spw-accent="flow" = `flow`
+  }
+}
+
+^"optimization"{
+  variants: [
+    { tier: "display", size: "768x432", formats: ["avif", "webp"] }
+  ]
+}

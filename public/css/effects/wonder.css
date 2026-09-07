@@ -944,24 +944,79 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
 /* ==========================================================================
    10. Metaphysics scaffolding
    --------------------------------------------------------------------------
-   Supports related JS for progressive reveal, attention pinning, and stateful
-   image or figure inspection.
+   Empty .spw-scaffold hosts spend a paper-maquette plate via background-image.
+   Hosts that already hold img/svg keep the photo; the debug label is inspect-only.
+   Tiles live in public/images/assets/motifs/ornament-scaffold-*-display.{avif,webp}.
    ========================================================================== */
 
 .spw-scaffold {
+  --spw-scaffold-image: none;
   position: relative;
   margin-bottom: 1.5rem;
   padding: 0.5rem;
   border: 1px dashed var(--line-strong, #008080);
   border-radius: 6px;
-  background: var(--surface-soft, rgba(255, 255, 255, 0.05));
+  background-color: var(--surface-soft, rgba(255, 255, 255, 0.05));
+  background-image: var(--spw-scaffold-image);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
-.spw-scaffold::before {
+.spw-scaffold:not(:has(img, svg, .spw-svg-surface)) {
+  --spw-scaffold-image: image-set(
+    url('/public/images/assets/motifs/ornament-scaffold-bone-display.avif') type('image/avif'),
+    url('/public/images/assets/motifs/ornament-scaffold-bone-display.webp') type('image/webp')
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-block-size: clamp(10rem, 42vw, 22rem);
+}
+
+.spw-scaffold[data-spw-accent="lattice"]:not(:has(img, svg, .spw-svg-surface)) {
+  --spw-scaffold-image: image-set(
+    url('/public/images/assets/motifs/ornament-scaffold-lattice-display.avif') type('image/avif'),
+    url('/public/images/assets/motifs/ornament-scaffold-lattice-display.webp') type('image/webp')
+  );
+}
+
+.spw-scaffold[data-spw-accent="flow"]:not(:has(img, svg, .spw-svg-surface)) {
+  --spw-scaffold-image: image-set(
+    url('/public/images/assets/motifs/ornament-scaffold-flow-display.avif') type('image/avif'),
+    url('/public/images/assets/motifs/ornament-scaffold-flow-display.webp') type('image/webp')
+  );
+}
+
+.spw-scaffold:not(:has(img, svg, .spw-svg-surface)) > figcaption {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0.45rem 0.55rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--paper, #f8f7f5) 88%, transparent);
+}
+
+html[data-spw-color-mode="dark"] .spw-scaffold:not(:has(img, svg, .spw-svg-surface)) {
+  background-color: color-mix(in srgb, var(--charcoal-dark, #111) 62%, transparent);
+  background-blend-mode: multiply;
+}
+
+html[data-spw-color-mode="dark"] .spw-scaffold:not(:has(img, svg, .spw-svg-surface)) > figcaption {
+  background: color-mix(in srgb, var(--charcoal-dark, #111) 78%, transparent);
+}
+
+html[data-spw-high-contrast="on"] .spw-scaffold {
+  --spw-scaffold-image: none;
+  background-image: none;
+}
+
+html:is([data-spw-debug-mode="on"], [data-spw-debug~="css"]) .spw-scaffold::before {
   content: "SCFFLD@METAPHYSICS";
   position: absolute;
   top: -10px;
   left: 10px;
+  z-index: 2;
   padding: 0 6px;
   border: 1px solid var(--line-strong);
   background: var(--charcoal-dark, #111);

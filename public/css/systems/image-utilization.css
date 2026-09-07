@@ -26,6 +26,16 @@
   object-fit: cover;
 }
 
+.spw-scaffold :is(picture, img) {
+  display: block;
+  inline-size: 100%;
+}
+
+.spw-scaffold img {
+  block-size: auto;
+  border-radius: 4px;
+}
+
 :where([data-spw-image-reward], [data-spw-image-discovery], .frame-card-media, .image-study) {
   contain: var(--spw-image-utilization-contain);
 }
