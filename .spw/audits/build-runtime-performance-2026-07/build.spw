@@ -26,6 +26,8 @@
   ][reg=set]
   deploy = `.github/workflows/deploy.yml runs npm run build → dist/ GitHub Pages`
   no_runtime_npm_deps = `devDependencies only: typescript, vite, postcss, @types/node — good for payload`
+  invoke = `package.json scripts call node node_modules/typescript/bin/tsc, same as scripts/build-compile.mjs. PATH tsc in this environment is a stub that exits 0 without compiling.`
+  worktree = `A new worktree has no node_modules. npm ci --ignore-scripts before build:tools / dev. Committed scripts/typed/ lets css-build --from-change run without a tsc pass.`
 }[reg=facet]
 
 ^"sample_timings_2026_07_10"{

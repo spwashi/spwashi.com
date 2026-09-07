@@ -47,7 +47,7 @@ The persona lens slice adds active selection through `spw-svg-persona` query, `h
 
 Canopy × material is the depth model. Frames already resolve `--material-highlight-inset` on the host. SVG figures now share that host family; `.spw-svg-surface` spends rest/lift shadows instead of a generic `--component-shadow`. Illustration hold from image-metaphysics writes `data-spw-ornament-state` and `--ornament-field-intensity`; SVG node fill mix and surface wash read that intensity. Do not add a third optics formula. Do not animate depth as a hero.
 
-Next opportunities (not this patch): studio/proof/poster/model environments should inherit the same inset; `data-spw-svg-environment` still should not become a sitewide capture family until a non-SVG host needs it; `npm run build:tools` in this worktree hit a PATH `tsc` stub — use `node node_modules/typescript/bin/tsc` after `npm ci`, do not add a bundler.
+Next opportunities (not this patch): studio/proof/poster/model environments should inherit the same inset; `data-spw-svg-environment` still should not become a sitewide capture family until a non-SVG host needs it. Build: npm scripts now invoke `node node_modules/typescript/bin/tsc` (fail closed if the worktree has no `node_modules`); `npm ci --ignore-scripts` before `dev` / `build:tools`. Do not add a bundler.
 
 ## Hypothesis
 

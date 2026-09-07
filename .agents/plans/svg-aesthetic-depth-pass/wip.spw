@@ -45,7 +45,7 @@
     `same ornament-state as chips and topic-photo-card`
   ][reg=set]
   expansion_prime = "If studio/proof/poster/model still look flat, they should inherit this inset before inventing environment-specific shadows."
-  build_friction = "npm run build:tools resolved a PATH tsc stub in this worktree. Prefer node node_modules/typescript/bin/tsc after npm ci. css-build.mjs --from-change can run without a new tsc compile when scripts/typed/ already exists."
+  build_friction = "PATH tsc in this environment is a stub that exits 0. package.json now calls node node_modules/typescript/bin/tsc. A new worktree still needs npm ci --ignore-scripts. css-build.mjs --from-change can run without tsc when scripts/typed/ already exists."
   validation = `rg -n "spw-svg-highlight-inset|spw-svg-figure" public/css/effects/material.css public/css/systems/svg-surfaces.css`
   do_not_promote_until = "A second diagram host (scene-bed or image-study without .spw-svg-figure) needs the same inset."
 }
