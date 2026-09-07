@@ -6,6 +6,7 @@ import { readFile } from 'node:fs/promises';
 import { describe, it } from 'node:test';
 
 import {
+  BEHAVIOR_SCOPES,
   filterBundleTargets,
   listBundleTargets,
   normalizeCssSourceHref,
@@ -13,6 +14,7 @@ import {
   parseStyleImports,
   resolveCanonicalRouteSurface,
   resolveScopedStylesheets,
+  ROUTE_SCOPES,
   routeBundleHref,
   targetsForSourcePaths,
 } from '../typed/css-manifest.mjs';
@@ -179,5 +181,35 @@ describe('css-manifest incremental filters', () => {
         .sort(),
       ['services'],
     );
+  });
+
+  it('a scope listing is delivery; route-owned CSS may omit style.css', async () => {
+    const styleSource = await readFile(new URL('../../public/css/style.css', import.meta.url), 'utf8');
+    const imported = new Set(parseStyleImports(styleSource).map((item) => item.file));
+
+    assert.equal(imported.has('/public/css/components/cards/payment-card.css'), false);
+    assert.equal(imported.has('/public/css/components/cards/profile-card.css'), false);
+    assert.ok(
+      targetsForSourcePaths(['public/css/components/cards/payment-card.css'], {
+        coreSourceHrefs: [],
+      }).some((target) => target.kind === 'route' && target.scope === 'services'),
+    );
+    assert.ok(
+      targetsForSourcePaths(['public/css/components/cards/profile-card.css'], {
+        coreSourceHrefs: [],
+      }).some((target) => target.kind === 'route' && target.scope === 'tools-profile'),
+    );
+  });
+
+  it('style.css extras still need a scope so payload can attach them', async () => {
+    const styleSource = await readFile(new URL('../../public/css/style.css', import.meta.url), 'utf8');
+    const scoped = new Set([...Object.values(ROUTE_SCOPES), ...Object.values(BEHAVIOR_SCOPES)].flat());
+    const extras = parseStyleImports(styleSource)
+      .map((item) => item.file)
+      .filter((file) => file !== '/public/css/style-core.css' && !/^https?:\/\//i.test(file));
+
+    for (const file of extras) {
+      assert.ok(scoped.has(file), `${file} is imported by style.css but has no route/behavior scope`);
+    }
   });
 });

@@ -55,16 +55,6 @@ const EXPECTED_LAYER_BY_CSS_DIR = new Map<string, string>([
 const INTENTIONAL_STANDALONE_CSS = new Set([
   '/public/css/compose.css',
 ]);
-/**
- * Component CSS that ships only in a route bundle, never in core. Listed in the
- * scope manifest (so the route bundle picks it up) but intentionally absent
- * from style-core.css's imports, because only one route mounts it.
- */
-const ROUTE_BUNDLE_ONLY_CSS = new Set([
-  '/public/css/components/cards/profile-card.css',
-  '/public/css/components/cards/payment-card.css',
-  '/public/css/effects/enhancements.css',
-]);
 
 type CssImport = {
   file: string;
@@ -380,8 +370,14 @@ export async function collectCssContractReport(): Promise<CssContractReport> {
   for (const files of [...Object.values(ROUTE_SCOPES), ...Object.values(BEHAVIOR_SCOPES)]) {
     for (const file of files) {
       scopedRouteAndBehaviorFiles.add(file);
-      if (!importedFiles.has(file) && !ROUTE_BUNDLE_ONLY_CSS.has(file)) {
-        errors.push(`${file} is listed in the CSS scope manifest but missing from style.css/style-core.css imports.`);
+      // A scope listing is delivery: css-build concatenates these into the
+      // route/behavior bundle. Omitting style.css is the happy path for
+      // route-owned CSS (payment-card, profile-card). Do not demand a core import.
+      knownReferences.add(file);
+      try {
+        await fs.access(path.join(ROOT_DIR, file.replace(/^\/+/, '')));
+      } catch {
+        errors.push(`${file} is listed in the CSS scope manifest but does not exist.`);
       }
     }
   }
@@ -456,9 +452,8 @@ export async function collectCssContractReport(): Promise<CssContractReport> {
       && !isGeneratedBundlePath(rootPath)
       && !knownReferences.has(rootPath)
       && !INTENTIONAL_STANDALONE_CSS.has(rootPath)
-      && !ROUTE_BUNDLE_ONLY_CSS.has(rootPath)
     ) {
-      warnings.push(`${relativePath} is not imported by the style manifest or linked by rendered routes.`);
+      warnings.push(`${relativePath} is not imported by the style manifest, a scope bundle, or a rendered route.`);
     }
   }
 
