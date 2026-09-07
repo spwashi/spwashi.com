@@ -644,11 +644,24 @@ body[data-spw-surface="about"] {
       max-inline-size: none;
     }
 
-    [data-spw-surface="about"] #about-frame > .frame-body > #about-title,
-    [data-spw-surface="about"] #about-frame > .frame-body > [data-spw-textual-role="tagline"],
-    [data-spw-surface="about"] #about-frame > .frame-body > [data-spw-textual-role="lede"],
+    [data-spw-surface="about"] #about-frame > .frame-body > #about-title {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    [data-spw-surface="about"] #about-frame > .frame-body > :is(.about-tagline, [data-spw-textual-role="tagline"]) {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    [data-spw-surface="about"] #about-frame > .frame-body > :is(#about-orientation-note, [data-spw-textual-role="lede"]) {
+      grid-column: 1;
+      grid-row: 3;
+    }
+
     [data-spw-surface="about"] #about-frame > .frame-body > .mode-switch {
       grid-column: 1;
+      grid-row: 4;
     }
 
     [data-spw-surface="about"] #about-frame > .frame-body > .image-study {
@@ -663,7 +676,7 @@ body[data-spw-surface="about"] {
       grid-column: 1 / -1;
     }
 
-    [data-spw-surface="about"] #about-frame > .frame-body > p:not([data-spw-textual-role="kicker"]):not([data-spw-textual-role="lede"]):has(~ .about-story-map) {
+    [data-spw-surface="about"] #about-frame > .frame-body > p:not([data-spw-textual-role="kicker"]):not([data-spw-textual-role="lede"]):not([data-spw-textual-role="tagline"]):not(.about-tagline):has(~ .about-story-map) {
       grid-column: 2;
       max-inline-size: var(--measure-panel);
       margin-block: 0;

@@ -84,11 +84,12 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     label: 'About opening',
     specimenRoute: '/about/',
     selector: '#about-frame',
-    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'Person first, then the italic creator sentence, then the lens. Anatomy chrome should not steal the crop.',
     captureValue: 'Identity, tagline, then reading lens.',
     sourceFiles: Object.freeze([
       'about/index.html',
+      'public/css/routes/surfaces/about.css',
       'public/css/ornament/ornament.css',
     ]),
   }),
@@ -98,7 +99,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     label: 'Town opening',
     specimenRoute: '/town/',
     selector: '#town-atlas-frame',
-    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'The atlas diagram is the subject. Origin prose stays below the still.',
     captureValue: 'Visit/world lens, labeled rooms, climate rail.',
     sourceFiles: Object.freeze([
@@ -113,7 +114,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     label: 'Research opening',
     specimenRoute: '/research/',
     selector: '#research-frame',
-    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'Ladder rungs should name signal → record. The photo is atmosphere, not the subject.',
     captureValue: 'Cite/decide lens, insight ladder, tropes rail.',
     sourceFiles: Object.freeze([
@@ -128,7 +129,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     label: 'Membership opening',
     specimenRoute: '/membership/',
     selector: '#membership-frame',
-    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'Roles around the issue bed should be nameable without the membership essay.',
     captureValue: 'Read/join lens, role-field SVG, climate rail.',
     sourceFiles: Object.freeze([
@@ -143,7 +144,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     label: 'SVG storytelling opening',
     specimenRoute: '/topics/craft/svg/',
     selector: '#svg-storytelling',
-    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'Glyph, creature, divider, token stay named in the kit still.',
     captureValue: 'Motif kit plus material rail.',
     sourceFiles: Object.freeze([
@@ -158,7 +159,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     label: 'Curriculum opening',
     specimenRoute: '/curriculum/',
     selector: '#curriculum-hero',
-    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'Spwashi teaches: one mechanism, one test, one artifact. Math and software neighbors stay named.',
     captureValue: 'Curriculum hook still: creator-first title, living terms, three practice beds.',
     sourceFiles: Object.freeze([
@@ -173,7 +174,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     label: 'Software opening',
     specimenRoute: '/topics/software/',
     selector: '#software-surface',
-    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'The CS half of the curriculum. Grammar, not a baker\'s-dozen hook.',
     captureValue: 'Software hook still: curriculum neighbor, named owners, step-trace living term.',
     sourceFiles: Object.freeze([
@@ -187,7 +188,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     label: 'Math opening',
     specimenRoute: '/topics/math/',
     selector: '#math-hero',
-    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'Structure atlas as the math neighbor. Dose and receipt stay countable.',
     captureValue: 'Math hook still: study path and curriculum/recipes chips.',
     sourceFiles: Object.freeze([
@@ -269,7 +270,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     label: 'Folio price ladder',
     specimenRoute: '/design/folios/#folio-prices',
     selector: '#folio-prices',
-    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'Planning amounts must read as a ladder, not as a live cart.',
     captureValue: 'Visible $35 / $75 / $150 asks with Seed 3-for-$95 and quoted prints.',
     sourceFiles: Object.freeze([

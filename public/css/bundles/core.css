@@ -40180,6 +40180,15 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   white-space: nowrap;
 }
 
+@media (min-width: 61.25rem) {
+  .mode-switch[aria-label]::before {
+    max-inline-size: min(100%, 36ch);
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
+}
+
 .mode-switch[data-spw-lens-feedback]::after {
   content: attr(data-spw-lens-feedback);
   flex: 1 1 9rem;
