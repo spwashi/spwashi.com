@@ -85,8 +85,8 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     specimenRoute: '/about/',
     selector: '#about-frame',
     layoutScenarios: Object.freeze(['pocket', 'fold']),
-    wonder: 'Person first, then the anatomy rail. Workshop posture should not steal the crop.',
-    captureValue: 'Identity, reading lens, anatomy climate rail.',
+    wonder: 'Person first, then the italic creator sentence, then the lens. Anatomy chrome should not steal the crop.',
+    captureValue: 'Identity, tagline, then reading lens.',
     sourceFiles: Object.freeze([
       'about/index.html',
       'public/css/ornament/ornament.css',
