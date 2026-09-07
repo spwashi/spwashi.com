@@ -27,6 +27,7 @@ expression = material[optics]{transmission.specular.shadow}<surface>
   ~#reading(the split): `canopy says how much light reaches a surface; material says what the surface does with it`
   &incomplete_alone: canopy ^ material
   ~#law: "a shading model without an optics model dims everything equally, which is fog rather than depth"
+  hosts = #[`.spw-frame`, `.spw-svg-figure`][reg=set]
 }
 
 ^"optics"{

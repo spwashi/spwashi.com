@@ -27,6 +27,29 @@
 @design_experiments_css_source: ~"../../../src/styles/entries/design-experiments.css"
 @svg_tunability_js: ~"../../../public/js/media/svg-tunability.js"
 
+^"svg_canopy_material_2026_09"{
+  id = "svg-canopy-material-2026-09"
+  operation = "align"
+  fixity = "tending"
+  source = "chat 2026-09-07: SVG depth + design/interaction plans + build process"
+  claim = "SVG depth is canopy × material on the figure host, plus ornament-field-intensity from local illustration hold. Not a new environment, not a new data-spw family, not a 3D hero."
+  evidence = #[
+    `public/css/effects/material.css :where(.spw-frame, .spw-svg-figure)`
+    `public/css/systems/svg-surfaces.css --spw-svg-highlight-inset / --material-shadow-lift`
+    `public/js/media/image-metaphysics.js data-spw-ornament-state`
+    `.agents/plans/canopy-material-depth/PLAN.md`
+  ][reg=set]
+  pattern_consideration = #[
+    `same inset formula as .spw-frame`
+    `same lift token as cards`
+    `same ornament-state as chips and topic-photo-card`
+  ][reg=set]
+  expansion_prime = "If studio/proof/poster/model still look flat, they should inherit this inset before inventing environment-specific shadows."
+  build_friction = "npm run build:tools resolved a PATH tsc stub in this worktree. Prefer node node_modules/typescript/bin/tsc after npm ci. css-build.mjs --from-change can run without a new tsc compile when scripts/typed/ already exists."
+  validation = `rg -n "spw-svg-highlight-inset|spw-svg-figure" public/css/effects/material.css public/css/systems/svg-surfaces.css`
+  do_not_promote_until = "A second diagram host (scene-bed or image-study without .spw-svg-figure) needs the same inset."
+}
+
 ^"svg_environment_capture"{
   id = "svg-environment-capture-2026-07"
   operation = "align"

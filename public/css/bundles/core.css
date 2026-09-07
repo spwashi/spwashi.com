@@ -43774,7 +43774,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
 /* Palette-depth: a frame returns the light its canopy admits. Resolve on
    the host: the root biome attenuation has already computed before local
    canopy reports arrive. Only the inset changes; ink keeps its own budget. */
-:where(.spw-frame) {
+:where(.spw-frame, .spw-svg-figure) {
   --material-highlight-inset: inset 0 1px 0 color-mix(in oklch, white calc(
     100% * clamp(0, var(--material-specular, 0.28), 1)
     * (1 - clamp(0, (

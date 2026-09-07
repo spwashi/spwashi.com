@@ -6,6 +6,10 @@ Integrate SVG widgets, illustrations, and interactive components into the site's
 
 The desired end state is a site that can use SVG as a first-class surface language: small widgets, inspectable illustrations, and deeper interactive components can share one mobile-first host contract instead of each becoming a special case. The immediate task is to define that ecosystem before implementation: when SVG should stay external and static, when it should become inline and addressable, how it participates in brace/block semantics, how it pivots into deeper structure on touch, and how future Spw-backed components and pages can project through the same substrate. The taste note is **diagrammatic warmth + inspectable restraint**: the site should gain clearer structure and a little more wonder, not more ornamental motion.
 
+## 2026-09-07 Landscape
+
+Depth for `.spw-svg-figure` spends canopy × material: `--material-highlight-inset` on the host, `--material-shadow-rest` / `--material-shadow-lift` on `.spw-svg-surface`. Do not invent a third optics formula. Studio/proof/poster/model stay SVG viewing reasons, not a sitewide capture family.
+
 ## Scope
 
 - **In scope**: define a taxonomy for SVG illustrations, widgets, and interactive components; choose an asset strategy for inline versus external SVG; predict runtime and CSS seams for mobile-first containment and inspectability; define host contracts for SVG-backed surfaces; map how future Spw-backed components/pages can author through this system.

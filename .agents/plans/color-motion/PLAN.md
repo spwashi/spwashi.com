@@ -16,6 +16,7 @@ Primary source of truth:
 - `public/css/handles/operators.css` owns operator chips, sigils, compact handles, pressed states, and graspable affordances.
 - `public/css/ornament/ornament.css` owns decorative/semi-semantic rails, seams, ribbons, and staged ornament. Same delivery: atmosphere after first paint. Sibling/child combinators are the readable grammar.
 - Route files such as `home.css` and `settings.css` bias local identity and should consume shared tokens rather than redefine interaction systems.
+- SVG hosts (`public/css/systems/svg-surfaces.css`) should lift with `--material-shadow-lift` and `--duration-base`, not a one-off 10px/28px diagram shadow. Reduced motion may keep the inset and drop the tilt transform.
 
 Existing timing scale:
 

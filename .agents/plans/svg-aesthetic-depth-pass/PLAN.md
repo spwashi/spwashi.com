@@ -43,6 +43,12 @@ The follow-up markup copy slice adds `data-spw-svg-persona` as an audience facet
 
 The persona lens slice adds active selection through `spw-svg-persona` query, `html[data-spw-svg-persona-active]`, host `data-spw-svg-persona-match`, and harmony tokens (`--spw-svg-persona-harmony`, pointer lift, narrative intensity) so matching SVG hosts resonate while others recede. The design lab exposes selectable chips; charge and wonder can read the same root state without duplicating persona prose.
 
+## 2026-09-07 Landscape
+
+Canopy × material is the depth model. Frames already resolve `--material-highlight-inset` on the host. SVG figures now share that host family; `.spw-svg-surface` spends rest/lift shadows instead of a generic `--component-shadow`. Illustration hold from image-metaphysics writes `data-spw-ornament-state` and `--ornament-field-intensity`; SVG node fill mix and surface wash read that intensity. Do not add a third optics formula. Do not animate depth as a hero.
+
+Next opportunities (not this patch): studio/proof/poster/model environments should inherit the same inset; `data-spw-svg-environment` still should not become a sitewide capture family until a non-SVG host needs it; `npm run build:tools` in this worktree hit a PATH `tsc` stub — use `node node_modules/typescript/bin/tsc` after `npm ci`, do not add a bundler.
+
 ## Hypothesis
 
 The future analysis will be better if the model is primed with:
