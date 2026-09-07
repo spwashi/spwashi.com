@@ -28,6 +28,30 @@ const HANDLE = 'spwashi';
 // PayPal.me supports /amount suffix. Cash App and Venmo do not have stable URL schemes for amounts.
 const PAYMENT_METHODS = [
     {
+        id: 'patreon',
+        label: 'Patreon',
+        handle: HANDLE,
+        sigil: '◆',
+        url: `https://www.patreon.com/${HANDLE}`,
+        amountUrl: null,
+    },
+    {
+        id: 'github',
+        label: 'GitHub Sponsors',
+        handle: HANDLE,
+        sigil: '♥',
+        url: `https://github.com/sponsors/${HANDLE}`,
+        amountUrl: null,
+    },
+    {
+        id: 'paypal',
+        label: 'PayPal',
+        handle: HANDLE,
+        sigil: 'P',
+        url: `https://paypal.me/${HANDLE}`,
+        amountUrl: (n) => `https://paypal.me/${HANDLE}/${n}`,
+    },
+    {
         id: 'cashapp',
         label: 'Cash App',
         handle: `$${HANDLE}`,
@@ -43,30 +67,15 @@ const PAYMENT_METHODS = [
         url: `https://venmo.com/${HANDLE}`,
         amountUrl: (n) => `https://venmo.com/u/${HANDLE}?txn=charge&amount=${n}&note=Support+spwashi`,
     },
-    {
-        id: 'paypal',
-        label: 'PayPal',
-        handle: HANDLE,
-        sigil: 'P',
-        url: `https://paypal.me/${HANDLE}`,
-        amountUrl: (n) => `https://paypal.me/${HANDLE}/${n}`,
-    },
-    {
-        id: 'github',
-        label: 'GitHub Sponsors',
-        handle: HANDLE,
-        sigil: '♥',
-        url: `https://github.com/sponsors/${HANDLE}`,
-        amountUrl: null,
-    },
 ];
 
 // ── Suggested amounts ─────────────────────────────────────────────────────────
 // Displayed as quick-tap chips above the payment links.
 // Selecting one updates PayPal's link to pre-fill the amount.
 const SUGGESTED_AMOUNTS = [
-    { value: 5,  label: '$5',  note: 'coffee' },
-    { value: 15, label: '$15', note: 'session' },
+    { value: 5,  label: '$5',  note: 'signal' },
+    { value: 10, label: '$10', note: 'credits' },
+    { value: 15, label: '$15', note: 'credits' },
     { value: 50, label: '$50', note: 'day' },
 ];
 

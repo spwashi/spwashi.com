@@ -107,6 +107,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
   ],
   services: [
     '/public/css/components/cards/seed-card.css',
+    '/public/css/components/cards/payment-card.css',
     '/public/css/routes/surfaces/services.css',
     '/public/css/routes/widgets/services-configurator.css',
   ],

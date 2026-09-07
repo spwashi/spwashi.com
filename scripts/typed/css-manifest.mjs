@@ -89,6 +89,7 @@ export const ROUTE_SCOPES = Object.freeze({
     ],
     services: [
         '/public/css/components/cards/seed-card.css',
+        '/public/css/components/cards/payment-card.css',
         '/public/css/routes/surfaces/services.css',
         '/public/css/routes/widgets/services-configurator.css',
     ],

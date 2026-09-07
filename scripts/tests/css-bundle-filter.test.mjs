@@ -167,4 +167,17 @@ describe('css-manifest incremental filters', () => {
       ['newyear', 'services'],
     );
   });
+
+  it('payment-card CSS follows the services support surface', () => {
+    const targets = targetsForSourcePaths(['public/css/components/cards/payment-card.css'], {
+      coreSourceHrefs: [],
+    });
+    assert.deepEqual(
+      targets
+        .filter((target) => target.kind === 'route')
+        .map((target) => target.scope)
+        .sort(),
+      ['services'],
+    );
+  });
 });
