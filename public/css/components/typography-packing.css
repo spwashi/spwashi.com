@@ -102,19 +102,13 @@
   --component-gap: var(--spw-pack-gap-active);
 }
 
-/* Settings line-spacing routes into packing + typography together */
+/* Leading only. Block rhythm follows --spw-container-space-scale on the quantum. */
 :where(html[data-spw-line-spacing="compact"]) {
   --site-line-height: var(--site-line-height-tight, 1.32);
-  --component-gap: calc(var(--pack-tier-balanced-gap) * 0.9);
-  --component-pad: calc(var(--pack-tier-balanced-pad) * 0.94);
-  --spw-flow-space: calc(var(--pack-tier-balanced-flow) * 0.92);
 }
 
 :where(html[data-spw-line-spacing="loose"]) {
   --site-line-height: var(--site-line-height-loose, 1.8);
-  --component-gap: calc(var(--pack-tier-balanced-gap) * 1.1);
-  --component-pad: calc(var(--pack-tier-balanced-pad) * 1.05);
-  --spw-flow-space: calc(var(--pack-tier-balanced-flow) * 1.08);
 }
 
 /* --------------------------------------------------------------------------

@@ -81,6 +81,10 @@
 
 ^"spacing_contract"{
   rule: "Spacing is public trust infrastructure. It decides whether the site feels maintained, inspectable, and safe to fund before any single feature explains itself."
+  quantum: "One unit: --spw-rhythm-unit. Four factors only — visitor --spw-spacing-scale (html[data-spw-spacing-tuner]), type --spw-type-space-scale, device --spw-device-space-scale, leading --spw-container-space-scale. First-paint CSS and runtime writes must share those names. Keep tuner scales in sync with SPACING_TUNER_PROFILE."
+  pack_rung: "compact|balanced|roomy is how a card spends the unit (pad/gap/measure), not a fifth multiplier. componentDensity writes data-spw-packing-state. spacingTuner does not."
+  anti_restate: "A selector that sets a quantum factor must not also restate --spw-component-pad, --spw-component-gap, or --spw-flow-space. Derived tokens stay multipliers of --spw-rhythm-unit."
+  chrome_floor: "Touch targets stay rem floors (--touch-target-min, --touch-target-compact). Shell gaps may follow the quantum. Do not shrink hit targets to pack a page."
   page_measure: "Every reachable route should preserve a readable main measure, stable side gutters, and a clear separation between page shell, region body, component clusters, and floating chrome."
   component_measure: "Cards, panels, figures, and tool surfaces need stable internal padding, predictable gaps, and enough line height for long words, operator chips, and runtime labels to wrap without collision."
   route_rule: "Route CSS may set local rhythm and personality, but shared spacing failures belong in shell, typography, grammar, components, systems, or handles before a route-local patch is accepted."
@@ -177,4 +181,7 @@
   @css_architecture: ~"../../.agents/plans/css-architecture-readability/PLAN.md"
   @core_css_spend_cut: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
   @flourish_pack: ~"../../public/css/effects/flourish-pack.css"
+  @spacing_tokens: ~"../../public/css/tokens/core.css"
+  @spacing_runtime: ~"../../public/js/kernel/site-settings-profiles.js"
+  @typography_packing: ~"./typography-packing.spw"
 }

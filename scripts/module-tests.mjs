@@ -38,4 +38,5 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/interaction-story.test.mjs',
   'scripts/tests/section-handle-swipe.test.mjs',
   'scripts/tests/operator-symmetry.test.mjs',
+  'scripts/tests/spacing-theory.test.mjs',
 ]);

@@ -26,6 +26,7 @@
 @designer_conversation: ~"./designer-conversation-canvas.spw"
 @operator_typography: ~"../language/operator-typography.spw"
 @pacing: ~"../philosophy/pacing.spw"
+@spacing_contract: ~"./css-instruction.spw"
 
 tiers: .{
   compact = `canonical compact tier: tight pad/gap, --grid-min-compact, --measure-compact (alias: dense)`
@@ -34,10 +35,10 @@ tiers: .{
 }
 
 routing: .{
-  density = `data-spw-density or data-spw-component-density on frame/panel/card. Canonical compact|balanced|roomy. Aliases: dense→compact, medium→balanced, roomy/soft/spacious/reading→roomy. region-profiler writes the canonical ladder.`
-  packing_state = `data-spw-packing-state compact|balanced|roomy|spacious on measured specimens`
+  density = `data-spw-density or data-spw-component-density on frame/panel/card. Canonical compact|balanced|roomy. Aliases: dense→compact, medium→balanced, roomy/soft/spacious/reading→roomy. This is the packing rung — how a card spends --spw-rhythm-unit — not a fifth quantum multiplier. region-profiler writes the canonical ladder.`
+  packing_state = `data-spw-packing-state compact|balanced|roomy|spacious. Runtime derives it from componentDensity only. spacingTuner is the quantum, not this rung.`
   occupancy = `data-spw-pack-occupancy sparse|balanced|full maps to tier ladder via dimensions.css`
-  line_spacing = `html[data-spw-line-spacing] from settings (compact|normal|loose)`
+  line_spacing = `html[data-spw-line-spacing] from settings (compact|normal|loose) sets leading and --spw-container-space-scale. Do not restate pad/gap here.`
   grid_pack = `data-spw-pack="fill|dense|balanced|compact|roomy" on .frame-grid`
   typography_surface = `frame-note, spec-kicker, frame-copy, settings-prose use tier measures`
 }
@@ -55,8 +56,9 @@ glyph_room: .{
 }
 
 validation: #[
-  `Settings line-spacing changes component gap/pad and prose line-height together.`
+  `Settings line-spacing changes --spw-container-space-scale and prose line-height together; pad/gap follow the quantum.`
   `An operator typographic response does not change measured line count at the compact tier.`
   `frame-grid defaults to balanced packing unless data-spw-pack overrides.`
   `frame-note and spec-kicker respect measure-panel/measure-card caps.`
+  `html[data-spw-spacing-tuner] sets --spw-spacing-scale only; packing-state stays on componentDensity.`
 ][reg=set]

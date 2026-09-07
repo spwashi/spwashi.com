@@ -2,6 +2,10 @@
  * settings-query-parity.js
  * ---------------------------------------------------------------------------
  * Bidirectional parity between canonical site settings and modular query strings.
+ *
+ * Spacing vs packing: `spacing` is the rhythm quantum (spacingTuner).
+ * `pack` / `component-density` is the packing rung. They compose; pack no
+ * longer implies a spacingTuner value.
  */
 
 import { queryKey } from '/public/js/kernel/text-normalization.js';
@@ -81,10 +85,8 @@ export function resolveLayoutFromTuner(layoutTuner = 'reading') {
   return LAYOUT_TUNER_TO_LAYOUT[layoutTuner] || 'reading';
 }
 
-export function resolvePackingFromDensity(componentDensity = 'soft', spacingTuner = 'balanced') {
-  const densityPack = DENSITY_TO_PACK[componentDensity];
-  if (densityPack) return densityPack;
-  return spacingTuner === 'compact' ? 'compact' : spacingTuner === 'roomy' ? 'roomy' : 'balanced';
+export function resolvePackingFromDensity(componentDensity = 'soft') {
+  return DENSITY_TO_PACK[componentDensity] || 'balanced';
 }
 
 export function queryParamsToSettingsPartial(params = {}) {
@@ -100,11 +102,6 @@ export function queryParamsToSettingsPartial(params = {}) {
   if (expanded.pack) {
     const density = PACK_TO_DENSITY[queryKey(expanded.pack)];
     if (density) partial.componentDensity = density;
-    if (!partial.spacingTuner) {
-      partial.spacingTuner = queryKey(expanded.pack) === 'compact'
-        ? 'compact'
-        : queryKey(expanded.pack) === 'roomy' ? 'roomy' : 'balanced';
-    }
   }
 
   if (expanded.layout && !partial.layoutTuner) {
@@ -135,7 +132,7 @@ export function settingsToQueryParams(settings = {}, { omitDefaults = true } = {
     params[aliases[0]] = String(value);
   });
 
-  const pack = resolvePackingFromDensity(settings.componentDensity, settings.spacingTuner);
+  const pack = resolvePackingFromDensity(settings.componentDensity);
   if (!omitDefaults || pack !== 'balanced') {
     params.pack = pack;
   }
@@ -207,7 +204,7 @@ export function buildLayoutPostureDatasets(settings = {}) {
   return {
     spwLayout: layout,
     spwLayoutTuner: normalized.layoutTuner || 'reading',
-    spwPackingState: resolvePackingFromDensity(normalized.componentDensity, normalized.spacingTuner),
+    spwPackingState: resolvePackingFromDensity(normalized.componentDensity),
     spwLayoutPosture: normalized.explorePosture || 'reading',
     spwPackOccupancy: normalized.componentDensity === 'dense'
       ? 'sparse'

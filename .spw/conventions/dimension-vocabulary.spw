@@ -34,7 +34,8 @@
       `data-spw-pack-occupancy`
     ][reg=set]
     occupancy = #[`sparse`, `balanced`, `full`][reg=set]
-    tokens = #[`--spw-pack-tier`, `--spw-pack-occupancy-weight`, `--spw-pack-measure-active`][reg=set]
+    tokens = #[`--spw-rhythm-unit`, `--spw-spacing-scale`, `--spw-pack-tier`, `--spw-pack-occupancy-weight`, `--spw-pack-measure-active`][reg=set]
+    quantum = `--spw-rhythm-unit is the page space unit. Packing attrs choose the rung (pad/gap/measure), not a fifth scale factor.`
   }
 
   temporal: .{

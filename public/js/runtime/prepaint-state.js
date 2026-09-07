@@ -26,6 +26,8 @@
     'glass-console'
   ]);
   const COMPONENT_DENSITIES = new Set(['dense', 'soft', 'roomy']);
+  const SPACING_TUNERS = new Set(['compact', 'balanced', 'roomy']);
+  const SPACING_TUNER_SCALE = Object.freeze({ compact: '0.88', balanced: '1', roomy: '1.16' });
   const AUTHOR_MODES = new Set(['draft', 'revise', 'polish', 'publish', 'archive']);
   const DEVELOPMENTAL_CLIMATES = new Set(['orient', 'anchor', 'weave', 'rehearse', 'offer']);
   const FONT_SIZES = new Set(['small', 'normal', 'large']);
@@ -99,6 +101,9 @@
   const colorMode = pick(settings.colorMode, COLOR_MODES, 'auto');
   const themePack = pick(settings.themePack, THEME_PACKS, 'neutral-paper');
   const componentDensity = pick(settings.componentDensity, COMPONENT_DENSITIES, 'soft');
+  const spacingTuner = pick(settings.spacingTuner, SPACING_TUNERS, 'balanced');
+  const packingState = componentDensity === 'dense' ? 'compact' : componentDensity === 'roomy' ? 'roomy' : 'balanced';
+  const packOccupancy = componentDensity === 'dense' ? 'sparse' : componentDensity === 'roomy' ? 'full' : 'balanced';
   const authorMode = pick(settings.authorMode, AUTHOR_MODES, 'draft');
   const developmentalClimate = pick(settings.currentDevelopmentalClimate, DEVELOPMENTAL_CLIMATES, 'orient');
   const fontSize = pick(settings.fontSize, FONT_SIZES, 'normal');
@@ -133,6 +138,9 @@
   html.dataset.spwColorMode = colorMode;
   html.dataset.spwThemePack = themePack;
   html.dataset.spwComponentDensity = componentDensity;
+  html.dataset.spwSpacingTuner = spacingTuner;
+  html.dataset.spwPackingState = packingState;
+  html.dataset.spwPackOccupancy = packOccupancy;
   html.dataset.spwAuthorMode = authorMode;
   html.dataset.authorMode = authorMode;
   html.dataset.spwDevelopmentalClimate = developmentalClimate;
@@ -179,6 +187,7 @@
   }
 
   html.style.colorScheme = colorMode === 'auto' ? 'light dark' : colorMode;
+  html.style.setProperty('--spw-spacing-scale', SPACING_TUNER_SCALE[spacingTuner] || SPACING_TUNER_SCALE.balanced);
   html.style.setProperty('--font-size-scale', `${fontSizeScale}%`);
   html.style.setProperty('--site-root-font-size', `${Math.round(fontSizeScale * fontScale)}%`);
   html.style.setProperty('--site-line-height', LINE_SPACING_VALUE[lineSpacing] || LINE_SPACING_VALUE.normal);

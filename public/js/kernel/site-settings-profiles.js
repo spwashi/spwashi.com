@@ -117,6 +117,8 @@ const COLOR_TUNER_PROFILE = Object.freeze({
   guarded: Object.freeze({lightingGuard: 0.58, regionFrameAlpha: 0.38, regionFillAlpha: 0.1, controlContrastLift: 0.3})
 });
 
+/* Quantum only. Keep scale in sync with html[data-spw-spacing-tuner] in tokens/core.css.
+   Packing rung is componentDensity → data-spw-packing-state, not this profile. */
 const SPACING_TUNER_PROFILE = Object.freeze({
   compact: Object.freeze({scale: 0.88}),
   balanced: Object.freeze({scale: 1}),
