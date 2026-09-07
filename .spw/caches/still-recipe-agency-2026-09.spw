@@ -1,0 +1,107 @@
+# Still Recipe Agency (2026-09)
+#
+# operation: cache
+# Viewport still recipes, a nightly design loop, and settings primitives.
+# Not a schema rewrite. Not an Imagine product. Not a fairytale config ontology.
+
+#>still_recipe_agency_2026_09
+#:cache #!stills #!settings #!operators #!boonhonk #!agents
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@copy_agentic: ~"./copy-agentic-direction-2026-09.spw"
+@thinking_dreaming: ~"./thinking-dreaming-runtime.spw"
+@situation_print_set: ~"./situation-print-set-2026-08.spw"
+@boonhonk: ~"./boonhonk-combinatoric-genre.spw"
+@screenshot_semantics: ~"../../.agents/plans/screenshot-semantics/screenshot-semantics.spw"
+@capture_pipeline: ~"../conventions/component-capture-pipeline.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@agent_ecology: ~"../conventions/agent-ecology.spw"
+@recipes: ~"../../scripts/lib/viewport-still-recipes.mjs"
+@prepare: ~"../../scripts/component-snapshots.mjs"
+@settings_route: ~"../../settings/index.html"
+@settings_profiles: ~"../../public/js/kernel/site-settings-profiles.js"
+@op_tokens: ~"../../public/css/tokens/core.css"
+@theme_resonance: ~"../../design/experiments/theme-resonance/index.html"
+@mixer: ~"../../public/js/modules/widgets/boonhonk-mixer.js"
+
+operation = "cache"
+fixity = "tending"
+source = "chat 2026-09-07: still-recipe debt after broadsheet openings; Imagine/Midjourney nightly loop; settings AI copy; Grok Build menu; operator+boonhonk as CSS tuner"
+
+^"thesis"{
+  claim = `A still recipe should name a subject, a prepare scene, and a falsifiable wonder. Settings should pick Spw primitives — operators, boonhonk valence, author mode, material, density — that already spend CSS variables. Theme-pack weather and hearth/loom labels are not that ontology.`
+  analog = `Grok Build's / menu: named operations, fuzzy, immediate, compact status. Learn the pattern. Do not clone the TUI onto /settings/.`
+  loop = `Nightly stills after a vibecode sitting are a set. A designer, Midjourney, or Grok Imagine may interpret the plate. Patch the route. Do not auto-post. @thinking_dreaming#screenshot_feed @situation_print_set`
+}[reg=facet]
+
+^"sr-001_recipe_schema"{
+  id = "sr-001"
+  operation = "cache"
+  claim = `VIEWPORT_STILL_RECIPES is a rest crop with a thin prepare. That is not enough for agentic interactivity testing.`
+  have = #[
+    `id, selector, layoutScenarios, wonder, captureValue, sourceFiles`,
+    `prepare.open / close / check / focus`,
+    `conditions.colorMode / themePack / reducedMotion / highContrast`,
+    `attention.section / probe and assertAttention=spend`
+  ][reg=set]
+  miss = #[
+    `press a lens (.reading vs ^kernel) as a pair, not a second id`,
+    `hover / :focus-within salience vs rest`,
+    `keyboard path as a prepare`,
+    `clipSpace choice: device frame vs subject box (folio-prices neighbors stole the desk crop)`,
+    `fail on overflowX / overfull — occupancy is a story, not a gate`,
+    `checks factorialize theme packs on home-hook instead of composing primitives`
+  ][reg=set]
+  expansion_prime = `One schema field for pair/press before minting more CHECKS. Keep clipSpace authored per recipe.`
+  refuse = `Do not Storybook. Do not make every themePack a still id.`
+}[reg=facet]
+
+^"sr-002_nightly_set"{
+  id = "sr-002"
+  operation = "prime"
+  claim = `The design loop is capture → set → chat → patch. Imagine interprets a still; it does not own the brand.`
+  sitting = `Developer runs named stills for the day's routes. Designer + Midjourney or Grok Imagine read the plate against unique UX flows (opening, lens press, settings tune). Brand direction lands as CSS/HTML, not as a generated skin.`
+  handles = `Visible words on the still are the prompt: living terms, chips, copy-units, operator sigils.`
+  refuse = #[
+    `Imagine as a public site feature`,
+    `auto-post`,
+    `replace visual:checks with JPEG goldens`,
+    `a fourth copy-accessor for alt-text of generated images`
+  ][reg=set]
+}[reg=facet]
+
+^"sr-003_settings_primitives"{
+  id = "sr-003"
+  operation = "audit"
+  claim = `Settings copy sells a climate-spell workbench. The useful knobs are already named in the engine.`
+  evidence = #[
+    `settings/index.html hook: "cognitive workbench", "casting a spell", "vellum weather"`,
+    `PRESET_LABELS hearth / loom / workshop / access / contemplative-hearth`,
+    `themePack ritual-vellum, banked-ember, electric-studio as atmosphere names`,
+    `UX_RECIPES draft / revise / publish compose authorMode, climate, density, typesetting — the honest recipes`
+  ][reg=set]
+  keep = #[`authorMode`, `enhancementLevel`, `baseMetamaterial`, `colorMode`, `semanticDensity`, `wonderMemory`, `reduceMotion`, `highContrast`][reg=set]
+  rule = `A preset is a saved composition of primitives. It is not a genre. Boonhonk stays a combinatoric genre, not a settings enum.`
+}[reg=facet]
+
+^"sr-004_operator_menu"{
+  id = "sr-004"
+  operation = "prime"
+  claim = `Bias settings toward operators with boonhonk valence as the method that already tunes CSS variables.`
+  grok_menu = `Type / : fuzzy named operations, skills in the same list, immediate run, status line as compact live state, mode filter. Settings should feel like that: pick a handle, see the spend, not scroll a fieldset essay.`
+  spend = `Operators already write --op-*-color and --active-op-color. Palette resonance already remaps --active-op-color. Theme-resonance bench already discharges --op-probe-color vs --op-binding-color from net valence.`
+  valence = `Boonhonk pentad boon|bane|bone|bonk|honk is a mixer, not 25 legal presets. @boonhonk#transforms @mixer`
+  first_patch = `Settings hook copy names the primitives and one operator chip as the tuner. Do not add data-spw-valence as a new family; map onto existing operator + mixer weights.`
+  refuse = `Do not clone Grok Build onto the page. Do not treat ritual-vellum as an operator.`
+}[reg=facet]
+
+^"next_session"{
+  claim = `Open this file. One named slice. Do not implement the loop.`
+  open = #[`this file`, `settings/index.html`, `scripts/lib/viewport-still-recipes.mjs`, `.spw/caches/boonhonk-combinatoric-genre.spw`][reg=set]
+  next_slice = `Settings hook copy: drop the spell/weather lede. Name author mode, material, density, enhancement. One operator chip that already spends --active-op-color.`
+  skip = #[`Imagine pipeline`, `Grok TUI clone`, `recipe schema rewrite`, `140-route copy`, `hearth/loom rename sweep`, `ASTRA.md`][reg=set]
+  leftover = `Folio-prices desk crop. Pocket about overflowX. Quest still. Recipe pair/press field. Boonhonk component jobs: .spw/caches/boonhonk-combinatoric-genre.spw#component_jobs`
+  cli = `npm run sense -- ink about-opening ; npm run sense -- copy`
+}[reg=facet]

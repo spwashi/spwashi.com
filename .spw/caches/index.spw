@@ -38,6 +38,7 @@
 @operator_hardware_organelle_2026_09: ~"./operator-hardware-organelle-2026-09.spw"
 @agent_markdown_spend_2026_09: ~"./agent-markdown-spend-2026-09.spw"
 @copy_agentic_direction_2026_09: ~"./copy-agentic-direction-2026-09.spw"
+@still_recipe_agency_2026_09: ~"./still-recipe-agency-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -70,6 +71,7 @@ fixity = "tending"
   operator_hardware_organelle_2026_09 = @operator_hardware_organelle_2026_09
   agent_markdown_spend_2026_09 = @agent_markdown_spend_2026_09
   copy_agentic_direction_2026_09 = @copy_agentic_direction_2026_09
+  still_recipe_agency_2026_09 = @still_recipe_agency_2026_09
 }[reg=facet]
 
 ^"cache_rules"{

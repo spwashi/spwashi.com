@@ -141,17 +141,19 @@ source = "chat 2026-09-07: sitewide copy vs recent direction; TikTok on AI / dev
 
 ^"next_session"{
   id = "ad-007"
-  operation = "cache"
-  claim = `main is clean. Open this facet, then one named slice. Do not re-read the session transcript.`
+  operation = "align"
+  claim = `Open this facet, then one named slice. Do not re-read the session transcript.`
   landed = #[
     `.[agents] Make explore and plan a host write-deny`,
     `.[agents] Make Sense first a command, not three to memorize`,
     `.[copy] Ground quest and the person-magazine cluster`,
-    `.[about] Lead About with the person, then the lens`
+    `.[about] Lead About with the person, then the lens`,
+    `.[about] 2026-09-07 ink about-opening pocket: identity-first holds`,
+    `.[about] 2026-09-07 broadsheet: pin tagline in the identity column; lens labels spend 36ch at 61.25rem`
   ][reg=set]
-  open = #[`this file`, `.spw/conventions/agent-ecology.spw#harness`, `.agents/state/agent-preference.spw`][reg=set]
-  next_slice = `Verify About identity-first: npm run sense -- ink about-opening. Quest has no still recipe until that crop is honest.`
+  open = #[`this file`, `./still-recipe-agency-2026-09.spw`, `settings/index.html`][reg=set]
+  next_slice = `Settings hook copy names primitives, not weather. Still-recipe pair/press and folio-prices desk crop wait. Quest still waits.`
   skip = #[`140-route copy`, `full visual:checks pack`, `ASTRA.md`, `PLAN.md diary`, `another harness essay`][reg=set]
-  credits = `Human: weekly pool 64% used, reset 3:28. Remaining is one cheap still, not architecture.`
+  prove = `broadsheet openings 13-02-47--4d97f7; recapture about/town/research/membership 13-09-34--a22237`
   cli = `npm run harness · npm run sense -- copy|nouns|ink`
 }[reg=facet]

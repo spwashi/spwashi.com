@@ -30,6 +30,13 @@
 @drawer_image: ~"../../public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer.spw"
 @kernel: ~"../../.agents/plans/daily-kernel-development/boonhonk-dimensional-flow-2026-08-21.spw"
 @voyager_window: ~"./golden-voyager-window.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@css_combinatorics: ~"./css-combinatorics.spw"
+@literary_motifs: ~"../conventions/literary-operational-motifs.spw"
+@region_ecology: ~"../conventions/region-component-ecology.spw"
+@still_agency: ~"./still-recipe-agency-2026-09.spw"
+@theme_resonance: ~"../../design/experiments/theme-resonance/index.html"
 
 operation = "prime"
 fixity = "tending"
@@ -229,6 +236,45 @@ fixity = "tending"
   musician_path = @product_lines
   kernel = @kernel
   held_realms = `about/domains/boon.land/ and about/domains/bane.land/ — no expansion this pass`
+}[reg=facet]
+
+^"linguistic_play"{
+  id = "bh-play-001"
+  operation = "prime"
+  claim = `Tasteful linguistic play is a small algorithm, not generated slogans. Compress the sentence; decorate the invitation.`
+  cite = @operator_semantics
+  algorithm = #[
+    `Name one transform job (optional secondary — the pair porch)`,
+    `At most two voice markers on the public sentence (@operator_semantics#voice_marker_combinatorics)`,
+    `Let CSS combinators carry kinship — child, sibling, :has() — not a factorial data-spw (@css_instruction)`,
+    `Spend color through existing --op-*-color, mixer --boon..--bane, or --active-op-color`,
+    `Prove rest vs one press with a named still, not a mixer screenshot on every route`
+  ][reg=set]
+  mixer_polarity = `Mixer sigils are the pentad's polarity (boon> bone^ bonk@ honk~ bane!). Public chips stay on OPERATOR_DEFINITIONS. Do not merge those tables in one patch.`
+  refuse = `Do not generate 25 pair-names as component variants. Do not costume jazz/funk/disco as class names. Do not add data-spw-boonhonk or data-spw-valence.`
+}[reg=facet]
+
+^"component_jobs"{
+  id = "bh-comp-001"
+  operation = "prime"
+  claim = `A component integrates boonhonk by doing one transform's job in its anatomy, not by hosting the mixer.`
+  map = #{
+    bone = `.spw-frame chassis, slots, persistence`,
+    boon = `lede, hospitality, arrival copy`,
+    bane = `constraint note, refuse, useful limit`,
+    bonk = `lens press, collision, experiment — prepare.press when recipes grow`,
+    honk = `.spw-chip public relay, still, broadcast`
+  }
+  seat = `Name the region first (@region_ecology). A chip that cannot name hook|hub|cluster|path|read does not get a transform label.`
+  already = #[
+    `@mixer already mixes five weights into one accent`,
+    `@theme_resonance already discharges probe vs binding from net valence`,
+    `copy-depth × operator accent is a live axis (@css_combinatorics)`,
+    `literary motifs reproject discharge kind; they do not add a boonhonk mode (@literary_motifs)`
+  ][reg=set]
+  gap = `Musical mapping is named; systematic visual grammar outside ornament is thin. Fill by seating jobs on existing nouns, not a boonhonk.css.`
+  first_patch = `One family: chips or mode-switch. The still wonder names the transform job. No new widget.`
+  refuse = `Mixer on every card. WAP lore on settings or home chips. More chip rows. Empty wrappers.`
 }[reg=facet]
 
 validation: #[

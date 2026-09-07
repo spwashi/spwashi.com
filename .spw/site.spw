@@ -27,6 +27,7 @@
 @copy_accessor: ~"./conventions/copy-accessor.spw"
 @copy_hypermedia_key: ~"./caches/copy-hypermedia-key-2026-09.spw"
 @copy_agentic_direction: ~"./caches/copy-agentic-direction-2026-09.spw"
+@still_recipe_agency: ~"./caches/still-recipe-agency-2026-09.spw"
 @living_medium_copy: ~"./conventions/living-medium-copy.spw"
 @assets: ~"./assets.spw"
 @composable_art: ~"./conventions/composable-art-system.spw"
