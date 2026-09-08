@@ -11,9 +11,9 @@
 
 @recursive_improvement: ~"../conventions/recursive-improvement.spw"
 @audits_index: ~"../audits/index.spw"
-@feature_wiring: ~"./feature-wiring-timing-2026-07.spw"
-@language_utilization: ~"./spw-language-utilization-2026-07.spw"
-@recursive_improvement_cache: ~"./recursive-improvement-2026-07.spw"
+@feature_wiring: ~"./feature-wiring-timing-2026-07.spw"  # cold 2026-09-08; successor: conventions/feature-utilization.spw + npm run ecology
+@language_utilization: ~"./spw-language-utilization-2026-07.spw"  # cold 2026-09-08; successor: language/feature-utilization.spw + npm run ecology:language
+@recursive_improvement_cache: ~"./recursive-improvement-2026-07.spw"  # cold 2026-09-08; successor: conventions/recursive-improvement.spw
 @implicit_attention_arcs: ~"./implicit-attention-arcs.spw"
 @morph_shader_handles: ~"./morph-shader-handles.spw"
 @css_combinatorics: ~"./css-combinatorics.spw"
@@ -45,10 +45,14 @@
 operation = "align"
 fixity = "tending"
 
-^"registry"{
+^"cold"{
+  note = `Lineage only. Quote successors in owner-registry, not these July counts.`
   recursive_improvement_2026_07 = @recursive_improvement_cache
   feature_wiring_timing_2026_07 = @feature_wiring
   spw_language_utilization_2026_07 = @language_utilization
+}[reg=facet]
+
+^"registry"{
   implicit_attention_arcs = @implicit_attention_arcs
   morph_shader_handles = @morph_shader_handles
   css_combinatorics = @css_combinatorics

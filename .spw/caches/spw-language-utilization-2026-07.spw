@@ -6,7 +6,7 @@
 #>cache_spw_language_utilization_2026_07
 #:cache #!language #!operators #!v04
 #:operation #!cache
-#:fixity #!tending
+#:fixity #!cold
 
 @language_utilization: ~"../language/feature-utilization.spw"
 @language_recursive: ~"../language/recursive-improvement.spw"
@@ -15,7 +15,15 @@
 @semantic_braces: ~"../conventions/semantic-braces.spw"
 
 operation = "cache"
-fixity = "tending"
+fixity = "cold"
+
+^"archive_status"{
+  operation = "archive"
+  cold_marked_at = `2026-09-08`
+  why = `Language-utilization measurement moved to the language tree's own entry and loop; do not conflate this July census with current baselines.`
+  successor = #[~"../language/feature-utilization.spw", ~"../language/recursive-improvement.spw", `npm run ecology:language`][reg=set]
+  keep = `lang-00x claims and probe lineage; quote 2026-09 baselines, not these counts.`
+}[reg=facet]
 
 ^"insights"{
   insight #lang-001 {

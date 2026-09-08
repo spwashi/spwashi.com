@@ -7,7 +7,7 @@
 #>cache_recursive_improvement_2026_07
 #:cache #!agents #!features #!scripts
 #:operation #!cache
-#:fixity #!tending
+#:fixity #!cold
 
 @recursive_improvement: ~"../conventions/recursive-improvement.spw"
 @feature_utilization: ~"../conventions/feature-utilization.spw"
@@ -18,7 +18,15 @@
 @inventory_core: ~"../../scripts/lib/spw-inventory-core.mjs"
 
 operation = "cache"
-fixity = "tending"
+fixity = "cold"
+
+^"archive_status"{
+  operation = "archive"
+  cold_marked_at = `2026-09-08`
+  why = `The recursive-improvement loop promoted into a convention; this cache holds the July pass judgments that seeded it.`
+  successor = #[~"../conventions/recursive-improvement.spw", `npm run ecology`][reg=set]
+  keep = `Open questions q1–q5 still need the human eye; answer them from the convention, then update status here.`
+}[reg=facet]
 
 ^"insights"{
   insight #ri-001 {

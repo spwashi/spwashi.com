@@ -6,7 +6,7 @@
 #>cache_feature_wiring_timing_2026_07
 #:cache #!features #!runtime #!catalog
 #:operation #!cache
-#:fixity #!tending
+#:fixity #!cold
 
 @module_catalog: ~"../../public/js/runtime/module-catalog.js"
 @runtime_contracts: ~"../../scripts/ts/runtime-contracts.mts"
@@ -16,7 +16,15 @@
 @progressive_css: ~"../audits/progressive-css-module-scopes-2026-07/index.spw"
 
 operation = "cache"
-fixity = "tending"
+fixity = "cold"
+
+^"archive_status"{
+  operation = "archive"
+  cold_marked_at = `2026-09-08`
+  why = `July catalog/timing judgments landed; live rules now live in the runtime feature-pack contract and its instruments.`
+  successor = #[~"../conventions/feature-utilization.spw", `npm run ecology`, `npm run check:runtime`][reg=set]
+  keep = `Insights explain why MODULE_DEFS timing and wiring look the way they do; read for lineage, not for current rules.`
+}[reg=facet]
 
 ^"insights"{
   insight #fwt-001 {
