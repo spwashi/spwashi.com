@@ -1,0 +1,125 @@
+# Taste from research (2026-09)
+#
+# operation: cache
+# Harvested judgments so the next session does not re-derive them from
+# chat. Not a convention. Not a public-copy rewrite. Not a scoring rubric.
+
+#>taste_research_2026_09
+#:cache #!taste #!orbit #!marketing #!chrome
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@model_guided_refinement: ~"../conventions/model-guided-refinement.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@ornament_contract: ~"../conventions/ornament-contract.spw"
+@copy_agentic: ~"./copy-agentic-direction-2026-09.spw"
+@arrival: ~"./arrival-perceptibility-2026-08.spw"
+@boonhonk: ~"./boonhonk-combinatoric-genre.spw"
+@fashion: ~"../audits/appendices/fashion-history-500y.spw"
+@technolinguistics: ~"../audits/appendices/technolinguistics-web-history-2007-2026.spw"
+@file_taste: ~"../audits/naming-grammar-js-types-2026-07/file-taste-reusability.spw"
+@taste_route: ~"../../services/ecosystem/index.html"
+@taste_price: ~"../../services/index.html"
+@series_home: ~"../../services/creator/index.html"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-09-07: cache taste from research before a usage-limit reset; Hume 1757; Bourdieu Distinction; Graham Taste for Makers 2002; Kim BJA 2024; Nielsen expert-review curve; CHI 2021 Beyond Beauty; Patterson Bootcamp 2026-08; local orbit copy and caches"
+
+expression = taste[orbit]{read.note.close}<pass>
+
+^"thesis"{
+  claim = `Taste here is a practiced reading of whether the room holds — not a like, not a score, not a class credential, not the average of a feed.`
+  already_public = ` /services/ecosystem/#taste already says one short note, not thirty reports; not a review marketplace; not a design committee. The orbit reads for whether the room holds, the path is kind, and a phrase wants to stay.`
+  product = `A $500 taste pass is a unary close (@boonhonk#channels). On a series home it sits before a 13th or 26th so the page can still move.`
+  refuse = `Do not add data-spw-taste. Do not put Hume, Bourdieu, or "true judge" in a first fold. Do not implement a rubric, NPS, or preference test from this cache. Do not rewrite public HTML in this pass.`
+}[reg=facet]
+
+^"tr-001_like_vs_good"{
+  id = "tr-001"
+  operation = "cache"
+  claim = `Hume splits "do I like it?" (sentiment, self-report) from "is it good?" (a determination that can be wrong). Practice, comparison, and cleared prejudice make a better reader — not birth and not a survey.`
+  evidence = #[
+    `Hume, Of the Standard of Taste, 1757 — true judge: strong sense, delicate sentiment, improved by practice, perfected by comparison, cleared of all prejudice`,
+    `SEP Hume's Aesthetics — sentiment vs determination`,
+    `@taste_route#taste already asks room / path / phrase, not like`
+  ][reg=set]
+  pattern_consideration = `Preference testing (dscout 2021) is the like-question wearing a method. Heuristic checklists answer "does this violate a known rule?" — a different question than taste.`
+  expansion_prime = `Keep the three reading questions. Do not add a fourth "would you use this?" box to the offer.`
+  do_not_promote_until = `A delivered taste note has used those three questions in one short letter.`
+}[reg=facet]
+
+^"tr-002_one_note"{
+  id = "tr-002"
+  operation = "cache"
+  claim = `The standard is one synthesized note that can hold blameless difference — not an average of thirty opinions, and not a 0–100 score.`
+  evidence = #[
+    `Kim, British Journal of Aesthetics 64(4) 2024: Hume's joint verdict is the standard because it encompasses blameless differences, not because verdicts converge`,
+    `Nielsen: ~1 evaluator finds ~35% of usability issues, ~5 find ~75%; the curve flattens; heuristic evaluation carries ~29% false positives`,
+    `@taste_route: "one short note, not thirty reports"`,
+    `@product_lines#series_home collectible_unit includes a taste note`
+  ][reg=set]
+  pattern_consideration = `Nielsen's 3–5 is a coverage argument for independent inspectors. The orbit is ~30 people who already share a close; the product is still one note. Do not confuse headcount with output.`
+  refuse = `Do not ship a Granollers-style 0–100 usability number. Do not turn the pass into thirty independent reports. Do not add a heuristic checklist as the offer.`
+}[reg=facet]
+
+^"tr-003_orbit_not_canon"{
+  id = "tr-003"
+  operation = "cache"
+  claim = `The orbit is a hotspot of related attention, not a credential of legitimate taste. Selling canon is Bourdieu's trap; hiding that taste can be wrong is Graham's trap.`
+  evidence = #[
+    `Bourdieu, Distinction (1979/1984): legitimate taste is the taste of the class that can name it`,
+    `Patterson, Taste is the must-have skill of the AI era, Bootcamp 2026-08-31: "whose taste?" is the live crack — access to practice and comparison was never even`,
+    `Graham, Taste for Makers, 2002: Florence vs Milan — good work clusters; genes without the hotspot do not compensate`,
+    `@taste_route: people are added by working together, not by signing up; not a directory, marketplace, or certification`
+  ][reg=set]
+  pattern_consideration = `A design committee averages power. A review marketplace sells volume. A close shares attention. The public copy already picked the third.`
+  expansion_prime = `If a later pass names the orbit, keep "people who already share a close." Do not add a signup or a badge.`
+}[reg=facet]
+
+^"tr-004_makers_map"{
+  id = "tr-004"
+  operation = "cache"
+  claim = `Graham's maker list maps onto contracts this site already has. Cite the contract, not the essay, in public copy.`
+  map = #{
+    simple = `Face the real problem; do not hide it under more chips. GROK: one named slice.`
+    ornament = `Ornament is not bad — only camouflage on insipid form. @ornament_contract: !important only in ornament; do not spend it as cover for missing structure.`
+    suggestive = `Give a few combinable elements. Operators, braces, copy-depth already do this.`
+    redesign = `Taste pass sits before a 13th/26th so the page can still move.`
+    strange = `Do not cultivate strangeness. Do not squash it if the right answer is odd.`
+    recipe = `Exacting taste plus the ability to gratify it. A cache without a later eye-call is the first half only.`
+  }
+  evidence = #[
+    `Graham 2002 Taste for Makers`,
+    `@ornament_contract`,
+    `@file_taste: prefer a leaf file over a mega runtime file`,
+    `@fashion thesis: fashion is differential salience — silhouette, texture, season — not a drop or a haul`
+  ][reg=set]
+  refuse = `Do not paste Graham's list onto /about/. Do not treat "timeless" as a reason to freeze tending copy.`
+}[reg=facet]
+
+^"tr-005_against_average"{
+  id = "tr-005"
+  operation = "cache"
+  claim = `A feed calibrates the palate to the average. Chrome taste is still an eye call: as subtle as necessary to be tasteful, as noticeable as necessary to be seen.`
+  evidence = #[
+    `Patterson 2026-08: exposure builds taste only when curated against the current; the algorithm's average is the new mud`,
+    `Ira Glass gap: taste outruns ability for a long time — do not flatten the voice to close the gap faster`,
+    `Hassenzahl / Tractinsky lineage vs CHI 2021 Beyond Beauty: HCI often reduces aesthetics to apparent beauty; interaction criticism is the missing half`,
+    `@arrival bar and next_smallest: one feature arriving perceptibly, judged by eye — not another abstraction`,
+    `@copy_agentic#ad-002: ungrounded metaphor is stale; a reader must be able to refuse it`,
+    `@technolinguistics discourse layer: Web 2.0, mobile-first, JAMstack, vibe coding, agentic — era nouns that steer taste and go stale`
+  ][reg=set]
+  pattern_consideration = `Arrival electrostatics already spent one perceptibility model. The leftover is the taste call, not a sixth altitude of wonder.`
+  expansion_prime = `Next chrome pass: one arrival judged by eye. Next copy pass: keep constructs inspectable so synthesis has a place to land (@copy_agentic#ad-004).`
+}[reg=facet]
+
+^"do_not"{
+  build = `No public PNC-style route, no data-spw family, no taste-score component, no committee UI.`
+  copy = `No namedrop of Hume/Kant/Bourdieu/Graham in a lede. No "true judge." No "legitimate taste."`
+  promote = `Do not contract this until a taste note has been delivered as one short letter, and a chrome pass has made one arrival perceptible by eye.`
+}[reg=facet]
+
+validation = `rg 'tr-00' .spw/caches/taste-research-2026-09.spw && rg 'one short note, not thirty reports' services/ecosystem/index.html`

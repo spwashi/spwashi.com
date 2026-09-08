@@ -215,6 +215,37 @@ product_lines: .{
    next_step = `Move the protocol to another route so it proves it is not route-local ornament.`
   }[reg=facet]
  }[reg=facet]
+ systems_kits = .{
+  pitch = `Physical-and-page kits for homeschooling families and lifelong learners. Each box names one mechanism, one test, one artifact. The next box consumes that artifact as residue — systems thinking as a household practice, not a 72-hour certificate.`
+  feature_shape = `A small sequence of boxes (or printable packets) whose later module reads the earlier module's leftover: a log, a culture, a proof card, a map. Garden, kitchen, and curriculum are doors, not three brands.`
+  collectible_unit = `One kit box; the artifact it leaves; the next box that can only start if that residue exists.`
+  audience_primary = shared
+  audience_bridge = #[
+   `homeschool households read it as a week's practice`,
+   `lifelong learners read it as a self-paced lab`,
+   `engineers read it as COST_COMMITMENT.RESIDUE`,
+   `growers read it as /recipes/#grower-start`
+  ][reg=set]
+  integration_contract = .{
+   audience = `homeschooling families and lifelong learners; curriculum and grower are bridges, not the public lead.`
+   offer = `A kit whose later box needs the earlier box's leftover — one mechanism, one boundary test, one artifact you can hold or export.`
+   proof = `/curriculum/ (analogy, then where it breaks) and /recipes/#grower-start (living cultures, sourcing, restaurant as horizon). No kit SKU yet.`
+   resonance = `A household can practice systems without buying Holmgren as labels or a certificate as the yield.`
+   extension = `Garden pad → curriculum proof → Town Library / skill_os as a sibling loop, not the kit SKU.`
+   next_action = `/services/#services-description names service vs product. Do not add /kits/ or /permaculture/. Curriculum and grower-start stay the proof, not a sixth lane.`
+  }[reg=facet]
+  current_state = .{
+   summary = `Named. Not routed. Services register now distinguishes product from service. Data-model projection stays in the permaculture cache.`
+   evidence = #[
+    `services.entry.lede on /services/#services-description`,
+    `services.hook.lede`,
+    `.spw/caches/permaculture-data-model-2026-09.spw product_later and pd-006`,
+    `curriculum.hook.lede: one mechanism, one test, one artifact`,
+    `recipes/#grower-start: analogy, then break`
+   ][reg=set]
+   next_step = `Design one box pair that shares residue. Do not implement kits from the data-model prime. Do not put PDC ethics in a first fold.`
+  }[reg=facet]
+ }[reg=facet]
  spw_language_medium = .{
   pitch = `Spw as an expressive plain-text language, zero-framework browser projection engine, and human-agent co-creation medium. Proven across 144+ routes and 279 verified convention surfaces.`
   feature_shape = `Language hub, live AST parser (/tools/spw-parser/), operator atlas (/topics/software/spw/), and executable knowledge audits (spw-integrity.mjs).`

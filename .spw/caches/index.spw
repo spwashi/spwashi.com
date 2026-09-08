@@ -39,6 +39,8 @@
 @agent_markdown_spend_2026_09: ~"./agent-markdown-spend-2026-09.spw"
 @copy_agentic_direction_2026_09: ~"./copy-agentic-direction-2026-09.spw"
 @still_recipe_agency_2026_09: ~"./still-recipe-agency-2026-09.spw"
+@taste_research_2026_09: ~"./taste-research-2026-09.spw"
+@permaculture_data_model_2026_09: ~"./permaculture-data-model-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -72,6 +74,8 @@ fixity = "tending"
   agent_markdown_spend_2026_09 = @agent_markdown_spend_2026_09
   copy_agentic_direction_2026_09 = @copy_agentic_direction_2026_09
   still_recipe_agency_2026_09 = @still_recipe_agency_2026_09
+  taste_research_2026_09 = @taste_research_2026_09
+  permaculture_data_model_2026_09 = @permaculture_data_model_2026_09
 }[reg=facet]
 
 ^"cache_rules"{

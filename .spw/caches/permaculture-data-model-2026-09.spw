@@ -1,0 +1,164 @@
+# Permaculture as data-model projection (2026-09)
+#
+# operation: prime
+# Holmgren/Mollison dynamics mapped onto existing coordinates so the next
+# session does not mint a parallel schema. Not a convention. Not a public
+# copy rewrite. Not new data-spw families. Kits for homeschool families
+# and lifelong learners live on @product_lines#systems_kits.
+
+#>permaculture_data_model_2026_09
+#:cache #!prime #!ecology #!runtime #!garden
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@model_guided_refinement: ~"../conventions/model-guided-refinement.spw"
+@metaphor_lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"
+@runtime_ecology: ~"../conventions/runtime-medium-ecology.spw"
+@kernel_rhizosphere: ~"../conventions/kernel-rhizosphere.spw"
+@js_cognition: ~"../conventions/js-architecture-cognition.spw"
+@storage_topology: ~"../conventions/storage-topology.spw"
+@attribute_governance: ~"../conventions/data-spw-attribute-governance.spw"
+@page_model: ~"../surfaces/page-model.spw"
+@plant_ecology: ~"../conventions/plant-ecology-operations.spw"
+@component_biome: ~"../conventions/component-biome.spw"
+@cauldron: ~"../conventions/cauldron-dynamics.spw"
+@spatial_gravity: ~"../conventions/spatial-gravity.spw"
+@daily_kernel: ~"../conventions/daily-kernel.spw"
+@module_export: ~"../../public/js/runtime/module-export-contract.js"
+@catalog_constants: ~"../../public/js/runtime/module-catalog-constants.js"
+@grower_start: ~"../../recipes/index.html"
+@product_lines: ~"../surfaces/product-lines.spw"
+@curriculum_route: ~"../../curriculum/index.html"
+@agent_ecology: ~"../conventions/agent-ecology.spw"
+@skill_invocation: ~"../conventions/skill-invocation.spw"
+@markdown_spend: ~"./agent-markdown-spend-2026-09.spw"
+@site_vs_workbench: ~"../../.agents/skills/_shared/site-vs-workbench.md"
+@agents_md: ~"../../AGENTS.md"
+
+operation = "prime"
+fixity = "experimental"
+source = "chat 2026-09-07: 72h PDC as systems-thinking homeschool kit; Holmgren 12; TikTok: local host zone 1, zone 5 everyone else's agent stack"
+focus_dimension = "engineer-toolmaker"
+region = "garden"
+primary_element = "metal"
+secondary_element = "wood"
+
+expression = permaculture[site]{observe.catch.yield}<projection>
+
+^"thesis"{
+  claim = `Permaculture is a projection register onto steward-proximity and onto couplings that already have names — ecology_guild, residue, authored prior. It is not a new axis and not a new data-spw family.`
+  already_landed = `Guild ids, rhizosphere, cauldron metabolism, spatial yield, and page-model regions already name plant-association and nutrient dynamics. @metaphor_lexicon#room_rule: freeze the coordinate; reproject the lexicon. mount_when stays catalog scheduling.`
+  product_later = `Kits are @product_lines#systems_kits. A box pair shares residue — later modules consume earlier updates of role residue. That is COST_COMMITMENT.RESIDUE plus @cauldron#metabolism, not a PDC schema in site.js and not Holmgren names on the carton.`
+  refuse = `Do not add data-spw-zone, data-spw-guild on public HTML, data-spw-sector, data-spw-permaculture, or a permaculture.js runtime. Do not rename MODULE_LAYERS or MOUNT_WHEN to Holmgren nouns. Do not put PDC ethics in a first fold. Do not implement kits from this data-model prime.`
+}[reg=facet]
+
+^"pd-001_coordinates_not_nouns"{
+  id = "pd-001"
+  operation = "prime"
+  claim = `Develop the data model by filling existing optional fields and making couplings inspectable — not by minting Holmgren names as attributes.`
+  evidence = #[
+    `@metaphor_lexicon#coordinate_space ecology_guild = substrate|orientation|symbiosis|memory|inspection|expression|media|literacy|field`,
+    `@runtime_ecology#guild_taxonomy same nine ids; catalog keeps layer/when for schedule; guild is documentation, compose batches, split planning`,
+    `SPW_MODULE_EXPORT.guild is optional; datasetFields.guild = data-spw-module-guild (inspection, not public authoring)`,
+    `MODULE_DEFS has no guild field — that is the gap, not a missing zone attribute`
+  ][reg=set]
+  pattern_consideration = `Compare @plant_ecology (mechanism + break) and @component_biome (soil, light, exchange, succession). Those are already the land language. A third ecology story that does not share ecology_guild is interference.`
+  expansion_prime = `Audit which SPW_MODULE_EXPORT objects set guild vs null. Fill from the nine ids. Do not add guild as a catalog scheduling field.`
+  do_not_promote_until = `An inspector can filter modules by guild and a second module's updates of role residue name the first as source.`
+}[reg=facet]
+
+^"pd-002_ethics_as_priors"{
+  id = "pd-002"
+  operation = "prime"
+  claim = `The three ethics are already runtime priors, not copy slogans.`
+  evidence = #[
+    `Earth Care = authored_prior in @js_cognition: route HTML remains legible and layout-correct without JS`,
+    `People Care = CLAUDE.md / AGENTS a11y floor, 44px ground-control, copy readable with JS off`,
+    `Fair Share = compose.js as pollinator; portable SPW_MODULE_EXPORT; do not hoard feature logic in site.js`
+  ][reg=set]
+  expansion_prime = `Cite these priors when refusing an IMMEDIATE mount that restyles authored geometry.`
+}[reg=facet]
+
+^"pd-003_semiotic_zones"{
+  id = "pd-003"
+  operation = "prime"
+  claim = `Zones are placement relative to the dwelling: who authors the sign, how far it is from localhost. Visit frequency follows that placement.`
+  tiktok = `local host zone 1, zone 5 everyone else's agent stack`
+  map = #[
+    .{ z = 0, name = `house`, signs = `creator identity; I'm Spwashi; voice that must not be machine-rewritten`, tend = `cite, do not re-lexicon` },
+    .{ z = 1, name = `localhost`, signs = `public nouns .spw-frame/.spw-chip; authored data-spw stems; copy-unit; AGENTS.md as gate`, tend = `align daily; check:agents; audit:copy:accessor` },
+    .{ z = 2, name = `hedge`, signs = `conventions; MODULE_DEFS; adapters as one-focus emphases`, tend = `contract when a stem repeats; adapters do not own a discipline` },
+    .{ z = 3, name = `plots`, signs = `route-local copy, slices, product-line names`, tend = `edit locally; do not promote a one-route word to a family` },
+    .{ z = 4, name = `orchard`, signs = `mounted workbench canon, parser, lattice`, tend = `consume; do not fork grammar here` },
+    .{ z = 5, name = `wilderness`, signs = `other models' skills, MCP, npm, Copilot, TikTok PDC talk, bundled Imagine/Grok stacks`, tend = `observe; harvest one seed into a cache; never align their whole stack to local stems` }
+  ][reg=set]
+  altitude_vs_zone = `Attribute altitude (html/body/region/component) is scale on a page. Semiotic zone is how close the vocabulary is to this host. A Zone 5 word can appear in a Zone 1 file as a quoted seed; that does not naturalize it.`
+  evidence = #[
+    `@attribute_governance: authored base vs *-resolved — Zone 1 does not let inference overwrite the sign`,
+    `@skill_invocation#focuses: adapters emphasize; AGENTS.md is the gate — Zone 1 gate, Zone 2 hedges`,
+    `@skill_invocation#shunt: always-on markdown is I/O not thinking; check:agents word budgets are the block`,
+    `@agent_ecology#harness: explore/plan do not write; Astra is coordinator not a fifth adapter; no ASTRA.md`,
+    `@site_vs_workbench: site HTML/CSS/JS vs workbench ontology — two systems, not one merged workflow`,
+    `AGENTS.md: no speculative MODEL.md; consume workbench, do not fork`
+  ][reg=set]
+  pattern_consideration = `mount_when and elaboration_stage already own catalog scheduling. Zones do not overlay them. Farming Zone 5 is importing Claude's constitution, Grok bundled skills, MCP tool names, or TikTok course slang as data-spw-* families.`
+  expansion_prime = `When a foreign stack offers a useful word, cache it here or in a same-family insight. Align only if the stem already exists on localhost. Do not add data-spw-zone.`
+  refuse = `Do not write other people's SKILL.md into this tree. Do not symlink adapters. Do not treat Open first as a substitute for the instrument. Do not put Holmgren zone numbers on public HTML.`
+}[reg=facet]
+
+^"pd-004_principles_onto_stems"{
+  id = "pd-004"
+  operation = "prime"
+  claim = `Each Holmgren principle already has a stem. The data-model job is to keep the stem load-bearing.`
+  map = #[
+    .{ p = `observe and interact`, stem = `page-state + attention + observation-beats`, refuse = `a new observe attr` },
+    .{ p = `catch and store energy`, stem = `@storage_topology + wonder-memory + visitation`, refuse = `ad-hoc localStorage` },
+    .{ p = `obtain a yield`, stem = `ground/collect + data-spw-yielded + cauldron harvest`, refuse = `certificate-as-product` },
+    .{ p = `self-regulation / feedback`, stem = `cost_class + reduced-motion + loader skip on page-family mismatch`, refuse = `always-on IMMEDIATE polish` },
+    .{ p = `renewable resources`, stem = `COST_COMMITMENT.AUTHORED; HTML/CSS before JS`, refuse = `JS-owned first paint` },
+    .{ p = `produce no waste`, stem = `updates role residue + archive that returns as nutrient + cauldron prune`, refuse = `delete-without-compost; duplicate safeParse` },
+    .{ p = `patterns to details`, stem = `@page_model page → region → feature → component`, refuse = `feature-name sprawl` },
+    .{ p = `integrate rather than segregate`, stem = `:has() exchange + slices + kinship + guilds`, refuse = `a wrapper div per concern` },
+    .{ p = `small and slow`, stem = `one named slice; MOUNT_WHEN not IMMEDIATE; daily kernel`, refuse = `implement from plans` },
+    .{ p = `value diversity`, stem = `operational diversity of .spw files; MODULE_LAYERS`, refuse = `one ontology for every insight` },
+    .{ p = `use edges`, stem = `data-spw-edge + spatial-gravity + context-edge-card`, refuse = `data-spw-sector` },
+    .{ p = `respond to change`, stem = `page-arrival arc + hydration + INVITED mount`, refuse = `a scheduler or notification runtime` }
+  ][reg=set]
+  validation = `rg the stem; if HTML, CSS, JS, and .spw disagree, align the stem — do not add a Holmgren synonym.`
+}[reg=facet]
+
+^"pd-005_coupling_is_the_model"{
+  id = "pd-005"
+  operation = "prime"
+  claim = `Systems thinking shows up when a later process consumes an earlier residue. Isolated MODULE_DEFS are vinegar volcanoes.`
+  evidence = #[
+    `COST_COMMITMENT = authored|listen|project|residue — residue is the only commitment that survives unmount as memory`,
+    `updates roles = structural|flourish|inspect|residue|measure|diagnostic`,
+    `@cauldron metabolism: intake → digestion → absorption → return; a stage that feeds nothing is storage, not metabolism`,
+    `ingredient phase gathering → resonant → mature → decayed already names succession`
+  ][reg=set]
+  expansion_prime = `On one enhancement module, declare updates with role residue and name the consumer in describes. Prove the consumer reads that nutrient. That is the illustrative metaphor.`
+  do_not_promote_until = `findModuleUpdateConflicts still catches double-claims, and at least one residue nutrient has a named later reader.`
+}[reg=facet]
+
+^"pd-006_public_surface"{
+  id = "pd-006"
+  operation = "prime"
+  claim = `If the metaphor must be public, it starts at /recipes/#grower-start with a mechanism and a break — not a new route and not curriculum-as-PDC.`
+  evidence = #[
+    `@plant_ecology#if_someone_points_a_model`,
+    `@daily_kernel region already includes garden`,
+    `cauldron vessels already join garden/media in footer braces`
+  ][reg=set]
+  refuse = `Do not twin a /permaculture/ route. Do not add data-spw-copy-unit permaculture.* until a real collectible lede exists. Homeschool and lifelong-learner kits are @product_lines#systems_kits — name the offer there; do not implement a box from this prime.`
+}[reg=facet]
+
+validation: #[
+  `rg ecology_guild .spw/conventions/metaphor-dimensional-lexicon.spw`,
+  `rg 'guild:' public/js/runtime/module-export-contract.js`,
+  `rg COST_COMMITMENT public/js/runtime/module-catalog-constants.js`,
+  `Do not author data-spw-zone or data-spw-permaculture`,
+  `Zone 5 harvest stays a cache seed; Zone 1 stems stay local`
+][reg=set]

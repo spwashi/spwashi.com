@@ -28,6 +28,8 @@
 @copy_hypermedia_key: ~"./caches/copy-hypermedia-key-2026-09.spw"
 @copy_agentic_direction: ~"./caches/copy-agentic-direction-2026-09.spw"
 @still_recipe_agency: ~"./caches/still-recipe-agency-2026-09.spw"
+@taste_research: ~"./caches/taste-research-2026-09.spw"
+@permaculture_data_model: ~"./caches/permaculture-data-model-2026-09.spw"
 @living_medium_copy: ~"./conventions/living-medium-copy.spw"
 @assets: ~"./assets.spw"
 @composable_art: ~"./conventions/composable-art-system.spw"
@@ -237,7 +239,7 @@ translations: .{
  narrative_instrumentation = #[@narrative_instrumentation, @annotation_layer, @attention_field, @site_semantics][reg=set]
  query_disposition = #[@query_disposition, @style_development, @site_semantics][reg=set]
  composition_box_model = #[@composition_box_model, @query_disposition, @site_semantics][reg=set]
- model_guided_refinement = #[@model_guided_refinement, @site_semantics, @product_lines][reg=set]
+ model_guided_refinement = #[@model_guided_refinement, @site_semantics, @product_lines, @taste_research][reg=set]
  semantic_capacity = #[@semantic_capacity, @model_guided_refinement, @planning_ecology][reg=set]
  discovery_powerups = #[@discovery_powerups, @semantic_capacity, @query_disposition][reg=set]
  daily_kernel = #[@daily_kernel, @semantic_capacity, @attention_field, @product_lines][reg=set]
@@ -255,7 +257,7 @@ translations: .{
  public_routes = #[@surfaces, @surface_registry][reg=set]
  language_evolution = #[@language, @language_v04, @spw_language_v04_plan, @spw_language_v04_plan_index][reg=set]
  runtime_medium = #[@runtime_medium_ecology, @js_architecture_cognition, @module_export_contract, @module_export_audit, @runtime_module_medium, @module_export_uniformity][reg=set]
- js_architecture = #[@js_architecture_cognition, @runtime_medium_ecology, @metaphor_dimensional_lexicon, @kernel_rhizosphere, @runtime_kernel_consolidation_audit, @runtime_module_medium, @module_granularity_lifecycle_audit][reg=set]
+ js_architecture = #[@js_architecture_cognition, @runtime_medium_ecology, @metaphor_dimensional_lexicon, @kernel_rhizosphere, @runtime_kernel_consolidation_audit, @runtime_module_medium, @module_granularity_lifecycle_audit, @permaculture_data_model][reg=set]
  metaphor_and_performance = #[@metaphor_dimensional_lexicon, @js_architecture_cognition, @component_philosophy_harmony_audit, @build_runtime_performance_audit, @module_granularity_lifecycle_audit, @dimension_vocabulary, @expressive_registers, @alignment_shell_lifecycle_sensitivity_audit, @component_anatomy_device_packing_audit, @css_module_attribute_impact_audit, @page_region_hydration_memory_audit][reg=set]
  naming_grammar_js_types = #[@naming_grammar_js_types_audit, @naming_structured_values, @module_export_contract, @module_export_audit, @language_v04, @js_architecture_cognition, @build_runtime_performance_audit][reg=set]
  commit_skill_induction = #[@commit_skill_induction_audit, @agent_optimization, @plan_maintenance, @naming_grammar_js_types_audit, @build_runtime_performance_audit][reg=set]
@@ -306,6 +308,8 @@ dispatch: .{
  copy_accessor = @copy_accessor
  copy_hypermedia_key = @copy_hypermedia_key
  copy_agentic_direction = @copy_agentic_direction
+ taste_research = @taste_research
+ permaculture_data_model = @permaculture_data_model
  living_medium_copy = @living_medium_copy
  style_development = @style_development
  composable_art = @composable_art
