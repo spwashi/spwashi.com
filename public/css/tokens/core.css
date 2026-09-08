@@ -1240,6 +1240,24 @@
   --spw-motion-settle: calc(var(--duration-base) * var(--spw-motion-scale, 1)) var(--ease-settle);
   --spw-motion-expressive: calc(var(--duration-deliberate) * var(--spw-motion-scale, 1)) var(--ease-paper);
 
+  /* Interaction timing bands (color-motion Patch 4). Aliases over the duration
+     primitives — reduced motion collapses the primitives, so every band
+     consumer inherits the reduction without restating it. Operator chips set
+     the tactile baseline; cards, controls, and SVG surfaces harmonize with
+     these bands instead of inventing local durations. */
+  --spw-time-ack: var(--duration-snap);          /* immediate hover/focus acknowledgement */
+  --spw-time-control: var(--duration-fast);      /* button/chip/control state */
+  --spw-time-surface: var(--duration-base);      /* card/panel settle */
+  --spw-time-reveal: var(--duration-deliberate); /* disclosures, metadata, labels */
+  --spw-time-ambient: var(--duration-slow);      /* resonance, attention echo */
+  --spw-time-ritual: var(--duration-ceremonial); /* rare expressive moments */
+
+  --spw-ease-ack: var(--ease-mechanical);
+  --spw-ease-control: var(--ease-precise);
+  --spw-ease-surface: var(--ease-settle);
+  --spw-ease-reveal: var(--ease-paper);
+  --spw-ease-ambient: var(--ease-orbit);
+
   /* Page/region timing aliases. Keep JS-readable values concrete. */
   --spw-page-arrival-step-1-delay: 0ms;
   --spw-page-arrival-step-2-delay: 64ms;

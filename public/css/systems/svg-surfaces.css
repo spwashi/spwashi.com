@@ -92,11 +92,11 @@
         rotateY(calc((var(--spw-svg-pointer-x-ratio, 0.5) - 0.5) * var(--spw-svg-pointer-intensity, 0) * var(--spw-svg-device-pointer-lift, var(--spw-svg-pointer-lift, 0)) * 1.2deg));
     transform-origin: center;
     transition:
-        border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
-        box-shadow var(--duration-base, 200ms) var(--ease-mechanical, ease),
-        color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
-        background var(--duration-base, 200ms) var(--ease-mechanical, ease),
-        transform var(--duration-base, 200ms) var(--ease-smooth, ease);
+        border-color var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
+        box-shadow var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease),
+        color var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
+        background var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease),
+        transform var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease);
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-surface:is(:hover, :focus-within) {
@@ -335,7 +335,7 @@
             transparent 38%
         );
     mix-blend-mode: multiply;
-    transition: opacity var(--duration-base, 200ms) var(--ease-smooth, ease);
+    transition: opacity var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease);
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"][data-spw-svg-pointer]::after {
@@ -370,7 +370,7 @@
  */
 
 [data-spw-features~="svg-surfaces"] .spw-svg-surface g[id] {
-    transition: opacity var(--duration-base, 200ms) var(--ease-smooth, ease);
+    transition: opacity var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease);
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-surface g[data-spw-svg-node-state="dimmed"] {
@@ -435,8 +435,8 @@
 [data-spw-features~="svg-surfaces"] .spw-svg-surface [data-spw-svg-plane] {
     --spw-plane-tint: 0%;
     transition:
-        opacity var(--duration-base, 200ms) var(--ease-smooth, ease),
-        filter var(--duration-base, 200ms) var(--ease-smooth, ease);
+        opacity var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease),
+        filter var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease);
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-surface [data-spw-svg-plane="ground"] {
@@ -466,7 +466,7 @@
 :where([data-spw-svg-layer="substrate"], .svg-layer--substrate) {
     opacity: 0.38;
     pointer-events: none;
-    transition: opacity var(--duration-base, 200ms) var(--ease-smooth, ease);
+    transition: opacity var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease);
 }
 
 :where([data-spw-svg-layer="structure"], .svg-layer--structure) {
@@ -483,9 +483,9 @@
     cursor: pointer;
     pointer-events: all;
     transition:
-        transform var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-        filter var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-        opacity var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+        transform var(--spw-time-control, 140ms) var(--spw-ease-control, ease),
+        filter var(--spw-time-control, 140ms) var(--spw-ease-control, ease),
+        opacity var(--spw-time-control, 140ms) var(--spw-ease-control, ease);
 }
 
 :where(g[data-spw-operator], g[data-spw-topic], g[role="button"]):is(:hover, :focus-visible) {
@@ -573,8 +573,8 @@ html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-f
     letter-spacing: calc(var(--spw-svg-label-spacing, 0.04em) * 0.75);
     opacity: var(--spw-svg-narrative-intensity, 1);
     transition:
-        fill var(--duration-fast, 120ms) var(--ease-mechanical, ease),
-        opacity var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+        fill var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
+        opacity var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease);
 }
 
 /* ─── Operator Grammar Flow Diagram ─────────────────────────────────────── */
@@ -838,7 +838,7 @@ html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-f
     --spw-svg-narrative-intensity: 0.62;
     --spw-svg-rail-intensity: 0.58;
     opacity: 0.78;
-    transition: opacity var(--duration-base, 200ms) var(--ease-mechanical, ease);
+    transition: opacity var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease);
 }
 
 :where(html[data-spw-svg-persona-active] .spw-svg-figure[data-spw-svg-persona-match="dim"] .spw-svg-surface) {

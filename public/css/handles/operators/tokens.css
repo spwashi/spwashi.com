@@ -759,11 +759,13 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
     inset 0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 22%, transparent),
     0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 12%, transparent);
 
-  --handle-duration-fast: var(--duration-fast, 120ms);
-  --handle-duration-base: var(--duration-base, 180ms);
-  --handle-duration-deliberate: var(--duration-deliberate, 280ms);
+  /* Handle timing rides the interaction bands (tokens/core.css, color-motion
+     Patch 4) so chips stay the tactile baseline the other families tune to. */
+  --handle-duration-fast: var(--spw-time-control, var(--duration-fast, 120ms));
+  --handle-duration-base: var(--spw-time-surface, var(--duration-base, 180ms));
+  --handle-duration-deliberate: var(--spw-time-reveal, var(--duration-deliberate, 280ms));
 
-  --handle-ease: var(--ease-mechanical, ease);
+  --handle-ease: var(--spw-ease-control, var(--ease-mechanical, ease));
   --handle-settle-ease: var(--brace-settle-ease, cubic-bezier(0.22, 0, 0.15, 1));
 
   --handle-underline-thickness: 1.5px;

@@ -1920,6 +1920,24 @@ html[data-spw-reduce-motion="on"] *::after {
   --spw-motion-settle: calc(var(--duration-base) * var(--spw-motion-scale, 1)) var(--ease-settle);
   --spw-motion-expressive: calc(var(--duration-deliberate) * var(--spw-motion-scale, 1)) var(--ease-paper);
 
+  /* Interaction timing bands (color-motion Patch 4). Aliases over the duration
+     primitives — reduced motion collapses the primitives, so every band
+     consumer inherits the reduction without restating it. Operator chips set
+     the tactile baseline; cards, controls, and SVG surfaces harmonize with
+     these bands instead of inventing local durations. */
+  --spw-time-ack: var(--duration-snap);          /* immediate hover/focus acknowledgement */
+  --spw-time-control: var(--duration-fast);      /* button/chip/control state */
+  --spw-time-surface: var(--duration-base);      /* card/panel settle */
+  --spw-time-reveal: var(--duration-deliberate); /* disclosures, metadata, labels */
+  --spw-time-ambient: var(--duration-slow);      /* resonance, attention echo */
+  --spw-time-ritual: var(--duration-ceremonial); /* rare expressive moments */
+
+  --spw-ease-ack: var(--ease-mechanical);
+  --spw-ease-control: var(--ease-precise);
+  --spw-ease-surface: var(--ease-settle);
+  --spw-ease-reveal: var(--ease-paper);
+  --spw-ease-ambient: var(--ease-orbit);
+
   /* Page/region timing aliases. Keep JS-readable values concrete. */
   --spw-page-arrival-step-1-delay: 0ms;
   --spw-page-arrival-step-2-delay: 64ms;
@@ -38493,11 +38511,13 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
     inset 0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 22%, transparent),
     0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 12%, transparent);
 
-  --handle-duration-fast: var(--duration-fast, 120ms);
-  --handle-duration-base: var(--duration-base, 180ms);
-  --handle-duration-deliberate: var(--duration-deliberate, 280ms);
+  /* Handle timing rides the interaction bands (tokens/core.css, color-motion
+     Patch 4) so chips stay the tactile baseline the other families tune to. */
+  --handle-duration-fast: var(--spw-time-control, var(--duration-fast, 120ms));
+  --handle-duration-base: var(--spw-time-surface, var(--duration-base, 180ms));
+  --handle-duration-deliberate: var(--spw-time-reveal, var(--duration-deliberate, 280ms));
 
-  --handle-ease: var(--ease-mechanical, ease);
+  --handle-ease: var(--spw-ease-control, var(--ease-mechanical, ease));
   --handle-settle-ease: var(--brace-settle-ease, cubic-bezier(0.22, 0, 0.15, 1));
 
   --handle-underline-thickness: 1.5px;
