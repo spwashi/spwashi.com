@@ -110,15 +110,17 @@ reading_order: .{
 @plan_spw_surface_normalization: ~"./spw-surface-normalization/index.spw"
 ^"css_layout_interaction"{
  label = "css layout interaction"
- count = 12
+ count = 14
  members = #[
   `card-grid-density-audit`,
   `chrome-navigation-wonder`,
   `compositional-css-electrostatics`,
+  `core-css-spend-cut`,
   `css-state-legibility`,
   `data-attribute-css-token-refinement`,
   `gesture-state-refinement`,
   `interaction-loop-contract`,
+  `landing-page-hierarchy-2026-08-21`,
   `landing-visual-hierarchy`,
   `navigation-header-disclosure`,
   `page-region-discoverability`,
@@ -131,6 +133,7 @@ reading_order: .{
 @plan_chrome_navigation_wonder: ~"./chrome-navigation-wonder/index.spw"
 @plan_component_box_model_responsive_audit: ~"./component-box-model-responsive-audit/index.spw"
 @plan_compositional_css_electrostatics: ~"./compositional-css-electrostatics/index.spw"
+@plan_core_css_spend_cut: ~"./core-css-spend-cut/index.spw"
 @plan_css_maintainability_refactor: ~"./archive/css-maintainability-refactor/index.spw"
 @plan_css_state_legibility: ~"./css-state-legibility/index.spw"
 @plan_data_attribute_css_token_refinement: ~"./data-attribute-css-token-refinement/index.spw"
@@ -241,7 +244,7 @@ reading_order: .{
 @plan_theme_palette_marketability: ~"./archive/theme-palette-marketability/index.spw"
 ^"active_backlog"{
  label = "active backlog"
- count = 73
+ count = 75
  members = #[
   `algorithm-scale-statistics-rpg-bridges`,
   `audience-onboarding-copy`,
@@ -270,6 +273,7 @@ reading_order: .{
   `lore-land-marketing`,
   `media-feature-brief`,
   `media-publishing`,
+  `microinteraction-motion-lifecycle`,
   `mindful-collection-controls`,
   `minimal-brace-disclosure`,
   `mobile-runtime-foundation`,
@@ -286,6 +290,7 @@ reading_order: .{
   `pure-math-routes`,
   `pwa-experience`,
   `reader-builder-entrances`,
+  `region-attenuation-coverage`,
   `return-visitor-surface-pass`,
   `rpg-asset-capture-frames`,
   `rpg-boonwap-fabric`,
@@ -511,12 +516,11 @@ reading_order: .{
 }[reg=facet]
 ^"since_2026_07_12"{
  label = "since 2026-07-12"
- count = 27
- note = `Live folders the 2026-07-12 root index never named. Not automatic backlog. Author index.spw on next touch; do not batch-generate. Open-first without index.spw: history-reflow, core-css-spend-cut, dimensional-expression-navigation.`
+ count = 23
+ note = `Live folders the 2026-07-12 root index never named. Not automatic backlog. Author index.spw on next touch; do not batch-generate. Open-first without index.spw: history-reflow, dimensional-expression-navigation. Graduated on touch once a hand-authored index declared a bucket: core-css-spend-cut + landing-page-hierarchy-2026-08-21 -> css_layout_interaction; microinteraction-motion-lifecycle + region-attenuation-coverage -> active_backlog. production-season-rhythm and visual-capture-ecology carry an index but no declared bucket yet.`
  members = #[
   `alignment-content-fit`,
   `canopy-material-depth`,
-  `core-css-spend-cut`,
   `creator-pathways`,
   `deploy-module-graph`,
   `design-experiment-template-migration`,
@@ -526,16 +530,13 @@ reading_order: .{
   `film-route-template-migration`,
   `folio-worktable`,
   `history-reflow`,
-  `landing-page-hierarchy-2026-08-21`,
   `layout-seat-squeeze`,
   `math-route-template-migration`,
-  `microinteraction-motion-lifecycle`,
   `operator-route-template-migration`,
   `page-frame-sizing`,
   `portable-experiment-template-migration`,
   `production-season-rhythm`,
   `public-entrance-runtime-payload`,
-  `region-attenuation-coverage`,
   `resume-record`,
   `semantic-classname-layers`,
   `template-dimensional-editorial-refinement`,
