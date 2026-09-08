@@ -9,7 +9,9 @@ import {
   formatHarnessStatus,
   formatPreToolUseDeny,
   isGitStash,
+  isInsideRepo,
   wantsStatus,
+  writeTargetOf,
 } from '../harness-write-gate.mjs';
 
 test('patch role may write', () => {
@@ -38,6 +40,32 @@ test('Claude plan permission mode does not write', () => {
   );
   assert.equal(decision.allow, false);
   assert.equal(decision.reason, WRITE_DENY_REASON);
+});
+
+test('the deny covers this tree, not the host plan file outside it', () => {
+  assert.equal(isInsideRepo('AGENTS.md'), true);
+  assert.equal(isInsideRepo('public/css/style.css'), true);
+  assert.equal(isInsideRepo(''), true, 'unknown target stays denied');
+  assert.equal(isInsideRepo('/Users/someone/.claude/plans/a-plan.md'), false);
+  assert.equal(isInsideRepo('../elsewhere/notes.md'), false);
+  assert.equal(writeTargetOf({ tool_input: { file_path: 'AGENTS.md' } }), 'AGENTS.md');
+
+  const inTree = decideHarnessWrite(
+    { tool_name: 'Write', tool_input: { file_path: 'AGENTS.md' }, permission_mode: 'plan' },
+    { SPW_HARNESS_ROLE: 'patch' },
+  );
+  assert.equal(inTree.allow, false);
+  assert.equal(inTree.reason, WRITE_DENY_REASON);
+
+  const planFile = decideHarnessWrite(
+    {
+      tool_name: 'Write',
+      tool_input: { file_path: '/Users/someone/.claude/plans/a-plan.md' },
+      permission_mode: 'plan',
+    },
+    { SPW_HARNESS_ROLE: 'patch' },
+  );
+  assert.equal(planFile.allow, true);
 });
 
 test('git stash is always denied', () => {

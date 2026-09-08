@@ -7,7 +7,9 @@
  */
 
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+
+export const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 export const WRITE_DENY_REASON = 'Explore/plan do not write.';
 export const WRITE_DENY_HINT = 'Switch to patch: SPW_HARNESS_ROLE=patch, or leave plan mode.';
@@ -45,6 +47,23 @@ export function isWriteTool(name) {
   return /^(Write|Edit|MultiEdit|NotebookEdit|StrReplace)$/i.test(String(name || ''));
 }
 
+export function writeTargetOf(event) {
+  const input = event?.tool_input || event?.toolInput || {};
+  return String(input.file_path || input.filePath || input.path || '').trim();
+}
+
+/**
+ * The deny protects this tree. A target outside the repo — the host's own plan
+ * file under ~/.claude/plans, say — is not a tree mutation, and denying it makes
+ * plan mode unable to record the plan it is asking the human to approve.
+ * An unknown target stays denied: strict is the safe default.
+ */
+export function isInsideRepo(target, root = REPO_ROOT) {
+  if (!target) return true;
+  const rel = path.relative(root, path.resolve(root, target));
+  return rel === '' || (!rel.startsWith(`..${path.sep}`) && rel !== '..' && !path.isAbsolute(rel));
+}
+
 export function decideHarnessWrite(event = {}, env = process.env) {
   const role = readHarnessRole(env);
   const mode = permissionModeOf(event, env);
@@ -56,7 +75,7 @@ export function decideHarnessWrite(event = {}, env = process.env) {
   }
 
   const planning = isWriteDeniedRole(role) || mode === 'plan';
-  if (planning && isWriteTool(tool)) {
+  if (planning && isWriteTool(tool) && isInsideRepo(writeTargetOf(event))) {
     return { allow: false, reason: WRITE_DENY_REASON };
   }
 
