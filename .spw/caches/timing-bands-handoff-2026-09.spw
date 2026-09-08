@@ -1,8 +1,8 @@
 # Interaction Timing Bands — Landed Alias Layer + Consumer Handoff (2026-09)
 #
 # operation: prime
-# Fable landed color-motion Patch 4's alias layer plus two consumer families.
-# This prime names what is done, what is next, and which model leans where.
+# Fable landed Patch 4 (bands + chips/SVG). Grok landed Patch 5 (phase
+# menus + settings forms). This prime names what is done and what is next.
 # Not a new timing language. Not a new data-spw-* family.
 
 #>timing_bands_handoff_2026_09
@@ -15,23 +15,25 @@
 @tokens: ~"../../public/css/tokens/core.css"
 @handle_tokens: ~"../../public/css/handles/operators/tokens.css"
 @svg_surfaces: ~"../../public/css/systems/svg-surfaces.css"
+@phase_controls: ~"../../public/css/handles/phase-controls.css"
+@settings_forms: ~"../../public/css/routes/surfaces/settings-forms.css"
 @css_instruction: ~"../conventions/css-instruction.spw"
 @attention_field: ~"../conventions/attention-field.spw"
 
 operation = "prime"
 fixity = "provisional"
-source = "session 2026-09-08: Fable landed Patch 4 bands; other models continue Patches 5-7"
+source = "session 2026-09-08: Fable Patch 4; Grok Patch 5 55ef2737; remaining Patches 6-7"
 
 ^"landed"{
   bands = `--spw-time-ack|control|surface|reveal|ambient|ritual and --spw-ease-ack|control|surface|reveal|ambient live in tokens/core.css as aliases over --duration-* / --ease-* primitives. Reduced motion collapses the primitives, so band consumers inherit reduction for free.`
-  consumers = `Operator-handle local tokens (--handle-duration-*, --handle-ease) and svg-surfaces.css transitions now ride the bands. Keyframe durations were left untouched per the plan rule.`
+  consumers = `Operator-handle local tokens, svg-surfaces.css, phase-controls.css, and settings-forms.css now ride the bands. controls.css had no --duration-* / --ease-* primitives (hydration keyframes stay concrete).`
 }[reg=facet]
 
 ^"next"{
-  patch_5 = `Controls and handles: components/controls.css, handles/phase-controls.css, routes/surfaces/settings-forms.css — ack for hover/focus color, control for state change.`
   patch_6 = `Cards and surfaces: effects/material.css, components/cards.css — surface band for background/border/shadow, control for small transforms.`
   patch_7 = `Wonder, resonance, ornament: effects/wonder.css, ornament/ornament.css — ambient and ritual bands; do not speed these up to control tempo.`
-  rule = `Migrate one family per patch. Alias, do not rename primitives. Rebuild bundles (npm run build:css) in the same commit.`
+  leftover = `sigils-and-chips.css .spw-expression-badge still uses --duration-fast; alias it with chips, not with cards.`
+  rule = `Migrate one family per patch. Alias, do not rename primitives. Rebuild bundles (npm run build:css:touched) in the same commit.`
 }[reg=facet]
 
 ^"model_leans"{
