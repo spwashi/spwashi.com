@@ -1,0 +1,96 @@
+# Owner Registry
+#
+# Machine- and human-readable concept → owner map (architecture-ecology wave B).
+# One row per durable concept stem: who sequences it, which contract holds it,
+# how to probe it, and what would disprove the ownership claim.
+# Route here before adding plan refs to site.spw or new convention prose.
+
+#>owner_registry
+#:registry #!owners #!contracts #!ecology
+#:operation #!contract
+#:fixity #!tending
+#:layer #!editor_inspectability
+
+@architecture_ecology: ~"./spw-architecture-ecology.spw"
+@operational_semantics: ~"./operational-semantics.spw"
+@conventions_index: ~"./index.spw"
+@plans_root: ~"../../.agents/plans/index.spw"
+@semantic_capacity: ~"./semantic-capacity.spw"
+@site: ~"../site.spw"
+
+operation = "contract"
+fixity = "tending"
+
+^"thesis"{
+ claim: "Every durable concept has exactly one sequencing owner plan and one contract surface. An agent resolves ownership by reading one registry row, not by reconstructing authority from file names or 200 plan folders."
+ seed_sources: #[@operational_semantics, `ecology coordinators`, `plans/index.spw semantic_rails`][reg=set]
+ row_rule: `owner_plan = "none" is honest when a convention owns the concept without live sequencing work. Never two owner plans for one stem.`
+ update_rule: `Add a row on contract promotion; flip status to superseded (never delete) when an owner is replaced; name the replacement.`
+}
+
+^"entries"{
+ copy_units: .{ concept = "copy-units" ; owner_plan = "semantic-copy-depth" ; owner_convention = ~"./copy-accessor.spw" ; probe_ref = `npm run audit:copy:accessor` ; falsification = `A fourth copy-accessor family appears, or dotted data-spw-copy-unit ids stop resolving to Spw handles.` ; status = "active" }[reg=facet]
+ copy_flow: .{ concept = "page-copy-flow" ; owner_plan = "none" ; owner_convention = ~"./copy-flow.spw" ; probe_ref = `npm run audit:copy` ; falsification = `Route copy lands without pretext measure and the accessor census cannot cluster it.` ; status = "active" }[reg=facet]
+ page_regions: .{ concept = "page-regions" ; owner_plan = "page-region-discoverability" ; owner_convention = ~"./region-component-ecology.spw" ; owner_slice = "page-region-discoverability" ; probe_ref = `rg 'region-component-ecology' .spw .agents/plans` ; falsification = `A new region vocabulary forks from page-model without a coordinator note.` ; status = "active" }[reg=facet]
+ language_grammar: .{ concept = "spw-language-grammar" ; owner_plan = "spw-metaphysical-language" ; owner_convention = ~"./language-ecology.spw" ; probe_ref = `npm run ecology:language` ; falsification = `Glyph or operator disputes resolve by ad hoc rename instead of the drift ledger path.` ; status = "active" }[reg=facet]
+ language_features: .{ concept = "spw-language-features" ; owner_plan = "spw-metaphysical-language" ; owner_convention = ~"../language/feature-utilization.spw" ; probe_ref = `npm run ecology:language` ; falsification = `Language-operator census is quoted from caches/spw-language-utilization-2026-07.spw, or runtime pack token "operators" is conflated with the Spw alphabet.` ; status = "active" }[reg=facet]
+ attribute_governance: .{ concept = "data-spw-attributes" ; owner_plan = "language-reclustering" ; owner_convention = ~"./data-spw-attribute-governance.spw" ; probe_ref = `rg 'data-spw-' public --type html | head` ; falsification = `A new data-spw-* family ships without a governance registration (check dataset.spw* writers too).` ; status = "active" }[reg=facet]
+ interaction_states: .{ concept = "interaction-feedback-states" ; owner_plan = "interaction-loop-contract" ; owner_convention = ~"./interaction-microstates.spw" ; probe_ref = `rg 'interaction-ecology|interaction-loop-contract' .spw .agents/plans` ; falsification = `New modules invent parallel interaction-phase attrs without registration.` ; status = "active" }[reg=facet]
+ capture_literacy: .{ concept = "capture-literacy" ; owner_plan = "spellcraft-authoring" ; owner_convention = ~"./capture-ecology.spw" ; probe_ref = `rg 'capture-ecology|screenshot_literacy' .spw .agents/plans` ; falsification = `New public copy defaults to the proof-card noun for screenshot-discussable surfaces.` ; status = "active" }[reg=facet]
+ agent_harness: .{ concept = "agent-harness" ; owner_plan = "agent-optimization" ; owner_convention = ~"./agent-ecology.spw#harness" ; probe_ref = `npm run check:agents` ; falsification = `Explore/plan roles write, or an always-on file exceeds its word budget while the check stays green.` ; status = "active" }[reg=facet]
+ plan_lifecycle: .{ concept = "plan-lifecycle" ; owner_plan = "plan-wip-index-conventions" ; owner_convention = ~"./planning-ecology.spw" ; probe_ref = `npm run plans:index:check` ; falsification = `A merge or completed_reference slug regains active_backlog, or generated indexes overwrite reviewed dispositions.` ; status = "active" }[reg=facet]
+ operator_projection: .{ concept = "operator-projection" ; owner_plan = "none" ; owner_convention = ~"./operator-site-projection.spw" ; probe_ref = `rg 'operator-probe-001|operator-action-001' .spw` ; falsification = `A public chip carries a sigil whose site role is undeclared in the projection contract.` ; status = "active" }[reg=facet]
+ attention_field: .{ concept = "attention-field" ; owner_plan = "none" ; owner_convention = ~"./attention-field.spw" ; probe_ref = `npm run visual:checks -- --ids=<fixture>` ; falsification = `Ink or light spend ignores attention state, or --spw-attention-opacity is spent from a :root calc of --charge / --spw-resonance.` ; status = "active" }[reg=facet]
+ wonder: .{ concept = "wonder-architecture" ; owner_plan = "none" ; owner_convention = ~"./wonder-architecture.spw" ; probe_ref = `npm run wonder` ; falsification = `A seventh wonder type or data-spw-wonder-type attribute appears.` ; status = "active" }[reg=facet]
+ wonder_vocabulary: .{ concept = "wonder-vocabulary" ; owner_plan = "none" ; owner_convention = ~"./wonder-vocabulary.spw" ; probe_ref = `rg 'wonder-vocabulary-field-001' .spw` ; falsification = `Wonder copy tokens become a second type list or custom events instead of field-biasing words.` ; status = "active" }[reg=facet]
+ semantic_braces: .{ concept = "semantic-braces" ; owner_plan = "none" ; owner_convention = ~"./semantic-braces.spw" ; probe_ref = `rg 'semantic-braces-queryable-001' .spw` ; falsification = `Brace markup ships without data-spw-form="brace" queryability.` ; status = "active" }[reg=facet]
+ ornament: .{ concept = "ornament" ; owner_plan = "none" ; owner_convention = ~"./ornament-contract.spw" ; probe_ref = `rg 'ornament-measures-001' .spw` ; falsification = `!important appears outside the ornament layer, or ornament stops projecting field state.` ; status = "active" }[reg=facet]
+ query_disposition: .{ concept = "query-disposition" ; owner_plan = "none" ; owner_convention = ~"./query-disposition.spw" ; probe_ref = `rg 'query-disposition-measures-001' .spw` ; falsification = `Query params configure measurement contexts that cannot be reproduced from the URL.` ; status = "active" }[reg=facet]
+ measurement: .{ concept = "measurement" ; owner_plan = "none" ; owner_convention = ~"./measurement-contract.spw" ; probe_ref = `rg 'measurement-contract' .spw` ; falsification = `A subjective measure is reported as objective, or capture paths go undeclared.` ; status = "active" }[reg=facet]
+ semantic_operations: .{ concept = "semantic-operations" ; owner_plan = "model-guided-refinement" ; owner_convention = ~"./semantic-capacity.spw" ; probe_ref = `rg 'operation = ' .spw/conventions | head` ; falsification = `.spw meaning lands without a named cache|audit|align|prime|contract|archive operation.` ; status = "active" }[reg=facet]
+ focus_dimensions: .{ concept = "focus-dimensions" ; owner_plan = "model-guided-refinement" ; owner_convention = ~"./model-guided-refinement.spw" ; probe_ref = `rg 'fixity tier|semantic fixity' .spw .agents/plans` ; falsification = `Cross-language refinement work proceeds without declared fixity tiers or focus dimensions.` ; status = "active" }[reg=facet]
+ daily_kernel: .{ concept = "daily-kernel" ; owner_plan = "daily-kernel-development" ; owner_convention = ~"./daily-kernel.spw" ; probe_ref = `rg 'daily-kernel' .spw .agents/plans` ; falsification = `A cross-discipline kernel omits one of its nine required fields.` ; status = "active" }[reg=facet]
+ experience_slices: .{ concept = "experience-slices" ; owner_plan = "modular-experience-slices" ; owner_convention = ~"../slices/index.spw" ; probe_ref = `rg 'slice' .spw/slices` ; falsification = `A slice claims route+CSS+JS ownership without a validation path or practice-bed note.` ; status = "active" }[reg=facet]
+ discovery_powerups: .{ concept = "discovery-powerups" ; owner_plan = "discovery-powerups" ; owner_convention = ~"./discovery-powerups.spw" ; probe_ref = `rg 'discovery-powerups' .spw .agents/plans` ; falsification = `Deep-link discovery affordances ship outside the powerup vocabulary.` ; status = "active" }[reg=facet]
+ spw_meta_architecture: .{ concept = "spw-meta-architecture" ; owner_plan = "spw-architecture-ecology" ; owner_convention = ~"./spw-architecture-ecology.spw" ; probe_ref = `rg 'ecology_coordinators|owner-registry' .spw` ; falsification = `site.spw regrows plan-level @ refs without coordinator routing, or a second registry forks this one.` ; status = "active" }[reg=facet]
+ module_exports: .{ concept = "module-exports" ; owner_plan = "module-export-uniformity" ; owner_convention = ~"./module-export-contract.spw" ; probe_ref = `npm run check:runtime` ; falsification = `Runtime modules ship export shapes the contract does not name.` ; status = "active" }[reg=facet]
+ catalog_selectors: .{ concept = "catalog-selector-nouns" ; owner_plan = "none" ; owner_convention = ~"./module-load-contract.spw" ; probe_ref = `npm run audit:module-selectors` ; falsification = `MODULE_DEFS.selector cites a class noun absent from public HTML (silent non-mount, see .site-frame → .spw-frame incident).` ; status = "active" }[reg=facet]
+ css_layers: .{ concept = "css-cascade-layers" ; owner_plan = "css-architecture-readability" ; owner_convention = ~"./css-instruction.spw" ; probe_ref = `npm run check:local` ; falsification = `style.css layer order changes, or delivery is conflated with cascade priority.` ; status = "active" }[reg=facet]
+ feature_packs: .{ concept = "runtime-feature-packs" ; owner_plan = "none" ; owner_convention = ~"./feature-utilization.spw" ; probe_ref = `npm run ecology` ; falsification = `body[data-spw-features] is treated as Spw language, or MODULE_DEFS timing is edited from caches/feature-wiring-timing-2026-07.spw instead of the live contract.` ; status = "active" }[reg=facet]
+ recursive_improvement: .{ concept = "recursive-improvement" ; owner_plan = "none" ; owner_convention = ~"./recursive-improvement.spw" ; probe_ref = `npm run ecology` ; falsification = `A thoroughness loop is invented beside recursive-improvement.spw, or the July cache is treated as the live loop.` ; status = "active" }[reg=facet]
+ commit_grammar: .{ concept = "commit-grammar" ; owner_plan = "history-reflow" ; owner_convention = ~"../../.agents/plans/history-reflow/PLAN.md" ; probe_ref = `git log -1 --format=%B` ; falsification = `A commit lands without a closing #[episode]{} — no local check catches this.` ; status = "active" }[reg=facet]
+ settings_writes: .{ concept = "root-dataset-settings" ; owner_plan = "none" ; owner_convention = ~"../surfaces/page-model.spw" ; probe_ref = `rg 'setDatasetEntries' public/js` ; falsification = `Canonical settings writes bypass site-settings-engine.js via ad hoc localStorage.` ; status = "active" }[reg=facet]
+}
+
+^"owner_claim"{
+ claim_id = "convention-owner_registry-001"
+ layer = "pragmatic"
+ hypothesis = `A single registry row answers "who owns this concept?" faster and more truthfully than scanning plan folders; superseded rows preserve lineage instead of deleting it.`
+ spec_ref = ~"./spw-architecture-ecology.spw#owner_registry"
+ impl_ref = ~"./owner-registry.spw"
+ probe_ref = `rg 'status = "active"' .spw/conventions/owner-registry.spw | wc -l`
+ falsification = `Two rows claim the same stem with different owner plans, owner_convention stays a quoted prose string, or agents keep reconstructing ownership from folder names after this file exists.`
+ status = "active"
+}[reg=facet]
+
+invariants: #[
+ `One stem, one owner plan (or an honest "none"), one contract surface.`,
+ `Rows are superseded, never deleted; replacements are named.`,
+ `Every row carries probe_ref and falsification — unfalsifiable ownership is not ownership.`,
+ `This registry precipitates into .agents/state/plans-index.json owner_map (wave C), not the reverse.`
+][reg=set]
+
+validation: #[
+ `test -f .spw/conventions/owner-registry.spw`
+ `rg -c 'falsification' .spw/conventions/owner-registry.spw`
+ `npm run plans:index:check`
+][reg=set]
+
+dispatch: .{
+ architecture = @architecture_ecology
+ operational = @operational_semantics
+ conventions = @conventions_index
+ plans_root = @plans_root
+ capacity = @semantic_capacity
+ site = @site
+}[reg=facet]

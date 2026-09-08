@@ -77,7 +77,7 @@
 @surfaces_menu_field: ~"./surfaces/menu-field.spw"
 @component_inventory: ~"./surfaces/component-inventory.spw"
 @caches: ~"./caches/index.spw"
-@feature_wiring_cache: ~"./caches/feature-wiring-timing-2026-07.spw"
+@feature_wiring_cache: ~"./caches/feature-wiring-timing-2026-07.spw"  # cold 2026-09-08; successor: conventions/feature-utilization.spw
 @component_capture_pipeline: ~"./conventions/component-capture-pipeline.spw"
 @agents: ~"../.agents/README.md"
 @plans: ~"../.agents/plans/README.md"
@@ -180,14 +180,20 @@
 @component_packing: ~"./conventions/component-packing.spw"
 @spatial_gravity: ~"./conventions/spatial-gravity.spw"
 @region_component_ecology: ~"./conventions/region-component-ecology.spw"
+@copy_ecology: ~"./conventions/copy-ecology.spw"
+@language_ecology: ~"./conventions/language-ecology.spw"
+@interaction_ecology: ~"./conventions/interaction-ecology.spw"
+@capture_ecology: ~"./conventions/capture-ecology.spw"
 @projection_attenuation: ~"./conventions/projection-attenuation.spw"
 @expression_card: ~"./conventions/expression-card.spw"
 
 @operational_semantics: ~"./conventions/operational-semantics.spw"
+@owner_registry: ~"./conventions/owner-registry.spw"
 @measurement_contract: ~"./conventions/measurement-contract.spw"
 
 operational_layer: .{
   registry = @operational_semantics
+  owners = @owner_registry
   measurement = @measurement_contract
   note = "Central surfaces for the site's operational contracts — the primary place agents and editors should look when asking how concepts are made queryable, claim-bearing, and safely extensible."
 }[reg=facet]
@@ -220,6 +226,7 @@ frame_patterns: #[
 ][reg=set]
 
 translations: .{
+ ecologies = #[@copy_ecology, @region_component_ecology, @language_ecology, @interaction_ecology, @capture_ecology, @agent_ecology, @planning_ecology][reg=set]  # coordinator hub first; leaf resolution goes conventions/index.spw → coordinator → owner plan
  software_surface = #[@literate_ui, @symmetry_ui, @ocean_ux][reg=set]
  pretext_surface = #[@surface_registry, @selection, @pretext_whimsy_plan, @pretext_whimsy_model][reg=set]
  labels_and_tokens = #[@naming, @selection][reg=set]
@@ -229,7 +236,7 @@ translations: .{
  timing_and_data = #[@timing_data_localization, @copy_localization, @site_semantics][reg=set]
  style_development = #[@css_instruction, @style_development, @composable_art, @site_semantics][reg=set]
  philosophy = #[@philosophy][reg=set]
- relational_design = #[@spw_architecture_ecology, @graph, @semantic_capacity][reg=set]
+ relational_design = #[@spw_architecture_ecology, @owner_registry, @graph, @semantic_capacity][reg=set]
  reviews = #[@reviews, @site_semantics][reg=set]
  planning_tracks = #[@interaction_loop_contract, @gesture_state_refinement, @navigation_header_disclosure, @floating_chrome_stack, @semantic_copy_depth, @component_region_personality_plan, @spw_architecture_ecology_plan, @modular_experience_slices][reg=set]
  interaction_model = #[@page_model, @attention_field, @ornament_contract, @wonder_architecture, @site_semantics][reg=set]
@@ -354,6 +361,7 @@ dispatch: .{
  intergenerational_literacy = @intergenerational_literacy
  component_region_personality = @component_region_personality
  spw_architecture_ecology = @spw_architecture_ecology
+ owner_registry = @owner_registry
  modular_experience_slices = @modular_experience_slices
  slices = @slices
  scenes = @scenes

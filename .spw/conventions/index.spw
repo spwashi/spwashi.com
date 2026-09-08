@@ -30,12 +30,16 @@
 @planning_ecology: ~"./planning-ecology.spw"
 @skill_invocation: ~"./skill-invocation.spw"  # operation is the lens; focuses are emphases; #roles write-deny; #shunt is the word-budget block
 @agent_ecology: ~"./agent-ecology.spw"  # #harness roles + sensors + host write-deny; no ASTRA.md
+@language_ecology: ~"./language-ecology.spw"  # dispatch: v04 grammar, reclustering, homonym renames, attribute governance
+@interaction_ecology: ~"./interaction-ecology.spw"  # dispatch: interaction feedback, gestures, chrome disclosure, floating islands
+@capture_ecology: ~"./capture-ecology.spw"  # dispatch: screenshot literacy, spell authoring, media seeds
 @wip_notebook: ~"./wip-notebook.spw"
 @plan_index: ~"./plan-index.spw"
 @plans_root: ~"../../.agents/plans/index.spw"
 @surfaces_index: ~"../surfaces/index.spw"
 @operator_site_projection: ~"./operator-site-projection.spw"
 @operational_semantics: ~"./operational-semantics.spw"
+@owner_registry: ~"./owner-registry.spw"  # concept → owner map; one row per stem with probe_ref + falsification
 @measurement_contract: ~"./measurement-contract.spw"
 @page_copy_audit: ~"./page-copy-audit.spw"
 @copy_flow: ~"./copy-flow.spw"
@@ -153,7 +157,20 @@
 @feature_utilization: ~"./feature-utilization.spw"
 @recursive_improvement: ~"./recursive-improvement.spw"
 @audits_index: ~"../audits/index.spw"
-@caches_recursive: ~"../caches/recursive-improvement-2026-07.spw"
+@caches_recursive: ~"../caches/recursive-improvement-2026-07.spw"  # cold 2026-09-08; successor: ./recursive-improvement.spw
+
+ecologies: .{
+ note = `Coordinator dispatch per spw-architecture-ecology.spw#ecology_coordinators: route cross-plan work through one coordinator before adding leaf refs here or to site.spw.`
+ copy = @copy_ecology
+ region_component = @region_component_ecology
+ language = @language_ecology
+ interaction = @interaction_ecology
+ capture = @capture_ecology
+ agent = @agent_ecology
+ planning = @planning_ecology
+ architecture = @spw_architecture_ecology
+ owners = @owner_registry
+}[reg=facet]
 
 dispatch: .{
  semantics = @site_semantics
@@ -169,6 +186,7 @@ dispatch: .{
  operator_alignment = @operator_alignment
  operator_site_projection = @operator_site_projection
  operational_semantics = @operational_semantics
+ owner_registry = @owner_registry
  measurement = @measurement_contract
  page_copy_audit = @page_copy_audit
  copy_flow = @copy_flow
@@ -178,6 +196,9 @@ dispatch: .{
  query_disposition = @query_disposition
  planning_ecology = @planning_ecology
  agent_ecology = @agent_ecology
+ language_ecology = @language_ecology
+ interaction_ecology = @interaction_ecology
+ capture_ecology = @capture_ecology
  skill_invocation = @skill_invocation
  wip_notebook = @wip_notebook
  plan_index = @plan_index
@@ -272,7 +293,6 @@ dispatch: .{
  plan_ecology_semantics_audit = @plan_ecology_semantics_audit
  plan_spw_tree_2026_09 = @plan_spw_tree_2026_09
  agentic_development_audit = @agentic_development_audit
- feature_partial_theatrics = @feature_partial_theatrics
 }[reg=facet]
 
 invariants: #[

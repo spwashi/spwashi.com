@@ -87,16 +87,16 @@ audit_run: .{
 
 ^"architecture_gap"{
   wave_a_coordinators = `copy, region-component, language, interaction, capture, agent ecology files exist; convention still said planned`
+  landed_2026_09_08 = `owner-registry.spw (wave B, live ~ edges); conventions/index.spw#ecologies; site.spw translations.ecologies; planning-ecology.spw#ecologies; three July caches marked cold`
   missing = #[
-    `owner-registry.spw`
     `construct-codex.spw`
     `surfaces/component-templates.spw`
     `scripts/validate-conventions.mjs`
-    `.agents/state/plans-index.json`
+    `.agents/state/plans-index.json owner_map (wave C)`
     `.agents/state/skills-index.json`
   ][reg=set]
-  site_spw = `172 @refs; hub_rule wants translation hubs, not a junk drawer`
-  do_not = `Do not invent owner-registry in this audit patch. Do not slim site.spw here.`
+  site_spw = `translations.ecologies hub is present; Wave H still owns pruning the remaining plan-level @ refs`
+  do_not = `Do not invent a second owner-registry. Do not slim site.spw in this audit patch.`
 }
 
 ^"open_first_unindexed"{
@@ -137,22 +137,21 @@ audit_run: .{
 
 ^"wave_a_wiring"{
   files = `six ecology coordinators exist`
-  missing_hub = `conventions/index.spw has no ecologies facet; language-ecology, capture-ecology, and interaction-ecology are unlisted there and on site.spw`
-  july_caches_to_cold = #[
-    `caches/feature-wiring-timing-2026-07.spw`
-    `caches/recursive-improvement-2026-07.spw`
-    `caches/spw-language-utilization-2026-07.spw`
+  hubs_2026_09_08 = `conventions/index.spw#ecologies, site.spw translations.ecologies, planning-ecology.spw#ecologies dispatch the six coordinators plus architecture/owners`
+  july_caches_cold = #[
+    `caches/feature-wiring-timing-2026-07.spw → conventions/feature-utilization.spw`
+    `caches/recursive-improvement-2026-07.spw → conventions/recursive-improvement.spw`
+    `caches/spw-language-utilization-2026-07.spw → language/feature-utilization.spw`
   ][reg=set]
 }
 
 ^"next_slices"{
   done_here = `audit + root-index bucket truth; 2026-09-07 archive of seven citation-safe folders`
+  landed_2026_09_08 = `owner-registry wave B; ecology hubs; July caches cold`
   later = #[
     `archive: remaining citation-bound merge folders only after sibling ~ paths are retargeted`
-    `align: conventions/index.spw ecologies facet + wire the three unlisted coordinators`
     `align: add operation/fixity to owner conventions on touch, not as a batch rewrite`
-    `archive: cold-mark the three 2026-07 caches`
-    `contract: owner-registry.spw (architecture-ecology wave B) before slimming site.spw`
+    `prime: wave C plans-index.json owner_map from owner-registry (do not hand-author the json)`
     `audit: stale public/js/spw-*.js plan paths on next touch of those plans`
   ][reg=set]
   never = #[

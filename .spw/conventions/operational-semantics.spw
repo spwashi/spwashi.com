@@ -18,6 +18,7 @@
 @ornament_contract: ~"./ornament-contract.spw"
 @query_disposition: ~"./query-disposition.spw"
 @measurement_contract: ~"./measurement-contract.spw"
+@owner_registry: ~"./owner-registry.spw"
 
 ^"active_contracts"{
   note: "All files/sections that currently carry formalized operational_semantics."
@@ -71,11 +72,12 @@
 }
 
 ^"registry_rules"{
-  addition: "When a new area receives a full operational_semantics treatment, add an entry here with file reference and key claims."
-  maintenance: "This registry should be the first place an agent or editor looks when asking 'what are the current enforceable operational contracts on this site?'"
+  addition: "When a new area receives a full operational_semantics treatment, add an entry here with file reference and key claims, and a matching owner-registry row."
+  maintenance: "This registry answers which contracts are operational. conventions/owner-registry.spw answers who sequences them. Do not reconstruct ownership from folder names."
 }
 
 dispatch: .{
   template = @planning_ecology#operational_semantics_template
   contracts = @active_contracts
+  owners = @owner_registry
 }[reg=facet]

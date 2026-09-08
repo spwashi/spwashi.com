@@ -25,6 +25,7 @@
 @language_reclustering: ~"../../.agents/plans/language-reclustering/PLAN.md"
 @component_region_personality: ~"./component-region-personality.spw"
 @operational_semantics: ~"./operational-semantics.spw"
+@owner_registry: ~"./owner-registry.spw"
 @precipitates_projections: ~"./precipitates-and-projections.spw"
 @wip_notebook: ~"./wip-notebook.spw"
 @site: ~"../site.spw"
@@ -159,7 +160,7 @@ fixity = "tending"
 
 ^"ecology_coordinators"{
  definition: "Thin convention dispatch files that route cross-plan work without new PLAN sprawl."
- status: "landed — six coordinator files exist; owner-registry, construct-codex, and site.spw hub slimness do not"
+ status: "landed — six coordinator files exist; conventions/index.spw ecologies facet and site.spw translations.ecologies dispatch them (2026-09-08); construct-codex and site.spw ref pruning remain"
  coordinators: .{
   copy_ecology: .{
     path = "~\"./copy-ecology.spw\""
@@ -207,7 +208,7 @@ fixity = "tending"
 
 ^"owner_registry"{
  definition: "Machine- and human-readable concept → owner map."
- path: "~\"./owner-registry.spw\" (planned wave B)"
+ path: "~\"./owner-registry.spw\" (landed 2026-09-08 — 31 rows; owner_convention is a live ~ edge, not a quoted path string)"
  entry_shape: .{
   concept = "stable stem, e.g. copy-depth, perspective-pair, cauldron-phase"
   owner_plan = "single sequencing owner"
@@ -359,11 +360,13 @@ fixity = "tending"
  wave_a_coordinators: .{
   name = "Ecology coordinator shells"
   deliver = #[`copy-ecology.spw`, `region-component-ecology.spw`, `language-ecology.spw`, `interaction-ecology.spw`, `capture-ecology.spw`, `agent-ecology.spw`][reg=set]
-  wire = #[`conventions/index.spw`, `planning-ecology.spw`][reg=set]
+  wire = #[`conventions/index.spw#ecologies`, `site.spw translations.ecologies`, `planning-ecology.spw#ecologies`][reg=set]
+  status = "landed 2026-09-08"
  }[reg=facet]
  wave_b_owner_registry: .{
   name = "Owner registry"
   deliver = `owner-registry.spw seeded from operational-semantics + coordinators`
+  status = "landed 2026-09-08 — live ~ owner_convention edges; cold-cache successors named"
  }[reg=facet]
  wave_c_precipitates: .{
   name = "Agent/editor indexes"
@@ -438,6 +441,7 @@ fixity = "tending"
 dispatch: .{
  plan = @plan
  planning = @planning_ecology
+ owners = @owner_registry
  semantic_capacity = @semantic_capacity
  relational_design = @relational_design
  site = @site

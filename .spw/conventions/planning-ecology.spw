@@ -49,6 +49,12 @@
 @spw_architecture_ecology: ~"./spw-architecture-ecology.spw"
 @spw_architecture_ecology_plan: ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
 @agent_ecology: ~"./agent-ecology.spw"
+@copy_ecology: ~"./copy-ecology.spw"
+@region_component_ecology: ~"./region-component-ecology.spw"
+@language_ecology: ~"./language-ecology.spw"
+@interaction_ecology: ~"./interaction-ecology.spw"
+@capture_ecology: ~"./capture-ecology.spw"
+@owner_registry: ~"./owner-registry.spw"
 @plan_ecology_semantics_audit: ~"../audits/plan-ecology-semantics-2026-07.spw"
 @plan_spw_tree_2026_09: ~"../audits/plan-spw-tree-2026-09.spw"
 @commit_history_deep: ~"../audits/commit-history-deep-2026-07/index.spw"
@@ -57,6 +63,18 @@
 @vocabulary_metaphor_synthesis: ~"../audits/vocabulary-metaphor-growth-synthesis-2026-07.spw"
 @metaphor_primitive_research: ~"../audits/metaphor-primitive-research-branching-2026-07.spw"
 @plan_maintenance_sweep_2026_07_12: ~"../../.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md"
+
+ecologies: .{
+ note = `Coordinator routing per spw-architecture-ecology.spw#ecology_coordinators. Sequencing stays on owner plans; do not add satellite PLAN.md paths here.`
+ copy = @copy_ecology
+ region_component = @region_component_ecology
+ language = @language_ecology
+ interaction = @interaction_ecology
+ capture = @capture_ecology
+ agent = @agent_ecology
+ architecture = @spw_architecture_ecology
+ owners = @owner_registry
+}[reg=facet]
 
 dispatch: .{
  agents = @agents

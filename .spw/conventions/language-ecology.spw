@@ -20,6 +20,7 @@
 @v04_plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
 @shell_vocab_plan: ~"../../.agents/plans/shell-model-vocabulary-consolidation/PLAN.md"
 @language_census: ~"../audits/language-census.spw"
+@language_features: ~"../language/feature-utilization.spw"
 
 operation = "align"
 fixity = "tending"
@@ -31,7 +32,7 @@ fixity = "tending"
  rename_execution: "homonym-renaming"
  supreme_court: "construct-codex.spw + drift_ledger (wave D)"
  satellite_plans: #[`shell-model-vocabulary-consolidation`][reg=set]
- conventions: #[`data-spw-attribute-governance`, `naming-and-structured-values`, `operator-semantics`][reg=set]
+ conventions: #[`data-spw-attribute-governance`, `naming-and-structured-values`, `operator-semantics`, `../language/feature-utilization.spw`][reg=set]
  conflict_rule: "construct-codex drift ledger arbitrates glyph disputes; reclustering assigns clusters; homonym-renaming executes word moves — never all three at once on the same stem."
  event_grammar: "bus-local domain:verb vs broadcast spw:domain-verb — boundary declared here."
  bucket_note: "Promote language plans to semantic_rails in plans/index.spw (wave D)."
@@ -53,5 +54,6 @@ dispatch: .{
  governance = @attribute_governance
  naming = @naming_structured_values
  operators = @operator_semantics
+ features = @language_features
  census = @language_census
 }[reg=facet]
