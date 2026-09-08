@@ -43227,9 +43227,9 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     line-height: 1.2;
     list-style: none;
     transition:
-        background var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-        border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-        box-shadow var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+        background var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
+        border-color var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
+        box-shadow var(--spw-time-control, 140ms) var(--spw-ease-control, ease);
 }
 
 :where(.phase-menu-trigger::-webkit-details-marker) {
@@ -43240,7 +43240,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     content: '#:layer · ';
     color: var(--ink-soft, rgba(14, 18, 20, 0.68));
     letter-spacing: 0.02em;
-    transition: color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+    transition: color var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease);
 }
 
 :where(.phase-menu-trigger:hover) {
@@ -43296,9 +43296,9 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     font-size: var(--text-size-xs, 0.75rem);
     text-align: left;
     transition:
-        background var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-        border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-        color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+        background var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
+        border-color var(--spw-time-control, 140ms) var(--spw-ease-control, ease),
+        color var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease);
 }
 
 :where(.phase-menu-choice:hover, .phase-menu-choice:focus-visible) {

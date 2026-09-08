@@ -17,9 +17,9 @@
   scroll-margin-top: calc(var(--shell-header-height, 4rem) + 1rem);
   box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
   transition:
-    background-color var(--duration-base, 180ms) var(--ease-mechanical, ease),
-    border-color var(--duration-base, 180ms) var(--ease-mechanical, ease),
-    box-shadow var(--duration-base, 180ms) var(--ease-mechanical, ease);
+    background-color var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease),
+    border-color var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease),
+    box-shadow var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease);
 }
 
 :where(body[data-spw-surface="settings"] .settings-category[open]) {
@@ -55,8 +55,8 @@
   opacity: 0.62;
   transform: rotate(45deg) translateY(-0.1rem);
   transition:
-    opacity var(--duration-fast, 120ms) var(--ease-mechanical, ease),
-    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+    opacity var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
+    transform var(--spw-time-control, 140ms) var(--spw-ease-control, ease);
 }
 
 :where(body[data-spw-surface="settings"] .settings-category[open] > .settings-category-header::after) {
@@ -115,9 +115,9 @@
   color: var(--settings-ink);
   cursor: pointer;
   transition:
-    background-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
-    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
-    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+    background-color var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
+    border-color var(--spw-time-control, 140ms) var(--spw-ease-control, ease),
+    transform var(--spw-time-control, 140ms) var(--spw-ease-control, ease);
 }
 
 :where(body[data-spw-surface="settings"] .settings-option:not(:has(input[type="radio"], input[type="checkbox"]))) {
@@ -205,7 +205,7 @@
   font-size: var(--text-size-xs, 0.8rem);
   padding: var(--space-2xs, 0.4rem) var(--space-sm, 0.8rem);
   border-radius: var(--shape-element, 4px);
-  transition: opacity var(--duration-base, 180ms) var(--ease-mechanical, ease);
+  transition: opacity var(--spw-time-surface, 200ms) var(--spw-ease-surface, ease);
 }
 
 :where(body[data-spw-surface="settings"] .settings-status[data-status="success"]) {
