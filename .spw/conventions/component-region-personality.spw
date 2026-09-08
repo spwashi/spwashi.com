@@ -30,6 +30,9 @@
 @design_catalog: ~"../../scripts/generate-design-catalog.mjs"
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 @component_packing: ~"./component-packing.spw"
+@deep_link_plan: ~"../../.agents/plans/deep-link-feature-discovery/PLAN.md"
+@aesthetic_alignment: ~"../audits/aesthetic-alignment-2026-08.spw"
+@history_strands: ~"../caches/history-conflict-strands-2026-09.spw"
 
 operation = "contract"
 fixity = "tending"
@@ -249,6 +252,7 @@ fixity = "tending"
     taxonomy_pill: .{ class = "spec-pill href", when = "plan/topic taxonomy hop" }[reg=facet]
     query_tune: .{ attr = "data-spw-link-intent=query", when = "tunable reading surface" }[reg=facet]
     glossary_anchor: .{ href = "/design/components/#...", when = "technical term first use" }[reg=facet]
+    deep_link: .{ attr = "data-spw-deep-link + stable fragment id", when = "a region is a shareable destination; optional ?lens=<group>:<mode>#<host-id> for a tuned posture" }[reg=facet]
   }[reg=facet]
   density_rule: "Above the fold: ≤6 operator chips + ≥1 non-chip link pattern per hero region."
   destination_effects: #[
@@ -270,6 +274,31 @@ fixity = "tending"
     copy = "One-line reason per neighbor link; screenshot literacy line optional in editorial tier"
   }[reg=facet]
   rollout: "Add to topic leaf template partial before one-off per-page edits."
+}
+
+^"deep_link_recognizability"{
+  operation: "align"
+  claim: "A deep-linked region must be recognizable on arrival across devices — the fragment names a place, and the place answers with the same identity in pocket and desktop shells. Aesthetic and interactive models are one bond: arrival state is the visual, the visual is the state."
+  bond: `region[deep-link]{fragment.lens} ^ visual[identity]{pocket.desktop}<arrival>`
+  existing_machinery: .{
+    address = `[data-spw-deep-link] carries scroll-margin against shell header height and a :target outline routed through --component-accent (public/css/components/runtime-states.css) — no JS required for the link to land.`
+    authority = `:target / :focus-within / [data-spw-region-mark] raise --spw-section-attention-authority to 1, so the addressed region outranks the viewport's automatic guess without a new attention state.`
+    lens = `?lens=<group>:<mode>#<host-id> writes data-spw-lens-* and data-spw-deep-link-state per @deep_link_plan — a tuned posture is a shareable URL, not new route copy.`
+    landmarks = `nav.spw-page-landmarks fragment ids stay stable per liminality_projection.landmark_rule; a landmark hop is a discover pulse plus aria-current="location".`
+  }[reg=facet]
+  device_rule: "Recognizability is carried by identity + accent + one region-family extra (per screenshot_literacy.pocket_variety), never by hover-only cues. The :target answer must survive touch (no hover), reduced motion (outline, not animation), and pocket width (scroll-margin clears floating chrome)."
+  churn_guards: #[
+    `hs-002 (@history_strands): a deep-link destination is one of the five named primitives (frame, card, panel, chip, prose) — do not mint a destination class.`,
+    `hs-004 (@history_strands): fragment ids are public nouns; a rename that does not travel to every citing href is a silent miss. Grep hrefs before renaming an id.`,
+    `F8 (@aesthetic_alignment): the addressed carrier owns its measure — arrival emphasis must not re-cap descendants.`,
+    `F1 (@aesthetic_alignment): arrival state rides existing attributes (data-spw-deep-link, data-spw-section-state, lens datasets) — no new data-spw-* family and no new phase vocabulary.`
+  ][reg=set]
+  authoring_rule: "When a region earns a personality pass, check whether it is a shareable destination. If yes: stable id + data-spw-deep-link + one-line reason on at least one citing link (linking_contour.deep_link). If no: do not decorate it with an id it cannot honor."
+  validation: #[
+    `rg 'data-spw-deep-link' public/css/components/runtime-states.css`,
+    `rg -o 'href="#[a-z0-9_-]+' --glob '*.html' | sort | uniq -c — every cited fragment resolves to an id`,
+    `npm run visual:checks — arrival outline present in pocket stills`
+  ][reg=set]
 }
 
 ^"screenshot_literacy"{
@@ -356,6 +385,8 @@ fixity = "tending"
   "Copy-unit ids are semantic and stable — not English sentence hashes.",
   "Screenshot literacy is taught with capture-friendly anatomy, not proof-card branding.",
   "Meta-documentation lives in technical or agent referentiality — not stacked on public invitation.",
+  "A published fragment id is a stable public noun: renaming it without updating every citing href is a regression, not a refactor.",
+  "Deep-link arrival stays recognizable without hover, motion, or JS — outline and attention authority carry it on every device.",
 }
 
 ^"validation"{
