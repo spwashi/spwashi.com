@@ -3,19 +3,22 @@ import test from 'node:test';
 
 import {
   ALWAYS_ON_SPECS,
-  FOCUSES,
   HARNESS_SPECS,
   MODEL_SPECS,
+  OPEN_FIRST_LINE_OVERRIDES,
   SHARED_EMPHASIS,
   SHARED_WRITE_DENY,
   SHUNT_MIN_LINES,
+  collectOpenFirstTargets,
   countLines,
   countWords,
   inspectAgentAdapter,
   inspectAgentAdapters,
   inspectAlwaysOnFiles,
   inspectHarnessFiles,
+  inspectOpenFirstFiles,
   inspectWordBudget,
+  openFirstSpecs,
 } from '../check-agent-contracts.mjs';
 
 test('agent adapters emphasize named focuses without exclusive ownership', () => {
@@ -23,18 +26,11 @@ test('agent adapters emphasize named focuses without exclusive ownership', () =>
     SHARED_EMPHASIS,
     'This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follows Open first.',
   );
-  assert.deepEqual(Object.keys(FOCUSES), [
-    'anti-bloat',
-    'constitutional',
-    'exactness',
-    'tool-mastery',
-    'computer-use',
-  ]);
   const byFile = Object.fromEntries(MODEL_SPECS.map((spec) => [spec.file, spec]));
-  assert.equal(byFile['CLAUDE.md'].emphasize, 'constitutional');
-  assert.equal(byFile['GROK.md'].emphasize, 'anti-bloat');
-  assert.equal(byFile['GEMINI.md'].emphasize, 'tool-mastery');
-  assert.equal(byFile['GPT.md'].emphasize, 'exactness');
+  assert.ok(byFile['CLAUDE.md'].requiredPhrases.includes('Constitutional Rigor'));
+  assert.ok(byFile['GROK.md'].requiredPhrases.includes('Anti-Bloat & Signal'));
+  assert.ok(byFile['GEMINI.md'].requiredPhrases.includes('Progressive Mastery'));
+  assert.ok(byFile['GPT.md'].requiredPhrases.includes('Contract Exactness'));
   assert.ok(byFile['GPT.md'].requiredPhrases.includes('verify-first'));
   assert.ok(byFile['GPT.md'].requiredPhrases.includes('one named patch'));
   assert.ok(byFile['GPT.md'].requiredPhrases.includes('visual:checks -- --ids='));
@@ -89,6 +85,42 @@ test('always-on files on disk fit their word budgets', () => {
   for (const report of reports) {
     assert.equal(report.ok, true, `${report.spec.file}: ${report.issues.join('; ')}`);
     assert.ok(report.words <= report.spec.maxWords);
+  }
+});
+
+test('open-first targets are derived from the gate and stay inside their line budget', () => {
+  const { targets, unresolved } = collectOpenFirstTargets();
+  assert.ok(targets.length > 0, 'AGENTS.md Open first named no resolvable file');
+  assert.deepEqual(unresolved, [], `Open first cites missing path(s): ${unresolved.join(', ')}`);
+
+  // Files budgeted elsewhere must not be double-reported here.
+  const covered = new Set([
+    ...MODEL_SPECS.map((spec) => spec.file),
+    ...ALWAYS_ON_SPECS.map((spec) => spec.file),
+    ...HARNESS_SPECS.map((spec) => spec.file),
+  ]);
+  for (const target of targets) {
+    assert.equal(covered.has(target), false, `${target} is budgeted twice`);
+  }
+
+  // A stale override is a lie about debt that is already paid.
+  for (const file of Object.keys(OPEN_FIRST_LINE_OVERRIDES)) {
+    assert.ok(targets.includes(file), `${file} has a line override but is no longer an Open first target`);
+    assert.ok(
+      OPEN_FIRST_LINE_OVERRIDES[file] > SHUNT_MIN_LINES,
+      `${file} override is at or under SHUNT_MIN_LINES — drop the entry instead`,
+    );
+  }
+
+  const { specs } = openFirstSpecs();
+  for (const spec of specs) {
+    assert.ok(spec.maxLines >= SHUNT_MIN_LINES, spec.file);
+  }
+
+  const reports = inspectOpenFirstFiles({ requireTracked: false });
+  assert.equal(reports.length, targets.length);
+  for (const report of reports) {
+    assert.equal(report.ok, true, `${report.spec.file}: ${report.issues.join('; ')}`);
   }
 });
 

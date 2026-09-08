@@ -21,57 +21,24 @@ export const REPO_ROOT = path.resolve(__dirname, '..');
 export const SHARED_EMPHASIS = 'This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follows Open first.';
 export const SHARED_WRITE_DENY = 'Explore/plan do not write';
 
-/** Do not Read a PLAN.md over this many lines unless Open first named that file. */
+/**
+ * Do not Read a PLAN.md over this many lines unless Open first named that file.
+ * Enforced here as the default line budget for every file the AGENTS.md
+ * "Open first" tables route to: following Open first must never force an
+ * over-budget read.
+ */
 export const SHUNT_MIN_LINES = 200;
 
-export const FOCUSES = Object.freeze({
-  'anti-bloat': {
-    label: 'Anti-Bloat & Signal',
-    tools: [
-      'npm run wonder',
-      'npm run spw:lattice',
-      'npm run audit:copy:accessor',
-      'declare cache|audit|align|prime|contract|archive',
-      'stop at the named slice',
-    ],
-  },
-  constitutional: {
-    label: 'Constitutional Rigor',
-    tools: [
-      'npm run spw:integrity',
-      'npm run audit:copy:accessor',
-      'semantic HTML',
-      'WCAG AA',
-      'no new data-spw-* family',
-      'smallest honest surface',
-    ],
-  },
-  exactness: {
-    label: 'Contract Exactness',
-    tools: [
-      'npm run audit:module-selectors',
-      'npm run visual:checks -- --ids=',
-      'npm run check:runtime',
-      'npm run check:css',
-      'explicit .js imports',
-      'CSS layer order',
-    ],
-  },
-  'tool-mastery': {
-    label: 'Progressive Mastery',
-    tools: [
-      'npm run visual:checks',
-      'npm run wonder',
-      'npm run spw:lattice',
-      'npm run reasons',
-      'npm run check:agents -- --spend',
-      'no background-task polling',
-    ],
-  },
-  'computer-use': {
-    label: 'Computer-use verify-first',
-    tools: ['npm run audit:module-selectors', 'npm run visual:checks -- --ids=', 'one named patch', 'stop'],
-  },
+/**
+ * Open-first targets already measured above SHUNT_MIN_LINES. A ratchet, not
+ * amnesty: each cap sits just above today's count, so growth fails. Reduce
+ * toward SHUNT_MIN_LINES; delete the entry once the file fits.
+ */
+export const OPEN_FIRST_LINE_OVERRIDES = Object.freeze({
+  '.agents/plans/css-architecture-readability/PLAN.md': 850,
+  '.spw/conventions/attention-field.spw': 390,
+  '.spw/language/feature-utilization.spw': 330,
+  '.agents/plans/history-reflow/PLAN.md': 230,
 });
 
 export const ADAPTER_MAX_WORDS = 280;
@@ -80,7 +47,6 @@ export const MODEL_SPECS = Object.freeze([
   {
     name: 'Claude',
     file: 'CLAUDE.md',
-    emphasize: 'constitutional',
     maxWords: ADAPTER_MAX_WORDS,
     requiredPhrases: [
       'AGENTS.md',
@@ -95,7 +61,6 @@ export const MODEL_SPECS = Object.freeze([
   {
     name: 'Grok',
     file: 'GROK.md',
-    emphasize: 'anti-bloat',
     maxWords: ADAPTER_MAX_WORDS,
     requiredPhrases: [
       'AGENTS.md',
@@ -112,7 +77,6 @@ export const MODEL_SPECS = Object.freeze([
   {
     name: 'Gemini',
     file: 'GEMINI.md',
-    emphasize: 'tool-mastery',
     maxWords: ADAPTER_MAX_WORDS,
     requiredPhrases: [
       'AGENTS.md',
@@ -127,7 +91,6 @@ export const MODEL_SPECS = Object.freeze([
   {
     name: 'GPT',
     file: 'GPT.md',
-    emphasize: 'exactness',
     maxWords: ADAPTER_MAX_WORDS,
     requiredPhrases: [
       'AGENTS.md',
@@ -287,6 +250,121 @@ export function inspectHarnessFiles(options = {}) {
   return HARNESS_SPECS.map((spec) => ({ spec, ...inspectHarnessFile(spec, options) }));
 }
 
+/** A backticked cell token worth resolving: not a command, not a `<placeholder>`. */
+function isPathLikeToken(token) {
+  if (!token) return false;
+  if (/^(npm|node|git|bash|rg)\b/.test(token)) return false;
+  if (token.includes('<') || token.includes('>')) return false;
+  const bare = token.replace(/[#?].*$/, '');
+  return bare.includes('/') || /\.(md|spw)$/.test(bare);
+}
+
+/**
+ * Resolve an Open-first token to a repo-relative file, or null when it does not
+ * exist. Anchors are stripped, a bare `name.spw` is looked up under
+ * `.spw/conventions/`, and a directory resolves to its PLAN.md.
+ */
+function resolveOpenFirstToken(token, root) {
+  const bare = token.replace(/[#?].*$/, '').replace(/^\.\//, '').replace(/\/$/, '');
+  if (!bare) return null;
+  const candidates = bare.includes('/') ? [bare] : [bare, `.spw/conventions/${bare}`];
+  for (const candidate of candidates) {
+    const abs = path.join(root, candidate);
+    if (!fs.existsSync(abs)) continue;
+    if (!fs.statSync(abs).isDirectory()) return candidate;
+    const plan = path.join(abs, 'PLAN.md');
+    if (fs.existsSync(plan)) return `${candidate}/PLAN.md`;
+  }
+  return null;
+}
+
+/**
+ * The files the AGENTS.md "Open first" tables route to. Derived from the gate,
+ * not hand-listed, so a new routing row is budgeted the moment it lands.
+ * Files already covered by MODEL_SPECS / ALWAYS_ON_SPECS / HARNESS_SPECS are
+ * left to those groups. `unresolved` holds path-shaped tokens that no longer
+ * exist — a stale citation in the gate itself.
+ */
+export function collectOpenFirstTargets({ root = REPO_ROOT, gate = 'AGENTS.md' } = {}) {
+  const gatePath = path.join(root, gate);
+  if (!fs.existsSync(gatePath)) return { targets: [], unresolved: [] };
+  const text = fs.readFileSync(gatePath, 'utf8');
+  const start = text.search(/^##\s+Open first\s*$/im);
+  if (start < 0) return { targets: [], unresolved: [] };
+  const rest = text.slice(start);
+  const nextHeading = rest.slice(1).search(/^##\s+/m);
+  const section = nextHeading < 0 ? rest : rest.slice(0, nextHeading + 1);
+
+  const covered = new Set([
+    ...MODEL_SPECS.map((spec) => spec.file),
+    ...ALWAYS_ON_SPECS.map((spec) => spec.file),
+    ...HARNESS_SPECS.map((spec) => spec.file),
+  ]);
+
+  const targets = [];
+  const unresolved = [];
+  const seen = new Set();
+  for (const line of section.split('\n')) {
+    if (!line.trim().startsWith('|')) continue;
+    const cells = line.split('|').slice(1, -1);
+    if (cells.length < 2) continue;
+    for (const match of cells[1].matchAll(/`([^`]+)`/g)) {
+      const token = match[1].trim();
+      if (!isPathLikeToken(token)) continue;
+      const resolved = resolveOpenFirstToken(token, root);
+      if (!resolved) {
+        if (!unresolved.includes(token)) unresolved.push(token);
+        continue;
+      }
+      if (covered.has(resolved) || seen.has(resolved)) continue;
+      seen.add(resolved);
+      targets.push(resolved);
+    }
+  }
+  return { targets, unresolved };
+}
+
+export function openFirstSpecs(options = {}) {
+  const { targets, unresolved } = collectOpenFirstTargets(options);
+  const specs = targets.map((file) => ({
+    file,
+    maxLines: OPEN_FIRST_LINE_OVERRIDES[file] ?? SHUNT_MIN_LINES,
+    kind: 'open-first',
+  }));
+  return { specs, unresolved };
+}
+
+export function inspectOpenFirstFile(spec, { root = REPO_ROOT, requireTracked = true } = {}) {
+  const issues = [];
+  const { content, missing } = readSpecFile(spec, root);
+  if (missing) {
+    issues.push(`missing file ${spec.file}`);
+    return { ok: false, issues, content: '', words: 0, lines: 0 };
+  }
+  if (requireTracked && !isGitTracked(spec.file, root)) {
+    issues.push(`untracked ${spec.file} — Open first must not route to an untracked file`);
+  }
+  const budget = inspectWordBudget(spec, content);
+  issues.push(...budget.issues);
+  return { ok: issues.length === 0, issues, content, words: budget.words, lines: budget.lines };
+}
+
+export function inspectOpenFirstFiles(options = {}) {
+  const { specs, unresolved } = openFirstSpecs(options);
+  const reports = specs.map((spec) => ({ spec, ...inspectOpenFirstFile(spec, options) }));
+  for (const token of unresolved) {
+    reports.push({
+      spec: { file: `AGENTS.md → ${token}`, kind: 'open-first' },
+      ok: false,
+      issues: [`Open first routes to \`${token}\`, which does not resolve`],
+      content: '',
+      words: 0,
+      lines: 0,
+    });
+  }
+  return reports;
+}
+
 function formatSpendLine(reports) {
   return reports
     .map((report) => {
@@ -296,8 +374,8 @@ function formatSpendLine(reports) {
     .join(' ');
 }
 
-function printSpendTable(adapterReports, alwaysOnReports, harnessReports = []) {
-  const rows = [...alwaysOnReports, ...adapterReports, ...harnessReports];
+function printSpendTable(adapterReports, alwaysOnReports, harnessReports = [], openFirstReports = []) {
+  const rows = [...alwaysOnReports, ...adapterReports, ...harnessReports, ...openFirstReports];
   process.stdout.write('[check:agents] spend\n');
   for (const report of rows) {
     const wordCap = report.spec.maxWords != null ? String(report.spec.maxWords) : '—';
@@ -313,7 +391,8 @@ function main() {
   const adapterReports = inspectAgentAdapters();
   const alwaysOnReports = inspectAlwaysOnFiles();
   const harnessReports = inspectHarnessFiles();
-  const reports = [...adapterReports, ...alwaysOnReports, ...harnessReports];
+  const openFirstReports = inspectOpenFirstFiles();
+  const reports = [...adapterReports, ...alwaysOnReports, ...harnessReports, ...openFirstReports];
   let failed = false;
   for (const report of reports) {
     if (report.ok) continue;
@@ -323,14 +402,14 @@ function main() {
     }
   }
   if (!quiet) {
-    printSpendTable(adapterReports, alwaysOnReports, harnessReports);
+    printSpendTable(adapterReports, alwaysOnReports, harnessReports, openFirstReports);
   }
   if (failed) {
     process.stderr.write('[check:agents] FAILED\n');
     process.exit(1);
   }
   process.stdout.write(
-    `[check:agents] PASSED (${MODEL_SPECS.length} adapters; ${HARNESS_SPECS.length} harness; always-on ${formatSpendLine(alwaysOnReports)})\n`,
+    `[check:agents] PASSED (${MODEL_SPECS.length} adapters; ${HARNESS_SPECS.length} harness; ${openFirstReports.length} open-first ≤${SHUNT_MIN_LINES}L; always-on ${formatSpendLine(alwaysOnReports)})\n`,
   );
 }
 
