@@ -1,0 +1,46 @@
+# Interaction Timing Bands — Landed Alias Layer + Consumer Handoff (2026-09)
+#
+# operation: prime
+# Fable landed color-motion Patch 4's alias layer plus two consumer families.
+# This prime names what is done, what is next, and which model leans where.
+# Not a new timing language. Not a new data-spw-* family.
+
+#>timing_bands_handoff_2026_09
+#:cache #!prime #!css #!motion #!svg #!agents
+#:operation #!prime
+#:fixity #!provisional
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/color-motion/PLAN.md"
+@tokens: ~"../../public/css/tokens/core.css"
+@handle_tokens: ~"../../public/css/handles/operators/tokens.css"
+@svg_surfaces: ~"../../public/css/systems/svg-surfaces.css"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+
+operation = "prime"
+fixity = "provisional"
+source = "session 2026-09-08: Fable landed Patch 4 bands; other models continue Patches 5-7"
+
+^"landed"{
+  bands = `--spw-time-ack|control|surface|reveal|ambient|ritual and --spw-ease-ack|control|surface|reveal|ambient live in tokens/core.css as aliases over --duration-* / --ease-* primitives. Reduced motion collapses the primitives, so band consumers inherit reduction for free.`
+  consumers = `Operator-handle local tokens (--handle-duration-*, --handle-ease) and svg-surfaces.css transitions now ride the bands. Keyframe durations were left untouched per the plan rule.`
+}[reg=facet]
+
+^"next"{
+  patch_5 = `Controls and handles: components/controls.css, handles/phase-controls.css, routes/surfaces/settings-forms.css — ack for hover/focus color, control for state change.`
+  patch_6 = `Cards and surfaces: effects/material.css, components/cards.css — surface band for background/border/shadow, control for small transforms.`
+  patch_7 = `Wonder, resonance, ornament: effects/wonder.css, ornament/ornament.css — ambient and ritual bands; do not speed these up to control tempo.`
+  rule = `Migrate one family per patch. Alias, do not rename primitives. Rebuild bundles (npm run build:css) in the same commit.`
+}[reg=facet]
+
+^"model_leans"{
+  grok = `One family, one patch, stop. No new durations.`
+  claude = `Guard reduced-motion inheritance and a11y focus timing; smallest honest surface.`
+  gpt = `Verify with rg for var(--duration-|var(--ease- in the migrated family, then npm run check:local.`
+  gemini = `Run visual:checks on a fixture that exercises the migrated family before landing.`
+}[reg=facet]
+
+~"open"{
+  question = `Should keyframe animations adopt the bands after ordinary transitions are consistent, or keep concrete durations for JS readability?`
+}

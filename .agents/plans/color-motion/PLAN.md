@@ -895,6 +895,10 @@ Manual states:
 - Are delight/resonance effects currently too frequent, too slow, or too visually strong?
 - Should theme packs be treated as product-facing modes or internal tuning presets?
 
+## Landed 2026-09-08 — Patch 4 alias layer plus chip and SVG consumers
+
+`public/css/tokens/core.css` now declares the six `--spw-time-*` bands and five `--spw-ease-*` bands as aliases over the duration/easing primitives, so `html[data-spw-reduce-motion="on"]` reduction flows through automatically. Two consumer families migrated: operator-handle local tokens (`public/css/handles/operators/tokens.css` `--handle-duration-*` / `--handle-ease` now ride `--spw-time-control|surface|reveal`) and SVG surfaces (`public/css/systems/svg-surfaces.css` transitions use ack/control/surface bands; keyframe durations untouched per the rules above). Remaining consumers for the next session: `effects/material.css`, `components/cards.css`, `components/controls.css`, `effects/wonder.css`, `ornament/ornament.css` (Patches 5–7). Handoff prime: `.spw/caches/timing-bands-handoff-2026-09.spw`.
+
 ## Landed 2026-08-31 — texture-slice consumes settle timing
 
 `public/css/effects/texture-slice.css` registers `--spw-slice-lift` and transitions it with `--spw-motion-settle`. Invite/charge/hold raise one coefficient; they do not invent a third duration. Pointer crop tracks immediately, then settles on leave. Reduced motion (`prefers-reduced-motion` and `html[data-spw-reduce-motion="on"]`) keeps opacity, drops crop motion and glitch. This is a Patch 4 consumer, not a new timing band.
