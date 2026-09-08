@@ -1,0 +1,144 @@
+# Review 2026-09-07 — hand-authored on first touch (open-first plan the 2026-07-12 root index never named). Keep as the core-CSS delivery-schedule owner under the css-architecture-readability rail; measurement is `npm run build:css` + `npm run css:payload`, not @layer reorder.
+# Plan Index — core-css-spend-cut
+#
+# First paint ships structure. Wonder, grain, cinematic, and ornament arrive
+# after interactive so core CSS can shrink. A late restyle may only add
+# atmosphere — never hide, move, or resize what the visitor already read.
+
+#>plan_core_css_spend_cut_index
+#:index #!plan
+#:operation #!align
+#:layer #!pragmatics
+
+operation = "align"
+fixity = "tending"
+
+intent: .{
+ goal = `Keep bundles/core.css at first-paint structure only. Atmosphere — wonder, grain, cinematic, ornament, theme-resonance, inspect overlays — follows its runtime owner or the idle flourish envelope, in the same @layer it already occupied. A late restyle may add paint but may never hide, move, or resize content the visitor has already read. This is a delivery-schedule plan, not a redesign and not an @layer reorder.`
+ owner = `core-css-spend-cut`
+ kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "observation | align | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "align | tending"
+ memory_tier = "warm"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `@layer is cascade geology — which rule wins — not a load optimizer; delivery is which file is requested, when, and how it is cached, and core must carry only what first paint needs to render structure the reader can trust.`
+ concepts = #[
+  `cascade-vs-delivery`,
+  `first-paint-structure`,
+  `idle-flourish-envelope`,
+  `late-restyle-ban`,
+  `combinator-literature`,
+  `soft-core-budget`,
+ ][reg=set]
+ surfaces = #[
+  `public/css/style-core.css`,
+  `public/css/tokens/flourish-defaults.css`,
+  `public/css/effects/flourish-pack.css`,
+  `public/css/components/runtime-inspect.css`,
+  `public/js/kernel/deferred-styles.js`,
+  `scripts/ts/css-contracts.mts`,
+  `.spw/conventions/css-instruction.spw`,
+  `.spw/conventions/stylesheet-ecology.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Mechanic, not showrunner — name what arrives, when, and which combinators the sheet is allowed to speak.`
+ accuracy = `First cut landed 2026-08-18. The 2026-09-03 lifecycle pass took core 1702 -> ~1630 KiB (atmosphere to the idle envelope, route-only grids to route bundles, dormant swipe rules removed, runtime-owned effects load with their modules). Measured 2026-09-07: core 1602.3 KiB, under the 1638 KiB soft line; route:website 129.3 KiB is the one route bundle over its own soft budget. Named first-paint PE (@property interpolation, reading-groove tokens, no-JS section-handle focus, :has() kinship) may sit above the core line without failing — do not strip those names to go green.`
+ direction = `Split route-local enhancement families further only if the website route budget needs a hard ceiling; keep their grid geometry synchronous. Page-anatomy stays in core until a first-paint probe calls it atmosphere. Combinator literature is practice when touching ornament or wonder, not a new plan.`
+ inspiration = `An observant reader should hear kinship in the selectors (>, +, :has()); a visitor should never watch the page shove what they already read.`
+ alignment = `Owner rail css-architecture-readability. Conventions css-instruction (cascade_vs_delivery, combinator_literature, late_restyle) and stylesheet-ecology. Sibling payload public-entrance-runtime-payload; noun grammar semantic-classname-layers.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `css-architecture-readability`
+ related_plans = #[
+  `css-architecture-readability`,
+  `public-entrance-runtime-payload`,
+  `semantic-classname-layers`,
+  `compositional-css-electrostatics`,
+  `data-attribute-css-token-refinement`,
+ ][reg=set]
+ public_surface = `/about/plans/`
+}[reg=facet]
+
+^"research_bridge"{
+ convention = `.spw/conventions/css-instruction.spw#cascade_vs_delivery`
+ ecology = `.spw/conventions/stylesheet-ecology.spw#progressive_enhancement`
+ audit = `.spw/audits/progressive-css-module-scopes-2026-07`
+ cache = `.spw/caches/arrival-perceptibility-2026-08.spw`
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@style_core: ~"../../../public/css/style-core.css"
+@flourish_defaults: ~"../../../public/css/tokens/flourish-defaults.css"
+@flourish_pack: ~"../../../public/css/effects/flourish-pack.css"
+@runtime_inspect: ~"../../../public/css/components/runtime-inspect.css"
+@deferred_styles: ~"../../../public/js/kernel/deferred-styles.js"
+@css_contracts: ~"../../../scripts/ts/css-contracts.mts"
+@css_instruction: ~"../../../.spw/conventions/css-instruction.spw"
+@stylesheet_ecology: ~"../../../.spw/conventions/stylesheet-ecology.spw"
+@arrival_perceptibility: ~"../../../.spw/caches/arrival-perceptibility-2026-08.spw"
+@css_architecture_readability: ~"../css-architecture-readability/index.spw"
+@public_entrance_runtime_payload: ~"../public-entrance-runtime-payload/PLAN.md"
+@semantic_classname_layers: ~"../semantic-classname-layers/PLAN.md"
+
+dispatch: .{
+ plan = @plan
+ style_core = @style_core
+ flourish_defaults = @flourish_defaults
+ flourish_pack = @flourish_pack
+ runtime_inspect = @runtime_inspect
+ deferred_styles = @deferred_styles
+ css_contracts = @css_contracts
+ css_instruction = @css_instruction
+ stylesheet_ecology = @stylesheet_ecology
+ arrival_perceptibility = @arrival_perceptibility
+ css_architecture_readability = @css_architecture_readability
+ public_entrance_runtime_payload = @public_entrance_runtime_payload
+ semantic_classname_layers = @semantic_classname_layers
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-core_css_spend_cut-001"
+ layer = "pragmatic"
+ hypothesis = `Core CSS can carry first-paint structure alone while wonder, grain, cinematic, ornament, theme-resonance, and inspect overlays load with their runtime owner or the idle flourish envelope — each deferred sheet restating the canonical @layer order — without the visitor ever watching a late restyle hide, move, or resize what they already read.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/css/style-core.css"
+ probe_ref = `npm run css:payload`
+ falsification = `A patch claims a core-spend cut while bundles/core.css KiB is unchanged in npm run build:css; or a deferred sheet omits the canonical @layer list and dumps unlayered rules; or a late restyle hides, moves, or resizes first-paint content.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does core-css-spend-cut own, and what is explicitly out of scope (no @layer reorder, no token/shell/frame/card moves)?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of core-css-spend-cut?`, see = @index }[reg=facet],
+ .{ ask = `What is the current core KiB, the soft budget, and which bundle is over?`, see = @index#plan_refinement }[reg=facet],
+][reg=set]
+
+validation: #[
+ `npm run build:css`,
+ `node --check on edited JS`,
+ `npm run css:payload`,
+ `flourish-pack.css begins with the same @layer list as style-core.css`,
+][reg=set]
+
+invariants: #[
+ `Owner intent: keep bundles/core.css at first-paint structure; atmosphere follows its runtime owner or the idle flourish envelope in the same @layer.`,
+ `PLAN.md sequences scope and validation order; index.spw routes inspection and selection.`,
+ `@layer is cascade, not delivery — do not reorder layers to chase spend.`,
+ `A soft core overage that is named first-paint PE substrate is not a blocker; a late restyle that shoves read content is.`,
+][reg=set]
