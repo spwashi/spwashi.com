@@ -58,8 +58,8 @@ fixity = "tending"
   patch = `Write one named slice after Sense first.`
   review = `Sensors after the patch. Cheap visual uses --ids. Do not write.`
   write_deny = `Explore/plan do not write.`
-  always_on_sense = #[`npm run audit:copy:accessor`, `npm run audit:module-selectors`, `npm run visual:checks -- --ids=<fixture>`][reg=set]
-  cheap_visual = `npm run visual:checks -- --ids=<fixture> — one pocket still, not the full pack.`
+  always_on_sense = #[`npm run audit:copy:accessor`, `npm run audit:module-selectors`, `npm run sense -- ink <still-id>`][reg=set]
+  cheap_visual = `npm run sense -- ink <still-id> — recipe id (home-opening), not fixture family (home-hook). Same instrument as visual:checks -- --ids=. One pocket still, not the pack.`
   dx = `npm run harness. npm run sense -- copy|nouns|ink. Ink without an id lists fixtures instead of starting the full pack.`
   grok_sensors = #[`npm run wonder`, `npm run spw:lattice`, `npm run audit:copy:accessor`][reg=set]
   claude_sensors = #[`npm run spw:integrity`, `npm run audit:copy:accessor`][reg=set]
@@ -69,7 +69,7 @@ fixity = "tending"
   host = @write_gate
   claude_host = @claude_settings
   prove = `npm run check:agents`
-  refuse = `Do not symlink adapters. Do not add ASTRA.md. Do not treat Open first as a substitute for running the instrument.`
+  refuse = `Do not symlink adapters. Do not add ASTRA.md. Do not treat Open first as a substitute for running the instrument. Do not pass a fixture family id and call it a still.`
 }[reg=facet]
 
 dispatch: .{

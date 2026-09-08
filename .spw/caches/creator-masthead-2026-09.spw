@@ -1,0 +1,35 @@
+# Creator Masthead (2026-09)
+#
+# operation: cache
+# Homepage heading scale. Pocket source-order and fold jump unpaid.
+# Consultations live here, not in /tmp.
+
+#>creator_masthead
+#:cache #!home #!hierarchy #!agents
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@home_css: ~"../../public/css/routes/surfaces/home.css"
+@home_route: ~"../../index.html"
+@agent_ecology: ~"../conventions/agent-ecology.spw"
+@still_recipes: ~"./still-recipe-agency-2026-09.spw"
+@skill_invocation: ~"../conventions/skill-invocation.spw"
+
+operation = "cache"
+fixity = "experimental"
+owner = @home_css
+source = "Codex 01a07f00 + Grok resume 2026-09-07: creatively improve the design; ask Claude/Grok in .spw first"
+focus = "hierarchy"
+element = "air"
+
+?["Can the creator name lead a dense homepage without adding more chrome?"]{
+  landed = "h1 clamp ceiling 3.4rem → 5rem; hero lede max-inline-size min(54ch, 100%). Copy, controls, artwork unchanged."
+  claude = "Haiku: distinct heading / tagline / map scales. Keep the italic serif tagline. Do not restyle buttons or the art plate in this slice."
+  grok = "Yes to 5rem desktop and 54ch map. Keep pocket heading size. Risk: mid-width wrap; 54ch can look sparse on a wide pane."
+  evidence = "Resume stills 3/3: design/components/captures/runs/2026-09-07/ambient/22-34-17--8369c8 — name one line at pocket/fold/broadsheet; working view usable; broadsheet map shorter than the column."
+  unpaid = "Pocket @media (max-width: 32rem) h1/lede sizes sit above the 5rem rule and lose. Fold takes the jump (~46px → 55px at 820). 5rem only caps near 1440px. 54ch air is taste, not a fill."
+  probe = "npm run sense -- ink home-opening — recipe id, not --ids=home-hook. @still_recipes#sr-007 @agent_ecology#harness"
+  falsification = "The name clips, the map overflows, or the working-view controls become unusable."
+  refuse = "Do not wire this cache into site.spw while that file is dirty with a sibling session. Do not grow the art plate to fill 54ch air. Do not leave model replies in /tmp."
+}

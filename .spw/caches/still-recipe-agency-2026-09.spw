@@ -25,6 +25,7 @@
 @op_tokens: ~"../../public/css/tokens/core.css"
 @theme_resonance: ~"../../design/experiments/theme-resonance/index.html"
 @mixer: ~"../../public/js/modules/widgets/boonhonk-mixer.js"
+@creator_masthead: ~"./creator-masthead-2026-09.spw"
 
 operation = "cache"
 fixity = "tending"
@@ -124,12 +125,27 @@ source = "chat 2026-09-07: still-recipe debt after broadsheet openings; Imagine/
   refuse = `Do not restore density-space-scale into --spw-rhythm-unit. Do not restate pad/gap on a quantum-factor selector.`
 }[reg=facet]
 
+^"sr-007_family_is_not_a_still"{
+  id = "sr-007"
+  operation = "cache"
+  dated = `2026-09-07`
+  claim = `A fixture family id is not a still. --ids=home-hook is twelve jobs; home-opening is the opening frame.`
+  evidence = #[
+    `Codex 01a07f00 ran visual:checks -- --ids=home-hook, hit closed-tab errors, and called pocket/desktop sound`,
+    `Resume: node scripts/component-snapshots.mjs --stills --ids=home-opening --viewports pocket,fold,broadsheet — 3/3`,
+    `@recipes home-opening.fixtureId = home-hook`
+  ][reg=set]
+  rule = `Pass a VIEWPORT_STILL_RECIPES id. Do not pass fixtureId and call the pack a still.`
+  refuse = `Do not SIGINT sibling exec sessions to clean up a capture. Do not treat /tmp model replies as in-tree output.`
+  masthead = @creator_masthead
+}[reg=facet]
+
 ^"next_session"{
   claim = `Open this file. One named slice. Do not implement the loop.`
   open = #[`this file`, `settings/index.html`, `scripts/lib/viewport-still-recipes.mjs`, `.spw/caches/boonhonk-combinatoric-genre.spw`][reg=set]
   next_slice = `Settings hook copy only: .settings-note "cognitive workbench", .spw-playable-hook weather/spell, Atmosphere card "vellum weather". Name author mode, material, density, enhancement. One operator chip that already spends --active-op-color.`
   skip = #[`Imagine pipeline`, `Grok TUI clone`, `recipe schema rewrite`, `140-route copy`, `hearth/loom rename sweep`, `ASTRA.md`, `quest lede`, `spacing-theory redo`][reg=set]
-  leftover = `Folio-prices desk crop. Pocket about overflowX. Quest still-recipe (not copy). Recipe pair/press field. Boonhonk component jobs: .spw/caches/boonhonk-combinatoric-genre.spw#component_jobs`
+  leftover = `Folio-prices desk crop. Pocket about overflowX. Quest still-recipe (not copy). Recipe pair/press field. home-hook family vs home-opening still (@sr-007). Boonhonk component jobs: .spw/caches/boonhonk-combinatoric-genre.spw#component_jobs`
   concurrent = `Primary main worktree may carry uncommitted payment-card / promo-wonder / settings payment-note. Never git stash.`
   cli = `npm run sense -- ink about-opening ; npm run sense -- copy`
 }[reg=facet]
