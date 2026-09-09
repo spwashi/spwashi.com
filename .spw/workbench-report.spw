@@ -47,7 +47,8 @@ expression = consumer[report]{defect.gap.built}<upstream>
   ~#consequence: "every consumer script here shells find with -not -path '*_workbench*' rather than using --from"
   history = `Named as consumer[walk]{roots} ^ workbench[mount]{node_modules}<isolation> in @history_strands#workbench_explore. Explore the workbench after a pruned walk, not before.`
   2026_09_astra = `At pin f2e5b61, query already excludes _workbench; a pathRefs count still exceeded 15s. Shared walker: 681 files, 374 mounted, 307 without the mount. Isolation is still useful; it is not the proven timeout cause. Instrument discovery vs per-file parse next.`
-  probe: `spw query --from .spw/conventions,.spw/language --selector pathRefs --count` vs `spw query --from .spw --selector pathRefs --count`
+  ~#resolved(2026-09-09, workbench f92382f, pin 14b4b47): "Default walks skip _workbench and build; --include-infrastructure / --all opts back in. doctor scan-exclusions: .git, node_modules, dist, release, _workbench, .agents, .spw/gen. Remaining cost is parse, not mount descent: conventions pathRefs --stats files_walked=118 parse_ms=13566.8 total_ms=13778.9."
+  probe: `spw query --from .spw/conventions --selector pathRefs --count --stats`
 }
 
 ^"parse_entry_points_disagree"{
@@ -75,7 +76,8 @@ expression = consumer[report]{defect.gap.built}<upstream>
   ~#reading: `the same postfix-binding work that fixed parseExpression above appears to read the lone > in ~> as an unmatched capsule-close now, where 993c0994d016 read it as two ordinary characters`
   ~#cost: "none measured on this site — every consumer here (readJoinChain, kernelJoinFromTokens) reads ~> at the string/token level and never trusted the assembled AST's node types beyond parse().success/errors.length, so all 14 authored project-join expressions still resolve correctly through the manifest and spw:integrity. A consumer that walks the AST instead of the tokens would see Prose/ProseChunk where it expected Sequence/Operation."
   fix: "disambiguate ~> from a lone capsule-close, or lex ~> as one PROJECT token rather than OPERATOR '~' followed by CAPSULE_CLOSE '>'"
-  ~#superseded(2026-09-03, same day, workbench f2e5b61): "still open in the grammar — this was not what f2e5b61 fixed — but moot for this site's own 14 authorings: all 11 that used ~> for a plain ordered sequence (as opposed to a genuine directional path between distinct stations, like this file's own scrap ~> mill ~> temper) were converted to ; once ; became real (see sequence_separators_ranked below). ~> stays reserved for what compound-expressions.spw already called project — movement between distinct places — not for steps of one practice, which ; now names correctly and without the degradation."
+  ~#superseded(2026-09-03, same day, workbench f2e5b61): "still open in the grammar at that pin — this was not what f2e5b61 fixed — but moot for this site's own 14 authorings: all 11 that used ~> for a plain ordered sequence were converted to ; once ; became real. ~> stays reserved for movement between distinct places."
+  ~#resolved(2026-09-09, workbench f681d04, pin 14b4b47): "Lex ~> as one project-join connector. Verified: spw fingerprint --expr 'cauldron[garden]{sow ~> tend ~> harvest}' reports complete=true prose=false root=Expression Sequence=1."
 }
 
 ^"sequence_separators_ranked"{
@@ -95,6 +97,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   }[reg=facet]
   ~#reading: `an empty field presented as a finding is worse than an error`
   fix: "read ~#name: as a cell, or report the two forms separately so the gap is visible"
+  ~#resolved(2026-09-09, workbench 5f18124, pin 14b4b47): "CLI lattice counts ~#name: as a distinct colon species. Advertised on this pin; not re-censused here."
 }
 
 ^"no_annotation_lint"{
@@ -104,6 +107,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   found = 4
   ~#consequence: "four surfaces were absent from every axis query until the sigil was restored"
   fix: "spw lint — well-formed annotations, known axis values, anchor uniqueness"
+  ~#resolved(2026-09-09, pin 14b4b47): "spw lint is a command. Flags `#:operation contract` (missing #!) and duplicate #> names inside one surface."
 }
 
 ^"missing_intermediate_form"{
@@ -114,13 +118,14 @@ expression = consumer[report]{defect.gap.built}<upstream>
   ~#cost: "the first attempt here used a regex and reported 59 false positives on ~\": \" inside prose values. The parser already knew; the regex did not."
   built = @integrity
   fix: "spw resolve <root> — or a --resolve flag on query --selector pathRefs"
+  ~#resolved(2026-09-09, pin 14b4b47): "spw resolve classifies pathRefs as file|route|directory|external without treating ~\": \" prose as a citation. Site @integrity remains the existence walk this corpus already had."
 }
 
 ^"built_because_absent"{
   ~#note: "Each is a consumer script that would be better as a command."
-  resolve: .{ built = @integrity, does = `resolve every citation to file and anchor, classified` }[reg=facet]
+  resolve: .{ built = @integrity, does = `resolve every citation to file and anchor, classified`, ~#landed(2026-09-09, pin 14b4b47): `spw resolve now classifies; @integrity still checks existence` }[reg=facet]
   axes: .{ built = @dimensional_index, does = `group the corpus by the operation, fixity and layer surfaces declare about themselves` }[reg=facet]
-  wonders: .{ built = @wonder, does = `harvest ?[…]{ !probe{} } and resolve each $%[…] substrate against its producer` }[reg=facet]
+  wonders: .{ built = @wonder, does = `harvest ?[…]{ !probe{} } and resolve each $%[…] substrate against its producer`, still = `no spw wonder command at pin 14b4b47` }[reg=facet]
   precipitate: .{ built = @precipitate, does = `lift probe output into a cache with deltas against the prior run` }[reg=facet]
   ~#reading(the pattern): `census answers what the corpus is; none of these answered what it claims about itself`
 }
@@ -136,6 +141,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   claim: "No timing, no walk counts, no cache-hit reporting. The memo line says fresh and never says what it saved."
   ~#consequence: "the walk_cost finding took a two-minute timeout to notice; --stats would have shown it in one run"
   fix: "--stats on collate commands: files walked, files parsed, bytes, cache hits, elapsed"
+  ~#resolved(2026-09-09, pin 14b4b47): "spw query --stats prints files_walked, files_parsed, bytes_read, cache_hits, parse_ms, total_ms. cache_hits stayed 0 on the conventions pathRefs run."
 }
 
 ^"what_landed_well"{
@@ -156,6 +162,26 @@ expression = consumer[report]{defect.gap.built}<upstream>
   cyclic_flag: `reports that a cycle exists without saying whether it matters`
   ~#missing: `node-shape fingerprint — Operation, Frame, Body, Capsule counts for one expression, run perhaps fifteen times here by hand`
   fix: "spw fingerprint <expression> — how any grammar claim gets verified"
+  ~#resolved(2026-09-09, pin 14b4b47): "spw fingerprint / spw fp. Used to verify the ~> project-join landing."
+}
+
+^"wonder_harvest_absent"{
+  pin = `14b4b47`
+  claim: "The consumer-cli-instruments pin landed fingerprint, resolve, lint, walk isolation, and query --stats. It did not land a wonder harvest. scripts/wonder.mjs still walks ?[…]{ !probe{} $%[…] }. Answers authored as grok = inside the wonder body are invisible to that harvest, to LSP parseWonderBlock (12-line cap, lens from // lens: not ~#lens()), and to probe-measure (question / !probe / $% only)."
+  astra_pass = `npm run wonder -- --surface astra-design still prints four open questions after grok=/claude=/agy=/astra= have landed in the cache.`
+  refuse = `Do not add a seventh wonder type or ASTRA.md. Reuse ~#model plus a ~#grok: cell, or a neighboring !land{} / !boon{} procedure after the probe — flow-protocol already names procedure-after-probe.`
+  first_patch = `Either consume: author landings as ~#grok: so field() sees them; or upstream: brace-walk parseWonderBlock, count the ~#model binding, and add spw wonder --unanswered.`
+  probe = `npm run spw -- wonder --help — not a command at this pin`
+}[reg=facet]
+
+#>wonder_workbench_report_landings
+?["Can harvest tell a finished prime from an open question when the answer is grok = inside the wonder body?"]{
+  #:depth #!computational ~#lens(inquiry)
+  ~#with: @wonder
+  ~#hypothesis: "question, !probe, and $% are visible. grok = is an assignment no harvest, lattice, or probe-measure counts. ~#grok: would already be a cell."
+  ~#tension: "a completed Astra prime still harvests as four open questions. Adding a seventh wonder type would be the counterfeit."
+  !probe{ "npm run wonder -- --surface astra-design after grok=/astra= land. if the output cannot say answered, the landing is invisible. npm run spw -- wonder --help should fail as an unknown command at pin 14b4b47." }
+  $%[wonder.answered, landing.form, cli.wonder]
 }
 
 #>wonder_workbench_report_1

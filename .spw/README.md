@@ -65,28 +65,13 @@ anything in the target. All 2480 citations currently resolve.
   re-derive). `npm run spw:integrity` still checks with `parse()` on
   principle — the two entry points converging on real content is not a
   reason to stop naming which one is canonical.
-- **`~>` (project-join) inside a body degrades to prose when nothing follows
-  it with a matching `<capsule>`.** Found re-verifying the site's corpus
-  against the `75d8f9d26253` rebuild above; still open at `f2e5b61b9e3d`
-  (the `;`/`||` fix a few lines below is a different code path and did not
-  touch this). `cauldron[garden]{sow ~> tend ~> harvest}` and the doc
-  example a few lines up, `scrap ~> mill ~> temper`, both still `parse()`
-  with `success: true` and zero errors, but the AST's top node is now
-  `Prose` (with `ProseChunk` fragments), not `Sequence`/`Operation`, and a
-  `warnings` entry names it: `"Structured parse stopped at CAPSULE_CLOSE
-  '>'; surface degraded to prose."` The same postfix-binding work that fixed
-  the two gaps above appears to have made `>` bind more eagerly toward
-  capsule-closing, and an unmatched `>` from `~>` (no preceding `<`) now
-  falls outside what the structured grammar can place, rather than being
-  read as two ordinary characters the way `993c0994d016` read it. No impact
-  found on this site in practice: every consumer here reads `~>` at the
-  string/token level (`readJoinChain`, `kernelJoinFromTokens`), never by
-  trusting the assembled AST's node types beyond `parse().success` and
-  `errors.length` — but this site converted its 11 authorings that used
-  `~>` for a plain ordered sequence to `;` once that became real (below)
-  rather than lean on the degradation; `~>` is still correct and still
-  used site-wide for what it actually means, movement between distinct
-  places, not steps of one practice.
+- **`~>` (project-join) used to degrade to prose when nothing followed it
+  with a matching `<capsule>`.** Open at `f2e5b61b9e3d`. **Resolved at
+  workbench `f681d04` / pin `14b4b47763aa`:** `spw fingerprint --expr
+  'cauldron[garden]{sow ~> tend ~> harvest}'` reports complete, not prose.
+  Site authorings that meant ordered steps already use `;`; `~>` stays
+  reserved for movement between distinct places. Details:
+  `.spw/workbench-report.spw#project_join_degrades_to_prose`.
 - **`;` and `||` promoted to real sequence separators — RESOLVED same day,
   workbench `f2e5b61b9e3d` (a different commit than the rebuild above, from
   a different session).** `;` used to lex as a plain CONNECTOR that chained
