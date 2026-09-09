@@ -135,6 +135,25 @@
     --material-depth-opacity: var(--material-depth-opacity-3);
     z-index: var(--material-layer-content);
   }
+
+  /* Grounded — a touch this material had no arc for.
+     systems/electrostatic-affordances.css declares the grounded reading and
+     drops the electrode tokens, but it cannot paint it here: that file is
+     `systems`, and this block sets `outline: 1px solid transparent` plus a
+     filter from `effects` and `routes`, both of which outrank it. The outline
+     is already this file's state channel — focus-visible tints the same
+     property, and the transition above already covers outline-color — so the
+     grounded tint belongs with the rest of the material's states rather than
+     fighting them from a lower layer.
+     Quieter than focus and desaturating rather than lifting: the reader should
+     be able to tell "nothing here" from "something happened" at a glance. */
+  &[data-spw-charge="grounded"]:not(:focus-visible) {
+    --interaction-excitement: 0;
+    --material-local-shadow: var(--material-shadow-rest);
+    outline-color: color-mix(in oklab, var(--material-ink) 16%, transparent);
+    outline-offset: 0;
+    filter: saturate(0.82);
+  }
 }
 
 /* ==========================================================================

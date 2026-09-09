@@ -31419,17 +31419,27 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .frame-card, .frame-panel) 
    driven by a real interaction, and it clears itself — a host is never
    grounded at first paint. See electrostatic-affordances.spw#do_not_author.
    ========================================================================== */
-:where([data-spw-charge="grounded"], [data-spw-charge-phase="grounded"]) {
+:where([data-spw-charge="grounded"], [data-spw-charge-phase="grounded"]):not(:focus-visible) {
   --spw-electrode: latent;
   --spw-electrode-ring: 0;
   --spw-induced-field: 0;
   --spw-discharge-color: color-mix(in srgb, currentColor 34%, transparent);
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, currentColor 18%, transparent),
-    inset 0 -2px 0 -1px color-mix(in srgb, currentColor 12%, transparent);
+
+  /* Outline rather than box-shadow, deliberately. This file is `systems`, and
+     handles, effects and ornament all paint above it — a box-shadow here loses
+     on any handle, chip or piece of floating chrome, which is most of what a
+     reader actually taps. Nothing sets an outline at rest, so this one lands
+     everywhere; :focus-visible is excluded so it never fights a focus ring.
+
+     Solid and flush, not dashed. Dashed already means potential in this
+     vocabulary (an armed hook), and grounded is the opposite claim — a closed
+     circuit with nowhere to go. It should not read as "something is about to
+     happen here". */
+  outline: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  outline-offset: 0;
   filter: saturate(0.82);
   transition:
-    box-shadow var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
+    outline-color var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
     filter var(--spw-time-control, 140ms) var(--spw-ease-control, ease);
 }
 
@@ -44042,6 +44052,25 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     --interaction-excitement: 0.32;
     --material-depth-opacity: var(--material-depth-opacity-3);
     z-index: var(--material-layer-content);
+  }
+
+  /* Grounded — a touch this material had no arc for.
+     systems/electrostatic-affordances.css declares the grounded reading and
+     drops the electrode tokens, but it cannot paint it here: that file is
+     `systems`, and this block sets `outline: 1px solid transparent` plus a
+     filter from `effects` and `routes`, both of which outrank it. The outline
+     is already this file's state channel — focus-visible tints the same
+     property, and the transition above already covers outline-color — so the
+     grounded tint belongs with the rest of the material's states rather than
+     fighting them from a lower layer.
+     Quieter than focus and desaturating rather than lifting: the reader should
+     be able to tell "nothing here" from "something happened" at a glance. */
+  &[data-spw-charge="grounded"]:not(:focus-visible) {
+    --interaction-excitement: 0;
+    --material-local-shadow: var(--material-shadow-rest);
+    outline-color: color-mix(in oklab, var(--material-ink) 16%, transparent);
+    outline-offset: 0;
+    filter: saturate(0.82);
   }
 }
 
