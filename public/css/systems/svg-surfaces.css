@@ -672,38 +672,23 @@ html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-f
     margin: 0;
 }
 
-/* Mobile: rail scrolls horizontally instead of wrapping — keeps SVG full-width */
+/* Pocket: wrap the register so a still can name the whole kit.
+   Horizontal scroll + edge fade clipped `^margin_creature` off the crop. */
 @media (max-width: 45rem) {
     [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] > .spw-svg-rail {
-        display: grid;
-        grid-auto-flow: column;
-        grid-auto-columns: max-content;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        padding-bottom: var(--space-xs, 0.48rem);
-        /* Fade edges to hint at scroll */
-        mask-image: linear-gradient(
-            to right,
-            transparent 0,
-            black 1rem,
-            black calc(100% - 1rem),
-            transparent 100%
-        );
-        scroll-snap-type: x proximity;
-    }
-
-    .spw-svg-rail::-webkit-scrollbar {
-        display: none;
-    }
-
-    /* Larger touch targets on mobile for rail chips */
-    .spw-svg-rail > * {
-        min-height: max(2.15rem, var(--spw-svg-hit-min, var(--touch-target-compact, 2.15rem)));
         display: flex;
+        flex-wrap: wrap;
+        overflow: visible;
+        padding-bottom: var(--space-xs, 0.48rem);
+    }
+
+    .spw-svg-rail > * {
+        flex: 0 1 auto;
+        width: auto;
+        max-width: 100%;
+        min-height: max(2.15rem, var(--spw-svg-hit-min, var(--touch-target-compact, 2.15rem)));
+        display: inline-flex;
         align-items: center;
-        scroll-snap-align: start;
     }
 }
 
