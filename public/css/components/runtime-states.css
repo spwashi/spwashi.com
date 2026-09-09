@@ -1102,8 +1102,17 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   display: none !important;
 }
 
+/* Keep the outline; add the glow. This used to set `outline: none` and put the
+   whole focus ring in a box-shadow, which loses it in two common places: a
+   box-shadow is clipped by any overflow:hidden ancestor, and any component that
+   sets its own :focus box-shadow replaces it outright. The reset's outline
+   (reset/base.css) is the ring that survives both, and because components
+   outranks reset this zero-specificity rule was silently removing it site-wide
+   — along with --focus-ring-color and --focus-ring-offset, which had no other
+   consumer left. The shadow stays as the soft halo it was always drawing. */
 :where(:focus-visible) {
-  outline: none;
+  outline: 2px solid var(--focus-ring-color, var(--teal, #008080));
+  outline-offset: var(--focus-ring-offset, 3px);
   box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
 }
 

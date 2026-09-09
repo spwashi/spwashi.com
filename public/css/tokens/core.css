@@ -1194,7 +1194,7 @@
 
   /* Shared settling field: small offsets/opacities that page-state and components can spend together. */
   --spw-micro-lift-distance: 1px;
-  --spw-micro-press-scale: 0.997;
+  --spw-micro-press-scale: 0.985;
   --spw-hover-scale: 1.006;
   --spw-armed-scale: 1.01;
   --spw-burst-scale: 1.012;
@@ -1202,7 +1202,18 @@
   --spw-chassis-highlight: inset 0 1px 0 color-mix(in srgb, white 22%, transparent);
   --spw-chassis-shadow: inset 0 -1px 0 color-mix(in srgb, var(--shadow-color, #111) 6%, transparent);
   --spw-control-hover-lift: -1px;
-  --spw-control-press-depth: 0.75px;
+  --spw-control-press-depth: 1.5px;
+
+  /* Charge ladder. Contact is conduction; proximity is only induction, so a
+     press must outrank a hover. Rest -> proximity -> contact -> held. These are
+     the rungs handles/operators/primitive.css spends into --interaction-excitement,
+     which drives both the handle glow and its lift. Named here so the ladder is
+     readable in one place rather than inferred from four selectors.
+     Contract: .spw/conventions/electrostatic-affordances.spw. */
+  --spw-excitement-rest: 0;
+  --spw-excitement-proximity: 0.82;
+  --spw-excitement-contact: 0.94;
+  --spw-excitement-held: 1;
   --spw-interaction-acknowledge: var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1));
   --spw-interaction-commit: var(--touch-commit, 180ms) var(--ease-mechanical, cubic-bezier(0.32, 0, 0, 1));
   --spw-interaction-settle: var(--touch-recover, 520ms) var(--ease-settle, cubic-bezier(0.20, 0.80, 0.20, 1));

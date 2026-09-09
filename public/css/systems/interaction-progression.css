@@ -261,25 +261,14 @@
   filter: saturate(0.94);
 }
 
-/* Coarse pointer: tap replaces hover affordance */
-@media (hover: none) and (pointer: coarse) {
-  :where(
-    [data-spw-interaction-contract]:active,
-    [data-spw-gesture-contract]:active,
-    .spw-chip:active,
-    .spw-page-landmarks a:active,
-    .spw-section-handle-step:active
-  ) {
-    --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.42);
-    transform: scale(0.992);
-  }
-
-  :where([data-spw-gesture-contract]:active) {
-    box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--active-op-color) 24%, transparent),
-      0 0 0 3px color-mix(in srgb, var(--active-op-color) 8%, transparent);
-  }
-}
+/* Contact moved to components/gesture-anatomy.css.
+   This sheet is injected at runtime by a VISIBLE module (kernel/deferred-styles
+   ensureInteractionProgressionStyles), which is right for everything keyed on
+   data-spw-interaction-phase — those rules genuinely need the module that writes
+   the attribute. It was wrong for the :active press rules that used to live
+   here: they are pure CSS, depend on no phase, and made the elements that
+   advertise a gesture contract the last ones on the page to acknowledge a tap.
+   Press feedback should not wait on a module it does not use. */
 
 /* Scroll-rail swipe discoverability */
 :where([data-spw-scroll-rail], .spw-visual-link-board__grid, .frame-grid--media) {

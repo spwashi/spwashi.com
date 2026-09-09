@@ -30,7 +30,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { COMPONENT_KIND_MIRROR_SELECTOR, isOwnAffordanceTarget, writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import { COMPONENT_KIND_MIRROR_SELECTOR, groundInteraction, isOwnAffordanceTarget, writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { guardCall } from '/public/js/kernel/dom-render.js';
 import { normalizePathname } from '/public/js/kernel/route-utils.js';
 import {
@@ -258,6 +258,11 @@ function onGroundToggleClick(event) {
     suppressClickTargets.delete(target);
     event.preventDefault();
     event.stopPropagation();
+    // The hold already gathered this term, so the click riding out behind it
+    // must not toggle grounding a second time — but cancelling it silently is
+    // the reward contract's own counter-example. Show the tap being absorbed
+    // and say why, instead of letting it disappear.
+    groundInteraction(target, 'already-gathered', { mutator: 'haptics' });
     return;
   }
   if (shouldIgnoreGroundToggle(target, event)) return;

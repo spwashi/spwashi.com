@@ -43,6 +43,7 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import {
+  groundInteraction,
   isNativeControl,
   isOwnAffordanceTarget,
   writeDatasetValue,
@@ -981,8 +982,11 @@ function onPointerUp(event) {
     }
   }
 
+  let resolved = Boolean(state?.dragging || state?.armed);
+
   if (shouldToggleSemanticExpansionOnRelease(target, meta, state, event)) {
     applySemanticExpansion(target, meta, target.dataset.spwInspectSemanticExpanded !== 'true');
+    resolved = true;
   }
 
   gestureState.delete(target);
@@ -1002,7 +1006,22 @@ function onPointerUp(event) {
     event.clientY >= rect.top &&
     event.clientY <= rect.bottom;
 
-  if (inside) {
+  if (inside && isCoarsePointerEvent(event)) {
+    // A finger leaves no hover behind it. Falling through to "charging" here
+    // wrote a proximity reading with no proximity — it appeared *after* the
+    // touch ended and then sat there, which is why a tap could look like it
+    // responded late and then stuck. Coarse contact ends at neutral.
+    setGesture(target, meta, 'neutral');
+
+    // A tap that armed nothing, dragged nothing and expanded nothing has just
+    // been absorbed. That is the silence interaction-microstates.spw's reward
+    // contract calls a violation rather than a neutral outcome, so answer it:
+    // grounded says "this took your touch and had no arc to give back", and
+    // the reason says why. It clears itself; nothing accumulates.
+    if (!resolved) {
+      groundInteraction(target, 'tap-no-arc', { mutator: 'brace-gestures' });
+    }
+  } else if (inside) {
     setGesture(target, meta, 'charging');
     emitBraceEvents(
       ['brace:charged', 'brace:charge-start'],

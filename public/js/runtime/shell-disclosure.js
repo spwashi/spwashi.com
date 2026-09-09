@@ -931,11 +931,13 @@ export function initSpwShellDisclosure(options = {}) {
     }
   };
 
+  // Contact is written on press, not on release. PHASES.CONTACT sits between
+  // APPROACH and PROJECTING, so writing it on pointerup landed it after the
+  // click had already fired and the menu was opening — the phase described a
+  // moment that had passed. Contact is the finger arriving, so it belongs on
+  // pointerdown, where it can actually acknowledge the press.
   const handleTogglePointerDown = (event) => {
     event.stopPropagation();
-  };
-
-  const handleTogglePointerUp = (event) => {
     if (event.button && event.button !== 0) return;
     writeRuntimeDatasetValues(toggle, {
       spwMenuPhase: PHASES.CONTACT,
@@ -1249,7 +1251,6 @@ export function initSpwShellDisclosure(options = {}) {
 
   toggle.addEventListener('click', handleToggle);
   toggle.addEventListener('pointerdown', handleTogglePointerDown);
-  toggle.addEventListener('pointerup', handleTogglePointerUp);
   toggle.addEventListener('keydown', handleToggleKeydown);
   header.addEventListener('pointerenter', handlePointerEnter);
   header.addEventListener('pointermove', handlePointerMove);
@@ -1293,7 +1294,6 @@ export function initSpwShellDisclosure(options = {}) {
     cleanup() {
       toggle.removeEventListener('click', handleToggle);
       toggle.removeEventListener('pointerdown', handleTogglePointerDown);
-      toggle.removeEventListener('pointerup', handleTogglePointerUp);
       toggle.removeEventListener('keydown', handleToggleKeydown);
       header.removeEventListener('pointerenter', handlePointerEnter);
       header.removeEventListener('pointermove', handlePointerMove);

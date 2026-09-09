@@ -79,6 +79,40 @@
   --spw-electrode: acted;
 }
 
+/* ==========================================================================
+   Grounded — the negative pole
+   --------------------------------------------------------------------------
+   Everything above this point is a way of saying yes. The ladder could report
+   latent, armed, preview and acted, and could name four kinds of discharge,
+   but it had no way at all to say "your touch arrived and there was no arc
+   here" — so that case rendered as nothing, which is indistinguishable from a
+   surface that is broken. charge-cycle.spw always listed `grounded` among its
+   phases and charge-field.js always carried an intensity for it; this is the
+   reading that was missing, and it is what makes the ladder signed.
+
+   Grounded must not look like a reward. Charge sinks inward instead of
+   sparking outward: the ring collapses to an inset, saturation drops, and
+   nothing travels. A reader should be able to tell "nothing is here" from
+   "something happened" without being taught which is which.
+
+   kernel/dom-contracts.js#groundInteraction is the only writer, it is always
+   driven by a real interaction, and it clears itself — a host is never
+   grounded at first paint. See electrostatic-affordances.spw#do_not_author.
+   ========================================================================== */
+:where([data-spw-charge="grounded"], [data-spw-charge-phase="grounded"]) {
+  --spw-electrode: latent;
+  --spw-electrode-ring: 0;
+  --spw-induced-field: 0;
+  --spw-discharge-color: color-mix(in srgb, currentColor 34%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, currentColor 18%, transparent),
+    inset 0 -2px 0 -1px color-mix(in srgb, currentColor 12%, transparent);
+  filter: saturate(0.82);
+  transition:
+    box-shadow var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
+    filter var(--spw-time-control, 140ms) var(--spw-ease-control, ease);
+}
+
 /* Channel: placing an acted terminal into a region multiplies hold.
    Material lives in projection-attenuation.css. This only names the role.
    data-spw-region is seat-exclusive (region-component-ecology.spw) — it
@@ -223,6 +257,18 @@ html[data-spw-interaction-phase="approach"] :where([data-spw-operator]:is(:hover
   --spw-electrode-ring: 0.55;
 }
 
+/* Contact. :hover and :focus-visible are proximity readings — neither one fires
+   for a finger, so before this rule a terminal could only light on a fine
+   pointer or a keyboard. A touch went straight from latent to armed-after-hold,
+   which is 420ms of nothing. Contact is the terminal actually closing, so it
+   reads at least as strongly as approach and needs no phase on the root to say
+   so. Not folded into the acted rule below: acted is a landed discharge and
+   should stay durable, while this lasts exactly as long as the finger does. */
+:where([data-spw-operator]:active) {
+  --spw-electrode: preview;
+  --spw-electrode-ring: max(var(--spw-electrode-ring, 0), 0.62);
+}
+
 :where([data-spw-operator][data-spw-charge="charged"]),
 :where([data-spw-operator][data-spw-charge-phase="charged"]),
 html[data-spw-interaction-phase="inspect"] :where([data-spw-section-state="active"] [data-spw-operator]),
@@ -279,7 +325,16 @@ html[data-spw-microinteraction-pulse] :where(
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Reduce movement, not acknowledgement. This block used to force every
+     terminal back to latent with a zero ring, which removed the only feedback a
+     reduced-motion reader had left — the ring is a static outline, not motion,
+     and the reward contract does not exempt anyone from it. Terminals keep the
+     ring they earn; what stops is travel and the induced field's drift. */
   :where([data-spw-operator]) {
+    --spw-induced-field: 0;
+  }
+
+  :where([data-spw-operator]:not(:active):not(:hover):not(:focus-visible)) {
     --spw-electrode: latent;
     --spw-electrode-ring: 0;
   }

@@ -793,8 +793,14 @@ a.cauldron-ingredient-meta.cauldron-deep-link:is(:hover, :focus-visible) {
   border-color: color-mix(in srgb, var(--op-ref-color, #4f7fbf) 48%, transparent);
 }
 
+/* --focus-ring is a box-shadow value (tokens/core.css), so `outline:
+   var(--focus-ring, ...)` substituted to `outline: 0 0 0 3px rgba(...)` — not a
+   valid outline. The fallback could not rescue it either, since the variable is
+   defined and a fallback only applies when it is not, so the declaration was
+   dropped at computed-value time and this link had no focus ring at all. Use
+   the outline tokens, which is what the reset uses. */
 a.cauldron-ingredient-meta.cauldron-deep-link:focus-visible {
-  outline: var(--focus-ring, 2px solid currentColor);
+  outline: 2px solid var(--focus-ring-color, var(--teal, #008080));
   outline-offset: 2px;
 }
 

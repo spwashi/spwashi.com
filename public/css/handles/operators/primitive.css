@@ -36,7 +36,7 @@
 ) {
   --handle-arrival-lift: 0px;
   --handle-arrival-opacity: 1;
-  --interaction-excitement: 0;
+  --interaction-excitement: var(--spw-excitement-rest, 0);
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -87,7 +87,7 @@
   .persona-chip,
   [data-spw-handle="true"]
 ):is(:hover, :focus-visible) {
-  --interaction-excitement: 0.82;
+  --interaction-excitement: var(--spw-excitement-proximity, 0.82);
 }
 
 @keyframes spw-operator-breath {
@@ -119,7 +119,7 @@
   .persona-chip,
   [data-spw-handle="true"]
 ):is([data-spw-selection="active"], [data-spw-selection="selected"], [aria-current="page"], [aria-pressed="true"]) {
-  --interaction-excitement: 1;
+  --interaction-excitement: var(--spw-excitement-held, 1);
   animation: spw-operator-breath 2s ease-in-out infinite;
 }
 
@@ -136,7 +136,12 @@
   .spw-guide-chip,
   [data-spw-handle="true"]
 ):active {
-  --interaction-excitement: 0.42;
+  /* Contact outranks proximity. This rung read 0.42 against hover's 0.82, so a
+     click made a handle dimmer and lower than merely pointing at it — the charge
+     ladder ran backwards at the one moment the reader is actually touching it.
+     Conduction beats induction; the press keeps its downward travel, but it no
+     longer discharges the glow to get it. */
+  --interaction-excitement: var(--spw-excitement-contact, 0.94);
   transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));
   transition:
     transform var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1))),

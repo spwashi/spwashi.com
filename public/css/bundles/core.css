@@ -1874,7 +1874,7 @@ html[data-spw-reduce-motion="on"] *::after {
 
   /* Shared settling field: small offsets/opacities that page-state and components can spend together. */
   --spw-micro-lift-distance: 1px;
-  --spw-micro-press-scale: 0.997;
+  --spw-micro-press-scale: 0.985;
   --spw-hover-scale: 1.006;
   --spw-armed-scale: 1.01;
   --spw-burst-scale: 1.012;
@@ -1882,7 +1882,18 @@ html[data-spw-reduce-motion="on"] *::after {
   --spw-chassis-highlight: inset 0 1px 0 color-mix(in srgb, white 22%, transparent);
   --spw-chassis-shadow: inset 0 -1px 0 color-mix(in srgb, var(--shadow-color, #111) 6%, transparent);
   --spw-control-hover-lift: -1px;
-  --spw-control-press-depth: 0.75px;
+  --spw-control-press-depth: 1.5px;
+
+  /* Charge ladder. Contact is conduction; proximity is only induction, so a
+     press must outrank a hover. Rest -> proximity -> contact -> held. These are
+     the rungs handles/operators/primitive.css spends into --interaction-excitement,
+     which drives both the handle glow and its lift. Named here so the ladder is
+     readable in one place rather than inferred from four selectors.
+     Contract: .spw/conventions/electrostatic-affordances.spw. */
+  --spw-excitement-rest: 0;
+  --spw-excitement-proximity: 0.82;
+  --spw-excitement-contact: 0.94;
+  --spw-excitement-held: 1;
   --spw-interaction-acknowledge: var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1));
   --spw-interaction-commit: var(--touch-commit, 180ms) var(--ease-mechanical, cubic-bezier(0.32, 0, 0, 1));
   --spw-interaction-settle: var(--touch-recover, 520ms) var(--ease-settle, cubic-bezier(0.20, 0.80, 0.20, 1));
@@ -9491,8 +9502,14 @@ a.cauldron-ingredient-meta.cauldron-deep-link:is(:hover, :focus-visible) {
   border-color: color-mix(in srgb, var(--op-ref-color, #4f7fbf) 48%, transparent);
 }
 
+/* --focus-ring is a box-shadow value (tokens/core.css), so `outline:
+   var(--focus-ring, ...)` substituted to `outline: 0 0 0 3px rgba(...)` — not a
+   valid outline. The fallback could not rescue it either, since the variable is
+   defined and a fallback only applies when it is not, so the declaration was
+   dropped at computed-value time and this link had no focus ring at all. Use
+   the outline tokens, which is what the reset uses. */
 a.cauldron-ingredient-meta.cauldron-deep-link:focus-visible {
-  outline: var(--focus-ring, 2px solid currentColor);
+  outline: 2px solid var(--focus-ring-color, var(--teal, #008080));
   outline-offset: 2px;
 }
 
@@ -23807,14 +23824,99 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   transition: none;
 }
 
-@media (hover: none) and (pointer: coarse) {
-  :where(.frame-card:active, .spw-chip:active, .spec-pill:active, button:active) {
-    transform: scale(calc(1 - (0.008 * var(--spw-interaction-scale, 1))));
-    transition-duration: var(--touch-acknowledge, 90ms);
-    transition-timing-function: var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
-  }
+/* ==========================================================================
+   Contact
+   --------------------------------------------------------------------------
+   One press state for every interactive family. Contact is conduction — the
+   moment the reader actually closes the circuit — so it reads on every pointer,
+   not only a coarse one. Three separate things used to go wrong here, and all
+   three reach a person as the same sentence, "it didn't respond":
 
-  :where(html[data-spw-interaction-tuner="calm"] .frame-card:active) {
+   - the ring for gesture-contract hosts sat inside a coarse-pointer media
+     query, so a mouse click on a section, article or figure got nothing;
+   - it also sat in systems/interaction-progression.css, which a VISIBLE module
+     injects at runtime, so on a cold page the elements advertising a gesture
+     contract were precisely the ones with no press feedback. Those rules are
+     pure CSS and depend on no phase attribute, so they had no reason to wait;
+   - the calm tuner, which is the site default, zeroed the card press outright.
+
+   Travel spends --spw-micro-press-scale so every family shrinks by the same
+   amount, and --spw-interaction-scale lets a tuner attenuate that without
+   switching it off, which is what a tuner is for. Native controls and cards are
+   named explicitly: the reset strips buttons of their border and several files
+   clear the tap highlight, so those surfaces otherwise acknowledge nothing at
+   all on touch.
+
+   [data-spw-floating-chrome] is excluded from the transform only — a transform
+   would make it a containing block for its own fixed descendants, which
+   css-instruction.spw#flow_ownership forbids. It still takes the phase weight.
+   ========================================================================== */
+
+:where(
+  button,
+  summary,
+  [role="button"],
+  .frame-card,
+  .spw-chip,
+  .spec-pill,
+  [data-spw-interaction-contract],
+  [data-spw-gesture-contract],
+  .spw-page-landmarks a,
+  .spw-section-handle-step
+):active {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.42);
+  transition-duration: var(--touch-acknowledge, 90ms);
+  transition-timing-function: var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
+}
+
+:where(
+  button,
+  summary,
+  [role="button"],
+  .frame-card,
+  .spw-chip,
+  .spec-pill,
+  [data-spw-interaction-contract],
+  [data-spw-gesture-contract],
+  .spw-page-landmarks a,
+  .spw-section-handle-step
+):not(:where([data-spw-floating-chrome], [data-spw-floating-chrome] *)):active {
+  transform: scale(
+    calc(1 - ((1 - var(--spw-micro-press-scale, 0.985)) * var(--spw-interaction-scale, 1)))
+  );
+}
+
+/* Gesture-contract hosts are sections, articles, figures and details. They
+   carry no border or background of their own, so travel alone is close to
+   invisible on them; the ring is what makes the contact legible. It is no
+   longer coarse-only, because the report named clicks as well as taps. */
+:where([data-spw-gesture-contract]:active) {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color) 24%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--active-op-color) 8%, transparent);
+}
+
+/* Links are inline boxes, so a transform does not apply to them. Prose links
+   had no press state of any kind; they now finish the same reading the reset
+   starts on hover instead of borrowing a control's shrink. */
+:where(a[href]):active {
+  text-decoration-color: var(--active-op-color, currentColor);
+  text-decoration-thickness: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    button,
+    summary,
+    [role="button"],
+    .frame-card,
+    .spw-chip,
+    .spec-pill,
+    [data-spw-interaction-contract],
+    [data-spw-gesture-contract],
+    .spw-page-landmarks a,
+    .spw-section-handle-step
+  ):active {
     transform: none;
   }
 }
@@ -26744,8 +26846,17 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   display: none !important;
 }
 
+/* Keep the outline; add the glow. This used to set `outline: none` and put the
+   whole focus ring in a box-shadow, which loses it in two common places: a
+   box-shadow is clipped by any overflow:hidden ancestor, and any component that
+   sets its own :focus box-shadow replaces it outright. The reset's outline
+   (reset/base.css) is the ring that survives both, and because components
+   outranks reset this zero-specificity rule was silently removing it site-wide
+   — along with --focus-ring-color and --focus-ring-offset, which had no other
+   consumer left. The shadow stays as the soft halo it was always drawing. */
 :where(:focus-visible) {
-  outline: none;
+  outline: 2px solid var(--focus-ring-color, var(--teal, #008080));
+  outline-offset: var(--focus-ring-offset, 3px);
   box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
 }
 
@@ -31288,6 +31399,40 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .frame-card, .frame-panel) 
   --spw-electrode: acted;
 }
 
+/* ==========================================================================
+   Grounded — the negative pole
+   --------------------------------------------------------------------------
+   Everything above this point is a way of saying yes. The ladder could report
+   latent, armed, preview and acted, and could name four kinds of discharge,
+   but it had no way at all to say "your touch arrived and there was no arc
+   here" — so that case rendered as nothing, which is indistinguishable from a
+   surface that is broken. charge-cycle.spw always listed `grounded` among its
+   phases and charge-field.js always carried an intensity for it; this is the
+   reading that was missing, and it is what makes the ladder signed.
+
+   Grounded must not look like a reward. Charge sinks inward instead of
+   sparking outward: the ring collapses to an inset, saturation drops, and
+   nothing travels. A reader should be able to tell "nothing is here" from
+   "something happened" without being taught which is which.
+
+   kernel/dom-contracts.js#groundInteraction is the only writer, it is always
+   driven by a real interaction, and it clears itself — a host is never
+   grounded at first paint. See electrostatic-affordances.spw#do_not_author.
+   ========================================================================== */
+:where([data-spw-charge="grounded"], [data-spw-charge-phase="grounded"]) {
+  --spw-electrode: latent;
+  --spw-electrode-ring: 0;
+  --spw-induced-field: 0;
+  --spw-discharge-color: color-mix(in srgb, currentColor 34%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, currentColor 18%, transparent),
+    inset 0 -2px 0 -1px color-mix(in srgb, currentColor 12%, transparent);
+  filter: saturate(0.82);
+  transition:
+    box-shadow var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease),
+    filter var(--spw-time-control, 140ms) var(--spw-ease-control, ease);
+}
+
 /* Channel: placing an acted terminal into a region multiplies hold.
    Material lives in projection-attenuation.css. This only names the role.
    data-spw-region is seat-exclusive (region-component-ecology.spw) — it
@@ -31432,6 +31577,18 @@ html[data-spw-interaction-phase="approach"] :where([data-spw-operator]:is(:hover
   --spw-electrode-ring: 0.55;
 }
 
+/* Contact. :hover and :focus-visible are proximity readings — neither one fires
+   for a finger, so before this rule a terminal could only light on a fine
+   pointer or a keyboard. A touch went straight from latent to armed-after-hold,
+   which is 420ms of nothing. Contact is the terminal actually closing, so it
+   reads at least as strongly as approach and needs no phase on the root to say
+   so. Not folded into the acted rule below: acted is a landed discharge and
+   should stay durable, while this lasts exactly as long as the finger does. */
+:where([data-spw-operator]:active) {
+  --spw-electrode: preview;
+  --spw-electrode-ring: max(var(--spw-electrode-ring, 0), 0.62);
+}
+
 :where([data-spw-operator][data-spw-charge="charged"]),
 :where([data-spw-operator][data-spw-charge-phase="charged"]),
 html[data-spw-interaction-phase="inspect"] :where([data-spw-section-state="active"] [data-spw-operator]),
@@ -31488,7 +31645,16 @@ html[data-spw-microinteraction-pulse] :where(
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Reduce movement, not acknowledgement. This block used to force every
+     terminal back to latent with a zero ring, which removed the only feedback a
+     reduced-motion reader had left — the ring is a static outline, not motion,
+     and the reward contract does not exempt anyone from it. Terminals keep the
+     ring they earn; what stops is travel and the induced field's drift. */
   :where([data-spw-operator]) {
+    --spw-induced-field: 0;
+  }
+
+  :where([data-spw-operator]:not(:active):not(:hover):not(:focus-visible)) {
     --spw-electrode: latent;
     --spw-electrode-ring: 0;
   }
@@ -38678,7 +38844,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
 ) {
   --handle-arrival-lift: 0px;
   --handle-arrival-opacity: 1;
-  --interaction-excitement: 0;
+  --interaction-excitement: var(--spw-excitement-rest, 0);
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -38729,7 +38895,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   .persona-chip,
   [data-spw-handle="true"]
 ):is(:hover, :focus-visible) {
-  --interaction-excitement: 0.82;
+  --interaction-excitement: var(--spw-excitement-proximity, 0.82);
 }
 
 @keyframes spw-operator-breath {
@@ -38761,7 +38927,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   .persona-chip,
   [data-spw-handle="true"]
 ):is([data-spw-selection="active"], [data-spw-selection="selected"], [aria-current="page"], [aria-pressed="true"]) {
-  --interaction-excitement: 1;
+  --interaction-excitement: var(--spw-excitement-held, 1);
   animation: spw-operator-breath 2s ease-in-out infinite;
 }
 
@@ -38778,7 +38944,12 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   .spw-guide-chip,
   [data-spw-handle="true"]
 ):active {
-  --interaction-excitement: 0.42;
+  /* Contact outranks proximity. This rung read 0.42 against hover's 0.82, so a
+     click made a handle dimmer and lower than merely pointing at it — the charge
+     ladder ran backwards at the one moment the reader is actually touching it.
+     Conduction beats induction; the press keeps its downward travel, but it no
+     longer discharges the glow to get it. */
+  --interaction-excitement: var(--spw-excitement-contact, 0.94);
   transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));
   transition:
     transform var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1))),

@@ -615,6 +615,62 @@ export function isOwnAffordanceTarget(handle, target) {
   return !interactive || interactive === handle;
 }
 
+/* How long a grounded reading stays legible. Long enough to be seen as an
+   answer, short enough that it never reads as a stuck state. Matches the
+   commit band rather than the settle band: grounding is a resolution, not a
+   decay. */
+const GROUNDED_READING_MS = 520;
+
+/* The negative pole of the charge ladder.
+ *
+ * charge-cycle.spw has always listed `grounded` among its phases and
+ * charge-field.js has always carried an intensity for it, but nothing ever
+ * wrote it as a *reading* — so an interaction that moved nothing produced
+ * nothing, which is the one outcome interaction-microstates.spw#reward_contract
+ * forbids: "An interaction the surface swallows is a contract violation, not a
+ * neutral outcome." Its own potential_forms names the remedy, "unavailable arcs
+ * read as grounded, with the reason inspectable". This is that writer.
+ *
+ * Grounding is deliberately event-driven and self-clearing. A host grounded at
+ * first paint would advertise deadness before anyone touched it, which
+ * electrostatic-affordances.spw#do_not_author rules out for charge stickers
+ * generally. Nothing here is persisted and nothing accumulates.
+ *
+ * `reason` rides the existing runtime-mutation channel rather than a new
+ * attribute family, so the answer to "why did nothing happen" is inspectable
+ * in the same place every other runtime write already explains itself.
+ */
+export function groundInteraction(el, reason = 'no-arc', options = {}) {
+  if (!(el instanceof Element)) return false;
+  // Never overwrite a live charge. A terminal mid-discharge is doing something;
+  // grounding is only for the case where nothing is.
+  const current = el.dataset?.spwCharge;
+  if (current && current !== 'grounded') return false;
+
+  writeRuntimeDatasetValues(el, {
+    spwCharge: 'grounded',
+    spwRuntimeMutator: options.mutator || 'ground',
+    spwRuntimeMutationReason: reason,
+    spwRuntimeStylingAxis: 'charge',
+  }, {
+    source: options.mutator || 'ground',
+    reason,
+  });
+
+  const view = el.ownerDocument?.defaultView || globalThis;
+  view.clearTimeout?.(groundedTimers.get(el));
+  groundedTimers.set(el, view.setTimeout?.(() => {
+    groundedTimers.delete(el);
+    if (el.dataset?.spwCharge === 'grounded') {
+      removeDatasetValues(el, ['spwCharge', 'spwRuntimeMutationReason']);
+    }
+  }, options.duration || GROUNDED_READING_MS));
+
+  return true;
+}
+
+const groundedTimers = new WeakMap();
+
 /**
  * Inline room actually available to floating chrome.
  *
