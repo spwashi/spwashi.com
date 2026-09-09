@@ -25,6 +25,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PLAN_REFINEMENTS } from './plan-refinements-data.mjs';
+import { extractPlanGoal } from './lib/plan-index-goal.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -569,20 +570,10 @@ function parsePlanArtifact(absDir, slug, files, relDir = '') {
   const titleMatch = source.match(/^#\s+(?:Plan|Fix):\s*(.+)$/im) || source.match(/^#\s+(.+)$/m);
   const title = titleMatch ? titleMatch[1].trim() : slug;
 
-  let goal = '';
-  if (kind === 'fix') {
-    const planned = sectionText(source, 'Planned Fix');
-    const diagnosis = sectionText(source, 'Diagnosis');
-    goal =
-      bulletLines(planned, 1)[0] ||
-      firstParagraph(planned) ||
-      firstParagraph(diagnosis) ||
-      bulletLines(sectionText(source, 'Failures'), 1)[0] ||
-      firstParagraph(source);
-  } else {
-    goal = sectionText(source, 'Public Goal') || sectionText(source, 'Goal') || firstParagraph(source);
-  }
-  goal = goal.replace(/\s+/g, ' ').trim().replace(/^[-*]\s+/, '');
+  const goal = extractPlanGoal(source, {
+    kind,
+    override: PLAN_REFINEMENTS[slug]?.goal || '',
+  });
 
   const scopeSection = sectionText(source, 'Scope');
   const scopeIn = bulletLines(scopeSection.split(/out of scope/i)[0] || scopeSection, 4);

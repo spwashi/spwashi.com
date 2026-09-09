@@ -40,7 +40,7 @@ export const PLAN_REFINEMENTS = {
     },
     refinement: {
       tone: 'Honest meta-work — celebrate inspectability wins, name inflation costs.',
-      accuracy: 'The 2026-07-12 manual sweep reviewed all 279 plan .spw files and found owner overlap, stale WIP state, and generated conceptual filler.',
+      accuracy: '2026-09-09 recensus: 195 live PLAN.md vs 11 archived — still inverted. Do not generate indexes to record the count.',
       direction: 'Consolidate from the reviewed keep/merge/rework/archive decisions; do not run another mass index expansion.',
       inspiration: 'The next agent session should cost less discovery than the last.',
       alignment: 'commit-skill-induction audit, agentic-dev-contracts, spw-plan-maintenance skill',
@@ -194,10 +194,40 @@ export const PLAN_REFINEMENTS = {
     },
     refinement: {
       tone: 'Inviting wayfinding — curiosity without chrome sprawl.',
-      accuracy: 'Section handle and resonance landed; full scientifically-social taxonomy is long-horizon.',
-      direction: 'One mobile chrome polish pass on header + handle before new menu experiments.',
+      accuracy: 'Hamburger on coarse/pocket landed. CSS/JS share DRAWER_MENU_QUERY. Closed-toggle swipe cycles rooms. Open-drawer swipe is unpaid and must stay unpaid until priming names next verbs.',
+      direction: 'Hold the shared drawer query. Do not invent a fourth swipe engine on the open drawer.',
       inspiration: 'Navigation should feel like entering a workshop, not a settings panel.',
-      alignment: 'relational-attention-media, space-menu-arcs-electrical, metaphor-primitive-research',
+      alignment: 'navigation-header-disclosure, interaction-microstates expected_behavior, touch-gesture-contracts f14',
+    },
+  },
+  'navigation-header-disclosure': {
+    goal: 'Reduce header overload. Coarse/pocket disclosure is a glyph hamburger. Labeled Routes is inline-mode copy on a hover/fine pointer.',
+    conceptual: {
+      thesis: 'Coarse/pocket hamburger; Routes chip only as inline-mode copy.',
+      concepts: ['hamburger', 'disclosure', 'overlay', 'drawer-menu', 'inline-routes'],
+      surfaces: ['scripts/template.mjs', 'public/css/shell/chrome/navigation.css', 'public/js/runtime/shell-disclosure.js'],
+    },
+    refinement: {
+      tone: 'Pocket-first chrome — glyph when a finger is on the page.',
+      accuracy: 'Hamburger landed b893cec3. CSS and JS share DRAWER_MENU_QUERY so the strip and the toggle cannot dual-paint.',
+      direction: 'Keep hamburger/CSS/JS query one string. Do not re-label Routes as primary on coarse.',
+      inspiration: 'A finger gets a drawer, not a ribbon.',
+      alignment: 'chrome-navigation-wonder, interaction-microstates expected_behavior, gesture-state-refinement',
+    },
+  },
+  'gesture-state-refinement': {
+    goal: 'Make shared gesture behavior calmer on mobile: leaf controls stay themselves; prime names the next reachable verb.',
+    conceptual: {
+      thesis: 'Gesture hosts must not claim leaf controls. A prime names the next verb, not just a glow.',
+      concepts: ['leaf-control', 'prime-telegraph', 'brace', 'region-menu', 'lens-mode'],
+      surfaces: ['public/js/kernel/dom-contracts.js', 'public/js/runtime/brace-gestures.js', 'public/js/runtime/region-menu.js', 'public/js/semantic/image-interaction.js'],
+    },
+    refinement: {
+      tone: 'Do this / expect this — not a fourth gesture ladder.',
+      accuracy: 'isLensModeControl skips brace/hold/double-tap on mode-switch. Image prime names swipe and hold. Settings copy still unpaid.',
+      direction: 'Keep leaf-control skips in one helper. Do not teach swipe on tab strips.',
+      inspiration: 'A tap should teach what can follow.',
+      alignment: 'touch-gesture-contracts f13/f14, interaction-microstates expected_behavior',
     },
   },
   'spellcraft-authoring': {

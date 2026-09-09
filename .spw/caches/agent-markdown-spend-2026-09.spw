@@ -107,7 +107,7 @@ do_not = `Do not rewrite AGENTS.md from this cache. Do not invent a markdown lin
 
 ^"ms-006_plan_archive_quota"{
   id = "ms-006"
-  claim = `The archive quota is not held. 199 active PLAN.md vs 5 archived. Plan-maintenance success metric (smaller next census) is inverted.`
+  claim = `The archive quota is not held. 199 active PLAN.md vs 5 archived (2026-09-06). 2026-09-09 recensus: 195 live vs 11 archived — still inverted.`
   evidence = #[
     `@induction_pain case_plan_ecology_inflation`,
     `plans/README.md Current Semantic Rails lists ~20 tracks — already a second Open first`

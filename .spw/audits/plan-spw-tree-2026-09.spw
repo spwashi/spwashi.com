@@ -145,6 +145,20 @@ audit_run: .{
   ][reg=set]
 }
 
+^"recensus_2026_09_09"{
+  measured_at = `2026-09-09`
+  live_plan_md = 195
+  archived_plan_md = 11
+  total_plan_md = 206
+  plan_index_spw = 197
+  site_spw_files = 352
+  caches = 37
+  integrity = `labeled-brace pathRefs (~"open") are not files; spw-integrity skips them via isFollowablePathRef`
+  disclosure_ia = `navigation-header-disclosure named Routes as primary; coarse glyph hamburger landed b893cec3; owner plan, index, and PLAN_REFINEMENTS retargeted; CSS/JS share DRAWER_MENU_QUERY`
+  gesture_ia = `gesture-state-refinement now names leaf-control skips and prime telegraph (f13/f14). Open-drawer swipe stays unpaid.`
+  still_inverted = `195 live vs 11 archived. Do not generate indexes to record this.`
+}[reg=facet]
+
 ^"next_slices"{
   done_here = `audit + root-index bucket truth; 2026-09-07 archive of seven citation-safe folders`
   landed_2026_09_08 = `owner-registry wave B; ecology hubs; July caches cold`

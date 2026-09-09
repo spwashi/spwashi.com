@@ -20,7 +20,7 @@
 
 ## Landed (2026-07)
 
-- `public/css/shell/chrome/navigation.css` reserves `min-inline-size` on `.spw-nav-toggle-copy` and `.spw-nav-toggle-label` so disclosure copy changes do not reflow the header grid.
+- `public/css/shell/chrome/navigation.css` reserves `min-inline-size` on `.spw-nav-toggle-copy` and `.spw-nav-toggle-label` so disclosure copy changes do not reflow the header grid. That copy is inline-mode only; toggle-field / coarse / pocket hide it and keep the glyph.
 
 ## Deferred Follow-Ups
 

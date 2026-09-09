@@ -1,7 +1,7 @@
-# Review 2026-07-12 — keep as the header disclosure owner; Routes stays primary and secondary tools must earn visible space.
+# Review 2026-07-12 — keep as the header disclosure owner; coarse/pocket hamburger is primary, Routes chip is inline-mode copy.
 # Plan Index — Navigation Header Disclosure
 #
-# Reduce header overload while keeping the site's semantic controls discoverable: - keep Routes as the primary navigation disclosure - make Media Cauldron and current attention…
+# Reduce header overload: glyph hamburger on coarse/pocket; labeled Routes on hover/fine inline.
 
 #>plan_navigation_header_disclosure_index
 #:index #!plan
@@ -12,7 +12,7 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Reduce header overload while keeping the site's semantic controls discoverable: - keep Routes as the primary navigation disclosure - make Media Cauldron and current attention posture visible in the header - move secondary reading/display controls behind a Display disclosure on constrained layouts - preserve existing shell-disclosure, settings, cauldron, and route-menu ownership - keep the overlay contract explicit so data-spw-menu-overlay, data-spw-menu-mode, data-spw-menu-topology, and aria-expanded remain separately legible`
+  goal = `Reduce header overload. Coarse/pocket disclosure is a glyph hamburger. Labeled Routes is inline-mode copy on a hover/fine pointer. Cauldron and attention posture stay visible. Display holds secondary tuners. Overlay contract stays explicit.`
  owner = `navigation-header-disclosure`
  kind = `plan`
  bucket = `css_layout_interaction`
@@ -28,7 +28,7 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Reduce header overload while keeping the site's semantic controls discoverable: - keep Routes as the primary navigation…`
+  thesis = `Coarse/pocket hamburger; Routes chip only as inline-mode copy.`
  concepts = #[
   `header`,
   `disclosure`,
@@ -74,11 +74,11 @@ dispatch: .{
 ^"owner_claim"{
  claim_id = "plan-navigation_header_disclosure-001"
  layer = "pragmatic"
- hypothesis = `Reduce header overload while keeping the site's semantic controls discoverable: - keep Routes as the primary navigation disclosure - make Media Cauldron and current attention posture visible in the header - move secondary reading/display controls behind a Display disclosure on constrained layouts - preserve existing shell-disclosure, settings, cauldron, and route-menu ownership - keep the overlay contract explicit so data-spw-menu-overlay, data-spw-menu-mode, data-spw-menu-topology, and aria-expanded remain separately legible`
+ hypothesis = `Coarse/pocket hamburger is the primary disclosure; labeled Routes is inline-mode copy. Overlay contract stays explicit.`
  spec_ref = ~"./PLAN.md"
  impl_ref = ~"../../../scripts/template.mjs"
- probe_ref = `node --check public/js/runtime/shell-disclosure.js`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/template.mjs unchanged or untested.`
+ probe_ref = `grep -n "pointer: coarse" public/js/runtime/shell-disclosure.js public/css/shell/chrome/navigation.css`
+ falsification = `CSS and JS advertise different drawer queries, or a coarse fold shows both the Routes chip and the hamburger.`
  status = "active"
 }[reg=facet]
 
@@ -96,7 +96,7 @@ editor_prompts: #[
 ][reg=set]
 
 invariants: #[
- `Owner intent: Reduce header overload while keeping the site's semantic controls discoverable: - keep Routes as the primary navigation disclosure - make…`,
+ `Owner intent: coarse/pocket glyph hamburger; Routes chip is inline-mode copy.`,
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]

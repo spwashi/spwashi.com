@@ -86,6 +86,8 @@ fixity = "stable"
   }[reg=facet]
   minimum = `Semantic rails, canonical tracks, and completed_reference carry hand-authored plan_refinement; maintain script preserves PLAN_REFINEMENTS map.`
   anti_pattern = `Pasting PLAN.md Public Goal into all five fields — each axis must add distinct steering.`
+  goal_extraction = `intent.goal is the first paragraph of Goal/Public Goal, or PLAN_REFINEMENTS[slug].goal. Never concatenate the whole section. A --force-generated rebuild that dumps every bullet into goal restales stale primary-affordance copy.`
+  owner = ~"../../scripts/lib/plan-index-goal.mjs"
 }
 
 ^"research_bridge_template"{

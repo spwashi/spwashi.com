@@ -33,7 +33,7 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 - Skills are thin wrappers over the pinned workbench. Site-workflow holds layers and focuses.
 - `agentic-dev-contracts` landed the cheap "what is this route?" + "did I break it?" questions.
 - Public `/about/plans/` is still a hand-maintenance tax.
-- Archive quota is the success metric. 199 active `PLAN.md` vs 5 archived (2026-09-06 census) is inverted.
+- Archive quota is the success metric. 2026-09-09: 195 live `PLAN.md`, 11 archived (still inverted vs 2026-09-06's 199/5). Census: `.spw/audits/plan-spw-tree-2026-09.spw`.
 
 ## Failure ledger (do not relearn)
 
@@ -48,6 +48,7 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 - Always-on context is I/O, not thinking (Spotify Portal analogue, RT 2026-09-06). Word budgets live in `scripts/check-agent-contracts.mjs`.
 - Guides without sensors are suggestions. Open first names the file; Sense first runs the instrument.
 - Full `visual:checks` is dear. Cheap proof is `npm run visual:checks -- --ids=<fixture>`.
+- `--force-generated` plan indexes must not concatenate Goal bullets. Goal is first paragraph or `PLAN_REFINEMENTS[slug].goal`.
 
 ## Do not
 

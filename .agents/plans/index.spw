@@ -38,6 +38,12 @@ intent: .{
  action = `Execute the 2026-07-12 next_rule on this root index: merged and completed_reference leave active_backlog, fix_queue, and topic buckets. Folders stay. Do not --force-generated.`
 }[reg=facet]
 
+^"recensus_2026_09_09"{
+ census = `195 live PLAN.md, 11 archived PLAN.md, 197 index.spw, 352 site .spw, 37 caches`
+ audit = ~"../../.spw/audits/plan-spw-tree-2026-09.spw#recensus_2026_09_09"
+ still_inverted = `Archive quota remains inverted. Do not generate indexes to record the count.`
+}[reg=facet]
+
 @readme: ~"./README.md"
 @planning_ecology: ~"../../.spw/conventions/planning-ecology.spw"
 @plan_index_convention: ~"../../.spw/conventions/plan-index.spw"

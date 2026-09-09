@@ -42,3 +42,7 @@ Make shared gesture behavior calmer on mobile, remove accidental menu / brace ac
 ## Landed 2026-08-31 — texture-slice respects coarse pointers
 
 `public/js/media/texture-slice.js` binds pointer crop only when the pointer is fine, motion is allowed, and capture is off. CSS hover lift is gated to `(hover: hover) and (pointer: fine)`; keyboard `focus-within` still lifts. Coarse now also reads `html[data-spw-pointer-mode]`. Capture mode and `data-spw-reduce-motion` rebind after mount. This does not reopen brace-gestures or region-menu.
+
+## Landed 2026-09-09 — leaf controls stay themselves; prime names the next verb
+
+Mode-switch buttons reuse `.frame-sigil`, which brace and region-menu treated as gesture hosts. `isLensModeControl` in `dom-contracts.js` skips braceTarget, hold-open, and coarse double-tap on those seats. Image prime readout now names swipe and hold; lensed state names the view. Settings-page “do this / expect this” copy is still unpaid. Do not teach swipe on the home Study/Build/Play strip.

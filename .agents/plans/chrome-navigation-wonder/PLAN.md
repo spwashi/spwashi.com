@@ -1,5 +1,13 @@
 # Chrome, Navigation, and Metaphysical Wonder (2026 review)
 
+## Status — 2026-09-09: coarse/pocket glyph hamburger (`b893cec3`)
+
+Closed-toggle swipe still cycles rooms (`02c7757a`). The disclosure itself is
+now a hamburger on a coarse pointer, not a labeled Routes chip. CSS and JS
+share `DRAWER_MENU_QUERY` so the strip and the toggle cannot dual-paint.
+Open-drawer swipe remains the unpaid fourth edge — do not add it until
+priming names the next verb (touch-gesture-contracts f14).
+
 ## Status — 2026-09-04: mobile edge/chrome swipe, 3 of 4 rooms done
 
 "On a phone, a visitor can leave the current room in more than one direction

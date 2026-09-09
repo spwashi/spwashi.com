@@ -1,7 +1,7 @@
 # Review 2026-07-12 — keep as the canonical mobile gesture-safety owner, with scroll cancellation and keyboard parity as proofs.
 # Plan Index — gesture-state-refinement
 #
-# Make shared gesture behavior calmer on mobile, remove accidental menu / brace activations during ordinary scrolling, and document the resulting interaction grammar through both…
+# Make shared gesture behavior calmer on mobile: leaf controls stay themselves; prime names the next reachable verb.
 
 #>plan_gesture_state_refinement_index
 #:index #!plan
@@ -12,7 +12,7 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Make shared gesture behavior calmer on mobile, remove accidental menu / brace activations during ordinary scrolling, and document the resulting interaction grammar through both visible settings-page copy and stable console helpers. Keep this pass focused on gesture intent; do not reopen the full shell or chrome ownership model here.`
+ goal = `Make shared gesture behavior calmer on mobile: leaf controls stay themselves; prime names the next reachable verb.`
  owner = `gesture-state-refinement`
  kind = `plan`
  bucket = `css_layout_interaction`
@@ -28,19 +28,19 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Make shared gesture behavior calmer on mobile, remove accidental menu / brace activations during ordinary scrolling,…`
+ thesis = `Gesture hosts must not claim leaf controls. A prime names the next verb, not just a glow.`
  concepts = #[
-  `gesture`,
-  `gesture-state-refinement`,
-  `behavior`,
-  `calmer`,
-  `mobile`,
+  `leaf-control`,
+  `prime-telegraph`,
+  `brace`,
+  `region-menu`,
+  `lens-mode`,
  ][reg=set]
  surfaces = #[
+  `js/kernel/dom-contracts.js`,
   `js/runtime/brace-gestures.js`,
   `js/runtime/region-menu.js`,
-  `js/site.js`,
-  `settings/index.html`,
+  `js/semantic/image-interaction.js`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]

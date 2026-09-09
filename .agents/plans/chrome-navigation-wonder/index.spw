@@ -46,10 +46,10 @@ intent: .{
 
 ^"plan_refinement"{
  tone = `Inviting wayfinding — curiosity without chrome sprawl.`
- accuracy = `Section handle and resonance landed; full scientifically-social taxonomy is long-horizon.`
- direction = `One mobile chrome polish pass on header + handle before new menu experiments.`
+ accuracy = `Hamburger on coarse/pocket landed. CSS/JS share DRAWER_MENU_QUERY. Closed-toggle swipe cycles rooms. Open-drawer swipe is unpaid and must stay unpaid until priming names next verbs.`
+ direction = `Hold the shared drawer query. Do not invent a fourth swipe engine on the open drawer.`
  inspiration = `Navigation should feel like entering a workshop, not a settings panel.`
- alignment = `relational-attention-media, space-menu-arcs-electrical, metaphor-primitive-research`
+ alignment = `navigation-header-disclosure, interaction-microstates expected_behavior, touch-gesture-contracts f14`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"

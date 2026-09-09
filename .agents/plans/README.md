@@ -25,8 +25,8 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 - `modular-experience-slices/PLAN.md` — use slice contracts when ownership spans HTML, CSS, JS, `.spw`, validation, and practice beds.
 - `dimensional-expression-navigation/PLAN.md` — connect 0D handles through 4D replay paths with content-responsive navigation and honest authored/contextual boundaries.
 - `interaction-loop-contract/PLAN.md` — centralize shared interaction-feedback states, refresh reasons, and cancel/eligibility handling.
-- `gesture-state-refinement/PLAN.md` — calm gesture intent on mobile and document the resulting interaction grammar.
-- `navigation-header-disclosure/PLAN.md` — keep header disclosure roles, overlay state, and compact action ownership legible.
+- `gesture-state-refinement/PLAN.md` — calm gesture intent on mobile; leaf controls stay themselves; prime names the next verb.
+- `navigation-header-disclosure/PLAN.md` — glyph hamburger on coarse/pocket; labeled Routes is inline-mode copy; overlay contract stays explicit.
 - `floating-chrome-stack/FIX.md` — normalize floating chrome roles, tiers, console ownership, and viewport participation.
 - `semantic-copy-depth/PLAN.md` — formalize entry/normal/dense/technical copy depth alongside the existing semantic layers.
 - `spw-architecture-ecology/PLAN.md` — `.spw` topology, promotion protocol, ecology coordinators, owner registry, component-template surface, `site.spw` slimness, review graduation, language-ecology alignment, slice promotion, convention hygiene, and precipitated agent/editor indexes.

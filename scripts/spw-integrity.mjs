@@ -85,6 +85,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isFollowablePathRef } from './lib/spw-path-ref.mjs';
 
 const run = promisify(execFile);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -174,15 +175,17 @@ function classifyTarget(raw) {
   // never resolvable; nothing had ever told the author so.
   if (/\s\(|\s::\s|\s{2,}/.test(target)) return { kind: 'malformed', target };
   if (/^[a-z][a-z0-9+.-]*:\/\//i.test(target)) return { kind: 'external', target };
+  // Labeled braces (~"open") are pathRefs to the parser and not files.
+  if (!isFollowablePathRef(target)) return { kind: 'label', target };
   return { kind: 'path', target };
 }
 
 async function checkRef(file, target) {
   const classified = classifyTarget(target);
   if (classified.kind !== 'path') {
-    return classified.kind === 'external'
-      ? { verdict: 'ok', external: true }
-      : { verdict: 'malformed', detail: 'prose or non-path separator inside ~"…"' };
+    if (classified.kind === 'external') return { verdict: 'ok', external: true };
+    if (classified.kind === 'label') return { verdict: 'ok', label: true };
+    return { verdict: 'malformed', detail: 'prose or non-path separator inside ~"…"' };
   }
 
   const [rawPath, fragment] = classified.target.split('#');

@@ -25,6 +25,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/module-timing-contract.test.mjs',
   'scripts/tests/pinch-scale.test.mjs',
   'scripts/tests/native-affordance.test.mjs',
+  'scripts/tests/plan-ia-tooling.test.mjs',
   'scripts/tests/module-describes-contract.test.mjs',
   'scripts/tests/lens-modes.test.mjs',
   'scripts/tests/production-season-runtime.test.mjs',

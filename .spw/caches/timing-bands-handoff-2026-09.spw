@@ -43,6 +43,6 @@ source = "session 2026-09-08: Fable Patch 4; Grok Patch 5 55ef2737; remaining Pa
   gemini = `Run visual:checks on a fixture that exercises the migrated family before landing.`
 }[reg=facet]
 
-~"open"{
+^"open_questions"{
   question = `Should keyframe animations adopt the bands after ordinary transitions are consistent, or keep concrete durations for JS readability?`
 }
