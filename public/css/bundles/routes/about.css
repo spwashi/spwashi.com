@@ -623,6 +623,9 @@ body[data-spw-surface="about"] {
       grid-column: 1 / -1;
       display: grid;
       grid-template-columns: minmax(18rem, 0.78fr) minmax(26rem, 1.22fr);
+      /* Keep the masthead together; the spanning plate leaves its extra
+         height in the controls row instead of between the three text rows. */
+      grid-template-rows: repeat(3, min-content) minmax(min-content, 1fr);
       grid-auto-flow: dense;
       inline-size: 100%;
       max-inline-size: none;
