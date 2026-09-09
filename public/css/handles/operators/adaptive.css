@@ -234,6 +234,15 @@
     box-shadow var(--handle-duration-fast, 140ms) var(--handle-ease);
 }
 
+/* Inline phrases wrap as a unit. Panels that reuse the class stay `inline`
+   so later frame-panel display rules keep the seat. Long phrases shrink
+   to the measure and wrap inside; short ones like "living concepts" do
+   not split the highlight across a line break. */
+span.spw-living-term,
+span[data-spw-living-term] {
+  white-space: nowrap;
+}
+
 /* Make gestureability easy to discover even when idle — subtle garden marker that only appears on interaction or focus */
 .spw-living-term::after,
 [data-spw-living-term]::after {
