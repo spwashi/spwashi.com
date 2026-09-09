@@ -280,15 +280,6 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
     gap: 0.38rem 0.42rem;
     padding: 0.28rem 0 0.48rem;
   }
-
-  :where([data-spw-feature="home-kernel-entry"] h1) {
-    font-size: clamp(1.82rem, 1.35rem + 3vw, 3.4rem);
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] [data-spw-textual-role="lede"]) {
-    font-size: clamp(0.96rem, 0.9rem + 0.35vw, 1.08rem);
-    line-height: 1.52;
-  }
 }
 
 :where([data-spw-feature="home-kernel-entry"] [data-spw-textual-role="kicker"]) {
@@ -306,7 +297,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   max-inline-size: min(22ch, 100%);
   margin: 0;
   color: var(--home-accent-ink);
-  font-size: clamp(1.9rem, 1.1rem + 4.5vw, 5rem);
+  font-size: clamp(1.9rem, 1.1rem + 4.5cqi, 5rem);
   line-height: 1.02;
   letter-spacing: -0.045em;
   text-wrap: balance;
@@ -344,10 +335,23 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   max-inline-size: var(--home-measure-wide);
   margin: 0;
   color: color-mix(in srgb, var(--ink, #1b1f23) 90%, transparent);
-  font-size: clamp(1.12rem, 1rem + 0.6vw, 1.34rem);
+  font-size: clamp(1.12rem, 1rem + 0.6cqi, 1.34rem);
   font-weight: 400;
   line-height: 1.58;
   text-wrap: pretty;
+}
+
+/* The newspaper seat can narrow on a wide viewport; masthead type follows
+   the existing frame container, after the base rules so compact type wins. */
+@container spw-frame (max-width: 32rem) {
+  :where([data-spw-feature="home-kernel-entry"] h1) {
+    font-size: clamp(1.82rem, 1.35rem + 3cqi, 3.4rem);
+  }
+
+  :where([data-spw-feature="home-kernel-entry"] [data-spw-textual-role="lede"]) {
+    font-size: clamp(0.96rem, 0.9rem + 0.35cqi, 1.08rem);
+    line-height: 1.52;
+  }
 }
 
 :where([data-spw-feature="home-kernel-entry"] [data-spw-textual-role="note"]) {
