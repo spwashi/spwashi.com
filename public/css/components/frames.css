@@ -255,6 +255,20 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 
 .frame-body {
   display: grid;
+  /* The track has to be stated here, next to the display it belongs to.
+     region-seats.css declares minmax(0, 1fr) for this grid, but only inside
+     @container spw-hub (min-width: 40rem) — so below 40rem the grid ran with an
+     implicit auto column, which sizes to max-content. On a pocket viewport that
+     made the column wider than the grid box itself (418px of track inside a
+     320px body on /topics/software/), and .spw-frame's overflow-x: clip hid the
+     result: prose was cut mid-sentence with no scrollbar to explain it, and
+     document.scrollWidth still reported no overflow because the clip masked it.
+     100% rather than 1fr on purpose. An fr is a share of *free* space, which
+     needs a definite container width to resolve; this grid is a grid item
+     itself, so at track-sizing time its width is indefinite and the fr falls
+     back to max-content — the very thing that has to be capped. A percentage
+     resolves against the container, which is the intent either way. */
+  grid-template-columns: minmax(0, 100%);
   gap: var(--surface-gap);
   min-width: 0;
   z-index: var(--material-layer-content, 1);
