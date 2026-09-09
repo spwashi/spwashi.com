@@ -213,6 +213,37 @@
   vertical-align: baseline;
 }
 
+/* The same argument, one line up: a handle inside a heading is a label.
+ *
+ * The base handle rule sets min-height to max(2.2rem, --touch-target-min),
+ * which resolves to the 2.75rem ground-control floor on every pointer. That is
+ * correct for a chip you go and tap, and wrong for a price sitting inside its
+ * own <h3>: at 44px the pill is an atomic inline box far taller than the
+ * heading's line, so the heading text drops off its own baseline and
+ * "Seed original $35" reads as two things colliding rather than one label and
+ * its amount. Visible in the folio-prices still at every viewport.
+ *
+ * Shrinking it does not cost a tap target. These pills stay in haptics'
+ * GROUND_SELECTORS and stay tappable; WCAG's target-size criteria carry an
+ * explicit exception for a target whose size is constrained by the line-height
+ * of the surrounding non-target text, which is exactly this case. The floor
+ * applies to controls you aim at, not to a word set in a heading.
+ *
+ * Tokens rather than selectors, matching the running-copy block above.
+ * --handle-min-height-compact already exists for handles that must sit in a
+ * line; this is that situation one element up.
+ */
+:where(h1, h2, h3, h4, h5, h6, dt, summary, figcaption)
+  :where(.spec-pill, .spw-component-tag, .badge, .tag, .pill) {
+  --handle-min-height: var(--handle-min-height-compact, 1.64rem);
+  --handle-baseline-offset: 0;
+  /* An inline-flex box reports its content's baseline, and this one centres its
+     content inside padding, so aligning on that baseline still parks the pill
+     above the heading's cap height. Centring the box on the text's midline is
+     what makes "Seed original $35" read as one phrase. */
+  vertical-align: middle;
+}
+
 :where([data-spw-fixity-tier="volatile"]) {
   --spw-fixity-alpha: 0.72;
 }
