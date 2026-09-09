@@ -304,17 +304,31 @@
    * nowrap-plus-ellipsis further up: an address that elides is still an
    * address, where a verb that elides is a guess.
    *
-   * `anywhere` rather than `break-word`, because these labels are single
-   * underscore tokens — "~mental_health", "*rpg_wednesday" — and a chip is a
-   * flex item sized from its content's min-content contribution. break-word
-   * leaves that contribution at the width of the whole unbroken token, so the
-   * chip kept asking for 131px inside a 118px track and overflowed anyway.
-   * `anywhere` is the one that lets the token count as breakable when the
-   * track is measured, which is what actually lets the chip fit.
+   * Two materials sit on this one component, and they behave differently.
+   *
+   * "~mental_health" is stamped. It is one morsel of Spw — operator and
+   * operand pressed into a single mark — and it is meant to be picked up
+   * whole. A stamped thing does not tear: "~mental_h / ealth" is not a
+   * smaller morsel, it is a broken one, and the operator stops naming
+   * anything. "Move to home_frame" is written, not stamped. Writing reflows;
+   * that is what writing is for.
+   *
+   * min-content is the line between them, so CSS can tell them apart without
+   * a new attribute or a second class. A chip may never be squeezed narrower
+   * than its own longest unbreakable run: for a stamped token that is the
+   * whole token, so the morsel keeps its shape and the row wraps to give it
+   * room; for a written phrase it is one word, so the phrase wraps inside the
+   * pill as it should. overflow-wrap stays at break-word rather than
+   * anywhere — anywhere lets a token count as breakable while the track is
+   * measured, which is exactly the permission a morsel must not give.
+   *
+   * The squeeze this answers is runtime-states.css `flex: 1 1 11rem` on
+   * .frame-operators > .spw-chip: a shrinkable basis pulled these chips down
+   * to 118px against a 131px token. The tray was taking room from the morsel.
    */
   white-space: var(--spw-control-white-space, normal);
-  overflow-wrap: anywhere;
-  min-inline-size: 0;
+  overflow-wrap: break-word;
+  min-inline-size: min-content;
   max-inline-size: 100%;
   text-align: center;
   text-decoration: none;
