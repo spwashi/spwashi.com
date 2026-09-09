@@ -215,6 +215,8 @@ export function initSpwHaptics() {
   document.addEventListener('pointerout', onChargeLeave, true);
   document.addEventListener('focusin', onChargeFocusIn, true);
   document.addEventListener('focusout', onChargeFocusOut, true);
+  document.addEventListener('keydown', onConceptInspectKeydown);
+  document.addEventListener('click', onConceptInspectOutsideClick);
 
   unsubscribeBus = [
     bus.on('spell:reset', () => guardCall('haptics:reset', resetHaptics)),
@@ -236,6 +238,9 @@ export function initSpwHaptics() {
     document.removeEventListener('pointerout', onChargeLeave, true);
     document.removeEventListener('focusin', onChargeFocusIn, true);
     document.removeEventListener('focusout', onChargeFocusOut, true);
+    document.removeEventListener('keydown', onConceptInspectKeydown);
+    document.removeEventListener('click', onConceptInspectOutsideClick);
+    closeConceptInspect();
 
     unsubscribeBus.forEach((off) => off?.());
     unsubscribeBus = [];
@@ -263,6 +268,16 @@ function onGroundToggleClick(event) {
     // the reward contract's own counter-example. Show the tap being absorbed
     // and say why, instead of letting it disappear.
     groundInteraction(target, 'already-gathered', { mutator: 'haptics' });
+    return;
+  }
+  // The tap half of `tap:inspect hold:prime-to-cauldron`. This has to sit
+  // ahead of shouldIgnoreGroundToggle, which refuses living terms outright so
+  // that a tap cannot latch one — correct, but on its own it left the tap
+  // doing nothing at all.
+  if (isInspectableLivingTerm(target)) {
+    event.preventDefault();
+    event.stopPropagation();
+    openConceptInspect(target, { source: 'tap' });
     return;
   }
   if (shouldIgnoreGroundToggle(target, event)) return;
@@ -389,6 +404,17 @@ function onPrimeKeydown(event) {
   if (target.closest('a[href], button, input, textarea, select')) return;
 
   event.preventDefault();
+
+  // Keyboard parity with the pointer, on the same verb. Enter used to gather a
+  // living term outright, which meant Enter and a tap did different things to
+  // the same word and the keyboard had no way to reach the inspect side at
+  // all. Enter now opens the note, and the note carries a gather button — so
+  // both paths reach both arcs. Everything else that primes still primes.
+  if (isInspectableLivingTerm(target)) {
+    openConceptInspect(target, { source: 'keyboard' });
+    return;
+  }
+
   collectPrimeCandidate(target, event, 'keyboard-prime');
 }
 
@@ -776,7 +802,247 @@ function annotateCauldronCandidates(root = document) {
     node.dataset.spwCauldronCandidate = node.dataset.spwCauldronCandidate || 'true';
     node.dataset.spwGestureContract = node.dataset.spwGestureContract || 'tap:inspect hold:prime-to-cauldron';
     if (!node.title) node.title = 'tap to inspect; hold to gather as a cauldron ingredient';
+    annotateLivingTermRole(node);
   });
+}
+
+/* ==========================================================================
+   Concept inspection — the tap half of the living-term contract
+   --------------------------------------------------------------------------
+   The home page says it in running copy: "Highlighted words are living
+   concepts — tap to inspect, hold to prime." Every living term carries
+   `tap:inspect hold:prime-to-cauldron` from annotateCauldronCandidates above.
+
+   Hold has always worked, and so has Enter. Tap did not. shouldIgnoreGroundToggle
+   deliberately refuses to latch a living term on tap — its comment reads "A tap
+   should inspect, not latch" — but nothing was ever wired to do the inspecting,
+   so the tap fell past every handler and the reader got nothing back. Silence
+   is the one outcome interaction-microstates rules out: an interaction either
+   rewards with feedback or with clarity about the arcs available. This section
+   is the missing half, and it keeps the pointer and the keyboard on the same
+   verb so the two paths stay honest with each other.
+   ========================================================================== */
+
+const LIVING_TERM_SELECTOR = '.spw-living-term, [data-spw-living-term]';
+const CONCEPT_POPOVER_CLASS = 'spw-concept-popover';
+
+let conceptPopover = null;
+let conceptPopoverTerm = null;
+
+/** A living term is the bare word in running copy. Chips, sigils and real
+ *  links already carry their own affordance and must keep it. */
+function isInspectableLivingTerm(el) {
+  if (!(el instanceof HTMLElement)) return false;
+  if (!el.matches(LIVING_TERM_SELECTOR)) return false;
+  if (el.matches('.spw-chip, .frame-sigil, a[href], button, summary')) return false;
+  return !el.closest('[data-spw-groundable="false"]');
+}
+
+/** Say out loud what the term already behaves like.
+ *
+ *  These render as `<span tabindex="0">` with no role and no state, so a
+ *  screen reader announced the site's central mechanic as plain prose: the
+ *  word was reachable by Tab and did something on Enter, and nothing said so.
+ *  The visible text stays the accessible name, which keeps the sentence
+ *  readable; the title set above carries the gesture pair as the description. */
+function annotateLivingTermRole(node) {
+  if (!isInspectableLivingTerm(node)) return;
+  if (!node.hasAttribute('role')) node.setAttribute('role', 'button');
+  if (!node.hasAttribute('tabindex')) node.tabIndex = 0;
+  node.setAttribute('aria-haspopup', 'dialog');
+  if (!node.hasAttribute('aria-expanded')) node.setAttribute('aria-expanded', 'false');
+}
+
+function conceptRowsFor(detail) {
+  return [
+    ['expression', detail.expression],
+    ['reads as', detail.substrate],
+    ['climate', detail.context],
+    ['wonder', detail.wonder],
+    ['sits beside', detail.adjacent],
+    ['not to be confused with', detail.contrast],
+    ['practised as', detail.practice],
+  ].filter(([, value]) => typeof value === 'string' && value.trim());
+}
+
+function buildConceptPopover(term) {
+  const detail = buildSemanticDetail(term, { source: 'inspect' });
+  // Title the note with the word the reader actually tapped. Both detail.label
+  // and getElementText read data-spw-concept first, which is the slug, so the
+  // note opened saying "living-concepts" over a sentence that says "living
+  // concepts". The visible text is the thing the reader aimed at; the slug is
+  // already on the expression row directly below.
+  const spoken = normalizeText(term.textContent || '') || detail.label;
+  const popover = document.createElement('div');
+  const header = document.createElement('div');
+  const title = document.createElement('span');
+  const dismiss = document.createElement('button');
+  const grid = document.createElement('div');
+  const actions = document.createElement('div');
+  const gather = document.createElement('button');
+  const hint = document.createElement('p');
+
+  popover.className = CONCEPT_POPOVER_CLASS;
+  popover.setAttribute('role', 'dialog');
+  popover.setAttribute('aria-modal', 'false');
+  popover.setAttribute('aria-label', `${spoken} — living concept`);
+  popover.tabIndex = -1;
+  popover.id = `spw-concept-popover-${Math.random().toString(36).slice(2, 10)}`;
+
+  header.className = 'spw-concept-popover__header';
+  title.className = 'spw-concept-popover__title';
+  title.textContent = spoken;
+
+  dismiss.type = 'button';
+  dismiss.className = 'spw-popover-dismiss';
+  dismiss.setAttribute('aria-label', `Close ${spoken} note`);
+  dismiss.textContent = '×';
+
+  grid.className = 'spw-concept-popover__grid';
+  conceptRowsFor(detail).forEach(([label, value]) => {
+    const row = document.createElement('div');
+    const key = document.createElement('span');
+    const val = document.createElement('span');
+    row.className = 'spw-concept-popover__row';
+    key.className = 'spw-concept-popover__label';
+    val.className = 'spw-concept-popover__value';
+    key.textContent = label;
+    val.textContent = value;
+    row.append(key, val);
+    grid.append(row);
+  });
+
+  actions.className = 'spw-concept-popover__actions';
+  gather.type = 'button';
+  gather.className = 'spw-chip spw-concept-popover__gather';
+  // Hold is a pointer gesture with no keyboard equivalent. Without this button
+  // a keyboard reader could inspect a concept and never gather one, so the two
+  // paths would part company at exactly the interesting moment.
+  gather.textContent = isGrounded(term) ? 'gathered' : 'gather to cauldron';
+  actions.append(gather);
+
+  hint.className = 'spw-concept-popover__hint';
+  hint.textContent = 'Esc to close · hold the word to gather without opening this';
+
+  header.append(title, dismiss);
+  popover.append(header, grid, actions, hint);
+  return { popover, dismiss, gather, detail };
+}
+
+function positionConceptPopover(popover, term) {
+  const rect = term.getBoundingClientRect();
+  const popRect = popover.getBoundingClientRect();
+  const edge = 10;
+  const menuClearance = Number.parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--spw-floating-menu-clearance')
+  ) || 0;
+  const bottomLimit = window.innerHeight - edge - menuClearance;
+  let top = rect.bottom + edge;
+  let left = rect.left + (rect.width / 2) - (popRect.width / 2);
+
+  left = Math.max(edge, Math.min(left, window.innerWidth - popRect.width - edge));
+  if (top + popRect.height > bottomLimit) {
+    top = Math.max(edge, rect.top - popRect.height - edge);
+  }
+
+  popover.style.top = `${top}px`;
+  popover.style.left = `${left}px`;
+}
+
+export function closeConceptInspect({ restoreFocus = false } = {}) {
+  const term = conceptPopoverTerm;
+  const current = conceptPopover;
+  conceptPopover = null;
+  conceptPopoverTerm = null;
+
+  if (term) {
+    term.setAttribute('aria-expanded', 'false');
+    term.removeAttribute('aria-describedby');
+    if (restoreFocus) term.focus();
+  }
+
+  if (!current) return;
+  current.classList.remove('is-visible');
+  current.addEventListener('transitionend', () => current.remove(), { once: true });
+  window.setTimeout(() => current.remove(), 240);
+}
+
+function openConceptInspect(term, { source = 'tap' } = {}) {
+  if (conceptPopoverTerm === term) {
+    closeConceptInspect({ restoreFocus: true });
+    return;
+  }
+
+  closeConceptInspect();
+
+  const { popover, dismiss, gather, detail } = buildConceptPopover(term);
+  conceptPopover = popover;
+  conceptPopoverTerm = term;
+
+  document.body.append(popover);
+  positionConceptPopover(popover, term);
+
+  dismiss.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    closeConceptInspect({ restoreFocus: true });
+  });
+
+  gather.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    collectPrimeCandidate(term, event, `${source}-inspect-gather`);
+    gather.textContent = 'gathered';
+    gather.setAttribute('aria-disabled', 'true');
+  });
+
+  term.setAttribute('aria-expanded', 'true');
+  term.setAttribute('aria-describedby', popover.id);
+  setPrimeState(term, term.dataset.spwPrimeState || 'candidate');
+  tick(8);
+
+  bus.emit('concept:inspected', { ...detail, inspectedBy: source }, { target: term, element: term });
+
+  // Reveal and focus without waiting on a frame.
+  //
+  // The shared popover base rule starts at visibility:hidden and only
+  // `.is-visible` lifts it, and focus() on a visibility-hidden element is a
+  // no-op. Doing either inside requestAnimationFrame made opening the note
+  // depend on the next painted frame, and on this page that frame can be a
+  // long way off — see .spw/caches/interaction-paint-cost-2026-09.spw. The
+  // note stayed hidden and focus stayed on the word.
+  //
+  // Reading offsetHeight after the class flushes style, so the element is
+  // genuinely visible by the time focus lands. The note is appended to <body>,
+  // nowhere near the term in DOM order, so if focus does not move here a
+  // keyboard reader cannot reach the gather button at all.
+  // `.is-visible` alone is not enough to focus into. The shared rule starts at
+  // visibility:hidden and transitions visibility, so the computed value is
+  // still hidden in the tick the class lands — and focus() on a
+  // visibility-hidden element is a no-op. Waiting for a frame instead is worse
+  // here: on this page the next painted frame can be a long way off (see
+  // .spw/caches/interaction-paint-cost-2026-09.spw), and the note would open
+  // unfocused or not at all. Setting visibility inline makes the element
+  // focusable now; opacity and transform still carry the entrance, and close
+  // removes the node outright so the inline value never outlives it.
+  popover.classList.add('is-visible');
+  popover.style.visibility = 'visible';
+  popover.focus({ preventScroll: true });
+}
+
+function onConceptInspectKeydown(event) {
+  if (event.key !== 'Escape' || !conceptPopover) return;
+  event.preventDefault();
+  closeConceptInspect({ restoreFocus: true });
+}
+
+function onConceptInspectOutsideClick(event) {
+  if (!conceptPopover) return;
+  const el = event.target;
+  if (!(el instanceof Element)) return;
+  if (el.closest(`.${CONCEPT_POPOVER_CLASS}`)) return;
+  if (isInspectableLivingTerm(el.closest(LIVING_TERM_SELECTOR))) return;
+  closeConceptInspect();
 }
 
 /* ==========================================================================

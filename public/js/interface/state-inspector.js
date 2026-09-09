@@ -449,7 +449,16 @@ function applyPositionToLaunch(launch, left, top, fallback = false) {
   const rootRect = root.getBoundingClientRect();
   const w = rect.width || 120;
   const h = rect.height || 36;
-  const rootW = Math.min(rootRect.width || 400, Math.max(1, vw - 16));
+  // The root can never be narrower than the control it holds.
+  //
+  // The right-rail branch below places the root by subtracting rootW, so it
+  // trusts rootW to describe the box the launch button actually occupies.
+  // A collapsed satchel measures a few pixels wide while the button inside it
+  // is still ~120px, and that gap became the offset: at a 1433px viewport the
+  // root landed flush against the right margin and the button ran 106px past
+  // it, leaving a ~13px sliver of "state satchel" to aim at. Taking the wider
+  // of the two keeps the clamp honest whichever way the root is measured.
+  const rootW = Math.min(Math.max(rootRect.width || 400, w), Math.max(1, vw - 16));
 
   const margin = 8;
   const bottomReserve = getFloatingChromeBottomReserve();

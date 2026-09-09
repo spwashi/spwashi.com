@@ -1,0 +1,123 @@
+# Focus and paint cost on the reading surface (2026-09)
+#
+# operation: cache
+# Browser-measured cost of the interaction layer itself, taken during the
+# interaction-semantics audit that landed tap:inspect on living terms.
+# Do not implement from this file. Do not strip glass or grain from this
+# file alone — the measurements say where to look, not what to remove.
+
+#>interaction_paint_cost_2026_09
+#:cache #!performance #!focus #!paint #!attention
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@runtime_recalc: ~"./implicit-attention-arcs.spw"
+@css_combinatorics: ~"./css-combinatorics.spw"
+@touch_control_class: ~"./touch-control-class-2026-09.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+@haptics_js: ~"../../public/js/interface/haptics.js"
+@state_inspector_js: ~"../../public/js/interface/state-inspector.js"
+@headless_nav: ~"../../scripts/headless-nav.mjs"
+
+operation = "cache"
+fixity = "tending"
+source = "browser audit 2026-09-09, Chrome over `npm run dev` (unminified, dev-server) at a 1433px layout viewport"
+focus_dimension = "engineer"
+element = "metal"
+semantic_fixity = "tending"
+do_not = `Do not implement from this cache. Do not treat the dev-build absolute numbers as production figures. Do not remove backdrop-filter or grain wholesale — measure the stack depth first. Do not add a data-spw-* family for instrumentation.`
+
+expression = surface[cost]{focus.paint.attributes}<reading>
+
+^"thesis"{
+  claim = `The interaction layer is the expensive part, not the content. Reading a settled page is cheap; touching it is not. Focus is the hot path because every focus runs charge annotation across a large attribute surface, and paint is hot because the reading surface stacks translucency.`
+  measurement_caveat = `Taken on the dev server with unminified CSS and JS. Treat the ratios and the freeze as real and the millisecond counts as directional. A production re-measure is the next step, not a rewrite.`
+  distinction = .{
+    informational = `The site feels slow because it is big.`
+    interactive = `Some handler is slow; find and memoize it.`
+    cognitive = `Attention costs. Charge, prime and groove each write residue on contact, and the residue surface is what focus has to walk.`
+  }[reg=facet]
+}[reg=facet]
+
+^"ipc-001_focus_is_the_hot_path"{
+  id = "ipc-001"
+  operation = "cache"
+  fixity = "tending"
+  claim = `Sequential focus on the home page is pathologically expensive, to the point of stalling the renderer. Keyboard travel is the worst-served journey on the site.`
+  evidence = #[
+    `15 sequential el.focus() calls with a getComputedStyle read each: 21,803ms wall (~1.45s per stop)`,
+    `A follow-up loop of 10 focus() calls with no style read exceeded a 45,000ms CDP timeout; the renderer did not recover until navigation`,
+    `Scripted DOM reads stayed responsive throughout, so the JS thread was not the blocked resource — style/layout was`,
+    `focusin is bound in capture at @haptics_js initSpwHaptics via onChargeFocusIn, which writes charge residue per focus`,
+    `home carries 336 visible focusable elements and ~190 data-spw-* attributes on <html> plus ~140 on <body>`
+  ][reg=set]
+  pattern_consideration = #[
+    `@runtime_recalc already names forced style recalc on hot paths as the freeze mechanism; this is that pattern with focus as the trigger rather than scroll`,
+    `A real Tab journey through the header felt correct and showed a correct 2px focus ring, so the cost is in bulk traversal, not in a single stop`,
+    `The measurement loop is not a user behaviour. A person tabs at human speed. The freeze still says the per-focus write is unbounded.`
+  ][reg=set]
+  expansion_prime = `Batch or defer charge residue on focusin: coalesce to one rAF, skip when the same element regains focus, and stop writing when nothing reads the residue (discoverability quiet). Measure before changing selectors.`
+  validation = `Re-run the 15-focus probe on a production build. A settled page should stay well under one frame per stop.`
+  do_not_promote_until = `A production-build measurement exists and names which write in onChargeFocusIn dominates.`
+}[reg=facet]
+
+^"ipc-002_translucency_stacks"{
+  id = "ipc-002"
+  operation = "cache"
+  fixity = "tending"
+  claim = `First paint of the home page can exceed a 30s screenshot timeout, and two captures returned partially rastered frames — a blank panel over the hero, then hard grey bands. Both were compositor artifacts, not style bugs.`
+  evidence = #[
+    `Page.captureScreenshot timed out at 30,000ms on first load; later captures on the settled page succeeded`,
+    `18 elements resolve a non-none backdrop-filter, blur radii 3-14px, several overlapping in the hero`,
+    `116 elements resolve a non-none filter`,
+    `Two separate captures showed partial rasters that were absent from the DOM when probed immediately after`
+  ][reg=set]
+  pattern_consideration = #[
+    `@css_combinatorics owns the payload question; this is the paint question and they are not the same axis`,
+    `The material grammar wants glass and grain. The cost is stacking, not the effect: overlapping blurred layers each force their own backdrop read`,
+    `An artifact in a screenshot is not a defect on the reader's screen. Both were re-checked and withdrawn.`
+  ][reg=set]
+  expansion_prime = `Count blur layers that overlap in the hero and flatten the stack, rather than lowering radii everywhere. A single backdrop layer behind a group beats one per card.`
+  validation = `Capture the home hero cold on a production build; the first capture should return a complete frame.`
+  do_not_promote_until = `The overlap depth is measured per region, not per page.`
+}[reg=facet]
+
+^"ipc-003_state_is_written_twice"{
+  id = "ipc-003"
+  operation = "cache"
+  fixity = "tending"
+  claim = `The same runtime state is mirrored onto both <html> and <body>, so every settings or posture change writes two attribute surfaces and invalidates against both roots.`
+  evidence = #[
+    `~190 data-spw-* attributes on <html>, ~140 on <body> on the home page`,
+    `Identical pairs on both roots include animation-intensity, animation-throttling, attention-global-relation, attention-local-relation, attention-self-relation, color-mode, enhancement-level, reduce-motion, grain-intensity, spell-path-state and many more`,
+    `Selector ladders in the shell read from html; component-layer rules read from body`
+  ][reg=set]
+  pattern_consideration = #[
+    `Two roots is a real distinction where one is document policy and the other is page instance. Most of this list is neither — it is the same fact twice.`,
+    `@touch_control_class#tc-002 already holds the shape of this argument: diverging lists are only honest when they answer different questions`
+  ][reg=set]
+  expansion_prime = `Take an inventory of which attributes are read from which root, then keep each fact on exactly one. This is an align pass, not a rename.`
+  validation = `After the pass, no attribute name appears on both roots with the same value for the same reason.`
+  do_not_promote_until = `The read-side inventory exists; guessing which root owns a fact would break the shell or the components layer silently.`
+}[reg=facet]
+
+^"ipc-004_route_settle_is_seconds"{
+  id = "ipc-004"
+  operation = "cache"
+  fixity = "tending"
+  claim = `Every sampled route reaches runtime ready with zero console errors, but settle takes 4.3-5.2s on the dev server. Health is good; cost is high.`
+  evidence = #[
+    `@headless_nav over /, /about/, /topics/, /play/, /settings/, /services/ with --require-browser --fail-on-console-error --fail-on-overflow-x: ok=true, failures=0, settled=6, consoleErr=0`,
+    `Per-route wall: home 4370ms, about 5086ms, topics 4326ms, play 5135ms, settings 5111ms, services 5174ms; total 29,202ms`,
+    `15 runtime modules mount on home; last module observed was experiential`
+  ][reg=set]
+  pattern_consideration = #[
+    `The smoke gate passes because it asks whether the runtime settles, not how long it took. That is the right question for a gate and the wrong one for this cache.`,
+    `--fail-on-overflow-x passed while a fixed control sat 106px outside the viewport, because the satchel is fixed and never widened the scroll box. A clipped fixed control is invisible to a scroll-width check.`
+  ][reg=set]
+  expansion_prime = `Give the nav smoke an off-viewport-chrome assertion so a fixed control that leaves the frame fails the same way an overflowing one does.`
+  validation = `Re-run bench:nav on a production build for real settle figures before treating these as a budget.`
+  do_not_promote_until = `Production numbers exist; a dev-server budget would be a fiction.`
+}[reg=facet]

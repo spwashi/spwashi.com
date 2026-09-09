@@ -982,9 +982,16 @@ function renderBreadcrumbSpell() {
       deepLinkState,
     })}
     ${showTrail && guide ? `<p class="spw-spell-path__guide">${guide}</p>` : ''}
-    ${showTrail ? `<ol class="spw-spell-trail" id="${trailId}" aria-label="Current link trail">
+    <!-- The trail stays in the document in both states and hides with [hidden]
+         rather than being rendered away. The toggle above carries
+         aria-controls="${trailId}" and an aria-expanded that flips: when the
+         list only existed in the open state, a collapsed path bar pointed
+         assistive tech at an id that was not on the page, so "Expand link
+         trail" named a control with nothing behind it. Keeping the element
+         means the expanded/collapsed pair describes something real. -->
+    <ol class="spw-spell-trail" id="${trailId}" aria-label="Current link trail"${showTrail ? '' : ' hidden'}>
       ${items.join('')}
-    </ol>` : ''}
+    </ol>
     ${showTrail && !compact && relatedRoutes.length ? renderBreadcrumbNearbyRoutes(relatedRoutes) : ''}
     ${showTrail ? `
     <details class="spw-spell-path__inspect">

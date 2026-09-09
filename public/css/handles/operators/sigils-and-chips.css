@@ -284,7 +284,31 @@
   border-width: var(--operator-chip-border-width);
   border-style: var(--operator-chip-border-style);
   border-radius: var(--spw-control-radius, var(--shape-control, 0.78rem));
-  white-space: nowrap;
+  /* A chip is a label you aim at, not a fixed-width plate.
+   *
+   * The blanket nowrap that used to sit here is what cut
+   * "…entrance_sorter} next frame" in half on the home atlas, and clipped a
+   * label apiece on topics, play, services and about plus five on recipes.
+   * The mechanism is the same every time: the chip held its one line, the
+   * grid track it sits in held its width, and the label simply ran out past
+   * the pill. A reader loses the second half of the verb they were aiming at.
+   *
+   * A chip that cannot fit its label should grow a second line, not lose a
+   * word. Sigils and single-token operators are short enough that they never
+   * reach the wrap, so everything that reads as one glyph keeps its shape;
+   * only the labels that were already breaking change, and they change into
+   * something legible.
+   *
+   * --spw-control-white-space stays as the escape hatch for the rare control
+   * that genuinely must hold one line, and frame sigils keep their own
+   * nowrap-plus-ellipsis further up: an address that elides is still an
+   * address, where a verb that elides is a guess.
+   */
+  white-space: var(--spw-control-white-space, normal);
+  overflow-wrap: break-word;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  text-align: center;
   text-decoration: none;
   line-height: var(--spw-control-line-height, 1.08);
   font-size: var(--text-size-chip, 0.82rem);

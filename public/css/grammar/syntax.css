@@ -1955,7 +1955,7 @@
     0 0 0 3px color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 14%, transparent);
 }
 
-:where(.spw-topic-popover, .spw-semantic-popover) {
+:where(.spw-topic-popover, .spw-semantic-popover, .spw-concept-popover) {
   position: fixed;
   inset: auto;
   max-width: min(28rem, calc(100vw - 1.25rem));
@@ -1981,7 +1981,7 @@
     visibility var(--grammar-duration-fast) var(--grammar-ease-mechanical);
 }
 
-:where(.spw-topic-popover.is-visible, .spw-semantic-popover.is-visible) {
+:where(.spw-topic-popover.is-visible, .spw-semantic-popover.is-visible, .spw-concept-popover.is-visible) {
   pointer-events: auto;
   visibility: visible;
   opacity: 1;
@@ -2012,13 +2012,13 @@
   outline: none;
 }
 
-:where(.spw-topic-popover-header, .spw-semantic-popover-header) {
+:where(.spw-topic-popover-header, .spw-semantic-popover-header, .spw-concept-popover__header) {
   display: flex;
   align-items: flex-start;
   gap: 0.55rem;
 }
 
-:where(.spw-topic-popover-hint, .spw-semantic-popover-hint) {
+:where(.spw-topic-popover-hint, .spw-semantic-popover-hint, .spw-concept-popover__hint) {
   margin: 0.45rem 0 0;
   padding-top: 0.42rem;
   border-top: 1px solid color-mix(in srgb, var(--grammar-line, rgba(14, 18, 20, 0.14)) 72%, transparent);
@@ -2044,7 +2044,7 @@
     0 0 0.55rem color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent);
 }
 
-html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popover) {
+html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popover, .spw-concept-popover) {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 48%),
     color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.96)) 98%, transparent);
@@ -2164,6 +2164,55 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 :where(.spw-semantic-popover-value) {
   min-width: 0;
   color: var(--grammar-ink);
+}
+
+/* Concept note — the tap half of the living-term contract.
+ *
+ * A third popover family rather than a fourth kind of surface: it borrows the
+ * shell, the dismiss button and the hint rule above, and only says what a
+ * concept note holds that a semantic note does not. Wired in
+ * interface/haptics.js, which already owns living-term gestures. */
+:where(.spw-concept-popover__title) {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--grammar-ink);
+}
+
+:where(.spw-concept-popover__grid) {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+:where(.spw-concept-popover__row) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: start;
+}
+
+:where(.spw-concept-popover__label) {
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--grammar-ink-soft);
+}
+
+:where(.spw-concept-popover__value) {
+  min-width: 0;
+  color: var(--grammar-ink);
+}
+
+:where(.spw-concept-popover__actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+
+:where(.spw-concept-popover__gather[aria-disabled="true"]) {
+  opacity: 0.62;
+  pointer-events: none;
 }
 
 :where(.is-badge-active) {
