@@ -269,21 +269,30 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 /* Cluster C — stages stay single-column flex even if display:grid is used for gap.
    Missing flow is treated as stack so a late JS write of the attribute does not reflow. */
 :where(
-  .spw-frame:not([data-spw-composition-flow]),
-  .frame-panel:not([data-spw-composition-flow]),
-  .mode-panel:not([data-spw-composition-flow]),
-  [data-spw-kind="frame"]:not([data-spw-composition-flow]),
-  [data-spw-box-model="stage"]:not([data-spw-composition-flow]),
-  .spw-frame[data-spw-composition-flow="stack"],
-  .frame-panel[data-spw-composition-flow="stack"],
-  .mode-panel[data-spw-composition-flow="stack"],
-  [data-spw-kind="frame"][data-spw-composition-flow="stack"],
-  [data-spw-box-model="stage"][data-spw-composition-flow="stack"]
+  .spw-frame:not([data-spw-composition-flow]):not([hidden]),
+  .frame-panel:not([data-spw-composition-flow]):not([hidden]),
+  .mode-panel:not([data-spw-composition-flow]):not([hidden]),
+  [data-spw-kind="frame"]:not([data-spw-composition-flow]):not([hidden]),
+  [data-spw-box-model="stage"]:not([data-spw-composition-flow]):not([hidden]),
+  .spw-frame[data-spw-composition-flow="stack"]:not([hidden]),
+  .frame-panel[data-spw-composition-flow="stack"]:not([hidden]),
+  .mode-panel[data-spw-composition-flow="stack"]:not([hidden]),
+  [data-spw-kind="frame"][data-spw-composition-flow="stack"]:not([hidden]),
+  [data-spw-box-model="stage"][data-spw-composition-flow="stack"]:not([hidden])
 ) {
   display: flex;
   flex-direction: column;
   align-content: stretch;
   grid-template-columns: none;
+}
+
+/* Author display:flex above is :where() (specificity 0). Without this, a
+   hidden lens panel still paints, so tapping Study/Build/Play looks like a
+   no-op. Do not wrap [hidden] in :where(). Topics lanes and other hosts use
+   [data-mode-panel] without .mode-panel. */
+.mode-panel[hidden],
+[data-mode-panel][hidden] {
+  display: none;
 }
 
 :where([data-spw-composition-flow="inline-wrap"]:not(.spw-copy-motif-strip)) {

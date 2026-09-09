@@ -24,7 +24,10 @@ const DISCOVERY_GESTURE_CONTRACT = 'tap:discover swipe:toggle-lens hold:inspect'
 const HOLD_MS = 420;
 const SWIPE_MIN_PX = 48;
 const SWIPE_DOMINANCE = 1.45;
+const LENS_FEEDBACK_MS = 720;
+const PRIME_SETTLE_MS = 1600;
 const DEFAULT_LENS_CUES = ['probe', 'frame', 'surface'];
+const settleTimers = new WeakMap();
 
 let initialized = false;
 
@@ -91,9 +94,33 @@ function cycleLens(figure, direction = 1) {
   setInteractionState(figure, 'lensed');
   window.setTimeout(() => {
     if (figure.dataset.spwImageInteractionState === 'lensed') {
-      setInteractionState(figure, figure.matches(':hover') ? 'primed' : 'idle');
+      setInteractionState(figure, 'primed');
+      schedulePrimeSettle(figure);
     }
-  }, 220);
+  }, LENS_FEEDBACK_MS);
+}
+
+function clearPrimeSettle(figure) {
+  const timer = settleTimers.get(figure);
+  if (!timer) return;
+  window.clearTimeout(timer);
+  settleTimers.delete(figure);
+}
+
+function schedulePrimeSettle(figure) {
+  clearPrimeSettle(figure);
+  const timer = window.setTimeout(() => {
+    settleTimers.delete(figure);
+    if (readDiscovered(figure)) {
+      setInteractionState(figure, 'discovered');
+      return;
+    }
+    const state = figure.dataset.spwImageInteractionState;
+    if (state === 'primed' || state === 'lensed') {
+      setInteractionState(figure, 'idle');
+    }
+  }, PRIME_SETTLE_MS);
+  settleTimers.set(figure, timer);
 }
 
 function primeFigure(figure) {
@@ -148,13 +175,20 @@ function bindFigure(figure, controller) {
 
   const onIdle = () => {
     clearHold();
+    clearPrimeSettle(figure);
     if (figure.dataset.spwImageInteractionState === 'inspecting') return;
     setInteractionState(figure, readDiscovered(figure) ? 'discovered' : 'idle');
   };
 
   figure.addEventListener('pointerenter', onPrime, { signal: controller.signal });
   figure.addEventListener('focusin', onPrime, { signal: controller.signal });
-  figure.addEventListener('pointerleave', onIdle, { signal: controller.signal });
+  figure.addEventListener('pointerleave', (event) => {
+    if (event.pointerType === 'touch') {
+      schedulePrimeSettle(figure);
+      return;
+    }
+    onIdle();
+  }, { signal: controller.signal });
   figure.addEventListener('focusout', onIdle, { signal: controller.signal });
 
   figure.addEventListener('pointerdown', (event) => {
@@ -164,6 +198,7 @@ function bindFigure(figure, controller) {
     startX = event.clientX;
     startY = event.clientY;
     clearHold();
+    clearPrimeSettle(figure);
 
     if (readDiscovered(figure)) return;
 
@@ -210,12 +245,11 @@ function bindFigure(figure, controller) {
       return;
     }
 
-    if (holdActive) {
-      setInteractionState(figure, figure.matches(':hover') ? 'primed' : 'idle');
-    } else if (absX < 8 && absY < 8) {
+    if (holdActive || (absX < 8 && absY < 8)) {
       setInteractionState(figure, 'primed');
+      schedulePrimeSettle(figure);
     } else {
-      setInteractionState(figure, figure.matches(':hover') ? 'primed' : 'idle');
+      setInteractionState(figure, 'idle');
     }
 
     pointerId = null;

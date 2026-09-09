@@ -3,6 +3,7 @@ import test from 'node:test';
 
 import {
   NATIVE_CONTROL_SELECTOR,
+  isLensModeControl,
   isNativeControl,
   isOwnAffordanceTarget,
 } from '../../public/js/kernel/dom-contracts.js';
@@ -29,6 +30,16 @@ test('native control selector names disclosure and buttons, not tabindex', () =>
   assert.match(NATIVE_CONTROL_SELECTOR, /summary/);
   assert.match(NATIVE_CONTROL_SELECTOR, /button/);
   assert.doesNotMatch(NATIVE_CONTROL_SELECTOR, /tabindex/);
+});
+
+test('isLensModeControl names mode-switch seats, not ordinary sigils', () => {
+  const switchEl = mockNode('.mode-switch');
+  const lensButton = mockNode('[data-mode-group][data-set-mode]', switchEl);
+  const sigil = mockNode('.frame-sigil');
+
+  assert.equal(isLensModeControl(lensButton), true);
+  assert.equal(isLensModeControl(switchEl), true);
+  assert.equal(isLensModeControl(sigil), false);
 });
 
 test('isOwnAffordanceTarget leaves nested buttons and summaries to themselves', () => {

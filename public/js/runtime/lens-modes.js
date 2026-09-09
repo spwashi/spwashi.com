@@ -1,3 +1,8 @@
+import {
+  isCoarsePointerEnvironment,
+  supportsHoverEnvironment,
+} from '/public/js/kernel/dom-contracts.js';
+
 const LENS_MODE_QUERY_KEYS = Object.freeze(['spw-lens', 'lens', 'mode']);
 const DOCUMENT_NODE = 9;
 const FALLBACK_LOCATION = Object.freeze({ hash: '', pathname: '', search: '' });
@@ -48,9 +53,13 @@ export function shouldUseLensViewTransition({
   source = 'mode-switch',
   supportsTransition = false,
   reduceMotion = false,
+  coarsePointer = false,
+  hoverNone = false,
 } = {}) {
   return supportsTransition
     && !reduceMotion
+    && !coarsePointer
+    && !hoverNone
     && source !== 'initial'
     && source !== 'query';
 }
@@ -170,8 +179,17 @@ export function writeLensModeState({
   };
 
   const supportsTransition = typeof doc.startViewTransition === 'function';
-  const reduceMotion = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
-  if (shouldUseLensViewTransition({ source, supportsTransition, reduceMotion })) {
+  const view = doc.defaultView || globalThis;
+  const reduceMotion = view?.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
+  const coarsePointer = isCoarsePointerEnvironment(view);
+  const hoverNone = supportsHoverEnvironment(view) === false;
+  if (shouldUseLensViewTransition({
+    source,
+    supportsTransition,
+    reduceMotion,
+    coarsePointer,
+    hoverNone,
+  })) {
     try {
       const transition = doc.startViewTransition(applyDomUpdates);
       // Browsers reject one or more lifecycle promises when another transition

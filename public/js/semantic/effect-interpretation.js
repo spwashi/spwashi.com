@@ -105,7 +105,7 @@ const IMAGE_LENS_SEMANTICS = Object.freeze({
 
 const STATE_LABELS = Object.freeze({
   idle: '',
-  primed: 'Focused',
+  primed: 'swipe to change view · hold to inspect',
   inspecting: 'inspecting',
   lensed: 'view shifted',
   discovered: 'discovered',
@@ -301,7 +301,10 @@ function syncStateReadout(figure) {
   const state = figure.dataset.spwImageInteractionState || 'idle';
   const lens = figure.dataset.spwImageLensActive || '';
   const readout = ensureStateReadout(figure);
-  const label = STATE_LABELS[state] || '';
+  const viewLabel = lens ? `${LENS_VIEW_LABELS[lens] || lens} view` : '';
+  const label = state === 'lensed' && viewLabel
+    ? viewLabel
+    : (STATE_LABELS[state] || '');
 
   readout.textContent = label;
   readout.dataset.spwEffectStateValue = state;

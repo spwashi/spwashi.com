@@ -615,6 +615,18 @@ export function isOwnAffordanceTarget(handle, target) {
   return !interactive || interactive === handle;
 }
 
+/* Mode-switch buttons reuse .frame-sigil, which brace and region-menu treat as
+   gesture hosts. The leaf control is the lens; hold, double-tap, and brace
+   must not claim it. See .spw/audits/touch-gesture-contracts-2026-09.spw. */
+export const LENS_MODE_CONTROL_SELECTOR = [
+  '.mode-switch',
+  '[data-mode-group][data-set-mode]',
+].join(', ');
+
+export function isLensModeControl(node) {
+  return Boolean(node?.closest?.(LENS_MODE_CONTROL_SELECTOR));
+}
+
 /* How long a grounded reading stays legible. Long enough to be seen as an
    answer, short enough that it never reads as a stuck state. Matches the
    commit band rather than the settle band: grounding is a resolution, not a

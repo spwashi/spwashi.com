@@ -1,5 +1,6 @@
 import {
   annotateFloatingChromeElement,
+  isLensModeControl,
   isMobileBottomLane,
   isOwnAffordanceTarget,
   positionFloatingChromePopover,
@@ -338,6 +339,7 @@ function isLocalHashTarget(target) {
 function shouldHandleCoarseDoubleTap(target, event) {
   if (!isCoarsePointer(event)) return false;
   if (!(target instanceof HTMLElement)) return false;
+  if (isLensModeControl(target)) return false;
   return target.matches('.frame-sigil, .spw-delimiter, .frame-card-sigil, .frame-panel-sigil');
 }
 
@@ -1083,6 +1085,7 @@ function shouldArmHoldOpen(target, event) {
   if (!isCoarsePointer(event)) return false;
   if (event.altKey || event.metaKey || event.ctrlKey || event.shiftKey) return false;
   if (isNavigable(target)) return false;
+  if (isLensModeControl(target)) return false;
   return target.matches(
     '.spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-feature], [data-spw-semantic-expression], [data-spw-concept], [data-spw-grounding], [data-spw-assignment], [data-spw-reference-seed], [data-spw-vocab], [data-spw-topic]'
   );

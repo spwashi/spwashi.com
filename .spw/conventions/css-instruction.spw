@@ -77,6 +77,7 @@
   anatomy_rule: "Slot-bearing card anatomy owns readable content. Floating chrome and overlays are separate roles even when they borrow the same material tokens."
   failure_mode: "A generic > * selector assigns position or min-width to a fixed affordance, then debugging starts by guessing which broad rule stole layout ownership."
   containing_block: "Do not put contain:layout or position:relative on html, body, or [data-spw-floating-chrome]. 95a2bf2f: html[data-spw-region-state] contain:layout plus ornament position:relative parked the pocket travel rail thousands of pixels off-screen while AT still announced it."
+  hidden_display: "Do not wrap [hidden] in :where() when a later :where() display:flex/grid would paint the node. Author `.mode-panel[hidden], [data-mode-panel][hidden] { display: none }` without :where()."
 }
 
 ^"spacing_contract"{

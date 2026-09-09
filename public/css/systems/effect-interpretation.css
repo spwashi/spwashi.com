@@ -49,6 +49,15 @@
 }
 
 :where(
+  .topic-photo-card[data-spw-image-interaction-state="lensed"],
+  .image-study[data-spw-image-interaction-state="lensed"],
+  [data-spw-image-surface][data-spw-image-interaction-state="lensed"]
+)::before {
+  block-size: 4px;
+  opacity: 0.88;
+}
+
+:where(
   .topic-photo-card[data-spw-image-interaction-state="inspecting"],
   .image-study[data-spw-image-interaction-state="inspecting"],
   [data-spw-image-surface][data-spw-image-interaction-state="inspecting"]

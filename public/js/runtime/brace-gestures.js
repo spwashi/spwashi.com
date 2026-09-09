@@ -44,6 +44,7 @@
 import { bus } from '/public/js/kernel/bus.js';
 import {
   groundInteraction,
+  isLensModeControl,
   isNativeControl,
   isOwnAffordanceTarget,
   writeDatasetValue,
@@ -210,6 +211,7 @@ function braceTarget(node) {
   if (cauldronMatch && !cauldronMatch.matches(BRACE_TARGET_SELECTOR)) {
     return null;
   }
+  if (isLensModeControl(node)) return null;
   return node?.closest?.(BRACE_TARGET_SELECTOR) || null;
 }
 

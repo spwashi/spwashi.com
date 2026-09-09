@@ -114,6 +114,14 @@ const DEFAULTS = Object.freeze({
   settlePhaseMs: 180,
 });
 
+/* Same query as navigation.css pocket/coarse hamburger. Rem and pointer,
+   not a parallel 720px ladder, so the strip and the glyph cannot disagree. */
+const DRAWER_MENU_QUERY = '(pointer: coarse), (max-width: 45rem)';
+
+function prefersDrawerMenu(view = window) {
+  return view.matchMedia?.(DRAWER_MENU_QUERY).matches === true;
+}
+
 const FOCUSABLE_SELECTOR = [
   'a[href]',
   'button:not([disabled])',
@@ -262,10 +270,9 @@ function countOverflowRoutes(navList) {
 function resolveMenuMode(header, nav, navList, state) {
   const html = document.documentElement;
   const tier = html.dataset.spwViewportTier || getViewportTier(window.innerWidth, state.config);
-  const pointer = html.dataset.spwPointerMode || getPointerMode();
   const ratio = computeNavRatio(header, nav, navList, state);
+  if (prefersDrawerMenu()) return MODES.TOGGLE;
   if (tier === 'compact' || tier === 'narrow') return MODES.TOGGLE;
-  if (pointer === 'coarse') return MODES.TOGGLE;
 
   const previousMode = state.snapshot?.mode || state.mode || MODES.INLINE;
   const exitRatio = Math.max(1, state.config.compressedRatio - state.config.modeHysteresisRatio);

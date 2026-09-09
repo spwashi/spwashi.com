@@ -920,10 +920,18 @@ body > header[data-spw-shell-layout="toggle-field"] .spw-nav-toggle-meta {
   display: none;
 }
 
-/* Pocket and coarse: the control is a hamburger, not a labeled Routes chip.
-   Fine-pointer fold/broadsheet keep the chip only when the layout is already
-   a disclosed field. */
+/* Pocket and coarse: one disclosure. The hamburger is the control; the
+   strip is not also in the header. Same query as shell-disclosure
+   prefersDrawerMenu(). Open nav occupies the second grid row. */
 @media (pointer: coarse), (max-width: 45rem) {
+  .site-header,
+  body > header {
+    --spw-shell-grid-columns: minmax(0, 1fr) auto auto;
+    --spw-shell-grid-areas:
+      "sigil actions toggle"
+      "nav nav nav";
+  }
+
   .site-header .spw-nav-toggle,
   body > header .spw-nav-toggle {
     display: inline-flex;
@@ -938,6 +946,24 @@ body > header[data-spw-shell-layout="toggle-field"] .spw-nav-toggle-meta {
   body > header .spw-nav-toggle-copy,
   body > header .spw-nav-toggle-meta {
     display: none;
+  }
+
+  .site-header:not([data-spw-menu="open"]) nav,
+  body > header:not([data-spw-menu="open"]) nav {
+    display: none;
+  }
+
+  .site-header[data-spw-menu="open"] nav,
+  body > header[data-spw-menu="open"] nav {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-snap-type: none;
+    max-block-size: min(70svh, 32rem);
+    clip-path: none;
   }
 }
 

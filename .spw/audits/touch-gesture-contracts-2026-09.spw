@@ -177,6 +177,24 @@ audit_run: .{
     expected = `@interaction_microstates#expected_behavior`
     fix = `Travel only on button/chip/summary/handle. Ring only on leaf gesture hosts. Coarse pointer forces toggle. Toggle lives in the header template. Glyph-only at pocket/coarse. Hover transform idle where hover is none.`
   }
+  f13_leaf_claimed_or_consequence_hidden {
+    severity = "high"
+    dated = "2026-09-09"
+    claim = `The same miss class as f3/f12, three wires: (1) :where() display:flex in content.css Cluster C beats :where(.mode-panel[hidden]) because both are specificity 0 and flex is later; (2) .frame-sigil is both a lens button and a brace/region-menu host, so isOwnAffordanceTarget is true when handle === button and coarse double-tap preventDefaults the second tap; (3) View Transitions run on mode-switch even when pointer is coarse, so the DOM update can look like a no-op. Home quiet pressed state and unmatched lens-pass cards were too faint to read as a change.`
+    evidence = `content.css Cluster C vs surfaces.css :where(.mode-panel[hidden]); region-menu shouldHandleCoarseDoubleTap matches .frame-sigil; lens-modes shouldUseLensViewTransition skipped only initial/query; home quiet chrome 9% then 16%; lens-pass dim 0.72 then 0.42.`
+    pattern = `A later zero-specificity display, a shared class noun, or a transition can hide a wired click. The click ran; the consequence was unreadable.`
+    fix = `isLensModeControl in dom-contracts; braceTarget / shouldArmHoldOpen / shouldHandleCoarseDoubleTap skip it; shouldUseLensViewTransition skips coarse and hover:none; .mode-panel[hidden] and [data-mode-panel][hidden] are not wrapped in :where(); Cluster C excludes [hidden].`
+    falsify = `On / at pocket, tap Build. The systems panel must be the only visible mode-panel, aria-pressed must move, unmatched [data-spw-lens-pass] cards must recede, and a second tap must not open region-menu.`
+  }
+  f14_prime_does_not_name_next_verbs {
+    severity = "high"
+    dated = "2026-09-09"
+    claim = `Swipe feels unintuitive because priming never says what can follow. Image swipe is the one honest unique engine (48px, 1.45× dominance, no preventDefault), but the primed readout said only "Focused", lensed lasted 220ms then idle, and iOS pointerleave cleared the note on the same tap. Mode-switch looks swipeable and is tap. Section-handle swipe:cycle is generated chrome. swipe:cycle-nearby and scene-bed swipe:toggle-lens still have no engine (f7). Copy teaches three different "lens" nouns.`
+    expected = `@interaction_microstates#expected_behavior prime + swipe. After prime, name the next reachable verbs on that object. Do not add a fourth swipe engine.`
+    next = `Do not teach swipe on the home Study/Build/Play strip. Keep unique swipe on image figures. Unpaid: scene-bed and cycle-nearby contracts that advertise swipe with no owner; section-handle swipe still has no in-situ next-step note.`
+    fix = `Primed readout: "swipe to change view · hold to inspect". Lensed readout names the view. Lensed holds 720ms then primed. Touch pointerleave settles instead of wiping. Lensed rail opacity 0.88.`
+    falsify = `On a hero .image-study, tap once. The figure must keep a next-verb note long enough to read. Swipe horizontally: the view name must appear, then the same next-verb note, without stealing vertical scroll.`
+  }
 }[reg=facet]
 
 ^"fundamentals_first"{

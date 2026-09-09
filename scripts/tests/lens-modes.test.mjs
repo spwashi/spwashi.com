@@ -23,3 +23,11 @@ test('lens transitions respect capability and reduced motion', () => {
     reduceMotion: true,
   }), false);
 });
+
+test('lens transitions stay off coarse and hoverless pointers', () => {
+  const supported = { source: 'mode-switch', supportsTransition: true, reduceMotion: false };
+
+  assert.equal(shouldUseLensViewTransition({ ...supported, coarsePointer: true }), false);
+  assert.equal(shouldUseLensViewTransition({ ...supported, hoverNone: true }), false);
+  assert.equal(shouldUseLensViewTransition(supported), true);
+});
