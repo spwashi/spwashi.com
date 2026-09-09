@@ -430,16 +430,12 @@
      pure CSS and depend on no phase attribute, so they had no reason to wait;
    - the calm tuner, which is the site default, zeroed the card press outright.
 
-   Travel spends --spw-micro-press-scale so every family shrinks by the same
-   amount, and --spw-interaction-scale lets a tuner attenuate that without
-   switching it off, which is what a tuner is for. Native controls and cards are
-   named explicitly: the reset strips buttons of their border and several files
-   clear the tap highlight, so those surfaces otherwise acknowledge nothing at
-   all on touch.
-
-   [data-spw-floating-chrome] is excluded from the transform only — a transform
-   would make it a containing block for its own fixed descendants, which
-   css-instruction.spw#flow_ownership forbids. It still takes the phase weight.
+   Travel is on the electrode, not the room. A hook, section, or card that
+   contains links is not a control: shrinking it slides the real target out
+   from under the finger. Phase weight may still rise on the host; transform
+   does not. Floating chrome is excluded from the transform only — a
+   transform would make it a containing block for its own fixed descendants,
+   which css-instruction.spw#flow_ownership forbids.
    ========================================================================== */
 
 :where(
@@ -463,27 +459,42 @@
   button,
   summary,
   [role="button"],
-  .frame-card,
   .spw-chip,
   .spec-pill,
-  [data-spw-interaction-contract],
-  [data-spw-gesture-contract],
   .spw-page-landmarks a,
   .spw-section-handle-step
-):not(:where([data-spw-floating-chrome], [data-spw-floating-chrome] *)):active {
+):not(:where(
+  [data-spw-floating-chrome],
+  [data-spw-floating-chrome] *,
+  :has(a[href], button, summary, [role="button"])
+)):active {
   transform: scale(
     calc(1 - ((1 - var(--spw-micro-press-scale, 0.985)) * var(--spw-interaction-scale, 1)))
   );
 }
 
-/* Gesture-contract hosts are sections, articles, figures and details. They
-   carry no border or background of their own, so travel alone is close to
-   invisible on them; the ring is what makes the contact legible. It is no
-   longer coarse-only, because the report named clicks as well as taps. */
-:where([data-spw-gesture-contract]:active) {
+/* Leaf gesture hosts may ring. Rooms that wrap native controls must not:
+   the glow would claim the whole block was the target. */
+:where([data-spw-gesture-contract]:not(:has(a[href], button, summary, [role="button"])):active) {
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--active-op-color) 24%, transparent),
     0 0 0 3px color-mix(in srgb, var(--active-op-color) 8%, transparent);
+}
+
+@media (hover: none) {
+  :where(
+    button,
+    summary,
+    [role="button"],
+    .frame-card,
+    .spw-chip,
+    .spec-pill,
+    .spw-nav-toggle,
+    .site-header nav a,
+    body > header nav a
+  ):hover {
+    transform: none;
+  }
 }
 
 /* Links are inline boxes, so a transform does not apply to them. Prose links
@@ -499,11 +510,8 @@
     button,
     summary,
     [role="button"],
-    .frame-card,
     .spw-chip,
     .spec-pill,
-    [data-spw-interaction-contract],
-    [data-spw-gesture-contract],
     .spw-page-landmarks a,
     .spw-section-handle-step
   ):active {

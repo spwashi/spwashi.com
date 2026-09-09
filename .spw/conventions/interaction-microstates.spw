@@ -83,6 +83,14 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
   measure_vs_frame: `layout selection re-resolves frame (rem) and measure (ch) separately — see page-frame-sizing.spw`
 }
 
+^"expected_behavior"{
+  claim = `Complex behavior is learnable only when the finger's target and the motion's meaning are the same object.`
+  electrode = `Contact travel and press scale live on the control that received the finger. A room that contains links is not a control.`
+  disclosure = `A coarse primary pointer gets a glyph hamburger. The labeled Routes chip is inline-mode copy on a hover pointer, not pocket chrome.`
+  flourish = `Motion that does not name what happened is spectacle. Hover lift does not run where hover is none. Ornament idle-loads; first-paint contact does not wait on it.`
+  refuse = `Do not scale a host to acknowledge a nested link. Do not keep an inline strip on a finger because width hysteresis said fold.`
+}[reg=facet]
+
 ^"reward_contract"{
   claim: `Every interaction resolves into feedback or arc clarity - never silent absorption. A touch that moves state shows the movement; a touch that moves nothing reveals potential instead: which arcs are reachable from here, what charging would become, where a gesture could land. An interaction the surface swallows is a contract violation, not a neutral outcome.`
   feedback_forms: #[
@@ -327,6 +335,7 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
 
 validation: #[
   `Every interactive affordance resolves per reward_contract: state movement is shown or reachable arcs are revealed; no silent absorption.`
+  `Contact travel is on the electrode; a coarse pointer's disclosure is a glyph hamburger.`
   `Pinch preview sets data-spw-pinch-scaling and bumps approach-phase tokens.`
   `Brace gestures write data-spw-gesture; progression maps armed/charging to charge/prime.`
   `Arc lifecycle writes data-spw-loop-state; progression maps preview/activated/resolved to prime/charge/settle.`

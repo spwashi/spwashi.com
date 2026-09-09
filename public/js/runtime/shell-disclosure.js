@@ -260,9 +260,12 @@ function countOverflowRoutes(navList) {
 }
 
 function resolveMenuMode(header, nav, navList, state) {
-  const tier = document.documentElement.dataset.spwViewportTier || getViewportTier(window.innerWidth, state.config);
+  const html = document.documentElement;
+  const tier = html.dataset.spwViewportTier || getViewportTier(window.innerWidth, state.config);
+  const pointer = html.dataset.spwPointerMode || getPointerMode();
   const ratio = computeNavRatio(header, nav, navList, state);
   if (tier === 'compact' || tier === 'narrow') return MODES.TOGGLE;
+  if (pointer === 'coarse') return MODES.TOGGLE;
 
   const previousMode = state.snapshot?.mode || state.mode || MODES.INLINE;
   const exitRatio = Math.max(1, state.config.compressedRatio - state.config.modeHysteresisRatio);
@@ -824,9 +827,7 @@ export function initSpwShellDisclosure(options = {}) {
     toggle = document.createElement('button');
     toggle.className = 'spw-nav-toggle';
     toggle.type = 'button';
-    toggle.hidden = true;
-    toggle.setAttribute('aria-controls', nav.id);
-    toggle.setAttribute('aria-label', 'Toggle navigation menu');
+    toggle.setAttribute('aria-label', 'Open navigation menu');
     toggle.innerHTML = `
       <span class="spw-nav-toggle-glyph" aria-hidden="true"></span>
       <span class="spw-nav-toggle-copy">
@@ -842,6 +843,11 @@ export function initSpwShellDisclosure(options = {}) {
     } else {
       header.appendChild(toggle);
     }
+  }
+  toggle.type = 'button';
+  toggle.setAttribute('aria-controls', nav.id);
+  if (!toggle.getAttribute('aria-label')) {
+    toggle.setAttribute('aria-label', 'Open navigation menu');
   }
 
   const utilityRow = ensureUtilityRow(header);

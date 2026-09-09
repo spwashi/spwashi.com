@@ -835,7 +835,7 @@ function renderSiteHeader(vars) {
       ? `        <button type="button" class="header-annotation" data-spw-annotation-handle data-spw-annotation-kind="${attrEscape(annotation)}" aria-label="Inspect ${attrEscape(annotation)} annotation">${htmlEscape(annotation)}</button>\n`
       : '')
     + '    </div>\n\n'
-    + '    <nav aria-label="Primary">\n'
+    + '    <nav id="spw-shell-nav" aria-label="Primary">\n'
     + '        <ul>\n'
     + `${navItems}\n`
     + '        </ul>\n'
@@ -848,6 +848,14 @@ function renderSiteHeader(vars) {
     + '            <span class="spw-attention-posture-pill__value" data-spw-attention-posture-label>self / local / global</span>\n'
     + '        </button>\n'
     + '    </div>\n\n'
+    + '    <button type="button" class="spw-nav-toggle" aria-controls="spw-shell-nav" aria-expanded="false" aria-label="Open navigation menu">\n'
+    + '        <span class="spw-nav-toggle-glyph" aria-hidden="true"></span>\n'
+    + '        <span class="spw-nav-toggle-copy">\n'
+    + '            <span class="spw-nav-toggle-label">Routes</span>\n'
+    + '            <span class="spw-nav-toggle-state">tap to open</span>\n'
+    + '        </span>\n'
+    + '        <span class="spw-nav-toggle-meta" aria-hidden="true">routes</span>\n'
+    + '    </button>\n'
     + '    <span aria-hidden="true" class="header-op-indicator" data-header-op-slot>\n'
     + `        <span class="header-op-indicator__token">${htmlEscape(indicator)}</span>\n`
     + '    </span>\n'

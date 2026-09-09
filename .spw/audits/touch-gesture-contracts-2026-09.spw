@@ -164,6 +164,19 @@ audit_run: .{
     paint_note = `First attempt used box-shadow in electrostatic-affordances.css and rendered nothing on chips, section handles or cards: that file is systems, and handles, effects and ornament all paint above it. Outline is uncontested at rest and lands everywhere; cards resolve theirs in effects/material.css, which already owns outline-color as a state channel. Ornament was rejected as a home — it idle-loads with the flourish pack, which would have reintroduced f10.`
     open = `Grounding now covers the two silent paths found this pass. The 24 verbs from f7 still advertise arcs with no engine; grounding gives them an honest landing but the per-verb census is not run.`
   }
+  f12_room_is_not_a_control {
+    severity = "high"
+    dated = "2026-09-09"
+    claim = `The same class of bug kept returning: treat a container as the affordance. Contact scale on [data-spw-gesture-contract] hosts (1b87d0c9) stole link taps by shrinking the room. Width-only menu mode (ae7f93650) plus labeled Routes copy (4d60fee3) left coarse fold without a hamburger. Hover lift on hover:none stuck a flourish to the last tap.`
+    kinds = #[
+      `electrode vs room — motion must name the thing touched`,
+      `disclosure vs strip — a finger gets a glyph drawer, not an inline ribbon`,
+      `first-paint vs idle flourish — contact cannot wait on ornament`,
+      `hysteresis vs device class — stability must not freeze the wrong topology`
+    ][reg=set]
+    expected = `@interaction_microstates#expected_behavior`
+    fix = `Travel only on button/chip/summary/handle. Ring only on leaf gesture hosts. Coarse pointer forces toggle. Toggle lives in the header template. Glyph-only at pocket/coarse. Hover transform idle where hover is none.`
+  }
 }[reg=facet]
 
 ^"fundamentals_first"{
