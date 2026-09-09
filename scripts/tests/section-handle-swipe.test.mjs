@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  describeSectionHandleSwipe,
   resolveSectionHandleSwipe,
+  resolveSectionHandleSwipeContract,
+  SECTION_HANDLE_CONTRACTS,
   SECTION_HANDLE_SWIPE_DELTA_PX,
 } from '../../public/js/runtime/attention/section-handle.js';
 
@@ -43,6 +46,13 @@ test('collapsed pocket swipe cycles the visible rooms, not hidden kin', () => {
     }),
     null,
   );
+});
+
+test('collapsed swipe is rooms; expanded swipe is nearby kin', () => {
+  assert.equal(resolveSectionHandleSwipeContract({ compact: true }), SECTION_HANDLE_CONTRACTS.rooms);
+  assert.equal(resolveSectionHandleSwipeContract({ compact: false }), SECTION_HANDLE_CONTRACTS.nearby);
+  assert.match(describeSectionHandleSwipe({ compact: true }), /rooms/);
+  assert.match(describeSectionHandleSwipe({ compact: false }), /nearby kin/);
 });
 
 test('expanded swipe still cycles kin relations', () => {
