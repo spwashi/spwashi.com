@@ -303,9 +303,17 @@
    * that genuinely must hold one line, and frame sigils keep their own
    * nowrap-plus-ellipsis further up: an address that elides is still an
    * address, where a verb that elides is a guess.
+   *
+   * `anywhere` rather than `break-word`, because these labels are single
+   * underscore tokens — "~mental_health", "*rpg_wednesday" — and a chip is a
+   * flex item sized from its content's min-content contribution. break-word
+   * leaves that contribution at the width of the whole unbroken token, so the
+   * chip kept asking for 131px inside a 118px track and overflowed anyway.
+   * `anywhere` is the one that lets the token count as breakable when the
+   * track is measured, which is what actually lets the chip fit.
    */
   white-space: var(--spw-control-white-space, normal);
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   min-inline-size: 0;
   max-inline-size: 100%;
   text-align: center;
