@@ -883,6 +883,17 @@ function buildConceptPopover(term) {
   const hint = document.createElement('p');
 
   popover.className = CONCEPT_POPOVER_CLASS;
+  // Visible from the element's very first style resolution, before it is ever
+  // appended. The shared popover rule starts the family at visibility:hidden
+  // and `.is-visible` lifts it, but focus() on a visibility-hidden element is
+  // a no-op and the lift does not reach computed style until a recalc — which
+  // on this page is not promptly (see
+  // .spw/caches/interaction-paint-cost-2026-09.spw). Setting it after append
+  // therefore raced, and lost: the note opened with focus still on the word,
+  // and since the note lives at the end of <body> a keyboard reader could not
+  // Tab to the gather button at all. Declared here, the element is never
+  // computed as hidden; opacity and transform still carry the entrance.
+  popover.style.visibility = 'visible';
   popover.setAttribute('role', 'dialog');
   popover.setAttribute('aria-modal', 'false');
   popover.setAttribute('aria-label', `${spoken} — living concept`);
@@ -1022,11 +1033,10 @@ function openConceptInspect(term, { source = 'tap' } = {}) {
   // visibility-hidden element is a no-op. Waiting for a frame instead is worse
   // here: on this page the next painted frame can be a long way off (see
   // .spw/caches/interaction-paint-cost-2026-09.spw), and the note would open
-  // unfocused or not at all. Setting visibility inline makes the element
-  // focusable now; opacity and transform still carry the entrance, and close
-  // removes the node outright so the inline value never outlives it.
+  // unfocused or not at all. The note declares its own visibility at
+  // construction so it is focusable the moment it lands; this class only
+  // carries opacity and transform.
   popover.classList.add('is-visible');
-  popover.style.visibility = 'visible';
   popover.focus({ preventScroll: true });
 }
 
