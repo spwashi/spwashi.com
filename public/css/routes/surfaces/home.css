@@ -1615,13 +1615,13 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
   :where(body[data-spw-surface="home"] .spw-frame .frame-heading) {
     padding-block-end: 0.3rem;
     margin-block-end: 0;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
   }
 
   :where(body[data-spw-surface="home"] .spw-frame .frame-heading h2) {
-    flex: 0 1 auto;
+    flex: 1 0 100%;
     inline-size: 100%;
     min-inline-size: 0;
     max-inline-size: 100%;

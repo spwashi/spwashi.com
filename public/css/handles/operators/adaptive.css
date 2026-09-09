@@ -71,8 +71,10 @@
     .frame-topline > .spw-component-meta,
     .frame-heading > .spw-component-meta,
     .frame-topline > .spec-strip,
-    .frame-topline > .frame-operators
+    .frame-topline > .frame-operators,
+    .frame-heading > :is(h1, h2, h3)
   ) {
+    flex: 1 0 100%;
     width: 100%;
     margin-left: 0;
     margin-inline-start: 0;
@@ -87,14 +89,17 @@
 }
 
 @media (max-width: 32rem) {
+  /* Brace pair stays a row. Titles and spec strips already took
+     100% at 45rem, so they wrap under `{` + sigil instead of
+     column-stacking the delimiter onto its own line. */
   :where(.frame-topline, .frame-heading) {
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
   }
 
   :where(.frame-heading > :is(h1, h2, h3)) {
-    flex: 0 1 auto;
+    flex: 1 0 100%;
     inline-size: 100%;
     min-inline-size: 0;
     max-inline-size: 100%;
@@ -116,11 +121,11 @@
 
   :where(
     .frame-topline > .frame-sigil,
-    .frame-heading > .frame-sigil,
     .frame-topline > .spw-delimiter,
+    .frame-heading > .frame-sigil,
     .frame-heading > .spw-delimiter
   ) {
-    align-self: flex-start;
+    align-self: center;
   }
 }
 

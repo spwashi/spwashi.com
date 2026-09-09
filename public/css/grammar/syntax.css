@@ -947,10 +947,12 @@
   }
 
   @container (max-width: 32rem) {
+    /* `{` + sigil stay a brace pair. Titles / spec strips wrap
+       underneath via 100% basis — do not column the delimiter. */
     :where(.frame-topline, .frame-heading) {
-      flex-direction: column;
-      flex-wrap: nowrap;
-      align-items: stretch;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
     }
 
     :where(
@@ -959,7 +961,7 @@
       .frame-topline > .spw-delimiter,
       .frame-heading > .spw-delimiter
     ) {
-      align-self: flex-start;
+      align-self: center;
     }
   }
 
