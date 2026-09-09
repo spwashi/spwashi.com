@@ -73,8 +73,12 @@
   align-content: start;
 }
 
+/* Third instance of the same shape: display:grid with no track, so the implicit
+   auto column sizes to max-content and a prose item overruns its own card.
+   Measured on /about/ at broadsheet, 150px of track inside 112px. */
 :where(.returner-ledger-item) {
   display: grid;
+  grid-template-columns: minmax(0, 100%);
   gap: 0.32rem;
   padding-left: 0.85rem;
   border-left: 2px solid color-mix(in srgb, var(--active-op-color, #008080) 28%, transparent);

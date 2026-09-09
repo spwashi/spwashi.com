@@ -267,8 +267,16 @@ html[data-spw-theme-biome="glasshouse"] {
   font-weight: 650;
 }
 
+/* Both of these declare display:grid, so both have to declare a track. An
+   implicit auto column sizes to max-content, and a definition list holds long
+   prose: measured on /about/ at broadsheet, this grid resolved a 380px track
+   inside a 182px container and its dt/dd painted 151px past .spw-frame, which
+   clips. Same shape as the .frame-body defect, found by probe rather than by
+   eye. 100% rather than 1fr for the same reason as there: an fr is a share of
+   free space and needs a definite width, and these are grid items themselves. */
 .spw-room-path--define {
   display: grid;
+  grid-template-columns: minmax(0, 100%);
   gap: 0.55rem 1.1rem;
   margin: 0;
   padding: 0;
@@ -276,6 +284,7 @@ html[data-spw-theme-biome="glasshouse"] {
 
 .spw-room-path--define > div {
   display: grid;
+  grid-template-columns: minmax(0, 100%);
   gap: 0.12rem;
   padding-inline-start: 0.7rem;
   border-inline-start: 2px solid color-mix(in srgb, var(--spw-anatomy-color, var(--op-frame-color, #008080)) 34%, transparent);
