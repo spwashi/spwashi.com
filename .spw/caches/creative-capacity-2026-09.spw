@@ -16,6 +16,7 @@
 @wonder_vocabulary: ~"../conventions/wonder-vocabulary.spw"
 @wonder_architecture: ~"../conventions/wonder-architecture.spw"
 @history_strands: ~"./history-conflict-strands-2026-09.spw"
+@astra_design_direction: ~"./astra-design-direction-2026-09.spw"
 @copy_accessor: ~"../conventions/copy-accessor.spw"
 @living_medium_copy: ~"../conventions/living-medium-copy.spw"
 @skill_invocation: ~"../conventions/skill-invocation.spw"
@@ -129,7 +130,7 @@ source = "chat 2026-09-04: creative capacity, engaged wonder, unique style, Spw 
     `workbench-report.spw#walk_cost: a lens on a 120s walk is spectacle`
   ][reg=set]
   pattern_consideration = `Do not add ASTRA.md. Do not implement go-to-owner, rename-refuse, or an altitude lens from this prime. Dual-path still holds: consume workbench XOR mutate site .spw.`
-  first_patch = `Keep the wonders harvestable. Next Astra session: pick one probe (walk isolation, go-to-owner, or operation|fixity lens) — not all three.`
+  first_patch = `Keep the wonders harvestable. Next Astra tooling session: pick one probe (walk isolation, go-to-owner, or operation|fixity lens) — not all three. A creative design pass gauges first: @astra_design_direction; harvest with npm run wonder -- --surface astra-design.`
   history = `Longer-horizon Astra work points at @history_strands: cross-file silent misses, arrival vs earned, one staged still, open-drawer swipe — coordinator over a bounded implementer.`
   validation = `node scripts/wonder.mjs --surface wonder-architecture && rg 'astra_prime|wonder_architecture_lsp_' .spw/conventions/wonder-architecture.spw`
 }[reg=facet]

@@ -1,0 +1,192 @@
+# Astra Design Direction (2026-09)
+#
+# operation: prime
+# Gauge a creative design pass before anyone patches. One harvestable
+# question per cheaper model. Answers land here, not in /tmp. Astra
+# coordinates. Not a seventh theme-pack. Not ASTRA.md.
+
+#>astra_design_direction_2026_09
+#:cache #!prime #!design #!wonder #!agents #!style
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@creative_capacity: ~"./creative-capacity-2026-09.spw"
+@history_strands: ~"./history-conflict-strands-2026-09.spw"
+@skill_invocation: ~"../conventions/skill-invocation.spw"
+@agent_ecology: ~"../conventions/agent-ecology.spw"
+@creator_masthead: ~"./creator-masthead-2026-09.spw"
+@still_recipes: ~"./still-recipe-agency-2026-09.spw"
+@css_combinatorics: ~"./css-combinatorics.spw"
+@taste: ~"./taste-research-2026-09.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@layout_css: ~"../../public/css/shell/layout.css"
+@region_seats: ~"../../public/css/systems/region-seats.css"
+@home_css: ~"../../public/css/routes/surfaces/home.css"
+@about_css: ~"../../public/css/routes/surfaces/about.css"
+@contextual_ui: ~"../../public/js/interface/contextual-ui.js"
+@shell_disclosure: ~"../../public/js/runtime/shell-disclosure.js"
+@site_settings_engine: ~"../../public/js/kernel/site-settings-engine.js"
+
+operation = "prime"
+fixity = "experimental"
+source = "chat 2026-09-09: prompt Astra to creatively improve the design; Claude/Grok/AGY to conserve credits; one question each in .spw first"
+
+expression = design[gauge]{claude.grok.agy}<astra>
+
+^"thesis"{
+  claim = `A creative design pass earns its keep when cheaper models answer one harvestable question each, Astra names one combinatoric slice from those answers, and nobody invents a family to feel like progress.`
+  partner = `Astra is coordinator, not a fifth adapter. @wonder_architecture#astra_prime @agent_ecology#harness`
+  credit = `Ask Grok, then Claude, then AGY (Gemini/Antigravity). Skip Codex unless the named slice is ESM or CSS-layer exactness. One cheaper model plus Astra is enough — a lens that needs four models in the room is unusable.`
+  refuse = `Do not add ASTRA.md. Do not write public HTML from this prime. Do not leave model replies in /tmp. Do not kitchen-sink the candidate list. Do not run --ids=home-hook and call it a still.`
+}[reg=facet]
+
+^"candidates"{
+  note = `Existing first_patches. Grok names one after the census. Inventing a sixth is the miss.`
+  masthead = `Unpaid pocket/fold h1/lede on home. @creator_masthead. Probe: npm run sense -- ink home-opening. Local of newspaper fold, not a separate slice.`
+  climate = `Judge library-cozy XOR improve the -icon crop XOR one more theme_set sample. @creative_capacity#cc-007_astra_theming_climates`
+  still_or_swipe = `One staged icon set on one real route in light/dark XOR open-drawer swipe. @history_strands#design_develop`
+  settings_copy = `Settings hook names primitives, not weather. @still_recipes#next_session`
+  newspaper = `Spend newspaper × pocket|fold|broadsheet on one family main. @css_combinatorics#open_products`
+}[reg=facet]
+
+^"census"{
+  id = "adg-002"
+  operation = "audit"
+  dated = `2026-09-09`
+  claim = `The masthead-only pick under-read the tree. Newspaper already has three hosts. Shared CSS already spends pocket|fold|broadsheet. JS already writes the receipt and the leftover chrome gesture.`
+  routes = #{
+    newspaper = `/ /about/ /recipes/`
+    wide = `/now/ /settings/ /membership/ — not this slice`
+    atlas = `/topics/ /town/ — not this slice`
+    stills = `home-opening, about-opening, town-opening, research-opening, membership-opening, software-opening, folio-prices`
+  }
+  stylesheets = #{
+    structure = `style-core → @layout_css newspaper stem at 45rem/61.25rem; @region_seats desk flex excludes about+services`
+    local_fight = `@home_css @media (max-width: 32rem) heading rules sit above the 45rem pocket reason`
+    atmosphere = `wonder.css / ornament.css idle — not first paint`
+    do_not = `Do not pull about's 12-col desk into region-seats. Do not restyle settings .spw-frame. Do not convert wide routes to newspaper.`
+  }
+  javascript = #{
+    receipt = `@contextual_ui writes html[data-spw-layout-reason] — inspect, not the grid`
+    knobs = `@site_settings_engine writes color-mode, palette-resonance, semantic-density, wonder-memory — do not retune`
+    leftover = `@shell_disclosure has zero swipe; that is still_or_swipe, XOR with a staged still, not this patch`
+  }
+  refuse = `Do not invent a sixth candidate (section-handle restyle, expression-resonance, new theme-pack). Do not implement from this census.`
+  component_device = `Device variants sit on the newspaper stem (pocket|fold|broadsheet). Component variants pack from inline-size. Do not mint a per-device card. Owner: page-frame-sizing.spw#device_reasons. Wonder: npm run wonder -- --surface page-frame.`
+}[reg=facet]
+
+^"routing"{
+  astra = `Harvest, synthesize, name the slice and the combinatoric move, write a one-slice brief. Do not implement from this prime.`
+  grok = `Answer wonder_astra_design_grok only. Lean anti-bloat. Explore/plan do not write.`
+  claude = `Answer wonder_astra_design_claude against Grok's pick. Lean constitutional. Plan mode if the slice would touch a11y or a data-spw stem.`
+  agy = `Answer wonder_astra_design_agy by running the named Sense instrument. Lean tool-mastery. Do not poll background tasks.`
+  codex = `Skip this pass.`
+  land = `Write grok= claude= agy= astra= into the matching wonder bodies in this file.`
+}[reg=facet]
+
+# Harvestable wonders. Inquiry, not a backlog.
+# `npm run wonder -- --surface astra-design`
+
+#>wonder_astra_design_grok
+?["If Astra may land only one public still, which existing first_patch is the honest slice?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @history_strands
+  ~#model: "grok"
+  ~#focus: "anti-bloat"
+  ~#hypothesis: "masthead unpaid, library-cozy judgment, one staged still vs swipe, settings-hook copy, and newspaper×viewport already exist. A sixth candidate is kitchen-sink."
+  ~#tension: "creative improvement wants a new climate; anti-bloat wants the unpaid still. Naming the unpaid one is not a failure of taste."
+  !probe{ "read @creator_masthead unpaid, @creative_capacity#cc-007 first_patch, @history_strands#design_develop first_patch, @still_recipes#next_session. name one id. if the answer is 'all of them' or a new family, refuse." }
+  grok = `newspaper. Census: newspaper already hosts /, /about/, /recipes/; @layout_css spends pocket@45rem / fold@61.25rem; @home_css @32rem heading is a local of that stem, not its own slice. First patch: align home pocket/fold h1/lede to the newspaper reason breakpoints; prove about-opening pocket; leave recipes unedited; do not convert /now/ or /settings/ from wide; do not pull about into @region_seats; do not retune @contextual_ui or @shell_disclosure (swipe leftover). Sense: npm run sense -- ink home-opening at pocket,fold,broadsheet, and about-opening pocket as regression. Not a sixth candidate.`
+  $%[slice.named, candidate.id, refuse.sixth]
+}
+
+#>wonder_astra_design_claude
+?["On Grok's named slice, would the patch steal pocket chrome, invent a data-spw family, or restyle atmosphere as first-paint structure?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @attention_field
+  ~#model: "claude"
+  ~#focus: "constitutional"
+  ~#hypothesis: "the known thefts are a components-layer 2.75rem floor on floating chrome, contain:layout on html, and late restyle treated as structure. a 'better design' that does any of those is not better."
+  ~#tension: "44px is the ground-control floor on coarse pointers outside pocket chrome. Compact chrome keeps --touch-target-compact."
+  !probe{ "name the public primitive (frame|card|panel|chip|prose). if none, cache the idea; do not patch. grep the slice for [data-spw-floating-chrome] and html contain/position. if a new data-spw-* stem appears, stop." }
+  claude = `prose, seated in frame: the h1 plus [data-spw-textual-role="lede"] inside the entry-spine .spw-frame. Clean on all three named thefts. chrome.stolen no: zero [data-spw-floating-chrome] in @layout_css or @home_css, and neither file touches html contain or position, so the 2.75rem ground-control floor and --touch-target-compact are untouched. family.invented no: data-spw-layout, -layout-reason, -textual-role and -region-role already carry the slice. atmosphere no: wonder.css and ornament.css stay idle; this is first-paint structure that already exists.
+
+    The hazard is a fourth one this question does not name, and it argues for amending the slice rather than blocking it. Grok says align home pocket/fold h1/lede to the newspaper reason breakpoints. Those boundaries are viewport (45rem / 61.25rem in @layout_css), but the prose carrier is an inline-size container: frames.css gives .spw-frame container: spw-frame / inline-size. They disagree at exactly the size the slice cares about. Measured 2026-09-09 at fold, 768px viewport: .spw-frame 350px, article.frame-panel 279px. On settings the feature-scope row was 263px at fold against 306px at pocket — narrower at the larger viewport, because the page goes two-column there. Its fallback was a 40rem viewport query, so it fired at pocket and not at fold, and the third track resolved to 7px holding 80 characters. Fixed in f228f05f by asking the container. Keying an h1 and lede to a newspaper viewport band repeats that shape on the home entry spine.
+
+    Second, smaller: --spw-layout-reason is written in three media blocks in @layout_css and read by no CSS in the tree (no var(--spw-layout-reason) consumer), while html[data-spw-layout-reason] is documented as a receipt in layout.css:412 and region-seats.css:6 and registered html:inspect in the catalog. The breakpoints are real; the reason is a name, not a mechanism. Do not promote either into layout authority while aligning to them.
+
+    Verdict: proceed with one correction. Key the home h1/lede on the frame's own inline-size container, and keep 45rem/61.25rem only where they already decide --spw-newspaper-columns. Then about-opening pocket is a real regression control rather than a coincidence. If Astra would rather not carry a container-versus-viewport correction inside a design slice, cache it and let the newspaper pick stand as authored: it is safe, just keyed to the wrong width.`
+  $%[primitive.named, chrome.stolen, family.invented]
+}
+
+#>wonder_astra_design_agy
+?["Which Sense instrument would falsify a design that only looks better in one viewport?"]{
+  #:depth #!computational ~#lens(inquiry)
+  ~#with: @still_recipes
+  ~#model: "agy"
+  ~#focus: "tool-mastery"
+  ~#hypothesis: "home-hook is a fixture family (twelve jobs). home-opening is the still. Full visual:checks is dear. AGY's job is the cheap instrument, not the pack."
+  ~#tension: "a still that passes at broadsheet and clips at pocket is the usual miss. Running the family and calling pocket/desktop sound is how Codex 01a07f00 lied."
+  !probe{ "npm run sense -- ink <recipe-id> at pocket and broadsheet. recipe id, not --ids=<fixture-family>. if the named slice is ink, also npm run visual:checks -- --ids=<that same recipe>. do not poll." }
+  agy = `home-opening. Falsification evidence from live probe:
+    1. Recipe vs family: --ids=home-hook runs 12 jobs across 7 theme variants (ember, electric, glass, contrast), costing ~60s and masking layout clipping under color noise. home-opening is the isolated still (#home-frame, disclosures closed), capturing pocket (9.6s) and broadsheet (5.9s) in 2 jobs / 0 errors (run 08-56-51--8f1d96).
+    2. Multi-viewport falsification: node scripts/component-snapshots.mjs --stills --checks --viewports pocket,broadsheet --ids=home-opening reveals that broadsheet newspaper multi-column seats narrow the entry-spine container relative to a plain single column. A viewport query @media (max-width: 32rem) in @home_css cannot see this; it requires the container query @container spw-frame (max-width: ...) that Claude identified.
+    3. Regression control: node scripts/component-snapshots.mjs --stills --checks --viewports pocket --ids=about-opening runs in 4.4s (1 job / 0 errors), verifying that peer newspaper routes do not regress.`
+  $%[recipe.id, viewport.pocket, viewport.broadsheet]
+}
+
+#>wonder_astra_design_astra
+?["On the named slice, what combinatoric reuse of the seven wonder types, copy tokens, or living terms would a visitor notice without a new data-spw family?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @wonder_architecture
+  ~#model: "astra"
+  ~#focus: "coordinator"
+  ~#hypothesis: "unique style here is reuse of operators, copy-depth, living terms, and literary motifs as registers. a new theme-pack or a fourth accessor is the counterfeit."
+  ~#tension: "Astra's creativity altitude is permission-vocabulary, not a mood. Implementation waits until this answer names one surface."
+  !probe{ "after grok= claude= agy= land in this file, write astra= as one sentence: the slice, the combinatoric move, the owner file, the Sense instrument. then stop or hand a one-slice brief. do not implement from this prime." }
+  astra = `Newspaper home entry-spine (h1 + lede in #home-frame), container-query alignment to the spw-frame inline-size rather than viewport breakpoints so multi-column layouts cannot crush prose tracks, public/css/routes/surfaces/home.css, node scripts/component-snapshots.mjs --stills --checks --viewports pocket,broadsheet --ids=home-opening (with about-opening pocket as regression).`
+  status = `Grok named newspaper over masthead; Claude verified no stolen chrome or invented families with container-query correction; AGY executed the still across pocket/broadsheet (captures/pocket/01-home-opening.jpg, captures/broadsheet/01-home-opening.jpg) and about-opening pocket regression in 15s total; Astra synthesized one-slice brief. Prime complete; ready for implementation handoff without modifying public HTML in prime.`
+  sense = `2026-09-09: npm run wonder -- --surface astra-design harvested all four questions; npm run sense -- ink listed recipes and exited 2 as designed without starting the pack.`
+  egress = `Do not approve sending AGENTS.md, adapters, MEMORY, or the design-cache corpus to an external Grok CLI. This session already holds those files. A paste of the four wonders is the only packet that would have been honest, and it is already in this file.`
+  $%[slice.named, move.combinatoric, owner.file, sense.instrument]
+}
+
+^"paste"{
+  id = "adg-001"
+  operation = "prime"
+  claim = `The Astra prompt is this block. Walk one path.`
+  paste = `
+operation: prime, then one named patch — not both in one breath
+you: Astra. Coordinator, not a fifth adapter. AGENTS.md is the gate.
+open: .spw/caches/astra-design-direction-2026-09.spw
+      .spw/conventions/wonder-architecture.spw#astra_prime
+      .spw/caches/creative-capacity-2026-09.spw#cc-007
+sense: npm run wonder -- --surface astra-design
+       npm run sense -- ink   # lists recipes; do not start the pack
+goal: creatively improve the design as combinatoric reuse, not a new family
+
+credit:
+  1. Grok  — wonder_astra_design_grok   (name one candidate)
+  2. Claude — wonder_astra_design_claude (what the pick would steal)
+  3. AGY   — wonder_astra_design_agy    (run the still, pocket + broadsheet)
+  skip Codex. one cheaper model + you is enough.
+
+then: answer wonder_astra_design_astra in this file.
+      one sentence: slice, combinatoric move, owner file, Sense instrument.
+      hand a one-slice brief to Grok or Claude, or wait.
+      do not write public HTML from the prime.
+
+candidates: masthead unpaid | library-cozy XOR -icon XOR one theme_set
+            | one staged still XOR open-drawer swipe | settings-hook copy
+            | newspaper × viewport on one family main
+refuse: ASTRA.md, new data-spw-*, seventh theme-pack, --ids=home-hook as a still,
+        git stash, /tmp replies, 140-route copy, full visual pack, kitchen-sink
+`
+}[reg=facet]
+
+validation: #[
+  `node scripts/wonder.mjs --surface astra-design`
+  `rg 'wonder_astra_design_' .spw/caches/astra-design-direction-2026-09.spw .spw/caches/index.spw`
+][reg=set]

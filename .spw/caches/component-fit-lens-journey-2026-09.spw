@@ -1,0 +1,134 @@
+# Component Fit, Lens Priority, Journey Charge (2026-09)
+#
+# operation: prime
+# Walk the five public primitives: content specificity, opportunistic
+# display from what fits, lens priority, ordinal electrostatics of a
+# visit. Not a sixth primitive. Not a hamburger of every card.
+
+#>component_fit_lens_journey_2026_09
+#:cache #!prime #!components #!packing #!lens #!charge #!journey
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@component_taxonomy: ~"../conventions/component-taxonomy.spw"
+@component_packing: ~"../conventions/component-packing.spw"
+@page_frame: ~"../conventions/page-frame-sizing.spw"
+@region_ecology: ~"../conventions/region-component-ecology.spw"
+@electrostatics: ~"../conventions/electrostatic-affordances.spw"
+@arrival: ~"../conventions/arrival-electrostatics.spw"
+@charge_cycle: ~"../conventions/charge-cycle.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@attention_arcs: ~"./implicit-attention-arcs.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@living_medium: ~"../conventions/living-medium-copy.spw"
+@menu_field: ~"../surfaces/menu-field.spw"
+@astra_design: ~"./astra-design-direction-2026-09.spw"
+@history_strands: ~"./history-conflict-strands-2026-09.spw"
+
+operation = "prime"
+fixity = "experimental"
+source = "chat 2026-09-09: walk each component for content specificity, opportunistic fit, lens priority, ordinal electrostatics of user journeys"
+
+expression = component[fit]{lens.charge.journey}<ordinal>
+
+^"thesis"{
+  claim = `Fit, lens, and journey charge are three filters on the same five primitives. They do not mint device copies. When they disagree, the journey shell names what may speak, the lens names which kin, and the container names how many slots remain.`
+  axes = #{
+    specificity = `what content this primitive uniquely owns (copy-unit, expression, slot, operator)`
+    fit = `what it may hide or wrap when inline-size cannot hold the topology — opportunistic, never a viewport hamburger of the card`
+    lens = `subject[mode]{direction} plus page-modes / home-lens. Mode is the priority, not a second component`
+    ordinal = `visit order is already named: attention-arc approach→enter→dwell→echo→return; liminality entry→threshold→deep→settled; charge ladder rest→proximity→contact→held. Contact outranks proximity. One discharge per shell.`
+  }
+  refuse = `Do not add a sixth primitive. Do not pack-local the header. Do not interpolate composition as a gradient. Do not drop the electrode of the current shell to save pixels.`
+}[reg=facet]
+
+^"conflict_rule"{
+  id = "flj-000"
+  when = `fit, lens, and ordinal charge disagree`
+  win = #{
+    1_shell = `liminality / attention-arc: entry keeps lede; return may keep figure (dielectric, earned); approach does not replay entrance`
+    2_lens = `expression mode and data-spw-page-modes: reading keeps prose measure; inspect keeps operator chips; play may keep actions`
+    3_fit = `container topology: never reserve an empty pack-region; wrap body; collapse footer then meta then extra actions`
+  }
+  electrode = `The chip that is the terminal of this shell stays. A ? in a hook is not optional chrome.`
+  dielectric = `Figure holds meaning without spending it. Prefer a smaller crop over dropping the plate on first visit; on return the plate may wait.`
+}[reg=facet]
+
+^"frame"{
+  id = "flj-001"
+  primitive = `spw-frame`
+  specificity = `A section/hero wall. Owns region-role, liminality band, and the brace that makes potential. Slot anatomy header→footer lives here. Copy-unit on the lede if collectible.`
+  fit = `container: spw-frame / inline-size. Opportunistic: desk leftover at broadsheet; one column at pocket. Do not two-column main at fold. Home entry-spine currently keys a 32rem viewport query — that is the mix @page_frame forbids.`
+  lens = `data-spw-region-role=entry-spine is the first-fold lens. Page-modes on body rank what the frame may invite; the frame does not switch primitives.`
+  ordinal = `Entry shell. Arrival discharge draws on this wall, once. Header is entry, footer is settled — the frame is the wall between them. Nested frames attenuate (1 → 0.62 → 0.38).`
+}[reg=facet]
+
+^"card"{
+  id = "flj-002"
+  primitive = `spw-card`
+  specificity = `One discrete claim. Reason-copy before a link. Expression + copy-unit when kinship should fire. Pack-regions context|media|body|actions are the content types, not device copies.`
+  fit = `data-spw-pack-local. Width × owned topology: stack default; media+body split at 26rem; feature only with actions at 44rem. Never reserve an empty track. Same card in a rail and in a main column packs the same way.`
+  lens = `Mode on the expression (reading|play|inspect) chooses which region is the subject. Fill (sparse|balanced|full) is item count, not a lens.`
+  ordinal = `Threshold or cluster — inductance with kin operators via :has(). Approach arc does not mount packing JS; dwell may mirror pack-layout. Do not reposition on approach (@region_ecology gravity).`
+}[reg=facet]
+
+^"panel"{
+  id = "flj-003"
+  primitive = `spw-panel`
+  specificity = `Matte callout. Living-concept panels on home already pack-local. Less dielectric than a card; more resistance than a chip.`
+  fit = `May collapse to a kicker + one chip when compact. Disclosure (details) only if the essential line stays visible without opening — @living_medium disclosure_rule.`
+  lens = `Referentiality-tier panels (technical, agent) stay out of hero voice. A reading lens should not promote an inspect panel into the entry spine.`
+  ordinal = `Deep or projected shell. Quiet until dwell/echo. Grounded if it has no arc — do not answer with silence, do not spark on approach.`
+}[reg=facet]
+
+^"chip"{
+  id = "flj-004"
+  primitive = `spw-chip`
+  specificity = `The electrode. data-spw-operator is the terminal. Header slot = address; actions slot = portable link. Do not resticker discharge-kind on the same node.`
+  fit = `Never wrap. min-content. Overflow of a chip row is a scroll owner on the seat, not a smaller sigil. Compact chrome keeps --touch-target-compact; 44px is the floor outside floating chrome.`
+  lens = `Operator family is the lens: ? inquires, #> grounds, @ situates. Home-lens mode-switch chips are the reading/build/play/studio priority row — one pressed, alternatives remain.`
+  ordinal = `Latent → armed → preview → acted along rest→proximity→contact→held. Contact outranks proximity; :active is the contact rung a finger can reach. One chip, one terminal, one inferred discharge (release|transfer|ground|project).`
+}[reg=facet]
+
+^"prose"{
+  id = "flj-005"
+  primitive = `spw-prose`
+  specificity = `data-spw-textual-role lede|tagline|kicker|note. Dotted copy-unit for lookup; expression mode for lens. Resistance: the essay stays quiet.`
+  fit = `Measure in ch, not frame rem. Wrap the heading; do not let a label become HRESHOL. Copy-depth entry vs dense is the opportunistic register — first-fold keeps entry; echo/return may densify. Do not key type size to a viewport band when the frame container is narrower (home h1 @32rem).`
+  lens = `about[reading]{person} — mode is the lens. A play lens does not rewrite the lede; it sits a different chip.`
+  ordinal = `Entry speaks the lede once. Return should not replay arrival fire (@history_strands earned vs first-encounter). Kicker orients; lede commits; note sediments.`
+}[reg=facet]
+
+^"chrome_not_a_primitive"{
+  id = "flj-006"
+  note = `Header, hamburger, section-handle, floating islands. Not a sixth primitive.`
+  specificity = `Shell disclosure. One nav list. menu-mode inline|toggle with hysteresis.`
+  fit = `Crowding ratio, not pack-local. Overflow routes go in the route-menu host, not a gradient of the ribbon.`
+  lens = `Menu-field postures ground|mode|scene|subject. Current route is settlement, not a lens copy of the page.`
+  ordinal = `Always in the entry shell of the viewport, never of the article. Approach may show the handle; do not restyle nav as the page loads.`
+}[reg=facet]
+
+# Harvestable. `npm run wonder -- --surface component-fit`
+
+#>wonder_component_fit_conflict
+?["When a pocket frame cannot hold lede, figure, and the hook chip, which filter drops a slot — fit, lens, or journey charge?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @component_taxonomy
+  ~#hypothesis: "journey shell keeps the lede on first visit and the electrode chip always; lens may hide play-actions under a reading mode; fit wraps body and collapses footer/meta. figure shrinks (dielectric crop) before it vanishes. dropping the hook chip to save px is stealing the terminal."
+  ~#tension: "opportunistic display wants :has() topology; a hamburger of the card wants a device copy; a composition gradient wants clamp() to pick personality. the ordinal ladder already names the visit. a new drop-priority attribute would be a fourth accessor."
+  !probe{ "on / at pocket, name the slots inside #home-frame. if the working-view chips remain and the h1 is keyed to viewport 32rem while the frame is ~350px, fit and journey already disagree. capture home-opening fold. do not add data-spw-drop-order." }
+  $%[slot.kept, lens.mode, arc.ordinal, electrode.present]
+}
+
+^"do_not"{
+  sixth = `No sixth primitive, no data-spw-drop-order, no data-spw-device-variant`
+  mix = `Do not let shell crowding restyle a card; do not let pack-local restyle the header`
+  replay = `Do not discharge entry twice on return`
+  implement = `Do not patch home.css from this prime. Fold still waits as the Sense instrument.`
+}[reg=facet]
+
+validation: #[
+  `node scripts/wonder.mjs --surface component-fit`
+  `rg 'flj-00' .spw/caches/component-fit-lens-journey-2026-09.spw .spw/caches/index.spw`
+][reg=set]

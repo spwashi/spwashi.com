@@ -33,3 +33,14 @@ element = "air"
   falsification = "The name clips, the map overflows, or the working-view controls become unusable."
   refuse = "Do not wire this cache into site.spw while that file is dirty with a sibling session. Do not grow the art plate to fill 54ch air. Do not leave model replies in /tmp."
 }
+
+^"newspaper_entry_spine_alignment"{
+  operation = "align"
+  fixity = "tending"
+  dated = "2026-09-09"
+  change = `Home h1/lede spend cqi from their existing inline-size container; compact type queries spw-frame at 32rem after base declarations, paying the source-order debt without moving newspaper column breakpoints.`
+  owner = @home_css
+  evidence = `Home pocket/fold/broadsheet: design/components/captures/runs/2026-09-09/checks/09-25-19--aa4cfc; about pocket: runs/2026-09-09/checks/09-26-57--c75cef; four stills, zero capture errors, visually inspected.`
+  validation = `CSS build and git diff --check pass; check-generated --allow-dirty passes with the rebuilt home bundle; check:local passes 282 module tests but fails site census on pre-existing .claude/worktrees routes and flags the uncommitted generated home bundle.`
+  scope = `Route CSS plus generated home bundle only; copy, shared layout, atmosphere and chrome untouched; still recipe has no attention assertion, so these are layout observations.`
+}[reg=facet]

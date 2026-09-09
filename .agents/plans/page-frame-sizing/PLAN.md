@@ -46,3 +46,12 @@ Route layouts and reader-selected layout tuners produce predictable page frames 
 
 - Redesigning settings controls or navigation content.
 - Reworking unrelated spacing, ornament, or route presentation.
+
+## 2026-09-09 — newspaper opening slices
+
+Operation: `align`; fixity: `tending`. Each route remains a separate patch.
+- Home: h1/lede follow container width; compact rules follow base declarations. Owner: `public/css/routes/surfaces/home.css`; rebuilt home bundle. Stills: `09-25-19--aa4cfc` (pocket/fold/broadsheet).
+- About: the spanning illustration inflated four automatic rows. Keep three text rows at min-content and give the controls row the remaining height with `minmax(min-content, 1fr)`. Owner: `public/css/routes/surfaces/about.css`; rebuilt about bundle. Type sizes and column boundaries stay as authored.
+- About stills: baseline `09-31-21--819a0a`; pocket/fold controls `09-33-27--fceaaa`; final broadsheet `09-34-38--3ba3e6`. Runs live under `design/components/captures/runs/2026-09-09/checks/`. First auto-row attempt did not tighten the masthead; the final flexible row did. No capture errors.
+- Validation: CSS contracts, generated outputs with `--allow-dirty`, and whitespace pass. Local suite: 282 tests pass; overall failure remains `.claude/worktrees/` entering the route census and uncommitted generated home/about bundles. Do not regenerate route manifests from that census.
+- Recipes header packing and shared lede sizing remain candidates for measurement. Home and About landed as separate `align` commits.

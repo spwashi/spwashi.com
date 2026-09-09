@@ -41,6 +41,8 @@
 @still_recipe_agency_2026_09: ~"./still-recipe-agency-2026-09.spw"
 @taste_research_2026_09: ~"./taste-research-2026-09.spw"
 @permaculture_data_model_2026_09: ~"./permaculture-data-model-2026-09.spw"
+@astra_design_direction_2026_09: ~"./astra-design-direction-2026-09.spw"
+@component_fit_lens_journey_2026_09: ~"./component-fit-lens-journey-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -80,6 +82,8 @@ fixity = "tending"
   still_recipe_agency_2026_09 = @still_recipe_agency_2026_09
   taste_research_2026_09 = @taste_research_2026_09
   permaculture_data_model_2026_09 = @permaculture_data_model_2026_09
+  astra_design_direction_2026_09 = @astra_design_direction_2026_09
+  component_fit_lens_journey_2026_09 = @component_fit_lens_journey_2026_09
 }[reg=facet]
 
 ^"cache_rules"{

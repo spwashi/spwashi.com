@@ -16,6 +16,13 @@
 @settings_profiles: ~"../../public/js/kernel/site-settings-profiles.js"
 @hypermedia_2d: ~"./hypermedia-2d.spw"
 @dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@component_packing: ~"./component-packing.spw"
+@component_taxonomy: ~"./component-taxonomy.spw"
+@menu_field: ~"../surfaces/menu-field.spw"
+@anatomy_device: ~"../audits/component-anatomy-device-packing-2026-07.spw"
+@home_css: ~"../../public/css/routes/surfaces/home.css"
+@astra_design: ~"../caches/astra-design-direction-2026-09.spw"
+@shell_disclosure: ~"../../public/js/runtime/shell-disclosure.js"
 
 ^"unit_ladders"{
   rhythm: .{
@@ -76,6 +83,28 @@
   }[reg=facet]
   alignment: "A component packs by its own inline size (`data-spw-pack-local`). A region sits by the device reason and aspect ratio. Do not ask a card to restyle because the viewport changed if its container did not."
   islands: "A floating island that is not seated in a named region is ungrounded `~`. Reader layer keeps inspect islands off; they are not a layout reason."
+}
+
+# Harvestable. Inquiry, not a backlog. `npm run wonder -- --surface page-frame`
+
+#>wonder_page_frame_component_device
+?["When a component sits in a newspaper fold, is its variant the device reason or its own inline-size?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @component_packing
+  ~#hypothesis: "two altitudes already exist. The page/region sits by pocket|fold|broadsheet so the newspaper stem can name why it relates to the device. A component (frame, card, pack-local host) packs from its own inline-size. Three copies of a card per device are a fourth reason in disguise — mid mush."
+  ~#tension: "device-specific variants sound like a component matrix. the live miss is the opposite mix: home entry-spine h1 keys a 32rem viewport query in @home_css while .spw-frame is already container: spw-frame / inline-size. at fold the viewport is wider and the prose box may be narrower. f228f05f fixed that shape on settings by asking the container."
+  !probe{ "capture home-opening at fold (the band Gemini skipped). measure .spw-frame inline-size against the viewport. if they disagree and the heading query keys the viewport, the component restyled because the device changed while its container did not. compare the working-view hook on the same page, which already opted into data-spw-pack-local." }
+  $%[device.reason, component.packLocal, container.inline, viewport.fold]
+}
+
+#>wonder_page_frame_chrome_composition
+?["Do hamburger menus and composition gradients belong on the component, or on shell disclosure and named packing bands?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @menu_field
+  ~#hypothesis: "hamburger is chrome: data-spw-menu-mode inline|toggle from @shell_disclosure, with hysteresis so it does not flicker. it is never pack-local — that restyle was the measured 'nav changes as the page loads.' composition is named bands (stack|split|feature, pocket|fold|broadsheet), not a continuous gradient. a gradient is mid mush, the fourth reason device_reasons already refuses."
+  ~#tension: "a hamburger looks like a pocket variant of the nav; a packing morph looks like a gradient of one card. both tempt a per-device component copy. @anatomy_device already split the axes: shell-width owns chrome, box-width owns packing, input-capability owns hit-size. mixing them is how fold crushes prose and how a drawer-only gesture family gets born."
+  !probe{ "grep data-spw-pack-local on .site-header — expect 0. at compact/narrow, confirm menu-mode=toggle without a second nav markup. on a pack-local card, confirm stack|split|feature steps at container rem, not vw interpolation. if a linear-gradient or clamp() is doing the layout personality, it is a gradient pretending to be a variant." }
+  $%[chrome.menuMode, pack.layoutBand, device.reason, gradient.refused]
 }
 
 ^"selection"{
