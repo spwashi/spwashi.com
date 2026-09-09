@@ -31,6 +31,10 @@ const GESTURE_ACTION_LABELS = Object.freeze({
   'expand-trail': 'trail',
   'gather-search-term': 'gather',
   'cauldron-capture': 'capture',
+  travel: 'travel',
+  preview: 'preview',
+  cycle: 'rooms',
+  'cycle-nearby': 'nearby',
 });
 
 /** Prefer component-semantics resolved contract when present. */

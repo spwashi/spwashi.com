@@ -1,0 +1,76 @@
+# Post-commit route coverage (2026-09-09)
+#
+# operation: audit
+# After 6ccab1bb (lens consequence) and 03235df0 (plans IA), the thorough
+# still pack 11-56-42--ec2e4d reviewed home/about/town/research/membership
+# openings. Sibling lens, image-prime, and hidden-panel routes were not in
+# the crop. This census names them so the next patch is a fix, not a recapture.
+
+#>post_commit_route_coverage_2026_09
+#:audit #!routes #!lens #!still #!coverage
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@touch_gesture_contracts: ~"./touch-gesture-contracts-2026-09.spw"
+@still_recipes: ~"../../scripts/lib/viewport-still-recipes.mjs"
+@content_css: ~"../../public/css/components/content.css"
+@state_semantics: ~"../../public/css/handles/operators/state-semantics.css"
+
+operation = "audit"
+fixity = "tending"
+source = "chat 2026-09-09: audit routes that may not have been considered after committing"
+
+audit_run: .{
+  at = `2026-09-09`
+  method = `census mode-switch / data-mode-panel / swipe:toggle-lens in source HTML; match VIEWPORT_STILL_RECIPES; ignore dist-vite and load-symphony clones`
+  pack = `design/components/captures/runs/2026-09-09/checks/11-56-42--ec2e4d`
+  posture = `Findings, not a still rerun. Recapture only on a named slice. Dirty handle-swipe / home-spacing is a different patch.`
+}[reg=facet]
+
+^"thesis"{
+  claim: "6ccab1bb is shared CSS/JS. The still pack certified home and about. Play, craft, recipes opening, folio quiet chrome, and image-prime routes inherit the same contracts without a crop."
+  expected: "Every host of hidden lens panels, leaf .frame-sigil lenses, image prime telegraph, or quiet chrome is either in a still recipe or named here as a miss."
+  falsification: `A source route with .mode-switch[data-spw-kind=lens] or swipe:toggle-lens is neither in @still_recipes nor in ^misses.`
+}[reg=facet]
+
+^"committed_surfaces"{
+  hidden_panels = `.mode-panel[hidden], [data-mode-panel][hidden] { display: none } without :where() — components layer`
+  leaf_lens = `isLensModeControl / LENS_MODE_CONTROL_SELECTOR skips brace and region-menu on .mode-switch .frame-sigil`
+  view_transition = `coarse and hover-none skip lens view transitions`
+  image_prime = `image-interaction names swipe:toggle-lens and hold:inspect`
+  drawer = `DRAWER_MENU_QUERY shared CSS/JS`
+  plans_commit = `03235df0 has no public HTML/CSS/JS`
+}[reg=facet]
+
+^"considered"{
+  in_pack = #[`/`, `/about/`, `/town/`, `/research/`, `/membership/`, `/topics/craft/svg/`, `/curriculum/`, `/topics/software/` opening, `/topics/math/` opening, `/design/folios/` probes not lenses, `/recipes/` hero-dark not opening, `/play/rpg-wednesday/` boonhonk not lens, `/topics/` dark register not lanes][reg=set]
+  caveat = `Broadsheet recipes exist and did not run. Fold 768 with coarse emulation is hamburger. Software and topics lenses sit below the opening crop.`
+}[reg=facet]
+
+^"misses"{
+  same_anatomy = #[`/play/` 4-lens + hidden panels + brace sigil`, `/topics/craft/` 4-lens + hero swipe:toggle-lens`, `/recipes/` 4-lens opening][reg=set]
+  quiet_chrome = `/design/folios/ three silent-quiet switchers; stills clip kinetic probes`
+  image_prime = #[`/topics/craft/`, `/coordination/`, `/tools/`, `/services/`, `/topics/film/`, `/play/rpg-wednesday/` scene-bed][reg=set]
+  hidden_panels = #[`/topics/software/parsers/`, `/topics/software/pretext/`, `/topics/math/category-theory/`, `/topics/math/complexity/`, `/topics/film/scene-composition/*`, `/design/composition/`, `/design/interaction-design/`][reg=set]
+  not_a_miss = `hamburger-only contact/now/blog/plans/settings/care inherit certified pocket chrome; compression/distributed/schedulers have one orientation panel and no hidden sibling`
+}[reg=facet]
+
+^"layer_leak"{
+  claim: `Routes-layer :where(.topic-route-lane) { display: grid } outranks components-layer display:none. Topics currently restates hidden in :where(); a later same-layer display:grid would paint the lanes.`
+  evidence = `public/css/routes/surfaces/topics.css display:grid then :where(...[hidden]); @css_instruction#flow_ownership hidden_display`
+  next = `Restate hidden without :where() in handles so routes cannot leak.`
+}[reg=facet]
+
+^"copy_lens_gap"{
+  claim: `lens-modes.js always writes html[data-spw-active-lens-mode]. semantic-copy-lens.css only re-shows a listed token. Play @table has no copy-lens match, so sitting table blanks the play/memory/making copy stack.`
+  evidence = `play/index.html copy-lens tokens default|play|memory|making; LENS_MODE_IMPACTS already has table`
+}[reg=facet]
+
+^"link_drift"{
+  dead_fragment = `play/index.html /about/#surface-register — about has website-register, not surface-register`
+  next_table = `/now/ says Wednesday, September 9; play says September 2; rpg-wednesday and sessions say August 26`
+  season_label = `recipes #chicagoland-season heading is Early September; weekly-practice still links as Late August`
+}[reg=facet]

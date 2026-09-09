@@ -68,6 +68,19 @@ const EXPLICIT_SECTION_TRAVEL_SOURCES = new Set([
   'resonate',
 ]);
 
+export const SECTION_HANDLE_CONTRACTS = Object.freeze({
+  rooms: 'tap:travel hold:preview swipe:cycle',
+  nearby: 'tap:travel hold:preview swipe:cycle-nearby',
+});
+
+export function resolveSectionHandleSwipeContract({ compact = false } = {}) {
+  return compact ? SECTION_HANDLE_CONTRACTS.rooms : SECTION_HANDLE_CONTRACTS.nearby;
+}
+
+export function describeSectionHandleSwipe({ compact = false } = {}) {
+  return compact ? 'swipe to cycle rooms' : 'swipe to cycle nearby kin';
+}
+
 function setHandleState(handle, state) {
   if (!handle) return;
   if (handle.getAttribute(HANDLE_STATE_ATTR) === state) return;
@@ -445,9 +458,9 @@ function ensureHandle(root, sections) {
 function createHandleShell(origin, doc = document) {
   const shell = doc.createElement('nav');
   shell.className = HANDLE_SHELL_CLASS;
-  shell.setAttribute('aria-label', 'Page locomotion');
+  shell.setAttribute('aria-label', 'Page locomotion. Swipe to cycle rooms');
   shell.setAttribute(HANDLE_ENHANCED_ATTR, 'true');
-  shell.setAttribute('data-spw-gesture-contract', 'tap:travel hold:preview swipe:cycle');
+  shell.setAttribute('data-spw-gesture-contract', SECTION_HANDLE_CONTRACTS.rooms);
   annotateFloatingChromeElement(shell, {
     role: 'section-handle-shell',
     tier: 'floating',
@@ -502,15 +515,15 @@ function createHandleShell(origin, doc = document) {
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="bottom" data-spw-handle-advanced="true" aria-label="Jump to bottom of page">
       <span aria-hidden="true">↓</span>
     </button>
-    <button type="button" class="spw-section-handle-step spw-region-kin-particle" data-spw-handle-target="similar" data-spw-handle-advanced="true" data-spw-region-relation="similar" data-spw-operator="potential" data-spw-gesture-contract="tap:travel hold:preview swipe:cycle" aria-label="Explore a similar region">
+    <button type="button" class="spw-section-handle-step spw-region-kin-particle" data-spw-handle-target="similar" data-spw-handle-advanced="true" data-spw-region-relation="similar" data-spw-operator="potential" data-spw-gesture-contract="tap:travel hold:preview" aria-label="Explore a similar region">
       <span class="spw-region-kin-label" data-spw-kin-rung="compact" aria-hidden="true">~</span>
       <span class="spw-region-kin-label" data-spw-kin-rung="balanced" aria-hidden="true">~similar</span>
     </button>
-    <button type="button" class="spw-section-handle-step spw-region-kin-particle" data-spw-handle-target="contrast" data-spw-handle-advanced="true" data-spw-region-relation="contrast" data-spw-operator="subject" data-spw-gesture-contract="tap:travel hold:preview swipe:cycle" aria-label="Compare a contrasting region">
+    <button type="button" class="spw-section-handle-step spw-region-kin-particle" data-spw-handle-target="contrast" data-spw-handle-advanced="true" data-spw-region-relation="contrast" data-spw-operator="subject" data-spw-gesture-contract="tap:travel hold:preview" aria-label="Compare a contrasting region">
       <span class="spw-region-kin-label" data-spw-kin-rung="compact" aria-hidden="true">&amp;</span>
       <span class="spw-region-kin-label" data-spw-kin-rung="balanced" aria-hidden="true">&amp;contrast</span>
     </button>
-    <button type="button" class="spw-section-handle-step spw-region-kin-particle" data-spw-handle-target="resonate" data-spw-handle-advanced="true" data-spw-region-relation="resonate" data-spw-operator="vibration" data-spw-gesture-contract="tap:travel hold:preview swipe:cycle" aria-label="Anchor a resonant region">
+    <button type="button" class="spw-section-handle-step spw-region-kin-particle" data-spw-handle-target="resonate" data-spw-handle-advanced="true" data-spw-region-relation="resonate" data-spw-operator="vibration" data-spw-gesture-contract="tap:travel hold:preview" aria-label="Anchor a resonant region">
       <span class="spw-region-kin-label" data-spw-kin-rung="compact" aria-hidden="true">#</span>
       <span class="spw-region-kin-label" data-spw-kin-rung="balanced" aria-hidden="true">#resonate</span>
     </button>
@@ -560,8 +573,26 @@ function getSectionHandleRefs(handle, shell) {
   };
 }
 
+function syncSectionHandleSwipeHint(shell, compact, activeIndex = 0, sectionCount = 0) {
+  if (!(shell instanceof HTMLElement)) return;
+  const hint = describeSectionHandleSwipe({ compact });
+  shell.setAttribute('data-spw-gesture-contract', resolveSectionHandleSwipeContract({ compact }));
+  shell.setAttribute(
+    'aria-label',
+    compact ? 'Page locomotion. Swipe to cycle rooms' : 'Page locomotion. Swipe to cycle nearby kin',
+  );
+  const progressNode = shell.querySelector('.spw-section-handle-progress');
+  if (!(progressNode instanceof HTMLElement)) return;
+  progressNode.title = hint;
+  const count = sectionCount > 0
+    ? `Section ${activeIndex + 1} of ${sectionCount}`
+    : (progressNode.getAttribute('aria-label') || '').split('.')[0].trim() || 'Section progress';
+  progressNode.setAttribute('aria-label', `${count}. ${hint}`);
+}
+
 function syncSectionHandleShellState(shell, toggleButton, compact) {
   shell.setAttribute(HANDLE_SHELL_STATE_ATTR, compact ? 'collapsed' : 'expanded');
+  syncSectionHandleSwipeHint(shell, compact);
   if (!(toggleButton instanceof HTMLButtonElement)) return;
   toggleButton.setAttribute('aria-expanded', compact ? 'false' : 'true');
   toggleButton.setAttribute(
@@ -815,6 +846,7 @@ function updateSectionHandleState({
     sections.length,
     state.storyOverlay
   );
+  syncSectionHandleSwipeHint(shell, state.compact, state.activeIndex, sections.length);
 
   syncSectionHandleAttributes(handle, shell, info, state.activeIndex, sections.length, snapshot, source);
   const compactViewport = window.matchMedia?.(HANDLE_COMPACT_QUERY).matches;

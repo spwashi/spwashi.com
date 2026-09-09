@@ -589,6 +589,18 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
   text-transform: uppercase;
 }
 
+.spw-section-handle-shell[data-spw-handle-shell-state="expanded"] .spw-section-handle-progress::after {
+  content: " · nearby";
+  margin-inline-start: 0.12rem;
+  color: color-mix(
+    in srgb,
+    var(--active-op-color, var(--teal, #008080)) 58%,
+    var(--ink-soft, rgba(14, 18, 20, 0.68))
+  );
+  font-weight: 560;
+  letter-spacing: 0.03em;
+}
+
 .spw-section-handle-shell[data-spw-handle-shell-state="collapsed"] [data-spw-handle-advanced="true"] {
   display: none;
 }
@@ -870,6 +882,10 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
 
 @media (max-width: 26.25rem) {
   .spw-section-handle-current-form {
+    display: none;
+  }
+
+  .spw-section-handle-shell[data-spw-handle-shell-state="expanded"] .spw-section-handle-progress::after {
     display: none;
   }
 }

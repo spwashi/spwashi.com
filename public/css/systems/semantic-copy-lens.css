@@ -76,7 +76,8 @@
 :where(html[data-spw-active-lens-mode="read"] [data-spw-copy-lens~="read"]),
 :where(html[data-spw-active-lens-mode="inspect"] [data-spw-copy-lens~="inspect"]),
 :where(html[data-spw-active-lens-mode="reuse"] [data-spw-copy-lens~="reuse"]),
-:where(html[data-spw-active-lens-mode="play"] [data-spw-copy-lens~="play"]) {
+:where(html[data-spw-active-lens-mode="play"] [data-spw-copy-lens~="play"]),
+:where(html[data-spw-active-lens-mode="table"] [data-spw-copy-lens~="play"]) {
   display: block;
   animation: spw-lens-copy-in 420ms var(--ease-smooth, ease);
 }
@@ -89,7 +90,10 @@
 :where([data-spw-lens-mode="read"] [data-spw-copy-lens~="read"]),
 :where([data-spw-lens-mode="inspect"] [data-spw-copy-lens~="inspect"]),
 :where([data-spw-lens-mode="reuse"] [data-spw-copy-lens~="reuse"]),
-:where([data-spw-lens-mode="play"] [data-spw-copy-lens~="play"]) {
+:where([data-spw-lens-mode="play"] [data-spw-copy-lens~="play"]),
+:where([data-spw-lens-mode="memory"] [data-spw-copy-lens~="memory"]),
+:where([data-spw-lens-mode="making"] [data-spw-copy-lens~="making"]),
+:where([data-spw-lens-mode="table"] [data-spw-copy-lens~="play"]) {
   display: block;
   animation: spw-lens-copy-in 420ms var(--ease-smooth, ease);
 }

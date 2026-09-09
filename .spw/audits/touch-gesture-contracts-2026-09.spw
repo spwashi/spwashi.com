@@ -189,9 +189,9 @@ audit_run: .{
   f14_prime_does_not_name_next_verbs {
     severity = "high"
     dated = "2026-09-09"
-    claim = `Swipe feels unintuitive because priming never says what can follow. Image swipe is the one honest unique engine (48px, 1.45× dominance, no preventDefault), but the primed readout said only "Focused", lensed lasted 220ms then idle, and iOS pointerleave cleared the note on the same tap. Mode-switch looks swipeable and is tap. Section-handle swipe:cycle is generated chrome. swipe:cycle-nearby and scene-bed swipe:toggle-lens still have no engine (f7). Copy teaches three different "lens" nouns.`
+    claim = `Swipe feels unintuitive because priming never says what can follow. Image swipe is the one honest unique engine (48px, 1.45× dominance, no preventDefault), but the primed readout said only "Focused", lensed lasted 220ms then idle, and iOS pointerleave cleared the note on the same tap. Mode-switch looks swipeable and is tap. Section-handle swipe:cycle is rooms when collapsed and swipe:cycle-nearby (kin) when expanded. Scene-bed swipe:toggle-lens still has no engine (f7). Copy teaches three different "lens" nouns.`
     expected = `@interaction_microstates#expected_behavior prime + swipe. After prime, name the next reachable verbs on that object. Do not add a fourth swipe engine.`
-    next = `Do not teach swipe on the home Study/Build/Play strip. Keep unique swipe on image figures. Unpaid: scene-bed and cycle-nearby contracts that advertise swipe with no owner; section-handle swipe still has no in-situ next-step note.`
+    next = `Do not teach swipe on the home Study/Build/Play strip. Keep unique swipe on image figures. cycle-nearby is the expanded section-handle kin swipe. Garden details no longer advertise it. Scene-bed swipe:toggle-lens still has no owner.`
     fix = `Primed readout: "swipe to change view · hold to inspect". Lensed readout names the view. Lensed holds 720ms then primed. Touch pointerleave settles instead of wiping. Lensed rail opacity 0.88.`
     falsify = `On a hero .image-study, tap once. The figure must keep a next-verb note long enough to read. Swipe horizontally: the view name must appear, then the same next-verb note, without stealing vertical scroll.`
   }
