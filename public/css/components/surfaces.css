@@ -124,11 +124,6 @@
   color: var(--component-text);
 }
 
-
-:where(.mode-panel[hidden]) {
-  display: none;
-}
-
 html[data-spw-color-mode="dark"] :where(
   .frame-card,
   .media-card,

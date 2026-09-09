@@ -336,7 +336,7 @@ body[data-spw-surface="topics"] .spw-frame > .frame-actions:has(> .spw-delimiter
   border-inline-start: 2px solid color-mix(in srgb, var(--topic-route-lane-accent) 34%, transparent);
 }
 
-:where(body[data-spw-surface="topics"] #topics-register .topic-route-lane[hidden]) {
+body[data-spw-surface="topics"] #topics-register .topic-route-lane[hidden] {
   display: none;
 }
 

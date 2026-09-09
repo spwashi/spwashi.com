@@ -140,6 +140,14 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
    silent/row are pure attribute contracts (no JS).
    -------------------------------------------------------------------------- */
 
+/* Hidden panels: handles outranks routes. Topics lanes set display:grid in
+   the routes layer, which beats the components-layer display:none. Do not
+   wrap [hidden] in :where(). */
+.mode-panel[hidden],
+[data-mode-panel][hidden] {
+  display: none;
+}
+
 /* Cluster A — track layout (flex-first; grid only as a narrow 4+ fallback) */
 .mode-switch {
   --spw-lens-cascade-color: var(--active-op-color, var(--teal));
