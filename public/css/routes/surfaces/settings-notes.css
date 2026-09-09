@@ -479,6 +479,29 @@
   line-height: 1.45;
 }
 
+/* This row collapses on its own width, not the window's.
+ *
+ * The viewport query below fires at pocket (390px) and not at fold (768px) —
+ * but the row is *narrower* at fold, because the page goes two-column there and
+ * the panel gets less room. Measured: 306px wide at pocket, 263px at fold,
+ * 549px at broadsheet. So the one size where the fallback was needed was the
+ * one size it could not reach, and the three tracks
+ * (minmax(8rem, 12rem) auto 1fr) resolved to 161px + 41px + 7px. The detail
+ * column held 80 characters in 7px: a 1,214px tall stack one letter wide.
+ *
+ * article.frame-panel already carries container-type: inline-size, so an
+ * unnamed container query resolves against the panel that actually decides
+ * this row's width. 26rem sits above fold's panel and below broadsheet's, so
+ * the three-column reading survives exactly where there is room for it.
+ * The viewport query stays as the no-container fallback; both land on the
+ * same single-column result, so they cannot disagree.
+ */
+@container (max-width: 26rem) {
+  :where(body[data-spw-surface="settings"] .settings-feature-scope-row) {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 40rem) {
   :where(body[data-spw-surface="settings"] .settings-feature-scope-row) {
     grid-template-columns: 1fr;
