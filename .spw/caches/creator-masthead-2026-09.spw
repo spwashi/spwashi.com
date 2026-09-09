@@ -41,6 +41,6 @@ element = "air"
   change = `Home h1/lede spend cqi from their existing inline-size container; compact type queries spw-frame at 32rem after base declarations, paying the source-order debt without moving newspaper column breakpoints.`
   owner = @home_css
   evidence = `Home pocket/fold/broadsheet: design/components/captures/runs/2026-09-09/checks/09-25-19--aa4cfc; about pocket: runs/2026-09-09/checks/09-26-57--c75cef; four stills, zero capture errors, visually inspected.`
-  validation = `CSS build and git diff --check pass; check-generated --allow-dirty passes with the rebuilt home bundle; check:local passes 282 module tests but fails site census on pre-existing .claude/worktrees routes and flags the uncommitted generated home bundle.`
+  validation = `CSS build and git diff --check pass. Home bundle landed with the align commit. Nested Claude worktree under .claude/worktrees/ had zero unique commits and was removed.`
   scope = `Route CSS plus generated home bundle only; copy, shared layout, atmosphere and chrome untouched; still recipe has no attention assertion, so these are layout observations.`
 }[reg=facet]

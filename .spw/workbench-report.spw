@@ -48,6 +48,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   history = `Named as consumer[walk]{roots} ^ workbench[mount]{node_modules}<isolation> in @history_strands#workbench_explore. Explore the workbench after a pruned walk, not before.`
   2026_09_astra = `At pin f2e5b61, query already excludes _workbench; a pathRefs count still exceeded 15s. Shared walker: 681 files, 374 mounted, 307 without the mount. Isolation is still useful; it is not the proven timeout cause. Instrument discovery vs per-file parse next.`
   ~#resolved(2026-09-09, workbench f92382f, pin 14b4b47): "Default walks skip _workbench and build; --include-infrastructure / --all opts back in. doctor scan-exclusions: .git, node_modules, dist, release, _workbench, .agents, .spw/gen. Remaining cost is parse, not mount descent: conventions pathRefs --stats files_walked=118 parse_ms=13566.8 total_ms=13778.9."
+  nested_agent_worktrees = `A git worktree nested under the consumer (.claude/worktrees/…) is not canon. Doctor already excludes .agents; it does not name .claude/worktrees. Ignore the directory in the consumer; prune leftovers with git worktree remove when the branch has no unique commits.`
   probe: `spw query --from .spw/conventions --selector pathRefs --count --stats`
 }
 

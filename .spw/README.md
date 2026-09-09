@@ -39,16 +39,25 @@ rename fragility but had no automation behind it. It delegates *extraction* to
 only adds *resolution*: does the path exist, and does the `#fragment` name
 anything in the target. All 2480 citations currently resolve.
 
-**Known workbench gaps** (this consumer is a use case the workbench predates):
+**Known workbench gaps** (this consumer is a use case the workbench predates).
+Pin `14b4b47763aa`. Details: `.spw/workbench-report.spw`.
 
-- Citation targets are emitted as opaque strings. `./foo.spw#bar` arrives
-  unsplit and unclassified, so every consumer re-derives path-vs-fragment and
-  route-vs-file for itself. A *resolved citation* would be a more useful
-  intermediate form; `spw cite` / `spw follow` address content hashes, not
-  references.
-- `spw lattice` reads only `~#name(body)` unit cells. Plain `~#name:` apposition
-  — the form nearly every surface here uses — is invisible to it, so the
-  corpus reported zero readings while carrying thousands.
+Landed on this pin: `spw resolve`, `spw lint`, `spw fingerprint`, default
+walk isolation (`_workbench` skipped; `--include-infrastructure` opts in),
+`spw query --stats`, lattice `~#name:` as a colon species, `~>` as one
+project-join token.
+
+Still open:
+
+- **No `spw wonder`.** Harvest remains `scripts/wonder.mjs`. Answers authored
+  as `grok =` inside `?[]{}` are invisible to harvest, to LSP
+  `parseWonderBlock` (12-line cap), and to `probe-measure`. Do not add a
+  seventh wonder type; land as `~#grok:` or a neighboring `!land{}`.
+  `.spw/workbench-report.spw#wonder_harvest_absent`.
+- Nested agent worktrees (`.claude/worktrees/` and similar) are process
+  artifacts, not consumer canon. A leftover checkout under the repo can
+  pollute a filesystem census. Ignore the directory; prune with
+  `git worktree remove` when the branch has no unique commits.
 - **`parseExpression()` and `parse()` disagree** — RESOLVED at workbench
   `75d8f9d26253` (2026-09-03 rebuild, `npm run build:spw-parser`; was pinned
   to `993c0994d016`, 135 commits behind). The noun form `subject[mode]{parts}
@@ -80,11 +89,11 @@ anything in the target. All 2480 citations currently resolve.
   as "ordinal" since before the grammar recognized it — the site's tooling
   was built ahead of the language on purpose, and the language caught up.
   Verified: `cauldron[garden]{sow;tend;harvest}` now parses as `Sequence`
-  with `success: true`, zero errors, *zero warnings* — clean, unlike `~>`
-  above. Converted the 11 site expressions that used `~>` for a plain
-  sequence to `;`; no fix needed in `readShape` for the ordinal case, since
-  its existing fallback to the regex-captured body content was already
-  correctly scoped.
+  with `success: true`, zero errors, *zero warnings*. Converted the 11 site
+  expressions that used `~>` for a plain sequence to `;`; no fix needed in
+  `readShape` for the ordinal case, since its existing fallback to the
+  regex-captured body content was already correctly scoped. `~>` itself
+  later landed as one token — see the project-join bullet above.
 - **`spw graph`/`spw census`'s `brokenTargets` over-reports — `spw:integrity`
   is the authoritative resolver, not this list.** `npm run spw:graph`
   (workbench `f2e5b61b9e3d`) named 43 "broken" targets against this corpus;
