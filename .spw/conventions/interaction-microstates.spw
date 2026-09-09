@@ -166,10 +166,46 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
   css: ~"../../public/css/components/gesture-anatomy.css#gesture-state-anatomy"
 }
 
+^"charge_ladder_ordering"{
+  ~#note: "Contact is conduction. Proximity is only induction. A press must outrank a hover."
+  rungs: #[`rest`, `proximity`, `contact`, `held`][reg=set]
+  tokens: #[
+    `--spw-excitement-rest`, `--spw-excitement-proximity`,
+    `--spw-excitement-contact`, `--spw-excitement-held`
+  ][reg=set]
+  spends: `--interaction-excitement, which drives handle glow and lift in handles/operators/primitive.css`
+  ~#probed(2026-09-08, ladder ran backwards): `press set --interaction-excitement 0.42 against hover's 0.82, so a click made a handle dimmer and lower than pointing at it, and a touch — which has no hover — got under half the charge proximity alone earned. The core bundle carried 327 :hover rules against 27 :active. Press travel was --spw-micro-press-scale 0.997 and --spw-control-press-depth 0.75px, about a tenth of a pixel on a chip: authored, delivered, and beneath perception.`
+  ~#fixed(2026-09-08): `Rungs named in tokens/core.css so the ordering is readable in one place rather than inferred from four selectors; contact raised above proximity; travel deepened to 0.985 / 1.5px. Reported as "touch items don't respond immediately to taps or clicks".`
+  rule: "Do not add a rung below contact for a state that involves the reader actually touching the surface."
+}
+
+^"contact_delivery"{
+  claim: "Press feedback is pure CSS and must never wait on a module."
+  ~#probed(2026-09-08): `the :active rules for gesture-contract hosts, landmarks and section-handle steps lived in systems/interaction-progression.css, which kernel/deferred-styles.js injects only when the VISIBLE interaction-progression module mounts. Nothing in those rules read data-spw-interaction-phase, so the elements that advertise a gesture contract were the last on a cold page to acknowledge a tap. The ring was also inside @media (hover: none) and (pointer: coarse), so a mouse click on a section, article or figure got nothing at all.`
+  ~#fixed(2026-09-08): `Moved to components/gesture-anatomy.css, which core delivers, and ungated from the coarse-pointer query. Phase-keyed rules stay deferred — they genuinely need the module that writes the attribute. Verified on the live home route: 307 of 307 [data-spw-gesture-contract] hosts match the contact rule while the progression sheet is not loaded.`
+  ~#fixed(2026-09-08, tuner): `html[data-spw-interaction-tuner="calm"] .frame-card:active set transform:none. calm is the site default (site-settings-profiles.js), so every default visitor on a touch device lost card press feedback with nothing in its place. The tuner now attenuates by its own scale (0.82) instead of switching the press off.`
+  rule: "A tuner attenuates a sensation. It does not delete one."
+}
+
+^"grounded_reading"{
+  ~#note: "The negative pole. Everything else in the ladder is a way of saying yes."
+  attr: `data-spw-charge="grounded"` — an existing charge-cycle.spw phase, not a new family
+  writer: `kernel/dom-contracts.js#groundInteraction`
+  reason_channel: `data-spw-runtime-mutation-reason, so "why did nothing happen" is inspectable where every other runtime write already explains itself`
+  sites: #[
+    `brace-gestures.js — a coarse tap that armed, dragged and expanded nothing`,
+    `haptics.js — the click swallowed behind a hold-capture`
+  ][reg=set]
+  paint: `outline, not box-shadow. electrostatic-affordances.css is systems; handles, effects and ornament all paint above it, so a box-shadow there rendered as nothing on chips, section handles and cards. Cards resolve theirs in effects/material.css, which already owns outline-color as a state channel.`
+  ~#probed(2026-09-08): `the reward contract's own potential_forms has always said "unavailable arcs read as grounded, with the reason inspectable", charge-cycle.spw has always listed the phase, and charge-field.js has always carried PHASE_INTENSITY.grounded = 0.55 — but nothing ever wrote it as a reading, so an interaction that moved nothing rendered as nothing. A surface with no arc and a surface that is broken looked identical.`
+  boundary_rule: "Event-driven and self-clearing. A host grounded at first paint advertises deadness before anyone touched it — see electrostatic-affordances.spw#do_not_author. Nothing persists and nothing accumulates."
+  ~#open: `Grounding is written on the two silent paths found this pass. The 24 unaudited gesture-contract verbs (gather-search-term, toggle-lens, expand-trail, cycle-nearby, surface-current, open-companion, cycle-variant) still advertise arcs with no engine; grounding gives them somewhere honest to land, but the per-verb census has not been run.`
+}
+
 ^"input_families"{
   hover: .{ phase: approach, spend: "pre-state visibility, gesture hints, contract lift" }[reg=facet]
   focus: .{ phase: prime, spend: "operator resonance, variant selection weight" }[reg=facet]
-  tap: .{ phase: "prime|charge per contract", spend: ":active press depth on coarse pointers" }[reg=facet]
+  tap: .{ phase: "prime|charge per contract", spend: ":active press depth on every pointer, not only coarse" }[reg=facet]
   hold: .{ phase: charge, spend: "brace armed/sustained, cauldron prime" }[reg=facet]
   pinch: .{ phase: approach, spend: "font scale preview + palette-depth-strength bump" }[reg=facet]
   swipe: .{ phase: discover, spend: "horizontal scroll rails, vocabulary underline pulse" }[reg=facet]

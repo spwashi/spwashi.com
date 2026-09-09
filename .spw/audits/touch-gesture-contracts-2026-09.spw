@@ -138,6 +138,32 @@ audit_run: .{
     evidence = `gesture-anatomy.css html[data-spw-gesture-anatomy=active][data-spw-module-effects-active]; typesetting.css --spw-reading-rest-opacity: 0.86`
     next = `Do not add effect types for swipe/hold until f1/f3 stop arming the wrong host.`
   }
+  f9_contact_ranked_below_proximity {
+    severity = "high"
+    resolved = "2026-09-08"
+    reported_by = `User: "some of the touch items don't respond immediately to taps or clicks and it's hard to tell what the consequence should be".`
+    claim = `The charge ladder ran backwards at contact. handles/operators/primitive.css set --interaction-excitement to 0.82 on :hover and 0.42 on :active, and that property drives both handle glow and lift — so a click made a handle dimmer and lower than merely pointing at it, and a touch, which has no hover to fall from, got under half the charge proximity alone earned. Press travel was --spw-micro-press-scale 0.997 and --spw-control-press-depth 0.75px: roughly a tenth of a pixel on a chip.`
+    evidence = `primitive.css:39 rest 0, :90 hover 0.82, :122 selected 1, :139 press 0.42, spent at :60-61; tokens/core.css press scale and depth; 327 :hover rules against 27 :active in the core bundle.`
+    gap = `Every audit before this one asked whether a gesture was wired. This one was wired, delivered, and ordered wrong — which reads to a person exactly like being unwired.`
+    fix = `Rungs named as tokens (--spw-excitement-rest/proximity/contact/held) so the ordering is legible in one place; contact raised above proximity; travel deepened to 0.985 / 1.5px. :active added to the electrode ladder in electrostatic-affordances.css, since :hover and :focus-visible are proximity readings a finger never triggers.`
+    falsify = `Read --interaction-excitement on a chip at rest, on hover, and during a press. Contact must not be the lowest of the three non-rest values.`
+  }
+  f10_press_css_deferred_behind_its_own_module {
+    severity = "high"
+    resolved = "2026-09-08"
+    claim = `The :active rules for gesture-contract hosts, landmarks and section-handle steps sat in systems/interaction-progression.css, injected at runtime by deferred-styles when the VISIBLE module mounts. None of those rules read data-spw-interaction-phase, so they waited on a module they did not use, and the elements advertising a gesture contract were the last on a cold page to acknowledge a tap. The ring was additionally coarse-only, so a mouse click on a section, article or figure got nothing.`
+    evidence = `interaction-progression.css:264-282 before the move; deferred-styles.js ensureInteractionProgressionStyles; module-catalog-enhancement.js interaction-progression when=VISIBLE.`
+    fix = `Moved to components/gesture-anatomy.css, which core delivers, and ungated from @media (hover: none) and (pointer: coarse). Phase-keyed rules stayed deferred. Also removed the calm-tuner override that set transform:none on .frame-card:active — calm is the site default, so every default touch visitor lost card press feedback; it now attenuates by its own 0.82 scale.`
+    verified = `Live home route, dev server: 307 of 307 [data-spw-gesture-contract] hosts match the contact rule while the progression sheet is absent from document.styleSheets. :active itself could not be sampled — synthetic pointer events do not trigger it, only trusted input does.`
+  }
+  f11_grounding_was_declared_and_never_rendered {
+    severity = "high"
+    resolved = "2026-09-08"
+    claim = `The ladder could report latent, armed, preview and acted and name four discharge kinds, but had no way to say "your touch arrived and there was no arc here" — so that case rendered as nothing. charge-cycle.spw listed the grounded phase and charge-field.js carried its intensity; no writer produced it as a reading. A surface with no arc and a surface that is broken looked identical, which is the sharper form of the silence f1 and the reward contract already name.`
+    fix = `kernel/dom-contracts.js#groundInteraction writes the existing data-spw-charge="grounded" plus a reason on the runtime-mutation channel, refuses to overwrite a live charge, and clears itself. Called from brace-gestures.js for a coarse tap that armed, dragged and expanded nothing, and from haptics.js for the click swallowed behind a hold-capture. No new data-spw-* family.`
+    paint_note = `First attempt used box-shadow in electrostatic-affordances.css and rendered nothing on chips, section handles or cards: that file is systems, and handles, effects and ornament all paint above it. Outline is uncontested at rest and lands everywhere; cards resolve theirs in effects/material.css, which already owns outline-color as a state channel. Ornament was rejected as a home — it idle-loads with the flourish pack, which would have reintroduced f10.`
+    open = `Grounding now covers the two silent paths found this pass. The 24 verbs from f7 still advertise arcs with no engine; grounding gives them an honest landing but the per-verb census is not run.`
+  }
 }[reg=facet]
 
 ^"fundamentals_first"{
