@@ -31599,6 +31599,21 @@ html[data-spw-interaction-phase="approach"] :where([data-spw-operator]:is(:hover
   --spw-electrode-ring: max(var(--spw-electrode-ring, 0), 0.62);
 }
 
+/* Tried and rejected 2026-09-08: tinting the contact ring with
+   --spw-discharge-color so a press would show what the terminal *does*
+   (release/transfer/ground/project) rather than what it *is*. The idea does not
+   survive contact with the table above — release maps to the probe colour and
+   probe operators already carry it, transfer maps to the ref colour, ground to
+   the frame colour. Measured on /topics/software/: of 223 operators, 44 ground,
+   59 transfer and 39 release resolve a discharge colour identical to their
+   identity colour, 63 have no discharge kind at all, and only the 18 in the
+   project family differ — and that difference reads as a gap in the table
+   rather than as signal. A rule that changes 8% of terminals cannot carry a
+   claim about narrating consequence, so it is not here.
+   The real finding is the 63: operators like `state` sit in no discharge family,
+   the same shape as the route/stream/surface omission fixed above. Filling that
+   in is a semantics call for the operator owner, not a paint change. */
+
 :where([data-spw-operator][data-spw-charge="charged"]),
 :where([data-spw-operator][data-spw-charge-phase="charged"]),
 html[data-spw-interaction-phase="inspect"] :where([data-spw-section-state="active"] [data-spw-operator]),
@@ -44031,6 +44046,19 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     --interaction-excitement: 0.16;
     --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 38%, var(--material-line));
     outline-color: color-mix(in oklab, var(--material-prime-color) 28%, transparent);
+  }
+
+  /* Contact. The carrier had hover, focus and a durable selected state but no
+     press rung at all, so a card could be touched without its own excitement
+     channel registering anything — the same inversion the handles carried,
+     one altitude up. Placed above hover and focus because contact is
+     conduction, and below [data-state~="active"] because that state is a
+     landed choice while this lasts only as long as the finger.
+     Scale is the material's own, not the handle ladder's: a carrier glows a
+     fraction of what a terminal does. See electrostatic-affordances.spw#sign. */
+  &:active {
+    --interaction-excitement: 0.2;
+    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 42%, var(--material-line));
   }
 
   &[data-state~="active"],

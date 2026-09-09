@@ -115,6 +115,19 @@
     outline-color: color-mix(in oklab, var(--material-prime-color) 28%, transparent);
   }
 
+  /* Contact. The carrier had hover, focus and a durable selected state but no
+     press rung at all, so a card could be touched without its own excitement
+     channel registering anything — the same inversion the handles carried,
+     one altitude up. Placed above hover and focus because contact is
+     conduction, and below [data-state~="active"] because that state is a
+     landed choice while this lasts only as long as the finger.
+     Scale is the material's own, not the handle ladder's: a carrier glows a
+     fraction of what a terminal does. See electrostatic-affordances.spw#sign. */
+  &:active {
+    --interaction-excitement: 0.2;
+    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 42%, var(--material-line));
+  }
+
   &[data-state~="active"],
   &[data-spw-active="true"] {
     --interaction-excitement: 0.24;
