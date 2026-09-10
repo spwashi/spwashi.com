@@ -282,11 +282,13 @@
   inset-inline-start: 50%;
   translate: -50% 0;
   display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
   max-inline-size: min(14rem, 70vw);
-  overflow: hidden;
+  overflow: visible;
   padding: 0.16rem 0.42rem;
   border: 1px solid color-mix(in srgb, var(--gesture-anatomy-accent) 24%, transparent);
-  border-radius: 999px;
+  border-radius: var(--shape-control, 0.78rem);
   background: color-mix(in srgb, var(--gesture-anatomy-surface) 92%, var(--gesture-anatomy-accent) 8%);
   box-shadow: 0 4px 12px color-mix(in srgb, var(--shadow-color, #111) 10%, transparent);
   color: var(--gesture-anatomy-ink);
@@ -297,8 +299,9 @@
   opacity: 0.96;
   pointer-events: none;
   text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-overflow: unset;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 :where(.spw-living-term[data-spw-gesture-hint])::after {

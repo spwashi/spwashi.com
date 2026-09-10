@@ -13,6 +13,8 @@
   [data-spw-discovery-notice],
   [data-spw-discovery-notice-stack],
   [data-spw-discovery-notice-modal],
+  [data-spw-runtime-reward],
+  [data-spw-chrome-role="discovery-toast-stack"],
   .spw-section-handle,
   .spw-section-handle-shell,
   .spw-section-handle-current,

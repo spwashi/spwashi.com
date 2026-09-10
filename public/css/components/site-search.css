@@ -14,7 +14,8 @@
   inset: 0;
   z-index: calc(var(--z-priority, 2000) + 20);
   display: grid;
-  place-items: start center;
+  /* Stretch the column so max-content hits cannot center-expand the panel. */
+  place-items: start stretch;
   padding:
     max(4.5rem, calc(var(--spw-shell-menu-offset, 4rem) + 1rem))
     max(0.75rem, env(safe-area-inset-right))
@@ -32,10 +33,16 @@
 
 .spw-site-search__panel {
   width: min(36rem, 100%);
+  max-width: 100%;
   max-height: min(70dvh, 32rem);
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  /* header, facets, status, scrolling hits, footer — five children. */
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.45rem;
+  min-width: 0;
+  min-inline-size: 0;
+  margin-inline: auto;
   padding: 0.7rem;
   border: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 78%, var(--op-probe-color, #6a3fb8) 22%);
   border-radius: var(--shape-floating, 16px);
@@ -131,12 +138,21 @@
 
 .spw-site-search__list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.35rem;
   margin: 0;
   padding: 0;
+  min-width: 0;
+  min-height: 0;
   overflow: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
+}
+
+.spw-site-search__item {
+  min-width: 0;
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 .spw-site-search__group {
@@ -156,9 +172,19 @@
 }
 
 .spw-site-search__result {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   gap: 0.12rem;
   width: 100%;
+  min-width: 0;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  /* Floating-chrome marks dialog links nowrap/max-content for compact
+     controls. Hits are body copy inside that dialog — they must wrap. */
+  text-wrap: wrap;
+  white-space: normal;
+  overflow-wrap: break-word;
   min-height: var(--touch-target-min, 2.75rem);
   padding: 0.42rem 0.55rem;
   border: 1px solid transparent;
@@ -175,6 +201,7 @@
   display: flex;
   align-items: baseline;
   gap: 0.38rem;
+  width: 100%;
   min-width: 0;
 }
 
@@ -203,13 +230,17 @@
 }
 
 .spw-site-search__title {
+  flex: 1 1 auto;
   min-width: 0;
   font-weight: 650;
   line-height: 1.25;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .spw-site-search__meta {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.7rem;
@@ -241,7 +272,11 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.35rem 0.55rem;
-  padding-inline: 0.2rem;
+  position: relative;
+  z-index: 1;
+  padding: 0.35rem 0.2rem 0;
+  border-top: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 72%, transparent);
+  background: var(--surface-strong, #fff);
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
   font-size: 0.72rem;
 }

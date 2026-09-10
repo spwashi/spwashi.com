@@ -1960,7 +1960,10 @@
 :where(.spw-topic-popover, .spw-semantic-popover, .spw-concept-popover) {
   position: fixed;
   inset: auto;
+  z-index: var(--z-drawer, var(--z-popover, 2020));
+  isolation: isolate;
   max-width: min(28rem, calc(100vw - 1.25rem));
+  min-inline-size: 0;
   padding: 0.72rem 0.88rem 0.68rem;
   pointer-events: none;
   visibility: hidden;
@@ -1994,9 +1997,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
   margin-inline-start: auto;
-  min-width: 1.65rem;
-  min-height: 1.65rem;
+  min-width: var(--touch-target-compact, 2.15rem);
+  min-height: var(--touch-target-compact, 2.15rem);
   padding: 0;
   border: 1px solid color-mix(in srgb, var(--grammar-line, rgba(14, 18, 20, 0.14)) 78%, transparent);
   border-radius: var(--grammar-radius-sm);
@@ -2174,7 +2178,17 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
  * shell, the dismiss button and the hint rule above, and only says what a
  * concept note holds that a semantic note does not. Wired in
  * interface/haptics.js, which already owns living-term gestures. */
+:where(.spw-concept-popover) {
+  max-block-size: min(70dvh, 24rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  min-inline-size: 0;
+}
+
 :where(.spw-concept-popover__title) {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow-wrap: anywhere;
   font-weight: 700;
   letter-spacing: 0.01em;
   color: var(--grammar-ink);

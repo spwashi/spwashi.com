@@ -166,6 +166,8 @@
 /* Pronunciation Hints */
 .spw-pronunciation-hint {
   position: absolute;
+  z-index: var(--z-popover, 40);
+  max-inline-size: min(18rem, calc(100vw - 1.5rem));
   pointer-events: none;
   opacity: 0;
   transform: translateY(4px);
@@ -181,13 +183,15 @@
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+  max-inline-size: 100%;
   padding: 0.35rem 0.65rem;
   border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 28%, transparent);
   border-radius: var(--handle-radius-tight);
   background: color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .spw-pronunciation-hint__pronunciation {

@@ -11845,6 +11845,8 @@ body[aria-busy="true"] {
   [data-spw-discovery-notice],
   [data-spw-discovery-notice-stack],
   [data-spw-discovery-notice-modal],
+  [data-spw-runtime-reward],
+  [data-spw-chrome-role="discovery-toast-stack"],
   .spw-section-handle,
   .spw-section-handle-shell,
   .spw-section-handle-current,
@@ -14993,7 +14995,10 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
 :where(.spw-topic-popover, .spw-semantic-popover, .spw-concept-popover) {
   position: fixed;
   inset: auto;
+  z-index: var(--z-drawer, var(--z-popover, 2020));
+  isolation: isolate;
   max-width: min(28rem, calc(100vw - 1.25rem));
+  min-inline-size: 0;
   padding: 0.72rem 0.88rem 0.68rem;
   pointer-events: none;
   visibility: hidden;
@@ -15027,9 +15032,10 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
   margin-inline-start: auto;
-  min-width: 1.65rem;
-  min-height: 1.65rem;
+  min-width: var(--touch-target-compact, 2.15rem);
+  min-height: var(--touch-target-compact, 2.15rem);
   padding: 0;
   border: 1px solid color-mix(in srgb, var(--grammar-line, rgba(14, 18, 20, 0.14)) 78%, transparent);
   border-radius: var(--grammar-radius-sm);
@@ -15207,7 +15213,17 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
  * shell, the dismiss button and the hint rule above, and only says what a
  * concept note holds that a semantic note does not. Wired in
  * interface/haptics.js, which already owns living-term gestures. */
+:where(.spw-concept-popover) {
+  max-block-size: min(70dvh, 24rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  min-inline-size: 0;
+}
+
 :where(.spw-concept-popover__title) {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow-wrap: anywhere;
   font-weight: 700;
   letter-spacing: 0.01em;
   color: var(--grammar-ink);
@@ -23846,11 +23862,13 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   inset-inline-start: 50%;
   translate: -50% 0;
   display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
   max-inline-size: min(14rem, 70vw);
-  overflow: hidden;
+  overflow: visible;
   padding: 0.16rem 0.42rem;
   border: 1px solid color-mix(in srgb, var(--gesture-anatomy-accent) 24%, transparent);
-  border-radius: 999px;
+  border-radius: var(--shape-control, 0.78rem);
   background: color-mix(in srgb, var(--gesture-anatomy-surface) 92%, var(--gesture-anatomy-accent) 8%);
   box-shadow: 0 4px 12px color-mix(in srgb, var(--shadow-color, #111) 10%, transparent);
   color: var(--gesture-anatomy-ink);
@@ -23861,8 +23879,9 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   opacity: 0.96;
   pointer-events: none;
   text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-overflow: unset;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 :where(.spw-living-term[data-spw-gesture-hint])::after {
@@ -25599,7 +25618,8 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
   inset: 0;
   z-index: calc(var(--z-priority, 2000) + 20);
   display: grid;
-  place-items: start center;
+  /* Stretch the column so max-content hits cannot center-expand the panel. */
+  place-items: start stretch;
   padding:
     max(4.5rem, calc(var(--spw-shell-menu-offset, 4rem) + 1rem))
     max(0.75rem, env(safe-area-inset-right))
@@ -25617,10 +25637,16 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 
 .spw-site-search__panel {
   width: min(36rem, 100%);
+  max-width: 100%;
   max-height: min(70dvh, 32rem);
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  /* header, facets, status, scrolling hits, footer — five children. */
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.45rem;
+  min-width: 0;
+  min-inline-size: 0;
+  margin-inline: auto;
   padding: 0.7rem;
   border: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 78%, var(--op-probe-color, #6a3fb8) 22%);
   border-radius: var(--shape-floating, 16px);
@@ -25716,12 +25742,21 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 
 .spw-site-search__list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.35rem;
   margin: 0;
   padding: 0;
+  min-width: 0;
+  min-height: 0;
   overflow: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
+}
+
+.spw-site-search__item {
+  min-width: 0;
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 .spw-site-search__group {
@@ -25741,9 +25776,19 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 }
 
 .spw-site-search__result {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   gap: 0.12rem;
   width: 100%;
+  min-width: 0;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  /* Floating-chrome marks dialog links nowrap/max-content for compact
+     controls. Hits are body copy inside that dialog — they must wrap. */
+  text-wrap: wrap;
+  white-space: normal;
+  overflow-wrap: break-word;
   min-height: var(--touch-target-min, 2.75rem);
   padding: 0.42rem 0.55rem;
   border: 1px solid transparent;
@@ -25760,6 +25805,7 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
   display: flex;
   align-items: baseline;
   gap: 0.38rem;
+  width: 100%;
   min-width: 0;
 }
 
@@ -25788,13 +25834,17 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 }
 
 .spw-site-search__title {
+  flex: 1 1 auto;
   min-width: 0;
   font-weight: 650;
   line-height: 1.25;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .spw-site-search__meta {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.7rem;
@@ -25826,7 +25876,11 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
   flex-wrap: wrap;
   align-items: center;
   gap: 0.35rem 0.55rem;
-  padding-inline: 0.2rem;
+  position: relative;
+  z-index: 1;
+  padding: 0.35rem 0.2rem 0;
+  border-top: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 72%, transparent);
+  background: var(--surface-strong, #fff);
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
   font-size: 0.72rem;
 }
@@ -42913,6 +42967,8 @@ html[data-spw-cognitive-handles="off"] :where(
 /* Pronunciation Hints */
 .spw-pronunciation-hint {
   position: absolute;
+  z-index: var(--z-popover, 40);
+  max-inline-size: min(18rem, calc(100vw - 1.5rem));
   pointer-events: none;
   opacity: 0;
   transform: translateY(4px);
@@ -42928,13 +42984,15 @@ html[data-spw-cognitive-handles="off"] :where(
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+  max-inline-size: 100%;
   padding: 0.35rem 0.65rem;
   border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 28%, transparent);
   border-radius: var(--handle-radius-tight);
   background: color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .spw-pronunciation-hint__pronunciation {
