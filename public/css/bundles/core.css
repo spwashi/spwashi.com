@@ -4578,6 +4578,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
    4. Generic surface defaults for common page content
    --------------------------------------------------------------------------
    Surface Primitives (spw-panel, spw-prose, callout)
+   .frame-panel is the legacy HTML class; public hosts should author .spw-panel.
    ========================================================================== */
 
 .spw-panel,
@@ -17872,6 +17873,7 @@ html[data-spw-color-mode="dark"] :where(
 
 :where(
   .spw-card,
+  .spw-panel,
   .frame-card,
   .frame-panel,
   .media-card,
@@ -17905,6 +17907,7 @@ html[data-spw-color-mode="dark"] :where(
 
 :where(
   .spw-card,
+  .spw-panel,
   .frame-card,
   .frame-panel,
   .media-card,
@@ -18075,7 +18078,7 @@ html[data-spw-color-mode="dark"] :where(
 }
 
 /* Explicit defaults for consistent layout/wrapping/alignment across cards and panels */
-:where(.spw-card, .frame-card, .frame-panel, .math-lens-card, .topic-reference-card, .spw-principle-card) {
+:where(.spw-card, .spw-panel, .frame-card, .frame-panel, .math-lens-card, .topic-reference-card, .spw-principle-card) {
   --card-internal-gap: 0.42rem;
   display: grid;
   gap: var(--card-internal-gap);
@@ -18087,11 +18090,11 @@ html[data-spw-color-mode="dark"] :where(
   overflow-wrap: break-word;
 }
 
-:where(.spw-card, .frame-card, .frame-panel) :where(p) {
+:where(.spw-card, .spw-panel, .frame-card, .frame-panel) :where(p) {
   line-height: var(--site-line-height-tight, 1.4);
 }
 
-:where(.spw-card, .frame-card, .frame-panel) :where(h1, h2, h3, h4, h5, h6, .frame-card-title, .spw-card__title) {
+:where(.spw-card, .spw-panel, .frame-card, .frame-panel) :where(h1, h2, h3, h4, h5, h6, .frame-card-title, .spw-card__title) {
   line-height: var(--line-height-heading-sm, 1.2);
   margin-block-start: 0;
 }
@@ -18100,7 +18103,7 @@ html[data-spw-color-mode="dark"] :where(
   align-items: stretch;
 }
 
-:where(.spw-card, .frame-card, .frame-panel) :where(.spw-chip, .spw-chip, .frame-sigil) {
+:where(.spw-card, .spw-panel, .frame-card, .frame-panel) :where(.spw-chip, .spw-chip, .frame-sigil) {
   white-space: nowrap;
   max-inline-size: 100%;
   overflow: hidden;
@@ -18513,7 +18516,7 @@ html[data-spw-color-mode="dark"] :where(
   --spw-content-variant-gap: var(--card-internal-gap, 0.45rem);
 }
 
-:where(.frame-panel[data-spw-content-variant="entry"], .frame-card[data-spw-content-variant="entry"]) {
+:where(.spw-panel[data-spw-content-variant="entry"], .frame-panel[data-spw-content-variant="entry"], .frame-card[data-spw-content-variant="entry"]) {
   --spw-content-variant-accent: var(--op-frame-color, var(--component-accent));
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;

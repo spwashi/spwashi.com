@@ -731,6 +731,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
    4. Generic surface defaults for common page content
    --------------------------------------------------------------------------
    Surface Primitives (spw-panel, spw-prose, callout)
+   .frame-panel is the legacy HTML class; public hosts should author .spw-panel.
    ========================================================================== */
 
 .spw-panel,

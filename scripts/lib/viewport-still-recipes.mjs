@@ -158,7 +158,8 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     captureValue: 'Panel primitive: request tiles and operator chips on the home frame.',
     sourceFiles: Object.freeze([
       'index.html',
-      'public/css/components/surfaces.css',
+      'public/css/shell/layout.css',
+      'public/css/components/cards.css',
       'public/css/handles/operators/sigils-and-chips.css',
     ]),
   }),
