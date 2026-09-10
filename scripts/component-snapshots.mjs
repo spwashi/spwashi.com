@@ -466,8 +466,12 @@ function pinVisitorOverlaysScript({ assert = false } = {}) {
       if (getComputedStyle(el).display === 'none') {
         el.style.setProperty('display', 'grid', 'important');
       }
-      el.style.setProperty('max-block-size', 'min(72dvh, calc(100dvh - 6.5rem))', 'important');
-      el.style.setProperty('max-inline-size', 'min(22rem, calc(100vw - 1.5rem))', 'important');
+      if (el.classList.contains('spw-region-menu')) {
+        el.style.setProperty('max-block-size', 'min(72dvh, calc(100dvh - 6.5rem))', 'important');
+        el.style.setProperty('max-inline-size', 'min(22rem, calc(100vw - 1.5rem))', 'important');
+      } else {
+        el.style.setProperty('overflow', 'visible', 'important');
+      }
       return true;
     };
     pinOverlay(document.querySelector('.spw-region-menu[data-spw-state="open"]'));

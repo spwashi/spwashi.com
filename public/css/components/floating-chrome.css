@@ -76,6 +76,13 @@
   text-wrap: nowrap;
 }
 
+:where([data-spw-floating-chrome="true"]) :where(.spw-popover-dismiss) {
+  min-inline-size: var(--touch-target-compact, 2.15rem);
+  min-block-size: var(--touch-target-compact, 2.15rem);
+  inline-size: var(--touch-target-compact, 2.15rem);
+  block-size: var(--touch-target-compact, 2.15rem);
+}
+
 :where(
   [data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"],
   [data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle"],
@@ -176,6 +183,10 @@
   );
   overflow: auto;
   overscroll-behavior: contain;
+}
+
+:where([data-spw-floating-chrome="true"].spw-topic-popover) {
+  overflow: visible;
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-popup-placement="popover"][data-spw-popup-vertical="above"]) {

@@ -178,7 +178,7 @@ source = "chat 2026-09-07: still-recipe debt after broadsheet openings; Imagine/
   pattern_consideration = #[
     `home-search-open and home-living-term-note already occupy the opening fold — do not pin those`,
     `compact sheet inset-block-end + --spw-bottom-chrome-clearance is product placement; capture pin is not`,
-    `topic popover overflow:auto can paint a stray scrollbar on a 122px note`
+    `topic popover "scrollbar" was the dismiss: floating-chrome min-inline-size:max-content shrinks × while min-height keeps a tall pill. Landed 2026-09-10: .spw-popover-dismiss keeps --touch-target-compact. Still 07-53-17--64972d.`
   ][reg=set]
   expansion_prime = `Reuse overlay-offscreen in any capture of menus, notes, or sheets. Do not Storybook the overlay.`
   validation = `node scripts/component-snapshots.mjs --stills --checks --viewports pocket --ids=home-region-menu,home-topic-note,home-region-menu-dark,home-topic-note-dark`
