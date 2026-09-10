@@ -1,0 +1,196 @@
+# Still Alignment Ladder (2026-09)
+#
+# operation: cache
+# What the 2026-09-09/10 stills show about edge agreement, and the one
+# mechanism underneath it. Not a redesign. Not a spacing-theory redo.
+# Not a second card taxonomy.
+
+#>still_alignment_ladder_2026_09
+#:cache #!stills #!alignment #!packing #!components
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@still_recipe: ~"./still-recipe-agency-2026-09.spw"
+@aesthetic_alignment: ~"../audits/aesthetic-alignment-2026-08.spw"
+@touch_control_class: ~"./touch-control-class-2026-09.spw"
+@hypermedia_geometry: ~"./hypermedia-geometry-2026-09.spw"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@capture_pipeline: ~"../conventions/component-capture-pipeline.spw"
+@surfaces_css: ~"../../public/css/components/surfaces.css"
+@cards_css: ~"../../public/css/components/cards.css"
+@frames_css: ~"../../public/css/components/frames.css"
+@card_ecology: ~"../../public/css/components/card-ecology.css"
+@shell_layout: ~"../../public/css/shell/layout.css"
+@recipes: ~"../../scripts/lib/viewport-still-recipes.mjs"
+
+operation = "cache"
+fixity = "tending"
+source = "stills 2026-09-09 11-56-42--ec2e4d (fold/pocket pack, 190 frames), 2026-09-10 checks 07-39-53, 07-53-17, 08-01-14, 17-08-41; broadsheet 2026-09-09 09-34-38--3ba3e6"
+
+^"thesis"{
+  claim = `The stills do not show a spacing problem. They show a membership problem. Panels that read as siblings are members of different selector unions per property, so each one resolves its own pad, its own clip, and its own right edge. The visible symptom is a left-edge ladder; the cause is that the card family has no core.`
+  falsifier = `If one selector were present in every rule that styles .spw-panel, the edges would agree. None is. Measured below.`
+  scope = `Edge agreement and overflow honesty only. Rhythm quantum is settled — @still_recipe#sr-006. Measure caps reaching into descendants is already named — @aesthetic_alignment#F1.`
+}[reg=facet]
+
+^"al-001_card_union_has_no_core"{
+  id = "al-001"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `103 rule sites name .spw-panel across components/, shell/, and grammar/. They carry 52 distinct memberships. Zero selectors appear in all of them.`
+  measured = #[
+    `103 rule sites, 52 distinct memberships, 119 distinct class names in the union of all`,
+    `membership sizes run 2..29 — no plateau, so no intended tier`,
+    `.spw-panel 100/103 · .frame-panel 97/103 — the twin pair itself drifts by 3`,
+    `.frame-card 81 · .operator-card 49 · .plan-card 46 · .media-card 42 · .ref-card 42 · .software-card 43 · .compare-card 39 · .mode-panel 36 · .media-focus-card 35 · .spec-column 27 · .spw-frame 25`,
+    `cards.css carries 39 of the sites, foundation.css 12, card-ecology.css 10, surfaces.css 9`
+  ][reg=set]
+  consequence = `.compare-card and .plan-card are the same card to a reader and differ by 7 rules to the cascade. A panel picks up padding from one union and route-accent ink from another, so its content box starts where its ancestors happened to agree.`
+  evidence_still = `2026-09-10 17-08-41--b8ef7a pocket/01-home-opening: four content left edges in one column — lede block, working-view panel inner, beds label, reading note. Right edges disagree by 3-5px across the same four.`
+  rule = `A property that belongs to the card family is declared once against a named family, not restated against a hand-typed union. The family is the thing to mint, not another card class.`
+  refuse = `Do not add a 120th class. Do not introduce a data-spw-card family — @css_instruction and CLAUDE.md both block a new data-spw-* stem. Map onto the existing union by hoisting it to one :where() list the other rules reference.`
+  next_probe = `Pick the two largest memberships; diff them; the difference is the intended tier or a typo. There is no third answer.`
+}[reg=facet]
+
+^"al-002_clip_hides_its_own_overflow"{
+  id = "al-002"
+  operation = "cache"
+  dated = `2026-09-10`
+  claim = `The card union sets padding and overflow:clip in the same block. Clip masks the overflow it causes, so a too-wide child is cut mid-word and document.scrollWidth reports nothing.`
+  evidence = #[
+    `@surfaces_css:47 overflow: clip beside padding: var(--component-pad) and min-width: 0`,
+    `@frames_css:255-270 already documents this exact failure on /topics/software/ — an implicit auto column sized to max-content, 418px of track in a 320px body, hidden by .spw-frame overflow-x: clip`,
+    `the landed fix there is grid-template-columns: minmax(0, 100%) plus min-width: 0, with the reasoning that an fr resolves to max-content when the container width is indefinite`,
+    `overflow-x: auto exists in only 5 places tree-wide: embedded-workshop, cauldron, shell-controls, shell/layout:1238`
+  ][reg=set]
+  evidence_still = `2026-09-10 07-53-17--64972d pocket--dark-mode/01-home-topic-note-dark: the Grammar block cuts "#>home_frame < orients this (" and "#:layer pragmatics < qualifi" at the panel edge with no scrollbar and no fade. Three consecutive lines truncate mid-token.`
+  transferable = #[
+    `The frames.css remedy is the pattern, not a one-route patch. Any grid inside a clipped panel needs minmax(0, 100%) — not 1fr — plus min-width: 0`,
+    `A still cannot fail on overflowX when the ancestor clips. The occupancy assert reads a lie`,
+    `Where content is legitimately wide (code, grammar, tables), the panel owes a scroll affordance, not a clip`
+  ][reg=set]
+  capture_debt = `@still_recipe#sr-001 says stills fail on handle-clipped / overflowX. Under overflow:clip that check is silently vacuous. Measure the child's scrollWidth against its own box, not the document's.`
+  refuse = `Do not swap clip for visible globally — clip is doing paint containment work beside contain: paint style.`
+}[reg=facet]
+
+^"al-003_overlay_contract_orphans_a_cell"{
+  id = "al-003"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `The region menu keeps a two-column action contract but its groups have odd counts, so a row ends in an empty cell while the label rail changes rhythm mid-sheet.`
+  evidence_still = #[
+    `2026-09-10 07-39-53--dc18b0 pocket/01-home-region-menu`,
+    `INSPECT holds three: Show related, Next match, Previous match — Previous match sits alone with a full empty cell beside it`,
+    `REUSABLE MOVES, INSPECT, CARRY are full-width single labels; MARK and SETTLE are a paired label row — the rail switches from one column to two halfway down`,
+    `the subtitle hyphen-breaks "source-to-address" because CLOSE steals inline width from the definition line`,
+    `underlying page text shows through the sheet — a stray glyph sits beside the *home-frame chip`
+  ][reg=set]
+  reading = `The packing decision landed in @still_recipe#sr-009 was correct — keep the contract two-column, put mark+reset on one row. What it did not settle is what a group with an odd count does. Right now the grid decides, and it decides badly.`
+  proposal = #[
+    `An odd trailing action spans both columns rather than orphaning a cell. One rule on the last-child of an odd group`,
+    `Either every group label is full-width or every group label is a column head. The mixed rail is the defect, not the label`,
+    `CLOSE leaves the definition line's flow instead of sharing it — the subtitle should wrap on words, not hyphenate around a floated control`,
+    `Raise the sheet's own backdrop opacity until page glyphs stop reading through. A menu that shows the page under its own text is not yet an overlay`
+  ][reg=set]
+  refuse = `Do not restyle the four control skins into one. Dashed moves, solid inspect, tinted mark is a legible ladder — @touch_control_class. Only the grid and the rail are in scope.`
+  validation = `node scripts/component-snapshots.mjs --stills --checks --viewports pocket --ids=home-region-menu,home-region-menu-dark`
+}[reg=facet]
+
+^"al-004_broadsheet_column_spends_nothing"{
+  id = "al-004"
+  operation = "audit"
+  dated = `2026-09-09`
+  claim = `On broadsheet the about opening runs three different right edges inside one column, and the widest is used by a rule that nothing beneath it fills.`
+  evidence_still = #[
+    `2026-09-09 09-34-38--3ba3e6 broadsheet/01-about-opening, 1440 viewport`,
+    `lede prose stops at ~535 · lens grid stops at ~549 · the divider rule beneath runs to ~1348`,
+    `the block under that full-width rule is inset to ~1020, so the rule promises a width its own content declines`,
+    `the lens chips are a wrap, not a grid: row one cells end at 256/402/549, row two at 245/404/549 — columns do not line up between rows`,
+    `the narrative-flow caption truncates to "NARRATIVE FLOW · ORIENTATI…" inside a cell on a row with slack`
+  ][reg=set]
+  relation = `This is @aesthetic_alignment#F1 seen from the still side — an ancestor caps measure while descendants keep full width, so the component shrinks to make space nothing claims. The new fact is that the divider inherits the uncapped width and advertises the gap.`
+  proposal = #[
+    `A rule inside a measure-capped column takes the measure, not the column. Otherwise it reads as a section break for a section that is not there`,
+    `The lens cluster is a grid with named columns or it is a wrap that does not pretend to be rows. Right now it is a wrap drawn with cell borders`,
+    `A cell that truncates on a row with slack is the wrap failing, not the copy being long. Fix the track, do not shorten the caption`
+  ][reg=set]
+  refuse = `Do not widen the reading measure. The prose cap is correct; the rule and the grid are what disagree with it.`
+}[reg=facet]
+
+^"al-005_inline_sigils_break_the_rag"{
+  id = "al-005"
+  operation = "cache"
+  dated = `2026-09-10`
+  claim = `Inline operator badges and pill chips are set as boxes inside running text, so they push leading unevenly and, on wrap, indent the following line by their own width.`
+  evidence_still = #[
+    `2026-09-10 07-53-17--64972d pocket--dark-mode/01-home-topic-note-dark`,
+    `"A perspective @ charges." wraps so the badge lands at line start and "charges." begins ~78px right of the paragraph's left edge`,
+    `"projects." indents to the same false margin on the next line`,
+    `the topic-handle and ?operator-route pills sit on adjacent lines of one paragraph and give it three different line heights`
+  ][reg=set]
+  reading = `Operator typography is meant to be readable at rest — @aesthetic_alignment names operator typography as asserted-but-absent. This is the running-text case. A sigil that is a box cannot sit in a paragraph without owning the line.`
+  proposal = #[
+    `A badge in running prose sets line-height: 0 against its own box and inherits the paragraph's leading, so the rag stays straight`,
+    `A wrapped badge does not become a hanging indent — the badge and its word are one unbreakable unit, or the badge is not inline`,
+    `Where a pill genuinely needs box height, the paragraph is not the place for it. Promote it out of the flow`
+  ][reg=set]
+  refuse = `Do not remove the sigils. Do not flatten them to plain glyphs — the charge ladder is the point.`
+}[reg=facet]
+
+^"al-006_note_escapes_the_column"{
+  id = "al-006"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `The topic note anchors to its term and lands outside the reading column's left edge, crossing the page shell rules.`
+  evidence_still = `2026-09-10 07-53-17--64972d: note left edge ~32 while every block on the page starts at 78 or 118. It overhangs the shell's own inset rules. The dismiss square is inset 21 from the note's right and 48 from its left.`
+  proposal = #[
+    `A viewport-positioned note clamps to the reading column, not to the viewport. Anchor to the term for the block axis; clamp to the column for the inline axis`,
+    `Note padding is symmetric or the dismiss is a column of its own. Not both`
+  ][reg=set]
+  relation = `@still_recipe#sr-009 landed the pin and the dismiss sizing. Position was proved to be on-screen; it was not proved to be in the column.`
+  refuse = `Do not re-pin. The overlay occupancy work is landed and correct.`
+}[reg=facet]
+
+^"al-007_closed_disclosure_reserves_open_height"{
+  id = "al-007"
+  operation = "cache"
+  dated = `2026-09-10`
+  claim = `The "Why this card exists" disclosure holds a block of empty height while closed, so every entry panel ends on dead space.`
+  evidence_still = `2026-09-10 08-01-14--973aad pocket/01-home-entry-panels: both cards show the dashed disclosure with its summary at the top and roughly 90px of empty box beneath. Identical on both, so it is a rule, not content.`
+  reading = `A closed disclosure that reserves its open height defeats the pacing it was added for, and it is the last thing in the card, so the card's bottom rhythm is the wrong one everywhere the pattern appears.`
+  proposal = `The closed state is summary height plus its own pad. If the reservation exists to stop layout shift on open, that is the reflow-attribution question, not a packing constant — @still_recipe and the reflow work already own it.`
+  refuse = `Do not delete the disclosure. Do not animate the open to hide the constant.`
+}[reg=facet]
+
+^"al-008_caption_slab_bands_the_image"{
+  id = "al-008"
+  operation = "cache"
+  dated = `2026-09-09`
+  claim = `The attention-register card overlays the media it captions and leaves a strip of image below it, cutting one photograph into two visible bands plus a separate caption bar.`
+  evidence_still = `2026-09-09 09-34-38--3ba3e6 broadsheet/01-about-opening: opaque card sits across the image's lower half; the image reappears beneath it; a third caption bar sits below that. Three horizontal bands for one picture.`
+  proposal = `The overlay sits flush to one edge of the media, or it sits outside it. A slab that floats mid-image with the image continuing beneath reads as a stacking accident, and Grok Imagine reads the plate the same way a person does.`
+  relation = `Capture legibility is a requirement, not a nicety — the still is the prompt. @still_recipe#sr-002.`
+  refuse = `Do not drop the caption. Do not crop the image to hide the band.`
+}[reg=facet]
+
+^"proposal_order"{
+  claim = `One mechanism, then the symptoms it explains. Do not start at the stills.`
+  order = #[
+    `al-001 first — hoist the card union to one named family. Every edge finding downstream either resolves or becomes a real decision`,
+    `al-002 second — it is already solved in @frames_css; the work is applying the landed pattern and repairing the capture assert that clip made vacuous`,
+    `al-003 and al-006 next — both are single-rule fixes in visitor chrome the overlay pass already touched`,
+    `al-004, al-005, al-007, al-008 are sensation calls. Proposal plus demo, browser approval before implementation`
+  ][reg=set]
+  gate = `Pacing and bundling-feel decisions end at proposal + demo. The human approves sensation in the browser.`
+  skip = #[`spacing-theory redo`, `new data-spw-* family`, `a 120th card class`, `measure-cap rewrite`, `Storybook`, `theme-pack factorial`][reg=set]
+}[reg=facet]
+
+^"next_session"{
+  claim = `Open this file. al-001 is the only finding with a measured mechanism; the rest are evidence for it or sensation calls behind the browser gate.`
+  open = #[`this file`, `public/css/components/cards.css`, `public/css/components/surfaces.css`][reg=set]
+  next_slice = `al-001 probe only: diff the two largest of the 52 memberships. Report whether the difference is an intended tier or accumulated typo. Do not patch until that is answered.`
+  reproduce = `python3 over public/css/{components,shell,grammar}/*.css — collect selector groups containing spw-panel, count distinct member tuples, intersect them. Expect 103 / 52 / empty.`
+  validation = `npm run check:local ; npm run spw:integrity ; node scripts/component-snapshots.mjs --stills --checks --viewports pocket --ids=home-opening,home-region-menu,home-topic-note`
+  concurrent = `Multiple sessions commit to main in this tree. Never git stash here.`
+}[reg=facet]
