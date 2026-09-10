@@ -148,8 +148,41 @@ source = "chat 2026-09-07: still-recipe debt after broadsheet openings; Imagine/
   claim = `A visitor overlay is visual:layout and a named still. Inspect chrome is capture-hide. Recipe fixtureId must be an ecology/component seat or the recipe id.`
   instrument = `scripts/lib/still-module-coverage.mjs`
   visitor = #[`shell-disclosure`, `site-search`, `haptics`, `pronunciation-hints`, `region-menu`, `topic-discovery`][reg=set]
-  leftover = `Pair/press still (@sr-001). Panel CSS still names .frame-panel. Pocket region-menu is overfull (MARK clips).`
+  leftover = `Pair/press still (@sr-001). Panel CSS still names .frame-panel.`
   refuse = `Do not Storybook. Do not still every floating-chrome inspect module.`
+}[reg=facet]
+
+^"sr-009_overlay_still_occupancy"{
+  id = "sr-009"
+  operation = "cache"
+  dated = `2026-09-10`
+  fixity = "tending"
+  source = `chat 2026-09-09/10: visitor overlay stills; runs 21-29-35--78ba8c miss, 22-15-49--bd6384 occupancy`
+  claim = `An overlay still is false unless the overlay occupies the device frame. Open-in-DOM is not occupancy.`
+  evidence = #[
+    `21-29-35--78ba8c: .spw-region-menu 374×354 and .spw-topic-popover 284×122, clip null, JPEG was the page`,
+    `capture.css hid [data-spw-floating-chrome] except role=dialog; region-menu is role=menu, pronunciation is role=status`,
+    `pinOverlay inset:auto !important reset top/left; body-appended position:fixed then sat at static position past the fold`,
+    `measureSelector scrollIntoView on fixed chrome fires region-menu onViewportChange → clearPopupPlacementStyles`,
+    `d5c91793: except dialog/menu/status; openRegionMenuForElement; pin longhands; overlay-offscreen after measure`
+  ][reg=set]
+  transferable = #[
+    `Wait for .is-visible / [data-spw-state=open], then assert getBoundingClientRect intersects the viewport`,
+    `Do not pin with the inset shorthand — set top/left/right/bottom longhands`,
+    `Prefer an exported open() plus grace over synthesized contextmenu/pointerdown`,
+    `Skip scrollIntoView on position:fixed visitor chrome; it is already viewport-relative`,
+    `Pronunciation is position:absolute with top+scrollY; region-menu and topic notes are position:fixed viewport coords`,
+    `Capture-hide lists must except the visitor ARIA roles the overlay actually authors`
+  ][reg=set]
+  packing = `Pocket sheet at 42dvh plus a 1-column contract plus stacked Mark/Settle lanes clips trailing actions. Pack first: keep the contract two-column; put mark+reset on one row; then raise max-block-size only enough for the actions to sit. Landed 2026-09-10: min(62dvh, 100dvh - clearance - 4rem). Still 07-39-53--dc18b0 shows Pin region and Clear highlight on rest and dark.`
+  pattern_consideration = #[
+    `home-search-open and home-living-term-note already occupy the opening fold — do not pin those`,
+    `compact sheet inset-block-end + --spw-bottom-chrome-clearance is product placement; capture pin is not`,
+    `topic popover overflow:auto can paint a stray scrollbar on a 122px note`
+  ][reg=set]
+  expansion_prime = `Reuse overlay-offscreen in any capture of menus, notes, or sheets. Do not Storybook the overlay.`
+  validation = `node scripts/component-snapshots.mjs --stills --checks --viewports pocket --ids=home-region-menu,home-topic-note,home-region-menu-dark,home-topic-note-dark`
+  refuse = `Do not treat pin as product layout. Do not still every inspect module. Do not factorialize theme packs.`
 }[reg=facet]
 
 ^"next_session"{
