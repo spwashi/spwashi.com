@@ -49,6 +49,7 @@ import {
   assessCaptureOccupancy,
   assessViewportSubject,
   assessStillAttention,
+  assessStillOverflow,
   isBlankStill,
   isStarvedClip,
   formatCaptureExpression,
@@ -636,6 +637,15 @@ async function measureSelector(session, selector, timeoutMs = CAPTURE_MEASURE.ev
         interactiveCount: el.querySelectorAll('a[href], button, input, select, textarea, [role="button"]').length,
         textLength: text.length,
         text: text.slice(0, 240),
+        clipOverflow: (() => {
+          const handles = el.querySelectorAll(':scope > .frame-topline > .frame-sigil, :scope > .frame-heading > .frame-sigil');
+          for (const node of handles) {
+            const hr = node.getBoundingClientRect();
+            if (hr.width < 2 || hr.height < 2) continue;
+            if (hr.right > r.right + 2 || hr.left < r.left - 2) return true;
+          }
+          return false;
+        })(),
       };
     })()`,
     returnByValue: true,
@@ -913,8 +923,10 @@ async function applyCapturePrepare(session, job) {
   const charge = Array.isArray(prepare?.charge) ? prepare.charge : (prepare?.charge ? [prepare.charge] : []);
   const hold = Array.isArray(prepare?.hold) ? prepare.hold : (prepare?.hold ? [prepare.hold] : []);
   const contextmenu = Array.isArray(prepare?.contextmenu) ? prepare.contextmenu : (prepare?.contextmenu ? [prepare.contextmenu] : []);
+  const hover = Array.isArray(prepare?.hover) ? prepare.hover : (prepare?.hover ? [prepare.hover] : []);
+  const keys = Array.isArray(prepare?.keys) ? prepare.keys : (prepare?.keys ? [prepare.keys] : []);
   const focus = prepare?.focus;
-  const needsPrepare = close.length || open.length || check.length || click.length || charge.length || hold.length || contextmenu.length || attention.section || attention.probe || Boolean(focus);
+  const needsPrepare = close.length || open.length || check.length || click.length || charge.length || hold.length || contextmenu.length || hover.length || keys.length || attention.section || attention.probe || Boolean(focus);
   await evaluateProbe(session, `(async () => {
     const html = document.documentElement;
     if (html) html.setAttribute('data-spw-capture-mode', 'screenshot');
@@ -1123,6 +1135,64 @@ async function applyCapturePrepare(session, job) {
     }
     return true;
   })()`, evaluateTimeoutMsFor(job));
+  if (keys.length) await applyKeyPrepare(session, keys, job);
+  if (hover.length) await applyPointerHover(session, hover, job);
+}
+
+const KEY_CODES = Object.freeze({
+  Tab: { key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 },
+  Enter: { key: 'Enter', code: 'Enter', text: '\r', unmodifiedText: '\r', windowsVirtualKeyCode: 13 },
+  Escape: { key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 },
+  ArrowRight: { key: 'ArrowRight', code: 'ArrowRight', windowsVirtualKeyCode: 39 },
+  ArrowLeft: { key: 'ArrowLeft', code: 'ArrowLeft', windowsVirtualKeyCode: 37 },
+  ArrowUp: { key: 'ArrowUp', code: 'ArrowUp', windowsVirtualKeyCode: 38 },
+  ArrowDown: { key: 'ArrowDown', code: 'ArrowDown', windowsVirtualKeyCode: 40 },
+  ' ': { key: ' ', code: 'Space', text: ' ', unmodifiedText: ' ', windowsVirtualKeyCode: 32 },
+});
+
+async function applyKeyPrepare(session, keys, job) {
+  for (const name of keys) {
+    const spec = KEY_CODES[name] || { key: String(name), code: String(name) };
+    await session.send('Input.dispatchKeyEvent', { type: 'keyDown', ...spec });
+    await session.send('Input.dispatchKeyEvent', { type: 'keyUp', key: spec.key, code: spec.code, windowsVirtualKeyCode: spec.windowsVirtualKeyCode });
+  }
+  await evaluateProbe(session, `(async () => {
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    return true;
+  })()`, evaluateTimeoutMsFor(job));
+}
+
+async function applyPointerHover(session, selectors, job) {
+  await session.send('Emulation.setEmulatedMedia', {
+    features: [
+      { name: 'hover', value: 'hover' },
+      { name: 'any-hover', value: 'hover' },
+      { name: 'pointer', value: 'fine' },
+      { name: 'any-pointer', value: 'fine' },
+    ],
+  }).catch(() => {});
+  for (const sel of selectors) {
+    const point = await evaluateProbe(session, `(() => {
+      const el = document.querySelector(${JSON.stringify(sel)});
+      if (!el) return { found: false };
+      try { el.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } catch { /* detached */ }
+      const r = el.getBoundingClientRect();
+      return {
+        found: true,
+        x: r.left + r.width / 2,
+        y: r.top + r.height / 2,
+      };
+    })()`, evaluateTimeoutMsFor(job));
+    if (!point?.found) continue;
+    await session.send('Input.dispatchMouseEvent', {
+      type: 'mouseMoved',
+      x: point.x,
+      y: point.y,
+      button: 'none',
+      pointerType: 'mouse',
+    });
+  }
+  await sleep(180);
 }
 
 function isTargetGoneError(error) {
@@ -1170,7 +1240,8 @@ async function captureJob(session, job, {
   const padding = job.flow === 'region' ? 20 : job.canvas === 'card' ? 16 : 12;
   let clip = null;
   let buffer;
-  const deviceFrame = job.still || job.flow === 'page' || !box;
+  const authoredClip = job.clipSpace === 'viewport' || job.clipSpace === 'document';
+  const deviceFrame = (!authoredClip && (job.still || job.flow === 'page')) || !box;
   const shotTimeoutMs = screenshotTimeoutMsFor(job);
   if (deviceFrame) {
     buffer = await screenshotBuffer(session, { format, quality, timeoutMs: shotTimeoutMs });
@@ -1184,6 +1255,10 @@ async function captureJob(session, job, {
   const captureOccupancy = assessCaptureOccupancy(job, snapshot);
   const subjectFit = assessViewportSubject(job, snapshot, viewport);
   const stillAttention = assessStillAttention(job, snapshot);
+  const stillOverflow = assessStillOverflow(job, snapshot);
+  if (!stillOverflow.ok) {
+    throw new Error(`overflow-x: ${stillOverflow.reason} ${job.selector || ''}`.trim());
+  }
   if (!stillAttention.ok) {
     throw new Error(
       `attention-miss: ${stillAttention.reason}`

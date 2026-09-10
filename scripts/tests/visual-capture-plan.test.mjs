@@ -43,7 +43,9 @@ import {
   isMissedSpecimen,
   assessCaptureOccupancy,
   assessStillAttention,
+  assessStillOverflow,
   attentionAssertKind,
+  RECIPE_PAIR_KINDS,
   STILL_ATTENTION_READ_EXPRESSION,
   assessViewportSubject,
   isBlankStill,
@@ -557,6 +559,7 @@ test('named stills cover curriculum, software, and math openings', () => {
   assert.ok(jobs.some((job) => job.id === 'curriculum-opening' && job.selector === '#curriculum-hero'));
   assert.ok(jobs.some((job) => job.id === 'software-opening' && job.selector === '#software-surface'));
   assert.ok(jobs.some((job) => job.id === 'math-opening' && job.selector === '#math-hero'));
+  assert.ok(jobs.some((job) => job.id === 'quest-opening' && job.selector === '#domain-frame'));
 });
 
 test('named stills crop the public card, panel, chip, and lede nouns', () => {
@@ -621,6 +624,61 @@ test('folio probes and prices are named still recipes, not catalog components', 
   assert.deepEqual(branch?.prepare?.check, ['#folio-growth-probe input[value="branch"]']);
   assert.equal(prices?.selector, '#folio-prices');
   assert.equal(reduced?.conditions?.reducedMotion, 'reduce');
+});
+
+test('a recipe id is not a fixture family, and press is a pair not a second recipe', () => {
+  const restOnly = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeStills: true,
+    includeChecks: true,
+    viewports: [VIEWPORTS.pocket],
+    ids: ['home-entry-panels'],
+  }).jobs;
+  assert.equal(restOnly.length, 1);
+  assert.equal(restOnly[0].id, 'home-entry-panels');
+
+  const { jobs } = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeStills: true,
+    viewports: [VIEWPORTS.pocket],
+    ids: ['about-opening'],
+  });
+  const rest = jobs.find((job) => job.id === 'about-opening');
+  const press = jobs.find((job) => job.id === 'about-opening-press');
+  const hover = jobs.find((job) => job.id === 'about-opening-hover');
+  const keys = jobs.find((job) => job.id === 'about-opening-keys');
+  assert.ok(rest);
+  assert.ok(press);
+  assert.ok(hover);
+  assert.ok(keys);
+  assert.deepEqual(press?.prepare?.click, ['#about-frame .mode-switch [data-set-mode="kernel"]']);
+  assert.deepEqual(hover?.prepare?.hover, ['#about-frame .mode-switch [data-set-mode="kernel"]']);
+  assert.deepEqual(keys?.prepare?.keys, ['Tab']);
+  assert.equal(keys?.prepare?.focus, '#about-frame .mode-switch [data-set-mode="reading"]');
+  assert.equal(jobs.some((job) => job.id === 'quest-opening'), false);
+
+  const pressOnly = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeStills: true,
+    viewports: [VIEWPORTS.pocket],
+    ids: ['about-opening-press'],
+  }).jobs;
+  assert.equal(pressOnly.length, 1);
+  assert.equal(pressOnly[0].id, 'about-opening-press');
+
+  const quest = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeStills: true,
+    viewports: [VIEWPORTS.pocket],
+    ids: ['quest-opening'],
+  }).jobs;
+  assert.equal(quest.length, 1);
+  assert.equal(quest[0].selector, '#domain-frame');
+  assert.deepEqual([...RECIPE_PAIR_KINDS], ['press', 'hover', 'keys']);
 });
 
 test('still attention receipts fail when ink stays at rest while charge is live', () => {
@@ -743,6 +801,19 @@ test('still attention receipts fail when ink stays at rest while charge is live'
   );
   assert.equal(probePass.ok, true);
   assert.match(STILL_ATTENTION_READ_EXPRESSION, /--spw-attention-opacity/);
+
+  const overflowSkip = assessStillOverflow({ flow: 'component' }, { clipOverflow: true });
+  assert.equal(overflowSkip.verdict, 'skip');
+  const clipped = assessStillOverflow({ still: true, flow: 'page' }, { clipOverflow: true });
+  assert.equal(clipped.ok, false);
+  assert.equal(clipped.reason, 'handle-clipped');
+  const overflowX = assessStillOverflow(
+    { still: true, flow: 'page' },
+    { composition: { box: { overflowX: true } } },
+  );
+  assert.equal(overflowX.reason, 'overflow-x');
+  const overflowPass = assessStillOverflow({ still: true, flow: 'page' }, { clipOverflow: false });
+  assert.equal(overflowPass.ok, true);
 });
 
 test('capture runs nest readable profile folders under the day', () => {
@@ -793,7 +864,11 @@ test('still token opts into named viewport recipes', () => {
     includeStills: true,
     viewports: [VIEWPORTS.pocket],
   });
-  assert.equal(jobs.length, VIEWPORT_STILL_RECIPES.length);
+  const pairJobs = VIEWPORT_STILL_RECIPES.reduce(
+    (n, recipe) => n + RECIPE_PAIR_KINDS.filter((kind) => recipe[kind]).length,
+    0,
+  );
+  assert.equal(jobs.length, VIEWPORT_STILL_RECIPES.length + pairJobs);
   assert.ok(jobs.every((job) => job.still && job.flow === 'page'));
   assert.equal(assetKindFor(jobs[0]).id, 'page');
 });
@@ -870,6 +945,9 @@ test('live capture measure evaluate is bounded and races font wait', async () =>
   assert.match(source, /CAPTURE_MEASURE\.fontWaitMs/);
   assert.match(source, /readStillAttention/);
   assert.match(source, /attention-miss/);
+  assert.match(source, /applyPointerHover/);
+  assert.match(source, /applyKeyPrepare/);
+  assert.match(source, /overflow-x:/);
   assert.match(source, /fonts\.ready[\s\S]{0,180}race\(/);
   assert.doesNotMatch(
     source,

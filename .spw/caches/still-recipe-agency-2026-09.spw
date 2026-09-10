@@ -43,20 +43,19 @@ source = "chat 2026-09-07: still-recipe debt after broadsheet openings; Imagine/
   claim = `VIEWPORT_STILL_RECIPES is a rest crop with a thin prepare. That is not enough for agentic interactivity testing.`
   have = #[
     `id, selector, layoutScenarios, wonder, captureValue, sourceFiles`,
-    `prepare.open / close / check / focus / click`,
+    `prepare.open / close / check / focus / click / charge / hold / contextmenu / hover / keys`,
+    `press{} / hover{} / keys{} as pairs on the same recipe (about-opening-press, -hover, -keys)`,
+    `clipSpace authored per recipe (device frame default; viewport clip of folio-prices blanked)`,
     `home-nav-open, home-living-term-note, home-search-open`,
     `conditions.colorMode / themePack / reducedMotion / highContrast`,
-    `attention.section / probe and assertAttention=spend`
+    `attention.section / probe and assertAttention=spend`,
+    `stills fail on handle-clipped / overflowX — occupancy stays a story`
   ][reg=set]
   miss = #[
-    `press a lens (.reading vs ^kernel) as a pair, not a second id`,
-    `hover / :focus-within salience vs rest`,
-    `keyboard path as a prepare`,
-    `clipSpace choice: device frame vs subject box (folio-prices neighbors stole the desk crop)`,
-    `fail on overflowX / overfull — occupancy is a story, not a gate`,
-    `checks factorialize theme packs on home-hook instead of composing primitives`
+    `checks factorialize theme packs on home-hook instead of composing primitives`,
+    `pocket hover still is quiet — touch viewport; press/keys pairs are the visible delta`
   ][reg=set]
-  expansion_prime = `One schema field for pair/press before minting more CHECKS. Keep clipSpace authored per recipe.`
+  expansion_prime = `Pairs are press/hover/keys on the same recipe. Do not mint a second id for a prepare.`
   refuse = `Do not Storybook. Do not make every themePack a still id.`
 }[reg=facet]
 
@@ -106,10 +105,10 @@ source = "chat 2026-09-07: still-recipe debt after broadsheet openings; Imagine/
   claim = `Quest HTML is already the public contract. What waits is a still recipe, not a copy rewrite.`
   evidence = #[
     `about/domains/spw.quest/index.html #quest-lede data-spw-copy-unit=quest.hook.lede already names constructs, sensors, and grammar not to fork`,
-    `scripts/lib/viewport-still-recipes.mjs has about-opening and folio-prices — no quest id`
+    `VIEWPORT_STILL_RECIPES quest-opening on #domain-frame — still, not a copy rewrite`
   ][reg=set]
   refuse = `Do not retune the quest lede. Do not treat "Quest still waits" as unpaid copy.`
-  expansion_prime = `One VIEWPORT_STILL_RECIPES id on #domain-frame / #quest-lede. Pair/press is still the schema miss (@sr-001).`
+  expansion_prime = `Quest still landed. Pair/press/hover/keys live on about-opening (@sr-001).`
 }[reg=facet]
 
 ^"sr-006_spacing_quantum_landed"{
@@ -148,7 +147,7 @@ source = "chat 2026-09-07: still-recipe debt after broadsheet openings; Imagine/
   claim = `A visitor overlay is visual:layout and a named still. Inspect chrome is capture-hide. Recipe fixtureId must be an ecology/component seat or the recipe id.`
   instrument = `scripts/lib/still-module-coverage.mjs`
   visitor = #[`shell-disclosure`, `site-search`, `haptics`, `pronunciation-hints`, `region-menu`, `topic-discovery`][reg=set]
-  leftover = `Pair/press still (@sr-001). Experiment beds still author .frame-panel.`
+  leftover = `Experiment beds still author .frame-panel. Skipped on purpose.`
   refuse = `Do not Storybook. Do not still every floating-chrome inspect module.`
 }[reg=facet]
 
@@ -186,11 +185,11 @@ source = "chat 2026-09-07: still-recipe debt after broadsheet openings; Imagine/
 }[reg=facet]
 
 ^"next_session"{
-  claim = `Open this file. One named slice. Do not implement the loop.`
-  open = #[`this file`, `settings/index.html`, `scripts/lib/viewport-still-recipes.mjs`, `.spw/caches/boonhonk-combinatoric-genre.spw`][reg=set]
+  claim = `Open this file. Leftovers are remaining work in the same request, not a handoff. GROK "one named slice" is anti-bloat, not a stop when the user said loop.`
+  open = #[`this file`, `settings/index.html`][reg=set]
   next_slice = `Settings hook copy only: .settings-note "cognitive workbench", .spw-playable-hook weather/spell, Atmosphere card "vellum weather". Name author mode, material, density, enhancement. One operator chip that already spends --active-op-color.`
-  skip = #[`Imagine pipeline`, `Grok TUI clone`, `recipe schema rewrite`, `140-route copy`, `hearth/loom rename sweep`, `ASTRA.md`, `quest lede`, `spacing-theory redo`][reg=set]
-  leftover = `Folio-prices desk crop. Pocket about overflowX. Quest still-recipe (not copy). Recipe pair/press field. home-hook family vs home-opening still (@sr-007). Boonhonk component jobs: .spw/caches/boonhonk-combinatoric-genre.spw#component_jobs. Experiment beds still author .frame-panel.`
+  skip = #[`Imagine pipeline`, `Grok TUI clone`, `140-route copy`, `hearth/loom rename sweep`, `ASTRA.md`, `quest lede`, `spacing-theory redo`, `experiment-bed .frame-panel`][reg=set]
+  leftover = `Pocket about-opening-hover matches rest — :hover lift is quiet on a touch viewport. Experiment beds still author .frame-panel (skip).`
   concurrent = `Primary main worktree may carry uncommitted payment-card / promo-wonder / settings payment-note. Never git stash.`
   cli = `npm run sense -- ink about-opening ; npm run sense -- copy`
 }[reg=facet]

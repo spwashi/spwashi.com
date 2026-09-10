@@ -39581,6 +39581,15 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   outline: none;
 }
 
+.frame-topline > .spw-delimiter + .frame-sigil,
+.frame-heading > .spw-delimiter + .frame-sigil {
+  margin-inline-start: 0;
+  margin-left: 0;
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  max-inline-size: calc(100% - 1.75rem);
+}
+
 :where(.frame-topline .frame-sigil + .spec-strip, .frame-heading .frame-sigil + .spw-component-meta) {
   align-self: flex-start;
   margin-inline-start: 0.22rem;

@@ -200,7 +200,7 @@ export function recaptureJobIds(errorArtifacts = []) {
 
 export function classifyCaptureFailure(error, job = {}) {
   const message = String(error?.message || error || '');
-  if (/selector-miss|not found or empty|attention-miss/i.test(message)) return 'miss';
+  if (/selector-miss|not found or empty|attention-miss|overflow-x:/i.test(message)) return 'miss';
   if (/navigated or closed|session closed|websocket|target closed/i.test(message)) return 'gone';
   if (/blank/i.test(message)) return 'blank';
   if (/collision|identical to/i.test(message)) return 'collision';
@@ -586,6 +586,26 @@ export function assessStillAttention(job = {}, snapshot = {}) {
   }
 
   return { ok: true, verdict: 'pass', reason: null, ...receipt };
+}
+
+/**
+ * Viewport stills fail when a handle is clipped or the host overflows X.
+ * Occupancy remains a story; clip is a gate.
+ */
+export function assessStillOverflow(job = {}, snapshot = {}) {
+  if (!job.still && job.flow !== 'page') {
+    return { ok: true, verdict: 'skip', reason: 'not-a-viewport-still' };
+  }
+  if (snapshot.clipOverflow === true) {
+    return { ok: false, verdict: 'failed', reason: 'handle-clipped' };
+  }
+  if (snapshot.composition?.box?.overflowX === true) {
+    return { ok: false, verdict: 'failed', reason: 'overflow-x' };
+  }
+  if (snapshot.bodyOverflowX === true) {
+    return { ok: false, verdict: 'failed', reason: 'body-overflow-x' };
+  }
+  return { ok: true, verdict: 'pass', reason: null };
 }
 
 /** Injected into the capture evaluate. Reads inheriting reports, not --charge on descendants. */
@@ -1391,9 +1411,75 @@ function stillJobFromRecipe(recipe, viewport, format) {
     conditions: recipe.conditions || null,
     attention: recipe.attention || null,
     assertAttention: recipe.assertAttention || null,
+    clipSpace: recipe.clipSpace || null,
     publish: ['layout-qa', 'design-review', 'agent-brief'],
     chapter: recipe.conditions || recipe.attention || recipe.assertAttention ? 'climate' : 'page',
   };
+}
+
+export const RECIPE_PAIR_KINDS = Object.freeze(['press', 'hover', 'keys']);
+
+function pairSelectors(pair, field) {
+  if (!pair) return [];
+  if (Array.isArray(pair)) return [...pair];
+  if (typeof pair === 'string') return [pair];
+  if (Array.isArray(pair[field])) return [...pair[field]];
+  if (typeof pair[field] === 'string') return [pair[field]];
+  if (typeof pair.selector === 'string') return [pair.selector];
+  return [];
+}
+
+function stillJobFromPair(recipe, viewport, format, kind) {
+  const pair = recipe[kind];
+  const job = stillJobFromRecipe(recipe, viewport, format);
+  const prepare = { ...(recipe.prepare || {}) };
+  if (kind === 'press') {
+    prepare.click = Object.freeze([...(prepare.click || []), ...pairSelectors(pair, 'click')]);
+  } else if (kind === 'hover') {
+    const hover = pairSelectors(pair, 'hover');
+    prepare.hover = Object.freeze(hover.length ? hover : pairSelectors(pair, 'selector'));
+  } else if (kind === 'keys') {
+    if (pair.focus) prepare.focus = pair.focus;
+    const keys = Array.isArray(pair.keys) ? pair.keys : (pair.keys ? [pair.keys] : []);
+    prepare.keys = Object.freeze([...keys]);
+  }
+  return {
+    ...job,
+    id: `${recipe.id}-${kind}`,
+    label: `${recipe.label} ${kind}`,
+    prepare: Object.freeze(prepare),
+    wonder: pair?.wonder || recipe.wonder,
+    captureValue: pair?.captureValue || recipe.captureValue,
+    chapter: 'climate',
+  };
+}
+
+function catalogHasRecipeId(catalog, id) {
+  return catalog.some((recipe) => recipe.id === id);
+}
+
+function recipePairKinds(recipe) {
+  return RECIPE_PAIR_KINDS.filter((kind) => recipe[kind]);
+}
+
+function recipeIdHits(recipe, idFilter, catalog) {
+  const pairs = recipePairKinds(recipe);
+  if (!idFilter) {
+    return { rest: true, pairs };
+  }
+  const wantRestId = idFilter.has(recipe.id);
+  const wantedPairs = pairs.filter((kind) => wantRestId || idFilter.has(`${recipe.id}-${kind}`));
+  if (wantRestId || wantedPairs.length) {
+    return { rest: wantRestId, pairs: wantedPairs };
+  }
+  if (
+    recipe.fixtureId
+    && idFilter.has(recipe.fixtureId)
+    && !catalogHasRecipeId(catalog, recipe.fixtureId)
+  ) {
+    return { rest: true, pairs };
+  }
+  return { rest: false, pairs: [] };
 }
 
 export function buildViewportStillJobs(recipes = VIEWPORT_STILL_RECIPES, {
@@ -1408,11 +1494,15 @@ export function buildViewportStillJobs(recipes = VIEWPORT_STILL_RECIPES, {
   const catalog = includeChecks ? [...recipes, ...checkRecipes] : [...recipes];
   const jobs = [];
   for (const recipe of catalog) {
-    if (idFilter && !idFilter.has(recipe.id) && !idFilter.has(recipe.fixtureId)) continue;
+    const hits = recipeIdHits(recipe, idFilter, catalog);
+    if (!hits.rest && !hits.pairs.length) continue;
     if (seats?.length && recipe.seat && !seats.includes(recipe.seat)) continue;
     for (const viewport of viewports) {
       if (!viewportMatchesScenario(viewport.id, recipe.layoutScenarios)) continue;
-      jobs.push(stillJobFromRecipe(recipe, viewport, format));
+      if (hits.rest) jobs.push(stillJobFromRecipe(recipe, viewport, format));
+      for (const kind of hits.pairs) {
+        jobs.push(stillJobFromPair(recipe, viewport, format, kind));
+      }
     }
   }
   return assignBrowsePaths(jobs, format);

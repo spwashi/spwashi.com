@@ -261,10 +261,39 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'Person first, then the italic creator sentence, then the lens. Anatomy chrome should not steal the crop.',
     captureValue: 'Identity, tagline, then reading lens.',
+    press: Object.freeze({
+      click: Object.freeze(['#about-frame .mode-switch [data-set-mode="kernel"]']),
+      wonder: 'Pressing ^kernel must change the opening. If the still is still .reading, the lens never sat.',
+      captureValue: 'About opening after the kernel lens is pressed.',
+    }),
+    hover: Object.freeze({
+      selector: '#about-frame .mode-switch [data-set-mode="kernel"]',
+      wonder: 'Hovering ^kernel must lift that handle without pressing it. If rest and hover match, :hover never sat.',
+      captureValue: 'About opening with the kernel lens hovered.',
+    }),
+    keys: Object.freeze({
+      focus: '#about-frame .mode-switch [data-set-mode="reading"]',
+      keys: Object.freeze(['Tab']),
+      wonder: 'Tab from .reading must land on ^kernel. If the still has no focus ring, the keyboard path never sat.',
+      captureValue: 'About opening after Tab from the reading lens.',
+    }),
     sourceFiles: Object.freeze([
       'about/index.html',
       'public/css/routes/surfaces/about.css',
       'public/css/ornament/ornament.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'quest-opening',
+    label: 'Quest opening',
+    specimenRoute: '/about/domains/spw.quest/',
+    selector: '#domain-frame',
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
+    wonder: 'Constructs, sensors, and grammar not to fork. Do not retune the lede; the still is the contract.',
+    captureValue: 'spw.quest public contract until the remote moves.',
+    sourceFiles: Object.freeze([
+      'about/domains/spw.quest/index.html',
+      'public/css/routes/surfaces/about.css',
     ]),
   }),
   Object.freeze({

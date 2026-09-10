@@ -307,7 +307,9 @@ body[data-spw-surface="about"] {
 
 [data-spw-surface="about"] #about-frame {
   position: relative;
-  overflow: hidden;
+  /* Hidden clipped the pocket `{` + #>about_frame pair. The wash
+     sits inset 0 with the frame radius; it does not need a clip. */
+  overflow: visible;
   padding: clamp(1.05rem, 2vw, 1.6rem);
   border-radius: var(--about-panel-radius-loose);
   background:
@@ -326,6 +328,7 @@ body[data-spw-surface="about"] {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   pointer-events: none;
   background:
     linear-gradient(
@@ -1186,7 +1189,16 @@ body[data-spw-surface="about"] {
   }
 
   [data-spw-surface="about"] #about-frame > .frame-topline {
-    align-items: stretch;
+    justify-content: flex-start;
+    align-items: center;
+    min-width: 0;
+  }
+
+  [data-spw-surface="about"] #about-frame > .frame-topline > .frame-sigil {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    margin-inline-start: 0;
+    max-inline-size: calc(100% - 1.75rem);
   }
 
   [data-spw-surface="about"] #about-frame .mode-switch {
