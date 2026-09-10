@@ -451,6 +451,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-topic',
     timingChunk: 'idle-lab',
     effectScope: 'popover listeners bus',
+    visual: 'layout',
     // Body token topic-discovery is pack narrative; selector is the demand gate
     // (many topic pages omit the feature token but still host .spw-topic).
     updates: [

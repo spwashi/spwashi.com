@@ -519,6 +519,34 @@ test('named stills can click the shell menu and popups open', () => {
   assert.equal(search?.selector, '[data-spw-site-search="open"]');
 });
 
+test('named stills charge, inspect, and hold visitor overlays', () => {
+  const { jobs } = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeStills: true,
+    includeChecks: true,
+    viewports: [VIEWPORTS.pocket],
+    ids: [
+      'home-pronunciation',
+      'home-region-menu',
+      'home-topic-note',
+      'home-pronunciation-dark',
+      'home-region-menu-dark',
+      'home-topic-note-dark',
+    ],
+  });
+  const hint = jobs.find((job) => job.id === 'home-pronunciation');
+  const menu = jobs.find((job) => job.id === 'home-region-menu');
+  const topic = jobs.find((job) => job.id === 'home-topic-note');
+  assert.deepEqual(hint?.prepare?.charge, ['#home-frame .frame-sigil[data-spw-operator="frame"]']);
+  assert.equal(hint?.selector, '.spw-pronunciation-hint');
+  assert.deepEqual(menu?.prepare?.contextmenu, ['#home-frame .frame-sigil[data-spw-operator="frame"]']);
+  assert.equal(menu?.selector, '.spw-region-menu');
+  assert.deepEqual(topic?.prepare?.hold, ['#reading-layers .spw-topic[data-spw-topic="topic"]']);
+  assert.equal(topic?.selector, '.spw-topic-popover');
+  assert.equal(jobs.filter((job) => job.conditions?.colorMode === 'dark').length, 3);
+});
+
 test('named stills cover curriculum, software, and math openings', () => {
   const { jobs } = buildCapturePlan({
     includeComponents: false,
@@ -994,11 +1022,18 @@ test('visitor overlay modules have a still, and recipe seats resolve', () => {
     ecologyFixtures: REGION_ECOLOGY_FIXTURES,
     componentFixtures: COMPONENT_FIXTURES,
   });
-  assert.deepEqual(report.visitor.sort(), ['haptics', 'shell-disclosure', 'site-search']);
+  assert.deepEqual(report.visitor.sort(), [
+    'haptics',
+    'pronunciation-hints',
+    'region-menu',
+    'shell-disclosure',
+    'site-search',
+    'topic-discovery',
+  ]);
   assert.deepEqual(report.visitorMiss, []);
   assert.deepEqual(report.danglingFixtureIds, []);
-  assert.ok(report.unguardedOverlays.includes('pronunciation-hints'));
-  assert.ok(report.unguardedOverlays.includes('region-menu'));
+  assert.equal(report.unguardedOverlays.includes('pronunciation-hints'), false);
+  assert.equal(report.unguardedOverlays.includes('region-menu'), false);
   assert.ok(getRegionEcologyFixture('curriculum-hook'));
   assert.ok(getRegionEcologyFixture('rpg-boonhonk'));
 });

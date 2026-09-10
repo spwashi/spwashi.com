@@ -437,7 +437,61 @@ function gitChangedFiles() {
   return result.stdout.split('\n').map((line) => line.trim()).filter(Boolean);
 }
 
-async function measureSelector(session, selector, timeoutMs = CAPTURE_MEASURE.evaluateTimeoutMs) {
+function visitorOverlayPinJob(job) {
+  const prepare = job?.prepare;
+  if (!prepare) return false;
+  const has = (key) => Array.isArray(prepare[key]) && prepare[key].length;
+  return has('charge') || has('hold') || has('contextmenu');
+}
+
+function pinVisitorOverlaysScript({ assert = false } = {}) {
+  return `(() => {
+    const pinOverlay = (el) => {
+      if (!el) return false;
+      el.style.removeProperty('inset');
+      el.style.setProperty('position', 'fixed', 'important');
+      el.style.setProperty('top', '4.75rem', 'important');
+      el.style.setProperty('left', '0.75rem', 'important');
+      el.style.setProperty('right', 'auto', 'important');
+      el.style.setProperty('bottom', 'auto', 'important');
+      el.style.setProperty('inset-block-start', '4.75rem', 'important');
+      el.style.setProperty('inset-block-end', 'auto', 'important');
+      el.style.setProperty('inset-inline-start', '0.75rem', 'important');
+      el.style.setProperty('inset-inline-end', 'auto', 'important');
+      el.style.setProperty('transform', 'none', 'important');
+      el.style.setProperty('translate', 'none', 'important');
+      el.style.setProperty('z-index', '4000', 'important');
+      el.style.setProperty('opacity', '1', 'important');
+      el.style.setProperty('visibility', 'visible', 'important');
+      if (getComputedStyle(el).display === 'none') {
+        el.style.setProperty('display', 'grid', 'important');
+      }
+      el.style.setProperty('max-block-size', 'min(72dvh, calc(100dvh - 6.5rem))', 'important');
+      el.style.setProperty('max-inline-size', 'min(22rem, calc(100vw - 1.5rem))', 'important');
+      return true;
+    };
+    pinOverlay(document.querySelector('.spw-region-menu[data-spw-state="open"]'));
+    pinOverlay(document.querySelector('.spw-topic-popover.is-visible'));
+    pinOverlay(document.querySelector('.spw-pronunciation-hint.is-visible'));
+    ${assert ? `const miss = (sel) => {
+      const el = document.querySelector(sel);
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const vw = window.innerWidth || 1;
+      const vh = window.innerHeight || 1;
+      const visible = r.width > 8 && r.height > 8 && r.bottom > 12 && r.top < vh - 12 && r.right > 12 && r.left < vw - 12;
+      if (!visible) {
+        throw new Error('overlay-offscreen: ' + sel + ' ' + Math.round(r.top) + ',' + Math.round(r.left) + ' ' + Math.round(r.width) + 'x' + Math.round(r.height) + ' vs ' + vw + 'x' + vh);
+      }
+    };
+    miss('.spw-region-menu[data-spw-state="open"]');
+    miss('.spw-topic-popover.is-visible');
+    miss('.spw-pronunciation-hint.is-visible');` : ''}
+    return true;
+  })()`;
+}
+
+async function measureSelector(session, selector, timeoutMs = CAPTURE_MEASURE.evaluateTimeoutMs, { skipScroll = false } = {}) {
   const { result, exceptionDetails } = await session.send('Runtime.evaluate', {
     expression: `(async () => {
       const race = (promise, ms) => Promise.race([
@@ -451,8 +505,10 @@ async function measureSelector(session, selector, timeoutMs = CAPTURE_MEASURE.ev
       const body = document.body;
       if (html) html.setAttribute('data-spw-capture-mode', 'screenshot');
       if (body) body.setAttribute('data-spw-capture-mode', 'screenshot');
-      try { el.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'nearest' }); }
-      catch { el.scrollIntoView(true); }
+      if (!${JSON.stringify(Boolean(skipScroll))}) {
+        try { el.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'nearest' }); }
+        catch { el.scrollIntoView(true); }
+      }
       if (document.fonts && document.fonts.ready) {
         try { await race(document.fonts.ready, ${CAPTURE_MEASURE.fontWaitMs}); } catch { /* ignore font errors */ }
       }
@@ -850,8 +906,11 @@ async function applyCapturePrepare(session, job) {
   const open = Array.isArray(prepare?.open) ? prepare.open : (prepare?.open ? [prepare.open] : []);
   const check = Array.isArray(prepare?.check) ? prepare.check : (prepare?.check ? [prepare.check] : []);
   const click = Array.isArray(prepare?.click) ? prepare.click : (prepare?.click ? [prepare.click] : []);
+  const charge = Array.isArray(prepare?.charge) ? prepare.charge : (prepare?.charge ? [prepare.charge] : []);
+  const hold = Array.isArray(prepare?.hold) ? prepare.hold : (prepare?.hold ? [prepare.hold] : []);
+  const contextmenu = Array.isArray(prepare?.contextmenu) ? prepare.contextmenu : (prepare?.contextmenu ? [prepare.contextmenu] : []);
   const focus = prepare?.focus;
-  const needsPrepare = close.length || open.length || check.length || click.length || attention.section || attention.probe || Boolean(focus);
+  const needsPrepare = close.length || open.length || check.length || click.length || charge.length || hold.length || contextmenu.length || attention.section || attention.probe || Boolean(focus);
   await evaluateProbe(session, `(async () => {
     const html = document.documentElement;
     if (html) html.setAttribute('data-spw-capture-mode', 'screenshot');
@@ -873,9 +932,15 @@ async function applyCapturePrepare(session, job) {
       });
     }
     const clickSels = ${JSON.stringify(click)};
+    const chargeSels = ${JSON.stringify(charge)};
+    const holdSels = ${JSON.stringify(hold)};
+    const menuSels = ${JSON.stringify(contextmenu)};
     const wantsSearch = clickSels.some((sel) => sel.includes('site-search'));
     const wantsNote = clickSels.some((sel) => sel.includes('living-term') || sel.includes('spw-living-term') || sel.includes('spw-concept'));
-    if (clickSels.length && (wantsSearch || wantsNote)) {
+    const wantsHint = chargeSels.length > 0;
+    const wantsRegionMenu = menuSels.length > 0;
+    const wantsTopic = holdSels.some((sel) => sel.includes('spw-topic') || sel.includes('data-spw-topic'));
+    if (clickSels.length || chargeSels.length || holdSels.length || menuSels.length) {
       const readyDeadline = Date.now() + 4000;
       while (Date.now() < readyDeadline) {
         const searchReady = !wantsSearch || typeof window.spwSearch?.open === 'function';
@@ -895,22 +960,108 @@ async function applyCapturePrepare(session, job) {
           mod.initSpwHaptics?.();
         } catch { /* catalog may still win */ }
       }
+      if (wantsHint) {
+        try {
+          const mod = await import('/public/js/interface/pronunciation.js');
+          mod.initPronunciationHints?.();
+        } catch { /* catalog may still win */ }
+      }
+      if (wantsRegionMenu) {
+        try {
+          const mod = await import('/public/js/runtime/region-menu.js');
+          mod.initSpwRegionMenu?.(null, document);
+        } catch { /* catalog may still win */ }
+      }
+      if (wantsTopic) {
+        try {
+          const mod = await import('/public/js/interface/topic-discovery.js');
+          mod.initTopicDiscovery?.();
+        } catch { /* catalog may still win */ }
+      }
     }
+    const activate = (el) => {
+      if (!el) return;
+      try { el.scrollIntoView({ block: 'center', inline: 'nearest' }); } catch { /* detached */ }
+    };
     for (const sel of clickSels) {
       const el = document.querySelector(sel);
       if (!el) continue;
-      try { el.scrollIntoView({ block: 'center', inline: 'nearest' }); } catch { /* detached */ }
+      activate(el);
       if (typeof el.click === 'function') el.click();
       else el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
     }
-    if (clickSels.length) {
+    const point = (el) => {
+      const rect = el.getBoundingClientRect();
+      return {
+        clientX: rect.left + Math.min(8, Math.max(1, rect.width / 2)),
+        clientY: rect.top + Math.min(8, Math.max(1, rect.height / 2)),
+      };
+    };
+    for (const sel of menuSels) {
+      const el = document.querySelector(sel);
+      if (!el) continue;
+      activate(el);
+      try {
+        const mod = await import('/public/js/runtime/region-menu.js');
+        mod.openRegionMenuForElement?.(el, { source: 'capture', graceMs: 8000 });
+      } catch { /* fall through to pointer gestures */ }
+      if (!document.querySelector('.spw-region-menu[data-spw-state="open"]')) {
+        const { clientX, clientY } = point(el);
+        el.dispatchEvent(new MouseEvent('click', {
+          bubbles: true, cancelable: true, composed: true, view: window, altKey: true, clientX, clientY,
+        }));
+        if (!document.querySelector('.spw-region-menu[data-spw-state="open"]')) {
+          el.dispatchEvent(new MouseEvent('contextmenu', {
+            bubbles: true, cancelable: true, composed: true, view: window, button: 2, buttons: 2, clientX, clientY,
+          }));
+        }
+        if (!document.querySelector('.spw-region-menu[data-spw-state="open"]')) {
+          el.dispatchEvent(new PointerEvent('pointerdown', {
+            bubbles: true, cancelable: true, composed: true, pointerId: 1, isPrimary: true, button: 0, clientX, clientY,
+          }));
+          await new Promise((r) => setTimeout(r, 640));
+        }
+      }
+    }
+    for (const sel of chargeSels) {
+      const el = document.querySelector(sel);
+      if (!el) continue;
+      activate(el);
+      try {
+        const { bus } = await import('/public/js/kernel/bus.js');
+        bus.emit?.('brace:charged', {
+          element: el,
+          operator: el.dataset.spwOperator || 'frame',
+          targetKind: 'sigil',
+        });
+      } catch { /* bus optional */ }
+    }
+    for (const sel of holdSels) {
+      const el = document.querySelector(sel);
+      if (!el) continue;
+      activate(el);
+      const { clientX, clientY } = point(el);
+      el.dispatchEvent(new PointerEvent('pointerdown', {
+        bubbles: true, cancelable: true, composed: true, pointerId: 1, isPrimary: true, button: 0, clientX, clientY,
+      }));
+      await new Promise((r) => setTimeout(r, 640));
+    }
+    if (clickSels.length || chargeSels.length || holdSels.length || menuSels.length) {
       const deadline = Date.now() + 2500;
       while (Date.now() < deadline) {
         if (document.querySelector('[data-spw-menu="open"]')
-          || document.querySelector('.spw-concept-popover, .spw-topic-popover, .spw-semantic-popover')
+          || document.querySelector('.spw-concept-popover.is-visible, .spw-topic-popover.is-visible, .spw-semantic-popover.is-visible')
+          || document.querySelector('.spw-region-menu[data-spw-state="open"]')
+          || document.querySelector('.spw-pronunciation-hint.is-visible')
           || document.querySelector('[data-spw-site-search="open"]')) break;
         await new Promise((r) => requestAnimationFrame(r));
       }
+      const overlayMiss = [];
+      if (menuSels.length && !document.querySelector('.spw-region-menu[data-spw-state="open"]')) overlayMiss.push('region-menu');
+      if (holdSels.length && !document.querySelector('.spw-topic-popover.is-visible')) overlayMiss.push('topic-popover');
+      if (chargeSels.length && !document.querySelector('.spw-pronunciation-hint.is-visible')) overlayMiss.push('pronunciation-hint');
+      if (overlayMiss.length) throw new Error('overlay-miss: ' + overlayMiss.join(','));
+      ${pinVisitorOverlaysScript({ assert: false }).replace(/^/gm, '      ').trimStart()}
     }
     const focusWant = ${JSON.stringify(focus === true ? '' : String(focus || ''))};
     const focusHostSel = ${JSON.stringify(job.selector || '')};
@@ -994,8 +1145,11 @@ async function captureJob(session, job, {
       || await measureSelector(session, '[data-spw-capture-host="template"]', evaluateTimeoutMsFor(job));
   } else {
     await applyCapturePrepare(session, job);
+    const pinOverlay = Boolean(job.still && visitorOverlayPinJob(job));
     if (job.selector) {
-      box = await measureSelector(session, job.selector, evaluateTimeoutMsFor(job));
+      box = await measureSelector(session, job.selector, evaluateTimeoutMsFor(job), {
+        skipScroll: pinOverlay,
+      });
       if (!box || box.width < 2 || box.height < 2) {
         throw new Error(`selector-miss: ${job.selector} not found or empty`);
       }
@@ -1003,6 +1157,9 @@ async function captureJob(session, job, {
       if (isStarvedClip(job, box, occupancy)) {
         throw new Error(`selector-miss: ${job.selector} starved clip ${Math.round(box.width)}×${Math.round(box.height)}`);
       }
+    }
+    if (pinOverlay) {
+      await evaluateProbe(session, pinVisitorOverlaysScript({ assert: true }), evaluateTimeoutMsFor(job));
     }
   }
 

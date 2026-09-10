@@ -11855,7 +11855,7 @@ body[aria-busy="true"] {
   [data-spw-chrome-role="section-handle"],
   [data-pwa-toast],
   .spw-toast,
-  [data-spw-floating-chrome="true"]:not([role="dialog"]),
+  [data-spw-floating-chrome="true"]:not([role="dialog"]):not([role="menu"]):not([role="status"]),
   [data-spw-runtime-status],
   body > .promo-wonder-cycle__card,
   .promo-wonder-cycle__card[data-spw-presentation="modal"]
@@ -11892,6 +11892,18 @@ html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"]) .
 /* Still-readable interaction: pressed lens and landmark path stay visible
    after chrome is hidden. Slot/lens labels live in gesture-anatomy and
    frame-controls; this only thickens the pressed groove. */
+html:is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
+  :is(
+    .spw-region-menu[data-spw-state="open"],
+    .spw-topic-popover.is-visible,
+    .spw-pronunciation-hint.is-visible,
+    .spw-concept-popover.is-visible
+  ) {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
 html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   :where(.mode-switch .frame-sigil[aria-pressed="true"]) {
   box-shadow:

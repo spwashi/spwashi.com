@@ -337,6 +337,7 @@ export const FEATURE_DEFS = [
     evaluates: 'semantics navigation interaction region-menu',
     timingArc: 'enhance-inspect',
     effectScope: 'popover listeners',
+    visual: 'layout',
     load: () => import('./region-menu.js'),
   },
   {
@@ -355,6 +356,7 @@ export const FEATURE_DEFS = [
       'flourish:data-spw-operator-speech',
     ],
     effectScope: 'element-state flourish',
+    visual: 'layout',
     load: () => import('../interface/pronunciation.js'),
   },
   {
