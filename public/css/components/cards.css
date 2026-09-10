@@ -1114,7 +1114,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 :where(.spw-reason-strip strong, .spw-role-hooks strong, .spw-card-meta strong) {
   display: block;
   margin-block-end: var(--space-2xs, 0.25rem);
-  color: color-mix(in srgb, var(--material-ink-matte-strong, var(--ink, rgba(14, 18, 20, 0.92))) 88%, var(--active-op-color, var(--component-accent)) 12%);
+  color: color-mix(in srgb, var(--ink-strong, var(--ink, rgba(14, 18, 20, 0.92))) 92%, var(--active-op-color, var(--component-accent)) 8%);
   font-size: clamp(0.88rem, 0.86rem + 0.08vw, 0.94rem);
   font-weight: 800;
   letter-spacing: 0.045em;

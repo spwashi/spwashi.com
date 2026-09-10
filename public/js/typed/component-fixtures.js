@@ -21,7 +21,7 @@ export const COMPONENT_FIXTURES = Object.freeze([
     {
         id: 'frame-card',
         label: 'Frame card',
-        selector: '#entry-loops .frame-card',
+        selector: '#entry-loops .spw-card',
         regionSelector: '#entry-loops',
         specimenRoute: '/',
         cssOwner: 'public/css/components/cards.css',

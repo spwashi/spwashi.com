@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { COMPONENT_FIXTURES } from '../../public/js/kernel/component-fixtures.js';
+import {
+  COMPONENT_FIXTURES,
+  getComponentFixture,
+} from '../../public/js/kernel/component-fixtures.js';
 import {
   REGION_ECOLOGY_FIXTURES,
   getRegionEcologyFixture,
@@ -526,6 +529,40 @@ test('named stills cover curriculum, software, and math openings', () => {
   assert.ok(jobs.some((job) => job.id === 'curriculum-opening' && job.selector === '#curriculum-hero'));
   assert.ok(jobs.some((job) => job.id === 'software-opening' && job.selector === '#software-surface'));
   assert.ok(jobs.some((job) => job.id === 'math-opening' && job.selector === '#math-hero'));
+});
+
+test('named stills crop the public card, panel, chip, and lede nouns', () => {
+  const rest = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeStills: true,
+    viewports: [VIEWPORTS.pocket],
+  }).jobs;
+  assert.ok(rest.some((job) => job.id === 'home-entry-loops' && job.selector === '#entry-loops'));
+  assert.ok(rest.some((job) => job.id === 'home-entry-panels' && job.selector === '#home-entry-panels'));
+  assert.ok(rest.some((job) => job.id === 'home-lede' && job.selector === '#home-frame-note'));
+  assert.ok(rest.some((job) => job.id === 'home-chips'));
+
+  const climate = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeStills: true,
+    includeChecks: true,
+    viewports: [VIEWPORTS.pocket],
+    ids: [
+      'home-entry-loops-dark',
+      'home-entry-loops-reduced',
+      'home-entry-loops-ember',
+      'home-entry-loops-high-contrast',
+      'home-entry-panels-dark',
+      'home-entry-panels-ember',
+      'home-lede-dark',
+      'home-chips-dark',
+    ],
+  }).jobs;
+  assert.equal(climate.length, 8);
+  assert.ok(climate.every((job) => job.still && job.conditions));
+  assert.equal(getComponentFixture('frame-card')?.selector, '#entry-loops .spw-card');
 });
 
 test('folio probes and prices are named still recipes, not catalog components', () => {
