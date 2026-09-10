@@ -13724,37 +13724,16 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   overflow-wrap: anywhere;
 }
 
+/* handle-row, subtitle, suggestions, and the range thumb are declared once,
+   below, beside the surface they sit on. They used to be stated here as well
+   and again there: two grid-template-columns for the same row, two accent
+   colors for the same slider, and a grid template on a box the later pass
+   turned into a flex wrap. The later pass won every conflict, so the earlier
+   declarations were reachable only by reading them. */
 .spw-region-menu__handles,
-.spw-region-menu__suggestions,
 .spw-region-menu__action-group {
   display: grid;
   gap: 0.34rem;
-}
-
-.spw-region-menu__handle-row {
-  display: grid;
-  grid-template-columns: minmax(5.8rem, max-content) minmax(6rem, 1fr);
-  align-items: center;
-  gap: 0.52rem;
-  font: 700 0.68rem/1.2 var(--grammar-mono-font);
-  letter-spacing: 0.045em;
-}
-
-.spw-region-menu__handle-row input[type="range"] {
-  inline-size: 100%;
-  accent-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 72%, var(--ink));
-}
-
-.spw-region-menu__subtitle {
-  margin: 0.16rem 0 0;
-  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
-  font: 800 0.64rem/1.2 var(--grammar-mono-font);
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-}
-
-.spw-region-menu__suggestions {
-  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
 }
 
 .spw-region-menu__contract {
@@ -13840,6 +13819,8 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   grid-template-columns: 5.5rem 1fr;
   align-items: center;
   gap: 0.5rem;
+  font: 700 0.68rem/1.2 var(--grammar-mono-font);
+  letter-spacing: 0.045em;
 }
 
 .spw-region-menu__handle-row label {
@@ -13852,6 +13833,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
 }
 
 .spw-region-menu__handle-row input[type="range"] {
+  inline-size: 100%;
   cursor: ew-resize;
   accent-color: var(--active-op-color, var(--teal, #008080));
 }
@@ -13861,6 +13843,9 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   font-family: var(--grammar-mono-font);
   font-size: 0.62rem;
   font-weight: 800;
+  /* Was inherited from the earlier pass's `font:` shorthand. Stated now that
+     the shorthand is gone, so the label keeps its tight single-line rhythm. */
+  line-height: 1.2;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-muted, rgba(14, 18, 20, 0.58));
@@ -13933,6 +13918,17 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   .spw-region-menu[data-spw-region-menu-placement="sheet"] .spw-region-menu__action-group[data-spw-interaction-lane="mark"],
   .spw-region-menu[data-spw-region-menu-placement="sheet"] .spw-region-menu__action-group[data-spw-interaction-lane="reset"] {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* A lane with an odd count left its last action alone in a two-column row
+     with an empty cell beside it — inspect ships three (show related, next
+     match, previous match). Span the trailing odd action instead of orphaning
+     the cell. nth-of-type counts buttons only, so the lane's own label does
+     not shift the parity. */
+  .spw-region-menu[data-spw-region-menu-placement="sheet"]
+    .spw-region-menu__action-group:not([data-spw-interaction-lane="mark"]):not([data-spw-interaction-lane="reset"])
+    > button:last-of-type:nth-of-type(odd) {
+    grid-column: 1 / -1;
   }
 }
 

@@ -86,7 +86,9 @@ source = "stills 2026-09-09 11-56-42--ec2e4d (fold/pocket pack, 190 frames), 202
     `the subtitle hyphen-breaks "source-to-address" because CLOSE steals inline width from the definition line`,
     `underlying page text shows through the sheet — a stray glyph sits beside the *home-frame chip`
   ][reg=set]
+  correction = `The bleed-through is a capture artifact, not a product defect. See @al-010. The orphan cell and the hyphen-break are real.`
   reading = `The packing decision landed in @still_recipe#sr-009 was correct — keep the contract two-column, put mark+reset on one row. What it did not settle is what a group with an odd count does. Right now the grid decides, and it decides badly.`
+  landed = `2026-09-10. The odd trailing action now spans both columns: sheet placement, non-mark/reset lane, button:last-of-type:nth-of-type(odd). nth-of-type counts buttons only, so the lane label does not shift parity. Verified in the browser against the module's real markup (only inspect's third button matches; collect, mark, and reset do not) and in stills 18-04-57--c08cd9 on rest and dark.`
   proposal = #[
     `An odd trailing action spans both columns rather than orphaning a cell. One rule on the last-child of an odd group`,
     `Either every group label is full-width or every group label is a column head. The mixed rail is the defect, not the label`,
@@ -174,6 +176,84 @@ source = "stills 2026-09-09 11-56-42--ec2e4d (fold/pocket pack, 190 frames), 202
   refuse = `Do not drop the caption. Do not crop the image to hide the band.`
 }[reg=facet]
 
+^"al-009_region_menu_declared_twice"{
+  id = "al-009"
+  operation = "audit"
+  dated = `2026-09-10`
+  fixity = "landed"
+  claim = `Four region-menu selectors were declared twice in one file, a hundred lines apart, and every conflict was won by the later pass. The earlier declarations were reachable only by reading them.`
+  measured = #[
+    `grammar/syntax.css: 280 top-level rules, 275 distinct selectors, 5 duplicated — 4 of them region-menu`,
+    `__handle-row: two grid-template-columns (minmax(5.8rem,max-content) minmax(6rem,1fr) vs 5.5rem 1fr) and two gaps`,
+    `__handle-row input[type=range]: two accent-colors, the earlier a color-mix against --ink`,
+    `__subtitle: two margins, two sizes, two letter-spacings`,
+    `__suggestions: a grid-template-columns on a box the later pass turned into a flex wrap — dead on arrival`
+  ][reg=set]
+  landed = `Consolidated to one declaration each, preserving every computed value. The subtitle's line-height came from the earlier pass's font shorthand and is now stated outright; the range thumb's inline-size moved down. Re-measured: 276 rules, 275 distinct, 0 region-menu duplicates.`
+  reading = `This is @al-001 one scale down. There the union has no core across files; here the same class has two homes in one file. Both make an edge resolve wherever the cascade happened to land.`
+  transferable = `Before editing a component's CSS, count its declarations. A second pass that overrides the first is not a patch, it is a fork with the losing side left in.`
+  probe = `Parse for top-level selector groups, normalize whitespace, count duplicates. Cheap, and it finds forks no diff review catches.`
+  refuse = `Do not consolidate by deleting the earlier block wholesale — a shorthand there may be contributing a longhand the later block never states.`
+}[reg=facet]
+
+^"al-010_stills_drop_backdrop_filter"{
+  id = "al-010"
+  operation = "cache"
+  dated = `2026-09-10`
+  claim = `The capture browser does not composite backdrop-filter. Every overlay legibility judgment read off a still is therefore unreliable, and @al-003's bleed-through was a false positive.`
+  evidence = #[
+    `--surface-strong is rgba(…, 0.94); the region menu mixes it to ~94% alpha and the topic popover to ~90%, so on paper 6-10% of the page reads through`,
+    `floating chrome also carries backdrop-filter: blur(14px) saturate(1.12) — a real browser blurs whatever comes through, so no crisp glyph can survive it`,
+    `browser probe at 127.0.0.1: two panels with the menu's exact background stack over dense text — with backdrop-filter the page behind is completely hidden and the panel reads opaque`,
+    `the same still after the fix still shows the stray glyph beside the *home-frame chip, so the capture, not the product, is what loses the blur`
+  ][reg=set]
+  rule = `A still proves layout, spacing, wrap, and edge agreement. It does not prove translucency, blur, or anything else the compositor owns. Check those in a browser.`
+  cost = `One session nearly shipped an opaque backstop to fix a defect that does not exist outside the capture.`
+  refuse = `Do not raise overlay opacity on still evidence alone. Do not add a backstop layer — see @al-011 for why that particular fix is also malformed.`
+}[reg=facet]
+
+^"al-011_background_shorthand_drops_on_a_mid_stack_color"{
+  id = "al-011"
+  operation = "cache"
+  dated = `2026-09-10`
+  claim = `In the background shorthand only the final layer may carry a color. A bare color in any earlier position invalidates the whole declaration, silently, and the element paints no background at all.`
+  evidence = #[
+    `probe: background: linear-gradient(…), color-mix(…), hsl(42 32% 90%) — element.style.background reads back as the empty string, computed background-image is none`,
+    `probe: background: linear-gradient(…), hsl(42 32% 90%) — accepted, color last`,
+    `the region menu and both topic popovers already end their stack on a color-mix, so appending any backstop layer beneath silently deletes their background`
+  ][reg=set]
+  reading = `The failure is invisible in review: the line looks like one more layer, the CSS parses as a file, no build step complains, and the element simply loses its surface. It showed up only because the probe was rendered and looked at.`
+  transferable = `To put an opaque layer under an existing stack, the color must stay last and the stack above it must be images — or the layer belongs on a pseudo-element, not in the shorthand.`
+  refuse = `Do not append a color to a background stack that already ends in one.`
+}[reg=facet]
+
+^"al-012_pointer_capture_listeners_were_cancelable"{
+  id = "al-012"
+  operation = "audit"
+  dated = `2026-09-10`
+  fixity = "landed"
+  claim = `The region menu held six capture-phase pointer listeners on body, none passive, none calling preventDefault. Every touch scroll on every page waited on them to find that out.`
+  evidence = #[
+    `region-menu.js registered click, contextmenu, pointerenter/leave/down/move/up/cancel and keydown on body with capture true`,
+    `preventDefault appears only in onClick, onContextMenu, and onKeyDown — the pointer handlers only arm and disarm the hold timer`,
+    `capture phase on body puts them ahead of every scroll on the page, so the compositor could not start until they returned`
+  ][reg=set]
+  landed = `The six pointer registrations now pass { capture: true, passive: true }. click, contextmenu, and keydown stay cancelable because they do call preventDefault. Removal still matches on the capture flag, so teardown is unchanged.`
+  transferable = `A capture-phase listener on body is a tax on the whole document. Before adding one, check whether it ever cancels; if not, declare it passive.`
+  next_probe = `Other visitor chrome registers on body the same way. Audit the rest of @still_recipe#sr-008's visitor list for the same pattern.`
+  refuse = `Do not make click or keydown passive here — alt-click opens the menu and arrows move focus inside it.`
+}[reg=facet]
+
+^"al-013_camelcase_blind_spot_recurred"{
+  id = "al-013"
+  operation = "cache"
+  dated = `2026-09-10`
+  claim = `Grepping regionMenuPlacement found nothing and nearly produced a "the sheet block is dead code" finding. The writer is menu.dataset.spwRegionMenuPlacement — the same capital the prefix introduces.`
+  reading = `The known blind spot is data-spw-foo vs dataset.spwFoo. The sharper edge is that prefixing also capitalizes: region-menu-placement becomes spwRegionMenuPlacement, so a lowercase-initial camelCase guess misses too.`
+  transferable = `Search the attribute stem case-insensitively, or search the kebab and the capitalized camel together. Never conclude "no writer" from one casing.`
+  cost = `Would have deleted a live two-column sheet contract landed the same week.`
+}[reg=facet]
+
 ^"proposal_order"{
   claim = `One mechanism, then the symptoms it explains. Do not start at the stills.`
   order = #[
@@ -190,6 +270,12 @@ source = "stills 2026-09-09 11-56-42--ec2e4d (fold/pocket pack, 190 frames), 202
   claim = `Open this file. al-001 is the only finding with a measured mechanism; the rest are evidence for it or sensation calls behind the browser gate.`
   open = #[`this file`, `public/css/components/cards.css`, `public/css/components/surfaces.css`][reg=set]
   next_slice = `al-001 probe only: diff the two largest of the 52 memberships. Report whether the difference is an intended tier or accumulated typo. Do not patch until that is answered.`
+  landed_2026_09_10 = #[
+    `al-003 orphan cell — sheet lanes with an odd count span the trailing action`,
+    `al-009 four duplicated region-menu selectors consolidated, computed values preserved`,
+    `al-012 six capture-phase pointer listeners on body declared passive`
+  ][reg=set]
+  held = `al-002, al-004, al-005, al-007, al-008 unchanged. al-003's backdrop opacity withdrawn — @al-010.`
   reproduce = `python3 over public/css/{components,shell,grammar}/*.css — collect selector groups containing spw-panel, count distinct member tuples, intersect them. Expect 103 / 52 / empty.`
   validation = `npm run check:local ; npm run spw:integrity ; node scripts/component-snapshots.mjs --stills --checks --viewports pocket --ids=home-opening,home-region-menu,home-topic-note`
   concurrent = `Multiple sessions commit to main in this tree. Never git stash here.`

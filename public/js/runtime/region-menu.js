@@ -47,6 +47,9 @@ const HOLD_OPEN_MS = Object.freeze({
   expressive: 360,
 });
 const MOVE_CANCEL_PX = 10;
+// Capture phase so a hold anywhere on the page arms before the target sees it;
+// passive so arming never costs the compositor a cancelable touch scroll.
+const CAPTURE_PASSIVE = Object.freeze({ capture: true, passive: true });
 const DOUBLE_TAP_OPEN_MS = Object.freeze({
   calm: 380,
   responsive: 340,
@@ -104,14 +107,21 @@ export function initSpwRegionMenu(ctx, root) {
   if (body.dataset.spwRegionMenuInit === '1') return unmountSpwRegionMenu;
 
   body.dataset.spwRegionMenuInit = '1';
+  // click, contextmenu, and keydown call preventDefault (alt-click and
+  // long-press open the menu, arrows move focus inside it), so they stay
+  // cancelable. The pointer handlers never do — they only arm and disarm the
+  // hold timer — and they sit in the capture phase on body, which puts them
+  // ahead of every touch scroll on the page. Declaring them passive lets the
+  // compositor start the scroll without waiting to learn whether this module
+  // wanted to cancel it.
   body.addEventListener('click', onClick, true);
   body.addEventListener('contextmenu', onContextMenu, true);
-  body.addEventListener('pointerenter', onPointerEnter, true);
-  body.addEventListener('pointerleave', onPointerLeave, true);
-  body.addEventListener('pointerdown', onPointerDown, true);
-  body.addEventListener('pointermove', onPointerMove, true);
-  body.addEventListener('pointerup', onPointerUp, true);
-  body.addEventListener('pointercancel', onPointerCancel, true);
+  body.addEventListener('pointerenter', onPointerEnter, CAPTURE_PASSIVE);
+  body.addEventListener('pointerleave', onPointerLeave, CAPTURE_PASSIVE);
+  body.addEventListener('pointerdown', onPointerDown, CAPTURE_PASSIVE);
+  body.addEventListener('pointermove', onPointerMove, CAPTURE_PASSIVE);
+  body.addEventListener('pointerup', onPointerUp, CAPTURE_PASSIVE);
+  body.addEventListener('pointercancel', onPointerCancel, CAPTURE_PASSIVE);
   body.addEventListener('keydown', onKeyDown, true);
   window.addEventListener('scroll', onViewportChange, { passive: true });
   window.addEventListener('resize', onViewportChange);
