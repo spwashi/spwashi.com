@@ -254,6 +254,74 @@ source = "stills 2026-09-09 11-56-42--ec2e4d (fold/pocket pack, 190 frames), 202
   cost = `Would have deleted a live two-column sheet contract landed the same week.`
 }[reg=facet]
 
+^"al-014_the_box_model_is_egocentric"{
+  id = "al-014"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `A component can already measure itself. It cannot measure its fit. composition-box-model.js names no ancestor anywhere in 535 lines, so every panel in the ladder reports a healthy box while the relation between them is what is wrong.`
+  evidence = #[
+    `readBoxModel reads one rect, its own padding, border, overflow, child and link counts`,
+    `resolveMeasure bands the element's own inlineSize; resolveSizeContext reads the same box back`,
+    `readPackRegions looks downward into children — the only structural scan, and it never looks up`,
+    `grep for parentElement, closest(, offsetParent, containing across the module: zero hits`,
+    `the snapshot is already carried on every still as composition.box / packLocal / packLayout / packFill`
+  ][reg=set]
+  reading = `Egocentric measurement cannot see @al-001. Four panels each answer "I am 320px wide with 12px of padding" and all four answers are correct. The defect only exists between them.`
+  refuse = `Do not extend the box model with a parent field. Self-description and fit are different questions and the second one needs a walk, not a wider snapshot.`
+}[reg=facet]
+
+^"al-015_near_miss_is_the_signal"{
+  id = "al-015"
+  operation = "prime"
+  dated = `2026-09-10`
+  fixity = "landed"
+  claim = `Bottom-up alignment checking works, and the thing that makes it work is refusing to report differences. Only near-misses are findings.`
+  ladder = #[
+    `delta 0 — aligned, say nothing`,
+    `0 < delta <= 6px — alignment someone meant and missed, report it`,
+    `delta > 6px — an indent, a nest, a chosen offset, say nothing`,
+    `delta < 1px — sub-pixel rounding, floor it out`
+  ][reg=set]
+  why = `Nobody chooses a 3px inset. A tool that reports every difference reports the whole page and is read once; a tool that reports near-misses reports mistakes.`
+  edges = `Frame edge (border box) and content edge (border + padding) are tracked apart. A family can agree on the painted edge and disagree on where its text starts — that difference is the finding, not noise.`
+  instrument = #[
+    `scripts/lib/alignment-probe.mjs — builds the in-page walk, exports the near-miss config and a summarizer`,
+    `scripts/alignment-audit.mjs — drives it through the existing chrome-headless-harness`,
+    `npm run qa:alignment -- --routes / /about/ --viewports pocket,broadsheet`
+  ][reg=set]
+  kinds = #[
+    `near-flush — a child inset from its container's content edge by a hair`,
+    `sibling-ladder — block siblings in one container whose edges spread a few px`,
+    `clipped-overflow — a box overflowing inside a clipping ancestor, cut with no scrollbar`,
+    `page-overflow — documentElement.scrollWidth past clientWidth; the route scrolls sideways`
+  ][reg=set]
+  yield = `home at pocket: 959 boxes scanned, 38 findings, 18 distinct sites. about at pocket: 783 boxes, 9 findings, 9 sites. Small enough to read in one sitting.`
+  validation = `It rediscovered @al-002 unprompted — the clipped code block inside .spw-panel, +232px, which was originally found by eye in a dark-mode still.`
+  false_positives = #[
+    `A wrapping flex row ends where the last item lands. Children of one are exempt from near-flush on the inline axis`,
+    `Inline boxes make offsetLeft accumulation meaningless, so page-overflow names the widest painted box as a hint and says so when nothing reaches the scroll width`
+  ][reg=set]
+  refuse = `Do not gate a build on this yet. Read a few routes first and decide which kinds are worth a threshold. Do not widen nearMissPx to catch more — the narrowness is the tool.`
+}[reg=facet]
+
+^"al-016_about_scrolls_sideways_on_a_phone"{
+  id = "al-016"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `/about/ at 390px has a layout viewport of 825px. The route scrolls sideways by 435px on a phone and every still ever taken of it looks correct.`
+  evidence = #[
+    `documentElement.clientWidth 390, scrollWidth 825, visualViewport 390`,
+    `window.innerWidth reports 825 — Chrome reporting the blown-out layout viewport, not a probe error`,
+    `home on the same run: clientWidth 390, scrollWidth 390, clean`,
+    `both routes serve the same meta: width=device-width, initial-scale=1`,
+    `widest painted box is a.spw-section-handle at 459.5 — already 70px over, but nowhere near 825`
+  ][reg=set]
+  unattributed = `No painted rect reaches 825. The 14 candidates found by walking offsetLeft are all inline a and em inside p, where offsetLeft accumulation is not meaningful. Attribution is open.`
+  why_stills_missed_it = `A screenshot is clipped to the viewport. A route that overflows sideways is cropped to something that looks deliberate. Only a measurement can tell.`
+  next_probe = `Bisect with visibility, not reasoning: hide subtrees under main and watch scrollWidth. The one whose removal drops it to 390 owns the overflow.`
+  refuse = `Do not add overflow-x hidden to the route. That hides the symptom and @al-002 already names what clip costs.`
+}[reg=facet]
+
 ^"proposal_order"{
   claim = `One mechanism, then the symptoms it explains. Do not start at the stills.`
   order = #[

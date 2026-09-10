@@ -107,6 +107,8 @@
     "check:watch": "node scripts/check-watch.mjs",
     "check:watch:full": "node scripts/check-watch.mjs --full",
     "component:check": "node scripts/component-contracts.mjs",
+    "qa:alignment": "node scripts/alignment-audit.mjs",
+    "qa:alignment:json": "node scripts/alignment-audit.mjs --json",
     "component:screenshots": "node scripts/component-snapshots.mjs",
     "visual:capture": "node scripts/component-snapshots.mjs",
     "visual:plan": "node scripts/component-snapshots.mjs --dry-plan",
