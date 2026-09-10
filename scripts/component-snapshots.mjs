@@ -849,8 +849,9 @@ async function applyCapturePrepare(session, job) {
   const close = Array.isArray(prepare?.close) ? prepare.close : (prepare?.close ? [prepare.close] : []);
   const open = Array.isArray(prepare?.open) ? prepare.open : (prepare?.open ? [prepare.open] : []);
   const check = Array.isArray(prepare?.check) ? prepare.check : (prepare?.check ? [prepare.check] : []);
+  const click = Array.isArray(prepare?.click) ? prepare.click : (prepare?.click ? [prepare.click] : []);
   const focus = prepare?.focus;
-  const needsPrepare = close.length || open.length || check.length || attention.section || attention.probe || Boolean(focus);
+  const needsPrepare = close.length || open.length || check.length || click.length || attention.section || attention.probe || Boolean(focus);
   await evaluateProbe(session, `(async () => {
     const html = document.documentElement;
     if (html) html.setAttribute('data-spw-capture-mode', 'screenshot');
@@ -870,6 +871,46 @@ async function applyCapturePrepare(session, job) {
           el.dispatchEvent(new Event('change', { bubbles: true }));
         }
       });
+    }
+    const clickSels = ${JSON.stringify(click)};
+    const wantsSearch = clickSels.some((sel) => sel.includes('site-search'));
+    const wantsNote = clickSels.some((sel) => sel.includes('living-term') || sel.includes('spw-living-term') || sel.includes('spw-concept'));
+    if (clickSels.length && (wantsSearch || wantsNote)) {
+      const readyDeadline = Date.now() + 4000;
+      while (Date.now() < readyDeadline) {
+        const searchReady = !wantsSearch || typeof window.spwSearch?.open === 'function';
+        const noteReady = !wantsNote || Boolean(document.querySelector('.spw-living-term[role="button"], [data-spw-living-term][role="button"]'));
+        if (searchReady && noteReady) break;
+        await new Promise((r) => requestAnimationFrame(r));
+      }
+      if (wantsSearch && typeof window.spwSearch?.open !== 'function') {
+        try {
+          const mod = await import('/public/js/runtime/site-search.js');
+          mod.initSiteSearch?.(null, document);
+        } catch { /* catalog may still win */ }
+      }
+      if (wantsNote && !document.querySelector('.spw-living-term[role="button"], [data-spw-living-term][role="button"]')) {
+        try {
+          const mod = await import('/public/js/interface/haptics.js');
+          mod.initSpwHaptics?.();
+        } catch { /* catalog may still win */ }
+      }
+    }
+    for (const sel of clickSels) {
+      const el = document.querySelector(sel);
+      if (!el) continue;
+      try { el.scrollIntoView({ block: 'center', inline: 'nearest' }); } catch { /* detached */ }
+      if (typeof el.click === 'function') el.click();
+      else el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+    }
+    if (clickSels.length) {
+      const deadline = Date.now() + 2500;
+      while (Date.now() < deadline) {
+        if (document.querySelector('[data-spw-menu="open"]')
+          || document.querySelector('.spw-concept-popover, .spw-topic-popover, .spw-semantic-popover')
+          || document.querySelector('[data-spw-site-search="open"]')) break;
+        await new Promise((r) => requestAnimationFrame(r));
+      }
     }
     const focusWant = ${JSON.stringify(focus === true ? '' : String(focus || ''))};
     const focusHostSel = ${JSON.stringify(job.selector || '')};

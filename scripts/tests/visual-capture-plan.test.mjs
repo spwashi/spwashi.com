@@ -389,6 +389,9 @@ test('viewport stills are device frames, not tall region anatomy', () => {
   assert.equal(errorFile('blank', jobs[0]), 'captures/errors/pocket--blank--home-opening.jpg');
   assert.ok(jobs.some((job) => job.id === 'home-opening' && job.prepare?.close?.includes('.home-field-notes')));
   assert.ok(jobs.some((job) => job.id === 'home-entrance-open' && job.prepare?.open?.includes('.home-depth-disclosure')));
+  assert.ok(jobs.some((job) => job.id === 'home-nav-open' && job.prepare?.click?.includes('.spw-nav-toggle')));
+  assert.ok(jobs.some((job) => job.id === 'home-living-term-note' && job.prepare?.click?.includes('#home-frame .spw-living-term[data-spw-concept="living-concepts"]')));
+  assert.ok(jobs.some((job) => job.id === 'home-search-open' && job.prepare?.click?.includes('[data-spw-site-search-open]')));
 
   const tall = assessViewportSubject(
     { flow: 'region', kind: 'ecology', viewportId: 'pocket' },
@@ -487,6 +490,25 @@ test('capture conditions split route, theme, and attention into separate still f
   assert.ok(checks.some((job) => job.id === 'curriculum-memory-pin' && job.attention?.section === 'memory-buffers'));
   assert.ok(checks.some((job) => job.id === 'curriculum-hero-focus' && job.assertAttention === 'spend'));
   assert.equal(VIEWPORT_STILL_CHECKS.length >= 3, true);
+});
+
+test('named stills can click the shell menu and popups open', () => {
+  const { jobs } = buildCapturePlan({
+    includeComponents: false,
+    includeEcology: false,
+    includeStills: true,
+    viewports: [VIEWPORTS.pocket],
+    ids: ['home-nav-open', 'home-living-term-note', 'home-search-open'],
+  });
+  const nav = jobs.find((job) => job.id === 'home-nav-open');
+  const note = jobs.find((job) => job.id === 'home-living-term-note');
+  const search = jobs.find((job) => job.id === 'home-search-open');
+  assert.deepEqual(nav?.prepare?.click, ['.spw-nav-toggle']);
+  assert.equal(nav?.selector, '.site-header[data-spw-menu="open"]');
+  assert.deepEqual(note?.prepare?.click, ['#home-frame .spw-living-term[data-spw-concept="living-concepts"]']);
+  assert.equal(note?.selector, '.spw-concept-popover');
+  assert.deepEqual(search?.prepare?.click, ['[data-spw-site-search-open]']);
+  assert.equal(search?.selector, '[data-spw-site-search="open"]');
 });
 
 test('named stills cover curriculum, software, and math openings', () => {

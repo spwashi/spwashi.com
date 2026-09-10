@@ -21,7 +21,7 @@
   [data-spw-chrome-role="section-handle"],
   [data-pwa-toast],
   .spw-toast,
-  [data-spw-floating-chrome="true"],
+  [data-spw-floating-chrome="true"]:not([role="dialog"]),
   [data-spw-runtime-status],
   body > .promo-wonder-cycle__card,
   .promo-wonder-cycle__card[data-spw-presentation="modal"]

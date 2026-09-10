@@ -43,7 +43,8 @@ source = "chat 2026-09-07: still-recipe debt after broadsheet openings; Imagine/
   claim = `VIEWPORT_STILL_RECIPES is a rest crop with a thin prepare. That is not enough for agentic interactivity testing.`
   have = #[
     `id, selector, layoutScenarios, wonder, captureValue, sourceFiles`,
-    `prepare.open / close / check / focus`,
+    `prepare.open / close / check / focus / click`,
+    `home-nav-open, home-living-term-note, home-search-open`,
     `conditions.colorMode / themePack / reducedMotion / highContrast`,
     `attention.section / probe and assertAttention=spend`
   ][reg=set]
