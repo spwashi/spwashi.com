@@ -12,6 +12,8 @@ import { fileURLToPath } from 'node:url';
 
 import { COMPONENT_FIXTURES } from '../public/js/kernel/component-fixtures.js';
 import { REGION_ECOLOGY_FIXTURES } from '../public/js/kernel/region-ecology-fixtures.js';
+import { danglingStillFixtureIds } from './lib/still-module-coverage.mjs';
+import { VIEWPORT_STILL_CHECKS, VIEWPORT_STILL_RECIPES } from './lib/viewport-still-recipes.mjs';
 import {
   DEVICE_REASONS,
   REGION_SEATS,
@@ -167,6 +169,13 @@ export async function collectComponentContractReport() {
     if (!fixture.layoutScenarios?.length) {
       errors.push(`${fixture.id}: ecology fixture needs layoutScenarios`);
     }
+  }
+
+  for (const miss of danglingStillFixtureIds(
+    [...VIEWPORT_STILL_RECIPES, ...VIEWPORT_STILL_CHECKS],
+    { ecologyFixtures: REGION_ECOLOGY_FIXTURES, componentFixtures: COMPONENT_FIXTURES },
+  )) {
+    errors.push(`${miss.id}: fixtureId ${miss.fixtureId} is not an ecology/component seat`);
   }
 
   return {

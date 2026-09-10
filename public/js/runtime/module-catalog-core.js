@@ -46,6 +46,7 @@ export const CORE_DEFS = [
     evaluates: 'chrome defaults viewport pointer attention-posture',
     timingArc: 'boot-shell',
     effectScope: 'root-state chrome listeners viewport',
+    visual: 'layout',
     load: () => import('./shell-disclosure.js'),
   },
   {

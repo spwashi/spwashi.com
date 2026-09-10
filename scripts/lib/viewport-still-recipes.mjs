@@ -517,7 +517,7 @@ export const VIEWPORT_STILL_CHECKS = Object.freeze([
   }),
   Object.freeze({
     id: 'about-boonhonk-ember',
-    fixtureId: 'about-boonhonk-ember',
+    fixtureId: 'boonhonk-theme-chips',
     label: 'About boonhonk ember',
     specimenRoute: '/about/',
     selector: '#boonhonk-register',
@@ -550,7 +550,7 @@ export const VIEWPORT_STILL_CHECKS = Object.freeze([
   }),
   Object.freeze({
     id: 'rpg-boonhonk-dark',
-    fixtureId: 'rpg-boonhonk-dark',
+    fixtureId: 'rpg-boonhonk',
     label: 'RPG boonhonk dark',
     specimenRoute: '/play/rpg-wednesday/',
     selector: '#rpgw-boonhonk',
@@ -565,7 +565,7 @@ export const VIEWPORT_STILL_CHECKS = Object.freeze([
   }),
   Object.freeze({
     id: 'rpg-boonhonk-vellum',
-    fixtureId: 'rpg-boonhonk-vellum',
+    fixtureId: 'rpg-boonhonk',
     label: 'RPG boonhonk ritual vellum',
     specimenRoute: '/play/rpg-wednesday/',
     selector: '#rpgw-boonhonk',

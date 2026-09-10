@@ -94,6 +94,7 @@ export const ENHANCEMENT_DEFS = [
       'structural:data-spw-feature',
     ],
     evaluates: 'navigation region-discoverability component-discovery theme-readability',
+    visual: 'inspect',
     timingArc: 'visible-navigation',
     effectScope: 'floating-chrome root-state',
     load: () => import('./page-region-rail.js'),
@@ -227,6 +228,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-reward',
     timingChunk: 'idle-collectible',
     effectScope: 'root-state floating-chrome toast bus',
+    visual: 'inspect',
     load: () => import('./reward-ui.js'),
   },
   {
@@ -266,6 +268,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-search',
     timingChunk: 'idle-chrome',
     effectScope: 'floating-chrome listeners fetch root-state',
+    visual: 'layout',
     costClass: COST_CLASS.DEMAND_COUPLED,
     load: () => import('./site-search.js'),
   },
@@ -679,6 +682,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-feedback',
     timingChunk: 'idle-chrome',
     effectScope: 'floating-chrome storage listeners',
+    visual: 'inspect',
     load: () => import('../interface/discovery-notices.js'),
   },
   {
@@ -702,6 +706,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-metacognition',
     timingChunk: 'idle-lab',
     effectScope: 'floating-chrome root-state local-controls',
+    visual: 'inspect',
     load: () => import('../interface/state-inspector.js'),
   },
   {
@@ -1522,6 +1527,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-collectible',
     timingChunk: 'idle-collectible',
     effectScope: 'element-state storage bus',
+    visual: 'layout',
     load: () => import('../interface/haptics.js'),
   },
   {

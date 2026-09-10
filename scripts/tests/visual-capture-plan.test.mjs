@@ -2,7 +2,12 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import { COMPONENT_FIXTURES } from '../../public/js/kernel/component-fixtures.js';
-import { REGION_ECOLOGY_FIXTURES } from '../../public/js/kernel/region-ecology-fixtures.js';
+import {
+  REGION_ECOLOGY_FIXTURES,
+  getRegionEcologyFixture,
+} from '../../public/js/kernel/region-ecology-fixtures.js';
+import { MODULE_DEFS } from '../../public/js/runtime/module-catalog.js';
+import { accountStillCoverage } from '../lib/still-module-coverage.mjs';
 import {
   DEVICE_REASONS,
   DEFAULT_QA_VIEWPORTS,
@@ -942,4 +947,21 @@ test('explore and stabilize profiles cap combinations the way fuzz explore/stabi
   assert.deepEqual(applied.viewports, ['pocket']);
   assert.equal(applied.maxNavs, 12);
   assert.equal(applied.themeViewport, 'pocket');
+});
+
+test('visitor overlay modules have a still, and recipe seats resolve', () => {
+  const report = accountStillCoverage({
+    modules: MODULE_DEFS,
+    recipes: VIEWPORT_STILL_RECIPES,
+    checks: VIEWPORT_STILL_CHECKS,
+    ecologyFixtures: REGION_ECOLOGY_FIXTURES,
+    componentFixtures: COMPONENT_FIXTURES,
+  });
+  assert.deepEqual(report.visitor.sort(), ['haptics', 'shell-disclosure', 'site-search']);
+  assert.deepEqual(report.visitorMiss, []);
+  assert.deepEqual(report.danglingFixtureIds, []);
+  assert.ok(report.unguardedOverlays.includes('pronunciation-hints'));
+  assert.ok(report.unguardedOverlays.includes('region-menu'));
+  assert.ok(getRegionEcologyFixture('curriculum-hook'));
+  assert.ok(getRegionEcologyFixture('rpg-boonhonk'));
 });

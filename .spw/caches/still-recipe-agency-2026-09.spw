@@ -141,12 +141,23 @@ source = "chat 2026-09-07: still-recipe debt after broadsheet openings; Imagine/
   masthead = @creator_masthead
 }[reg=facet]
 
+^"sr-008_still_accounts_for_layout"{
+  id = "sr-008"
+  operation = "audit"
+  dated = `2026-09-09`
+  claim = `A visitor overlay is visual:layout and a named still. Inspect chrome is capture-hide. Recipe fixtureId must be an ecology/component seat or the recipe id.`
+  instrument = `scripts/lib/still-module-coverage.mjs`
+  visitor = #[`shell-disclosure`, `site-search`, `haptics`][reg=set]
+  leftover = `pronunciation-hints, region-menu, topic-discovery — overlay without visual:layout. Pair/press still (@sr-001). Taxonomy primitives vs four fixtures.`
+  refuse = `Do not Storybook. Do not still every floating-chrome inspect module.`
+}[reg=facet]
+
 ^"next_session"{
   claim = `Open this file. One named slice. Do not implement the loop.`
   open = #[`this file`, `settings/index.html`, `scripts/lib/viewport-still-recipes.mjs`, `.spw/caches/boonhonk-combinatoric-genre.spw`][reg=set]
   next_slice = `Settings hook copy only: .settings-note "cognitive workbench", .spw-playable-hook weather/spell, Atmosphere card "vellum weather". Name author mode, material, density, enhancement. One operator chip that already spends --active-op-color.`
   skip = #[`Imagine pipeline`, `Grok TUI clone`, `recipe schema rewrite`, `140-route copy`, `hearth/loom rename sweep`, `ASTRA.md`, `quest lede`, `spacing-theory redo`][reg=set]
-  leftover = `Folio-prices desk crop. Pocket about overflowX. Quest still-recipe (not copy). Recipe pair/press field. home-hook family vs home-opening still (@sr-007). Boonhonk component jobs: .spw/caches/boonhonk-combinatoric-genre.spw#component_jobs`
+  leftover = `Folio-prices desk crop. Pocket about overflowX. Quest still-recipe (not copy). Recipe pair/press field. home-hook family vs home-opening still (@sr-007). Overlay leftovers @sr-008. Boonhonk component jobs: .spw/caches/boonhonk-combinatoric-genre.spw#component_jobs`
   concurrent = `Primary main worktree may carry uncommitted payment-card / promo-wonder / settings payment-note. Never git stash.`
   cli = `npm run sense -- ink about-opening ; npm run sense -- copy`
 }[reg=facet]
