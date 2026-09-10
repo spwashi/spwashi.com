@@ -1455,6 +1455,11 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 :where(#living-concepts .living-concept-card) {
   --component-shadow: var(--home-shadow-quiet);
   --component-shadow-active: var(--home-shadow-active);
+  /* The summary and the body are one column of text with a fold in it, so they
+     share one inline pad. Stated once because they used to state it twice: the
+     narrow override tightened the summary and left the body at 1rem, and a
+     card's own title sat 2.24px left of its own prose. */
+  --living-card-pad-inline: 1rem;
   position: relative;
   min-height: 0;
   padding: 0;
@@ -1481,7 +1486,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   grid-template-columns: minmax(0, 1fr);
   gap: 0.35rem;
   min-height: 0;
-  padding: 0.9rem 1rem;
+  padding: 0.9rem var(--living-card-pad-inline);
   cursor: pointer;
   list-style: none;
 }
@@ -1531,7 +1536,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 :where(#living-concepts .living-concept-card__body) {
   display: grid;
   gap: 0.7rem;
-  padding: 0 1rem 1rem;
+  padding: 0 var(--living-card-pad-inline) 1rem;
 }
 
 :where(#living-concepts .living-concept-card__body p) {
@@ -1943,9 +1948,16 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
     gap: 0.62rem;
   }
 
+  /* Tighten the shared pad on the card, so the summary and the body move
+     together. Setting it on the summary would leave the body behind — which is
+     the drift this token exists to prevent. */
+  :where(#living-concepts .living-concept-card) {
+    --living-card-pad-inline: 0.86rem;
+  }
+
   :where(#living-concepts .living-concept-card > summary) {
     min-height: 0;
-    padding: 0.76rem 0.86rem;
+    padding-block: 0.76rem;
   }
 
   :where([data-spw-feature="home-entrance-sorter"] .entrance-role-hooks) {
@@ -2746,7 +2758,14 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
 }
 
 @media (max-width: 48rem) {
+  /* Every top-level section on the home route packs to the same inline pad
+     below the fold. This is a hand-typed roster, so a section is in it by
+     being remembered — #choose-your-entrance was not, kept the 0.68rem clamp,
+     and its text started 3.5px left of every sibling above and below it. The
+     others all carry data-spw-region-role; the entrance sorter is addressed by
+     feature because it has no role of its own. */
   :where([data-spw-feature="home-kernel-entry"][data-spw-region-role="entry-spine"]),
+  :where([data-spw-feature="home-entrance-sorter"]),
   :where(#operator-field),
   :where(#climate-tuning),
   :where(#entry-loops),

@@ -108,6 +108,9 @@ export function buildAlignmentProbeExpression(options = {}) {
       width: round(rect.width),
       overflowX: el.scrollWidth > Math.ceil(el.clientWidth + 1),
       clipsX: cs.overflowX === 'clip' || cs.overflowX === 'hidden',
+      // A strip that overflows on purpose and offers a scrollbar is a
+      // scroller, not a truncation. Only content with no way out is cut.
+      scrollsX: cs.overflowX === 'auto' || cs.overflowX === 'scroll',
       display: cs.display,
       position: cs.position,
       // A wrapping flex row ends wherever the last item lands. That trailing
@@ -115,6 +118,15 @@ export function buildAlignmentProbeExpression(options = {}) {
       // are exempt from the near-flush test on the inline axis.
       wraps: (cs.display === 'flex' || cs.display === 'inline-flex')
         && cs.flexWrap === 'wrap',
+      // An element that paints its own edge — a border, a fill — is a surface,
+      // and a surface is expected to inset its text by its own border and pad.
+      // A bordered code block beside a paragraph should line up on the painted
+      // edge, not on the glyphs. Comparing their content edges reports the
+      // design as a defect, so content edges are only ever compared between
+      // peers of the same kind.
+      surface: (bl > 0 || br > 0)
+        || (cs.backgroundImage && cs.backgroundImage !== 'none')
+        || (cs.backgroundColor && !/^rgba\\(0, 0, 0, 0\\)$|^transparent$/.test(cs.backgroundColor)),
     };
   };
 
@@ -175,20 +187,29 @@ export function buildAlignmentProbeExpression(options = {}) {
   }
   for (const [parent, kids] of groups) {
     if (kids.length < 2) continue;
-    for (const edge of ['frameLeft', 'contentLeft']) {
-      const vals = kids.map((k) => k[edge]);
-      const min = Math.min(...vals);
-      const max = Math.max(...vals);
-      const spread = round(max - min);
+    // Frame edges are compared across every sibling: whatever a box is made of,
+    // its painted edge should agree with its neighbours'. Content edges are
+    // compared only within a surface class, so a bordered panel is judged
+    // against other bordered panels and prose against prose.
+    const cohorts = [
+      ['frame', 'frameLeft', kids],
+      ['content', 'contentLeft', kids.filter((k) => !k.surface)],
+      ['content', 'contentLeft', kids.filter((k) => k.surface)],
+    ];
+    for (const [label, edge, cohort] of cohorts) {
+      if (cohort.length < 2) continue;
+      const vals = cohort.map((k) => k[edge]);
+      const spread = round(Math.max(...vals) - Math.min(...vals));
       if (spread >= CONFIG.floorPx && spread <= CONFIG.nearMissPx) {
         findings.push({
           kind: 'sibling-ladder',
-          edge: edge === 'frameLeft' ? 'frame' : 'content',
+          edge: label,
+          cohort: label === 'content' ? (cohort[0].surface ? 'surfaces' : 'prose') : 'all',
           spread,
-          count: kids.length,
+          count: cohort.length,
           container: path(parent),
-          members: kids.slice(0, 6).map((k) => ({ at: k[edge], node: describe(k.el) })),
-          top: Math.min(...kids.map((k) => k.top)),
+          members: cohort.slice(0, 6).map((k) => ({ at: k[edge], node: describe(k.el) })),
+          top: Math.min(...cohort.map((k) => k.top)),
         });
       }
     }
@@ -200,11 +221,15 @@ export function buildAlignmentProbeExpression(options = {}) {
   // sentence ending mid-word and nothing reports it.
   for (const b of boxes) {
     if (!b.overflowX) continue;
+    if (b.scrollsX) continue;
     let node = b.el.parentElement;
     let clipper = null;
     let hops = 0;
     while (node && hops < 12) {
       const m = byEl.get(node);
+      // A scrolling ancestor rescues its overflowing content: the reader can
+      // reach it. Stop the walk there rather than blaming a clipper further up.
+      if (m && m.scrollsX) break;
       if (m && m.clipsX) { clipper = node; break; }
       node = node.parentElement;
       hops += 1;

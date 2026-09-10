@@ -322,6 +322,61 @@ source = "stills 2026-09-09 11-56-42--ec2e4d (fold/pocket pack, 190 frames), 202
   refuse = `Do not add overflow-x hidden to the route. That hides the symptom and @al-002 already names what clip costs.`
 }[reg=facet]
 
+^"al-017_a_cohort_is_what_makes_it_taste"{
+  id = "al-017"
+  operation = "prime"
+  dated = `2026-09-10`
+  fixity = "landed"
+  claim = `The near-miss rule was necessary and not sufficient. Half the first sweep's findings were correct measurements of deliberate design, because the probe compared boxes that were never meant to line up.`
+  learned = #[
+    `A bordered code block beside a paragraph should agree on its painted edge, not its glyphs. Comparing content edges across that pair reports the design as a defect`,
+    `A strip with overflow-x auto is a scroller. Its overflow is the feature, and the reader can reach the content`,
+    `A wrapping flex row ends where the last item lands. That trailing gap is arithmetic, not intent`
+  ][reg=set]
+  landed = #[
+    `Content edges are compared only within a surface class — prose against prose, surfaces against surfaces. Frame edges are still compared across every sibling`,
+    `An element that scrolls itself is never a truncation, and a scrolling ancestor stops the clipper walk`,
+    `Children of a wrapping flex row are exempt from near-flush on the inline axis`
+  ][reg=set]
+  yield = #[
+    `sweep of / /about/ /topics/ at pocket and broadsheet`,
+    `135 findings at first light`,
+    `100 once cohorts landed`,
+    `92 after the two CSS fixes below`,
+    `76 once scrollers stopped counting as cuts`
+  ][reg=set]
+  rule = `Precision is the product. A measurement that is true but irrelevant costs more than a missed finding, because it teaches the reader to skim the report.`
+  refuse = `Do not widen nearMissPx to recover volume. Do not report a difference the design chose.`
+}[reg=facet]
+
+^"al-018_two_ladders_closed"{
+  id = "al-018"
+  operation = "audit"
+  dated = `2026-09-10`
+  fixity = "landed"
+  claim = `Both were one value stated twice and tightened once. Neither was a design decision.`
+  card = `#living-concepts .living-concept-card: the summary and the body each stated 1rem of inline pad, and the narrow override tightened only the summary to 0.86rem. A card's own title sat 2.24px left of its own prose, on every card, at pocket. Both now read --living-card-pad-inline, and the media block overrides the token on the card so the pair moves together. Setting it on the summary would have reproduced the drift.`
+  sections = `A hand-typed roster of home sections packs to 0.9rem below 48rem. #choose-your-entrance was not on it, kept the 0.68rem clamp, and its text started 3.5px left of every sibling above and below. Added by feature, since it is the one section with no data-spw-region-role of its own.`
+  measured = `#home-frame and #choose-your-entrance now share contentL 31.8 at pocket. summary and body now share contentL 43.`
+  reading = `Both are @al-001 in miniature: a property that belongs to a family, restated per member, drifting the moment one member is edited.`
+  refuse = `Do not chase the 16px spread between stacked panels on the home opening. That is the card union question, not a near-miss, and the probe is right to stay quiet about it.`
+}[reg=facet]
+
+^"al-019_topics_register_hides_its_own_content"{
+  id = "al-019"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `section#topics-register is overflow: clip with scrollWidth 940 against clientWidth 350 at pocket. It hides 590px of its own content and reports nothing.`
+  evidence = #[
+    `.spw-room-path--sequence: overflow-x visible, scrollWidth 526, clientWidth 192 — overflows with no way out, clipped by the register`,
+    `by contrast .spw-visual-link-board__grid and .spw-reason-strip are overflow-x auto and genuinely scroll; they were false positives and no longer report`,
+    `8 clipped-overflow findings survive on /topics/ at pocket after scrollers stop counting`
+  ][reg=set]
+  reading = `Same mechanism as @al-002, one route over. The clip is load-bearing for paint containment and also swallows the evidence that anything is wrong.`
+  next_slice = `Decide per strip whether it scrolls or wraps. A room path that cannot be reached is not a path.`
+  refuse = `Do not switch the register to overflow visible. Fix the children that overflow it.`
+}[reg=facet]
+
 ^"proposal_order"{
   claim = `One mechanism, then the symptoms it explains. Do not start at the stills.`
   order = #[

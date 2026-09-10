@@ -677,7 +677,14 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
 }
 
 @media (max-width: 48rem) {
+  /* Every top-level section on the home route packs to the same inline pad
+     below the fold. This is a hand-typed roster, so a section is in it by
+     being remembered — #choose-your-entrance was not, kept the 0.68rem clamp,
+     and its text started 3.5px left of every sibling above and below it. The
+     others all carry data-spw-region-role; the entrance sorter is addressed by
+     feature because it has no role of its own. */
   :where([data-spw-feature="home-kernel-entry"][data-spw-region-role="entry-spine"]),
+  :where([data-spw-feature="home-entrance-sorter"]),
   :where(#operator-field),
   :where(#climate-tuning),
   :where(#entry-loops),

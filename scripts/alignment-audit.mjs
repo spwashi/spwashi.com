@@ -73,7 +73,8 @@ function formatRow(row) {
   }
   if (row.kind === 'sibling-ladder') {
     const members = (row.members || []).map((m) => `${m.at} ${m.node}`).join('\n              ');
-    return `  sibling-ladder    ${row.edge} edges spread ${row.spread}px across ${row.count}${times}\n`
+    const cohort = row.cohort && row.cohort !== 'all' ? ` (${row.cohort})` : '';
+    return `  sibling-ladder    ${row.edge}${cohort} edges spread ${row.spread}px across ${row.count}${times}\n`
       + `      in      ${row.container}\n`
       + `      edges   ${members}`;
   }
