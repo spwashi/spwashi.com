@@ -97,7 +97,7 @@
 /* Grammar owns route-portable structural semantics. */
 :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .mode-panel,
@@ -114,7 +114,7 @@
 /* Lift ordinary flow content above generated braces, rails, and ornaments.
    Out-of-flow roles keep their own geometry contract. */
 :where(
-  :is(.spw-frame, .frame-panel, .frame-card, .software-card, .mode-panel, .plan-card, .compare-card, .spec-column)
+  :is(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .software-card, .mode-panel, .plan-card, .compare-card, .spec-column)
     > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"])
 ) {
   position: relative;
@@ -1597,7 +1597,7 @@
   --brace-corner-height: 1.1rem;
 }
 
-:where(.frame-panel[data-spw-form="brace"]) {
+:where(:is(.spw-panel, .frame-panel)[data-spw-form="brace"]) {
   --brace-corner-offset: 0.3rem;
   --brace-corner-width: 1.2rem;
   --brace-corner-height: 0.85rem;
@@ -1753,7 +1753,7 @@
   --block-depth-color: color-mix(in srgb, var(--grammar-ink) 2%, transparent);
 }
 
-:where(.frame-panel[data-spw-form="block"]) {
+:where(:is(.spw-panel, .frame-panel)[data-spw-form="block"]) {
   --block-inset: 0.25rem;
   --block-radius: calc(var(--grammar-radius-sm) - 0.06rem);
   --block-highlight-offset: 0.6px;
@@ -1779,7 +1779,7 @@
 
 :where(
   .spw-frame > .spw-component-tag,
-  .frame-panel > .spw-component-tag,
+  :is(.spw-panel, .frame-panel) > .spw-component-tag,
   .frame-card > .spw-component-tag,
   .software-card > .spw-component-tag,
   .mode-panel > .spw-component-tag,

@@ -1165,7 +1165,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   text-wrap: pretty;
 }
 
-:where(body[data-spw-surface="home"] .frame-panel),
+:where(body[data-spw-surface="home"] :is(.spw-panel, .frame-panel)),
 :where(body[data-spw-surface="home"] .frame-card) {
   --component-shadow: var(--home-shadow-quiet);
   --component-shadow-active: var(--home-shadow-active);
@@ -1183,13 +1183,13 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
       );
 }
 
-:where(body[data-spw-surface="home"] .frame-panel h3),
+:where(body[data-spw-surface="home"] :is(.spw-panel, .frame-panel) h3),
 :where(body[data-spw-surface="home"] .frame-card h3),
 :where(body[data-spw-surface="home"] .frame-card strong) {
   letter-spacing: -0.015em;
 }
 
-:where(body[data-spw-surface="home"] .frame-panel p) {
+:where(body[data-spw-surface="home"] :is(.spw-panel, .frame-panel) p) {
   max-inline-size: 54ch;
 }
 
@@ -1338,14 +1338,14 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   transform: translateX(2px);
 }
 
-:where(#reader-builder-paths .frame-panel) {
+:where(#reader-builder-paths :is(.spw-panel, .frame-panel)) {
   transition:
       transform var(--home-transition-fast),
       border-color var(--home-transition-base),
       box-shadow var(--home-transition-base);
 }
 
-:where(#reader-builder-paths .frame-panel:is(:hover, :focus-within)) {
+:where(#reader-builder-paths :is(.spw-panel, .frame-panel):is(:hover, :focus-within)) {
   transform: translateY(-1px);
   border-color: color-mix(in srgb, var(--home-accent-primary) 22%, transparent);
 }
@@ -1391,7 +1391,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-base, 17rem)), 1fr));
 }
 
-:where([data-spw-feature="home-entrance-sorter"] .frame-panel) {
+:where([data-spw-feature="home-entrance-sorter"] :is(.spw-panel, .frame-panel)) {
   min-height: auto;
   align-content: start;
   transition:
@@ -1400,7 +1400,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
       box-shadow var(--home-transition-base);
 }
 
-:where([data-spw-feature="home-entrance-sorter"] .frame-panel:is(:hover, :focus-within)) {
+:where([data-spw-feature="home-entrance-sorter"] :is(.spw-panel, .frame-panel):is(:hover, :focus-within)) {
   transform: translateY(-2px);
   border-color: color-mix(in srgb, var(--home-accent-primary) 24%, transparent);
   box-shadow:
@@ -1860,7 +1860,7 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
   :where(
     body[data-spw-surface="home"] .spw-chip,
     body[data-spw-surface="home"] .spw-frame,
-    body[data-spw-surface="home"] .frame-panel,
+    body[data-spw-surface="home"] :is(.spw-panel, .frame-panel),
     body[data-spw-surface="home"] .living-concept-card,
     body[data-spw-surface="home"] .spw-wisdom-card,
     body[data-spw-surface="home"] .entrance-role-hooks > li
@@ -1870,7 +1870,7 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
 
   :where(
     body[data-spw-surface="home"] .spw-chip:is(:hover, :focus-visible),
-    body[data-spw-surface="home"] .frame-panel:is(:hover, :focus-within),
+    body[data-spw-surface="home"] :is(.spw-panel, .frame-panel):is(:hover, :focus-within),
     body[data-spw-surface="home"] .spw-wisdom-card:is(:hover, :focus-within),
     body[data-spw-surface="home"] .entrance-role-hooks > li:is(:hover, :focus-within)
   ) {

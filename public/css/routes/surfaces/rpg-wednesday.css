@@ -368,7 +368,7 @@
   justify-self: center;
 }
 
-:where(body[data-spw-surface="rpg-wednesday"] #rpgw-character .frame-panel) {
+:where(body[data-spw-surface="rpg-wednesday"] #rpgw-character :is(.spw-panel, .frame-panel)) {
   width: 100%;
   min-width: 0;
   align-self: stretch;
@@ -933,10 +933,10 @@
 }
 
 :where(
-  body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk .frame-panel,
-  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-panel,
-  body[data-spw-surface="rpg-wednesday"] #weekly-affairs .frame-panel,
-  body[data-spw-surface="rpg-wednesday"] #seasonal-ecology .frame-panel
+  body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk :is(.spw-panel, .frame-panel),
+  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit :is(.spw-panel, .frame-panel),
+  body[data-spw-surface="rpg-wednesday"] #weekly-affairs :is(.spw-panel, .frame-panel),
+  body[data-spw-surface="rpg-wednesday"] #seasonal-ecology :is(.spw-panel, .frame-panel)
 ) {
   min-width: 0;
 }

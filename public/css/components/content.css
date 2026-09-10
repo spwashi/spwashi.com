@@ -90,7 +90,7 @@
    the base reset (reset/base.css) strips list-style for ordinary <ol>/<ul> —
    it only zeroes padding-left there — so a route that reaches for one of
    them on a semantically-correct <ol> (e.g. a sequence of steps that should
-   be an ordered list, not four unordered .frame-panel divs) gets a decimal
+   be an ordered list, not four unordered :is(.spw-panel, .frame-panel) divs) gets a decimal
    marker column fighting the grid's own columns. Defensive, not speculative:
    contact/index.html's #contact-intake inquiry steps do exactly this. */
 :where(ol, ul):where(.frame-grid, .plans-grid, .contact-grid, .spec-grid, .directory-grid, .ref-grid) {
@@ -200,7 +200,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   [data-spw-composition-flow="grid"]:not(
     :is(
       .spw-frame,
-      .frame-panel,
+      :is(.spw-panel, .frame-panel),
       .mode-panel,
       [data-spw-kind="frame"],
       [data-spw-box-model="stage"]
@@ -248,7 +248,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   [data-spw-composition-flow="stack"]:not(
     :is(
       .spw-frame,
-      .frame-panel,
+      :is(.spw-panel, .frame-panel),
       .mode-panel,
       [data-spw-kind="frame"],
       [data-spw-box-model="stage"],
@@ -270,12 +270,12 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
    Missing flow is treated as stack so a late JS write of the attribute does not reflow. */
 :where(
   .spw-frame:not([data-spw-composition-flow]):not([hidden]),
-  .frame-panel:not([data-spw-composition-flow]):not([hidden]),
+  :is(.spw-panel, .frame-panel):not([data-spw-composition-flow]):not([hidden]),
   .mode-panel:not([data-spw-composition-flow]):not([hidden]),
   [data-spw-kind="frame"]:not([data-spw-composition-flow]):not([hidden]),
   [data-spw-box-model="stage"]:not([data-spw-composition-flow]):not([hidden]),
   .spw-frame[data-spw-composition-flow="stack"]:not([hidden]),
-  .frame-panel[data-spw-composition-flow="stack"]:not([hidden]),
+  :is(.spw-panel, .frame-panel)[data-spw-composition-flow="stack"]:not([hidden]),
   .mode-panel[data-spw-composition-flow="stack"]:not([hidden]),
   [data-spw-kind="frame"][data-spw-composition-flow="stack"]:not([hidden]),
   [data-spw-box-model="stage"][data-spw-composition-flow="stack"]:not([hidden])
@@ -456,7 +456,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   .compare-card,
   .spec-column,
   .ref-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .spw-frame
 ) :is(code, kbd, samp) {
@@ -474,7 +474,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   .compare-card,
   .spec-column,
   .ref-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .spw-frame
 ) :is(pre, .frame-code-enrichment, .demo-code-output) {

@@ -13,7 +13,7 @@
    See .spw/conventions/projection-attenuation.spw
    ========================================================================== */
 
-:where(.spw-frame, .frame-card, .frame-panel, [data-spw-form="brace"]) {
+:where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), [data-spw-form="brace"]) {
   --spw-wonder-hold: 1;
   --spw-slot-attenuate: 1;
   --spw-nest-attenuate: 1;
@@ -107,7 +107,7 @@
   );
 }
 
-:where(.spw-frame, .frame-card, .frame-panel) {
+:where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel)) {
   transition:
     border-color var(--spw-projected-echo, 480ms) var(--ease-settle, ease),
     box-shadow var(--spw-projected-echo, 480ms) var(--ease-settle, ease),
@@ -134,11 +134,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(.spw-frame, .frame-card, .frame-panel) {
+  :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel)) {
     --spw-projected-echo: 1ms;
   }
 }
 
-html[data-spw-high-contrast="on"] :where(.spw-frame, .frame-card, .frame-panel) {
+html[data-spw-high-contrast="on"] :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel)) {
   --spw-wonder-hold: 0.2;
 }

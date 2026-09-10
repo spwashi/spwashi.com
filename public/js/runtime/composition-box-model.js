@@ -179,7 +179,7 @@ function readDisplayFlow(style) {
  * auto-fit rules meant for inner card grids — never mirror that onto stages.
  */
 function resolveCompositionFlow(el, style) {
-  if (el.matches?.('.site-frame, .frame-panel, .mode-panel, .site-hero')) {
+  if (el.matches?.('.site-frame, .spw-panel, .frame-panel, .mode-panel, .site-hero')) {
     const authored = normalizeToken(el.getAttribute('data-spw-composition-flow') || '');
     if (authored && authored !== 'grid' && authored !== 'inline-grid') return authored;
     return 'stack';

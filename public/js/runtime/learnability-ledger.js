@@ -42,6 +42,7 @@ const PROCESS_CUES = Object.freeze({
 const LAYOUT_HOST_SELECTOR = [
   '.site-frame',
   '.frame-card',
+  '.spw-panel',
   '.frame-panel',
   '.mode-panel',
   '.vibe-widget',
@@ -54,7 +55,7 @@ const LAYOUT_HOST_SELECTOR = [
 ].join(', ');
 const FEATURE_SELECTOR = '[data-spw-feature]';
 const GESTURE_SELECTOR = '[data-spw-gesture-contract], [data-spw-interaction-contract]';
-const SLOT_HOST_SELECTOR = '.site-frame, .frame-card, .frame-panel, .mode-panel, .vibe-widget, [data-spw-kind="frame"], [data-spw-kind="card"]';
+const SLOT_HOST_SELECTOR = '.site-frame, .frame-card, .spw-panel, .frame-panel, .mode-panel, .vibe-widget, [data-spw-kind="frame"], [data-spw-kind="card"]';
 
 let pulseTimer = 0;
 

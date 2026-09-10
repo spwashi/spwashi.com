@@ -209,7 +209,7 @@ async function inspectComponentDoc(relativePath) {
       dataSpwKind: countOccurrences(source, /\bdata-spw-kind=/g),
       dataSpwSlot: countOccurrences(source, /\bdata-spw-slot=/g),
       dataSpwComponent: countOccurrences(source, /\bdata-spw-component/g),
-      framePanels: countOccurrences(source, /\bframe-panel\b/g),
+      framePanels: countOccurrences(source, /\bspw-panel\b/g) + countOccurrences(source, /\bframe-panel\b/g),
       siteFrames: countOccurrences(source, /\bsite-frame\b/g),
     },
   };

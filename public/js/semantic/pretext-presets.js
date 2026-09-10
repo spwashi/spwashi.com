@@ -86,7 +86,7 @@ function queryTexts(selectors = []) {
 function sampleArchetypes() {
     const bodyTexts = queryTexts([
         'main p',
-        '.frame-panel p',
+        '.spw-panel p, .frame-panel p',
         '.frame-card p',
         '[data-spw-surface] p',
         '.site-figure figcaption',
@@ -105,7 +105,7 @@ function sampleArchetypes() {
         'main h3',
         'main h4',
         '.frame-card h3',
-        '.frame-panel h3',
+        '.spw-panel h3, .frame-panel h3',
         '.lede',
         '.deck',
     ]);
@@ -211,8 +211,8 @@ function getFontProfiles() {
 
     return {
         body: {
-            font: getComputedFont('main p, .frame-panel p, .frame-card p', '16px system-ui'),
-            lineHeightPx: getLineHeightPx('main p, .frame-panel p, .frame-card p', Math.round(rootFontSize * 1.68)),
+            font: getComputedFont('main p, .spw-panel p, .frame-panel p, .frame-card p', '16px system-ui'),
+            lineHeightPx: getLineHeightPx('main p, .spw-panel p, .frame-panel p, .frame-card p', Math.round(rootFontSize * 1.68)),
         },
         heading: {
             font: getComputedFont('main h1, main h2, .frame-title', '700 28px system-ui'),

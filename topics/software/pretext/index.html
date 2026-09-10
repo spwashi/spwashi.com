@@ -56,7 +56,7 @@
                 <p data-spw-textual-role="note">Pretext measures multiline text without putting it in the DOM. The toys below show the three useful facts: a UI hook's wrap, a bubble's height, and mixed-script line breaks.</p>
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="orientation" data-spw-role="orientation">
-                        <figure class="frame-panel">
+                        <figure class="spw-panel">
                             <img src="/public/images/assets/illustrations/pretext-physics.png" alt="The same prepared text projected into several measured line fields." loading="lazy" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); margin-bottom: 1.5rem;">
                         </figure>
                         <p>One prepared handle. Phone, tablet, and poster layouts. Wrap is the line-count jump between the narrow and wide ends. Use that number for packing and HUD alignment; do not remount the engine sitewide.</p>
@@ -114,7 +114,7 @@ const desktop = layoutWithLines(prepared, 1072, 27)
                 </header>
                 <p data-spw-textual-role="note">Start with <strong>hook</strong> — the Software-page line from the phone screenshot. Stable = 0–1 line jump, responsive = 2–3, volatile = 4+.</p>
                 <div class="pretext-lab-grid">
-                    <div class="frame-panel pretext-controls-panel" data-spw-role="control" data-spw-meaning="control surface" data-spw-kind="panel" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_1">
+                    <div class="spw-panel pretext-controls-panel" data-spw-role="control" data-spw-meaning="control surface" data-spw-kind="panel" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_1">
                         <label class="pretext-field">
                             <span>Probe text</span>
                             <textarea id="pretext-input" class="pretext-textarea" rows="4">A component is a small machine for arranging attention.</textarea>
@@ -142,7 +142,7 @@ const desktop = layoutWithLines(prepared, 1072, 27)
                         <p id="pretext-status" data-spw-textual-role="note">Loading Pretext.js and waiting for fonts…</p>
                     </div>
 
-                    <div class="frame-panel pretext-summary-panel" data-spw-role="telemetry" data-spw-meaning="telemetry panel" data-spw-kind="panel" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_2">
+                    <div class="spw-panel pretext-summary-panel" data-spw-role="telemetry" data-spw-meaning="telemetry panel" data-spw-kind="panel" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_2">
                         <h3>Probe Telemetry</h3>
                         <div class="pretext-metric-grid">
                             <div class="pretext-metric" data-spw-kind="metric" data-spw-role="telemetry" data-spw-liminality="deep" data-spw-meaning="handle state">
@@ -180,7 +180,7 @@ const desktop = layoutWithLines(prepared, 1072, 27)
                         </div>
                     </div>
 
-                    <div class="frame-panel pretext-sandbox-panel" data-spw-role="probe" data-spw-meaning="resizable sandbox" data-spw-kind="panel" data-spw-context="analysis">
+                    <div class="spw-panel pretext-sandbox-panel" data-spw-role="probe" data-spw-meaning="resizable sandbox" data-spw-kind="panel" data-spw-context="analysis">
                         <div class="vibe-widget-header">
                             <p class="vibe-widget-kicker">Interactive Ruler</p>
                             <h3 class="vibe-widget-title">Live Sandbox</h3>
@@ -252,15 +252,15 @@ const desktop = layoutWithLines(prepared, 1072, 27)
                 </header>
                 <p data-spw-textual-role="note">Three facts. The official playground is still the API catalog.</p>
                 <div class="frame-grid">
-                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_3" data-spw-semantic-expression="copy[bubble]{height.reserve}<paint>">
+                    <div class="spw-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_3" data-spw-semantic-expression="copy[bubble]{height.reserve}<paint>">
                         <h3>Height before paint</h3>
                         <p>A chat bubble or HUD can reserve its box from <code>layout.height</code> instead of measuring a hidden node.</p>
                     </div>
-                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_6" data-spw-semantic-expression="copy[hook]{wrap.align}<pack>">
+                    <div class="spw-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_6" data-spw-semantic-expression="copy[hook]{wrap.align}<pack>">
                         <h3>Wrap class for packing</h3>
                         <p>Phone vs desktop line counts tell alignment work whether a hook stays one line. <code>npm run audit:copy:align</code> and <code>npm run audit:copy:expr</code> list titles and expression hosts.</p>
                     </div>
-                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_5" data-spw-semantic-expression="copy[script]{prepare.once}<handle>">
+                    <div class="spw-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_5" data-spw-semantic-expression="copy[script]{prepare.once}<handle>">
                         <h3>Mixed scripts, one handle</h3>
                         <p>Latin, CJK, and Arabic share <code>prepareWithSegments</code>. Layout does not need a second code path.</p>
                     </div>

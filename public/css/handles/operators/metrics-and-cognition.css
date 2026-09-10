@@ -62,7 +62,7 @@
 /* Guiding should only style component-family containers, not arbitrary nodes. */
 :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .operator-card,
@@ -80,7 +80,7 @@
 /* Guided threshold states should read as an earned seam, not a generic highlight. */
 :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .operator-card,
@@ -91,7 +91,7 @@
 
 html[data-spw-show-semantic-metadata="on"] :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .operator-card,
@@ -99,7 +99,7 @@ html[data-spw-show-semantic-metadata="on"] :where(
 )[data-spw-guided="true"] > .spw-component-guides,
 html[data-spw-show-semantic-metadata="on"] :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .operator-card,
@@ -114,7 +114,7 @@ html[data-spw-cognitive-handles="off"] :is(.spw-smart-console-host, .cognitive-s
 
 html[data-spw-cognitive-handles="off"] :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .operator-card,

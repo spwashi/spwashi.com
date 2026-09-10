@@ -315,7 +315,7 @@ body {
 /* Card-like surfaces */
 :where(
   .frame-card, .media-card, .media-focus-card, .operator-card,
-  .frame-panel, .mode-panel, .pretext-surface, .settings-category,
+  :is(.spw-panel, .frame-panel), .mode-panel, .pretext-surface, .settings-category,
   .settings-fieldset, .spw-console, .spw-nav-panel, .vibe-widget,
   .settings-state-card, .settings-nav-card, .settings-structure-card
 ) {
@@ -329,7 +329,7 @@ body {
 
 :where(
   .frame-card, .media-card, .media-focus-card, .operator-card,
-  .frame-panel, .mode-panel, .vibe-widget,
+  :is(.spw-panel, .frame-panel), .mode-panel, .vibe-widget,
   .settings-state-card, .settings-nav-card, .settings-structure-card
 ):is(:hover, :focus-within) {
   transform: translateY(var(--climate-hover-lift));
@@ -385,7 +385,7 @@ body {
    ========================================================================== */
 
 :where(
-  .spw-frame, .frame-panel, .frame-card, .media-card,
+  .spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .media-card,
   .media-focus-card, .operator-card, .mode-panel, .vibe-widget, .settings-fieldset
 ) {
   --climate-local-gap: calc(var(--component-gap, 0.9rem) * var(--climate-gap-scale));
@@ -397,7 +397,7 @@ body {
 }
 
 :where(
-  .frame-panel, .frame-card, .media-card, .media-focus-card,
+  :is(.spw-panel, .frame-panel), .frame-card, .media-card, .media-focus-card,
   .operator-card, .mode-panel, .vibe-widget, .settings-fieldset
 ) {
   gap: var(--climate-local-gap, 0.55rem);
@@ -410,7 +410,7 @@ body {
   [data-author-surface],
   .author-surface,
   .manuscript-surface
-) :where(.frame-panel, .frame-card, .vibe-widget, .settings-fieldset) {
+) :where(:is(.spw-panel, .frame-panel), .frame-card, .vibe-widget, .settings-fieldset) {
   padding: var(--climate-local-pad, 0.9rem);
 }
 
@@ -465,7 +465,7 @@ body {
 
 :where(
   .spw-frame, .frame-card, .media-card, .media-focus-card, .operator-card,
-  .frame-panel, .mode-panel, .spec-pill, .spw-chip, .frame-sigil,
+  :is(.spw-panel, .frame-panel), .mode-panel, .spec-pill, .spw-chip, .frame-sigil,
   .syntax-token, .spw-delimiter
 )[data-spw-selection="focused"] {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--climate-accent) 16%, transparent);
@@ -473,11 +473,11 @@ body {
 
 :where(
   .spw-frame, .frame-card, .media-card, .media-focus-card, .operator-card,
-  .frame-panel, .mode-panel, .spec-pill, .spw-chip, .frame-sigil
+  :is(.spw-panel, .frame-panel), .mode-panel, .spec-pill, .spw-chip, .frame-sigil
 )[data-spw-selection="active"],
 :where(
   .spw-frame, .frame-card, .media-card, .media-focus-card, .operator-card,
-  .frame-panel, .mode-panel, .spec-pill, .spw-chip, .frame-sigil
+  :is(.spw-panel, .frame-panel), .mode-panel, .spec-pill, .spw-chip, .frame-sigil
 )[data-spw-selection="selected"] {
   border-color: var(--climate-accent-line-strong);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--climate-accent) 22%, transparent),

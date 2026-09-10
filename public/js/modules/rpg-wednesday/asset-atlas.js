@@ -715,7 +715,7 @@ export const createAssetAtlasController = ({ getState, save }) => {
     ]);
 
     const panel = createElement('div', {
-        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--assets',
+        className: 'spw-panel rpg-gameplay-panel rpg-gameplay-panel--assets',
         id: 'rpg-kit-assets',
         'data-spw-feature': 'rpg-kit-assets'
     }, [

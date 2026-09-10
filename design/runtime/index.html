@@ -52,7 +52,7 @@
             console helpers inspect the result, and data attributes explain why a surface may reflow.
         </p>
 
-        <section class="frame-panel" id="load-locality" aria-labelledby="load-locality-title" data-spw-kind="panel" data-spw-role="load-model" data-spw-wonder="locality performance introduction">
+        <section class="spw-panel" id="load-locality" aria-labelledby="load-locality-title" data-spw-kind="panel" data-spw-role="load-model" data-spw-wonder="locality performance introduction">
             <h2 id="load-locality-title">Load as a local introduction</h2>
             <p>
                 The first script is a small boot graph. Core settings apply before the feature, region, and
@@ -70,7 +70,7 @@
             </p>
         </section>
 
-        <section class="frame-panel" id="performance-puppetry" aria-labelledby="performance-puppetry-title" data-spw-kind="panel" data-spw-role="performance-model" data-spw-wonder="puppetry performance browser svg">
+        <section class="spw-panel" id="performance-puppetry" aria-labelledby="performance-puppetry-title" data-spw-kind="panel" data-spw-role="performance-model" data-spw-wonder="puppetry performance browser svg">
             <h2 id="performance-puppetry-title">Performance puppetry</h2>
             <p>For live use, runtime behavior can become puppetry: query strings set the stage, scripts pull named strings, CSS changes disposition, SVG art carries visible figures, and logs narrate which controller moved which surface.</p>
             <pre><code>const puppet = spwCompose.logger('stage-puppet', {
@@ -83,7 +83,7 @@ puppet.describe();
 puppet.reflow('#runtime-lab', 'interaction', { scope: 'stage' });</code></pre>
         </section>
 
-        <section class="frame-panel" id="svg-art-runtime" aria-labelledby="svg-art-runtime-title" data-spw-kind="panel" data-spw-role="future-surface" data-spw-wonder="svg art performance">
+        <section class="spw-panel" id="svg-art-runtime" aria-labelledby="svg-art-runtime-title" data-spw-kind="panel" data-spw-role="future-surface" data-spw-wonder="svg art performance">
             <h2 id="svg-art-runtime-title">SVG art as a controllable surface</h2>
             <p>SVG belongs in this model because it can be semantic markup, visual art, and a live puppet surface at the same time. Hosts can expose named palettes, brand color overrides, pointer modes, and repaint cost so screenshots remain interpretable by people and image models.</p>
             <p data-spw-textual-role="note">Newer power-user surfaces (observation beats and Screenshot QA Mode via <code>?qa=screenshot-qa</code>) extend this legibility: short rhythmic capture windows pair what the page looks like with where the reader is, when the capture happened, and which semantic handles were active. Keyboard <kbd>s</kbd> or a long-press in QA mode can turn that moment into a cauldron ingredient for later comparison.</p>
@@ -97,7 +97,7 @@ console.table(SPW_SVG_PALETTES);</code></pre>
             <p><a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-palette=signal&amp;spw-svg-pointer=field&amp;spw-reflow=theme#svg-brand-screenshot" data-spw-operator="wonder">? open tuned SVG lab</a></p>
         </section>
 
-        <section class="frame-panel" id="query-controls" aria-labelledby="query-controls-title" data-spw-kind="panel" data-spw-role="query-contract">
+        <section class="spw-panel" id="query-controls" aria-labelledby="query-controls-title" data-spw-kind="panel" data-spw-role="query-contract">
             <h2 id="query-controls-title">Query tuning links</h2>
             <p>These links keep behavior visible in the URL so a tester, teammate, or language model can see the configuration without opening storage. The short aliases are meant to be typed from memory; the longer <code>spw-*</code> names remain available for forks that want stricter namespacing. The same presets are also exposed at <code>spwCompose.queryPresets</code> and <code>window.spwDebugPresets</code>.</p>
             <nav class="frame-operators" aria-label="Runtime query examples">
@@ -110,26 +110,26 @@ console.table(SPW_SVG_PALETTES);</code></pre>
             </nav>
         </section>
 
-        <section class="frame-panel" id="debug-presets" aria-labelledby="debug-presets-title" data-spw-kind="panel" data-spw-role="debug-contract">
+        <section class="spw-panel" id="debug-presets" aria-labelledby="debug-presets-title" data-spw-kind="panel" data-spw-role="debug-contract">
             <h2 id="debug-presets-title">View and interaction presets</h2>
             <p><code>view</code> tunes semantic density, <code>interaction</code> tunes motion and response, and <code>debug</code> reveals ownership. They compose cleanly because they target different layers of the runtime model.</p>
             <div class="frame-grid frame-grid--2up">
-                <article class="frame-panel">
+                <article class="spw-panel">
                     <h3>Viewing</h3>
                     <p>Use <code>?view=quiet</code>, <code>?view=readable</code>, <code>?view=inspect</code>, or <code>?view=screenshot</code> when the question is how much meaning should stay visible.</p>
                     <p><a class="spw-chip" data-spw-handle="true" href="/design/runtime/?view=inspect#debug-presets" data-spw-operator="wonder">? open inspect view</a></p>
                 </article>
-                <article class="frame-panel">
+                <article class="spw-panel">
                     <h3>Interaction</h3>
                     <p>Use <code>?interaction=calm</code>, <code>?interaction=tactile</code>, <code>?interaction=puppet</code>, or <code>?interaction=screenshot</code> when the question is how physically responsive a surface should feel.</p>
                     <p><a class="spw-chip" data-spw-handle="true" href="/design/runtime/?interaction=puppet#debug-presets" data-spw-operator="wonder">? open puppet interaction</a></p>
                 </article>
-                <article class="frame-panel">
+                <article class="spw-panel">
                     <h3>Debug</h3>
                     <p>Use <code>?debug=css</code> for structure tags, <code>?debug=layout</code> for ownership overlays, and comma-join them when the question is where a rule belongs.</p>
                     <p><a class="spw-chip" data-spw-handle="true" href="/design/runtime/?debug=css,layout#debug-presets" data-spw-operator="wonder">? open layout debug</a></p>
                 </article>
-                <article class="frame-panel">
+                <article class="spw-panel">
                     <h3>Bundle handoff</h3>
                     <p>The same query contract travels with the portable bundles, so vendors or teammates can read the URL, inspect the DOM, and know which runtime posture they are seeing.</p>
                     <p><a class="spw-chip" data-spw-handle="true" href="/design/composition/#css-svg-learning-title" data-spw-operator="potential">~bundle_docs</a></p>
@@ -137,7 +137,7 @@ console.table(SPW_SVG_PALETTES);</code></pre>
             </div>
         </section>
 
-        <section class="frame-panel" id="memory-garden-mirror" aria-labelledby="memory-garden-mirror-title" data-spw-kind="panel" data-spw-role="runtime-mirror" data-spw-feature="cauldron-garden">
+        <section class="spw-panel" id="memory-garden-mirror" aria-labelledby="memory-garden-mirror-title" data-spw-kind="panel" data-spw-role="runtime-mirror" data-spw-feature="cauldron-garden">
             <h2 id="memory-garden-mirror-title">Memory garden mirror</h2>
             <p>The cauldron and spell systems expose live lifecycle phases and gardening affordances. Root data attributes (<code>data-spw-cauldron-phase</code>, <code>data-spw-cauldron-count</code>, per-ingredient <code>data-spw-ingredient-phase</code>) plus bus events make the current "garden" of semantic memory observable and lightly tunable in any surface that loads the composition runtime.</p>
 
@@ -158,7 +158,7 @@ console.table(SPW_SVG_PALETTES);</code></pre>
         </section>
 
         <section
-            class="frame-panel spw-interaction-contract"
+            class="spw-panel spw-interaction-contract"
             id="brace-interaction-contract"
             aria-labelledby="brace-interaction-contract-title"
             data-spw-kind="panel"
@@ -212,7 +212,7 @@ console.table(SPW_SVG_PALETTES);</code></pre>
             </div>
         </section>
 
-        <section class="frame-panel" id="console-contract" aria-labelledby="console-contract-title" data-spw-kind="panel" data-spw-role="console-contract">
+        <section class="spw-panel" id="console-contract" aria-labelledby="console-contract-title" data-spw-kind="panel" data-spw-role="console-contract">
             <h2 id="console-contract-title">Console contract</h2>
             <p>The portable bundle exposes a deliberate console API. Install it when a lab page needs inspection without mounting the whole site runtime.</p>
             <pre><code>import { installSpwCompositionConsole } from '/public/js/compose.js';
@@ -222,7 +222,7 @@ spwCompose.query(document.documentElement);
 spwCompose.inspect('#runtime-lab');</code></pre>
         </section>
 
-        <section class="frame-panel" id="logging-contract" aria-labelledby="logging-contract-title" data-spw-kind="panel" data-spw-role="logging-contract">
+        <section class="spw-panel" id="logging-contract" aria-labelledby="logging-contract-title" data-spw-kind="panel" data-spw-role="logging-contract">
             <h2 id="logging-contract-title">Namespaced logging</h2>
             <p>Loggers stay quiet unless debug mode or a namespace query enables them. Each logger can describe its role, metaphor, owned surface, and target snapshot.</p>
             <pre><code>?spw-log=spw-compose,spw-core&amp;spw-log-level=debug
@@ -236,7 +236,7 @@ logger.describe();
 logger.trace('after query disposition', '#runtime-lab');</code></pre>
         </section>
 
-        <section class="frame-panel" id="reflow-contract" aria-labelledby="reflow-contract-title" data-spw-kind="panel" data-spw-role="reflow-contract">
+        <section class="spw-panel" id="reflow-contract" aria-labelledby="reflow-contract-title" data-spw-kind="panel" data-spw-role="reflow-contract">
             <h2 id="reflow-contract-title">Reflow reasons</h2>
             <p>When behavior can move layout, write the reason and tuning scope. The point is not to prevent reflow; it is to make the cause inspectable.</p>
             <pre><code>spwCompose.reflow('#runtime-lab', 'density', {
@@ -245,7 +245,7 @@ logger.trace('after query disposition', '#runtime-lab');</code></pre>
 });</code></pre>
         </section>
 
-        <section class="frame-panel" id="resource-readiness" aria-labelledby="resource-readiness-title" data-spw-kind="panel" data-spw-role="resource-contract" data-spw-wonder="prefetch cache offline responsiveness">
+        <section class="spw-panel" id="resource-readiness" aria-labelledby="resource-readiness-title" data-spw-kind="panel" data-spw-role="resource-contract" data-spw-wonder="prefetch cache offline responsiveness">
             <h2 id="resource-readiness-title">Resource readiness</h2>
             <p>The module loader now exposes what it can know before a module mounts: route and selector eligibility, effective timing, inferred module URLs, cache presence, connection posture, and whether a conservative prefetch hint was issued.</p>
             <pre><code>spwCompose.controls.modules.discovery()

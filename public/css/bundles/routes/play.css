@@ -166,14 +166,14 @@ body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
    5. Core panels / cards (Overrides for Play Route)
    ========================================================================== */
 
-:where(body[data-spw-surface="play"] :is(.frame-panel, .frame-card, .session-card, .play-card, .seed-card)) {
+:where(body[data-spw-surface="play"] :is(:is(.spw-panel, .frame-panel), .frame-card, .session-card, .play-card, .seed-card)) {
   padding: var(--inset-component, 1.2rem);
   min-height: var(--play-card-min-height-phone);
 }
 
 @supports (container-type: inline-size) {
   @container (min-width: 48rem) {
-    :where(body[data-spw-surface="play"] :is(.frame-panel, .frame-card, .session-card, .play-card, .seed-card)) {
+    :where(body[data-spw-surface="play"] :is(:is(.spw-panel, .frame-panel), .frame-card, .session-card, .play-card, .seed-card)) {
       min-height: var(--play-card-min-height-tablet);
     }
     :where(body[data-spw-surface="play"] .spw-frame) {
@@ -256,7 +256,7 @@ body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
    7. Readable text and notes
    ========================================================================== */
 
-:where(body[data-spw-surface="play"] :is([data-spw-textual-role="note"], .inline-note, .session-note, .frame-panel p, .frame-card p, .play-card p, .seed-card p)) {
+:where(body[data-spw-surface="play"] :is([data-spw-textual-role="note"], .inline-note, .session-note, :is(.spw-panel, .frame-panel) p, .frame-card p, .play-card p, .seed-card p)) {
   max-width: var(--play-readable-width);
 }
 

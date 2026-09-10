@@ -81,15 +81,15 @@
                 </p>
 
                 <div class="frame-grid frame-grid--dense">
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen">
                         <h3>Its own axis</h3>
                         <p>Affordance writes <code>--spw-salience-affordance</code>, not the shared salience property. That matters: the older feeders all declare <code>--spw-architecture-salience</code> directly, so two of them on one element do not stack &mdash; the cascade picks a winner. A separate axis lets affordance multiply <em>with</em> charge and region on the same element.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen">
                         <h3>Composition, not paint</h3>
                         <p>Twelve values, one renderer. Adding a thirteenth value &mdash; or a whole new module &mdash; is a one-line declaration with a default of <code>1</code>. Nothing new gets painted, and no selector has to win a specificity fight to be heard.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="tune">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="tune">
                         <h3>Where JavaScript still branches</h3>
                         <p><code>tune</code> keeps a second, older life in the runtime: <code>tuning-discovery.js</code> and <code>module-catalog-enhancement.js</code> select on it, and <code>page-region-rail.js</code> tests for it and writes it back onto rail links so a tunable region earns a sigil. Those tests are exact-match, so a stacked value like <code>read tune</code> registers with the CSS field but <em>not</em> with the rail.</p>
                     </article>
@@ -109,51 +109,51 @@
                 <p>Counts are occurrences in the site's HTML. The long tail is not dead weight &mdash; it is where the surface is still deciding what it wants to be.</p>
 
                 <div class="frame-grid frame-grid--dense">
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="read">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="read">
                         <h3>read <span class="spec-pill">359</span></h3>
                         <p>Reference material. The component expects to be taken in, not operated. By far the default across topic and editorial surfaces.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="orient">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="orient">
                         <h3>orient <span class="spec-pill">78</span></h3>
                         <p>Hero blocks and primary navigation. Anchors page flow and gives the reader a firm return point inside a long scroll.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="inspect">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="inspect">
                         <h3>inspect <span class="spec-pill">69</span></h3>
                         <p>Invites a closer look &mdash; deeper metadata, traces, structural guidelines. Pairs naturally with the console and field-guide features.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="navigate">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="navigate">
                         <h3>navigate <span class="spec-pill">58</span></h3>
                         <p>Moves you somewhere else. <code>navigation-spells.js</code> uses <code>navigate ground replay</code> as its default affordance for links that do not declare one.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="tune">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="tune">
                         <h3>tune <span class="spec-pill">33</span></h3>
                         <p>Holds live controls. The one value the runtime acts on &mdash; see above.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="act">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="act">
                         <h3>act <span class="spec-pill">17</span></h3>
                         <p>Commits something. Distinct from <code>tune</code>: tuning adjusts a value in place, acting takes a step that has a consequence.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="practice">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="practice">
                         <h3>practice <span class="spec-pill">10</span></h3>
                         <p>Repeatable exercise. The component expects to be run more than once, and expects you to get better at it.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="revisit">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="revisit">
                         <h3>revisit <span class="spec-pill">8</span></h3>
                         <p>Built for return rather than first contact. Assumes you have been here and are coming back with context.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="reward">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="reward">
                         <h3>reward <span class="spec-pill">4</span></h3>
                         <p>Gives something back for the interaction &mdash; a collectable, an unlock, a acknowledgement that the effort registered.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="reflect">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="reflect">
                         <h3>reflect <span class="spec-pill">4</span></h3>
                         <p>Asks for consideration rather than input. No correct answer to submit.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="choose">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="choose">
                         <h3>choose <span class="spec-pill">4</span></h3>
                         <p>Presents alternatives that are genuinely exclusive. Picking one forecloses the others.</p>
                     </article>
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="learn">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="learn">
                         <h3>learn <span class="spec-pill">3</span></h3>
                         <p>Instructional intent. The component is trying to leave you able to do something you could not do before.</p>
                     </article>

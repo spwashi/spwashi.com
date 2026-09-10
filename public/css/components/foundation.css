@@ -126,7 +126,7 @@
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -173,7 +173,7 @@
   .topic-reference-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -211,7 +211,7 @@
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -237,7 +237,7 @@
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -262,7 +262,7 @@
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -290,7 +290,7 @@
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -313,7 +313,7 @@
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -365,7 +365,7 @@
     .media-focus-card,
     .software-card,
     .operator-card,
-    .frame-panel,
+    :is(.spw-panel, .frame-panel),
     .mode-panel,
     .plan-card,
     .compare-card,
@@ -575,7 +575,7 @@
     .media-focus-card,
     .software-card,
     .operator-card,
-    .frame-panel,
+    :is(.spw-panel, .frame-panel),
     .mode-panel,
     .plan-card,
     .compare-card,
@@ -604,7 +604,7 @@
    vertical ribbon of words. */
 :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .media-card,
   .software-card,
@@ -1272,14 +1272,14 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   margin-block: calc(var(--local-bleed-offset) * -1);
 }
 
-:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:first-child,
-:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:first-child {
+:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .plan-card) > .spw-bleed:first-child,
+:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .plan-card) > .spw-bleed-block:first-child {
   border-start-start-radius: inherit;
   border-start-end-radius: inherit;
 }
 
-:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:last-child,
-:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:last-child {
+:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .plan-card) > .spw-bleed:last-child,
+:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .plan-card) > .spw-bleed-block:last-child {
   border-end-start-radius: inherit;
   border-end-end-radius: inherit;
 }

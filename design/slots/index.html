@@ -62,7 +62,7 @@
                 <h1>Universal Slots</h1>
 
                 <p data-spw-textual-role="lede">
-                    Most pieces of UI in Spwashi are a variation of the <code>.frame-card</code> or <code>.frame-panel</code> structure. Instead of authoring arbitrary wrappers, we use a predictable slot anatomy.
+                    Most pieces of UI in Spwashi are a variation of the <code>.frame-card</code> or <code>.spw-panel</code> structure. Instead of authoring arbitrary wrappers, we use a predictable slot anatomy.
                 </p>
 
                 <figure class="image-study" data-spw-slot="figure">
@@ -74,27 +74,27 @@
                 </p>
 
                 <div class="frame-grid frame-grid--dense" data-spw-slot="body">
-                    <article class="frame-panel" data-spw-slot-specimen="header">
+                    <article class="spw-panel" data-spw-slot-specimen="header">
                         <h3>[data-spw-slot="header"]</h3>
                         <p>Used for the component's identifying marker, sigil, title, or top-level pill row. It anchors the component and provides identity before interaction.</p>
                     </article>
-                    <article class="frame-panel" data-spw-slot-specimen="meta">
+                    <article class="spw-panel" data-spw-slot-specimen="meta">
                         <h3>[data-spw-slot="meta"]</h3>
                         <p>For secondary information directly beneath the header—timestamps, provenance hints, and contextual breadcrumbs.</p>
                     </article>
-                    <article class="frame-panel" data-spw-slot-specimen="figure">
+                    <article class="spw-panel" data-spw-slot-specimen="figure">
                         <h3>[data-spw-slot="figure"]</h3>
                         <p>The primary visual container, whether for a raster image study or a runtime SVG rendering surface.</p>
                     </article>
-                    <article class="frame-panel" data-spw-slot-specimen="body">
+                    <article class="spw-panel" data-spw-slot-specimen="body">
                         <h3>[data-spw-slot="body"]</h3>
                         <p>The container for prose, lists, and structurally dense readable content. Handled by a <code>max-inline-size</code> measure.</p>
                     </article>
-                    <article class="frame-panel" data-spw-slot-specimen="actions">
+                    <article class="spw-panel" data-spw-slot-specimen="actions">
                         <h3>[data-spw-slot="actions"]</h3>
                         <p>Holds operator chips, buttons, and outbound links, usually sitting at the bottom boundary before references.</p>
                     </article>
-                    <article class="frame-panel" data-spw-slot-specimen="footer">
+                    <article class="spw-panel" data-spw-slot-specimen="footer">
                         <h3>[data-spw-slot="footer"]</h3>
                         <p>For terminal metadata, reference traces, or system-level output.</p>
                     </article>

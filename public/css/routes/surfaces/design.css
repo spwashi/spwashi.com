@@ -195,7 +195,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   gap: 0.6rem;
 }
 
-:where(body[data-spw-page-seed^="page_design_"]) :where(.spw-frame) .frame-panel {
+:where(body[data-spw-page-seed^="page_design_"]) :where(.spw-frame) :is(.spw-panel, .frame-panel) {
   padding: 0.65rem 0.8rem;
 }
 
@@ -1246,7 +1246,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
    palettes hero cards and status for now; the data attr + class can be reused site-wide for
    communicable, premium-feel verification of material/UX changes. */
 :where(body[data-spw-page-seed="page_design_palettes"]) [data-settings-state],
-:where(body[data-spw-page-seed="page_design_palettes"]) .frame-panel[data-spw-component-identity] {
+:where(body[data-spw-page-seed="page_design_palettes"]) :is(.spw-panel, .frame-panel)[data-spw-component-identity] {
   transition:
     box-shadow 260ms var(--ease-mechanical, ease),
     border-color 260ms var(--ease-mechanical, ease),

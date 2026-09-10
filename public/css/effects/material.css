@@ -57,7 +57,7 @@
   .frame-card,
   .media-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main),
@@ -295,10 +295,10 @@
    This makes matte a reliable clear-contrast page posture when chosen in settings
    without forcing every child to carry the attr. Used by design hub experiments and
    any route that wants the safeguard for its primary reading surfaces. */
-:where(body[data-spw-base-metamaterial="matte"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
+:where(body[data-spw-base-metamaterial="matte"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
   /* Inherit the matte projection; explicit metamaterial on a child can still override. */
 }
-:where(body[data-spw-base-metamaterial="matte"][data-spw-high-contrast="on"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
+:where(body[data-spw-base-metamaterial="matte"][data-spw-high-contrast="on"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
   /* When matte + high-contrast, force the strongest clear ink for the treatment. */
   color: var(--material-ink-matte-strong);
 }
@@ -381,7 +381,7 @@
 }
 
 /* Inspection Posture: Structural lucidity & luminous hairline edges */
-:where(html[data-spw-interaction-context="inspecting"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel) {
+:where(html[data-spw-interaction-context="inspecting"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel) {
   --material-local-border-color: color-mix(in oklab, var(--active-op-color, #008080) 38%, var(--line-strong));
   box-shadow:
     inset 0 0 0 1px color-mix(in oklab, var(--active-op-color, #008080) 14%, transparent),

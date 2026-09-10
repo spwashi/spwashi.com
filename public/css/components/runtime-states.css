@@ -824,7 +824,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   html[data-spw-page-state="interactive"]
 ) :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   [data-spw-kind]:not(body):not(main),
   [data-spw-box-model]
@@ -851,7 +851,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   --spw-site-rhythm-tempo: min(var(--spw-site-rhythm-tempo, 1), 0.82);
 }
 
-:where(html[data-spw-connection-posture="offline"]) :where(.spw-frame, .frame-panel, .frame-card) {
+:where(html[data-spw-connection-posture="offline"]) :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card) {
   --component-accent:
     color-mix(in srgb, var(--component-accent, var(--teal, #008080)) 72%, var(--ink-soft, rgba(14, 18, 20, 0.72)) 28%);
 }
@@ -1259,7 +1259,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 }
 
 @media (max-width: 26.25rem) {
-  :where(.spw-frame, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel, .plan-card, .compare-card, .spec-column, .ref-card) {
+  :where(.spw-frame, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, :is(.spw-panel, .frame-panel), .mode-panel, .plan-card, .compare-card, .spec-column, .ref-card) {
     --component-pad: 0.68rem;
     --component-gap-tight: 0.42rem;
   }
@@ -1281,7 +1281,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
    Prevents bad wrapping and "missing element" visual breakage under seams, metadata, or dense inspect content.
    Also protects padding/chrome areas as potential gesture surfaces. */
 :where(html[data-spw-debug-mode="on"], [data-spw-state-inspector="open"]) :where(
-  .frame-card, .spw-frame, .frame-panel, .brace-surface, [data-spw-brace]
+  .frame-card, .spw-frame, :is(.spw-panel, .frame-panel), .brace-surface, [data-spw-brace]
 ) {
   /* Stronger wrapping defense */
   overflow-wrap: break-word;
@@ -1290,7 +1290,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-state-inspector="open"]) :where(
-  .frame-card, .spw-frame, .frame-panel, .brace-surface, [data-spw-brace]
+  .frame-card, .spw-frame, :is(.spw-panel, .frame-panel), .brace-surface, [data-spw-brace]
 ) :where(.frame-topline, .frame-heading, .card-body, [data-spw-slot]) {
   min-height: 0; /* prevent flex/grid collapse */
 }

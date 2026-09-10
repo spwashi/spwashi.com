@@ -20,6 +20,7 @@ const SCAFFOLD_MAP = {
 
 const GUIDED_COMPONENT_SELECTOR = [
     '.site-frame',
+    '.spw-panel',
     '.frame-panel',
     '.frame-card',
     '.software-card',
@@ -99,7 +100,7 @@ function getActiveSubstrates() {
 function getSubstrateCandidates(substrate) {
     const selector = [
         `.site-frame[data-spw-substrate="${substrate}"]`,
-        `.frame-panel[data-spw-substrate="${substrate}"]`,
+        `.spw-panel[data-spw-substrate="${substrate}"], .frame-panel[data-spw-substrate="${substrate}"]`,
         `.frame-card[data-spw-substrate="${substrate}"]`,
     ].join(', ');
 

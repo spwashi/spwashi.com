@@ -853,7 +853,7 @@ export const initRpgWednesday = () => {
     nextTurnButton.addEventListener('click', nextTurn);
 
     const initiativePanel = createElement('div', {
-        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--initiative',
+        className: 'spw-panel rpg-gameplay-panel rpg-gameplay-panel--initiative',
         id: 'rpg-kit-initiative',
         'data-spw-feature': 'rpg-kit-initiative'
     }, [
@@ -873,7 +873,7 @@ export const initRpgWednesday = () => {
     addClockButton.addEventListener('click', addClock);
 
     const clocksPanel = createElement('div', {
-        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--clocks',
+        className: 'spw-panel rpg-gameplay-panel rpg-gameplay-panel--clocks',
         id: 'rpg-kit-clocks',
         'data-spw-feature': 'rpg-kit-clocks'
     }, [
@@ -885,7 +885,7 @@ export const initRpgWednesday = () => {
     ]);
 
     const scenePanel = createElement('div', {
-        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--scene',
+        className: 'spw-panel rpg-gameplay-panel rpg-gameplay-panel--scene',
         id: 'rpg-kit-scene',
         'data-spw-feature': 'rpg-kit-scene'
     }, [
@@ -898,7 +898,7 @@ export const initRpgWednesday = () => {
     ]);
 
     const notesPanel = createElement('div', {
-        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--notes',
+        className: 'spw-panel rpg-gameplay-panel rpg-gameplay-panel--notes',
         id: 'rpg-kit-notes',
         'data-spw-feature': 'rpg-kit-notes'
     }, [
@@ -977,7 +977,7 @@ export const initRpgWednesday = () => {
     });
 
     const briefPanel = createElement('div', {
-        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--brief',
+        className: 'spw-panel rpg-gameplay-panel rpg-gameplay-panel--brief',
         id: 'rpg-kit-brief',
         'data-spw-feature': 'rpg-kit-brief'
     }, [

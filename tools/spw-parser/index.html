@@ -238,43 +238,43 @@
                 </header>
                 <p data-spw-textual-role="note">These specimens test candidate v0.4 grammar constructs against the live browser parser kernel. Workbench designers can click any specimen to load it into the editor, check token spans, verify AST depth, and falsify proposed grammar changes.</p>
                 <div class="frame-grid frame-grid--dense">
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Claims &amp; Probes (<a href="?spw_sample=v04_claims#literal-parser">load</a>)</h3>
                         <p><code>owner_claim</code> and <code>^"synthesis"</code> blocks declare hypotheses, specification citations, and falsification probes. Pillar: <a href="/topics/software/spw/#language-evolution-v04">claim-probe syntax</a>.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>File Profiles (<a href="?spw_sample=profiles#literal-parser">load</a>)</h3>
                         <p><code>!:profile "convention"</code> headers declare expected file anatomy and enforce required structural blocks across the corpus. Pillar: <a href="/topics/software/spw/#language-evolution-v04">profiles &amp; validator</a>.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Dot-Crawl Joins (<a href="?spw_sample=dot_crawl#literal-parser">load</a>)</h3>
                         <p>Crawl traverses complete braces (<code>{a}.{b}.{c}</code>). Tight <code>a.b.c</code> is one identifier. Comma is common; semicolon is a schedule; <code>~&gt;</code> is a path. Pillar: <a href="/topics/software/spw/#join-crawl">joins</a>.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Stem Projections (<a href="?spw_sample=stem_projection#literal-parser">load</a>)</h3>
                         <p><code>&gt;stem[name]{...}</code> projects one semantic root into copy, design tokens, runtime datasets, and inspection handles without forking truth.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Combinatoric Genre (<a href="?spw_sample=boonhonk#literal-parser">load</a>)</h3>
                         <p>Five voices, twenty pairs. Dummy for a first beat, not twenty-five SKUs. Parser still has to round-trip <code>boonhonk[genre]{...}</code>.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Path count (<a href="?spw_sample=paths#literal-parser">load</a>)</h3>
                         <p>The spatial twin of a pair: <code>paths[grid]{east.north}</code>.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Gradient slices (<a href="?spw_sample=gradient#literal-parser">load</a>)</h3>
                         <p>Slice-specific rates as one uphill hint.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Holdings (<a href="?spw_sample=holdings#literal-parser">load</a>)</h3>
                         <p>Seed, season, table — a small book of holds. Capsule <code>&lt;policy&gt;</code> is the channel, not a ticker.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>First beat (<a href="?spw_sample=beat#literal-parser">load</a>)</h3>
                         <p><code>beat[unary]{close}&lt;offer&gt;</code>, pair compose, season dwell. Same grammar as the studio channel.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Workbench Bridge</h3>
                         <p>Upstream language design lives on branch <code>feature/spw-language-v04</code> in <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>. See <a href="/topics/software/spw/#language-evolution-v04">language evolution</a> and <a href="https://github.com/spwashi/spw-workbench/blob/main/packages/spw-seed/src/parser.ts">parser source</a>.</p>
                     </article>
@@ -301,19 +301,19 @@
                     <h2>What this proves</h2>
                 </header>
                 <div class="frame-grid frame-grid--dense">
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Literal structure</h3>
                         <p>Source positions, token kinds, and AST spans remain inspectable. When the parser emits diagnostics they stay visible; permissive input remains accepted exactly as the parser reports.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Portable kernel</h3>
                         <p>The parser has no DOM dependency. This page imports a browser bundle generated from the mounted workbench parser entrypoint.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Lossless evidence</h3>
                         <p>The token stream is concatenated and compared with the original source. “Exact” means every emitted token reconstructs the literal input.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Honest boundary</h3>
                         <p>This proves parsing and source geometry. It does not claim evaluation, canonical normalization, runtime effects, or semantic correctness for every possible program.</p>
                     </article>

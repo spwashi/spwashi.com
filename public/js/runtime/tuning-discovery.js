@@ -21,6 +21,7 @@ const TUNABLE_SCOPE_SELECTOR = [
 const SETTING_TRIGGER_SELECTOR = '[data-site-setting-set], [data-site-settings-recipe], [data-preset], [name]';
 const EMBEDDED_TUNING_HOST_SELECTOR = [
   '.site-frame',
+  '.spw-panel',
   '.frame-panel',
   '.frame-card',
   '.mode-panel',

@@ -143,6 +143,7 @@ export const COMPONENT_SELECTORS = Object.freeze([
 export const MODULE_SELECTORS = Object.freeze([
   '.spw-frame',
   '[data-spw-kind="frame"]',
+  '.spw-panel',
   '.frame-panel',
   '.frame-card',
   '.software-card',
@@ -154,6 +155,7 @@ export const MODULE_SELECTORS = Object.freeze([
 export const SEMANTIC_CHROME_SELECTORS = Object.freeze([
   '.spw-frame',
   '[data-spw-kind="frame"]',
+  '.spw-panel',
   '.frame-panel',
   '.frame-card',
   '.mode-panel',
@@ -1660,7 +1662,7 @@ export function inferTopographyKind(el, fallback = 'component') {
 
   if (matchesAny(el, SURFACE_COMPONENT_SELECTORS)) return 'surface';
   if (hasClass(el, 'site-frame')) return 'frame';
-  if (hasClass(el, 'frame-panel') || hasClass(el, 'intent-cluster')) return 'panel';
+  if (hasClass(el, 'spw-panel') || hasClass(el, 'frame-panel') || hasClass(el, 'intent-cluster')) return 'panel';
   if (hasClass(el, 'mode-panel') || el.matches?.('[data-spw-kind="lens"], [data-spw-component-kind="lens"]')) return 'lens';
   if (el.matches?.('[data-spw-kind="hook"], [data-spw-component-kind="hook"]')) return 'hook';
   if (el.matches?.('[data-spw-kind="surface"], [data-spw-component-kind="surface"]')) return 'surface';

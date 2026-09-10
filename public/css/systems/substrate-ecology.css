@@ -50,7 +50,7 @@
   [data-spw-surface-kind],
   .spw-frame,
   .frame-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .operator-card,
   .media-card,

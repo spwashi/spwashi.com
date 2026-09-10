@@ -175,8 +175,8 @@
   .media-card-grid > .media-card,
   .media-focus-layout > * > .media-focus-card,
   .feature-map > .frame-card,
-  .domain-grid > .frame-panel,
-  .spec-grid > :is(.software-card, .frame-panel)
+  .domain-grid > :is(.spw-panel, .frame-panel),
+  .spec-grid > :is(.software-card, :is(.spw-panel, .frame-panel))
 ) {
   height: 100%;
 }
@@ -281,14 +281,14 @@
   border-style: dashed;
 }
 
-:where(.spw-frame .frame-panel, .spw-frame .frame-card) {
+:where(.spw-frame :is(.spw-panel, .frame-panel), .spw-frame .frame-card) {
   transition:
     transform var(--duration-fast, 120ms) var(--ease-mechanical, ease),
     border-color var(--duration-base, 180ms) var(--ease-mechanical, ease),
     box-shadow var(--duration-base, 180ms) var(--ease-mechanical, ease);
 }
 
-:where(.spw-frame .frame-panel:is(:hover, :focus-within), .spw-frame .frame-card:is(:hover, :focus-within)) {
+:where(.spw-frame :is(.spw-panel, .frame-panel):is(:hover, :focus-within), .spw-frame .frame-card:is(:hover, :focus-within)) {
   transform: translateY(-1px);
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, var(--line, transparent));
 }
@@ -317,11 +317,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(.spw-frame .frame-panel, .spw-frame .frame-card) {
+  :where(.spw-frame :is(.spw-panel, .frame-panel), .spw-frame .frame-card) {
     transition: none;
   }
 
-  :where(.spw-frame .frame-panel:is(:hover, :focus-within), .spw-frame .frame-card:is(:hover, :focus-within)) {
+  :where(.spw-frame :is(.spw-panel, .frame-panel):is(:hover, :focus-within), .spw-frame .frame-card:is(:hover, :focus-within)) {
     transform: none;
   }
 }

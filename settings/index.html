@@ -2321,7 +2321,7 @@
                         </fieldset>
                     </div>
 
-                    <article class="frame-panel settings-console-snippets" data-spw-box-model="console-recipe" data-spw-page-hook="console-snippets" data-spw-page-hook-label="Console snippets">
+                    <article class="spw-panel settings-console-snippets" data-spw-box-model="console-recipe" data-spw-page-hook="console-snippets" data-spw-page-hook-label="Console snippets">
                         <h3>Console snippets</h3>
                         <p>
                             Hobbyists and extension authors can paste these into DevTools to inspect the same shared runtime
@@ -2507,7 +2507,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             </div>
 
             <article
-                class="frame-panel settings-feature-scope-panel"
+                class="spw-panel settings-feature-scope-panel"
                 data-site-feature-scope-panel
                 data-spw-box-model="technical-readout"
                 data-spw-feature="settings-feature-scopes"
@@ -2558,7 +2558,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             </article>
 
             <article
-                class="frame-panel settings-partial-lab-panel"
+                class="spw-panel settings-partial-lab-panel"
                 data-site-feature-lab-panel
                 data-site-settings-scope
                 data-spw-box-model="control-card"
@@ -2700,7 +2700,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
 
             <div class="frame-grid" data-spw-feature="settings-notes-grid">
                 <div
-                    class="frame-panel settings-note-register"
+                    class="spw-panel settings-note-register"
                     data-spw-category-family="specimen"
                     data-spw-collectability="medium"
                     data-spw-consequence="memory"
@@ -2750,7 +2750,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                 </div>
 
                 <div
-                    class="frame-panel settings-reset-panel"
+                    class="spw-panel settings-reset-panel"
                     data-spw-category-family="specimen"
                     data-spw-kind="panel"
                     data-spw-role="reference"
@@ -2841,7 +2841,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                 </article>
             </div>
 
-            <article class="frame-panel settings-persistence-panel" data-spw-feature="persistence-register">
+            <article class="spw-panel settings-persistence-panel" data-spw-feature="persistence-register">
                 <p class="settings-panel-kicker">Browser-local registers</p>
                 <h3>Persistence register</h3>
                 <p>
@@ -2857,7 +2857,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                 <div class="settings-persistence-list" data-site-persistence-list="resettable"></div>
             </article>
 
-            <article class="frame-panel settings-collection-panel" data-spw-feature="component-collection">
+            <article class="spw-panel settings-collection-panel" data-spw-feature="component-collection">
                 <p class="settings-panel-kicker">Discovered across the site</p>
                 <h3>Component collection</h3>
                 <p>
@@ -2900,7 +2900,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                 rule: explicit state first, visual response second.
             </p>
 
-            <aside class="frame-panel" data-spw-box-model="composition-note" data-spw-semantic-cluster="javascript layout storytelling settings">
+            <aside class="spw-panel" data-spw-box-model="composition-note" data-spw-semantic-cluster="javascript layout storytelling settings">
                 <h3>Component composition is inspectable</h3>
                 <p>
                     The Settings page now labels representative regions as stages, folds, choice fields, readouts, token cards,
@@ -2915,37 +2915,37 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             </aside>
 
             <div class="frame-grid" data-spw-box-model="runtime-sequence" data-spw-composition-flow="grid">
-                <article class="frame-panel" data-spw-box-model="runtime-step">
+                <article class="spw-panel" data-spw-box-model="runtime-step">
                     <h3>1. Normalize</h3>
                     <p>Stored values are merged with defaults and checked against allowed options.</p>
                     <code>normalizeSiteSettings(storage.get())</code>
                 </article>
 
-                <article class="frame-panel" data-spw-box-model="runtime-step">
+                <article class="spw-panel" data-spw-box-model="runtime-step">
                     <h3>2. Derive</h3>
                     <p>Settings become author, climate, typography, motion, grain, ecology, semantic, field, and wonder modifiers.</p>
                     <code>deriveArchitecturalModifiers(settings)</code>
                 </article>
 
-                <article class="frame-panel" data-spw-box-model="runtime-step">
+                <article class="spw-panel" data-spw-box-model="runtime-step">
                     <h3>3. Apply</h3>
                     <p>Datasets and CSS variables are written to the document root and body.</p>
                     <code>document.documentElement.dataset.spw*</code>
                 </article>
 
-                <article class="frame-panel" data-spw-box-model="runtime-step">
+                <article class="spw-panel" data-spw-box-model="runtime-step">
                     <h3>4. Emit</h3>
                     <p>Canonical bus events announce settings, author mode, development shifts, and deviations.</p>
                     <code>bus.emit("settings:changed", settings)</code>
                 </article>
 
-                <article class="frame-panel" data-spw-box-model="runtime-step">
+                <article class="spw-panel" data-spw-box-model="runtime-step">
                     <h3>5. Warm</h3>
                     <p>Eligible modules declare whether they were considered, prefetched, cached, or deferred by connection posture.</p>
                     <code>window.__SPW_SITE__.discoverRuntimeResources()</code>
                 </article>
 
-                <article class="frame-panel settings-query-panel" data-site-settings-query-lab data-spw-box-model="query-recipe-lab" data-spw-feature="settings-query-lab" data-spw-page-hook="query-recipes" data-spw-page-hook-label="Landing modes">
+                <article class="spw-panel settings-query-panel" data-site-settings-query-lab data-spw-box-model="query-recipe-lab" data-spw-feature="settings-query-lab" data-spw-page-hook="query-recipes" data-spw-page-hook-label="Landing modes">
                     <h3>Query recipes</h3>
                     <p class="settings-query-lede">
                         Named landing modes you can share in the address bar. Each recipe uses readable query keys —

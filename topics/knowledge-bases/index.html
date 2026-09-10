@@ -80,15 +80,15 @@
             <h2>Knowledge Base Value Model</h2>
             <p>Knowledge bases matter when they reduce rediscovery cost. A good one turns scattered work into durable recall, gives future collaborators a route into the material, and keeps private notes close enough to become public artifacts when the time is right.</p>
             <div class="frame-grid">
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>Retrieval</h3>
                     <p>Search, backlinks, tags, and stable file names help a thought survive beyond the week it was written.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>Publication</h3>
                     <p>Notes become useful outside the notebook when they can project into guides, service pages, books, documentation, or route maps.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>Codebase curriculum</h3>
                     <p>The same habit applies to software: events, page data, component rationales, and architecture notes should make a codebase easier to learn.</p>
                 </div>
@@ -128,15 +128,15 @@
             <p>Earlier passes concentrated on the application that held the notes. The durable lessons were narrower and more useful: keep the files, put rare behavior at the edge, teach agents an open format, and let a reader leave without surrendering the corpus. The current work begins one layer deeper: state the semantic relation before asking software to transform it.</p>
             <p>The infrastructure a knowledge base needs in order to stay honest is now visible here: a page template so routes share a shell, a browser parser that is the same kernel as the workbench, operator names aligned with that parser, a module catalog that can unmount as well as mount, and site search that can find a stem. Copy still has to earn its keep as a checkable claim, not as a plea to imagine more integrations.</p>
             <div class="frame-grid">
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>What file-first tools taught</h3>
                     <p>Agents get more useful when the corpus has a grammar they can be taught, and less trustworthy when they must invent structure inside a blob. Owned files, explicit links, and narrow extensions matter more than copying a particular vault interface.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>What AI changes now</h3>
                     <p>A language model can traverse named stems, propose a scene, or draft a weight table. It should not become the owner of the files. Human-readable source stays the trust surface; the model is a temporary reader whose work leaves a receipt, not a second memory silo.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>Where attention moved</h3>
                     <p>Attention is now on semantic identity, admissible transformations, and compact evidence. The honest question is whether a claim stays the same claim across its native shapes—and whether a crew can inspect the authorized result without replaying the whole search.</p>
                 </div>
@@ -151,19 +151,19 @@
             <h2>Four authorable ways to keep meaning inspectable</h2>
             <p>A contribution becomes easier to share when its native shape, transformation rule, and witness are explicit. These four tracks are useful across games, publications, software, and learning systems because each can produce a compact receipt without collapsing into one universal format.</p>
             <div class="frame-grid">
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>Track A — deterministic renderings</h3>
                     <p>A committed seed selects traits, then a pure function renders layered SVG. The contract is <code>render(traits) → SVG</code> with no hidden randomness, so another reader can re-derive the same image. That is closer to a craft constraint than to a style prompt. Continue in the <a href="/design/experiments/svg/">SVG experiments</a>.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>Track B — readable scene files</h3>
                     <p>A scene can remain handwritten text—rooms, conditions, effects, exits, and a declared win—while an executor checks the same marks later. The source stays authorable without runtime expertise. The compact pattern lives in <a href="#scene-receipts">the scene receipt below</a>.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>Track C — seasonal tables</h3>
                     <p>Generated biomes, ingredients, or encounter lists can live in versioned tables. If an addition re-buckets every seed, expansion belongs at a named season boundary rather than inside a silent edit. The table version is part of the result.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>Hand art, separately</h3>
                     <p>Procedural assets should stay seed-derived. Hand-drawn or generated stills are another layer with their own provenance, crop, palette, and review path. A missing integration should not erase the asset’s native identity. Continue in the <a href="/design/folios/">folios</a> or <a href="/tools/midjourney/">depiction bench</a>.</p>
                 </div>
@@ -190,15 +190,15 @@
             <h2>Identity, boundary, ledger</h2>
             <p data-spw-copy-unit="knowledge.versioned-holdings.lede">Value gets vague when identity, supply boundary, and history collapse into one number. These are three separate holdings a crew can share. Other systems can reuse the policy without copying the surrounding world.</p>
             <div class="frame-grid">
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>Seed</h3>
                     <p>The same committed seed must render the same thing twice. That is identity you can re-run, closer to a serial number than to a vibe.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>Season</h3>
                     <p>Appending mid-season re-buckets every existing seed. Expansion is a boundary, not a silent mint. Supply policy you can see.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3>Table version</h3>
                     <p>The ledger is the versioned table. A stranger should be able to name which table they played.</p>
                 </div>
@@ -238,19 +238,19 @@ The vault door hangs open.
   ~ hands = 1
   -&gt; END</code></pre>
             <div class="frame-grid">
-                <article class="frame-panel">
+                <article class="spw-panel">
                     <h3>Rooms</h3>
                     <p><code>=== name</code> is a room. Prose under it is what the runner sees. <code>-&gt; hall</code> or <code>-&gt; END</code> is the exit.</p>
                 </article>
-                <article class="frame-panel">
+                <article class="spw-panel">
                     <h3>Gates</h3>
                     <p><code>{ strength &gt;= 5 }</code> is a condition. <code>var op value</code>, membership, <code>!</code>, AND (<code>&amp;&amp;</code> or comma), OR (<code>||</code>). A <code>$</code> on the right is another slot, not Spw substrate.</p>
                 </article>
-                <article class="frame-panel">
+                <article class="spw-panel">
                     <h3>Effects</h3>
                     <p><code>~ gold -= 10</code> mutates a slot. Assign, add, subtract, or <code>call("name", args)</code>. Budget is sixteen slots.</p>
                 </article>
-                <article class="frame-panel">
+                <article class="spw-panel">
                     <h3>Win and publish</h3>
                     <p>A declared win condition is what a verifier re-executes. Until the publish path accepts and checks the same source, a <code>.scene</code> file is a draft rather than an authorized board entry.</p>
                 </article>
@@ -269,19 +269,19 @@ The vault door hangs open.
             </div>
             <h2>Starting references</h2>
             <div class="frame-grid">
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3><a href="/tools/spw-parser/">Spw literal parser</a></h3>
                     <p>The local substrate check: author an expression, inspect how it parses, and compare the literal relation with its HTML projection. Useful before asking a runtime or agent to infer more than the source says.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3><a href="https://commonmark.org/" target="_blank" rel="noopener">CommonMark</a></h3>
                     <p>Useful when the question becomes "what exactly is the Markdown substrate?" rather than "what does this app add on top?" Returning learners can use this as the substrate check before comparing tools.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3><a href="https://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a></h3>
                     <p>The original Markdown project page is still a helpful anchor for the older, lighter-weight file-format side of the ecosystem. It pairs well with the local file routes when you want to separate syntax from product behavior.</p>
                 </div>
-                <div class="frame-panel">
+                <div class="spw-panel">
                     <h3><a href="/topics/software/text-editing/">Text editing</a></h3>
                     <p>Use the adjacent text-editing route when you need the broader editor lineage rather than only the knowledge-base category. Returning learners can move between the two routes without losing the distinction between editing and knowledge-base behavior.</p>
                 </div>

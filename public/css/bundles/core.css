@@ -333,7 +333,7 @@ a {
 }
 
 article a,
-.frame-panel a,
+:is(.spw-panel, .frame-panel) a,
 .inline-note a,
 [data-spw-textual-role="lede"] a,
 [data-spw-textual-role="lede"] a,
@@ -347,7 +347,7 @@ article a,
 }
 
 article a:hover,
-.frame-panel a:hover,
+:is(.spw-panel, .frame-panel) a:hover,
 .inline-note a:hover,
 [data-spw-textual-role="lede"] a:hover,
 [data-spw-textual-role="note"] a:hover {
@@ -487,7 +487,7 @@ code {
   figure,
   .spw-frame,
   .frame-grid,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .mode-panels,
   .mode-panel,
@@ -12175,8 +12175,8 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   article :is(p, li, blockquote, pre, code, kbd, samp),
   [data-spw-textual-role="lede"],
   [data-spw-textual-role="lede"],
-  :is(.frame-panel, .frame-details) p,
-  .frame-panel li,
+  :is(:is(.spw-panel, .frame-panel), .frame-details) p,
+  :is(.spw-panel, .frame-panel) li,
   .inline-note,
   [data-spw-textual-role="note"],
   .plan-thesis,
@@ -13145,7 +13145,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
 /* Grammar owns route-portable structural semantics. */
 :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .mode-panel,
@@ -13162,7 +13162,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
 /* Lift ordinary flow content above generated braces, rails, and ornaments.
    Out-of-flow roles keep their own geometry contract. */
 :where(
-  :is(.spw-frame, .frame-panel, .frame-card, .software-card, .mode-panel, .plan-card, .compare-card, .spec-column)
+  :is(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .software-card, .mode-panel, .plan-card, .compare-card, .spec-column)
     > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"])
 ) {
   position: relative;
@@ -14645,7 +14645,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   --brace-corner-height: 1.1rem;
 }
 
-:where(.frame-panel[data-spw-form="brace"]) {
+:where(:is(.spw-panel, .frame-panel)[data-spw-form="brace"]) {
   --brace-corner-offset: 0.3rem;
   --brace-corner-width: 1.2rem;
   --brace-corner-height: 0.85rem;
@@ -14801,7 +14801,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   --block-depth-color: color-mix(in srgb, var(--grammar-ink) 2%, transparent);
 }
 
-:where(.frame-panel[data-spw-form="block"]) {
+:where(:is(.spw-panel, .frame-panel)[data-spw-form="block"]) {
   --block-inset: 0.25rem;
   --block-radius: calc(var(--grammar-radius-sm) - 0.06rem);
   --block-highlight-offset: 0.6px;
@@ -14827,7 +14827,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
 
 :where(
   .spw-frame > .spw-component-tag,
-  .frame-panel > .spw-component-tag,
+  :is(.spw-panel, .frame-panel) > .spw-component-tag,
   .frame-card > .spw-component-tag,
   .software-card > .spw-component-tag,
   .mode-panel > .spw-component-tag,
@@ -15700,7 +15700,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -15747,7 +15747,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   .topic-reference-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -15785,7 +15785,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -15811,7 +15811,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -15836,7 +15836,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -15864,7 +15864,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -15887,7 +15887,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -15939,7 +15939,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
     .media-focus-card,
     .software-card,
     .operator-card,
-    .frame-panel,
+    :is(.spw-panel, .frame-panel),
     .mode-panel,
     .plan-card,
     .compare-card,
@@ -16149,7 +16149,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
     .media-focus-card,
     .software-card,
     .operator-card,
-    .frame-panel,
+    :is(.spw-panel, .frame-panel),
     .mode-panel,
     .plan-card,
     .compare-card,
@@ -16178,7 +16178,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
    vertical ribbon of words. */
 :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .media-card,
   .software-card,
@@ -16846,14 +16846,14 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   margin-block: calc(var(--local-bleed-offset) * -1);
 }
 
-:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:first-child,
-:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:first-child {
+:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .plan-card) > .spw-bleed:first-child,
+:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .plan-card) > .spw-bleed-block:first-child {
   border-start-start-radius: inherit;
   border-start-end-radius: inherit;
 }
 
-:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:last-child,
-:where(.spw-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:last-child {
+:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .plan-card) > .spw-bleed:last-child,
+:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .plan-card) > .spw-bleed-block:last-child {
   border-end-start-radius: inherit;
   border-end-end-radius: inherit;
 }
@@ -16927,8 +16927,8 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   [data-spw-component-density="compact"],
   [data-spw-component-density="dense"],
   [data-spw-pinch-variant="compact"],
-  html[data-spw-component-density="dense"] :where(.spw-frame, .frame-panel, .frame-card),
-  html[data-spw-pinch-variant="compact"] :where(.spw-frame, .frame-panel, .frame-card)
+  html[data-spw-component-density="dense"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card),
+  html[data-spw-pinch-variant="compact"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card)
 ) {
   --component-pad: var(--pack-tier-compact-pad);
   --component-gap: var(--pack-tier-compact-gap);
@@ -16952,8 +16952,8 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   [data-spw-density="reading"],
   [data-spw-component-density="roomy"],
   [data-spw-pinch-variant="roomy"],
-  html[data-spw-component-density="roomy"] :where(.spw-frame, .frame-panel, .frame-card),
-  html[data-spw-pinch-variant="roomy"] :where(.spw-frame, .frame-panel, .frame-card)
+  html[data-spw-component-density="roomy"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card),
+  html[data-spw-pinch-variant="roomy"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card)
 ) {
   --component-pad: var(--pack-tier-roomy-pad);
   --component-gap: var(--pack-tier-roomy-gap);
@@ -16971,7 +16971,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   );
 }
 
-:where(.spw-frame, .frame-panel, .frame-card, .frame-body) {
+:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body) {
   --spw-flow-space: var(--pack-tier-balanced-flow);
   --component-pad: var(--spw-pack-pad-active, var(--pack-tier-balanced-pad));
   --component-gap: var(--spw-pack-gap-active, var(--pack-tier-balanced-gap));
@@ -17112,7 +17112,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17177,7 +17177,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17196,7 +17196,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17212,7 +17212,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17225,7 +17225,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 html[data-spw-color-mode="dark"] :where(
   .frame-card,
   .media-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17241,7 +17241,7 @@ html[data-spw-color-mode="dark"] :where(
   html[data-spw-color-mode="auto"] :where(
     .frame-card,
     .media-card,
-    .frame-panel,
+    :is(.spw-panel, .frame-panel),
     .mode-panel,
     .plan-card,
     .compare-card,
@@ -17260,7 +17260,7 @@ html[data-spw-color-mode="dark"] :where(
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17308,7 +17308,7 @@ html[data-spw-color-mode="dark"] :where(
     .media-focus-card,
     .software-card,
     .operator-card,
-    .frame-panel,
+    :is(.spw-panel, .frame-panel),
     .mode-panel,
     .plan-card,
     .compare-card,
@@ -17378,7 +17378,7 @@ html[data-spw-color-mode="dark"] :where(
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17552,7 +17552,7 @@ html[data-spw-color-mode="dark"] :where(
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17675,7 +17675,7 @@ html[data-spw-color-mode="dark"] :where(
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17699,7 +17699,7 @@ html[data-spw-color-mode="dark"] :where(
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17723,7 +17723,7 @@ html[data-spw-color-mode="dark"] :where(
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17750,7 +17750,7 @@ html[data-spw-color-mode="dark"] :where(
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -17875,7 +17875,7 @@ html[data-spw-color-mode="dark"] :where(
   .spw-card,
   .spw-panel,
   .frame-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .media-card,
   .media-focus-card,
   .software-card,
@@ -17909,7 +17909,7 @@ html[data-spw-color-mode="dark"] :where(
   .spw-card,
   .spw-panel,
   .frame-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .media-card,
   .media-focus-card,
   .software-card,
@@ -17924,7 +17924,7 @@ html[data-spw-color-mode="dark"] :where(
 :where(
   .spw-card,
   .frame-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .media-card,
   .media-focus-card,
   .software-card,
@@ -17939,7 +17939,7 @@ html[data-spw-color-mode="dark"] :where(
 :where(
   .spw-card,
   .frame-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .media-card,
   .media-focus-card,
   .software-card,
@@ -18078,7 +18078,7 @@ html[data-spw-color-mode="dark"] :where(
 }
 
 /* Explicit defaults for consistent layout/wrapping/alignment across cards and panels */
-:where(.spw-card, .spw-panel, .frame-card, .frame-panel, .math-lens-card, .topic-reference-card, .spw-principle-card) {
+:where(.spw-card, .spw-panel, .frame-card, :is(.spw-panel, .frame-panel), .math-lens-card, .topic-reference-card, .spw-principle-card) {
   --card-internal-gap: 0.42rem;
   display: grid;
   gap: var(--card-internal-gap);
@@ -18090,11 +18090,11 @@ html[data-spw-color-mode="dark"] :where(
   overflow-wrap: break-word;
 }
 
-:where(.spw-card, .spw-panel, .frame-card, .frame-panel) :where(p) {
+:where(.spw-card, .spw-panel, .frame-card, :is(.spw-panel, .frame-panel)) :where(p) {
   line-height: var(--site-line-height-tight, 1.4);
 }
 
-:where(.spw-card, .spw-panel, .frame-card, .frame-panel) :where(h1, h2, h3, h4, h5, h6, .frame-card-title, .spw-card__title) {
+:where(.spw-card, .spw-panel, .frame-card, :is(.spw-panel, .frame-panel)) :where(h1, h2, h3, h4, h5, h6, .frame-card-title, .spw-card__title) {
   line-height: var(--line-height-heading-sm, 1.2);
   margin-block-start: 0;
 }
@@ -18103,7 +18103,7 @@ html[data-spw-color-mode="dark"] :where(
   align-items: stretch;
 }
 
-:where(.spw-card, .spw-panel, .frame-card, .frame-panel) :where(.spw-chip, .spw-chip, .frame-sigil) {
+:where(.spw-card, .spw-panel, .frame-card, :is(.spw-panel, .frame-panel)) :where(.spw-chip, .spw-chip, .frame-sigil) {
   white-space: nowrap;
   max-inline-size: 100%;
   overflow: hidden;
@@ -18437,18 +18437,18 @@ html[data-spw-color-mode="dark"] :where(
 /* Screenshot-utility defaults for reference-style token/spec cards across the site.
    Makes sections like Environment Synchronization, sync specimens, and similar
    denser, higher-contrast, and more legible when captured. */
-:where(.frame-panel.sync-specimen, .sync-specimen) {
+:where(:is(.spw-panel, .frame-panel).sync-specimen, .sync-specimen) {
   padding: 0.6rem 0.75rem;
   gap: 0.32rem;
 }
 
-:where(.frame-panel.sync-specimen h4, .sync-specimen h4) {
+:where(:is(.spw-panel, .frame-panel).sync-specimen h4, .sync-specimen h4) {
   font-size: 0.8rem;
   margin: 0;
   letter-spacing: 0.015em;
 }
 
-:where(.frame-panel.sync-specimen code, .sync-specimen code) {
+:where(:is(.spw-panel, .frame-panel).sync-specimen code, .sync-specimen code) {
   font-size: 0.76rem;
   padding: 0.1rem 0.38rem;
   border-radius: 3px;
@@ -18459,7 +18459,7 @@ html[data-spw-color-mode="dark"] :where(
   font-weight: 600;
 }
 
-:where(.frame-panel.sync-specimen [data-spw-textual-role="note"], .sync-specimen [data-spw-textual-role="note"]) {
+:where(:is(.spw-panel, .frame-panel).sync-specimen [data-spw-textual-role="note"], .sync-specimen [data-spw-textual-role="note"]) {
   font-size: 0.7rem;
   line-height: 1.32;
   color: var(--ink-mid, color-mix(in srgb, var(--ink) 58%, transparent));
@@ -18506,7 +18506,7 @@ html[data-spw-color-mode="dark"] :where(
   overflow-wrap: break-word;
 }
 
-/* Light upgrade for .frame-panel used in card-like roles on landing pages.
+/* Light upgrade for :is(.spw-panel, .frame-panel) used in card-like roles on landing pages.
    Gives them better wrapping, rhythm, and hover behavior without requiring a full class change.
    This is especially useful on design, blog, about, math, and play hubs. */
 /* Content-specific card variants: authored intent + runtime tone feedback. */
@@ -18516,7 +18516,7 @@ html[data-spw-color-mode="dark"] :where(
   --spw-content-variant-gap: var(--card-internal-gap, 0.45rem);
 }
 
-:where(.spw-panel[data-spw-content-variant="entry"], .frame-panel[data-spw-content-variant="entry"], .frame-card[data-spw-content-variant="entry"]) {
+:where(:is(.spw-panel, .frame-panel)[data-spw-content-variant="entry"], .frame-card[data-spw-content-variant="entry"]) {
   --spw-content-variant-accent: var(--op-frame-color, var(--component-accent));
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
@@ -18554,8 +18554,8 @@ html[data-spw-color-mode="dark"] :where(
   max-inline-size: 48ch;
 }
 
-:where(.frame-panel[data-spw-content-tone="dense"],
-       .frame-panel[data-spw-content-tone="operator-heavy"],
+:where(:is(.spw-panel, .frame-panel)[data-spw-content-tone="dense"],
+       :is(.spw-panel, .frame-panel)[data-spw-content-tone="operator-heavy"],
        .frame-card[data-spw-content-tone="dense"],
        .frame-card[data-spw-content-tone="operator-heavy"]) {
   --spw-content-variant-gap: 0.36rem;
@@ -18564,18 +18564,18 @@ html[data-spw-color-mode="dark"] :where(
   gap: var(--spw-content-variant-gap);
 }
 
-:where(.frame-panel[data-spw-content-tone="text-long"],
+:where(:is(.spw-panel, .frame-panel)[data-spw-content-tone="text-long"],
        .frame-card[data-spw-content-tone="text-long"]) {
   --spw-content-variant-gap: 0.5rem;
 }
 
-:where(.frame-panel[data-spw-content-tone="light"],
+:where(:is(.spw-panel, .frame-panel)[data-spw-content-tone="light"],
        .frame-card[data-spw-content-tone="light"]) {
   --spw-content-variant-pad: calc(var(--component-pad, 0.85rem) * 1.06);
   padding: var(--spw-content-variant-pad);
 }
 
-:where(.frame-panel[data-spw-kind="card"], .frame-panel[data-spw-role="reference"][data-spw-category-family]) {
+:where(:is(.spw-panel, .frame-panel)[data-spw-kind="card"], :is(.spw-panel, .frame-panel)[data-spw-role="reference"][data-spw-category-family]) {
   background:
     linear-gradient(
       180deg,
@@ -18589,13 +18589,13 @@ html[data-spw-color-mode="dark"] :where(
   transition: box-shadow var(--component-transition-base), border-color var(--component-transition-fast);
 }
 
-:where(.frame-panel[data-spw-kind="card"], .frame-panel[data-spw-role="reference"][data-spw-category-family]):is(:hover, :focus-within) {
+:where(:is(.spw-panel, .frame-panel)[data-spw-kind="card"], :is(.spw-panel, .frame-panel)[data-spw-role="reference"][data-spw-category-family]):is(:hover, :focus-within) {
   box-shadow: var(--component-shadow-active);
   border-color: color-mix(in srgb, var(--component-route-accent, var(--active-op-color, #008080)) 35%, transparent);
 }
 
-:where(.frame-panel[data-spw-kind="card"] p,
-       .frame-panel[data-spw-role="reference"][data-spw-category-family] p) {
+:where(:is(.spw-panel, .frame-panel)[data-spw-kind="card"] p,
+       :is(.spw-panel, .frame-panel)[data-spw-role="reference"][data-spw-category-family] p) {
   max-inline-size: 42ch;
   text-wrap: pretty;
 }
@@ -18605,7 +18605,7 @@ html[data-spw-color-mode="dark"] :where(
    (math-lens-card, topic-reference-card, principle cards, gratitude/returner variants, etc.).
    Works alongside brace-gestures.js armed/charging states. */
 :where(
-  .frame-card, .frame-panel, .math-lens-card, .topic-reference-card,
+  .frame-card, :is(.spw-panel, .frame-panel), .math-lens-card, .topic-reference-card,
   .spw-principle-card, .gratitude-card, .returner-card
 )[data-spw-gesture="armed"] {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, #008080) 35%, transparent);
@@ -18613,7 +18613,7 @@ html[data-spw-color-mode="dark"] :where(
 }
 
 :where(
-  .frame-card, .frame-panel, .math-lens-card, .topic-reference-card,
+  .frame-card, :is(.spw-panel, .frame-panel), .math-lens-card, .topic-reference-card,
   .spw-principle-card, .gratitude-card, .returner-card
 )[data-spw-gesture="charging"] {
   transform: translateY(calc(var(--component-micro-lift, 1px) * -1));
@@ -18621,7 +18621,7 @@ html[data-spw-color-mode="dark"] :where(
 }
 
 :where(
-  .frame-card, .frame-panel, .math-lens-card, .topic-reference-card,
+  .frame-card, :is(.spw-panel, .frame-panel), .math-lens-card, .topic-reference-card,
   .spw-principle-card, .gratitude-card, .returner-card
 )[data-spw-gesture="sustained"] {
   border-color: color-mix(in srgb, var(--active-op-color, #008080) 28%, transparent);
@@ -18669,12 +18669,12 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 }
 
 /* Stronger defaults for layout, wrapping, and alignment in cards/panels */
-:where(.frame-card, .frame-panel, .math-lens-card, .topic-reference-card) {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .math-lens-card, .topic-reference-card) {
   text-align: start;
   align-items: start;
 }
 
-:where(.frame-card, .frame-panel) > * {
+:where(.frame-card, :is(.spw-panel, .frame-panel)) > * {
   min-width: 0;
 }
 
@@ -18736,7 +18736,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 
 :where(
   .frame-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .media-card,
   .media-focus-card,
   .software-card,
@@ -18845,7 +18845,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 
 :where(
   .frame-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .media-card,
   .media-focus-card,
   .software-card,
@@ -18861,7 +18861,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 
 :where(
   .frame-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .media-card,
   .media-focus-card,
   .software-card,
@@ -18876,7 +18876,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 @media (pointer: coarse) {
   :where(
     .frame-card,
-    .frame-panel,
+    :is(.spw-panel, .frame-panel),
     .media-card,
     .media-focus-card,
     .software-card,
@@ -19049,7 +19049,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   margin-block-start: 0;
 }
 
-:where(.frame-card, .frame-panel, .returner-card):is(:hover, :focus-within)
+:where(.frame-card, :is(.spw-panel, .frame-panel), .returner-card):is(:hover, :focus-within)
   :where(.spw-card-meta strong, .spw-card-reason > summary) {
   color: var(--active-op-color, var(--component-accent));
 }
@@ -19080,7 +19080,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -19118,7 +19118,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -19134,7 +19134,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .plan-card,
   .compare-card,
@@ -19159,7 +19159,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 
 /* Container query responses for cards across wide, standard, narrow, and micro containers */
 @container spw-card (min-width: 36rem) {
-  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel), .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
     --card-rhythm: 0.82rem;
     --card-internal-gap: 0.65rem;
     padding: clamp(1rem, 2.5cqi, 1.4rem);
@@ -19167,18 +19167,18 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 }
 
 @container spw-card (max-width: 24rem) {
-  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel), .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
     --card-rhythm: 0.5rem;
     --card-internal-gap: 0.35rem;
     padding: clamp(0.5rem, 3.5cqi, 0.75rem);
   }
-  :where(.spw-card, .frame-card, .frame-panel) :is(h2, h3, h4) {
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel)) :is(h2, h3, h4) {
     font-size: clamp(0.92rem, 4.5cqi, 1.1rem);
   }
 }
 
 @container spw-card (max-width: 18rem) {
-  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel), .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
     --card-rhythm: 0.38rem;
     --card-internal-gap: 0.28rem;
     padding: 0.45rem;
@@ -19186,12 +19186,12 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 }
 
 @container spw-card (max-width: 14rem) {
-  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel), .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
     --card-rhythm: 0.28rem;
     --card-internal-gap: 0.2rem;
     padding: 0.35rem;
   }
-  :where(.spw-card, .frame-card, .frame-panel) :is(h2, h3, h4) {
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel)) :is(h2, h3, h4) {
     font-size: 0.85rem;
   }
 }
@@ -19496,7 +19496,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   color: color-mix(in srgb, var(--op-object-color) 72%, var(--ink) 28%);
 }
 
-:where(.frame-card, .frame-panel, .spw-wisdom-card, .returner-card, .gratitude-card) {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .spw-wisdom-card, .returner-card, .gratitude-card) {
   border-color: color-mix(in srgb, var(--spw-region-frame-line, var(--line)) 78%, transparent);
 }
 
@@ -19571,7 +19571,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 
 /* Button layout audit (semantic emphasis): operator-chip provides op sigil/arg distinction for localization/styling (see chrome utility sigil+arg spans); nooks use side-by-side chips for embedded component feel (bottom align via flex/baseline in shell/chrome); cauldron actions use operator-chip soft-pill cluster with flex-wrap for emphasis on action verbs while preserving resonance. Regional/nook + charge on lists discharge on tap for state semantics. No broad changes; preserves operator taxonomy emphasis over generic buttons. */
 
-:where([data-spw-region], .spw-frame, .frame-panel) {
+:where([data-spw-region], .spw-frame, :is(.spw-panel, .frame-panel)) {
   --spw-region-local-line: var(--spw-region-frame-line, var(--line));
   --spw-region-local-fill: var(--spw-region-frame-fill, var(--surface-panel));
 }
@@ -20249,7 +20249,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
    storytelling, gardening).
    ========================================================================== */
 
-:where(.spw-card, .spw-panel, .frame-card, .frame-panel, .topic-reference-card, .spw-principle-card, .operator-card, .plan-card) {
+:where(.spw-card, .spw-panel, .frame-card, :is(.spw-panel, .frame-panel), .topic-reference-card, .spw-principle-card, .operator-card, .plan-card) {
   /* Base card rhythm tokens already provide defaults; spacing attrs make "absent vs present"
      intent explicit for research, inclusive dynamics, and component ecology experiments. */
 }
@@ -20285,22 +20285,22 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 /* Charge / discharge generalizable + steps for state traversability and ease of variability.
    Different "ease" via physics-reason or data-spw-variability on ancestor; steps 0-3+ let
    accuracy players count precise quanta while fantasy players feel the "speech bubble" swell. */
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="0"],
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge=""] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="0"],
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge=""] {
   /* discharged / null / resting */
   opacity: 0.92;
   filter: saturate(0.85);
 }
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="1"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="1"] {
   border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 22%, transparent);
 }
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="2"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="2"] {
   transform: translateY(-0.5px);
   box-shadow: var(--component-shadow-active);
 }
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="3"],
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="full"],
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="artifact"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="3"],
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="full"],
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="artifact"] {
   /* charged / active / artifact relationship state (component as "artifact" in cauldron sense) */
   border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 48%, transparent);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--component-accent)) 25%, transparent);
@@ -20308,25 +20308,25 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 
 /* Machinability / component state: how easily the card yields to tuning, selection, activation.
    High = loose, playful, combinatoric; low = deliberate, precise physics. */
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-machinability="high"],
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-state-contract*="machin"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-machinability="high"],
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-state-contract*="machin"] {
   cursor: pointer;
   transition-duration: var(--component-transition-fast);
 }
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-machinability="low"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-machinability="low"] {
   transition-duration: var(--component-transition-deliberate);
   /* slower, weightier for "real physics" or fantasy mass feel */
 }
-:where(.frame-card, .frame-panel)[data-spw-card-state="skim"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel))[data-spw-card-state="skim"] {
   --card-secondary-opacity: 0.6;
   filter: saturate(0.7);
 }
-:where(.frame-card, .frame-panel)[data-spw-card-state="select"],
-:where(.frame-card, .frame-panel)[data-spw-selection="active"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel))[data-spw-card-state="select"],
+:where(.frame-card, :is(.spw-panel, .frame-panel))[data-spw-selection="active"] {
   outline: 1px dashed color-mix(in srgb, var(--active-op-color, var(--component-accent)) 40%, transparent);
   outline-offset: 2px;
 }
-:where(.frame-card, .frame-panel)[data-spw-card-state="activate"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel))[data-spw-card-state="activate"] {
   box-shadow: var(--component-shadow-active);
   border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 55%, transparent);
 }
@@ -21333,7 +21333,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
    the base reset (reset/base.css) strips list-style for ordinary <ol>/<ul> —
    it only zeroes padding-left there — so a route that reaches for one of
    them on a semantically-correct <ol> (e.g. a sequence of steps that should
-   be an ordered list, not four unordered .frame-panel divs) gets a decimal
+   be an ordered list, not four unordered :is(.spw-panel, .frame-panel) divs) gets a decimal
    marker column fighting the grid's own columns. Defensive, not speculative:
    contact/index.html's #contact-intake inquiry steps do exactly this. */
 :where(ol, ul):where(.frame-grid, .plans-grid, .contact-grid, .spec-grid, .directory-grid, .ref-grid) {
@@ -21443,7 +21443,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   [data-spw-composition-flow="grid"]:not(
     :is(
       .spw-frame,
-      .frame-panel,
+      :is(.spw-panel, .frame-panel),
       .mode-panel,
       [data-spw-kind="frame"],
       [data-spw-box-model="stage"]
@@ -21491,7 +21491,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   [data-spw-composition-flow="stack"]:not(
     :is(
       .spw-frame,
-      .frame-panel,
+      :is(.spw-panel, .frame-panel),
       .mode-panel,
       [data-spw-kind="frame"],
       [data-spw-box-model="stage"],
@@ -21513,12 +21513,12 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
    Missing flow is treated as stack so a late JS write of the attribute does not reflow. */
 :where(
   .spw-frame:not([data-spw-composition-flow]):not([hidden]),
-  .frame-panel:not([data-spw-composition-flow]):not([hidden]),
+  :is(.spw-panel, .frame-panel):not([data-spw-composition-flow]):not([hidden]),
   .mode-panel:not([data-spw-composition-flow]):not([hidden]),
   [data-spw-kind="frame"]:not([data-spw-composition-flow]):not([hidden]),
   [data-spw-box-model="stage"]:not([data-spw-composition-flow]):not([hidden]),
   .spw-frame[data-spw-composition-flow="stack"]:not([hidden]),
-  .frame-panel[data-spw-composition-flow="stack"]:not([hidden]),
+  :is(.spw-panel, .frame-panel)[data-spw-composition-flow="stack"]:not([hidden]),
   .mode-panel[data-spw-composition-flow="stack"]:not([hidden]),
   [data-spw-kind="frame"][data-spw-composition-flow="stack"]:not([hidden]),
   [data-spw-box-model="stage"][data-spw-composition-flow="stack"]:not([hidden])
@@ -21699,7 +21699,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   .compare-card,
   .spec-column,
   .ref-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .spw-frame
 ) :is(code, kbd, samp) {
@@ -21717,7 +21717,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   .compare-card,
   .spec-column,
   .ref-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .spw-frame
 ) :is(pre, .frame-code-enrichment, .demo-code-output) {
@@ -26845,7 +26845,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   html[data-spw-page-state="interactive"]
 ) :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   [data-spw-kind]:not(body):not(main),
   [data-spw-box-model]
@@ -26872,7 +26872,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   --spw-site-rhythm-tempo: min(var(--spw-site-rhythm-tempo, 1), 0.82);
 }
 
-:where(html[data-spw-connection-posture="offline"]) :where(.spw-frame, .frame-panel, .frame-card) {
+:where(html[data-spw-connection-posture="offline"]) :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card) {
   --component-accent:
     color-mix(in srgb, var(--component-accent, var(--teal, #008080)) 72%, var(--ink-soft, rgba(14, 18, 20, 0.72)) 28%);
 }
@@ -27280,7 +27280,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 }
 
 @media (max-width: 26.25rem) {
-  :where(.spw-frame, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel, .plan-card, .compare-card, .spec-column, .ref-card) {
+  :where(.spw-frame, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, :is(.spw-panel, .frame-panel), .mode-panel, .plan-card, .compare-card, .spec-column, .ref-card) {
     --component-pad: 0.68rem;
     --component-gap-tight: 0.42rem;
   }
@@ -27302,7 +27302,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
    Prevents bad wrapping and "missing element" visual breakage under seams, metadata, or dense inspect content.
    Also protects padding/chrome areas as potential gesture surfaces. */
 :where(html[data-spw-debug-mode="on"], [data-spw-state-inspector="open"]) :where(
-  .frame-card, .spw-frame, .frame-panel, .brace-surface, [data-spw-brace]
+  .frame-card, .spw-frame, :is(.spw-panel, .frame-panel), .brace-surface, [data-spw-brace]
 ) {
   /* Stronger wrapping defense */
   overflow-wrap: break-word;
@@ -27311,7 +27311,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-state-inspector="open"]) :where(
-  .frame-card, .spw-frame, .frame-panel, .brace-surface, [data-spw-brace]
+  .frame-card, .spw-frame, :is(.spw-panel, .frame-panel), .brace-surface, [data-spw-brace]
 ) :where(.frame-topline, .frame-heading, .card-body, [data-spw-slot]) {
   min-height: 0; /* prevent flex/grid collapse */
 }
@@ -30051,7 +30051,7 @@ html {
   [data-spw-surface-kind],
   .spw-frame,
   .frame-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   .operator-card,
   .media-card,
@@ -31471,7 +31471,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame[data-spw-region], .spw-frame
    See .spw/conventions/projection-attenuation.spw
    ========================================================================== */
 
-:where(.spw-frame, .frame-card, .frame-panel, [data-spw-form="brace"]) {
+:where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), [data-spw-form="brace"]) {
   --spw-wonder-hold: 1;
   --spw-slot-attenuate: 1;
   --spw-nest-attenuate: 1;
@@ -31565,7 +31565,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame[data-spw-region], .spw-frame
   );
 }
 
-:where(.spw-frame, .frame-card, .frame-panel) {
+:where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel)) {
   transition:
     border-color var(--spw-projected-echo, 480ms) var(--ease-settle, ease),
     box-shadow var(--spw-projected-echo, 480ms) var(--ease-settle, ease),
@@ -31592,12 +31592,12 @@ html[data-spw-high-contrast="on"] :where(.spw-frame[data-spw-region], .spw-frame
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(.spw-frame, .frame-card, .frame-panel) {
+  :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel)) {
     --spw-projected-echo: 1ms;
   }
 }
 
-html[data-spw-high-contrast="on"] :where(.spw-frame, .frame-card, .frame-panel) {
+html[data-spw-high-contrast="on"] :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel)) {
   --spw-wonder-hold: 0.2;
 }
 }
@@ -33926,13 +33926,13 @@ html[data-spw-page-section-phase="idle"] {
 }
 
 /* Block containers may take the full treatment; inline controls never do. */
-:where(article, section, details, .frame-panel, .frame-card):where(:not([data-spw-electrostatic-role]))[data-spw-operator='potential'] {
+:where(article, section, details, :is(.spw-panel, .frame-panel), .frame-card):where(:not([data-spw-electrostatic-role]))[data-spw-operator='potential'] {
   border: 1px solid var(--spw-role-edge);
   border-start-start-radius: var(--radius-lg, 12px);
   border-end-end-radius: var(--radius-lg, 12px);
 }
 
-:where(article, section, details, .frame-panel, .frame-card):where(:not([data-spw-electrostatic-role]))[data-spw-operator='integration'] {
+:where(article, section, details, :is(.spw-panel, .frame-panel), .frame-card):where(:not([data-spw-electrostatic-role]))[data-spw-operator='integration'] {
   box-shadow:
     inset 2px 0 0 var(--spw-role-edge),
     inset 6px 0 0 color-mix(in oklab, var(--spw-role-accent) 18%, transparent);
@@ -34151,8 +34151,8 @@ html[data-spw-page-section-phase="idle"] {
   .media-card-grid > .media-card,
   .media-focus-layout > * > .media-focus-card,
   .feature-map > .frame-card,
-  .domain-grid > .frame-panel,
-  .spec-grid > :is(.software-card, .frame-panel)
+  .domain-grid > :is(.spw-panel, .frame-panel),
+  .spec-grid > :is(.software-card, :is(.spw-panel, .frame-panel))
 ) {
   height: 100%;
 }
@@ -34257,14 +34257,14 @@ html[data-spw-page-section-phase="idle"] {
   border-style: dashed;
 }
 
-:where(.spw-frame .frame-panel, .spw-frame .frame-card) {
+:where(.spw-frame :is(.spw-panel, .frame-panel), .spw-frame .frame-card) {
   transition:
     transform var(--duration-fast, 120ms) var(--ease-mechanical, ease),
     border-color var(--duration-base, 180ms) var(--ease-mechanical, ease),
     box-shadow var(--duration-base, 180ms) var(--ease-mechanical, ease);
 }
 
-:where(.spw-frame .frame-panel:is(:hover, :focus-within), .spw-frame .frame-card:is(:hover, :focus-within)) {
+:where(.spw-frame :is(.spw-panel, .frame-panel):is(:hover, :focus-within), .spw-frame .frame-card:is(:hover, :focus-within)) {
   transform: translateY(-1px);
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, var(--line, transparent));
 }
@@ -34293,11 +34293,11 @@ html[data-spw-page-section-phase="idle"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(.spw-frame .frame-panel, .spw-frame .frame-card) {
+  :where(.spw-frame :is(.spw-panel, .frame-panel), .spw-frame .frame-card) {
     transition: none;
   }
 
-  :where(.spw-frame .frame-panel:is(:hover, :focus-within), .spw-frame .frame-card:is(:hover, :focus-within)) {
+  :where(.spw-frame :is(.spw-panel, .frame-panel):is(:hover, :focus-within), .spw-frame .frame-card:is(:hover, :focus-within)) {
     transform: none;
   }
 }
@@ -40018,7 +40018,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .spw-chip) {
   box-shadow: inset 0 1px 0 var(--specular-soft, color-mix(in srgb, white 28%, transparent));
 }
 
-:where(html[data-spw-color-mode="dark"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, .spec-strip) :where(.spw-component-tag, .spec-pill) {
+:where(html[data-spw-color-mode="dark"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, .spec-strip) :where(.spw-component-tag, .spec-pill) {
   background: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, rgba(255, 255, 255, 0.16) 64%);
   color: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
@@ -40028,7 +40028,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .spw-chip) {
 }
 
 @media (prefers-color-scheme: dark) {
-  :where(html[data-spw-color-mode="auto"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, .spec-strip) :where(.spw-component-tag, .spec-pill) {
+  :where(html[data-spw-color-mode="auto"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, .spec-strip) :where(.spw-component-tag, .spec-pill) {
     background: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
     border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, rgba(255, 255, 255, 0.16) 64%);
     color: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
@@ -42767,7 +42767,7 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
 /* Guiding should only style component-family containers, not arbitrary nodes. */
 :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .operator-card,
@@ -42785,7 +42785,7 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
 /* Guided threshold states should read as an earned seam, not a generic highlight. */
 :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .operator-card,
@@ -42796,7 +42796,7 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
 
 html[data-spw-show-semantic-metadata="on"] :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .operator-card,
@@ -42804,7 +42804,7 @@ html[data-spw-show-semantic-metadata="on"] :where(
 )[data-spw-guided="true"] > .spw-component-guides,
 html[data-spw-show-semantic-metadata="on"] :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .operator-card,
@@ -42819,7 +42819,7 @@ html[data-spw-cognitive-handles="off"] :is(.spw-smart-console-host, .cognitive-s
 
 html[data-spw-cognitive-handles="off"] :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .software-card,
   .operator-card,
@@ -44392,7 +44392,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   .frame-card,
   .media-card,
   .operator-card,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .mode-panel,
   [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main),
@@ -44630,10 +44630,10 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
    This makes matte a reliable clear-contrast page posture when chosen in settings
    without forcing every child to carry the attr. Used by design hub experiments and
    any route that wants the safeguard for its primary reading surfaces. */
-:where(body[data-spw-base-metamaterial="matte"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
+:where(body[data-spw-base-metamaterial="matte"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
   /* Inherit the matte projection; explicit metamaterial on a child can still override. */
 }
-:where(body[data-spw-base-metamaterial="matte"][data-spw-high-contrast="on"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
+:where(body[data-spw-base-metamaterial="matte"][data-spw-high-contrast="on"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, [data-spw-component-kind]:not(body):not(main), [data-spw-kind]:not(body):not(main)) {
   /* When matte + high-contrast, force the strongest clear ink for the treatment. */
   color: var(--material-ink-matte-strong);
 }
@@ -44716,7 +44716,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
 }
 
 /* Inspection Posture: Structural lucidity & luminous hairline edges */
-:where(html[data-spw-interaction-context="inspecting"]) :where(.spw-frame, .frame-card, .frame-panel, .mode-panel) {
+:where(html[data-spw-interaction-context="inspecting"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel) {
   --material-local-border-color: color-mix(in oklab, var(--active-op-color, #008080) 38%, var(--line-strong));
   box-shadow:
     inset 0 0 0 1px color-mix(in oklab, var(--active-op-color, #008080) 14%, transparent),

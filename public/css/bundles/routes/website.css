@@ -307,16 +307,16 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
     var(--website-paper);
 }
 
-:where(body[data-spw-surface="website"] #design-details .frame-panel) {
+:where(body[data-spw-surface="website"] #design-details :is(.spw-panel, .frame-panel)) {
   background: var(--website-panel);
 }
 
-:where(body[data-spw-surface="website"] #design-details .frame-panel h3) {
+:where(body[data-spw-surface="website"] #design-details :is(.spw-panel, .frame-panel) h3) {
   position: relative;
   padding-bottom: 0.3rem;
 }
 
-:where(body[data-spw-surface="website"] #design-details .frame-panel h3)::after {
+:where(body[data-spw-surface="website"] #design-details :is(.spw-panel, .frame-panel) h3)::after {
   content: "";
   position: absolute;
   left: 0;
@@ -375,7 +375,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   gap: var(--gap-panel, 0.85rem);
 }
 
-:where(body[data-spw-surface="website"] .feature-ladder .frame-panel) {
+:where(body[data-spw-surface="website"] .feature-ladder :is(.spw-panel, .frame-panel)) {
   background: var(--website-panel);
 }
 
@@ -785,7 +785,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   width: 100%;
 }
 
-:where(body[data-spw-page-role="composition-reference"] .frame-panel) {
+:where(body[data-spw-page-role="composition-reference"] :is(.spw-panel, .frame-panel)) {
   min-inline-size: 0;
   width: 100%;
 }
@@ -1031,7 +1031,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   gap: 0.6rem;
 }
 
-:where(body[data-spw-page-seed^="page_design_"]) :where(.spw-frame) .frame-panel {
+:where(body[data-spw-page-seed^="page_design_"]) :where(.spw-frame) :is(.spw-panel, .frame-panel) {
   padding: 0.65rem 0.8rem;
 }
 
@@ -2082,7 +2082,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
    palettes hero cards and status for now; the data attr + class can be reused site-wide for
    communicable, premium-feel verification of material/UX changes. */
 :where(body[data-spw-page-seed="page_design_palettes"]) [data-settings-state],
-:where(body[data-spw-page-seed="page_design_palettes"]) .frame-panel[data-spw-component-identity] {
+:where(body[data-spw-page-seed="page_design_palettes"]) :is(.spw-panel, .frame-panel)[data-spw-component-identity] {
   transition:
     box-shadow 260ms var(--ease-mechanical, ease),
     border-color 260ms var(--ease-mechanical, ease),
@@ -3376,7 +3376,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
     grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-:where(.feature-ladder .frame-panel) {
+:where(.feature-ladder :is(.spw-panel, .frame-panel)) {
     min-height: auto;
 }
 

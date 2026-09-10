@@ -32,7 +32,7 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-:where(.feature-ladder .frame-panel) {
+:where(.feature-ladder :is(.spw-panel, .frame-panel)) {
     min-height: auto;
 }
 

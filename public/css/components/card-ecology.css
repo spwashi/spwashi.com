@@ -23,7 +23,7 @@
    storytelling, gardening).
    ========================================================================== */
 
-:where(.spw-card, .spw-panel, .frame-card, .frame-panel, .topic-reference-card, .spw-principle-card, .operator-card, .plan-card) {
+:where(.spw-card, .spw-panel, .frame-card, :is(.spw-panel, .frame-panel), .topic-reference-card, .spw-principle-card, .operator-card, .plan-card) {
   /* Base card rhythm tokens already provide defaults; spacing attrs make "absent vs present"
      intent explicit for research, inclusive dynamics, and component ecology experiments. */
 }
@@ -59,22 +59,22 @@
 /* Charge / discharge generalizable + steps for state traversability and ease of variability.
    Different "ease" via physics-reason or data-spw-variability on ancestor; steps 0-3+ let
    accuracy players count precise quanta while fantasy players feel the "speech bubble" swell. */
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="0"],
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge=""] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="0"],
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge=""] {
   /* discharged / null / resting */
   opacity: 0.92;
   filter: saturate(0.85);
 }
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="1"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="1"] {
   border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 22%, transparent);
 }
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="2"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="2"] {
   transform: translateY(-0.5px);
   box-shadow: var(--component-shadow-active);
 }
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="3"],
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="full"],
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="artifact"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="3"],
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="full"],
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-charge="artifact"] {
   /* charged / active / artifact relationship state (component as "artifact" in cauldron sense) */
   border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 48%, transparent);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--component-accent)) 25%, transparent);
@@ -82,25 +82,25 @@
 
 /* Machinability / component state: how easily the card yields to tuning, selection, activation.
    High = loose, playful, combinatoric; low = deliberate, precise physics. */
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-machinability="high"],
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-state-contract*="machin"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-machinability="high"],
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-state-contract*="machin"] {
   cursor: pointer;
   transition-duration: var(--component-transition-fast);
 }
-:where(.frame-card, .frame-panel, .operator-card)[data-spw-machinability="low"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel), .operator-card)[data-spw-machinability="low"] {
   transition-duration: var(--component-transition-deliberate);
   /* slower, weightier for "real physics" or fantasy mass feel */
 }
-:where(.frame-card, .frame-panel)[data-spw-card-state="skim"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel))[data-spw-card-state="skim"] {
   --card-secondary-opacity: 0.6;
   filter: saturate(0.7);
 }
-:where(.frame-card, .frame-panel)[data-spw-card-state="select"],
-:where(.frame-card, .frame-panel)[data-spw-selection="active"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel))[data-spw-card-state="select"],
+:where(.frame-card, :is(.spw-panel, .frame-panel))[data-spw-selection="active"] {
   outline: 1px dashed color-mix(in srgb, var(--active-op-color, var(--component-accent)) 40%, transparent);
   outline-offset: 2px;
 }
-:where(.frame-card, .frame-panel)[data-spw-card-state="activate"] {
+:where(.frame-card, :is(.spw-panel, .frame-panel))[data-spw-card-state="activate"] {
   box-shadow: var(--component-shadow-active);
   border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 55%, transparent);
 }

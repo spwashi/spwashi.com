@@ -1139,7 +1139,7 @@
     content: "−";
   }
 
-  .profile-builder-panel > .frame-panel {
+  .profile-builder-panel > :is(.spw-panel, .frame-panel) {
     margin: 0;
     border: 0;
     border-radius: 0;
@@ -1147,7 +1147,7 @@
     background: transparent;
   }
 
-  .profile-builder-panel:not([open]) > .frame-panel {
+  .profile-builder-panel:not([open]) > :is(.spw-panel, .frame-panel) {
     display: none;
   }
 

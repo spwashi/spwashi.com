@@ -284,8 +284,8 @@ function inferResolvedRegionCompositionStability(el, profile) {
  * wherever it sits): its own occupants should not inflate its parent's count.
  */
 const CANOPY_OCCUPANT_SELECTOR = [
-  ':scope > .spw-card', ':scope > .frame-card', ':scope > .media-card', ':scope > .frame-panel',
-  ':scope > * > .spw-card', ':scope > * > .frame-card', ':scope > * > .media-card', ':scope > * > .frame-panel',
+  ':scope > .spw-card', ':scope > .frame-card', ':scope > .media-card', ':scope > .spw-panel', ':scope > .frame-panel',
+  ':scope > * > .spw-card', ':scope > * > .frame-card', ':scope > * > .media-card', ':scope > * > .spw-panel', ':scope > * > .frame-panel',
 ].join(', ');
 
 function inferRegionCanopy(el) {

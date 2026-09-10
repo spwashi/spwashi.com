@@ -163,13 +163,13 @@
 }
 
 /* Block containers may take the full treatment; inline controls never do. */
-:where(article, section, details, .frame-panel, .frame-card):where(:not([data-spw-electrostatic-role]))[data-spw-operator='potential'] {
+:where(article, section, details, :is(.spw-panel, .frame-panel), .frame-card):where(:not([data-spw-electrostatic-role]))[data-spw-operator='potential'] {
   border: 1px solid var(--spw-role-edge);
   border-start-start-radius: var(--radius-lg, 12px);
   border-end-end-radius: var(--radius-lg, 12px);
 }
 
-:where(article, section, details, .frame-panel, .frame-card):where(:not([data-spw-electrostatic-role]))[data-spw-operator='integration'] {
+:where(article, section, details, :is(.spw-panel, .frame-panel), .frame-card):where(:not([data-spw-electrostatic-role]))[data-spw-operator='integration'] {
   box-shadow:
     inset 2px 0 0 var(--spw-role-edge),
     inset 6px 0 0 color-mix(in oklab, var(--spw-role-accent) 18%, transparent);

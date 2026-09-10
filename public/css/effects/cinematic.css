@@ -441,7 +441,7 @@
   filter: none;
 }
 
-:where(.frame-card[data-spw-grounded="true"], .frame-panel[data-spw-grounded="true"], .software-card[data-spw-grounded="true"], .spw-frame[data-spw-grounded="true"]) {
+:where(.frame-card[data-spw-grounded="true"], :is(.spw-panel, .frame-panel)[data-spw-grounded="true"], .software-card[data-spw-grounded="true"], .spw-frame[data-spw-grounded="true"]) {
   opacity: 1;
   text-decoration: none;
 }
@@ -624,7 +624,7 @@
 
 :where(
   p, li, pre, code, blockquote, [data-copyable], [data-readable],
-  .frame-panel p, .frame-card span, .inline-note, [data-spw-textual-role="note"]
+  :is(.spw-panel, .frame-panel) p, .frame-card span, .inline-note, [data-spw-textual-role="note"]
 ) {
   -webkit-user-select: text;
   user-select: text;

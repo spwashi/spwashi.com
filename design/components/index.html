@@ -379,7 +379,7 @@
                 </div>
 
                 <div class="frame-grid frame-grid--2up">
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">macro layout wrapper</p>
                         <h3>.site-frame</h3>
                         <p>The primary block-level section element <code>&lt;section class="spw-frame" data-spw-kind="frame"&gt;</code>. These define large vertical stopping points down the scroll. They often host <code>id</code> attributes and <code>data-spw-*</code> rendering attributes to bias their local contents.</p>
@@ -388,57 +388,57 @@
                         </ul>
                     </article>
 
-                    <article class="frame-panel" data-spw-metamaterial="glass">
+                    <article class="spw-panel" data-spw-metamaterial="glass">
                         <p data-spw-textual-role="note">primary legible surface</p>
                         <h3>.frame-card</h3>
                         <p>The standard semi-transparent or material card. It usually implies <code>backdrop-filter</code> blur (when acting as glass) or warm opacity (when acting as paper). It serves as an isolated thought space.</p>
                         <p><a class="spw-chip" data-spw-handle="true" href="#" data-spw-operator="frame" data-spw-action="address">#&gt;sample_affordance</a></p>
                     </article>
 
-                    <article class="frame-panel" data-spw-metamaterial="matte">
+                    <article class="spw-panel" data-spw-metamaterial="matte">
                         <p data-spw-textual-role="note">sub-surface blocks</p>
-                        <h3>.frame-panel</h3>
+                        <h3>.spw-panel</h3>
                         <p>A flatter, more structural tile. Commonly placed inside a <code>.frame-grid</code> to form reference tables or multi-column indices like this one.</p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">the functional unit</p>
                         <h3>.operator-chip</h3>
                         <p>The standard <a class="spw-chip operator-chip--demo" data-spw-handle="true" href="#" data-spw-operator="potential" data-spw-action="explore">~chip_format</a> for interactions, anchors, state toggles, and metadata hints. Operator chips dynamically adjust color based on `data-spw-operator` syntax (e.g. <code>#&gt;</code> teal frames vs <code>?</code> violet probes).</p>
                     </article>
 
-                    <article class="frame-panel" id="demo-rails">
+                    <article class="spw-panel" id="demo-rails">
                         <p data-spw-textual-role="note">discoverability ecology</p>
                         <h3>.spw-demo-rail</h3>
                         <p>A portable row of quick demos for discoverability, QA, grounded resources, and route handoff. Each <code>.spw-demo-card</code> names a reason, exposes a route, and gives the reader a low-pressure way to try or learn from a live surface before contacting, committing, or changing settings.</p>
                         <p><a class="spw-chip" data-spw-handle="true" href="/services/#learning-demos" data-spw-operator="perspective" data-spw-action="enter">@learning_demos</a> <a class="spw-chip" data-spw-handle="true" href="/recipes/#recipes-learning-demos" data-spw-operator="value" data-spw-action="materialize">*recipe_demos</a> <a class="spw-chip" data-spw-handle="true" href="/design/#design-circuits" data-spw-operator="integration" data-spw-action="publish">^design_demos</a></p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">diagrams & vectors</p>
                         <h3>.spw-svg-figure</h3>
                         <p>The host wrapper for inline SVGs. Contains a scoped viewBox and exposes data attributes necessary to tie the SVG stroke/flow lines to the page's color resonance (e.g. inheriting the <code>--craft-accent</code> token).</p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">the text renderer output</p>
                         <h3>.pretext-flow</h3>
                         <p>A readable annotation surface that handles text posture, wrapping, and cache volatility. Often accompanied by <code>.pretext-flow-lines</code> to split syntax decorators (like `#&gt;` or `%`) from the prose.</p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">grid systems</p>
                         <h3>.frame-grid</h3>
                         <p>The robust CSS Grid layout class that handles most interior spacing. Use variants like <code>.frame-grid--dense</code> or <code>.frame-grid--2up</code> for structural intent, and use <code>data-spw-density="dense|soft|roomy"</code> on the grid itself when the cards need a clearer spacing contract across compact, narrow, and tablet widths.</p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">hero image wrapping</p>
                         <h3>.image-study</h3>
                         <p>Usually combined with <code>.topic-photo-card</code>. Provides a rich frame for surfacing screenshots or artwork, complete with accent palettes, responsive projection hints, and enough caption structure to survive screen reading, image prompting, and later SVG cleanup.</p>
                     </article>
 
-                    <article class="frame-panel" id="floating-chrome-contract">
+                    <article class="spw-panel" id="floating-chrome-contract">
                         <p data-spw-textual-role="note">viewport-local affordances</p>
                         <h3>Floating chrome</h3>
                         <p>Skip links, section handles, toasts, non-modal notices, and similar dismissable shells are not card content. They should declare <code>data-spw-floating-chrome="true"</code> and <code>data-spw-layout-owner="floating-chrome"</code> so shared content-lifting rules do not pull them back into host flow.</p>
@@ -446,7 +446,7 @@
                         <p><a class="spw-chip" data-spw-handle="true" href="/design/runtime/?debug=layout#debug-presets" data-spw-operator="wonder">? ownership</a> <a class="spw-chip" data-spw-handle="true" href="/design/#design-circuits" data-spw-operator="potential" data-spw-action="explore">~design_circuits</a></p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">card interior anatomy</p>
                         <h3>Slot-bearing content</h3>
                         <p>Cards, frames, panels, and compare shells should spend their anatomy budget on <code>header</code>, <code>meta</code>, <code>body</code>, <code>figure</code>, <code>actions</code>, and <code>footer</code>. Dismissable overlays belong beside that anatomy as overlays or floating chrome, not as anonymous extra children that broad selectors have to guess about later.</p>
@@ -514,7 +514,7 @@
 
                 <div class="frame-grid frame-grid--dense">
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">topline slot</p>
                         <h3>.frame-topline</h3>
                         <p>The compact header row sitting above the heading. Hosts sigils, pills, breadcrumbs, or mode switches. Rendered as a flex row with tight gap.</p>
@@ -535,7 +535,7 @@
                         </div>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">heading slot</p>
                         <h3>.frame-heading</h3>
                         <p>The primary heading wrapper inside a frame. Contains <code>h1</code>–<code>h3</code> and an optional sigil anchor. Adds appropriate vertical rhythm and max-width capping.</p>
@@ -547,7 +547,7 @@
                         </div>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">anchor sigil</p>
                         <h3>.frame-sigil</h3>
                         <p>A small monospaced anchor that links to the section's own <code>id</code>. Visually marks the operator prefix (e.g. <code>#&gt;</code>, <code>^</code>, <code>?</code>) and gets colored by the operator token system.</p>
@@ -560,14 +560,14 @@
                         </p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">contextual annotation</p>
                         <h3>.frame-note</h3>
                         <p>A subdued <code>p</code>-level label used for role clarifiers, context hints, or sub-captions. Renders at a smaller size with reduced opacity.</p>
                         <p data-spw-textual-role="note" style="margin-top: 0.5rem; border: 1px dashed var(--line); padding: 0.25rem 0.5rem; border-radius: 4px;">↑ this text is a live .frame-note specimen</p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">action row slot</p>
                         <h3>.frame-actions</h3>
                         <p>The footer action row for a frame or card. Hosts operator chips and primary commit actions. Sits at the bottom of the card slot order.</p>
@@ -577,7 +577,7 @@
                         </footer>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">operator navigation row</p>
                         <h3>.frame-operators</h3>
                         <p>A horizontal run of operator chips — commonly placed after a section's main content as its navigation footer. Distinct from <code>.frame-actions</code> in that it navigates rather than commits.</p>
@@ -587,7 +587,7 @@
                         </nav>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">identified narrator voice</p>
                         <h3>Narrator specimen</h3>
                         <p><strong>Bench narrator:</strong> “This component still wants a clearer job. If it needs three explanations, the slot order is wrong. What if we move the topic link higher and let the note become the spoken hook?”</p>
@@ -634,7 +634,7 @@
                     </section>
 
                     <div class="frame-grid frame-grid--dense">
-                        <article class="frame-panel">
+                        <article class="spw-panel">
                             <p data-spw-textual-role="note">authored contract</p>
                             <h3>Kind + role</h3>
                             <p>Use <code>data-spw-kind="hook"</code> with <code>data-spw-role="call|invocation|gate"</code>. Runtime mirrors to <code>data-spw-component-kind</code> so CSS and JS can share one vocabulary.</p>
@@ -648,13 +648,13 @@
                             </div>
                         </article>
 
-                        <article class="frame-panel">
+                        <article class="spw-panel">
                             <p data-spw-textual-role="note">placement</p>
                             <h3>Nested inside frame-body</h3>
                             <p>Place the hook as the first interactive threshold inside <code>.frame-body</code> or directly under <code>.frame-topline</code> when the frame has no body wrapper. Avoid treating dismissable floating chrome as hook content.</p>
                         </article>
 
-                        <article class="frame-panel">
+                        <article class="spw-panel">
                             <p data-spw-textual-role="note">locomotion</p>
                             <h3>Section handle participation</h3>
                             <p>Nested hooks are collected by <code>HOOK_REGION_SELECTOR</code> and receive tiered locomotion state. Prev/next labels use the hook's <code>aria-label</code> or inner heading when present.</p>
@@ -676,7 +676,7 @@
 
                 <div class="frame-grid frame-grid--dense">
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">metadata label</p>
                         <h3>.spec-pill</h3>
                         <p>A small rounded badge used to annotate content type, status, or topic. Used inside <code>.spec-strip</code> for horizontal runs.</p>
@@ -687,7 +687,7 @@
                         </p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">horizontal pill run</p>
                         <h3>.spec-strip</h3>
                         <p>A flex row of spec-pills. Used in toplines, frame headings, and card headers to annotate context without taking layout space.</p>
@@ -704,14 +704,14 @@
                         </div>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">contextual kicker</p>
                         <h3>.spec-kicker</h3>
                         <p>An all-caps label above the main <code>h1</code> on hero sections. Sets tone and topic family without competing with the heading hierarchy.</p>
                         <p class="spec-kicker" style="margin-top: 0.75rem;">Component Type / Context</p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">action verb strip</p>
                         <h3>.plan-verb-strip</h3>
                         <p>A strip variant focused on action verbs rather than labels. Used on planning and services pages where the reader needs to scan verbs quickly.</p>
@@ -722,7 +722,7 @@
                         </div>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">inline metadata badge</p>
                         <h3>.meta-chip &amp; .info-chip</h3>
                         <p>Contextual badges for inline use within prose or cards. <code>.meta-chip</code> carries content metadata (dates, counts); <code>.info-chip</code> signals supplemental information.</p>
@@ -744,7 +744,7 @@
                     <a class="frame-sigil" href="#metamaterial-states">^"metamaterial_states"</a>
                     <h2>Metamaterial States</h2>
                 </header>
-                <p data-spw-textual-role="note">Any <code>.frame-card</code> or <code>.frame-panel</code> can receive a <code>data-spw-metamaterial</code> attribute to shift its visual posture. These are the four primary states.</p>
+                <p data-spw-textual-role="note">Any <code>.frame-card</code> or <code>.spw-panel</code> can receive a <code>data-spw-metamaterial</code> attribute to shift its visual posture. These are the four primary states.</p>
 
                 <div class="frame-grid frame-grid--2up">
 
@@ -811,7 +811,7 @@
 
                 <div class="frame-grid frame-grid--dense">
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">sidenote</p>
                         <h3>.inline-note</h3>
                         <p>A bordered aside with a <code>::before</code> marker. Used to highlight caveats, implementation details, or process notes without interrupting the main argument.</p>
@@ -820,7 +820,7 @@
                         </div>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">editorial callout</p>
                         <h3>.inline-note.editorial-note</h3>
                         <p>A variant of <code>.inline-note</code> for editorial voice — opinions, author perspective, or contextual framing. Distinct tone from the neutral sidenote.</p>
@@ -829,7 +829,7 @@
                         </div>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">spacing variants</p>
                         <h3>.inline-note spacing</h3>
                         <p>Both spacing variants control the note's block padding via the <code>data-spw-spacing</code> attribute:</p>
@@ -1155,25 +1155,25 @@
                 <p data-spw-textual-role="note">When a human or external model wants to design a new component, the safest starting point is usually an existing Spw specimen. Copy the slot order, keep the same semantic family, and only change the pieces that the new job truly needs.</p>
 
                 <div class="frame-grid frame-grid--2up">
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">what to preserve</p>
                         <h3>Canonical structure</h3>
                         <p>Keep <code>header</code>, <code>meta</code>, <code>body</code>, <code>figure</code>, <code>actions</code>, and <code>footer</code> in the same order unless the new component has a different responsibility. Broad selectors and runtime projections already expect that slot rhythm.</p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">what to change</p>
                         <h3>Semantic responsibility</h3>
                         <p>Change the <code>data-spw-kind</code>, <code>data-spw-role</code>, and route-local labels to match the actual job: route sorter, status board, product surface, commercial router, role model, kernel explanation, atlas, evidence shelf, or intake fallback.</p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">what models need</p>
                         <h3>Readable intent</h3>
                         <p>A component should explain itself in the markup. If the purpose is hidden in a stylesheet or script, the surface is harder to reuse, harder to review, and harder for an external model to summarize accurately.</p>
                     </article>
 
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <p data-spw-textual-role="note">where to inspect</p>
                         <h3>Reference surfaces</h3>
                         <p>Use the <a href="/design/runtime/">runtime design page</a> for query presets and the <a href="/design/composition/">composition notes</a> for portable bundles. Those pages show the same contracts with a smaller shell around them.</p>
@@ -1235,7 +1235,7 @@
                 <p data-spw-textual-role="note">The Spw language uses brace delimiters to anchor specific semantic intentions. We project these into HTML using <code>data-spw-form="brace"</code>.</p>
 
                 <div class="frame-grid frame-grid--2up">
-                    <article class="frame-panel" data-spw-form="brace" data-spw-brace="objective">
+                    <article class="spw-panel" data-spw-form="brace" data-spw-brace="objective">
                         <header class="frame-topline" data-spw-slot="header">
                             <span class="frame-sigil">^</span>
                             <span class="spec-pill">objective form</span>
@@ -1244,7 +1244,7 @@
                         <code>data-spw-brace="objective"</code>
                     </article>
 
-                    <article class="frame-panel" data-spw-form="brace" data-spw-brace="subjective">
+                    <article class="spw-panel" data-spw-form="brace" data-spw-brace="subjective">
                         <header class="frame-topline" data-spw-slot="header">
                             <span class="frame-sigil">%</span>
                             <span class="spec-pill">subjective form</span>
@@ -1265,7 +1265,7 @@
                 <p data-spw-textual-role="note">We rarely invent new CSS classes for state or variations. Instead, we stack <code>data-spw-*</code> attributes onto the base components defined above. This makes the surface readable to CSS selectors without bloating the HTML with ad-hoc BEM modifiers.</p>
 
                 <div class="frame-grid frame-grid--dense">
-                    <article class="frame-panel" data-spw-metamaterial="paper" data-spw-context="reading" data-spw-affordance="read">
+                    <article class="spw-panel" data-spw-metamaterial="paper" data-spw-context="reading" data-spw-affordance="read">
                         <h3>Example 1: Paper Article</h3>
                         <p>By declaring <code>[data-spw-metamaterial="paper"]</code> and <code>[data-spw-affordance="read"]</code> on a block, the component becomes opaque, warm, and static. It tells the browser (and the reader) to settle in for uninterrupted prose reading rather than active interaction.</p>
                         <div class="code-block-wrapper">
@@ -1276,7 +1276,7 @@
                         </div>
                     </article>
 
-                    <article class="frame-panel" data-spw-metamaterial="glass" data-spw-context="analysis" data-spw-affordance="inspect">
+                    <article class="spw-panel" data-spw-metamaterial="glass" data-spw-context="analysis" data-spw-affordance="inspect">
                         <h3>Example 2: Inspectable Glass Tool</h3>
                         <p>Using <code>[data-spw-metamaterial="glass"]</code> yields a translucent blur effect. Combined with <code>[data-spw-affordance="inspect"]</code>, the block invites hover, ready to reveal contextual traces, metadata borders, or deeper layered hints.</p>
                         <div class="code-block-wrapper">
@@ -1287,18 +1287,18 @@
                         </div>
                     </article>
 
-                    <article class="frame-panel" data-spw-metamaterial="field" data-spw-context="signal" data-spw-affordance="tune">
+                    <article class="spw-panel" data-spw-metamaterial="field" data-spw-context="signal" data-spw-affordance="tune">
                         <h3>Example 3: Active Input Field</h3>
                         <p>When an area contains active widgets or tests, tagging it with <code>[data-spw-metamaterial="field"]</code> sets high contrast bounds, while <code>[data-spw-affordance="tune"]</code> prepares the component to visibly react to direct manipulation.</p>
                         <div class="code-block-wrapper">
-<pre><code>&lt;div class="frame-panel"
+<pre><code>&lt;div class="spw-panel"
   data-spw-metamaterial="field"
   data-spw-context="signal"
   data-spw-affordance="tune"&gt;</code></pre>
                         </div>
                     </article>
 
-                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="schema" data-spw-context="analysis">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="schema" data-spw-context="analysis">
                         <h3>Example 4: Kind mirror contract</h3>
                         <p>Author with <code>data-spw-kind</code> when possible. Runtime backfills <code>data-spw-component-kind</code> through <code>syncComponentKindMirrors()</code> so route markers, metamaterial, haptics, and semantic tag colors stay aligned before and after hydration.</p>
                         <div class="code-block-wrapper">

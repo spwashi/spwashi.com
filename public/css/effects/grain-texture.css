@@ -106,7 +106,7 @@ html[data-spw-developmental-climate="offer"] {
 /* ==========================================================================
    4. Scope-local grain controls (prevents leakage between nested surfaces)
    ========================================================================== */
-:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
@@ -160,7 +160,7 @@ body::after {
 /* ==========================================================================
    6. Grain-bearing surfaces (texture + shading/glow layers)
    ========================================================================== */
-:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
@@ -182,13 +182,13 @@ body::after {
 }
 
 /* Shared pseudo-element scaffolding */
-:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
   .payment-card, .seed-card, .profile-card, .svc-wrapper,
   .spw-chip, .spec-pill, .badge, .tag, .pill)::before,
-:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
@@ -201,7 +201,7 @@ body::after {
   z-index: var(--spw-local-layer-substrate, 0);
 }
 
-:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
@@ -212,7 +212,7 @@ body::after {
 }
 
 /* Surface grain layer */
-:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
@@ -228,7 +228,7 @@ body::after {
 }
 
 /* Panel shading / glow / bloom (artist + JS friendly) */
-:where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
+:where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel,
   .software-card, .operator-card, .media-card, .media-focus-card,
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
@@ -561,7 +561,7 @@ html[data-spw-high-contrast="on"] {
     background-image: none;
   }
 
-  :where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
+  :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel,
     .software-card, .operator-card, .media-card, .media-focus-card,
     .pretext-surface, .settings-category, .settings-fieldset,
     .domain-visual, .spw-console, .spw-nav-panel,
@@ -571,7 +571,7 @@ html[data-spw-high-contrast="on"] {
     opacity: 0.006;
   }
 
-  :where(.spw-frame, .frame-card, .frame-panel, .mode-panel,
+  :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel,
     .software-card, .operator-card, .media-card, .media-focus-card,
     .pretext-surface, .settings-category, .settings-fieldset,
     .domain-visual, .spw-console, .spw-nav-panel,

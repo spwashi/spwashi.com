@@ -83,6 +83,7 @@ const CHARGE_SELECTORS = [
   GROUND_SELECTORS,
   '.spw-frame',
   '.frame-card',
+  '.spw-panel',
   '.frame-panel',
   '.mode-panel',
   '.plan-card',

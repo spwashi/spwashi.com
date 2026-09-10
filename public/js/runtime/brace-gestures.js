@@ -268,7 +268,7 @@ function resolveTargetKind(el) {
   if (el.matches('.spec-pill, .badge, .tag, .pill')) return 'inline-pill';
   if (el.matches('.spw-delimiter')) return 'delimiter';
   if (el.matches('.site-frame')) return 'frame';
-  if (el.matches('.frame-card, .frame-panel, .mode-panel, .software-card, .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card')) return 'card';
+  if (el.matches('.frame-card, .spw-panel, .frame-panel, .mode-panel, .software-card, .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card')) return 'card';
   return 'form';
 }
 

@@ -379,7 +379,7 @@ body[data-spw-surface="contact"] {
   gap: 0.9rem;
 }
 
-[data-spw-surface="contact"] .frame-panel {
+[data-spw-surface="contact"] :is(.spw-panel, .frame-panel) {
   border-color: color-mix(in srgb, var(--contact-line) 96%, transparent);
   border-radius: 12px;
   background:
@@ -390,11 +390,11 @@ body[data-spw-surface="contact"] {
     0 6px 16px rgba(34, 22, 14, 0.04);
 }
 
-[data-spw-surface="contact"] .frame-panel h3 {
+[data-spw-surface="contact"] :is(.spw-panel, .frame-panel) h3 {
   color: color-mix(in srgb, var(--contact-ink) 88%, var(--contact-accent-2));
 }
 
-[data-spw-surface="contact"] .frame-panel p {
+[data-spw-surface="contact"] :is(.spw-panel, .frame-panel) p {
   color: var(--contact-ink-soft);
 }
 
@@ -467,7 +467,7 @@ body[data-spw-surface="contact"] {
 @media (prefers-reduced-motion: reduce) {
   [data-spw-surface="contact"] .spw-frame,
   [data-spw-surface="contact"] .frame-card,
-  [data-spw-surface="contact"] .frame-panel,
+  [data-spw-surface="contact"] :is(.spw-panel, .frame-panel),
   [data-spw-surface="contact"] .spw-chip {
     transition: none !important;
     animation: none !important;

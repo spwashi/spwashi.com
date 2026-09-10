@@ -41,8 +41,8 @@
   [data-spw-component-density="compact"],
   [data-spw-component-density="dense"],
   [data-spw-pinch-variant="compact"],
-  html[data-spw-component-density="dense"] :where(.spw-frame, .frame-panel, .frame-card),
-  html[data-spw-pinch-variant="compact"] :where(.spw-frame, .frame-panel, .frame-card)
+  html[data-spw-component-density="dense"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card),
+  html[data-spw-pinch-variant="compact"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card)
 ) {
   --component-pad: var(--pack-tier-compact-pad);
   --component-gap: var(--pack-tier-compact-gap);
@@ -66,8 +66,8 @@
   [data-spw-density="reading"],
   [data-spw-component-density="roomy"],
   [data-spw-pinch-variant="roomy"],
-  html[data-spw-component-density="roomy"] :where(.spw-frame, .frame-panel, .frame-card),
-  html[data-spw-pinch-variant="roomy"] :where(.spw-frame, .frame-panel, .frame-card)
+  html[data-spw-component-density="roomy"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card),
+  html[data-spw-pinch-variant="roomy"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card)
 ) {
   --component-pad: var(--pack-tier-roomy-pad);
   --component-gap: var(--pack-tier-roomy-gap);
@@ -85,7 +85,7 @@
   );
 }
 
-:where(.spw-frame, .frame-panel, .frame-card, .frame-body) {
+:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body) {
   --spw-flow-space: var(--pack-tier-balanced-flow);
   --component-pad: var(--spw-pack-pad-active, var(--pack-tier-balanced-pad));
   --component-gap: var(--spw-pack-gap-active, var(--pack-tier-balanced-gap));

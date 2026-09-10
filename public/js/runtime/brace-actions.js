@@ -3,7 +3,7 @@ import { emitSpwAction } from '/public/js/kernel/shared.js';
 const TARGET_SELECTOR = [
     '.spw-frame[data-spw-form="brace"], [data-spw-kind="frame"][data-spw-form="brace"]',
     '.frame-card[data-spw-form="brace"]:not(a)',
-    '.frame-panel[data-spw-form="brace"]',
+    '.spw-panel[data-spw-form="brace"], .frame-panel[data-spw-form="brace"]',
     '.software-card[data-spw-form="brace"]:not(a)',
     '.mode-panel[data-spw-form="brace"]',
     '.operator-card[data-spw-form="brace"]:not(a)',

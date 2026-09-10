@@ -72,7 +72,7 @@ function parsePractice() {
 
 function parseFlavors() {
     const panels = Array.from(
-        document.querySelectorAll('#flavor-grammar .frame-panel')
+        document.querySelectorAll('#flavor-grammar .spw-panel, #flavor-grammar .frame-panel')
     );
     const cards = Array.from(
         document.querySelectorAll('#flavor-grammar .frame-card')
@@ -114,7 +114,7 @@ function setDetail(level) {
     // Compact: truncate descriptions, hide kickers
     // Full: show everything
     const descriptions = document.querySelectorAll(
-        '.frame-card span:last-of-type, .frame-panel p'
+        '.frame-card span:last-of-type, .spw-panel p, .frame-panel p'
     );
     const kickers = document.querySelectorAll('.spec-kicker');
 

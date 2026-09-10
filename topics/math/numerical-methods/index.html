@@ -232,19 +232,19 @@
                 </header>
                 <p data-spw-textual-role="note">We don't practice numerical stepping to satisfy academic requirements. We practice it because it provides the algorithms that run dynamic software systems:</p>
                 <div class="frame-grid frame-grid--dense">
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Physics Engines</h3>
                         <p>Video games must compute positions of objects, gravity, collisions, and spring joints in real-time. This requires integrating differential equations (usually via Verlet or Euler stepping) at 60 frames per second.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Game Loop Frame-Rate Ticks</h3>
                         <p>A game loop must update its game state based on elapsed time <code>dt</code>. Using numerical methods to handle variable <code>dt</code> ensures that characters move at the same speed regardless of hardware frame-rate spikes.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Inverse Kinematics</h3>
                         <p>How does a character's hand reach naturally for a doorknob? By iteratively solving kinematic constraint equations (often using Newton-like solvers) to calculate joint angles.</p>
                     </article>
-                    <article class="frame-panel">
+                    <article class="spw-panel">
                         <h3>Solving Non-linear Equations</h3>
                         <p>Many real-world engineering problems (such as orbital mechanics or structural stress loads) cannot be resolved analytically. Numerical iteration is the only way to find solutions.</p>
                     </article>

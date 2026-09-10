@@ -397,7 +397,7 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
 }
 
-:where(body[data-spw-surface="home"] [data-spw-feature="reading-seats"] > .frame-panel) {
+:where(body[data-spw-surface="home"] [data-spw-feature="reading-seats"] > :is(.spw-panel, .frame-panel)) {
   display: grid;
   gap: var(--home-gap-md);
   min-width: 0;
@@ -408,7 +408,7 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
   box-shadow: var(--home-shadow-quiet);
 }
 
-:where(body[data-spw-surface="home"] [data-spw-feature="reading-seats"] > .frame-panel p) {
+:where(body[data-spw-surface="home"] [data-spw-feature="reading-seats"] > :is(.spw-panel, .frame-panel) p) {
   max-inline-size: var(--home-measure-wide);
   margin: 0;
   line-height: 1.62;

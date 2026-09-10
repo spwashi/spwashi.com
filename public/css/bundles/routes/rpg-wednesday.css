@@ -166,14 +166,14 @@ body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
    5. Core panels / cards (Overrides for Play Route)
    ========================================================================== */
 
-:where(body[data-spw-surface="play"] :is(.frame-panel, .frame-card, .session-card, .play-card, .seed-card)) {
+:where(body[data-spw-surface="play"] :is(:is(.spw-panel, .frame-panel), .frame-card, .session-card, .play-card, .seed-card)) {
   padding: var(--inset-component, 1.2rem);
   min-height: var(--play-card-min-height-phone);
 }
 
 @supports (container-type: inline-size) {
   @container (min-width: 48rem) {
-    :where(body[data-spw-surface="play"] :is(.frame-panel, .frame-card, .session-card, .play-card, .seed-card)) {
+    :where(body[data-spw-surface="play"] :is(:is(.spw-panel, .frame-panel), .frame-card, .session-card, .play-card, .seed-card)) {
       min-height: var(--play-card-min-height-tablet);
     }
     :where(body[data-spw-surface="play"] .spw-frame) {
@@ -256,7 +256,7 @@ body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
    7. Readable text and notes
    ========================================================================== */
 
-:where(body[data-spw-surface="play"] :is([data-spw-textual-role="note"], .inline-note, .session-note, .frame-panel p, .frame-card p, .play-card p, .seed-card p)) {
+:where(body[data-spw-surface="play"] :is([data-spw-textual-role="note"], .inline-note, .session-note, :is(.spw-panel, .frame-panel) p, .frame-card p, .play-card p, .seed-card p)) {
   max-width: var(--play-readable-width);
 }
 
@@ -831,7 +831,7 @@ body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
   justify-self: center;
 }
 
-:where(body[data-spw-surface="rpg-wednesday"] #rpgw-character .frame-panel) {
+:where(body[data-spw-surface="rpg-wednesday"] #rpgw-character :is(.spw-panel, .frame-panel)) {
   width: 100%;
   min-width: 0;
   align-self: stretch;
@@ -1396,10 +1396,10 @@ body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
 }
 
 :where(
-  body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk .frame-panel,
-  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit .frame-panel,
-  body[data-spw-surface="rpg-wednesday"] #weekly-affairs .frame-panel,
-  body[data-spw-surface="rpg-wednesday"] #seasonal-ecology .frame-panel
+  body[data-spw-surface="rpg-wednesday"] #rpgw-boonhonk :is(.spw-panel, .frame-panel),
+  body[data-spw-surface="rpg-wednesday"] #boonhonk-fit :is(.spw-panel, .frame-panel),
+  body[data-spw-surface="rpg-wednesday"] #weekly-affairs :is(.spw-panel, .frame-panel),
+  body[data-spw-surface="rpg-wednesday"] #seasonal-ecology :is(.spw-panel, .frame-panel)
 ) {
   min-width: 0;
 }
@@ -1812,7 +1812,7 @@ body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
     grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-:where(.feature-ladder .frame-panel) {
+:where(.feature-ladder :is(.spw-panel, .frame-panel)) {
     min-height: auto;
 }
 

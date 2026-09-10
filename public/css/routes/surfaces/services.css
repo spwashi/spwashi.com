@@ -102,7 +102,7 @@
     }
   }
 
-  & .frame-panel {
+  & :is(.spw-panel, .frame-panel) {
     background: var(--services-panel);
     border-color: color-mix(in srgb, var(--services-accent) 14%, var(--line));
 

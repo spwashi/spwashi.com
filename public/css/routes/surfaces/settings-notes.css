@@ -18,7 +18,7 @@
   gap: 1rem;
 }
 
-:where(body[data-spw-surface="settings"] .settings-notes-grid .frame-panel) {
+:where(body[data-spw-surface="settings"] .settings-notes-grid :is(.spw-panel, .frame-panel)) {
   border-left: 3px solid var(--line-strong);
   padding-left: 0.75rem;
 }
@@ -489,7 +489,7 @@
  * (minmax(8rem, 12rem) auto 1fr) resolved to 161px + 41px + 7px. The detail
  * column held 80 characters in 7px: a 1,214px tall stack one letter wide.
  *
- * article.frame-panel already carries container-type: inline-size, so an
+ * article:is(.spw-panel, .frame-panel) already carries container-type: inline-size, so an
  * unnamed container query resolves against the panel that actually decides
  * this row's width. 26rem sits above fold's panel and below broadsheet's, so
  * the three-column reading survives exactly where there is room for it.

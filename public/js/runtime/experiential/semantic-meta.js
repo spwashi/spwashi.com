@@ -68,7 +68,7 @@ function normalizeAffordances(detailAffordances, target) {
   if (opInfo?.type === 'probe') out.push('explore');
   if (opInfo?.type === 'pragma' || opInfo?.type === 'action') out.push('commit');
   if (target.closest('[data-spw-swappable]') || target.hasAttribute('data-spw-swappable')) out.push('swap');
-  if (target.matches('.site-frame, .frame-card, .frame-panel, .frame-sigil, .frame-card-sigil')) out.push('pin');
+  if (target.matches('.site-frame, .frame-card, .spw-panel, .frame-panel, .frame-sigil, .frame-card-sigil')) out.push('pin');
   if (!out.length) out.push('hint');
   return [...new Set(out)];
 }

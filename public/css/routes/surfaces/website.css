@@ -304,16 +304,16 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
     var(--website-paper);
 }
 
-:where(body[data-spw-surface="website"] #design-details .frame-panel) {
+:where(body[data-spw-surface="website"] #design-details :is(.spw-panel, .frame-panel)) {
   background: var(--website-panel);
 }
 
-:where(body[data-spw-surface="website"] #design-details .frame-panel h3) {
+:where(body[data-spw-surface="website"] #design-details :is(.spw-panel, .frame-panel) h3) {
   position: relative;
   padding-bottom: 0.3rem;
 }
 
-:where(body[data-spw-surface="website"] #design-details .frame-panel h3)::after {
+:where(body[data-spw-surface="website"] #design-details :is(.spw-panel, .frame-panel) h3)::after {
   content: "";
   position: absolute;
   left: 0;
@@ -372,7 +372,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   gap: var(--gap-panel, 0.85rem);
 }
 
-:where(body[data-spw-surface="website"] .feature-ladder .frame-panel) {
+:where(body[data-spw-surface="website"] .feature-ladder :is(.spw-panel, .frame-panel)) {
   background: var(--website-panel);
 }
 
@@ -782,7 +782,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   width: 100%;
 }
 
-:where(body[data-spw-page-role="composition-reference"] .frame-panel) {
+:where(body[data-spw-page-role="composition-reference"] :is(.spw-panel, .frame-panel)) {
   min-inline-size: 0;
   width: 100%;
 }

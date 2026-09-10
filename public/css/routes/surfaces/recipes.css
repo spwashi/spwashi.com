@@ -353,12 +353,12 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
   gap: clamp(0.65rem, 1.4cqi, 1.05rem);
 }
 
-:where(body[data-spw-surface="recipes"] #chicagoland-season .frame-panel) {
+:where(body[data-spw-surface="recipes"] #chicagoland-season :is(.spw-panel, .frame-panel)) {
   background: var(--recipes-panel);
   min-width: 0;
 }
 
-:where(body[data-spw-surface="recipes"] #chicagoland-season .frame-panel[data-spw-pack-span="full"]) {
+:where(body[data-spw-surface="recipes"] #chicagoland-season :is(.spw-panel, .frame-panel)[data-spw-pack-span="full"]) {
   background: var(--recipes-panel-warm);
 }
 
@@ -373,7 +373,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
     grid-template-columns: 1fr;
   }
 
-  :where(body[data-spw-surface="recipes"] #chicagoland-season .frame-panel[data-spw-pack-span="full"]) {
+  :where(body[data-spw-surface="recipes"] #chicagoland-season :is(.spw-panel, .frame-panel)[data-spw-pack-span="full"]) {
     grid-column: 1;
   }
 }

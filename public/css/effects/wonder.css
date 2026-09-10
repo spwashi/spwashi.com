@@ -30,7 +30,7 @@
 
 :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .mode-panel,
   .software-card,
@@ -166,7 +166,7 @@ html[data-spw-reduce-motion="on"] :where([data-spw-operator], [data-spw-sigil]) 
 
 :where(
   .spw-frame[data-spw-delight="settled"],
-  .frame-panel[data-spw-delight="settled"],
+  :is(.spw-panel, .frame-panel)[data-spw-delight="settled"],
   .frame-card[data-spw-delight="settled"],
   .mode-panel[data-spw-delight="settled"]
 ) {
@@ -206,7 +206,7 @@ html[data-spw-reduce-motion="on"] :where([data-spw-operator], [data-spw-sigil]) 
 
 :where(
   .spw-frame[data-spw-wonder-state="resonant"],
-  .frame-panel[data-spw-wonder-state="resonant"],
+  :is(.spw-panel, .frame-panel)[data-spw-wonder-state="resonant"],
   .frame-card[data-spw-wonder-state="resonant"],
   .mode-panel[data-spw-wonder-state="resonant"],
   .intent-cluster[data-spw-wonder-state="resonant"],
@@ -594,7 +594,7 @@ html[data-spw-interaction-wonder="architecture"] {
 
 :where(
   .spw-frame[data-spw-charge="sustained"],
-  .frame-panel[data-spw-charge="sustained"],
+  :is(.spw-panel, .frame-panel)[data-spw-charge="sustained"],
   .frame-card[data-spw-charge="sustained"],
   .mode-panel[data-spw-charge="sustained"]
 ) {
@@ -708,7 +708,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   border-color: var(--teal-soft, #1a9999) !important;
 }
 
-[data-spw-persona="viewer"] :where(.spw-frame, .frame-panel, .frame-card)[data-spw-wonder-state="resonant"] {
+[data-spw-persona="viewer"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card)[data-spw-wonder-state="resonant"] {
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 18%, transparent),
     0 0 14px color-mix(in srgb, var(--wonder-accent-color) 10%, transparent);
@@ -1048,7 +1048,7 @@ html:is([data-spw-debug-mode="on"], [data-spw-debug~="css"]) .spw-scaffold::befo
 
 [data-spw-semantics="unlocked"] :where(
   .spw-frame,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .mode-panel,
   .spw-svg-surface,

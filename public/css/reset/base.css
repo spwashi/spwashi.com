@@ -330,7 +330,7 @@ a {
 }
 
 article a,
-.frame-panel a,
+:is(.spw-panel, .frame-panel) a,
 .inline-note a,
 [data-spw-textual-role="lede"] a,
 [data-spw-textual-role="lede"] a,
@@ -344,7 +344,7 @@ article a,
 }
 
 article a:hover,
-.frame-panel a:hover,
+:is(.spw-panel, .frame-panel) a:hover,
 .inline-note a:hover,
 [data-spw-textual-role="lede"] a:hover,
 [data-spw-textual-role="note"] a:hover {
@@ -484,7 +484,7 @@ code {
   figure,
   .spw-frame,
   .frame-grid,
-  .frame-panel,
+  :is(.spw-panel, .frame-panel),
   .frame-card,
   .mode-panels,
   .mode-panel,

@@ -17,7 +17,7 @@
     gap: 0.9rem;
   }
 
-  & :is(#plan-relationships, #plan-discovery) .frame-panel {
+  & :is(#plan-relationships, #plan-discovery) :is(.spw-panel, .frame-panel) {
     min-width: 0;
     border-color: color-mix(in srgb, var(--plans-line) 96%, transparent);
     border-radius: 12px;
@@ -27,11 +27,11 @@
       0 5px 14px rgba(34, 22, 14, 0.035);
   }
 
-  & :is(#plan-relationships, #plan-discovery) .frame-panel h3 {
+  & :is(#plan-relationships, #plan-discovery) :is(.spw-panel, .frame-panel) h3 {
     color: color-mix(in srgb, var(--plans-ink) 90%, var(--plans-accent-2));
   }
 
-  & :is(#plan-relationships, #plan-discovery) .frame-panel :is(p, li) {
+  & :is(#plan-relationships, #plan-discovery) :is(.spw-panel, .frame-panel) :is(p, li) {
     color: var(--plans-ink-mid);
   }
 
