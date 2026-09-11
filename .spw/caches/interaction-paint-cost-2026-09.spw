@@ -804,9 +804,48 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   }
   %felt_response {
     kind = "subjective"
-    source = `Future observer annotation of the same keyboard/menu journey; not yet
-      sampled.`
-    scale = `responsive | delayed | disrupted`
+    source = `Observer annotation of the named journeys below, sampled by a person in a
+      real browser. The harness never produces a taste reading.`
+    why_anchored = `A three-word scale with no anchors records mood and cannot be
+      argued with later. Anchors make two sittings comparable, let a second observer
+      disagree on the same terms, and keep a taste verdict from drifting into whatever
+      the last measurement suggested.`
+    scale = `immediate | attributable | detached | disrupted`
+    anchors = .{
+      immediate = `The surface answers inside the same gesture. No seam between the act
+        and the response; nothing arrives late enough to register as its own event.`
+      attributable = `A wait is perceived, but the response still reads as the
+        consequence of your action. You are still holding the thought you acted on.`
+      detached = `The response lands after attention has moved on, so it reads as the
+        page acting on its own rather than answering you.`
+      disrupted = `The response contradicts what was just perceived: a stale
+        correction, a reflow under the pointer, a state that snaps back.`
+    }[reg=facet]
+    anchor_source = `The boundaries follow the ordinary interaction thresholds — same
+      gesture, still-held thought, attention moved on. They are calibration for a human
+      judgment, not measured site facts, and no objective claim may cite them.`
+    reward_anchor = `Independent of latency: an interaction that absorbs an act and
+      returns nothing fails taste even when it is instant. @interaction_microstates
+      names the contract; silence is a defect, not a fast path.`
+    journeys = #[
+      `Paced Tab travel through the header and into the first region, at human pace,
+        watching whether the focus ring keeps up with the key`,
+      `First menu open from cold, then close, then reopen`,
+      `Hero arrival on a cold load: what settles, and what moves after you have begun
+        reading`,
+      `One settings change on the settings route, and the return to the previous
+        value`
+    ][reg=set]
+    protocol = `Sample baseline and candidate in the same sitting, order alternated and
+      unlabelled where the surface allows it. Record the taste reading before reading
+      the objective receipt. Write one sentence naming the moment that decided the
+      reading, not an average of the journey.`
+    pairing = `A taste verdict may block a landing on its own. It may never promote one
+      on its own: an improvement claim still needs the ipc-011 objective receipt. When
+      the two disagree, record both and keep the surface as it is.`
+    neutral_case = `Work-elimination candidates predict no felt change at all. For
+      those, the passing reading is indistinguishable, and a felt difference is the
+      finding: something semantic moved, and that is a defect to trace before landing.`
     rule = `Keep observer judgment beside objective receipts; do not turn electrostatic
       metaphor into measured browser physics.`
   }
@@ -1223,6 +1262,23 @@ expression = surface[cost]{focus.paint.attributes}<reading>
       module mount re-annotates every sigil already annotated.`
     hypothesis = `An equality guard in the annotation writers removes the repeated
       assignments without changing any final attribute value; the same shape as A.`
+    design = `Guard at the point of assignment, inside sigil-annotation.js, so the
+      annotation code keeps reading as one sentence per key. Where a key is written
+      with the assign-if-falsy idiom, the existing value already decides the outcome:
+      when it is present, the write is the value it already holds and can be skipped;
+      when it is absent, the computed value is written once. Preserve the current
+      serialization, the aria-label and title paths, and the absent-key case, which is
+      not a delete. Do not route these keys through a shared dataset helper in this
+      patch: its empty-string and array rules differ from the annotation contract, and
+      that migration is its own candidate.`
+    taste_expectation = `Indistinguishable on all four ipc-011 journeys. This candidate
+      changes no final attribute, so a felt difference means a semantic change slipped
+      in; trace it rather than land it.`
+    separate = `The larger design question is scope, not idempotence:
+      refreshOperatorSemantics re-annotates the whole document on every batch of added
+      nodes. Narrowing that to the added subtree would remove the repetition rather
+      than make it cheap, but it changes when annotation reaches an element and needs
+      its own gate and receipt. Keep it as a successor candidate; do not fold it in.`
     unknown = `Whether the removed writes carry attributable style or paint cost.
       Write counts are not latency, and ipc-011 pairing is still required before any
       performance claim.`
