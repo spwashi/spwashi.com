@@ -208,6 +208,13 @@ html[data-spw-theme-biome="glasshouse"] {
   align-items: center;
 }
 
+.spw-page-landmarks [data-spw-liminality] {
+  border: none;
+  box-shadow: none;
+  --card-lift: 0;
+  --card-scale: 1;
+}
+
 .spw-page-landmarks a {
   display: inline-flex;
   align-items: center;
