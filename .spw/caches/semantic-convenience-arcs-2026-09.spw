@@ -240,6 +240,23 @@ expression = convenience[still]{vertical.horizontal.arc}<unfold>
   ][reg=set]
 }[reg=facet]
 
+^"ci-008_silent_contracts_census"{
+  id = "ci-008"
+  operation = "audit"
+  dated = `2026-09-10`
+  scene = `site-wide gesture contracts, body capture registrations, module catalog mount slots`
+  claim = `24 unaudited gesture contracts divide into resolving mechanics and silent promises; 16 document-capture pointer listeners tax touch/scroll without calling preventDefault; 0 modules remain in MOUNT_WHEN.INTERACTION.`
+  census = #[
+    `24 gesture contracts surveyed across 13 routes: 15 resolve, 9 remain silent promises with no runtime engine`,
+    `resolving: 7 swipe:toggle-lens on image study figures (image-interaction.js cycles data-spw-image-lens-active), 7 hold:gather-search-term on search living terms (haptics.js onPrimePointerDown emits spell:capture), 1 tap:discover on coordination hero (image-interaction.js / interaction-hops.js)`,
+    `silent (unbacked by JS): 2 double-click:expand-trail (/play/rpg-wednesday/), 1 tap:cycle-variant (/settings/), 1 tap:surface-current (/settings/), 1 tap:open-companion (/settings/), 1 drag:cycle (/topics/math/), 1 hold:prime on .math-lens-card (/topics/math/ — outside BRACE_TARGET_SELECTOR and has no living term candidate), 2 hold:prime-to-cauldron on containers without living term or concept markup`,
+    `body capture tax (al-012 pattern): 16 capture listeners on document/body do not pass passive: true and never call preventDefault — 6 in haptics.js (pointerdown/up/cancel/move/over/out), 3 in contextual-ui.js (pointerover/out/down), 2 in gesture-anatomy.js (pointerover/out), 4 in interaction-progression.js (pointerdown x2, pointerup, pointercancel), 1 in semantic-chrome.js (scroll). All tax the compositor on every touch/scroll to run non-canceling state updates`,
+    `mount timing: MOUNT_WHEN.INTERACTION is currently empty (interactionSlotEmpty true in module-catalog-normalize.js). attention-pinch-scale was migrated to MOUNT_WHEN.IDLE because async dynamic import on first interaction swallowed the touchstart that initiated the pinch`
+  ][reg=set]
+  grounding_honesty = `Silent contracts should either resolve through their component or be stripped down to grounded/text-friendly affordances. A contract that promises an arc and does nothing violates the reward contract (never silent absorption).`
+  refuse = `Do not add a CSS glow to silent affordances. Do not invent a fourth gesture engine.`
+}[reg=facet]
+
 ^"already_in_the_bed"{
   note = `The creative work is solubilizing what the stills already grew. Do not invent a climate to feel like progress.`
   specimens = #{
