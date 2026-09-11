@@ -29,6 +29,12 @@
 [data-spw-pack-region="body"] { grid-area: body; min-inline-size: 0; }
 [data-spw-pack-region="actions"] { grid-area: actions; min-inline-size: 0; }
 
+/* Occupiable lanes are named pack-regions. An unlabeled child is leftover
+   of the whole pack, not a fifth cell beside body|actions. */
+[data-spw-pack-regions] > :not([data-spw-pack-region]) {
+  grid-column: 1 / -1;
+}
+
 @supports (container-type: inline-size) {
   /* Split: spend two columns only when two real regions can occupy them. */
   @container spw-pack (min-width: 26rem) {

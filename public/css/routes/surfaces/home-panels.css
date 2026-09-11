@@ -131,7 +131,6 @@
 
 :where(body[data-spw-surface="home"] .home-microcosm-figure:is(:hover, :focus-within) img) {
   filter: saturate(1.06) contrast(1.02);
-  transform: scale(1.012);
 }
 
 :where(body[data-spw-surface="home"] .home-microcosm-figure figcaption) {

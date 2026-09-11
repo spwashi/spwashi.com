@@ -1875,7 +1875,7 @@ html[data-spw-reduce-motion="on"] *::after {
   /* Shared settling field: small offsets/opacities that page-state and components can spend together. */
   --spw-micro-lift-distance: 1px;
   --spw-micro-press-scale: 0.985;
-  --spw-hover-scale: 1.006;
+  --spw-hover-scale: 1;
   --spw-armed-scale: 1.01;
   --spw-burst-scale: 1.012;
   /* Machined chassis: century-scale handles meant to be inspected, not merely clicked. */
@@ -18957,6 +18957,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 :where(.spw-copy-motif-strip li) {
   display: inline-flex;
   align-items: center;
+  cursor: default;
   min-height: 1.9rem;
   padding: 0.18rem 0.62rem;
   border: 1px solid color-mix(in srgb, var(--spw-operator-color, var(--line, rgba(14, 18, 20, 0.14))) 36%, var(--line, rgba(14, 18, 20, 0.14)) 64%);
@@ -24342,8 +24343,8 @@ html[data-spw-theme-biome="glasshouse"] {
 }
 
 .spw-page-landmarks__kicker {
-  flex: 1 0 100%;
-  margin: 0 0 0.28rem;
+  flex: 0 1 auto;
+  margin: 0;
   color: var(--ink-soft, rgba(14, 18, 20, 0.62));
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.62rem;
@@ -24355,6 +24356,7 @@ html[data-spw-theme-biome="glasshouse"] {
 .spw-page-landmarks ol {
   display: flex;
   flex-wrap: wrap;
+  flex: 1 1 16rem;
   gap: inherit;
   margin: 0;
   padding: 0;
@@ -24388,6 +24390,7 @@ html[data-spw-theme-biome="glasshouse"] {
   font-size: 0.82rem;
   font-weight: 650;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .spw-page-landmarks a:is(:hover, :focus-visible) {
@@ -29382,6 +29385,12 @@ html {
 [data-spw-pack-region="media"] { grid-area: media; min-inline-size: 0; }
 [data-spw-pack-region="body"] { grid-area: body; min-inline-size: 0; }
 [data-spw-pack-region="actions"] { grid-area: actions; min-inline-size: 0; }
+
+/* Occupiable lanes are named pack-regions. An unlabeled child is leftover
+   of the whole pack, not a fifth cell beside body|actions. */
+[data-spw-pack-regions] > :not([data-spw-pack-region]) {
+  grid-column: 1 / -1;
+}
 
 @supports (container-type: inline-size) {
   /* Split: spend two columns only when two real regions can occupy them. */
@@ -39911,6 +39920,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   max-inline-size: 100%;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
   line-height: var(--spw-control-line-height, 1.08);
   font-size: var(--text-size-chip, 0.82rem);
   background: var(--operator-chip-bg);
@@ -39934,7 +39944,6 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   border-color: var(--operator-chip-hover-border);
   color: var(--operator-chip-hover-ink);
   box-shadow: var(--operator-chip-hover-shadow);
-  transform: translateY(var(--operator-chip-hover-lift));
   outline: none;
 }
 
@@ -40475,7 +40484,7 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
   outline: none;
 }
 
-:where(.spec-pill, .badge, .tag, .pill):hover {
+:where(.spec-pill, .badge, .tag, .pill, .spw-chip, .frame-sigil):hover {
   transform: none;
 }
 
@@ -41222,7 +41231,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   --mode-switch-hover-ink: var(--mode-switch-hover-ink-intent, var(--ink, rgba(14, 18, 20, 0.92)));
   --mode-switch-hover-shadow: var(--mode-switch-hover-shadow-intent,
     inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent));
-  --mode-switch-hover-lift: var(--mode-switch-hover-lift-intent, var(--spw-control-hover-lift, -1px));
+  --mode-switch-hover-lift: var(--mode-switch-hover-lift-intent, 0);
   --mode-switch-active-bg: var(--mode-switch-active-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 72%, var(--active-op-color, var(--teal)) 28%));
   --mode-switch-active-border: var(--mode-switch-active-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal)) 58%, transparent));
   --mode-switch-active-ink: var(--mode-switch-active-ink-intent, var(--ink, rgba(14, 18, 20, 0.92)));
@@ -41266,6 +41275,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   font-weight: var(--mode-switch-idle-weight);
   font-size: var(--text-size-chip, 0.84rem);
   line-height: 1.02;
+  cursor: default;
   transition:
     background-color var(--spw-interaction-commit, var(--touch-commit, 180ms) var(--ease-mechanical, ease)),
     border-color var(--spw-interaction-commit, var(--touch-commit, 180ms) var(--ease-mechanical, ease)),
@@ -41329,7 +41339,6 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   color: var(--mode-switch-hover-ink);
   box-shadow: var(--mode-switch-hover-shadow);
   opacity: 1;
-  transform: translateY(var(--mode-switch-hover-lift));
 }
 
 .mode-switch .frame-sigil:focus-visible {

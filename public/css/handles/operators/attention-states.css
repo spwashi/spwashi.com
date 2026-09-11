@@ -30,7 +30,7 @@
   outline: none;
 }
 
-:where(.spec-pill, .badge, .tag, .pill):hover {
+:where(.spec-pill, .badge, .tag, .pill, .spw-chip, .frame-sigil):hover {
   transform: none;
 }
 

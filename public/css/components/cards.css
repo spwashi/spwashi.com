@@ -1082,6 +1082,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 :where(.spw-copy-motif-strip li) {
   display: inline-flex;
   align-items: center;
+  cursor: default;
   min-height: 1.9rem;
   padding: 0.18rem 0.62rem;
   border: 1px solid color-mix(in srgb, var(--spw-operator-color, var(--line, rgba(14, 18, 20, 0.14))) 36%, var(--line, rgba(14, 18, 20, 0.14)) 64%);

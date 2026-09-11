@@ -1195,7 +1195,7 @@
   /* Shared settling field: small offsets/opacities that page-state and components can spend together. */
   --spw-micro-lift-distance: 1px;
   --spw-micro-press-scale: 0.985;
-  --spw-hover-scale: 1.006;
+  --spw-hover-scale: 1;
   --spw-armed-scale: 1.01;
   --spw-burst-scale: 1.012;
   /* Machined chassis: century-scale handles meant to be inspected, not merely clicked. */

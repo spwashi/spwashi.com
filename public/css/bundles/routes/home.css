@@ -523,8 +523,9 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   --mode-switch-active-ink-intent: var(--home-accent-ink, var(--ink-strong, currentColor));
   --mode-switch-active-shadow-intent: inset 0 -0.2rem 0 color-mix(in srgb, var(--home-accent-primary) 82%, transparent);
   --mode-switch-idle-ink-intent: color-mix(in srgb, var(--ink, currentColor) 78%, var(--home-accent-primary) 22%);
-  display: grid;
-  align-content: start;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
   gap: 0.5rem;
   min-width: 0;
   padding: 0.58rem;
@@ -535,6 +536,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
 :where([data-spw-feature="home-kernel-entry"] .home-working-view__intro) {
   display: grid;
+  flex: 1 1 10rem;
   gap: 0.16rem;
   min-width: 0;
 }
@@ -554,7 +556,8 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 :where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch) {
   display: flex;
   align-items: stretch;
-  inline-size: 100%;
+  flex: 1 1 16rem;
+  inline-size: auto;
   min-inline-size: 0;
   gap: 0.32rem;
 }
@@ -718,6 +721,44 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
     flex: 0 0 auto;
     margin-inline-start: 0;
   }
+
+  /* Identity keeps the masthead track; the hook spends leftover beside it. */
+  :where([data-spw-feature="home-kernel-entry"] .home-hero-copy) {
+    grid-template-columns: minmax(22rem, 0.9fr) minmax(16rem, 1fr);
+    align-items: start;
+    column-gap: clamp(0.85rem, 1.6vw, 1.4rem);
+  }
+
+  :where(
+    [data-spw-feature="home-kernel-entry"] [data-spw-textual-role="kicker"],
+    [data-spw-feature="home-kernel-entry"] h1,
+    [data-spw-feature="home-kernel-entry"] .home-hero-copy > .home-tagline,
+    [data-spw-feature="home-kernel-entry"] [data-spw-textual-role="lede"],
+    [data-spw-feature="home-kernel-entry"] .home-hero-note,
+    [data-spw-feature="home-kernel-entry"] .home-live-note
+  ) {
+    grid-column: 1;
+  }
+
+  :where([data-spw-feature="home-kernel-entry"] .home-hero-copy > [data-spw-textual-role="lede"]) {
+    max-inline-size: none;
+  }
+
+  :where([data-spw-feature="home-kernel-entry"] .hook-call) {
+    grid-column: 2;
+    grid-row: 1 / span 6;
+    justify-self: stretch;
+    align-self: start;
+  }
+
+  :where(
+    [data-spw-feature="home-kernel-entry"] .spw-copy-motif-strip,
+    [data-spw-feature="home-kernel-entry"] .spw-reason-strip,
+    [data-spw-feature="home-kernel-entry"] .spw-narration,
+    [data-spw-feature="home-kernel-entry"] .home-quick-start
+  ) {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (min-width: 72rem) {
@@ -731,7 +772,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   :where([data-spw-feature="home-kernel-entry"] .home-hero-copy) {
     grid-column: 1;
     grid-row: 1 / -1;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(22rem, 0.9fr) minmax(16rem, 1fr);
   }
 
   :where(
@@ -744,15 +785,16 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
     [data-spw-feature="home-kernel-entry"] .home-production-note,
     [data-spw-feature="home-kernel-entry"] .spw-anatomy-key,
     [data-spw-feature="home-kernel-entry"] .spw-playable-hook,
-    [data-spw-feature="home-kernel-entry"] .home-hero-skim,
-    [data-spw-feature="home-kernel-entry"] .spw-copy-motif-strip
+    [data-spw-feature="home-kernel-entry"] .home-hero-skim
   ) {
     grid-column: 1;
   }
 
   :where([data-spw-feature="home-kernel-entry"] .hook-call) {
-    grid-column: 1;
+    grid-column: 2;
+    grid-row: 1 / span 6;
     justify-self: stretch;
+    align-self: start;
   }
 
   :where([data-spw-feature="home-kernel-entry"] .home-hero-grid > .home-brand-plate) {
@@ -879,14 +921,12 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   transition:
       border-color var(--home-transition-fast),
       background-color var(--home-transition-fast),
-      color var(--home-transition-fast),
-      transform var(--home-transition-fast);
+      color var(--home-transition-fast);
 }
 
 :where(body[data-spw-surface="home"] .frame-sigil:is(:hover, :focus-visible)) {
   border-color: color-mix(in srgb, var(--home-accent-primary) 34%, transparent);
   color: var(--home-accent-primary);
-  transform: translateY(-1px);
 }
 
 
@@ -2229,7 +2269,6 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
 
 :where(body[data-spw-surface="home"] .home-microcosm-figure:is(:hover, :focus-within) img) {
   filter: saturate(1.06) contrast(1.02);
-  transform: scale(1.012);
 }
 
 :where(body[data-spw-surface="home"] .home-microcosm-figure figcaption) {

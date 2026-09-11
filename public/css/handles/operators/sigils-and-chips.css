@@ -341,6 +341,7 @@
   max-inline-size: 100%;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
   line-height: var(--spw-control-line-height, 1.08);
   font-size: var(--text-size-chip, 0.82rem);
   background: var(--operator-chip-bg);
@@ -364,7 +365,6 @@
   border-color: var(--operator-chip-hover-border);
   color: var(--operator-chip-hover-ink);
   box-shadow: var(--operator-chip-hover-shadow);
-  transform: translateY(var(--operator-chip-hover-lift));
   outline: none;
 }
 

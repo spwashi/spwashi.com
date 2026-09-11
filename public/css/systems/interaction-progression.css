@@ -26,7 +26,7 @@
 
 :where(html[data-spw-enhancement-level="rich"], html[data-spw-enhancement-level="theatrical"]) {
   --spw-interaction-phase-tuning: 1.14;
-  --spw-hover-scale: 1.01;
+  --spw-hover-scale: 1;
   --spw-armed-scale: 1.016;
   --spw-burst-scale: 1.02;
 }
