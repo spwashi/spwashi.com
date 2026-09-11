@@ -242,7 +242,8 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.35rem 0.55rem;
+  justify-content: flex-start;
+  gap: 0.35rem 0;
   min-width: 0;
   padding: 0.24rem 0 0.4rem;
   border-bottom: 1px solid color-mix(in srgb, var(--home-accent-line) 72%, transparent);
@@ -280,7 +281,8 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.38rem 0.42rem;
+    justify-content: flex-start;
+    gap: 0.38rem 0;
     padding: 0.28rem 0 0.48rem;
   }
 }
@@ -1095,7 +1097,8 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
         "brace identity meta"
         "compose compose compose"
         "inspect inspect inspect";
-    gap: 0.32rem 0.42rem;
+    justify-content: flex-start;
+    gap: 0.32rem 0;
     padding-block-end: 0.38rem;
   }
 

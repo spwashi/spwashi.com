@@ -1655,6 +1655,24 @@ export function compareCompositionTiers(left = 'unknown', right = 'unknown') {
   return leftIndex - rightIndex;
 }
 
+export function insertAfterFrameSignature(mount, node) {
+  if (!(mount instanceof HTMLElement) || !(node instanceof HTMLElement)) return node;
+  const delimiter = Array.from(mount.children).find((child) => (
+    child instanceof HTMLElement && child.classList.contains('spw-delimiter')
+  ));
+  const sigil = delimiter?.nextElementSibling instanceof HTMLElement
+    && delimiter.nextElementSibling.classList.contains('frame-sigil')
+    ? delimiter.nextElementSibling
+    : null;
+  const anchor = sigil || delimiter;
+  if (anchor) {
+    anchor.insertAdjacentElement('afterend', node);
+    return node;
+  }
+  mount.append(node);
+  return node;
+}
+
 export function inferTopographyKind(el, fallback = 'component') {
   if (!el) return fallback;
   if (el.dataset?.spwKind) return normalizeTopographyToken(el.dataset.spwKind);

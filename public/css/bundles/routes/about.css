@@ -619,6 +619,8 @@ body[data-spw-surface="about"] {
 
     [data-spw-surface="about"] #about-frame > .frame-topline {
       grid-column: 1 / -1;
+      justify-content: flex-start;
+      column-gap: 0;
       margin-bottom: clamp(0.35rem, 1vw, 0.7rem);
     }
 
@@ -1194,6 +1196,7 @@ body[data-spw-surface="about"] {
   [data-spw-surface="about"] #about-frame > .frame-topline {
     justify-content: flex-start;
     align-items: center;
+    column-gap: 0;
     min-width: 0;
   }
 

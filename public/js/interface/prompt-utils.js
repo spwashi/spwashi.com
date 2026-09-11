@@ -1,4 +1,5 @@
 import { bus } from '/public/js/kernel/bus.js';
+import { insertAfterFrameSignature } from '/public/js/kernel/dom-contracts.js';
 import { serializeLatticeToSpw } from '/public/js/semantic/lattice.js';
 import { getSiteSettings, getSiteSettingModifiers } from '/public/js/kernel/site-settings.js';
 
@@ -388,7 +389,8 @@ function initFrameCopyButtons(runtime) {
             btn = document.createElement('button');
             btn.className = 'frame-prompt-copy';
             btn.innerHTML = '<span class="log-op">$</span> copy_seed';
-            (mount || frame).appendChild(btn);
+            if (mount) insertAfterFrameSignature(mount, btn);
+            else frame.append(btn);
         }
 
         if (btn.dataset.spwPromptCopyBound === 'true') return;
