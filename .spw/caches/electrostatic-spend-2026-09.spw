@@ -1,0 +1,198 @@
+# Electrostatic Spend (2026-09)
+#
+# operation: cache
+# What the charge model earns and where it spends it. Review of spells, the
+# cauldron, chips, and braces against the primitives that claim to drive them.
+# Not a physics rewrite. Not a new attribute family. Not a second field.
+
+#>electrostatic_spend_2026_09
+#:cache #!charge #!cauldron #!operators #!braces
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@charge_cycle: ~"../conventions/charge-cycle.spw"
+@electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
+@cauldron_dynamics: ~"../conventions/cauldron-dynamics.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@chip_grammar: ~"../conventions/operator-chip-grammar.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@still_alignment: ~"./still-alignment-ladder-2026-09.spw"
+@charge_field: ~"../../public/js/runtime/charge-field.js"
+@spells: ~"../../public/js/runtime/spells.js"
+@registers: ~"../../public/js/interface/cauldron/registers.js"
+@storage: ~"../../public/js/interface/cauldron/storage.js"
+@affordances_css: ~"../../public/css/systems/electrostatic-affordances.css"
+@wonder_css: ~"../../public/css/effects/wonder.css"
+
+operation = "audit"
+fixity = "tending"
+source = "review 2026-09-10: interactive design of spells, cauldron, chips, braces; token spend measured across public/css and public/js"
+
+^"thesis"{
+  claim = `The model earns more signal than it spends. Every interaction is classified twice — once into a discharge kind, once into a relation — and both classifications converge on one ring. Meanwhile the subsystem with the most to gain from them, the cauldron, keeps its own parallel charge and never hears the field.`
+  falsifier = `@charge_cycle sets the test itself: if removing charge state does not change inspectability, resonance, or consequence, the effect was decoration. Applied token by token below.`
+  not_a_complaint = `The terminal layer is strong, the ladder was signed and fixed in September, and --spw-charge-field is genuinely load-bearing at 62 reads. The gap is downstream of a good model, not inside it.`
+}[reg=facet]
+
+^"es-001_what_is_actually_live"{
+  id = "es-001"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `Three of the primitives carry real weight. The rest are declared more often than they are read.`
+  measured = #[
+    `--spw-charge-field: 1 declaration, 62 reads, 3 JS writers — the spine`,
+    `--spw-resonance: 33 declarations, 13 reads, spends into ornament, registers, projection-attenuation, and operator handles`,
+    `--spw-e-edge: 7 and 7, balanced`,
+    `--spw-field-intensity: 9 and 10, balanced`,
+    `--spw-edge-proximity: 1 declaration, 3 reads, 11 JS touches — runtime-driven`
+  ][reg=set]
+  reading = `Where a token is read about as often as it is set, it is doing work. The imbalances below are where the model narrates more than it spends.`
+}[reg=facet]
+
+^"es-002_the_channel_layer_is_the_thin_leg"{
+  id = "es-002"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `Region-as-material is the model's most distinctive claim and its least implemented one.`
+  measured = #[
+    `--spw-e-channel: 8 declarations, 2 reads`,
+    `--spw-slot-attenuate: 6 declarations, 1 read`,
+    `--spw-wonder-hold: 7 declarations, 2 reads`
+  ][reg=set]
+  authored = `@affordances_css:138-142 gives five materials a number: hook stores at 1.15, hub conducts at 1, cluster couples at 0.85, path leaks at 0.72, read resists at 0.55. That is a real gradient, carefully chosen.`
+  spent = `Both readers multiply it into one product. @electrostatic_affordances promises "the same ? in a hook lingers; in a read seat it fades" — the number that would do that is consulted twice site-wide.`
+  reading = `The channel is the part of the model that could not be inferred from the operator alone. It is the part carrying the psychology rather than the notation, and it is the part that evaporates before reaching a surface.`
+  proposal = `Before adding a reader, ask what a visitor should be able to tell apart. Hold time is the honest candidate: the same handle in a hook should stay warm visibly longer than in a read seat. That is one decay multiplier, not a new field.`
+  refuse = `Do not add a second channel token. Do not author a per-card field — @electrostatic_affordances already forbids it.`
+}[reg=facet]
+
+^"es-003_the_funnel"{
+  id = "es-003"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `Four dimensions multiply into one scalar, get attenuated by 0.55, and land as a ring.`
+  chain = `--spw-e-terminal × --spw-e-channel × --spw-e-nest × (1 + 0.22 × --spw-e-edge) → --spw-impact-scale → --spw-induced-field × 0.55 → --spw-resonance → wonder.css paints a ring`
+  reading = `Terminal, channel, nest, and edge are four independent readings of a moment. Multiplied into one number they become indistinguishable: a deeply nested probe in a reading seat and a shallow reference at the page edge can land on the same value and look identical. The product is cheap and legible in CSS, and it is also where the distinctions die.`
+  proposal = `Keep the product for intensity. Let one dimension survive as a kind rather than a magnitude — nest is the strongest candidate, because depth is the one a reader can verify by looking. --spw-channel already exists as a word (store/conduct/couple/leak/resist) beside its number; nothing reads the word.`
+  refuse = `Do not paint four rings. The funnel is correct as a default; the argument is for one surviving distinction, not four.`
+}[reg=facet]
+
+^"es-004_a_cast_spell_does_not_discharge"{
+  id = "es-004"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `The charge cycle names a discharge kind for exactly what casting does, and casting does not fire it.`
+  evidence = #[
+    `@charge_field subscribes to seven events: charge:armed, charge:preview, charge:charged, charge:settled, brace:discharged, spell:grounded, spell:capture`,
+    `the bus carries nine spell events: checkpoint, grounded, capture, reset, ungrounded, cast, probe, decomposed, momentum`,
+    `spell:cast is emitted at @spells:780 and again through kernel/shared.js, and no charge listener hears it`,
+    `@charge_cycle#discharge_kinds defines project as "stored tendency becomes outward artifact or runnable value — proof card, expanded panel, lab output, playable route"`
+  ][reg=set]
+  reading = `Gathering an ingredient transfers. Grounding sediments. Casting — the act the whole metabolism runs toward — returns nothing to the field. The cauldron's loudest moment is its quietest one.`
+  proposal = `spell:cast fires a project discharge carrying the cast's own operator set. The receipt @cauldron_dynamics already asks for (which ingredients participated, what changed, what can be replayed) is the consequence the field should name.`
+  gate = `This changes what a cast feels like. Proposal and demo, browser approval before it lands.`
+  refuse = `Do not wire the other six events at the same time. Cast is the one with a named kind waiting for it.`
+}[reg=facet]
+
+^"es-005_two_tables_one_key"{
+  id = "es-005"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `Two subsystems key a table on the operator and compute complementary halves of the same judgment. Neither reads the other.`
+  tables = #[
+    `@charge_field OPERATOR_DISCHARGE: 25 operators → release | transfer | ground | project. Kind, with no sign.`,
+    `@registers VALENCE_BY_OPERATOR: 10 operators → +1 credit, -1 spend, 0 ambient. Sign, with no kind.`
+  ][reg=set]
+  worked = #[
+    `wonder: release, +1 — an inquiry that credits`,
+    `action: release, -1 — a commitment that costs`,
+    `both discharge identically and mean opposite things to the ledger`
+  ][reg=set]
+  reading = `@electrostatic_affordances already names the asymmetry from one side: "the model could name four kinds of discharge and no kind of refusal." The other half of the answer is sitting in the cauldron. Kind says what happened; valence says which way it went. Together they are the prediction @charge_cycle#wonder_and_learning wants the visitor to be able to make.`
+  proposal = `A discharge carries its valence. One field on the event, read from the table that already exists. The ring can then read commitment differently from inquiry without a second charge attribute or a new sigil.`
+  relation = `This is @still_alignment#al-001 in another register: one judgment, restated in two places, drifting because nothing makes them meet.`
+  refuse = `Do not merge the tables. They answer different questions and should stay separately readable. Make the event carry both.`
+}[reg=facet]
+
+^"es-006_dead_and_near_dead_outputs"{
+  id = "es-006"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `One output is computed on every discharge and read nowhere. Three more are computed and spent below perception.`
+  dead = `--spw-conceptual-nuance: written by @charge_field on every discharge as the max of the three relation rewards. Zero readers in public/css. It is the doctrine's own falsifier, in one line.`
+  near_dead = #[
+    `--spw-curiosity-reward, --spw-relationship-reward, --spw-architecture-reward: one reader each, all three in @wonder_css:352-390`,
+    `each spends as a 10px blur at color-mix(… reward × 10%), so the reward tops out at 10% of its colour`,
+    `the interaction reward contract says every interaction rewards with feedback or clarity about potential arcs, no silent absorption. A tenth of a colour in a blur is close to absorption`
+  ][reg=set]
+  proposal = #[
+    `Either spend --spw-conceptual-nuance or delete it. It is two lines of JS either way, and leaving it is what makes the falsifier bite`,
+    `The relation triad is the most interesting thing the field computes — it knows whether the visitor is being curious, relational, or structural. Ten percent of a glow is not where that belongs`
+  ][reg=set]
+  gate = `Raising the reward is a sensation change. Deleting a dead property is not.`
+}[reg=facet]
+
+^"es-007_the_largest_terminal_is_ungathered"{
+  id = "es-007"
+  operation = "cache"
+  dated = `2026-09-10`
+  claim = `@cauldron_dynamics#intake already names this and it remains true: the biggest capture surface on the site is the one nothing gathers from.`
+  counts = #[`operator: 3023`, `semantic_expression: 494`, `living_term: 85`][reg=set]
+  quoted = `"the largest capture surface is the one nothing gathers from"`
+  connection = `The charge field already classifies every operator interaction into a relation and a discharge kind. The cauldron already clusters on operator, region, liminality, route and has to derive salience itself. The classification the field throws away is the salience the cauldron recomputes.`
+  proposal = `Not a new intake path. A gathered fragment could carry the relation it was charged under, and @storage clusterIngredients gains an axis it does not have to infer.`
+  refuse = `Do not make all 3023 operators gatherable at once. @cauldron_dynamics#wonder_cauldron_dynamics_1 has an open question about refusal that should be answered first.`
+}[reg=facet]
+
+^"es-008_braces_already_carry_a_settledness_ladder"{
+  id = "es-008"
+  operation = "prime"
+  dated = `2026-09-10`
+  claim = `The site runs at least four ladders that all describe how settled a thing is, in four vocabularies, and none of them can address another.`
+  ladders = #[
+    `charge phase: neutral, arming, preview, charged, discharging, quiet, grounded, transferring`,
+    `brace position: root stable, [variant] and {behavior} infix tending, closing brace and residue volatile — @semantic_braces#positional_coupling`,
+    `cauldron register fixity, and the credit/spend/ambient valence beside it`,
+    `the precipitate ladder: idea, design, implementation, instance`
+  ][reg=set]
+  reading = `@semantic_braces says the opening brace leans objective and the closing leans subjective. That is the same gradient the charge phases walk — a thing that is being proposed versus a thing that has been committed to. The brace says it in grammar, the field says it in phase, and a reader who learned one gets no help with the other.`
+  proposal = `Do not unify them. Name the correspondence once, in a convention, so a reader who learns the brace gradient can predict the charge gradient. That is a teaching artifact, not a refactor.`
+  refuse = `Do not collapse four vocabularies into one. They are at different scales on purpose — notation, interaction, storage, practice. The cost right now is that nothing says so.`
+}[reg=facet]
+
+^"es-009_what_is_working"{
+  id = "es-009"
+  operation = "cache"
+  dated = `2026-09-10`
+  claim = `Recorded so a later pass does not mistake these for open problems.`
+  strong = #[
+    `The terminal layer. A visible sigil must resolve to a parser prefix and a data-spw-operator — @chip_grammar enforces adjacency, @semantic_braces#sigil_consequence forbids ornament that cannot be parsed. This is the part that makes the rest legible`,
+    `Dual read. Without JS the operator still teaches what would happen; with JS the field spends it. The HTML does not pre-announce phase`,
+    `The signed ladder. rest, proximity, contact, held — contact outranks proximity since 2026-09-08, and the probe note records that press used to read dimmer than hover and that press travel was a tenth of a pixel. That is the model catching its own error`,
+    `Refusing to sticker. One field per room, not one per card. Discharge inferred from the operator rather than authored beside it`,
+    `grounded as a negative pole, so a recognised interaction with no arc is distinguishable from a broken one`
+  ][reg=set]
+}[reg=facet]
+
+^"order"{
+  claim = `Two of these are not sensation calls and can be settled first.`
+  order = #[
+    `es-006 dead property — spend it or delete it. No feel change either way`,
+    `es-005 valence on the discharge event — data plumbing; the visual consequence is a separate decision`,
+    `es-004 cast discharges — proposal and demo, browser approval`,
+    `es-002 channel hold time — proposal and demo`,
+    `es-008 the correspondence note — writing, not code`,
+    `es-003 and es-007 stay open. Both touch questions the corpus has already asked and not answered`
+  ][reg=set]
+  gate = `@still_alignment established the pattern: measure first, propose, demo, then let the human approve the sensation in a browser.`
+  skip = #[`a second field`, `a new data-spw-* family`, `merging the operator tables`, `making all 3023 operators gatherable`][reg=set]
+}[reg=facet]
+
+^"next_session"{
+  claim = `Open this file. The measurements are reproducible and the two non-sensation items are small.`
+  open = #[`this file`, `public/js/runtime/charge-field.js`, `public/css/systems/electrostatic-affordances.css`][reg=set]
+  reproduce = `For each token, count declarations (--token:) against readers (var(--token)) across public/css excluding bundles, and JS touches across public/js excluding generated. The imbalance is the finding.`
+  validation = `npm run check:local ; npm run spw:integrity`
+  concurrent = `Multiple sessions commit to main in this tree. Never git stash here.`
+}[reg=facet]
