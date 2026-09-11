@@ -1683,6 +1683,8 @@ export function inferTopographyKind(el, fallback = 'component') {
     || hasClass(el, 'semantic-contract-card')
   ) return 'card';
 
+  if (el.dataset?.spwSlot || el.matches?.('[data-spw-slot], .frame-topline, .frame-heading')) return 'slot';
+
   if (el.matches?.('main')) return 'main';
   if (el.matches?.('nav')) return 'nav';
   if (el.matches?.('aside')) return 'aside';

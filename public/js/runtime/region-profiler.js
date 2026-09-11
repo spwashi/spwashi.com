@@ -424,7 +424,9 @@ export function describeRegionProfile(profile) {
 }
 
 export function applyRegionProfile(el, profile) {
-  writeDatasetValueIfMissing(el, 'spwKind', profile.kind);
+  if (profile.kind !== 'slot' && !el.matches?.('.frame-topline, .frame-heading')) {
+    writeDatasetValueIfMissing(el, 'spwKind', profile.kind);
+  }
   writeDatasetValueIfMissing(el, 'spwRole', profile.role);
   writeDatasetValueIfMissing(el, 'spwContext', profile.context);
   writeDatasetValueIfMissing(el, 'spwSurface', profile.surface);
@@ -469,7 +471,7 @@ export function summarizeRegionDiversity(profiles = []) {
 
   for (const profile of profiles) {
     if (!profile) continue;
-    if (profile.kind) kinds.add(profile.kind);
+    if (profile.kind && profile.kind !== 'slot') kinds.add(profile.kind);
     if (profile.role) roles.add(profile.role);
     if (profile.harmony) harmonies.add(profile.harmony);
     if (profile.context) contexts.add(profile.context);
