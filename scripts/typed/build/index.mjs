@@ -201,7 +201,15 @@ async function bundleSiteRuntimeGraph(outDir, logger) {
             format: 'es',
             minify: true,
             sourcemap: false,
-            strictExecutionOrder: true,
+            // Off deliberately. Strict order wraps every module in a lazy `init_x()`
+            // held in a `var`, and the semantic groups below hand rolldown chunk
+            // graphs with cycles in them even though the module graph has none. A
+            // `var` binding is not hoisted like a function declaration, so the first
+            // chunk into a cycle called an initializer that was still undefined and
+            // every module mount after it died on `is not a function`. Native ESM
+            // ordering is already correct for an acyclic module graph, which this
+            // one is; the wrappers were buying nothing and costing the runtime.
+            strictExecutionOrder: false,
             entryFileNames: 'site.js',
             chunkFileNames: '[name]-[hash].js',
         };
