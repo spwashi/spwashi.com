@@ -320,13 +320,13 @@ export function initInteractionProgression(root = document) {
     if (!moved) return;
     const now = Date.now();
     if (now - swipeCooldown < SWIPE_COOLDOWN_MS) return;
-    swipeCooldown = now;
     const swipeHost = event.target instanceof Element
-      ? event.target.closest('[data-spw-gesture-contract]')
+      ? event.target.closest('[data-spw-gesture-contract*="swipe:"]')
       : null;
-    const swipePhase = swipeHost
-      ? (phaseFromContractKind(swipeHost.dataset.spwGestureContract, 'swipe') || 'discover')
-      : 'discover';
+    if (!swipeHost) return;
+    const swipePhase = phaseFromContractKind(swipeHost.dataset.spwGestureContract, 'swipe');
+    if (!swipePhase) return;
+    swipeCooldown = now;
     writePhase(html, swipePhase, { source: 'swipe-rail', force: true });
   };
 
@@ -392,9 +392,9 @@ export function initInteractionProgression(root = document) {
   document.addEventListener('focusin', onFocusIn, { signal, capture: true });
   document.addEventListener('focusout', onFocusOut, { signal, capture: true });
   document.addEventListener('pointerenter', onPointerEnter, { signal, capture: true });
-  document.addEventListener('pointerdown', onRailPointerDown, { signal, capture: true });
-  document.addEventListener('pointerup', onRailPointerUp, { signal, capture: true });
-  document.addEventListener('pointercancel', onRailPointerUp, { signal, capture: true });
+  document.addEventListener('pointerdown', onRailPointerDown, { signal, capture: true, passive: true });
+  document.addEventListener('pointerup', onRailPointerUp, { signal, capture: true, passive: true });
+  document.addEventListener('pointercancel', onRailPointerUp, { signal, capture: true, passive: true });
 
   if (typeof bus?.on === 'function') {
     bus.on('cauldron:updated', onCauldronUpdated, { signal });
