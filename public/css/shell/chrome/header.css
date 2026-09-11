@@ -629,6 +629,7 @@
 .header-annotation {
   display: inline-flex;
   align-items: center;
+  min-block-size: var(--touch-target-compact, 2.15rem);
   max-width: min(18ch, 28vw);
   padding: 0.1rem 0.4rem;
   border: 1px solid color-mix(in srgb, var(--spw-shell-chrome-line-local) 82%, transparent);

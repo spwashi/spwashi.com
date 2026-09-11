@@ -5846,6 +5846,7 @@ body > header:empty {
 .header-annotation {
   display: inline-flex;
   align-items: center;
+  min-block-size: var(--touch-target-compact, 2.15rem);
   max-width: min(18ch, 28vw);
   padding: 0.1rem 0.4rem;
   border: 1px solid color-mix(in srgb, var(--spw-shell-chrome-line-local) 82%, transparent);
@@ -7690,7 +7691,7 @@ body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel 
 :where(.site-header[data-spw-menu-topology="screen-field"] nav, body > header[data-spw-menu-topology="screen-field"] nav) {
   position: fixed;
   inset-block-start: auto;
-  inset-block-end: max(0.65rem, env(safe-area-inset-bottom));
+  inset-block-end: 0;
   inset-inline: max(0.65rem, env(safe-area-inset-left)) max(0.65rem, env(safe-area-inset-right));
   z-index: calc(var(--z-header) + 1);
   display: grid;
@@ -7706,8 +7707,12 @@ body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel 
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y pinch-zoom;
   padding: 0.3rem;
+  padding-block-end: max(0.85rem, env(safe-area-inset-bottom));
   border-width: 1px;
+  border-block-end-width: 0;
   border-radius: clamp(0.82rem, 3vw, 1.05rem);
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
   background:
     linear-gradient(180deg, var(--spw-shell-mobile-sheen), transparent 12rem),
     var(--spw-shell-mobile-panel-bg);
@@ -8950,6 +8955,7 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   }
 
   .header-annotation {
+    min-block-size: var(--touch-target-compact, 2.15rem);
     max-width: min(100%, 24ch);
     text-align: left;
   }
@@ -10073,10 +10079,11 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
     background: color-mix(in oklab, var(--bg, #111) 52%, transparent);
     backdrop-filter: blur(4px) saturate(0.94);
     -webkit-backdrop-filter: blur(4px) saturate(0.94);
-    /* Capture outside taps/scroll so the dimmed page does not activate under the field. */
+    /* Capture outside taps/scroll so the dimmed page does not activate under the field.
+       cursor: pointer ensures iOS Safari / WebKit dispatches click events for outside taps. */
     pointer-events: auto;
     touch-action: none;
-    cursor: default;
+    cursor: pointer;
   }
 
   /* Within the raised header's stacking context this only orders the nav
@@ -10090,6 +10097,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) .spw-state-inspector[data-spw-state-inspector="closed"]:not([data-spw-satchel-positioned="user"]),
   html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) .spw-state-inspector[data-spw-state-inspector="closed"]:not([data-spw-satchel-positioned="user"]) {
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     transform: translateY(0.45rem);
     transition:
@@ -10097,9 +10105,10 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
       transform 160ms var(--shell-ease, ease);
   }
 
-  html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell),
-  html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell) {
+  html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]),
+  html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]) {
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0.45rem);
   }
@@ -18228,22 +18237,22 @@ html[data-spw-color-mode="dark"] :where(
 }
 
 /* Liminality: Entry */
-:where([data-spw-liminality="entry"]) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-liminality="entry"]) {
   --spw-physics-mass: 0.85;
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, var(--line, rgba(0, 0, 0, 0.12)));
 }
-:where([data-spw-liminality="entry"]:is(:hover, :focus-within)) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-liminality="entry"]:is(:hover, :focus-within)) {
   --card-lift: -1px;
   box-shadow: 0 6px 18px var(--card-shadow-color);
 }
 
 /* Liminality: Threshold */
-:where([data-spw-liminality="threshold"]) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-liminality="threshold"]) {
   --spw-physics-mass: 0.95;
   border-style: dashed;
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 45%, var(--line, rgba(0, 0, 0, 0.15)));
 }
-:where([data-spw-liminality="threshold"]:is(:hover, :focus-within)) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-liminality="threshold"]:is(:hover, :focus-within)) {
   --card-lift: -1.5px;
   --card-scale: var(--spw-hover-scale, 1.006);
   border-style: solid;
@@ -18252,58 +18261,58 @@ html[data-spw-color-mode="dark"] :where(
 }
 
 /* Liminality: Deep */
-:where([data-spw-liminality="deep"]) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-liminality="deep"]) {
   --spw-physics-mass: 1.25;
   background: color-mix(in srgb, var(--component-surface-strong, #fff) 94%, var(--active-op-color, var(--teal)) 6%);
   box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.05), var(--component-shadow);
 }
-:where([data-spw-liminality="deep"]:is(:hover, :focus-within)) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-liminality="deep"]:is(:hover, :focus-within)) {
   --card-lift: -1px;
   box-shadow: inset 0 3px 18px color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, rgba(0, 0, 0, 0.08)), 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Liminality: Projected */
-:where([data-spw-liminality="projected"]) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-liminality="projected"]) {
   --spw-physics-mass: 1.1;
   --card-lift: -1.5px;
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 60%, var(--line, transparent));
   box-shadow: 0 8px 24px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
 }
-:where([data-spw-liminality="projected"]:is(:hover, :focus-within)) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-liminality="projected"]:is(:hover, :focus-within)) {
   --card-lift: -2px;
   --card-scale: var(--spw-armed-scale, 1.01);
   box-shadow: 0 14px 32px color-mix(in srgb, var(--active-op-color, var(--teal)) 25%, transparent);
 }
 
 /* Liminality: Settled */
-:where([data-spw-liminality="settled"]) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-liminality="settled"]) {
   --spw-physics-mass: 1.4;
   border-width: 2px;
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 35%, var(--line, rgba(0, 0, 0, 0.2)));
 }
 
 /* Valence: Positive (Magnetic Lift) */
-:where([data-spw-valence="positive"]:is(:hover, :focus-within)) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-valence="positive"]:is(:hover, :focus-within)) {
   --card-lift: -1.5px;
   box-shadow: 0 10px 22px color-mix(in srgb, var(--op-frame-color, var(--teal)) 20%, transparent);
 }
 
 /* Valence: Negative (Inward Tuck) */
-:where([data-spw-valence="negative"]) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-valence="negative"]) {
   border-color: color-mix(in srgb, var(--ink, #111) 22%, var(--line, transparent));
 }
-:where([data-spw-valence="negative"]:is(:hover, :focus-within)) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-valence="negative"]:is(:hover, :focus-within)) {
   --card-lift: 1px;
   --card-scale: 0.995;
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* Valence: Charged (Aura Pulse) */
-:where([data-spw-valence="charged"]) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-valence="charged"]) {
   border-color: var(--active-op-color, var(--teal));
   box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--active-op-color, var(--teal)) 40%, transparent), 0 6px 18px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
 }
-:where([data-spw-valence="charged"]:is(:hover, :focus-within)) {
+:where(.spw-card, .frame-card, .plan-card, .ref-card, .media-card, .media-focus-card, .software-card, .operator-card, .compare-card, .math-lens-card, .topic-reference-card, .spw-principle-card, [data-spw-card]):where([data-spw-valence="charged"]:is(:hover, :focus-within)) {
   --card-lift: -2px;
   box-shadow: 0 0 0 2.5px var(--active-op-color, var(--teal)), 0 12px 28px color-mix(in srgb, var(--active-op-color, var(--teal)) 28%, transparent);
 }
@@ -24357,6 +24366,7 @@ html[data-spw-theme-biome="glasshouse"] {
   align-items: center;
   min-height: 2.75rem;
   padding: 0.28rem 0.7rem 0.28rem 0.55rem;
+  border: 0;
   border-inline-start: 0.22rem solid var(--landmark-mark);
   border-radius: 0 0.42rem 0.42rem 0;
   background: color-mix(in srgb, var(--landmark-mark) 8%, var(--surface-strong, #fff));

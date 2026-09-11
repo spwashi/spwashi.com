@@ -213,6 +213,7 @@ html[data-spw-theme-biome="glasshouse"] {
   align-items: center;
   min-height: 2.75rem;
   padding: 0.28rem 0.7rem 0.28rem 0.55rem;
+  border: 0;
   border-inline-start: 0.22rem solid var(--landmark-mark);
   border-radius: 0 0.42rem 0.42rem 0;
   background: color-mix(in srgb, var(--landmark-mark) 8%, var(--surface-strong, #fff));

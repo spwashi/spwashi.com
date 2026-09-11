@@ -1062,6 +1062,13 @@ export function initSpwShellDisclosure(options = {}) {
     closeToggleMenu('outside');
   };
 
+  const handleDocumentPointerDown = (event) => {
+    if (state.mode !== MODES.TOGGLE) return;
+    if (!state.userIntentOpen) return;
+    if (header.contains(event.target)) return;
+    closeToggleMenu('outside');
+  };
+
   const handleDocumentKeydown = (event) => {
     if (event.key === 'Escape' && attentionPanel && !attentionPanel.hidden) {
       event.preventDefault();
@@ -1279,6 +1286,7 @@ export function initSpwShellDisclosure(options = {}) {
   utilitySummary?.addEventListener('click', handleToolsSummaryClick, true);
   utilitySummary?.addEventListener('keydown', handleToolsSummaryKeydown, true);
   document.addEventListener('click', handleDocumentClick);
+  document.addEventListener('pointerdown', handleDocumentPointerDown, { capture: true, passive: true });
   document.addEventListener('keydown', handleDocumentKeydown);
   document.addEventListener(EVENT_NAMES.INTENT, handleMenuIntent);
   document.addEventListener(EVENT_NAMES.TRACE, handleTraceChange);
@@ -1322,6 +1330,7 @@ export function initSpwShellDisclosure(options = {}) {
       utilitySummary?.removeEventListener('click', handleToolsSummaryClick, true);
       utilitySummary?.removeEventListener('keydown', handleToolsSummaryKeydown, true);
       document.removeEventListener('click', handleDocumentClick);
+      document.removeEventListener('pointerdown', handleDocumentPointerDown, { capture: true, passive: true });
       document.removeEventListener('keydown', handleDocumentKeydown);
       document.removeEventListener(EVENT_NAMES.INTENT, handleMenuIntent);
       document.removeEventListener(EVENT_NAMES.TRACE, handleTraceChange);

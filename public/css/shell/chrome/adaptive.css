@@ -171,6 +171,7 @@
   }
 
   .header-annotation {
+    min-block-size: var(--touch-target-compact, 2.15rem);
     max-width: min(100%, 24ch);
     text-align: left;
   }
@@ -1294,10 +1295,11 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
     background: color-mix(in oklab, var(--bg, #111) 52%, transparent);
     backdrop-filter: blur(4px) saturate(0.94);
     -webkit-backdrop-filter: blur(4px) saturate(0.94);
-    /* Capture outside taps/scroll so the dimmed page does not activate under the field. */
+    /* Capture outside taps/scroll so the dimmed page does not activate under the field.
+       cursor: pointer ensures iOS Safari / WebKit dispatches click events for outside taps. */
     pointer-events: auto;
     touch-action: none;
-    cursor: default;
+    cursor: pointer;
   }
 
   /* Within the raised header's stacking context this only orders the nav
@@ -1311,6 +1313,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) .spw-state-inspector[data-spw-state-inspector="closed"]:not([data-spw-satchel-positioned="user"]),
   html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) .spw-state-inspector[data-spw-state-inspector="closed"]:not([data-spw-satchel-positioned="user"]) {
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     transform: translateY(0.45rem);
     transition:
@@ -1318,9 +1321,10 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
       transform 160ms var(--shell-ease, ease);
   }
 
-  html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell),
-  html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell) {
+  html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]),
+  html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]) {
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0.45rem);
   }
