@@ -201,6 +201,13 @@ export function initBraceGestures() {
 // nothing. See .spw/conventions/interaction-microstates.spw#reward_contract.
 const BRACE_TARGET_SELECTOR = '[data-spw-form], [data-spw-kind="hook"], [data-spw-component-kind="hook"], .spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression], .spw-card, .frame-card, .plan-card, .ref-card, .media-card, .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card';
 
+const TEXT_FRIENDLY_SELECTOR =
+  '[data-spw-text-friendly="true"], [data-spw-gesture-priority="text"], [data-spw-kind="hook"], [data-spw-component-kind="hook"], .spw-playable-hook';
+
+function isTextFriendlyTarget(el) {
+  return Boolean(el?.closest?.(TEXT_FRIENDLY_SELECTOR));
+}
+
 // Living terms (.spw-living-term / [data-spw-living-term]) and cauldron
 // candidates ([data-spw-cauldron-candidate="true"]) are excluded here on
 // purpose, added 2026-09-03 — but only when the matched element is a BARE
@@ -905,10 +912,7 @@ function onPointerDown(event) {
       // data-spw-text-friendly/-gesture-priority are the general opt-in and
       // remain unauthored anywhere on the site; hooks get this by default
       // rather than needing 13 routes to each remember to add one.
-      const textFriendly = target.closest(
-        '[data-spw-text-friendly="true"], [data-spw-gesture-priority="text"], [data-spw-kind="hook"], [data-spw-component-kind="hook"]'
-      );
-      if (!textFriendly) {
+      if (!isTextFriendlyTarget(target)) {
         target.style.userSelect = 'none';
       }
     }
@@ -1044,15 +1048,21 @@ function onPointerUp(event) {
       scheduleCoarseResidue(target, meta);
     } else {
       setGesture(target, meta, 'neutral');
-      groundInteraction(target, 'tap-no-arc', { mutator: 'brace-gestures' });
+      if (!isTextFriendlyTarget(target)) {
+        groundInteraction(target, 'tap-no-arc', { mutator: 'brace-gestures' });
+      }
     }
   } else if (inside) {
-    setGesture(target, meta, 'charging');
-    emitBraceEvents(
-      ['brace:charged', 'brace:charge-start'],
-      buildDetail(meta),
-      target
-    );
+    if (isTextFriendlyTarget(target)) {
+      setGesture(target, meta, 'neutral');
+    } else {
+      setGesture(target, meta, 'charging');
+      emitBraceEvents(
+        ['brace:charged', 'brace:charge-start'],
+        buildDetail(meta),
+        target
+      );
+    }
   } else {
     setGesture(target, meta, 'neutral');
     emitBraceEvents(
