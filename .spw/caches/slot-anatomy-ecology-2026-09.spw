@@ -1,0 +1,48 @@
+# Slot Anatomy Ecology (2026-09)
+#
+# operation: cache
+# The boundary separating regional seats, component registers, and internal
+# slot anatomy. Why a slot is not a component, and why an anatomical seam
+# must never inherit lifted card optics.
+
+#>slot_anatomy_ecology_2026_09
+#:cache #!ecology #!slots #!regions #!material #!components
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@region_component_ecology: ~"../conventions/region-component-ecology.spw"
+@material_physics: ~"../conventions/material-physics.spw"
+@still_alignment_ladder: ~"./still-alignment-ladder-2026-09.spw"
+@semantic_convenience_arcs: ~"./semantic-convenience-arcs-2026-09.spw"
+@dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
+@region_profiler: ~"../../public/js/runtime/region-profiler.js"
+@material_css: ~"../../public/css/effects/material.css"
+
+operation = "cache"
+fixity = "tending"
+source = "pocket still analysis 2026-09-10; frame topline card wrapping defect; ci-001 speak the brace; al-001 card union core"
+
+^"thesis"{
+  claim = `A slot is internal component anatomy, not a regional seat and not a standalone component. Stamping component kinds or card material onto an anatomy slot violates both material optics and regional diversity metrics.`
+  anatomy_rule = `Slot names stay on pack-region or data-spw-slot (@region_component_ecology#authored_vs_runtime line 64). A frame topline (<header class="frame-topline" data-spw-slot="header">) is a structural seam of the frame, not an entity lifted above it.`
+  falsifier = `If removing card styling from frame toplines breaks layout or nesting, the topline was a card. It does not: the brace groups cleanly with the handle, and the spurious gray sliver disappears.`
+}[reg=facet]
+
+^"optics_violation"{
+  card_optics = `Cards receive specular returned from the top edge (--card-highlight), surface background, and box-shadow (--card-shadow) to read as raised entities (@material_physics#states).`
+  sliver_box = `When region-profiler stamps data-spw-kind="component" onto [data-spw-slot], material.css matches [data-spw-kind]:not(body):not(main) and gives the topline its own card glass, border, and shadow. To the reader, this draws a floating box around {#>home_frame or {#>about_frame, breaking the spoken brace.`
+  spoken_brace = `ci-001 ("speak the brace"): A visitor should be able to read the frame signature as one spoken line. The gray sliver was an accidental card box surrounding an internal slot.`
+}[reg=facet]
+
+^"census_integrity"{
+  diversity_metric = `summarizeRegionDiversity counts distinct component kinds across page regions to provide downstream collection and achievement systems an ordinal signal of biome health.`
+  distortion = `Counting [data-spw-slot] as a distinct component kind inflates the diversity index with internal organelle seams rather than actual public components.`
+  remedy = `inferTopographyKind returns 'slot' for elements carrying data-spw-slot. applyRegionProfile guards against stamping spwKind on slots, and summarizeRegionDiversity filters out kind === 'slot'.`
+}[reg=facet]
+
+^"commitments"{
+  css_gate = `material.css excludes .frame-topline and .frame-heading from kind-based card optics. It does not :not([data-spw-slot]) globally — figure slots that are already surfaces still need kind material. Shell chrome (.site-header, .mode-switch) is a different slice.`
+  runtime_gate = `inferTopographyKind returns slot after card/surface/panel classes, so an image-study figure keeps surface. applyRegionProfile skips stamping kind when kind is slot or the host is .frame-topline / .frame-heading. summarizeRegionDiversity ignores kind === slot.`
+  ecology = `Zero new data-spw-* attribute stems. Preserves progressive enhancement: static HTML and hydrated runtime agree on the uncarded topline.`
+}[reg=facet]
