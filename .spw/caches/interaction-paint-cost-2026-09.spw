@@ -1,13 +1,16 @@
 # Focus and paint cost on the reading surface (2026-09)
 #
 # operation: cache
+# Reading width: 88 columns. Evidence is historical; candidates are gated.
 # Browser-measured cost of the interaction layer itself, taken during the
 # interaction-semantics audit that landed tap:inspect on living terms.
-# Do not implement from this file. Do not strip glass or grain from this
-# file alone — the measurements say where to look, not what to remove.
+# Each block couples that cost to electrostatics UX and projects a
+# performance / module slice. Enter through ipc-013_implementation_handoff. Do not
+# strip glass or grain from this file alone — the measurements say where
+# to look, not what to remove.
 
 #>interaction_paint_cost_2026_09
-#:cache #!performance #!focus #!paint #!attention
+#:cache #!performance #!focus #!paint #!attention #!electrostatics
 #:operation #!cache
 #:fixity #!tending
 #:layer #!pragmatics
@@ -15,29 +18,89 @@
 @runtime_recalc: ~"./implicit-attention-arcs.spw"
 @css_combinatorics: ~"./css-combinatorics.spw"
 @touch_control_class: ~"./touch-control-class-2026-09.spw"
+@electrostatic_spend: ~"./electrostatic-spend-2026-09.spw"
 @interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@charge_cycle: ~"../conventions/charge-cycle.spw"
+@folding_chrome: ~"../conventions/folding-chrome-organelle.spw"
 @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
 @haptics_js: ~"../../public/js/interface/haptics.js"
 @state_inspector_js: ~"../../public/js/interface/state-inspector.js"
 @headless_nav: ~"../../scripts/headless-nav.mjs"
+@runtime_bootstrap_plan: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@runtime_decomposition_plan: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@shell_lifecycle_audit:
+  ~"../audits/alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
+@pointer_device_audit: ~"../audits/pointer-device-detection-2026-09.spw"
 
 operation = "cache"
 fixity = "tending"
-source = "browser audit 2026-09-09, Chrome over `npm run dev` (unminified, dev-server) at a 1433px layout viewport"
+source = `browser audit 2026-09-09, Chrome over npm run dev (unminified, dev-server) at
+  a 1433px layout viewport`
+follow_up_source = `warm phone runtime pass 2026-09-11 at 390x844 after speculative
+  module prefetch was removed from the pocket boot path`
 focus_dimension = "engineer"
 element = "metal"
 semantic_fixity = "tending"
-do_not = `Do not implement from this cache. Do not treat the dev-build absolute numbers as production figures. Do not remove backdrop-filter or grain wholesale — measure the stack depth first. Do not add a data-spw-* family for instrumentation.`
+do_not = `Implement only a named candidate through ipc-013_implementation_handoff;
+  speculative extraction maps are not patch instructions. Do not treat the dev-build
+  absolute numbers as production figures. Do not remove backdrop-filter or grain
+  wholesale — measure the stack depth first. Do not add a data-spw-* family for
+  instrumentation.`
 
 expression = surface[cost]{focus.paint.attributes}<reading>
+  ~ field[ux]{arm.discharge.ground}<electrostatics>
+  ^ module[slice]{haptics.shell.chrome}<extract>
+
+# Read: candidate -> gate -> model -> historical receipts.
+^"reading_path"{
+  start = candidate[A]{settings.delta}<ipc-013>
+  gate = verdict[paired]{compatibility.work.latency}<ipc-012>
+  model = cost[contours]{state.paint.schedule}<ipc-010>
+  measure = receipt[protocol]{objective.subjective}<ipc-011>
+  history = evidence[dated]{ipc-001.ipc-009}<inspect>
+  boundary = `A is ready for a local experiment; B-D need attribution. Runtime remains
+    unchanged. File-tree predictions are not a work queue.`
+}[reg=facet]
+
+^"expression_schema"{
+  form = `cost[perf]{parts}<optimize>
+    ~ electrostatics[ux]{parts}<feel>
+    ^ module[slice]{owners}<extract>`
+  inductance = `~ names the electrostatics UX the cost is already spending — arming,
+    dielectric, one-room field, arrival, contact, phase, capture.`
+  projection = `^ names the smallest module to measure or extract if the finding holds.
+    Capsules are optimization potentials, not landed work.`
+  tree = `Extend existing kernel/runtime/interface/css folders. Mint a file only when a
+    measured owner has one job the current file cannot keep.`
+  refuse = `Resolve these projections through ipc-013_implementation_handoff before
+    choosing an extraction. Do not add a second field, a new attribute family, or a
+    catalog-wide rewrite to pay a local freeze.`
+}[reg=facet]
 
 ^"thesis"{
-  claim = `The interaction layer is the expensive part, not the content. Reading a settled page is cheap; touching it is not. Focus is the hot path because every focus runs charge annotation across a large attribute surface, and paint is hot because the reading surface stacks translucency.`
-  measurement_caveat = `Taken on the dev server with unminified CSS and JS. Treat the ratios and the freeze as real and the millisecond counts as directional. A production re-measure is the next step, not a rewrite.`
+  expression = contact[cost]{charge.prime.groove}<residue>
+    ~ terminal[arming]{focus.dwell.click}<hot>
+    ^ owner[slice]{haptics.material}<split>
+  ux = `Reading is cheap because the field is latent. Touching is expensive because
+    focus, dwell and click arm terminals and write residue the style engine walks.
+    Split charge annotation from stacked dielectric paint — they share a freeze, not an
+    owner.`
+  tree = `Two owners already exist: interface/haptics.js (arming listeners) and
+    effects/material.css (dielectric paint). Do not invent a third folder to hold both.`
+  claim = `The sampled bulk-focus and capture journeys expose interaction-associated
+    cost. Charge annotation, downstream subscribers, selector invalidation and
+    overlapping material are candidate amplifiers; these observations do not establish
+    their individual contributions or exclude content-driven cost.`
+  measurement_caveat = `Taken on the dev server with unminified CSS and JS. Treat the
+    ratios and the freeze as real and the millisecond counts as directional. A
+    production re-measure is the next step, not a rewrite.`
   distinction = .{
     informational = `The site feels slow because it is big.`
     interactive = `Some handler is slow; find and memoize it.`
-    cognitive = `Attention costs. Charge, prime and groove each write residue on contact, and the residue surface is what focus has to walk.`
+    cognitive = `Attention costs. Charge, prime and groove each write residue on
+      contact, and the residue surface is what focus has to walk.`
   }[reg=facet]
 }[reg=facet]
 
@@ -45,42 +108,92 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   id = "ipc-001"
   operation = "cache"
   fixity = "tending"
-  claim = `Sequential focus on the home page is pathologically expensive, to the point of stalling the renderer. Keyboard travel is the worst-served journey on the site.`
+  expression = focus[hot]{annotation.walk}<coalesce>
+    ~ terminal[arming]{residue.field}<unbounded>
+    ^ module[haptics]{charge.field}<defer>
+  ux = `Focus is the arming event. Each Tab writes charge residue across a large
+    attribute surface, so sequential travel is an unbounded field walk. Performance:
+    coalesce to one rAF and skip same-element reentry. Module: defer the write in
+    @haptics_js / charge-field; stop when nothing reads the residue —
+    @electrostatic_spend already names dead field outputs.`
+  tree = `keep interface/haptics.js for ground/collect/inspect (IDLE). Move
+    focus/pointer arming coalesce into runtime/charge-field.js (VISIBLE, 393 lines). Do
+    not mint interface/haptics/ or charge-arm.js until charge-field would mix
+    room-field with per-element arming.`
+  claim = `Sequential focus on the home page is pathologically expensive, to the point
+    of stalling the renderer. Keyboard travel is the worst-served journey on the site.`
   evidence = #[
-    `15 sequential el.focus() calls with a getComputedStyle read each: 21,803ms wall (~1.45s per stop)`,
-    `A follow-up loop of 10 focus() calls with no style read exceeded a 45,000ms CDP timeout; the renderer did not recover until navigation`,
-    `Scripted DOM reads stayed responsive throughout, so the JS thread was not the blocked resource — style/layout was`,
-    `focusin is bound in capture at @haptics_js initSpwHaptics via onChargeFocusIn, which writes charge residue per focus`,
-    `home carries 336 visible focusable elements and ~190 data-spw-* attributes on <html> plus ~140 on <body>`
+    `15 sequential el.focus() calls with a getComputedStyle read each: 21,803ms wall
+      (~1.45s per stop)`,
+    `A follow-up loop of 10 focus() calls with no style read exceeded a 45,000ms CDP
+      timeout; the renderer did not recover until navigation`,
+    `Scripted DOM reads were reported responsive during the investigation; without a
+      synchronized trace this does not isolate JS, style/layout, raster or compositor
+      cost`,
+    `focusin is bound in capture at @haptics_js initSpwHaptics via onChargeFocusIn,
+      which writes charge residue per focus`,
+    `home carries 336 visible focusable elements and ~190 data-spw-* attributes on
+      <html> plus ~140 on <body>`
   ][reg=set]
   pattern_consideration = #[
-    `@runtime_recalc already names forced style recalc on hot paths as the freeze mechanism; this is that pattern with focus as the trigger rather than scroll`,
-    `A real Tab journey through the header felt correct and showed a correct 2px focus ring, so the cost is in bulk traversal, not in a single stop`,
-    `The measurement loop is not a user behaviour. A person tabs at human speed. The freeze still says the per-focus write is unbounded.`
+    `@runtime_recalc already names forced style recalc on hot paths as the freeze
+      mechanism; this is that pattern with focus as the trigger rather than scroll`,
+    `A real Tab journey through the header felt correct and showed a correct 2px focus
+      ring, so the cost is in bulk traversal, not in a single stop`,
+    `The measurement loop is not a user behaviour. A person tabs at human speed. The
+      timeout establishes a censored stress result, not an asymptotic bound on each
+      focus write.`
   ][reg=set]
-  expansion_prime = `Batch or defer charge residue on focusin: coalesce to one rAF, skip when the same element regains focus, and stop writing when nothing reads the residue (discoverability quiet). Measure before changing selectors.`
-  validation = `Re-run the 15-focus probe on a production build. A settled page should stay well under one frame per stop.`
-  do_not_promote_until = `A production-build measurement exists and names which write in onChargeFocusIn dominates.`
+  expansion_prime = `Batch or defer charge residue on focusin: coalesce to one rAF,
+    skip when the same element regains focus, and stop writing when nothing reads the
+    residue (discoverability quiet). Measure before changing selectors.`
+  validation = `Re-run the 15-focus probe on a production build. Report
+    input-to-visible-feedback against the measured display interval; separate handler
+    duration, downstream work and presentation delay.`
+  do_not_promote_until = `A production-build measurement exists and names which write
+    in onChargeFocusIn dominates.`
 }[reg=facet]
 
 ^"ipc-002_translucency_stacks"{
   id = "ipc-002"
   operation = "cache"
   fixity = "tending"
-  claim = `First paint of the home page can exceed a 30s screenshot timeout, and two captures returned partially rastered frames — a blank panel over the hero, then hard grey bands. Both were compositor artifacts, not style bugs.`
+  expression = glass[paint]{backdrop.filter}<flatten>
+    ~ dielectric[hold]{blur.overlap}<compositor>
+    ^ layer[material]{hero.group}<one>
+  ux = `Glass is dielectric: it holds charge without conducting. Overlapping
+    backdrop-filter layers are stacked dielectrics, each forcing its own compositor
+    read. Performance: flatten the hero stack, not the radii. Module: one material
+    layer behind a group — @electrostatic_affordances already forbids a field per card.`
+  tree = `keep effects/material.css as dielectric grammar and shell/chrome/*.css as
+    chrome glass. Flatten overlapping hero backdrops onto the existing host. Do not add
+    effects/material-hero.css or a per-card glass sheet.`
+  claim = `An initial home-page screenshot request exceeded a 30s timeout, and two
+    captures returned partially rastered frames — a blank panel over the hero, then
+    hard grey bands. Both were treated as capture artifacts after re-checking; their
+    rendering-stage cause remains unproven.`
   evidence = #[
-    `Page.captureScreenshot timed out at 30,000ms on first load; later captures on the settled page succeeded`,
-    `18 elements resolve a non-none backdrop-filter, blur radii 3-14px, several overlapping in the hero`,
+    `Page.captureScreenshot timed out at 30,000ms on first load; later captures on the
+      settled page succeeded`,
+    `18 elements resolve a non-none backdrop-filter, blur radii 3-14px, several
+      overlapping in the hero`,
     `116 elements resolve a non-none filter`,
-    `Two separate captures showed partial rasters that were absent from the DOM when probed immediately after`
+    `Two separate captures showed partial rasters that were absent from the DOM when
+      probed immediately after`
   ][reg=set]
   pattern_consideration = #[
-    `@css_combinatorics owns the payload question; this is the paint question and they are not the same axis`,
-    `The material grammar wants glass and grain. The cost is stacking, not the effect: overlapping blurred layers each force their own backdrop read`,
-    `An artifact in a screenshot is not a defect on the reader's screen. Both were re-checked and withdrawn.`
+    `@css_combinatorics owns the payload question; this is the paint question and they
+      are not the same axis`,
+    `The material grammar wants glass and grain. The cost is stacking, not the effect:
+      overlapping blurred layers each force their own backdrop read`,
+    `An artifact in a screenshot is not a defect on the reader's screen. Both were
+      re-checked and withdrawn.`
   ][reg=set]
-  expansion_prime = `Count blur layers that overlap in the hero and flatten the stack, rather than lowering radii everywhere. A single backdrop layer behind a group beats one per card.`
-  validation = `Capture the home hero cold on a production build; the first capture should return a complete frame.`
+  expansion_prime = `Count blur layers that overlap in the hero and flatten the stack,
+    rather than lowering radii everywhere. A single backdrop layer behind a group beats
+    one per card.`
+  validation = `Capture the home hero cold on a production build; the first capture
+    should return a complete frame.`
   do_not_promote_until = `The overlap depth is measured per region, not per page.`
 }[reg=facet]
 
@@ -88,36 +201,749 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   id = "ipc-003"
   operation = "cache"
   fixity = "tending"
-  claim = `The same runtime state is mirrored onto both <html> and <body>, so every settings or posture change writes two attribute surfaces and invalidates against both roots.`
+  expression = attribute[root]{html,body}<mirror>
+    ~ field[room]{charge.intensity}<one>
+    ^ engine[settings]{policy.instance}<align>
+  ux = `One room field. Mirroring charge, intensity, and posture onto both html and
+    body is a second field at document scale. Performance: every posture write
+    invalidates two roots. Module: site-settings-engine keeps document policy on one
+    root and page instance on the other — an align pass, not a rename.`
+  tree = `keep kernel/site-settings.js as the 15-line barrel and
+    site-settings-engine.js as apply(). Split dataset policy vs instance inside apply()
+    first. Mint site-settings-roots.js only after a read-side inventory.`
+  claim = `The same runtime state is mirrored onto both <html> and <body>, so every
+    settings or posture change writes two attribute surfaces and invalidates against
+    both roots.`
   evidence = #[
     `~190 data-spw-* attributes on <html>, ~140 on <body> on the home page`,
-    `Identical pairs on both roots include animation-intensity, animation-throttling, attention-global-relation, attention-local-relation, attention-self-relation, color-mode, enhancement-level, reduce-motion, grain-intensity, spell-path-state and many more`,
+    `Identical pairs on both roots include animation-intensity, animation-throttling,
+      attention-global-relation, attention-local-relation, attention-self-relation,
+      color-mode, enhancement-level, reduce-motion, grain-intensity, spell-path-state
+      and many more`,
     `Selector ladders in the shell read from html; component-layer rules read from body`
   ][reg=set]
   pattern_consideration = #[
-    `Two roots is a real distinction where one is document policy and the other is page instance. Most of this list is neither — it is the same fact twice.`,
-    `@touch_control_class#tc-002 already holds the shape of this argument: diverging lists are only honest when they answer different questions`
+    `Two roots is a real distinction where one is document policy and the other is
+      page instance. Most of this list is neither — it is the same fact twice.`,
+    `@touch_control_class#tc-002 already holds the shape of this argument: diverging
+      lists are only honest when they answer different questions`
   ][reg=set]
-  expansion_prime = `Take an inventory of which attributes are read from which root, then keep each fact on exactly one. This is an align pass, not a rename.`
-  validation = `After the pass, no attribute name appears on both roots with the same value for the same reason.`
-  do_not_promote_until = `The read-side inventory exists; guessing which root owns a fact would break the shell or the components layer silently.`
+  expansion_prime = `Take an inventory of which attributes are read from which root,
+    then keep each fact on exactly one. This is an align pass, not a rename.`
+  validation = `After the pass, no attribute name appears on both roots with the same
+    value for the same reason.`
+  do_not_promote_until = `The read-side inventory exists; guessing which root owns a
+    fact would break the shell or the components layer silently.`
 }[reg=facet]
 
 ^"ipc-004_route_settle_is_seconds"{
   id = "ipc-004"
   operation = "cache"
   fixity = "tending"
-  claim = `Every sampled route reaches runtime ready with zero console errors, but settle takes 4.3-5.2s on the dev server. Health is good; cost is high.`
+  expression = route[settle]{mount.ready}<seconds>
+    ~ arrival[wash]{discharge.ground}<latency>
+    ^ schedule[mount]{immediate.visible.idle}<split>
+  ux = `Seconds of settle is the arrival wash: many mounts, no wall, so discharges
+    smear into one latency. Performance: production numbers before a budget. Module:
+    split immediate / visible / idle the way @arrival_electrostatics already splits
+    shells — do not delay ready to fake grounding.`
+  tree = `keep runtime/module-loader.js and arrival-shells.js. Do not split the loader.
+    Schedule honesty lives in module-catalog-*.js when= values, not a new
+    runtime/schedule/ folder.`
+  claim = `Every sampled route reaches runtime ready with zero console errors, but
+    settle takes 4.3-5.2s on the dev server. Health is good; cost is high.`
   evidence = #[
-    `@headless_nav over /, /about/, /topics/, /play/, /settings/, /services/ with --require-browser --fail-on-console-error --fail-on-overflow-x: ok=true, failures=0, settled=6, consoleErr=0`,
-    `Per-route wall: home 4370ms, about 5086ms, topics 4326ms, play 5135ms, settings 5111ms, services 5174ms; total 29,202ms`,
+    `@headless_nav over /, /about/, /topics/, /play/, /settings/, /services/ with
+      --require-browser --fail-on-console-error --fail-on-overflow-x: ok=true,
+      failures=0, settled=6, consoleErr=0`,
+    `Per-route wall: home 4370ms, about 5086ms, topics 4326ms, play 5135ms, settings
+      5111ms, services 5174ms; total 29,202ms`,
     `15 runtime modules mount on home; last module observed was experiential`
   ][reg=set]
   pattern_consideration = #[
-    `The smoke gate passes because it asks whether the runtime settles, not how long it took. That is the right question for a gate and the wrong one for this cache.`,
-    `--fail-on-overflow-x passed while a fixed control sat 106px outside the viewport, because the satchel is fixed and never widened the scroll box. A clipped fixed control is invisible to a scroll-width check.`
+    `The smoke gate passes because it asks whether the runtime settles, not how long
+      it took. That is the right question for a gate and the wrong one for this cache.`,
+    `--fail-on-overflow-x passed while a fixed control sat 106px outside the viewport,
+      because the satchel is fixed and never widened the scroll box. A clipped fixed
+      control is invisible to a scroll-width check.`
   ][reg=set]
-  expansion_prime = `Give the nav smoke an off-viewport-chrome assertion so a fixed control that leaves the frame fails the same way an overflowing one does.`
-  validation = `Re-run bench:nav on a production build for real settle figures before treating these as a budget.`
-  do_not_promote_until = `Production numbers exist; a dev-server budget would be a fiction.`
+  expansion_prime = `Give the nav smoke an off-viewport-chrome assertion so a fixed
+    control that leaves the frame fails the same way an overflowing one does.`
+  validation = `Re-run bench:nav on a production build for real settle figures before
+    treating these as a budget.`
+  do_not_promote_until = `Production numbers exist; a dev-server budget would be a
+    fiction.`
+}[reg=facet]
+
+^"ipc-005_shell_is_the_next_measured_boot_slice"{
+  id = "ipc-005"
+  operation = "cache"
+  fixity = "tending"
+  expression = shell[boot]{disclosure.immediate}<measure>
+    ~ wall[arrival]{liminality.field}<entrance>
+    ^ module[disclosure]{menu.weather.tune}<extract>
+  ux = `The shell is the arrival wall, not a catalog of scripts. Immediate boot cost is
+    the entrance crossing before the field can ground. Performance: measure import,
+    mount, and state-write separately. Module: extract only the disclosure sub-owner
+    that dominates (menu, weather, or tune), not the whole shell.`
+  tree = `extend runtime/shell/ (already attention-posture-panel, scroll-lock,
+    utility-row). Next file is shell/measurement.js only if a profile names
+    viewport/nav-fit as the immediate slice. Keep shell-disclosure.js as the CORE phase
+    orchestrator and one catalog id.`
+  claim = `After pocket/coarse readers stopped probing and hinting every eligible
+    runtime resource before interactive, the immediate shell remained the largest
+    measured boot slice. The next performance patch should measure and decompose
+    shell-disclosure, not broaden another catalog-wide optimization.`
+  evidence = #[
+    `Warm 390x844 baseline: 139 scripts / 2353 KiB transferred; average immediate
+      9840ms, wall 17504ms, boot 12402ms; 2 of 3 routes settled`,
+    `After the pocket prefetch patch: 70 scripts / about 1.07 MiB transferred; average
+      immediate 8598ms, wall 15603ms, boot 11239ms; 3 of 3 routes settled`,
+    `Per-run shell-disclosure contribution remained directional and noisy at roughly
+      1.7-5.8s`,
+    `@runtime_bootstrap_plan now names shell immediate code/decomposition as the next
+      distinct measured bottleneck`,
+    `@shell_lifecycle_audit already records shell-disclosure as a large owner spanning
+      menu settle, weather, tune surfaces, pressure and topology`
+  ][reg=set]
+  pattern_consideration = `The network/script-width win is real, but warm headless
+    millisecond totals are too noisy to justify a large extraction by themselves.
+    Measure imports, mount work, and shell state writers separately before following
+    @runtime_decomposition_plan.`
+  expansion_prime = `Record a shell-disclosure import/mount/state-write timeline on
+    home plus one content route at pocket and desktop widths. Extract only the
+    sub-owner that dominates and has a clean lifecycle boundary.`
+  validation = `The extracted slice lowers shell immediate duration without changing
+    menu phases, nav fit, pressure topology, settings application, or first-open
+    behavior.`
+  do_not_promote_until = `A repeated profile identifies one shell sub-owner rather than
+    only the aggregate module duration.`
+}[reg=facet]
+
+^"ipc-006_floating_chrome_needs_one_write_timeline"{
+  id = "ipc-006"
+  operation = "cache"
+  fixity = "tending"
+  expression = chrome[lane]{sync.correction}<jump>
+    ~ edge[magnetism]{proximity.slot}<race>
+    ^ owner[transition]{open.settle.close}<one>
+  ux = `Floating chrome is the locomotion organelle; --spw-e-edge is magnetism on one
+    slot. Two writers correcting the same lane are two electrodes sparking the same
+    terminal. Performance: the jump is a second correction, not overflow. Module: one
+    owner per open/settle/close transition in @folding_chrome.`
+  tree = `keep kernel/dom-contracts.js#syncFloatingChromeState as the only geometry
+    writer. Callers stay (shell-disclosure, layout-assumptions, section-handle,
+    region-menu, state-inspector). Do not add chrome-sync.js; do not move
+    layout-assumptions into shell/.`
+  claim = `Pocket chrome jumping is plausibly a lifecycle ownership problem before it
+    is a CSS positioning problem: shell disclosure, floating-chrome synchronization,
+    and late layout assumptions can all correct the same lane as the menu opens,
+    settles, or closes.`
+  evidence = #[
+    `@shell_lifecycle_audit#shell_logic G5 records dual syncFloatingChromeState
+      writers and a possible rapid open/close race`,
+    `@shell_lifecycle_audit#alignment_logic records a settled layout-assumptions
+      correction pass that writes bottom-lane clearance and crowded state`,
+    `The 390x844 smoke had zero horizontal overflow, so scroll-width alone does not
+      explain or detect the visible jump`,
+    `#ipc-004 already records that fixed chrome can leave the viewport without widening
+      the scroll box`
+  ][reg=set]
+  pattern_consideration = `Do not stabilize the symptom with fixed offsets,
+    contain:layout, or position:relative on the document root. First name each writer,
+    its event, and the geometry it read.`
+  expansion_prime = `Capture menu closed -> opening -> open -> closing with timestamps
+    for chrome slot, bottom-lane clearance, crowded state, and bounding rects. Assign
+    one owner to each state transition.`
+  validation = `At 320px, 390px, and 720px, chrome rects remain inside the visual
+    viewport and do not reverse direction during one disclosure transition.`
+  do_not_promote_until = `A timeline shows which writer causes the second correction;
+    source adjacency alone is not proof of a race.`
+}[reg=facet]
+
+^"ipc-007_compression_requires_rect_receipts"{
+  id = "ipc-007"
+  operation = "cache"
+  fixity = "experimental"
+  expression = control[compact]{hitbox.contain}<receipt>
+    ~ contact[terminal]{slot.channel}<class>
+    ^ class[touch]{ground.chrome.link}<keep>
+  ux = `Contact outranks proximity, so a terminal that cannot be pressed is not armed.
+    Compression is a slot/channel failure, not a missing 44px rule. Performance: rect
+    receipts before CSS. Module: keep the three touch classes in @touch_control_class;
+    patch the first named containment miss only.`
+  tree = `no new JS file. Touch classes stay in CSS plus the touch-control-class cache.
+    Rect receipts are a visual:checks / measurement fixture, not a runtime module.`
+  claim = `The pocket pass did not reproduce horizontal document overflow, so
+    compressed controls must be separated into three cases: undersized child hitboxes,
+    a parent that fails to contain intrinsic width, or deliberate compact/icon-only
+    chrome whose label reduction is correct.`
+  evidence = #[
+    `All sampled 390x844 routes reported zero horizontal overflow after the runtime
+      patch`,
+    `@touch_control_class#tc-001 distinguishes 2.75rem ground controls, compact
+      floating chrome, and content-shaped links`,
+    `@pointer_device_audit records unresolved local pointer predicates, so iconography
+      and minimum-size decisions can disagree across modules`,
+    `The home-opening and home-region-menu pocket visual checks passed after the
+      runtime patch`
+  ][reg=set]
+  pattern_consideration = `A blanket min-width or 44px rule would collapse the existing
+    control classes and can steal the floating lane. Overflow checks also miss clipped
+    fixed controls.`
+  expansion_prime = `Measure parent and child rects for nav toggle, section handle, and
+    state inspector in closed, open, and crowded states at 320px, 390px, and 720px.
+    Patch the first named containment failure only.`
+  validation = `Every control has an intentional hitbox class, its visible icon or
+    label matches the device context, and no child exceeds its owning slot without an
+    explicit overflow contract.`
+  do_not_promote_until = `A receipt names the selector and whether the failure is
+    intrinsic sizing, hitbox sizing, or chrome occlusion.`
+}[reg=facet]
+
+^"ipc-008_ready_and_settled_are_not_one_benchmark"{
+  id = "ipc-008"
+  operation = "cache"
+  fixity = "tending"
+  expression = ready[benchmark]{settle.idle}<split>
+    ~ phase[charge]{armed.grounded.quiet}<distinct>
+    ^ harness[time]{interactive.ready.idle}<observe>
+  ux = `Ready is armed, not grounded. Mixing them in one benchmark treats a charged
+    page as a quiet one. Performance: keep early interactivity. Module: the harness
+    observes extra timestamps; @charge_cycle's public phase machine stays unchanged.`
+  tree = `keep runtime/page-state.js as the public phase writer. Extra timestamps
+    belong in scripts/headless-nav.mjs, not a new runtime/ready-settled.js.`
+  claim = `The benchmark currently mixes runtime ready with ecological settle. A route
+    can report ready or site-ready while visible/region work is still loading, which
+    makes post-interactive cost hard to attribute and can make an apparent settle win
+    too generous.`
+  evidence = #[
+    `@shell_lifecycle_audit#lifecycle_arcs G9 records that spwRuntimeStage ready
+      precedes window load and idle queue drain`,
+    `The 2026-09-11 phone runs still observed loading modules after
+      runtimeStage=ready, including region enhancement work`,
+    `The patched sample improved from 2/3 to 3/3 settled while wall time remained
+      around 15.6s, showing that the boolean and the duration answer different
+      questions`
+  ][reg=set]
+  pattern_consideration = `Do not delay page ready merely to improve a benchmark.
+    Preserve early interactivity; add a distinct observation point for idle/visible
+    work completion.`
+  expansion_prime = `Have the measurement harness report interactive, runtime-ready,
+    evidence-settled, and observed-idle timestamps separately, plus modules still
+    loading at each point.`
+  validation = `A phone run can attribute time before first interaction separately from
+    deferred work after ready without changing the public lifecycle.`
+  do_not_promote_until = `The harness proves the extra timestamp is stable across
+    repeated routes and does not wait forever on intentionally interaction-gated
+    modules.`
+}[reg=facet]
+
+^"ipc-009_visual_and_css_budget_debt_stays_separate"{
+  id = "ipc-009"
+  operation = "cache"
+  fixity = "experimental"
+  expression = debt[verify]{fixture.budget}<separate>
+    ~ capture[still]{discharge.suppress}<artifact>
+    ^ owner[css]{core.website}<trace>
+  ux = `Capture mode already suppresses discharge because a mid-flourish still is an
+    artifact. A missed open-menu fixture and a CSS budget miss are capture/ownership
+    debts, not field defects. Performance: do not strip glass to hit a soft budget.
+    Module: classify the fixture, trace CSS hunks; neither is shell-disclosure.`
+  tree = `no runtime split. Fixture lives with visual:checks hosts; CSS budget hunks
+    trace to existing layer files under public/css/. Do not fold into runtime/shell/.`
+  claim = `Two verification debts remain outside the landed runtime patch: the
+    home-nav-open fixture no longer observed its expected open-menu state, and
+    core/website CSS remain slightly above their soft budgets. Neither debt should be
+    folded into shell decomposition without its own evidence.`
+  evidence = #[
+    `home-nav-open expected .site-header[data-spw-menu="open"] and missed during the
+      pocket capture; home-opening and home-region-menu passed`,
+    `The validation run reported core CSS about 1640.6 KiB against a 1638 KiB soft
+      budget and website CSS about 129.4 KiB against 120 KiB`,
+    `The landed pocket runtime patch added no CSS, so those budget deltas predate or
+      sit beside this slice`,
+    `Formal Core Web Vitals and CLS tracing were unavailable because the Chrome
+      DevTools profiling surface was not configured for the session`
+  ][reg=set]
+  pattern_consideration = `A stale fixture can resemble a menu regression, and a soft
+    CSS budget can tempt unrelated removal. Reconcile the fixture contract and trace
+    bundle ownership before editing behavior or styles.`
+  expansion_prime = `First reproduce home-nav-open interactively and decide whether the
+    fixture host or menu contract changed. Separately trace the CSS budget hunks to
+    source owners under the core CSS spend plan.`
+  validation = `All named pocket fixtures capture their requested state; any CSS
+    reduction rebuilds touched bundles and preserves attention/chrome visual checks.`
+  do_not_promote_until = `The fixture miss is classified as harness, selector, or
+    behavior, and CSS ownership is traced to source rather than bundle size alone.`
+}[reg=facet]
+
+^"file_tree_modularity"{
+  id = "ipc-tree"
+  operation = "cache"
+  fixity = "experimental"
+  dated = `2026-09-11`
+  expression = tree[modularity]{kernel.runtime.interface.css}<predict>
+    ~ field[ux]{arm.dielectric.wall}<job>
+    ^ folder[existing]{shell.attention.experiential}<extend>
+  claim = `Modularity here is not "file is long." Split by electrostatics job and
+    measured owner. The tree already started: extend those folders; mint a file only
+    when one job cannot stay.`
+  already = .{
+    settings = `kernel/site-settings.js is a 15-line barrel over engine/profiles/ui —
+      the dual html/body write is still inside site-settings-engine.js apply() (1508)`
+    shell = `runtime/shell/{attention-posture-panel,scroll-lock,utility-row} exists
+      while shell-disclosure.js remains 1382 CORE immediate`
+    attention = `runtime/attention/ exists while section-handle.js remains 1643`
+    experiential = `runtime/experiential/ exists while experiential.js remains 1619`
+    storage = `kernel/storage-utils.js already holds checkpoint/grounded keys; that is
+      not the paint-cost hot path`
+  }[reg=facet]
+  predicted = #{
+    `public/js/interface/haptics.js` = `
+      keep IDLE ground/collect/inspect/checkpoint; drop capture focusin arming
+    `
+    `public/js/runtime/charge-field.js` = `
+      take coalesced arming writes (393 today). Mint charge-arm.js only if room-field
+      and per-element arming cannot share the file
+    `
+    `public/js/runtime/shell-disclosure.js` = `keep CORE orchestrator and catalog id`
+    `public/js/runtime/shell/measurement.js` = `
+      next mint, and only if a profile names viewport/nav-fit as the 1.7-5.8s immediate
+      slice
+    `
+    `public/js/kernel/dom-contracts.js` = `
+      keep syncFloatingChromeState as the single geometry writer
+    `
+    `public/js/runtime/layout-assumptions.js` = `
+      stay SETTLED beside shell, not inside it
+    `
+    `public/js/kernel/site-settings-engine.js` = `
+      split policy vs instance inside apply(); no new file until the inventory exists
+    `
+    `public/js/runtime/module-loader.js` = `
+      do not split; schedule honesty is catalog when=
+    `
+    `public/js/runtime/page-state.js` = `
+      keep public phase; timestamps go to scripts/headless-nav.mjs
+    `
+    `public/css/effects/material.css` = `
+      keep dielectric grammar; flatten stacked glass in place
+    `} do_not_mint = #[`interface/haptics/ — arming is field work, not chrome`,
+    `runtime/chrome-sync.js — the writer already lives in dom-contracts`,
+    `runtime/ready-settled.js — that would delay or duplicate page-state`,
+    `runtime/schedule/ — module-catalog-*.js already is the schedule`,
+    `effects/material-hero.css — one backdrop host, not a new sheet`,
+    `kernel/site-settings-roots.js before a read-side inventory`
+  ][reg=set]
+  order = #[
+    `ipc-001 attribute arming cost and lifecycle before considering charge-field
+      relocation`,
+    `ipc-003 dataset policy vs instance inside apply() — align, no new file`,
+    `ipc-005 measure shell-disclosure before minting shell/measurement.js`,
+    `ipc-006 assign chrome callers; do not mint a writer`,
+    `ipc-002 flatten glass in existing CSS`,
+    `ipc-008 harness timestamps only`,
+    `ipc-007 and ipc-009 stay out of the JS tree`
+  ][reg=set]
+  against_plan = `@runtime_decomposition_plan Phase 1 still wants haptics storage-first
+    and a three-way shell split. Paint-cost says the hot path is arming residue and
+    shell immediate, so storage-utils (already present) and a wholesale shell carve are
+    the wrong next files.`
+  refuse = `Use ipc-013_implementation_handoff to select and validate one candidate. Do
+    not add a folder that duplicates kernel/runtime/interface roles in
+    public/js/README.md.`
+  validation = `Line counts locate inspection effort, not performance success. Compare
+    critical-path work, activation timing, subscriber fan-out and cleanup before/after
+    an extract. Keep existing catalog identities unless independent lifecycle evidence
+    warrants a split.`
+}[reg=facet]
+
+
+# Theory refinement: these gates qualify the earlier extraction potentials.
+# Source inspection is new; browser timings above remain historical receipts.
+^"ipc-010_algorithmic_contours"{
+  operation = "cache"
+  fixity = "experimental"
+  source = `2026-09-11 local inspection: haptics.js
+    onChargeFocusIn/setPassiveCharge/previewCharge; site-settings-engine.js
+    setDatasetEntries; module-catalog-enhancement.js charge-field entry.`
+  expression = event[contour]{arrival.fanout.invalidation.presentation}<attribute>
+    ~ substrate[cost]{state.style.raster.schedule}<separate>
+    ^ module[boundary]{activation.disposal}<predict>
+  claim = `A useful module boundary encloses a change rate and lifecycle; a useful
+    performance redesign reduces work on a measured causal path. Moving a file boundary
+    alone predicts neither.`
+  evidence = #[
+    `onChargeFocusIn selects a target and delegates to setPassiveCharge; previewCharge
+      already skips an element in passive preview. Same-element deduplication is
+      partly present.`,
+    `previewCharge writes local residue, calls setPrimeState and emitChargePhase, then
+      emits brace:charged and spell:probe. Count subscriber effects before attributing
+      the freeze to local writes.`,
+    `setDatasetEntries assigns each supplied non-null value without an equality check.
+      Assignment count is observable; actual browser invalidation is a separate
+      measurement.`,
+    `charge-field is VISIBLE specifically to catch first-gesture phase events.
+      Relocating IDLE haptics arming there can advance activation and enlarge its
+      dependency closure.`
+  ][reg=set]
+  notation = `Expressions below are causal contours, not executable cost equations or
+    new grammar. E = input events, U = effective state transitions, F = subscriber
+    fan-out, R = affected style region, B = synchronous read-after-write barriers, A =
+    painted pixel area, D = overlapping effect depth. Vary one axis; coefficients are
+    unknown.`
+  state_contour = event[E]{target.transition}<U>
+    > bus[F]{subscriber.writes}<R>
+    > style[B]{recalc.layout}<presentation>
+  state_prediction = `For a fixed subscriber graph, reducing redundant transitions may
+    reduce work roughly with U rather than E. Broad selectors, feedback and forced
+    reads can change the contour; attribute totals alone cannot establish O(E*R) or
+    quadratic behavior.`
+  paint_contour = region[A]{overlap.depth}<D>
+    > material[effect]{raster.composite}<presentation>
+  paint_prediction = `Larger affected area and overlap depth may amplify paint cost,
+    but invalidation, raster caching, clipping and GPU behavior determine the curve. A
+    count of filters is not a count of render passes.`
+  schedule_contour = arrival[graph]{import.mount.write}<critical>
+    ~ deferred[queue]{visible.idle.invited}<later>
+  schedule_prediction = `Arrival latency follows dependencies and contention;
+    overlapping module durations cannot simply be summed. Splitting code helps boot
+    only if work or an import closure leaves the critical path without damaging first
+    use.`
+  decision = `Use these contours to select the mediator for a bounded candidate in
+    ipc-013_implementation_handoff. Retain a no-change result when the predicted work
+    reduction is absent.`
+}[reg=facet]
+
+^"ipc-011_substrates_and_measurement"{
+  operation = "cache"
+  fixity = "experimental"
+  expression = substrate[ownership]{volatility.reader.reset}<bound>
+    ^ measure[receipt]{source.unit.condition}<compare>
+  $state {
+    owner = `haptics.js local terminal residue; charge-field.js room projection;
+      site-settings-engine.js policy application.`
+    property = `Mutation frequency and propagation radius; event/element lifetime
+      versus document policy lifetime.`
+    prediction = `Equality guards may remove repeated assignments before root ownership
+      redesign is needed. Preserve legitimate focusout/reentry and source changes; do
+      not suppress distinct semantic transitions.`
+    reader_utility = `Immediate focus recognition with inspectable charge and grounded
+      memory.`
+  }
+  $material {
+    owner = `effects/material.css and existing shell chrome hosts.`
+    property = `Optical grouping, backdrop sampling, affected area; pixels are volatile
+      and are not persisted charge memory.`
+    prediction = `One group backdrop may reduce overlap work but changes sampling and
+      clipping. Keep per-card semantics; reject grouping if depth, contrast or
+      independent motion becomes misleading.`
+    reader_utility = `Readable boundaries and material depth during movement.`
+  }
+  $schedule {
+    owner = `module catalogs, module-loader.js and existing shell lifecycle owners.`
+    property = `Activation, import dependency closure, listeners, timers and cleanup
+      across navigation.`
+    prediction = `An in-file ownership split can clarify disposal without adding a
+      request; a lazy extraction can reduce arrival work but transfer latency to first
+      open. Measure both.`
+    reader_utility = `Early usable navigation that remains responsive on its first
+      disclosure.`
+  }
+  %receipt_protocol {
+    kind = "objective"
+    source = `Proposed paired browser trace protocol; no new browser timings collected
+      in this refinement.`
+    unit = `ms per journey/phase; mutation and subscriber counts; affected CSS px area;
+      overlap depth; transferred bytes`
+    conditions = `Record revision plus dirty diff, route, production/dev artifact,
+      browser/device, viewport/DPR, pointer, material, enhancement and motion settings.
+      Separate HTTP, module and service-worker cache conditions; do not mix cold and
+      warm samples.`
+    sample = `Use home and /about/ at 390x844 and the original desktop width. Start
+      with five matched baseline/candidate pairs per chosen condition, alternate order,
+      retain all samples and report median plus range. Expand only when noise prevents
+      a decision; this is not a population percentile estimate.`
+    journeys = `Separate paced keyboard travel from the historical 15-focus stress
+      loop; separately observe first menu open and cold hero capture. A timeout is a
+      lower-bound/censored duration, never a completed sample.`
+    perturbation = `Capture event/subscriber timings and mutation counts separately
+      from rect/computed-style reads. Sample geometry after a named phase; compare
+      instrumentation on/off. A screenshot completion time is not a paint duration.`
+    completion = `Record interactive, runtime-ready and a bounded observation window
+      after visible work. Report pending invited/idle modules instead of waiting
+      indefinitely or redefining ready.`
+    acceptance = `Promote only when repeated improvement exceeds observed paired noise
+      and the predicted mediator changes, with intact focus order/ring, charge
+      transitions, first-open behavior and cleanup. If available, use rendering traces
+      to attribute style/layout/raster; missing attribution stays unknown.`
+  }
+  %felt_response {
+    kind = "subjective"
+    source = `Future observer annotation of the same keyboard/menu journey; not yet
+      sampled.`
+    scale = `responsive | delayed | disrupted`
+    rule = `Keep observer judgment beside objective receipts; do not turn electrostatic
+      metaphor into measured browser physics.`
+  }
+}[reg=facet]
+
+#>ipc_wonder_transition_boundary
+?["Arming cost: duplicate transitions or subscriber work?"]{
+  #:depth #!computational ~#lens(inquiry)
+  ~#with: @haptics_js
+  ~#hypothesis: "Duplicate residue may coalesce; moving its owner alone saves no work."
+  ~#tension: "Last-target batching risks cleanup/events; native focus stays immediate."
+  !probe{ "Trace paced A -> B -> A separately from the focus stress loop." }
+  !probe{ "Count preview guards, phase events, subscribers and writes." }
+  !probe{ "Compare cosmetic coalescing only after locating duplicate work." }
+  !probe{ "Reject if valid transitions dominate or disposal semantics change." }
+  $%[focus.eventMs, charge.transitionCount, charge.subscriberCount, state.writeCount]
+}
+
+#>ipc_wonder_root_delta
+?["Can delta writes pay off before root ownership changes?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @electrostatic_spend
+  ~#hypothesis: "Delta writes may preserve both roots and avoid redundant work."
+  ~#tension: "Equal-value writes can notify observers; root count is not style cost."
+  !probe{ "Inventory selectors, dataset readers and observers on both roots." }
+  !probe{ "Compare unchanged apply, one-setting toggle and equality guard." }
+  !probe{ "Refute speedup if fewer assignments leave attributable work unchanged." }
+  !probe{ "Root removal still requires a separate reader inventory." }
+  $%[settings.assignmentCount, settings.changedCount]
+  $%[style.recalcMs, observer.callbackCount]
+}
+
+#>ipc_wonder_material_boundary
+?["Can grouped glass preserve terminal boundaries?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @electrostatic_affordances
+  ~#hypothesis: "Group the measured overlap before shrinking every blur radius."
+  ~#tension: "Grouping can enlarge repaint area or flatten meaningful depth."
+  !probe{ "Measure overlap and invalidated area in the named hero region." }
+  !probe{ "Compare one grouped host under identical scroll/focus input." }
+  !probe{ "Reject if raster/composite cost, contrast, clipping or motion regress." }
+  !probe{ "Screenshots attest appearance; they do not time paint." }
+  $%[hero.overlapDepth, hero.affectedArea, raster.durationMs, composite.durationMs]
+}
+
+#>ipc_wonder_lifecycle_cut
+?["Which shell cut preserves a complete disclosure lifetime?"]{
+  #:depth #!computational ~#lens(projection)
+  ~#with: @runtime_decomposition_plan
+  ~#hypothesis: "Extract where measured work and setup/dispose ownership agree."
+  ~#tension: "Deferred boot work may slow first use; one writer can read stale state."
+  !probe{ "Trace import, mount, geometry reads/writes on home and about." }
+  !probe{ "Include first open/close, rapid reversal and cleanup." }
+  !probe{ "Compare internal split and deferred extraction for the dominant slice." }
+  !probe{ "Reject if work moves into first use or stale corrections survive." }
+  $%[shell.importMs, shell.mountMs]
+  $%[shell.firstOpenMs, chrome.correctionCount]
+  $%[lifecycle.retainedListeners]
+}
+
+^"ipc-012_prediction_gate"{
+  operation = "cache"
+  fixity = "experimental"
+  expression = prediction[gate]{mediator.lifecycle.reader}<receipt>
+    ~ redesign[potential]{delta.group.defer}<conditional>
+  priority = `Choose the reproducible journey first, then its dominant mediator, then
+    its smallest owner. The file_tree_modularity order is an inspection hypothesis, not
+    an implementation queue.`
+  hold = `The earlier move-to-charge-field, one-root and grouped-glass prescriptions
+    remain unconfirmed alternatives. Preserve existing files if an internal delta or
+    lifecycle correction answers the measured problem.`
+  validation = `npm run ecology:language; node scripts/wonder.mjs --surface
+    interaction-paint-cost; git diff --check. These validate cache discoverability and
+    hygiene, not browser performance.`
+  decision = `Start ipc-013 candidate A with its compatibility probe. Candidates B-D
+    require their named attribution receipt first. Cache a
+    supported/refuted/inconclusive verdict before promoting a performance claim; a
+    local experiment need not wait for proof of its own outcome.`
+}[reg=facet]
+
+
+^"ipc-013_implementation_handoff"{
+  operation = "cache"
+  fixity = "tending"
+  status = "ready for candidate A; runtime unchanged"
+  expression = implementation[candidate]{baseline.patch.compare}<bounded>
+    ^ receipt[decision]{compatibility.work.latency}<land>
+  public_goal = `Repeated settings application avoids redundant root dataset mutations
+    while real setting changes still reach both root surfaces and their consumers.`
+  source = `2026-09-11: site-settings-engine.js setDatasetEntries/apply;
+    dom-contracts.js writeDatasetValue/serializeDatasetValue; headless-nav.mjs CLI;
+    existing root observers and settings:changed bus emissions.`
+  selection = `Start with A because the redundant assignment is directly visible and
+    the candidate is one function. This is a work-elimination hypothesis, not a claim
+    that settings dominate the focus timeout.`
+  ownership = `This cache owns the experiment handoff. Existing
+    runtime-bootstrap-performance and runtime-module-decomposition plans remain landing
+    owners if a later candidate crosses modules; do not create a second broad
+    performance roadmap.`
+  bounds = `One candidate per patch. Preserve root ownership, catalog gates, public
+    attributes and settings bus emissions. No package, new runtime module, observer
+    framework, visual redesign or file extraction in A.`
+
+  [A_settings_delta] {
+    operation = "align"
+    fixity = "tending"
+    target = `public/js/kernel/site-settings-engine.js: setDatasetEntries only; keep
+      apply() callers and html-only spwLayout exclusion intact.`
+    before = entry[all]{nullish.delete.string.assign}<repeat>
+    after = entry[delta]{equal.skip.absent.skip.changed.write}<undefined>
+    candidate_source = `const setDatasetEntries = (root, entries = {}) => {
+  if (!(root instanceof HTMLElement)) return;
+  Object.entries(entries).forEach(([key, value]) => {
+    if (value === undefined || value === null) {
+      if (Object.hasOwn(root.dataset, key)) delete root.dataset[key];
+      return;
+    }
+    const next = String(value);
+    if (root.dataset[key] !== next) root.dataset[key] = next;
+  });
+};`
+    compatibility = `
+      Do not replace this with writeDatasetValues blindly: its default removes empty
+      strings and its serializer space-joins arrays/Sets; the current settings writer
+      retains empty strings and uses String(value). The local guard avoids a serializer
+      migration and another import.
+    `
+    preflight = `Record git status and this function's current source. Search
+      MutationObserver, attributeFilter and settings:changed consumers across
+      public/js, including dataset writers. Inspect callbacks for dependence on
+      repeated equal-value mutation as a refresh signal; record callback/path and
+      dependency, not just observer counts.`
+    known_consumers = `Begin at runtime/dom-sync-hub.js, runtime/page-anatomy.js,
+      interface/discovery-notices.js, interface/state-inspector.js and
+      runtime/pulse-beat-tuner.js. This is a starting set, not an exhaustive inventory.
+      Keep apply()/set() event emission paths unchanged.`
+    stop = `If a consumer requires an equal-value mutation to repair derived state,
+      leave A unlanded and name that consumer as the next separate repair. Do not
+      silently widen A into observer redesign.`
+  }
+
+  [A_compatibility_probe] {
+    location = `Temporary Node probe under /tmp; evaluate the actual baseline and
+      candidate setDatasetEntries declarations in separate node:vm contexts with an
+      HTMLElement stub and a Proxy-backed dataset. Do not copy only the candidate
+      algorithm into a test and call it source verification.`
+    cases = #[
+      `First apply and identical second apply with strings, empty string, zero, false,
+        arrays and a Set: final own-key maps match baseline; candidate second apply
+        performs zero sets/deletes.`,
+      `Change one existing key: exactly one set; remove an existing key with null and
+        then undefined: one total delete; remove an absent key: zero deletes.`,
+      `Re-add after deletion and perform A -> B -> A: each genuine transition writes;
+        equal numeric/string representations remain equal.`,
+      `Non-HTMLElement input: no writes and undefined return. Omitted entries: no
+        writes. Both isolated root instances behave identically.`,
+      `Prototype property with no own dataset key and null removal: no deletion
+        attempt. Preserve current string conversion for all supplied non-null values.`
+    ][reg=set]
+    required = `Compare final datasets after every step, not only at journey end;
+      assert return values and exact mutation counts. Keep both sampled function
+      sources with the receipt so the comparison is reproducible.`
+    sampled_receipt = `2026-09-11 node:vm comparison of current source versus
+      candidate_source: strings/empty/zero/false/array/Set, identical reapply, A -> B
+      -> A, null/undefined removal and re-add retained per-step state parity. Baseline
+      15 sets/2 delete attempts; candidate 9 sets/1 delete attempt. Final identical
+      reapply added zero writes. Invalid root and omitted entries passed. Prototype and
+      browser observer cases remain unverified; runtime source was not edited.`
+    limit = `The stub proves writer compatibility and requested assignments only. It
+      cannot prove MutationObserver, CSS invalidation or paint behavior.`
+  }
+
+  [A_browser_probe] {
+    setup = `Use npm run dev for a behavioral smoke, or build and serve the production
+      artifact for latency claims. Set --base explicitly so the smoke cannot silently
+      spawn a different server. Record actual URL and artifact; the navigation command
+      below is a health gate, not a mutation profiler.`
+    health_command = `npm run smoke:nav -- --base http://127.0.0.1:4173 --routes \
+/,/about/,/settings/ --require-browser --require-settled \
+--fail-on-console-error --fail-on-overflow-x --json`
+    observation = `
+      In a disposable browser context, observe attributes on documentElement and body
+      with attributeOldValue:true and subtree:false. Snapshot own datasets before/after
+      repeated apply of the same normalized settings, then one-setting change and
+      restoration. Disconnect in finally; discard the context to reset URL/storage
+      changes.
+    `
+    attribution = `Apply also writes outside setDatasetEntries. Separate the supplied
+      datasetEntries keys and call window from other writes; do not require the whole
+      document or whole apply() to emit zero mutations. Record side-effect collisions
+      as unattributed until traced.`
+    checks = `Exercise theme and motion controls on /settings/, first menu open/close
+      and paced focus on home/about. Compare computed state and observer-derived UI
+      with baseline after actual changes and after an unchanged reapply. Include
+      390x844 and desktop conditions from ipc-011.`
+    receipt = `Record candidate/revision/dirty diff, function sources, environment,
+      journey, before/after root maps, requested mutation counts, observed attribute
+      records, consumer behavior, timeout/pending state, and all paired timings if
+      measured. Attach the compact verdict here; keep raw logs under /tmp until
+      evidence worth retaining is selected.`
+  }
+
+  [A_landing_gate] {
+    checks = #[
+      `node --check public/js/kernel/site-settings-engine.js`,
+      `npm run check:local`,
+      `git diff --check`,
+      `Run the temporary source-comparison probe and explicit-base browser
+        health/behavior probes above.`
+    ][reg=set]
+    pass = `Equivalent state after every compatibility step, zero redundant candidate
+      writer mutations, real changes delivered on both roots, and no reader/observer
+      regression. Land as redundant-write reduction even if latency is inconclusive;
+      claim faster rendering only with ipc-011 paired evidence.`
+    fail = `State or consumer mismatch: reject the candidate. Reduced writes with
+      missing browser verification: keep as an unvalidated candidate. No meaningful
+      mutation reduction on the actual path: retain the receipt and reselect the
+      mediator.`
+    rollback = `Revert only A's function diff, preserving other sessions' changes and
+      the cached evidence. Do not revert the whole file or working tree.`
+    complete = `Update status and add an A verdict with checks/receipt location. Stop
+      after A; B-D are independent follow-ups, not automatic scope.`
+  }
+
+  [B_focus_projection] {
+    gate = `ipc_wonder_transition_boundary trace identifies redundant cosmetic
+      projection after existing previewCharge guards; retain valid phase events.`
+    files = `interface/haptics.js first; charge-field.js only if subscriber attribution
+      points there. No relocation or catalog change in the first experiment.`
+    algorithm = element[pending]{schedule.validate.flush.cancel}<cosmetic>
+    preserve = focus[native]{immediate} ~ phase[semantic]{immediate}
+    cleanup = `Clear prior-target residue; cancel on disposal. One scheduled flush;
+      never one global last target for all elements.`
+    acceptance = `A -> B -> A, focusout before flush, pointer/focus overlap and
+      disposal preserve baseline semantic events and final residue while reducing
+      traced projection work. Reject when event semantics cannot be separated from the
+      writes.`
+  }
+  [C_shell_lifetime] {
+    gate = `ipc_wonder_lifecycle_cut names a dominant sub-owner and conflicting
+      geometry snapshot or deferred import closure.`
+    files = `runtime/shell-disclosure.js and its existing runtime/shell/ owners; keep
+      dom-contracts.js as geometry writer.`
+    algorithm = owner[local]{setup.read.commit.dispose}<isolate>
+    correction = transition[generation]{current.commit.stale.skip}<cancel>
+    extraction = `Require an independent import or lifetime boundary.`
+    acceptance = `Rapid open/close/open and teardown produce no stale correction;
+      first-open latency and boot both remain acceptable against paired baseline. Keep
+      one shell catalog id.`
+  }
+  [D_material_group] {
+    gate = `ipc_wonder_material_boundary identifies a specific overlapping hero region
+      and attributable raster/composite cost.`
+    files = `Existing effects/material.css or owning shell sheet; route HTML only if no
+      existing group host is suitable.`
+    algorithm = `Move the measured backdrop effect to the existing group host; retain
+      child boundaries and remove only duplicate child backdrop sampling in that
+      region. Rebuild affected bundles.`
+    acceptance = `Less measured affected sampling work with intact depth, clipping,
+      contrast and independent motion. Run visual:checks for affected fixtures; reject
+      if the group enlarges invalidation enough to erase the win.`
+  }
 }[reg=facet]
