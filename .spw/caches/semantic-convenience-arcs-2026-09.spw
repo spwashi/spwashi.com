@@ -1,0 +1,292 @@
+# Semantic convenience arcs (2026-09)
+#
+# operation: prime
+# Creative improvements read off pocket stills. Not a sixth primitive.
+# Not a data-spw-arc-radius. Not a patch list.
+
+#>semantic_convenience_arcs_2026_09
+#:cache #!prime #!attention #!gesture #!stills #!garden
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@model_guided_refinement: ~"../conventions/model-guided-refinement.spw"
+@daily_kernel: ~"../conventions/daily-kernel.spw"
+@plant_ecology: ~"../conventions/plant-ecology-operations.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@electrostatics: ~"../conventions/electrostatic-affordances.spw"
+@charge_cycle: ~"../conventions/charge-cycle.spw"
+@microstates: ~"../conventions/interaction-microstates.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@dot_join: ~"../language/dot-join.spw"
+@screenshot_semantics: ~"../../.agents/plans/screenshot-semantics/screenshot-semantics.spw"
+@still_recipes: ~"./still-recipe-agency-2026-09.spw"
+@component_fit: ~"./component-fit-lens-journey-2026-09.spw"
+@arc_axes: ~"./arc-axes-2026-08.spw"
+@creative_capacity: ~"./creative-capacity-2026-09.spw"
+@astra_design: ~"./astra-design-direction-2026-09.spw"
+@midjourney: ~"../../.agents/plans/midjourney-design-concepts/PLAN.md"
+@quest: ~"../../about/domains/spw.quest/index.html"
+@home: ~"../../index.html"
+@about: ~"../../about/index.html"
+@learnability: ~"../conventions/learnability-ledger.spw"
+@feature_discovery: ~"../../public/js/runtime/feature-discovery.js"
+@product_lines: ~"../surfaces/product-lines.spw"
+@marketing: ~"../conventions/model-guided-refinement.spw"
+@registers: ~"../conventions/expressive-registers.spw"
+@circuit: ~"../conventions/circuit-components.spw"
+@discoverability: ~"../slices/page-region-discoverability/index.spw"
+@concept_salience: ~"../../public/js/semantic/concept-salience.js"
+@organelle: ~"./operator-hardware-organelle-2026-09.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@arrival: ~"./arrival-perceptibility-2026-08.spw"
+
+operation = "prime"
+fixity = "experimental"
+source = "chat 2026-09-10: stills → creative arcs; then: some arcs for learning new features, others for sponsored salience, how to distinguish, other channels for clustered attentional semantics"
+focus_dimension = "designer"
+bridge_discipline = "puppeteer"
+region = "garden"
+brand_physics = "charge"
+intensity = "studio"
+semantic_operation = "prime"
+output = "this cache"
+do_not_touch = `public HTML, shared CSS, a new data-spw-* stem, a fourth gesture ladder, Midjourney promotion, a seventh theme-pack`
+
+expression = convenience[still]{vertical.horizontal.arc}<unfold>
+
+^"kernel"{
+  claim = `A daily kernel: one designer, one puppeteer, the garden of user-journey branches, charge as the physics. The output is named creative moves, not a CSS dump.`
+  puppeteer = `Brace is a joint. The string has a length. Pull too far and the figure leaves the hand.`
+  garden = `Journeys are branches. PNSB solubilize phosphorus already in the bed — folio packing, about's 2×2, quest's spoken braces. Do not dump nitrogen. Do not compress into growth hormones.`
+}[reg=facet]
+
+^"thesis"{
+  claim = `Creative improvement is making a still read as a spoken Spw line, and making the next gesture sit inside a named radius of the thing just touched.`
+  vertical = `Claim order: kicker orients, lede commits, note sediments, the next seat arrives. A walk down the page is a crawl of complete practices.`
+  horizontal = `Kinship: alternatives share a square, a path shares a walk, an electrode sits in the noun's mouth. A ribbon of exclusive lenses is a path wearing the wrong clothes.`
+  arc = `Attention already falls off with distance. Nest already attenuates 1 → 0.62 → 0.38. The creative move is to treat that falloff as string length: contact, host, field. This is not @arc_axes — that file is arrival's vertical shell, grounded href, topic inductance. Settling damps that vertical. These string lengths are gesture reach inside a still.`
+  unfold = `Crawl, not identifier: tap mills a note; hold laminates the host and names the next verbs; swipe cures only on a host that already names the cycle. Tight tap.hold.swipe is one identifier the finger cannot play. See @dot_join.`
+  refuse = `Do not add data-spw-arc-radius. Do not unify TOUCH / GESTURE / progression ladders. Do not invent a sixth primitive. Do not wallpaper home with the about figure. The paper-machine is climate chemistry, not a hero.`
+}[reg=facet]
+
+^"ci-001_speak_the_brace"{
+  id = "ci-001"
+  operation = "prime"
+  scene = `pocket home-opening · about-opening · quest-opening · home-topic-note`
+  expression = frame[signature]{brace.handle}<spoken>
+  claim = `The topline is a line you could say aloud. Group the opening brace with the handle the way about groups #>about_frame beside it. Home splits the breath. Quest forgets the opening brace and lets "coming soon" sit in the handle's chair.`
+  evidence = #[
+    `design/components/captures/runs/2026-09-10/checks/18-59-56--f7b637/captures/pocket/01-home-opening.jpg — opening brace left, #>home_frame right, a sliver that reads as a second object`,
+    `.../17-07-39--f49a1d/captures/pocket/01-about-opening.jpg — opening brace and #>about_frame as one signature`,
+    `.../ambient/08-32-39--560932/captures/pocket/02-quest-opening.jpg — #>spw_quest | coming soon; the body already teaches that opening leans objective`,
+    `.../checks/07-53-17--64972d/captures/pocket/01-home-topic-note.jpg — ^"reading_layers" nested in the topline is already pasteable workbench`
+  ][reg=set]
+  creative = `A visitor who knows Spw as an abstract C-style language should be able to screenshot the opening and paste the signature into /tools/spw-parser/. The still is the spoken line. The gray sliver is someone coughing in the middle of the name.`
+  break = `Status ("coming soon") may share the row, but it is not the handle. A lifted card around the signature is not a brace.`
+  first_patch = `Named slice pocket-frame-literacy Commit 1: slot is anatomy. Do not restyle quest from this prime.`
+  pattern_consideration = #[
+    `@semantic_braces`,
+    `@screenshot_semantics priming must survive without hover`,
+    `@component_fit#frame`
+  ][reg=set]
+}[reg=facet]
+
+^"ci-002_electrode_in_the_noun"{
+  id = "ci-002"
+  operation = "prime"
+  scene = `folio-prices · about-opening 2×2 · home working-view strip · home-entry-panels`
+  expression = chip[seat]{title.square.walk}<kin>
+  claim = `The electrode lives in the claim's mouth. Folio already does this: "Seed original $35" is one breath. About's lenses sit in a square of choice. Home's STUDY/BUILD/PLAY/STUDIO is a walk of alternatives. Entry-panel chips wait under the essay, then a dashed "Why this card exists" becomes a second object.`
+  evidence = #[
+    `.../ambient/08-32-39--560932/captures/pocket/03-folio-prices.jpg — title + price on one row, ordinal tiers stacked`,
+    `about-opening 2×2 — .READING ^KERNEL ~LATTICE @HOSPITALITY; the figure stays in the host radius`,
+    `home-opening — four exclusive lenses in one strip; "highlights related cards on this page" names a room that is off-screen`,
+    `home-entry-panels — chips below prose; dashed why-box wearing card liminality`
+  ][reg=set]
+  creative = `Horizontal is kinship, not density. Alternatives gather as comma company in a square: reading, kernel, lattice, hospitality. A path gathers as a semicolon schedule, a walk: hook, door, atlas, garden. Do not put a company in a walk's clothes. If a working view highlights cards, bring one highlighted card into the frame so the spell completes in the still.`
+  break = `Landmarks are a walk. Do not turn Door into a lifted card; keep the mark. Do not 2×2 a path.`
+  first_patch = `Home working-view packing may borrow about's square in pocket-frame-literacy Commit 2 packing — only if asked. Folio packing is the specimen, not a shared rewrite.`
+  pattern_consideration = #[
+    `@component_fit#chip never wrap`,
+    `@dot_join comma vs semicolon`,
+    `@plant_ecology#growth_payloads_2026_09 dose`
+  ][reg=set]
+}[reg=facet]
+
+^"ci-003_three_string_lengths"{
+  id = "ci-003"
+  operation = "prime"
+  scene = `about-opening hover/keys/press · home-topic-note popover`
+  expression = gesture[radius]{contact.host.field}<crawl>
+  claim = `A puppeteer's string has three lengths. Contact is the finger's target. Host is the object that names the next verbs after prime. Field is the overlay that takes the whole room. Pocket has no inhale: hover and keys stills match rest, so the first audible note is the tap.`
+  evidence = #[
+    `about-opening-hover and about-opening-keys ≈ about-opening rest — @still_recipes#sr-001`,
+    `about-opening-press fills KERNEL while READING stays selected — contact visible, acted vs selected still-ambiguous`,
+    `home-topic-note: <topic> popover covers the ? that summoned it, while chrome says "long-press topic to open"`,
+    `@attention_field spatial_influence I(a→b)=σ·r·exp(−α·d)`,
+    `@electrostatics nest 1 → 0.62 → 0.38 ; contact outranks proximity ; :active is the contact rung a finger can reach`,
+    `@microstates#expected_behavior prime names next verbs on that same object ; swipe only on a host that names the cycle`,
+    `@dot_join crawl vs tight identifier — mill.laminate.cure is one name; braced crawl is three practices`
+  ][reg=set]
+  creative = `Play the crawl, not the identifier. Tap mills a note — even grounded, even "nothing happened," so silence is never the rest. Hold laminates the host and writes the next reachable verbs on it. Swipe is a complete practice only where the host already says cycle. A living term's capsule opens beside the term, the way a nested brace opens inside a frame — it does not eat the probe.`
+  break = `A background ripple that substitutes for a missing close is spectacle. A swipe on a tab strip is not a cycle. Do not scale a card because a nested link was tapped.`
+  first_patch = `Do not build a ripple engine from this prime. After a drawer close is reliable, grounded contact may show potential. Topic popover placement is Branch T, alone.`
+  pattern_consideration = #[
+    `@charge_cycle latent to armed to preview to acted`,
+    `@microstates#reward_contract never silent`,
+    `@electrostatics#sign`
+  ][reg=set]
+}[reg=facet]
+
+^"ci-004_when_the_flower_opens"{
+  id = "ci-004"
+  operation = "prime"
+  scene = `home-nav-open · home-region-menu`
+  expression = overlay[field]{apical.yield}<uptake>
+  claim = `When an overlay is apical, laterals rest. The drawer is a flower. Travel pills are buds. They must not bloom in its shade. Region-menu CLOSE sits in the stretch; Next room sits in the thumb rest — the strings are crossed.`
+  evidence = #[
+    `.../17-08-41--b8ef7a/captures/pocket/02-home-nav-open.jpg — 2-col destinations are thumb-honest; Next room / Living concepts peek under the panel; background copy stays readable`,
+    `.../07-39-53--dc18b0/captures/pocket/01-home-region-menu.jpg — inspect grammar unfolds; landmarks and travel pills remain hittable`,
+    `@attention_field#as_nutrient attention is competed for`,
+    `@plant_ecology auxin is apical dominance; do not compress into growth hormones`,
+    `world-physics carrier: a screen-field drawer is carried by the viewport`
+  ][reg=set]
+  creative = `Uptake is hospitality. The open drawer takes the room the way a bloom takes the light. The 2-col destination grid is already the plump packing. The creative miss is not the grid — it is the buds still glowing underneath. CLOSE wants the same control that opened, in the same corner, so the joint reverses.`
+  break = `Suppressing laterals is yield, not a third material state. PNSB are not restaurant lighting. Do not hide reading copy behind a blur and call it rest if the pills still steal.`
+  first_patch = `pocket-frame-literacy Commit 2 (only if asked): dock the drawer, yield floating chrome, pointerdown outside closes. Not a new overlay family.`
+  pattern_consideration = #[
+    `@astra_design leftover swipe XOR staged still`,
+    `@microstates disclosure hamburger`
+  ][reg=set]
+}[reg=facet]
+
+^"ci-005_who_pays_the_nutrient"{
+  id = "ci-005"
+  operation = "prime"
+  expression = attention[nutrient]{earned.sponsored}<who>
+  claim = `An arc is paid for. Learning is visitor-sourced charge that stays on the host and deepens on return. Sponsored salience is author-sourced or product-line-sourced charge that sits in an offer seat. They compete for the same scarce nutrient. They are not two glows.`
+  learning = .{
+    who = `The visitor pays. Charge accrues from contact, hold, dwell.`
+    radius = `Host. Next verbs stay on the object that was touched (@microstates#prime).`
+    memory = `data-spw-feature-encounter = novel | convergent | return. A species met before deepens; it does not re-announce (@feature_discovery, @arrival first-encounter announces once).`
+    crawl = `Tap mills a note. Hold laminates. Swipe cures only on a named cycle. Convergent encounter is the pleasure of recognizing a trait already collected on another species.`
+    wonder = `Earned depth. The surprise can be derived after the fact (@wonder_doctrine). Spectacle is surprise that cannot be derived and does not repeat — a nagging promo wearing a discovery hat fails that test twice.`
+    posture = `@learnability witness|composer|explorer|integrator|overflow. Explorer scans; composer gathers. The ledger modulates resonance; it does not hide authored copy.`
+  }[reg=facet]
+  sponsored = .{
+    who = `The author or a product line pays. The page spends budget to place an offer, a commission door, a membership card, a promo/wonder cadence.`
+    radius = `A named offer seat — a card that already is a claim — not a field overlay that takes the room, and not the host of an unrelated chip.`
+    contract = `@marketing#creative_marketing_engine and @product_lines: audience, offer, proof, resonance, extension, next_action. If one is missing, it is not yet an offer; it is a push.`
+    discharge = `Project, not release. Proof becomes an outward artifact. Inquiry spark is learning's discharge.`
+    subspecies = `Site-sponsored teaching (a mount toast, a "feature learned" notice) is still sponsored. It may teach. It must not write novel as if the visitor found a species while moseying.`
+  }[reg=facet]
+  garden = `Learning is exchange — costly, bidirectional, like mycorrhizae. Sponsored is a catalytic payload with a dose. More charge is not automatically more useful (@plant_ecology#growth_payloads_2026_09).`
+  evidence = #[
+    `@feature_discovery naturalist framing: novel / convergent / return`,
+    `@attention_field#as_nutrient competed_for yes, conserved per visit`,
+    `promo-wonder-cycle gated by media-publishing — @arrival proportionality miss: 10KB bundle for one page-unaware card`,
+    `spw:discovery-reward + handleFeatureLearningToast — a mount toast is sponsored teaching; 2026-09-05 it was silently dead, then suddenly able to fire`
+  ][reg=set]
+  first_patch = `Do not retune discovery toasts or promo cards from this prime. When a later pass touches one surface, name who paid before choosing a reward color.`
+}[reg=facet]
+
+^"ci-006_costume"{
+  id = "ci-006"
+  operation = "prime"
+  expression = salience[costume]{color.encounter.radius.copy}<tell>
+  claim = `Distinguish learning from sponsored by costume, not by inventing a stem. Four tells already exist. Mixing them is the miss.`
+  tells = #{
+    who_paid = `Visitor charge vs author budget. If the page spoke first, it is sponsored.`
+    encounter = `Learning may write data-spw-feature-encounter. Sponsored never writes novel. A return visit deepens a species and should quiet an offer, not shout it.`
+    color = `Learning brightens toward curiosity (@discoverability#color_reward_contract: probe, wonder, action). Sponsored may use valence/approach temperature or architecture structure. It does not steal curiosity's hue.`
+    radius = `Learning's next verb stays on the touched host. Sponsored's next_action lives in the offer card. A toast that covers the probe that "discovered" it is sponsored eating the learning radius (home-topic-note still).`
+    copy = `Learning names the next verb on this object ("hold to prime"). Sponsored names audience and one next_action ("Open Services when the ask has a shape").`
+  }[reg=facet]
+  theft = #{
+    discovery_hat = `A mount toast that says you discovered a feature the catalog just loaded. Costume: field-guide. Payer: author.`
+    curiosity_promo = `A commission card that glows with probe-reward because glow was handy. Costume: inquiry. Payer: product line.`
+    nag_return = `An offer that gets louder on the second visit. Wonder-doctrine: spectacle does not repeat; earned depth does. Sponsored that nags is spectacle.`
+  }[reg=facet]
+  still_read = `home-entry-panels "@services ^cards" under a concrete-request card is an offer seat — sponsored, and honest if the six fields can be answered. The dashed "Why this card exists" is not a lesson; it is a second object. folio-prices is an offer seat whose electrode is in the noun — sponsored packing done well.`
+  break = `Do not add data-spw-sponsored. Do not add a fourth reward color. The tell is who paid plus which existing channel speaks.`
+}[reg=facet]
+
+^"ci-007_clustered_channels"{
+  id = "ci-007"
+  operation = "prime"
+  expression = attention[cluster]{channel.register.encounter}<already>
+  claim = `Clustered attentional semantics already have channels. A cluster is an organelle only when it metabolizes — stores, couples, folds, or discharges — not when it repeats a card. Do not mint a sponsored channel. Reproject.`
+  already = #{
+    reward_color = `curiosity · relationship · architecture — @discoverability. Question, connection, structure.`
+    register = `depth · valence · resonance · attention · field — @registers. Nouns of feeling; a register is the viewpoint, not a new noun.`
+    encounter = `novel · convergent · return — @feature_discovery. Field-guide, not marketing.`
+    posture = `witness · composer · explorer · integrator · overflow × breath · scan · trace · compose — @learnability.`
+    visit_arc = `approach · enter · dwell · echo · return · rest — @arc_axes sibling implicit_attention_arcs. Load timing, not offer timing.`
+    gravity_overlap = `background · ambient · primary · focal on [data-spw-gravity] — leftover room, yield. Spatial.`
+    concept_map = `@concept_salience maps data-spw-field-salience to attention and data-spw-salience to spatial. Two hosts, one English word. Do not add a third salience stem.`
+    circuit = `resistor · capacitor · inductor · transformer — @circuit editor metaphor. Public copy does not speak ohms.`
+    editor_cluster = `copy-accessor clustered_update is an editor working set. It is not visitor attention.`
+  }[reg=facet]
+  how_to_cluster = `A learning cluster shares an encounter trait (convergent evolution) or a curiosity kin (:has() operator echo). A sponsored cluster shares an offer (one audience, one next_action) inside one card. A mixed cluster — a working-view strip that both teaches STUDY and sells a commission — splits the nutrient and teaches neither.`
+  creative = `Home working-view is a learning square waiting to happen (company of lenses). Folio prices is a sponsored walk of tiers. About's 2×2 is learning lenses with a dielectric figure. Nav-open is a field overlay: neither lesson nor offer; it is uptake. If it peeks travel pills, it is stealing both budgets.`
+  refuse = `No data-spw-attention-channel. No fourth reward color named sponsored. No merging gravity overlap with concept salience. Freeze the coordinate (@registers five nouns, @discoverability three reward colors); reproject the lexicon.`
+  first_patch = `When a later CSS pass spends a reward color, name whether the host is a species (learning) or an offer (sponsored). One host, one payer.`
+  pattern_consideration = #[
+    `@circuit physics_dictionary one table`,
+    `@organelle cluster metabolizes`,
+    `@registers rendering invariant: a visual effect with no channel is noise`
+  ][reg=set]
+}[reg=facet]
+
+^"already_in_the_bed"{
+  note = `The creative work is solubilizing what the stills already grew. Do not invent a climate to feel like progress.`
+  specimens = #{
+    folio = `electrode in the title row`
+    about_square = `alternatives as company`
+    quest_copy = `Opening brace leans objective. Closing brace leans subjective.`
+    reading_layers = `^"reading_layers" nested in a topline, pasteable in a still`
+    about_figure = `paper-machine as dielectric, not wallpaper — @creative_capacity#cc-007 climate judgment stays XOR`
+    folio_offer = `sponsored packing: electrode in the title of an offer seat`
+    about_lenses = `learning square: company of modes, figure stays dielectric`
+  }[reg=facet]
+}[reg=facet]
+
+^"do_not"{
+  family = `No data-spw-arc-radius, data-spw-string-length, data-spw-drop-order, data-spw-sponsored, data-spw-attention-channel`
+  engine = `No fourth gesture ladder. Deepen image swipe, pinch, hold-to-cauldron.`
+  nitrogen = `No longer :not() lists as the creative act. Kinship is slot vs register, walk vs company.`
+  hormone = `Do not write "growth hormones" into public copy. Named organisms stay on provenance surfaces.`
+  color = `No fourth reward color named sponsored. Curiosity stays learning. Valence or architecture may carry an offer.`
+  encounter = `Sponsored never writes data-spw-feature-encounter=novel.`
+  implement = `Do not patch home.css, material.css, brace-gestures.js, feature-discovery.js, or promo-wonder from this prime.`
+}[reg=facet]
+
+validation: #[
+  `rg 'ci-00' .spw/caches/semantic-convenience-arcs-2026-09.spw .spw/caches/index.spw`,
+  `npm run sense -- ink home-opening`,
+  `npm run wonder -- --surface semantic-convenience`
+][reg=set]
+
+# Harvestable. `npm run wonder -- --surface semantic-convenience`
+
+#>wonder_semantic_convenience_already
+?["Which still already contains the creative improvement we keep trying to invent?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @component_fit
+  ~#hypothesis: "folio-prices seats the electrode; about-opening squares the alternatives; quest teaches the brace in prose; topic-note already shows a nested brace a parser could eat. Inventing a radius attribute would be nitrogen on a bed that already has phosphorus."
+  ~#tension: "creative work wants a new climate; the stills want someone to notice the joint."
+  !probe{ "open the four stills named in already_in_the_bed. name one specimen to copy, not a family to mint. if the answer is 'all of them plus a new overlay', refuse." }
+  $%[specimen.named, family.refused, still.id]
+}
+
+#>wonder_semantic_convenience_payer
+?["If a toast teaches a feature and a promo card sells a commission, which channel may they share?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @feature_discovery
+  ~#hypothesis: "they share the nutrient budget and may share architecture as structure. they must not share curiosity reward or encounter=novel. the toast is sponsored teaching; the card is an offer seat. one host, one payer."
+  ~#tension: "a field-guide costume makes a push feel earned; stealing curiosity makes an offer feel like a lesson. both thefts spend the visit twice."
+  !probe{ "pick one discovery toast and one promo/wonder or services card. name who paid, which reward color it spends, whether encounter is written, and which radius holds next_action. if both write novel or both glow probe-reward, the costume is mixed." }
+  $%[payer.who, color.channel, encounter.written, radius.seat]
+}

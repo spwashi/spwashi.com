@@ -44,6 +44,8 @@
 @permaculture_data_model_2026_09: ~"./permaculture-data-model-2026-09.spw"
 @astra_design_direction_2026_09: ~"./astra-design-direction-2026-09.spw"
 @component_fit_lens_journey_2026_09: ~"./component-fit-lens-journey-2026-09.spw"
+@semantic_convenience_arcs_2026_09: ~"./semantic-convenience-arcs-2026-09.spw"
+@claude_session_precipitate_2026_09: ~"./claude-session-precipitate-2026-09.spw"
 @still_alignment_ladder_2026_09: ~"./still-alignment-ladder-2026-09.spw"  # edge agreement read off the 2026-09-09/10 stills; al-001 is the measured mechanism
 @electrostatic_spend_2026_09: ~"./electrostatic-spend-2026-09.spw"  # what the charge model earns vs where it spends it; es-005 is the two-table finding
 @signs_of_life_2026_09: ~"./signs-of-life-2026-09.spw"  # ambient life is all earned, so a cold page runs one animation; sol-005 is the true-signal proposal
@@ -90,6 +92,8 @@ fixity = "tending"
   permaculture_data_model_2026_09 = @permaculture_data_model_2026_09
   astra_design_direction_2026_09 = @astra_design_direction_2026_09
   component_fit_lens_journey_2026_09 = @component_fit_lens_journey_2026_09
+  semantic_convenience_arcs_2026_09 = @semantic_convenience_arcs_2026_09
+  claude_session_precipitate_2026_09 = @claude_session_precipitate_2026_09
   still_alignment_ladder_2026_09 = @still_alignment_ladder_2026_09
   electrostatic_spend_2026_09 = @electrostatic_spend_2026_09
   signs_of_life_2026_09 = @signs_of_life_2026_09
