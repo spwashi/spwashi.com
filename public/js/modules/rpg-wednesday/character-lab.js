@@ -73,7 +73,7 @@ export const initRpgCharacterLab = (section) => {
         id: 'rpg-character-role',
         label: 'Role / calling',
         value: '',
-        placeholder: 'Signal cartographer, woodfrog paladin, coral witch'
+        placeholder: 'Signal cartographer, rockgnome artisan, coral witch'
     });
     const { field: vocationField, input: vocationInput } = createLineField({
         id: 'rpg-character-vocation',

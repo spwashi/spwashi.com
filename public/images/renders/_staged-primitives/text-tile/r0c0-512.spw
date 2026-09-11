@@ -1,0 +1,25 @@
+#>asset_metadata
+#:layer #!design
+#:fixity #!experimental
+
+^"spirit"{
+  whimsy_name: "typographical-seam"
+  description: "Teal and ochre text tile mesh with soft typographical letterforms and rasterized letter edges."
+  visual_qualities: "teal field, ochre letterforms, typographical mesh, tactile paper texture"
+}
+
+^"staging"{
+  source = ~"00.unsorted/tiles/spwashi_spwashi.com_text_for_a_background_tile_--chaos_20_--t_e255c4cf-317d-4ef9-b2f4-72b85ad8dce0_1.png"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
+  theme_pack_candidate = "text-mesh"
+  component_genre_candidate = "header-mesh"
+  theme_set = "text-tile"
+  trope = "text texture as wallpaper: readable as pattern, quiet enough for typography to sit on top"
+  icon_candidate = "true"
+  replace_later = "true"
+  promoted = "false"
+}[reg=facet]
+
+^"discovery"{
+  tags: ["staged", "theme-set", "text-tile", "typography", "abstract"]
+}

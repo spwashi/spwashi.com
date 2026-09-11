@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-31T20:40:15.419Z",
+  "generatedAt": "2026-09-11T03:52:21.403Z",
   "sourceRoot": "/public/images/",
-  "count": 623,
+  "count": 784,
   "concepts": [
     "about",
     "algorithm",
@@ -838,6 +838,72 @@
         "home"
       ],
       "swapHint": "Use /public/images/assets/illustrations/home-og-card.jpg when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "item-boonhonk-apparatus",
+      "title": "Item Boonhonk Apparatus",
+      "path": "/public/images/assets/illustrations/item-boonhonk-apparatus-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 25522,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/item-boonhonk-apparatus-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "item-boonhonk-apparatus",
+      "title": "Item Boonhonk Apparatus",
+      "path": "/public/images/assets/illustrations/item-boonhonk-apparatus-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 21236,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/item-boonhonk-apparatus-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "item-boonhonk-apparatus",
+      "title": "Item Boonhonk Apparatus",
+      "path": "/public/images/assets/illustrations/item-boonhonk-apparatus-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 110083,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/item-boonhonk-apparatus-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "item-boonhonk-apparatus",
+      "title": "Item Boonhonk Apparatus",
+      "path": "/public/images/assets/illustrations/item-boonhonk-apparatus-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 154856,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/item-boonhonk-apparatus-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "item-boonhonk-apparatus",
+      "title": "Item Boonhonk Apparatus",
+      "path": "/public/images/assets/illustrations/item-boonhonk-apparatus-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 4414,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/item-boonhonk-apparatus-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "item-boonhonk-apparatus",
+      "title": "Item Boonhonk Apparatus",
+      "path": "/public/images/assets/illustrations/item-boonhonk-apparatus-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 5098,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/item-boonhonk-apparatus-thumb.webp when a thumbnail visual needs a stable tracked asset."
     },
     {
       "id": "lore-land-og-card",
@@ -1725,6 +1791,80 @@
       "swapHint": "Use /public/images/assets/illustrations/semantic-phases.png when a image visual needs a stable tracked asset."
     },
     {
+      "id": "ornament-scaffold-bone",
+      "title": "Ornament Scaffold Bone",
+      "path": "/public/images/assets/motifs/ornament-scaffold-bone-display.avif",
+      "directory": "public/images/assets/motifs",
+      "format": "avif",
+      "bytes": 20238,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/ornament-scaffold-bone-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornament-scaffold-bone",
+      "title": "Ornament Scaffold Bone",
+      "path": "/public/images/assets/motifs/ornament-scaffold-bone-display.webp",
+      "directory": "public/images/assets/motifs",
+      "format": "webp",
+      "bytes": 23022,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/ornament-scaffold-bone-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornament-scaffold-flow",
+      "title": "Ornament Scaffold Flow",
+      "path": "/public/images/assets/motifs/ornament-scaffold-flow-display.avif",
+      "directory": "public/images/assets/motifs",
+      "format": "avif",
+      "bytes": 37125,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/ornament-scaffold-flow-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornament-scaffold-flow",
+      "title": "Ornament Scaffold Flow",
+      "path": "/public/images/assets/motifs/ornament-scaffold-flow-display.webp",
+      "directory": "public/images/assets/motifs",
+      "format": "webp",
+      "bytes": 41272,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/ornament-scaffold-flow-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornament-scaffold-lattice",
+      "title": "Ornament Scaffold Lattice",
+      "path": "/public/images/assets/motifs/ornament-scaffold-lattice-display.avif",
+      "directory": "public/images/assets/motifs",
+      "format": "avif",
+      "bytes": 41896,
+      "role": "display",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/assets/motifs/ornament-scaffold-lattice-display.avif when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornament-scaffold-lattice",
+      "title": "Ornament Scaffold Lattice",
+      "path": "/public/images/assets/motifs/ornament-scaffold-lattice-display.webp",
+      "directory": "public/images/assets/motifs",
+      "format": "webp",
+      "bytes": 45382,
+      "role": "display",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/assets/motifs/ornament-scaffold-lattice-display.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
       "id": "spwashi-alchemy-token",
       "title": "Alchemy Token",
       "path": "/public/images/assets/motifs/spwashi-alchemy-token-display.png",
@@ -1946,6 +2086,102 @@
         "rpg"
       ],
       "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-thumb.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-item-boonhonk-blort-reactor",
+      "title": "Rpg Item Boonhonk Blort Reactor",
+      "path": "/public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-display.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 39618,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-display.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-item-boonhonk-blort-reactor",
+      "title": "Rpg Item Boonhonk Blort Reactor",
+      "path": "/public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-display.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 35700,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-display.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-item-boonhonk-blort-reactor",
+      "title": "Rpg Item Boonhonk Blort Reactor",
+      "path": "/public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-hero.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 128175,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-hero.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-item-boonhonk-blort-reactor",
+      "title": "Rpg Item Boonhonk Blort Reactor",
+      "path": "/public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-hero.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 206354,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-hero.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-item-boonhonk-blort-reactor",
+      "title": "Rpg Item Boonhonk Blort Reactor",
+      "path": "/public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-thumb.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 5434,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-thumb.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-item-boonhonk-blort-reactor",
+      "title": "Rpg Item Boonhonk Blort Reactor",
+      "path": "/public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-thumb.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 7266,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-thumb.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
     },
     {
       "id": "rpg-scene-library-provisional-drawer",
@@ -5744,6 +5980,1954 @@
       "swapHint": "Use /public/images/renders/_raw/spwashi_watercolor_wash_--profile_3q5khel_--stylize_750_--v_7_c1ffd42b-1976-49e3-b8d6-21dcb4678d60_0.png when a style-reference / surface visual needs a stable tracked asset."
     },
     {
+      "id": "r0c0-512-edge",
+      "title": "R0c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r0c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 89484,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r0c0-512-edge.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r0c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 992,
+      "role": "thumbnail",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r0c0-512-icon.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-nucleus",
+      "title": "R0c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r0c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 13376,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r0c0-512-nucleus.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-wash",
+      "title": "R0c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r0c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 13658,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r0c0-512-wash.webp when a software / algorithm / architecture / style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r0c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 18190,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r0c0-512.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-edge",
+      "title": "R0c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r0c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 78176,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r0c1-512-edge.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r0c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 1016,
+      "role": "thumbnail",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r0c1-512-icon.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-nucleus",
+      "title": "R0c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r0c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 10898,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r0c1-512-nucleus.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-wash",
+      "title": "R0c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r0c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 14338,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r0c1-512-wash.webp when a software / algorithm / architecture / style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r0c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 19432,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r0c1-512.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-edge",
+      "title": "R1c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r1c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 72546,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r1c0-512-edge.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r1c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 1004,
+      "role": "thumbnail",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r1c0-512-icon.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-nucleus",
+      "title": "R1c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r1c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 9022,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r1c0-512-nucleus.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-wash",
+      "title": "R1c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r1c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 12736,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r1c0-512-wash.webp when a software / algorithm / architecture / style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r1c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 17086,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r1c0-512.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-edge",
+      "title": "R1c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r1c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 90506,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r1c1-512-edge.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r1c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 1074,
+      "role": "thumbnail",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r1c1-512-icon.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-nucleus",
+      "title": "R1c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r1c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 13070,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r1c1-512-nucleus.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-wash",
+      "title": "R1c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r1c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 13996,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r1c1-512-wash.webp when a software / algorithm / architecture / style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/algorithm-lattice/r1c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/algorithm-lattice",
+      "format": "webp",
+      "bytes": 20030,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/algorithm-lattice/r1c1-512.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-edge",
+      "title": "R0c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r0c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 85518,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r0c0-512-edge.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r0c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 1236,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r0c0-512-icon.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-nucleus",
+      "title": "R0c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r0c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 16570,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r0c0-512-nucleus.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-wash",
+      "title": "R0c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r0c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 22256,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r0c0-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r0c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 28818,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r0c0-512.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-edge",
+      "title": "R0c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r0c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 75696,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r0c1-512-edge.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r0c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 1130,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r0c1-512-icon.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-nucleus",
+      "title": "R0c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r0c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 20564,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r0c1-512-nucleus.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-wash",
+      "title": "R0c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r0c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 23730,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r0c1-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r0c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 29252,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r0c1-512.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-edge",
+      "title": "R1c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r1c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 93472,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r1c0-512-edge.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r1c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 944,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r1c0-512-icon.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-nucleus",
+      "title": "R1c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r1c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 13602,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r1c0-512-nucleus.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-wash",
+      "title": "R1c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r1c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 19280,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r1c0-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r1c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 25140,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r1c0-512.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-edge",
+      "title": "R1c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r1c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 120420,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r1c1-512-edge.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r1c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 622,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r1c1-512-icon.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-nucleus",
+      "title": "R1c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r1c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 7272,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r1c1-512-nucleus.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-wash",
+      "title": "R1c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r1c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 6786,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r1c1-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/boonhonk-abstract/r1c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/boonhonk-abstract",
+      "format": "webp",
+      "bytes": 9920,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/boonhonk-abstract/r1c1-512.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-edge",
+      "title": "R0c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r0c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 125128,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r0c0-512-edge.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r0c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 978,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r0c0-512-icon.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-nucleus",
+      "title": "R0c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r0c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 20842,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r0c0-512-nucleus.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-wash",
+      "title": "R0c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r0c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 29632,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding",
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r0c0-512-wash.webp when a library / worldbuilding / style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r0c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 37556,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r0c0-512.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-edge",
+      "title": "R0c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r0c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 112018,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r0c1-512-edge.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r0c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 1104,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r0c1-512-icon.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-nucleus",
+      "title": "R0c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r0c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 14506,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r0c1-512-nucleus.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-wash",
+      "title": "R0c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r0c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 24376,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding",
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r0c1-512-wash.webp when a library / worldbuilding / style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r0c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 29760,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r0c1-512.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-edge",
+      "title": "R1c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r1c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 122544,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r1c0-512-edge.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r1c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 1026,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r1c0-512-icon.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-nucleus",
+      "title": "R1c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r1c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 18442,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r1c0-512-nucleus.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-wash",
+      "title": "R1c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r1c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 28836,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding",
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r1c0-512-wash.webp when a library / worldbuilding / style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r1c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 35888,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r1c0-512.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-edge",
+      "title": "R1c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r1c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 112334,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r1c1-512-edge.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r1c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 1072,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r1c1-512-icon.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-nucleus",
+      "title": "R1c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r1c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 20274,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r1c1-512-nucleus.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-wash",
+      "title": "R1c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r1c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 29526,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding",
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r1c1-512-wash.webp when a library / worldbuilding / style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/library-cozy/r1c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/library-cozy",
+      "format": "webp",
+      "bytes": 36424,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/library-cozy/r1c1-512.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-edge",
+      "title": "R0c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r0c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 77588,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r0c0-512-edge.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r0c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 1056,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r0c0-512-icon.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-nucleus",
+      "title": "R0c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r0c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 1458,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r0c0-512-nucleus.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-wash",
+      "title": "R0c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r0c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 2532,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r0c0-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r0c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 3186,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r0c0-512.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-edge",
+      "title": "R0c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r0c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 84730,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r0c1-512-edge.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r0c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 1010,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r0c1-512-icon.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-nucleus",
+      "title": "R0c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r0c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 1998,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r0c1-512-nucleus.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-wash",
+      "title": "R0c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r0c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 3092,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r0c1-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r0c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 3766,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r0c1-512.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-edge",
+      "title": "R1c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r1c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 66414,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r1c0-512-edge.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r1c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 956,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r1c0-512-icon.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-nucleus",
+      "title": "R1c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r1c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 2446,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r1c0-512-nucleus.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-wash",
+      "title": "R1c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r1c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 2374,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r1c0-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r1c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 3184,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r1c0-512.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-edge",
+      "title": "R1c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r1c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 83270,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r1c1-512-edge.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r1c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 1128,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r1c1-512-icon.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-nucleus",
+      "title": "R1c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r1c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 1620,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r1c1-512-nucleus.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-wash",
+      "title": "R1c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r1c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 2640,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r1c1-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/neutral-hex/r1c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/neutral-hex",
+      "format": "webp",
+      "bytes": 3364,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/neutral-hex/r1c1-512.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-edge",
+      "title": "R0c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r0c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 82340,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r0c0-512-edge.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r0c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 1172,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r0c0-512-icon.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-nucleus",
+      "title": "R0c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r0c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 16456,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r0c0-512-nucleus.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-wash",
+      "title": "R0c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r0c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 22476,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r0c0-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r0c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 26570,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r0c0-512.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-edge",
+      "title": "R0c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r0c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 81858,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r0c1-512-edge.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r0c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 1066,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r0c1-512-icon.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-nucleus",
+      "title": "R0c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r0c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 16290,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r0c1-512-nucleus.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-wash",
+      "title": "R0c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r0c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 24124,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r0c1-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r0c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 28176,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r0c1-512.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-edge",
+      "title": "R1c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r1c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 88784,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r1c0-512-edge.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r1c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 1166,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r1c0-512-icon.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-nucleus",
+      "title": "R1c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r1c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 21600,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r1c0-512-nucleus.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-wash",
+      "title": "R1c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r1c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 26416,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r1c0-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r1c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 31826,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r1c0-512.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-edge",
+      "title": "R1c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r1c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 96174,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r1c1-512-edge.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r1c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 1232,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r1c1-512-icon.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-nucleus",
+      "title": "R1c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r1c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 19530,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r1c1-512-nucleus.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-wash",
+      "title": "R1c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r1c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 30914,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r1c1-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/papergami-cubes/r1c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/papergami-cubes",
+      "format": "webp",
+      "bytes": 36012,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/papergami-cubes/r1c1-512.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-edge",
+      "title": "R0c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r0c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 83908,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r0c0-512-edge.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r0c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 1298,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r0c0-512-icon.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-nucleus",
+      "title": "R0c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r0c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 15484,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r0c0-512-nucleus.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-wash",
+      "title": "R0c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r0c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 23554,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "style-reference",
+        "surface",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r0c0-512-wash.webp when a rpg-wednesday / session-memory / character / style-reference / surface / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r0c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 28502,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r0c0-512.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-edge",
+      "title": "R0c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r0c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 69520,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r0c1-512-edge.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r0c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 1292,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r0c1-512-icon.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-nucleus",
+      "title": "R0c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r0c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 9352,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r0c1-512-nucleus.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-wash",
+      "title": "R0c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r0c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 19800,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "style-reference",
+        "surface",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r0c1-512-wash.webp when a rpg-wednesday / session-memory / character / style-reference / surface / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r0c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 23304,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r0c1-512.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-edge",
+      "title": "R1c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r1c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 59280,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r1c0-512-edge.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r1c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 1258,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r1c0-512-icon.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-nucleus",
+      "title": "R1c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r1c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 10532,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r1c0-512-nucleus.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-wash",
+      "title": "R1c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r1c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 16952,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "style-reference",
+        "surface",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r1c0-512-wash.webp when a rpg-wednesday / session-memory / character / style-reference / surface / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r1c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 19862,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r1c0-512.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-edge",
+      "title": "R1c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r1c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 54218,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r1c1-512-edge.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r1c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 1172,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r1c1-512-icon.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-nucleus",
+      "title": "R1c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r1c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 7644,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r1c1-512-nucleus.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-wash",
+      "title": "R1c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r1c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 19370,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "style-reference",
+        "surface",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r1c1-512-wash.webp when a rpg-wednesday / session-memory / character / style-reference / surface / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/rpg-hype/r1c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/rpg-hype",
+      "format": "webp",
+      "bytes": 23024,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/rpg-hype/r1c1-512.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-edge",
+      "title": "R0c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r0c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 73760,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r0c0-512-edge.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r0c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 1278,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r0c0-512-icon.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-nucleus",
+      "title": "R0c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r0c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 11698,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r0c0-512-nucleus.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512-wash",
+      "title": "R0c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r0c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 21568,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r0c0-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c0-512",
+      "title": "R0c0 512",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r0c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 26756,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r0c0-512.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-edge",
+      "title": "R0c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r0c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 77074,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r0c1-512-edge.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r0c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 1384,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r0c1-512-icon.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-nucleus",
+      "title": "R0c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r0c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 13884,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r0c1-512-nucleus.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512-wash",
+      "title": "R0c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r0c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 24720,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r0c1-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r0c1-512",
+      "title": "R0c1 512",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r0c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 30458,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r0c1-512.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-edge",
+      "title": "R1c0 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r1c0-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 68060,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r1c0-512-edge.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r1c0-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 1378,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r1c0-512-icon.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-nucleus",
+      "title": "R1c0 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r1c0-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 12292,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r1c0-512-nucleus.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512-wash",
+      "title": "R1c0 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r1c0-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 22744,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r1c0-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c0-512",
+      "title": "R1c0 512",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r1c0-512.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 27574,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r1c0-512.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-edge",
+      "title": "R1c1 512 Edge",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r1c1-512-edge.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 69680,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r1c1-512-edge.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r1c1-512-icon.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 1346,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r1c1-512-icon.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-nucleus",
+      "title": "R1c1 512 Nucleus",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r1c1-512-nucleus.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 9928,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r1c1-512-nucleus.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512-wash",
+      "title": "R1c1 512 Wash",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r1c1-512-wash.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 19096,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r1c1-512-wash.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "r1c1-512",
+      "title": "R1c1 512",
+      "path": "/public/images/renders/_staged-primitives/text-tile/r1c1-512.webp",
+      "directory": "public/images/renders/_staged-primitives/text-tile",
+      "format": "webp",
+      "bytes": 23858,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_staged-primitives/text-tile/r1c1-512.webp when a render visual needs a stable tracked asset."
+    },
+    {
       "id": "spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d",
       "title": "",
       "path": "/public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-display.avif",
@@ -6654,6 +8838,43 @@
       "role": "render",
       "concepts": [],
       "swapHint": "Use /public/images/renders/2026-08-22-recovered-gold-study/upcycled-gold-feedstock.jpg when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornament-scaffold-bone",
+      "title": "Ornament Scaffold Bone",
+      "path": "/public/images/renders/2026-09-07-scaffold-tiles/ornament-scaffold-bone.jpg",
+      "directory": "public/images/renders/2026-09-07-scaffold-tiles",
+      "format": "jpg",
+      "bytes": 235669,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-09-07-scaffold-tiles/ornament-scaffold-bone.jpg when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornament-scaffold-flow",
+      "title": "Ornament Scaffold Flow",
+      "path": "/public/images/renders/2026-09-07-scaffold-tiles/ornament-scaffold-flow.jpg",
+      "directory": "public/images/renders/2026-09-07-scaffold-tiles",
+      "format": "jpg",
+      "bytes": 327154,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-09-07-scaffold-tiles/ornament-scaffold-flow.jpg when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "ornament-scaffold-lattice",
+      "title": "Ornament Scaffold Lattice",
+      "path": "/public/images/renders/2026-09-07-scaffold-tiles/ornament-scaffold-lattice.jpg",
+      "directory": "public/images/renders/2026-09-07-scaffold-tiles",
+      "format": "jpg",
+      "bytes": 366484,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/2026-09-07-scaffold-tiles/ornament-scaffold-lattice.jpg when a software / algorithm / architecture visual needs a stable tracked asset."
     },
     {
       "id": "papergami-architecture",

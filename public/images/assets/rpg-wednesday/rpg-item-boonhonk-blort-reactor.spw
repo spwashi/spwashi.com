@@ -1,0 +1,43 @@
+#>asset_metadata
+#:layer #!rpg_wednesday
+
+^"spirit"{
+  whimsy_name: "rpg-item-boonhonk-blort-reactor"
+  description: "Tactile mechanical reactor with brass gears, levers, and a warm glowing amber chamber, gearing up to blort some bap at the table."
+  visual_qualities: "tactile gears, mechanical switches, amber glow, brass casing, physical table prop"
+}
+
+^"thematic_mapping"{
+  operator: "action"
+  valence: "boon"
+  spirit_phase: "ignition"
+  liminality: "threshold"
+  role: "table-prop"
+  context: "rpg wednesday, table kit, mechanical artifact, physical prop"
+}
+
+^"usage"{
+  surface: "rpg_wednesday"
+  role: "prop-specimen"
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["avif", "webp"]
+  alt_text: "A tactile brass machine with mechanical gears, levers, and a warm glowing amber core, prepared for play."
+}
+
+^"optimization"{
+  optimized_on: "2026-09-10T22:20:00Z"
+  source_master: "00.unsorted/items/spwashi_glowing_boonhonk_machine_gearin_up_to_blort_some_bap_55fcbbd0-246c-431b-97f5-f38ea1035bda.png"
+  variants: [
+    { tier: "thumb", size: "320x320", formats: ["avif", "webp"] },
+    { tier: "display", size: "640x640", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x1024", formats: ["avif", "webp"] }
+  ]
+  notes: "Tiered AVIF/WebP variants generated using conventions/asset-management.spw#optimization."
+}
+
+^"discovery"{
+  tags: ["rpg", "prop", "machine", "reactor", "brass", "amber", "boonhonk"]
+  spirit_name: "rpg-item-boonhonk-blort-reactor"
+  status: "extracted"
+  related_images: ["boonhonk-machine-register", "rpg-scene-library-provisional-drawer"]
+}

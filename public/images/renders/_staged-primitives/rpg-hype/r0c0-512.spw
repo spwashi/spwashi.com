@@ -1,0 +1,25 @@
+#>asset_metadata
+#:layer #!design
+#:fixity #!experimental
+
+^"spirit"{
+  whimsy_name: "ritual-hype-rune"
+  description: "Luminous green and amber RPG campaign hype tile with table runes and glowing celebratory energy."
+  visual_qualities: "green aura, amber sparks, glowing runes, celebratory table energy"
+}
+
+^"staging"{
+  source = ~"00.unsorted/tiles/spwashi_RPG_wednesday_glowing_hype_for_boonhonk_--chaos_20_--_5cec7ecf-8f9f-4949-a5bb-d82cbbd62f67_1.png"
+  method = "slice-render-primitives.mjs grid crop + wash/edge/icon/nucleus"
+  theme_pack_candidate = "ritual-hype"
+  component_genre_candidate = "campaign-signal"
+  theme_set = "rpg-hype"
+  trope = "table excitement rendered as energetic background: bright rune marks against deep moss green"
+  icon_candidate = "true"
+  replace_later = "true"
+  promoted = "false"
+}[reg=facet]
+
+^"discovery"{
+  tags: ["staged", "theme-set", "rpg-hype", "signal", "abstract"]
+}

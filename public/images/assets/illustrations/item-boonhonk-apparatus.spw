@@ -1,0 +1,32 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  name: "item-boonhonk-apparatus"
+  title: "Boonhonk Apparatus"
+  description: "A tall physical apparatus with tactile dials, brass vertical conduits, and an amber vacuum chamber glowing under workshop light."
+  visual_qualities: "tactile brass, vertical conduits, amber vacuum chamber, mechanical dials, physical machine specimen"
+}
+
+^"provenance"{
+  generator: "Midjourney"
+  imported_on: "2026-09-10"
+  source_master: "00.unsorted/items/spwashi_glowing_boonhonk_machine_--chaos_20_--ar_34_--profile_b3c0d3f2-64d0-440f-85ad-d9cd281031a5_2.png"
+  prompt: "glowing boonhonk machine --chaos 20 --ar 3:4 --profile 3q5khel --hd --v 8.1"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "physical-item-specimen"
+  dimensions: { width: 1024, height: 1365 }
+  formats_available: ["avif", "webp"]
+  alt_text: "A vertical brass mechanical apparatus with tactile dials, measurement gauges, and an amber illuminated vacuum chamber."
+}
+
+^"optimization"{
+  variants: [
+    { tier: "thumb", size: "256x341", formats: ["avif", "webp"] },
+    { tier: "display", size: "512x683", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x1365", formats: ["avif", "webp"] }
+  ]
+}
