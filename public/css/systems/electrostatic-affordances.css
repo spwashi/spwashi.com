@@ -79,6 +79,20 @@
   --spw-electrode: acted;
 }
 
+/* Brace-gestures writes charging | active | sustained | charged. Map those
+   buckets onto the electrode ladder so a tap is not invisible to this file. */
+:where([data-spw-charge="charging"]) {
+  --spw-electrode: armed;
+}
+
+:where([data-spw-charge="sustained"]) {
+  --spw-electrode: armed;
+}
+
+:where([data-spw-charge="active"]) {
+  --spw-electrode: acted;
+}
+
 /* ==========================================================================
    Grounded — the negative pole
    --------------------------------------------------------------------------
@@ -170,8 +184,10 @@
 :where(
   [data-spw-region]:has([data-spw-operator][data-spw-charge="charged"]),
   [data-spw-region]:has([data-spw-operator][data-spw-charge-phase="charged"]),
+  [data-spw-region]:has([data-spw-operator][data-spw-charge="active"]),
   [data-spw-region-role]:has([data-spw-operator][data-spw-charge="charged"]),
-  [data-spw-region-role]:has([data-spw-operator][data-spw-charge-phase="charged"])
+  [data-spw-region-role]:has([data-spw-operator][data-spw-charge-phase="charged"]),
+  [data-spw-region-role]:has([data-spw-operator][data-spw-charge="active"])
 ) {
   --spw-induced-field: calc(
     var(--spw-projected-field, var(--spw-charge-field, 0))
@@ -295,6 +311,7 @@ html[data-spw-interaction-phase="approach"] :where([data-spw-operator]:is(:hover
    in is a semantics call for the operator owner, not a paint change. */
 
 :where([data-spw-operator][data-spw-charge="charged"]),
+:where([data-spw-operator][data-spw-charge="active"]),
 :where([data-spw-operator][data-spw-charge-phase="charged"]),
 html[data-spw-interaction-phase="inspect"] :where([data-spw-section-state="active"] [data-spw-operator]),
 html[data-spw-interaction-phase="discover"] :where([data-spw-section-state="active"] [data-spw-operator]) {
@@ -349,6 +366,38 @@ html[data-spw-microinteraction-pulse] :where(
   --spw-motion-duration: var(--spw-microinteraction-pulse-duration, 280ms);
 }
 
+/* Parchment crease: operator list items drink contact into a start-edge fold.
+   Chips and sigils stay quartz (ring). Following siblings take a thinner
+   crease — attentional liquid pooling down the list. */
+:where(.spw-copy-motif-strip li[data-spw-operator]) {
+  border-radius: 0 var(--component-radius-pill, 999px) var(--component-radius-pill, 999px) 0;
+  border-inline-start-width: 0.22rem;
+  border-inline-start-color: color-mix(
+    in srgb,
+    var(--spw-discharge-color, var(--spw-operator-color, var(--active-op-color, #008080))) 62%,
+    transparent
+  );
+}
+
+:where(
+  .spw-copy-motif-strip li[data-spw-operator]:is(:active, [data-spw-charge]:not([data-spw-charge="grounded"]))
+) {
+  border-inline-start-width: 0.32rem;
+  border-inline-start-color: var(--spw-discharge-color, var(--spw-operator-color, var(--active-op-color, #008080)));
+}
+
+:where(
+  .spw-copy-motif-strip li[data-spw-operator]:is(:active, [data-spw-charge]:not([data-spw-charge="grounded"]))
+  ~ li[data-spw-operator]
+) {
+  border-inline-start-width: 0.16rem;
+  border-inline-start-color: color-mix(
+    in srgb,
+    var(--spw-discharge-color, var(--spw-operator-color, var(--active-op-color, #008080))) 34%,
+    transparent
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   /* Reduce movement, not acknowledgement. This block used to force every
      terminal back to latent with a zero ring, which removed the only feedback a
@@ -359,7 +408,7 @@ html[data-spw-microinteraction-pulse] :where(
     --spw-induced-field: 0;
   }
 
-  :where([data-spw-operator]:not(:active):not(:hover):not(:focus-visible)) {
+  :where([data-spw-operator]:not(:active):not(:hover):not(:focus-visible):not([data-spw-charge])) {
     --spw-electrode: latent;
     --spw-electrode-ring: 0;
   }

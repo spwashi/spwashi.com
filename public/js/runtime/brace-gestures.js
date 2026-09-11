@@ -63,6 +63,7 @@ import {
 
 const HOLD_THRESHOLD_MS = 420;
 const DRAG_THRESHOLD_PX = 8;
+const COARSE_RESIDUE_MS = 2800;
 const COARSE_POINTER_TYPES = new Set(['touch']);
 
 const CHARGE_BY_GESTURE = Object.freeze({
@@ -79,7 +80,7 @@ const GESTURE_TO_CHARGE_BUCKET = Object.freeze({
   active: 'active',
   armed: 'sustained',
   projecting: 'active',
-  committed: 'active',
+  committed: 'charged',
 });
 
 /* ARIA hygiene for transient gesture states (see gesture-aria-hygiene/FIX.md).
@@ -147,6 +148,25 @@ const DISCOVERED_META_DATA_KEYS = Object.freeze({
  * }>}
  */
 const gestureState = new WeakMap();
+const residueTimers = new WeakMap();
+
+function clearResidueTimer(target) {
+  const view = target?.ownerDocument?.defaultView || globalThis;
+  view.clearTimeout?.(residueTimers.get(target));
+  residueTimers.delete(target);
+}
+
+function scheduleCoarseResidue(target, meta) {
+  if (!(target instanceof HTMLElement)) return;
+  const view = target.ownerDocument?.defaultView || globalThis;
+  clearResidueTimer(target);
+  residueTimers.set(target, view.setTimeout?.(() => {
+    residueTimers.delete(target);
+    if (target.dataset.spwGesture === 'committed') {
+      setGesture(target, meta, 'neutral');
+    }
+  }, COARSE_RESIDUE_MS));
+}
 
 export function initBraceGestures() {
   const body = document.body;
@@ -179,7 +199,7 @@ export function initBraceGestures() {
 // hold:inspect" on this exact class of element and nothing made the promise
 // real: a hook was never a brace target, so tapping or holding one did
 // nothing. See .spw/conventions/interaction-microstates.spw#reward_contract.
-const BRACE_TARGET_SELECTOR = '[data-spw-form], [data-spw-kind="hook"], [data-spw-component-kind="hook"], .spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression], .spw-card, .frame-card, .plan-card, .ref-card, .media-card, .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card, [data-spw-card]';
+const BRACE_TARGET_SELECTOR = '[data-spw-form], [data-spw-kind="hook"], [data-spw-component-kind="hook"], .spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression], .spw-card, .frame-card, .plan-card, .ref-card, .media-card, .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card';
 
 // Living terms (.spw-living-term / [data-spw-living-term]) and cauldron
 // candidates ([data-spw-cauldron-candidate="true"]) are excluded here on
@@ -856,6 +876,7 @@ function onPointerDown(event) {
   const target = braceTarget(event.target);
   if (!target || !isOwnAffordanceTarget(target, event.target)) return;
 
+  clearResidueTimer(target);
   const meta = classifyTarget(target);
   setGesture(target, meta, 'active', { source: 'pointer', button: 0 });
 
@@ -1009,18 +1030,20 @@ function onPointerUp(event) {
     event.clientY <= rect.bottom;
 
   if (inside && isCoarsePointerEvent(event)) {
-    // A finger leaves no hover behind it. Falling through to "charging" here
-    // wrote a proximity reading with no proximity — it appeared *after* the
-    // touch ended and then sat there, which is why a tap could look like it
-    // responded late and then stuck. Coarse contact ends at neutral.
-    setGesture(target, meta, 'neutral');
-
-    // A tap that armed nothing, dragged nothing and expanded nothing has just
-    // been absorbed. That is the silence interaction-microstates.spw's reward
-    // contract calls a violation rather than a neutral outcome, so answer it:
-    // grounded says "this took your touch and had no arc to give back", and
-    // the reason says why. It clears itself; nothing accumulates.
-    if (!resolved) {
+    // A finger leaves no hover behind it. Do not fall through to "charging"
+    // (proximity with no proximity). A resolved tap still has to leave
+    // discharging residue — quartz that cannot hold is a dead electrode.
+    // charge-cycle.spw names that bleed at ~2.8s; grounded is the no-arc pole.
+    if (resolved) {
+      setGesture(target, meta, 'committed');
+      emitBraceEvents(
+        ['brace:discharged', 'brace:discharge'],
+        buildDetail(meta),
+        target
+      );
+      scheduleCoarseResidue(target, meta);
+    } else {
+      setGesture(target, meta, 'neutral');
       groundInteraction(target, 'tap-no-arc', { mutator: 'brace-gestures' });
     }
   } else if (inside) {
