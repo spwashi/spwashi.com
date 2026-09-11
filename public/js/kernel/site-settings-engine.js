@@ -680,8 +680,12 @@ const applyImageLoadingPreference = (settings, root = document) => {
 const setDatasetEntries = (root, entries = {}) => {
   if (!(root instanceof HTMLElement)) return;
   Object.entries(entries).forEach(([key, value]) => {
-    if (value === undefined || value === null) delete root.dataset[key];
-    else root.dataset[key] = String(value);
+    if (value === undefined || value === null) {
+      if (Object.hasOwn(root.dataset, key)) delete root.dataset[key];
+      return;
+    }
+    const next = String(value);
+    if (root.dataset[key] !== next) root.dataset[key] = next;
   });
 };
 

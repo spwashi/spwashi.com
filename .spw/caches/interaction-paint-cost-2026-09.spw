@@ -60,8 +60,8 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   model = cost[contours]{state.paint.schedule}<ipc-010>
   measure = receipt[protocol]{objective.subjective}<ipc-011>
   history = evidence[dated]{ipc-001.ipc-009}<inspect>
-  boundary = `A is ready for a local experiment; B-D need attribution. Runtime remains
-    unchanged. File-tree predictions are not a work queue.`
+  boundary = `A's local settings delta is implemented; see its dated receipt below.
+    B-D still need attribution. File-tree predictions are not a work queue.`
 }[reg=facet]
 
 ^"expression_schema"{
@@ -768,7 +768,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
 ^"ipc-013_implementation_handoff"{
   operation = "cache"
   fixity = "tending"
-  status = "ready for candidate A; runtime unchanged"
+  status = "candidate A validated; redundant-write reduction implemented"
   expression = implementation[candidate]{baseline.patch.compare}<bounded>
     ^ receipt[decision]{compatibility.work.latency}<land>
   public_goal = `Repeated settings application avoids redundant root dataset mutations
@@ -906,6 +906,62 @@ expression = surface[cost]{focus.paint.attributes}<reading>
       the cached evidence. Do not revert the whole file or working tree.`
     complete = `Update status and add an A verdict with checks/receipt location. Stop
       after A; B-D are independent follow-ups, not automatic scope.`
+  }
+
+  [A_receipt_2026_09_11] {
+    operation = "align"
+    fixity = "tending"
+    baseline = "7f96ed9b08f4a8357f4e8c44d92e02a0785efa7f; clean working tree"
+    patch = `Only setDatasetEntries changed in runtime: six added lines, two removed.
+      Preserve String(value), empty values, both roots, html-only spwLayout and events.`
+    consumers = `dom-sync-hub scheduleDomSync, page-anatomy onSettingsChanged,
+      discovery-notices adoptGlobalMaterial, state-inspector reapply and
+      pulse-beat-tuner refreshRhythm also receive settings events. Their callbacks
+      read current state; none requires an equal-value mutation to repair state.
+      reading-groove syncReadingGroovePreference projects its current preference on
+      real changes. interactive-medium watches separate device/route registers and
+      settings events. Remaining observers watch child lists, local attributes or
+      diagnostic records. No equal-value repair dependency found in the source audit.`
+    source_probe = `Actual baseline/candidate declarations evaluated in separate VM
+      contexts with two Proxy-backed roots. Per-step maps and undefined returns match:
+      strings, empty, zero, false, array, Set, repeat, A -> B -> A, numeric/string
+      equality, null/undefined deletion, absent/prototype key, re-add, omitted entries
+      and invalid roots. Baseline: 32 sets/8 delete attempts; candidate: 18 sets/2
+      deletes. Identical repeat: zero candidate writes on each root.`
+    environment = `Darwin x86_64; Chrome 152.0.7977.83, headless, GPU disabled;
+      npm run dev at http://127.0.0.1:4173. Disposable profile per variant;
+      390x844 touch/mobile and 1433x844 pointer, DPR 1. Development artifact only.`
+    browser = `Home, about and settings at both viewports: all six paired journeys
+      settled. Observe both root attributes with old values and subtree:false;
+      snapshot own datasets before/after unchanged apply, motion change, restoration,
+      theme/motion radio controls on settings, and menu open/close plus three paced
+      focus stops on home/about. All 94 writer keys match baseline after every step;
+      sampled readouts, computed body colors and menu expanded states also match.
+      Theme/motion controls update both roots. Inspector launch was absent in these
+      default journeys; its compatibility evidence is source inspection.`
+    work = `Unchanged apply: 181 baseline mutations on the writer's supplied keys,
+      zero candidate mutations, in each of six journeys. Whole synchronous root
+      data-attribute window: 214 -> 33. Remaining writes are outside this function:
+      motif/active-motif and layout/reflow/instrumentation/console projections.
+      Async callback counts are retained without causal attribution.`
+    validation = `node --check, check:local, source comparison, paired browser
+      comparison and git diff --check passed. Explicit-base strict smoke passed home
+      and settings; about passed on the final paired retry using the same harness
+      and hard criteria: ready, zero console errors and zero horizontal overflow.
+      Baseline source was served through CDP Fetch only in its disposable context.`
+    limits = `No production timing claim. Two earlier strict smoke runs left about
+      booting at the deadline, including one without another browser probe. Final
+      isolated baseline/candidate retry passed at 25741/25671ms navigation wall time.
+      This single pair does not resolve boot variability or establish a latency win.
+      Retain both failed runs; do not widen A into boot scheduling changes.`
+    receipts = `/tmp/spw-ipc-a/: baseline.js, function-sources.json, compare.mjs,
+      source-comparison.json, browser.mjs, baseline-browser.json,
+      candidate-browser.json, analyze.mjs, browser-comparison.json,
+      candidate-check.log, final-check.log, health.json, health-isolated.json,
+      health-pair.mjs, health-pair.json and health-pair-verdict.json. Raw logs are
+      local and temporary; this block retains the result and baseline revision.`
+    decision = `Paired state compatibility and redundant-write elimination supported.
+      Stop after candidate A. B-D remain separate attribution-gated candidates.`
   }
 
   [B_focus_projection] {
