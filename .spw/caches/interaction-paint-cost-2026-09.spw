@@ -60,8 +60,12 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   model = cost[contours]{state.paint.schedule}<ipc-010>
   measure = receipt[protocol]{objective.subjective}<ipc-011>
   history = evidence[dated]{ipc-001.ipc-009}<inspect>
+  reattribution = evidence[paced]{focus.writes.owner}<ipc-014>
   boundary = `A's local settings delta is implemented; see its dated receipt below.
-    B-D still need attribution. File-tree predictions are not a work queue.`
+    B, C and D were traced on 2026-09-11 and none of their gates opened; their
+    verdicts sit in ipc-013. E is named there and unimplemented. The file-tree
+    predictions are now graded into a work queue in file_tree_modularity; take its
+    topmost ready item.`
 }[reg=facet]
 
 ^"expression_schema"{
@@ -152,6 +156,9 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     duration, downstream work and presentation delay.`
   do_not_promote_until = `A production-build measurement exists and names which write
     in onChargeFocusIn dominates.`
+  reattributed_by = `ipc-014. The paced trace reproduces the per-stop cost but does
+    not find charge residue behind it. Treat the charge-residue attribution in this
+    block as unsupported until a journey shows otherwise.`
 }[reg=facet]
 
 ^"ipc-002_translucency_stacks"{
@@ -489,6 +496,16 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   claim = `Modularity here is not "file is long." Split by electrostatics job and
     measured owner. The tree already started: extend those folders; mint a file only
     when one job cannot stay.`
+  semantic_rule = `The tree is read before it is run, so a path has to carry meaning on
+    its own. Each existing root already names a relation to the reader: kernel holds
+    contracts every surface may assume, runtime holds behavior the schedule brings in,
+    interface holds the place a person touches the page, semantic holds the grammar the
+    page speaks about itself, and css/effects holds the material that grammar wears. A
+    new path earns its place by adding a word to that vocabulary, so that finding the
+    file and understanding the job are the same act. A path that only relocates lines
+    subtracts meaning: it splits one job across two names and leaves the reader to
+    rejoin them. Judge a mint by what the path teaches someone who has never opened
+    it, then by what it measures.`
   already = .{
     settings = `kernel/site-settings.js is a 15-line barrel over engine/profiles/ui —
       the dual html/body write is still inside site-settings-engine.js apply() (1508)`
@@ -536,16 +553,122 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     `effects/material-hero.css — one backdrop host, not a new sheet`,
     `kernel/site-settings-roots.js before a read-side inventory`
   ][reg=set]
-  order = #[
-    `ipc-001 attribute arming cost and lifecycle before considering charge-field
-      relocation`,
-    `ipc-003 dataset policy vs instance inside apply() — align, no new file`,
-    `ipc-005 measure shell-disclosure before minting shell/measurement.js`,
-    `ipc-006 assign chrome callers; do not mint a writer`,
-    `ipc-002 flatten glass in existing CSS`,
-    `ipc-008 harness timestamps only`,
-    `ipc-007 and ipc-009 stay out of the JS tree`
-  ][reg=set]
+  queue_rule = `This is a work queue, ordered by measured attribution and readiness,
+    not by file length or by how appealing a split looks. Each item still carries its
+    own entry gate; ready means the gate can be worked now, not that the patch is
+    pre-approved. Take the topmost ready item, land it through
+    ipc-013_implementation_handoff, then re-grade the rest against the new receipt.
+    Blocked items name the measurement that would unblock them. Closed items record
+    what refuted them so they are not re-proposed.`
+  queue = .{
+
+    [q1_annotation_idempotence] {
+      state = "ready"
+      owner = `public/js/semantic/sigil-annotation.js and semantic/operators.js`
+      why = `ipc-014 measures 35054 to 50710 attribute writes per focus journey with
+        58 to 84 percent of them equal-value, the largest attributed write source in
+        this cache.`
+      entry = `Reader inventory of the sigil and operator dataset families in both
+        attribute and camelCase spellings; confirm no consumer treats an equal-value
+        write as a refresh signal.`
+      exit = `ipc-013 E_annotation_idempotence receipt: source comparison plus paired
+        browser journeys, identical final attributes, fewer writes.`
+      semantics = `semantic/ already means the grammar the page speaks about itself,
+        and idempotent annotation is part of that meaning: saying the same thing twice
+        should cost nothing. The guard belongs where the sentence is written.`
+      mint = "none"
+    }
+
+    [q2_harness_timestamps] {
+      state = "ready"
+      owner = `scripts/headless-nav.mjs`
+      why = `ipc-008 still conflates ready and settled, and every trace in this cache
+        has had to reason around that. Harness-only, so it cannot regress the site.`
+      entry = `None beyond the usual checks; this item touches no runtime file.`
+      exit = `Ready, runtime-ready and a bounded post-visible window reported
+        separately, per the ipc-011 completion rule.`
+      semantics = `scripts/ means what observes the site from outside it. Ready and
+        settled are two different promises to a reader; a harness that blurs them
+        teaches every later trace the wrong vocabulary.`
+      mint = "none"
+    }
+
+    [q3_chrome_write_timeline] {
+      state = "needs trace"
+      owner = `public/js/kernel/dom-contracts.js syncFloatingChromeState and its
+        callers`
+      why = `ipc-006 wants one write timeline for floating chrome. ipc-014 saw 0.8 to
+        3.9 seconds of synchronous time on resize jitter with almost no shell writes,
+        so the owner of that time is still unnamed.`
+      entry = `Attribute the resize and scroll synchronous time to a caller before
+        assigning callers a timeline.`
+      exit = `A named dominant caller, or a recorded no-change result.`
+      semantics = `dom-contracts is the promise that geometry has one writer. Minting
+        a second chrome writer would break the one thing that path currently teaches.`
+      mint = "none — the writer already lives in dom-contracts"
+    }
+
+    [q4_settings_policy_instance] {
+      state = "blocked"
+      owner = `public/js/kernel/site-settings-engine.js apply()`
+      why = `ipc-003 splits policy from instance. Candidate A removed the redundant
+        writes inside setDatasetEntries but left apply()'s dual-root shape intact.`
+      entry = `The read-side inventory ipc-003 asks for: every selector, dataset
+        reader and observer on both roots.`
+      exit = `Policy and instance separated inside the existing file.`
+      semantics = `A setting is a policy; a root attribute is an instance of it. The
+        engine currently spells both in one voice, so the split is a reading gain
+        before it is a performance one.`
+      mint = "none until the inventory exists"
+    }
+
+    [q5_shell_measurement] {
+      state = "blocked"
+      owner = `public/js/runtime/shell-disclosure.js`
+      why = `ipc-005 would mint shell/measurement.js. The C gate found imports of 13
+        to 40ms, children already split, and cleanup complete, so no dominant
+        sub-owner is named.`
+      entry = `A production-artifact boot trace naming viewport or nav-fit measurement
+        as a dominant immediate slice.`
+      exit = `Either that name, or ipc-005 closes.`
+      semantics = `runtime/shell/ means the parts of the shell with their own
+        lifetimes. measurement.js would only mean something there if measuring were a
+        lifetime of its own, and no trace says it is yet.`
+      mint = "not yet"
+    }
+
+    [q6_glass_flatten] {
+      state = "demoted"
+      owner = `public/css/effects/material.css`
+      why = `ipc-002 assumed stacked glass. The D gate measured hero overlap depth 1
+        and zero overlapping area with glass active, so there is nothing to flatten
+        on the traced routes.`
+      entry = `A route whose hero region actually stacks backdrop sampling, with
+        raster or composite attribution.`
+      exit = `Duplicate sampling removed in the existing sheet.`
+      semantics = `effects/material.css means the dielectric grammar in one place. A
+        hero-only sheet would name a page, not a material, and the tree would say less
+        than it does now.`
+      mint = "none"
+    }
+
+    [q7_charge_field_relocation] {
+      state = "closed"
+      owner = `public/js/interface/haptics.js and runtime/charge-field.js`
+      why = `ipc-001 proposed coalescing and same-element skip. The B gate found the
+        existing previewCharge guard already pays reentry at 0.1ms and zero writes,
+        and ipc-014 reattributes the focus writes to annotation.`
+      entry = `A journey that fires repeated charge phases and still shows duplicate
+        writes after the guard.`
+      exit = "closed"
+      semantics = `interface/haptics.js means contact: what happens where a person
+        touches the page. The B gate found the arming it already does is honest work,
+        so moving it to runtime would trade a true name for a smaller file.`
+      mint = "none"
+    }
+  }[reg=facet]
+  not_queued = `ipc-007 and ipc-009 stay out of the JS tree: rect receipts and budget
+    debt are measurement and accounting, not module work.`
   against_plan = `@runtime_decomposition_plan Phase 1 still wants haptics storage-first
     and a three-way shell split. Paint-cost says the hot path is arming residue and
     shell immediate, so storage-utils (already present) and a wholesale shell carve are
@@ -689,6 +812,49 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   }
 }[reg=facet]
 
+^"ipc-014_the_writes_are_annotation_not_charge"{
+  id = "ipc-014"
+  operation = "cache"
+  fixity = "tending"
+  expression = focus[cost]{reproduced}<per_stop>
+    ~ writer[owner]{annotation.not.residue}<reattribute>
+    ^ time[unattributed]{js.style.contention}<separate>
+  source = `2026-09-11 paced focus trace behind the B, C and D gates. Chrome 152
+    headless over npm run dev, home and about at 390x844 and 1433x844. Nine steps per
+    cell: A -> B -> A, same-element refocus, blur and refocus, then a second element.
+    Counters observe documentElement with subtree and old values.`
+  claim = `The per-stop focus cost ipc-001 measured is reproducible, but the writes
+    that accompany it are sigil and operator annotation, not charge residue.`
+  evidence = #[
+    `Per-journey attribute writes on the document subtree: 50710 home at 390, 48280
+      home at 1433, 35054 about at 390, 41765 about at 1433`,
+    `Equal-value share of those writes: 83, 84, 79 and 58 percent respectively`,
+    `Dominant families are data-spw-operator-* and data-spw-sigil-*; charge families
+      appear in one of four cells and contribute at most five writes there`,
+    `Same-element refocus costs 0.1ms with zero writes and zero events, so the
+      existing previewCharge guard already pays the reentry case ipc-001 proposed`,
+    `semantic/sigil-annotation.js writes each key with the assign-if-falsy idiom, so
+      an already-correct value is reassigned`,
+    `semantic/operators.js re-runs refreshOperatorSemantics over the whole document
+      on every animation-frame batch of added nodes, so each mount re-annotates every
+      sigil already annotated`
+  ][reg=set]
+  unattributed = #[
+    `A single focus() call measured 1.3 to 4.8 seconds of synchronous time in this
+      development artifact. Nothing here separates handler JS from forced style
+      recalc, from the annotation cascade, or from headless contention with the dev
+      server`,
+    `Write counts are observable; the browser invalidation behind them is not
+      measured. A count of mutations is not a count of style recalculations`,
+    `Resize jitter showed 0.8 to 3.9 seconds of synchronous time with almost no shell
+      writes; its owner is also unattributed`
+  ][reg=set]
+  do_not_promote_until = `A rendering trace attributes style, layout and raster on a
+    production artifact. Until then this block reassigns the writer, not the latency.`
+  next = `ipc-013 E_annotation_idempotence carries the bounded experiment. Its gate is
+    a reader inventory plus an A-shaped source and browser receipt.`
+}[reg=facet]
+
 #>ipc_wonder_transition_boundary
 ?["Arming cost: duplicate transitions or subscriber work?"]{
   #:depth #!computational ~#lens(inquiry)
@@ -750,8 +916,9 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   expression = prediction[gate]{mediator.lifecycle.reader}<receipt>
     ~ redesign[potential]{delta.group.defer}<conditional>
   priority = `Choose the reproducible journey first, then its dominant mediator, then
-    its smallest owner. The file_tree_modularity order is an inspection hypothesis, not
-    an implementation queue.`
+    its smallest owner. The file_tree_modularity queue orders that choice by measured
+    attribution and readiness; each of its items still carries its own entry gate, so
+    a ready item is workable, not pre-approved.`
   hold = `The earlier move-to-charge-field, one-root and grouped-glass prescriptions
     remain unconfirmed alternatives. Preserve existing files if an internal delta or
     lifecycle correction answers the measured problem.`
