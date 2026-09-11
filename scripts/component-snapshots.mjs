@@ -644,6 +644,23 @@ async function measureSelector(session, selector, timeoutMs = CAPTURE_MEASURE.ev
             if (hr.width < 2 || hr.height < 2) continue;
             if (hr.right > r.right + 2 || hr.left < r.left - 2) return true;
           }
+          for (const node of el.querySelectorAll('*')) {
+            const cs = getComputedStyle(node);
+            if (cs.display === 'inline' || cs.display === 'none' || cs.visibility === 'hidden') continue;
+            if (node.clientWidth < 2) continue;
+            const scrollsX = cs.overflowX === 'auto' || cs.overflowX === 'scroll';
+            if (scrollsX) continue;
+            if (node.scrollWidth > Math.ceil(node.clientWidth + 1)) {
+              let p = node;
+              while (p && p !== el.parentElement) {
+                const ps = getComputedStyle(p);
+                if (ps.overflowX === 'auto' || ps.overflowX === 'scroll') break;
+                if (ps.overflowX === 'clip' || ps.overflowX === 'hidden') return true;
+                if (p === el) break;
+                p = p.parentElement;
+              }
+            }
+          }
           return false;
         })(),
       };
