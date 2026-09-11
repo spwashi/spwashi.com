@@ -63,7 +63,7 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
   immediateScheduling:
     'Immediate definitions within a layer mount concurrently after any site-settings core seed; call sites may run independent non-core layers together.',
   resourceDiscovery:
-    'Visible and idle CacheStorage probes share a bounded pool; results and resource hints retain catalog order before page-interactive.',
+    'Eligible visible and idle CacheStorage probes share a bounded pool; conservative devices record deferred resources without paying probe or hint cost before page-interactive.',
   timingArc:
     'Module definitions may name timingArc to explain the intended scheduling posture beyond raw mount timing.',
   timingChunk:
@@ -974,9 +974,12 @@ async function prefetchRuntimeResources(ctx, defs, expectedWhen, rel) {
   const canPrefetch = shouldPrefetchRuntimeResources(ctx);
   const measureName = `spw:runtime-resource-prefetch:${expectedWhen}`;
   performance.mark(`${measureName}:start`);
-  const inspected = await Promise.all(
-    candidates.map((entry) => syncRuntimeResourceEntry(ctx, entry)),
-  );
+  // A conservative posture means no speculative work, including CacheStorage
+  // inspection. caches.match() across the catalog was still a long async boot
+  // barrier on phones even though no resource hints were emitted afterwards.
+  const inspected = canPrefetch
+    ? await Promise.all(candidates.map((entry) => syncRuntimeResourceEntry(ctx, entry)))
+    : candidates.map((entry) => ({ ...entry, status: 'deferred' }));
   const warmed = [];
 
   for (const current of inspected) {

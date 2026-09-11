@@ -331,6 +331,17 @@ function shouldPrefetchRuntimeResources(ctx) {
   if (!ctx || !navigator.onLine) return false;
   if (ctx.runtimePolicy.timing === 'manual' || ctx.runtimePolicy.timing === 'quiet') return false;
 
+  // Pocket and coarse-pointer devices should spend their first reading posture
+  // on modules they actually mount. Speculatively probing and hinting the full
+  // visible/idle catalog defeats the staged lifecycle on phones: the browser
+  // still parses and transfers those modules even when their roots stay below
+  // the fold. Explicit eager timing remains the QA/editor escape hatch.
+  if (ctx.runtimePolicy.timing !== 'eager') {
+    const pocket = window.matchMedia?.('(max-width: 45rem)').matches;
+    const coarsePointer = window.matchMedia?.('(pointer: coarse)').matches;
+    if (pocket || coarsePointer) return false;
+  }
+
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || null;
   if (connection?.saveData) return false;
   const effectiveType = String(connection?.effectiveType || '').toLowerCase();

@@ -175,7 +175,7 @@ If a patch introduces a new reusable semantic family or runtime state contract, 
 - [x] Phase 1 patch (parallel immediate mounts) implemented; source/runtime validation passed, with `check:local` still reporting the refreshed generated core CSS bundle until that output is staged
 - [x] Phase 2a patch (selected module reclassification) implemented
 - [x] Phase 2b patch: `kernel/site-settings.js` is now a 15-line re-export shell over `site-settings-profiles.js` + `site-settings-engine.js` (CORE, immediate). `site-settings-ui.js` (1452 lines: forms, readouts, recipes) loads only when `apply()` finds a settings scope/form on the page, the settings-page catalog module mounts, or a console caller touches a bind/init/recipe method — confirmed 2026-09-03, no code change needed, this plan's checklist was stale
-- [x] Phase 2a follow-up landed: event-only settings momentum deferred; cache probes bounded with a forced out-of-order concurrency/order contract test
+- [x] Phase 2a follow-up landed: event-only settings momentum deferred; eligible cache probes stay bounded and ordered, while pocket/coarse readers record deferred resources without paying catalog-wide CacheStorage probes or speculative hints before interactive (2026-09-11 phone baseline: 139 scripts / 2353 KiB transferred, 10.4s immediate, of which ~5.6s followed the mounted immediate waves)
 - [x] Phase 2a follow-up: feature-gated console diagnostics deferred to `idle-chrome`
 - [x] Static before/after census captured (37→36 immediate; 23→22 immediate enhancements) and build evidence recorded in the existing BRP audit; representative route timing remains a follow-up once the browser harness settle/target lifecycle is hardened
 - [ ] .spw bridge added only if a stable new reusable contract emerges
