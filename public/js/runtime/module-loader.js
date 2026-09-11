@@ -1281,7 +1281,10 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       { message: error?.message || String(error) },
       logRelationships.LIFECYCLE,
     );
-    console.warn(`[${logLabel}] module mount failed: ${def.id}`, error);
+    // error, not warn: a module that cannot mount is a broken page, and the
+    // nav smoke's --fail-on-console-error is the only gate that sees it. As a
+    // warning, a build that killed every mount on the site still passed CI.
+    console.error(`[${logLabel}] module mount failed: ${def.id}`, error);
 
     const failedAt = Math.round(performance.now());
     Object.assign(record, {
