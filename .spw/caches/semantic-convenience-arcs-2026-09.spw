@@ -305,5 +305,17 @@ validation: #[
   ~#hypothesis: "they share the nutrient budget and may share architecture as structure. they must not share curiosity reward or encounter=novel. the toast is sponsored teaching; the card is an offer seat. one host, one payer."
   ~#tension: "a field-guide costume makes a push feel earned; stealing curiosity makes an offer feel like a lesson. both thefts spend the visit twice."
   !probe{ "pick one discovery toast and one promo/wonder or services card. name who paid, which reward color it spends, whether encounter is written, and which radius holds next_action. if both write novel or both glow probe-reward, the costume is mixed." }
+  payer = `Specimen 1: Discovery Notice Toast (discovery-notices.js handleFeatureLearningToast).
+    payer.who = learning (mount-sponsored teaching triggered by spw:module-mounted when a catalog module registers; not visitor-earned).
+    color.channel = signal/action teal (data-spw-promo-theme="signal" maps to --op-action-color / --teal-dark in footer.css); does not spend --spw-curiosity-reward.
+    encounter.written = false (no data-spw-feature-encounter written; novelty is reserved for visitor exploration in feature-discovery.js, not catalog mounts).
+    radius.seat = toast actions container (.spw-discovery-notice__actions .spw-discovery-notice__cta, compact floating dock at viewport bottom-right).
+Specimen 2: Offer Seat (design/folios/index.html #folio-prices lines 310-337).
+    payer.who = sponsored (creator folio original and tier pricing ladder).
+    color.channel = architecture line / neutral spec-pill (--surface, --line, --ink-soft); zero curiosity or probe-reward glow.
+    encounter.written = false (no data-spw-feature-encounter="novel"; commercial tiers never wear field-guide novelty).
+    radius.seat = frame-flow walk (closing paragraph text links to /contact/ and /services/#pricing; price pills are passive header badges).
+Synthesis:
+    Neither specimen wears the other's costume: toast does not claim novel encounter; pricing cards do not claim probe-reward. The nutrient budget is respected.`
   $%[payer.who, color.channel, encounter.written, radius.seat]
 }
