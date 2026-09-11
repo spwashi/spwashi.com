@@ -1,5 +1,6 @@
 export const BUILD_EXCLUDED_TOP_LEVEL = [
   '.agents',
+  '.claude',
   '.git',
   '.github',
   '.idea',
@@ -39,6 +40,7 @@ export const BUILD_EXCLUDED_PREFIXES = [
 
 export const VALIDATION_IGNORED_SEGMENTS = [
   '.agents',
+  '.claude',
   '.git',
   '.idea',
   '.references',

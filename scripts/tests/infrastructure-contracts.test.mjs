@@ -69,6 +69,12 @@ test('component capture packs stay outside public build and authored inventories
   assert.equal(isAuthoredHtml(path.join(ROOT, captureIndex)), false);
 });
 
+test('claude worktrees stay outside public build and validation walks', () => {
+  const isolated = '.claude/worktrees/still-alignment-cache/index.html';
+  assert.equal(shouldExcludeBuildPath(isolated), true);
+  assert.equal(shouldIgnoreValidationPath(isolated), true);
+});
+
 test('design catalog line lookup indexes each source once without line drift', () => {
   const lineAt = createLineLocator('alpha\nbeta\n\ngamma');
 
