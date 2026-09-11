@@ -219,6 +219,10 @@
   box-shadow: inset 0 0.5px 0 rgba(255,255,255,0.5);
 }
 
+/* One phrase, even across a line break. This read `white-space: nowrap`, which
+   let long terms overrun the measure and clip; the default `slice` fragmentation
+   is what keeps a wrapped phrase reading as one highlight, where `clone` would
+   redraw the radius and wash on each half and make it read as two chips. */
 .spw-living-term,
 [data-spw-living-term] {
   display: inline;
@@ -236,17 +240,6 @@
     border-color var(--handle-duration-fast, 140ms) var(--handle-ease),
     background-color var(--handle-duration-fast, 140ms) var(--handle-ease),
     box-shadow var(--handle-duration-fast, 140ms) var(--handle-ease);
-}
-
-/* Inline phrases keep one highlight. Panels reusing the class stay `inline` so
-   later frame-panel display rules keep the seat. This read `white-space: nowrap`,
-   which said the opposite and let long terms overrun the measure. The worry
-   nowrap answered, a phrase splitting mid-highlight, is what
-   box-decoration-break is for, as [data-spw-inline-tone] already does. */
-span.spw-living-term,
-span[data-spw-living-term] {
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
 }
 
 /* In prose the term bleeds 0.22em to sit flush with the text; inside a chip the
@@ -267,9 +260,13 @@ span[data-spw-living-term] {
 .spw-living-term::after,
 [data-spw-living-term]::after {
   content: "✧";
-  position: absolute;
-  right: -0.45em; /* tighter to reduce line-box pressure and wrapping artifacts at end of balanced text */
-  top: -0.08em;
+  /* A zero-width inline-block: it rides the end of the last fragment and spends
+     no measure. Absolute positioning resolved against the union of a wrapped
+     inline's fragments and stranded the marker mid-sentence; giving it real
+     width pushed the punctuation after the term. */
+  display: inline-block;
+  inline-size: 0;
+  vertical-align: 0.42em;
   font-size: 0.52em;
   color: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, transparent);
   opacity: 0.55;
