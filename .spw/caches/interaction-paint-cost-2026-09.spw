@@ -4,13 +4,13 @@
 # Reading width: 88 columns. Evidence is historical; candidates are gated.
 # Browser-measured cost of the interaction layer itself, taken during the
 # interaction-semantics audit that landed tap:inspect on living terms.
-# Each block couples that cost to electrostatics UX and projects a
-# performance / module slice. Enter through ipc-013_implementation_handoff. Do not
-# strip glass or grain from this file alone — the measurements say where
-# to look, not what to remove.
+# Five readings of one cost: performance, electrostatic arc, sense of life,
+# nutrient uptake, file topography. Enter through
+# ipc-013_implementation_handoff. Do not strip glass or grain from this
+# file alone — the measurements say where to look, not what to remove.
 
 #>interaction_paint_cost_2026_09
-#:cache #!performance #!focus #!paint #!attention #!electrostatics
+#:cache #!performance #!focus #!paint #!attention #!electrostatics #!life #!ecology
 #:operation #!cache
 #:fixity #!tending
 #:layer #!pragmatics
@@ -19,11 +19,16 @@
 @css_combinatorics: ~"./css-combinatorics.spw"
 @touch_control_class: ~"./touch-control-class-2026-09.spw"
 @electrostatic_spend: ~"./electrostatic-spend-2026-09.spw"
+@signs_of_life: ~"./signs-of-life-2026-09.spw"
 @interaction_microstates: ~"../conventions/interaction-microstates.spw"
 @electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
 @arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
 @charge_cycle: ~"../conventions/charge-cycle.spw"
 @folding_chrome: ~"../conventions/folding-chrome-organelle.spw"
+@plant_ecology: ~"../conventions/plant-ecology-operations.spw"
+@kernel_rhizosphere: ~"../conventions/kernel-rhizosphere.spw"
+@runtime_medium_ecology: ~"../conventions/runtime-medium-ecology.spw"
+@js_architecture_cognition: ~"../conventions/js-architecture-cognition.spw"
 @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
 @haptics_js: ~"../../public/js/interface/haptics.js"
 @state_inspector_js: ~"../../public/js/interface/state-inspector.js"
@@ -50,11 +55,14 @@ do_not = `Implement only a named candidate through ipc-013_implementation_handof
   instrumentation.`
 
 expression = surface[cost]{focus.paint.attributes}<reading>
-  ~ field[ux]{arm.discharge.ground}<electrostatics>
-  ^ module[slice]{haptics.shell.chrome}<extract>
+  ~ field[arc]{approach.enter.dwell.echo}<electrostatics>
+  ~ life[ambient]{earned.still}<sign>
+  ~ nutrient[write]{uptake.dump}<rhizosphere>
+  ^ folder[topography]{kernel.runtime.semantic}<place>
 
-# Read: candidate -> gate -> model -> historical receipts.
+# Read: design -> candidate -> gate -> model -> historical receipts.
 ^"reading_path"{
+  design = registers[five]{perf.arc.life.nutrient.topography}<design_registers>
   start = candidate[A]{settings.delta}<ipc-013>
   gate = verdict[paired]{compatibility.work.latency}<ipc-012>
   model = cost[contours]{state.paint.schedule}<ipc-010>
@@ -65,22 +73,69 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     B, C and D were traced on 2026-09-11 and none of their gates opened; their
     verdicts sit in ipc-013. E is named there and unimplemented. The file-tree
     predictions are now graded into a work queue in file_tree_modularity; take its
-    topmost ready item.`
+    topmost ready item. Read design_registers before proposing a sixth metaphor.`
 }[reg=facet]
 
 ^"expression_schema"{
   form = `cost[perf]{parts}<optimize>
-    ~ electrostatics[ux]{parts}<feel>
-    ^ module[slice]{owners}<extract>`
-  inductance = `~ names the electrostatics UX the cost is already spending — arming,
-    dielectric, one-room field, arrival, contact, phase, capture.`
+    ~ electrostatics[arc]{approach.enter.dwell}<feel>
+    ~ life[ambient]{earned.still}<sign>
+    ~ nutrient[write]{uptake.dump}<rhizosphere>
+    ^ folder[topography]{owners}<place>`
+  inductance = `~ names the electrostatics arc the cost is already spending — not only
+    a terminal event, but when in the visit (approach, enter, dwell, echo, return,
+    rest) the runtime is allowed to spend.`
+  life = `~ names whether the spend is earned ambient life or silent restatement.
+    @signs_of_life: life is earned. Equal-value writes are not life.`
+  nutrition = `~ names whether a write is uptake (the nutrient changed) or dump
+    (the nutrient was already present). @plant_ecology: solubilize what is in the
+    bed; do not dump nitrogen.`
   projection = `^ names the smallest module to measure or extract if the finding holds.
     Capsules are optimization potentials, not landed work.`
-  tree = `Extend existing kernel/runtime/interface/css folders. Mint a file only when a
-    measured owner has one job the current file cannot keep.`
+  tree = `A path is a landform. Extend existing kernel/runtime/interface/semantic/css
+    folders. Mint a file only when a measured owner has one job the current file
+    cannot keep, and the new path teaches that job to someone who has never opened
+    it.`
   refuse = `Resolve these projections through ipc-013_implementation_handoff before
     choosing an extraction. Do not add a second field, a new attribute family, or a
-    catalog-wide rewrite to pay a local freeze.`
+    catalog-wide rewrite to pay a local freeze. Do not blend the five registers into
+    one organism story.`
+}[reg=facet]
+
+^"design_registers"{
+  operation = "cache"
+  fixity = "tending"
+  expression = cost[perf]{parts}<optimize>
+    ~ electrostatics[arc]{approach.enter.dwell}<feel>
+    ~ life[ambient]{earned.still}<sign>
+    ~ nutrient[write]{uptake.dump}<rhizosphere>
+    ^ folder[topography]{kernel.runtime.semantic}<place>
+  claim = `Five readings of one cost. They are not five problems. Compare, then
+    operate — @plant_ecology. The current truth is ipc-014: the focus freeze is
+    annotation restatement, not charge residue.`
+  performance = `What the browser spends. Writes, style, paint, schedule. ipc-010
+    contours still select the mediator; write counts are not latency.`
+  electrostatic_arc = `When in the visit the spend is allowed. @runtime_recalc:
+    approach, enter, dwell, echo, return, rest. Charge is an event; the arc is why
+    the runtime may spend. A Tab freeze is enter-arc spend. Dwell is where
+    @signs_of_life would listen, and nothing currently does.`
+  sense_of_life = `Ambient life is earned (@signs_of_life). A cold page that is still
+    (sol-001) and a hot path that chatters (ipc-014) are the same defect at two
+    temperatures: life that is not true. Do not add motion to pay a freeze. A
+    quiet focus ring that keeps up is the sign of life; fifty thousand equal-value
+    writes are not.`
+  nutrition = `A nutrient is inspectable state the runtime writes
+    (@runtime_medium_ecology#nutrient_fractal). @kernel_rhizosphere transports it.
+    Equal-value annotation is dumped nitrogen: the nutrient is already in the bed
+    and restated. Idempotence (A landed, E named) is solubilization — PNSB making
+    present phosphorus usable, not a new fertilizer. A changed setting is uptake.`
+  topography = `A path is a landform (@js_architecture_cognition processing strata).
+    kernel/ is substrate, runtime/ is orchestration, semantic/ is the grammar the
+    page speaks, interface/ is contact. One pathway per nutrient family. A mint
+    that relocates lines without adding a word subtracts meaning: the reader has
+    to rejoin what the tree split.`
+  refuse = `Do not invent a sixth register. Do not implement life, nutrition, or a
+    folder from this facet. Do not resticker charge to make the page look alive.`
 }[reg=facet]
 
 ^"thesis"{
@@ -89,10 +144,16 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     ^ owner[slice]{haptics.material}<split>
   ux = `Reading is cheap because the field is latent. Touching is expensive because
     focus, dwell and click arm terminals and write residue the style engine walks.
-    Split charge annotation from stacked dielectric paint — they share a freeze, not an
-    owner.`
+    Split charge annotation from stacked dielectric paint — they share a freeze,
+    not an owner.`
   tree = `Two owners already exist: interface/haptics.js (arming listeners) and
     effects/material.css (dielectric paint). Do not invent a third folder to hold both.`
+  arc = `Reading is rest. Touching is enter. The freeze was measured on enter, not
+    on dwell — so adding ambient life will not pay it.`
+  life = `A settled page that looks lived-in and a focus journey that restates
+    grammar are opposite temperatures of the same question: is the spend true.`
+  nutrition = `Residue that nothing reads is dumped nutrient. Split charge
+    annotation from stacked dielectric paint only when each write is uptake.`
   claim = `The sampled bulk-focus and capture journeys expose interaction-associated
     cost. Charge annotation, downstream subscribers, selector invalidation and
     overlapping material are candidate amplifiers; these observations do not establish
@@ -124,6 +185,12 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     focus/pointer arming coalesce into runtime/charge-field.js (VISIBLE, 393 lines). Do
     not mint interface/haptics/ or charge-arm.js until charge-field would mix
     room-field with per-element arming.`
+  arc = `Focus is enter-arc arming. ipc-014 found the spend is not that arc — it is
+    grammar restated on every stop.`
+  life = `Arming was the suspected life. The paced trace found restatement instead.
+    A quiet focus ring that keeps up is the sign of life; equal-value writes are not.`
+  nutrition = `Closed as a charge-coalesce candidate (B, q7). The nutrient still
+    being dumped is annotation, not residue — see ipc-014 and E.`
   claim = `Sequential focus on the home page is pathologically expensive, to the point
     of stalling the renderer. Keyboard travel is the worst-served journey on the site.`
   evidence = #[
@@ -171,7 +238,8 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   ux = `Glass is dielectric: it holds charge without conducting. Overlapping
     backdrop-filter layers are stacked dielectrics, each forcing its own compositor
     read. Performance: flatten the hero stack, not the radii. Module: one material
-    layer behind a group — @electrostatic_affordances already forbids a field per card.`
+    layer behind a group — @electrostatic_affordances already forbids a field
+    per card.`
   tree = `keep effects/material.css as dielectric grammar and shell/chrome/*.css as
     chrome glass. Flatten overlapping hero backdrops onto the existing host. Do not add
     effects/material-hero.css or a per-card glass sheet.`
@@ -576,6 +644,9 @@ expression = surface[cost]{focus.paint.attributes}<reading>
       semantics = `semantic/ already means the grammar the page speaks about itself,
         and idempotent annotation is part of that meaning: saying the same thing twice
         should cost nothing. The guard belongs where the sentence is written.`
+      nutrition = `Equal-value annotation is dumped nitrogen. The guard solubilizes
+        phosphorus already in the bed; it does not add a life animation or a new
+        path.`
       mint = "none"
     }
 
@@ -670,9 +741,10 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   not_queued = `ipc-007 and ipc-009 stay out of the JS tree: rect receipts and budget
     debt are measurement and accounting, not module work.`
   against_plan = `@runtime_decomposition_plan Phase 1 still wants haptics storage-first
-    and a three-way shell split. Paint-cost says the hot path is arming residue and
-    shell immediate, so storage-utils (already present) and a wholesale shell carve are
-    the wrong next files.`
+    and a three-way shell split. Paint-cost now says the measured hot writer is
+    annotation restatement (ipc-014 / queue q1), not haptics storage or a wholesale
+    shell carve. storage-utils is already present; do not mint a folder to relocate
+    it.`
   refuse = `Use ipc-013_implementation_handoff to select and validate one candidate. Do
     not add a folder that duplicates kernel/runtime/interface roles in
     public/js/README.md.`
@@ -862,6 +934,14 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     headless over npm run dev, home and about at 390x844 and 1433x844. Nine steps per
     cell: A -> B -> A, same-element refocus, blur and refocus, then a second element.
     Counters observe documentElement with subtree and old values.`
+  arc = `The journey is enter: paced Tab. Dwell, echo and rest were not the spend.`
+  life = `Annotation chatter is not a sign of life. @signs_of_life wants earned
+    ambient motion; this path restates grammar the page already knew.`
+  nutrition = `58 to 84 percent equal-value writes are dumped nitrogen. E
+    solubilizes them in place, in semantic/, where the sentence is written.`
+  topography = `semantic/ already means the grammar the page speaks about itself.
+    The guard belongs there. Do not move annotation into runtime to make a freeze
+    look like charge.`
   claim = `The per-stop focus cost ipc-001 measured is reproducible, but the writes
     that accompany it are sigil and operator annotation, not charge residue.`
   evidence = #[
@@ -1271,6 +1351,12 @@ expression = surface[cost]{focus.paint.attributes}<reading>
       not a delete. Do not route these keys through a shared dataset helper in this
       patch: its empty-string and array rules differ from the annotation contract, and
       that migration is its own candidate.`
+    nutrition = `Solubilize the nutrient already in the bed. An equality guard is
+      PNSB, not fertilizer: it makes present phosphorus usable and dumps nothing
+      new. Do not add a life animation to hide the dump.`
+    topography = `Keep the guard in semantic/sigil-annotation.js. That path already
+      means the grammar speaking itself; a runtime/ relocation would teach the
+      wrong landform.`
     taste_expectation = `Indistinguishable on all four ipc-011 journeys. This candidate
       changes no final attribute, so a felt difference means a semantic change slipped
       in; trace it rather than land it.`
