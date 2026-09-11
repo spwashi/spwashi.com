@@ -20,7 +20,6 @@
   --spw-curiosity-reward: 0;
   --spw-relationship-reward: 0;
   --spw-architecture-reward: 0;
-  --spw-conceptual-nuance: 0;
 
   /* Align with core motion ladder — taste favors settle over bounce. */
   --spw-wonder-duration-fast: var(--duration-fast, 140ms);

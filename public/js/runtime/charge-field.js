@@ -90,7 +90,6 @@ const RELATION_STYLE_PROPERTIES = Object.freeze([
   '--spw-curiosity-reward',
   '--spw-relationship-reward',
   '--spw-architecture-reward',
-  '--spw-conceptual-nuance',
 ]);
 
 function clamp01(value = 0) {
@@ -140,12 +139,10 @@ function writeRelationReward(intensity = 0, relation = '') {
   const curiosity = relation === 'curiosity' ? reward : 0;
   const relationship = relation === 'relationship' ? reward : 0;
   const architecture = relation === 'architecture' ? reward : 0;
-  const nuance = Math.max(curiosity, relationship, architecture);
 
   document.documentElement.style.setProperty('--spw-curiosity-reward', curiosity.toFixed(2));
   document.documentElement.style.setProperty('--spw-relationship-reward', relationship.toFixed(2));
   document.documentElement.style.setProperty('--spw-architecture-reward', architecture.toFixed(2));
-  document.documentElement.style.setProperty('--spw-conceptual-nuance', nuance.toFixed(2));
 }
 
 function syncReadouts(root = document) {

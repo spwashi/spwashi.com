@@ -977,12 +977,6 @@ html[data-spw-reduce-motion="on"] *::after {
   initial-value: 0;
 }
 
-@property --spw-conceptual-nuance {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
 /* Effect ledger precipitation — effect-ledger.js writes; ornament/runtime-states spend. */
 @property --spw-effect-count {
   syntax: "<number>";
@@ -3615,7 +3609,6 @@ html[data-spw-reduce-motion="on"] {
   --spw-curiosity-reward: 0;
   --spw-relationship-reward: 0;
   --spw-architecture-reward: 0;
-  --spw-conceptual-nuance: 0;
 
   /* Align with core motion ladder — taste favors settle over bounce. */
   --spw-wonder-duration-fast: var(--duration-fast, 140ms);

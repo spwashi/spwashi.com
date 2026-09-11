@@ -297,12 +297,6 @@
   initial-value: 0;
 }
 
-@property --spw-conceptual-nuance {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
 /* Effect ledger precipitation — effect-ledger.js writes; ornament/runtime-states spend. */
 @property --spw-effect-count {
   syntax: "<number>";
