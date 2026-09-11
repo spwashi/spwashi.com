@@ -1,0 +1,73 @@
+# Leftover peer ecology (2026-09)
+#
+# operation: prime
+# Broadsheet home still: components do not "adjust." They share leftover
+# with peers. Runtime already names the stack. Do not add a fourth layout.
+
+#>leftover_peer_ecology_2026_09
+#:cache #!prime #!pack #!regions #!observers #!salience
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@region_ecology: ~"../conventions/region-component-ecology.spw"
+@biome: ~"../conventions/component-biome.spw"
+@packing: ~"../conventions/component-packing.spw"
+@gravity: ~"../conventions/spatial-gravity.spw"
+@fit: ~"../../public/js/runtime/fit-report.js"
+@observe: ~"../../public/js/kernel/dom-contracts.js"
+@salience: ~"../../public/js/interface/contextual-ui.js"
+@lifecycle: ~"../../public/js/site.js"
+@profiler: ~"../../public/js/runtime/region-profiler.js"
+
+operation = "prime"
+fixity = "experimental"
+source = "2026-09-10 broadsheet home still: working-view leftover, beds row leftover, reason-card peers. User: not 'adjust' — awareness of granted space and peer relations."
+
+expression = peer[leftover]{seat.share.canopy}<desk>
+
+^"word"{
+  claim = `The verb is share leftover. A seat is granted. Peers split what remains. Canopy is how a neighbor shades. Fit reports starvation; it does not repair. Adjust would mean each component privately resizes — that is the oscillation @fit exists to forbid.`
+  screenshot = `Working-view intro keeps copy; lenses sit in leftover. Beds kicker stays; Hook/Door/Atlas/Garden take leftover. Reason cards share a row; the occasion plate is a peer, not a float. Motif pills wrap in leftover of the beds row.`
+  peers = `Two share; one grows. @region_ecology leftover-track. Not a third packing axis.`
+}[reg=facet]
+
+^"lp-001_stack_already_named"{
+  id = "lp-001"
+  operation = "audit"
+  claim = `The ecology the screenshot is asking for is already the layout stack. Do not mint a seventh seat or a live edge bus.`
+  stack = `posture → seat → pack → gravity → resonance → still`
+  already = #[
+    `CSS leftover: region-seats.css flex 1 1 leftover-track, 16rem floor`,
+    `canopy: region-profiler writes data-spw-canopy clearing|dappled|closed from child/grandchild counts`,
+    `fit: ResizeObserver reports, demand only escalates, never withdraws`,
+    `salience: contextual-ui writes --spw-salience-weight from role + journey context match`,
+    `lifecycle: site.js booting → interactive → hydrated → region-enhanced → enhanced; regions queued → primed → settling`,
+    `gravity waits for settle; copy-flow: CSS spends the seat, JS may improve fit after dwell`,
+    `observeAddedMatches: selector-gated, rAF-coalesced added-node observer`
+  ][reg=set]
+  gap = `@biome: :has() is parent reading descendants. None is sibling exchange. qa:alignment is the lantern for edges, not a runtime driver.`
+}[reg=facet]
+
+^"lp-002_observers_still_naive"{
+  id = "lp-002"
+  operation = "audit"
+  claim = `Five modules use observeAddedMatches. Haptics restoreObserver and bare-spw-markup still do new MutationObserver(annotate) with subtree:true on body — the freeze shape the helper was written to stop.`
+  first_patch = `Point those two at observeAddedMatches. Do not add a third observer bus. Do not observe attributes sitewide.`
+}[reg=facet]
+
+^"lp-003_salience_must_not_drive_the_box_it_measures"{
+  id = "lp-003"
+  operation = "prime"
+  claim = `Page-reasonable default is CSS leftover. Weighted salience as a journey consequence may tint grow, not restyle on first paint from getBoundingClientRect.`
+  default = `Authored seat + leftover-track. Newspaper/atlas/wide already pack without JS.`
+  measure = `Fit and gravity after settle. Region profiler is a receipt.`
+  weight = `--spw-salience-weight already exists. A later CSS spend may flex-grow leftover by that authored number. A ResizeObserver that assigns widths from live salience is the fit-report oscillation.`
+  refuse = `Do not add lifecycle hooks that reflow the desk on every salience tick. Do not parse journey on the critical path.`
+}[reg=facet]
+
+^"do_not"{
+  bus = `Do not add a shared-edge event bus that writes layout`
+  seat = `Do not add a seventh seat because a card is vivid`
+  observer = `Do not subtree-observe attributes on document.body`
+}[reg=facet]

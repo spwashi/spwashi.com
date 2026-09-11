@@ -52,6 +52,7 @@
 @claude_sitting_harvest_2026_09_10: ~"./claude-sitting-harvest-2026-09-10.spw"  # reply to Grok's precipitate request; ch-001 is the worktree jsonl key gap
 @slot_anatomy_ecology_2026_09: ~"./slot-anatomy-ecology-2026-09.spw"
 @brace_hysteresis_crease_2026_09: ~"./brace-hysteresis-crease-2026-09.spw"
+@leftover_peer_ecology_2026_09: ~"./leftover-peer-ecology-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -102,6 +103,7 @@ fixity = "tending"
   claude_sitting_harvest_2026_09_10 = @claude_sitting_harvest_2026_09_10
   slot_anatomy_ecology_2026_09 = @slot_anatomy_ecology_2026_09
   brace_hysteresis_crease_2026_09 = @brace_hysteresis_crease_2026_09
+  leftover_peer_ecology_2026_09 = @leftover_peer_ecology_2026_09
 }[reg=facet]
 
 ^"cache_rules"{
