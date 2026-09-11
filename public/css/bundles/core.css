@@ -32292,6 +32292,15 @@ html[data-spw-microinteraction-pulse] :where(
   }
 }
 
+/* Page-body easter-egg reveal (sol-003): when a rare tier unlocks,
+   the rare reveal lands on the concept that was gathered in the page body,
+   where the reader is looking, rather than exclusively on the dock trigger.
+   Salience and reduced motion are respected via --spw-reward-egg-accent. */
+:where(html[data-spw-reward-easter-egg]) :where([data-spw-cauldron-collected="true"]) {
+  box-shadow: 0 0 0 2px var(--spw-reward-egg-accent, transparent);
+  border-radius: var(--radius-sm, 2px);
+}
+
 /* ── Dimension: what the visitor is carrying ──────────────────────────────
    contract.js#publishCauldronCapacity puts --spw-cauldron-load-ratio (0..1) and
    data-spw-cauldron-load on the document element every time the gathering

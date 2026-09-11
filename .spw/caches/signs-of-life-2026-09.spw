@@ -79,6 +79,7 @@ source = "review 2026-09-10: ambient motion inventory across public/css; cold-vi
   ][reg=set]
   reading = `An egg that appears on the trophy cabinet is an announcement. The delight of a hidden thing is that it was in the room you were already reading, and you would have missed it. Right now the rare tier decorates the counter that tells you your count went up.`
   proposal = `One page-body consumer. The rare reveal lands on the concept that was just gathered, where the reader is looking, rather than on the dock that tallies it. The seam, the three salience levels, and the capture-suppression already exist — this is a selector, not a system.`
+  landed = `2026-09-10. One page-body consumer in @field_physics: :where(html[data-spw-reward-easter-egg]) :where([data-spw-cauldron-collected="true"]) consumes --spw-reward-egg-accent.`
   gate = `Sensation. Proposal and demo.`
   refuse = `Do not add a second egg attribute. Do not make the dock quieter to compensate.`
 }[reg=facet]
