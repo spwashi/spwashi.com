@@ -768,7 +768,8 @@ expression = surface[cost]{focus.paint.attributes}<reading>
 ^"ipc-013_implementation_handoff"{
   operation = "cache"
   fixity = "tending"
-  status = "candidate A validated; redundant-write reduction implemented"
+  status = `candidate A validated and landed; B, C and D gates measured and not
+    met; E named and unimplemented`
   expression = implementation[candidate]{baseline.patch.compare}<bounded>
     ^ receipt[decision]{compatibility.work.latency}<land>
   public_goal = `Repeated settings application avoids redundant root dataset mutations
@@ -977,6 +978,21 @@ expression = surface[cost]{focus.paint.attributes}<reading>
       disposal preserve baseline semantic events and final residue while reducing
       traced projection work. Reject when event semantics cannot be separated from the
       writes.`
+    verdict = "refuted 2026-09-11: no redundant cosmetic projection on the traced path"
+    receipt = `Paced focus journey on home and about at 390x844 and 1433x844, Chrome
+      152 headless over npm run dev. Nine steps: A -> B -> A, same-element refocus,
+      blur and refocus, then a second element. The existing previewCharge guard
+      already costs nothing: same-element refocus produced 0.1ms of synchronous work,
+      zero charge events and zero attribute writes. Charge phase events fired in one
+      of four route and viewport cells, three events on home at 390x844; the other
+      three cells fired none, so there is no duplicate phase emission to coalesce.
+      Focus-step writes were dominated by sigil, operator and shell-menu families,
+      not by the charge writer.`
+    stop = `Do not land B. Its wonder probe rejects when valid transitions dominate;
+      here the traced work is not charge projection at all. Scheduling a cosmetic
+      flush in haptics.js would defer work this trace does not attribute to
+      haptics.js. Reopen only with a journey that fires repeated charge phases and
+      still shows duplicate writes after the guard.`
   }
   [C_shell_lifetime] {
     gate = `ipc_wonder_lifecycle_cut names a dominant sub-owner and conflicting
@@ -989,6 +1005,19 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     acceptance = `Rapid open/close/open and teardown produce no stale correction;
       first-open latency and boot both remain acceptable against paired baseline. Keep
       one shell catalog id.`
+    verdict = "unmet 2026-09-11: no stale correction and no dominant sub-owner"
+    receipt = `Same harness and conditions. First open, close, rapid open close open,
+      settle, final close, resize jitter and scroll jitter on home and about at both
+      viewports. Menu state stayed correct through rapid reversal in all four cells:
+      expanded after the triple click, closed after the final close. Shell and menu
+      attribute writes were zero to six per step with zero equal-value writes, so
+      there is no correction storm to cut. shell-disclosure.js imports in 13 to 40ms
+      and its three shell/ children already load as separate modules within 50ms of
+      it, so the deferred import closure the gate asks for is already split. cleanup()
+      removes every listener it adds, disconnects its observer and cancels its settle
+      timer and three animation frames.`
+    stop = `Do not land C. Reopen only with a production-artifact boot trace that
+      names a dominant sub-owner; dev-artifact import duration is not that evidence.`
   }
   [D_material_group] {
     gate = `ipc_wonder_material_boundary identifies a specific overlapping hero region
@@ -1001,5 +1030,39 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     acceptance = `Less measured affected sampling work with intact depth, clipping,
       contrast and independent motion. Run visual:checks for affected fixtures; reject
       if the group enlarges invalidation enough to erase the win.`
+    verdict = "refuted 2026-09-11: the overlapping hero region does not exist"
+    receipt = `Same harness, glass material active and backdrop-filter supported. Hero
+      region sampled on a 16px grid over the first viewport height. Home and about at
+      390x844 and 1433x844 carry one or two backdrop-filter elements in that region,
+      maximum overlap depth 1 and zero overlapping area. The whole 7228px home
+      document carries seven backdrop-filter elements and 24 filtered elements. There
+      is no measured overlap to group.`
+    stop = `Do not land D. Reopen only if a route is found whose hero region stacks
+      backdrop sampling, with raster or composite attribution attached.`
+  }
+
+  [E_annotation_idempotence] {
+    operation = "align"
+    fixity = "experimental"
+    status = "named by the B trace; not implemented"
+    gate = `E needs its own source comparison and paired browser receipt before any
+      patch, exactly as A did. Naming a mediator is not permission to change it.`
+    source = `2026-09-11 focus trace: 35054 to 50710 root-subtree attribute writes per
+      nine-step focus journey, of which 58 to 84 percent were equal-value. The
+      dominant families are data-spw-operator-* and data-spw-sigil-*, written by
+      semantic/sigil-annotation.js through the assign-if-falsy idiom, which reassigns
+      an already correct value. semantic/operators.js re-runs refreshOperatorSemantics
+      over the whole document on every animation-frame batch of added nodes, so each
+      module mount re-annotates every sigil already annotated.`
+    hypothesis = `An equality guard in the annotation writers removes the repeated
+      assignments without changing any final attribute value; the same shape as A.`
+    unknown = `Whether the removed writes carry attributable style or paint cost.
+      Write counts are not latency, and ipc-011 pairing is still required before any
+      performance claim.`
+    preflight = `Inventory readers and observers of the sigil and operator dataset
+      families, in both attribute and camelCase dataset spellings, and confirm no
+      consumer depends on an equal-value mutation as a refresh signal.`
+    bounds = `Writers only. No change to annotation scope, no observer redesign, no
+      new module and no re-annotation scheduling change in the first patch.`
   }
 }[reg=facet]
