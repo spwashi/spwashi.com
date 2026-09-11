@@ -1,0 +1,155 @@
+# Signs of Life (2026-09)
+#
+# operation: cache
+# Ambient life on a resting page: what runs, what earns it, and why the
+# visitor who most needs encouragement is the one who gets none.
+# Not a motion pack. Not a new ornament family. Not decoration for its own sake.
+
+#>signs_of_life_2026_09
+#:cache #!ornament #!wonder #!engagement #!easter_eggs
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@electrostatic_spend: ~"./electrostatic-spend-2026-09.spw"
+@still_alignment: ~"./still-alignment-ladder-2026-09.spw"
+@charge_cycle: ~"../conventions/charge-cycle.spw"
+@cauldron_dynamics: ~"../conventions/cauldron-dynamics.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@discovery_powerups: ~"../conventions/discovery-powerups.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@reward_ui: ~"../../public/js/runtime/reward-ui.js"
+@field_physics: ~"../../public/css/systems/field-physics.css"
+@theme_resonance: ~"../../public/css/systems/theme-resonance.css"
+@holiday_tropes: ~"../../public/css/ornament/holiday-tropes.css"
+@floating_chrome: ~"../../public/css/components/floating-chrome.css"
+
+operation = "audit"
+fixity = "tending"
+source = "review 2026-09-10: ambient motion inventory across public/css; cold-visit animation census via getAnimations on a settled home route"
+
+^"thesis"{
+  claim = `Every sign of life on this site is earned. Twinkle needs a gathered concept, resonance needs a theme cluster, the egg needs a reward. A first visit to a settled page runs one continuous animation. The reader who has engaged is surrounded by life; the reader who has not is looking at a photograph.`
+  tension = `Ambient life that is a reward for engagement cannot encourage the first engagement. That is the whole ask, and the current design has it exactly backwards at the entrance.`
+  not_a_complaint = `The machinery is good and the restraint is deliberate. @field_physics reasons about will-change and memory; the stagger is tuned so a growing set gets a longer wave rather than a busier one; resonance pauses under the pointer. Nothing here argues for more motion. It argues for some of it arriving earlier, and for some of it meaning something.`
+}[reg=facet]
+
+^"sol-001_the_cold_page_is_still"{
+  id = "sol-001"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `A genuinely first-time visitor on a settled home route sees exactly one continuously running animation.`
+  method = `Fresh profile, broadsheet, 6s settle, then document.getAnimations() filtered to playState running.`
+  measured = #[
+    `localStorage keys 0, [data-spw-cauldron-collected] 0, [data-spw-theme-cluster] 0, [data-spw-visited] 0 — confirmed cold`,
+    `97 running animations, of which 85 are CSSTransition and 11 are spw-potential-discharge, all finite arrival work`,
+    `exactly 1 with iterations Infinity: spw-operator-breath, on a single button.frame-sigil`,
+    `the site declares 86 distinct keyframes and 20 infinite animation declarations`
+  ][reg=set]
+  reading = `86 keyframes exist and one of them is alive at the entrance. The arrival is busy and the rest is silent, which is the opposite of a room that looks lived in.`
+  refuse = `Do not read this as an argument for animating the arrival harder. The arrival is already the loud part.`
+}[reg=facet]
+
+^"sol-002_life_is_gated_behind_the_thing_it_should_cause"{
+  id = "sol-002"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `The two ambient systems both gate on evidence of prior engagement.`
+  gates = #[
+    `@field_physics:211 — twinkle requires [data-spw-cauldron-collected="true"]. A concept twinkles because it was gathered`,
+    `@theme_resonance:79 — resonance requires [data-spw-theme-cluster], which a cold page has none of`,
+    `[data-spw-visited="true"] sets --spw-familiarity 0.34, so life also fades as the place becomes familiar`
+  ][reg=set]
+  reading = `The familiarity decay is right: a room you know should not keep waving at you. The entrance condition is the problem. Charge is spent on first contact and re-earned rather than replayed — but at the entrance there has been no first contact yet, so there is nothing to spend and nothing to re-earn.`
+  proposal = `A starting allowance rather than a reward. One concept on the page — its most central, not a random one — twinkles once on settle because it is offered, not because it was taken. --spw-familiarity already decays it on the second visit, so the gesture retires itself. That is a demonstration of an affordance, which is what an entrance owes.`
+  falsifier = `If a first-visit twinkle does not change whether readers touch a living term, it was decoration and should come out. That is measurable and worth measuring before it is worth keeping.`
+  gate = `Sensation. Proposal and demo, browser approval.`
+  refuse = `Do not twinkle every concept on a cold page. The set that makes a wave is the earned set; the entrance gets one.`
+}[reg=facet]
+
+^"sol-003_the_egg_never_leaves_the_furniture"{
+  id = "sol-003"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `The easter-egg seam is well built and reveals itself only on the chrome that reports rewards.`
+  evidence = #[
+    `@reward_ui:28 offers data-spw-reward-easter-egg as "a seam CSS can hook for rare-tier delight"`,
+    `all five consumers live in @floating_chrome: the dock trigger, the toast, and three salience levels`,
+    `the salience model is genuinely good — rarity, page zone, and where the reader sits in the attentional arc combine, so an egg stays quiet during arrival and only breathes on a settled page`
+  ][reg=set]
+  reading = `An egg that appears on the trophy cabinet is an announcement. The delight of a hidden thing is that it was in the room you were already reading, and you would have missed it. Right now the rare tier decorates the counter that tells you your count went up.`
+  proposal = `One page-body consumer. The rare reveal lands on the concept that was just gathered, where the reader is looking, rather than on the dock that tallies it. The seam, the three salience levels, and the capture-suppression already exist — this is a selector, not a system.`
+  gate = `Sensation. Proposal and demo.`
+  refuse = `Do not add a second egg attribute. Do not make the dock quieter to compensate.`
+}[reg=facet]
+
+^"sol-004_idle_is_not_a_state"{
+  id = "sol-004"
+  operation = "prime"
+  dated = `2026-09-10`
+  claim = `Nothing measures dwell without input. The page can tell that you arrived and that you acted; it cannot tell that you stayed.`
+  evidence = #[
+    `@charge_cycle names quiet and neutral as phases, both of them decay destinations rather than readings of the reader`,
+    `the ornament layer has no idle input at all; @holiday_tropes calls itself idle flourish but is gated on enhancement-level rich, not on idleness`,
+    `reward salience already tracks the attentional arc, so the concept of where-the-reader-is exists — it just is not fed by stillness`
+  ][reg=set]
+  reading = `Dwell is the cheapest honest sign of life there is. A reader who has stopped scrolling and not clicked anything is the reader most available to notice something, and the one the page currently cannot see.`
+  proposal = `An existing-stem value, not a new family: after N seconds with no pointer, key, or scroll on a settled page, the ambient layer widens slightly. One threshold, one multiplier on amplitude that already exists. It must decay back on the first input — the point is acknowledgement, not accumulation.`
+  gate = `Sensation, and also a timing decision. Proposal and demo.`
+  refuse = `Do not add a per-card idle timer. One room, one clock — @electrostatic_affordances already rules out a second field per card and the same reasoning holds.`
+}[reg=facet]
+
+^"sol-005_none_of_the_life_is_true"{
+  id = "sol-005"
+  operation = "prime"
+  dated = `2026-09-10`
+  claim = `Every ambient effect is driven by visitor history or authored by hand. None is driven by a fact about the content.`
+  evidence = #[
+    `twinkle: visitor gathered it`,
+    `resonance: visitor built a cluster`,
+    `egg: visitor earned a rare tier`,
+    `spw-garden-tended: a class typed onto one details element in index.html`,
+    `no seasonal, time-of-day, or recency driver exists — the only getMonth in the runtime formats a date`
+  ][reg=set]
+  reading = `This is the one that would make ambient motion survive @wonder_doctrine. A glow that means nothing fails the falsifier by construction: removing it changes no inspectability, no resonance, no consequence. A glow that means this was tended last week fails nothing, because removing it removes information.`
+  proposal = `Let one ornament be driven by a fact the repository already knows. Recency of tending is the obvious candidate and the site is a garden by its own account. A concept touched this week carries a warmth a dormant one does not, and the warmth decays on its own schedule rather than the visitor's.`
+  why_it_fits = `It turns ornament into a reading. It rewards return visits with something that actually changed. And it is the only proposal here that makes the page look alive because it is, rather than because it is performing.`
+  cost = `Needs a real recency signal reaching the page. That is the work, and it is not small. Everything else here is a selector or a threshold.`
+  gate = `Sensation plus a data path. Worth a plan, not a patch.`
+  refuse = `Do not fake the signal with authored classes. A hand-typed tended flag is the thing this replaces.`
+}[reg=facet]
+
+^"sol-006_constraints_any_proposal_inherits"{
+  id = "sol-006"
+  operation = "cache"
+  dated = `2026-09-10`
+  claim = `Recorded so a later pass does not rediscover them by breaking one.`
+  constraints = #[
+    `Capture. Stills are the prompt for an external art tool. Ambient motion must never be caught mid-pop; @reward_ui already gates reveals on page-hydrated and suppresses toasts in clean capture. Anything new inherits that`,
+    `Reduced motion. Both ambient systems sit inside prefers-reduced-motion: no-preference. A tuner attenuates a sensation, it does not delete one — @interaction_microstates#contact_delivery`,
+    `Density, not count. The twinkle stagger is tuned so a growing set spreads across the cycle. The wave gets longer, not busier. Any new ambient effect owes the same arithmetic`,
+    `Idleness of the timeline. @field_physics deliberately omits will-change because the animation is idle ~95% of the time and a permanent layer promotion per concept would cost memory for a set designed to grow`,
+    `No new data-spw-* families — CLAUDE.md. Every proposal above lands on an existing stem or an existing token`
+  ][reg=set]
+}[reg=facet]
+
+^"order"{
+  claim = `Cheapest first, and the one that matters most is last because it is the only one that needs a data path.`
+  order = #[
+    `sol-003 egg in the page body — a selector against a seam that already exists`,
+    `sol-002 first-visit allowance — one concept, one twinkle, already-built decay`,
+    `sol-004 dwell — one threshold and one multiplier`,
+    `sol-005 life driven by recency — a plan, not a patch`
+  ][reg=set]
+  also = `@electrostatic_spend#es-006 is the same budget from another angle: the relation rewards are computed on every discharge and spend as ten percent of a colour inside a blur. That is ambient life already paid for and thrown away.`
+  gate = `All four are sensation. Proposal and demo; the human approves the feel in a browser.`
+  skip = #[`a motion pack`, `a second ornament family`, `animating the arrival harder`, `seasonal theming as a first move`][reg=set]
+}[reg=facet]
+
+^"next_session"{
+  claim = `Open this file. The cold-visit census is reproducible in one probe and is the number that makes the case.`
+  open = #[`this file`, `public/css/systems/field-physics.css`, `public/js/runtime/reward-ui.js`][reg=set]
+  reproduce = `Fresh Chrome profile, navigate to /, settle 6s, document.getAnimations().filter(a => a.playState === 'running') and count the ones whose effect timing has iterations Infinity. Expect 1.`
+  validation = `npm run check:local ; npm run spw:integrity`
+  concurrent = `Multiple sessions commit to main in this tree. Never git stash here.`
+}[reg=facet]

@@ -46,6 +46,7 @@
 @component_fit_lens_journey_2026_09: ~"./component-fit-lens-journey-2026-09.spw"
 @still_alignment_ladder_2026_09: ~"./still-alignment-ladder-2026-09.spw"  # edge agreement read off the 2026-09-09/10 stills; al-001 is the measured mechanism
 @electrostatic_spend_2026_09: ~"./electrostatic-spend-2026-09.spw"  # what the charge model earns vs where it spends it; es-005 is the two-table finding
+@signs_of_life_2026_09: ~"./signs-of-life-2026-09.spw"  # ambient life is all earned, so a cold page runs one animation; sol-005 is the true-signal proposal
 
 operation = "align"
 fixity = "tending"
@@ -90,6 +91,7 @@ fixity = "tending"
   component_fit_lens_journey_2026_09 = @component_fit_lens_journey_2026_09
   still_alignment_ladder_2026_09 = @still_alignment_ladder_2026_09
   electrostatic_spend_2026_09 = @electrostatic_spend_2026_09
+  signs_of_life_2026_09 = @signs_of_life_2026_09
 }[reg=facet]
 
 ^"cache_rules"{
