@@ -39,7 +39,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
  * artifacts as authored usage and inflated every count several-fold.
  */
 const SKIP_DIRS = new Set([
-  'node_modules', '.git', '.spw', 'coverage', '.claude',
+  'node_modules', '.git', '.spw', 'coverage', '.claude', '.references',
   'dist', 'dist-vite', 'build', '.vite', '.next', 'out',
 ]);
 

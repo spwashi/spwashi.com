@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const PROJECT_ROOT = process.cwd();
-const EXCLUDED_DIRS = new Set(['node_modules', '.git', 'dist', 'dist-vite', '.spw']);
+const EXCLUDED_DIRS = new Set(['node_modules', '.git', 'dist', 'dist-vite', '.spw', '.references']);
 
 const OPERATOR_PREFIXES = ['#>', '#:', '#', '.', '^', '~', '?', '@', '*', '&', '=', '$', '%', '!', '>', '<', '(', '[', '{'];
 const INLINE_PAYLOAD_OPERATORS = new Set(['#', '?']);

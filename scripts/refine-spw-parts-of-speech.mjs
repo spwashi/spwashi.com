@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT = '/Users/spwashi/air/spwashi.com';
-const EXCLUDES = new Set(['node_modules', '.git', 'dist', 'dist-vite', '.spw']);
+const EXCLUDES = new Set(['node_modules', '.git', 'dist', 'dist-vite', '.spw', '.references']);
 
 // Mapping of explicit phrase replacements to clean up edge cases or verb-led non-action chips
 const CHIP_TRANSFORMS = new Map([

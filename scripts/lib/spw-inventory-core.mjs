@@ -25,6 +25,7 @@ export const SKIP_DIRS = new Set([
   'dist-vite',
   '_workbench',
   '.claude',
+  '.references',
 ]);
 
 /** Generated HTML that must not count as authored surface. */

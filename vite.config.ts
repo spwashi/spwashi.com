@@ -12,6 +12,7 @@ const ignoredSegments = new Set([
   '.git',
   '.github',
   '.idea',
+  '.references',
   '00.unsorted',
   '_partials',
   'dist',
@@ -183,6 +184,11 @@ export default defineConfig({
     host: '127.0.0.1',
     port: 4173,
     strictPort: false,
+    fs: {
+      // Cloned neighbor repos are reading material, never served bytes. The
+      // defaults are restated because `deny` replaces them wholesale.
+      deny: ['.env', '.env.*', '*.{crt,pem}', '**/.git/**', '**/.references/**'],
+    },
   },
   preview: {
     host: '127.0.0.1',

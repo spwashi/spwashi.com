@@ -9,7 +9,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SKIP = new Set(['node_modules', 'dist', 'dist-vite', '.git', '_workbench', 'catalog', 'experiments', 'load-symphony']);
+const SKIP = new Set(['node_modules', 'dist', 'dist-vite', '.git', '.references', '_workbench', 'catalog', 'experiments', 'load-symphony']);
 
 function shouldSkip(filePath) {
   return filePath.split(path.sep).some((part) => SKIP.has(part));

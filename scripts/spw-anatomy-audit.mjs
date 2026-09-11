@@ -39,7 +39,7 @@ const SPW = path.join(ROOT, '.spw');
 
 /** Build output is not authored markup. */
 const SKIP_DIRS = new Set([
-  'node_modules', '.git', '.spw', 'coverage', '.claude',
+  'node_modules', '.git', '.spw', 'coverage', '.claude', '.references',
   'dist', 'dist-vite', 'build', '.vite', '.next', 'out',
 ]);
 
