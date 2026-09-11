@@ -519,11 +519,16 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   border-bottom: 0;
 }
 
+/* The lab panel is a flex column that does not stretch its children, so the grid
+   sized from its own content and the 46rem rule below cut five tracks out of
+   178px. A grid describing a full row asks for the row. */
 :where(.spw-amount-grid) {
   --spw-amount-accent: var(--op-object-color, var(--active-op-color, #a67c00));
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr));
   gap: var(--component-gap-tight, 0.65rem);
+  inline-size: 100%;
+  min-inline-size: 0;
   margin-block: var(--component-gap, 1rem);
 }
 

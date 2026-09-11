@@ -326,8 +326,12 @@ html[data-spw-theme-biome="glasshouse"] {
   line-height: 1.45;
 }
 
+/* The bare-attribute half is a courtesy for anchors that forgot the class; the
+   tag guard let region hosts (div, nav) take chip layout and overrun the frame.
+   Every host carries [data-spw-feature]; no anchor does. JS reads the same line:
+   isCompactAnatomyTarget in runtime/page-anatomy.js. */
 .spw-anatomy-anchor,
-:where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+:where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   --spw-anatomy-color-local: var(--spw-anatomy-color, var(--active-op-color, var(--teal, #008080)));
   --spw-anatomy-surface-local: var(--surface-strong, #fff);
   --spw-anatomy-highlight: color-mix(in srgb, white 22%, transparent);
@@ -336,7 +340,9 @@ html[data-spw-theme-biome="glasshouse"] {
   min-width: min-content;
   min-height: 2.25rem;
   overflow-wrap: normal;
-  white-space: nowrap;
+  /* One line when it can be, not when it cannot: nowrap promised the anchor is
+     always short. The ::before label keeps its own nowrap below. */
+  white-space: normal;
   align-items: center;
   gap: 0.42rem;
   padding: 0.34rem 0.58rem;
@@ -364,33 +370,33 @@ html[data-spw-theme-biome="glasshouse"] {
 }
 
 /* Theme + material synergy for interactive anatomy anchors */
-html[data-spw-color-mode="dark"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+html[data-spw-color-mode="dark"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   --spw-anatomy-surface-local: color-mix(in srgb, var(--surface-strong, #1a1e20) 94%, var(--spw-anatomy-color-local) 6%);
   --spw-anatomy-highlight: color-mix(in srgb, white 8%, transparent);
 }
 
-html[data-spw-base-metamaterial="matte"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+html[data-spw-base-metamaterial="matte"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   --spw-anatomy-surface-local: var(--matte-surface, var(--surface-strong, #fff));
   --spw-anatomy-highlight: transparent;
 }
 
-html[data-spw-base-metamaterial="glass"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+html[data-spw-base-metamaterial="glass"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-html[data-spw-gesture-anatomy="active"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+html[data-spw-gesture-anatomy="active"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   /* Module bridge: when slot anatomy is live, page anchors share accent language. */
   border-color: color-mix(in srgb, var(--spw-anatomy-color-local) 28%, transparent);
 }
 
-html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   animation: spw-anatomy-arrive var(--duration-base, 220ms) var(--ease-settle, ease) both;
   animation-delay: calc(min(var(--spw-anatomy-order, 0), 12) * 18ms);
 }
 
 .spw-anatomy-anchor::before,
-:where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body))::before {
+:where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature])))::before {
   content: attr(data-spw-anatomy);
   flex: 0 1 auto;
   max-width: 18ch;
@@ -404,12 +410,12 @@ html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatom
 }
 
 .spw-anatomy-anchor > *,
-:where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) > * {
+:where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) > * {
   min-width: 0;
 }
 
 .spw-anatomy-anchor:is(:hover, :focus-visible),
-:where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)):is(:hover, :focus-visible, [data-spw-anatomy-state="active"], [data-spw-anatomy-state="pinned"]) {
+:where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))):is(:hover, :focus-visible, [data-spw-anatomy-state="active"], [data-spw-anatomy-state="pinned"]) {
   border-color: color-mix(in srgb, var(--spw-anatomy-color-local) 44%, transparent);
   background:
     linear-gradient(180deg, color-mix(in srgb, white 26%, transparent), transparent 70%),
@@ -423,7 +429,7 @@ html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatom
 }
 
 .spw-anatomy-anchor[data-spw-anatomy-state="pinned"],
-:where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body))[data-spw-anatomy-state="pinned"] {
+:where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature])))[data-spw-anatomy-state="pinned"] {
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, white 34%, transparent),
     0 0.65rem 1.35rem color-mix(in srgb, var(--spw-anatomy-color-local) 16%, transparent),
@@ -548,7 +554,7 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
   }
 
   .spw-anatomy-anchor,
-  :where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+  :where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
     flex: 1 1 min(10rem, 100%);
     justify-content: space-between;
   }
@@ -576,13 +582,13 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
 
 @media (prefers-reduced-motion: reduce) {
   .spw-anatomy-anchor,
-  :where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+  :where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
     animation: none;
     transition: none;
   }
 
   .spw-anatomy-anchor:is(:hover, :focus-visible),
-  :where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)):is(:hover, :focus-visible, [data-spw-anatomy-state="active"], [data-spw-anatomy-state="pinned"]) {
+  :where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))):is(:hover, :focus-visible, [data-spw-anatomy-state="active"], [data-spw-anatomy-state="pinned"]) {
     transform: none;
   }
 

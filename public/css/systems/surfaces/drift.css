@@ -94,6 +94,17 @@
   }
 }
 
+/* The viewport is the wrong ruler: on /services/, /topics/ and /play/ the
+   reentry frame is a 469px column of a wide spread, so the query above never
+   fires. .spw-frame is already an inline-size container (foundation.css). */
+@supports (container-type: inline-size) {
+  @container (max-width: 46rem) {
+    :where(.returner-grid) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
 /* Gratitude / wonder reward surfaces */
 :where(.gratitude-grid) {
   display: grid;

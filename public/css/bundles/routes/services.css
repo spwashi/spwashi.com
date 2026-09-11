@@ -1835,7 +1835,10 @@
       column-gap: clamp(1.1rem, 2.6vw, 2rem);
     }
 
+    /* The room path is an orientation strip, not a column of the spread. Left
+       unplaced it took one of the twelve tracks, 75px for a 103px list. */
     & #services-frame > .frame-body > #services-hook,
+    & #services-frame > .frame-body > .spw-room-path,
     & #services-frame > .frame-body > :is(.frame-operators, .page-index),
     & #services-frame > .frame-body > figure + p {
       grid-column: 1 / -1;

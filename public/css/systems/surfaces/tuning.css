@@ -131,6 +131,14 @@
   align-items: center;
 }
 
+/* A pill is nowrap because a pill is a label; the runtime writes sentences into
+   this meta row. Here the pill is a note, so it reads like one. */
+.vibe-widget-meta > .spec-pill {
+  white-space: normal;
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+}
+
 :where(:is(.vibe-widget, .palette-probe)-state) {
   color: color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 74%, var(--ink) 26%);
   font-weight: 600;

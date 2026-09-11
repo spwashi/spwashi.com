@@ -18038,10 +18038,16 @@ html[data-spw-color-mode="dark"] :where(
   border-radius: var(--component-radius-sm, 6px);
 }
 
+/* The general case of the defect drift.css and page-anatomy.css each patched
+   locally: grid with no track means one implicit `auto` column, and auto is
+   minmax(auto, max-content), so a wide child sizes the track instead of
+   shrinking to it. inline-size is already 100%; the track has to agree. 100% not
+   1fr because an fr needs free space and these bodies are often grid items. */
 :where(.spw-card__body, .frame-card-body, div[data-spw-slot="body"], section[data-spw-slot="body"]) {
   min-inline-size: 0;
   inline-size: 100%;
   display: grid;
+  grid-template-columns: minmax(0, 100%);
   gap: var(--card-rhythm, 0.6rem);
 }
 
@@ -18054,8 +18060,12 @@ html[data-spw-color-mode="dark"] :where(
   inline-size: 100%;
 }
 
+/* space-between on a row that cannot wrap is a promise the content has to keep;
+   a footer holding prose beside a chip nav crushed the nav. Wrap keeps the
+   two-ends reading whenever both still fit the line. */
 :where(.spw-card__footer, .frame-card-footer, [data-spw-slot="footer"]) {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-xs, 0.35rem);
@@ -18962,7 +18972,11 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: lowercase;
-  white-space: nowrap;
+  /* Pills prefer one line and settle for two: the strip carries motif words but
+     also sentence-length prompts. inline-flex and centred, so a second line
+     grows the pill rather than breaking its shape. */
+  white-space: normal;
+  text-wrap: pretty;
 }
 
 :where(.spw-reason-strip > *, .spw-role-hooks > *) {
@@ -21768,11 +21782,16 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   border-bottom: 0;
 }
 
+/* The lab panel is a flex column that does not stretch its children, so the grid
+   sized from its own content and the 46rem rule below cut five tracks out of
+   178px. A grid describing a full row asks for the row. */
 :where(.spw-amount-grid) {
   --spw-amount-accent: var(--op-object-color, var(--active-op-color, #a67c00));
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr));
   gap: var(--component-gap-tight, 0.65rem);
+  inline-size: 100%;
+  min-inline-size: 0;
   margin-block: var(--component-gap, 1rem);
 }
 
@@ -24480,8 +24499,12 @@ html[data-spw-theme-biome="glasshouse"] {
   line-height: 1.45;
 }
 
+/* The bare-attribute half is a courtesy for anchors that forgot the class; the
+   tag guard let region hosts (div, nav) take chip layout and overrun the frame.
+   Every host carries [data-spw-feature]; no anchor does. JS reads the same line:
+   isCompactAnatomyTarget in runtime/page-anatomy.js. */
 .spw-anatomy-anchor,
-:where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+:where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   --spw-anatomy-color-local: var(--spw-anatomy-color, var(--active-op-color, var(--teal, #008080)));
   --spw-anatomy-surface-local: var(--surface-strong, #fff);
   --spw-anatomy-highlight: color-mix(in srgb, white 22%, transparent);
@@ -24490,7 +24513,9 @@ html[data-spw-theme-biome="glasshouse"] {
   min-width: min-content;
   min-height: 2.25rem;
   overflow-wrap: normal;
-  white-space: nowrap;
+  /* One line when it can be, not when it cannot: nowrap promised the anchor is
+     always short. The ::before label keeps its own nowrap below. */
+  white-space: normal;
   align-items: center;
   gap: 0.42rem;
   padding: 0.34rem 0.58rem;
@@ -24518,33 +24543,33 @@ html[data-spw-theme-biome="glasshouse"] {
 }
 
 /* Theme + material synergy for interactive anatomy anchors */
-html[data-spw-color-mode="dark"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+html[data-spw-color-mode="dark"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   --spw-anatomy-surface-local: color-mix(in srgb, var(--surface-strong, #1a1e20) 94%, var(--spw-anatomy-color-local) 6%);
   --spw-anatomy-highlight: color-mix(in srgb, white 8%, transparent);
 }
 
-html[data-spw-base-metamaterial="matte"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+html[data-spw-base-metamaterial="matte"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   --spw-anatomy-surface-local: var(--matte-surface, var(--surface-strong, #fff));
   --spw-anatomy-highlight: transparent;
 }
 
-html[data-spw-base-metamaterial="glass"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+html[data-spw-base-metamaterial="glass"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-html[data-spw-gesture-anatomy="active"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+html[data-spw-gesture-anatomy="active"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   /* Module bridge: when slot anatomy is live, page anchors share accent language. */
   border-color: color-mix(in srgb, var(--spw-anatomy-color-local) 28%, transparent);
 }
 
-html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   animation: spw-anatomy-arrive var(--duration-base, 220ms) var(--ease-settle, ease) both;
   animation-delay: calc(min(var(--spw-anatomy-order, 0), 12) * 18ms);
 }
 
 .spw-anatomy-anchor::before,
-:where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body))::before {
+:where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature])))::before {
   content: attr(data-spw-anatomy);
   flex: 0 1 auto;
   max-width: 18ch;
@@ -24558,12 +24583,12 @@ html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatom
 }
 
 .spw-anatomy-anchor > *,
-:where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) > * {
+:where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) > * {
   min-width: 0;
 }
 
 .spw-anatomy-anchor:is(:hover, :focus-visible),
-:where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)):is(:hover, :focus-visible, [data-spw-anatomy-state="active"], [data-spw-anatomy-state="pinned"]) {
+:where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))):is(:hover, :focus-visible, [data-spw-anatomy-state="active"], [data-spw-anatomy-state="pinned"]) {
   border-color: color-mix(in srgb, var(--spw-anatomy-color-local) 44%, transparent);
   background:
     linear-gradient(180deg, color-mix(in srgb, white 26%, transparent), transparent 70%),
@@ -24577,7 +24602,7 @@ html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatom
 }
 
 .spw-anatomy-anchor[data-spw-anatomy-state="pinned"],
-:where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body))[data-spw-anatomy-state="pinned"] {
+:where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature])))[data-spw-anatomy-state="pinned"] {
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, white 34%, transparent),
     0 0.65rem 1.35rem color-mix(in srgb, var(--spw-anatomy-color-local) 16%, transparent),
@@ -24702,7 +24727,7 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
   }
 
   .spw-anatomy-anchor,
-  :where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+  :where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
     flex: 1 1 min(10rem, 100%);
     justify-content: space-between;
   }
@@ -24730,13 +24755,13 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
 
 @media (prefers-reduced-motion: reduce) {
   .spw-anatomy-anchor,
-  :where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+  :where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
     animation: none;
     transition: none;
   }
 
   .spw-anatomy-anchor:is(:hover, :focus-visible),
-  :where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)):is(:hover, :focus-visible, [data-spw-anatomy-state="active"], [data-spw-anatomy-state="pinned"]) {
+  :where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))):is(:hover, :focus-visible, [data-spw-anatomy-state="active"], [data-spw-anatomy-state="pinned"]) {
     transform: none;
   }
 
@@ -34785,6 +34810,17 @@ html[data-spw-page-section-phase="idle"] {
   }
 }
 
+/* The viewport is the wrong ruler: on /services/, /topics/ and /play/ the
+   reentry frame is a 469px column of a wide spread, so the query above never
+   fires. .spw-frame is already an inline-size container (foundation.css). */
+@supports (container-type: inline-size) {
+  @container (max-width: 46rem) {
+    :where(.returner-grid) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
 /* Gratitude / wonder reward surfaces */
 :where(.gratitude-grid) {
   display: grid;
@@ -34990,6 +35026,14 @@ html[data-spw-page-section-phase="idle"] {
   flex-wrap: wrap;
   gap: 0.45rem 0.6rem;
   align-items: center;
+}
+
+/* A pill is nowrap because a pill is a label; the runtime writes sentences into
+   this meta row. Here the pill is a note, so it reads like one. */
+.vibe-widget-meta > .spec-pill {
+  white-space: normal;
+  text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 :where(:is(.vibe-widget, .palette-probe)-state) {
@@ -43180,13 +43224,29 @@ html[data-spw-cognitive-handles="off"] :where(
     box-shadow var(--handle-duration-fast, 140ms) var(--handle-ease);
 }
 
-/* Inline phrases wrap as a unit. Panels that reuse the class stay `inline`
-   so later frame-panel display rules keep the seat. Long phrases shrink
-   to the measure and wrap inside; short ones like "living concepts" do
-   not split the highlight across a line break. */
+/* Inline phrases keep one highlight. Panels reusing the class stay `inline` so
+   later frame-panel display rules keep the seat. This read `white-space: nowrap`,
+   which said the opposite and let long terms overrun the measure. The worry
+   nowrap answered, a phrase splitting mid-highlight, is what
+   box-decoration-break is for, as [data-spw-inline-tone] already does. */
 span.spw-living-term,
 span[data-spw-living-term] {
-  white-space: nowrap;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* In prose the term bleeds 0.22em to sit flush with the text; inside a chip the
+   term is the label and the bleed paints past it. */
+:where(.spw-chip, .frame-sigil, .syntax-token) > .spw-living-term,
+:where(.spw-chip, .frame-sigil, .syntax-token) > [data-spw-living-term] {
+  padding-inline: 0;
+  margin-inline: 0;
+}
+
+/* The ✧ hangs outside the term for running text; a chip clips it anyway. */
+:where(.spw-chip, .frame-sigil, .syntax-token) > .spw-living-term::after,
+:where(.spw-chip, .frame-sigil, .syntax-token) > [data-spw-living-term]::after {
+  content: none;
 }
 
 /* Make gestureability easy to discover even when idle — subtle garden marker that only appears on interaction or focus */

@@ -396,9 +396,15 @@ body[data-spw-surface="about"] {
   color: color-mix(in srgb, var(--about-ink) 92%, var(--about-accent-2));
 }
 
+/* Intrinsic, not queried. Two @container steps used to pack this to three
+   tracks, but the nearest container is #about-frame (1345px) while the list sits
+   in a 470px track of .frame-body — 151px tracks for a chip that cannot shrink
+   below 124px. auto-fit reads the room the list is standing in; 18rem is the
+   measure at which a record's dd still reads as prose rather than a stack of
+   two-word lines, which is why the pinch-scale rule below already used it. */
 [data-spw-surface="about"] .about-years {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
   gap: 0.55rem;
   margin-block: 1rem 1.15rem;
   padding: 0;
@@ -528,26 +534,9 @@ body[data-spw-surface="about"] {
 }
 
 @container (min-width: 40rem) {
-  [data-spw-surface="about"] .about-years {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   [data-spw-surface="about"] .spw-reason-strip {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-}
-
-@container (min-width: 56rem) {
-  [data-spw-surface="about"] .about-years {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-/* Pinch text scaling changes packing as well as glyph size. The wider record
-   measure lets the intrinsic grid shed a column before copy feels pinched. */
-:where(html[data-spw-font-size-scale="110"], html[data-spw-font-size-scale="120"])
-  [data-spw-surface="about"] .about-years {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
 }
 
 [data-spw-surface="about"] .about-story-map {

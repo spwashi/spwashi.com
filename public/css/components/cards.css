@@ -170,10 +170,16 @@
   border-radius: var(--component-radius-sm, 6px);
 }
 
+/* The general case of the defect drift.css and page-anatomy.css each patched
+   locally: grid with no track means one implicit `auto` column, and auto is
+   minmax(auto, max-content), so a wide child sizes the track instead of
+   shrinking to it. inline-size is already 100%; the track has to agree. 100% not
+   1fr because an fr needs free space and these bodies are often grid items. */
 :where(.spw-card__body, .frame-card-body, div[data-spw-slot="body"], section[data-spw-slot="body"]) {
   min-inline-size: 0;
   inline-size: 100%;
   display: grid;
+  grid-template-columns: minmax(0, 100%);
   gap: var(--card-rhythm, 0.6rem);
 }
 
@@ -186,8 +192,12 @@
   inline-size: 100%;
 }
 
+/* space-between on a row that cannot wrap is a promise the content has to keep;
+   a footer holding prose beside a chip nav crushed the nav. Wrap keeps the
+   two-ends reading whenever both still fit the line. */
 :where(.spw-card__footer, .frame-card-footer, [data-spw-slot="footer"]) {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-xs, 0.35rem);
@@ -1094,7 +1104,11 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: lowercase;
-  white-space: nowrap;
+  /* Pills prefer one line and settle for two: the strip carries motif words but
+     also sentence-length prompts. inline-flex and centred, so a second line
+     grows the pill rather than breaking its shape. */
+  white-space: normal;
+  text-wrap: pretty;
 }
 
 :where(.spw-reason-strip > *, .spw-role-hooks > *) {

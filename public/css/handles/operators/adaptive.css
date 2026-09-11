@@ -238,13 +238,29 @@
     box-shadow var(--handle-duration-fast, 140ms) var(--handle-ease);
 }
 
-/* Inline phrases wrap as a unit. Panels that reuse the class stay `inline`
-   so later frame-panel display rules keep the seat. Long phrases shrink
-   to the measure and wrap inside; short ones like "living concepts" do
-   not split the highlight across a line break. */
+/* Inline phrases keep one highlight. Panels reusing the class stay `inline` so
+   later frame-panel display rules keep the seat. This read `white-space: nowrap`,
+   which said the opposite and let long terms overrun the measure. The worry
+   nowrap answered, a phrase splitting mid-highlight, is what
+   box-decoration-break is for, as [data-spw-inline-tone] already does. */
 span.spw-living-term,
 span[data-spw-living-term] {
-  white-space: nowrap;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* In prose the term bleeds 0.22em to sit flush with the text; inside a chip the
+   term is the label and the bleed paints past it. */
+:where(.spw-chip, .frame-sigil, .syntax-token) > .spw-living-term,
+:where(.spw-chip, .frame-sigil, .syntax-token) > [data-spw-living-term] {
+  padding-inline: 0;
+  margin-inline: 0;
+}
+
+/* The ✧ hangs outside the term for running text; a chip clips it anyway. */
+:where(.spw-chip, .frame-sigil, .syntax-token) > .spw-living-term::after,
+:where(.spw-chip, .frame-sigil, .syntax-token) > [data-spw-living-term]::after {
+  content: none;
 }
 
 /* Make gestureability easy to discover even when idle — subtle garden marker that only appears on interaction or focus */

@@ -54,6 +54,10 @@ function isReducedMotion() {
 function isCompactAnatomyTarget(element) {
   if (!(element instanceof HTMLElement)) return false;
   if (['SECTION', 'ARTICLE', 'MAIN', 'BODY'].includes(element.tagName)) return false;
+  // A region host carries the vocabulary for everything inside it and is not
+  // itself a chip. Same separator the CSS uses; see the comment above
+  // .spw-anatomy-anchor in css/components/page-anatomy.css.
+  if (element.dataset.spwFeature) return false;
   return element.classList.contains('spw-anatomy-anchor') || Boolean(element.dataset.spwVocabulary);
 }
 
