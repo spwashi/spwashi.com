@@ -148,6 +148,7 @@ source = "chat 2026-09-04: creative capacity, engaged wonder, unique style, Spw 
   ][reg=set]
   pattern_consideration = `Do not add a seventh theme-pack, a new card-family, or a data-spw-theme-set attribute from this prime alone. A theme_set sidecar staying "REPLACE_ME" is the honest default until a human judges it on /design/materials/.`
   first_patch = `Astra picks one of: (a) judge library-cozy — name it a variant of an existing pack or make the case for a seventh with @midjourney_promotion_rule's review gate, (b) improve slice-render-primitives.mjs's -icon step (e.g. posterize/quantize before edge-detect) so painterly sources stop producing scribble, or (c) add one more theme_set sample and extend the /design/materials/#staged-theme-sets row — not all three in one patch.`
+  landed = `2026-09-10. Judged library-cozy across all 4 crops: oxide-ledger library variant, reference-card genre, icon_candidate=false (painterly noise). Replaced REPLACE_ME spirit/staging sidecars without minting a seventh theme pack.`
   validation = `ls public/images/renders/_staged-primitives/ && rg 'theme_set|icon_candidate' public/images/renders/_staged-primitives/*/*.spw | head`
 }[reg=facet]
 
