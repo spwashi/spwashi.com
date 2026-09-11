@@ -4,10 +4,11 @@
 // Wraps delimiter tokens and inline operator sigils so runtime modules,
 // gesture physics, and geometry projection can address them consistently.
 
-import { BARE_SPW_CONTAINER_SELECTOR } from '/public/js/kernel/dom-contracts.js';
+import { BARE_SPW_CONTAINER_SELECTOR, observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
 import { scanSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 
 let initialized = false;
+let disconnectAddedMatches = null;
 
 const SKIP_ANCESTOR_SELECTOR = [
   'script',
@@ -148,23 +149,11 @@ function initBareSpwMarkupInternal() {
 
   enhanceBareSpwMarkup();
 
-  const observer = new MutationObserver((records) => {
-    for (const record of records) {
-      for (const node of record.addedNodes) {
-        if (!(node instanceof Element)) continue;
-        if (node.matches?.(BARE_SPW_CONTAINER_SELECTOR)) {
-          enhanceContainer(node);
-          continue;
-        }
-        enhanceBareSpwMarkup(node);
-      }
-    }
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
+  disconnectAddedMatches = observeAddedMatches(BARE_SPW_CONTAINER_SELECTOR, enhanceBareSpwMarkup);
 
   return () => {
-    observer.disconnect();
+    disconnectAddedMatches?.();
+    disconnectAddedMatches = null;
     initialized = false;
   };
 }

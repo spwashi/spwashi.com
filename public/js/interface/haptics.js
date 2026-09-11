@@ -30,7 +30,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { COMPONENT_KIND_MIRROR_SELECTOR, groundInteraction, isOwnAffordanceTarget, writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import { COMPONENT_KIND_MIRROR_SELECTOR, groundInteraction, isOwnAffordanceTarget, observeAddedMatches, writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { guardCall } from '/public/js/kernel/dom-render.js';
 import { normalizePathname } from '/public/js/kernel/route-utils.js';
 import {
@@ -100,7 +100,7 @@ const CHARGE_SELECTORS = [
 ].join(', ');
 
 let initialized = false;
-let restoreObserver = null;
+let disconnectRestoreObserver = null;
 let cleanupArcLifecycle = null;
 let unsubscribeBus = [];
 const passiveChargeTimers = new WeakMap();
@@ -246,8 +246,8 @@ export function initSpwHaptics() {
     unsubscribeBus.forEach((off) => off?.());
     unsubscribeBus = [];
 
-    restoreObserver?.disconnect();
-    restoreObserver = null;
+    disconnectRestoreObserver?.();
+    disconnectRestoreObserver = null;
     cleanupArcLifecycle?.();
     cleanupArcLifecycle = null;
   };
@@ -777,17 +777,13 @@ function restoreGroundedState(root = document) {
 function initRestoreObserver() {
   if (!document.body) return;
 
-  restoreObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (!(node instanceof Element)) return;
-        restoreGroundedState(node);
-        annotateCauldronCandidates(node);
-      });
-    });
-  });
-
-  restoreObserver.observe(document.body, { childList: true, subtree: true });
+  disconnectRestoreObserver = observeAddedMatches(
+    `${GROUND_SELECTORS}, ${CAULDRON_CANDIDATE_SELECTORS}`,
+    () => {
+      restoreGroundedState();
+      annotateCauldronCandidates();
+    }
+  );
 }
 
 function annotateCauldronCandidates(root = document) {
