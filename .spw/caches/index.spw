@@ -51,6 +51,7 @@
 @signs_of_life_2026_09: ~"./signs-of-life-2026-09.spw"  # ambient life is all earned, so a cold page runs one animation; sol-005 is the true-signal proposal
 @claude_sitting_harvest_2026_09_10: ~"./claude-sitting-harvest-2026-09-10.spw"  # reply to Grok's precipitate request; ch-001 is the worktree jsonl key gap
 @slot_anatomy_ecology_2026_09: ~"./slot-anatomy-ecology-2026-09.spw"
+@brace_hysteresis_crease_2026_09: ~"./brace-hysteresis-crease-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
@@ -100,6 +101,7 @@ fixity = "tending"
   signs_of_life_2026_09 = @signs_of_life_2026_09
   claude_sitting_harvest_2026_09_10 = @claude_sitting_harvest_2026_09_10
   slot_anatomy_ecology_2026_09 = @slot_anatomy_ecology_2026_09
+  brace_hysteresis_crease_2026_09 = @brace_hysteresis_crease_2026_09
 }[reg=facet]
 
 ^"cache_rules"{

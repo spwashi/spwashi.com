@@ -1,0 +1,102 @@
+# Brace hysteresis and the crease (2026-09)
+#
+# operation: prime
+# Theory of mind from dist markup for a visitor who already knows a tap
+# is an electrostatic reading. Not a fourth field. Not data-spw-crease.
+
+#>brace_hysteresis_crease_2026_09
+#:cache #!prime #!charge #!brace #!material #!lists
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@electrostatic: ~"../conventions/electrostatic-affordances.spw"
+@charge_cycle: ~"../conventions/charge-cycle.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@material_physics: ~"../conventions/material-physics.spw"
+@electromagnetic_containers: ~"../conventions/electromagnetic-containers.spw"
+@microstates: ~"../conventions/interaction-microstates.spw"
+@spend: ~"./electrostatic-spend-2026-09.spw"
+@convenience: ~"./semantic-convenience-arcs-2026-09.spw"
+@brace_js: ~"../../public/js/runtime/brace-gestures.js"
+@charge_js: ~"../../public/js/runtime/charge-field.js"
+@affordances_css: ~"../../public/css/systems/electrostatic-affordances.css"
+@dist_home: ~"../../dist/index.html"
+
+operation = "prime"
+fixity = "experimental"
+source = "2026-09-10: read dist/index.html (composed 2026-09-04) plus current brace-gestures and charge-field. Visitor already literate in tap-as-electrode."
+do_not_touch = `new data-spw-* family, data-spw-crease, a second field per card, quest restyle, motif discharge-kind restickers as a rewrite this sitting`
+
+expression = brace[hysteresis]{crease.pool.residue}<touch>
+
+^"kernel"{
+  focus = `brace physics`
+  disciplines = `animator + materials`
+  region = `garden`
+  brand_physics = `charge`
+  intensity = `studio`
+  semantic_operation = `prime`
+  output = `this cache plus one align: coarse residue and a parchment crease on operator list items`
+}[reg=facet]
+
+^"visitor"{
+  claim = `This visitor does not need to be taught that a tap is an electrode. They already hear a living term's title (tap: inspect • hold to prime). They come looking for where the charge goes after the finger lifts, and whether a card is a crystal that holds it or a page that drinks it.`
+  dist_electrodes = #[
+    `nav li > a[data-spw-operator] — eight terminals in one list, the first crease they can run a finger down`,
+    `.spw-copy-motif-strip li[data-spw-operator] — cookbook/magazine/issue as operator-styled list items, also authored data-spw-discharge-kind (the third sticker @electrostatic forbids)`,
+    `.spw-page-landmarks li[data-spw-liminality] > a — Hook/Door/Atlas/Garden already have a start-edge mark, not operator terminals`,
+    `a.spw-chip[data-spw-operator] — electrodes that navigate; braceTarget does not name them`,
+    `[data-spw-form=brace] frames and reason articles — the wall that should store tendency`
+  ][reg=set]
+  quartz = `A card that returns specular and keeps a ring after contact — glass, chip, delimiter docked to a sigil. Charge sits on the face.`
+  parchment = `A list item or reading card that drinks the tap into a start-edge crease. Charge does not sit on the face; it runs the fold.`
+}[reg=facet]
+
+^"bh-001_touch_has_no_residue"{
+  id = "bh-001"
+  operation = "audit"
+  claim = `A literate finger that completes a brace tap is snapped to neutral. The 2.8s field bleed in charge-field.js never sees a discharge event from that path, so the component has no hysteresis.`
+  evidence = #[
+    `@brace_js onPointerUp: coarse + inside → setGesture(neutral). Comment: do not leave charging (hover) after a tap. Correct about charging. Silent about committed residue.`,
+    `Fine pointer inside → charging (proximity leftover). Touch gets none.`,
+    `@charge_js scheduleDecay 2800ms listens for brace:discharged / charge:charged. Coarse resolved tap emits neither.`,
+    `@charge_cycle discharging_to_quiet is the named hysteresis. GROUNDED_READING_MS is 520ms and is the no-arc pole, not the yes-arc residue.`
+  ][reg=set]
+  reading = `The visitor who knows the physics experiences a quartz that cannot hold. The snap was a fix for stuck hover. Residue must be discharging, not charging.`
+  first_patch = `On resolved coarse release: write committed/charged, emit brace:discharged, clear to neutral after 2800ms. Do not use charging.`
+}[reg=facet]
+
+^"bh-002_brace_buckets_miss_the_electrode_css"{
+  id = "bh-002"
+  operation = "audit"
+  claim = `Brace physics writes data-spw-charge=active|charging|sustained. Electrode CSS paints armed|preview|charged. Tap contact does not light the acted rung.`
+  evidence = `GESTURE_TO_CHARGE_BUCKET vs @affordances_css:69-80. Induction :has([data-spw-charge=charged]) never sees a brace tap.`
+  first_patch = `Map committed → charged. Recognize active/charging/sustained on the electrode ladder. No new attribute.`
+}[reg=facet]
+
+^"bh-003_the_crease_is_already_named"{
+  id = "bh-003"
+  operation = "prime"
+  claim = `Attentional liquid pools down an operator list along a start-edge crease, not a pill outline. @electromagnetic_containers already named charged_crease. Motif items are currently full pills (quartz chips wearing parchment's job).`
+  evidence = #[
+    `dist .spw-copy-motif-strip li — operator + motif + discharge-kind, pill in cards.css, wash in holiday-tropes (ornament)`,
+    `landmarks already crease (border-inline-start) without being electrodes`,
+    `nav lis are electrodes without a crease — charge has nowhere to run`
+  ][reg=set]
+  quartz_vs_parchment = `Chip and sigil stay quartz (specular, ring). Motif list item and reading card stay parchment (crease, absorb, pool to ~ siblings). Do not restyle every card.`
+  first_patch = `systems/electrostatic-affordances.css: motif li[data-spw-operator] start-edge crease in --spw-discharge-color; :active and [data-spw-charge] wet the fold; following siblings take a thinner crease. Physics layer, not ornament.`
+  refuse = `Do not add data-spw-crease. Do not make every chip a brace target this sitting. Do not resticker discharge-kind off the motif lis in the same commit as the crease.`
+}[reg=facet]
+
+^"do_not"{
+  field = `Do not author a per-card --spw-charge-field`
+  hover = `Do not restore post-tap charging on coarse pointers`
+  family = `Do not mint data-spw-hysteresis or data-spw-crease`
+  target = `Do not dump .spw-chip into BRACE_TARGET_SELECTOR`
+}[reg=facet]
+
+validation: #[
+  `rg 'committed' public/js/runtime/brace-gestures.js public/css/systems/electrostatic-affordances.css`,
+  `npm run visual:checks -- --ids=home-opening`
+][reg=set]
