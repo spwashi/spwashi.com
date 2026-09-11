@@ -53,6 +53,32 @@ source = "stills 2026-09-09 11-56-42--ec2e4d (fold/pocket pack, 190 frames), 202
   next_probe = `Pick the two largest memberships; diff them; the difference is the intended tier or a typo. There is no third answer.`
 }[reg=facet]
 
+^"al-001b_two_largest_memberships_diff"{
+  id = "al-001b"
+  operation = "audit"
+  dated = `2026-09-10`
+  claim = `Diffing the two largest card-union memberships reveals accumulated typo and copy-paste drift, not an intended tier.`
+  two_largest = #{
+    union_1 = `@foundation_css:166 container-type rule (23 card classes + 2 attribute selectors)`,
+    union_2 = `@foundation_css:120 base layout/containment rule (22 card classes + 2 attribute selectors)`
+  }[reg=facet]
+  shared_core = #[
+    `.spw-frame`, `.frame-card`, `.media-card`, `.media-focus-card`,
+    `.software-card`, `.operator-card`, `:is(.spw-panel, .frame-panel)`,
+    `.mode-panel`, `.plan-card`, `.compare-card`, `.spec-column`, `.ref-card`,
+    `.settings-state-card`, `.settings-nav-card`, `.settings-structure-card`,
+    `.settings-map-card`, `.settings-preset-btn`, `.vibe-widget`,
+    `.pwa-status-card`, `.payment-card`
+  ][reg=set]
+  diff = #[
+    `in union 1 only: .topic-reference-card (omitted at line 120, present at line 173)`,
+    `in attribute guards only: :not(body):not(main):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch) added to container-type but omitted from base box-sizing`,
+    `across cards.css: sibling rules alternate between .spw-panel beside :is(.spw-panel, .frame-panel) (e.g. lines 12-15, 47-49) and omitting standalone .spw-panel (line 64)`
+  ][reg=set]
+  verdict = `accumulated typo. The differences are arbitrary omissions from copy-pasting class lists across adjacent blocks in the same file. There is no semantic or layout tier that warrants .topic-reference-card having container-type while lacking base isolation, or .spw-panel being named twice in one selector and once in the next.`
+  consequence = `Safe to hoist one canonical :where() card family definition in E1b without disturbing an intended tier.`
+}[reg=facet]
+
 ^"al-002_clip_hides_its_own_overflow"{
   id = "al-002"
   operation = "cache"
@@ -392,8 +418,9 @@ source = "stills 2026-09-09 11-56-42--ec2e4d (fold/pocket pack, 190 frames), 202
 ^"next_session"{
   claim = `Open this file. al-001 is the only finding with a measured mechanism; the rest are evidence for it or sensation calls behind the browser gate.`
   open = #[`this file`, `public/css/components/cards.css`, `public/css/components/surfaces.css`][reg=set]
-  next_slice = `al-001 probe only: diff the two largest of the 52 memberships. Report whether the difference is an intended tier or accumulated typo. Do not patch until that is answered.`
+  next_slice = `al-001b answered (accumulated typo). E1b: hoist one named family the other rules reference.`
   landed_2026_09_10 = #[
+    `al-001b card union diff answered: accumulated typo`,
     `al-003 orphan cell — sheet lanes with an odd count span the trailing action`,
     `al-009 four duplicated region-menu selectors consolidated, computed values preserved`,
     `al-012 six capture-phase pointer listeners on body declared passive`
