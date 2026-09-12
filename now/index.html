@@ -1,12 +1,12 @@
 <spw-page
     title="Spwashi • Now"
-    description="Friday, September 11, 2026: two days to the September 13 A-cycle close. Support paths for software, art, and the table."
+    description="Release note since August 26, 2026: creator-first site copy and pocket behavior, richer Spw tooling, and deeper lore.land interiors."
     canonical="https://spwashi.com/now/"
     og_title="Spwashi • Now"
-    og_description="Friday, September 11, 2026: two days to the September 13 A-cycle close."
+    og_description="Release note since August 26, 2026: site, workbench, and lore.land updates."
     og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
-    og_image_alt="Spwashi current sprint and funding metadata card."
-    keywords="spwashi funding, current sprint, 13 phases, support ladder, ask card, commission work, membership, coordination"
+    og_image_alt="Spwashi release record for site, workbench, and lore.land updates."
+    keywords="spwashi release notes, creator-first site copy, pocket navigation, Spw workbench, lore.land, support ladder, commissions, membership"
     breadcrumb_label="Spwashi · Now"
     header_current="Spwashi · Now"
     header_current_href="/now/"
@@ -70,19 +70,23 @@
             </header>
 
             <div class="frame-body" data-spw-slot="body">
-                <p data-spw-textual-role="kicker" data-spw-semantic-expression="sprint[now]{live.dispatch}">This issue</p>
-                <h1 id="now-title">This week’s issue</h1>
+                <p data-spw-textual-role="kicker" data-spw-semantic-expression="sprint[now]{live.dispatch}">Release note</p>
+                <h1 id="now-title">Since August 26</h1>
                 <div class="focus-lens-container prose" data-spw-typeset-surface="editorial" data-spw-focus-lens="editorial">
-                    <p id="now-description" data-spw-textual-role="lede" data-spw-copy-unit="now.hook.lede" data-spw-semantic-expression="now[hook]{close}">I use this site to make the work legible and fundable. Friday, September 11, 2026: two days to the September 13 A-cycle close. Last month’s B-cycle closed August 26.</p>
-                    <p data-spw-textual-role="note">Closes land on the 13th and the 26th. Ongoing development costs about $250/month. The current state is meant to be readable, not hidden.</p>
+                    <p id="now-description" data-spw-textual-role="lede" data-spw-copy-unit="now.hook.lede" data-spw-semantic-expression="now[hook]{close}">A release across three working surfaces: clearer public routes at spwashi.com, more capable Spw tools in the workbench, and a deeper, steadier lore.land.</p>
+                    <p data-spw-textual-role="note">All three working trees are clean. This page keeps the shipped state, its receipts, and the remaining release-day check in one readable place.</p>
                     <p data-spw-textual-role="note" data-spw-semantic-expression="support[input]{change;continuity}&lt;receipt&gt;">Every funded input should leave a visible consequence: a route strengthened, a session held, an asset published, or a method made reusable. The receipt is the before-and-after state, not a promise that activity happened somewhere offscreen.</p>
                 </div>
                 <div class="spw-card spw-panel" data-spw-metamaterial="matte" data-spw-brace="objective" data-spw-text-variant="punchy">
-                    <h2>What this close still needs</h2>
-                    <p><strong>Hosting, food, transportation, and two more days of focused build time.</strong> This week the page learned to rest when a setting is already true, and to keep helpers off first paint on a phone. The August 26 B-cycle asked $750 for that mix. The September 13 A-cycle is the place to land the same kinds of support. SuperGrok is the Grok plan that holds this writing — about $30 a month, or $300 a year. When the budget can hold a yearly tool, Midjourney prefers annual Standard (or more fast hours), and SuperGrok prefers annual too.</p>
-                    <p>Status: A-cycle close window. Last updated: September 11, 2026.</p>
-                    <p>Making the need visible enough that someone can understand it, screenshot it, or act on it in under a minute. That support protects the practice: software, art, and the repetition it takes to make the process teachable — the reason a reader would reopen this page.</p>
-                    <p data-spw-textual-role="note">Read the words, or scroll the rooms. Produce: <a href="/recipes/#chicagoland-season">Recipes</a>. Table: <a href="/play/rpg-wednesday/">RPG Wednesday</a>. Art: <a href="/design/folios/#collect-a-folio">folios</a>. Craft: <a href="/topics/craft/">Craft</a>. Poems and other lines can become depiction prompts on the <a href="/tools/midjourney/">Midjourney bench</a>.</p>
+                    <h2>What shipped</h2>
+                    <ul class="frame-list">
+                        <li><strong>spwashi.com:</strong> clearer creator-first Home, About, and Now copy; more legible pocket navigation, rails, lenses, chips, braces, and touch behavior; improved gesture and native-control handling; faster, more selective runtime boot and UI updates.</li>
+                        <li><strong>spw-workbench:</strong> richer Spw sequencing (<code>;</code>, <code>||</code>) and project joins (<code>~&gt;</code>); new <code>fingerprint</code>, <code>resolve</code>, and axis-lint CLI tools; query-timing receipts and more deliberate corpus walking.</li>
+                        <li><strong>lore.land:</strong> deeper interiors across the thirteen-chamber world, clearer story voices, quieter egg copy, paragraph references, refreshed home and reading layouts, the Cullet &amp; Unfired Deck spiral, Ant Hearths, and a rolling chapter cadence/trope-physics pass.</li>
+                    </ul>
+                    <p><strong>Release checks:</strong> spwashi.com’s <code>npm run check:local</code> passed with 299 tests; spw-workbench’s <code>npm run fuzz:ship</code> passed typecheck plus 1,230 tests; lore.land’s static projection, public Spw projection, and seed-bundle verification passed. Its Spw lint has 14 warnings, with no parse failures or errors.</p>
+                    <p><strong>One release-day item remains:</strong> the full pocket visual suite could not start Chrome’s debug port here. Re-run <code>npm run visual:checks</code> on the release machine before publishing. The site also carries two non-blocking CSS soft-budget warnings: core is about 2.6 KiB over and the website bundle about 9.4 KiB over.</p>
+                    <p>Status: release record current as of September 12, 2026.</p>
                 </div>
             <nav class="page-index" aria-label="Now sprint sections">
                 <ul>
@@ -99,7 +103,7 @@
                      loading="lazy" decoding="async" width="1400" height="1400">
                 <figcaption>
                     <strong>This week’s table</strong>
-                    <span>Last table sat Wednesday, September 9. Next table is September 16, after this close. A-cycle closes September 13. Late-summer market pressure lives in <a href="/play/rpg-wednesday/#weekly-affairs">The Sale Clock</a>.</span>
+                    <span>Last table sat Wednesday, September 9. Next table is September 16. Late-summer market pressure lives in <a href="/play/rpg-wednesday/#weekly-affairs">The Sale Clock</a>.</span>
                 </figcaption>
             </figure>
 
