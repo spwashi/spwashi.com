@@ -1,0 +1,48 @@
+# Timeline Copy Resonance (2026-09-12)
+#
+# operation: audit
+# fixity: tending
+#
+# The timeline is a public practice surface, not a résumé claim. Its useful
+# sequence is: early technical curiosity → production code → reusable systems
+# → Factshift as a public experience → factshift as a meditation → learning organization → senior frontend
+# practice → Spw as the continuing design surface.
+
+#>timeline_copy_resonance_2026_09
+#:audit #!copy #!timeline #!factshift #!practice
+
+^"thesis"{
+  claim = `The biography becomes more resonant when each dated turn names what a visitor can practice now, not only what happened then.`
+  factshift = `Factshift begins as a 2016 project and becomes lowercase in 2019: a meditation on phenomena through a relationship to code while developing the Spw parser. Visitors can try describing the experience, inspect the public app codebase, then clone and extend it.`
+  continuity = `The through-line is description under changing conditions: production software, reusable frameworks, conceptual compression, learning design, frontend systems, and Spw's grammatical/ornamental surfaces.`
+}[reg=facet]
+
+^"scope"{
+  routes = #[`/about/`, `/about/domains/factshift.com/`, `/topics/software/`, `/services/systems/`][reg=set]
+  edits = `Clarify Factshift as both a 2016 origin and a present-tense reference point; give visitors a concrete practice invitation; connect cloning/extending the codebase to Spw's broader codebase-as-curriculum claim.`
+  non_goals = `Do not repeat the full timeline on every route, claim current ownership beyond the supplied references, or add runtime behavior and new data-spw-* families.`
+}[reg=facet]
+
+^"decision"{
+  text = `Keep the dated sequence canonical on /about/. Let the Factshift domain page carry the practice invitation and repository link. Let software and systems routes use one short bridge back to that proof.`
+}[reg=facet]
+
+^"network_and_crypto"{
+  network = `Spwashi is a strong ecosystem brand. Services should describe loosely-coupled but capable agentic pools with gradients of initiative and capacity, not imply a staff organization or a single-person mentorship funnel.`
+  dregg = `The optional $DREGG route can point to dregg.net while stating that the site is more than its coin. Keep the language experiential and non-financial.`
+}[reg=facet]
+
+^"language_communities"{
+  claim = `The timeline now continues into software-language study: formal patterns matter, but communities decide how a language is learned, preserved, extended, and made meaningful.`
+  models = `Language models can make new dimensions of development more accessible and differently meaningful; public copy should pair that access with community context and consequence.`
+}[reg=facet]
+
+^"creator_differentiation"{
+  claim = `The ecosystem coordinates without flattening its members. Individual creators differentiate and develop unique skill combinations; pools are connective tissue for those combinations.`
+}[reg=facet]
+
+validation: #[
+  `npm run audit:copy:accessor`
+  `npm run check:local`
+  `git diff --check`
+][reg=set]
