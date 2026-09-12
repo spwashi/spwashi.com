@@ -1277,3 +1277,33 @@ function onKeyUp(event) {
     applySemanticExpansion(target, meta, target.dataset.spwInspectSemanticExpanded !== 'true');
   }
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'brace-physics',
+  updates: Object.freeze([
+    'structural:data-spw-brace-nesting',
+    'structural:data-spw-handle-kind',
+    'structural:data-spw-resolved-operator',
+    'residue:data-spw-last-gesture',
+    'structural:data-spw-pinned',
+  ]),
+  mount: () => {
+    initBraceGestures();
+    return () => {
+      const body = document.body;
+      if (!body) return;
+      delete body.dataset.braceGesturesInit;
+      body.removeEventListener('pointerenter', onPointerEnter, true);
+      body.removeEventListener('pointerleave', onPointerLeave, true);
+      body.removeEventListener('pointerdown', onPointerDown, true);
+      body.removeEventListener('pointermove', onPointerMove, true);
+      body.removeEventListener('pointerup', onPointerUp, true);
+      body.removeEventListener('pointercancel', onPointerCancel, true);
+      body.removeEventListener('dblclick', onDoubleClick, true);
+      body.removeEventListener('keydown', onKeyDown, true);
+      body.removeEventListener('keyup', onKeyUp, true);
+    };
+  },
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

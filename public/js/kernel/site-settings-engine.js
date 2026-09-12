@@ -1510,3 +1510,10 @@ export {
   parseSettingsFromSearch,
   buildSettingsShareHref,
 };
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'site-settings',
+  mount: () => applySiteSettings(),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

@@ -426,7 +426,10 @@ export function initInteractionProgression(root = document) {
 
 export { INTERACTION_PHASES } from './vocabulary.js';
 
-export const spwModule = {
-  updates: ['attr:data-spw-interaction-phase', 'attr:data-spw-microinteraction-pulse'],
-  mount: (mod, ctx, root) => initInteractionProgression(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'interaction-progression',
+  updates: Object.freeze(['attr:data-spw-interaction-phase', 'attr:data-spw-microinteraction-pulse']),
+  mount: (ctx, root) => initInteractionProgression(root),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

@@ -3,7 +3,7 @@
  * load() paths are relative to public/js/runtime/catalog/.
  */
 
-import { COST_CLASS, isFn, MODULE_LAYERS, MOUNT_WHEN } from './constants.js';
+import { COST_CLASS, MODULE_LAYERS, MOUNT_WHEN } from './constants.js';
 
 export const CORE_DEFS = [
   {
@@ -24,11 +24,6 @@ export const CORE_DEFS = [
     effectScope: 'root-state storage settings',
     evaluates: 'root color palette wonder density saturation reward display',
     load: () => import('../../kernel/site-settings-engine.js'),
-    mount: (mod) => {
-      const fn = mod?.applySiteSettings;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
 
   {

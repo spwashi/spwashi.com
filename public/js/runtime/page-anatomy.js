@@ -1132,7 +1132,10 @@ export function initPageAnatomy(ctx, root) {
   };
 }
 
-export const spwModule = {
-  updates: ['attr:data-spw-anatomy-ready', 'attr:data-spw-page-serialization'],
-  mount: (mod, ctx, root) => initPageAnatomy(ctx, root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'page-anatomy',
+  updates: Object.freeze(['attr:data-spw-anatomy-ready', 'attr:data-spw-page-serialization']),
+  mount: (ctx, root) => initPageAnatomy(ctx, root),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
