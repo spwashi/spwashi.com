@@ -9,6 +9,13 @@
 @layer systems {
 
 :root {
+  /* Phase tuning resolves from an enhancement level and a density gain so the
+     density branches modulate the level instead of reading themselves. */
+  --spw-interaction-phase-level: 1;
+  --spw-interaction-phase-density-gain: 1;
+  --spw-interaction-phase-tuning: calc(
+    var(--spw-interaction-phase-level) * var(--spw-interaction-phase-density-gain)
+  );
   --spw-microinteraction-pulse-scale: 1;
   --spw-microinteraction-pulse-duration: 280ms;
   --spw-microinteraction-pulse-intensity: 1;
@@ -17,27 +24,27 @@
   --spw-variant-selection-duration: var(--spw-microinteraction-pulse-duration, 280ms);
 }
 
-:where(html[data-spw-enhancement-level="minimal"]) {
-  --spw-interaction-phase-tuning: 0.72;
+html[data-spw-enhancement-level="minimal"] {
+  --spw-interaction-phase-level: 0.72;
   --spw-hover-scale: 1;
   --spw-armed-scale: 1.004;
   --spw-burst-scale: 1.006;
 }
 
-:where(html[data-spw-enhancement-level="rich"], html[data-spw-enhancement-level="theatrical"]) {
-  --spw-interaction-phase-tuning: 1.14;
+html[data-spw-enhancement-level="rich"], html[data-spw-enhancement-level="theatrical"] {
+  --spw-interaction-phase-level: 1.14;
   --spw-hover-scale: 1;
   --spw-armed-scale: 1.016;
   --spw-burst-scale: 1.02;
 }
 
-:where(html[data-spw-semantic-density="minimal"]) {
+html[data-spw-semantic-density="minimal"] {
   --spw-microinteraction-pulse-scale: 1;
-  --spw-interaction-phase-tuning: calc(var(--spw-interaction-phase-tuning, 1) * 0.86);
+  --spw-interaction-phase-density-gain: 0.86;
 }
 
-:where(html[data-spw-semantic-density="rich"]) {
-  --spw-interaction-phase-tuning: calc(var(--spw-interaction-phase-tuning, 1) * 1.08);
+html[data-spw-semantic-density="rich"] {
+  --spw-interaction-phase-density-gain: 1.08;
 }
 
 :where(html:not([data-spw-interaction-phase]), html[data-spw-interaction-phase="idle"]) {
@@ -78,7 +85,7 @@
   --spw-ecology-settle-weight: max(var(--spw-ecology-settle-weight, 0), 0.88);
 }
 
-:where(html[data-spw-microinteraction-pulse]) {
+html[data-spw-microinteraction-pulse] {
   --spw-microinteraction-pulse-scale: calc(
     1 + (0.012 * var(--spw-microinteraction-pulse-intensity, 1))
   );
@@ -172,7 +179,7 @@
   --spw-salience-weight: calc(0.34 + (var(--spw-interaction-phase-weight, 0) * 0.22));
 }
 
-:where(html[data-spw-reduce-motion="on"]) {
+html[data-spw-reduce-motion="on"] {
   --spw-microinteraction-pulse-scale: 1;
 }
 
@@ -307,9 +314,9 @@
   --spw-ecology-twinkle: max(var(--spw-ecology-twinkle, 0), calc(0.22 * var(--spw-freshness-weight, 0.62)));
 }
 
-:where(html[data-spw-freshness-pulse]) {
+html[data-spw-freshness-pulse] {
   --spw-microinteraction-pulse-scale: calc(1 + (0.018 * var(--spw-microinteraction-pulse-intensity, 1) * var(--spw-freshness-weight, 0.62)));
-  --spw-ecology-twinkle: max(var(--spw-ecology-twinkle, 0), calc(0.34 * var(--spw-freshness-weight, 0.62)));
+  --spw-ecology-twinkle: calc(0.34 * var(--spw-freshness-weight, 0.62));
   transition:
     --spw-microinteraction-pulse-scale var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease),
     --spw-ecology-twinkle var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease);

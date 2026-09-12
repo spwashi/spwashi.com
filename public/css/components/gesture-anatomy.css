@@ -8,7 +8,18 @@
    ========================================================================== */
 
 :root {
-  --gesture-anatomy-opacity: 0.5;
+  /* Opacity resolves once from three parts so a modulating branch never has to
+     read the property it is setting (a self-reference is a cycle, not a step).
+     step  : the absolute reveal level a disclosure state asks for
+     gain  : theme/palette modulation applied on top of that level
+     max   : the ceiling a modulating branch is allowed to reach */
+  --gesture-anatomy-opacity-step: 0.5;
+  --gesture-anatomy-opacity-gain: 1;
+  --gesture-anatomy-opacity-max: 1;
+  --gesture-anatomy-opacity: min(
+    calc(var(--gesture-anatomy-opacity-step) * var(--gesture-anatomy-opacity-gain)),
+    var(--gesture-anatomy-opacity-max)
+  );
   --gesture-anatomy-size: 0.56rem;
   --gesture-anatomy-accent: var(--active-op-color, var(--component-accent, var(--teal, #008080)));
   --gesture-anatomy-surface: var(--surface-strong, #fff);
@@ -18,60 +29,60 @@
   --gesture-anatomy-ease: var(--ease-settle, ease);
 }
 
-:where(
-  html[data-spw-cognitive-handles="on"],
-  html[data-spw-capture-mode="screenshot"],
-  html[data-spw-capture-mode="study"],
-  html[data-spw-tuning-discoverability="revealed"]
-) {
-  --gesture-anatomy-opacity: 0.72;
+html[data-spw-cognitive-handles="on"],
+html[data-spw-capture-mode="screenshot"],
+html[data-spw-capture-mode="study"],
+html[data-spw-tuning-discoverability="revealed"] {
+  --gesture-anatomy-opacity-step: 0.72;
   --gesture-anatomy-size: 0.58rem;
 }
 
-:where(html[data-spw-capture-mode="screenshot"], html[data-spw-capture-mode="study"]) {
-  --gesture-anatomy-opacity: 0.88;
+html[data-spw-capture-mode="screenshot"], html[data-spw-capture-mode="study"] {
+  --gesture-anatomy-opacity-step: 0.88;
 }
 
-:where(html[data-spw-tuning-discoverability="ambient"]) {
-  --gesture-anatomy-opacity: 0.38;
+html[data-spw-tuning-discoverability="ambient"] {
+  --gesture-anatomy-opacity-step: 0.38;
   --gesture-anatomy-size: 0.54rem;
 }
 
 /* Theme / material posture — anatomy chrome spends the same palette as components. */
-:where(html[data-spw-color-mode="dark"]) {
+html[data-spw-color-mode="dark"] {
   --gesture-anatomy-surface: color-mix(in srgb, var(--surface-strong, #1a1e20) 92%, var(--gesture-anatomy-accent) 8%);
 }
 
-:where(html[data-spw-base-metamaterial="matte"]) {
+html[data-spw-base-metamaterial="matte"] {
   --gesture-anatomy-surface: var(--matte-surface, var(--surface-strong, #fff));
 }
 
-:where(html[data-spw-base-metamaterial="glass"]) {
+html[data-spw-base-metamaterial="glass"] {
   --gesture-anatomy-surface: color-mix(in srgb, var(--surface-strong, #fff) 86%, transparent);
 }
 
-:where(html[data-spw-theme-biome="shade-garden"]) {
+html[data-spw-theme-biome="shade-garden"] {
   --gesture-anatomy-accent: color-mix(in srgb, var(--active-op-color, #008080) 78%, hsl(28 40% 42%) 22%);
 }
 
-:where(html[data-spw-theme-biome="signal-reef"]) {
+html[data-spw-theme-biome="signal-reef"] {
   --gesture-anatomy-accent: color-mix(in srgb, var(--active-op-color, #008080) 72%, var(--blue, #2f69b1) 28%);
 }
 
-:where(html[data-spw-theme-biome="glasshouse"]) {
-  --gesture-anatomy-opacity: calc(var(--gesture-anatomy-opacity, 0.5) * 0.92);
+html[data-spw-theme-biome="glasshouse"] {
+  --gesture-anatomy-opacity-gain: 0.92;
 }
 
-:where(html[data-spw-palette-resonance="high"], html[data-spw-palette-resonance="vivid"]) {
-  --gesture-anatomy-opacity: min(calc(var(--gesture-anatomy-opacity, 0.5) * 1.12), 0.88);
+html[data-spw-palette-resonance="high"], html[data-spw-palette-resonance="vivid"] {
+  --gesture-anatomy-opacity-gain: 1.12;
+  --gesture-anatomy-opacity-max: 0.88;
 }
 
 /* Module synergy: when effect ledger / module-effects are active, anatomy reads slightly denser. */
-:where(html[data-spw-gesture-anatomy="active"][data-spw-module-effects-active]) {
-  --gesture-anatomy-opacity: min(calc(var(--gesture-anatomy-opacity, 0.5) * 1.06), 0.86);
+html[data-spw-gesture-anatomy="active"][data-spw-module-effects-active] {
+  --gesture-anatomy-opacity-gain: 1.06;
+  --gesture-anatomy-opacity-max: 0.86;
 }
 
-:where(html[data-spw-anatomy-theme-link*="semantics"]) {
+html[data-spw-anatomy-theme-link*="semantics"] {
   --gesture-anatomy-accent: color-mix(
     in srgb,
     var(--active-op-color, var(--teal, #008080)) 88%,

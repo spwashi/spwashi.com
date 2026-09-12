@@ -3277,6 +3277,7 @@ html[data-spw-reduce-motion="on"] {
    1. Packing tier routing
    ========================================================================== */
 
+html[data-spw-design-ecology-packing="compact"],
 :where(
   [data-spw-packing-state="compact"],
   [data-spw-density="compact"],
@@ -3284,8 +3285,7 @@ html[data-spw-reduce-motion="on"] {
   [data-spw-component-density="compact"],
   [data-spw-component-density="dense"],
   [data-spw-pack="compact"],
-  [data-spw-pack="dense"],
-  html[data-spw-design-ecology-packing="compact"]
+  [data-spw-pack="dense"]
 ) {
   --spw-pack-tier: compact;
   --spw-pack-occupancy-weight: 0.28;
@@ -3294,14 +3294,14 @@ html[data-spw-reduce-motion="on"] {
   --spw-pack-gap-active: var(--pack-tier-compact-gap, var(--component-gap-tight, 0.55rem));
 }
 
+html[data-spw-design-ecology-packing="balanced"],
 :where(
   [data-spw-packing-state="balanced"],
   [data-spw-density="balanced"],
   [data-spw-density="medium"],
   [data-spw-component-density="balanced"],
   [data-spw-pack="balanced"],
-  [data-spw-pack-occupancy="balanced"],
-  html[data-spw-design-ecology-packing="balanced"]
+  [data-spw-pack-occupancy="balanced"]
 ) {
   --spw-pack-tier: balanced;
   --spw-pack-occupancy-weight: 0.5;
@@ -3310,6 +3310,8 @@ html[data-spw-reduce-motion="on"] {
   --spw-pack-gap-active: var(--pack-tier-balanced-gap, var(--component-gap, 0.9rem));
 }
 
+html[data-spw-design-ecology-packing="spacious"],
+html[data-spw-design-ecology-packing="roomy"],
 :where(
   [data-spw-packing-state="roomy"],
   [data-spw-packing-state="spacious"],
@@ -3317,9 +3319,7 @@ html[data-spw-reduce-motion="on"] {
   [data-spw-density="roomy"],
   [data-spw-density="reading"],
   [data-spw-component-density="roomy"],
-  [data-spw-pack="roomy"],
-  html[data-spw-design-ecology-packing="spacious"],
-  html[data-spw-design-ecology-packing="roomy"]
+  [data-spw-pack="roomy"]
 ) {
   --spw-pack-tier: roomy;
   --spw-pack-occupancy-weight: 0.78;
@@ -3344,29 +3344,29 @@ html[data-spw-reduce-motion="on"] {
    2. Positioning phase routing
    ========================================================================== */
 
-:where(html[data-spw-loading-ecology-salience="forward"], html[data-spw-page-arrival="entering"]) {
+html[data-spw-loading-ecology-salience="forward"], html[data-spw-page-arrival="entering"] {
   --spw-position-phase: approach;
   --spw-position-bias-y: var(--spw-ecology-salience-shift, var(--spw-settle-offset-start, 2px));
   --spw-position-depth: var(--depth-ambient, 1);
 }
 
-:where(html[data-spw-loading-ecology-salience="return"], html[data-spw-page-arrival="returning"]) {
+html[data-spw-loading-ecology-salience="return"], html[data-spw-page-arrival="returning"] {
   --spw-position-phase: recall;
   --spw-position-bias-y: calc(var(--spw-ecology-salience-shift, var(--spw-settle-offset-start, 2px)) * -1);
 }
 
-:where(html[data-spw-loading-ecology-salience="restore"], html[data-spw-page-arrival="restored"]) {
+html[data-spw-loading-ecology-salience="restore"], html[data-spw-page-arrival="restored"] {
   --spw-position-phase: restore;
   --spw-position-depth: var(--depth-active, 50);
 }
 
-:where(html[data-spw-loading-ecology-salience="anchor"], html[data-spw-page-arrival="settled"]) {
+html[data-spw-loading-ecology-salience="anchor"], html[data-spw-page-arrival="settled"] {
   --spw-position-phase: anchor;
   --spw-position-bias-y: 0px;
   --spw-position-depth: var(--depth-settled, 10);
 }
 
-:where(html[data-spw-loading-ecology-salience="dormancy"], html[data-spw-page-presence="background"]) {
+html[data-spw-loading-ecology-salience="dormancy"], html[data-spw-page-presence="background"] {
   --spw-position-phase: dormancy;
   --spw-position-depth: var(--depth-ambient, 1);
 }
@@ -3487,16 +3487,16 @@ html[data-spw-reduce-motion="on"] {
 
 /* Layout attrs own frame (rem), not prose measure (ch). Cap only —
    shell-frame-max still mins with the settings tuner. */
+html[data-spw-layout="reading"],
 :where(
-  html[data-spw-layout="reading"],
   body[data-spw-layout="reading"]
 ) {
   --spw-shell-frame-cap: var(--page-width-reading);
   --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-reading));
 }
 
+html[data-spw-layout="newspaper"],
 :where(
-  html[data-spw-layout="newspaper"],
   body[data-spw-layout="newspaper"]
 ) {
   --spw-shell-frame-cap: var(--page-width-newspaper);
@@ -3504,33 +3504,33 @@ html[data-spw-reduce-motion="on"] {
 }
 
 @media (min-width: 61.25rem) {
-  :where(
-    html[data-spw-layout="newspaper"],
-    body[data-spw-layout="newspaper"]
-  ) {
+  html[data-spw-layout="newspaper"],
+:where(
+  body[data-spw-layout="newspaper"]
+) {
     --spw-shell-frame-cap: var(--page-width-atlas);
     --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-atlas));
   }
 }
 
+html[data-spw-layout="wide"],
 :where(
-  html[data-spw-layout="wide"],
   body[data-spw-layout="wide"]
 ) {
   --spw-shell-frame-cap: var(--page-width-wide);
   --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-wide));
 }
 
+html[data-spw-layout="atlas"],
 :where(
-  html[data-spw-layout="atlas"],
   body[data-spw-layout="atlas"]
 ) {
   --spw-shell-frame-cap: var(--page-width-atlas);
   --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-atlas));
 }
 
+html[data-spw-layout="split"],
 :where(
-  html[data-spw-layout="split"],
   body[data-spw-layout="split"]
 ) {
   --spw-shell-frame-cap: var(--page-width-wide);
@@ -3543,13 +3543,13 @@ html[data-spw-reduce-motion="on"] {
 
 /* Stack gap is authored. Do not shrink it when JS later writes lex —
    that arrival used to flash --flow-space. Pass attrs stay flourish-only. */
-:where(html[data-spw-hydration="ready"], html[data-spw-hydration-pass="pragmatic"]) {
+html[data-spw-hydration="ready"], html[data-spw-hydration-pass="pragmatic"] {
   --spw-real-estate-block: var(--page-stack-gap, clamp(1rem, 2.3vw, 1.7rem));
 }
 
-:where(html[data-spw-settings-momentum="pulse"]) {
-  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.62);
-  --spw-site-rhythm-tempo: min(calc(var(--spw-site-rhythm-tempo, 1) * 1.06), 3);
+html[data-spw-settings-momentum="pulse"] {
+  --spw-variant-selection-weight: 0.62;
+  --spw-site-rhythm-tempo: 1.06;
 }
 
 :where(html[data-spw-loading-ecology-dimensions~="variant"]) {
@@ -23654,7 +23654,18 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
    ========================================================================== */
 
 :root {
-  --gesture-anatomy-opacity: 0.5;
+  /* Opacity resolves once from three parts so a modulating branch never has to
+     read the property it is setting (a self-reference is a cycle, not a step).
+     step  : the absolute reveal level a disclosure state asks for
+     gain  : theme/palette modulation applied on top of that level
+     max   : the ceiling a modulating branch is allowed to reach */
+  --gesture-anatomy-opacity-step: 0.5;
+  --gesture-anatomy-opacity-gain: 1;
+  --gesture-anatomy-opacity-max: 1;
+  --gesture-anatomy-opacity: min(
+    calc(var(--gesture-anatomy-opacity-step) * var(--gesture-anatomy-opacity-gain)),
+    var(--gesture-anatomy-opacity-max)
+  );
   --gesture-anatomy-size: 0.56rem;
   --gesture-anatomy-accent: var(--active-op-color, var(--component-accent, var(--teal, #008080)));
   --gesture-anatomy-surface: var(--surface-strong, #fff);
@@ -23664,60 +23675,60 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   --gesture-anatomy-ease: var(--ease-settle, ease);
 }
 
-:where(
-  html[data-spw-cognitive-handles="on"],
-  html[data-spw-capture-mode="screenshot"],
-  html[data-spw-capture-mode="study"],
-  html[data-spw-tuning-discoverability="revealed"]
-) {
-  --gesture-anatomy-opacity: 0.72;
+html[data-spw-cognitive-handles="on"],
+html[data-spw-capture-mode="screenshot"],
+html[data-spw-capture-mode="study"],
+html[data-spw-tuning-discoverability="revealed"] {
+  --gesture-anatomy-opacity-step: 0.72;
   --gesture-anatomy-size: 0.58rem;
 }
 
-:where(html[data-spw-capture-mode="screenshot"], html[data-spw-capture-mode="study"]) {
-  --gesture-anatomy-opacity: 0.88;
+html[data-spw-capture-mode="screenshot"], html[data-spw-capture-mode="study"] {
+  --gesture-anatomy-opacity-step: 0.88;
 }
 
-:where(html[data-spw-tuning-discoverability="ambient"]) {
-  --gesture-anatomy-opacity: 0.38;
+html[data-spw-tuning-discoverability="ambient"] {
+  --gesture-anatomy-opacity-step: 0.38;
   --gesture-anatomy-size: 0.54rem;
 }
 
 /* Theme / material posture — anatomy chrome spends the same palette as components. */
-:where(html[data-spw-color-mode="dark"]) {
+html[data-spw-color-mode="dark"] {
   --gesture-anatomy-surface: color-mix(in srgb, var(--surface-strong, #1a1e20) 92%, var(--gesture-anatomy-accent) 8%);
 }
 
-:where(html[data-spw-base-metamaterial="matte"]) {
+html[data-spw-base-metamaterial="matte"] {
   --gesture-anatomy-surface: var(--matte-surface, var(--surface-strong, #fff));
 }
 
-:where(html[data-spw-base-metamaterial="glass"]) {
+html[data-spw-base-metamaterial="glass"] {
   --gesture-anatomy-surface: color-mix(in srgb, var(--surface-strong, #fff) 86%, transparent);
 }
 
-:where(html[data-spw-theme-biome="shade-garden"]) {
+html[data-spw-theme-biome="shade-garden"] {
   --gesture-anatomy-accent: color-mix(in srgb, var(--active-op-color, #008080) 78%, hsl(28 40% 42%) 22%);
 }
 
-:where(html[data-spw-theme-biome="signal-reef"]) {
+html[data-spw-theme-biome="signal-reef"] {
   --gesture-anatomy-accent: color-mix(in srgb, var(--active-op-color, #008080) 72%, var(--blue, #2f69b1) 28%);
 }
 
-:where(html[data-spw-theme-biome="glasshouse"]) {
-  --gesture-anatomy-opacity: calc(var(--gesture-anatomy-opacity, 0.5) * 0.92);
+html[data-spw-theme-biome="glasshouse"] {
+  --gesture-anatomy-opacity-gain: 0.92;
 }
 
-:where(html[data-spw-palette-resonance="high"], html[data-spw-palette-resonance="vivid"]) {
-  --gesture-anatomy-opacity: min(calc(var(--gesture-anatomy-opacity, 0.5) * 1.12), 0.88);
+html[data-spw-palette-resonance="high"], html[data-spw-palette-resonance="vivid"] {
+  --gesture-anatomy-opacity-gain: 1.12;
+  --gesture-anatomy-opacity-max: 0.88;
 }
 
 /* Module synergy: when effect ledger / module-effects are active, anatomy reads slightly denser. */
-:where(html[data-spw-gesture-anatomy="active"][data-spw-module-effects-active]) {
-  --gesture-anatomy-opacity: min(calc(var(--gesture-anatomy-opacity, 0.5) * 1.06), 0.86);
+html[data-spw-gesture-anatomy="active"][data-spw-module-effects-active] {
+  --gesture-anatomy-opacity-gain: 1.06;
+  --gesture-anatomy-opacity-max: 0.86;
 }
 
-:where(html[data-spw-anatomy-theme-link*="semantics"]) {
+html[data-spw-anatomy-theme-link*="semantics"] {
   --gesture-anatomy-accent: color-mix(
     in srgb,
     var(--active-op-color, var(--teal, #008080)) 88%,
@@ -28767,7 +28778,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   opacity: var(--spw-settle-opacity-high, 1);
 }
 
-:where(html[data-spw-reduce-motion="on"]) {
+html[data-spw-reduce-motion="on"] {
   --spw-image-interaction-lift: 1;
   --spw-image-interaction-saturate: 1;
   --spw-image-interaction-contrast: 1;
@@ -29272,7 +29283,7 @@ html {
 
 /* A minimal climate is a request for less; canopy is exactly the ambient
    modulation that request is about. */
-:where(html[data-spw-enhancement-level="minimal"]) {
+html[data-spw-enhancement-level="minimal"] {
   --spw-canopy: 0;
   --spw-canopy-depth: 0;
   --spw-canopy-edge: 0;
@@ -29665,41 +29676,41 @@ html {
   --spw-layout-posture-grid-bias: 1;
 }
 
-:where(html[data-spw-layout-tuner="reading"], body[data-spw-layout="reading"]) {
+html[data-spw-layout-tuner="reading"], :where(body[data-spw-layout="reading"]) {
   --spw-layout-posture-measure-bias: 0.92;
 }
 
-:where(html[data-spw-layout-tuner="newspaper"], body[data-spw-layout="newspaper"]) {
+html[data-spw-layout-tuner="newspaper"], :where(body[data-spw-layout="newspaper"]) {
   /* Denser prose + slightly tighter grid — newspaper is not “wide”. */
   --spw-layout-posture-measure-bias: 0.86;
   --spw-layout-posture-grid-bias: 1.08;
-  --spw-grid-min-active: min(var(--spw-grid-min-active, 15rem), 11.25rem);
+  --spw-grid-min-active: min(var(--spw-grid-min-base, 15rem), 11.25rem);
 }
 
-:where(html[data-spw-layout-tuner="wide"], body[data-spw-layout="wide"]) {
+html[data-spw-layout-tuner="wide"], :where(body[data-spw-layout="wide"]) {
   --spw-layout-posture-measure-bias: 1.04;
 }
 
-:where(html[data-spw-layout-tuner="atlas"], body[data-spw-layout="atlas"]) {
+html[data-spw-layout-tuner="atlas"], :where(body[data-spw-layout="atlas"]) {
   --spw-layout-posture-measure-bias: 1.12;
   --spw-layout-posture-grid-bias: 1.14;
 }
 
-:where(html[data-spw-explore-posture="reading"], html[data-spw-layout-posture="reading"]) {
+html[data-spw-explore-posture="reading"], html[data-spw-layout-posture="reading"] {
   --spw-layout-posture-weight: 0.34;
-  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.38);
+  --spw-variant-selection-weight: 0.38;
 }
 
-:where(html[data-spw-explore-posture="field"], html[data-spw-layout-posture="field"]) {
+html[data-spw-explore-posture="field"], html[data-spw-layout-posture="field"] {
   --spw-layout-posture-weight: 0.62;
   --spw-layout-posture-grid-bias: 1.06;
-  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.52);
+  --spw-variant-selection-weight: 0.52;
 }
 
-:where(html[data-spw-explore-posture="workshop"], html[data-spw-layout-posture="workshop"]) {
+html[data-spw-explore-posture="workshop"], html[data-spw-layout-posture="workshop"] {
   --spw-layout-posture-weight: 0.86;
   --spw-layout-posture-grid-bias: 1.12;
-  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.68);
+  --spw-variant-selection-weight: 0.68;
   --spw-tuning-discoverability: revealed;
 }
 
@@ -30442,36 +30453,36 @@ html {
    route-local timers. Succession stays on surfaces; this layer names the field.
    ========================================================================== */
 
-:where(html[data-spw-loading-ecology-phase="discovering"]) {
+html[data-spw-loading-ecology-phase="discovering"] {
   --spw-field-inquiry: 0.18;
   --spw-field-projection: 0.08;
 }
 
-:where(html[data-spw-loading-ecology-phase="prefetching"]) {
+html[data-spw-loading-ecology-phase="prefetching"] {
   --spw-field-projection: 0.22;
   --spw-field-memory: 0.14;
   --spw-ecology-field-charge: 0.12;
 }
 
-:where(html[data-spw-loading-ecology-phase="measuring"]) {
+html[data-spw-loading-ecology-phase="measuring"] {
   --spw-field-comparison: 0.24;
   --spw-field-constraint: 0.16;
   --spw-ecology-field-charge: 0.18;
 }
 
-:where(html[data-spw-loading-ecology-phase="mounting"]) {
+html[data-spw-loading-ecology-phase="mounting"] {
   --spw-field-charge: 0.14;
   --spw-field-resonance: 0.12;
   --spw-ecology-field-resonance: 0.16;
 }
 
-:where(html[data-spw-loading-ecology-phase="settling"], html[data-spw-loading-ecology-phase="personalizing"]) {
+html[data-spw-loading-ecology-phase="settling"], html[data-spw-loading-ecology-phase="personalizing"] {
   --spw-field-resonance: calc(0.16 + (var(--spw-ecology-trope-weight, 0) * 0.18));
   --spw-surface-local-resonance: calc(var(--spw-surface-resonance, 0.18) + var(--spw-ecology-field-resonance, 0));
   --spw-ecology-field-charge: calc(0.14 + (var(--spw-ecology-beat-align, 0) * 0.1));
 }
 
-:where(html[data-spw-loading-ecology-phase="settled"]) {
+html[data-spw-loading-ecology-phase="settled"] {
   --spw-field-memory: calc(0.16 + (var(--spw-ecology-trope-weight, 0) * 0.12));
   --spw-surface-local-memory: calc(var(--spw-surface-memory, 0.16) + (var(--spw-ecology-trope-weight, 0) * 0.08));
 }
@@ -36252,7 +36263,7 @@ html[data-spw-theme-pack="glass-console"] {
   --spw-monolith-rim-light: inset 0 1px 0 color-mix(in oklab, #fff 42%, transparent);
 }
 
-:where(html[data-spw-color-mode="dark"]) {
+html[data-spw-color-mode="dark"] {
   --spw-color-mix-base-surface: var(--surface-matte, #101618);
   --spw-color-mix-base-ink: var(--ink, #eef4f6);
   --spw-color-mix-base-line: var(--line-strong, rgba(255, 255, 255, 0.18));
@@ -36586,7 +36597,7 @@ body[data-spw-micro-world="true"]::before {
   --spw-resonance: calc(var(--spw-palette-treat-strength, 0.62) * 0.72);
 }
 
-:where(html[data-spw-reduce-motion="on"][data-spw-palette-treat-active="on"]) {
+html[data-spw-reduce-motion="on"][data-spw-palette-treat-active="on"] {
   --spw-palette-treat-strength: 0;
 }
 
@@ -36615,31 +36626,31 @@ body[data-spw-micro-world="true"]::before {
   --spw-reveal-frame-strength: 0;
 }
 
-:where(html[data-spw-key-selection="potentiated"]) {
+html[data-spw-key-selection="potentiated"] {
   --spw-key-potential-strength: calc(0.42 + (var(--spw-freshness-weight, 0.5) * 0.2));
 }
 
-:where(html[data-spw-key-selection="actualized"]) {
+html[data-spw-key-selection="actualized"] {
   --spw-key-potential-strength: calc(0.62 + (var(--spw-freshness-weight, 0.5) * 0.28));
 }
 
-:where(html[data-spw-scene-depth]) {
+html[data-spw-scene-depth] {
   --spw-scene-context-strength: calc(0.18 + (min(3, var(--spw-scene-depth, 0)) * 0.12));
 }
 
-:where(html[data-spw-reveal-phase="framing"]) {
+html[data-spw-reveal-phase="framing"] {
   --spw-reveal-frame-strength: calc(0.28 + (var(--spw-reveal-phase-weight, 0.35) * 0.4));
 }
 
-:where(html[data-spw-reveal-phase="revealing"]) {
+html[data-spw-reveal-phase="revealing"] {
   --spw-reveal-frame-strength: calc(0.52 + (var(--spw-reveal-phase-weight, 0.72) * 0.35));
 }
 
-:where(html[data-spw-reveal-phase="revealed"]) {
+html[data-spw-reveal-phase="revealed"] {
   --spw-reveal-frame-strength: calc(0.68 + (var(--spw-reveal-phase-weight, 1) * 0.22));
 }
 
-:where(html[data-spw-reveal-phase="settling"]) {
+html[data-spw-reveal-phase="settling"] {
   --spw-reveal-frame-strength: calc(0.22 + (var(--spw-reveal-phase-weight, 0.28) * 0.3));
 }
 
@@ -36988,7 +36999,12 @@ html[data-spw-color-mode="dark"] [data-spw-surface="about"] :where([data-spw-fea
    ========================================================================== */
 
 :root {
-  --spw-medium-touch-min: 2.75rem;
+  /* Touch size resolves from a step and a floor. Device branches raise the step
+     they want; a narrow viewport raises the floor without lowering a coarse
+     pointer's larger step. --touch-target-min stays the ground-control minimum. */
+  --spw-medium-touch-step: 2.75rem;
+  --spw-medium-touch-floor: var(--touch-target-min, 2.75rem);
+  --spw-medium-touch-min: max(var(--spw-medium-touch-step), var(--spw-medium-touch-floor));
   --spw-medium-lane-pad: 0.55rem;
   --spw-medium-layout-gap-scale: 1;
   --spw-medium-reveal-stagger-step: 72ms;
@@ -37004,24 +37020,24 @@ html[data-spw-color-mode="dark"] [data-spw-surface="about"] :where([data-spw-fea
    Device specificity — pointer, hover, viewport tier
    -------------------------------------------------------------------------- */
 
-:where(html[data-spw-pointer-mode="coarse"]) {
-  --spw-medium-touch-min: 3.15rem;
+html[data-spw-pointer-mode="coarse"] {
+  --spw-medium-touch-step: 3.15rem;
   --spw-medium-lane-pad: 0.72rem;
   --spw-medium-hover-lift: 0px;
   --spw-medium-outline-offset: 4px;
   --spw-medium-reveal-stagger-step: 58ms;
 }
 
-:where(html[data-spw-hover-mode="touch"]) {
+html[data-spw-hover-mode="touch"] {
   --spw-medium-hover-lift: 0px;
 }
 
-:where(html[data-spw-viewport-tier="compact"], html[data-spw-viewport-tier="narrow"]) {
+html[data-spw-viewport-tier="compact"], html[data-spw-viewport-tier="narrow"] {
   --spw-medium-layout-gap-scale: 0.92;
-  --spw-medium-touch-min: max(var(--spw-medium-touch-min, 2.75rem), 3rem);
+  --spw-medium-touch-floor: 3rem;
 }
 
-:where(html[data-spw-viewport-tier="wide"]) {
+html[data-spw-viewport-tier="wide"] {
   --spw-medium-layout-gap-scale: 1.06;
   --spw-medium-accent-weight: 1.04;
 }
@@ -37030,21 +37046,21 @@ html[data-spw-color-mode="dark"] [data-spw-surface="about"] :where([data-spw-fea
    Interaction posture — entertainment utility tuning
    -------------------------------------------------------------------------- */
 
-:where(html[data-spw-interaction-posture="touch-field"]) {
-  --spw-medium-touch-min: 3.35rem;
+html[data-spw-interaction-posture="touch-field"] {
+  --spw-medium-touch-step: 3.35rem;
   --spw-medium-lane-pad: 0.78rem;
   --spw-medium-layout-gap-scale: 0.9;
   --spw-medium-reveal-stagger-step: 52ms;
   --spw-module-style-modulator: 1.12;
 }
 
-:where(html[data-spw-interaction-posture="touch-tablet"]) {
-  --spw-medium-touch-min: 3.05rem;
+html[data-spw-interaction-posture="touch-tablet"] {
+  --spw-medium-touch-step: 3.05rem;
   --spw-medium-lane-pad: 0.68rem;
   --spw-module-style-modulator: 1.06;
 }
 
-:where(html[data-spw-interaction-posture="pointer-rich"]) {
+html[data-spw-interaction-posture="pointer-rich"] {
   --spw-medium-hover-lift: 2px;
   --spw-medium-accent-weight: 1.08;
   --spw-medium-scene-coupling: 0.48;
@@ -37054,32 +37070,32 @@ html[data-spw-color-mode="dark"] [data-spw-surface="about"] :where([data-spw-fea
    Medium register — route / entertainment targeting
    -------------------------------------------------------------------------- */
 
-:where(html[data-spw-medium-register="scene"]) {
+html[data-spw-medium-register="scene"] {
   --spw-medium-accent-weight: 1.12;
   --spw-medium-scene-coupling: 0.58;
   --spw-medium-lane-active-boost: 0.68;
   --spw-module-style-modulator: 1.1;
-  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.48);
+  --spw-variant-selection-weight: 0.48;
 }
 
-:where(html[data-spw-medium-register="play"]) {
+html[data-spw-medium-register="play"] {
   --spw-medium-accent-weight: 1.08;
   --spw-medium-scene-coupling: 0.52;
   --spw-medium-lane-active-boost: 0.62;
   --spw-module-style-modulator: 1.08;
 }
 
-:where(html[data-spw-medium-register="workshop"], html[data-spw-medium-register="lab"]) {
+html[data-spw-medium-register="workshop"], html[data-spw-medium-register="lab"] {
   --spw-medium-accent-weight: 1.04;
   --spw-module-style-modulator: 1.04;
 }
 
-:where(html[data-spw-medium-register="reading"]) {
+html[data-spw-medium-register="reading"] {
   --spw-medium-accent-weight: 0.96;
   --spw-module-style-modulator: 0.94;
 }
 
-:where(html[data-spw-interactive-medium-ready="true"]) {
+html[data-spw-interactive-medium-ready="true"] {
   --spw-medium-lane-active-boost: calc(0.48 + (var(--spw-medium-intensity, 0.5) * 0.28));
   --spw-module-style-modulator: calc(0.88 + (var(--spw-medium-intensity, 0.5) * 0.24));
 }
@@ -44777,10 +44793,12 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
    This makes matte a reliable clear-contrast page posture when chosen in settings
    without forcing every child to carry the attr. Used by design hub experiments and
    any route that wants the safeguard for its primary reading surfaces. */
-:where(body[data-spw-base-metamaterial="matte"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, [data-spw-component-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading), [data-spw-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading)) {
-  /* Inherit the matte projection; explicit metamaterial on a child can still override. */
-}
-:where(body[data-spw-base-metamaterial="matte"][data-spw-high-contrast="on"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, [data-spw-component-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading), [data-spw-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading)) {
+/* Read the base metamaterial from either root. The preflight seed runs in <head>,
+   where there is no body yet, so a body-only selector could not colour the first
+   paint; every other base-metamaterial rule in the tree already keys on html.
+   Children inherit the matte projection, and an explicit data-spw-metamaterial on
+   a child still wins on cascade and specificity. */
+:where(:is(html, body)[data-spw-base-metamaterial="matte"][data-spw-high-contrast="on"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, [data-spw-component-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading), [data-spw-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading)) {
   /* When matte + high-contrast, force the strongest clear ink for the treatment. */
   color: var(--material-ink-matte-strong);
 }

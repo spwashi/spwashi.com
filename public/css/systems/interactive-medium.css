@@ -7,7 +7,12 @@
    ========================================================================== */
 
 :root {
-  --spw-medium-touch-min: 2.75rem;
+  /* Touch size resolves from a step and a floor. Device branches raise the step
+     they want; a narrow viewport raises the floor without lowering a coarse
+     pointer's larger step. --touch-target-min stays the ground-control minimum. */
+  --spw-medium-touch-step: 2.75rem;
+  --spw-medium-touch-floor: var(--touch-target-min, 2.75rem);
+  --spw-medium-touch-min: max(var(--spw-medium-touch-step), var(--spw-medium-touch-floor));
   --spw-medium-lane-pad: 0.55rem;
   --spw-medium-layout-gap-scale: 1;
   --spw-medium-reveal-stagger-step: 72ms;
@@ -23,24 +28,24 @@
    Device specificity — pointer, hover, viewport tier
    -------------------------------------------------------------------------- */
 
-:where(html[data-spw-pointer-mode="coarse"]) {
-  --spw-medium-touch-min: 3.15rem;
+html[data-spw-pointer-mode="coarse"] {
+  --spw-medium-touch-step: 3.15rem;
   --spw-medium-lane-pad: 0.72rem;
   --spw-medium-hover-lift: 0px;
   --spw-medium-outline-offset: 4px;
   --spw-medium-reveal-stagger-step: 58ms;
 }
 
-:where(html[data-spw-hover-mode="touch"]) {
+html[data-spw-hover-mode="touch"] {
   --spw-medium-hover-lift: 0px;
 }
 
-:where(html[data-spw-viewport-tier="compact"], html[data-spw-viewport-tier="narrow"]) {
+html[data-spw-viewport-tier="compact"], html[data-spw-viewport-tier="narrow"] {
   --spw-medium-layout-gap-scale: 0.92;
-  --spw-medium-touch-min: max(var(--spw-medium-touch-min, 2.75rem), 3rem);
+  --spw-medium-touch-floor: 3rem;
 }
 
-:where(html[data-spw-viewport-tier="wide"]) {
+html[data-spw-viewport-tier="wide"] {
   --spw-medium-layout-gap-scale: 1.06;
   --spw-medium-accent-weight: 1.04;
 }
@@ -49,21 +54,21 @@
    Interaction posture — entertainment utility tuning
    -------------------------------------------------------------------------- */
 
-:where(html[data-spw-interaction-posture="touch-field"]) {
-  --spw-medium-touch-min: 3.35rem;
+html[data-spw-interaction-posture="touch-field"] {
+  --spw-medium-touch-step: 3.35rem;
   --spw-medium-lane-pad: 0.78rem;
   --spw-medium-layout-gap-scale: 0.9;
   --spw-medium-reveal-stagger-step: 52ms;
   --spw-module-style-modulator: 1.12;
 }
 
-:where(html[data-spw-interaction-posture="touch-tablet"]) {
-  --spw-medium-touch-min: 3.05rem;
+html[data-spw-interaction-posture="touch-tablet"] {
+  --spw-medium-touch-step: 3.05rem;
   --spw-medium-lane-pad: 0.68rem;
   --spw-module-style-modulator: 1.06;
 }
 
-:where(html[data-spw-interaction-posture="pointer-rich"]) {
+html[data-spw-interaction-posture="pointer-rich"] {
   --spw-medium-hover-lift: 2px;
   --spw-medium-accent-weight: 1.08;
   --spw-medium-scene-coupling: 0.48;
@@ -73,32 +78,32 @@
    Medium register — route / entertainment targeting
    -------------------------------------------------------------------------- */
 
-:where(html[data-spw-medium-register="scene"]) {
+html[data-spw-medium-register="scene"] {
   --spw-medium-accent-weight: 1.12;
   --spw-medium-scene-coupling: 0.58;
   --spw-medium-lane-active-boost: 0.68;
   --spw-module-style-modulator: 1.1;
-  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.48);
+  --spw-variant-selection-weight: 0.48;
 }
 
-:where(html[data-spw-medium-register="play"]) {
+html[data-spw-medium-register="play"] {
   --spw-medium-accent-weight: 1.08;
   --spw-medium-scene-coupling: 0.52;
   --spw-medium-lane-active-boost: 0.62;
   --spw-module-style-modulator: 1.08;
 }
 
-:where(html[data-spw-medium-register="workshop"], html[data-spw-medium-register="lab"]) {
+html[data-spw-medium-register="workshop"], html[data-spw-medium-register="lab"] {
   --spw-medium-accent-weight: 1.04;
   --spw-module-style-modulator: 1.04;
 }
 
-:where(html[data-spw-medium-register="reading"]) {
+html[data-spw-medium-register="reading"] {
   --spw-medium-accent-weight: 0.96;
   --spw-module-style-modulator: 0.94;
 }
 
-:where(html[data-spw-interactive-medium-ready="true"]) {
+html[data-spw-interactive-medium-ready="true"] {
   --spw-medium-lane-active-boost: calc(0.48 + (var(--spw-medium-intensity, 0.5) * 0.28));
   --spw-module-style-modulator: calc(0.88 + (var(--spw-medium-intensity, 0.5) * 0.24));
 }

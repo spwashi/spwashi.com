@@ -15,31 +15,31 @@
   --spw-reveal-frame-strength: 0;
 }
 
-:where(html[data-spw-key-selection="potentiated"]) {
+html[data-spw-key-selection="potentiated"] {
   --spw-key-potential-strength: calc(0.42 + (var(--spw-freshness-weight, 0.5) * 0.2));
 }
 
-:where(html[data-spw-key-selection="actualized"]) {
+html[data-spw-key-selection="actualized"] {
   --spw-key-potential-strength: calc(0.62 + (var(--spw-freshness-weight, 0.5) * 0.28));
 }
 
-:where(html[data-spw-scene-depth]) {
+html[data-spw-scene-depth] {
   --spw-scene-context-strength: calc(0.18 + (min(3, var(--spw-scene-depth, 0)) * 0.12));
 }
 
-:where(html[data-spw-reveal-phase="framing"]) {
+html[data-spw-reveal-phase="framing"] {
   --spw-reveal-frame-strength: calc(0.28 + (var(--spw-reveal-phase-weight, 0.35) * 0.4));
 }
 
-:where(html[data-spw-reveal-phase="revealing"]) {
+html[data-spw-reveal-phase="revealing"] {
   --spw-reveal-frame-strength: calc(0.52 + (var(--spw-reveal-phase-weight, 0.72) * 0.35));
 }
 
-:where(html[data-spw-reveal-phase="revealed"]) {
+html[data-spw-reveal-phase="revealed"] {
   --spw-reveal-frame-strength: calc(0.68 + (var(--spw-reveal-phase-weight, 1) * 0.22));
 }
 
-:where(html[data-spw-reveal-phase="settling"]) {
+html[data-spw-reveal-phase="settling"] {
   --spw-reveal-frame-strength: calc(0.22 + (var(--spw-reveal-phase-weight, 0.28) * 0.3));
 }
 

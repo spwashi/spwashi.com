@@ -296,10 +296,12 @@
    This makes matte a reliable clear-contrast page posture when chosen in settings
    without forcing every child to carry the attr. Used by design hub experiments and
    any route that wants the safeguard for its primary reading surfaces. */
-:where(body[data-spw-base-metamaterial="matte"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, [data-spw-component-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading), [data-spw-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading)) {
-  /* Inherit the matte projection; explicit metamaterial on a child can still override. */
-}
-:where(body[data-spw-base-metamaterial="matte"][data-spw-high-contrast="on"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, [data-spw-component-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading), [data-spw-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading)) {
+/* Read the base metamaterial from either root. The preflight seed runs in <head>,
+   where there is no body yet, so a body-only selector could not colour the first
+   paint; every other base-metamaterial rule in the tree already keys on html.
+   Children inherit the matte projection, and an explicit data-spw-metamaterial on
+   a child still wins on cascade and specificity. */
+:where(:is(html, body)[data-spw-base-metamaterial="matte"][data-spw-high-contrast="on"]) :where(.spw-frame, .frame-card, :is(.spw-panel, .frame-panel), .mode-panel, [data-spw-component-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading), [data-spw-kind]:not(body):not(main):not(.frame-topline):not(.frame-heading)) {
   /* When matte + high-contrast, force the strongest clear ink for the treatment. */
   color: var(--material-ink-matte-strong);
 }

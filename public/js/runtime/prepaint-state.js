@@ -41,6 +41,8 @@
   const LEGIBLE_CHANNEL = new Set(['off', 'structural', 'measure', 'residue', 'inspect', 'temporal', 'flourish', 'diagnostic']);
   const BINARY = new Set(['off', 'on']);
   const GRAIN_INTENSITY = new Set(['none', 'subtle', 'moderate', 'rich']);
+  const LAYOUT_TUNERS = new Set(['reading', 'newspaper', 'wide', 'atlas']);
+  const EXPLORE_POSTURES = new Set(['reading', 'field', 'workshop']);
   const ATTENTION_SELF_RELATION = new Set(['breath', 'inner-weather', 'dimensional-scan']);
   const ATTENTION_LOCAL_RELATION = new Set(['immediate-field', 'witness', 'reciprocity-proof']);
   const ATTENTION_GLOBAL_RELATION = new Set(['horizon-systems', 'cultural-fermentation', 'stewardship']);
@@ -111,6 +113,10 @@
   const monospaceVariant = pick(settings.monospaceVariant, MONOSPACE_VARIANTS, 'jetbrains');
   const headerOpacity = pick(settings.headerOpacity, HEADER_OPACITY, 'normal');
   const paletteResonance = pick(settings.paletteResonance, PALETTE_RESONANCE, 'route');
+  // Posture tokens bias prose measure and grid gap, so seeding them here keeps
+  // the first paint at the same width the settled page uses.
+  const layoutTuner = pick(settings.layoutTuner, LAYOUT_TUNERS, 'reading');
+  const explorePosture = pick(settings.explorePosture, EXPLORE_POSTURES, 'reading');
   const semanticDensity = pick(settings.semanticDensity, SEMANTIC_DENSITY, 'minimal');
   const enhancementLevel = pick(settings.enhancementLevel, ENHANCEMENT_LEVEL, 'minimal');
   const operatorSaturation = pick(settings.operatorSaturation, OPERATOR_SATURATION, 'normal');
@@ -129,7 +135,7 @@
 
   // Critical visual for early CSS (motif-driven pigment, tokens in core.css).
   // Duplicated tiny logic from shared.js so prepaint stays zero-dep and runs before any other module.
-  const pedagogicalFlavor = pick(settings.pedagogicalFlavor, new Set(['culinary', 'garden', 'studio', 'runtime']), 'runtime');
+  const pedagogicalFlavor = pick(settings.pedagogicalFlavor, new Set(['culinary', 'garden', 'studio', 'runtime']), 'culinary');
   let componentMotif = 'lab';
   const f = String(pedagogicalFlavor).toLowerCase();
   if (f === 'culinary' || f === 'garden') componentMotif = 'curriculum';
@@ -153,6 +159,8 @@
   html.dataset.spwMonospaceVariant = monospaceVariant;
   html.dataset.spwHeaderOpacity = headerOpacity;
   html.dataset.spwPaletteResonance = paletteResonance;
+  html.dataset.spwLayoutTuner = layoutTuner;
+  html.dataset.spwExplorePosture = explorePosture;
   html.dataset.spwSemanticDensity = semanticDensity;
   html.dataset.spwEnhancementLevel = enhancementLevel;
   html.dataset.spwOperatorSaturation = operatorSaturation;

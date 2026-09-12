@@ -142,6 +142,17 @@
   not_tolerable: "Hiding, moving, or resizing what the visitor already read. A JS alias map that conflates two operators. Unlayered late CSS that beats the stack."
 }
 
+^"root_state_specificity"{
+  claim: "A root-state branch must out-weigh the :root base it is trying to move."
+  mechanism: "`:root` is one class of specificity. `:where(...)` is zero. A rule written as `:where(html[data-spw-x=\"y\"])` therefore loses to a bare `:root` declaration of the same custom property in the same layer, whatever the source order. The branch reads as authored intent and applies to nothing."
+  found: "2026-09-11: 70 rules across 13 files. Every layout tuner, explore posture, pointer-mode touch size, viewport tier, medium register, reveal phase and loading-ecology phase was inert. A forced-attribute browser probe moved 19 of 20 sampled branches not at all."
+  rule: "Write a root-subject state branch as plain `html[data-spw-...]`. Keep `:where()` for the descendant branches in the same selector list so nothing outside the root changes weight."
+  compose_not_reenter: "A branch that modulates a token must not read the token it is setting. `--x: calc(var(--x) * 0.9)` is a cycle, and a cycle is invalid at computed-value time, so activating such a rule drops the token instead of scaling it. Split the token into the parts that compose: an absolute step or level, a multiplicative gain, and a floor or ceiling; resolve them once on :root."
+  seeded_pair: "A branch that biases measure, gap or touch size must also be seeded by the preflight, or activating it buys a first-paint reflow in exchange for the repair. prepaint-state.js and DEFAULT_SITE_SETTINGS are one contract: what the seed writes and what the engine settles on have to agree."
+  executable_contract: "scripts/ts/css-contracts.mts fails a zero-specificity root-subject rule that collides with its own file's :root base."
+  successor: "25 root-subject declarations still read the property they set, in sigils-and-chips, electrostatic-affordances, arrival-electrostatics, learnability-ledger, enrichment, texture-slice, grain-texture, packs and core. They are live selectors holding dead arithmetic. Each needs its own compose split and paired receipt; do not fold them into one sweep."
+}
+
 ^"late_restyle"{
   claim: "A late stylesheet may only add atmosphere to a surface that already held."
   hook: "First paint must already be worth staying for: a named person, a next action, readable structure, fast enough to trust."

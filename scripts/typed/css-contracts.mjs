@@ -247,6 +247,117 @@ function findSelectorAtRuleJoins(source) {
     }
     return invalidLines;
 }
+/**
+ * Root-state branches written as `:where(html[...])` carry zero specificity, so
+ * a bare `:root` rule for the same custom property in the same file always beats
+ * them no matter the source order. The branch then looks authored but never
+ * applies. Report those so a settings posture cannot go quietly dead again.
+ */
+function splitTopLevel(selector) {
+    const parts = [];
+    let depth = 0;
+    let buffer = '';
+    for (const character of selector) {
+        if (character === '(' || character === '[')
+            depth += 1;
+        else if (character === ')' || character === ']')
+            depth -= 1;
+        else if (character === ',' && depth === 0) {
+            parts.push(buffer.trim());
+            buffer = '';
+            continue;
+        }
+        buffer += character;
+    }
+    if (buffer.trim())
+        parts.push(buffer.trim());
+    return parts;
+}
+function unwrapOuterWhere(selector) {
+    const trimmed = selector.trim();
+    if (!trimmed.startsWith(':where(') || !trimmed.endsWith(')'))
+        return null;
+    let depth = 0;
+    for (let index = 0; index < trimmed.length; index += 1) {
+        if (trimmed[index] === '(')
+            depth += 1;
+        else if (trimmed[index] === ')') {
+            depth -= 1;
+            if (depth === 0 && index !== trimmed.length - 1)
+                return null;
+        }
+    }
+    return trimmed.slice(':where('.length, -1).trim();
+}
+function subjectIsRootElement(selector) {
+    const inner = unwrapOuterWhere(selector);
+    if (inner !== null)
+        return subjectIsRootElement(inner);
+    return splitTopLevel(selector).some((part) => {
+        const partInner = unwrapOuterWhere(part);
+        if (partInner !== null)
+            return subjectIsRootElement(partInner);
+        const compounds = part.split(/\s*[>+~]\s*|\s+/).filter(Boolean);
+        return /^(:root|html)(\[|:|\.|$)/.test(compounds[compounds.length - 1] ?? '');
+    });
+}
+function hasZeroSpecificity(selector) {
+    let stripped = selector;
+    let previous = '';
+    while (stripped !== previous) {
+        previous = stripped;
+        stripped = stripped.replace(/:where\(([^()]*)\)/g, '');
+    }
+    if (/[#.[\]]/.test(stripped))
+        return false;
+    if (/:(?!:)(?!where)[\w-]/.test(stripped))
+        return false;
+    return !/[a-zA-Z]/.test(stripped.replace(/[\s,>+~()]/g, ''));
+}
+const ROOT_BASE_SELECTOR = /^(:root|html|:root\s*,\s*html|html\s*,\s*:root)$/;
+function findDeadRootStateRules(source) {
+    const masked = source.replace(/\/\*[\s\S]*?\*\//g, (comment) => comment.replace(/[^\n]/g, ' '));
+    const rules = [];
+    const rulePattern = /([^{}@][^{}]*)\{([^{}]*)\}/g;
+    let match;
+    while ((match = rulePattern.exec(masked)) !== null) {
+        const selector = match[1].trim();
+        if (!selector || selector.startsWith('@'))
+            continue;
+        const properties = [...match[2].matchAll(/(--[\w-]+)\s*:/g)].map((entry) => entry[1]);
+        if (!properties.length)
+            continue;
+        rules.push({
+            selector,
+            properties,
+            line: masked.slice(0, match.index).split('\n').length,
+        });
+    }
+    const baseProperties = new Set();
+    for (const rule of rules) {
+        if (!ROOT_BASE_SELECTOR.test(rule.selector.replace(/\s+/g, ' ')))
+            continue;
+        for (const property of rule.properties)
+            baseProperties.add(property);
+    }
+    const dead = [];
+    for (const rule of rules) {
+        if (ROOT_BASE_SELECTOR.test(rule.selector.replace(/\s+/g, ' ')))
+            continue;
+        if (!hasZeroSpecificity(rule.selector) || !subjectIsRootElement(rule.selector))
+            continue;
+        for (const property of rule.properties) {
+            if (!baseProperties.has(property))
+                continue;
+            dead.push({
+                line: rule.line,
+                selector: rule.selector.replace(/\s+/g, ' ').slice(0, 72),
+                property,
+            });
+        }
+    }
+    return dead;
+}
 export async function collectCssContractReport() {
     const errors = [];
     const warnings = [];
@@ -380,6 +491,12 @@ export async function collectCssContractReport() {
         if (!compatibilityWrapper && !isGeneratedBundlePath(rootPath)) {
             for (const line of findSelectorAtRuleJoins(source)) {
                 errors.push(`${relativePath}:${line} ends a selector with a comma immediately before a conditional at-rule.`);
+            }
+        }
+        if (!compatibilityWrapper && !isGeneratedBundlePath(rootPath)) {
+            for (const dead of findDeadRootStateRules(source)) {
+                errors.push(`${relativePath}:${dead.line} sets ${dead.property} from a zero-specificity `
+                    + `\`${dead.selector}\`, which the same file's :root base always wins; drop the :where() wrapper on the root branch.`);
             }
         }
         if (!compatibilityWrapper

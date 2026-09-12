@@ -437,7 +437,9 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   highContrast: 'off',
   fontSize: 'normal',
 
-  colorMode: 'light',
+  // 'auto' so the prepaint seed and this default agree. Seeding one and
+  // settling on the other made a dark-OS visitor's first paint flip to light.
+  colorMode: 'auto',
   colorTuner: 'balanced',
   themePack: 'neutral-paper',
   iconPack: 'text',  // new consideration stub

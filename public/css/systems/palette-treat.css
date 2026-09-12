@@ -197,7 +197,7 @@
   --spw-resonance: calc(var(--spw-palette-treat-strength, 0.62) * 0.72);
 }
 
-:where(html[data-spw-reduce-motion="on"][data-spw-palette-treat-active="on"]) {
+html[data-spw-reduce-motion="on"][data-spw-palette-treat-active="on"] {
   --spw-palette-treat-strength: 0;
 }
 

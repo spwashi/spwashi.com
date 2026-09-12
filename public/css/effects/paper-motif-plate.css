@@ -176,7 +176,7 @@ html[data-spw-theme-pack="electric-studio"] {
     );
 }
 
-:where(html[data-spw-enhancement-level="minimal"]) {
+html[data-spw-enhancement-level="minimal"] {
   --spw-paper-motif-image: none;
 }
 

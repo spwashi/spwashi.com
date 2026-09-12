@@ -141,6 +141,7 @@
    1. Packing tier routing
    ========================================================================== */
 
+html[data-spw-design-ecology-packing="compact"],
 :where(
   [data-spw-packing-state="compact"],
   [data-spw-density="compact"],
@@ -148,8 +149,7 @@
   [data-spw-component-density="compact"],
   [data-spw-component-density="dense"],
   [data-spw-pack="compact"],
-  [data-spw-pack="dense"],
-  html[data-spw-design-ecology-packing="compact"]
+  [data-spw-pack="dense"]
 ) {
   --spw-pack-tier: compact;
   --spw-pack-occupancy-weight: 0.28;
@@ -158,14 +158,14 @@
   --spw-pack-gap-active: var(--pack-tier-compact-gap, var(--component-gap-tight, 0.55rem));
 }
 
+html[data-spw-design-ecology-packing="balanced"],
 :where(
   [data-spw-packing-state="balanced"],
   [data-spw-density="balanced"],
   [data-spw-density="medium"],
   [data-spw-component-density="balanced"],
   [data-spw-pack="balanced"],
-  [data-spw-pack-occupancy="balanced"],
-  html[data-spw-design-ecology-packing="balanced"]
+  [data-spw-pack-occupancy="balanced"]
 ) {
   --spw-pack-tier: balanced;
   --spw-pack-occupancy-weight: 0.5;
@@ -174,6 +174,8 @@
   --spw-pack-gap-active: var(--pack-tier-balanced-gap, var(--component-gap, 0.9rem));
 }
 
+html[data-spw-design-ecology-packing="spacious"],
+html[data-spw-design-ecology-packing="roomy"],
 :where(
   [data-spw-packing-state="roomy"],
   [data-spw-packing-state="spacious"],
@@ -181,9 +183,7 @@
   [data-spw-density="roomy"],
   [data-spw-density="reading"],
   [data-spw-component-density="roomy"],
-  [data-spw-pack="roomy"],
-  html[data-spw-design-ecology-packing="spacious"],
-  html[data-spw-design-ecology-packing="roomy"]
+  [data-spw-pack="roomy"]
 ) {
   --spw-pack-tier: roomy;
   --spw-pack-occupancy-weight: 0.78;
@@ -208,29 +208,29 @@
    2. Positioning phase routing
    ========================================================================== */
 
-:where(html[data-spw-loading-ecology-salience="forward"], html[data-spw-page-arrival="entering"]) {
+html[data-spw-loading-ecology-salience="forward"], html[data-spw-page-arrival="entering"] {
   --spw-position-phase: approach;
   --spw-position-bias-y: var(--spw-ecology-salience-shift, var(--spw-settle-offset-start, 2px));
   --spw-position-depth: var(--depth-ambient, 1);
 }
 
-:where(html[data-spw-loading-ecology-salience="return"], html[data-spw-page-arrival="returning"]) {
+html[data-spw-loading-ecology-salience="return"], html[data-spw-page-arrival="returning"] {
   --spw-position-phase: recall;
   --spw-position-bias-y: calc(var(--spw-ecology-salience-shift, var(--spw-settle-offset-start, 2px)) * -1);
 }
 
-:where(html[data-spw-loading-ecology-salience="restore"], html[data-spw-page-arrival="restored"]) {
+html[data-spw-loading-ecology-salience="restore"], html[data-spw-page-arrival="restored"] {
   --spw-position-phase: restore;
   --spw-position-depth: var(--depth-active, 50);
 }
 
-:where(html[data-spw-loading-ecology-salience="anchor"], html[data-spw-page-arrival="settled"]) {
+html[data-spw-loading-ecology-salience="anchor"], html[data-spw-page-arrival="settled"] {
   --spw-position-phase: anchor;
   --spw-position-bias-y: 0px;
   --spw-position-depth: var(--depth-settled, 10);
 }
 
-:where(html[data-spw-loading-ecology-salience="dormancy"], html[data-spw-page-presence="background"]) {
+html[data-spw-loading-ecology-salience="dormancy"], html[data-spw-page-presence="background"] {
   --spw-position-phase: dormancy;
   --spw-position-depth: var(--depth-ambient, 1);
 }
@@ -351,16 +351,16 @@
 
 /* Layout attrs own frame (rem), not prose measure (ch). Cap only —
    shell-frame-max still mins with the settings tuner. */
+html[data-spw-layout="reading"],
 :where(
-  html[data-spw-layout="reading"],
   body[data-spw-layout="reading"]
 ) {
   --spw-shell-frame-cap: var(--page-width-reading);
   --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-reading));
 }
 
+html[data-spw-layout="newspaper"],
 :where(
-  html[data-spw-layout="newspaper"],
   body[data-spw-layout="newspaper"]
 ) {
   --spw-shell-frame-cap: var(--page-width-newspaper);
@@ -368,33 +368,33 @@
 }
 
 @media (min-width: 61.25rem) {
-  :where(
-    html[data-spw-layout="newspaper"],
-    body[data-spw-layout="newspaper"]
-  ) {
+  html[data-spw-layout="newspaper"],
+:where(
+  body[data-spw-layout="newspaper"]
+) {
     --spw-shell-frame-cap: var(--page-width-atlas);
     --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-atlas));
   }
 }
 
+html[data-spw-layout="wide"],
 :where(
-  html[data-spw-layout="wide"],
   body[data-spw-layout="wide"]
 ) {
   --spw-shell-frame-cap: var(--page-width-wide);
   --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-wide));
 }
 
+html[data-spw-layout="atlas"],
 :where(
-  html[data-spw-layout="atlas"],
   body[data-spw-layout="atlas"]
 ) {
   --spw-shell-frame-cap: var(--page-width-atlas);
   --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-atlas));
 }
 
+html[data-spw-layout="split"],
 :where(
-  html[data-spw-layout="split"],
   body[data-spw-layout="split"]
 ) {
   --spw-shell-frame-cap: var(--page-width-wide);
@@ -407,13 +407,13 @@
 
 /* Stack gap is authored. Do not shrink it when JS later writes lex —
    that arrival used to flash --flow-space. Pass attrs stay flourish-only. */
-:where(html[data-spw-hydration="ready"], html[data-spw-hydration-pass="pragmatic"]) {
+html[data-spw-hydration="ready"], html[data-spw-hydration-pass="pragmatic"] {
   --spw-real-estate-block: var(--page-stack-gap, clamp(1rem, 2.3vw, 1.7rem));
 }
 
-:where(html[data-spw-settings-momentum="pulse"]) {
-  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.62);
-  --spw-site-rhythm-tempo: min(calc(var(--spw-site-rhythm-tempo, 1) * 1.06), 3);
+html[data-spw-settings-momentum="pulse"] {
+  --spw-variant-selection-weight: 0.62;
+  --spw-site-rhythm-tempo: 1.06;
 }
 
 :where(html[data-spw-loading-ecology-dimensions~="variant"]) {

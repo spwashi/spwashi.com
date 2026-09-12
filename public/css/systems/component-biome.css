@@ -200,7 +200,7 @@
 
 /* A minimal climate is a request for less; canopy is exactly the ambient
    modulation that request is about. */
-:where(html[data-spw-enhancement-level="minimal"]) {
+html[data-spw-enhancement-level="minimal"] {
   --spw-canopy: 0;
   --spw-canopy-depth: 0;
   --spw-canopy-edge: 0;

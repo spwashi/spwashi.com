@@ -362,7 +362,7 @@ html[data-spw-theme-pack="glass-console"] {
   --spw-monolith-rim-light: inset 0 1px 0 color-mix(in oklab, #fff 42%, transparent);
 }
 
-:where(html[data-spw-color-mode="dark"]) {
+html[data-spw-color-mode="dark"] {
   --spw-color-mix-base-surface: var(--surface-matte, #101618);
   --spw-color-mix-base-ink: var(--ink, #eef4f6);
   --spw-color-mix-base-line: var(--line-strong, rgba(255, 255, 255, 0.18));

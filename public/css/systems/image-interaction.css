@@ -255,7 +255,7 @@
   opacity: var(--spw-settle-opacity-high, 1);
 }
 
-:where(html[data-spw-reduce-motion="on"]) {
+html[data-spw-reduce-motion="on"] {
   --spw-image-interaction-lift: 1;
   --spw-image-interaction-saturate: 1;
   --spw-image-interaction-contrast: 1;

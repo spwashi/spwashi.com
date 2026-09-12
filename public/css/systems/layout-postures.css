@@ -15,41 +15,41 @@
   --spw-layout-posture-grid-bias: 1;
 }
 
-:where(html[data-spw-layout-tuner="reading"], body[data-spw-layout="reading"]) {
+html[data-spw-layout-tuner="reading"], :where(body[data-spw-layout="reading"]) {
   --spw-layout-posture-measure-bias: 0.92;
 }
 
-:where(html[data-spw-layout-tuner="newspaper"], body[data-spw-layout="newspaper"]) {
+html[data-spw-layout-tuner="newspaper"], :where(body[data-spw-layout="newspaper"]) {
   /* Denser prose + slightly tighter grid — newspaper is not “wide”. */
   --spw-layout-posture-measure-bias: 0.86;
   --spw-layout-posture-grid-bias: 1.08;
-  --spw-grid-min-active: min(var(--spw-grid-min-active, 15rem), 11.25rem);
+  --spw-grid-min-active: min(var(--spw-grid-min-base, 15rem), 11.25rem);
 }
 
-:where(html[data-spw-layout-tuner="wide"], body[data-spw-layout="wide"]) {
+html[data-spw-layout-tuner="wide"], :where(body[data-spw-layout="wide"]) {
   --spw-layout-posture-measure-bias: 1.04;
 }
 
-:where(html[data-spw-layout-tuner="atlas"], body[data-spw-layout="atlas"]) {
+html[data-spw-layout-tuner="atlas"], :where(body[data-spw-layout="atlas"]) {
   --spw-layout-posture-measure-bias: 1.12;
   --spw-layout-posture-grid-bias: 1.14;
 }
 
-:where(html[data-spw-explore-posture="reading"], html[data-spw-layout-posture="reading"]) {
+html[data-spw-explore-posture="reading"], html[data-spw-layout-posture="reading"] {
   --spw-layout-posture-weight: 0.34;
-  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.38);
+  --spw-variant-selection-weight: 0.38;
 }
 
-:where(html[data-spw-explore-posture="field"], html[data-spw-layout-posture="field"]) {
+html[data-spw-explore-posture="field"], html[data-spw-layout-posture="field"] {
   --spw-layout-posture-weight: 0.62;
   --spw-layout-posture-grid-bias: 1.06;
-  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.52);
+  --spw-variant-selection-weight: 0.52;
 }
 
-:where(html[data-spw-explore-posture="workshop"], html[data-spw-layout-posture="workshop"]) {
+html[data-spw-explore-posture="workshop"], html[data-spw-layout-posture="workshop"] {
   --spw-layout-posture-weight: 0.86;
   --spw-layout-posture-grid-bias: 1.12;
-  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.68);
+  --spw-variant-selection-weight: 0.68;
   --spw-tuning-discoverability: revealed;
 }
 
