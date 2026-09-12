@@ -637,12 +637,13 @@ async function measureSelector(session, selector, timeoutMs = CAPTURE_MEASURE.ev
         interactiveCount: el.querySelectorAll('a[href], button, input, select, textarea, [role="button"]').length,
         textLength: text.length,
         text: text.slice(0, 240),
-        clipOverflow: (() => {
+        clipOverflow: false,
+        clipCulprit: (() => {
           const handles = el.querySelectorAll(':scope > .frame-topline > .frame-sigil, :scope > .frame-heading > .frame-sigil');
           for (const node of handles) {
             const hr = node.getBoundingClientRect();
             if (hr.width < 2 || hr.height < 2) continue;
-            if (hr.right > r.right + 2 || hr.left < r.left - 2) return true;
+            if (hr.right > r.right + 2 || hr.left < r.left - 2) return 'handle-sigil:' + node.textContent;
           }
           for (const node of el.querySelectorAll('*')) {
             const cs = getComputedStyle(node);
@@ -655,15 +656,21 @@ async function measureSelector(session, selector, timeoutMs = CAPTURE_MEASURE.ev
               while (p && p !== el.parentElement) {
                 const ps = getComputedStyle(p);
                 if (ps.overflowX === 'auto' || ps.overflowX === 'scroll') break;
-                if (ps.overflowX === 'clip' || ps.overflowX === 'hidden') return true;
+                if (ps.overflowX === 'clip' || ps.overflowX === 'hidden') {
+                  const nodeName = node.tagName.toLowerCase() + (node.className ? '.' + String(node.className).trim().replace(/\\s+/g, '.') : '');
+                  const pName = p.tagName.toLowerCase() + (p.className ? '.' + String(p.className).trim().replace(/\\s+/g, '.') : '');
+                  return nodeName + '[sw=' + node.scrollWidth + ',cw=' + node.clientWidth + ']_in_' + pName;
+                }
                 if (p === el) break;
                 p = p.parentElement;
               }
             }
           }
-          return false;
+          return null;
         })(),
       };
+      res.clipOverflow = Boolean(res.clipCulprit);
+      return res;
     })()`,
     returnByValue: true,
     awaitPromise: true,
@@ -1274,7 +1281,7 @@ async function captureJob(session, job, {
   const stillAttention = assessStillAttention(job, snapshot);
   const stillOverflow = assessStillOverflow(job, snapshot);
   if (!stillOverflow.ok) {
-    throw new Error(`overflow-x: ${stillOverflow.reason} ${job.selector || ''}`.trim());
+    throw new Error(`overflow-x: ${stillOverflow.reason}${snapshot.clipCulprit ? ' (' + snapshot.clipCulprit + ')' : ''} ${job.selector || ''}`.trim());
   }
   if (!stillAttention.ok) {
     throw new Error(
