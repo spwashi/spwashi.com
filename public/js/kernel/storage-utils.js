@@ -177,3 +177,9 @@ export function runCriticalPath(label, task, fallback = null) {
 
 /** @deprecated Prefer readJson for new code. */
 export const safeParseJson = readJson;
+
+export const SPW_STORAGE_CONTRACT = Object.freeze({
+  keys: STORAGE_KEYS,
+  topology: STORAGE_TOPOLOGY,
+  rule: 'Feature keys flow through storage-utils; canonical site settings flow through site-settings-engine.js.',
+});

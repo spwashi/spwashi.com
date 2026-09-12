@@ -445,3 +445,16 @@ export {
   SPW_INTERACTION_EXPRESSION_CONTRACT,
   formatMicrointeractionExpression,
 } from './semantic/interaction-expression.js';
+
+export {
+  SPW_STORAGE_CONTRACT,
+  STORAGE_KEYS,
+  STORAGE_TOPOLOGY,
+  readJson,
+  writeJson,
+  removeJson,
+  readStorageFlag,
+  writeStorageFlag,
+  readStorageText,
+  writeStorageText,
+} from './kernel/storage-utils.js';

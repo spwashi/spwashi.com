@@ -1753,7 +1753,7 @@ export const ENHANCEMENT_DEFS = [
     subfeatures: ['slide-carousel-driver', 'boundary-kinetics-simulator', 'cauldron-payload-dropper'],
     triggers: ['operator-touch', 'pointer-approach'],
     affordances: ['navigate-hero-slides', 'trigger-cauldron-drop', 'inspect-membrane-physics'],
-    electrostatics: { role: 'transformer', discharge: 'spark', field: '--spw-hero-kinetic-charge' },
+    electrostatics: { role: 'transformer', discharge: 'release', field: '--spw-hero-kinetic-charge' },
     selector: '[data-spw-feature="spw-hero-kinetic-stage"], .spw-hero-stage',
     rootMode: 'single',
     describes: 'hero[kinetic-stage]{boundaries|electrostatics|cauldron} interactive motion and payload lab',

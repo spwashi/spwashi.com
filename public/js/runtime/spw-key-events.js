@@ -1401,7 +1401,22 @@ export {
   syncWrapJobLabels,
 };
 
-export const spwModule = {
-  updates: ['attr:data-spw-key-active'],
-  mount: (mod, ctx, root) => initSpwKeyEvents(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'spw-key-events',
+  updates: Object.freeze([
+    'flourish:data-spw-key-selection',
+    'flourish:data-spw-selection-state',
+    'flourish:data-spw-key-potential',
+    'structural:data-spw-scene-context',
+    'structural:data-spw-scene-depth',
+    'structural:data-spw-scene-state',
+    'structural:data-spw-scene-posture',
+    'flourish:data-spw-reveal-phase',
+    'flourish:data-spw-information-reveal',
+    'flourish:data-spw-reveal-frame',
+    'structural:data-spw-key-events-ready',
+  ]),
+  mount: (ctx, root) => initSpwKeyEvents(root),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

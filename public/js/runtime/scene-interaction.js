@@ -393,7 +393,10 @@ export function initSceneInteraction(root = document) {
   };
 }
 
-export const spwModule = {
-  updates: ['attr:data-spw-scene-active', 'attr:data-spw-scene-phase'],
-  mount: (mod, ctx, root) => initSceneInteraction(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'scene-interaction',
+  updates: Object.freeze(['attr:data-spw-scene-active', 'attr:data-spw-scene-phase']),
+  mount: (ctx, root) => initSceneInteraction(root),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
