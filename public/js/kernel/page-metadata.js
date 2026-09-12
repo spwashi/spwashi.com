@@ -1237,7 +1237,7 @@ function normalizeShellMetadata(pageMeta, { body = document.body } = {}) {
     if (contextRelevance.length) setDataIfMissing(header, 'spwContextRelevance', contextRelevance);
   }
 
-  const hero = safeQuery('.site-frame.site-hero, main > article > section:first-of-type, main > section:first-of-type');
+  const hero = safeQuery('.spw-frame.site-hero, .site-frame.site-hero, main > article > section:first-of-type, main > section:first-of-type');
   if (!hero) return;
 
   setDataIfMissing(hero, 'spwKind', 'frame');

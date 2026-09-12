@@ -26,7 +26,7 @@ function readLaneId(lane) {
 
 function readBedId(bed) {
   if (!(bed instanceof HTMLElement)) return '';
-  const frame = bed.closest('.site-frame');
+  const frame = bed.closest('.spw-frame, .site-frame');
   const mode = bed.getAttribute('data-mode-panel') || bed.dataset.spwScenePosture || 'scene';
   return `${window.location.pathname}::${frame?.id || 'bed'}::${mode}`;
 }
@@ -42,7 +42,7 @@ function writeStorage(store) {
 function readActiveMode(bed) {
   const group = bed.getAttribute('data-mode-group');
   if (!group) return bed.getAttribute('data-mode-panel') || '';
-  const pressed = bed.closest('.site-frame')?.querySelector(
+  const pressed = bed.closest('.spw-frame, .site-frame')?.querySelector(
     `[data-mode-group="${CSS.escape(group)}"][data-set-mode][aria-pressed="true"]`,
   );
   return pressed?.getAttribute('data-set-mode')
@@ -119,7 +119,7 @@ function applyLaneFocus(bed, laneId, { persist = true, source = 'pointer' } = {}
     reason: 'lane-focus',
   });
 
-  const frame = bed.closest('.site-frame');
+  const frame = bed.closest('.spw-frame, .site-frame');
   if (frame instanceof HTMLElement) {
     writeDatasetValue(frame, 'spwSceneLocalState', 'active', {
       source: 'scene-interaction',
@@ -393,9 +393,26 @@ export function initSceneInteraction(root = document) {
   };
 }
 
+export const SPW_SCENE_INTERACTION_CONTRACT = Object.freeze({
+  id: 'scene-interaction',
+  selector: BED_SELECTOR,
+  updates: Object.freeze([
+    'structural:data-spw-scene-interactive',
+    'structural:data-spw-scene-focus-lane',
+    'flourish:data-spw-scene-lane-active',
+    'flourish:data-spw-scene-image-active',
+    'residue:data-spw-scene-local-state',
+  ]),
+  describes: 'scene[bed]{lane-focus|image-coupling|local-memory}',
+  storageKey: STORAGE_KEY,
+  mount: 'initSceneInteraction',
+});
+
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'scene-interaction',
-  updates: Object.freeze(['attr:data-spw-scene-active', 'attr:data-spw-scene-phase']),
+  contract: SPW_SCENE_INTERACTION_CONTRACT,
+  describes: SPW_SCENE_INTERACTION_CONTRACT.describes,
+  updates: SPW_SCENE_INTERACTION_CONTRACT.updates,
   mount: (ctx, root) => initSceneInteraction(root),
 });
 

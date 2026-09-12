@@ -9,7 +9,7 @@ import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
 import { resolveOwnerDocument } from '/public/js/runtime/runtime-helpers.js';
 
 const MAIN_IMAGE_SELECTOR = 'main img, main picture img, [data-spw-image-surface] img, [data-spw-image-reward] img, [data-spw-image-discovery] img';
-const HERO_SELECTOR = '[data-spw-frame="hero"] img, main > .site-frame:first-of-type img, main > article > .site-frame:first-of-type img';
+const HERO_SELECTOR = '[data-spw-frame="hero"] img, main > :is(.spw-frame, .site-frame):first-of-type img, main > article > :is(.spw-frame, .site-frame):first-of-type img';
 
 let initialized = false;
 

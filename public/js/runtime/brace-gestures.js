@@ -267,7 +267,7 @@ function classifyTarget(el) {
   }
   const semantic = deriveSemanticBraceExpression(el);
   const fieldRoot =
-    el.closest?.('[data-spw-field-root], .site-frame, main, body') || document.body;
+    el.closest?.('[data-spw-field-root], .spw-frame, .site-frame, main, body') || document.body;
 
   const meta = {
     form: el.dataset.spwForm || (el.classList.contains('spw-delimiter') ? 'delimiter' : 'unknown'),
@@ -290,11 +290,11 @@ function classifyTarget(el) {
 function resolveTargetKind(el) {
   if (el.matches('.frame-sigil')) return 'frame-sigil';
   if (el.matches('.frame-card-sigil')) return 'frame-card-sigil';
-  if (el.matches('.operator-chip')) return 'operator-chip';
+  if (el.matches('.spw-chip, .operator-chip')) return 'operator-chip';
   if (el.matches('.syntax-token')) return 'syntax-token';
   if (el.matches('.spec-pill, .badge, .tag, .pill')) return 'inline-pill';
   if (el.matches('.spw-delimiter')) return 'delimiter';
-  if (el.matches('.site-frame')) return 'frame';
+  if (el.matches('.spw-frame, .site-frame, [data-spw-kind="frame"]')) return 'frame';
   if (el.matches('.frame-card, .spw-panel, .frame-panel, .mode-panel, .software-card, .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card')) return 'card';
   return 'form';
 }
@@ -393,7 +393,7 @@ function resolveContext(el) {
   return (
     el.dataset.spwContext
     || el.closest?.('[data-spw-context]')?.dataset.spwContext
-    || el.closest?.('.site-frame')?.dataset.spwRole
+    || el.closest?.('.spw-frame, .site-frame')?.dataset.spwRole
     || document.body?.dataset.spwSurface
     || 'surface'
   );

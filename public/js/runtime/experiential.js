@@ -208,6 +208,8 @@ export function initSpwExperiential() {
 
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'experiential',
+  contract: SPW_EXPERIENTIAL_CONTRACT,
+  describes: 'gesture[tap|hold|swipe] spell[cauldron] learning[intuition]',
   mount: (ctx, root) => initSpwExperiential(ctx, root),
   refresh: () => {
     renderBreadcrumbSpell();
@@ -215,5 +217,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     syncExperientialSurface();
   },
 });
+
+export const spwModule = SPW_MODULE_EXPORT;
 
 export default initSpwExperiential;

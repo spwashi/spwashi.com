@@ -79,7 +79,7 @@ function getWindowMs() {
 function readRoutePosition() {
   if (typeof window === 'undefined') return {};
   const now = new Date();
-  const activeFrame = document.querySelector('.site-frame[data-state~="active"], .site-frame:target, #home-frame');
+  const activeFrame = document.querySelector('.spw-frame[data-state~="active"], .site-frame[data-state~="active"], .spw-frame:target, .site-frame:target, #home-frame');
   const activeRect = activeFrame?.getBoundingClientRect?.();
 
   return {

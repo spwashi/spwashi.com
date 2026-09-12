@@ -78,7 +78,7 @@ export function findLensModeHosts(group, buttons = [], panels = []) {
   const selector = `[data-spw-inspect-mode-group="${CSS.escape(group)}"]`;
   for (const node of [...buttons, ...panels]) {
     const host = node.closest?.(selector)
-      || node.closest?.('.site-frame, [data-spw-feature], [data-spw-kind]');
+      || node.closest?.('.spw-frame, .site-frame, [data-spw-feature], [data-spw-kind]');
     if (host instanceof HTMLElement) hosts.add(host);
   }
   return [...hosts];

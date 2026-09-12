@@ -1633,7 +1633,7 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.SETTLED,
     selector: 'body',
     rootMode: 'single',
-    describes: 'late layout alignment pass: module assumptions, compromises, refinements after runtime settle',
+    describes: 'layout[alignment]{settled} assumptions[compromises.refinements]',
     updates: [
       'html:structural:data-spw-layout-assumptions-active',
       'html:inspect:data-spw-layout-assumptions-pass',

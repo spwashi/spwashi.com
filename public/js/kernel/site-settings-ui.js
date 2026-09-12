@@ -419,7 +419,7 @@ const resolveStandaloneStatusNode = (node) => {
   const containers = [
     node.closest('[data-site-settings-panel]'),
     node.closest('.vibe-widget'),
-    node.closest('.site-frame'),
+    node.closest('.spw-frame, .site-frame'),
     node.closest('section, article, aside')
   ].filter(Boolean);
 
@@ -1212,7 +1212,7 @@ export const initSiteSettingsBindings = (settingsManager = manager) => {
 
   const getStatusNode = (root) => (
     root.querySelector('[data-site-settings-status]')
-    || root.closest('.site-frame, section, article, aside')?.querySelector('[data-site-settings-status]')
+    || root.closest('.spw-frame, .site-frame, section, article, aside')?.querySelector('[data-site-settings-status]')
     || document.querySelector('[data-site-settings-status]')
     || null
   );

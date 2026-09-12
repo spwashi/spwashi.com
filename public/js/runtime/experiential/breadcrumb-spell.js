@@ -227,7 +227,7 @@ export function navigateSpellPathTarget(sectionId, { source = 'breadcrumb' } = {
 }
 
 export function resolveActiveFrameElement() {
-  return document.querySelector('.site-frame[data-state~="active"]')
+  return document.querySelector('.spw-frame[data-state~="active"], .site-frame[data-state~="active"]')
     || (window.location.hash ? document.querySelector(window.location.hash) : null);
 }
 
@@ -336,7 +336,7 @@ export function resolveSpellPathExpandedDefault() {
 
   const routeParts = window.location.pathname.split('/').filter(Boolean);
   const hasHash = Boolean(window.location.hash);
-  const hasActiveLensFrame = Boolean(document.querySelector('.site-frame[data-state~="active"]'));
+  const hasActiveLensFrame = Boolean(document.querySelector('.spw-frame[data-state~="active"], .site-frame[data-state~="active"]'));
   const hasHashFrame = Boolean(hasHash && document.querySelector(window.location.hash));
   const isHome = window.location.pathname === '/' || window.location.pathname === '';
   const deepRoute = routeParts.length >= 3;
@@ -718,7 +718,7 @@ export function renderBreadcrumbSpell() {
   const pagePrimaryAction = document.body?.dataset.spwPagePrimaryAction || '';
   const relatedRoutes = collectRelatedBreadcrumbRoutes(url.pathname);
   const activeFrame =
-    document.querySelector('.site-frame[data-state~="active"]')
+    document.querySelector('.spw-frame[data-state~="active"], .site-frame[data-state~="active"]')
     || (url.hash ? document.querySelector(url.hash) : null);
 
   const activeFrameSigil =
@@ -1088,3 +1088,14 @@ export function initSpellBreadcrumbs(options = {}) {
 
   renderBreadcrumbSpell();
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'breadcrumb-spell',
+  contract: SPW_BREADCRUMB_SPELL_CONTRACT,
+  mount: (ctx, root) => initSpellBreadcrumbs(ctx),
+  refresh: () => renderBreadcrumbSpell(),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
+
+export default initSpellBreadcrumbs;

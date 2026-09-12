@@ -78,7 +78,7 @@ function getPageMeta() {
 }
 
 function getSections() {
-    return Array.from(document.querySelectorAll('.site-frame[id]')).map(el => ({
+    return Array.from(document.querySelectorAll('.spw-frame[id], .site-frame[id]')).map(el => ({
         id:          el.id,
         liminality:  el.dataset.spwLiminality ?? '',
         form:        el.dataset.spwForm ?? '',

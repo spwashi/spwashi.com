@@ -20,6 +20,7 @@ const DEFAULT_SELECTOR = [
   '[data-spw-pack-local]',
   '[data-site-settings-panel]',
   '[data-spw-feature]',
+  '.spw-frame',
   '.site-frame',
   '.vibe-widget',
   '.settings-fieldset',
@@ -179,7 +180,7 @@ function readDisplayFlow(style) {
  * auto-fit rules meant for inner card grids — never mirror that onto stages.
  */
 function resolveCompositionFlow(el, style) {
-  if (el.matches?.('.site-frame, .spw-panel, .frame-panel, .mode-panel, .site-hero')) {
+  if (el.matches?.('.spw-frame, .site-frame, .spw-panel, .frame-panel, .mode-panel, .site-hero')) {
     const authored = normalizeToken(el.getAttribute('data-spw-composition-flow') || '');
     if (authored && authored !== 'grid' && authored !== 'inline-grid') return authored;
     return 'stack';
@@ -236,7 +237,7 @@ function resolvePresence(box) {
 function resolveCompositionRole(el, box) {
   const explicit = el.dataset.spwBoxModel || el.dataset.spwCompositionRole || '';
   if (explicit) return normalizeToken(explicit);
-  if (el.matches('.site-frame')) return 'stage';
+  if (el.matches('.spw-frame, .site-frame, [data-spw-kind="frame"]')) return 'stage';
   if (el.matches('.settings-category, details')) return 'fold';
   if (el.matches('.settings-fieldset')) return 'control-group';
   if (el.matches('.vibe-widget, [data-site-settings-panel]')) return 'control-card';

@@ -20,6 +20,7 @@ const BLOCK_HOST_SELECTOR = [
 ].join(', ');
 
 const INSPECT_HOST_SELECTOR = [
+  '.spw-frame',
   '.site-frame',
   '.frame-card',
   '[data-spw-definition]',

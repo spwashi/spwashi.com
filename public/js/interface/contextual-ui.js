@@ -268,11 +268,11 @@ function applyModuleSemantics(root = document) {
     writeDatasetValue(el, 'spwContextProjectionResolved', contextProjection.join(' '));
     writeDatasetValue(el, 'spwContextMatch', contextMatched ? 'active' : 'idle');
 
-    if (writeDatasetValueIfMissing(el, 'spwModuleCopy', el.matches('.site-frame') ? 'scope-link' : 'fragment')) {
+    if (writeDatasetValueIfMissing(el, 'spwModuleCopy', el.matches('.spw-frame, .site-frame') ? 'scope-link' : 'fragment')) {
       writeDatasetValue(el, 'spwModuleCopyInferred', 'true');
     }
 
-    if (writeDatasetValueIfMissing(el, 'spwModuleHydration', el.matches('.site-frame') ? 'defer' : 'ready')) {
+    if (writeDatasetValueIfMissing(el, 'spwModuleHydration', el.matches('.spw-frame, .site-frame') ? 'defer' : 'ready')) {
       writeDatasetValue(el, 'spwModuleHydrationInferred', 'true');
     }
 
@@ -742,3 +742,29 @@ export function initSpwContextualUi() {
     },
   };
 }
+
+export const SPW_CONTEXTUAL_UI_CONTRACT = Object.freeze({
+  id: 'contextual-ui',
+  selector: 'main, .site-header, header',
+  describes: 'header[nav-fit|route-discovery]{module-inference}',
+  updates: Object.freeze([
+    'structural:data-spw-module',
+    'html:inspect:data-spw-route-discovery',
+    'inspect:data-spw-route-menu-state',
+    'html:measure:data-spw-nav-fit',
+    'html:inspect:data-spw-layout-reason',
+  ]),
+  mount: 'initSpwContextualUi',
+});
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'contextual-ui',
+  contract: SPW_CONTEXTUAL_UI_CONTRACT,
+  describes: SPW_CONTEXTUAL_UI_CONTRACT.describes,
+  updates: SPW_CONTEXTUAL_UI_CONTRACT.updates,
+  mount: (ctx, root) => initSpwContextualUi(ctx, root),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
+
+export default initSpwContextualUi;

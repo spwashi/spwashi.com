@@ -565,3 +565,14 @@ function onSampleDockKeydown(event) {
     clearSamplePin();
   }
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'sample-dock',
+  contract: SPW_SAMPLE_DOCK_CONTRACT,
+  mount: (ctx, root) => initSampleDock(ctx),
+  refresh: () => renderSampleDock(),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
+
+export default initSampleDock;

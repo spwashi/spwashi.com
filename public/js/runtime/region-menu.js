@@ -156,8 +156,23 @@ export function unmountSpwRegionMenu() {
 
 export { unmountSpwRegionMenu as unmount };
 
+export const SPW_REGION_MENU_CONTRACT = Object.freeze({
+  id: 'region-menu',
+  menuId: MENU_ID,
+  selector: TARGET_SELECTOR,
+  events: Object.freeze(['region-menu:opened', 'region-menu:closed', 'region-menu:marked']),
+  updates: Object.freeze([
+    'structural:data-spw-region-menu',
+    'structural:data-spw-region-menu-target',
+    'inspect:data-spw-inspect-semantic-focus-root',
+    'flourish:data-spw-region-mark',
+  ]),
+  mount: 'initSpwRegionMenu',
+});
+
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'region-menu',
+  contract: SPW_REGION_MENU_CONTRACT,
   mount: (ctx, root) => initSpwRegionMenu(ctx, root),
   describes: 'region-menu[inspect|mark|focus] semantic popover',
   timingArc: 'enhance-inspect',

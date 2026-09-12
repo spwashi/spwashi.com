@@ -52,7 +52,7 @@ export function initQABeatGestures() {
   let lpTimer = null;
   document.addEventListener('pointerdown', (e) => {
     if (!isQA()) return;
-    const frame = e.target.closest?.('.site-frame, [data-spw-kind="frame"]');
+    const frame = e.target.closest?.('.spw-frame, .site-frame, [data-spw-kind="frame"]');
     if (!frame) return;
 
     clearTimeout(lpTimer);

@@ -3,6 +3,7 @@ import test from 'node:test';
 
 import {
   SPW_SAMPLE_DOCK_CONTRACT,
+  SPW_MODULE_EXPORT as SAMPLE_DOCK_EXPORT,
   initSampleDock,
   renderSampleDock,
   selectSampleIndex,
@@ -13,6 +14,7 @@ import {
 
 import {
   SPW_BREADCRUMB_SPELL_CONTRACT,
+  SPW_MODULE_EXPORT as BREADCRUMB_SPELL_EXPORT,
   BREADCRUMB_ROUTE_REGISTRY,
   initSpellBreadcrumbs,
   renderBreadcrumbSpell,
@@ -32,6 +34,21 @@ import {
   initSpwExperiential,
   syncExperientialSurface,
 } from '../../public/js/runtime/experiential.js';
+
+import {
+  SPW_REGION_MENU_CONTRACT,
+  SPW_MODULE_EXPORT as REGION_MENU_EXPORT,
+} from '../../public/js/runtime/region-menu.js';
+
+import {
+  SPW_SCENE_INTERACTION_CONTRACT,
+  SPW_MODULE_EXPORT as SCENE_INTERACTION_EXPORT,
+} from '../../public/js/runtime/scene-interaction.js';
+
+import {
+  SPW_CONTEXTUAL_UI_CONTRACT,
+  SPW_MODULE_EXPORT as CONTEXTUAL_UI_EXPORT,
+} from '../../public/js/interface/contextual-ui.js';
 
 import {
   SPW_MODULE_EXPORT as RESONANCE_PROBE_EXPORT,
@@ -168,4 +185,37 @@ test('attention architecture exposes frozen contract, module export, and relatio
   assert.ok('probeRelation' in snapshot);
   assert.ok('blockResonanceCount' in snapshot);
   assert.ok('probeFamily' in snapshot);
+});
+
+test('runtime organs expose canonical contracts and module exports', () => {
+  assert.equal(BREADCRUMB_SPELL_EXPORT.id, 'breadcrumb-spell');
+  assert.equal(BREADCRUMB_SPELL_EXPORT.contract, SPW_BREADCRUMB_SPELL_CONTRACT);
+  assert.equal(typeof BREADCRUMB_SPELL_EXPORT.mount, 'function');
+  assert.equal(typeof BREADCRUMB_SPELL_EXPORT.refresh, 'function');
+
+  assert.equal(SAMPLE_DOCK_EXPORT.id, 'sample-dock');
+  assert.equal(SAMPLE_DOCK_EXPORT.contract, SPW_SAMPLE_DOCK_CONTRACT);
+  assert.equal(typeof SAMPLE_DOCK_EXPORT.mount, 'function');
+  assert.equal(typeof SAMPLE_DOCK_EXPORT.refresh, 'function');
+
+  assert.equal(REGION_MENU_EXPORT.id, 'region-menu');
+  assert.equal(REGION_MENU_EXPORT.contract, SPW_REGION_MENU_CONTRACT);
+  assert.equal(typeof REGION_MENU_EXPORT.mount, 'function');
+  assert.match(REGION_MENU_EXPORT.describes, /region-menu/);
+
+  assert.equal(SCENE_INTERACTION_EXPORT.id, 'scene-interaction');
+  assert.equal(SCENE_INTERACTION_EXPORT.contract, SPW_SCENE_INTERACTION_CONTRACT);
+  assert.equal(typeof SCENE_INTERACTION_EXPORT.mount, 'function');
+  assert.match(SCENE_INTERACTION_EXPORT.describes, /scene\[bed\]/);
+
+  assert.equal(CONTEXTUAL_UI_EXPORT.id, 'contextual-ui');
+  assert.equal(CONTEXTUAL_UI_EXPORT.contract, SPW_CONTEXTUAL_UI_CONTRACT);
+  assert.equal(typeof CONTEXTUAL_UI_EXPORT.mount, 'function');
+  assert.match(CONTEXTUAL_UI_EXPORT.describes, /header\[nav-fit/);
+
+  assert.equal(SPW_MODULE_EXPORT.id, 'experiential');
+  assert.equal(SPW_MODULE_EXPORT.contract, SPW_EXPERIENTIAL_CONTRACT);
+  assert.equal(typeof SPW_MODULE_EXPORT.mount, 'function');
+  assert.equal(typeof SPW_MODULE_EXPORT.refresh, 'function');
+  assert.match(SPW_MODULE_EXPORT.describes, /gesture\[tap/);
 });

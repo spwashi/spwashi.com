@@ -167,7 +167,7 @@ function write(el, report) {
 }
 
 /** Everything worth asking about fit. */
-const FIT_SELECTOR = '[data-spw-kind], [data-spw-role], .site-frame, .frame-card, .mode-switch';
+const FIT_SELECTOR = '[data-spw-kind], [data-spw-role], .spw-frame, .site-frame, .frame-card, .mode-switch';
 
 /**
  * Sweep a tree once and return the findings, for a console or a pre-deploy

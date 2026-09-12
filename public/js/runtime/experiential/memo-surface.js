@@ -8,7 +8,7 @@ const ROOMY_WIDTH_PX = 704;
 
 function findRoomyMemoTarget(target) {
   const frame =
-    target.closest('.site-frame')
+    target.closest('.spw-frame, .site-frame')
     || target.closest('.frame-card, .spw-panel, .frame-panel, .mode-panel');
 
   if (!frame) return null;

@@ -98,7 +98,7 @@ export function readRoom(referenceEl = null) {
     : null;
 
   const region = currentSection
-    || (referenceEl?.closest?.('.site-frame[data-spw-region], .site-frame[data-spw-region-role]'))
+    || (referenceEl?.closest?.('.spw-frame[data-spw-region], .spw-frame[data-spw-region-role], .site-frame[data-spw-region], .site-frame[data-spw-region-role]'))
     || null;
 
   // Prefer the region's own expression; fall back to the reference element's

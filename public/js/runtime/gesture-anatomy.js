@@ -45,7 +45,7 @@ const GESTURE_CONTRACT_SELECTOR = [
   '[data-spw-living-term]',
 ].join(', ');
 
-const SLOT_HOST_SELECTOR = '.site-frame, .frame-card, .vibe-widget, [data-spw-component-kind], [data-spw-kind="frame"]';
+const SLOT_HOST_SELECTOR = '.spw-frame, .site-frame, .frame-card, .vibe-widget, [data-spw-component-kind], [data-spw-kind="frame"]';
 
 function shouldAnnotate() {
   if (isReadingQuietChrome()) return false;

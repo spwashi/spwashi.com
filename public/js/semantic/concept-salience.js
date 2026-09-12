@@ -55,7 +55,7 @@ function inferConceptRef(element) {
 }
 
 function inferLearnableDimension(element) {
-  const host = element.closest('.site-frame, [data-spw-feature], main') || element;
+  const host = element.closest('.spw-frame, .site-frame, [data-spw-feature], main') || element;
   for (const [attr, dimension] of Object.entries(DIMENSION_BY_ATTR)) {
     const name = attr.replace(/^data-/, '').replace(/-([a-z])/g, (_, c) => c.toUpperCase());
     if (host.dataset?.[name]) return dimension;

@@ -612,7 +612,7 @@ function unmountInstance(state) {
    ========================================================================== */
 
 function resolveSemanticContext(el) {
-  const nearestFrame = el.closest('.site-frame');
+  const nearestFrame = el.closest('.spw-frame, .site-frame');
   const nearestArticle = el.closest('article');
   const nearestSection = el.closest('section');
   const nearestFigure = el.closest('figure');
@@ -1413,7 +1413,7 @@ function readFontProfile(computed) {
 }
 
 function readOperatorContext(el) {
-  return el.closest('.site-frame')?.dataset.spwOperator || FALLBACK_OPERATOR;
+  return el.closest('.spw-frame, .site-frame')?.dataset.spwOperator || FALLBACK_OPERATOR;
 }
 
 function classifyWidthClass(width) {
