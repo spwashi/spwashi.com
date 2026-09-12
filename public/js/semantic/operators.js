@@ -50,6 +50,28 @@ const refreshOperatorSemantics = (root = document) => {
   annotateRefs(root);
 };
 
+// Annotation owns the added host as well as its descendants. A single query
+// surface deduplicates overlapping roots without changing the public full refresh.
+const refreshAddedOperatorSemantics = (roots) => {
+  const scope = {
+    querySelectorAll(selector) {
+      const matches = new Set();
+      for (const root of roots) {
+        if (root.matches(selector)) matches.add(root);
+        for (const element of root.querySelectorAll(selector)) matches.add(element);
+      }
+      return [...matches];
+    },
+  };
+  annotateSignals(scope);
+  annotateSemanticExpressions(scope);
+  wireSigilTransitions(scope);
+  annotateRefs(scope);
+  // A newly mounted panel can satisfy an older probe elsewhere in its frame.
+  // Preserve that dependency scan; it is not a document-wide metadata refresh.
+  wireProbeSigils(document);
+};
+
 let observerDisconnect = null;
 
 const initSpwOperators = () => {
@@ -58,9 +80,11 @@ const initSpwOperators = () => {
 
   refreshOperatorSemantics(document);
 
-  observerDisconnect = observeAddedMatches(EXTENDED_OPERATOR_SIGNAL_SELECTOR, () => {
-    refreshOperatorSemantics(document);
-  });
+  observerDisconnect = observeAddedMatches(
+    EXTENDED_OPERATOR_SIGNAL_SELECTOR,
+    refreshAddedOperatorSemantics,
+    { collectRoots: true },
+  );
 };
 
 export function unmountSpwOperators() {

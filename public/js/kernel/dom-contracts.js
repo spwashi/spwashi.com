@@ -1415,8 +1415,8 @@ export function writeDatasetValues(el, entries = {}, options = {}) {
  * callback through requestAnimationFrame so every pass yields.
  *
  * @param {string} selector matches the nodes the module annotates
- * @param {() => void} onRelevant coalesced callback (at most one per frame)
- * @param {{ root?: Node }} [options]
+ * @param {(roots?: HTMLElement[]) => void} onRelevant coalesced callback
+ * @param {{ root?: Node, collectRoots?: boolean }} [options]
  * @returns {() => void} disconnect
  */
 export function observeAddedMatches(selector, onRelevant, options = {}) {
@@ -1426,15 +1426,43 @@ export function observeAddedMatches(selector, onRelevant, options = {}) {
   }
 
   let frame = 0;
+  const pending = new Set();
+  const collect = (node) => {
+    for (const queued of pending) {
+      if (queued.contains(node)) return;
+      if (node.contains(queued)) pending.delete(queued);
+    }
+    pending.add(node);
+  };
   const schedule = () => {
     if (frame) return;
     frame = window.requestAnimationFrame(() => {
       frame = 0;
-      onRelevant();
+      if (!options.collectRoots) {
+        onRelevant();
+        return;
+      }
+      const roots = [...pending].filter((node) => root.contains(node));
+      pending.clear();
+      if (roots.length) onRelevant(roots);
     });
   };
 
   const observer = new MutationObserver((records) => {
+    if (options.collectRoots) {
+      for (const record of records) {
+        for (const node of record.addedNodes) {
+          if (!(node instanceof HTMLElement)) continue;
+          if (!node.matches(selector) && !node.querySelector(selector)) continue;
+          collect(node);
+          // Added markup can change the text of an existing operator host.
+          const host = record.target instanceof HTMLElement ? record.target.closest(selector) : null;
+          if (host && root.contains(host)) collect(host);
+        }
+      }
+      if (pending.size) schedule();
+      return;
+    }
     const relevant = records.some((record) => Array.from(record.addedNodes).some((node) => (
       node instanceof HTMLElement
       && (node.matches?.(selector) || Boolean(node.querySelector?.(selector)))
@@ -1446,6 +1474,7 @@ export function observeAddedMatches(selector, onRelevant, options = {}) {
 
   return () => {
     observer.disconnect();
+    pending.clear();
     if (frame) {
       window.cancelAnimationFrame(frame);
       frame = 0;

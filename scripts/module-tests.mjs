@@ -8,6 +8,7 @@ export const MODULE_TEST_IMPORTS = Object.freeze([
 ]);
 
 export const MODULE_TEST_FILES = Object.freeze([
+  'scripts/tests/annotation-refresh.test.mjs',
   'scripts/tests/engagement-features.test.mjs',
   'scripts/tests/component-fixtures.test.mjs',
   'scripts/tests/visual-capture-plan.test.mjs',

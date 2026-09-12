@@ -401,10 +401,10 @@ function publishSigilTransitionApi() {
 
 export function wireSigilTransitions(root = document) {
   root.querySelectorAll?.(SIGIL_TRANSITION_SELECTOR).forEach(prepareSigilTransitionTarget);
-  publishSigilTransitionApi();
 
   if (sigilTransitionsBound) return;
   sigilTransitionsBound = true;
+  publishSigilTransitionApi();
 
   document.addEventListener('pointerover', (event) => {
     const target = findSigilTransitionTarget(event);
@@ -497,7 +497,8 @@ export function annotateRefs(root = document) {
     const match = text.match(/~["#]?([^"}\s]+)/);
     if (match) {
       const ref = match[1].replace(/['"]/g, '');
-      sigil.setAttribute('aria-label', `reference: ${ref}`);
+      const label = `reference: ${ref}`;
+      if (sigil.getAttribute('aria-label') !== label) sigil.setAttribute('aria-label', label);
       if (!sigil.title) sigil.title = `~"${ref}"`;
     }
   }

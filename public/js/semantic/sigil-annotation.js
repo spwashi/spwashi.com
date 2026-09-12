@@ -65,13 +65,13 @@ export function applyOperatorGeometry(element, op) {
   const geometry = getOperatorGeometry(op?.type);
   if (!geometry) return;
 
-  element.dataset.spwOperatorLeftRole = element.dataset.spwOperatorLeftRole || geometry.leftRole;
-  element.dataset.spwOperatorRightRole = element.dataset.spwOperatorRightRole || geometry.rightRole;
-  element.dataset.spwOperatorFlow = element.dataset.spwOperatorFlow || geometry.flow;
-  element.dataset.spwOperatorBraceBias = element.dataset.spwOperatorBraceBias || geometry.braceBias;
-  element.dataset.spwOperatorGeometry = element.dataset.spwOperatorGeometry || geometry.geometry;
-  element.dataset.spwOperatorOverload = element.dataset.spwOperatorOverload || geometry.overload;
-  element.dataset.spwOperatorChargeRole = element.dataset.spwOperatorChargeRole || geometry.chargeRole;
+  writeIfChanged(element, 'spwOperatorLeftRole', element.dataset.spwOperatorLeftRole || geometry.leftRole);
+  writeIfChanged(element, 'spwOperatorRightRole', element.dataset.spwOperatorRightRole || geometry.rightRole);
+  writeIfChanged(element, 'spwOperatorFlow', element.dataset.spwOperatorFlow || geometry.flow);
+  writeIfChanged(element, 'spwOperatorBraceBias', element.dataset.spwOperatorBraceBias || geometry.braceBias);
+  writeIfChanged(element, 'spwOperatorGeometry', element.dataset.spwOperatorGeometry || geometry.geometry);
+  writeIfChanged(element, 'spwOperatorOverload', element.dataset.spwOperatorOverload || geometry.overload);
+  writeIfChanged(element, 'spwOperatorChargeRole', element.dataset.spwOperatorChargeRole || geometry.chargeRole);
 }
 
 const resolveStableIdentifier = (element) => {
@@ -99,16 +99,16 @@ const applySigilParts = (element, op) => {
   const parts = parseSigilParts(element, op);
   if (!parts) return;
 
-  element.dataset.spwSigil = element.dataset.spwSigil || parts.sigil;
-  element.dataset.spwSigilPrefix = element.dataset.spwSigilPrefix || parts.prefix;
-  element.dataset.spwSigilName = element.dataset.spwSigilName || parts.name;
-  element.dataset.spwSigilLabel = element.dataset.spwSigilLabel || parts.label;
-  element.dataset.spwSigilRole = element.dataset.spwSigilRole || 'grammar';
+  writeIfChanged(element, 'spwSigil', element.dataset.spwSigil || parts.sigil);
+  writeIfChanged(element, 'spwSigilPrefix', element.dataset.spwSigilPrefix || parts.prefix);
+  writeIfChanged(element, 'spwSigilName', element.dataset.spwSigilName || parts.name);
+  writeIfChanged(element, 'spwSigilLabel', element.dataset.spwSigilLabel || parts.label);
+  writeIfChanged(element, 'spwSigilRole', element.dataset.spwSigilRole || 'grammar');
 
   const position = parseSigilPosition(parts.sigil);
   if (position.position !== 'unknown') {
-    element.dataset.spwSigilPosition = element.dataset.spwSigilPosition || position.position;
-    element.dataset.spwFixityTier = element.dataset.spwFixityTier || position.fixity;
+    writeIfChanged(element, 'spwSigilPosition', element.dataset.spwSigilPosition || position.position);
+    writeIfChanged(element, 'spwFixityTier', element.dataset.spwFixityTier || position.fixity);
     if (position.delimiter && !element.dataset.spwDelimiter) {
       element.dataset.spwDelimiter = position.delimiter;
     }
@@ -116,8 +116,8 @@ const applySigilParts = (element, op) => {
 
   const identifier = resolveStableIdentifier(element);
   if (identifier) {
-    element.dataset.spwIdentifier = element.dataset.spwIdentifier || identifier;
-    element.dataset.spwAddressRole = element.dataset.spwAddressRole || 'identifier';
+    writeIfChanged(element, 'spwIdentifier', element.dataset.spwIdentifier || identifier);
+    writeIfChanged(element, 'spwAddressRole', element.dataset.spwAddressRole || 'identifier');
   }
 
   if (!element.getAttribute('aria-label')) {
@@ -135,7 +135,7 @@ const writeIfChanged = (element, key, value) => {
 export function applyOperatorMetadata(element, op) {
   if (!(element instanceof HTMLElement) || !op) return;
 
-  element.dataset.spwOperator = element.dataset.spwOperator || op.type;
+  writeIfChanged(element, 'spwOperator', element.dataset.spwOperator || op.type);
   writeIfChanged(element, 'spwOperatorIntent', op.intent);
   writeIfChanged(element, 'spwOperatorInteraction', op.interaction);
   writeIfChanged(element, 'spwOperatorFamily', op.family);
@@ -171,7 +171,7 @@ export function annotateDelimiters(root = document) {
 
     const char = element.textContent.trim();
     const form = inferDelimiterForm(element);
-    if (form) element.dataset.spwForm = form;
+    if (form) writeIfChanged(element, 'spwForm', form);
     if (!element.dataset.spwDelimiter && char) element.dataset.spwDelimiter = char;
 
     const perspective = DELIMITER_PERSPECTIVE[char];
@@ -192,10 +192,8 @@ export function annotateDelimiters(root = document) {
     }
 
     const isClosing = char === '}' || char === ')' || char === ']' || char === '>';
-    element.dataset.spwSigilPosition = element.dataset.spwSigilPosition
-      || (isClosing ? 'postfix' : 'infix');
-    element.dataset.spwFixityTier = element.dataset.spwFixityTier
-      || (isClosing ? 'tending' : 'stable');
+    writeIfChanged(element, 'spwSigilPosition', element.dataset.spwSigilPosition || (isClosing ? 'postfix' : 'infix'));
+    writeIfChanged(element, 'spwFixityTier', element.dataset.spwFixityTier || (isClosing ? 'tending' : 'stable'));
   });
 }
 
@@ -208,6 +206,6 @@ export function annotateSemanticExpressions(root = document) {
     if (parsed.position === 'unknown') return;
 
     element.dataset.spwSigilPosition = parsed.position;
-    element.dataset.spwFixityTier = element.dataset.spwFixityTier || parsed.fixity;
+    writeIfChanged(element, 'spwFixityTier', element.dataset.spwFixityTier || parsed.fixity);
   });
 }
