@@ -86,7 +86,10 @@ export {
   writeDatasetValue,
   writeDatasetValueIfMissing,
   writeDatasetValues,
+  writeProjectionTier,
   writeStyleValue,
+  PROJECTION_TIERS,
+  SPW_PROJECTION_TIERS_CONTRACT,
 } from './kernel/dom-contracts.js';
 
 export {

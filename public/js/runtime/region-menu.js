@@ -6,7 +6,10 @@ import {
   positionFloatingChromePopover,
   syncFloatingChromeState,
   writeDatasetValue,
+  writeProjectionTier,
+  PROJECTION_TIERS,
 } from '/public/js/kernel/dom-contracts.js';
+
 import { measureSpatialGravity } from '/public/js/runtime/spatial-gravity.js';
 import { bus } from '/public/js/kernel/bus.js';
 import {
@@ -106,7 +109,7 @@ export function initSpwRegionMenu(ctx, root) {
   if (!body) return () => {};
   if (body.dataset.spwRegionMenuInit === '1') return unmountSpwRegionMenu;
 
-  body.dataset.spwRegionMenuInit = '1';
+  writeProjectionTier(body, PROJECTION_TIERS.INSPECTION, { spwRegionMenuInit: '1' });
   // click, contextmenu, and keydown call preventDefault (alt-click and
   // long-press open the menu, arrows move focus inside it), so they stay
   // cancelable. The pointer handlers never do — they only arm and disarm the
@@ -133,7 +136,8 @@ export function initSpwRegionMenu(ctx, root) {
 export function unmountSpwRegionMenu() {
   const body = document.body;
   if (!body || body.dataset.spwRegionMenuInit !== '1') return;
-  body.dataset.spwRegionMenuInit = '0';
+  writeProjectionTier(body, PROJECTION_TIERS.INSPECTION, { spwRegionMenuInit: '0' });
+
   body.removeEventListener('click', onClick, true);
   body.removeEventListener('contextmenu', onContextMenu, true);
   body.removeEventListener('pointerenter', onPointerEnter, true);
@@ -417,12 +421,13 @@ function openMenu(target) {
   writeDatasetValue(target, 'spwGeometryRight', geometry?.rightRole || null);
 
   const menu = ensureMenu();
-  menu.dataset.spwPopupPosture = readPopupPosture();
+  writeProjectionTier(menu, PROJECTION_TIERS.TRANSIENT, { spwPopupPosture: readPopupPosture() });
   menu.replaceChildren(buildMenuContent(target, semantic, frame));
   positionMenu(menu, target);
   writeDatasetValue(menu, 'spwState', 'open');
   writeDatasetValue(target, 'spwRegionMenuTarget', 'true');
-  document.documentElement.dataset.spwRegionMenu = 'open';
+  writeProjectionTier(document.documentElement, PROJECTION_TIERS.TRANSIENT, { spwRegionMenu: 'open' });
+
   syncFloatingChromeState(document, {
     source: 'region-menu',
     reason: 'region-menu-opened',
@@ -447,12 +452,15 @@ function ensureMenu() {
   menu.className = 'spw-region-menu';
   menu.setAttribute('role', 'menu');
   menu.setAttribute('aria-label', 'Spw region menu');
-  menu.dataset.spwMetamaterial = 'shell';
-  menu.dataset.spwDismissible = 'true';
-  menu.dataset.spwPopupPosture = readPopupPosture();
-  menu.dataset.spwGravity = 'open';
-  menu.dataset.spwSalience = 'focal';
-  menu.dataset.spwSeating = 'flush-host';
+  writeProjectionTier(menu, PROJECTION_TIERS.TRANSIENT, {
+    spwMetamaterial: 'shell',
+    spwDismissible: 'true',
+    spwPopupPosture: readPopupPosture(),
+    spwGravity: 'open',
+    spwSalience: 'focal',
+    spwSeating: 'flush-host',
+  });
+
   annotateFloatingChromeElement(menu, {
     role: 'region-menu-popover',
     island: 'region-menu-popover',
@@ -1026,7 +1034,7 @@ function closeMenu(options = {}) {
     previewTarget = null;
   }
   writeDatasetValue(document.documentElement, 'spwRegionPreviewing', null);
-  document.documentElement.removeAttribute('data-spw-region-menu');
+  writeProjectionTier(document.documentElement, PROJECTION_TIERS.TRANSIENT, { spwRegionMenu: null });
   if (restoreFocus) {
     activeTarget?.focus?.({ preventScroll: true });
   }

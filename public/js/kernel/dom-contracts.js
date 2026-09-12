@@ -1403,6 +1403,41 @@ export function writeDatasetValues(el, entries = {}, options = {}) {
   return changed;
 }
 
+export const PROJECTION_TIERS = Object.freeze({
+  AUTHOR_OWNED: 'author-owned',
+  TRANSIENT: 'transient',
+  INSPECTION: 'inspection',
+});
+
+export const SPW_PROJECTION_TIERS_CONTRACT = Object.freeze({
+  tiers: PROJECTION_TIERS,
+  definitions: Object.freeze({
+    [PROJECTION_TIERS.AUTHOR_OWNED]: 'Author-owned semantic attributes (context, wonder, operator); explicit user action or opt-in only.',
+    [PROJECTION_TIERS.TRANSIENT]: 'Dynamic runtime or gesture visual state (charge, pinned, open, posture); writeDatasetValue.',
+    [PROJECTION_TIERS.INSPECTION]: 'Diagnostic and inspection hints (resolved-*, ready markers); writeDatasetValueIfMissing by default.',
+  }),
+});
+
+/**
+ * Write dataset entries scoped to a formalized projection tier.
+ *
+ * @param {HTMLElement} el target element
+ * @param {'author-owned' | 'transient' | 'inspection'} tier projection posture
+ * @param {Record<string, unknown>} entries dataset key-value pairs
+ * @param {object} [options]
+ * @returns {boolean} true if any dataset value changed
+ */
+export function writeProjectionTier(el, tier, entries = {}, options = {}) {
+  if (!el?.dataset || !entries || typeof entries !== 'object') return false;
+
+  const resolvedTier = String(tier || PROJECTION_TIERS.TRANSIENT).toLowerCase();
+  const tierOptions = resolvedTier === PROJECTION_TIERS.INSPECTION
+    ? { missingOnly: true, ...options }
+    : options;
+
+  return writeDatasetValues(el, entries, tierOptions);
+}
+
 /**
  * Shared added-node observer for annotate-on-mutation modules.
  *
