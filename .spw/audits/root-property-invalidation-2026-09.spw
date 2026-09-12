@@ -71,28 +71,77 @@ fixity = "tending"
     write invalidates only what an attribute selector on html can match, which
     is why it is about eight times cheaper. Batching the writes collapses ten
     flushes into one, which is also about eight times cheaper.`
-  refutes = `"Cache or throttle the reads." Reads are already free when nothing
-    invalidated style; batching getComputedStyle calls buys nothing. A patch
-    collapsing page-state's ten per-arrival readRootTimeToken calls into one
-    snapshot was written, measured and reverted: no effect outside noise, and
-    the apparent 6x win in the first measurement was the order artifact above.
-    Do not re-propose read batching without a writer in the same patch.`
-  confirms = `"Change-only writes." Every root custom-property write skipped is
-    about 430ms that the next reader does not pay.`
+  refutes = #[
+    `"Cache or throttle the reads." Reads are already free when nothing
+      invalidated style; batching getComputedStyle calls buys nothing. A patch
+      collapsing page-state's ten per-arrival readRootTimeToken calls into one
+      snapshot was written, built into dist, profiled and reverted: no effect
+      outside noise, and the apparent 6x win in the first measurement was the
+      order artifact above.`,
+    `"Guard the runtime token writes." updateRuntimeStateTokens writes six root
+      tokens through raw setProperty rather than writeStyleValue, which reads
+      like the no-op-write finding. Routing all six through writeStyleValue was
+      written and measured: 113 writes with 12 same-value became 110 with 9,
+      stable over two runs. Three writes removed, no transition removed, no time
+      moved, because the write that causes the expensive flush is a genuine
+      value change. Reverted. The contract line about skipping no-op CSS var
+      writes is still right; it is just not what costs here.`
+  ][reg=set]
+  confirms = `A root custom-property write costs about 430ms only when a reader
+    follows it. Skipping a write that no reader follows saves nothing, and
+    skipping one that a reader follows saves all of it. Separate the pair or
+    skip the write; counting either side alone predicts nothing.`
 }[reg=facet]
 
 ^"writer_census"{
   method = `CSSStyleDeclaration.prototype.setProperty patched before any site
     script, counting writes where the declaration is documentElement.style and
-    the name starts with two dashes.`
-  boot_total = `114 root custom-property writes on /, 13 of them same-value, plus
-    39 removes. One call site accounts for 85 of the 114.`
-  caution = `114 is small next to the 35054 to 50710 attribute writes ipc-014
-    measured. That is the point: these are not many writes, they are expensive
-    ones, and the cost lands on a different function than the one that caused
-    it. Counting writes is not the measure; counting write-then-read pairs is.`
-  next = `Attribute the 85-write call site to a source function on an unminified
-    build, then look for the reads that follow it within the same task.`
+    the name starts with two dashes. Run against the dev server for names.`
+  boot_total = `113 root custom-property writes on /, 12 of them same-value.`
+  owners = #{
+    `kernel/site-settings-engine.js` = `88 — 85 of them one batch, from
+      setStyleProperties inside SiteSettingsManager.apply, plus 4 from
+      applyPaletteResonanceSwatches`
+    `runtime/module-loader.js` = `11 from updateRuntimeStateTokens, reached by
+      endMountBatch and by wireRuntimeTokens at boot`
+    `runtime/interactive-medium.js` = `2 from applyInteractiveMedium`
+    `runtime/shell-disclosure.js` = `2 from syncShellOffset`
+  }
+  caution = `113 is small next to the 35054 to 50710 attribute writes ipc-014
+    measured, and the count is not the measure. The settings engine writes 85 of
+    them in one pre-paint batch and that batch is nearly free: the read after it
+    costs 2ms, because nothing has been painted yet and no reader is waiting.`
+}[reg=facet]
+
+^"adjacency"{
+  claim = `The cost is not the writes and not the reads. It is six places in a
+    boot where a root custom-property write is followed by a root style, rect or
+    scroll read. Six transitions carry about two seconds.`
+  method = `setProperty, getComputedStyle().getPropertyValue,
+    Element.getBoundingClientRect and the window.scrollY getter all patched
+    before first paint. A write marks style dirty; the next read records the
+    pair and the elapsed time, then clears the flag.`
+  measured = `113 writes and 39 to 50 reads produce only 6 write-to-read
+    transitions. Total flush time 1896ms and 2530ms on two runs. The write-run
+    signature is identical run to run: eleven writes, a read, ninety-two writes,
+    then five single writes each followed by a read.`
+  pairs = #{
+    `readRootTimeToken @ runtime/page-state.js` = `after updateRuntimeStateTokens
+      @ runtime/module-loader.js — x2, 953ms and 1360ms`
+    `readSafeAreaInsetPx @ kernel/dom-contracts.js` = `after syncShellOffset @
+      runtime/shell-disclosure.js — x2, 425ms and 659ms`
+    `getScrollY @ runtime/shell-disclosure.js` = `after applyInteractiveMedium @
+      runtime/interactive-medium.js — x1, 516ms and 510ms`
+    `read @ runtime/interactive-medium.js` = `after the settings engine batch —
+      x1, 2ms, because that batch runs before first paint`
+  }
+  reading = `Nothing here is a hot loop. Each of these is one write and one read
+    that happen to be adjacent in the boot schedule. Separating a pair costs
+    nothing structural; it is a scheduling question, not a rewrite.`
+  answers = `This is the attribution ipc-006 q3 asked for and could not name.
+    The owner of the synchronous time is not a single writer: it is the
+    adjacency between a writer and the next reader, which is why counting
+    writes per module never found it.`
 }[reg=facet]
 
 ^"do_not"{
@@ -102,16 +151,24 @@ fixity = "tending"
       cheaper to write but the two are not interchangeable, and the site's CSS
       reads these tokens through var().`,
     `Do not attribute a sub-2x profile change on a loaded machine.`,
-    `Do not measure any of this on the dev server.`
+    `Do not measure timing on the dev server. Attribution is fine there —
+      the names are real and the schedule is the same — but the numbers are not
+      the production numbers.`,
+    `Do not treat the settings engine's 85-write batch as the problem because
+      it is the biggest. It is pre-paint and nearly free.`
   ][reg=set]
 }[reg=facet]
 
 validation: #[
   `Order-controlled microbenchmark: reads alone 0.1ms, interleaved 4294ms,
     batched 517ms, dataset 539ms, three rounds with reversed order`,
-  `Writer census patched in before first paint: 114 root writes, 85 from one
-    call site`,
-  `Reverted read-batching patch measured no effect outside noise`
+  `Writer census patched in before first paint: 113 root writes, 88 from the
+    settings engine and 11 from the module loader`,
+  `Adjacency probe over setProperty, getPropertyValue, getBoundingClientRect
+    and scrollY: 6 write-to-read transitions, 1896ms and 2530ms, identical
+    write-run signature on both runs`,
+  `Two candidate patches measured and reverted: read batching moved nothing,
+    write guarding removed 3 writes of 113 and no transition`
 ][reg=set]
 
 dispatch: .{
