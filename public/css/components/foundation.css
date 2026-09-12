@@ -121,6 +121,7 @@
   [data-spw-component-kind]:not(.site-header),
   [data-spw-kind]:not(.site-header),
   .spw-frame,
+  .spw-card,
   .frame-card,
   .media-card,
   .media-focus-card,
@@ -167,6 +168,7 @@
   [data-spw-component-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch),
   [data-spw-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch),
   .spw-frame,
+  .spw-card,
   .frame-card,
   .media-card,
   .media-focus-card,
@@ -191,14 +193,14 @@
   container-type: inline-size;
 }
 
-:where(.frame-card, .spw-chip) {
+:where(.spw-card, .frame-card, .spw-chip) {
   transition:
     transform 80ms var(--ease-settle, ease),
     box-shadow var(--component-transition-fast, 120ms ease),
     border-color var(--component-transition-fast, 120ms ease);
 }
 
-:where(.frame-card, .spw-chip):active {
+:where(.spw-card, .frame-card, .spw-chip):active {
   transform: scale(0.984);
 }
 
@@ -360,6 +362,7 @@
   }
 
   :where(
+    .spw-card,
     .frame-card,
     .media-card,
     .media-focus-card,
@@ -378,6 +381,54 @@
   ) {
     --component-card-detail-opacity: 0.9;
   }
+}
+
+:where(html[data-spw-pointer-mode="coarse"]) :where(
+  button,
+  summary,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  [role="button"],
+  .spw-chip,
+  .frame-sigil
+):not(:where(
+  [data-spw-floating-chrome] *,
+  .spw-section-handle-shell *
+)) {
+  min-block-size: var(--touch-target-min, 2.75rem);
+  touch-action: manipulation;
+}
+
+:where(html[data-spw-pointer-mode="coarse"]) :where(
+  .spw-chip,
+  .frame-sigil
+):not(:where(
+  [data-spw-floating-chrome] *,
+  .spw-section-handle-shell *
+)) {
+  min-inline-size: var(--touch-target-min, 2.75rem);
+}
+
+:where(html[data-spw-pointer-mode="coarse"]) :where(
+  .spw-card,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .pwa-status-card
+) {
+  --component-card-detail-opacity: 0.9;
 }
 
 :where([data-spw-region-flow="stack"], .spw-region-stack) {

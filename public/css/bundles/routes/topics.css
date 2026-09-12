@@ -1692,6 +1692,10 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
   margin: 0;
 }
 
+:where(.spw-scene-bed__figure[data-spw-scene-lane-bind], .image-study[data-spw-scene-lane-bind]) {
+  cursor: pointer;
+}
+
 :where(.spw-scene-bed__figure[data-spw-scene-image-active="off"]) {
   opacity: 0.72;
   filter: saturate(0.88);
@@ -1726,6 +1730,15 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
 
 :where(html[data-spw-hover-mode="hover"]) :where(.spw-scene-bed__lane:hover, .spw-scene-bed__lane:focus-visible) {
   transform: translateY(calc(var(--spw-medium-hover-lift, 1px) * -1));
+}
+
+:where(html[data-spw-pointer-mode="coarse"]) :where(.spw-scene-bed__lane:active) {
+  transform: scale(0.985);
+  background: color-mix(
+    in srgb,
+    var(--surface-strong, #fff) 80%,
+    var(--active-op-color, #008080) 20%
+  );
 }
 
 :where(.spw-scene-bed__lane[data-spw-scene-lane-active="true"]) {

@@ -12,6 +12,7 @@ import {
   resolveScrollBand,
   resolveScrollDirection,
   resolveMenuPressure,
+  syncDeviceContext,
 } from '../../public/js/runtime/shell/measurement.js';
 
 test('shell measurement exports frozen contract', () => {
@@ -76,4 +77,33 @@ test('resolveMenuPressure handles ratio hysteresis and crowded toggle', () => {
     resolveMenuPressure({ ratio: 1.25, navFit: 'roomy', tier: VIEWPORT_TIERS.WIDE }),
     PRESSURES.COMPRESSED
   );
+});
+
+test('syncDeviceContext writes attributes and computes flow and reason', () => {
+  const target = { dataset: {} };
+  const mockView = {
+    innerWidth: 375,
+    matchMedia: (query) => ({ matches: query.includes('coarse') }),
+  };
+  const result = syncDeviceContext(null, target, mockView);
+  assert.equal(result.tier, 'compact');
+  assert.equal(result.reason, 'pocket');
+  assert.equal(result.flow, 'vertical-ribbon');
+  assert.equal(target.dataset.spwViewportTier, 'compact');
+  assert.equal(target.dataset.spwLayoutReason, 'pocket');
+  assert.equal(target.dataset.spwLayoutFlow, 'vertical-ribbon');
+  assert.equal(target.dataset.spwPointerMode, 'coarse');
+  assert.equal(target.dataset.spwDeviceContext, 'compact-coarse');
+
+  const desktopTarget = { dataset: {} };
+  const desktopView = {
+    innerWidth: 1200,
+    matchMedia: (query) => ({ matches: query.includes('hover') }),
+  };
+  const desktopResult = syncDeviceContext(null, desktopTarget, desktopView);
+  assert.equal(desktopResult.tier, 'regular');
+  assert.equal(desktopResult.reason, 'broadsheet');
+  assert.equal(desktopResult.flow, 'broadsheet');
+  assert.equal(desktopTarget.dataset.spwLayoutReason, 'broadsheet');
+  assert.equal(desktopTarget.dataset.spwLayoutFlow, 'broadsheet');
 });

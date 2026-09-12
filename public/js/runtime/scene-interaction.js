@@ -213,6 +213,18 @@ function onLaneClick(event) {
   applyLaneFocus(bed, laneId, { source: 'pointer' });
 }
 
+function onFigureClick(event) {
+  const figure = event.target.closest(FIGURE_SELECTOR);
+  const bed = figure?.closest(BED_SELECTOR);
+  if (!(figure instanceof HTMLElement) || !(bed instanceof HTMLElement)) return;
+  if (figure.closest('a[href]')) return;
+
+  const laneBind = figure.dataset.spwSceneLaneBind;
+  if (laneBind) {
+    applyLaneFocus(bed, laneBind, { source: 'figure-click' });
+  }
+}
+
 function onLaneKeydown(event) {
   const lane = event.target.closest(LANE_SELECTOR);
   const bed = lane?.closest(BED_SELECTOR);
@@ -350,6 +362,10 @@ function publishApi() {
         listFigures(bed).forEach((figure) => delete figure.dataset.spwSceneImageActive);
         const strip = bed.querySelector('[data-spw-scene-memory-value]');
         if (strip) strip.textContent = 'cleared';
+        const frame = bed.closest('.spw-frame, .site-frame');
+        if (frame instanceof HTMLElement) {
+          delete frame.dataset.spwSceneLocalState;
+        }
       });
     },
   };
@@ -365,6 +381,7 @@ export function initSceneInteraction(root = document) {
   root.querySelectorAll(BED_SELECTOR).forEach(prepareBed);
 
   root.addEventListener('click', onLaneClick, true);
+  root.addEventListener('click', onFigureClick, true);
   root.addEventListener('keydown', onLaneKeydown, true);
   root.addEventListener('spw:variant-selected', onVariantSelected);
   root.addEventListener('spw:image-lens', onImageLens, true);
@@ -384,6 +401,7 @@ export function initSceneInteraction(root = document) {
     initialized = false;
     observer.disconnect();
     root.removeEventListener('click', onLaneClick, true);
+    root.removeEventListener('click', onFigureClick, true);
     root.removeEventListener('keydown', onLaneKeydown, true);
     root.removeEventListener('spw:variant-selected', onVariantSelected);
     root.removeEventListener('spw:image-lens', onImageLens, true);

@@ -71,7 +71,7 @@ html[data-spw-layout-tuner="newspaper"] :where(h3) {
     gap: 0.52rem;
   }
 
-  html[data-spw-layout-tuner="newspaper"] :where(.frame-card, .spw-frame) {
+  html[data-spw-layout-tuner="newspaper"] :where(.spw-card, .frame-card, .spw-frame) {
     --component-pad: 0.68rem;
     --component-gap-tight: 0.34rem;
   }
@@ -115,9 +115,29 @@ html[data-spw-layout-flow="vertical-ribbon"] main > article {
     gap: 0.78rem;
   }
 
-  html[data-spw-layout-flow="vertical-ribbon"] :where(.frame-card--illustrated .frame-card-media) {
+  html[data-spw-layout-flow="vertical-ribbon"] :where(.spw-card--illustrated .frame-card-media, .frame-card--illustrated .frame-card-media) {
     max-block-size: 10.5rem;
   }
+}
+
+/* Spread flow — balanced multi-pane or fold rhythm */
+html[data-spw-layout-flow="spread"] main > article {
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+}
+
+html[data-spw-layout-flow="spread"] :where(.frame-grid:not(.frame-grid--dense)) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr));
+  gap: clamp(0.72rem, 1.5vw, 1.1rem);
+}
+
+/* Broadsheet flow — wide panoramic reader / desktop rhythm */
+html[data-spw-layout-flow="broadsheet"] main > article {
+  gap: clamp(1.25rem, 2.8vw, 1.95rem);
+}
+
+html[data-spw-layout-flow="broadsheet"] :where(.frame-grid:not(.frame-grid--dense)) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18.5rem), 1fr));
+  gap: clamp(0.85rem, 1.8vw, 1.35rem);
 }
 
 /* Attention architecture: active section emphasis */

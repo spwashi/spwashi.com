@@ -15693,6 +15693,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   [data-spw-component-kind]:not(.site-header),
   [data-spw-kind]:not(.site-header),
   .spw-frame,
+  .spw-card,
   .frame-card,
   .media-card,
   .media-focus-card,
@@ -15739,6 +15740,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   [data-spw-component-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch),
   [data-spw-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch),
   .spw-frame,
+  .spw-card,
   .frame-card,
   .media-card,
   .media-focus-card,
@@ -15763,14 +15765,14 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   container-type: inline-size;
 }
 
-:where(.frame-card, .spw-chip) {
+:where(.spw-card, .frame-card, .spw-chip) {
   transition:
     transform 80ms var(--ease-settle, ease),
     box-shadow var(--component-transition-fast, 120ms ease),
     border-color var(--component-transition-fast, 120ms ease);
 }
 
-:where(.frame-card, .spw-chip):active {
+:where(.spw-card, .frame-card, .spw-chip):active {
   transform: scale(0.984);
 }
 
@@ -15932,6 +15934,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   }
 
   :where(
+    .spw-card,
     .frame-card,
     .media-card,
     .media-focus-card,
@@ -15950,6 +15953,54 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   ) {
     --component-card-detail-opacity: 0.9;
   }
+}
+
+:where(html[data-spw-pointer-mode="coarse"]) :where(
+  button,
+  summary,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  [role="button"],
+  .spw-chip,
+  .frame-sigil
+):not(:where(
+  [data-spw-floating-chrome] *,
+  .spw-section-handle-shell *
+)) {
+  min-block-size: var(--touch-target-min, 2.75rem);
+  touch-action: manipulation;
+}
+
+:where(html[data-spw-pointer-mode="coarse"]) :where(
+  .spw-chip,
+  .frame-sigil
+):not(:where(
+  [data-spw-floating-chrome] *,
+  .spw-section-handle-shell *
+)) {
+  min-inline-size: var(--touch-target-min, 2.75rem);
+}
+
+:where(html[data-spw-pointer-mode="coarse"]) :where(
+  .spw-card,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .pwa-status-card
+) {
+  --component-card-detail-opacity: 0.9;
 }
 
 :where([data-spw-region-flow="stack"], .spw-region-stack) {
@@ -31025,9 +31076,9 @@ html[data-spw-loading-ecology-phase="settled"] {
 
 /* Lede / orientation: one breath. Do not columnize a greeting. */
 :where(
-  .spw-frame[data-spw-region] :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"], .entrance-lede),
-  .spw-frame[data-spw-region-role="entry-spine"] :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"]),
-  .spw-frame[data-spw-region="hero"] :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"])
+  .spw-frame[data-spw-region] :is([data-spw-textual-role="lede"], .entrance-lede),
+  .spw-frame[data-spw-region-role="entry-spine"] [data-spw-textual-role="lede"],
+  .spw-frame[data-spw-region="hero"] [data-spw-textual-role="lede"]
 ) {
   max-inline-size: var(--spw-region-prose);
 }
@@ -37617,7 +37668,7 @@ html[data-spw-layout-tuner="newspaper"] :where(h3) {
     gap: 0.52rem;
   }
 
-  html[data-spw-layout-tuner="newspaper"] :where(.frame-card, .spw-frame) {
+  html[data-spw-layout-tuner="newspaper"] :where(.spw-card, .frame-card, .spw-frame) {
     --component-pad: 0.68rem;
     --component-gap-tight: 0.34rem;
   }
@@ -37661,9 +37712,29 @@ html[data-spw-layout-flow="vertical-ribbon"] main > article {
     gap: 0.78rem;
   }
 
-  html[data-spw-layout-flow="vertical-ribbon"] :where(.frame-card--illustrated .frame-card-media) {
+  html[data-spw-layout-flow="vertical-ribbon"] :where(.spw-card--illustrated .frame-card-media, .frame-card--illustrated .frame-card-media) {
     max-block-size: 10.5rem;
   }
+}
+
+/* Spread flow — balanced multi-pane or fold rhythm */
+html[data-spw-layout-flow="spread"] main > article {
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+}
+
+html[data-spw-layout-flow="spread"] :where(.frame-grid:not(.frame-grid--dense)) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr));
+  gap: clamp(0.72rem, 1.5vw, 1.1rem);
+}
+
+/* Broadsheet flow — wide panoramic reader / desktop rhythm */
+html[data-spw-layout-flow="broadsheet"] main > article {
+  gap: clamp(1.25rem, 2.8vw, 1.95rem);
+}
+
+html[data-spw-layout-flow="broadsheet"] :where(.frame-grid:not(.frame-grid--dense)) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18.5rem), 1fr));
+  gap: clamp(0.85rem, 1.8vw, 1.35rem);
 }
 
 /* Attention architecture: active section emphasis */

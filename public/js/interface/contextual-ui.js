@@ -18,15 +18,12 @@
 import {
   MODULE_SELECTOR,
   inferTopographyKind,
-  supportsHoverEnvironment,
   writeDatasetValue,
   writeDatasetValueIfMissing,
   writeStyleValue,
 } from '/public/js/kernel/dom-contracts.js';
 import {
-  getViewportTier,
-  getPointerMode,
-  layoutReasonForTier,
+  syncDeviceContext,
 } from '/public/js/runtime/shell/measurement.js';
 import { buildRouteMenuLink } from '/public/js/semantic/link-copy.js';
 import {
@@ -371,21 +368,7 @@ function bindModuleInteractionStates() {
 }
 
 function applyDeviceContext() {
-  const tier = getViewportTier(window.innerWidth);
-  const pointer = getPointerMode(window);
-  const hover = supportsHoverEnvironment(window) ? 'hover' : 'touch';
-  const reason = layoutReasonForTier(tier);
-
-  writeDatasetValue(HTML, 'spwViewportTier', tier);
-  writeDatasetValue(HTML, 'spwPointerMode', pointer);
-  writeDatasetValue(HTML, 'spwHoverMode', hover);
-  writeDatasetValue(HTML, 'spwDeviceContext', `${tier}-${pointer}`);
-  writeDatasetValue(HTML, 'spwLayoutReason', reason);
-  writeDatasetValue(
-    HTML,
-    'spwLayoutFlow',
-    reason === 'pocket' ? 'vertical-ribbon' : reason === 'fold' ? 'spread' : 'broadsheet'
-  );
+  syncDeviceContext(null, document, window);
 }
 
 function collectExistingNavPaths(navList) {

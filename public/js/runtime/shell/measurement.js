@@ -105,6 +105,8 @@ export function syncDeviceContext(state, root = globalThis.document, view = glob
   const tier = getViewportTier(width, state?.config || SHELL_MEASUREMENT_DEFAULTS);
   const pointer = getPointerMode(view);
   const hover = getHoverMode(view);
+  const reason = layoutReasonForTier(tier);
+  const flow = reason === 'pocket' ? 'vertical-ribbon' : reason === 'fold' ? 'spread' : 'broadsheet';
 
   const target = root?.documentElement || root;
   if (target) {
@@ -113,10 +115,12 @@ export function syncDeviceContext(state, root = globalThis.document, view = glob
       spwPointerMode: pointer,
       spwHoverMode: hover,
       spwDeviceContext: `${tier}-${pointer}`,
+      spwLayoutReason: reason,
+      spwLayoutFlow: flow,
     });
   }
 
-  return { tier, pointer, hover };
+  return { tier, pointer, hover, reason, flow };
 }
 
 export function getScrollY(view = globalThis) {

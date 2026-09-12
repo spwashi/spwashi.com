@@ -230,9 +230,9 @@
 
 /* Lede / orientation: one breath. Do not columnize a greeting. */
 :where(
-  .spw-frame[data-spw-region] :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"], .entrance-lede),
-  .spw-frame[data-spw-region-role="entry-spine"] :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"]),
-  .spw-frame[data-spw-region="hero"] :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"])
+  .spw-frame[data-spw-region] :is([data-spw-textual-role="lede"], .entrance-lede),
+  .spw-frame[data-spw-region-role="entry-spine"] [data-spw-textual-role="lede"],
+  .spw-frame[data-spw-region="hero"] [data-spw-textual-role="lede"]
 ) {
   max-inline-size: var(--spw-region-prose);
 }
