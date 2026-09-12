@@ -46,3 +46,9 @@ Remove the `spw-` prefix from the JavaScript source tree, keep the runtime namin
 - Validate syntax, runtime contracts, selector census, ecology, generated manifests, and `check:local`.
 - Result: all four family definitions and resolved import targets match the original sources; moved-file syntax, selector audit, ecology, and deploy build passed.
 - `check:local -- --allow-dirty` re-run after resume: 299 tests passed, 0 failed. Concurrent `annotation-refresh.test.mjs` is now in `MODULE_TEST_FILES`.
+
+## 2026-09 Interaction Tree Alignment
+- Operation: align. Fixity: stable. One slice: group five `interaction-*` peers under `public/js/runtime/interaction/` with folder-local names (`loop`, `hops`, `vocabulary`, `progression`, `story`).
+- Keep catalog module id `interaction-progression` and `systems/interaction-progression.css`. Only the JS load path and imports move.
+- Preserve exports, phase writes, and hop/story contracts. Do not pull `interactive-medium.js` or `interactive-expression-lab.js` into this folder — those are different jobs.
+- Validate syntax, runtime contracts, interaction-story tests, and `check:local`.

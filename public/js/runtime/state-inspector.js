@@ -23,7 +23,7 @@ import {
     IMAGE_REFRESH_REASONS,
     LOOP_STATES,
     LOOP_TOKENS
-} from '/public/js/runtime/interaction-loop.js';
+} from '/public/js/runtime/interaction/loop.js';
 import { OPERATOR_DEFINITIONS, detectOperator } from '/public/js/kernel/shared.js';
 
 const TARGET_SELECTOR = [

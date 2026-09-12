@@ -46,7 +46,7 @@ audit_run: .{
       `kernel/settings-query-parity.js`
       `modules/profile/builder.js`
       `runtime/behavior-scopes.js`
-      `runtime/interaction-vocabulary.js`
+      `runtime/interaction/vocabulary.js`
       `semantic/pretext-utils.js`
       `semantic/semantic-utils.js`
       `typed/json-feeds.js`

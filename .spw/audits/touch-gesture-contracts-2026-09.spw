@@ -17,7 +17,7 @@
 @pointer_device_detection: ~"./pointer-device-detection-2026-09.spw"
 @module_selector_depth: ~"./module-selector-depth-2026-09.spw"
 @gesture_contract_js: ~"../../public/js/runtime/gesture-contract.js"
-@interaction_vocabulary: ~"../../public/js/runtime/interaction-vocabulary.js"
+@interaction_vocabulary: ~"../../public/js/runtime/interaction/vocabulary.js"
 @brace_gestures: ~"../../public/js/runtime/brace-gestures.js"
 @image_interaction: ~"../../public/js/semantic/image-interaction.js"
 @pinch_scale: ~"../../public/js/runtime/attention/pinch-scale.js"

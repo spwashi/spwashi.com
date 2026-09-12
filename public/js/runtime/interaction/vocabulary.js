@@ -1,5 +1,5 @@
 /**
- * interaction-vocabulary.js
+ * interaction/vocabulary.js
  * ---------------------------------------------------------------------------
  * Canonical mappings between gestures, interaction contracts, and html phases.
  * Shared by interaction-progression, learnability surfaces, and inspection.

@@ -20,10 +20,10 @@ partial reading of gathered conceptual payloads.
 | `public/js/interface/cauldron/storage.js` | `clusterIngredients()` — operator / region / liminality / route; groups of one stay loose |
 | `public/js/interface/composition.js` | Wrap clustered chips in `.spw-ornament-cluster` with the winning axis stamped on existing attrs |
 | `public/js/interface/cauldron/resonance.js` | `--spw-cluster-index` is the cluster ordinal so kin twinkle together |
-| `public/js/runtime/interaction-progression.js` | Landmark hash hops write `discover`; gather `charge`; inspect `inspect`; release `settle` |
-| `public/js/runtime/interaction-hops.js` | Landmark loop-state, swipe-to-cycle rooms, section-handle travel synergy |
-| `public/js/runtime/interaction-story.js` | Reads phase+pulse+liminality+loop+hash as one story |
-| `public/js/runtime/interaction-vocabulary.js` | `tap:travel` / `swipe:cycle`; landmarks and cauldron chips in the gesture target set |
+| `public/js/runtime/interaction/progression.js` | Landmark hash hops write `discover`; gather `charge`; inspect `inspect`; release `settle` |
+| `public/js/runtime/interaction/hops.js` | Landmark loop-state, swipe-to-cycle rooms, section-handle travel synergy |
+| `public/js/runtime/interaction/story.js` | Reads phase+pulse+liminality+loop+hash as one story |
+| `public/js/runtime/interaction/vocabulary.js` | `tap:travel` / `swipe:cycle`; landmarks and cauldron chips in the gesture target set |
 | `public/js/runtime/attention/section-handle.js` | Documents the live story on the handle form; writes `data-spw-approach` on the current room; pins resonance probe from the room's operator on a hop |
 | `public/css/systems/electrostatic-affordances.css` | Interaction-phase arms the room electrode; current section and handle raise `--spw-e-edge`; induced field spends into `--spw-resonance` |
 | `public/js/runtime/charge-field.js` | Hop/gather/inspect phases bump the existing charge-field intensity |

@@ -183,9 +183,9 @@ These are the files whose standalone boundary is weakest. Treat this as a queue 
 | A | `public/js/runtime/gesture-contract.js` | runtime | L278 I2/1 E0 S0 D0 Q8 | bounded module; reusable with low side-effect pressure | Leave alone except normal maintenance. |
 | A | `public/js/runtime/hydration-passes.js` | runtime | L81 I2/0 E1 S0 D3 Q0 | bounded module; reusable with low side-effect pressure | Leave alone except normal maintenance. |
 | A | `public/js/runtime/ingredient-lab.js` | runtime | L82 I0/0 E1 S0 D7 Q5 | bounded module; reusable with low side-effect pressure | Leave alone except normal maintenance. |
-| A | `public/js/runtime/interaction-loop.js` | runtime | L114 I0/3 E2 S0 D0 Q0 | bounded module; reusable with low side-effect pressure | Leave alone except normal maintenance. |
-| B | `public/js/runtime/interaction-progression.js` | runtime | L309 I2/0 E14 S0 D6 Q12 | bounded feature script; standalone with local DOM/runtime assumptions | Route new custom events through bus unless DOM compatibility requires raw dispatch. |
-| A | `public/js/runtime/interaction-vocabulary.js` | runtime | L107 I0/2 E0 S0 D0 Q0 | portable or declarative; standalone boundary is clean | Leave alone except normal maintenance. |
+| A | `public/js/runtime/interaction/loop.js` | runtime | L114 I0/3 E2 S0 D0 Q0 | bounded module; reusable with low side-effect pressure | Leave alone except normal maintenance. |
+| B | `public/js/runtime/interaction/progression.js` | runtime | L309 I2/0 E14 S0 D6 Q12 | bounded feature script; standalone with local DOM/runtime assumptions | Route new custom events through bus unless DOM compatibility requires raw dispatch. |
+| A | `public/js/runtime/interaction/vocabulary.js` | runtime | L107 I0/2 E0 S0 D0 Q0 | portable or declarative; standalone boundary is clean | Leave alone except normal maintenance. |
 | B | `public/js/runtime/interactive-medium.js` | runtime | L382 I1/0 E10 S0 D0 Q5 | bounded feature script; standalone with local DOM/runtime assumptions | Route new custom events through bus unless DOM compatibility requires raw dispatch. |
 | A | `public/js/runtime/layout-assumptions.js` | runtime | L372 I2/0 E1 S0 D4 Q11 | bounded module; reusable with low side-effect pressure | Leave alone except normal maintenance. |
 | A | `public/js/runtime/layout-shift-audit.js` | runtime | L577 I2/0 E5 S0 D6 Q3 | bounded module; reusable with low side-effect pressure | Leave alone except normal maintenance. |

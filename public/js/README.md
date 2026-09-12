@@ -64,6 +64,7 @@ wave.
 - `semantic/`: operator grammar, projection machinery, region role inference, narrative token lenses, and pretext helpers.
 - `runtime/`: module catalog/loader, active processes, route grounding, page-state, frame-state, spells, inspectors, gates, and lifecycle loops.
 - `runtime/catalog/`: staged family definitions (`core`, `feature`, `region`, `enhancement`), constants, and normalization. `runtime/module-catalog.js` remains the full-catalog entrypoint; `site.js` imports individual families to preserve lazy loading. Catalog load paths resolve relative to `catalog/`; source audits and the deploy builder use the same base.
+- `runtime/interaction/`: visitor-gesture vocabulary (`loop`, `hops`, `vocabulary`, `progression`, `story`). The catalog id `interaction-progression` is unchanged; its load path resolves from `catalog/` into this folder.
 - `runtime/page-hooks.js`: page-unique hooks, named handles, and console-facing page play helpers.
 - `interface/`: visible affordances, guide behavior, haptics, local controls, and chrome response.
 - `modules/`: page or feature bundles clustered by owner. Keep the first level folder-only; see `public/js/modules/README.md`.
@@ -87,7 +88,7 @@ These are the best candidates when you want to reuse a file on another site:
   timing and mount vocabulary.
 - `SPW_MODULE_LOADER_CONTRACT` + `MODULE_TIMING_STAGES` for mount lifecycle stages.
 - `kernel/dom-contracts.js` for selector, dataset, and style helpers.
-- `runtime/interaction-loop.js` for small interaction-state records and refresh events.
+- `runtime/interaction/loop.js` for small interaction-state records and refresh events.
 - `runtime/page-state.js` for page state, attention timing, and visibility hooks.
 - `runtime/page-hooks.js` for page-unique hook discovery, focus, and pulse helpers.
 - `runtime/composition-box-model.js` for component box-model snapshots, composition roles, and presence/overflow clues.

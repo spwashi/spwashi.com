@@ -19,7 +19,7 @@ import {
     dispatchImageRefresh,
     IMAGE_REFRESH_EVENT,
     IMAGE_REFRESH_REASONS
-} from '/public/js/runtime/interaction-loop.js';
+} from '/public/js/runtime/interaction/loop.js';
 import { getCanvasAccentInstance } from '/public/js/interface/canvas-accents.js';
 
 const PROMPT_MEMORY_KEY = STORAGE_KEYS.IMAGE_PROMPT_MEMORY;

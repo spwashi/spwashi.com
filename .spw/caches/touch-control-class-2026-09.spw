@@ -20,7 +20,7 @@
 @touch_gesture_contracts: ~"../audits/touch-gesture-contracts-2026-09.spw"
 @device_packing: ~"../audits/component-anatomy-device-packing-2026-07.spw"
 @gesture_contract_js: ~"../../public/js/runtime/gesture-contract.js"
-@interaction_vocabulary: ~"../../public/js/runtime/interaction-vocabulary.js"
+@interaction_vocabulary: ~"../../public/js/runtime/interaction/vocabulary.js"
 @foundation_css: ~"../../public/css/components/foundation.css"
 @insight_template: ~"../../.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
 

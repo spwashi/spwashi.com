@@ -143,7 +143,7 @@ export {
   getImageRefreshTransition,
   getLoopTiming,
   readDurationMs,
-} from './runtime/interaction-loop.js';
+} from './runtime/interaction/loop.js';
 
 export {
   SPW_COMPOSITION_BOX_MODEL_CONTRACT,

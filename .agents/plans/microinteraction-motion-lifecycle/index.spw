@@ -37,8 +37,8 @@ intent: .{
 @cauldron_dynamics: ~"../../../.spw/conventions/cauldron-dynamics.spw"
 @component_region_personality: ~"../../../.spw/conventions/component-region-personality.spw"
 @cauldron_storage: ~"../../../public/js/interface/cauldron/storage.js"
-@interaction_hops: ~"../../../public/js/runtime/interaction-hops.js"
-@interaction_story: ~"../../../public/js/runtime/interaction-story.js"
+@interaction_hops: ~"../../../public/js/runtime/interaction/hops.js"
+@interaction_story: ~"../../../public/js/runtime/interaction/story.js"
 @cauldron_clusters_test: ~"../../../scripts/tests/cauldron-clusters.test.mjs"
 
 dispatch: .{
@@ -60,7 +60,7 @@ dispatch: .{
   layer = "pragmatic"
   hypothesis = `A landmark hop, handle travel, or cauldron gather reads as one continuous interaction arc — not a silent state or URL change — when the section handle documents phase+pulse+liminality+loop+hash as a live story and existing ornament clusters group gathered chips by their winning shared axis.`
   spec_ref = ~"./PLAN.md"
-  impl_ref = ~"../../../public/js/runtime/interaction-hops.js"
+  impl_ref = ~"../../../public/js/runtime/interaction/hops.js"
   probe_ref = `node --test --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs scripts/tests/cauldron-clusters.test.mjs`
   falsification = `A patch cannot satisfy the public goal while leaving cauldron-clusters.test.mjs failing or interaction-hops.js/interaction-story.js unchanged for a new hop kind.`
   status = "active"

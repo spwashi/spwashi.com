@@ -3,7 +3,7 @@ import {
   LOOP_TOKENS,
   createLoopRecord,
   getLoopTiming,
-} from '/public/js/runtime/interaction-loop.js';
+} from '/public/js/runtime/interaction/loop.js';
 const ARC_TARGET_SELECTOR = [
   '[data-spw-arc]',
   '.operator-chip',

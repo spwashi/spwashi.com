@@ -20,7 +20,7 @@ import {
   getNextFontScale,
   syncUtilityRow,
 } from './shell/utility-row.js';
-import { bindInteractionHops } from './interaction-hops.js';
+import { bindInteractionHops } from './interaction/hops.js';
 
 const EVENT_NAMES = Object.freeze({
   INTENT: 'spw:shell-menu-intent',

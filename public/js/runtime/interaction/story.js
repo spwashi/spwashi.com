@@ -2,7 +2,7 @@
  * A hop, gather, or swipe is one story told by several existing attributes.
  * This module only reads them. It does not invent a parallel family.
  */
-import { formatMicrointeractionExpression } from '../semantic/interaction-expression.js';
+import { formatMicrointeractionExpression } from '../../semantic/interaction-expression.js';
 
 const PHASE_EVENT = 'spw:interaction-phase';
 

@@ -50,7 +50,7 @@ import {
   writeSectionProgressStyle,
 } from './shared.js';
 import { applyAttentionCapturePins } from './capture-pins.js';
-import { PHASE_EVENT, readInteractionStory } from '/public/js/runtime/interaction-story.js';
+import { PHASE_EVENT, readInteractionStory } from '/public/js/runtime/interaction/story.js';
 
 let lastSectionLogKey = '';
 let lastSectionIndex = 0;

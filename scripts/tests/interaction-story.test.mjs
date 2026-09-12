@@ -3,13 +3,13 @@ import assert from 'node:assert/strict';
 import {
   phaseFromContractKind,
   GESTURE_VERB_TO_PHASE,
-} from '../../public/js/runtime/interaction-vocabulary.js';
+} from '../../public/js/runtime/interaction/vocabulary.js';
 import {
   landmarkHashFromHref,
   resolveHeaderRoomHop,
   headerRoomCurrentIndex,
-} from '../../public/js/runtime/interaction-hops.js';
-import { readInteractionStory } from '../../public/js/runtime/interaction-story.js';
+} from '../../public/js/runtime/interaction/hops.js';
+import { readInteractionStory } from '../../public/js/runtime/interaction/story.js';
 
 test('tap and swipe verbs on one contract stay distinct', () => {
   const contract = 'tap:travel hold:preview swipe:cycle';

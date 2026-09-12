@@ -10,7 +10,7 @@ import {
   INTERACTION_CONTRACT_HINTS,
   phaseFromGestureContract,
   phaseFromInteractionContract,
-} from '/public/js/runtime/interaction-vocabulary.js';
+} from '/public/js/runtime/interaction/vocabulary.js';
 
 export const LIFECYCLE_BEATS = Object.freeze([
   'rest',

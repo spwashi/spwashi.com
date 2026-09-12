@@ -13,7 +13,7 @@ priming names the next verb (touch-gesture-contracts f14).
 "On a phone, a visitor can leave the current room in more than one direction
 from existing edges and chrome" landed for three of the four named edges,
 each reusing the existing tap:travel/swipe:cycle contract rather than a new
-gesture family — verify with `grep -n swipe public/js/runtime/interaction-hops.js
+gesture family — verify with `grep -n swipe public/js/runtime/interaction/hops.js
 public/js/runtime/attention/section-handle.js`:
 
 - **Header rooms (closed toggle-header)** — `resolveHeaderRoomHop` cycles

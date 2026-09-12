@@ -2,7 +2,7 @@
  * In-page hops: landmark rooms, provenance links, and section-handle travel.
  * Writes existing loop-state / aria-current; progression owns the phase pulse.
  */
-import { IN_PAGE_HOP_SELECTOR } from './interaction-vocabulary.js';
+import { IN_PAGE_HOP_SELECTOR } from './vocabulary.js';
 
 export const SECTION_TRAVEL_SOURCES = Object.freeze(new Set([
   'prev',

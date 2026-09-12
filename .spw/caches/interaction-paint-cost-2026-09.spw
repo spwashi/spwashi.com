@@ -40,7 +40,7 @@
 @pointer_device_audit: ~"../audits/pointer-device-detection-2026-09.spw"
 @layout_squeeze: ~"../../public/css/systems/layout-squeeze.css"
 @interaction_progression_css: ~"../../public/css/systems/interaction-progression.css"
-@interaction_progression_js: ~"../../public/js/runtime/interaction-progression.js"
+@interaction_progression_js: ~"../../public/js/runtime/interaction/progression.js"
 @affordances_css: ~"../../public/css/systems/electrostatic-affordances.css"
 @dom_sync_hub: ~"../../public/js/runtime/dom-sync-hub.js"
 @grain_texture: ~"../../public/css/effects/grain-texture.css"

@@ -68,7 +68,7 @@ source = "module-by-module review, catalog ecology, import census, and npm run c
   P2_portability = .{
     owner = @compose_plan
     move = `Promote Grade B contract surfaces to compose in guild-sized batches; keep browser-only modules browser-only.`
-    targets = #['runtime/interaction-loop.js', 'runtime/composition-box-model.js', 'media/svg-tunability.js', 'kernel/query-composer.js'][reg=set]
+    targets = #['runtime/interaction/loop.js', 'runtime/composition-box-model.js', 'media/svg-tunability.js', 'kernel/query-composer.js'][reg=set]
     value = `increases standalone utility without pretending full site modules are Node utilities`
     validation = #['npm run test:modules', 'starter:inventory -- --check', 'import each new compose export in isolation'][reg=set]
   }[reg=facet]

@@ -1,13 +1,13 @@
 /**
- * interaction-progression.js
+ * interaction/progression.js
  * ---------------------------------------------------------------------------
  * Progressive interaction phases and microinteraction pulses across figures,
  * gestures, pinch scaling, ecology settle, and link contracts.
  */
 
-import { bus } from '../kernel/bus.js';
-import { supportsFinePointerHover } from '../kernel/dom-contracts.js';
-import { bindInteractionHops, readHopHash } from './interaction-hops.js';
+import { bus } from '../../kernel/bus.js';
+import { supportsFinePointerHover } from '../../kernel/dom-contracts.js';
+import { bindInteractionHops, readHopHash } from './hops.js';
 import {
   GESTURE_TARGET_SELECTOR,
   IMAGE_STATE_TO_PHASE,
@@ -18,9 +18,9 @@ import {
   phaseFromInteractionContract,
   phaseFromLoopState,
   strongestPhase,
-} from './interaction-vocabulary.js';
-import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
-import { ensureInteractionProgressionStyles } from '../kernel/deferred-styles.js';
+} from './vocabulary.js';
+import { readMicrointeractionPulseMs } from '../pulse-beat-tuner.js';
+import { ensureInteractionProgressionStyles } from '../../kernel/deferred-styles.js';
 
 const PHASE_EVENT = 'spw:interaction-phase';
 const SWIPE_DELTA_PX = 28;
@@ -424,7 +424,7 @@ export function initInteractionProgression(root = document) {
   return () => controller.abort();
 }
 
-export { INTERACTION_PHASES } from './interaction-vocabulary.js';
+export { INTERACTION_PHASES } from './vocabulary.js';
 
 export const spwModule = {
   updates: ['attr:data-spw-interaction-phase', 'attr:data-spw-microinteraction-pulse'],

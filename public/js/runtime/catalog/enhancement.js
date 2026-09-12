@@ -1341,7 +1341,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'gesture loop pinch swipe hover tap image ecology interaction-vocabulary',
     timingArc: 'visible-phase',
     effectScope: 'root-state',
-    load: () => import('../interaction-progression.js'),
+    load: () => import('../interaction/progression.js'),
   },
   {
     id: 'concept-salience',

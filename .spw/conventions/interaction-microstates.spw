@@ -8,8 +8,8 @@
 #:operation #!contract
 #:fixity #!stable
 
-@interaction_vocabulary: ~"../../public/js/runtime/interaction-vocabulary.js"
-@interaction_progression: ~"../../public/js/runtime/interaction-progression.js"
+@interaction_vocabulary: ~"../../public/js/runtime/interaction/vocabulary.js"
+@interaction_progression: ~"../../public/js/runtime/interaction/progression.js"
 @pulse_beat_tuner: ~"../../public/js/runtime/pulse-beat-tuner.js"
 @palette_treat_discovery: ~"../../public/js/runtime/palette-treat-discovery.js"
 @feature_discovery: ~"../../public/js/runtime/feature-discovery.js"
