@@ -204,6 +204,22 @@ export function extractObjectLiterals(arrayLiteral) {
             }
             continue;
         }
+        // Skip comments before string detection: an apostrophe in a prose comment
+        // ("the loader's own") would otherwise open a string that never closes properly.
+        if (char === '/' && arrayLiteral[index + 1] === '/') {
+            const lineEnd = arrayLiteral.indexOf('\n', index);
+            if (lineEnd < 0)
+                break;
+            index = lineEnd;
+            continue;
+        }
+        if (char === '/' && arrayLiteral[index + 1] === '*') {
+            const blockEnd = arrayLiteral.indexOf('*/', index + 2);
+            if (blockEnd < 0)
+                break;
+            index = blockEnd + 1;
+            continue;
+        }
         if (char === '"' || char === "'" || char === '`') {
             inString = true;
             stringQuote = char;

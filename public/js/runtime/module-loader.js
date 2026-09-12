@@ -2,7 +2,11 @@
  * Composable module loader for the staged site runtime.
  */
 
-import { writeDatasetValue } from '../kernel/dom-contracts.js';
+import {
+  PROJECTION_TIERS,
+  writeDatasetValue,
+  writeProjectionTier,
+} from '../kernel/dom-contracts.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from './catalog/constants.js';
 import { describeModuleOrchestration } from './catalog/normalize.js';
 import {
@@ -80,6 +84,8 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
     'Definitions may keep explicit mount adapters; definitions without one fall back to SPW_MODULE_EXPORT, spwModule, default.mount, or init* exports.',
   lifecycleEvent:
     'spw:module-lifecycle emits scheduled, loading, mounted, observed, settled, unmounting, unmounted, and failed so modules can respond through ctx.bus without polling registry state.',
+  projectionTiers:
+    'Module target and root runtime indicators write through writeProjectionTier (inspection for diagnostics, transient for active loading/batches) preserving author semantic attributes.',
 });
 
 export function createModuleLoader(config = {}) {
@@ -743,40 +749,45 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
 
 function annotateModuleTarget(target, record) {
   if (!(target instanceof HTMLElement)) return;
-  writeDatasetValue(target, 'spwModule', record.baseId);
-  writeDatasetValue(target, 'spwModuleId', record.id);
-  writeDatasetValue(target, 'spwModuleLayer', record.layer);
-  writeDatasetValue(target, 'spwModuleWhen', record.effectiveWhen);
-  writeDatasetValue(target, 'spwModuleStatus', record.status);
-  writeDatasetValue(target, 'spwModuleLifecycleStage', record.stage || record.status);
-  writeDatasetValue(target, 'spwModuleReason', record.reason);
-  writeDatasetValue(target, 'spwModuleEvaluates', record.evaluates);
-  writeDatasetValue(target, 'spwModuleTimingArc', record.timingArc || null);
-  writeDatasetValue(target, 'spwModuleEffectScope', record.effectScope || null);
-  writeDatasetValue(target, 'spwModuleTriggerStatus', record.status);
-  writeDatasetValue(target, 'spwModuleLifecycle', summarizeModuleLifecycle(record));
+  writeProjectionTier(target, PROJECTION_TIERS.INSPECTION, {
+    spwModule: record.baseId,
+    spwModuleId: record.id,
+    spwModuleLayer: record.layer,
+    spwModuleWhen: record.effectiveWhen,
+    spwModuleStatus: record.status,
+    spwModuleLifecycleStage: record.stage || record.status,
+    spwModuleReason: record.reason,
+    spwModuleEvaluates: record.evaluates,
+    spwModuleTimingArc: record.timingArc || null,
+    spwModuleEffectScope: record.effectScope || null,
+    spwModuleLifecycle: summarizeModuleLifecycle(record),
+    spwModuleHydration: record.status === 'mounted' ? 'ready' : record.status,
+    spwModuleDurationMs: Number.isFinite(record.durationMs) ? String(Math.round(record.durationMs)) : null,
+  });
+  writeProjectionTier(target, PROJECTION_TIERS.TRANSIENT, {
+    spwModuleTriggerStatus: record.status,
+  });
 
   annotateModuleDescribesTarget(target, record.describes);
   annotateModuleUpdatesTarget(target, record.updates);
-
-  writeDatasetValue(target, 'spwModuleHydration', record.status === 'mounted' ? 'ready' : record.status);
-  if (Number.isFinite(record.durationMs)) {
-    writeDatasetValue(target, 'spwModuleDurationMs', String(Math.round(record.durationMs)));
-  }
 }
 
 function annotateModuleTrigger(target, def, ctx, effectiveWhen, status = 'queued') {
   if (!(target instanceof HTMLElement)) return;
   const reason = describeMountReason(def, ctx, target, effectiveWhen);
-  writeDatasetValue(target, 'spwModuleTrigger', def.id);
-  writeDatasetValue(target, 'spwModuleTriggerLayer', def.layer);
-  writeDatasetValue(target, 'spwModuleTriggerWhen', effectiveWhen);
-  writeDatasetValue(target, 'spwModuleTriggerStatus', status);
-  writeDatasetValue(target, 'spwModuleTriggerReason', reason);
-  writeDatasetValue(target, 'spwModuleTriggerTimingArc', def.timingArc || null);
-  writeDatasetValue(target, 'spwModuleTriggerEffectScope', normalizeModuleIntentValue(def.effectScope));
-  writeDatasetValue(target, 'spwFeatureMountTrigger', `${def.id}:${effectiveWhen}`);
-  if (def.selector) writeDatasetValue(target, 'spwModuleTriggerSelector', def.selector);
+  writeProjectionTier(target, PROJECTION_TIERS.INSPECTION, {
+    spwModuleTrigger: def.id,
+    spwModuleTriggerLayer: def.layer,
+    spwModuleTriggerWhen: effectiveWhen,
+    spwModuleTriggerReason: reason,
+    spwModuleTriggerTimingArc: def.timingArc || null,
+    spwModuleTriggerEffectScope: normalizeModuleIntentValue(def.effectScope),
+    spwFeatureMountTrigger: `${def.id}:${effectiveWhen}`,
+    spwModuleTriggerSelector: def.selector || null,
+  });
+  writeProjectionTier(target, PROJECTION_TIERS.TRANSIENT, {
+    spwModuleTriggerStatus: status,
+  });
 }
 
 function updateRuntimeStateTokens(ctx) {
@@ -804,7 +815,10 @@ function updateRuntimeStateTokens(ctx) {
   const layersList = [...activeLayers].sort();
   if (!layersList.length) layersList.push('core');
   const layersValue = layersList.join(' ');
-  writeDatasetValue(html, 'spwActiveLayers', layersList);
+  writeProjectionTier(html, PROJECTION_TIERS.TRANSIENT, {
+    spwActiveLayers: layersList,
+    spwSiteRhythm: activeLayers.size > 0 ? 'active' : 'quiet',
+  });
 
   const enhancementIntensity = hasEnhancement ? 0.92 : 0.32;
   const featureIntensity = hasFeature ? 0.78 : 0.22;
@@ -825,7 +839,6 @@ function updateRuntimeStateTokens(ctx) {
   const rhythmDensity = Math.max(0.25, Math.min(1.6, 0.28 + layerCount * 0.19));
   html.style.setProperty('--spw-site-rhythm-tempo', rhythmTempo.toFixed(2));
   html.style.setProperty('--spw-site-rhythm-density', rhythmDensity.toFixed(2));
-  writeDatasetValue(html, 'spwSiteRhythm', activeLayers.size > 0 ? 'active' : 'quiet');
 
   ctx.bus.emit('spw:runtime-tokens-updated', {
     activeLayers: layersValue,

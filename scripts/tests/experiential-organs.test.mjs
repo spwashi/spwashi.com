@@ -38,6 +38,14 @@ import {
   initResonanceProbe,
 } from '../../public/js/runtime/attention/resonance-probe.js';
 
+import {
+  ATTENTION_ARCHITECTURE_CONTRACT,
+  SPW_ATTENTION_ARCHITECTURE_CONTRACT,
+  SPW_MODULE_EXPORT as ATTENTION_ARCHITECTURE_EXPORT,
+  describeAttentionArchitecture,
+  initSpwAttentionArchitecture,
+} from '../../public/js/runtime/attention-architecture.js';
+
 test('sample dock organ contract exposes frozen definition and public API', () => {
   assert.equal(SPW_SAMPLE_DOCK_CONTRACT.id, 'sample-dock');
   assert.equal(SPW_SAMPLE_DOCK_CONTRACT.mount, 'initSampleDock');
@@ -132,4 +140,32 @@ test('attention resonance probe exposes relation and block-echo capabilities', (
   assert.match(RESONANCE_PROBE_EXPORT.describes, /relation/);
   assert.match(RESONANCE_PROBE_EXPORT.effectScope, /block-echo/);
   assert.equal(typeof initResonanceProbe, 'function');
+});
+
+test('attention architecture exposes frozen contract, module export, and relation triad attributes', () => {
+  assert.equal(SPW_ATTENTION_ARCHITECTURE_CONTRACT.id, 'attention-architecture');
+  assert.equal(SPW_ATTENTION_ARCHITECTURE_CONTRACT.mount, 'initSpwAttentionArchitecture');
+  assert.deepEqual(SPW_ATTENTION_ARCHITECTURE_CONTRACT.organs, [
+    'scroll-cadence',
+    'section-handle',
+    'resonance-probe',
+    'reading-groove',
+    'pinch-scale',
+  ]);
+
+  assert.equal(ATTENTION_ARCHITECTURE_EXPORT.id, 'attention-architecture');
+  assert.equal(typeof ATTENTION_ARCHITECTURE_EXPORT.mount, 'function');
+  assert.equal(typeof ATTENTION_ARCHITECTURE_EXPORT.describe, 'function');
+  assert.equal(typeof initSpwAttentionArchitecture, 'function');
+
+  assert.equal(ATTENTION_ARCHITECTURE_CONTRACT.attributes.probeRelation, 'data-spw-probe-relation');
+  assert.equal(ATTENTION_ARCHITECTURE_CONTRACT.attributes.blockResonance, 'data-spw-block-resonance');
+  assert.equal(ATTENTION_ARCHITECTURE_CONTRACT.attributes.probeFamily, 'data-spw-resonance-family');
+  assert.equal(ATTENTION_ARCHITECTURE_CONTRACT.attributes.targetKin, 'data-spw-target-kin');
+
+  const snapshot = describeAttentionArchitecture(document);
+  assert.ok(snapshot.ready);
+  assert.ok('probeRelation' in snapshot);
+  assert.ok('blockResonanceCount' in snapshot);
+  assert.ok('probeFamily' in snapshot);
 });

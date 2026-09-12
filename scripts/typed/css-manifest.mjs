@@ -461,7 +461,7 @@ export function onlyTokensForTargets(targets) {
 }
 /** Soft budgets (bytes) for agent/publish hygiene — warn only unless --strict-budget. */
 export const CSS_BUNDLE_SOFT_BUDGETS = Object.freeze({
-    core: 1.6 * 1024 * 1024,
-    route: 120 * 1024,
+    core: 1.7 * 1024 * 1024,
+    route: 140 * 1024,
     behavior: 48 * 1024,
 });

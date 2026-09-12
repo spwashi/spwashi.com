@@ -155,7 +155,7 @@ function resolveCatalogEntryPath(outDir: string, specifier: string): string {
 export function semanticPackIdForDefinition(definition: CatalogDefinitionForBuild): string {
   const when = String(definition.when || 'immediate');
   if (when === 'immediate') return 'foundation';
-  if (when === 'idle' && definition.timingChunk) return String(definition.timingChunk);
+  if (when === 'idle') return definition.timingChunk ? String(definition.timingChunk) : 'idle-default';
   if (when === 'settled') return 'settled';
   return `${slugifyChunkName(when)}-${slugifyChunkName(definition.id)}`;
 }

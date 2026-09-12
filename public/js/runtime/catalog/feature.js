@@ -19,7 +19,7 @@ export const FEATURE_DEFS = [
     selector: '[data-spw-feature="operator-symmetry"]',
     rootMode: 'each',
     describes: 'operator[square]{rotate.reflect.compare} invariant[labels|links]',
-    updates: ['structural:childList', 'structural:hidden', 'structural:textContent'],
+    updates: ['structural:property:childList', 'structural:hidden', 'structural:property:textContent'],
     evaluates: 'square identity composition-order authored-link preservation',
     timingArc: 'visible-feature',
     effectScope: 'local-dom listeners',

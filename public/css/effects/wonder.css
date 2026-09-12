@@ -1382,11 +1382,18 @@ html[data-spw-probe-relation="architecture"] {
 :where([data-spw-block-resonance="echoed"]) {
   outline: 1px dashed color-mix(
     in srgb,
-    var(--spw-operator-color, var(--active-op-color, var(--teal))) 32%,
+    var(--spw-reward-color, var(--wonder-accent-color, var(--spw-operator-color, var(--active-op-color, var(--teal))))) 40%,
     transparent
   );
   outline-offset: 4px;
-  transition: outline-color var(--motion-duration-fast, 0.2s) ease;
+  box-shadow: 0 0 12px -2px color-mix(
+    in srgb,
+    var(--spw-reward-color, var(--wonder-accent-color, var(--spw-operator-color, var(--active-op-color, var(--teal))))) 18%,
+    transparent
+  );
+  transition:
+    outline-color var(--motion-duration-fast, 0.2s) ease,
+    box-shadow var(--motion-duration-fast, 0.2s) ease;
 }
 
 /* ==========================================================================

@@ -37,6 +37,19 @@ import {
   SPW_MODULE_EXPORT as scrollCadenceExport,
 } from './attention/scroll-cadence.js';
 
+export const SPW_ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
+  id: 'attention-architecture',
+  organs: Object.freeze([
+    'scroll-cadence',
+    'section-handle',
+    'resonance-probe',
+    'reading-groove',
+    'pinch-scale',
+  ]),
+  mount: 'initSpwAttentionArchitecture',
+  ...ATTENTION_ARCHITECTURE_CONTRACT,
+});
+
 export {
   ATTENTION_ARCHITECTURE_CONTRACT,
   describeAttentionArchitecture,
@@ -81,3 +94,14 @@ export function initSpwAttentionArchitecture(ctx = {}) {
     }
   };
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'attention-architecture',
+  contract: SPW_ATTENTION_ARCHITECTURE_CONTRACT,
+  mount(ctx, root) {
+    return initSpwAttentionArchitecture({ ...ctx, root });
+  },
+  describe(root) {
+    return describeAttentionArchitecture(root);
+  },
+});

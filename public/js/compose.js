@@ -186,6 +186,8 @@ export {
 
 export {
   ATTENTION_ARCHITECTURE_CONTRACT,
+  SPW_ATTENTION_ARCHITECTURE_CONTRACT,
+  SPW_MODULE_EXPORT as attentionArchitectureExport,
   describeAttentionArchitecture,
   initPinchTextScale,
   initReadingGroove,
