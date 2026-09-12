@@ -1,0 +1,223 @@
+# Module and effect arrival options (2026-09)
+#
+# operation: cache
+# Four clocks already tick. These options say how they may relate.
+# None is selected. Do not implement from this file.
+
+#>module_effect_arc_options_2026_09
+#:cache #!modules #!effects #!cascade #!arcs #!load
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@stylesheet_ecology: ~"../conventions/stylesheet-ecology.spw"
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@runtime_medium: ~"../conventions/runtime-medium-ecology.spw"
+@implicit_arcs: ~"./implicit-attention-arcs.spw"
+@paint_cost: ~"./interaction-paint-cost-2026-09.spw"
+@arrival_cache: ~"./arrival-perceptibility-2026-08.spw"
+@css_combinatorics: ~"./css-combinatorics.spw"
+@deferred_styles: ~"../../public/js/kernel/deferred-styles.js"
+@flourish_pack: ~"../../public/css/effects/flourish-pack.css"
+@module_loader: ~"../../public/js/runtime/module-loader.js"
+@catalog_constants: ~"../../public/js/runtime/module-catalog-constants.js"
+@page_state: ~"../../public/js/runtime/page-state.js"
+
+operation = "cache"
+fixity = "experimental"
+source = `2026-09-11 reading of cascade vs delivery (@stylesheet_ecology),
+  MOUNT_WHEN × timingArc (@catalog_constants, @module_loader), flourish-pack
+  idle envelope, and html[data-spw-attention-arc] (@implicit_arcs). Prompted
+  after ipc-015 named style leaks on the enter-arc.`
+focus_dimension = "engineer"
+element = "metal"
+semantic_fixity = "experimental"
+do_not = `Do not pick an option in this file. Do not treat @layer as a load
+  schedule. Do not delay page ready to make a clock look honest. Do not add a
+  data-spw-* family. Do not fold flourish into core to "simplify." Do not
+  implement ipc-015 F from an option.`
+
+expression = clocks[four]{cascade.delivery.mount.arc}<relate>
+  ~ spend[when]{approach.enter.dwell.echo}<electrostatics>
+  ^ owner[existing]{layer.deferred.catalog.arc}<keep>
+
+^"thesis"{
+  claim = `Modules and effects already have four clocks. Cascade says who
+    wins. Delivery says when a sheet is requested. Mount says when JS runs.
+    Arc says whether the visit may spend. The freeze and the arrival wash
+    both come from spending as if those clocks were one.`
+  already = `Flourish-pack restates the layer list so idle CSS is restyle,
+    not a cascade coup. Catalog when= already splits immediate / visible /
+    idle / invited. Arc already promotes pronunciation-hints after
+    dwell|echo|return. Arrival already refuses discharge on a flat page.`
+  gap = `Catalog timingArc still names boot slices (boot-core, boot-shell,
+    visible-media), not approach|enter|dwell|echo. Agents keep using @layer
+    as a schedule. ipc-015 leak-c spends a room phase onto every frame.`
+  refuse = `Do not invent a fifth clock. timingArc is the misnamed fourth,
+    not a new one. Retie it or leave it as audit folklore; do not add
+    data-spw-load-tier.`
+}[reg=facet]
+
+^"clocks_as_found"{
+  id = "mea-000"
+  operation = "cache"
+  cascade = `@layer reset → tokens → shell → typography → grammar →
+    components → systems → routes → handles → effects → ornament.
+    Geology. Who wins. @stylesheet_ecology: not a request schedule.`
+  delivery = `style-core first paint; route bundles; @deferred_styles on
+    demand; @flourish_pack after interactive with html[data-spw-flourish=ready].
+    Sheets never unload.`
+  mount = `MODULE_LAYERS core|feature|region|enhancement × MOUNT_WHEN
+    immediate|visible|idle|interaction|invited|region|settled.
+    getEffectiveMountWhen may demote by category, familiarity, or policy.`
+  arc = `html[data-spw-attention-arc] approach|enter|dwell|echo|return|rest
+    (@implicit_arcs). Arrival field conductive|flat|suppressed
+    (@arrival_electrostatics). Arc currently changes one mount: literacy
+    pronunciation-hints.`
+  timingArc = `Catalog field, kebab token, used in snapshots and audits.
+    Values are boot-core, boot-shell, visible-media — a parallel vocabulary
+    that does not speak the electrostatic arc.`
+  pattern = `Same shape as copy-units mistaken for delivery keys
+    (@stylesheet_ecology) and as @layer mistaken for load.`
+}[reg=facet]
+
+^"mea-001_keep_four_clocks"{
+  id = "mea-001"
+  operation = "cache"
+  fixity = "experimental"
+  expression = clocks[named]{cascade.delivery.mount.arc}<honest>
+    ~ spend[arc]{discharge.flourish.intensity}<gate>
+    ^ vocab[timingArc]{approach.enter.dwell}<retie>
+  claim = `Keep the four clocks. Teach them. The only code change this
+    option allows is retieing catalog timingArc onto the electrostatic
+    vocabulary without changing when=.`
+  module = `when= stays the request/run schedule. timingArc becomes
+    approach|enter|dwell|echo|return|rest so audit rows and describeMountReason
+    speak the same language as @implicit_arcs.`
+  effect = `Flourish stays idle delivery. Tokens stay in core.
+    html[data-spw-flourish=ready] remains the dress mark, not a mount when.`
+  cascade = `Untouched. Late links keep restating the layer list.`
+  why_plausible = `ipc-008 already refuses delaying ready. ipc-005 already
+    cut pocket prefetch. The remaining confusion is vocabulary, not a missing
+    loader.`
+  cost = `A catalog string rename plus a contract check. No new file.`
+  risk = `Old audit queries that match boot-core will go stale. Absorb them
+    in the same patch.`
+  next = `If this option is chosen: one catalog-family retie, then stop.
+    Do not move when= in the same patch.`
+}[reg=facet]
+
+^"mea-002_arc_owned_delivery"{
+  id = "mea-002"
+  operation = "prime"
+  fixity = "experimental"
+  expression = sheet[tier]{approach.enter.dwell.echo}<banner>
+    ~ delivery[arc]{core.systems.flourish.ornament}<generate>
+    ^ manifest[style_core]{from.banners}<not_hand>
+  claim = `Each stylesheet declares an electrostatic tier in its banner.
+    The manifest is generated from those banners. Approach is core.
+    Enter is systems. Dwell is effects. Echo is ornament.`
+  already_wondered = `@stylesheet_ecology wonder_stylesheet_ecology_1 already
+    asks whether a sheet can declare core|route|deferred. This option uses
+    the arc words instead of delivery words, so cascade and delivery do not
+    share a vocabulary.`
+  module = `JS catalog when= is mapped onto the same words, or stays a
+    separate mount clock. Mapping them is a second patch.`
+  why_plausible = `Flourish-pack is already the dwell/echo envelope.
+    Generating style-core from banners would end the "membership lives in
+    another document" defect that wonder named.`
+  cost = `Banner convention plus a generator. Mis-tiering a first-paint
+    sheet makes the page wrong, not merely plainer.`
+  risk = `A late <link> that omits the layer list is still a cascade coup.
+    @flourish_pack already warns. A generated manifest that forgets the
+    restatement would dump ornament on top of tokens.`
+  next = `Do not start this. Prove mea-001 vocabulary first. If banners
+    grow a Tier line, use delivery words (core|route|deferred) until the
+    arc words are already live in the catalog.`
+}[reg=facet]
+
+^"mea-003_catalog_is_the_schedule"{
+  id = "mea-003"
+  operation = "prime"
+  fixity = "experimental"
+  expression = catalog[one]{js.css.packs}<when>
+    ~ load[deferred]{flourish.theme.inspect}<module>
+    ^ ecology[css]{files.stay.sheets}<not_graph>
+  claim = `CSS packs become catalog modules. @deferred_styles is what
+    load() calls. when=idle loads flourish-pack; when=invited loads
+    inspect; theme packs stay opt-in. Cascade stays geology.`
+  module = `One schedule for JS and CSS. timingArc (once retied) is why
+    the pack may spend, when= is when it is requested.`
+  effect = `ensureFlourishStyles, ensureThemePackStyles, ensureInspectStyles
+    become catalog ids with cleanup that does not unload the sheet
+    (deferred-styles already never removes).`
+  why_plausible = `Callers already load sheets from the module that owns
+    the consumers. Catalog would make that inspectable the way JS mounts
+    already are.`
+  cost = `Catalog growth. CSS ecology becomes a JS graph, which
+    @stylesheet_ecology refuses: a sheet must remain readable alone.`
+  risk = `A sheet that only makes sense as a catalog row has become a
+    fragment. First paint must not wait on the module loader to request
+    tokens.`
+  next = `Do not start this. If a pack is added, keep it in deferred-styles
+    and cite the owning module. A catalog id is allowed only when the pack
+    already has a JS mount with cleanup.`
+}[reg=facet]
+
+^"mea-004_potential_gates_spend"{
+  id = "mea-004"
+  operation = "cache"
+  fixity = "experimental"
+  expression = load[early]{paint.complete}<pe>
+    ~ spend[wall]{discharge.flourish.phase}<potential>
+    ^ room[token]{html.phase}<not.frames>
+  claim = `Load what first paint needs. Spend only where a wall makes
+    potential. Modules may mount VISIBLE and stay silent. Effects may sit
+    in core inert until flourish=ready and the arrival field is conductive.`
+  already = `@arrival_electrostatics: author a wall, let the entrance be
+    what crossing looks like. Capture and reduced-motion already suppress
+    discharge. ipc-015 leak-c is the anti-pattern: html phase restyles
+    every .spw-frame.`
+  module = `when= does not wait on arc except the one literacy promotion
+    already written. New spend (rings, pulses, grain animation) reads arc
+    or arrival-field, not a new when=.`
+  effect = `Flourish may load at idle and still refuse to animate on
+    approach. html[data-spw-flourish=ready] marks dress; arc marks whether
+    that dress may move.`
+  why_plausible = `This is the PE rule plus the arrival rule, said as one
+    sentence. It explains why delaying ready (ipc-008) is the wrong clock
+    to turn.`
+  cost = `Selector work: spend rules key on arc or conductive field, not
+    on every frame. No new loader.`
+  risk = `A silent VISIBLE module that later writes geometry is still a
+    shove. visual: authored|annotate remains the guard.`
+  next = `If this option is chosen after mea-001: patch one spend family
+    (ipc-015 leak-c projected-field on frames, or flourish motion) to read
+    the room token. Do not change when=.`
+}[reg=facet]
+
+^"selection"{
+  reading = `mea-001 is the honest status quo. mea-004 is the spend rule
+    the arrival convention already wanted. mea-002 and mea-003 are larger
+    delivery redesigns; they stay primes.`
+  first_if_any = `Retie catalog timingArc onto approach|enter|dwell|echo|
+    return|rest without moving when=. That is mea-001's only allowed patch.`
+  against_paint_cost = `ipc-013 E remains the JS write candidate. F remains
+    cyclic floors. These options do not reopen B, C, or D, and they do not
+    replace E or F.`
+  against_prefetch = `ipc-005 already removed pocket speculative module
+    prefetch. mea-003 must not put that prefetch back under a catalog id.`
+}[reg=facet]
+
+#>mea_wonder_which_clock
+?["Should flourish wait on dwell, or only discharge wait on a wall?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @flourish_pack
+  ~#hypothesis: "Dress may arrive at idle; motion may wait on conductive potential."
+  ~#tension: "A late restyle that shoves geometry is a shove even if the arc is dwell."
+  !probe{ "Cold home: first paint complete, then flourish=ready, then one discharge." }
+  !probe{ "Compare approach vs dwell with grain loaded and with grain inert." }
+  !probe{ "Reject if a late sheet moves measure, pad, or floating chrome." }
+  $%[paint.firstComplete, flourish.readyMs, discharge.count, layout.shift]
+}

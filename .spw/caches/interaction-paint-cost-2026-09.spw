@@ -44,6 +44,7 @@
 @affordances_css: ~"../../public/css/systems/electrostatic-affordances.css"
 @dom_sync_hub: ~"../../public/js/runtime/dom-sync-hub.js"
 @grain_texture: ~"../../public/css/effects/grain-texture.css"
+@module_effect_arcs: ~"./module-effect-arc-options-2026-09.spw"
 
 operation = "cache"
 fixity = "tending"
@@ -78,12 +79,15 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   history = evidence[dated]{ipc-001.ipc-009}<inspect>
   reattribution = evidence[paced]{focus.writes.owner}<ipc-014>
   style_leaks = candidates[likely]{cycle.inherit.restyle.fanout}<ipc-015>
+  arc_options = options[clocks]{cascade.delivery.mount.arc}<mea>
   boundary = `A's local settings delta is implemented; see its dated receipt below.
     B, C and D were traced on 2026-09-11 and none of their gates opened; their
     verdicts sit in ipc-013. E is named there and unimplemented. ipc-015 names
     style-side amplifiers that can fire on the same Tab journey as E; they are
-    not automatic scope on E. The file-tree predictions are now graded into a
-    work queue in file_tree_modularity; take its topmost ready item. Read
+    not automatic scope on E. @module_effect_arcs holds four options for how
+    modules and effects could load against cascade, delivery, mount, and arc;
+    none is selected. The file-tree predictions are now graded into a work
+    queue in file_tree_modularity; take its topmost ready item. Read
     design_registers before proposing a sixth metaphor.`
 }[reg=facet]
 
