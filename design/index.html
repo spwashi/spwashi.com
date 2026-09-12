@@ -85,7 +85,7 @@
                     class="hook-call"
                     aria-label="A playable instrument panel for discoverability, testing, and tuning"
                 >
-                    <p class="hook-lede spw-playable-hook" data-spw-copy-unit="design.hook.lede">
+                    <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="design.hook.lede" data-spw-semantic-expression="design[worktable]{slots.kinds.contracts}">
                         The hub is a worktable: <span class="spw-living-term" data-spw-living-term data-spw-concept="component-vocabulary" tabindex="0">name the parts</span>, tune one behavior, then carry the result back into a real route.
                     </p>
                     <p class="hook-sub">
@@ -1416,7 +1416,7 @@ spwCompose.inspect('#lab-behavior');</code></pre>
     // This gives "module application surfaced in ephemeral floating chrome" + improves interactivity for
     // experimenting with palette tunability + readability/materials. The credit text updates copy with token impact.
     document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.colorful-material-experiments .operator-chip');
+      const btn = e.target.closest('.colorful-material-experiments :where(.spw-chip, .operator-chip)');
       if (!btn) return;
       // Small delay simulates "after measuring layout post-apply" + gives the live style change time to settle.
       setTimeout(() => {

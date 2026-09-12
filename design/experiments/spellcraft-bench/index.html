@@ -51,7 +51,7 @@
     <article class="spw-frame" id="spellcraft-bench" data-spw-kind="frame" data-spw-role="reference">
         <header data-spw-slot="header">
             <h1>Spellcraft Bench</h1>
-            <p class="frame-note">Every specimen below is authored in static markup with explicit state bundles, so a screenshot taken today matches one taken next month unless a contract changed. Capture order for QA runs: vessel phases, atom grammar, ledger residue, decompose walkthrough.</p>
+            <p class="" data-spw-textual-role="note">Every specimen below is authored in static markup with explicit state bundles, so a screenshot taken today matches one taken next month unless a contract changed. Capture order for QA runs: vessel phases, atom grammar, ledger residue, decompose walkthrough.</p>
         </header>
 
         <section data-spw-anatomy="specimen-set" aria-labelledby="bench-phases">
@@ -86,17 +86,17 @@
             <h3>Sigil anatomy (raw vs hydrated)</h3>
             <p>Chips below are authored as fused text; with JS the sigil-anatomy module wraps <code>.spw-sigil</code>/<code>.spw-operand</code> with spacing preserved (inspect to compare raw source vs hydrated DOM — zero layout shift is the contract). Without JS the fused text is the reading.</p>
             <p>
-                <a class="operator-chip" href="/now/" data-spw-operator="substrate" data-spw-action="support">$now</a>
-                <a class="operator-chip" href="/topics/" data-spw-operator="value" data-spw-action="materialize">*topics</a>
-                <button class="operator-chip" type="button" data-spw-operator="ground" data-spw-action="ground">.orientation</button>
+                <a class="spw-chip" data-spw-handle="true" href="/now/" data-spw-operator="substrate" data-spw-action="support">$now</a>
+                <a class="spw-chip" data-spw-handle="true" href="/topics/" data-spw-operator="value" data-spw-action="materialize">*topics</a>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-spw-operator="ground" data-spw-action="ground">.orientation</button>
             </p>
             <h3>Disposition physics (container determines payload)</h3>
             <p>The same chip under each disposition. Charge pulls inward, discharge radiates, reference points (dotted), dereference resolves (solid).</p>
             <p>
-                <span data-spw-op-disposition="charge"><button class="operator-chip" type="button" data-spw-operator="substrate" data-spw-action="support">$in_a_charging_vessel</button></span>
-                <button class="operator-chip" type="button" data-spw-operator="action" data-spw-op-disposition="discharge" data-spw-action="apply">!discharge[cast]</button>
-                <button class="operator-chip" type="button" data-spw-operator="binding" data-spw-op-disposition="reference" data-spw-action="configure">=minted_reference</button>
-                <button class="operator-chip" type="button" data-spw-operator="potential" data-spw-op-disposition="dereference" data-spw-action="explore">~resolved_dereference</button>
+                <span data-spw-op-disposition="charge"><button class="spw-chip" data-spw-handle="true" type="button" data-spw-operator="substrate" data-spw-action="support">$in_a_charging_vessel</button></span>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-spw-operator="action" data-spw-op-disposition="discharge" data-spw-action="apply">!discharge[cast]</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-spw-operator="binding" data-spw-op-disposition="reference" data-spw-action="configure">=minted_reference</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-spw-operator="potential" data-spw-op-disposition="dereference" data-spw-action="explore">~resolved_dereference</button>
             </p>
         </section>
 
@@ -131,7 +131,7 @@
         <section data-spw-anatomy="specimen-set" aria-labelledby="bench-contour">
             <h2 id="bench-contour">2b. Contour anatomy (static)</h2>
             <p>A contour is a compound expression painted over an article; the brace type is the semantic slot. Parser: <code>parseContourExpression</code> in <code>kernel/shared.js</code>. The painting overlay itself is gated design work — this specimen documents the grammar only.</p>
-            <p class="frame-note" style="font-family: var(--site-mono-font, monospace);">
+            <p class="" data-spw-textual-role="note" style="font-family: var(--site-mono-font, monospace);">
                 <span data-spw-contour-head>topic</span><span data-spw-contour-slot="payload">(primary payload)</span><span data-spw-contour-slot="mode">[mode]</span><span data-spw-contour-slot="queue">{specific discussion queue…}</span>
             </p>
         </section>
@@ -140,9 +140,9 @@
             <h2 id="bench-ledger">3. Effect ledger residue</h2>
             <p>With JS: the buttons below seed and read <code>window.spwEffects</code>; the <code>&lt;html&gt;</code> element carries <code>data-spw-effects="count:n last:kind"</code>. Without JS this section stays prose — the ledger is residue, never load-bearing.</p>
             <p>
-                <button class="operator-chip" type="button" data-bench-action="seed-effect" data-spw-operator="action" data-spw-action="apply">!seed[one_effect]</button>
-                <button class="operator-chip" type="button" data-bench-action="list-effects" data-spw-operator="wonder" data-spw-action="inspect">? list to console</button>
-                <button class="operator-chip" type="button" data-bench-action="clear-effects" data-spw-operator="binding">=clear[ledger]</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-bench-action="seed-effect" data-spw-operator="action" data-spw-action="apply">!seed[one_effect]</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-bench-action="list-effects" data-spw-operator="wonder" data-spw-action="inspect">? list to console</button>
+                <button class="spw-chip" data-spw-handle="true" type="button" data-bench-action="clear-effects" data-spw-operator="binding">=clear[ledger]</button>
             </p>
             <output data-bench-ledger-readout aria-live="polite"></output>
         </section>
@@ -155,7 +155,7 @@
                 <li>Press <code>$ decompose</code> on the saved bundle card: its registry re-enters the cauldron through <code>spell:capture</code>.</li>
                 <li>Confirm the vessel phase bundle advances and the ledger records <code>spell-decomposed</code>.</li>
             </ol>
-            <p class="frame-note">This walkthrough is the promotion gate for the decompose verb: it must feel like reopening a draft, not replaying a log.</p>
+            <p class="" data-spw-textual-role="note">This walkthrough is the promotion gate for the decompose verb: it must feel like reopening a draft, not replaying a log.</p>
         </section>
     </article>
 </main>

@@ -57,8 +57,8 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article data-design-experiments-root data-spw-feature="design-experiments">
-            <section class="spw-frame site-hero design-experiment-hero" id="css-experiments" data-spw-kind="frame" data-spw-role="orientation" data-spw-context="analysis" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+            <section class="spw-frame design-experiment-hero" id="css-experiments" data-spw-kind="frame" data-spw-role="orientation" data-spw-context="analysis" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="/design/">#&gt;design</a>
                     <div class="spec-strip">
                         <span class="spec-pill">contour grammar</span>
@@ -90,23 +90,23 @@
                 </aside>
 
                 <nav class="design-experiment-actions" aria-label="Experiment routes">
-                    <a class="operator-chip" href="#bundle-register" data-spw-operator="potential" data-spw-action="explore">~bundles</a>
-                    <a class="operator-chip" href="#css-specimens" data-spw-operator="integration" data-spw-action="publish">^specimens</a>
-                    <a class="operator-chip" href="#css-rule-bench" data-spw-operator="normalize" data-spw-action="measure">%rule_bench</a>
-                    <a class="operator-chip" href="#css-variable-lab" data-spw-operator="substrate" data-spw-action="support">$variables</a>
-                    <a class="operator-chip" href="#css-token-register" data-spw-operator="wonder" data-spw-action="inspect">? token register</a>
-                    <a class="operator-chip" href="/design/experiments/css/controls/" data-spw-operator="potential">~controls</a>
-                    <a class="operator-chip" href="/design/experiments/svg/" data-spw-operator="potential">~svg_experiments</a>
-                    <a class="operator-chip" href="/settings/" data-spw-operator="potential">~settings</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#bundle-register" data-spw-operator="potential" data-spw-action="explore">~bundles</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#css-specimens" data-spw-operator="integration" data-spw-action="publish">^specimens</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#css-rule-bench" data-spw-operator="normalize" data-spw-action="measure">%rule_bench</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#css-variable-lab" data-spw-operator="substrate" data-spw-action="support">$variables</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#css-token-register" data-spw-operator="wonder" data-spw-action="inspect">? token register</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/css/controls/" data-spw-operator="potential">~controls</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/" data-spw-operator="potential">~svg_experiments</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/settings/" data-spw-operator="potential">~settings</a>
                 </nav>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="bundle-register" data-site-settings-scope data-spw-kind="frame" data-spw-role="control" data-spw-context="analysis">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#bundle-register">@ "css_bundle_register"</a>
                     <h2>Choose A Baseline, Then Refine</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     The bundle buttons set a coherent starting point. The chips below them let you separate contour, stroke,
                     wonder carryover, and field reach so the grammar becomes inspectable instead of magical.
                 </p>
@@ -150,9 +150,9 @@
                         <h3>Contour Profile</h3>
                         <p>Corner families and blur depth. This changes how components feel cut, braced, or softened.</p>
                         <div class="design-experiment-axis" role="group" aria-label="Contour profile choices">
-                            <button class="operator-chip" type="button" data-site-setting-set="contourProfile:tight" data-spw-operator="potential" data-spw-action="explore">~tight</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="contourProfile:balanced" data-spw-operator="potential" data-spw-action="explore">~balanced</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="contourProfile:soft" data-spw-operator="potential" data-spw-action="explore">~soft</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="contourProfile:tight" data-spw-operator="potential" data-spw-action="explore">~tight</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="contourProfile:balanced" data-spw-operator="potential" data-spw-action="explore">~balanced</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="contourProfile:soft" data-spw-operator="potential" data-spw-action="explore">~soft</button>
                         </div>
                     </article>
 
@@ -160,9 +160,9 @@
                         <h3>Stroke Profile</h3>
                         <p>Line width, annotation weight, and the severity of structural seams.</p>
                         <div class="design-experiment-axis" role="group" aria-label="Stroke profile choices">
-                            <button class="operator-chip" type="button" data-site-setting-set="strokeProfile:hairline" data-spw-operator="potential" data-spw-action="explore">~hairline</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="strokeProfile:structural" data-spw-operator="potential" data-spw-action="explore">~structural</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="strokeProfile:bold" data-spw-operator="potential" data-spw-action="explore">~bold</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="strokeProfile:hairline" data-spw-operator="potential" data-spw-action="explore">~hairline</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="strokeProfile:structural" data-spw-operator="potential" data-spw-action="explore">~structural</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="strokeProfile:bold" data-spw-operator="potential" data-spw-action="explore">~bold</button>
                         </div>
                     </article>
 
@@ -170,9 +170,9 @@
                         <h3>Field Resonance</h3>
                         <p>How widely the page's local attention field echoes when operators are hovered, focused, or remembered.</p>
                         <div class="design-experiment-axis" role="group" aria-label="Field resonance choices">
-                            <button class="operator-chip" type="button" data-site-setting-set="fieldResonance:local" data-spw-operator="potential" data-spw-action="explore">~local</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="fieldResonance:field" data-spw-operator="potential" data-spw-action="explore">~field</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="fieldResonance:choral" data-spw-operator="potential" data-spw-action="explore">~choral</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="fieldResonance:local" data-spw-operator="potential" data-spw-action="explore">~local</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="fieldResonance:field" data-spw-operator="potential" data-spw-action="explore">~field</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="fieldResonance:choral" data-spw-operator="potential" data-spw-action="explore">~choral</button>
                         </div>
                     </article>
 
@@ -180,24 +180,24 @@
                         <h3>Wonder Carryover</h3>
                         <p>This uses the site's existing wonder-memory setting so the tuned field can remain nearby or travel route-to-route.</p>
                         <div class="design-experiment-axis" role="group" aria-label="Wonder memory choices">
-                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off" data-spw-operator="potential" data-spw-action="explore">~focused</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby" data-spw-operator="potential" data-spw-action="explore">~connected</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide" data-spw-operator="potential" data-spw-action="explore">~immersive</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="wonderMemory:off" data-spw-operator="potential" data-spw-action="explore">~focused</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="wonderMemory:nearby" data-spw-operator="potential" data-spw-action="explore">~connected</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="wonderMemory:sitewide" data-spw-operator="potential" data-spw-action="explore">~immersive</button>
                         </div>
                     </article>
                 </div>
 
                 <p class="design-experiment-status" data-site-settings-status>These controls save locally and remain active on later routes.</p>
                 <div class="design-experiment-toolbar">
-                    <button class="operator-chip" type="button" data-site-settings-reset data-spw-operator="potential">!reset[authored_defaults]</button>
-                    <a class="operator-chip" href="/design/experiments/css/controls/" data-spw-operator="potential">~css_controls</a>
-                    <a class="operator-chip" href="/design/experiments/svg/" data-spw-operator="potential" data-spw-action="explore">~continue_into_svg</a>
-                    <a class="operator-chip" href="/design/website/" data-spw-operator="potential" data-spw-action="explore">~test_on_website_design</a>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-settings-reset data-spw-operator="potential">!reset[authored_defaults]</button>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/css/controls/" data-spw-operator="potential">~css_controls</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/" data-spw-operator="potential" data-spw-action="explore">~continue_into_svg</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/website/" data-spw-operator="potential" data-spw-action="explore">~test_on_website_design</a>
                 </div>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="design-lab-prologue" data-spw-kind="frame" data-spw-role="reference" data-spw-lore-role="bridge" data-spw-context="analysis" data-spw-wonder="resonance constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_design_experiments_css__design_lab_prologue" data-spw-feature="design-lab-prologue">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#design-lab-prologue">#"design_lab_prologue"</a>
                     <h2>The rule beneath the surface.</h2>
                 </header>
@@ -215,15 +215,15 @@
                         <p>The lab’s work is visible rule physics: selector scope, cascade layers, box model behavior, custom properties, and inspectable browser state all leave readable reasons behind. A child combinator names a child. A next-sibling combinator names the interval. <code>@layer</code> names who wins, not who arrives.</p>
                     </article>
                 </div>
-                <p class="frame-note spw-literary-note">That gives the town optionality. Practical routes stay practical. Story routes stay story-rich. The in-between surfaces can be inspected, tuned, and read aloud without becoming cryptic.</p>
+                <p class="spw-literary-note" data-spw-textual-role="note">That gives the town optionality. Practical routes stay practical. Story routes stay story-rich. The in-between surfaces can be inspected, tuned, and read aloud without becoming cryptic.</p>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="css-specimens" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#css-specimens">^ "css_specimens"</a>
                     <h2>Watch The Same Variables Touch Multiple Surface Types</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     The point is not a single pretty card. The same grammar should shape panels, annotations, chips,
                     separators, and hover-field behavior together.
                 </p>
@@ -232,7 +232,7 @@
                     <div class="design-css-stage">
                         <div class="design-css-stack">
                             <article class="frame-card design-specimen-card" data-spw-metamaterial="glass" data-spw-depth="2" data-spw-wonder-state="resonant">
-                                <div class="frame-topline">
+                                <div class="frame-topline" data-spw-slot="header">
                                     <span class="frame-sigil">#&gt;</span>
                                     <span class="spec-pill">surface specimen</span>
                                 </div>
@@ -249,12 +249,12 @@
                         </div>
 
                         <div class="design-css-chip-cloud" aria-label="Repeated operator chips for resonance testing">
-                            <a class="operator-chip" href="/design/website/" data-spw-operator="frame" data-spw-action="address">#&gt;website</a>
-                            <a class="operator-chip" href="/design/website/" data-spw-operator="frame" data-spw-action="address">#&gt;surface</a>
-                            <a class="operator-chip" href="/topics/architecture/" data-spw-operator="wonder" data-spw-action="inspect">? boundary</a>
-                            <a class="operator-chip" href="/topics/architecture/" data-spw-operator="wonder" data-spw-action="inspect">? contour</a>
-                            <a class="operator-chip" href="/design/experiments/svg/" data-spw-operator="potential" data-spw-action="explore">~diagram</a>
-                            <a class="operator-chip" href="/design/experiments/svg/" data-spw-operator="potential" data-spw-action="explore">~carryover</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/design/website/" data-spw-operator="frame" data-spw-action="address">#&gt;website</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/design/website/" data-spw-operator="frame" data-spw-action="address">#&gt;surface</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/architecture/" data-spw-operator="wonder" data-spw-action="inspect">? boundary</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/architecture/" data-spw-operator="wonder" data-spw-action="inspect">? contour</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/" data-spw-operator="potential" data-spw-action="explore">~diagram</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/" data-spw-operator="potential" data-spw-action="explore">~carryover</a>
                         </div>
                     </div>
 
@@ -276,11 +276,11 @@
             </section>
 
             <section class="spw-frame design-experiment-frame" id="css-literature" data-spw-kind="frame" data-spw-role="reference" data-spw-context="analysis" data-spw-wonder="resonance constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_design_experiments_css__css_literature" data-spw-feature="css-literature">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#css-literature">~ "css_literature"</a>
                     <h2>CSS as literature.</h2>
                 </header>
-                <p class="frame-note spw-literary-note">
+                <p class="spw-literary-note" data-spw-textual-role="note">
                     A selector is a title, a declaration is a sentence, a layer is a chapter, and the cascade is revision.
                     The page becomes easier to read when the code can be quoted back as prose and the prose can point back
                     to the rule that made it possible.
@@ -313,11 +313,11 @@
             </section>
 
             <section class="spw-frame design-experiment-frame" id="css-rule-bench" data-design-css-rule-bench data-design-selector-scope="component" data-design-cascade-layer="components" data-design-box-model="border-box" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis" data-spw-feature="css-rule-bench">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#css-rule-bench">% "css_rule_bench"</a>
                     <h2>CSS Rule Anatomy Bench</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     Rules become easier to learn when selector scope, cascade layer, and box model are visible at the same time. The cascade-layer axis is who wins, not who arrives. Change one axis, then read the specimen before touching another.
                 </p>
 
@@ -326,9 +326,9 @@
                         <h3>Selector Scope</h3>
                         <p>Choose whether the rule addresses the whole region, one component, or a slot inside the component.</p>
                         <div class="design-experiment-axis" role="group" aria-label="Selector scope choices">
-                            <button class="operator-chip" type="button" data-design-rule-axis="selectorScope" data-design-rule-value="region" data-spw-operator="potential" data-spw-action="explore">~region</button>
-                            <button class="operator-chip" type="button" data-design-rule-axis="selectorScope" data-design-rule-value="component" data-spw-operator="potential" data-spw-action="explore">~component</button>
-                            <button class="operator-chip" type="button" data-design-rule-axis="selectorScope" data-design-rule-value="slot" data-spw-operator="potential" data-spw-action="explore">~slot</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-design-rule-axis="selectorScope" data-design-rule-value="region" data-spw-operator="potential" data-spw-action="explore">~region</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-design-rule-axis="selectorScope" data-design-rule-value="component" data-spw-operator="potential" data-spw-action="explore">~component</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-design-rule-axis="selectorScope" data-design-rule-value="slot" data-spw-operator="potential" data-spw-action="explore">~slot</button>
                         </div>
                     </article>
 
@@ -336,9 +336,9 @@
                         <h3>Cascade Layer</h3>
                         <p>Move the same idea through token, component, and ornament responsibilities.</p>
                         <div class="design-experiment-axis" role="group" aria-label="Cascade layer choices">
-                            <button class="operator-chip" type="button" data-design-rule-axis="cascadeLayer" data-design-rule-value="tokens" data-spw-operator="potential" data-spw-action="explore">~tokens</button>
-                            <button class="operator-chip" type="button" data-design-rule-axis="cascadeLayer" data-design-rule-value="components" data-spw-operator="potential" data-spw-action="explore">~components</button>
-                            <button class="operator-chip" type="button" data-design-rule-axis="cascadeLayer" data-design-rule-value="ornament" data-spw-operator="potential" data-spw-action="explore">~ornament</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-design-rule-axis="cascadeLayer" data-design-rule-value="tokens" data-spw-operator="potential" data-spw-action="explore">~tokens</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-design-rule-axis="cascadeLayer" data-design-rule-value="components" data-spw-operator="potential" data-spw-action="explore">~components</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-design-rule-axis="cascadeLayer" data-design-rule-value="ornament" data-spw-operator="potential" data-spw-action="explore">~ornament</button>
                         </div>
                     </article>
 
@@ -346,9 +346,9 @@
                         <h3>Box Model</h3>
                         <p>Compare predictable sizing with a content-box rule that lets padding and border change the apparent footprint.</p>
                         <div class="design-experiment-axis" role="group" aria-label="Box model choices">
-                            <button class="operator-chip" type="button" data-design-rule-axis="boxModel" data-design-rule-value="border-box" data-spw-operator="potential" data-spw-action="explore">~border_box</button>
-                            <button class="operator-chip" type="button" data-design-rule-axis="boxModel" data-design-rule-value="content-box" data-spw-operator="potential" data-spw-action="explore">~content_box</button>
-                            <button class="operator-chip" type="button" data-design-rule-axis="boxModel" data-design-rule-value="contained" data-spw-operator="potential" data-spw-action="explore">~contained</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-design-rule-axis="boxModel" data-design-rule-value="border-box" data-spw-operator="potential" data-spw-action="explore">~border_box</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-design-rule-axis="boxModel" data-design-rule-value="content-box" data-spw-operator="potential" data-spw-action="explore">~content_box</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-design-rule-axis="boxModel" data-design-rule-value="contained" data-spw-operator="potential" data-spw-action="explore">~contained</button>
                         </div>
                     </article>
                 </div>
@@ -386,15 +386,15 @@
                     </figure>
 
                     <article class="design-rule-specimen" data-design-rule-target>
-                        <div class="frame-topline design-rule-slot" data-design-rule-slot="header">
+                        <div class="frame-topline design-rule-slot" data-spw-slot="header" data-design-rule-slot="header">
                             <span class="frame-sigil">#&gt;rule_specimen</span>
                             <span class="spec-pill">component</span>
                         </div>
                         <h3 class="design-rule-slot" data-design-rule-slot="heading">A rule is an address plus a responsibility.</h3>
                         <p class="design-rule-slot" data-design-rule-slot="body">Selector scope decides what is addressed. Cascade layer decides which responsibility is being expressed. The box model decides whether the component keeps its promised footprint.</p>
                         <div class="design-rule-slot design-css-chip-cloud" data-design-rule-slot="actions">
-                            <a class="operator-chip" href="#css-token-register" data-spw-operator="frame">#&gt;read_token</a>
-                            <a class="operator-chip" href="#css-variable-lab" data-spw-operator="action">!tune[variable]</a>
+                            <a class="spw-chip" data-spw-handle="true" href="#css-token-register" data-spw-operator="frame">#&gt;read_token</a>
+                            <a class="spw-chip" data-spw-handle="true" href="#css-variable-lab" data-spw-operator="action">!tune[variable]</a>
                         </div>
                     </article>
 
@@ -422,11 +422,11 @@
             </section>
 
             <section class="spw-frame design-experiment-frame" id="css-variable-lab" data-design-css-variable-lab data-spw-kind="frame" data-spw-role="control" data-spw-context="analysis">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#css-variable-lab">$ "css_variable_lab"</a>
                     <h2>CSS Variable Lab</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     Learn the live custom-property vocabulary here. Move a slider, watch the token register update below, then reset before comparing another route.
                 </p>
 
@@ -493,17 +493,17 @@
                 </div>
 
                 <div class="design-variable-actions">
-                    <button class="operator-chip" type="button" data-design-css-var-reset data-spw-operator="potential">!reset[css_variables]</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-design-css-var-reset data-spw-operator="potential">!reset[css_variables]</button>
                     <p class="design-variable-status" data-design-css-var-status>Adjust a variable, then compare the token register under it.</p>
                 </div>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="css-token-register" data-spw-kind="frame" data-spw-role="reference" data-spw-context="analysis">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#css-token-register">? "css_token_register"</a>
                     <h2>Current Token Register</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     These are live computed values from the document root, not hard-coded copy. They update when the experiment settings change.
                 </p>
 

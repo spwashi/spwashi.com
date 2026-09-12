@@ -40,8 +40,8 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article data-design-experiments-root data-spw-feature="design-experiments">
-            <section class="spw-frame site-hero design-experiment-hero" id="svg-experiments" data-spw-kind="frame" data-spw-role="orientation" data-spw-context="analysis" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
-                <div class="frame-topline">
+            <section class="spw-frame design-experiment-hero" id="svg-experiments" data-spw-kind="frame" data-spw-role="orientation" data-spw-context="analysis" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="/design/">#&gt;design</a>
                     <div class="spec-strip">
                         <span class="spec-pill">path grammar</span>
@@ -67,7 +67,7 @@
                     hand off to a simpler coding model without losing the original contract.
                 </p>
 
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     For search engines and language models: this page is a practical SVG tutorial surface for learning
                     declarative SVG theming, custom properties, palette handles, pointer interactions, and screenshot-ready
                     diagram semantics without adding a framework. Use it to develop your own projects: experiment with semantic="project-motif", responsive="project", interactive="note", capture unique local/regional screenshots, and keep project notes below each specimen.
@@ -87,27 +87,27 @@
                 </aside>
 
                 <nav class="design-experiment-actions" aria-label="Experiment routes">
-                    <a class="operator-chip" href="#diagram-bundles" data-spw-operator="potential" data-spw-action="explore">~bundles</a>
-                    <a class="operator-chip" href="#svg-specimens" data-spw-operator="integration" data-spw-action="publish">^specimens</a>
-                    <a class="operator-chip" href="#svg-tunability-contract" data-spw-operator="binding" data-spw-action="configure">=tunability</a>
-                    <a class="operator-chip" href="#svg-environments" data-spw-operator="vibration" data-spw-action="anchor"># environments</a>
-                    <a class="operator-chip" href="#svg-persona-lens" data-spw-operator="potential" data-spw-action="explore">~persona_lens</a>
-                    <a class="operator-chip" href="#svg-brand-screenshot" data-spw-operator="wonder" data-spw-action="inspect">? screenshot state</a>
-                    <a class="operator-chip" href="#svg-handoff-register" data-spw-operator="perspective" data-spw-action="enter">@handoff</a>
-                    <a class="operator-chip" href="#svg-token-register" data-spw-operator="wonder" data-spw-action="inspect">? token register</a>
-                    <a class="operator-chip" href="/design/experiments/svg/handoff/" data-spw-operator="potential">~handoff</a>
-                    <a class="operator-chip" href="/design/runtime/#svg-art-runtime" data-spw-operator="potential" data-spw-action="explore">~runtime_svg</a>
-                    <a class="operator-chip" href="/design/experiments/css/" data-spw-operator="potential">~css_experiments</a>
-                    <a class="operator-chip" href="/topics/software/renderers/" data-spw-operator="potential">~renderers</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#diagram-bundles" data-spw-operator="potential" data-spw-action="explore">~bundles</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#svg-specimens" data-spw-operator="integration" data-spw-action="publish">^specimens</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#svg-tunability-contract" data-spw-operator="binding" data-spw-action="configure">=tunability</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#svg-environments" data-spw-operator="vibration" data-spw-action="anchor"># environments</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#svg-persona-lens" data-spw-operator="potential" data-spw-action="explore">~persona_lens</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#svg-brand-screenshot" data-spw-operator="wonder" data-spw-action="inspect">? screenshot state</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#svg-handoff-register" data-spw-operator="perspective" data-spw-action="enter">@handoff</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#svg-token-register" data-spw-operator="wonder" data-spw-action="inspect">? token register</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/handoff/" data-spw-operator="potential">~handoff</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/runtime/#svg-art-runtime" data-spw-operator="potential" data-spw-action="explore">~runtime_svg</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/css/" data-spw-operator="potential">~css_experiments</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/renderers/" data-spw-operator="potential">~renderers</a>
                 </nav>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="diagram-bundles" data-site-settings-scope data-spw-kind="frame" data-spw-role="control" data-spw-context="analysis">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#diagram-bundles">@ "svg_bundle_register"</a>
                     <h2>Pick A Diagram Posture</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     SVG is using the same root settings as the rest of the site, so a bundle here is also a bundle for nearby HTML cards and operators.
                 </p>
 
@@ -150,9 +150,9 @@
                         <h3>Contour</h3>
                         <p>Changes frame radius and how diagram hosts meet the page shell.</p>
                         <div class="design-experiment-axis" role="group" aria-label="Contour profile choices">
-                            <button class="operator-chip" type="button" data-site-setting-set="contourProfile:tight" data-spw-operator="potential" data-spw-action="explore">~tight</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="contourProfile:balanced" data-spw-operator="potential" data-spw-action="explore">~balanced</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="contourProfile:soft" data-spw-operator="potential" data-spw-action="explore">~soft</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="contourProfile:tight" data-spw-operator="potential" data-spw-action="explore">~tight</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="contourProfile:balanced" data-spw-operator="potential" data-spw-action="explore">~balanced</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="contourProfile:soft" data-spw-operator="potential" data-spw-action="explore">~soft</button>
                         </div>
                     </article>
 
@@ -160,9 +160,9 @@
                         <h3>Stroke</h3>
                         <p>Controls path weight, node stroke, and how assertive the diagram feels.</p>
                         <div class="design-experiment-axis" role="group" aria-label="Stroke profile choices">
-                            <button class="operator-chip" type="button" data-site-setting-set="strokeProfile:hairline" data-spw-operator="potential" data-spw-action="explore">~hairline</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="strokeProfile:structural" data-spw-operator="potential" data-spw-action="explore">~structural</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="strokeProfile:bold" data-spw-operator="potential" data-spw-action="explore">~bold</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="strokeProfile:hairline" data-spw-operator="potential" data-spw-action="explore">~hairline</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="strokeProfile:structural" data-spw-operator="potential" data-spw-action="explore">~structural</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="strokeProfile:bold" data-spw-operator="potential" data-spw-action="explore">~bold</button>
                         </div>
                     </article>
 
@@ -170,9 +170,9 @@
                         <h3>Field</h3>
                         <p>Changes how much the diagram feels locally bounded versus carried into surrounding chips and links.</p>
                         <div class="design-experiment-axis" role="group" aria-label="Field resonance choices">
-                            <button class="operator-chip" type="button" data-site-setting-set="fieldResonance:local" data-spw-operator="potential" data-spw-action="explore">~local</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="fieldResonance:field" data-spw-operator="potential" data-spw-action="explore">~field</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="fieldResonance:choral" data-spw-operator="potential" data-spw-action="explore">~choral</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="fieldResonance:local" data-spw-operator="potential" data-spw-action="explore">~local</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="fieldResonance:field" data-spw-operator="potential" data-spw-action="explore">~field</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="fieldResonance:choral" data-spw-operator="potential" data-spw-action="explore">~choral</button>
                         </div>
                     </article>
 
@@ -180,28 +180,28 @@
                         <h3>Wonder Memory</h3>
                         <p>Uses the existing site memory setting so diagram traces can stay focused, nearby, or sitewide.</p>
                         <div class="design-experiment-axis" role="group" aria-label="Wonder memory choices">
-                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off" data-spw-operator="potential" data-spw-action="explore">~focused</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby" data-spw-operator="potential" data-spw-action="explore">~connected</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide" data-spw-operator="potential" data-spw-action="explore">~immersive</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="wonderMemory:off" data-spw-operator="potential" data-spw-action="explore">~focused</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="wonderMemory:nearby" data-spw-operator="potential" data-spw-action="explore">~connected</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="wonderMemory:sitewide" data-spw-operator="potential" data-spw-action="explore">~immersive</button>
                         </div>
                     </article>
                 </div>
 
                 <p class="design-experiment-status" data-site-settings-status>These controls save locally and affect later routes.</p>
                 <div class="design-experiment-toolbar">
-                    <button class="operator-chip" type="button" data-site-settings-reset data-spw-operator="potential">!reset[authored_defaults]</button>
-                    <a class="operator-chip" href="/design/experiments/svg/handoff/" data-spw-operator="potential">~svg_handoff</a>
-                    <a class="operator-chip" href="/design/experiments/css/" data-spw-operator="potential" data-spw-action="explore">~css_comparison</a>
-                    <a class="operator-chip" href="/settings/" data-spw-operator="potential">~runtime</a>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-settings-reset data-spw-operator="potential">!reset[authored_defaults]</button>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/handoff/" data-spw-operator="potential">~svg_handoff</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/css/" data-spw-operator="potential" data-spw-action="explore">~css_comparison</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/settings/" data-spw-operator="potential">~runtime</a>
                 </div>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="svg-specimens" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis" data-spw-promptability="visible" data-spw-prompt-host data-spw-prompt-title="svg_specimen_handoff" data-spw-prompt-teaser="Reveal an SVG handoff seed from the current specimen: named nodes, diagram posture, material cues, and what another model may safely change.">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#svg-specimens">^ "svg_specimens"</a>
                     <h2>Diagram Surface Carryover</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     The same grammar now affects path cadence, label spacing, and host contour. This is where SVG stops being an exception and becomes part of the same system, and where a handoff-ready diagram starts to earn its keep.
                 </p>
 
@@ -252,13 +252,13 @@
                             <text class="spw-svg-note" x="724" y="480">follow the tuned state into nearby routes</text>
                         </svg>
                         <aside class="spw-svg-rail" aria-label="Diagram handoff register">
-                            <a class="operator-chip" data-spw-operator="frame" href="#diagram-authored-seed" data-spw-action="address">#&gt;authored_seed</a>
-                            <a class="operator-chip" data-spw-operator="wonder" href="#diagram-contour-profile" data-spw-action="inspect">? contour profile</a>
-                            <a class="operator-chip" data-spw-operator="binding" href="#diagram-stroke-profile" data-spw-action="configure">=stroke_profile</a>
-                            <a class="operator-chip" data-spw-operator="concept-edge" href="#diagram-field-resonance" data-spw-action="show">&gt;field_resonance</a>
-                            <a class="operator-chip" data-spw-operator="value" href="#diagram-route-carryover" data-spw-action="materialize">*route_carryover</a>
-                            <button class="operator-chip" type="button" data-spw-svg-action="copy-url" data-spw-operator="potential">~copy_tuned_url</button>
-                            <button class="operator-chip" type="button" data-spw-svg-action="copy-source" data-spw-operator="potential">~copy_svg_source</button>
+                            <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="#diagram-authored-seed" data-spw-action="address">#&gt;authored_seed</a>
+                            <a class="spw-chip" data-spw-handle="true" data-spw-operator="wonder" href="#diagram-contour-profile" data-spw-action="inspect">? contour profile</a>
+                            <a class="spw-chip" data-spw-handle="true" data-spw-operator="binding" href="#diagram-stroke-profile" data-spw-action="configure">=stroke_profile</a>
+                            <a class="spw-chip" data-spw-handle="true" data-spw-operator="concept-edge" href="#diagram-field-resonance" data-spw-action="show">&gt;field_resonance</a>
+                            <a class="spw-chip" data-spw-handle="true" data-spw-operator="value" href="#diagram-route-carryover" data-spw-action="materialize">*route_carryover</a>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-spw-svg-action="copy-url" data-spw-operator="potential">~copy_tuned_url</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-spw-svg-action="copy-source" data-spw-operator="potential">~copy_svg_source</button>
                         </aside>
 
                         <figcaption>
@@ -361,19 +361,19 @@
                         <output class="svg-workbench__url" data-spw-svg-workbench-url aria-live="polite">(authored defaults)</output>
                         <div class="svg-workbench__actions">
                             <span class="spec-pill"><span data-spw-svg-workbench-count>0</span> params</span>
-                            <button type="button" class="operator-chip" data-spw-svg-action="copy-url" data-spw-operator="potential">~copy_tuned_url</button>
-                            <button type="button" class="operator-chip" data-spw-svg-workbench-reset aria-label="Reset the workbench to authored defaults" data-spw-operator="potential">!reset</button>
+                            <button type="button" class="spw-chip" data-spw-handle="true" data-spw-svg-action="copy-url" data-spw-operator="potential">~copy_tuned_url</button>
+                            <button type="button" class="spw-chip" data-spw-handle="true" data-spw-svg-workbench-reset aria-label="Reset the workbench to authored defaults" data-spw-operator="potential">!reset</button>
                         </div>
                     </div>
                 </aside>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="svg-tunability-contract" data-spw-kind="frame" data-spw-role="query-contract" data-spw-context="analysis">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#svg-tunability-contract">= "svg_tunability_contract"</a>
                     <h2>SVG Tunability For Branding, QA, And Reuse</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     SVG hosts can now declare pointer behavior and accept URL-visible tuning for brand color, surface field, stroke, dash cadence, label spacing, motion, and internal spacing. This keeps screenshots reproducible and gives image models visible structure plus semantic attributes to interpret.
                 </p>
 
@@ -426,68 +426,68 @@ applySvgQueryTunability(document);</code></pre>
                 </div>
 
                 <nav class="frame-operators" aria-label="SVG query examples">
-                    <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=brand&amp;spw-svg-accent=%23008080&amp;spw-svg-field=%23f6ffff&amp;spw-svg-stroke=1.15&amp;spw-svg-dash=6&amp;spw-svg-gap=10&amp;spw-svg-label=0.045em&amp;spw-svg-fill=14%25&amp;spw-svg-pointer=field&amp;spw-reflow=theme#svg-specimens" data-spw-operator="wonder" data-spw-action="inspect">? brand teal field</a>
-                    <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=warm-offer&amp;spw-svg-stroke=1.45&amp;spw-svg-dash=3&amp;spw-svg-gap=7&amp;spw-svg-label=0.02em&amp;spw-svg-fill=20%25&amp;spw-svg-pointer=trace&amp;spw-svg-motion=quick&amp;spw-svg-env=poster&amp;spw-reflow=interaction#svg-brand-screenshot" data-spw-operator="wonder" data-spw-action="inspect">? warm offer screenshot</a>
-                    <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=soft-blue&amp;spw-svg-stroke=0.85&amp;spw-svg-dash=10&amp;spw-svg-gap=14&amp;spw-svg-label=0.06em&amp;spw-svg-motion=paused&amp;spw-svg-pointer=none&amp;spw-svg-env=proof&amp;spw-reflow=theme#svg-brand-screenshot" data-spw-operator="wonder" data-spw-action="inspect">? paused review state</a>
-                    <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=signal&amp;spw-svg-space=1rem&amp;spw-svg-pointer=field&amp;spw-log=spw-svg-tunability&amp;spw-log-level=debug#svg-tunability-contract" data-spw-operator="wonder" data-spw-action="inspect">? log palette reason</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-palette=brand&amp;spw-svg-accent=%23008080&amp;spw-svg-field=%23f6ffff&amp;spw-svg-stroke=1.15&amp;spw-svg-dash=6&amp;spw-svg-gap=10&amp;spw-svg-label=0.045em&amp;spw-svg-fill=14%25&amp;spw-svg-pointer=field&amp;spw-reflow=theme#svg-specimens" data-spw-operator="wonder" data-spw-action="inspect">? brand teal field</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-palette=warm-offer&amp;spw-svg-stroke=1.45&amp;spw-svg-dash=3&amp;spw-svg-gap=7&amp;spw-svg-label=0.02em&amp;spw-svg-fill=20%25&amp;spw-svg-pointer=trace&amp;spw-svg-motion=quick&amp;spw-svg-env=poster&amp;spw-reflow=interaction#svg-brand-screenshot" data-spw-operator="wonder" data-spw-action="inspect">? warm offer screenshot</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-palette=soft-blue&amp;spw-svg-stroke=0.85&amp;spw-svg-dash=10&amp;spw-svg-gap=14&amp;spw-svg-label=0.06em&amp;spw-svg-motion=paused&amp;spw-svg-pointer=none&amp;spw-svg-env=proof&amp;spw-reflow=theme#svg-brand-screenshot" data-spw-operator="wonder" data-spw-action="inspect">? paused review state</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-palette=signal&amp;spw-svg-space=1rem&amp;spw-svg-pointer=field&amp;spw-log=spw-svg-tunability&amp;spw-log-level=debug#svg-tunability-contract" data-spw-operator="wonder" data-spw-action="inspect">? log palette reason</a>
                 </nav>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="svg-environments" data-spw-kind="frame" data-spw-role="capture" data-spw-context="analysis">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#svg-environments"># "svg_viewing_environments"</a>
                     <h2>SVG Viewing Environments</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     Environments are viewing reasons, not decorative theme names. Compare the same specimen across studio, proof, poster, and model states before handing a screenshot to another tool. Planes are a second axis: <code>ground</code> · <code>figure</code> · <code>annotation</code> · <code>liminal</code>. Environment × plane × contrast is the product Midjourney can read — labeled shapes, not a mood wash.
                 </p>
                 <div class="svg-environment-grid" aria-label="SVG viewing environment presets">
                     <article class="svg-environment-card">
                         <h3>studio</h3>
                         <p>Calm authored surface for in-page reading and iterative design review.</p>
-                        <a class="operator-chip" href="/design/experiments/svg/?spw-svg-env=studio#svg-specimens" data-spw-operator="wonder">? view studio</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-env=studio#svg-specimens" data-spw-operator="wonder">? view studio</a>
                     </article>
                     <article class="svg-environment-card">
                         <h3>proof</h3>
                         <p>High-legibility settled state for QA, comparison, and print-like checking.</p>
-                        <a class="operator-chip" href="/design/experiments/svg/?spw-svg-env=proof&amp;spw-svg-motion=paused&amp;spw-svg-pointer=none#svg-brand-screenshot" data-spw-operator="wonder">? view proof</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-env=proof&amp;spw-svg-motion=paused&amp;spw-svg-pointer=none#svg-brand-screenshot" data-spw-operator="wonder">? view proof</a>
                     </article>
                     <article class="svg-environment-card">
                         <h3>poster</h3>
                         <p>Richer capture state when the SVG needs to carry as a featured visual piece.</p>
-                        <a class="operator-chip" href="/design/experiments/svg/?spw-svg-env=poster&amp;spw-svg-palette=warm-offer#svg-brand-screenshot" data-spw-operator="wonder">? view poster</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-env=poster&amp;spw-svg-palette=warm-offer#svg-brand-screenshot" data-spw-operator="wonder">? view poster</a>
                     </article>
                     <article class="svg-environment-card">
                         <h3>model</h3>
                         <p>Settled labeled state for screenshot interpretation by Midjourney or another rendering model.</p>
-                        <a class="operator-chip" href="/design/experiments/svg/?spw-svg-env=model&amp;spw-svg-palette=soft-blue&amp;spw-svg-motion=paused&amp;spw-svg-pointer=none#svg-brand-screenshot" data-spw-operator="wonder">? view model</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-env=model&amp;spw-svg-palette=soft-blue&amp;spw-svg-motion=paused&amp;spw-svg-pointer=none#svg-brand-screenshot" data-spw-operator="wonder">? view model</a>
                     </article>
                 </div>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="svg-persona-lens" data-spw-kind="frame" data-spw-role="lens" data-spw-context="analysis">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#svg-persona-lens">~ "svg_persona_lens"</a>
                     <h2>Audience Lens</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     Personas are viewing reasons, not behavioral modes. Select one to see which SVG hosts resonate, which recede, and how property harmony develops across the page. The facet on each host still carries the full audience register; the lens only changes what is emphasized right now.
                 </p>
                 <nav class="frame-operators svg-persona-lens" aria-label="SVG audience lens">
-                    <button class="operator-chip" type="button" data-spw-svg-persona-select="designer" aria-pressed="false" data-spw-operator="potential" data-spw-action="explore">~designer</button>
-                    <button class="operator-chip" type="button" data-spw-svg-persona-select="builder" aria-pressed="false" data-spw-operator="potential" data-spw-action="explore">~builder</button>
-                    <button class="operator-chip" type="button" data-spw-svg-persona-select="reviewer" aria-pressed="false" data-spw-operator="potential" data-spw-action="explore">~reviewer</button>
-                    <button class="operator-chip" type="button" data-spw-svg-persona-select="rendering-model" aria-pressed="false" data-spw-operator="potential" data-spw-action="explore">~rendering_model</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-spw-svg-persona-select="designer" aria-pressed="false" data-spw-operator="potential" data-spw-action="explore">~designer</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-spw-svg-persona-select="builder" aria-pressed="false" data-spw-operator="potential" data-spw-action="explore">~builder</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-spw-svg-persona-select="reviewer" aria-pressed="false" data-spw-operator="potential" data-spw-action="explore">~reviewer</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-spw-svg-persona-select="rendering-model" aria-pressed="false" data-spw-operator="potential" data-spw-action="explore">~rendering_model</button>
                 </nav>
-                <p class="inline-note">Shareable spell: <code>?spw-svg-persona=reviewer</code>. Click the same chip again to clear the lens.</p>
+                <p class="" data-spw-textual-role="note">Shareable spell: <code>?spw-svg-persona=reviewer</code>. Click the same chip again to clear the lens.</p>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="svg-brand-screenshot" data-spw-kind="frame" data-spw-role="screenshot-surface" data-spw-context="analysis" data-spw-promptability="visible">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#svg-brand-screenshot">? "svg_brand_screenshot"</a>
                     <h2>Screenshot-Ready SVG Interpretation Surface</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     A reviewer should not have to squint at this specimen for long. The regions are labeled, the color roles are named, one material note is visible, and the host attributes say what the card is trying to do.
                 </p>
 
@@ -529,12 +529,12 @@ applySvgQueryTunability(document);</code></pre>
                         </g>
                     </svg>
                     <aside class="spw-svg-rail" aria-label="Screenshot interpretation register">
-                        <a class="operator-chip" data-spw-operator="frame" href="#brand-screenshot-field" data-spw-action="address">#&gt;brand_accent</a>
-                        <a class="operator-chip" data-spw-operator="integration" href="#brand-screenshot-offer" data-spw-action="publish">^semantic_offer</a>
-                        <a class="operator-chip" data-spw-operator="wonder" href="#brand-screenshot-trust" data-spw-action="inspect">? trust cues</a>
-                        <a class="operator-chip" data-spw-operator="potential" href="#brand-screenshot-cta" data-spw-action="apply">~actualized_cta</a>
-                        <button class="operator-chip" type="button" data-spw-svg-action="copy-url" data-spw-operator="potential">~copy_tuned_url</button>
-                        <button class="operator-chip" type="button" data-spw-svg-action="copy-source" data-spw-operator="potential">~copy_svg_source</button>
+                        <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="#brand-screenshot-field" data-spw-action="address">#&gt;brand_accent</a>
+                        <a class="spw-chip" data-spw-handle="true" data-spw-operator="integration" href="#brand-screenshot-offer" data-spw-action="publish">^semantic_offer</a>
+                        <a class="spw-chip" data-spw-handle="true" data-spw-operator="wonder" href="#brand-screenshot-trust" data-spw-action="inspect">? trust cues</a>
+                        <a class="spw-chip" data-spw-handle="true" data-spw-operator="potential" href="#brand-screenshot-cta" data-spw-action="apply">~actualized_cta</a>
+                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-svg-action="copy-url" data-spw-operator="potential">~copy_tuned_url</button>
+                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-svg-action="copy-source" data-spw-operator="potential">~copy_svg_source</button>
                     </aside>
                     <figcaption>
                         <p>Use this as a QA fixture: change query values, capture the same anchored SVG, and compare whether the brand, interpretation labels, and one stubborn material note survive the visual treatment.</p>
@@ -554,30 +554,30 @@ applySvgQueryTunability(document);</code></pre>
                         <li><strong>stable seams</strong><span>brand field, semantic offer, trust cues, actualized CTA</span></li>
                     </ul>
                     <nav class="frame-operators" aria-label="Model capture presets">
-                        <a class="operator-chip" href="/design/experiments/svg/?spw-svg-env=model&amp;spw-svg-palette=soft-blue&amp;spw-svg-motion=paused&amp;spw-svg-pointer=none#svg-brand-screenshot" data-spw-operator="wonder" data-spw-action="inspect">? model capture state</a>
-                        <a class="operator-chip" href="/tools/midjourney/" data-spw-operator="integration">^midjourney_bench</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/?spw-svg-env=model&amp;spw-svg-palette=soft-blue&amp;spw-svg-motion=paused&amp;spw-svg-pointer=none#svg-brand-screenshot" data-spw-operator="wonder" data-spw-action="inspect">? model capture state</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/tools/midjourney/" data-spw-operator="integration">^midjourney_bench</a>
                     </nav>
                 </aside>
 
-                <div class="frame-note project-notes" data-spw-local-note-origin="svg-experiments" data-spw-local-note-entry data-spw-slot="notes" aria-label="Project development notes for this SVG lab">
+                <div class="project-notes" data-spw-textual-role="note" data-spw-local-note-origin="svg-experiments" data-spw-local-note-entry data-spw-slot="notes" aria-label="Project development notes for this SVG lab">
                     <label for="svg-project-notes-input" class="spec-kicker">Project notes</label>
                     <form class="svg-project-note-form" data-spw-local-note-entry>
                         <div class="note-row">
                             <input id="svg-project-notes-input" type="text" data-local-note-input class="project-note-input" placeholder="Jot adaptations for your project (regional motif, palette, interactivity notes). Local only.">
-                            <button type="submit" class="operator-chip" data-spw-operator="action" data-spw-action="apply">!save</button>
+                            <button type="submit" class="spw-chip" data-spw-handle="true" data-spw-operator="action" data-spw-action="apply">!save</button>
                         </div>
-                        <p class="inline-note" data-local-note-preview></p>
+                        <p class="" data-spw-textual-role="note" data-local-note-preview></p>
                     </form>
-                    <p class="inline-note">These notes stay in your browser (spwashi:local-notes). Use to develop projects; new semantic/responsive/interactive attrs on the SVG above enable unique local/regional screenshots and better handoff. Prime compelling notes via cauldron.</p>
+                    <p class="" data-spw-textual-role="note">These notes stay in your browser (spwashi:local-notes). Use to develop projects; new semantic/responsive/interactive attrs on the SVG above enable unique local/regional screenshots and better handoff. Prime compelling notes via cauldron.</p>
                 </div>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="svg-handoff-register" data-spw-kind="frame" data-spw-role="handoff" data-spw-context="analysis">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#svg-handoff-register">@ "svg_handoff_register"</a>
                     <h2>What A Good SVG Handoff Includes</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     A naive model should not have to reverse-engineer the whole page. Give it the local contract: what the host is for, what material cues matter, and which seams should stay stable.
                 </p>
 
@@ -605,18 +605,18 @@ applySvgQueryTunability(document);</code></pre>
                 </div>
 
                 <nav class="frame-operators" aria-label="SVG handoff routes">
-                    <a class="operator-chip" href="/topics/craft/svg/" data-spw-operator="potential" data-spw-action="explore">~svg_storytelling</a>
-                    <a class="operator-chip" href="/about/website/#promptability-register" data-spw-operator="potential" data-spw-action="explore">~promptability</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="potential" data-spw-action="explore">~rpg_wednesday</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/craft/svg/" data-spw-operator="potential" data-spw-action="explore">~svg_storytelling</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/about/website/#promptability-register" data-spw-operator="potential" data-spw-action="explore">~promptability</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/" data-spw-operator="potential" data-spw-action="explore">~rpg_wednesday</a>
                 </nav>
             </section>
 
             <section class="spw-frame design-experiment-frame" id="svg-token-register" data-spw-kind="frame" data-spw-role="reference" data-spw-context="analysis">
-                <header class="frame-heading">
+                <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#svg-token-register">? "svg_token_register"</a>
                     <h2>Current Diagram Token Register</h2>
                 </header>
-                <p class="frame-note">
+                <p class="" data-spw-textual-role="note">
                     These values are read from the root after the current settings have been applied. They are part of the handoff contract when a diagram needs to stay in family across tools.
                 </p>
 

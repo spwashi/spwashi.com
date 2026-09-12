@@ -3169,7 +3169,8 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     container.innerHTML = '';
                     list.forEach(item => {
                         const a = document.createElement('a');
-                        a.className = 'operator-chip';
+                        a.className = 'spw-chip';
+                        a.dataset.spwHandle = 'true';
                         a.href = item.href;
                         a.textContent = item.label;
                         container.appendChild(a);
