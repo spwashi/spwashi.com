@@ -1,0 +1,121 @@
+# Root Custom-Property Invalidation (2026-09-11)
+#
+# operation: audit
+# Measured answer to the question ipc-003 and ipc-014 kept circling: what makes
+# a root style read expensive on this site. Not the reader. The writer before
+# it. Production artifact, not the dev server.
+
+#>root_property_invalidation_2026_09
+#:audit #!runtime #!paint #!invalidation #!root
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@paint_cost: ~"../caches/interaction-paint-cost-2026-09.spw"
+@module_export_contract: ~"../conventions/module-export-contract.spw"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@page_state: ~"../../public/js/runtime/page-state.js"
+@module_loader: ~"../../public/js/runtime/module-loader.js"
+@dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
+@core_bundle: ~"../../public/css/bundles/core.css"
+
+operation = "audit"
+fixity = "tending"
+
+^"instrument"{
+  artifact = `dist/ from npm run build:site:run, served static with no-store, not
+    the Vite dev server. The dev tree bundles differently and its numbers do not
+    transfer.`
+  browser = `Chrome 152 headless, CDP Profiler at a 200us sampling interval, plus
+    Runtime.evaluate microbenchmarks on the settled page.`
+  route = "/"
+  order_control = `Every microbenchmark warms each case once, then runs three
+    rounds with the case order reversed on alternate rounds. This matters more
+    than it sounds: without it the first case measured pays the cold recalc and
+    reads 10 to 20 times slower than the same code in second position, which is
+    enough to invert the conclusion. Two candidate readings were refuted this
+    way before the result below survived.`
+}[reg=facet]
+
+^"profile"{
+  claim = `Five of the six named JS costs on a home-route boot are reads of the
+    root element's computed style or scroll offset. Nothing else is close.`
+  named = #{
+    `measureFixedViewportCorrection` = `1348 to 2990ms self, page-state.js;
+      getComputedStyle plus getBoundingClientRect per bottom floating chrome`
+    `getScrollY` = `899 to 1563ms self, shell-disclosure.js; window.scrollY`
+    `readRootTimeToken` = `740 to 801ms self, page-state.js;
+      getComputedStyle(documentElement).getPropertyValue`
+    `interactive-medium read` = `424 to 727ms self; six root tokens in one pass`
+    `readSafeAreaInsetPx` = `225 to 450ms self, dom-contracts.js`
+    `writeDatasetValue` = `198ms self, dom-contracts.js`
+  }
+  variance = `Self time for the top two swings about twofold run to run on a
+    loaded machine. Rank is stable; magnitude is not. Do not attribute a change
+    of less than about 2x from this instrument alone.`
+}[reg=facet]
+
+^"mechanism"{
+  claim = `A root computed-style read costs nothing. A root custom-property
+    write costs about 430ms, and it is charged to whichever read comes next.`
+  measured = .{
+    read_only = `10 reads, nothing written between: 0.1ms`
+    interleaved = `10 (write --custom-prop on html, then read) pairs: 4294ms
+      median over three rounds, 4235 / 4619 / 4294 — about 429ms per pair`
+    batched = `the same 10 writes, then the same 10 reads: 517ms`
+    dataset = `10 (write data-* on html, then read) pairs: 539ms`
+  }[reg=facet]
+  reading = `Custom properties inherit, so setting one on the root invalidates
+    inherited-property resolution for the whole document, and the next computed
+    style read has to flush it against the full core bundle. A root data-*
+    write invalidates only what an attribute selector on html can match, which
+    is why it is about eight times cheaper. Batching the writes collapses ten
+    flushes into one, which is also about eight times cheaper.`
+  refutes = `"Cache or throttle the reads." Reads are already free when nothing
+    invalidated style; batching getComputedStyle calls buys nothing. A patch
+    collapsing page-state's ten per-arrival readRootTimeToken calls into one
+    snapshot was written, measured and reverted: no effect outside noise, and
+    the apparent 6x win in the first measurement was the order artifact above.
+    Do not re-propose read batching without a writer in the same patch.`
+  confirms = `"Change-only writes." Every root custom-property write skipped is
+    about 430ms that the next reader does not pay.`
+}[reg=facet]
+
+^"writer_census"{
+  method = `CSSStyleDeclaration.prototype.setProperty patched before any site
+    script, counting writes where the declaration is documentElement.style and
+    the name starts with two dashes.`
+  boot_total = `114 root custom-property writes on /, 13 of them same-value, plus
+    39 removes. One call site accounts for 85 of the 114.`
+  caution = `114 is small next to the 35054 to 50710 attribute writes ipc-014
+    measured. That is the point: these are not many writes, they are expensive
+    ones, and the cost lands on a different function than the one that caused
+    it. Counting writes is not the measure; counting write-then-read pairs is.`
+  next = `Attribute the 85-write call site to a source function on an unminified
+    build, then look for the reads that follow it within the same task.`
+}[reg=facet]
+
+^"do_not"{
+  list = #[
+    `Do not batch reads without removing a write. Refuted above with a receipt.`,
+    `Do not move a root custom property to data-* for speed alone — data-* is
+      cheaper to write but the two are not interchangeable, and the site's CSS
+      reads these tokens through var().`,
+    `Do not attribute a sub-2x profile change on a loaded machine.`,
+    `Do not measure any of this on the dev server.`
+  ][reg=set]
+}[reg=facet]
+
+validation: #[
+  `Order-controlled microbenchmark: reads alone 0.1ms, interleaved 4294ms,
+    batched 517ms, dataset 539ms, three rounds with reversed order`,
+  `Writer census patched in before first paint: 114 root writes, 85 from one
+    call site`,
+  `Reverted read-batching patch measured no effect outside noise`
+][reg=set]
+
+dispatch: .{
+  paint_cost = @paint_cost
+  contract = @module_export_contract
+  loader = @module_loader
+}[reg=facet]
