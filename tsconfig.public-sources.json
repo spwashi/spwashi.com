@@ -1,0 +1,18 @@
+{
+  // Strict check of the hand-authored TypeScript under public/ts, with the
+  // runtime JS it imports resolved and inferred rather than described.
+  //
+  // allowJs is what replaces the deleted sidecar declarations: types come from
+  // the JSDoc and the code in public/js/kernel/*.js. checkJs stays off so the
+  // ~1200 open inference findings in that JS do not drown the strict findings
+  // here; auditing the JS itself is tsconfig.public.json's job.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "types": [],
+    "paths": { "/public/js/*": ["./public/js/*"] }
+  },
+  "include": ["public/ts/**/*.ts", "types/**/*.d.ts"]
+}

@@ -16,6 +16,11 @@ export const SKELETON_ROLES = Object.freeze(['heading', 'line', 'card']);
 
 const VAR_RE = /\{\{\s*([a-zA-Z][a-zA-Z0-9_-]*)\s*\}\}/g;
 
+/**
+ * @param {unknown} error
+ * @param {string} [fallback]
+ * @returns {string}
+ */
 export function normalizeError(error, fallback = 'unknown error') {
   if (error instanceof Error) return error.message || fallback;
   if (typeof error === 'string') return error || fallback;
@@ -27,6 +32,12 @@ export function normalizeError(error, fallback = 'unknown error') {
   }
 }
 
+/**
+ * @param {string} source
+ * @param {unknown} error
+ * @param {{ host?: Element | null, silent?: boolean }} [options]
+ * @returns {{ source: string, message: string, host: Element | null }}
+ */
 export function reportRenderError(source, error, options = {}) {
   const message = normalizeError(error);
   const payload = {
@@ -49,6 +60,14 @@ export function reportRenderError(source, error, options = {}) {
   return payload;
 }
 
+/**
+ * Run a task and return an outcome record instead of throwing.
+ *
+ * @template T
+ * @param {(() => T | Promise<T>) | Promise<T>} task
+ * @param {{ source?: string, fallback?: T, host?: Element | null, silent?: boolean }} [options]
+ * @returns {Promise<{ ok: boolean, value: T | null, error: unknown }>}
+ */
 export async function runSafe(task, options = {}) {
   const source = options.source || 'run-safe';
 
@@ -61,6 +80,15 @@ export async function runSafe(task, options = {}) {
   }
 }
 
+/**
+ * Wrap a function so a throw becomes a reported error and a fallback value.
+ *
+ * @template {(...args: any[]) => any} F
+ * @param {F | null | undefined} fn
+ * @param {string} [source]
+ * @param {{ fallback?: ReturnType<F>, host?: Element | null, silent?: boolean }} [options]
+ * @returns {(...args: Parameters<F>) => ReturnType<F> | undefined}
+ */
 export function guardCall(fn, source = 'guard-call', options = {}) {
   if (typeof fn !== 'function') return () => options.fallback;
 

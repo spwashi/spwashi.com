@@ -1,8 +1,18 @@
 {
+  // Emits public/ts/*.ts to public/js/typed/*.js. Emit only.
+  //
+  // noImplicitAny is off here because this project cannot see the types of the
+  // runtime JS it imports. allowJs would let it infer them, but that makes the
+  // .js files emittable inputs, and rootDir (which pins the output layout) then
+  // rejects every one of them as outside the root. So this project resolves the
+  // imports and emits, and tsconfig.public-sources.json does the strict checking
+  // of these same files with the JS types in view. Both run in `npm run
+  // typecheck`; neither alone is the gate.
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": false,
     "incremental": true,
+    "noImplicitAny": false,
     "tsBuildInfoFile": ".tmp/tsc/runtime.tsbuildinfo",
     "noEmit": false,
     "outDir": "public/js/typed",

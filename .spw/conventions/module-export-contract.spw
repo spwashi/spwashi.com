@@ -77,6 +77,38 @@
   performance = `IDLE chunks order residue before collectible flourishes; skip no-op CSS var writes; prefer VISIBLE/IDLE over IMMEDIATE.`
 }[reg=facet]
 
+^"binding_integrity"{
+  claim = `A name a module reads must resolve to a declaration, an import, or a
+    platform global. Nothing in this tree checks that at build time on its own:
+    the runtime is hand-authored ES modules with no bundler, so an unbound name
+    is not an error until a browser evaluates the line that reads it.`
+  found = `Two were live when the check was written. site-settings-ui.js read
+    settingsManager inside bindSettingsScope, where only manager is in scope, so
+    every preset button on /settings/ threw ReferenceError after saving and before
+    reporting — the setting applied and the reader was told nothing. spells.js read
+    escapeHtml 25 times with no import; that path is gated behind a feature pack no
+    route declares yet, so it was waiting rather than failing.`
+  sidecar_rule = `Do not describe a public/js module in a .d.ts. A declaration file
+    restates a surface and then drifts from it: kernel/dom-contracts.d.ts declared 3
+    of 68 exports, so the other 65 read to TypeScript as missing exports — 194
+    phantom findings that hid the real ones. Types belong in JSDoc beside the code.`
+  emit_vs_check = `tsconfig.runtime.json emits public/ts to public/js/typed and
+    cannot infer from the JS it imports: allowJs would make those .js files emittable
+    inputs and rootDir rejects them. So emit and checking are two projects.
+    tsconfig.public-sources.json checks public/ts strictly with the JS types in view;
+    tsconfig.public.json feeds the binding gate.`
+  executable_contract = `npm run check:bindings, also inside npm run check:runtime.
+    Reads only TS2304 and TS2305 from tsconfig.public.json. Inference and strictness
+    findings are ignored on purpose — there are about 1200 and they would make the
+    output unreadable.`
+  baseline_rule = `The gate carries a short baseline of findings owned by files a
+    concurrent patch was holding. It is a list to empty. The check fails when a
+    baseline entry is fixed but still listed, so it cannot go stale.`
+  successor = `The ~1200 open inference findings are a separate project. Do not
+    enable strict checkJs across public/js in one sweep; take one folder, add JSDoc
+    where the type is load-bearing, and leave the gate reading the same two codes.`
+}[reg=facet]
+
 ^"inspection_dataset"{
   on_mount: #[
     `data-spw-module-export-shape`
@@ -90,6 +122,7 @@
 
 validation: #[
   `npm run check:runtime warns when catalog import target lacks resolvable mount`,
+  `npm run check:bindings fails on a name that resolves to nothing (TS2304/TS2305)`,
   `node --check on module-export-contract.js`,
   `describeModuleExport() returns stable JSON for all catalog ids (goal)`
   `A module-export refresh is preserved by module-loader when mount itself returns no refresh.`

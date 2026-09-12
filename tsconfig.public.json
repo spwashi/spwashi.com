@@ -1,0 +1,27 @@
+{
+  // Type-checks the hand-authored browser runtime from its own sources.
+  //
+  // There are no sidecar .d.ts files under public/. A declaration file that
+  // restates a module's surface can only ever drift from it: the one we removed
+  // described 3 of dom-contracts.js's 68 exports, so every import of the other
+  // 65 read as a missing export. Types come from the JSDoc in the JS instead,
+  // where they sit next to the code they describe.
+  //
+  // strict is off here on purpose. The gate this config feeds
+  // (scripts/check-runtime-bindings.mjs) reports unresolved names and imports,
+  // which are real defects at any strictness. Turning strict on would bury
+  // those in ~1700 inference notes and nobody would read the output.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "tsBuildInfoFile": ".tmp/tsc/public.tsbuildinfo",
+    "types": [],
+    "paths": { "/public/js/*": ["./public/js/*"] }
+  },
+  "include": ["public/js/**/*.js", "public/ts/**/*.ts", "types/**/*.d.ts"],
+  "exclude": ["public/js/generated/**", "public/js/typed/**"]
+}

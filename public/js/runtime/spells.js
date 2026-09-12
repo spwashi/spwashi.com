@@ -7,6 +7,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { escapeHtml } from '/public/js/kernel/dom-render.js';
 import { composeOpBundle, detectOperator, getOperatorAffordances, getOperatorDefinition, getOperatorGeometry } from '/public/js/kernel/shared.js';
 import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
 import { getGroundedCouplings, getGroundedRegistry, getSigilCollection, restoreCheckpoint } from '/public/js/interface/haptics.js';

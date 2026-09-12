@@ -756,7 +756,7 @@ const bindSettingsScope = (root, options = {}) => {
         if (!PRESETS[presetName]) return;
         const saved = saveSiteSettings(getPresetSettings(presetName));
         syncFromStore(saved);
-        const description = settingsManager.describePreset(presetName);
+        const description = manager.describePreset(presetName);
         const label = PRESET_LABELS[presetName] || presetName;
         setStatus(`Applied ${label} · ${description?.climate || 'climate'}.`, 'success');
         emitSettingsFeedbackCredit(PRESETS[presetName] || {}, saved, `preset-${presetName}`);
