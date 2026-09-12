@@ -1,8 +1,6 @@
 import { emitSpwAction } from '/public/js/kernel/shared.js';
 import {
-  isCoarsePointerEnvironment,
   removeDatasetValues,
-  supportsHoverEnvironment,
   syncFloatingChromeState,
   writeDatasetValues,
   writeDatasetValue,
@@ -20,17 +18,37 @@ import {
   getNextFontScale,
   syncUtilityRow,
 } from './shell/utility-row.js';
+import {
+  SHELL_MODES,
+  PRESSURES,
+  SCROLL_BANDS,
+  SCROLL_DIRECTIONS,
+  SHELL_MEASUREMENT_DEFAULTS,
+  DRAWER_MENU_QUERY,
+  prefersDrawerMenu,
+  getViewportTier,
+  getPointerMode,
+  getHoverMode,
+  syncDeviceContext,
+  getScrollY,
+  resolveScrollBand,
+  resolveScrollDirection,
+  readNavContentWidth,
+  computeNavRatio,
+  countPrimaryRoutes,
+  countOverflowRoutes,
+  resolveMenuMode,
+  resolveMenuPressure,
+} from './shell/measurement.js';
 import { bindInteractionHops } from './interaction/hops.js';
+
+const MODES = SHELL_MODES;
+const DEFAULTS = SHELL_MEASUREMENT_DEFAULTS;
 
 const EVENT_NAMES = Object.freeze({
   INTENT: 'spw:shell-menu-intent',
   STATE: 'spw:shell-menu-state',
   TRACE: 'spw:header-trace-change',
-});
-
-const MODES = Object.freeze({
-  INLINE: 'inline',
-  TOGGLE: 'toggle',
 });
 
 const PHASES = Object.freeze({
@@ -39,13 +57,6 @@ const PHASES = Object.freeze({
   CONTACT: 'contact',
   PROJECTING: 'projecting',
   SETTLING: 'settling',
-});
-
-const PRESSURES = Object.freeze({
-  CALM: 'calm',
-  TIGHT: 'tight',
-  COMPRESSED: 'compressed',
-  CROWDED: 'crowded',
 });
 
 const TOPOLOGIES = Object.freeze({
@@ -72,18 +83,6 @@ const CLARITIES = Object.freeze({
   SETTLE: 'settle',
 });
 
-const SCROLL_BANDS = Object.freeze({
-  TOP: 'top',
-  LIFTED: 'lifted',
-  DEEP: 'deep',
-});
-
-const SCROLL_DIRECTIONS = Object.freeze({
-  UP: 'up',
-  DOWN: 'down',
-  STILL: 'still',
-});
-
 const SHELL_LAYOUTS = Object.freeze({
   INLINE_RIBBON: 'inline-ribbon',
   INLINE_TABLET: 'inline-tablet',
@@ -102,26 +101,6 @@ const SHELL_TUNE_SURFACES = Object.freeze({
   STRIP: 'strip',
 });
 
-const DEFAULTS = Object.freeze({
-  narrowBreakpointPx: 720,
-  midBreakpointPx: 980,
-  compressedRatio: 1.55,
-  modeHysteresisRatio: 0.14,
-  pressureHysteresisRatio: 0.04,
-  scrollLiftPx: 18,
-  scrollDeepPx: 132,
-  scrollDirectionDeadzonePx: 4,
-  settlePhaseMs: 180,
-});
-
-/* Same query as navigation.css pocket/coarse hamburger. Rem and pointer,
-   not a parallel 720px ladder, so the strip and the glyph cannot disagree. */
-const DRAWER_MENU_QUERY = '(pointer: coarse), (max-width: 45rem)';
-
-function prefersDrawerMenu(view = window) {
-  return view.matchMedia?.(DRAWER_MENU_QUERY).matches === true;
-}
-
 const FOCUSABLE_SELECTOR = [
   'a[href]',
   'button:not([disabled])',
@@ -131,51 +110,6 @@ const FOCUSABLE_SELECTOR = [
   'textarea:not([disabled])',
   '[tabindex]:not([tabindex="-1"])',
 ].join(', ');
-
-function getViewportTier(width = window.innerWidth, config = DEFAULTS) {
-  if (width < 420) return 'compact';
-  if (width < config.narrowBreakpointPx) return 'narrow';
-  if (width < config.midBreakpointPx) return 'mid';
-  if (width < 1280) return 'regular';
-  return 'wide';
-}
-
-function getPointerMode() {
-  return isCoarsePointerEnvironment(window) ? 'coarse' : 'fine';
-}
-
-function getHoverMode() {
-  return supportsHoverEnvironment(window) ? 'hover' : 'touch';
-}
-
-function syncDeviceContext(state) {
-  const tier = getViewportTier(window.innerWidth, state?.config || DEFAULTS);
-  const pointer = getPointerMode();
-  const hover = getHoverMode();
-
-  writeDatasetValues(document.documentElement, {
-    spwViewportTier: tier,
-    spwPointerMode: pointer,
-    spwHoverMode: hover,
-    spwDeviceContext: `${tier}-${pointer}`,
-  });
-}
-
-function getScrollY() {
-  return Math.max(window.scrollY || window.pageYOffset || 0, 0);
-}
-
-function resolveScrollBand(scrollY, config = DEFAULTS) {
-  if (scrollY <= config.scrollLiftPx) return SCROLL_BANDS.TOP;
-  if (scrollY < config.scrollDeepPx) return SCROLL_BANDS.LIFTED;
-  return SCROLL_BANDS.DEEP;
-}
-
-function resolveScrollDirection(nextScrollY, previousScrollY, config = DEFAULTS) {
-  if (nextScrollY > previousScrollY + config.scrollDirectionDeadzonePx) return SCROLL_DIRECTIONS.DOWN;
-  if (nextScrollY < previousScrollY - config.scrollDirectionDeadzonePx) return SCROLL_DIRECTIONS.UP;
-  return SCROLL_DIRECTIONS.STILL;
-}
 
 function createState(config) {
   const scrollY = getScrollY();
@@ -201,88 +135,6 @@ function createState(config) {
     },
     snapshot: null,
   };
-}
-
-function readNavContentWidth(nav, navList) {
-  if (!(nav instanceof HTMLElement) || !(navList instanceof HTMLElement)) return 0;
-
-  const listItems = Array.from(navList.querySelectorAll(':scope > li'));
-  const listStyle = window.getComputedStyle(navList);
-  const columnGap = Number.parseFloat(listStyle.columnGap || listStyle.gap || '0') || 0;
-  const measuredItemsWidth = listItems.reduce((total, item) => {
-    if (!(item instanceof HTMLElement)) return total;
-    return total + item.getBoundingClientRect().width;
-  }, 0) + Math.max(0, listItems.length - 1) * columnGap;
-
-  return Math.max(nav.scrollWidth, navList.scrollWidth, measuredItemsWidth);
-}
-
-function computeNavRatio(header, nav, navList, state) {
-  const navStyle = window.getComputedStyle(nav);
-  const canMeasure = !nav.hidden && navStyle.display !== 'none' && navStyle.visibility !== 'hidden';
-  const cachedNavWidth = state?.navMeasure?.navWidth || 0;
-  const navWidth = canMeasure
-    ? nav.clientWidth || cachedNavWidth || Math.max(header.clientWidth * 0.58, 1)
-    : cachedNavWidth || Math.max(header.clientWidth * 0.58, 1);
-  if (!navWidth) return 1;
-
-  const measuredRawContentWidth = canMeasure ? readNavContentWidth(nav, navList) : 0;
-  const cachedContentWidth = state?.navMeasure?.contentWidth || 0;
-  const measuredContentWidth = measuredRawContentWidth && cachedContentWidth
-    && Math.abs(measuredRawContentWidth - cachedContentWidth) < 12
-    ? cachedContentWidth
-    : measuredRawContentWidth;
-  const contentWidth = measuredContentWidth || cachedContentWidth;
-
-  if (!contentWidth) {
-    return state?.navMeasure?.ratio || 1;
-  }
-
-  const ratio = contentWidth / navWidth;
-  if (state?.navMeasure) {
-    state.navMeasure = {
-      contentWidth,
-      navWidth,
-      ratio,
-      source: measuredContentWidth ? 'measured' : 'cached-content',
-      measuredAt: measuredContentWidth
-        ? Math.round(performance.now())
-        : state.navMeasure.measuredAt,
-    };
-  }
-
-  return ratio;
-}
-
-function countPrimaryRoutes(navList) {
-  return navList.querySelectorAll(':scope > li > a[href]').length;
-}
-
-function countOverflowRoutes(navList) {
-  const panelLinks = navList.querySelectorAll(':scope > li.spw-route-menu-host .spw-route-menu-panel a[href]').length;
-  if (panelLinks) return panelLinks;
-
-  const countText = navList.querySelector(':scope > li.spw-route-menu-host .spw-route-menu-count')?.textContent || '';
-  const count = Number.parseInt(countText.replace(/[^\d-]/g, ''), 10);
-  return Number.isFinite(count) ? Math.max(0, count) : 0;
-}
-
-function resolveMenuMode(header, nav, navList, state) {
-  const html = document.documentElement;
-  const tier = html.dataset.spwViewportTier || getViewportTier(window.innerWidth, state.config);
-  const ratio = computeNavRatio(header, nav, navList, state);
-  if (prefersDrawerMenu()) return MODES.TOGGLE;
-  if (tier === 'compact' || tier === 'narrow') return MODES.TOGGLE;
-
-  const previousMode = state.snapshot?.mode || state.mode || MODES.INLINE;
-  const exitRatio = Math.max(1, state.config.compressedRatio - state.config.modeHysteresisRatio);
-  if (previousMode === MODES.TOGGLE) {
-    return ratio > exitRatio ? MODES.TOGGLE : MODES.INLINE;
-  }
-
-  if (ratio > state.config.compressedRatio) return MODES.TOGGLE;
-
-  return MODES.INLINE;
 }
 
 function resolveShellLayout(snapshot) {
@@ -345,37 +197,6 @@ function syncShellChromeLayout(header, snapshot) {
   if (disclosure instanceof HTMLDetailsElement) {
     disclosure.dataset.spwShellTuneSurface = tuneSurface;
   }
-}
-
-function resolveMenuPressure({ mode, ratio, navFit, tier, pointer, previousPressure, config = DEFAULTS }) {
-  if (mode === MODES.TOGGLE && (tier === 'compact' || tier === 'narrow')) {
-    return PRESSURES.CROWDED;
-  }
-
-  const pressureMargin = config.pressureHysteresisRatio || 0;
-  const compressedEnterRatio = 1.18;
-  const compressedExitRatio = compressedEnterRatio - pressureMargin;
-  const tightEnterRatio = 1.02;
-  const tightExitRatio = tightEnterRatio - pressureMargin;
-  const compressedContext = navFit === 'compressed' || (tier === 'mid' && pointer === 'coarse');
-
-  if (previousPressure === PRESSURES.COMPRESSED && (ratio > compressedExitRatio || compressedContext)) {
-    return PRESSURES.COMPRESSED;
-  }
-
-  if (ratio > compressedEnterRatio || compressedContext) {
-    return PRESSURES.COMPRESSED;
-  }
-
-  if (previousPressure === PRESSURES.TIGHT && (ratio > tightExitRatio || navFit === 'tight')) {
-    return PRESSURES.TIGHT;
-  }
-
-  if (ratio > tightEnterRatio || navFit === 'tight') {
-    return PRESSURES.TIGHT;
-  }
-
-  return PRESSURES.CALM;
 }
 
 function resolveMenuTopology(mode, pressure, tier) {
@@ -626,7 +447,7 @@ function syncScrollState(header, state, nextScrollY = getScrollY()) {
 
 function isCoarsePointerMode() {
   return document.documentElement.dataset.spwPointerMode === 'coarse'
-    || isCoarsePointerEnvironment(window);
+    || getPointerMode(window) === 'coarse';
 }
 
 function describeToggleState(snapshot) {

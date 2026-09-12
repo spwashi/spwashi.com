@@ -18,12 +18,16 @@
 import {
   MODULE_SELECTOR,
   inferTopographyKind,
-  isCoarsePointerEnvironment,
   supportsHoverEnvironment,
   writeDatasetValue,
   writeDatasetValueIfMissing,
   writeStyleValue,
 } from '/public/js/kernel/dom-contracts.js';
+import {
+  getViewportTier,
+  getPointerMode,
+  layoutReasonForTier,
+} from '/public/js/runtime/shell/measurement.js';
 import { buildRouteMenuLink } from '/public/js/semantic/link-copy.js';
 import {
   normalizePathname,
@@ -366,27 +370,9 @@ function bindModuleInteractionStates() {
   };
 }
 
-function computeViewportTier(width = window.innerWidth) {
-  if (width < 420) return 'compact';
-  if (width < 720) return 'narrow';
-  if (width < 980) return 'mid';
-  if (width < 1280) return 'regular';
-  return 'wide';
-}
-
-function computePointerMode() {
-  return isCoarsePointerEnvironment(window) ? 'coarse' : 'fine';
-}
-
-function layoutReasonForTier(tier = 'regular') {
-  if (tier === 'compact' || tier === 'narrow') return 'pocket';
-  if (tier === 'mid') return 'fold';
-  return 'broadsheet';
-}
-
 function applyDeviceContext() {
-  const tier = computeViewportTier(window.innerWidth);
-  const pointer = computePointerMode();
+  const tier = getViewportTier(window.innerWidth);
+  const pointer = getPointerMode(window);
   const hover = supportsHoverEnvironment(window) ? 'hover' : 'touch';
   const reason = layoutReasonForTier(tier);
 
