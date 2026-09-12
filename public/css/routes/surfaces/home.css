@@ -1930,7 +1930,10 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
    8. Mobile rhythm compaction + region spacing ecology
    ========================================================================== */
 
-@media (max-width: 48rem) {
+/* The lens picker belongs to the hook pack, not to the viewport. A wide
+   viewport can still give this component a narrow rail; let its own seat pick
+   the compact two-by-two posture. */
+@container spw-pack (max-width: 44rem) {
   :where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1941,6 +1944,21 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
     inline-size: 100%;
     min-inline-size: var(--touch-target-min, 2.75rem);
     min-block-size: var(--touch-target-min, 2.75rem);
+  }
+}
+
+/* Four destination chips read as a small shelf at pocket measure. Keeping
+   them as two calm rows preserves full labels and touch targets instead of
+   squeezing four unrelated actions into one line. */
+@container spw-pack (max-width: 26rem) {
+  :where([data-spw-feature="home-kernel-entry"] .hook-invitation[data-spw-feature="wrap-jobs"]) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.38rem;
+  }
+
+  :where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"] :is(.spw-chip, .spw-chip)) {
+    inline-size: 100%;
   }
 }
 

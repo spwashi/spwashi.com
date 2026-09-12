@@ -108,6 +108,17 @@ fixity = "tending"
   invariant = `data-spw-pack-layout remains narration; no geometry is gated on the runtime attribute.`
 }[reg=facet]
 
+^"home_hook_action_shelf_2026_09_12"{
+  operation = "align"
+  fixity = "tending"
+  route = `/`
+  owner = `public/css/routes/surfaces/home.css`
+  claim = `The home hook already names context, body, and actions as pack regions. Its lens picker and destination chips now choose their compact posture from the hook's spw-pack container, not from the viewport.`
+  alignment = `At or below 44rem of available hook width, the four lens controls become a two-by-two selector. At or below 26rem, the four destination chips become a two-row action shelf so labels and touch targets remain whole.`
+  constraint = `No device-specific copy or new data attribute. The existing data-spw-pack-local and data-spw-pack-region="actions" are the semantic contract.`
+  probe = `npm run visual:capture -- --ids home-opening --stills --viewports pocket,fold,broadsheet`
+}[reg=facet]
+
 ^"packing_laws_2026_08_31"{
   operation = "contract"
   fixity = "tending"
