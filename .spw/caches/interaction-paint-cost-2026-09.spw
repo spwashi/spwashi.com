@@ -38,6 +38,12 @@
 @shell_lifecycle_audit:
   ~"../audits/alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
 @pointer_device_audit: ~"../audits/pointer-device-detection-2026-09.spw"
+@layout_squeeze: ~"../../public/css/systems/layout-squeeze.css"
+@interaction_progression_css: ~"../../public/css/systems/interaction-progression.css"
+@interaction_progression_js: ~"../../public/js/runtime/interaction-progression.js"
+@affordances_css: ~"../../public/css/systems/electrostatic-affordances.css"
+@dom_sync_hub: ~"../../public/js/runtime/dom-sync-hub.js"
+@grain_texture: ~"../../public/css/effects/grain-texture.css"
 
 operation = "cache"
 fixity = "tending"
@@ -45,6 +51,8 @@ source = `browser audit 2026-09-09, Chrome over npm run dev (unminified, dev-ser
   a 1433px layout viewport`
 follow_up_source = `warm phone runtime pass 2026-09-11 at 390x844 after speculative
   module prefetch was removed from the pocket boot path`
+style_leak_source = `2026-09-11 authored-CSS census (public/css, bundles excluded) plus
+  writePhase in @interaction_progression_js. Likely leaks, not paired timings.`
 focus_dimension = "engineer"
 element = "metal"
 semantic_fixity = "tending"
@@ -69,11 +77,14 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   measure = receipt[protocol]{objective.subjective}<ipc-011>
   history = evidence[dated]{ipc-001.ipc-009}<inspect>
   reattribution = evidence[paced]{focus.writes.owner}<ipc-014>
+  style_leaks = candidates[likely]{cycle.inherit.restyle.fanout}<ipc-015>
   boundary = `A's local settings delta is implemented; see its dated receipt below.
     B, C and D were traced on 2026-09-11 and none of their gates opened; their
-    verdicts sit in ipc-013. E is named there and unimplemented. The file-tree
-    predictions are now graded into a work queue in file_tree_modularity; take its
-    topmost ready item. Read design_registers before proposing a sixth metaphor.`
+    verdicts sit in ipc-013. E is named there and unimplemented. ipc-015 names
+    style-side amplifiers that can fire on the same Tab journey as E; they are
+    not automatic scope on E. The file-tree predictions are now graded into a
+    work queue in file_tree_modularity; take its topmost ready item. Read
+    design_registers before proposing a sixth metaphor.`
 }[reg=facet]
 
 ^"expression_schema"{
@@ -737,14 +748,53 @@ expression = surface[cost]{focus.paint.attributes}<reading>
         so moving it to runtime would trade a true name for a smaller file.`
       mint = "none"
     }
+
+    [q8_cyclic_token_floors] {
+      state = "needs trace"
+      owner = `public/css/systems/interaction-progression.css; repair shape already
+        in @layout_squeeze`
+      why = `ipc-015 leak-a. Authored CSS still uses --x: max(var(--x), N) and
+        --x: calc(var(--x) * k) on the Tab path, including registered inheriting
+        @property --spw-interaction-phase-weight. layout-squeeze already proved
+        that idiom is IACVT, not a clamp.`
+      entry = `Paired style/layout/raster on paced Tab with the html phase-weight
+        floors intact versus independent step/gain channels. Do not open a second
+        cycle-split in files a concurrent session is already editing.`
+      exit = `One named token family no longer reads itself; ipc-011 pairing
+        attributes any leftover invalidation.`
+      semantics = `A floor that reads its own output is dumped nutrient: the
+        cascade already had a value and the declaration throws it away. Independent
+        channels solubilize; a new sheet would only relocate the lie.`
+      mint = "none — break cycles in place, the way layout-squeeze already did"
+    }
+
+    [q9_html_phase_invalidation] {
+      state = "needs trace"
+      owner = `@interaction_progression_js writePhase plus html[data-spw-interaction-phase]
+        descendant rules in @interaction_progression_css and @affordances_css`
+      why = `ipc-015 leak-b and leak-c. Every non-idle phase writes an inheriting
+        @property on html and restyles every .spw-frame on charge/inspect/discover.
+        That is the remaining unattributed per-stop contour after ipc-014 named
+        the annotation writer.`
+      entry = `A rendering trace that separates html inherited-property invalidation
+        from descendant matching from the pulse attribute write/delete.`
+      exit = `Either a named dominant restyle, or this item closes as unattributable
+        in the development artifact.`
+      semantics = `Phase is a room fact. Spending it onto every frame teaches the
+        tree that the room is the furniture. Keep the write on html; spend the
+        paint on the charged terminal.`
+      mint = "none"
+    }
   }[reg=facet]
   not_queued = `ipc-007 and ipc-009 stay out of the JS tree: rect receipts and budget
-    debt are measurement and accounting, not module work.`
+    debt are measurement and accounting, not module work. ipc-015e grain and chrome
+    cycles stay out of F.`
   against_plan = `@runtime_decomposition_plan Phase 1 still wants haptics storage-first
     and a three-way shell split. Paint-cost now says the measured hot writer is
     annotation restatement (ipc-014 / queue q1), not haptics storage or a wholesale
-    shell carve. storage-utils is already present; do not mint a folder to relocate
-    it.`
+    shell carve. ipc-015 names style amplifiers on the same Tab; they are not a
+    reason to reopen B or D. storage-utils is already present; do not mint a
+    folder to relocate it.`
   refuse = `Use ipc-013_implementation_handoff to select and validate one candidate. Do
     not add a folder that duplicates kernel/runtime/interface roles in
     public/js/README.md.`
@@ -971,7 +1021,190 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   do_not_promote_until = `A rendering trace attributes style, layout and raster on a
     production artifact. Until then this block reassigns the writer, not the latency.`
   next = `ipc-013 E_annotation_idempotence carries the bounded experiment. Its gate is
-    a reader inventory plus an A-shaped source and browser receipt.`
+    a reader inventory plus an A-shaped source and browser receipt. ipc-015 names
+    style-side amplifiers on the same journey; do not fold them into E.`
+}[reg=facet]
+
+^"ipc-015_likely_style_leaks"{
+  id = "ipc-015"
+  operation = "cache"
+  fixity = "experimental"
+  dated = `2026-09-11`
+  expression = style[leak]{cycle.inherit.restyle.fanout}<candidate>
+    ~ enter[phase]{html.weight.pulse}<hot>
+    ^ owner[sheet]{progression.affordances.squeeze}<in_place>
+  source = `Authored CSS census 2026-09-11, bundles excluded: 206 declarations
+    whose specified value var()s the property they set (max/calc floors and
+    fallback-to-self chains) across 38 files. Cross-read with writePhase in
+    @interaction_progression_js, ATTRIBUTE_FILTER in @dom_sync_hub, and the IACVT
+    contract already written in @layout_squeeze.`
+  arc = `These leaks sit on enter: paced Tab writes html[data-spw-interaction-phase]
+    and then the style engine walks inheriting tokens and descendant frames. Grain
+    cycles and chrome-clearance floors are dwell/resize, not this journey.`
+  life = `A floor that restates itself is not ambient life. Independent channels
+    (step, gain, ceiling) are the sign of life; max(var(--x), N) is chatter.`
+  nutrition = `IACVT dumps the inherited nutrient and substitutes the fallback or
+    the registered initial. layout-squeeze already solubilized --spw-squeeze this
+    way. The interaction family has not.`
+  topography = `Keep the repair in the sheet that tells the lie. Do not mint a
+    cycle-audit.css or a phase-paint.js. @layout_squeeze is the landform.`
+  claim = `After ipc-014 named annotation as the write owner, the remaining
+    unattributed per-stop time is more likely style invalidation than charge
+    residue. Four leaks share that Tab; a fifth sits beside it on grain and
+    chrome. None of these is a latency receipt.`
+  unknown = `Write counts and declaration counts are not style/layout/raster ms.
+    A cycle can be semantically empty and still cheap. Promote only with ipc-011
+    pairing on a production artifact.`
+
+  [leak-a_cyclic_floors] {
+    id = "ipc-015a"
+    contour = "state"
+    expression = token[floor]{self.max.calc}<iacvt>
+    claim = `--x: max(var(--x), N) and --x: calc(var(--x) * k) are cycles, not
+      clamps. At computed-value time the self-reference is invalid, so the
+      declaration never reads the inherited value it pretends to raise.`
+    already_named = `@layout_squeeze:12-17 already records the failure:
+      --spw-squeeze: max(var(--spw-squeeze, 0), 0.4) resolved empty and silently
+      destroyed the value. Independent contribution channels plus a ceiling
+      replaced it.`
+    census = `206 self-var declarations in authored CSS. Hottest max/calc tokens:
+      grain-scope-opacity-multiplier 16, bottom-chrome-clearance 8,
+      interaction-phase-weight 8, card-charge 7, e-edge 6, site-rhythm-tempo 5,
+      field-intensity 4, site-rhythm-density 4, resonance 3.`
+    registered_hot = `The Tab-path cycles that are also inheriting @property:
+      --spw-interaction-phase-weight, --spw-field-intensity,
+      --spw-site-rhythm-tempo, --spw-site-rhythm-density,
+      --spw-runtime-enhancement-intensity, --spw-lifecycle-presence.
+      --spw-resonance inherits false, so its operator cycles stay local.`
+    tab_owners = #[
+      `@interaction_progression_css html[data-spw-interaction-phase=*] floors
+        pre-state-visibility, variant-selection-weight, ecology-twinkle,
+        salience-weight, ecology-settle-weight, and pinch-scaling
+        interaction-phase-weight`,
+      `components/semantic-variants.css, gesture-anatomy.css, site-search.css
+        also max() --spw-interaction-phase-weight on local hosts`,
+      `@affordances_css max() --spw-projected-field on every .spw-frame during
+        charge/inspect/discover, and max() --spw-e-edge / --spw-resonance on
+        terminals`
+    ][reg=set]
+    why_likely = `A registered custom property that is IACVT computes to its
+      initial value, not to max(fallback, N). Local
+      --spw-interaction-phase-weight: max(var(--self), 0.42) on a card does
+      not raise the inherited room weight; it zeros it and stops inheritance.
+      Unregistered cycles resolve empty (@layout_squeeze). Cycle detection is
+      per declaration; a successful html write of the same inheriting token
+      is still document-wide invalidation. That is the state-contour amplifier
+      ipc-010 warned attribute totals cannot see.`
+    next = `ipc-013 F_cycle_channels. One family first: the html phase-weight
+      floors in @interaction_progression_css, using the layout-squeeze shape.`
+  }
+
+  [leak-b_html_phase_inherit] {
+    id = "ipc-015b"
+    contour = "state"
+    expression = html[phase]{weight.inherit}<document>
+    claim = `writePhase assigns html.dataset.spwInteractionPhase on every real
+      phase change, and the matching html[data-spw-interaction-phase] rules
+      restate --spw-interaction-phase-weight, a registered inherits:true
+      @property. One attribute write can invalidate inherited custom properties
+      across the whole document.`
+    evidence = #[
+      `@interaction_progression_js writePhase skips same-phase reentry but still
+        writes data-spw-microinteraction-pulse and deletes it after
+        readMicrointeractionPulseMs — two extra root mutations per non-idle
+        stop`,
+      `tokens/core.css registers --spw-interaction-phase-weight inherits:true
+        initial 0, and --spw-microinteraction-pulse-intensity inherits:true so
+        a pulse scale can interpolate`,
+      `ipc-001 already counted ~190 data-spw-* on <html>; a phase write is one
+        more root invalidation on a large attribute surface`
+    ][reg=set]
+    why_likely = `This is the missing style half of ipc-014's unattributed
+      1.3 to 4.8s synchronous focus(). Annotation explains the writes; this
+      leak is what those writes, plus the phase attribute, might force the
+      style engine to walk.`
+    next = `Queue q9. Trace inherited-property invalidation separately from
+      descendant matching. Do not delay writePhase to fake a quiet page.`
+  }
+
+  [leak-c_room_descendant_restyle] {
+    id = "ipc-015c"
+    contour = "paint"
+    expression = room[phase]{frame.card.operator}<all>
+    claim = `html[data-spw-interaction-phase=charge|inspect|discover] restyles
+      every .spw-frame / .frame-card, and approach restyles every operator
+      :hover/:focus-visible. The room fact is spent as furniture paint.`
+    evidence = #[
+      `@affordances_css:207-214 sets --spw-projected-field via a cyclic max on
+        every frame during charge/inspect/discover`,
+      `@affordances_css:281 approach × [data-spw-operator]:is(:hover,:focus-visible)
+        writes electrode residue`,
+      `@affordances_css:339-351 restyles [data-container-type] per phase`,
+      `@interaction_progression_css:225-234 restyles [data-spw-copy-depth] per
+        phase; pulse rules transition box-shadow, border-color, transform on
+        image/collectible hosts for 280ms`
+    ][reg=set]
+    why_likely = `ipc-002 / D already refuted stacked hero glass. This is a
+      different paint contour: selector invalidation of the card population
+      when the room changes, not overlapping backdrop sampling.`
+    next = `Spend projected-field and electrode ring on the charged terminal
+      or the active section, not on every frame. Keep the room token on html.`
+  }
+
+  [leak-d_phase_fanout] {
+    id = "ipc-015d"
+    contour = "schedule"
+    expression = phase[event]{hub.subscribers.pulse}<fanout>
+    claim = `One phase write notifies a subtree observer and three runtime
+      subscribers, then a timeout deletes the pulse attribute and notifies
+      them again.`
+    evidence = #[
+      `@dom_sync_hub ATTRIBUTE_FILTER includes data-spw-interaction-phase, so
+        writePhase schedules gesture-anatomy, learnability-ledger, and the
+        other hub tasks`,
+      `spw:interaction-phase listeners: charge-field.js (hops only),
+        pulse-beat-tuner.js, palette-treat-discovery.js`,
+      `pulse-beat-tuner already cached getComputedStyle on this path; that
+        leak is paid. The remaining fan-out is mutation and subscriber work`
+    ][reg=set]
+    why_likely = `ipc-010's F (subscriber fan-out) after U (the phase
+      transition). writePhase already coalesces same-phase. The pulse
+      write/delete is a second U the style engine also sees.`
+    next = `Count hub callbacks and subscriber work on a paced Tab before
+      touching the observer filter. Do not remove data-spw-interaction-phase
+      from the filter by guess.`
+  }
+
+  [leak-e_grain_and_chrome] {
+    id = "ipc-015e"
+    contour = "paint"
+    expression = residue[elsewhere]{grain.clearance}<not_tab>
+    claim = `Two large cycle clusters are real and not the Tab freeze.
+      Do not strip them to pay ipc-001.`
+    grain = `@grain_texture: 35 self-modulating multiplier declarations on
+      room/permeability/succession. Grain is deferred flourish; IACVT here
+      wastes computed-value work on hosts that opted into grain, and removing
+      the texture would violate this cache's opening do_not.`
+    chrome = `shell/chrome/header.css: 8 --spw-bottom-chrome-clearance
+      max(var(--self), N) floors. If those run during resize, they are a
+      candidate owner for ipc-014's unattributed 0.8 to 3.9s resize jitter
+      (queue q3), not for focus.`
+    layer_count = `foundation.css --spw-runtime-layer-count:
+      calc(var(--self, 2) + 1) cannot count layers; IACVT plus fallback
+      yields a constant. Arrival leak, not Tab.`
+    next = `Leave grain and chrome out of F. Reopen grain only with a dwell
+      raster trace; reopen chrome only with q3's resize timeline.`
+  }
+
+  refuse = `Do not implement from this block. Do not fold these leaks into E.
+    Do not add a data-spw-* family to instrument them. Do not remove
+    backdrop-filter, grain, or :has() kinship to hit a soft CSS budget.
+    Do not double-patch interaction CSS a concurrent session is already
+    splitting into step/gain channels.`
+  validation = `rg --glob '!**/bundles/**' -n
+    -- '--[a-z0-9-]+:\\s*(max|min|calc)\\(.*var\\(--' public/css.
+    Confirm a hit reads its own custom property, not a sibling channel.
+    node scripts/wonder.mjs --surface interaction-paint-cost.`
 }[reg=facet]
 
 #>ipc_wonder_transition_boundary
@@ -1014,6 +1247,19 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   $%[hero.overlapDepth, hero.affectedArea, raster.durationMs, composite.durationMs]
 }
 
+#>ipc_wonder_cycle_floor
+?["Do cyclic token floors pay attributable style cost on Tab?"]{
+  #:depth #!computational ~#lens(inquiry)
+  ~#with: @layout_squeeze
+  ~#hypothesis: "IACVT self-max on inheriting @property is invalidation, not a clamp."
+  ~#tension: "A literal floor can drop a real cross-selector raise; grain and chrome cycles are not this journey."
+  !probe{ "Compare html phase-weight floors against independent channels on paced Tab." }
+  !probe{ "Separate IACVT detection from inherited-property invalidation from descendant matching." }
+  !probe{ "Leave grain multipliers and chrome-clearance floors out of the first family." }
+  !probe{ "Reject if computed numbers or focus-ring taste move." }
+  $%[phase.weightWriteCount, style.recalcMs, layout.durationMs, inherit.invalidationCount]
+}
+
 #>ipc_wonder_lifecycle_cut
 ?["Which shell cut preserves a complete disclosure lifetime?"]{
   #:depth #!computational ~#lens(projection)
@@ -1047,7 +1293,9 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   decision = `Start ipc-013 candidate A with its compatibility probe. Candidates B-D
     require their named attribution receipt first. Cache a
     supported/refuted/inconclusive verdict before promoting a performance claim; a
-    local experiment need not wait for proof of its own outcome.`
+    local experiment need not wait for proof of its own outcome. E remains the JS
+    write candidate. ipc-015 F is the style-side follow-up and is not automatic
+    scope on E.`
 }[reg=facet]
 
 
@@ -1055,7 +1303,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   operation = "cache"
   fixity = "tending"
   status = `candidate A validated and landed; B, C and D gates measured and not
-    met; E named and unimplemented`
+    met; E named and unimplemented; F named from ipc-015 and unimplemented`
   expression = implementation[candidate]{baseline.patch.compare}<bounded>
     ^ receipt[decision]{compatibility.work.latency}<land>
   public_goal = `Repeated settings application avoids redundant root dataset mutations
@@ -1373,5 +1621,52 @@ expression = surface[cost]{focus.paint.attributes}<reading>
       consumer depends on an equal-value mutation as a refresh signal.`
     bounds = `Writers only. No change to annotation scope, no observer redesign, no
       new module and no re-annotation scheduling change in the first patch.`
+  }
+
+  [F_cycle_channels] {
+    operation = "align"
+    fixity = "experimental"
+    status = "named by ipc-015; not implemented"
+    gate = `F needs a source comparison and paired browser receipt before any
+      patch, exactly as A and E do. A census of cycles is not permission to
+      rewrite every floor.`
+    source = `2026-09-11: 206 self-var custom-property declarations in authored
+      CSS. layout-squeeze already replaced the --spw-squeeze cycle with
+      independent channels. The Tab-path remainder is the html
+      data-spw-interaction-phase floors in @interaction_progression_css, plus
+      local max() of --spw-interaction-phase-weight on variants, anatomy, and
+      search.`
+    hypothesis = `Splitting a cyclic floor into a base/gain/ceiling (or writing
+      the floor as a literal) preserves the computed number without IACVT.
+      Registered self-max currently computes to initial 0, so a literal floor
+      can also restore a raise that never landed. Same shape as the
+      layout-squeeze repair and as the in-tree step/gain split already started
+      on --spw-interaction-phase-tuning and --gesture-anatomy-opacity.`
+    design = `One family: html[data-spw-interaction-phase] rules in
+      @interaction_progression_css. Where a rule currently does
+      --spw-pre-state-visibility: max(var(--spw-pre-state-visibility, 0.5), 0.62)
+      write the literal 0.62, or a named --spw-pre-state-visibility-floor that
+      the computed token reads once. Do not keep a self-max. Leave grain
+      multipliers, chrome clearance, card-charge, and --spw-e-edge for later
+      families. Rebuild touched bundles.`
+    nutrition = `The inherited value is already in the bed. A literal floor is
+      PNSB; a self-max dumps it. Do not add a transition to hide the dump.`
+    topography = `Keep the repair in @interaction_progression_css. Do not mint
+      a cycle-audit sheet. layout-squeeze remains the example, not a new owner.`
+    taste_expectation = `Indistinguishable on the four ipc-011 journeys if only
+      IACVT is removed. A felt flattening means a floor was actually composing
+      across selectors and the literal dropped a real raise; trace that rather
+      than land it.`
+    separate = `leak-b (html inheriting @property) and leak-c (every-frame
+      restyle) are successor candidates. Do not fold writePhase, pulse
+      write/delete, or affordances descendant selectors into F.`
+    unknown = `Whether IACVT detection or the inherited computed value is the
+      attributable cost. Declaration counts are not latency.`
+    preflight = `Confirm no consumer interpolates the cyclic specified value as
+      a transition source. Inventory @property inherits flags for the first
+      family. Do not start this patch in files a concurrent session is already
+      splitting.`
+    bounds = `One token family, in place. No new module, no grain removal, no
+      html/body root ownership change, no descendant-selector rewrite in F.`
   }
 }[reg=facet]
