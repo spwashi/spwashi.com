@@ -10,7 +10,7 @@ import { supportsFinePointerHover } from '../../kernel/dom-contracts.js';
 import { bindInteractionHops, readHopHash } from './hops.js';
 import {
   GESTURE_TARGET_SELECTOR,
-  IMAGE_STATE_TO_PHASE,
+  phaseFromSpell,
   IN_PAGE_HOP_SELECTOR,
   SCROLL_RAIL_SELECTOR,
   phaseFromContractKind,
@@ -22,9 +22,11 @@ import {
 import { readMicrointeractionPulseMs } from '../pulse-beat-tuner.js';
 import { ensureInteractionProgressionStyles } from '../../kernel/deferred-styles.js';
 
+import { INTERACTION_HYSTERESIS } from './hysteresis.js';
+import { createPhaseQueue } from './phase-queue.js';
+
 const PHASE_EVENT = 'spw:interaction-phase';
-const SWIPE_DELTA_PX = 28;
-const SWIPE_COOLDOWN_MS = 420;
+const RAIL = INTERACTION_HYSTERESIS.rail;
 
 let initialized = false;
 let pulseTimer = null;
@@ -32,7 +34,7 @@ let currentPhase = 'idle';
 let swipeCooldown = 0;
 let lastCauldronCount = null;
 
-function writePhase(html, phase, detail = {}) {
+function commitPhase(html, phase, detail = {}) {
   if (!html || !phase) return;
   const next = phase === 'idle' && detail.source === 'blur' ? 'idle' : phase;
   if (next === currentPhase && !detail.force) return;
@@ -60,7 +62,7 @@ function readImagePhase(target) {
   if (!(target instanceof HTMLElement)) return '';
   const figure = target.closest('[data-spw-image-interaction-state]');
   if (!figure) return '';
-  return IMAGE_STATE_TO_PHASE[figure.dataset.spwImageInteractionState] || '';
+  return phaseFromSpell(figure.dataset.spwImageInteractionState, 'image_state');
 }
 
 function readGesturePhase(target) {
@@ -89,32 +91,20 @@ function readGestureContractHost(target) {
   return target.closest('[data-spw-gesture-contract]');
 }
 
-// 'settle' is the top of the phase ladder and the ecology drives it shortly
-// after load, so strongestPhase(currentPhase='settle', …) would pin every later
-// hover/focus/gesture at 'settle' and silently swallow its microinteraction.
-// 'settle' is a *resting* terminal, not a live peak: a fresh interaction is
-// allowed to begin a new arc from it, which keeps the interaction-reward
-// contract (no silent absorption) after the page has settled.
-const RESTING_PHASES = new Set(['idle', 'settle']);
-
-function bumpPhase(html, candidate, detail = {}) {
-  if (!candidate) return;
-  const baseline = RESTING_PHASES.has(currentPhase) ? 'idle' : currentPhase;
-  writePhase(html, strongestPhase(baseline, candidate), detail);
-}
-
 export function initInteractionProgression(root = document) {
   if (initialized) return () => {};
-  initialized = true;
-  ensureInteractionProgressionStyles();
-
   const html = document.documentElement;
   if (!html) return () => {};
+  initialized = true;
+  ensureInteractionProgressionStyles();
   const controller = new AbortController();
   const { signal } = controller;
   const supportsHover = supportsFinePointerHover(window);
 
-  writePhase(html, 'idle', { source: 'boot', force: true });
+  const phases = createPhaseQueue(() => currentPhase, commitPhase);
+  const writePhase = phases.write;
+  const bumpPhase = phases.bump;
+  commitPhase(html, 'idle', { source: 'boot', force: true });
   const hops = bindInteractionHops({ html, root, writePhase, signal });
 
   const onImageLens = (event) => {
@@ -216,79 +206,86 @@ export function initInteractionProgression(root = document) {
   };
 
   const onPinchAttr = () => {
-    if (html.dataset.spwPinchScaling === 'true' || root.body?.dataset.spwPinchScaling === 'true') {
+    if (html.dataset.spwPinchScaling === 'true' || root?.body?.dataset.spwPinchScaling === 'true') {
       writePhase(html, 'approach', { source: 'pinch-scale', force: true });
     }
   };
 
-  const onLoopOrGestureAttr = (records) => {
-    let phase = '';
-    records.forEach((record) => {
-      if (record.type !== 'attributes') return;
-      if (record.attributeName === 'data-spw-gesture') {
-        const mapped = phaseFromGesture(record.target?.dataset?.spwGesture);
-        if (mapped) phase = strongestPhase(phase, mapped);
-        return;
-      }
-      if (record.attributeName === 'data-spw-loop-state') {
-        const mapped = phaseFromLoopState(record.target?.dataset?.spwLoopState);
-        if (mapped) phase = strongestPhase(phase, mapped);
-      }
-    });
-    if (phase) bumpPhase(html, phase, { source: 'gesture-or-loop-state', force: true });
-  };
-
-  const gestureObserver = typeof MutationObserver === 'function'
-    ? new MutationObserver(onLoopOrGestureAttr)
-    : null;
-
-  const targetNode = root?.body || html;
-  if (gestureObserver && targetNode && targetNode.nodeType === 1) {
-    gestureObserver.observe(targetNode, {
-      attributes: true,
-      attributeFilter: ['data-spw-gesture', 'data-spw-loop-state'],
-      subtree: true,
-    });
-  }
-
-  const pinchObserver = typeof MutationObserver === 'function'
-    ? new MutationObserver(onPinchAttr)
-    : null;
-
-  if (pinchObserver && html && html.nodeType === 1) {
-    pinchObserver.observe(html, { attributes: true, attributeFilter: ['data-spw-pinch-scaling'] });
-  }
-  if (pinchObserver && root?.body && root.body.nodeType === 1) {
-    pinchObserver.observe(root.body, { attributes: true, attributeFilter: ['data-spw-pinch-scaling'] });
-  }
-
-  const imageObserver = typeof MutationObserver === 'function'
+  const interactionObserver = typeof MutationObserver === 'function'
     ? new MutationObserver((records) => {
-      records.forEach((record) => {
-        if (record.type !== 'attributes' || record.attributeName !== 'data-spw-image-interaction-state') return;
-        const figure = record.target;
-        if (!(figure instanceof HTMLElement)) return;
-        const mapped = IMAGE_STATE_TO_PHASE[figure.dataset.spwImageInteractionState];
-        if (mapped) writePhase(html, mapped, { source: 'image-state', force: true });
-      });
+      const targets = new Map();
+      for (const record of records) {
+        if (record.type !== 'attributes') continue;
+        if (!targets.has(record.attributeName)) targets.set(record.attributeName, new Set());
+        targets.get(record.attributeName).add(record.target);
+      }
+      if (targets.has('data-spw-pinch-scaling')) onPinchAttr();
+      let imagePhase = '';
+      for (const target of targets.get('data-spw-image-interaction-state') || []) {
+        imagePhase = strongestPhase(imagePhase, phaseFromSpell(target.dataset.spwImageInteractionState, 'image_state'));
+      }
+      if (imagePhase) writePhase(html, imagePhase, { source: 'image-state', force: true });
+      let phase = '';
+      for (const target of targets.get('data-spw-gesture') || []) {
+        phase = strongestPhase(phase, phaseFromGesture(target.dataset.spwGesture));
+      }
+      for (const target of targets.get('data-spw-loop-state') || []) {
+        phase = strongestPhase(phase, phaseFromLoopState(target.dataset.spwLoopState));
+      }
+      if (phase) bumpPhase(html, phase, { source: 'gesture-or-loop-state', force: true });
+      if (records.some(record => record.type === 'childList')) syncVocabulary();
     })
     : null;
 
-  const observeImages = () => {
-    const target = typeof root?.querySelectorAll === 'function' ? root : (typeof document !== 'undefined' ? document : null);
-    if (!target) return;
-    target.querySelectorAll('[data-spw-image-interaction-state]').forEach((node) => {
-      imageObserver?.observe(node, { attributes: true, attributeFilter: ['data-spw-image-interaction-state'] });
-    });
+  // Subtree observation already covers images inserted after mount.
+  interactionObserver?.observe(html, {
+    attributes: true,
+    childList: true,
+    subtree: true,
+    attributeFilter: [
+      'data-spw-gesture', 'data-spw-loop-state',
+      'data-spw-pinch-scaling', 'data-spw-image-interaction-state',
+    ],
+  });
+
+  // Hover and keyboard focus can coexist; leaving one must preserve the other.
+  const vocabularySelector = '[data-spw-vocabulary-term]';
+  let hoveredVocabulary = null;
+  const vocabularyHost = (target) => target instanceof Element ? target.closest(vocabularySelector) : null;
+  const syncVocabulary = () => {
+    const focused = document.activeElement;
+    const engaged = Boolean(hoveredVocabulary?.isConnected
+      || (vocabularyHost(focused) && focused.matches(':focus-visible')));
+    if (engaged) {
+      if (html.dataset.spwVocabularyHover !== 'true') html.dataset.spwVocabularyHover = 'true';
+    } else if (html.hasAttribute('data-spw-vocabulary-hover')) {
+      delete html.dataset.spwVocabularyHover;
+    }
   };
-
-  observeImages();
-
-  const domObserver = typeof MutationObserver === 'function'
-    ? new MutationObserver(observeImages)
-    : null;
-
-  domObserver?.observe(root.body || html, { childList: true, subtree: true });
+  const onVocabularyPointerOver = (event) => {
+    if (!supportsHover || event.pointerType === 'touch') return;
+    hoveredVocabulary = vocabularyHost(event.target);
+    syncVocabulary();
+  };
+  const onVocabularyPointerOut = (event) => {
+    if (!supportsHover || event.pointerType === 'touch') return;
+    hoveredVocabulary = vocabularyHost(event.relatedTarget);
+    syncVocabulary();
+  };
+  const onVocabularyFocus = () => queueMicrotask(() => {
+    if (!signal.aborted) syncVocabulary();
+  });
+  const onWindowBlur = () => {
+    hoveredVocabulary = null;
+    delete html.dataset.spwVocabularyHover;
+  };
+  document.addEventListener('pointerover', onVocabularyPointerOver, { signal, passive: true });
+  document.addEventListener('pointerout', onVocabularyPointerOut, { signal, passive: true });
+  document.addEventListener('focusin', onVocabularyFocus, { signal });
+  document.addEventListener('focusout', onVocabularyFocus, { signal });
+  window.addEventListener('blur', onWindowBlur, { signal });
+  window.addEventListener('focus', onVocabularyFocus, { signal });
+  syncVocabulary();
 
   const swipeState = new WeakMap();
 
@@ -309,17 +306,17 @@ export function initInteractionProgression(root = document) {
     if (!rail) return;
     const start = swipeState.get(rail);
     swipeState.delete(rail);
-    if (!start) return;
+    if (!start || event.type === 'pointercancel') return;
 
     const dx = event.clientX - start.x;
     const dy = event.clientY - start.y;
     const scrollDelta = rail.scrollLeft - start.scrollLeft;
     const moved = Math.abs(dx) > Math.abs(dy)
-      && (Math.abs(dx) > SWIPE_DELTA_PX || Math.abs(scrollDelta) > SWIPE_DELTA_PX);
+      && (Math.abs(dx) > RAIL.minDeltaPx || Math.abs(scrollDelta) > RAIL.minDeltaPx);
 
     if (!moved) return;
     const now = Date.now();
-    if (now - swipeCooldown < SWIPE_COOLDOWN_MS) return;
+    if (now - swipeCooldown < RAIL.cooldownMs) return;
     const swipeHost = event.target instanceof Element
       ? event.target.closest('[data-spw-gesture-contract*="swipe:"]')
       : null;
@@ -375,6 +372,7 @@ export function initInteractionProgression(root = document) {
       force: true,
     });
     window.setTimeout(() => {
+      if (signal.aborted) return;
       if (html?.dataset?.spwLayoutSelectionPulse === nextTuner) {
         delete html.dataset.spwLayoutSelectionPulse;
       }
@@ -407,10 +405,11 @@ export function initInteractionProgression(root = document) {
   onPinchAttr();
 
   controller.signal.addEventListener('abort', () => {
-    gestureObserver?.disconnect();
-    pinchObserver?.disconnect();
-    imageObserver?.disconnect();
-    domObserver?.disconnect();
+    interactionObserver?.disconnect();
+    phases.clear();
+    hoveredVocabulary = null;
+    delete html.dataset.spwVocabularyHover;
+    swipeCooldown = 0;
     if (pulseTimer) window.clearTimeout(pulseTimer);
     pulseTimer = null;
     delete html.dataset.spwInteractionPhase;
@@ -428,7 +427,7 @@ export { INTERACTION_PHASES } from './vocabulary.js';
 
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'interaction-progression',
-  updates: Object.freeze(['attr:data-spw-interaction-phase', 'attr:data-spw-microinteraction-pulse']),
+  updates: Object.freeze(['attr:data-spw-interaction-phase', 'attr:data-spw-microinteraction-pulse', 'attr:data-spw-vocabulary-hover']),
   mount: (ctx, root) => initInteractionProgression(root),
 });
 

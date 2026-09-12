@@ -11,15 +11,9 @@ import {
   splitOperatorExpression,
 } from '/public/js/kernel/shared.js';
 
-export const INTERACTION_PHASES = Object.freeze([
-  'idle',
-  'approach',
-  'prime',
-  'charge',
-  'inspect',
-  'discover',
-  'settle',
-]);
+import { PHASE_ARC } from './arc-taxonomy.js';
+
+export const INTERACTION_PHASES = PHASE_ARC.states;
 
 export const GESTURE_TO_INTERACTION_PHASE = Object.freeze({
   neutral: 'idle',
@@ -90,28 +84,41 @@ export const IN_PAGE_HOP_SELECTOR = [
 
 export const SCROLL_RAIL_SELECTOR = '[data-spw-scroll-rail], .spw-visual-link-board__grid, .frame-grid--media';
 
+const SPELLBOOKS = Object.freeze({
+  gesture: GESTURE_TO_INTERACTION_PHASE,
+  image_state: IMAGE_STATE_TO_PHASE,
+  loop_state: LOOP_STATE_TO_PHASE,
+  verb: GESTURE_VERB_TO_PHASE,
+  contract: INTERACTION_CONTRACT_HINTS,
+});
+
+export function phaseFromSpell(input = '', type = 'gesture') {
+  const book = Object.hasOwn(SPELLBOOKS, type) ? SPELLBOOKS[type] : null;
+  const key = String(input || '').trim().toLowerCase();
+  return book && Object.hasOwn(book, key) ? book[key] : '';
+}
+
 export function phaseFromGesture(gesture = '') {
-  return GESTURE_TO_INTERACTION_PHASE[gesture] || '';
+  return phaseFromSpell(gesture, 'gesture');
 }
 
 export function phaseFromInteractionContract(contract = '') {
-  const key = String(contract || '').trim().toLowerCase();
-  return INTERACTION_CONTRACT_HINTS[key] || '';
+  return phaseFromSpell(contract, 'contract');
 }
 
 export function phaseFromLoopState(state = '') {
-  return LOOP_STATE_TO_PHASE[String(state || '').trim().toLowerCase()] || '';
+  return phaseFromSpell(state, 'loop_state');
 }
 
 export function phaseFromGestureContract(contract = '', verb = '') {
   const normalizedVerb = String(verb || '').trim().toLowerCase();
-  if (normalizedVerb) return GESTURE_VERB_TO_PHASE[normalizedVerb] || '';
+  if (normalizedVerb) return phaseFromSpell(normalizedVerb, 'verb');
 
   const tokens = String(contract || '').trim().toLowerCase().split(/\s+/);
   let phase = '';
   tokens.forEach((token) => {
     const [, mappedVerb] = token.split(':');
-    const mapped = GESTURE_VERB_TO_PHASE[mappedVerb || token];
+    const mapped = phaseFromSpell(mappedVerb || token, 'verb');
     if (mapped) phase = strongestPhase(phase || 'idle', mapped);
   });
   return phase;
@@ -128,9 +135,9 @@ export function phaseFromContractKind(contract = '', kind = 'tap') {
     .toLowerCase()
     .split(/\s+/)
     .find((part) => part.startsWith(prefix));
-  if (!token) return GESTURE_VERB_TO_PHASE[kind] || '';
+  if (!token) return phaseFromSpell(kind, 'verb');
   const verb = token.slice(prefix.length);
-  return GESTURE_VERB_TO_PHASE[verb] || GESTURE_VERB_TO_PHASE[kind] || '';
+  return phaseFromSpell(verb, 'verb') || phaseFromSpell(kind, 'verb');
 }
 
 

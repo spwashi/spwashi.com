@@ -10319,44 +10319,45 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 
 /* Operator palette resonance for floating section handles */
 :where(.spw-section-handle, .spw-section-handle-shell) {
-  --active-op-color: var(--semantic-accent, var(--spw-shell-chrome-accent, var(--teal, #008080)));
+  --active-op-color: var(--spw-handle-base-op-color);
+  --spw-handle-base-op-color: var(--semantic-accent, var(--spw-shell-chrome-accent, var(--teal, #008080)));
 }
 :where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="?"], [data-spw-handle-op="probe"], [data-spw-operator="probe"]) {
-  --active-op-color: var(--op-probe-color, #7a4fb5);
+  --spw-handle-base-op-color: var(--op-probe-color, #7a4fb5);
 }
 :where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="#>"], [data-spw-handle-op="frame"], [data-spw-operator="frame"]) {
-  --active-op-color: var(--op-frame-color, var(--teal, #008080));
+  --spw-handle-base-op-color: var(--op-frame-color, var(--teal, #008080));
 }
 :where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="^"], [data-spw-handle-op="object"], [data-spw-operator="object"]) {
-  --active-op-color: var(--op-object-color, var(--amber, #c07a1e));
+  --spw-handle-base-op-color: var(--op-object-color, var(--amber, #c07a1e));
 }
 :where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="~"], [data-spw-handle-op="ref"], [data-spw-operator="ref"]) {
-  --active-op-color: var(--op-ref-color, var(--blue, #2d68c4));
+  --spw-handle-base-op-color: var(--op-ref-color, var(--blue, #2d68c4));
 }
 :where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="@"], [data-spw-handle-op="action"], [data-spw-operator="action"]) {
-  --active-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f));
+  --spw-handle-base-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f));
 }
 :where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="<"], [data-spw-handle-op="topic"], [data-spw-operator="topic"]) {
-  --active-op-color: var(--op-topic-color, #227c67);
+  --spw-handle-base-op-color: var(--op-topic-color, #227c67);
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="model"],
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="framing"] {
-  --active-op-color: var(--op-frame-color, var(--teal, #008080));
+  --spw-handle-base-op-color: var(--op-frame-color, var(--teal, #008080));
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="entry"] {
-  --active-op-color: var(--op-topic-color, #227c67);
+  --spw-handle-base-op-color: var(--op-topic-color, #227c67);
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="memory"] {
-  --active-op-color: var(--op-ref-color, var(--blue, #2d68c4));
+  --spw-handle-base-op-color: var(--op-ref-color, var(--blue, #2d68c4));
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="record"] {
-  --active-op-color: var(--op-object-color, var(--amber, #c07a1e));
+  --spw-handle-base-op-color: var(--op-object-color, var(--amber, #c07a1e));
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="practice"] {
-  --active-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f));
+  --spw-handle-base-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f));
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="spell"] {
-  --active-op-color: var(--op-probe-color, #7a4fb5);
+  --spw-handle-base-op-color: var(--op-probe-color, #7a4fb5);
 }
 
 .spw-section-handle,
@@ -10637,13 +10638,14 @@ html[data-spw-reduce-motion="on"] .spw-section-handle-shell[data-spw-cauldron-re
    - The handle becomes more "alive" and context-sensitive when near primable vocabulary terms
      or active wonder/resonance states (ties directly to recent interactive vocabulary work).
    - Supports page-specific attentional rhythm and cathartic, playful discovery.
-   - Modern, performant: attribute-driven, no new observers. */
-body:has([data-spw-vocabulary-term]:hover, [data-spw-vocabulary-term]:focus-visible) .spw-section-handle,
-body:has([data-spw-wonder-state]:not([data-spw-wonder-state=""])) .spw-section-handle {
-  --active-op-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 15%, var(--op-probe-color, #6a3fb8));
+   - Vocabulary hover/focus is delegated by interaction progression.
+   - Blend from the base palette: self-reference invalidates custom properties. */
+html[data-spw-vocabulary-hover="true"] :is(.spw-section-handle, .spw-section-handle-shell),
+body:has([data-spw-wonder-state]:not([data-spw-wonder-state=""])) :is(.spw-section-handle, .spw-section-handle-shell) {
+  --active-op-color: color-mix(in srgb, var(--spw-handle-base-op-color, var(--teal, #008080)) 15%, var(--op-probe-color, #6a3fb8));
 }
 
-body:has([data-spw-vocabulary-term]:hover, [data-spw-vocabulary-term]:focus-visible) .spw-section-handle-shell::after,
+html[data-spw-vocabulary-hover="true"] .spw-section-handle-shell::after,
 body:has([data-spw-wonder-state]:not([data-spw-wonder-state=""])) .spw-section-handle-shell::after {
   opacity: 1;
   box-shadow:

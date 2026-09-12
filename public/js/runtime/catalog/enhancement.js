@@ -1341,6 +1341,7 @@ export const ENHANCEMENT_DEFS = [
     updates: [
       'structural:data-spw-interaction-phase',
       'flourish:data-spw-microinteraction-pulse',
+      'flourish:data-spw-vocabulary-hover',
     ],
     evaluates: 'gesture loop pinch swipe hover tap image ecology interaction-vocabulary',
     timingArc: 'visible-phase',

@@ -7,7 +7,6 @@
 
 import { normalizeText, normalizeToken, unique } from '/public/js/semantic/semantic-utils.js';
 import {
-  INTERACTION_CONTRACT_HINTS,
   phaseFromGestureContract,
   phaseFromInteractionContract,
 } from '/public/js/runtime/interaction/vocabulary.js';
@@ -236,7 +235,7 @@ export function inferInteractionAffordances(el, snapshotBase = {}) {
   }
 
   const interactionContract = snapshotBase.interactionContract || inferInteractionContract(el, snapshotBase);
-  if (interactionContract && INTERACTION_CONTRACT_HINTS[interactionContract.toLowerCase()]) {
+  if (phaseFromInteractionContract(interactionContract)) {
     affordances.push('contract-navigate');
   }
 

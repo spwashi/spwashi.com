@@ -31,6 +31,7 @@
 @skill_invocation: ~"./skill-invocation.spw"  # operation is the lens; focuses are emphases; #roles write-deny; #shunt is the word-budget block
 @agent_ecology: ~"./agent-ecology.spw"  # #harness roles + sensors + host write-deny; no ASTRA.md
 @language_ecology: ~"./language-ecology.spw"  # dispatch: v04 grammar, reclustering, homonym renames, attribute governance
+@interaction_cache: ~"./interaction-cache.spw"
 @interaction_ecology: ~"./interaction-ecology.spw"  # dispatch: interaction feedback, gestures, chrome disclosure, floating islands
 @capture_ecology: ~"./capture-ecology.spw"  # dispatch: screenshot literacy, spell authoring, media seeds
 @wip_notebook: ~"./wip-notebook.spw"

@@ -1,0 +1,134 @@
+# Interaction Cache
+#
+# One hysteresis config, one gesture grammar, one arc taxonomy. Shell,
+# swipe, locomotion, and loop already agree in behavior; this names the
+# single source each should read from instead of restating itself.
+
+#>interaction_cache
+#:convention #!runtime #!interaction #!performance
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/interaction-cache/PLAN.md"
+@hysteresis_config: ~"../../public/js/runtime/interaction/hysteresis.js"
+@arc_taxonomy: ~"../../public/js/runtime/interaction/arc-taxonomy.js"
+@phase_queue: ~"../../public/js/runtime/interaction/phase-queue.js"
+@progression: ~"../../public/js/runtime/interaction/progression.js"
+@vocabulary: ~"../../public/js/runtime/interaction/vocabulary.js"
+@hops: ~"../../public/js/runtime/interaction/hops.js"
+@loop: ~"../../public/js/runtime/interaction/loop.js"
+@story: ~"../../public/js/runtime/interaction/story.js"
+@component_packing: ~"./component-packing.spw"
+@charge_cycle: ~"./charge-cycle.spw"
+@attention_field: ~"./attention-field.spw"
+@spatial_bands: ~"../../public/js/kernel/spatial-bands.js"
+@section_context_css: ~"../../public/css/shell/chrome/section-context.css"
+
+operation = "align"
+fixity = "tending"
+
+^"thesis"{
+  claim = `A gesture, a loop state, a swipe, and a container-query edge are the same shape: a threshold crossed with memory of which side you came from. Spread across five lookup tables and two hard-coded deltas, that shape is invisible; named once, it is greppable.`
+  expression = gesture[hysteresis]{threshold, memory}<phase>
+  !anti = `Do not add a sixth lookup table or a third swipe delta to solve a phase-mapping gap. Extend the existing spellbook or arc; a new private table is the defect this file exists to name.`
+}[reg=facet]
+
+^"single_source_of_truth"{
+  rule = `Every gesture→phase, verb→phase, and state→phase mapping lives in one spellbook. Every swipe/cooldown/deadband constant lives in one hysteresis config. Every state machine (phase, loop, section) is one arc definition, not an implicit shape reconstructed per reader. PHASE_ARC and LOOP_ARC own fixed states; arcNeighborIndex traverses the live landmark/header list.`
+  symptom = `Before alignment, @progression read SWIPE_DELTA_PX=28; @hops read a same-named constant at 48. Same name, two truths, no comment explaining the gap — the next reader assumes a bug.`
+  fix = `Name the gap: rail swipes and landmark hops are different gestures with different cost of a false positive. One config, two keys, one sentence each explaining why they differ.`
+}[reg=facet]
+
+^"hysteresis"{
+  swipe = .{
+    min_delta_px = 28
+    direction = "horizontal motion dominates vertical motion; no fixed vertical cap"
+    cooldown_ms = 420
+    why = `Rail swipe is low-stakes (reveals adjacent content); 28px is thumb error margin, not deliberate-gesture margin.`
+  }[reg=facet]
+  landmark = .{
+    min_delta_px = 48
+    lock_ms = 90
+    why = `Page/section hop can lose scroll position; 1.7x the rail threshold requires a gesture a rail-swipe wouldn't produce by accident.`
+  }[reg=facet]
+  layout = .{
+    band_edge_deadband_ratio = 0.08
+    direction = "held in either direction until the edge clears by 8%"
+    precedent = `@component_packing#packing_laws_2026_08_31.deadband_when_self_driving already names this: a state whose remedy changes its own trigger needs a deadband held in the direction of travel. @spatial_bands is the one runtime holder of BAND_HYSTERESIS; this facet is the cross-reference, not a second copy.`
+  }[reg=facet]
+  phase = .{
+    settle_min_ms = 120
+    charge_max_ms = 2000
+    note = `Documented, not yet enforced. @arc_taxonomy's PHASE_ARC.resting (idle, settle) already gates restart; a timed deadband is the next increment, not a prerequisite.`
+  }[reg=facet]
+  ~#open: "Velocity-aware swipe, a vertical cap, settle_min_ms, and charge_max_ms remain proposals. Runtime config contains only values currently consumed; changing gesture feel needs a separate measured decision."
+}[reg=facet]
+
+^"gesture_grammar"{
+  claim = `Five spellbooks, one reader. Each table keeps its own vocabulary (gesture, image state, loop state, verb, contract); phaseFromSpell(input, type) is the single lookup path all five share.`
+  books = #[
+    `gesture — neutral/active/charging/armed/sustained/projecting/committed (hardware-level pointer state)`,
+    `image_state — idle/primed/inspecting/lensed/discovered (data-spw-image-interaction-state)`,
+    `loop_state — idle/preview/activated/resolved (@loop's INTERACTION_LOOP_CONTRACT)`,
+    `verb — prime/inspect/discover/charge/navigate/tap/swipe/cycle/... (data-spw-gesture, contract tokens)`,
+    `contract — multi-verb strings like "tap ground navigate" (data-spw-interaction-contract)`
+  ][reg=set]
+  why_preview_is_prime = `loop_state.preview → 'prime', not 'approach'. approach is passive noticing; preview is active review of a shown option with no committed cost yet. The distinction is the whole reason a sixth table isn't needed for "almost-committed" states.`
+  contract_kind_reader = `phaseFromContractKind(contract, kind) extracts the verb for one kind ("swipe:cycle" inside "tap:navigate swipe:cycle") and falls back to treating kind itself as a verb when no matching token exists. One function, not one per kind.`
+  !anti = `Do not encode a new gesture as a bare string comparison inside @progression. Add one entry to the matching spellbook; the reader function does not change.`
+}[reg=facet]
+
+^"arc_taxonomy"{
+  phase_arc = .{
+    states = #[`idle`, `approach`, `prime`, `charge`, `inspect`, `discover`, `settle`][reg=set]
+    entry = "idle"
+    rest = "settle"
+    resting = #[`idle`, `settle`][reg=set]
+    note = `settle is a resting terminal, not a live peak — @phase_queue restarts only from a committed resting phase. A fresh interaction restarts the arc from settle rather than latching there.`
+  }[reg=facet]
+  loop_arc = .{
+    states = #[`idle`, `preview`, `activated`, `resolved`][reg=set]
+    entry = "idle"
+    rest = "idle"
+    forward = "idle → preview → activated → resolved → idle"
+  }[reg=facet]
+  section_arc = .{
+    states = "dynamic — landmark set read from the DOM, not enumerated here"
+    entry = "first live landmark"
+    rest = "current landmark; boundaries clamp, header rooms wrap"
+    neighbors = "prev/next/top/bottom computed from position in the live landmark list; @hops already owns this computation and does not need a static state list."
+  }[reg=facet]
+  relation = `Three arcs, one shape (states, entry, rest, resting-or-neighbor function). Naming them as siblings is what lets a future arc — voice, AR gaze, whatever locomotion comes next — reuse the same traversal helpers instead of writing a fourth bespoke state machine.`
+}[reg=facet]
+
+^"write_budget"{
+  claim = `Progression batches phase and pulse writes before dispatch. This bounds writes per microtask batch, not per entire physical interaction across asynchronous events.`
+  before = `Four MutationObservers: gestures/loops, pinch, image state, and image discovery after DOM insertion.`
+  after = `One subtree MutationObserver with four filtered attributes. Inserted images are covered without rescanning or a separate child-list observer; child-list records only clear detached vocabulary focus/hover. Repeated records are deduplicated by attribute and target; image and gesture phases reduce to the strongest candidate.`
+  mechanism = `@phase_queue allows MutationObserver delivery to join an event's pending write before commit. Direct writes reset pending phase; bumps accumulate. A committed idle/settle starts a new arc, while a pending settle belongs to the current batch. Teardown cancels pending work.`
+  evidence = `The earlier 12–18/3–4 write counts and 180–240/80–120ms style timings had no trace attached and are withdrawn. Tests verify batch counts and lifecycle behavior; wall-clock improvement requires a Performance recording.`
+}[reg=facet]
+
+^"shell_resonance"{
+  claim = `Operator and consequence colors follow section state and inherited theme tokens. CSS remains their owner; progression does not duplicate the palette or read computed styles per phase.`
+  implementation = `Delegated pointer and focus listeners write data-spw-vocabulary-hover="true" on html while a vocabulary term is hovered or keyboard-focused. This is an explicit projection within the existing vocabulary family. Cleanup removes the projection; a fine-pointer gate excludes touch hover.`
+  design = `The handle blends from --spw-handle-base-op-color into --active-op-color. This removes a self-referencing custom-property cycle and applies the same tint to fallback and enhanced handles. Region-relation buttons retain their own colors.`
+  boundary = `Only vocabulary hover/focus :has() selectors are replaced. The independent wonder-state selector remains CSS-owned. No timing gain is asserted from selector shape alone.`
+}[reg=facet]
+
+^"validation"{
+  thresholds = "hysteresis.js preserves rail 28px/420ms and landmark 48px/90ms; layout re-exports kernel BAND_HYSTERESIS rather than copying it"
+  spellbook = "phaseFromSpell reads all five books; existing public helper exports delegate to it"
+  arcs = "PHASE_ARC and LOOP_ARC define fixed states; live landmark/header order uses arcNeighborIndex"
+  observer = "one filtered subtree observer in progression; no separate observer or rescan for discovering inserted images"
+  projection = "data-spw-vocabulary-hover is declared in progression exports and catalog updates; CSS consumes it"
+  regressions = "scripts/tests/interaction-story.test.mjs; scripts/check-interaction-cache.mjs"
+  checks = "node --check each edited JS module; npm run check:local; npm run visual:checks -- --ids=home-living-term-note"
+}[reg=facet]
+
+^"dispatch"{
+  @component_packing: ~"./component-packing.spw#packing_laws_2026_08_31"
+  @charge_cycle: ~"./charge-cycle.spw#phase_machine"
+  @attention_field: ~"./attention-field.spw"
+}[reg=facet]

@@ -182,6 +182,7 @@
 @region_component_ecology: ~"./conventions/region-component-ecology.spw"
 @copy_ecology: ~"./conventions/copy-ecology.spw"
 @language_ecology: ~"./conventions/language-ecology.spw"
+@interaction_cache: ~"./conventions/interaction-cache.spw"
 @interaction_ecology: ~"./conventions/interaction-ecology.spw"
 @capture_ecology: ~"./conventions/capture-ecology.spw"
 @projection_attenuation: ~"./conventions/projection-attenuation.spw"

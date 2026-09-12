@@ -3,6 +3,8 @@
  * Writes existing loop-state / aria-current; progression owns the phase pulse.
  */
 import { IN_PAGE_HOP_SELECTOR } from './vocabulary.js';
+import { INTERACTION_HYSTERESIS } from './hysteresis.js';
+import { arcNeighborIndex } from './arc-taxonomy.js';
 
 export const SECTION_TRAVEL_SOURCES = Object.freeze(new Set([
   'prev',
@@ -20,8 +22,7 @@ export const SECTION_TRAVEL_SOURCES = Object.freeze(new Set([
 
 const LANDMARK_CONTRACT = 'tap:travel swipe:cycle';
 const HEADER_CONTRACT = 'tap:open swipe:cycle';
-const SWIPE_DELTA_PX = 48;
-const HOP_LOCK_MS = 90;
+const LANDMARK = INTERACTION_HYSTERESIS.landmark;
 const HEADER_SELECTOR = '.site-header, body > header';
 
 function isElement(node) {
@@ -69,7 +70,7 @@ export function resolveHeaderRoomHop({
   if (direction !== 1 && direction !== -1) return null;
   if (!Array.isArray(hrefs) || hrefs.length < 2) return null;
   const from = currentIndex >= 0 ? currentIndex : 0;
-  const next = (from + direction + hrefs.length) % hrefs.length;
+  const next = arcNeighborIndex(hrefs, from, direction, { wrap: true });
   if (next === from) return null;
   return { href: hrefs[next], index: next };
 }
@@ -120,7 +121,7 @@ function cycleLandmarkNav(nav, direction = 1) {
   if (links.length < 2) return '';
   const current = links.findIndex((link) => link.getAttribute('aria-current') === 'location');
   const from = current >= 0 ? current : 0;
-  const next = Math.max(0, Math.min(links.length - 1, from + direction));
+  const next = arcNeighborIndex(links, from, direction);
   if (next === from && current >= 0) return '';
   return landmarkHashFromHref(links[next].getAttribute('href') || '');
 }
@@ -138,7 +139,7 @@ export function bindInteractionHops({ html, root = document, writePhase, signal 
 
   const hop = (source, hash = '') => {
     const now = Date.now();
-    if (now - hopCooldown < HOP_LOCK_MS) return;
+    if (now - hopCooldown < LANDMARK.lockMs) return;
     hopCooldown = now;
     if (typeof hopsPhaseWriter === 'function') {
       hopsPhaseWriter(html, hash ? 'discover' : 'settle', { source, hash, force: true });
@@ -170,14 +171,14 @@ export function bindInteractionHops({ html, root = document, writePhase, signal 
     if (!nav) return;
     const start = swipeState.get(nav);
     swipeState.delete(nav);
-    if (!start) return;
+    if (!start || event.type === 'pointercancel') return;
     const dx = (event.clientX || 0) - start.x;
     const dy = (event.clientY || 0) - start.y;
-    if (Math.abs(dx) < SWIPE_DELTA_PX || Math.abs(dx) < Math.abs(dy)) return;
+    if (Math.abs(dx) < LANDMARK.minDeltaPx || Math.abs(dx) < Math.abs(dy)) return;
     const hash = cycleLandmarkNav(nav, dx < 0 ? 1 : -1);
     if (!hash) return;
     event.preventDefault();
-    nav.addEventListener('click', (clickEvent) => clickEvent.preventDefault(), { once: true, capture: true });
+    nav.addEventListener('click', (clickEvent) => clickEvent.preventDefault(), { once: true, capture: true, signal });
     const nextHash = `#${hash}`;
     if (window.location.hash === nextHash) {
       hop('landmark-swipe', hash);
@@ -221,11 +222,11 @@ export function bindInteractionHops({ html, root = document, writePhase, signal 
   const onHeaderPointerUp = (event) => {
     const start = headerSwipe;
     headerSwipe = null;
-    if (!start?.header) return;
+    if (!start?.header || event.type === 'pointercancel') return;
     const header = start.header;
     const dx = (event.clientX || 0) - start.x;
     const dy = (event.clientY || 0) - start.y;
-    if (Math.abs(dx) < SWIPE_DELTA_PX || Math.abs(dx) < Math.abs(dy)) return;
+    if (Math.abs(dx) < LANDMARK.minDeltaPx || Math.abs(dx) < Math.abs(dy)) return;
     const intent = resolveHeaderRoomHop({
       direction: dx < 0 ? 1 : -1,
       menuOpen: header.getAttribute('data-spw-menu') === 'open',
@@ -244,7 +245,7 @@ export function bindInteractionHops({ html, root = document, writePhase, signal 
       if (dest) return;
       clickEvent.preventDefault();
       clickEvent.stopPropagation();
-    }, { once: true, capture: true });
+    }, { once: true, capture: true, signal });
     hop('header-swipe', intent.href);
     if (room instanceof HTMLAnchorElement) {
       room.click();
@@ -292,6 +293,12 @@ export function bindInteractionHops({ html, root = document, writePhase, signal 
   document.addEventListener('pointercancel', onHeaderPointerUp, { signal, capture: true });
   document.addEventListener('keydown', onHeaderKeydown, { signal });
 
+  signal?.addEventListener('abort', () => {
+    headerSwipe = null;
+    hopsBound = false;
+    hopsPhaseWriter = null;
+    hopsApi = null;
+  }, { once: true });
   hopsApi = { hop, readHopHash, syncLandmarkLoopState };
   return hopsApi;
 }

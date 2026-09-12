@@ -10,12 +10,8 @@
  * strings.
  */
 
-export const LOOP_STATES = Object.freeze({
-    IDLE: 'idle',
-    PREVIEW: 'preview',
-    ACTIVATED: 'activated',
-    RESOLVED: 'resolved'
-});
+import { LOOP_ARC, LOOP_STATES } from './arc-taxonomy.js';
+export { LOOP_STATES } from './arc-taxonomy.js';
 
 export const LOOP_TOKENS = Object.freeze({
     SURFACE: 'surface',
@@ -39,6 +35,7 @@ export const IMAGE_REFRESH_REASONS = Object.freeze({
 
 export const INTERACTION_LOOP_CONTRACT = Object.freeze({
     states: LOOP_STATES,
+    arc: LOOP_ARC,
     tokens: LOOP_TOKENS,
     event: IMAGE_REFRESH_EVENT,
     reasons: IMAGE_REFRESH_REASONS
