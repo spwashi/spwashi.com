@@ -11494,16 +11494,26 @@ body > header:not([data-spw-shell-disclosure-init]) nav {
   min-block-size: 0;
 }
 
+/* Pre-init pocket reserves the settled toggle-field row: sigil beside the
+   server-rendered toggle. A single "sigil" column pushed the toggle into an
+   implicit second row, so every phone booted a ~112px header that collapsed
+   to ~57px when shell-disclosure wrote toggle-field — a whole-page shift. */
 @media (max-width: 45rem) {
   .site-header:not([data-spw-shell-disclosure-init]),
   body > header:not([data-spw-shell-disclosure-init]) {
-    --spw-shell-grid-columns: minmax(0, 1fr);
+    --spw-shell-grid-columns: minmax(0, 1fr) auto;
     --spw-shell-grid-areas:
-      "sigil"
-      "nav";
-    row-gap: 0.35rem;
+      "sigil toggle"
+      "nav nav";
+    row-gap: 0;
   }
+}
 
+/* The route indicator and the toggle share grid-area toggle until
+   shell-disclosure picks an end slot. Wherever the toggle is displayed before
+   init (the navigation.css coarse/pocket query), the indicator waits, or its
+   label paints under the toggle — "TOPICS" beside the hamburger on a tablet. */
+@media (pointer: coarse), (max-width: 45rem) {
   .site-header:not([data-spw-shell-disclosure-init]) .header-op-indicator,
   body > header:not([data-spw-shell-disclosure-init]) .header-op-indicator {
     display: none;
@@ -31511,6 +31521,33 @@ html[data-spw-high-contrast="on"] :where(.spw-frame[data-spw-region], .spw-frame
   --squeeze-ceiling-extent: 0.15;
 }
 
+/* Set count caps the column count. `auto-fit` only reads width, so a set of
+   three landed 2/1 on every fold frame (~650-700px): reason strips on seven
+   flagship routes, route bridges, compact vibe grids, dense panels. The set
+   knows how many members it owns; the grid should never strand one of them.
+
+   Each track minimum switches on the grid's own inline size, not the viewport
+   and not the frame, so a strip nested in a narrow column still stacks:
+     three -> 3 up, else 1
+     four  -> 4 up, else 2 up, else 1
+     six   -> 3 up, else 2 up, else 1
+   `(threshold - 100%) * 999` is a switch: negative once the grid is wide
+   enough, huge below it, clamped to 100% (one column). Gap allowance is
+   1.25rem per gap, above every owner's gap including a charged bridge.
+   Declared before the narrow-host drop below so a narrow box still wins; route
+   layers still own their own strips (about keeps its three-up media query). */
+:where(.spw-reason-strip, .spw-role-hooks, .spw-route-bridge__links, .frame-grid--dense, .vibe-widget-grid--compact):has(> :nth-child(3):last-child) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max((100% - 2.5rem) / 3, (36rem - 100%) * 999)), 1fr));
+}
+
+:where(.spw-route-bridge__links, .frame-grid--dense):has(> :nth-child(4):last-child) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max((100% - 3.75rem) / 4, min((100% - 1.25rem) / 2, (50rem - 100%) * 999), (24rem - 100%) * 999)), 1fr));
+}
+
+:where(.spw-reason-strip, .spw-route-bridge__links, .frame-grid--dense, .vibe-widget-grid--compact):has(> :nth-child(6):last-child) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max((100% - 2.5rem) / 3, min((100% - 1.25rem) / 2, (40rem - 100%) * 999), (24rem - 100%) * 999)), 1fr));
+}
+
 /* Spend squeeze: drop extra columns inside a tight host. Inline measure is not
    ours to spend; see the removal note below. */
 :where([data-spw-box-measure="narrow"]) .frame-body,
@@ -39958,6 +39995,18 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   vertical-align: middle;
 }
 
+/* Same argument in a frame topline. A <span class="spec-pill"> there is a
+ * descriptor ("software", "local-first"), not a control: no href, no button,
+ * no tabindex. At the 44px floor it stood twice as tall as its row-mates — the
+ * frame sigil and the component tag already sit at the compact height — so the
+ * topline read as a row of unpressed buttons on every coarse pointer. Anything
+ * focusable or linked keeps the ground-control floor.
+ */
+:where(.frame-topline, .frame-heading) > :where(.spec-strip) > :where(span.spec-pill:not([tabindex])) {
+  --handle-min-height: var(--handle-min-height-compact, 1.64rem);
+  --handle-baseline-offset: 0;
+}
+
 :where([data-spw-fixity-tier="volatile"]) {
   --spw-fixity-alpha: 0.72;
 }
@@ -45230,8 +45279,12 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
    5. Spec Tokens
    ========================================================================== */
 
+/* Ornament paints the token; it does not re-seat the box. `inline-block` here
+   outranked the handle primitive's centred inline-flex (ornament is the last
+   layer), so a pill holding a min-height parked its label at the top edge. */
 :where(.spec-pill) {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     padding: 0.25rem 0.65rem;
     border: 1px solid var(--token-border, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, var(--line, rgba(0, 128, 128, 0.35))));
     border-radius: var(--spw-paper-corner);

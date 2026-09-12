@@ -188,8 +188,12 @@
    5. Spec Tokens
    ========================================================================== */
 
+/* Ornament paints the token; it does not re-seat the box. `inline-block` here
+   outranked the handle primitive's centred inline-flex (ornament is the last
+   layer), so a pill holding a min-height parked its label at the top edge. */
 :where(.spec-pill) {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     padding: 0.25rem 0.65rem;
     border: 1px solid var(--token-border, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, var(--line, rgba(0, 128, 128, 0.35))));
     border-radius: var(--spw-paper-corner);

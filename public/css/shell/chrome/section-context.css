@@ -1199,16 +1199,26 @@ body > header:not([data-spw-shell-disclosure-init]) nav {
   min-block-size: 0;
 }
 
+/* Pre-init pocket reserves the settled toggle-field row: sigil beside the
+   server-rendered toggle. A single "sigil" column pushed the toggle into an
+   implicit second row, so every phone booted a ~112px header that collapsed
+   to ~57px when shell-disclosure wrote toggle-field — a whole-page shift. */
 @media (max-width: 45rem) {
   .site-header:not([data-spw-shell-disclosure-init]),
   body > header:not([data-spw-shell-disclosure-init]) {
-    --spw-shell-grid-columns: minmax(0, 1fr);
+    --spw-shell-grid-columns: minmax(0, 1fr) auto;
     --spw-shell-grid-areas:
-      "sigil"
-      "nav";
-    row-gap: 0.35rem;
+      "sigil toggle"
+      "nav nav";
+    row-gap: 0;
   }
+}
 
+/* The route indicator and the toggle share grid-area toggle until
+   shell-disclosure picks an end slot. Wherever the toggle is displayed before
+   init (the navigation.css coarse/pocket query), the indicator waits, or its
+   label paints under the toggle — "TOPICS" beside the hamburger on a tablet. */
+@media (pointer: coarse), (max-width: 45rem) {
   .site-header:not([data-spw-shell-disclosure-init]) .header-op-indicator,
   body > header:not([data-spw-shell-disclosure-init]) .header-op-indicator {
     display: none;

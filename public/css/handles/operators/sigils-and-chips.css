@@ -253,6 +253,18 @@
   vertical-align: middle;
 }
 
+/* Same argument in a frame topline. A <span class="spec-pill"> there is a
+ * descriptor ("software", "local-first"), not a control: no href, no button,
+ * no tabindex. At the 44px floor it stood twice as tall as its row-mates — the
+ * frame sigil and the component tag already sit at the compact height — so the
+ * topline read as a row of unpressed buttons on every coarse pointer. Anything
+ * focusable or linked keeps the ground-control floor.
+ */
+:where(.frame-topline, .frame-heading) > :where(.spec-strip) > :where(span.spec-pill:not([tabindex])) {
+  --handle-min-height: var(--handle-min-height-compact, 1.64rem);
+  --handle-baseline-offset: 0;
+}
+
 :where([data-spw-fixity-tier="volatile"]) {
   --spw-fixity-alpha: 0.72;
 }

@@ -68,3 +68,12 @@ Readers can distinguish card titles, supporting copy, metadata, and actions at p
 1. Pocket walks for Home, About, Topics, Play, and Settings
 2. `node scripts/check-site.mjs && npm run check:runtime`
 3. `git diff --check && npm run check:local`
+
+## 2026-09-12 Device Fit Defaults
+
+- Evidence: headless sweep of 12 routes at pocket/fold/broadsheet (layout-shift entries with sources, lone-last-row grids, overflow). Pocket CLS was 0.32 home, 0.57 settings, 0.25 design — all from the header booting two rows tall. Fold grids stranded one member across eight routes.
+- Boot seat: pre-init pocket header reserves `"sigil toggle"`; the route indicator waits wherever the toggle shows before init. `section-context.css`.
+- Set count: three/four/six-member sets cap columns by count and switch on the grid's own inline size. `layout-squeeze.css`, before the narrow-host drop.
+- Topline descriptors: `whimsy.css` no longer re-seats `.spec-pill` as inline-block; non-focusable topline pills take the compact handle floor. `sigils-and-chips.css`.
+- Spw: `.spw/caches/component-fit-lens-journey-2026-09.spw#flj-007`, `#flj-008`.
+- Held: 5/7/8-member sets; `.header-surface` 6px settle shift at broadsheet (~0.008); JS-off pocket nav is `display:none` under the coarse query (pre-existing, not touched).

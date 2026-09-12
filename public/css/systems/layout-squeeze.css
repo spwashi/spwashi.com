@@ -105,6 +105,33 @@
   --squeeze-ceiling-extent: 0.15;
 }
 
+/* Set count caps the column count. `auto-fit` only reads width, so a set of
+   three landed 2/1 on every fold frame (~650-700px): reason strips on seven
+   flagship routes, route bridges, compact vibe grids, dense panels. The set
+   knows how many members it owns; the grid should never strand one of them.
+
+   Each track minimum switches on the grid's own inline size, not the viewport
+   and not the frame, so a strip nested in a narrow column still stacks:
+     three -> 3 up, else 1
+     four  -> 4 up, else 2 up, else 1
+     six   -> 3 up, else 2 up, else 1
+   `(threshold - 100%) * 999` is a switch: negative once the grid is wide
+   enough, huge below it, clamped to 100% (one column). Gap allowance is
+   1.25rem per gap, above every owner's gap including a charged bridge.
+   Declared before the narrow-host drop below so a narrow box still wins; route
+   layers still own their own strips (about keeps its three-up media query). */
+:where(.spw-reason-strip, .spw-role-hooks, .spw-route-bridge__links, .frame-grid--dense, .vibe-widget-grid--compact):has(> :nth-child(3):last-child) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max((100% - 2.5rem) / 3, (36rem - 100%) * 999)), 1fr));
+}
+
+:where(.spw-route-bridge__links, .frame-grid--dense):has(> :nth-child(4):last-child) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max((100% - 3.75rem) / 4, min((100% - 1.25rem) / 2, (50rem - 100%) * 999), (24rem - 100%) * 999)), 1fr));
+}
+
+:where(.spw-reason-strip, .spw-route-bridge__links, .frame-grid--dense, .vibe-widget-grid--compact):has(> :nth-child(6):last-child) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max((100% - 2.5rem) / 3, min((100% - 1.25rem) / 2, (40rem - 100%) * 999), (24rem - 100%) * 999)), 1fr));
+}
+
 /* Spend squeeze: drop extra columns inside a tight host. Inline measure is not
    ours to spend; see the removal note below. */
 :where([data-spw-box-measure="narrow"]) .frame-body,

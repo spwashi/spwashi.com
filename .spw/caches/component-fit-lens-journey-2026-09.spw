@@ -109,6 +109,37 @@ expression = component[fit]{lens.charge.journey}<ordinal>
   ordinal = `Always in the entry shell of the viewport, never of the article. Approach may show the handle; do not restyle nav as the page loads.`
 }[reg=facet]
 
+^"set_count_fit"{
+  id = "flj-007"
+  operation = "align"
+  dated = `2026-09-12`
+  fixity = "landed"
+  claim = `Fit read width alone, so a set stranded its last member. The set already owns its count; the count caps the columns and the grid's own inline size picks among the caps.`
+  evidence = #[
+    `fold census, 8 routes: spw-reason-strip 2/1 on seven flagship sections; route-bridge 3/1 and 3/3/1; frame-grid--dense 3/1; vibe-widget-grid--compact 2/1`,
+    `html census: reason strips 46 of 56 hold three; dense grids 21 hold four, 11 hold six`
+  ][reg=set]
+  landed = #[
+    `public/css/systems/layout-squeeze.css: three -> 3|1, four -> 4|2|1, six -> 3|2|1 via :has(> :nth-child(n):last-child) and a width switch on the grid itself`,
+    `declared before the narrow-host drop, so box-measure narrow still wins`
+  ][reg=set]
+  electrode = `No slot drops. A lone trailing card was not a hidden slot; it was an empty track beside a visible one — @thesis refuse, "never reserve an empty pack-region".`
+  refuse = `No data-spw-set-count. :has() already reads the count. Do not cap 5/7/8 until a still shows the strand costs the reader.`
+}[reg=facet]
+
+^"boot_seat"{
+  id = "flj-008"
+  operation = "align"
+  dated = `2026-09-12`
+  fixity = "landed"
+  claim = `Chrome that boots in a different seat than it settles in discharges entry twice. The pocket header painted a sigil-only column, auto-placed the toggle into a second row (112px), then collapsed to 57px when shell-disclosure wrote toggle-field — a 0.32 shift on home, 0.57 on settings.`
+  landed = #[
+    `section-context.css pre-init pocket areas reserve "sigil toggle" — first paint 52px, settle 57px`,
+    `pre-init .header-op-indicator waits wherever the toggle is displayed (coarse or pocket); it shared grid-area toggle and painted its route label under the hamburger on a tablet`
+  ][reg=set]
+  rule = `Pre-init CSS names the settled seat. JS may refine the seat; it does not move chrome between rows.`
+}[reg=facet]
+
 # Harvestable. `npm run wonder -- --surface component-fit`
 
 #>wonder_component_fit_conflict
