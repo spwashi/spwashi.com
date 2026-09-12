@@ -41,6 +41,7 @@ test('summarizeSpwPerformanceEntries picks layer + idle chunk measures', () => {
   const summary = summarizeSpwPerformanceEntries(
     [{ name: 'spw:boot-start', startTime: 0 }, { name: 'spw:site-ready', startTime: 100 }],
     [
+      { name: 'spw:boot-to-interactive', duration: 40 },
       { name: 'spw:boot-to-ready', duration: 100 },
       { name: 'spw:immediate-layer:core:parallel', duration: 40 },
       { name: 'spw:idle-chunk:idle-residue', duration: 12 },
@@ -48,6 +49,7 @@ test('summarizeSpwPerformanceEntries picks layer + idle chunk measures', () => {
       { name: 'spw:module:site-settings:load', duration: 5 },
     ],
   );
+  assert.equal(summary.bootToInteractive, 40);
   assert.equal(summary.bootToReady, 100);
   assert.equal(summary.immediateCore, 40);
   assert.equal(summary.idleChunkTotal, 12);

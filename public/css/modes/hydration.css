@@ -70,14 +70,7 @@ html[data-spw-runtime-stage="ready"] {
   --spw-lifecycle-presence: 1;
 }
 
-html[data-spw-page-state="booting"] :where([data-spw-operator], .spw-chip) {
-  --handle-arrival-opacity: 0.68;
-}
-
-html[data-spw-page-state="interactive"] :where([data-spw-operator], .spw-chip),
-html[data-spw-page-state="hydrated"] :where([data-spw-operator], .spw-chip) {
-  --handle-arrival-opacity: 1;
-}
+/* First-view chips keep the handle default. Later waves add grammar, not ink. */
 
 html[data-spw-page-arrival="entering"] :where(.spw-frame, [data-spw-kind="frame"]) {
   --frame-arrival-opacity: var(--spw-lifecycle-presence, 1);

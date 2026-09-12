@@ -116,7 +116,30 @@ test('isRuntimeSettled recognizes ready stage, site-ready mark, and boot measure
   assert.equal(isRuntimeSettled({ spw: { hasSiteReadyMark: true } }), true);
   assert.equal(isRuntimeSettled({ spw: { bootToReady: 120 } }), true);
   assert.equal(isRuntimeSettled({ pageState: 'booting' }), false);
-  assert.equal(isRuntimeSettled({ pageState: 'interactive' }), true);
+  assert.equal(isRuntimeSettled({ pageState: 'interactive' }), false);
+  assert.equal(isRuntimeSettled({ pageState: 'hydrated' }), false);
+  assert.equal(isRuntimeSettled({ pageState: 'region-enhanced' }), false);
+});
+
+test('navigation cells keep milestones, pending work and censored observation distinct', () => {
+  const observation = { readyObservedAt: null, elapsedMs: null, censored: true };
+  const pendingModules = [{ id: 'example', when: 'idle', status: 'loading' }];
+  const waitingTriggers = [{ id: 'invitation', when: 'invited', status: 'waiting' }];
+  const cell = cellFromProbe({ settled: false, runtimeReady: false, observation,
+    probe: { pageState: 'interactive', spw: {
+      interactiveAt: 100, runtimeReadyAt: null, visibleDrainAt: 125,
+      bootToInteractive: 42,
+      pendingModules, waitingTriggers,
+    } } });
+  assert.equal(cell.interactiveAtMs, 100);
+  assert.equal(cell.bootToInteractive, 42);
+  assert.equal(cell.runtimeReadyAtMs, null);
+  assert.equal(cell.runtimeReady, false);
+  assert.equal(cell.visibleDrainAtMs, 125);
+  assert.deepEqual(cell.observation, observation);
+  assert.deepEqual(cell.pendingModules, pendingModules);
+  assert.deepEqual(cell.waitingTriggers, waitingTriggers);
+  assert.equal(evaluateHardOk({ ...cell, ok: true }, { requireSettled: true }), false);
 });
 
 test('isBootPartial accepts immediate-layer progress under cold headless', () => {

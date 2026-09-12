@@ -82,7 +82,8 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   arc_options = options[clocks]{cascade.delivery.mount.arc}<mea>
   boundary = `A's local settings delta is implemented; see its dated receipt below.
     B, C and D were traced on 2026-09-11 and none of their gates opened; their
-    verdicts sit in ipc-013. E is named there and unimplemented. ipc-015 names
+    verdicts sit in ipc-013. E's source guard landed 2026-09-12; latency is
+    still unknown. ipc-015 names
     style-side amplifiers that can fire on the same Tab journey as E; they are
     not automatic scope on E. @module_effect_arcs holds four options for how
     modules and effects could load against cascade, delivery, mount, and arc;
@@ -646,7 +647,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   queue = .{
 
     [q1_annotation_idempotence] {
-      state = "ready"
+      state = "landed-source"
       owner = `public/js/semantic/sigil-annotation.js and semantic/operators.js`
       why = `ipc-014 measures 35054 to 50710 attribute writes per focus journey with
         58 to 84 percent of them equal-value, the largest attributed write source in
@@ -666,7 +667,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     }
 
     [q2_harness_timestamps] {
-      state = "ready"
+      state = "landed"
       owner = `scripts/headless-nav.mjs`
       why = `ipc-008 still conflates ready and settled, and every trace in this cache
         has had to reason around that. Harness-only, so it cannot regress the site.`
@@ -1307,7 +1308,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   operation = "cache"
   fixity = "tending"
   status = `candidate A validated and landed; B, C and D gates measured and not
-    met; E named and unimplemented; F named from ipc-015 and unimplemented`
+    met; E source landed 2026-09-12; F named from ipc-015 and unimplemented`
   expression = implementation[candidate]{baseline.patch.compare}<bounded>
     ^ receipt[decision]{compatibility.work.latency}<land>
   public_goal = `Repeated settings application avoids redundant root dataset mutations
@@ -1582,7 +1583,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   [E_annotation_idempotence] {
     operation = "align"
     fixity = "experimental"
-    status = "named by the B trace; not implemented"
+    status = "source landed 2026-09-12: writeIfChanged plus bounded added-root refresh; latency still unknown"
     gate = `E needs its own source comparison and paired browser receipt before any
       patch, exactly as A did. Naming a mediator is not permission to change it.`
     source = `2026-09-11 focus trace: 35054 to 50710 root-subtree attribute writes per

@@ -48,6 +48,7 @@ function parseArgs(argv) {
     retries: 1,
     routes: null,
     settleMs: 18000,
+    observationMs: 800,
     timeoutMs: 45000,
     warm: false,
   };
@@ -72,6 +73,7 @@ function parseArgs(argv) {
     } else if (arg.startsWith('--routes=')) {
       options.routes = arg.slice(9).split(',').map((s) => s.trim()).filter(Boolean);
     } else if (arg === '--settle-ms' && argv[i + 1]) options.settleMs = Number(argv[++i]) || options.settleMs;
+    else if (arg === '--observation-ms' && argv[i + 1]) options.observationMs = Math.max(0, Math.min(60000, Number(argv[++i]) || 0));
     else if (arg === '--timeout-ms' && argv[i + 1]) options.timeoutMs = Number(argv[++i]) || options.timeoutMs;
     else if (arg === '--retries' && argv[i + 1]) options.retries = Math.max(0, Number(argv[++i]) || 0);
     else if (arg === '--port' && argv[i + 1]) options.port = Number(argv[++i]) || 0;
@@ -97,6 +99,7 @@ Options:
   --warm                    Discard a cold first navigation (reduces Chrome cold bias)
   --retries N               Retry failed navigations (default 1)
   --settle-ms N             Max wait for runtime ready (default 18000; +grace when boot progresses)
+  --observation-ms N        Bounded post-ready observation (default 800, max 60000)
   --timeout-ms N            Load event timeout (default 45000)
   --chrome PATH             Browser binary
   --json                    JSON report on stdout
@@ -237,13 +240,14 @@ async function main() {
           settleMs: options.settleMs,
           timeoutMs: options.timeoutMs,
           retries: options.retries,
+          observationMs: options.observationMs,
         });
         const cell = cellFromProbe(row, { route: pathWithQuery });
         const hardOk = evaluateHardOk(cell, options);
         results.push({ ...cell, hardOk, raw: row });
         const markHint = cell.lastMark ? ` last=${cell.lastMark}` : '';
         process.stderr.write(
-          `  ${hardOk ? 'ok' : 'FAIL'} ${cell.wallMs}ms settled=${cell.settled ? 'y' : 'n'} surface=${cell.surface || '-'} stage=${cell.runtimeStage || '-'} page=${cell.pageState || '-'} layoutQa=${cell.layoutQaGrade || '-'} consoleErr=${cell.consoleErrorCount || 0}${markHint}\n`,
+          `  ${hardOk ? 'ok' : 'FAIL'} ${cell.wallMs}ms ready=${cell.runtimeReady ? 'y' : 'n'} interactive=${cell.interactiveAtMs ?? '-'}ms runtimeReady=${cell.runtimeReadyAtMs ?? '-'}ms observed=${cell.observation?.elapsedMs ?? '-'}ms pending=${cell.pendingModules?.length ?? '-'} surface=${cell.surface || '-'} stage=${cell.runtimeStage || '-'} page=${cell.pageState || '-'} consoleErr=${cell.consoleErrorCount || 0}${markHint}\n`,
         );
       } finally {
         session.close();
@@ -264,6 +268,7 @@ async function main() {
       failOnConsoleError: options.failOnConsoleError,
       failOnOverflowX: options.failOnOverflowX,
       settleMs: options.settleMs,
+      observationMs: options.observationMs,
       ok: results.every((r) => r.hardOk),
       routes: results.length,
       failures: results.filter((r) => !r.hardOk).length,

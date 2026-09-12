@@ -267,6 +267,7 @@ function getSpwPerformanceTimings() {
       marks,
       measures,
       summary: {
+        bootToInteractive: pick('spw:boot-to-interactive'),
         bootToReady: pick('spw:boot-to-ready'),
         immediateLayer: pick('spw:immediate-layer', 'spw:immediate-layer-parallel'),
         immediateCore: pick('spw:immediate-layer:core:parallel'),
@@ -889,8 +890,21 @@ async function bootSite() {
   // parse instead of blocking dataset apply.
   const orchestratorReady = import('./runtime/state-orchestrator.js');
   await mountImmediateLayer(CORE_DEFS, runtimeCtx, { label: 'core' });
-  await loadNonCoreCatalog();
   const { orchestrator: frameState, bindGlobalInteractions } = await orchestratorReady;
+
+  // Arm the visit after core: navigation, settings, and shell are enough to
+  // read. Operator annotation and later waves still run immediately, but they
+  // no longer hold the first useful view.
+  bindGlobalInteractions();
+  annotateDeepLinkTargets(document);
+  setPageState(PAGE_STATES.INTERACTIVE);
+  performance.mark('spw:page-interactive');
+  performance.measure('spw:boot-to-interactive', 'spw:boot-start', 'spw:page-interactive');
+  runtimeCtx.bus.emit('spw:page-interactive', { route: runtimeCtx.route });
+  schedulePageArrival(runtimeCtx, runtimeCtx.pageArrivalKind || PAGE_ARRIVAL.ENTERING, 'page-enter');
+  onIdle(() => ensureFlourishStyles());
+
+  await loadNonCoreCatalog();
 
   const composeApi = installSpwCompositionConsole(window, {
     namespace: 'site-runtime',
@@ -1012,10 +1026,6 @@ async function bootSite() {
   });
   runtimeCtx.compose = composeApi;
 
-  // Initialize relational state and global interactions
-  bindGlobalInteractions();
-  annotateDeepLinkTargets(document);
-
   performance.mark('spw:immediate-non-core-layers-start');
   await Promise.all([
     mountImmediateLayer(FEATURE_DEFS, runtimeCtx, { label: 'feature' }),
@@ -1037,12 +1047,6 @@ async function bootSite() {
   runtimeLogger.info('immediate layers mounted', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
   primeRegions(runtimeCtx);
   refreshRegionProfiles(runtimeCtx, 'immediate-enrichment');
-
-  schedulePageArrival(runtimeCtx, runtimeCtx.pageArrivalKind || PAGE_ARRIVAL.ENTERING, 'page-enter');
-
-  setPageState(PAGE_STATES.INTERACTIVE);
-  runtimeCtx.bus.emit('spw:page-interactive', { route: runtimeCtx.route });
-  onIdle(() => ensureFlourishStyles());
 
   scheduleRegionEnrichment(normalized.pageMeta, runtimeCtx);
 

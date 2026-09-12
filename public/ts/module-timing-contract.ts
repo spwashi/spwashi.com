@@ -33,6 +33,7 @@ export type SpwPerfMeasure = Readonly<{ name: string; duration: number; startTim
 export type IdleChunkDuration = Readonly<{ chunk: string; duration: number }>;
 
 export type SpwPerformanceSummary = Readonly<{
+  bootToInteractive: number | null;
   bootToReady: number | null;
   immediateLayer: number | null;
   immediateCore: number | null;
@@ -114,6 +115,7 @@ export function summarizeSpwPerformanceEntries(
       || measure.name.startsWith('spw:idle-chunk:')
       || measure.name === 'spw:settled-layer'
       || measure.name === 'spw:boot-to-ready'
+      || measure.name === 'spw:boot-to-interactive'
       || measure.name === 'spw:full-boot'
       || measure.name === 'spw:immediate-non-core-layers'
       || measure.name === 'spw:non-core-catalog'
@@ -123,6 +125,7 @@ export function summarizeSpwPerformanceEntries(
   }
 
   return {
+    bootToInteractive: pickDuration(measures, 'spw:boot-to-interactive'),
     bootToReady: pickDuration(measures, 'spw:boot-to-ready'),
     immediateLayer: pickDuration(measures, 'spw:immediate-layer', 'spw:immediate-layer-parallel'),
     immediateCore: pickDuration(measures, 'spw:immediate-layer:core:parallel'),

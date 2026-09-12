@@ -550,6 +550,7 @@ export const PERF_PROBE_EXPRESSION = `(() => {
     return null;
   };
   const hasMark = (name) => marks.some((m) => m.name === name);
+  const markTime = (name) => marks.find((m) => m.name === name)?.startTime ?? null;
   const lastMark = marks.length ? marks[marks.length - 1] : null;
   const recentMarks = marks.slice(-8).map((m) => m.name);
 
@@ -580,6 +581,7 @@ export const PERF_PROBE_EXPRESSION = `(() => {
 
   let site = null;
   let moduleStages = null;
+  let pendingModules = null;
   try {
     site = window.__SPW_SITE__ ? {
       hasLayoutQa: typeof window.__SPW_SITE__.layoutQa?.snapshot === 'function',
@@ -596,6 +598,10 @@ export const PERF_PROBE_EXPRESSION = `(() => {
         counts[stage] = (counts[stage] || 0) + 1;
       }
       moduleStages = counts;
+      pendingModules = records
+        .filter((r) => !['mounted', 'failed', 'unmounted'].includes(r.status))
+        .map((r) => ({ id: r.baseId || r.id, when: r.effectiveWhen || r.when || null,
+          status: r.status || null, stage: r.stage || null }));
     }
   } catch (e) {
     site = { error: String(e) };
@@ -652,6 +658,11 @@ export const PERF_PROBE_EXPRESSION = `(() => {
       domInteractive: Math.round(nav.domInteractive || 0),
     } : null,
     spw: {
+      interactiveAt: markTime('spw:page-interactive'),
+      runtimeReadyAt: markTime('spw:site-ready'),
+      visibleDrainAt: marks.filter((m) => m.name === 'spw:visible-layer:drain-end').at(-1)?.startTime ?? null,
+      sampledAt: performance.now(),
+      bootToInteractive: pick('spw:boot-to-interactive'),
       bootToReady: pick('spw:boot-to-ready'),
       immediateLayer: pick('spw:immediate-layer', 'spw:immediate-layer-parallel'),
       immediateCore: pick('spw:immediate-layer:core:parallel'),
@@ -665,6 +676,10 @@ export const PERF_PROBE_EXPRESSION = `(() => {
       lastMark: lastMark ? lastMark.name : null,
       recentMarks,
       moduleStages,
+      pendingModules,
+      waitingTriggers: Array.from(document.querySelectorAll('[data-spw-module-trigger-status="waiting"], [data-spw-module-trigger-status="queued"]'))
+        .map((el) => ({ id: el.dataset.spwModuleTrigger, when: el.dataset.spwModuleTriggerWhen,
+          status: el.dataset.spwModuleTriggerStatus, root: el.id || null })),
       idleChunks: Object.fromEntries(
         measures
           .filter((m) => String(m.name || '').startsWith('spw:idle-chunk:') && !String(m.name).includes(':start') && !String(m.name).includes(':end'))
@@ -737,16 +752,14 @@ export async function screenshotBuffer(session, { format = 'png', quality = 70, 
 }
 
 /**
- * Settled when boot finished writing ready stage, lifecycle advanced, or boot-to-ready measure exists.
+ * Legacy API name: tests runtime readiness, not completion of visible/idle work.
+ * Interactive and hydrated states are intermediate milestones, not ready.
  */
 export function isRuntimeSettled(probe) {
   if (!probe) return false;
   if (probe.runtimeStage === 'ready') return true;
   if (probe.spw?.hasSiteReadyMark) return true;
   if (probe.spw?.bootToReady != null) return true;
-  if (probe.pageState && !['', 'booting', 'boot', 'preflight'].includes(probe.pageState)) {
-    return true;
-  }
   return false;
 }
 
@@ -773,6 +786,8 @@ export async function navigateAndProbe(session, {
   logBrowser = true,
   /** Extra settle budget when boot is clearly progressing but not yet ready. */
   partialGraceMs = 8000,
+  /** Bounded observation after ready; never wait for uninvited/idle work forever. */
+  observationMs = 800,
 } = {}) {
   let lastError;
   // Runtime.evaluate can briefly queue behind first-paint work even when a short
@@ -830,6 +845,7 @@ export async function navigateAndProbe(session, {
       const baseDeadline = Date.now() + Math.max(settleMs, 2000);
       let deadline = baseDeadline;
       let probe = await evaluateProbe(session, PERF_PROBE_EXPRESSION, probeTimeoutMs);
+      let readyObservedAt = null;
       let sawPartial = isBootPartial(probe);
       while (Date.now() < deadline && !isRuntimeSettled(probe)) {
         await sleep(250);
@@ -841,7 +857,8 @@ export async function navigateAndProbe(session, {
         }
       }
       if (isRuntimeSettled(probe)) {
-        await sleep(Math.min(800, Math.max(200, Math.floor(settleMs / 10))));
+        readyObservedAt = Math.round(performance.now() - navStart);
+        await sleep(Math.max(0, Math.min(60000, observationMs)));
         probe = await evaluateProbe(session, PERF_PROBE_EXPRESSION, probeTimeoutMs);
       }
 
@@ -857,6 +874,16 @@ export async function navigateAndProbe(session, {
         wallMs,
         ok,
         settled,
+        runtimeReady: settled,
+        observation: {
+          readyObservedAt,
+          requestedMs: observationMs,
+          elapsedMs: readyObservedAt === null ? null : wallMs - readyObservedAt,
+          afterVisibleDrainMs: probe.spw?.visibleDrainAt == null ? null
+            : Math.max(0, probe.spw.sampledAt - probe.spw.visibleDrainAt),
+          // Readiness timeout is censored, never a completed settle sample.
+          censored: !settled,
+        },
         partial,
         loadOutcome,
         attempt: attempt + 1,
@@ -946,6 +973,13 @@ export function cellFromProbe(row, { route, viewport = null } = {}) {
     wallMs: row.wallMs,
     ok: row.ok,
     settled: row.settled,
+    runtimeReady: row.runtimeReady ?? row.settled,
+    interactiveAtMs: p.spw?.interactiveAt ?? null,
+    runtimeReadyAtMs: p.spw?.runtimeReadyAt ?? null,
+    visibleDrainAtMs: p.spw?.visibleDrainAt ?? null,
+    observation: row.observation ?? null,
+    pendingModules: p.spw?.pendingModules ?? null,
+    waitingTriggers: p.spw?.waitingTriggers ?? null,
     partial: Boolean(row.partial),
     loadOutcome: row.loadOutcome || null,
     attempt: row.attempt || 1,
@@ -953,6 +987,7 @@ export function cellFromProbe(row, { route, viewport = null } = {}) {
     load: p.navigation?.loadEventEnd ?? null,
     navDuration: p.navigation?.duration ?? null,
     transferSize: p.navigation?.transferSize ?? null,
+    bootToInteractive: p.spw?.bootToInteractive ?? null,
     bootToReady: p.spw?.bootToReady ?? null,
     immediateLayer: p.spw?.immediateLayer ?? null,
     immediateCore: p.spw?.immediateCore ?? null,

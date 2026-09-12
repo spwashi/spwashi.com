@@ -169,6 +169,33 @@ If a patch introduces a new reusable semantic family or runtime state contract, 
 
 ## Status
 
+### 2026-09 interaction and arrival pass
+
+Public goal: a useful first view with responsive navigation, then richer behavior
+as the visitor explores. Operation `align`; runtime semantics are stable, the
+performance experiments are experimental. Source: interaction-paint-cost cache,
+candidate E and its separately gated subtree successor.
+
+- Guard annotation writes in `semantic/sigil-annotation.js`, preserving empty
+  strings, authored overrides, accessibility labels and defaults.
+- Measure added-node refreshes; extend the existing observer's ownership contract
+  only if bounded refreshes preserve matching hosts, descendants, late prerequisites,
+  removal, explicit refresh and cleanup. Keep default behavior for other consumers.
+- Report browser interactive, runtime-ready and bounded post-visible observation
+  separately in the existing headless harness. Record pending work honestly.
+- Inspect default home/about/settings boot, errors, first menu open, paced focus,
+  settings restoration and pocket arrival. Repair observed failures in their owner.
+- Compare source behavior and paired browser work before claiming improvement;
+  retain raw receipts under `/tmp/spw-ipc-e`. Run local checks and pocket visuals.
+- No new framework, animation, attribute family, speculative folder split or blanket
+  removal of material effects. Marketing claims require production measurements.
+- Landed 2026-09-12: `PAGE_STATES.INTERACTIVE` and `spw:page-interactive` fire
+  after CORE + shell bindings, before the non-core catalog and operator wave.
+  `spw:boot-to-interactive` is a distinct measure from `spw:boot-to-ready`.
+  First-view chips keep `--handle-arrival-opacity` at the handle default;
+  boot no longer washes them to 0.68. Annotation idempotence and bounded
+  added-root refresh stay in `semantic/`; harness windows stay distinct.
+
 - [x] Plan written and placed under `.agents/plans/runtime-bootstrap-performance/`
 - [x] Phase 0 cross-references added (listed in `.agents/plans/README.md` under high-signal runtime items; pointer added to `agent-optimization/PLAN.md`; discoverable via existing `@plans` / `@agent_optimization` dispatch in `.spw`)
 - [x] Light `spw-plan-maintenance` sweep recorded (indexes + agent-optimization cross-link landed; no new durable semantic family yet so no immediate `.spw` dispatch change required)
