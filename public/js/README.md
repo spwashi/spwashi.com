@@ -63,6 +63,7 @@ wave.
 - `kernel/`: durable primitives, settings (profiles/engine/ui split), shared contracts, and runtime bridges.
 - `semantic/`: operator grammar, projection machinery, region role inference, narrative token lenses, and pretext helpers.
 - `runtime/`: module catalog/loader, active processes, route grounding, page-state, frame-state, spells, inspectors, gates, and lifecycle loops.
+- `runtime/catalog/`: staged family definitions (`core`, `feature`, `region`, `enhancement`), constants, and normalization. `runtime/module-catalog.js` remains the full-catalog entrypoint; `site.js` imports individual families to preserve lazy loading. Catalog load paths resolve relative to `catalog/`; source audits and the deploy builder use the same base.
 - `runtime/page-hooks.js`: page-unique hooks, named handles, and console-facing page play helpers.
 - `interface/`: visible affordances, guide behavior, haptics, local controls, and chrome response.
 - `modules/`: page or feature bundles clustered by owner. Keep the first level folder-only; see `public/js/modules/README.md`.

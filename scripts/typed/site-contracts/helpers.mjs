@@ -255,10 +255,10 @@ export function parseRuntimeDefinition(objectLiteral, family) {
 }
 /** Family files under public/js/runtime/ — catalog barrel re-exports these. */
 export const MODULE_CATALOG_FAMILY_FILES = Object.freeze({
-    CORE_DEFS: 'module-catalog-core.js',
-    FEATURE_DEFS: 'module-catalog-feature.js',
-    REGION_DEFS: 'module-catalog-region.js',
-    ENHANCEMENT_DEFS: 'module-catalog-enhancement.js',
+    CORE_DEFS: 'catalog/core.js',
+    FEATURE_DEFS: 'catalog/feature.js',
+    REGION_DEFS: 'catalog/region.js',
+    ENHANCEMENT_DEFS: 'catalog/enhancement.js',
 });
 /**
  * Concatenate family sources so extractRuntimeArrayLiteral still finds
@@ -270,7 +270,7 @@ export async function readModuleCatalogSource(runtimeDir) {
 }
 /**
  * Parse staged module defs from catalog (or any source that still uses const *_DEFS = […]).
- * Families live in module-catalog-*.js; pass concatenated source from readModuleCatalogSource().
+ * Families live in runtime/catalog/*.js; pass concatenated source from readModuleCatalogSource().
  */
 export function collectRuntimeDefinitionsFromSource(catalogSource) {
     const families = ['CORE_DEFS', 'FEATURE_DEFS', 'REGION_DEFS', 'ENHANCEMENT_DEFS'];

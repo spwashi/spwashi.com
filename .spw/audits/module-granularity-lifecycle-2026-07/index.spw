@@ -25,7 +25,7 @@
 @decomposition_plan: ~"../../../.agents/plans/runtime-module-decomposition/PLAN.md"
 @bootstrap_plan: ~"../../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
 @module_catalog: ~"../../../public/js/runtime/module-catalog.js"
-@module_normalize: ~"../../../public/js/runtime/module-catalog-normalize.js"
+@module_normalize: ~"../../../public/js/runtime/catalog/normalize.js"
 @module_loader: ~"../../../public/js/runtime/module-loader.js"
 @page_state: ~"../../../public/js/runtime/page-state.js"
 @runtime_module_medium: ~"../../surfaces/runtime-module-medium.spw"

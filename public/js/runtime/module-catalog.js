@@ -2,12 +2,12 @@
  * Runtime module catalog for the staged site bootstrap.
  *
  * Families are split for reviewability:
- *   module-catalog-constants.js
- *   module-catalog-core.js
- *   module-catalog-feature.js
- *   module-catalog-region.js
- *   module-catalog-enhancement.js
- *   module-catalog-normalize.js  (cost + costClass aliases + optimization rollups)
+ *   catalog/constants.js
+ *   catalog/core.js
+ *   catalog/feature.js
+ *   catalog/region.js
+ *   catalog/enhancement.js
+ *   catalog/normalize.js  (cost + costClass aliases + optimization rollups)
  *
  * Contract parsers read each family file (export const *_DEFS = […])
  * or concatenate them via readModuleCatalogSource().
@@ -31,11 +31,11 @@ export {
   costModelFromClass,
   describeModuleCost,
   isFn,
-} from './module-catalog-constants.js';
-export { CORE_DEFS } from './module-catalog-core.js';
-export { FEATURE_DEFS } from './module-catalog-feature.js';
-export { REGION_DEFS } from './module-catalog-region.js';
-export { ENHANCEMENT_DEFS } from './module-catalog-enhancement.js';
+} from './catalog/constants.js';
+export { CORE_DEFS } from './catalog/core.js';
+export { FEATURE_DEFS } from './catalog/feature.js';
+export { REGION_DEFS } from './catalog/region.js';
+export { ENHANCEMENT_DEFS } from './catalog/enhancement.js';
 export {
   describeModuleOrchestration,
   filterEnhancementDefs,
@@ -46,16 +46,16 @@ export {
   normalizeCatalogDefinitions,
   resolveModuleCatalogSpecifier,
   summarizeModuleCatalogOptimization,
-} from './module-catalog-normalize.js';
+} from './catalog/normalize.js';
 
-import { CORE_DEFS } from './module-catalog-core.js';
-import { FEATURE_DEFS } from './module-catalog-feature.js';
-import { REGION_DEFS } from './module-catalog-region.js';
-import { ENHANCEMENT_DEFS } from './module-catalog-enhancement.js';
+import { CORE_DEFS } from './catalog/core.js';
+import { FEATURE_DEFS } from './catalog/feature.js';
+import { REGION_DEFS } from './catalog/region.js';
+import { ENHANCEMENT_DEFS } from './catalog/enhancement.js';
 import {
   listModuleCatalogIndex as indexCatalogDefinitions,
   normalizeCatalogDefinitions,
-} from './module-catalog-normalize.js';
+} from './catalog/normalize.js';
 
 /** Normalized catalog: schedule fields preserved, cost + costClass resolved. */
 export const MODULE_DEFS = normalizeCatalogDefinitions([

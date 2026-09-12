@@ -128,10 +128,10 @@ function classifyTokens(counts, tiers) {
 
 async function catalogHygiene() {
   const familyFiles = [
-    'module-catalog-core.js',
-    'module-catalog-feature.js',
-    'module-catalog-region.js',
-    'module-catalog-enhancement.js',
+    'catalog/core.js',
+    'catalog/feature.js',
+    'catalog/region.js',
+    'catalog/enhancement.js',
   ];
   let text;
   try {

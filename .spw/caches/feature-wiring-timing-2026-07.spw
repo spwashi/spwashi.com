@@ -115,7 +115,7 @@ validation: #[
   `npm run check:runtime`
   `npm run ecology`
   `node --check public/js/runtime/module-catalog.js`
-  `node --check public/js/runtime/module-catalog-normalize.js`
+  `node --check public/js/runtime/catalog/normalize.js`
   `node --check public/js/runtime/module-updates-contract.js`
   `node --check public/js/runtime/effect-ledger.js`
   `node --check public/js/runtime/module-loader.js`

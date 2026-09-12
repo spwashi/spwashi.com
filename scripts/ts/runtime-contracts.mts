@@ -57,13 +57,13 @@ const PUBLIC_JS_DIR = path.join(ROOT_DIR, 'public/js');
 const MODULES_DIR = path.join(PUBLIC_JS_DIR, 'modules');
 const PUBLIC_TS_DIR = path.join(ROOT_DIR, 'public/ts');
 const MODULE_CATALOG_DIR = path.join(PUBLIC_JS_DIR, 'runtime');
-/** Barrel path — dynamic import() resolution is relative to this directory. */
-const MODULE_CATALOG_PATH = path.join(MODULE_CATALOG_DIR, 'module-catalog.js');
+/** Family imports resolve from their owning catalog directory. */
+const MODULE_CATALOG_IMPORT_DIR = path.join(MODULE_CATALOG_DIR, 'catalog');
 const MODULE_CATALOG_FAMILY_FILES = Object.freeze({
-  CORE_DEFS: 'module-catalog-core.js',
-  FEATURE_DEFS: 'module-catalog-feature.js',
-  REGION_DEFS: 'module-catalog-region.js',
-  ENHANCEMENT_DEFS: 'module-catalog-enhancement.js',
+  CORE_DEFS: 'catalog/core.js',
+  FEATURE_DEFS: 'catalog/feature.js',
+  REGION_DEFS: 'catalog/region.js',
+  ENHANCEMENT_DEFS: 'catalog/enhancement.js',
 } as const);
 const MODULE_UPDATES_CONTRACT_PATH = path.join(PUBLIC_JS_DIR, 'runtime/module-updates-contract.js');
 const SITE_RUNTIME_PATH = path.join(PUBLIC_JS_DIR, 'site.js');
@@ -598,7 +598,7 @@ async function collectBehaviorScopeModuleIssues(): Promise<{ errors: string[]; s
 }
 
 function importPathToAbsolute(importPath: string): string {
-  return path.resolve(path.dirname(MODULE_CATALOG_PATH), importPath);
+  return path.resolve(MODULE_CATALOG_IMPORT_DIR, importPath);
 }
 
 const INIT_EXPORT_SOURCE_RE = /\bexport\s+(?:async\s+)?function\s+init[A-Z]\w*|\bexport\s+const\s+init[A-Z]\w*\s*=|\bexport\s+\{[^}]*\binit[A-Z]\w*|\bSPW_MODULE_EXPORT\b|\bspwModule\b|\bexport\s+default\s*\{[^}]*\bmount\b/;

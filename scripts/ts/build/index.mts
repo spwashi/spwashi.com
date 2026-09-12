@@ -142,7 +142,7 @@ function extractCatalogLoadSpecifier(load: CatalogDefinitionForBuild['load']): s
 
 function resolveCatalogEntryPath(outDir: string, specifier: string): string {
   return resolvePublicSpecifier(specifier, outDir)
-    || path.resolve(path.join(outDir, 'public/js/runtime'), specifier);
+    || path.resolve(path.join(outDir, 'public/js/runtime/catalog'), specifier);
 }
 
 /**

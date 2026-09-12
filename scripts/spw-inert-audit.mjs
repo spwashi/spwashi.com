@@ -81,9 +81,9 @@ async function main() {
     walk(ROOT, (n) => n.endsWith('.html')),
     walk(path.join(ROOT, 'public/css'), (n) => n.endsWith('.css')),
     walk(path.join(ROOT, 'public/js'), (n) => n.endsWith('.js')),
-    readdir(path.join(ROOT, 'public/js/runtime')).then((names) => names
-      .filter((n) => n.startsWith('module-catalog-') && n.endsWith('.js'))
-      .map((n) => path.join(ROOT, 'public/js/runtime', n))),
+    readdir(path.join(ROOT, 'public/js/runtime/catalog')).then((names) => names
+      .filter((n) => n.endsWith('.js'))
+      .map((n) => path.join(ROOT, 'public/js/runtime/catalog', n))),
   ]);
 
   const [html, , js, catalogs] = await Promise.all([

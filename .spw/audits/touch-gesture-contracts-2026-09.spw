@@ -108,7 +108,7 @@ audit_run: .{
     severity = "medium"
     status = "Scheduling fix landed 2026-09-05; cold-page first-event delivery remains unverified"
     claim = `pinch-scale left INTERACTION mount after f5 in the pointer audit. charge-field, region-menu, and navigation-locomotion still mount on MOUNT_WHEN.INTERACTION. A first tap/hold that is supposed to prime charge or open inspect can be the event that only starts the import.`
-    evidence = `module-catalog-enhancement.js charge-field:104, navigation-locomotion:1399; module-catalog-feature.js region-menu:323`
+    evidence = `catalog/enhancement.js charge-field:104, navigation-locomotion:1399; catalog/feature.js region-menu:323`
     gap = `tap:prime as a learnable promise is false on a cold page for anything those modules own.`
     next = `Same move as pinch-scale: IDLE or VISIBLE for any module whose own pointer/touch listener must see the first gesture. region-menu may stay INTERACTION if inspect is defined as a second move — say so in the catalog comment.`
     falsify = `Cold load, first pointerdown on a charge-field selector host, confirm module status still idle when the pointer goes up`
@@ -152,7 +152,7 @@ audit_run: .{
     severity = "high"
     resolved = "2026-09-08"
     claim = `The :active rules for gesture-contract hosts, landmarks and section-handle steps sat in systems/interaction-progression.css, injected at runtime by deferred-styles when the VISIBLE module mounts. None of those rules read data-spw-interaction-phase, so they waited on a module they did not use, and the elements advertising a gesture contract were the last on a cold page to acknowledge a tap. The ring was additionally coarse-only, so a mouse click on a section, article or figure got nothing.`
-    evidence = `interaction-progression.css:264-282 before the move; deferred-styles.js ensureInteractionProgressionStyles; module-catalog-enhancement.js interaction-progression when=VISIBLE.`
+    evidence = `interaction-progression.css:264-282 before the move; deferred-styles.js ensureInteractionProgressionStyles; catalog/enhancement.js interaction-progression when=VISIBLE.`
     fix = `Moved to components/gesture-anatomy.css, which core delivers, and ungated from @media (hover: none) and (pointer: coarse). Phase-keyed rules stayed deferred. Also removed the calm-tuner override that set transform:none on .frame-card:active — calm is the site default, so every default touch visitor lost card press feedback; it now attenuates by its own 0.82 scale.`
     verified = `Live home route, dev server: 307 of 307 [data-spw-gesture-contract] hosts match the contact rule while the progression sheet is absent from document.styleSheets. :active itself could not be sampled — synthetic pointer events do not trigger it, only trusted input does.`
   }
@@ -246,7 +246,7 @@ audit_run: .{
     .{ owner = `interface/haptics.js` ; result = `Prime-candidate filtering now rejects nested native targets; retained mouse-link exclusion. No new end-to-end hold-to-cauldron receipt in this review.` }[reg=facet],
     .{ owner = `semantic/image-interaction.js` ; result = `Shared ownership guard adds nested-control protection to the existing figure interaction. Swipe/scroll and long-press coexistence still need device verification.` }[reg=facet],
     .{ owner = `runtime/charge-field.js + runtime/navigation-locomotion.js` ; result = `Implementation unchanged by ecf221e6; catalog scheduling changes to VISIBLE. Their first-event delivery has not been independently verified.` }[reg=facet],
-    .{ owner = `runtime/module-loader.js + module-catalog-feature.js + module-catalog-enhancement.js` ; result = `VISIBLE removes the event-triggered import dependency, but IntersectionObserver, queued tasks and awaited mount remain asynchronous. No before-first-input guarantee follows from the enum.` }[reg=facet],
+    .{ owner = `runtime/module-loader.js + catalog/feature.js + catalog/enhancement.js` ; result = `VISIBLE removes the event-triggered import dependency, but IntersectionObserver, queued tasks and awaited mount remain asynchronous. No before-first-input guarantee follows from the enum.` }[reg=facet],
     .{ owner = `interface/discovery-notices.js` ; result = `40dd95c8 distinguishes object-wrapped notice source from flat string provenance. This aligns payload normalization with the reward contract; visual cadence after restored delivery remains a separate question.` }[reg=facet],
     .{ owner = `runtime/attention/pinch-scale.js` ; result = `d2677f7b exposes the disabled setting through the existing reward event. Recognition wording exceeds the current two-contact detector; see pinch_recognition below.` }[reg=facet]
   ][reg=set]

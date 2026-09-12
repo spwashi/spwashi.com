@@ -816,7 +816,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   fixity = "experimental"
   source = `2026-09-11 local inspection: haptics.js
     onChargeFocusIn/setPassiveCharge/previewCharge; site-settings-engine.js
-    setDatasetEntries; module-catalog-enhancement.js charge-field entry.`
+    setDatasetEntries; catalog/enhancement.js charge-field entry.`
   expression = event[contour]{arrival.fanout.invalidation.presentation}<attribute>
     ~ substrate[cost]{state.style.raster.schedule}<separate>
     ^ module[boundary]{activation.disposal}<predict>

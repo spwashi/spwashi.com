@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import { MODULE_DEFS } from '../../public/js/runtime/module-catalog.js';
-import { listModuleCatalogIndex } from '../../public/js/runtime/module-catalog-normalize.js';
+import { listModuleCatalogIndex } from '../../public/js/runtime/catalog/normalize.js';
 import {
   parseModuleDescribes,
 } from '../../public/js/runtime/module-describes-contract.js';

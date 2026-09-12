@@ -1,6 +1,6 @@
 /**
  * Shared catalog constants (layers + mount when + cost).
- * Definition families live in module-catalog-*.js for reviewability.
+ * Definition families live in core.js, feature.js, region.js, and enhancement.js for reviewability.
  *
  * Preferred definition field order (normalize / review scan):
  *   id, layer, when, cost?, costClass?, features?, route?, selector?, rootMode?,

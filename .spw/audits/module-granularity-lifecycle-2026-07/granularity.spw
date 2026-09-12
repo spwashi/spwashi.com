@@ -192,7 +192,7 @@
 }[reg=facet]
 
 ^"family_file_hygiene"{
-  issue = `ENHANCEMENT-layer defs live in module-catalog-feature.js (brace-physics, region-menu, sigil-anatomy)`
+  issue = `ENHANCEMENT-layer defs live in catalog/feature.js (brace-physics, region-menu, sigil-anatomy)`
   direction = `family file = MODULE_LAYERS membership for agent scan`
   plan_phase = `P3`
 }[reg=facet]

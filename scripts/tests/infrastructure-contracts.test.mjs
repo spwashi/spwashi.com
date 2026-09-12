@@ -3,13 +3,13 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 
-import { MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
-import { ENHANCEMENT_DEFS } from '../../public/js/runtime/module-catalog-enhancement.js';
+import { MOUNT_WHEN } from '../../public/js/runtime/catalog/constants.js';
+import { ENHANCEMENT_DEFS } from '../../public/js/runtime/catalog/enhancement.js';
 import {
   describeModuleOrchestration,
   resolveModuleCatalogSpecifier,
   resolveRuntimeModuleSpecifier,
-} from '../../public/js/runtime/module-catalog-normalize.js';
+} from '../../public/js/runtime/catalog/normalize.js';
 import { describeModuleExport } from '../../public/js/runtime/module-export-contract.js';
 import {
   listNamedInitAdapterExports,
@@ -371,11 +371,11 @@ test('PWA offline dependencies include only local load-bearing assets', () => {
 
 test('runtime resource probes resolve from the module catalog directory', () => {
   assert.equal(
-    resolveModuleCatalogSpecifier('./spells.js', 'https://spwashi.test'),
+    resolveModuleCatalogSpecifier('../spells.js', 'https://spwashi.test'),
     'https://spwashi.test/public/js/runtime/spells.js',
   );
   assert.equal(
-    resolveModuleCatalogSpecifier('../interface/guide.js', 'https://spwashi.test'),
+    resolveModuleCatalogSpecifier('../../interface/guide.js', 'https://spwashi.test'),
     'https://spwashi.test/public/js/interface/guide.js',
   );
   assert.equal(
@@ -660,16 +660,16 @@ test('maps operator threshold physics sequence states', () => {
 test('settings apply stays off the UI module graph', async () => {
   const [barrel, coreCatalog, featureCatalog, engine, ui] = await Promise.all([
     readFile(path.join(ROOT, 'public/js/kernel/site-settings.js'), 'utf8'),
-    readFile(path.join(ROOT, 'public/js/runtime/module-catalog-core.js'), 'utf8'),
-    readFile(path.join(ROOT, 'public/js/runtime/module-catalog-feature.js'), 'utf8'),
+    readFile(path.join(ROOT, 'public/js/runtime/catalog/core.js'), 'utf8'),
+    readFile(path.join(ROOT, 'public/js/runtime/catalog/feature.js'), 'utf8'),
     readFile(path.join(ROOT, 'public/js/kernel/site-settings-engine.js'), 'utf8'),
     readFile(path.join(ROOT, 'public/js/kernel/site-settings-ui.js'), 'utf8'),
   ]);
 
   assert.doesNotMatch(barrel, /import\s+[^;]*site-settings-ui/);
   assert.doesNotMatch(barrel, /export\s+\*\s+from\s+['"]\.\/site-settings-ui/);
-  assert.match(coreCatalog, /id:\s*'site-settings'[\s\S]*import\('\.\.\/kernel\/site-settings-engine\.js'\)/);
-  assert.match(featureCatalog, /id:\s*'settings-page'[\s\S]*import\('\.\.\/kernel\/site-settings-ui\.js'\)/);
+  assert.match(coreCatalog, /id:\s*'site-settings'[\s\S]*import\('\.\.\/\.\.\/kernel\/site-settings-engine\.js'\)/);
+  assert.match(featureCatalog, /id:\s*'settings-page'[\s\S]*import\('\.\.\/\.\.\/kernel\/site-settings-ui\.js'\)/);
   assert.doesNotMatch(featureCatalog, /initSiteSettingsPage/);
   assert.match(ui, /export const initSiteSettingsPage/);
   assert.match(ui, /SPW_MODULE_EXPORT/);

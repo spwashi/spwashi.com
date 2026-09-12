@@ -76,7 +76,7 @@ fixity = "tending"
   goal: "Sharpen the module contract: useful granularity, coupling only where resonance earns it, purer primitives."
   owns: #[
     `public/js/runtime/module-export-contract.js`,
-    `public/js/runtime/module-catalog-normalize.js`,
+    `public/js/runtime/catalog/normalize.js`,
     `public/js/kernel/storage-utils.js`
   ][reg=set]
   why: "96 catalog modules share one export contract that has grown optional fields faster than it has grown rules about them. Several runtime modules read storage directly rather than through a primitive that treats it as untrusted."

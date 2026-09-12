@@ -1,6 +1,6 @@
 /**
  * FEATURE_DEFS — staged runtime catalog family.
- * load() paths are relative to public/js/runtime/.
+ * load() paths are relative to public/js/runtime/catalog/.
  */
 
 import {
@@ -8,7 +8,7 @@ import {
   MODULE_LAYERS,
   MOUNT_WHEN,
   PRETEXT_LIVE_SELECTOR,
-} from './module-catalog-constants.js';
+} from './constants.js';
 
 export const FEATURE_DEFS = [
   {
@@ -23,7 +23,7 @@ export const FEATURE_DEFS = [
     evaluates: 'square identity composition-order authored-link preservation',
     timingArc: 'visible-feature',
     effectScope: 'local-dom listeners',
-    load: () => import('../modules/tools/operator-symmetry.js'),
+    load: () => import('../../modules/tools/operator-symmetry.js'),
   },
   {
     id: 'blog-interpreter',
@@ -43,7 +43,7 @@ export const FEATURE_DEFS = [
     evaluates: 'blog interpretation writing workflow attention-register',
     timingArc: 'visible-feature',
     effectScope: 'local-dom element-state',
-    load: () => import('../modules/blog/interpreter.js'),
+    load: () => import('../../modules/blog/interpreter.js'),
   },
   {
     id: 'blog-specimens',
@@ -61,7 +61,7 @@ export const FEATURE_DEFS = [
     evaluates: 'blog specimens interaction demos visual filters',
     timingArc: 'visible-feature',
     effectScope: 'local-dom element-state css-vars',
-    load: () => import('../modules/blog/specimens.js'),
+    load: () => import('../../modules/blog/specimens.js'),
   },
   {
     id: 'attn-register',
@@ -79,7 +79,7 @@ export const FEATURE_DEFS = [
     evaluates: 'attention charge register blog semantics local interaction',
     timingArc: 'visible-feature',
     effectScope: 'local-dom bus',
-    load: () => import('../modules/blog/attn-register.js'),
+    load: () => import('../../modules/blog/attn-register.js'),
   },
   {
     id: 'seed-cards',
@@ -98,7 +98,7 @@ export const FEATURE_DEFS = [
     evaluates: 'seed generation card authoring screenshot utility',
     timingArc: 'visible-feature',
     effectScope: 'local-dom storage',
-    load: () => import('../modules/cards/seed-card.js'),
+    load: () => import('../../modules/cards/seed-card.js'),
   },
   {
     id: 'payment-cards',
@@ -117,7 +117,7 @@ export const FEATURE_DEFS = [
     evaluates: 'payment settings support routes local storage',
     timingArc: 'visible-feature',
     effectScope: 'local-dom storage',
-    load: () => import('../modules/cards/payment-card.js'),
+    load: () => import('../../modules/cards/payment-card.js'),
   },
   {
     id: 'services-configurators',
@@ -136,7 +136,7 @@ export const FEATURE_DEFS = [
     evaluates: 'services offer fit pricing dimensions grounding',
     timingArc: 'visible-feature',
     effectScope: 'local-dom',
-    load: () => import('../modules/services/configurator.js'),
+    load: () => import('../../modules/services/configurator.js'),
   },
   {
     id: 'rpg-wednesday',
@@ -156,7 +156,7 @@ export const FEATURE_DEFS = [
     evaluates: 'rpg gameplay local state evidence capture play surface',
     timingArc: 'visible-feature',
     effectScope: 'local-dom storage',
-    load: () => import('../modules/rpg-wednesday/index.js'),
+    load: () => import('../../modules/rpg-wednesday/index.js'),
   },
   {
     id: 'settings-page',
@@ -173,7 +173,7 @@ export const FEATURE_DEFS = [
       'html:inspect:data-spw-deviation-state',
       'html:inspect:data-spw-deviation-count',
     ],
-    load: () => import('../kernel/site-settings-ui.js'),
+    load: () => import('../../kernel/site-settings-ui.js'),
   },
   {
     id: 'payment-settings',
@@ -186,7 +186,7 @@ export const FEATURE_DEFS = [
     evaluates: 'payment settings support defaults',
     timingArc: 'visible-settings',
     effectScope: 'local-dom storage',
-    load: () => import('../modules/cards/payment-card.js'),
+    load: () => import('../../modules/cards/payment-card.js'),
   },
   {
     id: 'home-section-index',
@@ -204,7 +204,7 @@ export const FEATURE_DEFS = [
     evaluates: 'homepage navigation filtering section discovery',
     timingArc: 'visible-feature',
     effectScope: 'local-dom',
-    load: () => import('../modules/home/section-index.js'),
+    load: () => import('../../modules/home/section-index.js'),
   },
   {
     id: 'promo-wonder-cycle',
@@ -223,7 +223,7 @@ export const FEATURE_DEFS = [
     evaluates: 'promo cadence wonder marketing media-publishing',
     timingArc: 'visible-media',
     effectScope: 'local-dom element-state',
-    load: () => import('../typed/promo-wonder-cycle.js'),
+    load: () => import('../../typed/promo-wonder-cycle.js'),
   },
   {
     id: 'media-publishing',
@@ -242,7 +242,7 @@ export const FEATURE_DEFS = [
     evaluates: 'media publishing feed localization website surface',
     timingArc: 'visible-media',
     effectScope: 'local-dom element-state',
-    load: () => import('../typed/media-publishing.js'),
+    load: () => import('../../typed/media-publishing.js'),
   },
   {
     id: 'media-cauldron',
@@ -262,7 +262,7 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-lab',
     evaluates: 'media cauldron attention relations prompt-pack generation',
     effectScope: 'local-dom element-state bus',
-    load: () => import('../modules/media/cauldron.js'),
+    load: () => import('../../modules/media/cauldron.js'),
   },
   {
     id: 'brace-pivots',
@@ -277,7 +277,7 @@ export const FEATURE_DEFS = [
     evaluates: 'settings defaults brace interaction',
     timingArc: 'visible-settings',
     effectScope: 'local-dom root-state',
-    load: () => import('./brace-pivots.js'),
+    load: () => import('../brace-pivots.js'),
   },
   {
     id: 'narrative-instrumentation',
@@ -295,7 +295,7 @@ export const FEATURE_DEFS = [
     evaluates: 'narrative copy semantics operator resonance',
     timingArc: 'visible-semantics',
     effectScope: 'local-dom bus',
-    load: () => import('../semantic/narrative-instrumentation.js'),
+    load: () => import('../../semantic/narrative-instrumentation.js'),
   },
   {
     id: 'brace-physics',
@@ -315,7 +315,7 @@ export const FEATURE_DEFS = [
     evaluates: 'gesture semantics brace inspectability spell capture',
     timingArc: 'visible-gesture',
     effectScope: 'element-state listeners bus',
-    load: () => import('./brace-gestures.js'),
+    load: () => import('../brace-gestures.js'),
   },
   {
     id: 'region-menu',
@@ -338,7 +338,7 @@ export const FEATURE_DEFS = [
     timingArc: 'enhance-inspect',
     effectScope: 'popover listeners',
     visual: 'layout',
-    load: () => import('./region-menu.js'),
+    load: () => import('../region-menu.js'),
   },
   {
     id: 'pronunciation-hints',
@@ -357,7 +357,7 @@ export const FEATURE_DEFS = [
     ],
     effectScope: 'element-state flourish',
     visual: 'layout',
-    load: () => import('../interface/pronunciation.js'),
+    load: () => import('../../interface/pronunciation.js'),
   },
   {
     id: 'sigil-anatomy',
@@ -375,7 +375,7 @@ export const FEATURE_DEFS = [
     evaluates: 'operator-grammar anatomy hydration capture-legibility',
     timingArc: 'immediate-anatomy',
     effectScope: 'element-state',
-    load: () => import('./sigil-anatomy.js'),
+    load: () => import('../sigil-anatomy.js'),
   },
   {
     id: 'effect-ledger',
@@ -400,7 +400,7 @@ export const FEATURE_DEFS = [
     timingArc: 'enhance-ledger',
     timingChunk: 'idle-residue',
     effectScope: 'root-state storage bus flourish',
-    load: () => import('./effect-ledger.js'),
+    load: () => import('../effect-ledger.js'),
   },
   {
     id: 'cauldron',
@@ -421,7 +421,7 @@ export const FEATURE_DEFS = [
     timingArc: 'enhance-collectible',
     timingChunk: 'idle-collectible',
     effectScope: 'storage bus floating-chrome root-state',
-    load: () => import('../interface/composition.js'),
+    load: () => import('../../interface/composition.js'),
   },
   {
     id: 'local-notes',
@@ -438,7 +438,7 @@ export const FEATURE_DEFS = [
     evaluates: 'local memory notes privacy browser storage',
     timingArc: 'visible-memory',
     effectScope: 'local-dom storage',
-    load: () => import('../interface/local-notes.js'),
+    load: () => import('../../interface/local-notes.js'),
   },
   {
     id: 'boonhonk-mixer',
@@ -457,7 +457,7 @@ export const FEATURE_DEFS = [
     evaluates: 'operator blending widget color memory',
     timingArc: 'visible-widget',
     effectScope: 'local-dom',
-    load: () => import('../modules/widgets/boonhonk-mixer.js'),
+    load: () => import('../../modules/widgets/boonhonk-mixer.js'),
   },
   {
     id: 'pretext-lab',
@@ -474,7 +474,7 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-lab',
     evaluates: 'pretext layout sandbox projection observe resize inspect',
     effectScope: 'local-dom css-vars measure',
-    load: () => import('../semantic/pretext-lab.js'),
+    load: () => import('../../semantic/pretext-lab.js'),
   },
   {
     id: 'pretext-physics',
@@ -495,7 +495,7 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-lab',
     evaluates: 'pretext measure classify wrap-volatility width-class projection',
     effectScope: 'local-dom css-vars measure',
-    load: () => import('../semantic/pretext-physics.js'),
+    load: () => import('../../semantic/pretext-physics.js'),
   },
   {
     id: 'typography-measurement-preview',
@@ -515,7 +515,7 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-lab',
     evaluates: 'typography measure preview pretext bus designer conversation',
     effectScope: 'local-dom css-vars measure bus',
-    load: () => import('../modules/design/typography-measurement-preview.js'),
+    load: () => import('../../modules/design/typography-measurement-preview.js'),
   },
   {
     id: 'frame-metrics',
@@ -534,6 +534,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-metrics',
     evaluates: 'frame text measure line-count wrap height pretext bus',
     effectScope: 'element-state measure bus',
-    load: () => import('./frame-metrics.js'),
+    load: () => import('../frame-metrics.js'),
   },
 ];

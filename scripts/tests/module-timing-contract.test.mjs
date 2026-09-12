@@ -20,9 +20,9 @@ import {
   resolveAttentionMain,
   restoreAttribute,
 } from '../../public/js/runtime/attention/shared.js';
-import { ENHANCEMENT_DEFS } from '../../public/js/runtime/module-catalog-enhancement.js';
-import { FEATURE_DEFS } from '../../public/js/runtime/module-catalog-feature.js';
-import { MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
+import { ENHANCEMENT_DEFS } from '../../public/js/runtime/catalog/enhancement.js';
+import { FEATURE_DEFS } from '../../public/js/runtime/catalog/feature.js';
+import { MOUNT_WHEN } from '../../public/js/runtime/catalog/constants.js';
 import { resolveOwnerDocument } from '../../public/js/runtime/runtime-helpers.js';
 
 test('timingArc stems and idle chunks are stable contracts', () => {

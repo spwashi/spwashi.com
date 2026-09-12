@@ -1,9 +1,9 @@
 /**
  * REGION_DEFS — staged runtime catalog family.
- * load() paths are relative to public/js/runtime/.
+ * load() paths are relative to public/js/runtime/catalog/.
  */
 
-import { isFn, MODULE_LAYERS, MOUNT_WHEN, REGION_ENHANCER_SELECTOR } from './module-catalog-constants.js';
+import { isFn, MODULE_LAYERS, MOUNT_WHEN, REGION_ENHANCER_SELECTOR } from './constants.js';
 
 export const REGION_DEFS = [
   {
@@ -23,6 +23,6 @@ export const REGION_DEFS = [
     evaluates: 'region lifecycle harmony density motion defaults',
     timingArc: 'region-hydration',
     effectScope: 'region-state css-vars bus',
-    load: () => import('./region-enhancer.js'),
+    load: () => import('../region-enhancer.js'),
   },
 ];

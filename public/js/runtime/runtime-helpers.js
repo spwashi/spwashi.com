@@ -7,7 +7,7 @@
  */
 
 import { runtimeToken } from '/public/js/kernel/text-normalization.js';
-import { MOUNT_WHEN } from '/public/js/runtime/module-catalog-constants.js';
+import { MOUNT_WHEN } from '/public/js/runtime/catalog/constants.js';
 
 const RUNTIME_TIMING_POLICIES = new Set(['normal', 'eager', 'defer', 'quiet', 'manual']);
 const MOUNT_WHEN_VALUES = new Set(Object.values(MOUNT_WHEN));

@@ -15,7 +15,7 @@
 @site_semantics: ~"./site-semantics.spw"
 @wonder_memory_runtime: ~"../../public/js/interface/wonder-memory.js"
 @attention_compatibility_runtime: ~"../../public/js/runtime/attention-architecture.js"
-@attention_catalog: ~"../../public/js/runtime/module-catalog-enhancement.js"
+@attention_catalog: ~"../../public/js/runtime/catalog/enhancement.js"
 @accent_palette_runtime: ~"../../public/js/interface/accent-palette.js"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
 @wonder_architecture: ~"./wonder-architecture.spw"

@@ -43,7 +43,7 @@ function extractCatalogLoadSpecifier(load) {
 }
 function resolveCatalogEntryPath(outDir, specifier) {
     return resolvePublicSpecifier(specifier, outDir)
-        || path.resolve(path.join(outDir, 'public/js/runtime'), specifier);
+        || path.resolve(path.join(outDir, 'public/js/runtime/catalog'), specifier);
 }
 /**
  * Transport names follow the catalog's existing arrival vocabulary. Broad

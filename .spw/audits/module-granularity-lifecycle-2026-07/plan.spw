@@ -105,7 +105,7 @@
       id = `P1.1`
       title = `attention L3 catalog children`
       surfaces = #[
-        `public/js/runtime/module-catalog-enhancement.js`,
+        `public/js/runtime/catalog/enhancement.js`,
         `public/js/runtime/attention-architecture.js`,
         `public/js/runtime/attention/*`
       ][reg=set]
@@ -120,7 +120,7 @@
         `public/js/kernel/site-settings.js`,
         `public/js/kernel/site-settings-engine.js`,
         `public/js/kernel/site-settings-ui.js`,
-        `module-catalog-core.js`,
+        `catalog/core.js`,
         `settings-page feature def`
       ][reg=set]
       work = `First-paint: apply datasets only (no static UI import). UI bind dynamic on settings route / IDLE / explicit init. Align with @bootstrap Phase 2`
@@ -130,7 +130,7 @@
     .{
       id = `P1.3`
       title = `component-semantics schedule`
-      surfaces = #[`module-catalog-enhancement.js`, `public/js/semantic/component-semantics.js`][reg=set]
+      surfaces = #[`catalog/enhancement.js`, `public/js/semantic/component-semantics.js`][reg=set]
       work = `Prefer VISIBLE for broad annotate; optional IDLE inspect projection; or split resolve vs project if needed`
       level = `L1 then L3 if still heavy`
       acceptance = `Not IMMEDIATE without selector gate proof; no regression on authored role/kind`
@@ -138,7 +138,7 @@
     .{
       id = `P1.4`
       title = `html-root IMMEDIATE trim`
-      surfaces = #[`module-catalog-enhancement.js`][reg=set]
+      surfaces = #[`catalog/enhancement.js`][reg=set]
       work = `topical-payload wait medium-ready or VISIBLE; interaction-progression INTERACTION/IDLE; precipitation IDLE/beforeprint`
       level = `L1`
       acceptance = `catalogOptimization enhancementImmediate drops; smoke keyboard and print`
@@ -272,7 +272,7 @@
     .{
       id = `P3.1`
       title = `family file = layer`
-      work = `Move ENHANCEMENT defs out of module-catalog-feature.js into enhancement family`
+      work = `Move ENHANCEMENT defs out of catalog/feature.js into enhancement family`
     }
     .{
       id = `P3.2`

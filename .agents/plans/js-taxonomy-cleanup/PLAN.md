@@ -37,3 +37,12 @@ Remove the `spw-` prefix from the JavaScript source tree, keep the runtime namin
 ## Out of Scope
 - Runtime behavior changes unrelated to path and taxonomy cleanup.
 - New features or semantic state additions.
+
+## 2026-09 Catalog Tree Alignment
+- Operation: align. Fixity: stable. One slice: group six catalog implementation files under `public/js/runtime/catalog/` with folder-local names.
+- Keep `runtime/module-catalog.js` as the existing full-catalog entrypoint; bootstrap still imports families separately.
+- Resolve relative catalog load paths from `runtime/catalog/` in browser imports, source-based tools, and the deploy builder. Update source readers, test imports, and live references.
+- Preserve module IDs, selectors, scheduling, exports, and behavior. Leave concurrent kernel/semantic work alone.
+- Validate syntax, runtime contracts, selector census, ecology, generated manifests, and `check:local`.
+- Result: all four family definitions and resolved import targets match the original sources; moved-file syntax, selector audit, ecology, and deploy build passed.
+- `check:local -- --allow-dirty` re-run after resume: 299 tests passed, 0 failed. Concurrent `annotation-refresh.test.mjs` is now in `MODULE_TEST_FILES`.

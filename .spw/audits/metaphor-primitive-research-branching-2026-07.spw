@@ -248,7 +248,7 @@ audit_run: .{
   cluster_d_cognition_cost_surface: .{
     question = `Can mount_when and cost_class appear in design/runtime map without new modules?`
     hypothesis = `module-catalog describes already carry cognition+ecology; state-inspector can project elaboration_stage + guild`
-    surfaces = #[`/design/runtime/`, `state-inspector`, `module-catalog-enhancement.js`][reg=set]
+    surfaces = #[`/design/runtime/`, `state-inspector`, `catalog/enhancement.js`][reg=set]
     disciplines = #[`cognitive_science.working_memory_load`][reg=set]
     validation = `rg 'MOUNT_WHEN|elaboration_stage|cost_class' public/js/runtime design/runtime`
     stop_rule = `Do not add visitor-facing "working set" prose on curriculum routes`
@@ -337,7 +337,7 @@ audit_run: .{
   validation: #[
     `rg 'cluster_|primitive_matrix|discipline_branches' .spw/audits/metaphor-primitive-research-branching-2026-07.spw`,
     `rg 'data-spw-register' --glob '**/index.html'`,
-    `rg 'attention-field|loading-ecology|charge-field' public/js/runtime/module-catalog-enhancement.js`
+    `rg 'attention-field|loading-ecology|charge-field' public/js/runtime/catalog/enhancement.js`
   ][reg=set]
 }
 

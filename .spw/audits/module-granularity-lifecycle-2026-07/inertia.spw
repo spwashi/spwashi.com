@@ -398,7 +398,7 @@
   problems: #[
     `runtime/ mixes loader substrate, shell chrome, spells, labs, ledgers, anatomy`,
     `interface/ vs runtime/ boundary fuzzy (state-inspector, discovery-notices, haptics vs page-anatomy)`,
-    `ENHANCEMENT catalog defs in module-catalog-feature.js (layer ≠ file family)`,
+    `ENHANCEMENT catalog defs in catalog/feature.js (layer ≠ file family)`,
     `Legacy path ghosts in git history (site-settings.js root era) confuse churn stats`,
     `typed/ is compile output island — easy to forget contract source is public/ts`
   ][reg=set]

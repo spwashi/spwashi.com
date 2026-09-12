@@ -20,8 +20,8 @@
 @export_uniformity_wip: ~"../../.agents/plans/module-export-uniformity/wip.spw"
 @decomposition_wip: ~"../../.agents/plans/runtime-module-decomposition/wip.spw"
 @module_catalog: ~"../../public/js/runtime/module-catalog.js"
-@module_catalog_constants: ~"../../public/js/runtime/module-catalog-constants.js"
-@module_catalog_normalize: ~"../../public/js/runtime/module-catalog-normalize.js"
+@module_catalog_constants: ~"../../public/js/runtime/catalog/constants.js"
+@module_catalog_normalize: ~"../../public/js/runtime/catalog/normalize.js"
 
 operation = "audit"
 fixity = "tending"
@@ -69,7 +69,7 @@ audit_run: .{
   ][reg=set]
   note = `complete = subfeatures + triggers + affordances + electrostatics. attention-resonance-probe has electrostatics and affordances but no subfeatures, so it is not complete. Do not fill the other 103 to make the count pretty.`
   describes_subject_leak = `media-cauldron lists subject attention; cauldron index only lists cauldron + query-link-composer (fluency, media-cauldron, ingredient-lab, expression-resonance missing).`
-  file_vs_layer = `module-catalog-feature.js hosts seven enhancement-layer defs: narrative-instrumentation, brace-physics, region-menu, pronunciation-hints, sigil-anatomy, effect-ledger, cauldron. Family file is not layer.`
+  file_vs_layer = `catalog/feature.js hosts seven enhancement-layer defs: narrative-instrumentation, brace-physics, region-menu, pronunciation-hints, sigil-anatomy, effect-ledger, cauldron. Family file is not layer.`
 }[reg=facet]
 
 ^"impact_dimensions"{
@@ -300,7 +300,7 @@ audit_run: .{
     `Author data-container-type on every frame-card just to occupy electromagnetic-containers`,
     `Move atmosphere html mounts to immediate`,
     `Treat costClass as a kind of module`,
-    `Treat family file (module-catalog-feature.js) as layer`
+    `Treat family file (catalog/feature.js) as layer`
   ][reg=set]
 }[reg=facet]
 

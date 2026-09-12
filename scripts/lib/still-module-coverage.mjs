@@ -14,7 +14,7 @@ export function moduleLoadFile(def = {}) {
   const match = src.match(/import\(\s*['"]([^'"]+)['"]\s*\)/);
   if (!match) return null;
   try {
-    return new URL(match[1], 'https://spwashi.local/public/js/runtime/').pathname.replace(/^\//, '');
+    return new URL(match[1], 'https://spwashi.local/public/js/runtime/catalog/').pathname.replace(/^\//, '');
   } catch {
     return null;
   }

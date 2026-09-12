@@ -16,7 +16,7 @@
 @css_specificity_pe: ~"./css-specificity-pe-2026-07/index.spw"
 @html_component_audit: ~"./html-component-audit-2026-07.spw"
 @module_catalog: ~"../../public/js/runtime/module-catalog.js"
-@region_selector: ~"../../public/js/runtime/module-catalog-constants.js"
+@region_selector: ~"../../public/js/runtime/catalog/constants.js"
 @audit_script: ~"../../scripts/module-selector-depth-audit.mjs"
 @css_instruction: ~"../conventions/css-instruction.spw"
 
@@ -58,7 +58,7 @@ audit_run: .{
     claim = `Six catalog selectors still name .site-frame. Public routes author .spw-frame + data-spw-kind=frame. kernel/dom-contracts CORE_COMPONENT_SELECTORS already lists .spw-frame first.`
     evidence = `frame-navigator selector is only .site-frame → 0 hosts / 0 hits on 124 routes. region-enhancer / collection / reward keep matching because they also list [data-spw-kind=frame] (2896 hits). variant-selection still matches 55 routes via .frame-card and data-spw-feature, not via .site-frame.`
     next = `Alias .spw-frame beside .site-frame in REGION_SELECTOR and frame-navigator. Do not delete .site-frame until design/experiments beds move.`
-    resolved = `2026-09-04 — .spw-frame added beside .site-frame in REGION_SELECTOR (module-catalog-constants.js) and frame-navigator's selector (module-catalog-enhancement.js). frame-navigator: 0/0 → 124 hosts/695 hits. .site-frame kept for design/experiments beds, unresolved for the other five ids since their [data-spw-kind=frame]/.frame-card branches already carried the real match.`
+    resolved = `2026-09-04 — .spw-frame added beside .site-frame in REGION_SELECTOR (catalog/constants.js) and frame-navigator's selector (catalog/enhancement.js). frame-navigator: 0/0 → 124 hosts/695 hits. .site-frame kept for design/experiments beds, unresolved for the other five ids since their [data-spw-kind=frame]/.frame-card branches already carried the real match.`
   }
   f2_sibling_combinator_vs_cluster_wrap {
     severity = "high"

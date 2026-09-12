@@ -21,7 +21,7 @@
 @deferred_styles: ~"../../public/js/kernel/deferred-styles.js"
 @flourish_pack: ~"../../public/css/effects/flourish-pack.css"
 @module_loader: ~"../../public/js/runtime/module-loader.js"
-@catalog_constants: ~"../../public/js/runtime/module-catalog-constants.js"
+@catalog_constants: ~"../../public/js/runtime/catalog/constants.js"
 @page_state: ~"../../public/js/runtime/page-state.js"
 
 operation = "cache"

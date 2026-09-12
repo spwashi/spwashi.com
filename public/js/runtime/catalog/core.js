@@ -1,9 +1,9 @@
 /**
  * CORE_DEFS — staged runtime catalog family.
- * load() paths are relative to public/js/runtime/.
+ * load() paths are relative to public/js/runtime/catalog/.
  */
 
-import { COST_CLASS, isFn, MODULE_LAYERS, MOUNT_WHEN } from './module-catalog-constants.js';
+import { COST_CLASS, isFn, MODULE_LAYERS, MOUNT_WHEN } from './constants.js';
 
 export const CORE_DEFS = [
   {
@@ -23,7 +23,7 @@ export const CORE_DEFS = [
     timingArc: 'boot-core',
     effectScope: 'root-state storage settings',
     evaluates: 'root color palette wonder density saturation reward display',
-    load: () => import('../kernel/site-settings-engine.js'),
+    load: () => import('../../kernel/site-settings-engine.js'),
     mount: (mod) => {
       const fn = mod?.applySiteSettings;
       if (!isFn(fn)) return;
@@ -47,7 +47,7 @@ export const CORE_DEFS = [
     timingArc: 'boot-shell',
     effectScope: 'root-state chrome listeners viewport',
     visual: 'layout',
-    load: () => import('./shell-disclosure.js'),
+    load: () => import('../shell-disclosure.js'),
   },
   {
     id: 'interactive-medium',
@@ -64,7 +64,7 @@ export const CORE_DEFS = [
     evaluates: 'viewport-tier pointer-mode hover-mode scene/play register display-variant module-style-modulator',
     timingArc: 'boot-medium',
     effectScope: 'root-state css-vars entertainment-routes',
-    load: () => import('./interactive-medium.js'),
+    load: () => import('../interactive-medium.js'),
   },
   {
     id: 'site-core-minimal',
@@ -81,6 +81,6 @@ export const CORE_DEFS = [
     evaluates: 'frame lifecycle mode-switch hash-target calm-defaults',
     timingArc: 'boot-frame',
     effectScope: 'frame-state hash listeners bus',
-    load: () => import('./site-core-minimal.js'),
+    load: () => import('../site-core-minimal.js'),
   },
 ];

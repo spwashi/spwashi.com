@@ -23,7 +23,7 @@ import {
   pickWeekly,
 } from '../../public/js/typed/promo-wonder-cycle.js';
 import { createModuleLoader } from '../../public/js/runtime/module-loader.js';
-import { MODULE_LAYERS, MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
+import { MODULE_LAYERS, MOUNT_WHEN } from '../../public/js/runtime/catalog/constants.js';
 import {
   SPW_FEATURE_DISCOVERY_CONTRACT,
   initFeatureDiscovery,

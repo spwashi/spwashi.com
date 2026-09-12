@@ -20,9 +20,9 @@ import {
   costClassFromModel,
   costModelFromClass,
   describeModuleCost,
-} from './module-catalog-constants.js';
-import { summarizeCatalogTiming } from '../kernel/module-timing-contract.js';
-import { parseModuleDescribes } from './module-describes-contract.js';
+} from './constants.js';
+import { summarizeCatalogTiming } from '../../kernel/module-timing-contract.js';
+import { parseModuleDescribes } from '../module-describes-contract.js';
 
 const COST_CLASS_SET = new Set(COST_CLASS_VALUES);
 const COMMITMENT_SET = new Set(COST_COMMITMENT_VALUES);
@@ -37,7 +37,7 @@ const RESIDUE_SCOPE_RE = /storage|settings|pins|checkpoint|collection|visitation
 const LISTEN_SCOPE_RE = /listeners|observer|viewport|document-scroll|resize/;
 const PIN_ID_RE = /spell|checkpoint|pin-registry|haptics/;
 const KEEP_ID_RE = /site-settings|visitation|collection|local-notes|local-memory/;
-const MODULE_CATALOG_URL_PATH = '/public/js/runtime/module-catalog.js';
+const MODULE_CATALOG_URL_PATH = '/public/js/runtime/catalog/core.js';
 
 function asToken(value) {
   return String(value || '').trim().toLowerCase();
@@ -80,7 +80,7 @@ export function resolveModuleCatalogSpecifier(specifier = '', origin = '') {
 
 /**
  * Resolve either an authored catalog import or a semantic deploy-pack import.
- * Catalog specifiers remain relative to module-catalog.js; generated `spw-*`
+ * Catalog specifiers remain relative to the catalog/ family files; generated `spw-*`
  * chunks are siblings of the production site entry that contains the catalog.
  */
 export function resolveRuntimeModuleSpecifier(

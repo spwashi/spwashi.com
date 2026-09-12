@@ -81,14 +81,14 @@ import {
   initHydration,
   progressHydration,
 } from './kernel/hydration.js';
-import { CORE_DEFS } from './runtime/module-catalog-core.js';
-import { MOUNT_WHEN } from './runtime/module-catalog-constants.js';
+import { CORE_DEFS } from './runtime/catalog/core.js';
+import { MOUNT_WHEN } from './runtime/catalog/constants.js';
 import {
   filterEnhancementDefs,
   listModuleCatalogIndex,
   resolveRuntimeModuleSpecifier,
   summarizeModuleCatalogOptimization,
-} from './runtime/module-catalog-normalize.js';
+} from './runtime/catalog/normalize.js';
 import {
   clearPageCascadeTiming,
   primeRegions,
@@ -608,9 +608,9 @@ async function loadNonCoreCatalog() {
   if (NON_CORE_DEFS.length) return;
   performance.mark('spw:non-core-catalog-start');
   const [featureMod, regionMod, enhancementMod] = await Promise.all([
-    import('./runtime/module-catalog-feature.js'),
-    import('./runtime/module-catalog-region.js'),
-    import('./runtime/module-catalog-enhancement.js'),
+    import('./runtime/catalog/feature.js'),
+    import('./runtime/catalog/region.js'),
+    import('./runtime/catalog/enhancement.js'),
   ]);
   FEATURE_DEFS = featureMod.FEATURE_DEFS;
   REGION_DEFS = regionMod.REGION_DEFS;

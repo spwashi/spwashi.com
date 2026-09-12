@@ -46,7 +46,7 @@ fixity = "tending"
     `DEFAULT_QA_VIEWPORTS was phone/desktop while DEVICE_REASONS already named pocket/fold/broadsheet`
   ][reg=set]
   expansion_prime = `Mount block-association at idle; apply expression-query slots; lazy parse() only on inspect. Named device-reason defaults. Region-local card echo. Agent still briefs name the stack.`
-  validation = `node --test scripts/tests/visual-capture-plan.test.mjs scripts/tests/expression-query.test.mjs; rg 'spw-block-association' public/js/runtime/module-catalog-enhancement.js`
+  validation = `node --test scripts/tests/visual-capture-plan.test.mjs scripts/tests/expression-query.test.mjs; rg 'spw-block-association' public/js/runtime/catalog/enhancement.js`
   do_not_promote_until = `A second still pass uses named device-reasons without adding a new viewport physics, and inspect parse() is challenged against at least one authored definition.`
 }[reg=facet]
 

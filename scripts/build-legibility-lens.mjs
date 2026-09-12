@@ -37,7 +37,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const CATALOG_DIR = path.join(ROOT, 'public/js/runtime');
+const CATALOG_DIR = path.join(ROOT, 'public/js/runtime/catalog');
 const OUT = path.join(ROOT, 'public/css/systems/legibility-lens.css');
 
 /** Channels ordered by how load-bearing they are. Order drives the cascade. */
@@ -55,7 +55,7 @@ const CHANNEL_NOTE = {
 
 async function collectChannels() {
   const files = (await readdir(CATALOG_DIR))
-    .filter((name) => name.startsWith('module-catalog-') && name.endsWith('.js'));
+    .filter((name) => name.endsWith('.js'));
 
   const byChannel = new Map();
   for (const file of files) {

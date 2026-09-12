@@ -27,7 +27,7 @@
 @spatial_gravity: ~"../conventions/spatial-gravity.spw"
 @daily_kernel: ~"../conventions/daily-kernel.spw"
 @module_export: ~"../../public/js/runtime/module-export-contract.js"
-@catalog_constants: ~"../../public/js/runtime/module-catalog-constants.js"
+@catalog_constants: ~"../../public/js/runtime/catalog/constants.js"
 @grower_start: ~"../../recipes/index.html"
 @product_lines: ~"../surfaces/product-lines.spw"
 @curriculum_route: ~"../../curriculum/index.html"
@@ -158,7 +158,7 @@ expression = permaculture[site]{observe.catch.yield}<projection>
 validation: #[
   `rg ecology_guild .spw/conventions/metaphor-dimensional-lexicon.spw`,
   `rg 'guild:' public/js/runtime/module-export-contract.js`,
-  `rg COST_COMMITMENT public/js/runtime/module-catalog-constants.js`,
+  `rg COST_COMMITMENT public/js/runtime/catalog/constants.js`,
   `Do not author data-spw-zone or data-spw-permaculture`,
   `Zone 5 harvest stays a cache seed; Zone 1 stems stay local`
 ][reg=set]

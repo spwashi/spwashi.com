@@ -19,8 +19,8 @@
 @wonder_architecture: ~"./wonder-architecture.spw"
 @charge_cycle: ~"./charge-cycle.spw"
 @module_updates_contract: ~"../../public/js/runtime/module-updates-contract.js"
-@module_catalog_constants: ~"../../public/js/runtime/module-catalog-constants.js"
-@module_catalog_normalize: ~"../../public/js/runtime/module-catalog-normalize.js"
+@module_catalog_constants: ~"../../public/js/runtime/catalog/constants.js"
+@module_catalog_normalize: ~"../../public/js/runtime/catalog/normalize.js"
 @module_export_contract: ~"../../public/js/runtime/module-export-contract.js"
 
 operation = "contract"
