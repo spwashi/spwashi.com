@@ -186,113 +186,107 @@ function createPublicJsResolvePlugin(outDir) {
 async function bundleSiteRuntimeGraph(outDir, logger) {
     const jsRoot = path.join(outDir, 'public/js');
     const entry = path.join(jsRoot, 'site.js');
-    const tmpDir = await fs.mkdtemp(path.join(outDir, '.bundle-'));
     const startedAt = Date.now();
-    try {
-        const definitions = await loadCatalogDefinitionsForBuild();
-        const sharedOptions = {
-            input: entry,
-            cwd: outDir,
-            makeAbsoluteExternalsRelative: false,
-            preserveEntrySignatures: 'allow-extension',
-            plugins: [createPublicJsResolvePlugin(outDir)],
-        };
-        const sharedOutput = {
-            format: 'es',
-            minify: true,
-            sourcemap: false,
-            // Off deliberately. Strict order wraps every module in a lazy `init_x()`
-            // held in a `var`, and the semantic groups below hand rolldown chunk
-            // graphs with cycles in them even though the module graph has none. A
-            // `var` binding is not hoisted like a function declaration, so the first
-            // chunk into a cycle called an initializer that was still undefined and
-            // every module mount after it died on `is not a function`. Native ESM
-            // ordering is already correct for an acyclic module graph, which this
-            // one is; the wrappers were buying nothing and costing the runtime.
-            strictExecutionOrder: false,
-            entryFileNames: 'site.js',
-            chunkFileNames: '[name]-[hash].js',
-        };
-        // First discover the static closure without manual groups. A catalog target
-        // that is already resident through a static import cannot truthfully be a
-        // deferred pack; assigning it to one would pull that whole pack into boot.
-        const discovery = await rolldownBuild({
-            ...sharedOptions,
-            write: false,
-            output: sharedOutput,
-        });
-        const discoveryChunks = discovery.output.filter((output) => output.type === 'chunk');
-        const residentModuleIds = new Set(collectStaticChunkClosure(discoveryChunks)
-            .flatMap((chunk) => chunk.moduleIds)
-            .map(normalizeModuleId));
-        const deferredDefinitions = definitions.filter((definition) => {
-            const specifier = extractCatalogLoadSpecifier(definition.load);
-            if (!specifier)
-                return false;
-            return !residentModuleIds.has(normalizeModuleId(resolveCatalogEntryPath(outDir, specifier)));
-        });
-        const semanticPlan = createSemanticModulePlan(deferredDefinitions, outDir);
-        const result = await rolldownBuild({
-            ...sharedOptions,
-            output: {
-                ...sharedOutput,
-                dir: tmpDir,
-                codeSplitting: {
-                    includeDependenciesRecursively: false,
-                    groups: [{
-                            name(moduleId) {
-                                return semanticPlan.chunkNameByEntryPath.get(normalizeModuleId(moduleId)) || null;
-                            },
-                            entriesAware: false,
-                        }],
-                },
+    const definitions = await loadCatalogDefinitionsForBuild();
+    const sharedOptions = {
+        input: entry,
+        cwd: outDir,
+        makeAbsoluteExternalsRelative: false,
+        preserveEntrySignatures: 'allow-extension',
+        plugins: [createPublicJsResolvePlugin(outDir)],
+    };
+    const sharedOutput = {
+        format: 'es',
+        minify: true,
+        sourcemap: false,
+        // Off deliberately. Strict order wraps every module in a lazy `init_x()`
+        // held in a `var`, and the semantic groups below hand rolldown chunk
+        // graphs with cycles in them even though the module graph has none. A
+        // `var` binding is not hoisted like a function declaration, so the first
+        // chunk into a cycle called an initializer that was still undefined and
+        // every module mount after it died on `is not a function`. Native ESM
+        // ordering is already correct for an acyclic module graph, which this
+        // one is; the wrappers were buying nothing and costing the runtime.
+        strictExecutionOrder: false,
+        entryFileNames: 'site.js',
+        chunkFileNames: '[name]-[hash].js',
+    };
+    // First discover the static closure without manual groups. A catalog target
+    // that is already resident through a static import cannot truthfully be a
+    // deferred pack; assigning it to one would pull that whole pack into boot.
+    const discovery = await rolldownBuild({
+        ...sharedOptions,
+        write: false,
+        output: sharedOutput,
+    });
+    const discoveryChunks = discovery.output.filter((output) => output.type === 'chunk');
+    const residentModuleIds = new Set(collectStaticChunkClosure(discoveryChunks)
+        .flatMap((chunk) => chunk.moduleIds)
+        .map(normalizeModuleId));
+    const deferredDefinitions = definitions.filter((definition) => {
+        const specifier = extractCatalogLoadSpecifier(definition.load);
+        if (!specifier)
+            return false;
+        return !residentModuleIds.has(normalizeModuleId(resolveCatalogEntryPath(outDir, specifier)));
+    });
+    const semanticPlan = createSemanticModulePlan(deferredDefinitions, outDir);
+    const result = await rolldownBuild({
+        ...sharedOptions,
+        write: false,
+        output: {
+            ...sharedOutput,
+            codeSplitting: {
+                includeDependenciesRecursively: false,
+                groups: [{
+                        name(moduleId) {
+                            return semanticPlan.chunkNameByEntryPath.get(normalizeModuleId(moduleId)) || null;
+                        },
+                        entriesAware: false,
+                    }],
             },
-        });
-        const chunks = result.output.filter((output) => output.type === 'chunk');
-        const emittedHrefs = [];
-        let bytes = 0;
-        for (const chunk of chunks) {
-            const target = path.join(jsRoot, path.basename(chunk.fileName));
-            const content = Buffer.from(chunk.code);
-            bytes += content.length;
-            await fs.writeFile(target, content);
-            emittedHrefs.push(toPublicHref(outDir, target));
-        }
-        emittedHrefs.sort();
-        const bootChunks = collectStaticChunkClosure(chunks);
-        const boot = {
-            hrefs: bootChunks.map((chunk) => `/public/js/${path.basename(chunk.fileName)}`).sort(),
-            bytes: bootChunks.reduce((total, chunk) => total + Buffer.byteLength(chunk.code), 0),
-            gzipBytes: bootChunks.reduce((total, chunk) => total + gzipSync(chunk.code).length, 0),
+        },
+    });
+    const chunks = result.output.filter((output) => output.type === 'chunk');
+    const emittedHrefs = [];
+    let bytes = 0;
+    for (const chunk of chunks) {
+        const target = path.join(jsRoot, path.basename(chunk.fileName));
+        const content = Buffer.from(chunk.code);
+        bytes += content.length;
+        await fs.writeFile(target, content);
+        emittedHrefs.push(toPublicHref(outDir, target));
+    }
+    emittedHrefs.sort();
+    const bootChunks = collectStaticChunkClosure(chunks);
+    const boot = {
+        hrefs: bootChunks.map((chunk) => `/public/js/${path.basename(chunk.fileName)}`).sort(),
+        bytes: bootChunks.reduce((total, chunk) => total + Buffer.byteLength(chunk.code), 0),
+        gzipBytes: bootChunks.reduce((total, chunk) => total + gzipSync(chunk.code).length, 0),
+    };
+    const chunksByName = new Map(chunks.map((chunk) => [chunk.name, chunk]));
+    const modulePacks = {};
+    for (const pack of semanticPlan.packs) {
+        const chunk = chunksByName.get(pack.chunkName);
+        if (!chunk)
+            continue;
+        modulePacks[pack.id] = {
+            href: `/public/js/${path.basename(chunk.fileName)}`,
+            when: pack.when,
+            timingChunk: pack.timingChunk,
+            modules: pack.moduleIds,
+            describes: pack.describes,
+            updates: pack.updates,
+            imports: chunk.imports.map((value) => `/public/js/${path.basename(value)}`).sort(),
+            dynamicImports: chunk.dynamicImports.map((value) => `/public/js/${path.basename(value)}`).sort(),
+            bytes: Buffer.byteLength(chunk.code),
+            gzipBytes: gzipSync(chunk.code).length,
         };
-        const chunksByName = new Map(chunks.map((chunk) => [chunk.name, chunk]));
-        const modulePacks = {};
-        for (const pack of semanticPlan.packs) {
-            const chunk = chunksByName.get(pack.chunkName);
-            if (!chunk)
-                continue;
-            modulePacks[pack.id] = {
-                href: `/public/js/${path.basename(chunk.fileName)}`,
-                when: pack.when,
-                timingChunk: pack.timingChunk,
-                modules: pack.moduleIds,
-                describes: pack.describes,
-                updates: pack.updates,
-                imports: chunk.imports.map((value) => `/public/js/${path.basename(value)}`).sort(),
-                dynamicImports: chunk.dynamicImports.map((value) => `/public/js/${path.basename(value)}`).sort(),
-                bytes: Buffer.byteLength(chunk.code),
-                gzipBytes: gzipSync(chunk.code).length,
-            };
-        }
-        const ms = Date.now() - startedAt;
-        logger.info(`[build] bundled site runtime graph: boot=${boot.hrefs.join(', ') || '(none)'} `
-            + `packs=${Object.keys(modulePacks).length} chunks=${chunks.length} `
-            + `(${bytes} bytes total, ${boot.bytes} boot, ${ms}ms)`);
-        return { boot, emittedHrefs, modulePacks, bytes, ms };
     }
-    finally {
-        await rmrf(tmpDir);
-    }
+    const ms = Date.now() - startedAt;
+    logger.info(`[build] bundled site runtime graph: boot=${boot.hrefs.join(', ') || '(none)'} `
+        + `packs=${Object.keys(modulePacks).length} chunks=${chunks.length} `
+        + `(${bytes} bytes total, ${boot.bytes} boot, ${ms}ms)`);
+    return { boot, emittedHrefs, modulePacks, bytes, ms };
 }
 const SITE_SCRIPT_RE = /(<script\b[^>]*\bsrc=["']\/public\/js\/site\.js["'][^>]*>\s*<\/script>)/i;
 async function injectBootModulePreloads(outDir, hrefs) {
@@ -304,16 +298,16 @@ async function injectBootModulePreloads(outDir, hrefs) {
         .join('\n');
     const files = (await listFilesRecursive(outDir)).filter((file) => file.endsWith('.html'));
     let changed = 0;
-    for (const file of files) {
+    await Promise.all(files.map(async (file) => {
         const source = await fs.readFile(file, 'utf8');
         if (!SITE_SCRIPT_RE.test(source) || source.includes('data-spw-boot-chunk="true"'))
-            continue;
+            return;
         const output = source.replace(SITE_SCRIPT_RE, `${links}\n    $1`);
         if (output === source)
-            continue;
+            return;
         await fs.writeFile(file, output, 'utf8');
         changed += 1;
-    }
+    }));
     return changed;
 }
 /**
@@ -334,26 +328,25 @@ async function minifyPublicJsModules(outDir, logger, skipFiles = []) {
     async function minifyOne(filePath) {
         const source = await fs.readFile(filePath);
         beforeBytes += source.length;
-        const tmpDir = await fs.mkdtemp(path.join(outDir, '.minify-'));
-        try {
-            await rolldownBuild({
-                input: filePath,
-                output: {
-                    dir: tmpDir,
-                    format: 'es',
-                    minify: true,
-                    entryFileNames: 'out.js',
-                    sourcemap: false,
-                },
-                // Externalize every non-entry import so relative and /public/ paths stay.
-                external: (id) => id !== filePath && !id.startsWith('\0'),
-            });
-            const minified = await fs.readFile(path.join(tmpDir, 'out.js'));
+        const bundle = await rolldownBuild({
+            input: filePath,
+            write: false,
+            output: {
+                format: 'es',
+                minify: true,
+                sourcemap: false,
+            },
+            // Externalize every non-entry import so relative and /public/ paths stay.
+            external: (id) => id !== filePath && !id.startsWith('\0'),
+        });
+        const chunk = bundle.output.find((out) => out.type === 'chunk');
+        if (chunk) {
+            const minified = Buffer.from(chunk.code, 'utf8');
             afterBytes += minified.length;
             await fs.writeFile(filePath, minified);
         }
-        finally {
-            await rmrf(tmpDir);
+        else {
+            afterBytes += source.length;
         }
     }
     async function worker() {
@@ -433,24 +426,37 @@ async function hashAndRewritePublicAssets(outDir, options, runtimeBundle) {
             throw error;
         }
     }
-    const workerPath = path.join(outDir, 'sw.js');
-    const rewriteTargets = (await listFilesRecursive(outDir)).filter((file) => (file.endsWith('.html')
-        || file.endsWith('.js')
-        || path.resolve(file) === path.resolve(workerPath)));
-    for (const file of rewriteTargets) {
-        const source = await fs.readFile(file, 'utf8');
-        let output = source;
-        for (const [original, hashed] of Object.entries(assetMap)) {
-            output = output.replaceAll(original, hashed);
-            const originalBase = path.posix.basename(original);
-            const hashedBase = path.posix.basename(hashed);
-            if (originalBase !== hashedBase) {
-                output = output.replaceAll(`./${originalBase}`, `./${hashedBase}`);
+    const activeRewrites = Object.entries(assetMap).filter(([original, hashed]) => original !== hashed);
+    if (activeRewrites.length > 0) {
+        const workerPath = path.join(outDir, 'sw.js');
+        const rewriteTargets = (await listFilesRecursive(outDir)).filter((file) => (file.endsWith('.html')
+            || file.endsWith('.js')
+            || path.resolve(file) === path.resolve(workerPath)));
+        const rewritePoolLimit = 16;
+        let cursor = 0;
+        async function rewriteWorker() {
+            while (cursor < rewriteTargets.length) {
+                const index = cursor;
+                cursor += 1;
+                const file = rewriteTargets[index];
+                if (!file)
+                    return;
+                const source = await fs.readFile(file, 'utf8');
+                let output = source;
+                for (const [original, hashed] of activeRewrites) {
+                    output = output.replaceAll(original, hashed);
+                    const originalBase = path.posix.basename(original);
+                    const hashedBase = path.posix.basename(hashed);
+                    if (originalBase !== hashedBase) {
+                        output = output.replaceAll(`./${originalBase}`, `./${hashedBase}`);
+                    }
+                }
+                if (output !== source) {
+                    await fs.writeFile(file, output, 'utf8');
+                }
             }
         }
-        if (output !== source) {
-            await fs.writeFile(file, output, 'utf8');
-        }
+        await Promise.all(Array.from({ length: Math.min(rewritePoolLimit, rewriteTargets.length) }, () => rewriteWorker()));
     }
     const resolveAssetHref = (href) => assetMap[href] || href;
     const modulePacks = Object.fromEntries(Object.entries(runtimeBundle.modulePacks).map(([id, pack]) => [id, {

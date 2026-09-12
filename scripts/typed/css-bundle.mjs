@@ -11,9 +11,7 @@ function stripSourceMapComments(source) {
 }
 function normalizeCssBody(source) {
     return stripSourceMapComments(source)
-        .split('\n')
-        .map((line) => line.replace(/\s+$/u, ''))
-        .join('\n')
+        .replace(/[ \t\r]+$/gm, '')
         .trim();
 }
 export function stripManifestAndImports(source) {
@@ -21,9 +19,18 @@ export function stripManifestAndImports(source) {
         .replace(/^@layer[ \t]+[^;{}\n]+;[ \t]*(?:\r?\n)?/m, '')
         .replace(/@import\s+url\((['"]?)([^'")]+)\1\)\s*(?:layer\(([^)]+)\))?\s*;/g, ''));
 }
+const localCssCache = new Map();
+export function clearLocalCssCache() {
+    localCssCache.clear();
+}
 async function readLocalCss(href) {
+    const cached = localCssCache.get(href);
+    if (cached !== undefined)
+        return cached;
     const absolutePath = absoluteFromRootHref(href);
-    return fs.readFile(absolutePath, 'utf8');
+    const content = await fs.readFile(absolutePath, 'utf8');
+    localCssCache.set(href, content);
+    return content;
 }
 async function readTextIfExists(absolutePath) {
     try {
@@ -176,6 +183,7 @@ async function buildOneBundle(target, coreImports, options) {
     };
 }
 export async function buildCssBundles(options = {}) {
+    clearLocalCssCache();
     const targets = await resolveBundleTargets(options);
     if (!targets.length) {
         throw new Error('[css-bundle] no bundle targets matched filter'

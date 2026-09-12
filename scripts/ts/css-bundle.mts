@@ -35,9 +35,7 @@ function stripSourceMapComments(source: string): string {
 
 function normalizeCssBody(source: string): string {
   return stripSourceMapComments(source)
-    .split('\n')
-    .map((line) => line.replace(/\s+$/u, ''))
-    .join('\n')
+    .replace(/[ \t\r]+$/gm, '')
     .trim();
 }
 
@@ -49,9 +47,19 @@ export function stripManifestAndImports(source: string): string {
   );
 }
 
+const localCssCache = new Map<string, string>();
+
+export function clearLocalCssCache(): void {
+  localCssCache.clear();
+}
+
 async function readLocalCss(href: string): Promise<string> {
+  const cached = localCssCache.get(href);
+  if (cached !== undefined) return cached;
   const absolutePath = absoluteFromRootHref(href);
-  return fs.readFile(absolutePath, 'utf8');
+  const content = await fs.readFile(absolutePath, 'utf8');
+  localCssCache.set(href, content);
+  return content;
 }
 
 async function readTextIfExists(absolutePath: string): Promise<string | null> {
@@ -260,6 +268,7 @@ async function buildOneBundle(
 }
 
 export async function buildCssBundles(options: BuildCssBundlesOptions = {}): Promise<CssBundleBuildResult[]> {
+  clearLocalCssCache();
   const targets = await resolveBundleTargets(options);
 
   if (!targets.length) {

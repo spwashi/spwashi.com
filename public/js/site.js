@@ -96,6 +96,8 @@ import {
 } from './runtime/region-profiler.js';
 import { createModuleLoader } from './runtime/module-loader.js';
 import { describePageCategory, readPageCategory } from './runtime/page-category.js';
+import * as expressionGeometry from './semantic/spw-expression-geometry.js';
+import * as moduleTimingContract from './kernel/module-timing-contract.js';
 
 function loadCompositionBox() {
   return import('./runtime/composition-box-model.js');
@@ -106,7 +108,7 @@ function loadGestureContract() {
 }
 
 function loadExpressionGeometry() {
-  return import('./semantic/spw-expression-geometry.js');
+  return Promise.resolve(expressionGeometry);
 }
 /**
  * site.js
@@ -224,18 +226,13 @@ const runtimeLogger = createSpwLogger('spw-runtime', {
 });
 
 async function getModuleTimingContract() {
-  if (getModuleTimingContract.mod) return getModuleTimingContract.mod;
-  try {
-    getModuleTimingContract.mod = await import('./kernel/module-timing-contract.js');
-  } catch {
-    getModuleTimingContract.mod = null;
-  }
-  return getModuleTimingContract.mod;
+  return moduleTimingContract;
 }
+getModuleTimingContract.mod = moduleTimingContract;
 
 function getSpwPerformanceTimings() {
   // Sync path for compose.controls.modules.timings(); prefers typed contract when already loaded.
-  const contract = getModuleTimingContract.mod;
+  const contract = moduleTimingContract;
   if (contract?.collectSpwPerformanceTimings) {
     return contract.collectSpwPerformanceTimings(performance);
   }
@@ -288,8 +285,6 @@ function getSpwPerformanceTimings() {
   }
 }
 
-// Warm the typed timing contract in the background (non-blocking).
-void getModuleTimingContract();
 
 annotateFloatingChrome(document);
 annotatePageHooks(document);

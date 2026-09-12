@@ -259,8 +259,29 @@ export async function rmrf(target: string): Promise<void> {
   await fs.rm(target, { recursive: true, force: true });
 }
 
-export async function copyFileOrRender(srcPath: string, dstPath: string): Promise<Exclude<CopyResult, 'skipped-directory' | 'skipped-missing' | 'skipped-special'>> {
-  await fs.mkdir(path.dirname(dstPath), { recursive: true });
+async function ensureDir(dirPath: string, cache?: Set<string>): Promise<void> {
+  if (cache) {
+    if (cache.has(dirPath)) return;
+    await fs.mkdir(dirPath, { recursive: true });
+    cache.add(dirPath);
+    let parent = path.dirname(dirPath);
+    while (parent && !cache.has(parent) && parent !== dirPath) {
+      cache.add(parent);
+      const next = path.dirname(parent);
+      if (next === parent) break;
+      parent = next;
+    }
+  } else {
+    await fs.mkdir(dirPath, { recursive: true });
+  }
+}
+
+export async function copyFileOrRender(
+  srcPath: string,
+  dstPath: string,
+  dirCache?: Set<string>,
+): Promise<Exclude<CopyResult, 'skipped-directory' | 'skipped-missing' | 'skipped-special'>> {
+  await ensureDir(path.dirname(dstPath), dirCache);
 
   if (srcPath.endsWith('.html')) {
     const source = await fs.readFile(srcPath, 'utf8');
@@ -357,7 +378,11 @@ export function logDuplicateImages(duplicateGroups: string[][], logger: BuildLog
   }
 }
 
-export async function copyTrackedPath(repoPath: string, options: BuildOptions): Promise<CopyResult> {
+export async function copyTrackedPath(
+  repoPath: string,
+  options: BuildOptions,
+  dirCache?: Set<string>,
+): Promise<CopyResult> {
   const srcPath = path.join(ROOT_DIR, repoPath);
   const dstPath = path.join(options.outDir, repoPath);
   let stats;
@@ -372,7 +397,7 @@ export async function copyTrackedPath(repoPath: string, options: BuildOptions): 
   if (stats.isDirectory()) return 'skipped-directory';
 
   if (stats.isSymbolicLink()) {
-    await fs.mkdir(path.dirname(dstPath), { recursive: true });
+    await ensureDir(path.dirname(dstPath), dirCache);
 
     try {
       await fs.unlink(dstPath);
@@ -386,7 +411,7 @@ export async function copyTrackedPath(repoPath: string, options: BuildOptions): 
   }
 
   if (stats.isFile()) {
-    return copyFileOrRender(srcPath, dstPath);
+    return copyFileOrRender(srcPath, dstPath, dirCache);
   }
 
   return 'skipped-special';
@@ -401,6 +426,7 @@ export async function copyRepo(sourcePaths: string[], options: BuildOptions, log
     symlinked: 0,
     skipped: 0,
   };
+  const ensuredDirs = new Set<string>();
 
   resetTemplateStats();
 
@@ -409,7 +435,7 @@ export async function copyRepo(sourcePaths: string[], options: BuildOptions, log
       const repoPath = sourcePaths[nextIndex];
       nextIndex += 1;
 
-      const result = await copyTrackedPath(repoPath, options);
+      const result = await copyTrackedPath(repoPath, options, ensuredDirs);
 
       if (result === 'rendered') stats.rendered += 1;
       else if (result === 'copied') stats.copied += 1;
