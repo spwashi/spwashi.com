@@ -1362,6 +1362,33 @@ html[data-spw-resonance-ingredient] :where([data-spw-ingredient]):not(:hover):no
 :where([data-spw-target-kin]):not(:hover):not(:focus-visible) {
   --spw-resonance: 0.6;
 }
+
+/* Relation triad: when a probed operator carries a known relation classification
+   (curiosity, relationship, architecture), bias the probe glow so the visitor
+   senses structural intent vs inquiry vs connection without new paint weight. */
+html[data-spw-probe-relation="curiosity"] {
+  --spw-probe-relation-bias: 1;
+}
+html[data-spw-probe-relation="relationship"] {
+  --spw-probe-relation-bias: 2;
+}
+html[data-spw-probe-relation="architecture"] {
+  --spw-probe-relation-bias: 3;
+}
+
+/* Block resonance echo: when an operator or concept is actively probed,
+   matching Spw definition or reference blocks receive transient block resonance,
+   connecting living chips to their defining grammar. */
+:where([data-spw-block-resonance="echoed"]) {
+  outline: 1px dashed color-mix(
+    in srgb,
+    var(--spw-operator-color, var(--active-op-color, var(--teal))) 32%,
+    transparent
+  );
+  outline-offset: 4px;
+  transition: outline-color var(--motion-duration-fast, 0.2s) ease;
+}
+
 /* ==========================================================================
    Transferable Spw Interactive Momentum & Genomic Resonance
    --------------------------------------------------------------------------

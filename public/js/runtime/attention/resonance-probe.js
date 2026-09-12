@@ -1,5 +1,9 @@
 import { getOperatorDefinition } from '/public/js/kernel/operator-detection.js';
-import { supportsFinePointerHover } from '/public/js/kernel/dom-contracts.js';
+import {
+  PROJECTION_TIERS,
+  supportsFinePointerHover,
+  writeProjectionTier,
+} from '/public/js/kernel/dom-contracts.js';
 import {
   PROBE_ATTR,
   PROBE_TARGET_SELECTOR,
@@ -11,8 +15,48 @@ import {
 } from './shared.js';
 import { readPinnedProbe } from './capture-pins.js';
 
+const CURIOSITY_OPERATORS = new Set([
+  'probe',
+  'potential',
+  'action',
+  'normalize',
+  'measure',
+]);
+
+const RELATIONSHIP_OPERATORS = new Set([
+  'ref',
+  'route',
+  'stream',
+  'surface',
+  'substrate',
+  'meta',
+  'resource',
+  'support',
+  'perspective',
+  'subject',
+  'confluence',
+]);
+
+const ARCHITECTURE_OPERATORS = new Set([
+  'frame',
+  'vibration',
+  'address',
+  'integration',
+  'object',
+  'value',
+  'binding',
+]);
+
+function inferRelation(operatorType = '') {
+  if (!operatorType) return '';
+  if (CURIOSITY_OPERATORS.has(operatorType)) return 'curiosity';
+  if (RELATIONSHIP_OPERATORS.has(operatorType)) return 'relationship';
+  if (ARCHITECTURE_OPERATORS.has(operatorType)) return 'architecture';
+  return '';
+}
+
 function readResonanceState(target) {
-  if (!target) return { key: '', family: '', concept: '', ingredient: '', navTarget: '' };
+  if (!target) return { key: '', family: '', concept: '', ingredient: '', navTarget: '', sigil: '' };
   const rawKey = (
     target.getAttribute(RESONANCE_KEY_ATTR)
     || target.getAttribute('data-spw-operator')
@@ -20,21 +64,12 @@ function readResonanceState(target) {
   );
   const def = rawKey ? getOperatorDefinition(rawKey) : null;
   const key = def?.type || String(rawKey).trim().toLowerCase();
-  // Kin operators (frame/layer/vibration, ground/binding, integration/subject,
-  // concept-edge/concept) share a family in OPERATOR_DEFINITIONS but were
-  // never grouped in CSS — pinning "frame" only ever echoed other "frame"
-  // chips. wonder.css reads this to give same-family operators a fainter
-  // echo alongside the existing exact-match one.
   const family = def?.family || '';
+  const sigil = def?.sigil || '';
   const concept = target.getAttribute('data-spw-concept') || '';
   const ingredient = target.getAttribute('data-spw-ingredient') || '';
-  // Quick-move chips (home/other hubs) author data-spw-target as a freeform
-  // destination label ("rpg-images", "prompt-handles") — authored 25 times,
-  // read by nothing. Unlike operator type, target values are high-cardinality
-  // and freeform, so they cannot be enumerated as CSS selectors the way the
-  // operator families above are; matching is done directly against the DOM.
   const navTarget = target.getAttribute('data-spw-target') || '';
-  return { key, family, concept, ingredient, navTarget };
+  return { key, family, concept, ingredient, navTarget, sigil };
 }
 
 export function initResonanceProbe(root) {
@@ -52,6 +87,7 @@ export function initResonanceProbe(root) {
 
   let rafId = 0;
   let markedTargetEls = [];
+  let markedBlockEls = [];
   let lastNavTarget = '';
 
   function clearTargetKin() {
@@ -69,6 +105,34 @@ export function initResonanceProbe(root) {
     for (const el of markedTargetEls) el.setAttribute('data-spw-target-kin', 'true');
   }
 
+  function clearBlockResonance() {
+    for (const el of markedBlockEls) {
+      writeProjectionTier(el, PROJECTION_TIERS.TRANSIENT, { spwBlockResonance: null });
+    }
+    markedBlockEls = [];
+  }
+
+  function applyBlockResonance(key, concept, sigil) {
+    clearBlockResonance();
+    if (!key && !concept && !sigil) return;
+
+    const blocks = Array.from(doc.querySelectorAll('[data-spw-definition], [data-spw-ref], script[type="text/spw"]'));
+    for (const block of blocks) {
+      const def = block.getAttribute('data-spw-definition') || '';
+      const ref = block.getAttribute('data-spw-ref') || '';
+      const text = block.textContent || '';
+      const matchesOp = (
+        (key && (def.includes(key) || ref.includes(key) || text.includes(key)))
+        || (sigil && (def.includes(sigil) || ref.includes(sigil) || text.includes(sigil)))
+      );
+      const matchesConcept = concept && (def.includes(concept) || ref.includes(concept) || text.includes(concept));
+      if (matchesOp || matchesConcept) {
+        writeProjectionTier(block, PROJECTION_TIERS.TRANSIENT, { spwBlockResonance: 'echoed' });
+        markedBlockEls.push(block);
+      }
+    }
+  }
+
   function scheduleApply() {
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(apply);
@@ -76,15 +140,26 @@ export function initResonanceProbe(root) {
 
   function apply() {
     const pinnedProbe = readPinnedProbe(doc);
+    const pinnedDef = pinnedProbe ? getOperatorDefinition(pinnedProbe) : null;
     const pinnedState = pinnedProbe
-      ? { key: pinnedProbe, family: getOperatorDefinition(pinnedProbe)?.family || '', concept: '', ingredient: '', navTarget: '' }
-      : { key: '', family: '', concept: '', ingredient: '', navTarget: '' };
+      ? { key: pinnedProbe, family: pinnedDef?.family || '', concept: '', ingredient: '', navTarget: '', sigil: pinnedDef?.sigil || '' }
+      : { key: '', family: '', concept: '', ingredient: '', navTarget: '', sigil: '' };
     const state = probeFocus || probeHover || pinnedState;
     const key = state.key;
     const family = state.family;
     const concept = state.concept;
     const ingredient = state.ingredient;
+    const sigil = state.sigil || '';
     applyTargetKin(state.navTarget);
+    applyBlockResonance(key, concept, sigil);
+
+    const relation = inferRelation(key);
+    if (relation) {
+      html.setAttribute('data-spw-probe-relation', relation);
+    } else {
+      html.removeAttribute('data-spw-probe-relation');
+    }
+
     const nextLogKey = (key || concept || ingredient) ? `${key}:${concept}:${ingredient}` : 'cleared';
     const shouldLog = nextLogKey !== lastProbeLogKey;
     lastProbeLogKey = nextLogKey;
@@ -172,11 +247,13 @@ export function initResonanceProbe(root) {
     if (rafId) cancelAnimationFrame(rafId);
     clearTimeout(hoverTimer);
     clearTargetKin();
+    clearBlockResonance();
     lastNavTarget = '';
     if (!readPinnedProbe(doc)) html.removeAttribute(PROBE_ATTR);
     html.removeAttribute('data-spw-resonance-family');
     html.removeAttribute('data-spw-resonance-concept');
     html.removeAttribute('data-spw-resonance-ingredient');
+    html.removeAttribute('data-spw-probe-relation');
   };
 }
 
@@ -185,9 +262,9 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initResonanceProbe(
     resolveAttentionMain(ctx, root) || resolveAttentionDocument(ctx, root),
   ),
-  describes: 'attention[operator|family|concept|ingredient|nav-target] resonance probe',
+  describes: 'attention[operator|family|concept|ingredient|nav-target|relation] resonance probe',
   timingArc: 'visible-attention',
-  effectScope: 'root-state focus-listener conditional-hover-listener',
+  effectScope: 'root-state focus-listener conditional-hover-listener block-echo',
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

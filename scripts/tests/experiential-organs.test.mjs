@@ -33,6 +33,11 @@ import {
   syncExperientialSurface,
 } from '../../public/js/runtime/experiential.js';
 
+import {
+  SPW_MODULE_EXPORT as RESONANCE_PROBE_EXPORT,
+  initResonanceProbe,
+} from '../../public/js/runtime/attention/resonance-probe.js';
+
 test('sample dock organ contract exposes frozen definition and public API', () => {
   assert.equal(SPW_SAMPLE_DOCK_CONTRACT.id, 'sample-dock');
   assert.equal(SPW_SAMPLE_DOCK_CONTRACT.mount, 'initSampleDock');
@@ -120,4 +125,11 @@ test('breadcrumb string and path utilities normalize predictably', () => {
     activeMode: null,
   });
   assert.equal(summary, 'folios · visual study · #>folio-hero');
+});
+
+test('attention resonance probe exposes relation and block-echo capabilities', () => {
+  assert.equal(RESONANCE_PROBE_EXPORT.id, 'attention-resonance-probe');
+  assert.match(RESONANCE_PROBE_EXPORT.describes, /relation/);
+  assert.match(RESONANCE_PROBE_EXPORT.effectScope, /block-echo/);
+  assert.equal(typeof initResonanceProbe, 'function');
 });
