@@ -50,35 +50,36 @@
   "daily": [
     {
       "promo": {
-        "label": "Daily promo",
+        "label": "Release",
         "operator": "@",
-        "title": "Open the culinary route into play",
-        "summary": "Recipes now carry cuisine taxonomy, soup systems, Mediterranean clusters, American cuisine clusters, wings, sauces, weekly vegetable snacks, trade ingredients, named dishes, and software metaphors that can feed RPG Wednesday scenes.",
-        "href": "/recipes/",
-        "cta": "Open recipes",
-        "why": "A public kitchen gives collaborators concrete vocabulary for screenshots, prompts, and table-ready imagination.",
+        "title": "Open the September 13 release record",
+        "summary": "Scan the three-surface close, inspect the receipts, then choose the route you want to carry forward.",
+        "href": "/now/",
+        "cta": "Read the release",
+        "why": "The A-cycle turns scattered work into one public checkpoint.",
         "presentation": "modal",
         "promotion": {
-          "kind": "service",
-          "audience": "collaborators looking for a concrete entry into cuisine, play, or media development",
-          "offer": "Use culinary technique, ingredient clusters, and named dishes as shared grammar for recipes, components, and RPG scenes",
-          "proof": "The recipes, play, RPG Wednesday, and component glossary surfaces now share the same cuisine handles.",
-          "objection": "It should feel useful, not decorative.",
-          "urgency": "The next session can use these handles immediately.",
+          "kind": "release",
+          "audience": "returning readers, collaborators, and patrons deciding what to follow after the close",
+          "offer": "A readable September 13 checkpoint across the site, workbench, and lore.land",
+          "proof": "The Now route names the shipped surfaces, local verification gate, and paths that remain open.",
+          "objection": "A release record should show consequence instead of reciting activity.",
+          "urgency": "The A-cycle closes today; the next useful move begins from its receipts.",
           "tone": "clear",
           "theme": "glass",
-          "handles": ["culinary", "rpg", "media", "guide"],
+          "handles": ["release", "receipts", "site", "workbench", "lore.land"],
           "ctaStyle": "primary",
           "presentation": "modal"
         }
       },
       "wonder": {
-        "label": "Daily wonder",
+        "label": "Release question",
         "operator": "?",
-        "title": "What changes when an ingredient arrives from elsewhere?",
-        "summary": "A hard-to-source flavor can become a trade route, a character debt, a magical substitute, or the reason a town remembers a visitor.",
-        "href": "/play/rpg-wednesday/",
-        "cta": "Take it to play"
+        "title": "Which shipped change should become a practice?",
+        "summary": "Follow one receipt into its route. If the relation still helps there, it earned a return.",
+        "href": "/now/#release-receipts",
+        "cta": "Follow the receipts",
+        "why": "Practice: pick one line, open its proof, and decide what should survive the next cycle."
       }
     },
     {

@@ -18,9 +18,11 @@ import {
   shouldSuppressNotice,
 } from '../../public/js/interface/discovery-notices.js';
 import {
+  dailyCadenceForDate,
   feedLocale,
   pickDaily,
   pickWeekly,
+  releaseCycleForDate,
 } from '../../public/js/typed/promo-wonder-cycle.js';
 import { createModuleLoader } from '../../public/js/runtime/module-loader.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from '../../public/js/runtime/catalog/constants.js';
@@ -850,6 +852,14 @@ test('promo wonder selection remains data driven', () => {
   assert.equal(feedLocale(promoFeed), 'fr');
   assert.equal(daily.promo.title, 'Tuesday promo');
   assert.equal(weekly.promo.title, promoFeed.weekly[weeklyIndex].promo.title);
+});
+
+test('promo wonder cadence marks the 13th and 26th as release closes', () => {
+  assert.equal(releaseCycleForDate(new Date(2026, 8, 13, 12)), 'A-cycle');
+  assert.equal(releaseCycleForDate(new Date(2026, 8, 26, 12)), 'B-cycle');
+  assert.equal(releaseCycleForDate(new Date(2026, 8, 14, 12)), '');
+  assert.equal(dailyCadenceForDate(new Date(2026, 8, 13, 12)), 'cycle');
+  assert.equal(dailyCadenceForDate(new Date(2026, 8, 14, 12)), 'daily');
 });
 
 test('live promo feed can pick the folio worktable on a known weekday', () => {

@@ -55,35 +55,36 @@ const DEFAULT_FEED = Object.freeze({
     daily: [
         {
             promo: {
-                label: 'Daily promo',
+                label: 'Release',
                 operator: '@',
-                title: 'Keep a configuration that fits how you read',
-                summary: 'Presets, workflow, and climate stay in this browser. One change is enough to feel the page answer.',
-                href: '/settings/#presets',
-                cta: 'Open presets',
-                why: 'Quick Start is the fastest useful control surface on the site.',
+                title: 'Open the September 13 release record',
+                summary: 'Scan the three-surface close, inspect the receipts, then choose the route you want to carry forward.',
+                href: '/now/',
+                cta: 'Read the release',
+                why: 'The A-cycle turns scattered work into one public checkpoint.',
                 presentation: 'inline',
                 promotion: {
-                    kind: 'service',
-                    audience: 'people who want the site to match how they actually read',
-                    offer: 'A browser-local preset, workflow, and climate you can keep',
-                    proof: 'Settings saves in this browser and the rest of the site already listens.',
-                    objection: 'It should change the page, not just document the knobs.',
-                    urgency: 'The first useful change is a preset.',
+                    kind: 'release',
+                    audience: 'returning readers, collaborators, and patrons deciding what to follow after the close',
+                    offer: 'A readable September 13 checkpoint across the site, workbench, and lore.land',
+                    proof: 'The Now route names the shipped surfaces, local verification gate, and paths that remain open.',
+                    objection: 'A release record should show consequence instead of reciting activity.',
+                    urgency: 'The A-cycle closes today; the next useful move begins from its receipts.',
                     tone: 'clear',
                     theme: 'signal',
-                    handles: ['settings', 'presets', 'climate', 'workflow'],
+                    handles: ['release', 'receipts', 'site', 'workbench', 'lore.land'],
                     ctaStyle: 'primary',
                     presentation: 'inline',
                 },
             },
             wonder: {
-                label: 'Daily wonder',
+                label: 'Release question',
                 operator: '?',
-                title: 'What if this page had a different climate?',
-                summary: 'Climate is the attention posture. Try one, then leave — the site keeps it.',
-                href: '/settings/#climate-settings',
-                cta: 'Try climate',
+                title: 'Which shipped change should become a practice?',
+                summary: 'Follow one receipt into its route. If the relation still helps there, it earned a return.',
+                href: '/now/#release-receipts',
+                cta: 'Follow the receipts',
+                why: 'Practice: pick one line, open its proof, and decide what should survive the next cycle.',
             },
         },
         {
@@ -174,6 +175,16 @@ export function pickWeekly(feed, date = new Date()) {
     const weekly = Array.isArray(feed.weekly) && feed.weekly.length ? feed.weekly : DEFAULT_FEED.weekly;
     return weekly[clampIndex(getWeekIndex(date), weekly.length)] ?? DEFAULT_FEED.weekly[0];
 }
+export function releaseCycleForDate(date = new Date()) {
+    if (date.getDate() === 13)
+        return 'A-cycle';
+    if (date.getDate() === 26)
+        return 'B-cycle';
+    return '';
+}
+export function dailyCadenceForDate(date = new Date()) {
+    return releaseCycleForDate(date) ? 'cycle' : 'daily';
+}
 function fallbackLabel(kind) {
     return kind === 'promo' ? 'Promo' : 'Wonder';
 }
@@ -185,6 +196,9 @@ function fallbackOperator(kind) {
 }
 function cardOperatorType(kind) {
     return kind === 'promo' ? 'perspective' : 'probe';
+}
+function ctaOperatorType(kind) {
+    return kind === 'promo' ? 'action' : 'probe';
 }
 function getInlinePresentation() {
     return 'inline';
@@ -251,9 +265,14 @@ function renderCard(item = {}, kind = 'promo', cadence = 'daily', locale = SOURC
         const link = el('a', 'spw-chip promo-wonder-cycle__cta', {
             href: cleanText(item.href),
             'data-spw-handle': 'true',
-            'data-spw-operator': cardOperatorType(kind),
+            'data-spw-operator': ctaOperatorType(kind),
         });
         link.textContent = cleanText(item.cta || 'Open');
+        const cue = el('span', 'promo-wonder-cycle__cta-cue', {
+            'aria-hidden': 'true',
+        });
+        cue.textContent = kind === 'promo' ? '! \u2192' : '? \u219D';
+        link.append(cue);
         article.append(link);
     }
     return article;
@@ -266,6 +285,8 @@ export function renderFeed(host, feed, date = new Date()) {
     const daily = pickDaily(feed, date);
     const weekly = pickWeekly(feed, date);
     const locale = feedLocale(feed);
+    const releaseCycle = releaseCycleForDate(date);
+    const dailyCadence = dailyCadenceForDate(date);
     const dayLabel = cleanText(date.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' }));
     const dayStamp = [
         date.getFullYear(),
@@ -281,9 +302,14 @@ export function renderFeed(host, feed, date = new Date()) {
     dayTime.dateTime = dayStamp;
     dayTime.textContent = dayLabel;
     meta.append(dayTime);
+    if (releaseCycle) {
+        const releaseMarker = el('strong', 'promo-wonder-cycle__release');
+        releaseMarker.textContent = `${releaseCycle} release day`;
+        meta.append(' · ', releaseMarker);
+    }
     const grid = el('div', 'promo-wonder-cycle__grid');
     grid.dataset.spwRegionFlow = 'overlay';
-    grid.append(renderCard(daily.promo, 'promo', 'daily', locale), renderCard(daily.wonder, 'wonder', 'daily', locale));
+    grid.append(renderCard(daily.promo, 'promo', dailyCadence, locale), renderCard(daily.wonder, 'wonder', dailyCadence, locale));
     const weeklyGrid = el('div', 'promo-wonder-cycle__weekly');
     weeklyGrid.dataset.spwRegionFlow = 'overlay';
     weeklyGrid.setAttribute('aria-label', 'This week');

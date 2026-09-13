@@ -38,10 +38,19 @@
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem;
   margin: 0;
   color: var(--ink-soft, rgba(27, 31, 35, 0.68));
   font-size: 0.82rem;
   letter-spacing: 0.02em;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__release {
+  color: var(--op-object-color, #a67c00);
+  font-weight: 720;
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__static-fallback, .promo-wonder-cycle__live) {
@@ -76,7 +85,8 @@
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card {
-  --spw-arc-color: var(--home-accent-primary, var(--semantic-accent, #008080));
+  --spw-card-accent: var(--home-accent-primary, var(--semantic-accent, #008080));
+  --spw-arc-color: var(--spw-card-accent);
   display: grid;
   position: relative;
   grid-template-rows: auto auto 1fr auto;
@@ -85,6 +95,7 @@
   min-height: 100%;
   padding: 1rem 1.05rem 1.05rem;
   border: var(--home-surface-border);
+  border-block-start: 0.2rem solid color-mix(in srgb, var(--spw-card-accent) 78%, transparent);
   border-radius: calc(var(--home-radius-md) + 0.1rem);
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--home-surface-bg-strong) 94%, transparent), var(--home-surface-bg-muted)),
@@ -97,6 +108,14 @@
     transform var(--home-transition-base),
     box-shadow var(--home-transition-base),
     border-color var(--home-transition-base);
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--promo {
+  --spw-card-accent: var(--op-perspective-color, var(--op-action-color, #006d6d));
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--wonder {
+  --spw-card-accent: var(--op-probe-color, #7a4fb5);
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card::after {
@@ -114,24 +133,22 @@
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card[data-spw-cadence="weekly"] {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-primary) 5%, transparent), transparent 48%),
+    linear-gradient(180deg, color-mix(in srgb, var(--spw-card-accent) 5%, transparent), transparent 48%),
     color-mix(in srgb, var(--home-surface-bg-muted) 94%, var(--home-surface-bg-strong) 6%);
 }
 
 /* Daily cards feel snappier and more immediate (return tomorrow signal). */
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card[data-spw-cadence="daily"] {
-  --spw-arc-color: var(--home-accent-primary, var(--op-action-color, #006d6d));
   transition-duration: 160ms, 160ms, 120ms;
-  border-color: color-mix(in srgb, var(--home-accent-primary) 22%, var(--home-surface-border-color, transparent) 78%);
+  border-color: color-mix(in srgb, var(--spw-card-accent) 24%, var(--home-surface-border-color, transparent) 76%);
 }
 
 /* Cycle (13/26 release close) and streak carry heavier editorial weight. */
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card[data-spw-cadence="cycle"] {
-  --spw-arc-color: var(--op-frame-color, var(--teal, #008080));
   box-shadow:
     0 8px 22px rgba(0, 0, 0, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.36);
-  border-color: color-mix(in srgb, var(--op-frame-color, var(--teal, #008080)) 18%, var(--home-surface-border-color, transparent) 82%);
+  border-color: color-mix(in srgb, var(--spw-card-accent) 34%, var(--op-object-color, #a67c00) 12%, var(--home-surface-border-color, transparent) 54%);
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card[data-spw-cadence="streak"] {
@@ -145,7 +162,7 @@
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--wonder {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-secondary) 9%, transparent), transparent 52%),
+    linear-gradient(180deg, color-mix(in srgb, var(--spw-card-accent) 9%, transparent), transparent 52%),
     var(--home-surface-bg-muted);
 }
 
@@ -156,7 +173,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card:is(:hover, :focus-within) {
-    border-color: var(--home-accent-line-strong);
+    border-color: color-mix(in srgb, var(--spw-card-accent) 52%, var(--home-surface-border-color, transparent) 48%);
     box-shadow:
       0 10px 24px rgba(0, 0, 0, 0.07),
       inset 0 1px 0 rgba(255, 255, 255, 0.38);
@@ -173,10 +190,10 @@
   justify-self: start;
   margin: 0;
   padding: 0.16rem 0.48rem;
-  border: 1px solid color-mix(in srgb, var(--home-accent-primary) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--spw-card-accent) 28%, transparent);
   border-radius: var(--home-radius-pill);
-  background: color-mix(in srgb, var(--home-surface-bg-strong) 94%, var(--home-accent-primary) 6%);
-  color: color-mix(in srgb, var(--home-accent-primary) 54%, var(--ink-soft, rgba(27, 31, 35, 0.68)));
+  background: color-mix(in srgb, var(--home-surface-bg-strong) 92%, var(--spw-card-accent) 8%);
+  color: color-mix(in srgb, var(--spw-card-accent) 72%, var(--ink, #1b1f23));
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -190,7 +207,7 @@
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__title-row h3 {
   margin: 0;
-  color: var(--home-accent-ink);
+  color: color-mix(in srgb, var(--ink, #1b1f23) 88%, var(--spw-card-accent) 12%);
   font-size: clamp(1.02rem, 0.94rem + 0.42vw, 1.22rem);
   line-height: 1.14;
   letter-spacing: -0.02em;
@@ -221,7 +238,7 @@
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__why {
   margin: -0.1rem 0 0;
   padding-inline-start: 0.7rem;
-  border-inline-start: 1px solid color-mix(in srgb, var(--home-accent-primary) 22%, transparent);
+  border-inline-start: 1px solid color-mix(in srgb, var(--spw-card-accent) 34%, transparent);
   color: var(--ink-soft, rgba(27, 31, 35, 0.72));
   font-size: 0.83rem;
   line-height: 1.45;
@@ -232,11 +249,64 @@
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__cta {
+  --spw-control-gap: 0.48rem;
+  --spw-control-min-height: var(--touch-target-min, 2.75rem);
+  --spw-control-padding-block: 0.48rem;
+  --spw-control-padding-inline: 0.9rem;
   justify-self: start;
   align-self: end;
   margin-top: auto;
   display: inline-flex;
   align-items: center;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--promo .promo-wonder-cycle__cta {
+  --spw-control-radius: 0.62rem;
+  --active-op-color: var(--op-action-color, #006d6d);
+  font-weight: 760;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--wonder .promo-wonder-cycle__cta {
+  --spw-control-radius: var(--home-radius-pill, 999px);
+  --active-op-color: var(--op-probe-color, #7a4fb5);
+  font-weight: 620;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__cta-cue {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 2.3rem;
+  min-block-size: 1.35rem;
+  padding-inline: 0.3rem;
+  border: 1px solid color-mix(in srgb, var(--spw-card-accent) 48%, transparent);
+  color: var(--spw-card-accent);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  transition: transform var(--home-transition-base);
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--promo .promo-wonder-cycle__cta-cue {
+  border-radius: 0.28rem;
+  background: color-mix(in srgb, var(--spw-card-accent) 18%, transparent);
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--wonder .promo-wonder-cycle__cta-cue {
+  border-style: dashed;
+  border-radius: var(--home-radius-pill, 999px);
+  background: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--promo .promo-wonder-cycle__cta:is(:hover, :focus-visible) .promo-wonder-cycle__cta-cue {
+    transform: translateX(0.14rem);
+  }
+
+  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--wonder .promo-wonder-cycle__cta:is(:hover, :focus-visible) .promo-wonder-cycle__cta-cue {
+    transform: rotate(-8deg) translateX(0.08rem);
+  }
 }
 
 @supports (container-type: inline-size) {

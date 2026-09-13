@@ -19,7 +19,8 @@ import type {
 import { validatePromoWonderFeed } from './json-feeds.js';
 
 type PromoWonderKind = 'promo' | 'wonder';
-type TemporalCadence = 'daily' | 'weekly';
+type TemporalCadence = 'daily' | 'weekly' | 'cycle';
+type ReleaseCycle = 'A-cycle' | 'B-cycle' | '';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const SOURCE_LOCALE = 'en';
@@ -76,35 +77,36 @@ const DEFAULT_FEED = Object.freeze({
   daily: [
     {
       promo: {
-        label: 'Daily promo',
+        label: 'Release',
         operator: '@',
-        title: 'Keep a configuration that fits how you read',
-        summary: 'Presets, workflow, and climate stay in this browser. One change is enough to feel the page answer.',
-        href: '/settings/#presets',
-        cta: 'Open presets',
-        why: 'Quick Start is the fastest useful control surface on the site.',
+        title: 'Open the September 13 release record',
+        summary: 'Scan the three-surface close, inspect the receipts, then choose the route you want to carry forward.',
+        href: '/now/',
+        cta: 'Read the release',
+        why: 'The A-cycle turns scattered work into one public checkpoint.',
         presentation: 'inline' as PromoPresentation,
         promotion: {
-          kind: 'service' as PromotionKind,
-          audience: 'people who want the site to match how they actually read',
-          offer: 'A browser-local preset, workflow, and climate you can keep',
-          proof: 'Settings saves in this browser and the rest of the site already listens.',
-          objection: 'It should change the page, not just document the knobs.',
-          urgency: 'The first useful change is a preset.',
+          kind: 'release' as PromotionKind,
+          audience: 'returning readers, collaborators, and patrons deciding what to follow after the close',
+          offer: 'A readable September 13 checkpoint across the site, workbench, and lore.land',
+          proof: 'The Now route names the shipped surfaces, local verification gate, and paths that remain open.',
+          objection: 'A release record should show consequence instead of reciting activity.',
+          urgency: 'The A-cycle closes today; the next useful move begins from its receipts.',
           tone: 'clear',
           theme: 'signal',
-          handles: ['settings', 'presets', 'climate', 'workflow'],
+          handles: ['release', 'receipts', 'site', 'workbench', 'lore.land'],
           ctaStyle: 'primary',
           presentation: 'inline' as PromoPresentation,
         },
       },
       wonder: {
-        label: 'Daily wonder',
+        label: 'Release question',
         operator: '?',
-        title: 'What if this page had a different climate?',
-        summary: 'Climate is the attention posture. Try one, then leave — the site keeps it.',
-        href: '/settings/#climate-settings',
-        cta: 'Try climate',
+        title: 'Which shipped change should become a practice?',
+        summary: 'Follow one receipt into its route. If the relation still helps there, it earned a return.',
+        href: '/now/#release-receipts',
+        cta: 'Follow the receipts',
+        why: 'Practice: pick one line, open its proof, and decide what should survive the next cycle.',
       },
     },
     {
@@ -200,6 +202,16 @@ export function pickWeekly(feed: PromoWonderFeed, date = new Date()): PromoWonde
   return weekly[clampIndex(getWeekIndex(date), weekly.length)] ?? DEFAULT_FEED.weekly[0];
 }
 
+export function releaseCycleForDate(date = new Date()): ReleaseCycle {
+  if (date.getDate() === 13) return 'A-cycle';
+  if (date.getDate() === 26) return 'B-cycle';
+  return '';
+}
+
+export function dailyCadenceForDate(date = new Date()): TemporalCadence {
+  return releaseCycleForDate(date) ? 'cycle' : 'daily';
+}
+
 function fallbackLabel(kind: PromoWonderKind): string {
   return kind === 'promo' ? 'Promo' : 'Wonder';
 }
@@ -214,6 +226,10 @@ function fallbackOperator(kind: PromoWonderKind): string {
 
 function cardOperatorType(kind: PromoWonderKind): string {
   return kind === 'promo' ? 'perspective' : 'probe';
+}
+
+function ctaOperatorType(kind: PromoWonderKind): string {
+  return kind === 'promo' ? 'action' : 'probe';
 }
 
 function getInlinePresentation(): PromoPresentation {
@@ -293,9 +309,14 @@ function renderCard(
     const link = el('a', 'spw-chip promo-wonder-cycle__cta', {
       href: cleanText(item.href),
       'data-spw-handle': 'true',
-      'data-spw-operator': cardOperatorType(kind),
+      'data-spw-operator': ctaOperatorType(kind),
     });
     link.textContent = cleanText(item.cta || 'Open');
+    const cue = el('span', 'promo-wonder-cycle__cta-cue', {
+      'aria-hidden': 'true',
+    });
+    cue.textContent = kind === 'promo' ? '! \u2192' : '? \u219D';
+    link.append(cue);
     article.append(link);
   }
 
@@ -311,6 +332,8 @@ export function renderFeed(host: Element, feed: PromoWonderFeed, date = new Date
   const daily = pickDaily(feed, date);
   const weekly = pickWeekly(feed, date);
   const locale = feedLocale(feed);
+  const releaseCycle = releaseCycleForDate(date);
+  const dailyCadence = dailyCadenceForDate(date);
   const dayLabel = cleanText(date.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' }));
   const dayStamp = [
     date.getFullYear(),
@@ -328,12 +351,17 @@ export function renderFeed(host: Element, feed: PromoWonderFeed, date = new Date
   dayTime.dateTime = dayStamp;
   dayTime.textContent = dayLabel;
   meta.append(dayTime);
+  if (releaseCycle) {
+    const releaseMarker = el('strong', 'promo-wonder-cycle__release');
+    releaseMarker.textContent = `${releaseCycle} release day`;
+    meta.append(' · ', releaseMarker);
+  }
 
   const grid = el('div', 'promo-wonder-cycle__grid');
   grid.dataset.spwRegionFlow = 'overlay';
   grid.append(
-    renderCard(daily.promo, 'promo', 'daily', locale),
-    renderCard(daily.wonder, 'wonder', 'daily', locale),
+    renderCard(daily.promo, 'promo', dailyCadence, locale),
+    renderCard(daily.wonder, 'wonder', dailyCadence, locale),
   );
 
   const weeklyGrid = el('div', 'promo-wonder-cycle__weekly');

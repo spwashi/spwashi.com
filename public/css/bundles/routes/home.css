@@ -387,7 +387,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 92%, transparent);
 }
 
-:where(html:not([data-spw-semantic-density="rich"]) [data-spw-feature="home-kernel-entry"] .home-hero-copy > [data-spw-textual-role="note"]:not(.home-hero-note, .home-hero-skim):nth-of-type(n + 2)) {
+:where(html:not([data-spw-semantic-density="rich"]) [data-spw-feature="home-kernel-entry"] .home-hero-copy > [data-spw-textual-role="note"]:not(.home-hero-note, .home-hero-skim, .home-production-note):nth-of-type(n + 2)) {
   display: none;
 }
 
