@@ -13,6 +13,7 @@ import {
 } from '/public/js/kernel/dom-contracts.js';
 import { readPretextSignals } from '../semantic/pretext-measurement-bus.js';
 import { PAGE_ATTENTION_EVENT } from './page-state.js';
+import { VARIANT_EVENT } from './variant-selection.js';
 
 const DEFAULT_SELECTOR = [
   '[data-spw-box-model]',
@@ -21,7 +22,6 @@ const DEFAULT_SELECTOR = [
   '[data-site-settings-panel]',
   '[data-spw-feature]',
   '.spw-frame',
-  '.site-frame',
   '.vibe-widget',
   '.settings-fieldset',
   '.settings-category',
@@ -463,11 +463,13 @@ export function initSpwCompositionBoxModel(ctx = {}) {
   const queueRefresh = scheduleCompositionRefresh(refresh, 48);
 
   const handleAttentionChange = () => queueRefresh();
+  const handleVariantSelected = () => queueRefresh();
   const handleResize = () => queueRefresh();
   const bus = ctx.bus || globalThis.__SPW_SITE__?.bus;
   const offSettings = bus?.on?.('settings:changed', queueRefresh) || null;
 
   document.addEventListener(PAGE_ATTENTION_EVENT, handleAttentionChange);
+  document.addEventListener(VARIANT_EVENT, handleVariantSelected);
   window.addEventListener('resize', handleResize, { passive: true });
   window.visualViewport?.addEventListener?.('resize', handleResize, { passive: true });
 
@@ -489,6 +491,7 @@ export function initSpwCompositionBoxModel(ctx = {}) {
   const cleanup = () => {
     offSettings?.();
     document.removeEventListener(PAGE_ATTENTION_EVENT, handleAttentionChange);
+    document.removeEventListener(VARIANT_EVENT, handleVariantSelected);
     window.removeEventListener('resize', handleResize);
     window.visualViewport?.removeEventListener?.('resize', handleResize);
     resizeObserver?.disconnect();
@@ -534,3 +537,13 @@ export const SPW_COMPOSITION_BOX_MODEL_CONTRACT = Object.freeze({
   portableUse:
     'Import snapshotCompositionBox() or annotateCompositionBoxes() to make a static component explain its layout, presence, size context, content tone, and next repair clue.',
 });
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'composition-box-model',
+  mount(ctx, root) {
+    const handle = initSpwCompositionBoxModel({ ...ctx, root });
+    return () => handle.cleanup?.();
+  },
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

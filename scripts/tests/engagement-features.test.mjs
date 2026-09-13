@@ -38,7 +38,18 @@ import {
 import {
   buildVariantEdge,
   resolveVariantChoice,
+  resolveMeasureTierVariant,
+  selectMode,
+  initVariantSelection,
+  VARIANT_EVENT,
+  SPW_MODULE_EXPORT as variantSelectionExport,
+  spwModule as variantSelectionModule,
 } from '../../public/js/runtime/variant-selection.js';
+import {
+  SPW_MODULE_EXPORT as compositionBoxModelExport,
+  spwModule as compositionBoxModelModule,
+  initSpwCompositionBoxModel,
+} from '../../public/js/runtime/composition-box-model.js';
 
 test('component packing resolves width and fill on independent axes', () => {
   assert.equal(resolvePackLayoutForWidth(415), 'stack');
@@ -72,6 +83,213 @@ test('variant choice honors explicit intent and names its traversed edge', () =>
     label: 'read → inspect',
   });
   assert.equal(buildVariantEdge('inspect', 'inspect').changed, false);
+});
+
+test('resolveMeasureTierVariant resolves variants from measure bands or tiers', () => {
+  const map = { compact: 'simple', balanced: 'standard', wide: 'expanded' };
+  assert.equal(resolveMeasureTierVariant('compact', map), 'simple');
+  assert.equal(resolveMeasureTierVariant('wide', map), 'expanded');
+  assert.equal(resolveMeasureTierVariant('maximal', map, 'fallback-variant'), 'fallback-variant');
+  assert.equal(resolveMeasureTierVariant('', map, 'fallback-variant'), 'fallback-variant');
+  assert.equal(resolveMeasureTierVariant('compact', null, 'fallback-variant'), 'fallback-variant');
+});
+
+test('variant selection initializes roving tabindex and arrow key navigation', () => {
+  const createMockButton = (mode, pressed = false) => {
+    const attrs = new Map([
+      ['data-mode-group', 'test-group'],
+      ['data-set-mode', mode],
+      ['aria-pressed', pressed ? 'true' : 'false'],
+    ]);
+    const listeners = new Map();
+    const btn = Object.create(HTMLElement.prototype);
+    Object.assign(btn, {
+      nodeType: 1,
+      tagName: 'BUTTON',
+      dataset: { modeGroup: 'test-group', setMode: mode },
+      getAttribute(name) { return attrs.get(name) ?? null; },
+      hasAttribute(name) { return attrs.has(name); },
+      setAttribute(name, val) {
+        attrs.set(name, String(val));
+        if (name.startsWith('data-')) {
+          const camel = name.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+          btn.dataset[camel] = String(val);
+        }
+      },
+      removeAttribute(name) {
+        attrs.delete(name);
+        if (name.startsWith('data-')) {
+          const camel = name.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+          delete btn.dataset[camel];
+        }
+      },
+      addEventListener(type, fn) {
+        if (!listeners.has(type)) listeners.set(type, []);
+        listeners.get(type).push(fn);
+      },
+      removeEventListener(type, fn) {
+        const list = listeners.get(type) || [];
+        listeners.set(type, list.filter((l) => l !== fn));
+      },
+      dispatchEvent(event) {
+        const list = listeners.get(event.type) || [];
+        list.forEach((fn) => fn(event));
+        return true;
+      },
+      focus() {
+        btn.isFocused = true;
+      },
+      closest() {
+        return null;
+      },
+      matches() {
+        return false;
+      },
+    });
+    return btn;
+  };
+
+  const createMockPanel = (mode, hidden = false) => {
+    const attrs = new Map([
+      ['data-mode-group', 'test-group'],
+      ['data-mode-panel', mode],
+    ]);
+    return {
+      nodeType: 1,
+      tagName: 'DIV',
+      dataset: { modeGroup: 'test-group', modePanel: mode },
+      hidden,
+      getAttribute(name) { return attrs.get(name) ?? null; },
+      hasAttribute(name) { return attrs.has(name); },
+      setAttribute(name, val) { attrs.set(name, String(val)); },
+      removeAttribute(name) { attrs.delete(name); },
+      closest() { return null; },
+      matches() { return false; },
+      querySelectorAll() { return []; },
+    };
+  };
+
+  const btnAlpha = createMockButton('alpha', true);
+  const btnBeta = createMockButton('beta', false);
+  const btnGamma = createMockButton('gamma', false);
+  const panelAlpha = createMockPanel('alpha', false);
+  const panelBeta = createMockPanel('beta', true);
+  const panelGamma = createMockPanel('gamma', true);
+
+  const buttons = [btnAlpha, btnBeta, btnGamma];
+  const panels = [panelAlpha, panelBeta, panelGamma];
+
+  const mockRoot = {
+    querySelectorAll(selector) {
+      if (selector.includes('data-set-mode')) return buttons;
+      if (selector.includes('data-mode-panel')) return panels;
+      if (selector.includes('data-spw-variant-selected')) return [];
+      if (selector.includes('data-spw-component-variant-active')) return [];
+      if (selector.includes('data-spw-semantic-variant')) return [];
+      if (selector.includes('data-spw-variant-bound')) return buttons.filter((b) => b.dataset.spwVariantBound);
+      return [];
+    },
+    querySelector(selector) {
+      if (selector.includes('data-mode-panel')) {
+        return panels.find((p) => selector.includes(p.getAttribute('data-mode-panel'))) || null;
+      }
+      return null;
+    },
+    documentElement: { dataset: {} },
+    body: { dataset: {} },
+  };
+
+  const emittedEvents = [];
+  const onVariantSelected = (e) => emittedEvents.push(e.detail);
+  document.addEventListener(VARIANT_EVENT, onVariantSelected);
+
+  try {
+    const cleanup = initVariantSelection(mockRoot);
+
+    // Initial roving tabindex
+    assert.equal(btnAlpha.getAttribute('tabindex'), '0');
+    assert.equal(btnBeta.getAttribute('tabindex'), '-1');
+    assert.equal(btnGamma.getAttribute('tabindex'), '-1');
+
+    // ArrowRight advances from Alpha to Beta
+    btnAlpha.dispatchEvent({ type: 'keydown', key: 'ArrowRight', preventDefault() {} });
+    assert.equal(btnBeta.isFocused, true);
+    assert.equal(btnAlpha.getAttribute('aria-pressed'), 'false');
+    assert.equal(btnBeta.getAttribute('aria-pressed'), 'true');
+    assert.equal(btnAlpha.getAttribute('tabindex'), '-1');
+    assert.equal(btnBeta.getAttribute('tabindex'), '0');
+    assert.equal(panelAlpha.hidden, true);
+    assert.equal(panelBeta.hidden, false);
+
+    // ArrowLeft wraps from Alpha to Gamma if dispatched on Alpha
+    btnAlpha.isFocused = false;
+    btnAlpha.dispatchEvent({ type: 'keydown', key: 'ArrowLeft', preventDefault() {} });
+    assert.equal(btnGamma.isFocused, true);
+    assert.equal(btnGamma.getAttribute('aria-pressed'), 'true');
+    assert.equal(btnGamma.getAttribute('tabindex'), '0');
+
+    // End key jumps to Gamma
+    btnBeta.dispatchEvent({ type: 'keydown', key: 'End', preventDefault() {} });
+    assert.equal(btnGamma.getAttribute('aria-pressed'), 'true');
+
+    // Home key jumps to Alpha
+    btnGamma.dispatchEvent({ type: 'keydown', key: 'Home', preventDefault() {} });
+    assert.equal(btnAlpha.getAttribute('aria-pressed'), 'true');
+    assert.equal(btnAlpha.getAttribute('tabindex'), '0');
+
+    // Programmatic selectMode
+    const edge = selectMode(btnBeta, mockRoot, 'api');
+    assert.equal(edge.to, 'beta');
+    assert.equal(btnBeta.getAttribute('aria-pressed'), 'true');
+
+    assert.ok(emittedEvents.length >= 3);
+    assert.equal(emittedEvents.at(-1).variant, 'beta');
+    assert.equal(emittedEvents.at(-1).source, 'api');
+
+    cleanup();
+    assert.equal(btnAlpha.hasAttribute('tabindex'), false);
+    assert.equal(btnBeta.hasAttribute('tabindex'), false);
+    assert.equal(btnGamma.hasAttribute('tabindex'), false);
+  } finally {
+    document.removeEventListener(VARIANT_EVENT, onVariantSelected);
+  }
+});
+
+test('variant selection and composition box model export standard SPW_MODULE_EXPORT shapes', () => {
+  assert.equal(variantSelectionExport.id, 'variant-selection');
+  assert.equal(typeof variantSelectionExport.mount, 'function');
+  assert.equal(variantSelectionModule, variantSelectionExport);
+  assert.ok(Array.isArray(variantSelectionExport.updates));
+  assert.ok(variantSelectionExport.updates.includes('structural:data-spw-variant-selected'));
+
+  assert.equal(compositionBoxModelExport.id, 'composition-box-model');
+  assert.equal(typeof compositionBoxModelExport.mount, 'function');
+  assert.equal(compositionBoxModelModule, compositionBoxModelExport);
+});
+
+test('composition box model binds and unbinds spw:variant-selected listener', () => {
+  const registeredListeners = new Map();
+  const origAddEventListener = document.addEventListener;
+  const origRemoveEventListener = document.removeEventListener;
+
+  document.addEventListener = (type, fn) => {
+    registeredListeners.set(type, fn);
+  };
+  document.removeEventListener = (type, fn) => {
+    if (registeredListeners.get(type) === fn) {
+      registeredListeners.delete(type);
+    }
+  };
+
+  try {
+    const handle = initSpwCompositionBoxModel({ root: { querySelectorAll: () => [] } });
+    assert.ok(registeredListeners.has(VARIANT_EVENT), 'composition box model must listen to spw:variant-selected');
+    handle.cleanup();
+    assert.equal(registeredListeners.has(VARIANT_EVENT), false, 'cleanup must unbind spw:variant-selected');
+  } finally {
+    document.addEventListener = origAddEventListener;
+    document.removeEventListener = origRemoveEventListener;
+  }
 });
 
 test('feature discovery keeps regional attention opt-in and bounded', () => {

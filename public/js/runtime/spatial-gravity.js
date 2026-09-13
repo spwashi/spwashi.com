@@ -424,6 +424,7 @@ const bindListeners = () => {
   // whose scroll lives on an inner element. Measurement is viewport-relative
   // (getBoundingClientRect) so it stays correct regardless of the scroller.
   document.addEventListener('scroll', scheduleMeasure, { passive: true, capture: true });
+  document.addEventListener('spw:variant-selected', scheduleMeasure, { passive: true });
   window.addEventListener('resize', scheduleMeasure, { passive: true });
   window.visualViewport?.addEventListener?.('resize', scheduleMeasure, { passive: true });
 };
@@ -431,6 +432,7 @@ const bindListeners = () => {
 const unbindListeners = () => {
   if (!listenersBound || typeof window === 'undefined') return;
   document.removeEventListener('scroll', scheduleMeasure, { capture: true });
+  document.removeEventListener('spw:variant-selected', scheduleMeasure);
   window.removeEventListener('resize', scheduleMeasure);
   window.visualViewport?.removeEventListener?.('resize', scheduleMeasure);
   listenersBound = false;

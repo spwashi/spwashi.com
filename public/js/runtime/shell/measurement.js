@@ -68,6 +68,7 @@ export const SPW_SHELL_MEASUREMENT_CONTRACT = Object.freeze({
   scrollDirections: SCROLL_DIRECTIONS,
   pressures: PRESSURES,
   defaults: SHELL_MEASUREMENT_DEFAULTS,
+  resolveViewportVariant,
 });
 
 export function prefersDrawerMenu(view = globalThis) {
@@ -270,4 +271,24 @@ export function resolveMenuPressure({
   }
 
   return PRESSURES.CALM;
+}
+
+export function resolveViewportVariant(widthOrTier = (globalThis.innerWidth || 1024), variantMap = {}, fallback = '') {
+  if (!variantMap || typeof variantMap !== 'object') return fallback;
+  const tier = typeof widthOrTier === 'number'
+    ? getViewportTier(widthOrTier)
+    : String(widthOrTier || '').trim().toLowerCase();
+
+  // 1. Direct tier match: compact, narrow, mid, regular, wide
+  if (Object.prototype.hasOwnProperty.call(variantMap, tier)) {
+    return variantMap[tier];
+  }
+
+  // 2. Posture/layout reason match: pocket, fold, broadsheet
+  const reason = layoutReasonForTier(tier);
+  if (reason && Object.prototype.hasOwnProperty.call(variantMap, reason)) {
+    return variantMap[reason];
+  }
+
+  return fallback;
 }

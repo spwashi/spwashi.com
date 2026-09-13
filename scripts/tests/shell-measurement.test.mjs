@@ -13,6 +13,7 @@ import {
   resolveScrollDirection,
   resolveMenuPressure,
   syncDeviceContext,
+  resolveViewportVariant,
 } from '../../public/js/runtime/shell/measurement.js';
 
 test('shell measurement exports frozen contract', () => {
@@ -21,6 +22,7 @@ test('shell measurement exports frozen contract', () => {
   assert.ok(Object.isFrozen(SPW_SHELL_MEASUREMENT_CONTRACT.scrollBands));
   assert.ok(Object.isFrozen(SPW_SHELL_MEASUREMENT_CONTRACT.scrollDirections));
   assert.ok(Object.isFrozen(SPW_SHELL_MEASUREMENT_CONTRACT.pressures));
+  assert.equal(typeof SPW_SHELL_MEASUREMENT_CONTRACT.resolveViewportVariant, 'function');
 });
 
 test('viewport tiers resolve across standard breakpoints', () => {
@@ -106,4 +108,19 @@ test('syncDeviceContext writes attributes and computes flow and reason', () => {
   assert.equal(desktopResult.flow, 'broadsheet');
   assert.equal(desktopTarget.dataset.spwLayoutReason, 'broadsheet');
   assert.equal(desktopTarget.dataset.spwLayoutFlow, 'broadsheet');
+});
+
+test('resolveViewportVariant maps viewport tiers and postures to variants', () => {
+  const tierMap = { compact: 'pocket-summary', wide: 'desktop-panorama' };
+  assert.equal(resolveViewportVariant(320, tierMap), 'pocket-summary');
+  assert.equal(resolveViewportVariant(1400, tierMap), 'desktop-panorama');
+  assert.equal(resolveViewportVariant('wide', tierMap), 'desktop-panorama');
+
+  const postureMap = { pocket: 'ribbon', fold: 'card', broadsheet: 'spread' };
+  assert.equal(resolveViewportVariant(360, postureMap), 'ribbon');
+  assert.equal(resolveViewportVariant(800, postureMap), 'card');
+  assert.equal(resolveViewportVariant(1280, postureMap), 'spread');
+
+  assert.equal(resolveViewportVariant(800, { pocket: 'ribbon' }, 'default-variant'), 'default-variant');
+  assert.equal(resolveViewportVariant(null, null, 'fallback'), 'fallback');
 });

@@ -140,6 +140,7 @@ function syncModeSwitch(group, mode, root, source = 'mode') {
   buttons.forEach((button) => {
     const active = button.getAttribute('data-set-mode') === mode;
     button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    button.setAttribute('tabindex', active ? '0' : '-1');
   });
 
   panels.forEach((panel) => {
@@ -166,6 +167,34 @@ function writeLiveModeExpression(switchEl, seat) {
   switchEl.dataset.spwSemanticExpression = composeModeSeatExpression({ subject, seat });
 }
 
+export function selectMode(button, root = document, source = 'mode-switch') {
+  if (!(button instanceof HTMLElement)) return null;
+  const group = button.getAttribute('data-mode-group');
+  const mode = button.getAttribute('data-set-mode');
+  if (!group || !mode) return null;
+  clearGroupVariantMarks(root, group);
+  const edge = syncModeSwitch(group, mode, root, source);
+  writeLiveModeExpression(button.closest('.mode-switch'), mode);
+  const html = root.documentElement || document.documentElement;
+  pulseRootSelection(html, source, mode);
+  emitVariantSelected({
+    group,
+    variant: mode,
+    previousVariant: edge?.from || null,
+    edge,
+    source,
+  });
+  return edge;
+}
+
+export function resolveMeasureTierVariant(measureBandOrTier = '', variantMap = {}, fallback = '') {
+  const key = String(measureBandOrTier || '').trim().toLowerCase();
+  if (key && variantMap && Object.prototype.hasOwnProperty.call(variantMap, key)) {
+    return variantMap[key];
+  }
+  return fallback;
+}
+
 function bindModeSwitches(root, controller) {
   root.querySelectorAll(MODE_BUTTON_SELECTOR).forEach((button) => {
     if (!(button instanceof HTMLElement)) return;
@@ -173,22 +202,44 @@ function bindModeSwitches(root, controller) {
     // duplicate click listener on every button.
     if (button.dataset.spwVariantBound === 'true') return;
     button.dataset.spwVariantBound = 'true';
+
+    // Establish initial roving tabindex if not already assigned.
+    if (!button.hasAttribute('tabindex')) {
+      const isPressed = button.getAttribute('aria-pressed') === 'true';
+      button.setAttribute('tabindex', isPressed ? '0' : '-1');
+    }
+
     button.addEventListener('click', () => {
+      selectMode(button, root, 'mode-switch');
+    }, { signal: controller.signal });
+
+    button.addEventListener('keydown', (event) => {
       const group = button.getAttribute('data-mode-group');
-      const mode = button.getAttribute('data-set-mode');
-      if (!group || !mode) return;
-      clearGroupVariantMarks(root, group);
-      const edge = syncModeSwitch(group, mode, root, 'mode-switch');
-      writeLiveModeExpression(button.closest('.mode-switch'), mode);
-      const html = root.documentElement || document.documentElement;
-      pulseRootSelection(html, 'mode-switch', mode);
-      emitVariantSelected({
-        group,
-        variant: mode,
-        previousVariant: edge?.from || null,
-        edge,
-        source: 'mode-switch',
-      });
+      if (!group) return;
+      const buttons = [...root.querySelectorAll(`.mode-switch [data-mode-group="${CSS.escape(group)}"][data-set-mode]`)];
+      if (buttons.length <= 1) return;
+      const currentIndex = buttons.indexOf(button);
+      if (currentIndex === -1) return;
+
+      let targetIndex = -1;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+        targetIndex = (currentIndex + 1) % buttons.length;
+      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        targetIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+      } else if (event.key === 'Home') {
+        targetIndex = 0;
+      } else if (event.key === 'End') {
+        targetIndex = buttons.length - 1;
+      }
+
+      if (targetIndex !== -1 && targetIndex !== currentIndex) {
+        event.preventDefault();
+        const nextButton = buttons[targetIndex];
+        if (nextButton instanceof HTMLElement) {
+          nextButton.focus();
+          selectMode(nextButton, root, 'keyboard');
+        }
+      }
     }, { signal: controller.signal });
   });
 }
@@ -245,7 +296,12 @@ export function initVariantSelection(root = document) {
   );
   groups.forEach((group) => {
     const mode = readActiveMode(group, root);
-    if (mode) syncModeSwitch(group, mode, root, 'authored');
+    if (mode) {
+      syncModeSwitch(group, mode, root, 'authored');
+    } else {
+      const buttons = [...root.querySelectorAll(`.mode-switch [data-mode-group="${CSS.escape(group)}"][data-set-mode]`)];
+      buttons.forEach((b, idx) => b.setAttribute('tabindex', idx === 0 ? '0' : '-1'));
+    }
   });
 
   root.querySelectorAll('[data-spw-semantic-variant], [data-spw-content-variant]')
@@ -272,7 +328,10 @@ export function initVariantSelection(root = document) {
     delete html.dataset.spwVariantSelectionWeight;
     delete html.dataset.spwVariantSelectionSource;
     root.querySelectorAll('[data-spw-variant-bound]').forEach((button) => {
-      if (button instanceof HTMLElement) delete button.dataset.spwVariantBound;
+      if (button instanceof HTMLElement) {
+        delete button.dataset.spwVariantBound;
+        button.removeAttribute('tabindex');
+      }
     });
     initialized = false;
   }, { once: true });
@@ -282,7 +341,20 @@ export function initVariantSelection(root = document) {
 
 export { VARIANT_EVENT };
 
-export const spwModule = {
-  updates: ['attr:data-spw-query-variant', 'attr:data-spw-variant-selection-pulse'],
-  mount: (mod, ctx, root) => initVariantSelection(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'variant-selection',
+  updates: Object.freeze([
+    'structural:data-spw-variant-selected',
+    'structural:data-spw-component-variant-active',
+    'structural:data-spw-variant-selection-source',
+    'structural:data-spw-query-variant',
+    'flourish:data-spw-variant-selection-pulse',
+    'flourish:data-spw-variant-selection-weight',
+  ]),
+  mount(ctx, root) {
+    const targetRoot = root instanceof Node ? root : ctx?.root || document;
+    return initVariantSelection(targetRoot);
+  },
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

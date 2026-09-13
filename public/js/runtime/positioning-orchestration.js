@@ -238,10 +238,12 @@ export function initPositioningOrchestration(ctx) {
     });
   }
 
-  // Listen to viewport changes
+  // Listen to viewport changes and variant selections
   const onResize = () => requestPositioningPass();
+  const onVariantSelected = () => requestPositioningPass();
   window.addEventListener('resize', onResize, { passive: true });
   window.addEventListener('orientationchange', onResize, { passive: true });
+  document.addEventListener('spw:variant-selected', onVariantSelected);
 
   // Initial pass
   requestPositioningPass();
@@ -250,6 +252,7 @@ export function initPositioningOrchestration(ctx) {
     if (rafId) cancelAnimationFrame(rafId);
     window.removeEventListener('resize', onResize);
     window.removeEventListener('orientationchange', onResize);
+    document.removeEventListener('spw:variant-selected', onVariantSelected);
     intersectionObserver?.disconnect();
     resizeObserver?.disconnect();
     mutationObserver?.disconnect();
