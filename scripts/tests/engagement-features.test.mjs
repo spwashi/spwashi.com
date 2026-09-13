@@ -558,6 +558,65 @@ test('runtime resource probes are bounded while resource hints keep catalog orde
   assert.equal(emitted.at(-1)?.detail?.probeConcurrency, 3);
 });
 
+test('runtime resource hints stop at the requested limit in catalog order', async () => {
+  const definitions = Array.from({ length: 5 }, (_, index) => ({
+    id: `limit-${index}`,
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.VISIBLE,
+    specifier: `/public/js/limit-${index}.js`,
+  }));
+  const hinted = [];
+  const loader = createModuleLoader({
+    moduleDefs: definitions,
+    html: document.documentElement,
+    body: document.body,
+    matchesRoute: () => true,
+    matchesFeatures: () => true,
+    hasSelector: () => true,
+    getRoots: () => [],
+    hasDebugOrQAMode: () => false,
+    readConnectionPosture: () => 'fast',
+    shouldPrefetchRuntimeResources: () => true,
+    extractDynamicImportSpecifier: (definition) => definition.specifier,
+    moduleSpecifierToUrl: (specifier) => specifier,
+    ensureResourceHint: (href) => {
+      hinted.push(href);
+      return true;
+    },
+    isRuntimeResourceCached: async () => false,
+    requestServiceWorkerPrefetch: () => false,
+    requestServiceWorkerCacheSummary: () => false,
+    refreshRegionProfiles: () => {},
+    setPageState: () => {},
+  });
+  const ctx = {
+    route: '/',
+    features: new Set(),
+    runtimePolicy: {
+      timing: 'normal',
+      timingByModule: new Map(),
+      only: new Set(),
+      skip: new Set(),
+      audit: false,
+    },
+    moduleSkipAuditKeys: new Set(),
+    resourceReadiness: new Map(),
+    bus: { emit() {} },
+  };
+
+  const resources = await loader.prefetchRuntimeResources(
+    ctx,
+    definitions,
+    MOUNT_WHEN.VISIBLE,
+    'modulepreload',
+    { limit: 2 },
+  );
+
+  assert.deepEqual(hinted, ['/public/js/limit-0.js', '/public/js/limit-1.js']);
+  assert.equal(resources.length, 2);
+  assert.equal(ctx.resourceReadiness.size, 2);
+});
+
 test('discovery notice selection stays deterministic', () => {
   const keys = getDateKeys(date);
   const selected = selectScheduleItems(noticeFeed, date);

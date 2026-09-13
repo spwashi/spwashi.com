@@ -344,6 +344,11 @@ function shouldPrefetchRuntimeResources(ctx) {
   return effectiveType !== 'slow-2g' && effectiveType !== '2g' && effectiveType !== '3g';
 }
 
+// Desktop speculation caps (component-runtime-review crr-001). Catalog order
+// decides which eligible modules are hinted first.
+const VISIBLE_MODULEPRELOAD_LIMIT = 12;
+const IDLE_PREFETCH_LIMIT = 8;
+
 function extractDynamicImportSpecifier(def) {
   const source = String(def?.load || '');
   const match = source.match(/import\(\s*['"]([^'"]+)['"]\s*\)/);
@@ -896,6 +901,9 @@ async function bootSite() {
   performance.mark('spw:page-interactive');
   performance.measure('spw:boot-to-interactive', 'spw:boot-start', 'spw:page-interactive');
   runtimeCtx.bus.emit('spw:page-interactive', { route: runtimeCtx.route });
+  // The document is readable and navigable here. Components still hydrating
+  // carry their own local busy state; the page no longer claims to be busy.
+  document.body?.setAttribute('aria-busy', 'false');
   schedulePageArrival(runtimeCtx, runtimeCtx.pageArrivalKind || PAGE_ARRIVAL.ENTERING, 'page-enter');
   onIdle(() => ensureFlourishStyles());
 
@@ -1033,10 +1041,16 @@ async function bootSite() {
     'spw:immediate-non-core-layers-complete',
   );
   progressHydration(HYDRATION_STATES.ACTIVATING);
-  await Promise.all([
-    prefetchRuntimeResources(runtimeCtx, NON_CORE_DEFS, MOUNT_WHEN.VISIBLE, 'modulepreload'),
-    prefetchRuntimeResources(runtimeCtx, NON_CORE_DEFS, MOUNT_WHEN.IDLE, 'prefetch'),
-  ]);
+  // Visible roots earn a bounded preload. Idle catalog eligibility is a weaker
+  // signal, so its hints wait for idle time and never hold the visible wave.
+  await prefetchRuntimeResources(runtimeCtx, NON_CORE_DEFS, MOUNT_WHEN.VISIBLE, 'modulepreload', {
+    limit: VISIBLE_MODULEPRELOAD_LIMIT,
+  });
+  onIdle(() => {
+    prefetchRuntimeResources(runtimeCtx, NON_CORE_DEFS, MOUNT_WHEN.IDLE, 'prefetch', {
+      limit: IDLE_PREFETCH_LIMIT,
+    }).catch(() => {});
+  });
   performance.mark('spw:immediate-layer-complete');
   performance.measure('spw:immediate-layer', 'spw:boot-start', 'spw:immediate-layer-complete');
   runtimeLogger.info('immediate layers mounted', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
@@ -1055,7 +1069,6 @@ async function bootSite() {
   setPageState(PAGE_STATES.HYDRATED);
   performance.mark('spw:page-hydrated');
   runtimeCtx.bus.emit('spw:page-hydrated', { route: runtimeCtx.route });
-  document.body?.setAttribute('aria-busy', 'false');
 
   await scheduleRegionEnrichment(normalized.pageMeta, runtimeCtx);
   await mountRegionLayer(REGION_DEFS, runtimeCtx);

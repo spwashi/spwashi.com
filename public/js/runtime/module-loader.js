@@ -998,12 +998,15 @@ async function syncRuntimeResourceEntry(ctx, entry) {
   };
 }
 
-async function prefetchRuntimeResources(ctx, defs, expectedWhen, rel) {
+async function prefetchRuntimeResources(ctx, defs, expectedWhen, rel, { limit = Infinity } = {}) {
   if (!ctx) return [];
+  // Eligibility is not confidence: a desktop catalog can match dozens of
+  // modules. The limit keeps speculation to the first entries in catalog order.
   const candidates = defs
     .filter((def) => shouldScheduleDefinition(def, ctx, expectedWhen))
     .map((def) => buildRuntimeResourceEntry(def, expectedWhen, rel))
-    .filter(Boolean);
+    .filter(Boolean)
+    .slice(0, limit);
 
   if (!candidates.length) return [];
 
