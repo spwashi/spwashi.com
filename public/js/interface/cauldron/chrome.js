@@ -76,13 +76,41 @@ function syncFloatingChip() {
   }
   applyCauldronState(chip, { phase, count });
 
-  const footerVisible = (() => {
-    const host = document.querySelector(PANEL_QUERY);
-    if (!(host instanceof HTMLElement)) return false;
-    const rect = host.getBoundingClientRect();
-    return rect.top < window.innerHeight * 0.82 && rect.bottom > 0;
-  })();
-  chip.hidden = !(count > 0 && !footerVisible);
+  const hidden = !(count > 0 && !readFooterPanelVisible());
+  if (chip.hidden !== hidden) chip.hidden = hidden;
+}
+
+/* The chip yields while the cauldron panel is on screen: its top above 82% of
+   the viewport and its bottom below the viewport top. An IntersectionObserver
+   with that bottom inset reports the crossing once, so scrolling no longer
+   reads layout on every event. */
+let footerPanelVisible = false;
+let footerPanelObserver = null;
+
+function measureFooterPanelVisible(host) {
+  const rect = host.getBoundingClientRect();
+  return rect.top < window.innerHeight * 0.82 && rect.bottom > 0;
+}
+
+function readFooterPanelVisible() {
+  if (footerPanelObserver) return footerPanelVisible;
+  const host = document.querySelector(PANEL_QUERY);
+  return host instanceof HTMLElement ? measureFooterPanelVisible(host) : false;
+}
+
+function observeFooterPanel() {
+  if (typeof IntersectionObserver !== 'function') return false;
+  const host = document.querySelector(PANEL_QUERY);
+  if (!(host instanceof HTMLElement)) return false;
+  footerPanelVisible = measureFooterPanelVisible(host);
+  footerPanelObserver = new IntersectionObserver((entries) => {
+    const entry = entries[entries.length - 1];
+    if (!entry || entry.isIntersecting === footerPanelVisible) return;
+    footerPanelVisible = entry.isIntersecting;
+    safeSyncFloatingChip();
+  }, { rootMargin: '0px 0px -18% 0px' });
+  footerPanelObserver.observe(host);
+  return true;
 }
 
 const safeSyncFloatingChip = guardCall(syncFloatingChip, 'cauldron:floating-chip');
@@ -90,8 +118,10 @@ const safeSyncFloatingChip = guardCall(syncFloatingChip, 'cauldron:floating-chip
 export function setupCauldronChrome() {
   if (!chipScrollBound) {
     chipScrollBound = true;
-    window.addEventListener('scroll', safeSyncFloatingChip, { passive: true });
-    window.addEventListener('resize', safeSyncFloatingChip, { passive: true });
+    if (!observeFooterPanel()) {
+      window.addEventListener('scroll', safeSyncFloatingChip, { passive: true });
+      window.addEventListener('resize', safeSyncFloatingChip, { passive: true });
+    }
   }
   safeSyncFloatingChip();
 }

@@ -1,5 +1,6 @@
 import {
   annotateFloatingChromeElement,
+  FLOATING_CHROME_SETTLED_EVENT,
   writeDatasetValue,
 } from '/public/js/kernel/dom-contracts.js';
 
@@ -295,8 +296,6 @@ function updateFixedViewportCorrection() {
 
 function initFixedViewportCorrection() {
   let frame = 0;
-  let pollTimer = 0;
-  let pollCount = 0;
   let observer = null;
   let lastRunAt = 0;
   let trailing = 0;
@@ -324,17 +323,24 @@ function initFixedViewportCorrection() {
       runUpdate();
     });
   };
-  const pollMountedChrome = () => {
-    schedule();
-    pollCount += 1;
-    if (pollCount < 10) {
-      pollTimer = window.setTimeout(pollMountedChrome, 180);
-    }
+  /* Window scroll cannot displace fixed chrome while the visual viewport matches
+     the layout viewport. A pinch, an on-screen keyboard, or a collapsing browser
+     bar can, and each of those also offsets or resizes the visual viewport. So
+     scroll re-measures only in that state or while a correction is still applied. */
+  const scheduleOnScroll = () => {
+    const viewport = window.visualViewport;
+    const displaced = !viewport
+      || Math.abs(viewport.scale - 1) > 0.01
+      || Math.abs(viewport.offsetTop) > 0.5
+      || Math.abs(viewport.height - window.innerHeight) > 0.5;
+    if (displaced || appliedCorrectionY !== 0) schedule();
   };
 
   schedule();
-  pollMountedChrome();
-  window.addEventListener('scroll', schedule, { passive: true });
+  // Late chrome announces itself: the floating-chrome lane emits a settled pulse
+  // when its occupants or geometry change, which replaces boot-time polling.
+  document.addEventListener(FLOATING_CHROME_SETTLED_EVENT, schedule);
+  window.addEventListener('scroll', scheduleOnScroll, { passive: true });
   window.addEventListener('resize', schedule, { passive: true });
   window.visualViewport?.addEventListener?.('resize', schedule, { passive: true });
   window.visualViewport?.addEventListener?.('scroll', schedule, { passive: true });
@@ -380,9 +386,9 @@ function initFixedViewportCorrection() {
   return () => {
     if (frame) window.cancelAnimationFrame(frame);
     if (trailing) window.clearTimeout(trailing);
-    if (pollTimer) window.clearTimeout(pollTimer);
+    document.removeEventListener(FLOATING_CHROME_SETTLED_EVENT, schedule);
     observer?.disconnect();
-    window.removeEventListener('scroll', schedule);
+    window.removeEventListener('scroll', scheduleOnScroll);
     window.removeEventListener('resize', schedule);
     window.visualViewport?.removeEventListener?.('resize', schedule);
     window.visualViewport?.removeEventListener?.('scroll', schedule);

@@ -416,10 +416,12 @@ export function annotateFloatingChromeElement(el, options = {}) {
    */
   const descriptor = createFloatingChromeDescriptor(options);
 
-  return writeRuntimeDatasetValues(el, descriptor.entries, {
+  const changed = writeRuntimeDatasetValues(el, descriptor.entries, {
     source: descriptor.mutator || 'floating-chrome',
     reason: descriptor.reason || 'floating-chrome',
   });
+  if (changed) observeFloatingChromeSize(el);
+  return changed;
 }
 
 function isSectionHandleShellSibling(el) {
@@ -530,21 +532,62 @@ const BOTTOM_LANE_MANAGED_STYLE_KEYS = Object.freeze([
 ]);
 
 let bottomLaneListenersBound = false;
+let floatingChromeSyncFrame = 0;
+let floatingChromeResizeObserver = null;
+const floatingChromeSeenConnected = new WeakSet();
+const pendingFloatingChromeSources = new Set();
+const pendingFloatingChromeReasons = new Set();
+
+/*
+ * The lane measures geometry, so it settles at most once per frame. Callers that
+ * do not read the returned snapshot request a pass instead of running one;
+ * sources and reasons from the same frame travel together so the pass stays
+ * attributable in the runtime mutation log.
+ */
+export function requestFloatingChromeSync(options = {}) {
+  if (options.source) pendingFloatingChromeSources.add(options.source);
+  if (options.reason) pendingFloatingChromeReasons.add(options.reason);
+  if (floatingChromeSyncFrame || typeof globalThis.requestAnimationFrame !== 'function') return;
+  floatingChromeSyncFrame = globalThis.requestAnimationFrame(() => {
+    floatingChromeSyncFrame = 0;
+    const source = [...pendingFloatingChromeSources].join(' ') || 'floating-chrome';
+    const reason = [...pendingFloatingChromeReasons].join(' ') || 'requested';
+    pendingFloatingChromeSources.clear();
+    pendingFloatingChromeReasons.clear();
+    syncFloatingChromeState(globalThis.document, { source, reason });
+  });
+}
+
+/*
+ * Chrome announces its own arc. A ResizeObserver reports the first box when an
+ * element mounts, each size change as it expands, reduces, or hides, and an
+ * empty box when it leaves. The lane re-measures when chrome changes instead of
+ * on every scroll frame. Targets that were connected and then left are released
+ * so transient toasts are not retained.
+ */
+function observeFloatingChromeSize(el) {
+  if (typeof globalThis.ResizeObserver !== 'function') {
+    requestFloatingChromeSync({ source: 'floating-chrome', reason: 'chrome-annotated' });
+    return;
+  }
+  floatingChromeResizeObserver ||= new globalThis.ResizeObserver((entries) => {
+    entries.forEach(({ target }) => {
+      if (target.isConnected) floatingChromeSeenConnected.add(target);
+      else if (floatingChromeSeenConnected.has(target)) floatingChromeResizeObserver.unobserve(target);
+    });
+    requestFloatingChromeSync({ source: 'floating-chrome', reason: 'chrome-resized' });
+  });
+  floatingChromeResizeObserver.observe(el);
+}
 
 function ensureBottomLaneListeners() {
   if (bottomLaneListenersBound || typeof globalThis.window === 'undefined') return;
   bottomLaneListenersBound = true;
-  const resync = () => {
-    globalThis.requestAnimationFrame(() => {
-      syncFloatingChromeState(globalThis.document, {
-        source: 'floating-chrome',
-        reason: 'viewport-resize',
-      });
-    });
-  };
+  // Scroll does not move fixed chrome; a changed viewport box does. Chrome that
+  // moves on scroll (the section handle) already reports its own visibility.
+  const resync = () => requestFloatingChromeSync({ source: 'floating-chrome', reason: 'viewport-resize' });
   globalThis.window.addEventListener('resize', resync, { passive: true });
   globalThis.window.visualViewport?.addEventListener?.('resize', resync, { passive: true });
-  globalThis.window.addEventListener('scroll', resync, { passive: true });
 }
 
 /* The one canonical answer to "is this a small/coarse-pointer viewport",
@@ -698,16 +741,25 @@ function viewportInlinePx() {
   return Math.max(1, globalThis.visualViewport?.width || globalThis.innerWidth || 360);
 }
 
+/* One lane pass holds one root computed style. Resolving it again for every
+   converted slot value and every inset edge repeated the lookup up to eleven
+   times per pass. */
+let laneRootStyle = null;
+
+function readLaneRootStyle() {
+  return laneRootStyle
+    || globalThis.getComputedStyle?.(globalThis.document?.documentElement)
+    || null;
+}
+
 function pxToRem(px) {
-  const rootStyle = globalThis.getComputedStyle?.(globalThis.document?.documentElement);
-  const fontSize = Number.parseFloat(rootStyle?.fontSize) || 16;
+  const fontSize = Number.parseFloat(readLaneRootStyle()?.fontSize) || 16;
   return `${(px / fontSize).toFixed(3)}rem`;
 }
 
 function readSafeAreaInsetPx(edge = 'bottom') {
-  const root = globalThis.document?.documentElement;
-  if (!root || !globalThis.getComputedStyle) return BOTTOM_LANE_SLOT_GAP_PX;
-  const style = globalThis.getComputedStyle(root);
+  const style = readLaneRootStyle();
+  if (!style) return BOTTOM_LANE_SLOT_GAP_PX;
   const token = style.getPropertyValue(
     edge === 'bottom' ? '--spw-floating-slot-bottom-base' : '--spw-floating-slot-gutter'
   ).trim();
@@ -958,8 +1010,10 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
     handleLane = 'compact';
   }
 
+  // Change-only: these land on the root, and a redundant set still invalidates
+  // style for the whole document on the next read.
   Object.entries(vars).forEach(([key, value]) => {
-    html.style.setProperty(key, value);
+    if (html.style.getPropertyValue(key) !== value) html.style.setProperty(key, value);
   });
 
   writeRuntimeDatasetValues(html, {
@@ -987,13 +1041,19 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
 // this list to opt a role into pressure-driven collapse.
 const FLOATING_CHROME_COLLAPSIBLE_ROLES = Object.freeze(['collection-dock']);
 
+/* The settled pulse: emitted after a pass that changed who occupies the lane or
+   how it is packed. Consumers re-measure on it instead of polling for late chrome. */
+export const FLOATING_CHROME_SETTLED_EVENT = 'spw:floating-chrome-settled';
+let lastFloatingChromeSignature = '';
+let crowdedHoldKey = '';
+
 function applyChromeCollapse(open = [], competition = 'clear', collidingNodes = new Set()) {
   let collapsed = 0;
   for (const node of open) {
     if (!FLOATING_CHROME_COLLAPSIBLE_ROLES.includes(node.dataset.spwChromeRole)) continue;
     const pressured = competition === 'crowded' || collidingNodes.has(node);
     if (pressured) {
-      node.dataset.spwChromeCollapse = 'pressured';
+      if (node.dataset.spwChromeCollapse !== 'pressured') node.dataset.spwChromeCollapse = 'pressured';
       collapsed += 1;
     } else if (node.dataset.spwChromeCollapse) {
       delete node.dataset.spwChromeCollapse;
@@ -1020,15 +1080,27 @@ export function syncFloatingChromeState(root = document, options = {}) {
   const dockedOpen = open.filter((node) => FLOATING_CHROME_DOCKED_ROLES.includes(node.dataset.spwChromeRole));
   const dockedOpenCount = dockedOpen.length;
   const occlusion = measureFloatingChromeOcclusion(open);
-  const competition = resolveFloatingChromeCompetition(
-    open.length,
-    dockedOpenCount,
-    occlusion.state === 'overlap'
-  );
+  const overlap = occlusion.state === 'overlap';
+  /* Reduction is a response, not a new layout to re-test. Once overlap crowds
+     the lane it stays crowded until its occupants or the viewport width change;
+     otherwise reduced chrome stops overlapping, expands, and overlaps again,
+     and the resize observer would carry that flicker frame after frame. */
+  const holdKey = `${openRoles.join(' ')}|${Math.round(viewportInlinePx())}`;
+  const held = !overlap && crowdedHoldKey === holdKey;
+  const competition = held
+    ? 'crowded'
+    : resolveFloatingChromeCompetition(open.length, dockedOpenCount, overlap);
+  crowdedHoldKey = overlap || held ? holdKey : '';
   // Redundancy handling: collapse ambient chrome that is crowded or overlapping.
   const collapsedCount = applyChromeCollapse(open, competition, occlusion.collidingNodes);
   ensureBottomLaneListeners();
-  const bottomLane = measureAndApplyBottomLane(doc, html, { competition, occlusion });
+  laneRootStyle = globalThis.getComputedStyle?.(html) || null;
+  let bottomLane = null;
+  try {
+    bottomLane = measureAndApplyBottomLane(doc, html, { competition, occlusion });
+  } finally {
+    laneRootStyle = null;
+  }
 
   writeRuntimeDatasetValues(html, {
     spwFloatingChromeCount: String(rendered.length),
@@ -1049,6 +1121,29 @@ export function syncFloatingChromeState(root = document, options = {}) {
     source: options.source || 'floating-chrome',
     reason: options.reason || 'chrome-state-sync',
   });
+
+  const signature = [
+    openRoles.join(' '),
+    competition,
+    occlusion.state,
+    collapsedCount,
+    bottomLane?.laneMode || '',
+    bottomLane?.handleLane || '',
+    Math.round(bottomLane?.clearancePx || 0),
+  ].join('|');
+  if (signature !== lastFloatingChromeSignature) {
+    lastFloatingChromeSignature = signature;
+    doc.dispatchEvent?.(new globalThis.CustomEvent(FLOATING_CHROME_SETTLED_EVENT, {
+      detail: {
+        source: options.source || 'floating-chrome',
+        reason: options.reason || 'chrome-state-sync',
+        openRoles,
+        competition,
+        laneMode: bottomLane?.laneMode || null,
+        clearancePx: bottomLane ? Math.round(bottomLane.clearancePx) : null,
+      },
+    }));
+  }
 
   return {
     count: rendered.length,

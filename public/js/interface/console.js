@@ -5,7 +5,7 @@ import {
 } from '/public/js/kernel/shared.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
-import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
+import { annotateFloatingChromeElement, requestFloatingChromeSync } from '/public/js/kernel/dom-contracts.js';
 import { writeLensModeState } from '/public/js/runtime/lens-modes.js';
 
 let initialized = false;
@@ -762,6 +762,7 @@ const initSpwConsole = () => {
         lifecycle.abort();
         window.clearTimeout(idleTimer);
         nodes.root.remove();
+        requestFloatingChromeSync({ source: 'console', reason: 'console-unmount' });
         // window.spwInterface may already be shared with other modules; only the
         // console handle is released.
         if (window.spwConsole?.refresh === refresh) delete window.spwConsole;

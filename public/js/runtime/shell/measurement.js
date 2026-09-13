@@ -218,10 +218,12 @@ export function resolveMenuMode(header, nav, navList, state, view = globalThis) 
   const html = doc?.documentElement;
   const config = state?.config || SHELL_MEASUREMENT_DEFAULTS;
   const tier = html?.dataset?.spwViewportTier || getViewportTier(view?.innerWidth, config);
-  const ratio = computeNavRatio(header, nav, navList, state, view);
-
+  // The drawer query and pocket tiers decide without geometry; measuring inline
+  // item widths first cost a forced layout on every pocket open and close.
   if (prefersDrawerMenu(view)) return SHELL_MODES.TOGGLE;
   if (tier === VIEWPORT_TIERS.COMPACT || tier === VIEWPORT_TIERS.NARROW) return SHELL_MODES.TOGGLE;
+
+  const ratio = computeNavRatio(header, nav, navList, state, view);
 
   const previousMode = state?.snapshot?.mode || state?.mode || SHELL_MODES.INLINE;
   const exitRatio = Math.max(1, config.compressedRatio - config.modeHysteresisRatio);

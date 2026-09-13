@@ -1,7 +1,7 @@
 import { emitSpwAction } from '/public/js/kernel/shared.js';
 import {
   removeDatasetValues,
-  syncFloatingChromeState,
+  requestFloatingChromeSync,
   writeDatasetValues,
   writeDatasetValue,
   writeRuntimeDatasetValues,
@@ -287,7 +287,10 @@ function buildMenuSnapshot(header, nav, navList, state, open, source) {
   const tier = html.dataset.spwViewportTier || getViewportTier(window.innerWidth, state.config);
   const pointer = html.dataset.spwPointerMode || getPointerMode();
   const navFit = header.dataset.spwNavFit || 'roomy';
-  const ratio = computeNavRatio(header, nav, navList, state);
+  // Pocket toggle pressure is crowded whatever the strip would measure, so the
+  // last measured ratio stands in instead of forcing layout on each open/close.
+  const pocketToggle = state.mode === MODES.TOGGLE && (tier === 'compact' || tier === 'narrow');
+  const ratio = pocketToggle ? (state.navMeasure?.ratio || 1) : computeNavRatio(header, nav, navList, state);
   const primaryRouteCount = countPrimaryRoutes(navList);
   const overflowRouteCount = countOverflowRoutes(navList);
   const pressure = resolveMenuPressure({
@@ -377,15 +380,18 @@ function writeScrollDatasets(header, state) {
   syncShellOffset(header);
 }
 
+let appliedShellMenuOffset = '';
+
 function syncShellOffset(header) {
   if (!(header instanceof HTMLElement)) return;
   const rect = header.getBoundingClientRect();
-  const offset = Math.max(0, rect.bottom || 0);
-  document.documentElement.style.setProperty('--spw-shell-menu-offset', `${offset.toFixed(1)}px`);
-  syncFloatingChromeState(document, {
-    source: 'shell-disclosure',
-    reason: 'shell-offset',
-  });
+  const offset = `${Math.max(0, rect.bottom || 0).toFixed(1)}px`;
+  // A root write invalidates style for the whole document, and the lane only
+  // owes a pass when the header edge actually moved.
+  if (offset === appliedShellMenuOffset) return;
+  appliedShellMenuOffset = offset;
+  document.documentElement.style.setProperty('--spw-shell-menu-offset', offset);
+  requestFloatingChromeSync({ source: 'shell-disclosure', reason: 'shell-offset' });
 }
 
 function syncHeaderPointerField(header, event) {
