@@ -420,7 +420,9 @@ export function annotateFloatingChromeElement(el, options = {}) {
     source: descriptor.mutator || 'floating-chrome',
     reason: descriptor.reason || 'floating-chrome',
   });
-  if (changed) observeFloatingChromeSize(el);
+  // Observation is lifecycle wiring, not a side effect of annotation changing.
+  // Authored or remounted chrome may already carry the complete descriptor.
+  observeFloatingChromeSize(el);
   return changed;
 }
 

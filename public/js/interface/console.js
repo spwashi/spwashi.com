@@ -556,7 +556,7 @@ const initSpwConsole = () => {
     // One signal owns every document listener this mount registers.
     const lifecycle = new AbortController();
     const listen = (type, handler, options = {}) => {
-        listen(type, handler, { ...options, signal: lifecycle.signal });
+        document.addEventListener(type, handler, { ...options, signal: lifecycle.signal });
     };
 
     const history = makeRingBuffer(HISTORY_SIZE);

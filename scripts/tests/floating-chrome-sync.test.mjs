@@ -1,8 +1,31 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { requestFloatingChromeSync } from '../../public/js/kernel/dom-contracts.js';
+import {
+  annotateFloatingChromeElement,
+  requestFloatingChromeSync,
+} from '../../public/js/kernel/dom-contracts.js';
 import { resolveMenuMode, SHELL_MODES } from '../../public/js/runtime/shell/measurement.js';
+
+test('idempotent floating chrome annotation still wires size observation', () => {
+  const saved = globalThis.ResizeObserver;
+  const observed = [];
+  globalThis.ResizeObserver = class {
+    observe(target) { observed.push(target); }
+  };
+
+  try {
+    const chrome = new globalThis.HTMLElement();
+    chrome.dataset = {};
+    const options = { role: 'console', tier: 'docked', mutator: 'test' };
+
+    assert.equal(annotateFloatingChromeElement(chrome, options), true);
+    assert.equal(annotateFloatingChromeElement(chrome, options), false);
+    assert.deepEqual(observed, [chrome, chrome]);
+  } finally {
+    globalThis.ResizeObserver = saved;
+  }
+});
 
 test('floating chrome sync requests coalesce into one frame', () => {
   const saved = globalThis.requestAnimationFrame;

@@ -488,6 +488,16 @@ test('module export inspection reports catalog mirror drift without changing aut
   assert.deepEqual(report.orchestration.drift, ['timingArc']);
 });
 
+test('console lifecycle binds document listeners to its abort signal', async () => {
+  const source = await readFile(path.join(ROOT, 'public/js/interface/console.js'), 'utf8');
+  assert.match(
+    source,
+    /document\.addEventListener\(type, handler, \{ \.\.\.options, signal: lifecycle\.signal \}\)/,
+  );
+  assert.match(source, /activeConsoleCleanup = \(\) => \{\s+lifecycle\.abort\(\)/);
+  assert.doesNotMatch(source, /const listen = \([^)]*\) => \{\s+listen\(/);
+});
+
 test('deploy packs preserve catalog timing language and module addresses', () => {
   const definitions = [
     {

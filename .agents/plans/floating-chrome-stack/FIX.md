@@ -51,3 +51,9 @@ The site already has the right ownership model: floating chrome belongs to a sha
 - Every tappable chrome control now reads `--spw-floating-control-size`, assigned only in the "Control size" block of `floating-chrome.css`. The role values there are the inherited spread, kept exactly: a computed-size matrix (4 pointer/width cells × 7 lane modes × 9 controls, 2772 values) matched before and after.
 - Removed as dead: the lane rule's launch and console entries, the pocket `--spw-floating-slot-control` launch rule (outranked by `runtime-states.css`), and duplicated console pocket literals.
 - Step 2 (sensation gate, browser demo before commit): collapse the role spread into one decision — compact base, a coarse-pointer step keyed to pointer rather than width — and decide whether the ornament layer's 48rem `:where(button, .spw-chip, label)` min-height should keep reaching floating chrome, since it currently overrides every control below that width. `--spw-floating-slot-control` still carries the pocket clamp for slot positioning and should read the control token once step 2 settles the size.
+
+## 2026-09-13 Mount/Observation Repair
+
+- The console's abortable listener adapter called itself instead of `document.addEventListener`, overflowing before the idle module could finish mounting. The same abort signal now owns each document subscription and teardown still removes the console, timer, and lane participant.
+- Floating chrome observation is lifecycle wiring, so annotation observes the element even when its descriptor was already complete. Remounted or authored chrome can therefore announce later size and departure changes without requiring a dataset mutation.
+- Regression gates cover the listener/abort pairing and idempotent observation. A settled Home navigation completed with zero console errors; the full module suite passed 330 tests.
