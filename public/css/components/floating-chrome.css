@@ -873,7 +873,7 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 
 /* ---- stacked is the tightest state: status text reduces too ---- */
 
-:where([data-spw-bottom-lane-mode='stacked']) :where(.spw-console-label) {
+:where([data-spw-bottom-lane-mode='stacked']) :where(.spw-console-action-token) {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
