@@ -306,7 +306,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 }
 
 .spw-state-inspector__launch {
-  min-block-size: 2.2rem;
+  min-block-size: var(--spw-floating-control-size, 2.2rem);
   min-inline-size: max-content;
   padding: 0.38rem 0.68rem;
   overflow-wrap: normal;

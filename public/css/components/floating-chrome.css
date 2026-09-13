@@ -77,10 +77,10 @@
 }
 
 :where([data-spw-floating-chrome="true"]) :where(.spw-popover-dismiss) {
-  min-inline-size: var(--touch-target-compact, 2.15rem);
-  min-block-size: var(--touch-target-compact, 2.15rem);
-  inline-size: var(--touch-target-compact, 2.15rem);
-  block-size: var(--touch-target-compact, 2.15rem);
+  min-inline-size: var(--spw-floating-control-size);
+  min-block-size: var(--spw-floating-control-size);
+  inline-size: var(--spw-floating-control-size);
+  block-size: var(--spw-floating-control-size);
 }
 
 :where(
@@ -92,6 +92,50 @@
   overflow-wrap: normal;
 }
 
+/* --------------------------------------------------------------------------
+   Control size — one token for every tappable chrome control
+   --------------------------------------------------------------------------
+   Controls read --spw-floating-control-size and only this block assigns it.
+   The role values reproduce the sizes each sheet used to set as its own
+   literal, so routing them here changed no resolved size. They are the spread
+   a sizing pass reconciles, not a decision about what the size should be.
+
+   Still outside this token: at 48rem and below, the ornament layer's
+   :where(button, .spw-chip, label) min-height wins over every control here.
+   -------------------------------------------------------------------------- */
+
+:root {
+  --spw-floating-control-size: var(--touch-target-compact, 2.15rem);
+}
+
+:where(.spw-state-inspector__launch) {
+  --spw-floating-control-size: 2.2rem;
+}
+
+:where(.spw-console-expand-btn, .spw-console-collapse-btn) {
+  --spw-floating-control-size: 1.9rem;
+}
+
+:where(.spw-console.is-collapsed .spw-console-expand-btn) {
+  --spw-floating-control-size: 1.6rem;
+}
+
+:where([data-spw-bottom-lane-mode]) :where(.spw-reward-dock-trigger) {
+  --spw-floating-control-size: 2.75rem;
+}
+
+@media (pointer: coarse) {
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) :where(button) {
+    --spw-floating-control-size: var(--touch-target-min, 2.75rem);
+  }
+}
+
+@media (max-width: 45rem) {
+  :where(.spw-console.is-collapsed .spw-console-expand-btn) {
+    --spw-floating-control-size: 1.25rem;
+  }
+}
+
 /* The section rail is a shrinking flex row. Preserve real button targets while
    allowing its current-room sentence to yield before the next-room control. */
 :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) {
@@ -99,7 +143,7 @@
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) :where(button) {
-  min-inline-size: var(--touch-target-compact, 2.25rem);
+  min-inline-size: var(--spw-floating-control-size);
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) :where(.spw-section-handle-current) {
@@ -117,11 +161,6 @@
   display: none;
 }
 
-@media (pointer: coarse) {
-  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) :where(button) {
-    min-inline-size: var(--touch-target-min, 2.75rem);
-  }
-}
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="floating"]) {
   --spw-floating-tier-z: var(--z-floating, var(--layer-floating, 100));
@@ -490,12 +529,6 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
     max-inline-size: none;
   }
 
-  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"]) .spw-state-inspector__launch {
-    min-inline-size: var(--spw-floating-slot-control);
-    min-block-size: var(--spw-floating-slot-control);
-    padding-inline: 0.75rem;
-  }
-
   html[data-spw-bottom-lane-managed="true"] :where(
     [data-spw-floating-chrome="true"][data-spw-chrome-role="discovery-toast-stack"],
     .spw-discovery-notice-stack
@@ -837,18 +870,14 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
                         thing in the lane because nothing breaks if it is only
                         a glyph.
 
-   Reduction is label-then-padding, never the target. Every trigger keeps a
-   44px touch target at every mode — a control that shrinks below the finger
-   that operates it has not reduced, it has broken.
+   Reduction is label-then-padding, never the target. Lane modes reduce what a
+   control shows; the control's size comes from --spw-floating-control-size
+   (see "Control size" near the top of this sheet), not from the mode.
    ========================================================================== */
 
-:where([data-spw-bottom-lane-mode]) :where(
-  .spw-reward-dock-trigger,
-  .spw-state-inspector__launch,
-  .spw-console-toggle
-) {
-  min-block-size: 2.75rem;
-  min-inline-size: 2.75rem;
+:where([data-spw-bottom-lane-mode]) :where(.spw-reward-dock-trigger) {
+  min-block-size: var(--spw-floating-control-size);
+  min-inline-size: var(--spw-floating-control-size);
 }
 
 /* ---- crowded / stacked: collection reduces to its glyph ---- */
