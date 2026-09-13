@@ -9,6 +9,7 @@ import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.j
 import { writeLensModeState } from '/public/js/runtime/lens-modes.js';
 
 let initialized = false;
+let activeConsoleCleanup = null;
 
 // ─── Ring buffer for action history ──────────────────────────────────────────
 
@@ -546,11 +547,17 @@ const getDefaultCollapsedState = (storageKey, settings = getSiteSettings()) => {
 
 const initSpwConsole = () => {
     if (initialized && document.querySelector('.spw-console')) return;
-    if (initialized) initialized = false;
+    activeConsoleCleanup?.();
+    initialized = false;
 
     const api = window.spwInterface || createConsoleInterface();
     if (!window.spwInterface) window.spwInterface = api;
     initialized = true;
+    // One signal owns every document listener this mount registers.
+    const lifecycle = new AbortController();
+    const listen = (type, handler, options = {}) => {
+        listen(type, handler, { ...options, signal: lifecycle.signal });
+    };
 
     const history = makeRingBuffer(HISTORY_SIZE);
     const nodes = createConsole();
@@ -572,7 +579,7 @@ const initSpwConsole = () => {
     };
     applyFeedback();
     // Listen for settings changes (like satchel reapply).
-    document.addEventListener('spw:settings:changed', () => { syncConsoleMaterial(); applyFeedback(); }, { passive: true });
+    listen('spw:settings:changed', () => { syncConsoleMaterial(); applyFeedback(); }, { passive: true });
     if (window.spwSettings && window.spwSettings.bus) {
       // if bus available
     }
@@ -670,13 +677,13 @@ const initSpwConsole = () => {
     };
 
     // ── Event subscriptions ──
-    document.addEventListener('spw:frame-change', (event) => {
+    listen('spw:frame-change', (event) => {
         sync(event.detail);
         setAction(nodes, history, ...describeFrameAction(event.detail), describeFrameSelection(event.detail, api.getActiveFrame()));
         wake();
     });
 
-    document.addEventListener('spw:mode-change', (event) => {
+    listen('spw:mode-change', (event) => {
         const frameMeta = event.detail.frameMeta
             ? { ...event.detail.frameMeta, frame: event.detail.frame }
             : null;
@@ -689,7 +696,7 @@ const initSpwConsole = () => {
         wake();
     });
 
-    document.addEventListener('spw:action', (event) => {
+    listen('spw:action', (event) => {
         const detail = event.detail || {};
         if (!detail.token || !detail.description) return;
         setAction(nodes, history, detail.token, detail.description, {
@@ -701,13 +708,13 @@ const initSpwConsole = () => {
         wake();
     });
 
-    document.addEventListener('spw:settings-change', (event) => {
+    listen('spw:settings-change', (event) => {
         const display = event.detail?.consoleDisplay;
         if (display === 'expanded') applyCollapsed(false, true);
         if (display === 'collapsed' || display === 'hidden') applyCollapsed(true, true);
     });
 
-    document.addEventListener('spw:development-shifted', (event) => {
+    listen('spw:development-shifted', (event) => {
         if (!shouldNarrateDiagnostics('basic')) return;
         setAction(nodes, history, ...describeDevelopmentAction(event.detail), {
             source: 'development-shift',
@@ -718,7 +725,7 @@ const initSpwConsole = () => {
         wake();
     });
 
-    document.addEventListener('spw:semantic-snapshot', (event) => {
+    listen('spw:semantic-snapshot', (event) => {
         if (!shouldNarrateDiagnostics('verbose')) return;
         setAction(nodes, history, ...describeSemanticSnapshot(event.detail), {
             source: 'semantic-snapshot',
@@ -729,7 +736,7 @@ const initSpwConsole = () => {
         wake();
     });
 
-    document.addEventListener('spw:runtime-refresh', (event) => {
+    listen('spw:runtime-refresh', (event) => {
         if (!shouldNarrateDiagnostics('verbose')) return;
         setAction(nodes, history, ...describeRuntimeRefresh(event.detail), {
             source: 'runtime-refresh',
@@ -740,7 +747,7 @@ const initSpwConsole = () => {
         wake();
     });
 
-    document.addEventListener('spw:layout-shift', (event) => {
+    listen('spw:layout-shift', (event) => {
         if (!shouldNarrateDiagnostics('basic')) return;
         setAction(nodes, history, ...describeLayoutShiftAction(event.detail), {
             source: 'layout-shift',
@@ -750,10 +757,22 @@ const initSpwConsole = () => {
         });
         wake();
     });
+
+    activeConsoleCleanup = () => {
+        lifecycle.abort();
+        window.clearTimeout(idleTimer);
+        nodes.root.remove();
+        // window.spwInterface may already be shared with other modules; only the
+        // console handle is released.
+        if (window.spwConsole?.refresh === refresh) delete window.spwConsole;
+        activeConsoleCleanup = null;
+        initialized = false;
+    };
 };
 
 export function unmountSpwConsole() {
-    initialized = false;
+    if (activeConsoleCleanup) activeConsoleCleanup();
+    else initialized = false;
 }
 
 export { initSpwConsole, unmountSpwConsole as unmount };

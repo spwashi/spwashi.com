@@ -1175,7 +1175,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'image-utilization',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.VISIBLE,
-    selector: 'main, [data-spw-image-surface], [data-spw-image-reward], [data-spw-image-discovery]',
+    selector: 'main img, [data-spw-image-surface], [data-spw-image-reward], [data-spw-image-discovery]',
     rootMode: 'single',
     describes: 'image[distribution|utilization] performance lazy-priority',
     updates: [
