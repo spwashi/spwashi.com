@@ -54,6 +54,7 @@
 @brace_hysteresis_crease_2026_09: ~"./brace-hysteresis-crease-2026-09.spw"
 @leftover_peer_ecology_2026_09: ~"./leftover-peer-ecology-2026-09.spw"
 @module_effect_arc_options_2026_09: ~"./module-effect-arc-options-2026-09.spw"  # four clocks: cascade, delivery, mount, arc; none selected
+@component_runtime_review_2026_09: ~"./component-runtime-review-2026-09.spw"  # measured component/runtime findings; crr-001 starts with desktop speculation
 
 operation = "align"
 fixity = "tending"
@@ -106,6 +107,7 @@ fixity = "tending"
   brace_hysteresis_crease_2026_09 = @brace_hysteresis_crease_2026_09
   leftover_peer_ecology_2026_09 = @leftover_peer_ecology_2026_09
   module_effect_arc_options_2026_09 = @module_effect_arc_options_2026_09
+  component_runtime_review_2026_09 = @component_runtime_review_2026_09
 }[reg=facet]
 
 ^"cache_rules"{

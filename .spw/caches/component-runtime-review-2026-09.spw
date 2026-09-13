@@ -1,0 +1,216 @@
+# Component and runtime review cache (2026-09)
+#
+# operation: cache
+# A bounded review of public component UX and shared runtime performance.
+# Measurements are local, warm, headless, and directional; they are not
+# production Core Web Vitals. This cache selects future patches. It does not
+# authorize a catalog rewrite, observer federation, or home redesign.
+
+#>component_runtime_review_2026_09
+#:cache #!components #!runtime #!performance #!ux #!accessibility
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@runtime_plan: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@css_plan: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
+@interaction_cost: ~"./interaction-paint-cost-2026-09.spw"
+@runtime_entry: ~"../../public/js/site.js"
+@module_loader: ~"../../public/js/runtime/module-loader.js"
+@enhancement_catalog: ~"../../public/js/runtime/catalog/enhancement.js"
+@interaction_progression: ~"../../public/js/runtime/interaction/progression.js"
+@console: ~"../../public/js/interface/console.js"
+@operator_attention: ~"../../public/css/handles/operators/attention-states.css"
+@operator_chips: ~"../../public/css/handles/operators/sigils-and-chips.css"
+@core_css: ~"../../public/css/style-core.css"
+@home: ~"../../index.html"
+
+operation = "cache"
+fixity = "tending"
+source = `2026-09-12 component/runtime review: source census, CSS payload report,
+  module-selector audit, runtime contracts, component tests, timing tests,
+  62-still visual checks, and the warm headless navigation matrix.`
+measurement_caveat = `The repository headless runner supplied local comparative
+  timings and resource counts. Chrome DevTools tracing was unavailable, so no
+  production LCP, CLS, INP, long-task, or causal millisecond claim is made.`
+concurrency_caveat = `The checkout gained concurrent edits in the enhancement
+  catalog, module loader, engagement tests, and generated search index during
+  the review. The final runtime contract passed against that current checkout;
+  none of those edits belong to this cache patch.`
+runtime_caveat = `Runtime counts predate 9ef06550, which coalesced root dataset
+  writes, deduplicated single-root visible mounts, and narrowed the visible
+  rootMargin. Re-run bench:nav:quick before reading crr-001 numbers as current.`
+
+^"baseline"{
+  runtime = `114 module definitions: immediate 6, visible 59, idle 43,
+    invited 3, region 1, settled 2. Runtime contracts passed.`
+  css = `Generated core CSS: 1,685,278 bytes raw and 322,858 bytes gzip;
+    99 imports. The raw bundle remains inside its existing soft budget.`
+  visual = `npm run visual:checks produced 62 stills with zero skipped and
+    zero errors. The six-cell navigation matrix reported no horizontal overflow.`
+  interaction = `Coarse-pointer component rules provide 44px minimum targets.
+    Component checks and timing tests passed.`
+  interpretation = `The architecture already stages work and protects pocket
+    readers. The next gain is narrower speculation and clearer readiness, not
+    another lifecycle vocabulary.`
+}[reg=facet]
+
+insight #crr-001 {
+  operation = "cache"
+  fixity = "tending"
+  claim = `Desktop resource speculation erases much of the staged-runtime gain.`
+  evidence = #[
+    `Warm matrix: laptop loaded 142-162 scripts; phone loaded 75-99.`,
+    `Average boot-to-ready: laptop 5514ms; phone 3373ms.`,
+    `@runtime_entry awaits visible modulepreload and idle prefetch together.`,
+    `@module_loader probes and hints every eligible candidate when prefetch is allowed.`
+  ][reg=set]
+  pattern_consideration = #[
+    `Pocket/coarse readers already disable speculative prefetch.`,
+    `Visible roots and idle catalog eligibility are different confidence levels.`
+  ][reg=set]
+  expansion_prime = `Through @runtime_plan, stop awaiting idle speculation;
+    preload only near-viewport visible roots and cap hints by count or bytes.`
+  validation = `Run bench:nav:quick on phone and laptop, then confirm fewer laptop
+    scripts without slower first interaction or missing visible enhancement.`
+}
+
+insight #crr-002 {
+  operation = "cache"
+  fixity = "tending"
+  claim = `Document-level aria-busy outlives the first useful reading posture.`
+  evidence = #[
+    `@runtime_entry sets body aria-busy=true at boot.`,
+    `PAGE_STATES.INTERACTIVE lands before non-core catalog loading and prefetch.`,
+    `body aria-busy=false is written only after hydration and mount scheduling.`
+  ][reg=set]
+  pattern_consideration = #[
+    `Document readiness differs from a widget still hydrating.`,
+    `The existing page-interactive mark is the honest global boundary.`
+  ][reg=set]
+  expansion_prime = `Clear global busy at page-interactive; keep local busy state
+    only on components that still have incomplete content or controls.`
+  validation = `Screen-reader smoke plus runtime timing tests across normal,
+    quiet, and eager postures.`
+}
+
+insight #crr-003 {
+  operation = "cache"
+  fixity = "tending"
+  claim = `Shared chip focus is too close to hover and can lose a clear keyboard ring.`
+  evidence = #[
+    `@operator_attention merges :hover and :focus-visible, then sets outline:none.`,
+    `@operator_chips repeats the merged state; its default hover shadow is none.`,
+    `Route-specific focus treatments are stronger than the shared component default.`
+  ][reg=set]
+  pattern_consideration = #[
+    `The reset already supplies a visible focus outline.`,
+    `Pointer feedback and keyboard location communicate different information.`
+  ][reg=set]
+  expansion_prime = `Give .spw-chip:focus-visible an explicit 2px tokenized outline
+    in the existing handle sheet and add a keyboard-focus still.`
+  validation = `Paced Tab journey at phone and laptop widths plus visual:checks.`
+}
+
+insight #crr-004 {
+  operation = "cache"
+  fixity = "experimental"
+  claim = `Broad catalog selectors import enhancement work on routes that cannot
+    realize its value.`
+  evidence = #[
+    `image-utilization selects main, which exists on ordinary routes without images.`,
+    `interaction-progression selects html, observes the document subtree, and binds
+      global pointer, focus, image, settings, cauldron, and rail events.`
+  ][reg=set]
+  pattern_consideration = #[
+    `Feature-gated and exact-host modules already avoid no-op imports.`,
+    `A build-time route subset and runtime dynamic-root detection solve different jobs.`
+  ][reg=set]
+  expansion_prime = `First tighten image-utilization to actual image hosts. Then
+    measure progression before splitting only bridges without hosts on that route.`
+  validation = `audit:module-selectors, check:runtime, route smoke with late-added
+    images, and a browser trace before any progression split.`
+}
+
+insight #crr-005 {
+  operation = "cache"
+  fixity = "stable"
+  claim = `Console unmount does not dispose the resources created by console mount.`
+  evidence = #[
+    `@console appends .spw-console, starts an idle timer, and registers document listeners.`,
+    `unmountSpwConsole only sets initialized=false.`
+  ][reg=set]
+  pattern_consideration = #[
+    `Other runtime modules use AbortController or explicit cleanup.`,
+    `The loader contract treats a returned function as teardown.`
+  ][reg=set]
+  expansion_prime = `Use one AbortController, clear the timer, remove the owned DOM,
+    and release only globals created by this mount.`
+  validation = `Add a mount-unmount-remount test that asserts one console root and
+    one reaction per emitted event.`
+}
+
+insight #crr-006 {
+  operation = "cache"
+  fixity = "tending"
+  claim = `Core CSS is within its raw budget but remains the largest shared component cost.`
+  evidence = #[
+    `Core is 1,685,278 raw bytes and 322,858 gzip bytes.`,
+    `@core_css includes query-composer, embedded-workshop, and interactive-expression,
+      whose confirmed authored sources total 21,992 raw bytes.`,
+    `runtime-states.css is 51,232 raw bytes and mixes structural and decorative states.`
+  ][reg=set]
+  pattern_consideration = #[
+    `Tokens, syntax, shell, frames, and cards are protected core owners.`,
+    `Rare labs already have route and behavior bundle patterns to join.`
+  ][reg=set]
+  expansion_prime = `Through @css_plan, demote the three rare lab sheets first;
+    separately split only decorative runtime states when selector coverage proves it.`
+  validation = `css:payload, check:local, and affected route visual fixtures.`
+}
+
+insight #crr-007 {
+  operation = "cache"
+  fixity = "experimental"
+  claim = `The home pocket asks for too many orientation decisions before the first room.`
+  evidence = #[
+    `@home presents creator identity, route map, living-concept instructions,
+      release note, four working views, wrap jobs, and page landmarks in one opening.`,
+    `The home visual fixture passed mechanically but showed a dense first fold.`
+  ][reg=set]
+  pattern_consideration = #[
+    `Creator-first identity and one useful next action are the fixed opening.`,
+    `Inspect posture can hold editor-facing explanation without hiding route access.`
+  ][reg=set]
+  expansion_prime = `Prototype one pocket-only information-order change: move page
+    landmarks and secondary lens explanation below the first room or into inspect posture.`
+  validation = `Compare the home opening still and keyboard order at phone and desktop;
+    retain every route link and the canonical creator statement.`
+}
+
+^"decision_gate"{
+  decision = "build through existing owner plans, one named patch at a time"
+  first = `@runtime_plan: separate global aria readiness from speculative resources.`
+  second = `@runtime_plan: cap desktop visible prefetch and stop eager idle hints.`
+  third = `A small craft-quality patch for the shared chip focus ring.`
+  then = `Console cleanup, exact image selector, and rare CSS demotion can proceed as
+    independent owner-local patches after the first three are measured.`
+  do_not_build = `Do not rewrite the catalog, federate all observers, remove material
+    effects broadly, or redesign the home route from this cache. Interaction progression
+    splitting and home hierarchy remain experimental until a targeted trace or comparison.`
+  archive_when = `Archive each insight when landed with a receipt, disproved by a
+    targeted probe, or superseded by its owner plan.`
+}[reg=facet]
+
+validation: #[
+  `npm run check:runtime`,
+  `npm run test:components`,
+  `npm run test:timing`,
+  `npm run component:check`,
+  `npm run visual:checks`,
+  `npm run bench:nav:quick -- --json`,
+  `npm run audit:module-selectors`,
+  `npm run css:payload`,
+  `npm run spw:doctor`,
+  `git diff --check`
+][reg=set]
