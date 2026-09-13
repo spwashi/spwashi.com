@@ -370,14 +370,19 @@
 }
 
 .spw-chip:hover,
-.spw-chip:focus-visible,
-.spw-chip:hover,
 .spw-chip:focus-visible {
   background: var(--operator-chip-hover-bg);
   border-color: var(--operator-chip-hover-border);
   color: var(--operator-chip-hover-ink);
   box-shadow: var(--operator-chip-hover-shadow);
   outline: none;
+}
+
+/* Keyboard location is not pointer feedback: the ring survives the shared
+   hover treatment above and the attention-states reset. */
+.spw-chip:focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--teal, #008080));
+  outline-offset: 2px;
 }
 
 /* Microinteraction refinement tied to runtime load posture/timing.
