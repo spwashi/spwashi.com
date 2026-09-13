@@ -817,3 +817,178 @@ test('overlapping component releases share cleanup and remount waits for disposa
     assert.equal(await loader.unmountModuleById(testDef.id, ctx), false);
   }
 });
+
+test('module-loader batches root dataset mutations during mount batch', async () => {
+  const fakeElement = {
+    dataset: {},
+    style: {
+      setProperty() {},
+      removeProperty() {},
+    },
+    setAttribute() {},
+    getAttribute() { return null; },
+  };
+  const trackedHtml = new Proxy(fakeElement, {
+    set(target, prop, val) {
+      if (prop === 'dataset') {
+        target.dataset = val;
+        return true;
+      }
+      return Reflect.set(target, prop, val);
+    },
+  });
+
+  const writeCalls = [];
+  const trackedDataset = new Proxy({}, {
+    set(target, prop, val) {
+      writeCalls.push({ prop, val });
+      target[prop] = val;
+      return true;
+    },
+  });
+  trackedHtml.dataset = trackedDataset;
+
+  const def1 = {
+    id: 'batch-test-1',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    load: async () => ({ SPW_MODULE_EXPORT: { mount() {} } }),
+  };
+  const def2 = {
+    id: 'batch-test-2',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    load: async () => ({ SPW_MODULE_EXPORT: { mount() {} } }),
+  };
+
+  const loader = createModuleLoader({
+    moduleDefs: [def1, def2],
+    html: trackedHtml,
+    body: trackedHtml,
+    matchesRoute: () => true,
+    matchesFeatures: () => true,
+    hasSelector: () => true,
+    getRoots: () => [],
+    hasDebugOrQAMode: () => false,
+    readConnectionPosture: () => 'fast',
+    shouldPrefetchRuntimeResources: () => true,
+    extractDynamicImportSpecifier: (def) => def.specifier,
+    moduleSpecifierToUrl: (spec) => spec,
+    ensureResourceHint: () => true,
+    isRuntimeResourceCached: async () => false,
+    requestServiceWorkerPrefetch: () => false,
+    requestServiceWorkerCacheSummary: () => false,
+    refreshRegionProfiles: () => {},
+    setPageState: () => {},
+  });
+
+  const ctx = {
+    registry: createRegistry(),
+    runtimePolicy: readRuntimePolicy(),
+    moduleAudit: [],
+    bus: { emit() {}, on() { return () => {}; } },
+    html: trackedHtml,
+    body: trackedHtml,
+    now: () => performance.now(),
+  };
+
+  // Mount immediate layer which wraps in beginMountBatch() / endMountBatch()
+  await loader.mountImmediateLayer([def1, def2], ctx, { label: 'batch-test' });
+
+  // In a batch of 2 modules, dataset writes should only occur once at the end of the batch
+  const lastModuleWrites = writeCalls.filter((call) => call.prop === 'spwRuntimeLastModule');
+  assert.equal(lastModuleWrites.length, 1);
+  assert.equal(trackedDataset.spwRuntimeModuleCount, '2');
+});
+
+test('mountVisibleFeatures deduplicates visible single-root definitions across multiple elements', async () => {
+  let mountCount = 0;
+  const singleDef = {
+    id: 'visible-single-test',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    rootMode: 'single',
+    selector: '.test-host',
+    load: async () => ({
+      SPW_MODULE_EXPORT: {
+        mount() {
+          mountCount += 1;
+        },
+      },
+    }),
+  };
+
+  let observerCallback = null;
+  const observed = [];
+  const unobserved = [];
+  class FakeObserver {
+    constructor(cb) {
+      observerCallback = cb;
+    }
+    observe(el) {
+      observed.push(el);
+    }
+    unobserve(el) {
+      unobserved.push(el);
+    }
+    disconnect() {}
+  }
+  const originalObserver = globalThis.IntersectionObserver;
+  globalThis.IntersectionObserver = FakeObserver;
+
+  try {
+    const el1 = { matches: (sel) => sel === '.test-host' };
+    const el2 = { matches: (sel) => sel === '.test-host' };
+    const el3 = { matches: (sel) => sel === '.test-host' };
+
+    const loader = createModuleLoader({
+      moduleDefs: [singleDef],
+      html: document.documentElement,
+      body: document.body,
+      matchesRoute: () => true,
+      matchesFeatures: () => true,
+      hasSelector: () => true,
+      getRoots: () => [el1, el2, el3],
+      hasDebugOrQAMode: () => false,
+      readConnectionPosture: () => 'fast',
+      shouldPrefetchRuntimeResources: () => true,
+      extractDynamicImportSpecifier: (def) => def.specifier,
+      moduleSpecifierToUrl: (spec) => spec,
+      ensureResourceHint: () => true,
+      isRuntimeResourceCached: async () => false,
+      requestServiceWorkerPrefetch: () => false,
+      requestServiceWorkerCacheSummary: () => false,
+      refreshRegionProfiles: () => {},
+      setPageState: () => {},
+    });
+
+    const ctx = {
+      registry: createRegistry(),
+      runtimePolicy: readRuntimePolicy(),
+      moduleAudit: [],
+      bus: { emit() {}, on() { return () => {}; } },
+      addObserver() {},
+      html: document.documentElement,
+      body: document.body,
+      now: () => performance.now(),
+    };
+
+    await loader.mountVisibleFeatures([singleDef], ctx);
+
+    // Simulate all 3 elements intersecting in one wave
+    assert.ok(typeof observerCallback === 'function');
+    observerCallback([
+      { target: el1, isIntersecting: true },
+      { target: el2, isIntersecting: true },
+      { target: el3, isIntersecting: true },
+    ]);
+
+    // Wait a tick for the queue drain to complete
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    // Mount should only be called once because rootMode is single
+    assert.equal(mountCount, 1);
+  } finally {
+    globalThis.IntersectionObserver = originalObserver;
+  }
+});

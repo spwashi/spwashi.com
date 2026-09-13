@@ -130,6 +130,8 @@ export function createModuleLoader(config = {}) {
 
   let mountBatchDepth = 0;
   let tokenFlushScheduled = false;
+  let pendingSummaryRecord = null;
+  let summaryFlushScheduled = false;
   let activeResourceProbes = 0;
   const queuedResourceProbes = [];
   const pendingUnmounts = new WeakMap();
@@ -167,6 +169,7 @@ export function createModuleLoader(config = {}) {
     mountBatchDepth -= 1;
     if (mountBatchDepth === 0) {
       writeDatasetValue(html, 'spwRuntimeMountBatch', null);
+      flushRuntimeModuleSummary(ctx);
       flushRuntimeTokenUpdate(ctx);
     }
   }
@@ -174,6 +177,8 @@ export function createModuleLoader(config = {}) {
   function resetMountBatchState() {
     mountBatchDepth = 0;
     tokenFlushScheduled = false;
+    summaryFlushScheduled = false;
+    pendingSummaryRecord = null;
     writeDatasetValue(html, 'spwRuntimeMountBatch', null);
   }
 
@@ -212,6 +217,23 @@ export function createModuleLoader(config = {}) {
     if (tokenFlushScheduled) return;
     tokenFlushScheduled = true;
     queueMicrotask(() => flushRuntimeTokenUpdate(ctx));
+  }
+
+  function flushRuntimeModuleSummary(ctx) {
+    summaryFlushScheduled = false;
+    const record = pendingSummaryRecord;
+    pendingSummaryRecord = null;
+    if (!ctx || !record) return;
+    syncRuntimeModuleSummary(ctx, record);
+  }
+
+  function scheduleRuntimeModuleSummary(ctx, record) {
+    if (!ctx || !record) return;
+    pendingSummaryRecord = record;
+    if (mountBatchDepth > 0) return;
+    if (summaryFlushScheduled) return;
+    summaryFlushScheduled = true;
+    queueMicrotask(() => flushRuntimeModuleSummary(ctx));
   }
 
 function normalizeModuleTimingStage(stage = 'scheduled') {
@@ -854,6 +876,7 @@ function syncActiveModuleLayers(ctx) {
 }
 
 function syncRuntimeModuleSummary(ctx, record) {
+  if (!ctx || !record) return;
   const records = ctx.registry.values();
   const mounted = records.filter((entry) => entry.status === 'mounted').map((entry) => entry.baseId || entry.id);
   const failed = records.filter((entry) => entry.status === 'failed').map((entry) => entry.baseId || entry.id);
@@ -1220,7 +1243,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     });
     performance.mark(`spw:module:${def.id}:observed`);
     annotateModuleTarget(root, record);
-    syncRuntimeModuleSummary(ctx, record);
+    scheduleRuntimeModuleSummary(ctx, record);
     syncActiveModuleLayers(ctx); // for CSS transitions and attentional timing keyed off active runtime layers
 
     performance.mark(`spw:module:${def.id}:end`);
@@ -1320,7 +1343,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     });
     performance.mark(`spw:module:${record.id}:failed`);
     annotateModuleTarget(root, record);
-    syncRuntimeModuleSummary(ctx, record);
+    scheduleRuntimeModuleSummary(ctx, record);
     recordModuleAudit(ctx, {
       id: recordId,
       baseId: def.id,
@@ -1405,7 +1428,7 @@ function yieldToNextFrame() {
       resolve();
     };
     // Headless / background: rAF and scheduler may stall; always arm a timeout.
-    window.setTimeout(finish, 48);
+    window.setTimeout(finish, 16);
     if (typeof window.scheduler?.postTask === 'function') {
       try {
         window.scheduler.postTask(finish, { priority: 'user-visible' });
@@ -1438,6 +1461,7 @@ async function mountVisibleFeatures(defs, ctx) {
   if (!visibleDefs.length) return;
 
   const queue = [];
+  const queuedSingleDefs = new Set();
   let draining = false;
 
   const drainQueue = async () => {
@@ -1476,9 +1500,13 @@ async function mountVisibleFeatures(defs, ctx) {
           if (!el.matches(def.selector)) continue;
           annotateModuleTrigger(el, def, ctx, mountWhen.VISIBLE, 'triggered');
 
-          queue.push(() => (def.rootMode === 'single'
-            ? mountDefinition(def, ctx, null, 0)
-            : mountDefinition(def, ctx, el)));
+          if (def.rootMode === 'single') {
+            if (queuedSingleDefs.has(def.id) || ctx.registry.has(def.id)) continue;
+            queuedSingleDefs.add(def.id);
+            queue.push(() => mountDefinition(def, ctx, null, 0));
+          } else {
+            queue.push(() => mountDefinition(def, ctx, el));
+          }
         }
       }
 
@@ -1486,7 +1514,7 @@ async function mountVisibleFeatures(defs, ctx) {
     },
     {
       root: null,
-      rootMargin: '240px 0px',
+      rootMargin: '120px 0px',
       threshold: 0.01,
     }
   );
@@ -1867,7 +1895,7 @@ function refreshRuntime(ctx) {
           note: 'runtime refresh completed',
         });
         performance.mark(`spw:module:${record.id}:settled`);
-        syncRuntimeModuleSummary(ctx, record);
+        scheduleRuntimeModuleSummary(ctx, record);
       }
       record.refresh?.(ctx);
     } catch (error) {
@@ -1875,6 +1903,7 @@ function refreshRuntime(ctx) {
     }
   }
 
+  flushRuntimeModuleSummary(ctx);
   ctx.bus.emit('spw:runtime-refresh', { route: ctx.route });
 }
 
