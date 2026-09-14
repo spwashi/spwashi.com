@@ -50,13 +50,13 @@
   "daily": [
     {
       "promo": {
-        "label": "Release",
+        "label": "Release record",
         "operator": "@",
-        "title": "Open the September 13 release record",
-        "summary": "Scan the three-surface close, inspect the receipts, then choose the route you want to carry forward.",
+        "title": "Start the new cycle from the September 13 record",
+        "summary": "Scan the three-surface close, inspect the receipts, then choose one route to carry toward the next close.",
         "href": "/now/",
         "cta": "Read the release",
-        "why": "The A-cycle turns scattered work into one public checkpoint.",
+        "why": "A completed close becomes a clear starting point for the next one.",
         "presentation": "modal",
         "promotion": {
           "kind": "release",
@@ -64,7 +64,7 @@
           "offer": "A readable September 13 checkpoint across the site, workbench, and lore.land",
           "proof": "The Now route names the shipped surfaces, local verification gate, and paths that remain open.",
           "objection": "A release record should show consequence instead of reciting activity.",
-          "urgency": "The A-cycle closes today; the next useful move begins from its receipts.",
+          "urgency": "The release record is open; the next useful move begins from its receipts.",
           "tone": "clear",
           "theme": "glass",
           "handles": ["release", "receipts", "site", "workbench", "lore.land"],
@@ -73,13 +73,13 @@
         }
       },
       "wonder": {
-        "label": "Release question",
+        "label": "Cycle question",
         "operator": "?",
-        "title": "Which shipped change should become a practice?",
-        "summary": "Follow one receipt into its route. If the relation still helps there, it earned a return.",
+        "title": "What can become a practice before the next close?",
+        "summary": "Follow one receipt into its route. If the relation still helps there, give it a place in this cycle.",
         "href": "/now/#release-receipts",
         "cta": "Follow the receipts",
-        "why": "Practice: pick one line, open its proof, and decide what should survive the next cycle."
+        "why": "Practice: pick one line, open its proof, and decide what should reach the next close."
       }
     },
     {

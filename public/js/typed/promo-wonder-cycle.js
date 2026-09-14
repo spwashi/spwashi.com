@@ -55,13 +55,13 @@ const DEFAULT_FEED = Object.freeze({
     daily: [
         {
             promo: {
-                label: 'Release',
+                label: 'Release record',
                 operator: '@',
-                title: 'Open the September 13 release record',
-                summary: 'Scan the three-surface close, inspect the receipts, then choose the route you want to carry forward.',
+                title: 'Start the new cycle from the September 13 record',
+                summary: 'Scan the three-surface close, inspect the receipts, then choose one route to carry toward the next close.',
                 href: '/now/',
                 cta: 'Read the release',
-                why: 'The A-cycle turns scattered work into one public checkpoint.',
+                why: 'A completed close becomes a clear starting point for the next one.',
                 presentation: 'inline',
                 promotion: {
                     kind: 'release',
@@ -69,7 +69,7 @@ const DEFAULT_FEED = Object.freeze({
                     offer: 'A readable September 13 checkpoint across the site, workbench, and lore.land',
                     proof: 'The Now route names the shipped surfaces, local verification gate, and paths that remain open.',
                     objection: 'A release record should show consequence instead of reciting activity.',
-                    urgency: 'The A-cycle closes today; the next useful move begins from its receipts.',
+                    urgency: 'The release record is open; the next useful move begins from its receipts.',
                     tone: 'clear',
                     theme: 'signal',
                     handles: ['release', 'receipts', 'site', 'workbench', 'lore.land'],
@@ -78,13 +78,13 @@ const DEFAULT_FEED = Object.freeze({
                 },
             },
             wonder: {
-                label: 'Release question',
+                label: 'Cycle question',
                 operator: '?',
-                title: 'Which shipped change should become a practice?',
-                summary: 'Follow one receipt into its route. If the relation still helps there, it earned a return.',
+                title: 'What can become a practice before the next close?',
+                summary: 'Follow one receipt into its route. If the relation still helps there, give it a place in this cycle.',
                 href: '/now/#release-receipts',
                 cta: 'Follow the receipts',
-                why: 'Practice: pick one line, open its proof, and decide what should survive the next cycle.',
+                why: 'Practice: pick one line, open its proof, and decide what should reach the next close.',
             },
         },
         {
@@ -185,6 +185,26 @@ export function releaseCycleForDate(date = new Date()) {
 export function dailyCadenceForDate(date = new Date()) {
     return releaseCycleForDate(date) ? 'cycle' : 'daily';
 }
+export function upcomingReleaseForecasts(date = new Date(), count = 2) {
+    const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const candidates = [];
+    for (let monthOffset = 0; candidates.length < count + 2; monthOffset += 1) {
+        const month = date.getMonth() + monthOffset;
+        for (const day of [13, 26]) {
+            const candidate = new Date(date.getFullYear(), month, day);
+            if (candidate >= today)
+                candidates.push(candidate);
+        }
+    }
+    return candidates
+        .sort((left, right) => left.getTime() - right.getTime())
+        .slice(0, count)
+        .map((candidate) => ({
+        date: candidate,
+        cycle: releaseCycleForDate(candidate),
+        daysAway: Math.round((candidate.getTime() - today.getTime()) / 86_400_000),
+    }));
+}
 function fallbackLabel(kind) {
     return kind === 'promo' ? 'Promo' : 'Wonder';
 }
@@ -281,6 +301,73 @@ function resolveMount(host) {
     return host.querySelector('[data-spw-static-for="promo-wonder-cycle"], .promo-wonder-cycle__static-fallback')
         || host;
 }
+function forecastDateLabel(date, locale, compact = false) {
+    return date.toLocaleDateString(locale, compact
+        ? { month: 'short', day: 'numeric' }
+        : { weekday: 'long', month: 'long', day: 'numeric' });
+}
+function forecastTiming(forecast) {
+    if (forecast.daysAway === 0)
+        return `${forecast.cycle} closes today.`;
+    const days = forecast.daysAway === 1 ? '1 day' : `${forecast.daysAway} days`;
+    return `${days} until the ${forecast.cycle} close.`;
+}
+function renderForecast(date, locale) {
+    const forecasts = upcomingReleaseForecasts(date);
+    const forecast = el('section', 'promo-wonder-cycle__forecast', {
+        'aria-labelledby': 'promo-wonder-cycle-forecast-title',
+    });
+    const kicker = el('p', 'spec-kicker promo-wonder-cycle__forecast-kicker');
+    kicker.textContent = 'Schedule forecast';
+    const title = el('h3', 'promo-wonder-cycle__forecast-title', {
+        id: 'promo-wonder-cycle-forecast-title',
+    });
+    const description = el('p', 'promo-wonder-cycle__forecast-description', {
+        'aria-live': 'polite',
+    });
+    const controls = el('div', 'promo-wonder-cycle__forecast-controls', {
+        role: 'group',
+        'aria-label': 'Release forecast horizon',
+    });
+    const timeline = el('ol', 'promo-wonder-cycle__forecast-timeline');
+    const buttons = [];
+    const steps = [];
+    const selectForecast = (selectedIndex) => {
+        const selected = forecasts[selectedIndex];
+        if (!selected)
+            return;
+        title.textContent = `Next close: ${selected.cycle} · ${forecastDateLabel(selected.date, locale)}`;
+        description.textContent = `${forecastTiming(selected)} Choose one path to carry toward it.`;
+        buttons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === selectedIndex)));
+        steps.forEach((step, index) => step.classList.toggle('is-selected', index === selectedIndex));
+    };
+    forecasts.forEach((item, index) => {
+        const button = el('button', 'promo-wonder-cycle__forecast-button', {
+            type: 'button',
+            'aria-pressed': 'false',
+        });
+        button.textContent = `${index === 0 ? 'Next' : 'Then'} · ${item.cycle} · ${forecastDateLabel(item.date, locale, true)}`;
+        button.addEventListener('click', () => selectForecast(index));
+        buttons.push(button);
+        controls.append(button);
+        const step = el('li', 'promo-wonder-cycle__forecast-step');
+        const stepDate = el('time');
+        stepDate.dateTime = [
+            item.date.getFullYear(),
+            String(item.date.getMonth() + 1).padStart(2, '0'),
+            String(item.date.getDate()).padStart(2, '0'),
+        ].join('-');
+        stepDate.textContent = forecastDateLabel(item.date, locale, true);
+        const stepCopy = el('span');
+        stepCopy.textContent = `${item.cycle} · ${forecastTiming(item)}`;
+        step.append(stepDate, stepCopy);
+        steps.push(step);
+        timeline.append(step);
+    });
+    forecast.append(kicker, title, description, controls, timeline);
+    selectForecast(0);
+    return forecast;
+}
 export function renderFeed(host, feed, date = new Date()) {
     const daily = pickDaily(feed, date);
     const weekly = pickWeekly(feed, date);
@@ -318,7 +405,7 @@ export function renderFeed(host, feed, date = new Date()) {
     weeklyGrid.append(weeklyKicker, renderCard(weekly.promo, 'promo', 'weekly', locale, true), renderCard(weekly.wonder, 'wonder', 'weekly', locale, true));
     const mount = resolveMount(host);
     mount.classList.add('promo-wonder-cycle__live');
-    mount.replaceChildren(meta, grid, weeklyGrid);
+    mount.replaceChildren(meta, renderForecast(date, locale), grid, weeklyGrid);
 }
 export async function initPromoWonderCycle() {
     const hosts = Array.from(document.querySelectorAll('[data-promo-wonder-cycle]'));

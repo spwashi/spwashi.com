@@ -23,6 +23,7 @@ import {
   pickDaily,
   pickWeekly,
   releaseCycleForDate,
+  upcomingReleaseForecasts,
 } from '../../public/js/typed/promo-wonder-cycle.js';
 import { createModuleLoader } from '../../public/js/runtime/module-loader.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from '../../public/js/runtime/catalog/constants.js';
@@ -860,6 +861,15 @@ test('promo wonder cadence marks the 13th and 26th as release closes', () => {
   assert.equal(releaseCycleForDate(new Date(2026, 8, 14, 12)), '');
   assert.equal(dailyCadenceForDate(new Date(2026, 8, 13, 12)), 'cycle');
   assert.equal(dailyCadenceForDate(new Date(2026, 8, 14, 12)), 'daily');
+});
+
+test('promo wonder forecast carries the next two closes across a month boundary', () => {
+  const forecasts = upcomingReleaseForecasts(new Date(2026, 8, 14, 12));
+
+  assert.deepEqual(
+    forecasts.map(({ date, cycle, daysAway }) => [date.getMonth(), date.getDate(), cycle, daysAway]),
+    [[8, 26, 'B-cycle', 12], [9, 13, 'A-cycle', 29]],
+  );
 });
 
 test('live promo feed can pick the folio worktable on a known weekday', () => {

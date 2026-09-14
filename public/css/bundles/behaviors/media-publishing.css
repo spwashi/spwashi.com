@@ -58,6 +58,100 @@
   font-weight: 720;
 }
 
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast {
+  display: grid;
+  gap: 0.5rem;
+  padding: clamp(0.8rem, 1.5vw, 1rem);
+  border: 1px solid color-mix(in srgb, var(--op-object-color, #a67c00) 28%, var(--home-surface-border-color, transparent) 72%);
+  border-inline-start-width: 0.22rem;
+  border-radius: var(--home-radius-md);
+  background: color-mix(in oklab, var(--home-surface-bg-strong) 92%, var(--op-object-color, #a67c00) 8%);
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-kicker,
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-title,
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-description {
+  margin: 0;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-title {
+  color: color-mix(in srgb, var(--ink, #1b1f23) 86%, var(--op-object-color, #a67c00) 14%);
+  font-size: clamp(1rem, 0.95rem + 0.32vw, 1.16rem);
+  line-height: 1.2;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-description {
+  max-inline-size: 56ch;
+  color: var(--ink-soft, rgba(27, 31, 35, 0.72));
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.48rem;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-button {
+  min-block-size: var(--touch-target-min, 2.75rem);
+  padding: 0.42rem 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--op-object-color, #a67c00) 34%, transparent);
+  border-radius: var(--home-radius-pill);
+  background: color-mix(in srgb, var(--home-surface-bg) 88%, var(--op-object-color, #a67c00) 12%);
+  color: var(--ink, #1b1f23);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 680;
+  line-height: 1.2;
+  text-align: start;
+  cursor: pointer;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-button[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--op-object-color, #a67c00) 68%, transparent);
+  background: color-mix(in srgb, var(--op-object-color, #a67c00) 20%, var(--home-surface-bg-strong) 80%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #a67c00) 15%, transparent);
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--op-object-color, #a67c00) 46%, transparent);
+  outline-offset: 2px;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.42rem;
+  align-items: baseline;
+  padding: 0.48rem 0.58rem;
+  border-inline-start: 2px solid color-mix(in srgb, var(--op-object-color, #a67c00) 20%, transparent);
+  color: var(--ink-soft, rgba(27, 31, 35, 0.72));
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-step time {
+  color: var(--ink, #1b1f23);
+  font-family: var(--site-mono-font, monospace);
+  font-weight: 700;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-step.is-selected {
+  border-inline-start-color: var(--op-object-color, #a67c00);
+  background: color-mix(in srgb, var(--op-object-color, #a67c00) 9%, transparent);
+  color: var(--ink, #1b1f23);
+}
+
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__static-fallback, .promo-wonder-cycle__live) {
   display: grid;
   gap: var(--home-gap-md);
