@@ -6,6 +6,7 @@ import {
   annotateFloatingChromeElement,
   syncFloatingChromeState,
   writeDatasetValue,
+  writeTextContent,
 } from '/public/js/kernel/dom-contracts.js';
 
 const ATTENTION_RELATION_LABELS = Object.freeze({
@@ -53,11 +54,11 @@ export function syncAttentionPosturePanel(panel, posture = getCurrentAttentionPo
   const global = panel.querySelector('[data-spw-attention-panel-global]');
   const summary = panel.querySelector('[data-spw-attention-panel-summary]');
 
-  if (self) self.textContent = getAttentionRelationLabel(posture.self, 'breath');
-  if (local) local.textContent = getAttentionRelationLabel(posture.local, 'immediate-field');
-  if (global) global.textContent = getAttentionRelationLabel(posture.global, 'horizon-systems');
+  if (self) writeTextContent(self, getAttentionRelationLabel(posture.self, 'breath'));
+  if (local) writeTextContent(local, getAttentionRelationLabel(posture.local, 'immediate-field'));
+  if (global) writeTextContent(global, getAttentionRelationLabel(posture.global, 'horizon-systems'));
   if (summary) {
-    summary.textContent = `${posture.label}. Media Cauldron reads this posture when shaping seed prompts.`;
+    writeTextContent(summary, `${posture.label}. Media Cauldron reads this posture when shaping seed prompts.`);
   }
 }
 
@@ -78,7 +79,7 @@ export function syncHeaderActions(header) {
   }
 
   if (label) {
-    label.textContent = posture.label || 'self / local / global';
+    writeTextContent(label, posture.label || 'self / local / global');
   }
 
   syncAttentionPosturePanel(panel, posture);

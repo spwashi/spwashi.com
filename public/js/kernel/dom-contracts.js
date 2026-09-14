@@ -1462,6 +1462,18 @@ export function serializeDatasetValue(value, options = {}) {
   return allowEmpty ? '' : null;
 }
 
+/* Assigning textContent replaces the child text node even when the text is
+   identical, which queues childList records for every subtree observer. Sync
+   passes that rewrite readouts from a MutationObserver-driven flush then
+   schedule their own next flush, so readout writers go through this. */
+export function writeTextContent(el, text) {
+  if (!el || text == null) return false;
+  const next = String(text);
+  if (el.textContent === next) return false;
+  el.textContent = next;
+  return true;
+}
+
 export function writeDatasetValueIfMissing(el, key, value, options = {}) {
   return writeDatasetValue(el, key, value, { ...options, missingOnly: true });
 }

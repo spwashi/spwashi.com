@@ -3,6 +3,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { writeTextContent } from '/public/js/kernel/dom-contracts.js';
 import {
   AUTHOR_WORKFLOW_DEFINITIONS,
   normalizeAuthorMode,
@@ -575,13 +576,13 @@ const syncSettingsReadouts = (root = document, settings = getSiteSettings()) => 
   root.querySelectorAll?.('[data-settings-state]').forEach((node) => {
     const key = node.getAttribute('data-settings-state');
     if (!key || !isKnownSetting(key)) return;
-    node.textContent = describeSettingValue(key, normalized[key]);
+    writeTextContent(node, describeSettingValue(key, normalized[key]));
   });
 
   root.querySelectorAll?.('[data-site-setting-value]').forEach((node) => {
     const key = node.getAttribute('data-site-setting-value');
     if (!key || !isKnownSetting(key)) return;
-    node.textContent = describeSettingValue(key, normalized[key]);
+    writeTextContent(node, describeSettingValue(key, normalized[key]));
   });
 
   syncSettingTriggers(root, normalized);
@@ -915,14 +916,25 @@ const bindSettingsReadouts = (root = document) => {
   };
 };
 
+/* syncSettingsUx runs from dom-sync-hub flushes, and a rebuilt list is a body
+   mutation that schedules the next flush; hosts rebuild only when their
+   deviations change. */
+const deviationListSignatures = new WeakMap();
+
 const syncDeviationReadouts = (root = document, settings = getSiteSettings()) => {
   const deviations = listDeviations(settings);
 
   root.querySelectorAll?.('[data-site-deviation-count]').forEach((node) => {
-    node.textContent = String(deviations.length);
+    writeTextContent(node, String(deviations.length));
   });
 
   root.querySelectorAll?.('[data-site-deviation-list]').forEach((host) => {
+    const signature = JSON.stringify([
+      host.dataset.siteDeviationList || '',
+      deviations.map((entry) => [entry.name, entry.default, entry.current]),
+    ]);
+    if (host.firstChild && deviationListSignatures.get(host) === signature) return;
+    deviationListSignatures.set(host, signature);
     host.innerHTML = '';
 
     if (!deviations.length) {

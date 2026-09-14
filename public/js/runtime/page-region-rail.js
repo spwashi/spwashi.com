@@ -308,12 +308,43 @@ function bindActiveRegion(regions, rail) {
 }
 
 let activeCleanup = () => {};
+let lastRailSignature = '';
+let lastRailElements = [];
+
+/* The dom-sync hub runs this task on every observed body mutation, and the rail
+   is itself body markup: rebuilding it unconditionally queued the child-list
+   records that scheduled the next flush, so a settled page rebuilt the rail,
+   rebound its observer, and recalculated style on every frame indefinitely. A
+   refresh that would render the same rail for the same region nodes is a no-op. */
+function railSignature(regions) {
+  const html = document.documentElement.dataset;
+  return JSON.stringify([
+    html.spwThemePack || '',
+    html.spwPaletteResonance || '',
+    html.spwSemanticDensity || '',
+    regions.map(({ element, ...descriptor }) => descriptor),
+  ]);
+}
 
 export function refreshPageRegionRail(root = document) {
+  const regions = collectRegions(root);
+  const signature = railSignature(regions);
+  const existingRail = document.querySelector(`[${RAIL_ATTR}]`);
+  const railMatches = regions.length < MIN_REGIONS ? !existingRail : Boolean(existingRail?.isConnected);
+  if (
+    railMatches
+    && signature === lastRailSignature
+    && regions.length === lastRailElements.length
+    && regions.every((region, index) => region.element === lastRailElements[index])
+  ) {
+    return { count: regions.length, regions, unchanged: true };
+  }
+  lastRailSignature = signature;
+  lastRailElements = regions.map((region) => region.element);
+
   activeCleanup();
   activeCleanup = () => {};
 
-  const regions = collectRegions(root);
   const rail = renderRail(regions);
   if (rail) {
     activeCleanup = bindActiveRegion(regions, rail);
@@ -331,6 +362,8 @@ export function initPageRegionRail(ctx = null) {
     unregister();
     activeCleanup();
     activeCleanup = () => {};
+    lastRailSignature = '';
+    lastRailElements = [];
     document.querySelector(`[${RAIL_ATTR}]`)?.remove();
     writeDatasetValues(document.documentElement, {
       spwPageRegionRail: null,

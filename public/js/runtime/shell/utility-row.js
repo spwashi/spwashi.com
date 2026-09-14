@@ -14,6 +14,7 @@
  */
 
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
+import { writeTextContent } from '/public/js/kernel/dom-contracts.js';
 import { syncHeaderActions } from './attention-posture-panel.js';
 
 const FONT_SCALE_STEPS = Object.freeze(['70', '80', '90', '100', '110', '120']);
@@ -173,21 +174,21 @@ export function syncUtilityRow(row) {
 
   row.querySelectorAll('[data-spw-shell-action="color-light"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
-    if (arg) arg.textContent = labels['color-light'];
+    if (arg) writeTextContent(arg, labels['color-light']);
     button.setAttribute('aria-pressed', currentColorMode === 'light' ? 'true' : 'false');
     button.title = currentColorMode === 'light' ? 'Light mode active' : 'Switch to light mode';
   });
 
   row.querySelectorAll('[data-spw-shell-action="color-dark"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
-    if (arg) arg.textContent = labels['color-dark'];
+    if (arg) writeTextContent(arg, labels['color-dark']);
     button.setAttribute('aria-pressed', currentColorMode === 'dark' ? 'true' : 'false');
     button.title = currentColorMode === 'dark' ? 'Dark mode active' : 'Switch to dark mode';
   });
 
   row.querySelectorAll('[data-spw-shell-action="font-down"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
-    if (arg) arg.textContent = labels['font-down'];
+    if (arg) writeTextContent(arg, labels['font-down']);
     button.toggleAttribute('disabled', current === min);
     button.setAttribute('aria-disabled', current === min ? 'true' : 'false');
     button.title = current === min ? 'Already at the smallest readable size' : 'Make text smaller';
@@ -195,7 +196,7 @@ export function syncUtilityRow(row) {
 
   row.querySelectorAll('[data-spw-shell-action="font-up"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
-    if (arg) arg.textContent = labels['font-up'];
+    if (arg) writeTextContent(arg, labels['font-up']);
     button.toggleAttribute('disabled', current === max);
     button.setAttribute('aria-disabled', current === max ? 'true' : 'false');
     button.title = current === max ? 'Already at the largest readable size' : 'Make text larger';
@@ -203,7 +204,7 @@ export function syncUtilityRow(row) {
 
   row.querySelectorAll('[data-spw-shell-action="path-toggle"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
-    if (arg) arg.textContent = labels['path-toggle'];
+    if (arg) writeTextContent(arg, labels['path-toggle']);
     const pathExpanded = pathToggle?.getAttribute('aria-expanded') === 'true';
     button.toggleAttribute('disabled', !pathToggle);
     button.setAttribute('aria-disabled', pathToggle ? 'false' : 'true');
