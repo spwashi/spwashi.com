@@ -1,9 +1,10 @@
 /**
  * Compile step shared by `build` and `check:local`.
  *
- * The three tsc passes read disjoint inputs and write disjoint outputs
- * (root typecheck is noEmit; scripts/ts -> scripts/typed; public/ts ->
- * public/js/typed), so they run concurrently instead of end-to-end.
+ * Root typecheck, scripts emit, and runtime emit read disjoint inputs and
+ * write disjoint outputs, so they run concurrently. public-sources is a
+ * noEmit strict check of the same public/ts files against imported JS
+ * types; it does not write, so it can join the wave.
  * `fix-typed-imports` rewrites kernel specifiers in public/js/typed and so
  * waits on the runtime pass only.
  *
@@ -16,6 +17,7 @@ const PASSES = [
   { name: 'typecheck:root', args: ['--noEmit'] },
   { name: 'build:tools', args: ['-p', 'tsconfig.scripts.json'] },
   { name: 'build:runtime', args: ['-p', 'tsconfig.runtime.json'], then: 'fix-typed-imports' },
+  { name: 'typecheck:public-sources', args: ['-p', 'tsconfig.public-sources.json'] },
 ];
 
 /**

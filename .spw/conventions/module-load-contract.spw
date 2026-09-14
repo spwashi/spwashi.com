@@ -22,6 +22,7 @@
 @module_catalog_constants: ~"../../public/js/runtime/catalog/constants.js"
 @module_catalog_normalize: ~"../../public/js/runtime/catalog/normalize.js"
 @module_export_contract: ~"../../public/js/runtime/module-export-contract.js"
+@catalog_types: ~"../../types/module-catalog.d.ts"  # SpwModuleDef + cost axes; costClass is the projection
 
 operation = "contract"
 fixity = "settled"

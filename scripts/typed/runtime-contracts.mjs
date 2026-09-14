@@ -5,7 +5,7 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 import { BEHAVIOR_SCOPE_MODULE_HREF, BEHAVIOR_SCOPES, listBehaviorScopeBundles, listBehaviorScopeKeys, } from './css-manifest.mjs';
 import { extractObjectLiterals, extractRuntimeArrayLiteral, } from './site-contracts/helpers.mjs';
-import { STANDARD_IDLE_CHUNKS, TIMING_ARC_STEMS, VALID_MODULE_LAYERS, VALID_MOUNT_WHEN, } from './site-contracts/types.mjs';
+import { STANDARD_IDLE_CHUNKS, TIMING_ARC_STEMS, VALID_COST_CLASSES, VALID_COST_COMMITMENTS, VALID_COST_COPIES, VALID_COST_SPENDS, VALID_MODULE_LAYERS, VALID_MOUNT_WHEN, VALID_VISUAL_EFFECTS, } from './site-contracts/types.mjs';
 import { toPosixPath } from './shared/build-topology.mjs';
 import { collectStylePropertyContractReport, } from './style-property-contract.mjs';
 const BEHAVIOR_SCOPE_KEYS = new Set(Object.keys(BEHAVIOR_SCOPES));
@@ -75,15 +75,12 @@ const KERNEL_TYPED_SHIMS = new Map([
 ]);
 const TYPED_IMPORT_RE = /(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"]([^'"]*typed\/[^'"]+)['"]/g;
 const TYPED_SHIM_RE = /export\s+\*\s+from\s+['"]([^'"]+)['"]/;
-const VALID_COST_CLASSES = new Set([
-    'working_memory_pressure',
-    'premature_commitment',
-    'interference',
-    'demand_coupled',
-    'authored_prior_safe',
-    'paint_composite',
-]);
-/** timingArc stems from site-contracts (aligned with public/ts/module-timing-contract). */
+const VALID_COST_CLASS_TOKENS = new Set(VALID_COST_CLASSES);
+const VALID_COST_COMMITMENT_TOKENS = new Set(VALID_COST_COMMITMENTS);
+const VALID_COST_SPEND_TOKENS = new Set(VALID_COST_SPENDS);
+const VALID_COST_COPY_TOKENS = new Set(VALID_COST_COPIES);
+const VALID_VISUAL_TOKENS = new Set(VALID_VISUAL_EFFECTS);
+/** timingArc stems from types/module-catalog (scripts + public/ts must match). */
 const TIMING_ARC_STEM_RE = new RegExp(`^(?:${TIMING_ARC_STEMS.join('|')})-[a-z0-9]+(?:-[a-z0-9]+)*$`);
 function relativeRepoPath(absolutePath) {
     return toPosixPath(path.relative(ROOT_DIR, absolutePath));
@@ -326,8 +323,32 @@ function parseCostClassProperty(objectLiteral) {
         return fromConst.replace(/-/g, '_');
     return parseQuotedProperty(objectLiteral, 'costClass');
 }
+function parseCostAxis(objectLiteral, name, namespace) {
+    const block = objectLiteral.match(/cost:\s*\{([\s\S]*?)\}/);
+    if (!block)
+        return null;
+    const fromConst = parseConstantProperty(block[1], name, namespace);
+    if (fromConst)
+        return fromConst;
+    return parseQuotedProperty(block[1], name);
+}
+function parseCostObject(objectLiteral) {
+    if (!/\bcost:\s*\{/.test(objectLiteral))
+        return null;
+    const commitment = parseCostAxis(objectLiteral, 'commitment', 'COST_COMMITMENT');
+    const spend = parseCostAxis(objectLiteral, 'spend', 'COST_SPEND');
+    if (!commitment || !spend)
+        return null;
+    const copy = parseCostAxis(objectLiteral, 'copy', 'COST_COPY');
+    return {
+        commitment: commitment,
+        spend: spend,
+        copy: copy ? copy : null,
+    };
+}
 function parseRuntimeModule(objectLiteral, family, index) {
     return {
+        cost: parseCostObject(objectLiteral),
         costClass: parseCostClassProperty(objectLiteral),
         debugOnly: /\bdebugOnly:\s*true\b/.test(objectLiteral),
         describes: parseQuotedProperty(objectLiteral, 'describes'),
@@ -348,6 +369,8 @@ function parseRuntimeModule(objectLiteral, family, index) {
         // literal value for reporting.
         selectorContract: /\bselector\s*:\s*(?:[\`'"]|[A-Za-z_$])/.test(objectLiteral),
         selector: parseQuotedProperty(objectLiteral, 'selector'),
+        visual: parseQuotedProperty(objectLiteral, 'visual')
+            || parseConstantProperty(objectLiteral, 'visual', 'VISUAL_EFFECT'),
         timingArc: parseQuotedProperty(objectLiteral, 'timingArc'),
         timingChunk: parseQuotedProperty(objectLiteral, 'timingChunk'),
         updates: parseUpdates(objectLiteral),
@@ -720,12 +743,32 @@ function validateModule(module, errors, warnings, recommendations) {
         if (!module.features.length && !module.selectorContract) {
             warnings.push(`${label} is ENHANCEMENT+IMMEDIATE with no features gate and no selector contract; confirm it must run on every page at boot.`);
         }
-        if (!module.costClass) {
-            recommendations.push(`${label} is ENHANCEMENT+IMMEDIATE without explicit costClass; stamp COST_CLASS.* or rely on module-catalog-normalize infer (prefer explicit for budget reviews).`);
+        if (!module.cost && !module.costClass) {
+            recommendations.push(`${label} is ENHANCEMENT+IMMEDIATE without cost or costClass; stamp cost: { commitment, spend } (costClass is the projection).`);
         }
     }
-    if (module.costClass && !VALID_COST_CLASSES.has(module.costClass)) {
-        errors.push(`${label} costClass "${module.costClass}" is unknown; use COST_CLASS values (premature_commitment|working_memory_pressure|interference|demand_coupled|authored_prior_safe|paint_composite).`);
+    if (module.cost) {
+        if (!VALID_COST_COMMITMENT_TOKENS.has(module.cost.commitment)) {
+            errors.push(`${label} cost.commitment "${module.cost.commitment}" is unknown; use ${VALID_COST_COMMITMENTS.join('|')}.`);
+        }
+        if (!VALID_COST_SPEND_TOKENS.has(module.cost.spend)) {
+            errors.push(`${label} cost.spend "${module.cost.spend}" is unknown; use ${VALID_COST_SPENDS.join('|')}.`);
+        }
+        if (module.cost.copy && !VALID_COST_COPY_TOKENS.has(module.cost.copy)) {
+            errors.push(`${label} cost.copy "${module.cost.copy}" is unknown; use ${VALID_COST_COPIES.join('|')}.`);
+        }
+        else if (module.cost.commitment === 'residue' && !module.cost.copy) {
+            recommendations.push(`${label} is residue without cost.copy; stamp follow|keep|pin so the printing is explicit.`);
+        }
+        else if (module.cost.commitment !== 'residue' && module.cost.copy) {
+            recommendations.push(`${label} sets cost.copy off residue; copy only names follow|keep|pin for storage/memory.`);
+        }
+    }
+    if (module.costClass && !VALID_COST_CLASS_TOKENS.has(module.costClass)) {
+        errors.push(`${label} costClass "${module.costClass}" is unknown; use ${VALID_COST_CLASSES.join('|')}.`);
+    }
+    if (module.visual && !VALID_VISUAL_TOKENS.has(module.visual)) {
+        errors.push(`${label} visual "${module.visual}" is unknown; use ${VALID_VISUAL_EFFECTS.join('|')}.`);
     }
     if (module.when === 'immediate' && module.layer === 'feature' && !module.routeContract && !module.selectorContract && !module.features.length) {
         warnings.push(`${label} is FEATURE+IMMEDIATE without route, selector, or features gate; feature modules should be demand-coupled.`);

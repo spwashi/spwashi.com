@@ -4,6 +4,12 @@
  * Schedule truth stays in when/timingArc/timingChunk; this is inspect + budget only.
  */
 
+import type {
+  SpwIdleChunkId,
+  SpwSameKeys,
+  SpwTimingArcStem,
+} from '../../types/module-catalog';
+
 export const TIMING_ARC_STEMS = Object.freeze([
   'boot',
   'immediate',
@@ -13,9 +19,12 @@ export const TIMING_ARC_STEMS = Object.freeze([
   'idle',
   'settled',
   'region',
-] as const);
+] as const satisfies readonly SpwTimingArcStem[]);
 
-export type TimingArcStem = (typeof TIMING_ARC_STEMS)[number];
+const _timingArcEqual: SpwSameKeys<SpwTimingArcStem, (typeof TIMING_ARC_STEMS)[number]> = true;
+void _timingArcEqual;
+
+export type TimingArcStem = SpwTimingArcStem;
 
 export const STANDARD_IDLE_CHUNKS = Object.freeze([
   'idle-residue',
@@ -23,9 +32,12 @@ export const STANDARD_IDLE_CHUNKS = Object.freeze([
   'idle-chrome',
   'idle-lab',
   'idle-default',
-] as const);
+] as const satisfies readonly SpwIdleChunkId[]);
 
-export type IdleChunkId = (typeof STANDARD_IDLE_CHUNKS)[number];
+const _idleChunksEqual: SpwSameKeys<SpwIdleChunkId, (typeof STANDARD_IDLE_CHUNKS)[number]> = true;
+void _idleChunksEqual;
+
+export type IdleChunkId = SpwIdleChunkId;
 
 export type SpwPerfMark = Readonly<{ name: string; startTime: number }>;
 export type SpwPerfMeasure = Readonly<{ name: string; duration: number; startTime?: number }>;

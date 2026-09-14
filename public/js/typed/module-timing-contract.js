@@ -13,6 +13,8 @@ export const TIMING_ARC_STEMS = Object.freeze([
     'settled',
     'region',
 ]);
+const _timingArcEqual = true;
+void _timingArcEqual;
 export const STANDARD_IDLE_CHUNKS = Object.freeze([
     'idle-residue',
     'idle-collectible',
@@ -20,6 +22,8 @@ export const STANDARD_IDLE_CHUNKS = Object.freeze([
     'idle-lab',
     'idle-default',
 ]);
+const _idleChunksEqual = true;
+void _idleChunksEqual;
 const TIMING_ARC_STEM_RE = new RegExp(`^(?:${TIMING_ARC_STEMS.join('|')})-[a-z0-9]+(?:-[a-z0-9]+)*$`);
 export function isKnownTimingArc(value) {
     const token = String(value || '').trim().toLowerCase();

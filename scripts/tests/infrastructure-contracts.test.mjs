@@ -174,10 +174,11 @@ test('composite build pipelines compile each TypeScript project once', async () 
   assert.equal(scripts['check:pwa'], 'npm run build:tools && npm run check:pwa:run');
   assert.ok(scripts.typecheck.includes('tsconfig.scripts.json --noEmit'));
   assert.ok(scripts.typecheck.includes('tsconfig.runtime.json --noEmit'));
+  assert.ok(scripts.typecheck.includes('tsconfig.public-sources.json --noEmit'));
 
   // Each TypeScript project is compiled exactly once per compile wave.
   const compileSource = await readFile(path.join(ROOT, 'scripts/build-compile.mjs'), 'utf8');
-  for (const project of ['--noEmit', 'tsconfig.scripts.json', 'tsconfig.runtime.json']) {
+  for (const project of ['--noEmit', 'tsconfig.scripts.json', 'tsconfig.runtime.json', 'tsconfig.public-sources.json']) {
     assert.equal(
       compileSource.split(project).length - 1,
       1,

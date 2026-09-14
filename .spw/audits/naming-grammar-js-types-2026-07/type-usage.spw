@@ -48,12 +48,13 @@
 }[reg=facet]
 
 ^"gaps_and_diversity"{
-  gap1 = `Most catalog modules untyped — OK under policy; contracts lag in .d.ts (only 2)`
-  gap2 = `SPW_MODULE_EXPORT not yet a shared TypeScript interface consumed by catalog`
+  gap1 = `Most catalog modules untyped — OK under policy; types/module-catalog.d.ts now owns SpwModuleDef`
+  gap2 = `landed — SPW_MODULE_EXPORT / SpwModuleDef shared; catalog families JSDoc the typedef`
   gap3 = `Runtime ctx type not universal — mount(ctx) is structural duck typing`
   gap4 = `language-census / design catalog are JS generators — types optional`
-  diversity = `Three tsconfigs diversify concerns (site typecheck, scripts, runtime) without monorepo packages`
-  risk = `Triple typecheck wall time (see build-runtime-performance) — type diversity has build cost`
+  diversity = `Five tsconfigs (root, scripts, runtime, public-sources, public/bindings) share types/`
+  risk = `Typecheck wall time (see build-runtime-performance) — type diversity has build cost`
+  cost_axes = `commitment/spend/copy are the granular model; costClass projects them (spend first, then listen|residue|authored|demand_coupled)`
 }[reg=facet]
 
 ^"emergence_path"{

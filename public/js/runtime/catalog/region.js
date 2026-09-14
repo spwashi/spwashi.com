@@ -1,10 +1,13 @@
 /**
  * REGION_DEFS — staged runtime catalog family.
  * load() paths are relative to public/js/runtime/catalog/.
+ *
+ * @typedef {import('../../../../types/module-catalog').SpwModuleDef} SpwModuleDef
  */
 
 import { isFn, MODULE_LAYERS, MOUNT_WHEN, REGION_ENHANCER_SELECTOR } from './constants.js';
 
+/** @type {SpwModuleDef[]} */
 export const REGION_DEFS = [
   {
     id: 'region-enhancer',

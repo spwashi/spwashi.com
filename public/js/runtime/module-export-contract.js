@@ -3,6 +3,8 @@
  * --------------------------------------------------------------------------
  * Canonical module export shape for catalog mounting, compose portability,
  * and runtime-medium guild inspection.
+ *
+ * @typedef {import('../../../types/module-catalog').SpwModuleExport} SpwModuleExport
  */
 
 import { describeModuleUpdates, normalizeModuleUpdates } from './module-updates-contract.js';

@@ -20,7 +20,9 @@ export const VALID_MOUNT_WHEN = Object.freeze([
     'region',
     'settled',
 ]);
-/** timingArc stems — keep aligned with public/ts/module-timing-contract.ts */
+const _mountWhenEqual = true;
+void _mountWhenEqual;
+/** timingArc stems — same union as public/ts/module-timing-contract.ts via types/module-catalog. */
 export const TIMING_ARC_STEMS = Object.freeze([
     'boot',
     'immediate',
@@ -31,6 +33,8 @@ export const TIMING_ARC_STEMS = Object.freeze([
     'settled',
     'region',
 ]);
+const _timingArcEqual = true;
+void _timingArcEqual;
 export const STANDARD_IDLE_CHUNKS = Object.freeze([
     'idle-residue',
     'idle-collectible',
@@ -38,6 +42,8 @@ export const STANDARD_IDLE_CHUNKS = Object.freeze([
     'idle-lab',
     'idle-default',
 ]);
+const _idleChunksEqual = true;
+void _idleChunksEqual;
 /** Catalog layers accepted by module-catalog / runtime-contracts. */
 export const VALID_MODULE_LAYERS = Object.freeze([
     'core',
@@ -45,3 +51,54 @@ export const VALID_MODULE_LAYERS = Object.freeze([
     'region',
     'enhancement',
 ]);
+const _layersEqual = true;
+void _layersEqual;
+export const VALID_COST_COMMITMENTS = Object.freeze([
+    'authored',
+    'listen',
+    'project',
+    'residue',
+]);
+const _commitmentsEqual = true;
+void _commitmentsEqual;
+export const VALID_COST_SPENDS = Object.freeze([
+    'none',
+    'early',
+    'wide',
+    'fight',
+    'paint',
+]);
+const _spendsEqual = true;
+void _spendsEqual;
+export const VALID_COST_COPIES = Object.freeze([
+    'follow',
+    'keep',
+    'pin',
+]);
+const _copiesEqual = true;
+void _copiesEqual;
+/**
+ * Single-token cost projection. Spend tokens first; listen/residue/demand_coupled
+ * name the none-spend remainder. Keep aligned with catalog/constants.js COST_CLASS.
+ */
+export const VALID_COST_CLASSES = Object.freeze([
+    'premature_commitment',
+    'working_memory_pressure',
+    'interference',
+    'paint_composite',
+    'authored_prior_safe',
+    'listen',
+    'residue',
+    'demand_coupled',
+]);
+const _costClassesEqual = true;
+void _costClassesEqual;
+export const VALID_VISUAL_EFFECTS = Object.freeze([
+    'authored',
+    'annotate',
+    'inspect',
+    'layout',
+    'express',
+]);
+const _visualEqual = true;
+void _visualEqual;

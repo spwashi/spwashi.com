@@ -10,8 +10,14 @@
  * A module is one reversible process:
  *   enter (when) → act (spend) → leave (cleanup) → remain (commitment)
  *
- * cost = { commitment, spend, copy? }. costClass is a derived alias for
- * older audits and build-performance steps — do not treat it as a kind of module.
+ * Stamp cost = { commitment, spend, copy? } when the axes are known.
+ * costClass is the single-token projection of that object — not a kind of module.
+ *
+ * @typedef {import('../../../../types/module-catalog').SpwModuleDef} SpwModuleDef
+ * @typedef {import('../../../../types/module-catalog').SpwModuleLayer} SpwModuleLayer
+ * @typedef {import('../../../../types/module-catalog').SpwModuleMountWhen} SpwModuleMountWhen
+ * @typedef {import('../../../../types/module-catalog').SpwCostClass} SpwCostClass
+ * @typedef {import('../../../../types/module-catalog').SpwModuleCost} SpwModuleCost
  */
 
 export const MODULE_LAYERS = Object.freeze({
@@ -82,13 +88,18 @@ export const VISUAL_EFFECT = Object.freeze({
   ANNOTATE: 'annotate',
   INSPECT: 'inspect',
   LAYOUT: 'layout',
+  /** Authored ornament that is not a reflow. */
+  EXPRESS: 'express',
 });
 
 export const VISUAL_EFFECT_VALUES = Object.freeze(Object.values(VISUAL_EFFECT));
 
 /**
- * Legacy single-token aliases derived from { commitment, spend }.
- * Keep until audits and build-performance.mjs stop reading the old ids.
+ * Single-token projection of { commitment, spend, copy? }.
+ * Spend tokens win so authored+paint still reads as paint. None-spend remainder
+ * keeps commitment (listen / residue / authored / project) instead of one dump
+ * bucket. copy stays on the cost object — residue is the class, follow|keep|pin
+ * is the printing.
  */
 export const COST_CLASS = Object.freeze({
   /** spend=early — paid before the visitor or viewport needed it. */
@@ -97,12 +108,16 @@ export const COST_CLASS = Object.freeze({
   WORKING_MEMORY_PRESSURE: 'working_memory_pressure',
   /** spend=fight — two writers or a stale mirror. */
   INTERFERENCE: 'interference',
-  /** spend=none, commitment≠authored — demand-shaped activation. */
-  DEMAND_COUPLED: 'demand_coupled',
-  /** commitment=authored — JS narrates; geometry is already in HTML/CSS. */
-  AUTHORED_PRIOR_SAFE: 'authored_prior_safe',
   /** spend=paint — composite/reflow/:has. */
   PAINT_COMPOSITE: 'paint_composite',
+  /** spend=none, commitment=authored — JS narrates; geometry is already in HTML/CSS. */
+  AUTHORED_PRIOR_SAFE: 'authored_prior_safe',
+  /** spend=none, commitment=listen — handlers; cleanup restores. */
+  LISTEN: 'listen',
+  /** spend=none, commitment=residue — storage/memory; copy says follow|keep|pin. */
+  RESIDUE: 'residue',
+  /** spend=none, commitment=project — demand-shaped live attrs/vars. */
+  DEMAND_COUPLED: 'demand_coupled',
 });
 
 export const COST_CLASS_VALUES = Object.freeze(Object.values(COST_CLASS));
@@ -110,11 +125,13 @@ export const COST_CLASS_VALUES = Object.freeze(Object.values(COST_CLASS));
 export function costClassFromModel(cost = {}) {
   const commitment = cost.commitment;
   const spend = cost.spend;
-  if (commitment === COST_COMMITMENT.AUTHORED) return COST_CLASS.AUTHORED_PRIOR_SAFE;
   if (spend === COST_SPEND.FIGHT) return COST_CLASS.INTERFERENCE;
   if (spend === COST_SPEND.PAINT) return COST_CLASS.PAINT_COMPOSITE;
   if (spend === COST_SPEND.WIDE) return COST_CLASS.WORKING_MEMORY_PRESSURE;
   if (spend === COST_SPEND.EARLY) return COST_CLASS.PREMATURE_COMMITMENT;
+  if (commitment === COST_COMMITMENT.AUTHORED) return COST_CLASS.AUTHORED_PRIOR_SAFE;
+  if (commitment === COST_COMMITMENT.RESIDUE) return COST_CLASS.RESIDUE;
+  if (commitment === COST_COMMITMENT.LISTEN) return COST_CLASS.LISTEN;
   return COST_CLASS.DEMAND_COUPLED;
 }
 
@@ -122,6 +139,12 @@ export function costModelFromClass(costClass = '') {
   const token = String(costClass || '').trim();
   if (token === COST_CLASS.AUTHORED_PRIOR_SAFE) {
     return { commitment: COST_COMMITMENT.AUTHORED, spend: COST_SPEND.NONE, copy: null };
+  }
+  if (token === COST_CLASS.LISTEN) {
+    return { commitment: COST_COMMITMENT.LISTEN, spend: COST_SPEND.NONE, copy: null };
+  }
+  if (token === COST_CLASS.RESIDUE) {
+    return { commitment: COST_COMMITMENT.RESIDUE, spend: COST_SPEND.NONE, copy: COST_COPY.FOLLOW };
   }
   if (token === COST_CLASS.INTERFERENCE) {
     return { commitment: COST_COMMITMENT.PROJECT, spend: COST_SPEND.FIGHT, copy: null };

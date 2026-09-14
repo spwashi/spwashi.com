@@ -1,3 +1,35 @@
+import type {
+  SpwCostClass,
+  SpwIdleChunkId,
+  SpwModuleCostCommitment,
+  SpwModuleCostCopy,
+  SpwModuleCostSpend,
+  SpwModuleDef,
+  SpwModuleExport,
+  SpwModuleLayer,
+  SpwModuleMountWhen,
+  SpwModuleRootMode,
+  SpwModuleVisualEffect,
+  SpwSameKeys,
+  SpwTimingArcStem,
+} from '../../../types/module-catalog';
+
+export type {
+  SpwCostClass,
+  SpwIdleChunkId,
+  SpwModuleCostCommitment,
+  SpwModuleCostCopy,
+  SpwModuleCostSpend,
+  SpwModuleDef,
+  SpwModuleExport,
+  SpwModuleLayer,
+  SpwModuleMountWhen,
+  SpwModuleRootMode,
+  SpwModuleVisualEffect,
+  SpwSameKeys,
+  SpwTimingArcStem,
+};
+
 export const REQUIRED_BODY_DATA_KEYS = Object.freeze([
   'spwSurface',
   'spwFeatures',
@@ -12,14 +44,15 @@ export const REQUIRED_BODY_DATA_KEYS = Object.freeze([
 export const EXPECTED_STYLESHEET_PREFIX = '/public/css/style.css';
 export const EXPECTED_SITE_SCRIPT_PREFIX = '/public/js/site.js';
 
+/** Parsed catalog snapshot for the route-runtime manifest — a subset of SpwModuleDef. */
 export type RuntimeDefinition = {
   id: string;
   importPath: string | null;
-  layer: string;
-  rootMode: string | null;
+  layer: SpwModuleLayer | string;
+  rootMode: SpwModuleRootMode | string | null;
   route: string[];
   selector: string | null;
-  when: string;
+  when: SpwModuleMountWhen | string;
 };
 
 export type SvgHost = {
@@ -138,11 +171,14 @@ export const VALID_MOUNT_WHEN = Object.freeze([
   'invited',
   'region',
   'settled',
-] as const);
+] as const satisfies readonly SpwModuleMountWhen[]);
 
-export type MountWhen = (typeof VALID_MOUNT_WHEN)[number];
+const _mountWhenEqual: SpwSameKeys<SpwModuleMountWhen, (typeof VALID_MOUNT_WHEN)[number]> = true;
+void _mountWhenEqual;
 
-/** timingArc stems — keep aligned with public/ts/module-timing-contract.ts */
+export type MountWhen = SpwModuleMountWhen;
+
+/** timingArc stems — same union as public/ts/module-timing-contract.ts via types/module-catalog. */
 export const TIMING_ARC_STEMS = Object.freeze([
   'boot',
   'immediate',
@@ -152,9 +188,12 @@ export const TIMING_ARC_STEMS = Object.freeze([
   'idle',
   'settled',
   'region',
-] as const);
+] as const satisfies readonly SpwTimingArcStem[]);
 
-export type TimingArcStem = (typeof TIMING_ARC_STEMS)[number];
+const _timingArcEqual: SpwSameKeys<SpwTimingArcStem, (typeof TIMING_ARC_STEMS)[number]> = true;
+void _timingArcEqual;
+
+export type TimingArcStem = SpwTimingArcStem;
 
 export const STANDARD_IDLE_CHUNKS = Object.freeze([
   'idle-residue',
@@ -162,7 +201,10 @@ export const STANDARD_IDLE_CHUNKS = Object.freeze([
   'idle-chrome',
   'idle-lab',
   'idle-default',
-] as const);
+] as const satisfies readonly SpwIdleChunkId[]);
+
+const _idleChunksEqual: SpwSameKeys<SpwIdleChunkId, (typeof STANDARD_IDLE_CHUNKS)[number]> = true;
+void _idleChunksEqual;
 
 /** Catalog layers accepted by module-catalog / runtime-contracts. */
 export const VALID_MODULE_LAYERS = Object.freeze([
@@ -170,9 +212,71 @@ export const VALID_MODULE_LAYERS = Object.freeze([
   'feature',
   'region',
   'enhancement',
-] as const);
+] as const satisfies readonly SpwModuleLayer[]);
 
-export type ModuleLayer = (typeof VALID_MODULE_LAYERS)[number];
+const _layersEqual: SpwSameKeys<SpwModuleLayer, (typeof VALID_MODULE_LAYERS)[number]> = true;
+void _layersEqual;
+
+export type ModuleLayer = SpwModuleLayer;
+
+export const VALID_COST_COMMITMENTS = Object.freeze([
+  'authored',
+  'listen',
+  'project',
+  'residue',
+] as const satisfies readonly SpwModuleCostCommitment[]);
+
+const _commitmentsEqual: SpwSameKeys<SpwModuleCostCommitment, (typeof VALID_COST_COMMITMENTS)[number]> = true;
+void _commitmentsEqual;
+
+export const VALID_COST_SPENDS = Object.freeze([
+  'none',
+  'early',
+  'wide',
+  'fight',
+  'paint',
+] as const satisfies readonly SpwModuleCostSpend[]);
+
+const _spendsEqual: SpwSameKeys<SpwModuleCostSpend, (typeof VALID_COST_SPENDS)[number]> = true;
+void _spendsEqual;
+
+export const VALID_COST_COPIES = Object.freeze([
+  'follow',
+  'keep',
+  'pin',
+] as const satisfies readonly SpwModuleCostCopy[]);
+
+const _copiesEqual: SpwSameKeys<SpwModuleCostCopy, (typeof VALID_COST_COPIES)[number]> = true;
+void _copiesEqual;
+
+/**
+ * Single-token cost projection. Spend tokens first; listen/residue/demand_coupled
+ * name the none-spend remainder. Keep aligned with catalog/constants.js COST_CLASS.
+ */
+export const VALID_COST_CLASSES = Object.freeze([
+  'premature_commitment',
+  'working_memory_pressure',
+  'interference',
+  'paint_composite',
+  'authored_prior_safe',
+  'listen',
+  'residue',
+  'demand_coupled',
+] as const satisfies readonly SpwCostClass[]);
+
+const _costClassesEqual: SpwSameKeys<SpwCostClass, (typeof VALID_COST_CLASSES)[number]> = true;
+void _costClassesEqual;
+
+export const VALID_VISUAL_EFFECTS = Object.freeze([
+  'authored',
+  'annotate',
+  'inspect',
+  'layout',
+  'express',
+] as const satisfies readonly SpwModuleVisualEffect[]);
+
+const _visualEqual: SpwSameKeys<SpwModuleVisualEffect, (typeof VALID_VISUAL_EFFECTS)[number]> = true;
+void _visualEqual;
 
 /**
  * Hygiene posture for new catalog entries (agentic-development audit).

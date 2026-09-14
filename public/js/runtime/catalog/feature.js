@@ -1,6 +1,8 @@
 /**
  * FEATURE_DEFS — staged runtime catalog family.
  * load() paths are relative to public/js/runtime/catalog/.
+ *
+ * @typedef {import('../../../../types/module-catalog').SpwModuleDef} SpwModuleDef
  */
 
 import {
@@ -10,6 +12,7 @@ import {
   PRETEXT_LIVE_SELECTOR,
 } from './constants.js';
 
+/** @type {SpwModuleDef[]} */
 export const FEATURE_DEFS = [
   {
     id: 'operator-symmetry',

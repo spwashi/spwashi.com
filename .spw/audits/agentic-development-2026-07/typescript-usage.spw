@@ -10,9 +10,10 @@
 @ngjt_types: ~"../naming-grammar-js-types-2026-07/type-usage.spw"
 
 ^"dual_track"{
-  public_ts = `7 files → public/js/typed/ (bus, feeds, dom-contracts, media-publishing, …)`
-  scripts_ts = `21 .mts → scripts/typed/ (build, css-*, site-contracts, runtime-contracts, check-*)`
-  public_js = `~196 hand ESM modules — dominant agent edit surface`
+  public_ts = `11 files → public/js/typed/ (bus, feeds, timing, charge-field, …)`
+  scripts_ts = `scripts/ts → scripts/typed/ (build, css-*, site-contracts, runtime-contracts, check-*)`
+  shared_types = `types/module-catalog.d.ts — SpwModuleDef + cost axes; every tsconfig includes types/`
+  public_js = `hand ESM modules — dominant agent edit surface`
   skill_rule = `Do not introduce a TS build path for route code just because types would be nice`
 }[reg=facet]
 
@@ -26,10 +27,11 @@
 }[reg=facet]
 
 ^"features_underused"{
-  u1 = `Shared TypeScript interface for SPW_MODULE_EXPORT / ModuleDef`
-  u2 = `JSDoc typedefs on large runtime modules (catalog optional)`
-  u3 = `.d.ts only 2 files — consumers rarely import types`
+  u1 = `landed 2026-09 — types/module-catalog.d.ts SpwModuleDef + SpwModuleExport; catalog JSDoc; compile runs public-sources`
+  u2 = `JSDoc typedefs on large runtime modules (catalog families now typed; others optional)`
+  u3 = `types/ now 3 files — module-catalog is the shared catalog contract`
   u4 = `satisfies / strict public route typing — intentionally absent`
+  cost_axes = `Stamp cost { commitment, spend, copy? }; costClass is the projection (spend first, then listen|residue|authored|demand_coupled). Do not collapse axes to string.`
 }[reg=set]
 
 ^"agent_guidance"{

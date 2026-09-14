@@ -17,9 +17,21 @@ import {
 import {
   STANDARD_IDLE_CHUNKS,
   TIMING_ARC_STEMS,
+  VALID_COST_CLASSES,
+  VALID_COST_COMMITMENTS,
+  VALID_COST_COPIES,
+  VALID_COST_SPENDS,
   VALID_MODULE_LAYERS,
   VALID_MOUNT_WHEN,
+  VALID_VISUAL_EFFECTS,
 } from './site-contracts/types.mjs';
+import type {
+  SpwCostClass,
+  SpwModuleCost,
+  SpwModuleLayer,
+  SpwModuleMountWhen,
+  SpwModuleRootMode,
+} from '../../types/module-catalog';
 import { toPosixPath } from './shared/build-topology.mjs';
 import {
   collectStylePropertyContractReport,
@@ -101,23 +113,22 @@ const TYPED_SHIM_RE = /export\s+\*\s+from\s+['"]([^'"]+)['"]/;
 
 type RuntimeFamily = (typeof RUNTIME_FAMILIES)[number];
 
-const VALID_COST_CLASSES = new Set([
-  'working_memory_pressure',
-  'premature_commitment',
-  'interference',
-  'demand_coupled',
-  'authored_prior_safe',
-  'paint_composite',
-]);
+const VALID_COST_CLASS_TOKENS = new Set<string>(VALID_COST_CLASSES);
+const VALID_COST_COMMITMENT_TOKENS = new Set<string>(VALID_COST_COMMITMENTS);
+const VALID_COST_SPEND_TOKENS = new Set<string>(VALID_COST_SPENDS);
+const VALID_COST_COPY_TOKENS = new Set<string>(VALID_COST_COPIES);
+const VALID_VISUAL_TOKENS = new Set<string>(VALID_VISUAL_EFFECTS);
 
-/** timingArc stems from site-contracts (aligned with public/ts/module-timing-contract). */
+/** timingArc stems from types/module-catalog (scripts + public/ts must match). */
 const TIMING_ARC_STEM_RE = new RegExp(
   `^(?:${TIMING_ARC_STEMS.join('|')})-[a-z0-9]+(?:-[a-z0-9]+)*$`,
 );
 
 type RuntimeContractModule = {
-  /** Explicit costClass from catalog when present (optimization coordinate). */
-  costClass: string | null;
+  /** Explicit cost object when stamped; axes are the useful model. */
+  cost: SpwModuleCost | null;
+  /** Single-token projection of cost; not a kind of module. */
+  costClass: SpwCostClass | string | null;
   debugOnly: boolean;
   describes: string | null;
   effectScope: string | null;
@@ -127,17 +138,18 @@ type RuntimeContractModule = {
   id: string;
   importPath: string | null;
   index: number;
-  layer: string;
+  layer: SpwModuleLayer | string;
   objectLiteral: string;
   /** True when a route: field is present (route-gated feature modules). */
   routeContract: boolean;
-  rootMode: string | null;
+  rootMode: SpwModuleRootMode | string | null;
   selectorContract: boolean;
   selector: string | null;
   timingArc: string | null;
   timingChunk: string | null;
   updates: string[];
-  when: string;
+  visual: string | null;
+  when: SpwModuleMountWhen | string;
 };
 
 type RuntimeContractReport = {
@@ -415,8 +427,34 @@ function parseCostClassProperty(objectLiteral: string): string | null {
   return parseQuotedProperty(objectLiteral, 'costClass');
 }
 
+function parseCostAxis(
+  objectLiteral: string,
+  name: 'commitment' | 'spend' | 'copy',
+  namespace: 'COST_COMMITMENT' | 'COST_SPEND' | 'COST_COPY',
+): string | null {
+  const block = objectLiteral.match(/cost:\s*\{([\s\S]*?)\}/);
+  if (!block) return null;
+  const fromConst = parseConstantProperty(block[1], name, namespace);
+  if (fromConst) return fromConst;
+  return parseQuotedProperty(block[1], name);
+}
+
+function parseCostObject(objectLiteral: string): SpwModuleCost | null {
+  if (!/\bcost:\s*\{/.test(objectLiteral)) return null;
+  const commitment = parseCostAxis(objectLiteral, 'commitment', 'COST_COMMITMENT');
+  const spend = parseCostAxis(objectLiteral, 'spend', 'COST_SPEND');
+  if (!commitment || !spend) return null;
+  const copy = parseCostAxis(objectLiteral, 'copy', 'COST_COPY');
+  return {
+    commitment: commitment as SpwModuleCost['commitment'],
+    spend: spend as SpwModuleCost['spend'],
+    copy: copy ? (copy as NonNullable<SpwModuleCost['copy']>) : null,
+  };
+}
+
 function parseRuntimeModule(objectLiteral: string, family: RuntimeFamily, index: number): RuntimeContractModule {
   return {
+    cost: parseCostObject(objectLiteral),
     costClass: parseCostClassProperty(objectLiteral),
     debugOnly: /\bdebugOnly:\s*true\b/.test(objectLiteral),
     describes: parseQuotedProperty(objectLiteral, 'describes'),
@@ -437,6 +475,8 @@ function parseRuntimeModule(objectLiteral: string, family: RuntimeFamily, index:
     // literal value for reporting.
     selectorContract: /\bselector\s*:\s*(?:[\`'"]|[A-Za-z_$])/.test(objectLiteral),
     selector: parseQuotedProperty(objectLiteral, 'selector'),
+    visual: parseQuotedProperty(objectLiteral, 'visual')
+      || parseConstantProperty(objectLiteral, 'visual', 'VISUAL_EFFECT'),
     timingArc: parseQuotedProperty(objectLiteral, 'timingArc'),
     timingChunk: parseQuotedProperty(objectLiteral, 'timingChunk'),
     updates: parseUpdates(objectLiteral),
@@ -888,16 +928,48 @@ function validateModule(
         `${label} is ENHANCEMENT+IMMEDIATE with no features gate and no selector contract; confirm it must run on every page at boot.`,
       );
     }
-    if (!module.costClass) {
+    if (!module.cost && !module.costClass) {
       recommendations.push(
-        `${label} is ENHANCEMENT+IMMEDIATE without explicit costClass; stamp COST_CLASS.* or rely on module-catalog-normalize infer (prefer explicit for budget reviews).`,
+        `${label} is ENHANCEMENT+IMMEDIATE without cost or costClass; stamp cost: { commitment, spend } (costClass is the projection).`,
       );
     }
   }
 
-  if (module.costClass && !VALID_COST_CLASSES.has(module.costClass)) {
+  if (module.cost) {
+    if (!VALID_COST_COMMITMENT_TOKENS.has(module.cost.commitment)) {
+      errors.push(
+        `${label} cost.commitment "${module.cost.commitment}" is unknown; use ${VALID_COST_COMMITMENTS.join('|')}.`,
+      );
+    }
+    if (!VALID_COST_SPEND_TOKENS.has(module.cost.spend)) {
+      errors.push(
+        `${label} cost.spend "${module.cost.spend}" is unknown; use ${VALID_COST_SPENDS.join('|')}.`,
+      );
+    }
+    if (module.cost.copy && !VALID_COST_COPY_TOKENS.has(module.cost.copy)) {
+      errors.push(
+        `${label} cost.copy "${module.cost.copy}" is unknown; use ${VALID_COST_COPIES.join('|')}.`,
+      );
+    } else if (module.cost.commitment === 'residue' && !module.cost.copy) {
+      recommendations.push(
+        `${label} is residue without cost.copy; stamp follow|keep|pin so the printing is explicit.`,
+      );
+    } else if (module.cost.commitment !== 'residue' && module.cost.copy) {
+      recommendations.push(
+        `${label} sets cost.copy off residue; copy only names follow|keep|pin for storage/memory.`,
+      );
+    }
+  }
+
+  if (module.costClass && !VALID_COST_CLASS_TOKENS.has(module.costClass)) {
     errors.push(
-      `${label} costClass "${module.costClass}" is unknown; use COST_CLASS values (premature_commitment|working_memory_pressure|interference|demand_coupled|authored_prior_safe|paint_composite).`,
+      `${label} costClass "${module.costClass}" is unknown; use ${VALID_COST_CLASSES.join('|')}.`,
+    );
+  }
+
+  if (module.visual && !VALID_VISUAL_TOKENS.has(module.visual)) {
+    errors.push(
+      `${label} visual "${module.visual}" is unknown; use ${VALID_VISUAL_EFFECTS.join('|')}.`,
     );
   }
 

@@ -29,6 +29,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 | Target Surface | Source Path | Compiled Output | Build Script | Purpose |
 | :--- | :--- | :--- | :--- | :--- |
+| **Shared contracts** | `types/**/*.d.ts` | *(ambient / type-only)* | included by every tsconfig | Catalog `SpwModuleDef`, cost axes, feeds, dataset |
 | **Scripts / Tooling** | `scripts/ts/**/*.mts` | `scripts/typed/` | `npm run build:tools` | Type-safe manifest, CSS, & runtime contract checkers |
 | **Typed Kernel Runtime**| `public/ts/**/*.ts` | `public/js/typed/` | `npm run build:runtime` | Portable edges (bus, feeds, core DOM contracts) |
 | **Vanilla Runtime** | `public/js/**/*.js` | Native execution | *(None / direct)* | Standard browser modules, UI controllers, routes |

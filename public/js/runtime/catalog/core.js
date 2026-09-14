@@ -1,10 +1,13 @@
 /**
  * CORE_DEFS — staged runtime catalog family.
  * load() paths are relative to public/js/runtime/catalog/.
+ *
+ * @typedef {import('../../../../types/module-catalog').SpwModuleDef} SpwModuleDef
  */
 
 import { COST_CLASS, MODULE_LAYERS, MOUNT_WHEN } from './constants.js';
 
+/** @type {SpwModuleDef[]} */
 export const CORE_DEFS = [
   {
     id: 'site-settings',

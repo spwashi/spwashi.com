@@ -1,6 +1,8 @@
 /**
  * ENHANCEMENT_DEFS — staged runtime catalog family.
  * load() paths are relative to public/js/runtime/catalog/.
+ *
+ * @typedef {import('../../../../types/module-catalog').SpwModuleDef} SpwModuleDef
  */
 
 import {
@@ -29,6 +31,7 @@ const ATTENTION_READING_SELECTOR = [
   'main > section li',
 ].join(', ');
 
+/** @type {SpwModuleDef[]} */
 export const ENHANCEMENT_DEFS = [
   {
     id: 'layout-shift-audit',
