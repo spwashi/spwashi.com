@@ -322,11 +322,23 @@ function syncInteractiveMedium(root = document, { force = false } = {}) {
   return snapshot;
 }
 
+/* A frame callback runs before the browser recalculates style for that frame,
+   so when a settings change has just invalidated root style, the medium-token
+   read inside it paid the whole pending recalculation in script. The sync now
+   runs in a task queued from the frame callback, after the frame's own style
+   pass, where the same read finds style already clean. */
+let syncTimer = 0;
+
 function scheduleSync(root = document) {
   if (syncRaf) window.cancelAnimationFrame(syncRaf);
+  if (syncTimer) window.clearTimeout(syncTimer);
+  syncTimer = 0;
   syncRaf = window.requestAnimationFrame(() => {
     syncRaf = 0;
-    syncInteractiveMedium(root);
+    syncTimer = window.setTimeout(() => {
+      syncTimer = 0;
+      syncInteractiveMedium(root);
+    }, 0);
   });
 }
 
@@ -407,6 +419,8 @@ function cleanup() {
   initialized = false;
   if (syncRaf) window.cancelAnimationFrame(syncRaf);
   syncRaf = 0;
+  if (syncTimer) window.clearTimeout(syncTimer);
+  syncTimer = 0;
   lastSignature = '';
   invalidateMediumTokens();
 
