@@ -47,10 +47,17 @@ export const parseAccentNumber = (value, fallback, min = -Infinity, max = Infini
     return clamp(parsed, min, max);
 };
 
+/* The wonder-memory tokens are projected inline on <html> by the settings
+   engine, so the inline value is the setting. Reading it costs nothing, while
+   a computed-style read right after a settings change paid a full-page style
+   recalculation — up to seven times per change through the recent-path decay
+   checks. Computed style stays the fallback for pages without the engine. */
 const readRootSettingNumber = (name, fallback, min = -Infinity, max = Infinity) => {
     if (typeof document === 'undefined') return fallback;
 
-    const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    const root = document.documentElement;
+    const inline = root.style?.getPropertyValue?.(name).trim();
+    const value = inline || getComputedStyle(root).getPropertyValue(name).trim();
     return parseAccentNumber(value, fallback, min, max);
 };
 
