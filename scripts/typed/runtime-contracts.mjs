@@ -494,27 +494,27 @@ async function collectJsModuleEcology(catalogIdsByFile = new Map()) {
             seat: seatJsModuleEcology(flags),
         });
     }
-    const seats = {
-        'catalog-export': [],
-        'catalog-init-only': [],
-        'catalog-unresolved': [],
-        'unwired-init': [],
-        'export-unwired': [],
-        compose: [],
-        helper: [],
-    };
+    const ATTENTION_SEATS = [
+        'catalog-init-only',
+        'catalog-unresolved',
+        'unwired-init',
+        'export-unwired',
+    ];
+    const attention = {};
     const catalog = {};
     for (const row of rows) {
         const handle = row.catalogIds[0] || row.file;
-        seats[row.seat].push(handle);
+        if (ATTENTION_SEATS.includes(row.seat)) {
+            (attention[row.seat] ||= []).push(handle);
+        }
         for (const id of row.catalogIds) {
             catalog[id] = { file: row.file, seat: row.seat };
         }
     }
-    for (const key of Object.keys(seats)) {
-        seats[key].sort();
+    for (const key of Object.keys(attention)) {
+        attention[key].sort();
     }
-    const document = `${JSON.stringify({ catalog, seats }, null, 2)}\n`;
+    const document = `${JSON.stringify({ catalog, attention }, null, 2)}\n`;
     const recommendations = rows.map(recommendJsModuleEcology).filter((item) => Boolean(item));
     return { rows, recommendations, document };
 }
@@ -1086,8 +1086,8 @@ export async function main() {
     const paintCompositeImmediate = enhancementImmediate.filter((module) => module.costClass === 'paint_composite');
     const ecology = report.jsEcology || [];
     const seatCount = (seat) => ecology.filter((row) => row.seat === seat).length;
-    console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} topLevelModuleFiles=${report.topLevelModuleFiles.length} styleWrites=${report.stylePropertyWrites.length} cssCustomProperties=${report.cssCustomProperties.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length} behaviorScopes=${report.behaviorScopes.length} inspectContracts=${report.inspectContracts}`);
-    console.log(`[runtime] jsEcology files=${ecology.length} catalog-export=${seatCount('catalog-export')} catalog-init-only=${seatCount('catalog-init-only')} catalog-unresolved=${seatCount('catalog-unresolved')} unwired-init=${seatCount('unwired-init')} export-unwired=${seatCount('export-unwired')}`);
+    console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} styleWrites=${report.stylePropertyWrites.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length}`);
+    console.log(`[runtime] jsEcology catalog-export=${seatCount('catalog-export')} catalog-init-only=${seatCount('catalog-init-only')} unwired-init=${seatCount('unwired-init')} export-unwired=${seatCount('export-unwired')}`);
     console.log(`[runtime] mountHygiene enhancementImmediate=${enhancementImmediate.length}/${enhancementModules.length} demandGated=${demandGatedImmediate.length}/${enhancementImmediate.length} timingArc=${enhancementImmediate.filter((module) => Boolean(module.timingArc)).length}/${enhancementImmediate.length} idleChunk=${idleChunked.length}/${idleModules.length} rolefulUpdates=${rolefulModules.length}/${report.modules.length} costClass=${costClassTagged.length}/${report.modules.length} paintCompositeImmediate=${paintCompositeImmediate.length}`);
     console.log(`[runtime] schedule byWhen=${Object.entries(byWhen).map(([k, v]) => `${k}:${v}`).join(' ')}`);
     console.log(`[runtime] timingArc stems=${Object.entries(byTimingStem).map(([k, v]) => `${k}:${v}`).join(' ')}`);
@@ -1101,15 +1101,6 @@ export async function main() {
         }
         if (report.warnings.length > 12) {
             console.log(`  ... ${report.warnings.length - 12} more warnings`);
-        }
-    }
-    if (report.jsEcologyNotes.length) {
-        console.log(`[runtime] jsEcologyNotes=${report.jsEcologyNotes.length}`);
-        for (const note of report.jsEcologyNotes.slice(0, 12)) {
-            console.log(`  ${note}`);
-        }
-        if (report.jsEcologyNotes.length > 12) {
-            console.log(`  ... ${report.jsEcologyNotes.length - 12} more`);
         }
     }
     if (report.recommendations.length) {

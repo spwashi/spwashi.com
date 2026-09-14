@@ -49,20 +49,6 @@ export const SPW_MODULE_EXPORT_CONTRACT = Object.freeze({
     'default.mount',
     'initNamedExport',
   ]),
-  portableUse:
-    'Export SPW_MODULE_EXPORT with mount(); re-export spwModule as alias during migration. Catalog and compose resolve the same mount path.',
-  mountResult:
-    'mount() returns void, a cleanup function, or { cleanup?, refresh? }. A mount-returned refresh wins over the export-level refresh.',
-  cleanupOwnership:
-    'Loader-mounted modules return their handle and do not register that same cleanup with ctx.addCleanup. Overlapping loader unmounts share one pending release per record; remount waits for that release.',
-  routeBoundary:
-    'Routes replace the document; partial DOM replacement uses refresh/untracking. Do not tear down on pagehide because BFCache may restore the same document.',
-  catalogParity:
-    'The catalog owns gates, schedule, effects, and cost. SPW_MODULE_EXPORT owns mount/refresh portability and may mirror descriptive fields; describeModuleExport reports mirror drift, extra export keys, and catalog cost/visual/lifecycle without letting an export silently reschedule itself.',
-  inspect:
-    'describeModuleExport.orchestration is the inspect record. Loader stamps cleanup=handle|none after mount. Extra keys are extras, not catalog authority.',
-  updatesTopology:
-    'updates may use scope:role:kind:name (html:flourish:--token). Roles: structural|flourish|inspect|residue|measure|diagnostic.',
   datasetFields: Object.freeze({
     shape: 'data-spw-module-export-shape',
     guild: 'data-spw-module-guild',
