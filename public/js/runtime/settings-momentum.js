@@ -8,9 +8,15 @@
 
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 
+/* The pulse duration is projected inline on <html> by the settings engine
+   during the same save that triggers this pulse, so the inline value is
+   current. A computed-style read here ran right after the save's root style
+   changes and forced a full-page style recalculation, twice per change
+   (settings-change and settings:changed both pulse). */
 function readMomentumMs(html) {
-  if (typeof getComputedStyle !== 'function') return 640;
-  const raw = getComputedStyle(html).getPropertyValue('--spw-microinteraction-pulse-duration').trim();
+  const inline = html?.style?.getPropertyValue?.('--spw-microinteraction-pulse-duration').trim();
+  if (!inline && typeof getComputedStyle !== 'function') return 640;
+  const raw = inline || getComputedStyle(html).getPropertyValue('--spw-microinteraction-pulse-duration').trim();
   const parsed = Number.parseInt(raw, 10);
   const pulse = Number.isFinite(parsed) && parsed > 80 ? parsed : 280;
   return Math.max(420, Math.round(pulse * 2.2));
