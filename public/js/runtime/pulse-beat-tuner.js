@@ -94,24 +94,38 @@ function pulseFreshness(html, source = 'interaction', detail = {}) {
   }, duration);
 }
 
+/* A running cycle keeps its phase when a refresh leaves the interval unchanged:
+   settings tuning emits several events per gesture, and restarting the interval
+   on each one stalled the beat for as long as the gesture lasted. */
+let scheduledInterval = 0;
+
+function stopBeatTimer() {
+  if (beatTimer) window.clearInterval(beatTimer);
+  beatTimer = null;
+  scheduledInterval = 0;
+}
+
 function scheduleBeatCycle(html) {
-  if (beatTimer) {
-    window.clearInterval(beatTimer);
-    beatTimer = null;
-  }
   if (!isRhythmEnabled(html)) {
+    stopBeatTimer();
     delete html.dataset.spwBeat;
     delete html.dataset.spwPlaying;
     currentBeat = 0;
     return;
   }
+  /* Hidden documents keep their beat attributes but stop advancing them. */
+  if (typeof document !== 'undefined' && document.hidden) {
+    stopBeatTimer();
+    return;
+  }
 
   const interval = readBeatIntervalMs(html);
-  let beat = currentBeat || 0;
+  if (beatTimer && interval === scheduledInterval) return;
+  stopBeatTimer();
+  scheduledInterval = interval;
 
   beatTimer = window.setInterval(() => {
-    beat = beat >= BEAT_CADENCE ? 1 : beat + 1;
-    writeBeat(html, beat);
+    writeBeat(html, currentBeat >= BEAT_CADENCE ? 1 : currentBeat + 1);
   }, interval);
 
   if (!currentBeat) writeBeat(html, 1);
@@ -131,10 +145,20 @@ export function initPulseBeatTuner(root = document) {
   const controller = new AbortController();
   const { signal } = controller;
 
+  /* One settings gesture arrives as settings-change, settings:changed, and two
+     momentum events in the same task; they share one reschedule. */
+  let refreshQueued = false;
   const refreshRhythm = () => {
     invalidateTimingCache();
-    scheduleBeatCycle(html);
+    if (refreshQueued) return;
+    refreshQueued = true;
+    queueMicrotask(() => {
+      refreshQueued = false;
+      if (!signal.aborted) scheduleBeatCycle(html);
+    });
   };
+
+  let momentumPulseQueued = false;
 
   const onInteractionPhase = (event) => {
     const phase = event.detail?.phase;
@@ -151,8 +175,11 @@ export function initPulseBeatTuner(root = document) {
 
   const onSettingsMomentum = () => {
     if (!isRhythmEnabled(html)) return;
-    pulseFreshness(html, 'settings-tuning');
     refreshRhythm();
+    if (momentumPulseQueued) return;
+    momentumPulseQueued = true;
+    queueMicrotask(() => { momentumPulseQueued = false; });
+    pulseFreshness(html, 'settings-tuning');
   };
 
   const onRuntimeTokens = () => {
@@ -166,6 +193,7 @@ export function initPulseBeatTuner(root = document) {
   document.addEventListener('spw:settings-change', refreshRhythm, { signal });
   document.addEventListener('spw:settings:changed', refreshRhythm, { signal });
   document.addEventListener('spw:runtime-tokens-updated', onRuntimeTokens, { signal });
+  document.addEventListener('visibilitychange', () => scheduleBeatCycle(html), { signal });
 
   if (typeof MutationObserver === 'function' && html && html.nodeType === 1) {
     const observer = new MutationObserver((records) => {
@@ -185,9 +213,8 @@ export function initPulseBeatTuner(root = document) {
   refreshRhythm();
 
   controller.signal.addEventListener('abort', () => {
-    if (beatTimer) window.clearInterval(beatTimer);
+    stopBeatTimer();
     if (freshnessTimer) window.clearTimeout(freshnessTimer);
-    beatTimer = null;
     freshnessTimer = null;
     currentBeat = 0;
     delete html.dataset.spwBeat;

@@ -346,8 +346,12 @@ function syncEcology(ctx, reason = 'runtime') {
   return payload;
 }
 
-function pulsePhase(html, phase) {
-  writeDatasetValue(html, 'spwLoadingEcologyPhase', phase);
+/* Every caller follows with syncEcology in the same task, which writes the
+   dominant phase. Writing the event's phase first never reached a frame: after
+   settle each idle module mount flipped the root to mounting and back, and each
+   flip invalidated root custom properties across the whole tree. The trailing
+   resync still catches state that changes inside the pulse window. */
+function pulsePhase() {
   if (phasePulseTimer) window.clearTimeout(phasePulseTimer);
   phasePulseTimer = window.setTimeout(() => {
     syncEcology(null, 'phase-pulse-complete');
@@ -369,16 +373,14 @@ function onPageAttention(detail = {}, ctx) {
 function onResourcesProfiled(detail = {}, ctx) {
   const warmed = Array.isArray(detail.resources) ? detail.resources : [];
   ecology.prefetched = warmed.some((entry) => entry.status === 'prefetched' || entry.status === 'cached');
-  const html = document.documentElement;
-  pulsePhase(html, ECOLOGY_PHASES.PREFETCHING);
+  pulsePhase();
   syncEcology(ctx, detail.expectedWhen || 'resources-profiled');
 }
 
 function onPretextMeasurement(detail = {}, ctx) {
   ecology.measured = true;
   ecology.measuredSubjective = detail.measureKind === 'subjective';
-  const html = document.documentElement;
-  pulsePhase(html, ECOLOGY_PHASES.MEASURING);
+  pulsePhase();
   syncEcology(ctx, 'pretext-measurement');
 }
 
@@ -386,15 +388,13 @@ function onRegionsProfiled(detail = {}, ctx) {
   ecology.measured = true;
   ecology.diversityTier = detail.diversity?.tier || '';
   ecology.diversityKinds = detail.diversity?.kindCount || 0;
-  const html = document.documentElement;
-  pulsePhase(html, ECOLOGY_PHASES.MEASURING);
+  pulsePhase();
   syncEcology(ctx, detail.reason || 'regions-profiled');
 }
 
 function onModuleMounted(detail = {}, ctx) {
   ecology.modulesMounted += 1;
-  const html = document.documentElement;
-  pulsePhase(html, ECOLOGY_PHASES.MOUNTING);
+  pulsePhase();
   syncEcology(ctx, detail.baseId || detail.id || 'module-mounted');
 }
 
