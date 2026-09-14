@@ -1,0 +1,479 @@
+{
+  "undeclared": {
+    "(module-loader)": [
+      "attr:data-spw-active-layers",
+      "attr:data-spw-cached-module-count",
+      "attr:data-spw-connection-posture",
+      "attr:data-spw-prefetch-count",
+      "attr:data-spw-prefetch-mode",
+      "attr:data-spw-runtime-failed-modules",
+      "attr:data-spw-runtime-idle-chunk",
+      "attr:data-spw-runtime-idle-chunks",
+      "attr:data-spw-runtime-last-module",
+      "attr:data-spw-runtime-last-module-describes",
+      "attr:data-spw-runtime-last-module-effect-scope",
+      "attr:data-spw-runtime-last-module-evaluates",
+      "attr:data-spw-runtime-last-module-reason",
+      "attr:data-spw-runtime-last-module-stage",
+      "attr:data-spw-runtime-last-module-status",
+      "attr:data-spw-runtime-last-module-timing-arc",
+      "attr:data-spw-runtime-last-module-when",
+      "attr:data-spw-runtime-module-count",
+      "attr:data-spw-runtime-module-lifecycle-latest",
+      "attr:data-spw-runtime-module-lifecycle-stages",
+      "attr:data-spw-runtime-module-lifecycle-summary",
+      "attr:data-spw-runtime-mount-batch",
+      "attr:data-spw-runtime-mounted-modules",
+      "attr:data-spw-service-worker-cache-count",
+      "attr:data-spw-service-worker-cache-entries",
+      "attr:data-spw-service-worker-cache-state",
+      "attr:data-spw-service-worker-cache-version",
+      "attr:data-spw-service-worker-prefetch",
+      "attr:data-spw-service-worker-prefetch-cached",
+      "attr:data-spw-service-worker-prefetch-requested",
+      "attr:data-spw-service-worker-prefetch-state",
+      "attr:data-spw-site-rhythm",
+      "css-var:--spw-runtime-avg-module-ms",
+      "css-var:--spw-runtime-enhancement-intensity",
+      "css-var:--spw-runtime-feature-intensity",
+      "css-var:--spw-runtime-layer-count",
+      "css-var:--spw-site-rhythm-density",
+      "css-var:--spw-site-rhythm-tempo"
+    ],
+    "attention-section-handle": [
+      "attr:data-spw-region-preview"
+    ],
+    "blog-interpreter": [
+      "attr:data-spw-lifecycle-beat",
+      "attr:data-spw-lifecycle-beat-resolved"
+    ],
+    "boonhonk-mixer": [
+      "css-var:--bane",
+      "css-var:--bone",
+      "css-var:--bonk",
+      "css-var:--honk"
+    ],
+    "brace-physics": [
+      "attr:data-brace-gestures-init",
+      "attr:data-spw-field-context",
+      "attr:data-spw-field-gesture",
+      "attr:data-spw-field-wonder"
+    ],
+    "brace-pivots": [
+      "attr:data-spw-charge"
+    ],
+    "cauldron": [
+      "attr:data-spw-cauldron-brew",
+      "attr:data-spw-cauldron-cue",
+      "attr:data-spw-cauldron-operators",
+      "attr:data-spw-cauldron-phase",
+      "attr:data-spw-cauldron-resonance",
+      "attr:data-spw-cauldron-resonance-operators",
+      "attr:data-spw-cauldron-vessel",
+      "attr:data-spw-ingredient-availability",
+      "attr:data-spw-ingredient-source-count"
+    ],
+    "charge-field": [
+      "css-var:--spw-architecture-reward",
+      "css-var:--spw-charge-field",
+      "css-var:--spw-curiosity-reward",
+      "css-var:--spw-relationship-reward"
+    ],
+    "component-collection": [
+      "attr:data-spw-component-collection-init"
+    ],
+    "console": [
+      "attr:data-spw-metamaterial",
+      "css-var:--console-idle-opacity"
+    ],
+    "contextual-ui": [
+      "attr:data-spw-contextual-ui-init"
+    ],
+    "design-experiments": [
+      "attr:data-spw-base-metamaterial",
+      "attr:data-spw-component-motif",
+      "attr:data-spw-design-ecology-behavior",
+      "attr:data-spw-design-ecology-environment",
+      "attr:data-spw-design-ecology-packing",
+      "attr:data-spw-design-ecology-posture",
+      "attr:data-spw-design-ecology-settle",
+      "attr:data-spw-design-ecology-variant",
+      "attr:data-spw-font-size-scale",
+      "attr:data-spw-high-contrast",
+      "attr:data-spw-layout",
+      "css-var:--active-op-color",
+      "css-var:--pigment-context-boost"
+    ],
+    "design-review-surfaces": [
+      "attr:data-spw-review-active"
+    ],
+    "discovery-notices": [
+      "attr:data-spw-discovery-credits",
+      "attr:data-spw-discovery-credits-count",
+      "attr:data-spw-discovery-notices-active"
+    ],
+    "experiential": [
+      "attr:data-spw-experiential-init",
+      "attr:data-spw-inspect-field-context",
+      "attr:data-spw-inspect-field-operator",
+      "attr:data-spw-inspect-field-wonder"
+    ],
+    "haptics": [
+      "attr:data-spw-sigil-collection-count"
+    ],
+    "hydration-passes": [
+      "attr:data-spw-capture-mode",
+      "attr:data-spw-display-layer",
+      "attr:data-spw-hydration"
+    ],
+    "interaction-progression": [
+      "attr:data-spw-layout-selection-pulse"
+    ],
+    "interactive-medium": [
+      "css-var:--spw-medium-intensity"
+    ],
+    "layout-assumptions": [
+      "attr:data-spw-runtime-mutation-reason",
+      "attr:data-spw-runtime-mutator",
+      "attr:data-spw-runtime-styling-axis"
+    ],
+    "learnability-ledger": [
+      "attr:data-spw-learnability-cue",
+      "attr:data-spw-learnability-feature-count",
+      "attr:data-spw-learnability-gesture-count",
+      "attr:data-spw-learnability-process",
+      "attr:data-spw-learnability-resonance",
+      "attr:data-spw-learnability-slot-count",
+      "attr:data-spw-learnability-tuning"
+    ],
+    "module-effects": [
+      "attr:data-spw-module-effect-count"
+    ],
+    "navigation-spells": [
+      "attr:data-spw-navigation-spells-init"
+    ],
+    "observation-beats": [
+      "attr:data-spw-active-beat-reason",
+      "attr:data-spw-beat-window-ms",
+      "attr:data-spw-debug",
+      "attr:data-spw-debug-agent",
+      "attr:data-spw-debug-layout",
+      "attr:data-spw-debug-mode",
+      "attr:data-spw-debug-qa-posture",
+      "attr:data-spw-last-beat-duration",
+      "attr:data-spw-last-beat-flush-reason",
+      "attr:data-spw-qa"
+    ],
+    "operators": [
+      "attr:data-spw-sigil-transition-from",
+      "attr:data-spw-sigil-transition-source",
+      "attr:data-spw-sigil-transition-to"
+    ],
+    "page-anatomy": [
+      "attr:data-spw-material-lens",
+      "attr:data-spw-page-serialization",
+      "attr:data-spw-palette-species",
+      "attr:data-spw-palette-trace-count",
+      "attr:data-spw-palette-trace-recent",
+      "attr:data-spw-parallel-active",
+      "attr:data-spw-parallel-active-count",
+      "attr:data-spw-parallel-active-index",
+      "attr:data-spw-parallel-groups",
+      "attr:data-spw-popup-posture",
+      "attr:data-spw-theme-biome",
+      "css-var:--spw-palette-trace-count",
+      "css-var:--spw-popup-double-tap-window",
+      "css-var:--spw-popup-hold-open-delay",
+      "css-var:--spw-popup-preview-delay"
+    ],
+    "page-region-rail": [
+      "attr:data-spw-active-region",
+      "attr:data-spw-active-region-consequence",
+      "attr:data-spw-active-region-density",
+      "attr:data-spw-active-region-harmony",
+      "attr:data-spw-active-region-operator",
+      "attr:data-spw-active-region-seat",
+      "attr:data-spw-active-region-wonder"
+    ],
+    "precipitation-request": [
+      "attr:data-spw-capture-mode"
+    ],
+    "prompt-utils": [
+      "attr:data-spw-lattice-phase"
+    ],
+    "pwa-update-handler": [
+      "attr:data-spw-pwa-cache-count",
+      "attr:data-spw-pwa-cache-entries",
+      "attr:data-spw-pwa-offline-url",
+      "attr:data-spw-pwa-worker-version"
+    ],
+    "region-enhancer": [
+      "attr:data-spw-region-layer",
+      "css-var:--region-harmonic-weight"
+    ],
+    "region-menu": [
+      "attr:data-spw-inspect-semantic-focus-count",
+      "attr:data-spw-region-menu-init",
+      "attr:data-spw-region-previewing"
+    ],
+    "reward-ui": [
+      "attr:data-spw-reward-salience"
+    ],
+    "rpg-wednesday": [
+      "attr:data-spw-character-lab-density",
+      "attr:data-spw-language-evolution-posture",
+      "attr:data-spw-language-evolution-stage",
+      "attr:data-spw-rpg-curator-density",
+      "attr:data-spw-world-slot-kind"
+    ],
+    "semantic-crossrefs": [
+      "attr:data-spw-semantic-crossref",
+      "attr:data-spw-semantic-crossref-label"
+    ],
+    "settings-momentum": [
+      "attr:data-spw-freshness-pulse"
+    ],
+    "shell-disclosure": [
+      "attr:data-spw-shell-scroll-lock",
+      "attr:data-spw-shell-scroll-y",
+      "css-var:--spw-shell-menu-offset"
+    ],
+    "site-settings": [
+      "attr:data-spw-active-motif",
+      "attr:data-spw-cauldron-state",
+      "attr:data-spw-collection-kinds",
+      "attr:data-spw-collection-tier",
+      "attr:data-spw-collection-total",
+      "attr:data-spw-component-motif",
+      "attr:data-spw-query-parity",
+      "css-var:--attention-echo-duration",
+      "css-var:--attention-field-decay",
+      "css-var:--attention-field-radius",
+      "css-var:--author-annotation-strength",
+      "css-var:--author-draft-privacy",
+      "css-var:--author-margin-presence",
+      "css-var:--author-publication-readiness",
+      "css-var:--author-thread-density",
+      "css-var:--boundary-rail-width",
+      "css-var:--boundary-rail-width-strong",
+      "css-var:--climate-atmosphere-bias",
+      "css-var:--climate-charge-bias",
+      "css-var:--climate-clarity-bias",
+      "css-var:--climate-memory-bias",
+      "css-var:--climate-pressure-bias",
+      "css-var:--climate-resonance-bias",
+      "css-var:--climate-selection-bias",
+      "css-var:--duration-base",
+      "css-var:--duration-fast",
+      "css-var:--duration-instant",
+      "css-var:--duration-slow",
+      "css-var:--edge-softness",
+      "css-var:--fixture-annotation-weight",
+      "css-var:--font-size-scale",
+      "css-var:--grain-opacity",
+      "css-var:--line-heavy",
+      "css-var:--line-mid",
+      "css-var:--line-thick",
+      "css-var:--material-blur",
+      "css-var:--shape-component",
+      "css-var:--shape-element",
+      "css-var:--shape-floating",
+      "css-var:--shape-surface",
+      "css-var:--site-header-opacity",
+      "css-var:--site-line-height",
+      "css-var:--site-mono-font",
+      "css-var:--site-root-font-size",
+      "css-var:--spw-beat-interval-ms",
+      "css-var:--spw-cognitive-handle-factor",
+      "css-var:--spw-control-contrast-lift",
+      "css-var:--spw-developmental-atmosphere",
+      "css-var:--spw-developmental-charge-bias",
+      "css-var:--spw-developmental-clarity",
+      "css-var:--spw-developmental-memory",
+      "css-var:--spw-developmental-pressure",
+      "css-var:--spw-developmental-resonance",
+      "css-var:--spw-developmental-selection-bias",
+      "css-var:--spw-deviation-count",
+      "css-var:--spw-enhancement-factor",
+      "css-var:--spw-freshness-weight",
+      "css-var:--spw-infospace-factor",
+      "css-var:--spw-interaction-scale",
+      "css-var:--spw-layout-column-min",
+      "css-var:--spw-layout-frame-max",
+      "css-var:--spw-layout-measure",
+      "css-var:--spw-lighting-guard",
+      "css-var:--spw-microinteraction-pulse-duration",
+      "css-var:--spw-microinteraction-pulse-intensity",
+      "css-var:--spw-motion-scale",
+      "css-var:--spw-numericity-emphasis-factor",
+      "css-var:--spw-operator-presentation-factor",
+      "css-var:--spw-operator-saturation-factor",
+      "css-var:--spw-region-field-intensity",
+      "css-var:--spw-region-fill-alpha",
+      "css-var:--spw-region-frame-alpha",
+      "css-var:--spw-relational-factor",
+      "css-var:--spw-semantic-density-factor",
+      "css-var:--spw-semantic-metadata-factor",
+      "css-var:--spw-site-rhythm-tempo",
+      "css-var:--spw-spacing-scale",
+      "css-var:--spw-surface-permeability-base",
+      "css-var:--spw-svg-caption-opacity",
+      "css-var:--spw-svg-flow-dash",
+      "css-var:--spw-svg-flow-gap",
+      "css-var:--spw-svg-gap-scale",
+      "css-var:--spw-svg-label-spacing",
+      "css-var:--spw-svg-narrative-intensity",
+      "css-var:--spw-svg-pointer-lift",
+      "css-var:--spw-svg-rail-intensity",
+      "css-var:--spw-svg-scale-factor",
+      "css-var:--spw-svg-stroke-scale",
+      "css-var:--spw-svg-surface-max",
+      "css-var:--spw-wonder-memory-reach",
+      "css-var:--spw-wonder-memory-strength",
+      "css-var:--spw-wonder-memory-ttl-ms"
+    ],
+    "spw-key-events": [
+      "attr:data-spw-grounded",
+      "attr:data-spw-grounded-operator",
+      "attr:data-spw-interaction-context",
+      "attr:data-spw-semantic-density",
+      "css-var:--spw-reveal-phase-weight",
+      "css-var:--spw-reveal-stagger-step",
+      "css-var:--spw-scene-depth"
+    ],
+    "state-inspector": [
+      "attr:data-spw-chrome-fluid",
+      "attr:data-spw-dismissible",
+      "attr:data-spw-drag-state",
+      "attr:data-spw-metamaterial",
+      "attr:data-spw-page-state-mirror",
+      "attr:data-spw-room-affords",
+      "attr:data-spw-room-family",
+      "attr:data-spw-room-form",
+      "attr:data-spw-room-region",
+      "attr:data-spw-room-register",
+      "attr:data-spw-room-subject",
+      "attr:data-spw-satchel-positioned",
+      "attr:data-spw-satchel-rail",
+      "attr:data-spw-satchel-snap",
+      "attr:data-spw-snap",
+      "attr:data-spw-state-inspector-changed",
+      "attr:data-spw-state-serialization",
+      "css-var:--spw-room-accent"
+    ],
+    "tuning-discovery": [
+      "attr:data-spw-tuning-surfaces-present"
+    ],
+    "variant-selection": [
+      "attr:data-spw-variant-selection-pulse",
+      "attr:data-spw-variant-selection-weight"
+    ]
+  },
+  "sharedWriters": {
+    "(file:public/js/interface/cauldron/contract.js)": [
+      "attr:data-spw-cauldron-capacity",
+      "attr:data-spw-cauldron-load",
+      "css-var:--spw-cauldron-load-ratio"
+    ],
+    "(file:public/js/interface/wonder-memory.js)": [
+      "css-var:--delight-color",
+      "css-var:--field-balance",
+      "css-var:--spw-wonder-memory-alt-color",
+      "css-var:--spw-wonder-memory-color",
+      "css-var:--wonder-accent-color"
+    ],
+    "(file:public/js/kernel/deferred-styles.js)": [
+      "attr:data-spw-flourish"
+    ],
+    "(file:public/js/kernel/route-utils.js)": [
+      "attr:data-spw-route-prime-mode",
+      "attr:data-spw-route-primed"
+    ],
+    "(file:public/js/runtime/feature-lab.js)": [
+      "attr:data-spw-feature-lab",
+      "attr:data-spw-feature-lab-ops",
+      "attr:data-spw-features",
+      "attr:data-spw-features-authored"
+    ],
+    "(file:public/js/runtime/page-state.js)": [
+      "attr:data-spw-attention-arc",
+      "attr:data-spw-attention-context",
+      "attr:data-spw-contour-rail",
+      "attr:data-spw-fixed-viewport-correction",
+      "attr:data-spw-layout-settle-phase",
+      "attr:data-spw-page-arrival",
+      "attr:data-spw-page-arrival-step",
+      "attr:data-spw-page-presence",
+      "attr:data-spw-page-settle-confirmation",
+      "attr:data-spw-page-settling",
+      "attr:data-spw-page-state",
+      "attr:data-spw-page-transition",
+      "attr:data-spw-page-transition-phase",
+      "css-var:--spw-fixed-viewport-correction-y"
+    ],
+    "(file:public/js/runtime/region-profiler.js)": [
+      "attr:data-spw-composition-stability-field",
+      "attr:data-spw-gradient-boundary-field",
+      "attr:data-spw-harmony-field",
+      "attr:data-spw-pack-occupancy-field",
+      "attr:data-spw-page-tempo",
+      "attr:data-spw-region-diversity",
+      "attr:data-spw-region-kind-count",
+      "attr:data-spw-region-kind-field",
+      "attr:data-spw-region-semantic-depth",
+      "attr:data-spw-resolved-composition-stability-field",
+      "attr:data-spw-space-motion",
+      "attr:data-spw-tempo-field"
+    ]
+  },
+  "multiWriter": {
+    "attr:data-spw-capture-mode": [
+      "hydration-passes",
+      "precipitation-request"
+    ],
+    "attr:data-spw-collection-kinds": [
+      "component-collection",
+      "site-settings"
+    ],
+    "attr:data-spw-collection-tier": [
+      "component-collection",
+      "site-settings"
+    ],
+    "attr:data-spw-collection-total": [
+      "component-collection",
+      "site-settings"
+    ],
+    "attr:data-spw-component-motif": [
+      "design-experiments",
+      "site-settings"
+    ],
+    "attr:data-spw-freshness-pulse": [
+      "pulse-beat-tuner",
+      "settings-momentum"
+    ],
+    "attr:data-spw-metamaterial": [
+      "console",
+      "state-inspector"
+    ],
+    "attr:data-spw-region-flow": [
+      "payment-cards",
+      "payment-settings"
+    ],
+    "attr:data-spw-spell-momentum": [
+      "navigation-locomotion",
+      "settings-momentum"
+    ],
+    "attr:data-theme": [
+      "attn-register",
+      "blog-specimens"
+    ],
+    "css-var:--field-balance": [
+      "(file:public/js/interface/wonder-memory.js)",
+      "attention-section-handle"
+    ],
+    "css-var:--spw-site-rhythm-tempo": [
+      "(module-loader)",
+      "site-settings"
+    ]
+  }
+}

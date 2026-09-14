@@ -689,11 +689,18 @@ const setDatasetEntries = (root, entries = {}) => {
   });
 };
 
+/* apply() projects ~85 root custom properties on every settings change, and a
+   root custom-property write invalidates style across the whole tree. Only
+   changed values are written. */
 const setStyleProperties = (root, entries = {}) => {
   if (!(root instanceof HTMLElement)) return;
   Object.entries(entries).forEach(([name, value]) => {
-    if (value === undefined || value === null || value === '') root.style.removeProperty(name);
-    else root.style.setProperty(name, String(value));
+    if (value === undefined || value === null || value === '') {
+      if (root.style.getPropertyValue(name) !== '') root.style.removeProperty(name);
+      return;
+    }
+    const next = String(value);
+    if (root.style.getPropertyValue(name) !== next) root.style.setProperty(name, next);
   });
 };
 

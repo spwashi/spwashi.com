@@ -1474,6 +1474,23 @@ export function writeTextContent(el, text) {
   return true;
 }
 
+/* Inline custom properties keep their authored text, so a string compare is
+   exact. Root custom-property writes invalidate the whole tree; write only
+   changes. Empty or nullish values remove the property. */
+export function writeStyleProperty(el, name, value) {
+  if (!el?.style || !name) return false;
+  const current = typeof el.style.getPropertyValue === 'function' ? el.style.getPropertyValue(name) : null;
+  if (value == null || value === '') {
+    if (current === '') return false;
+    el.style.removeProperty(name);
+    return true;
+  }
+  const next = String(value);
+  if (current === next) return false;
+  el.style.setProperty(name, next);
+  return true;
+}
+
 export function writeDatasetValueIfMissing(el, key, value, options = {}) {
   return writeDatasetValue(el, key, value, { ...options, missingOnly: true });
 }

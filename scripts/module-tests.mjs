@@ -45,5 +45,6 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/floating-chrome-sync.test.mjs',
   'scripts/tests/pulse-beat-tuner.test.mjs',
   'scripts/tests/text-content-writes.test.mjs',
+  'scripts/tests/module-writer-audit.test.mjs',
   'scripts/tests/experiential-organs.test.mjs',
 ]);

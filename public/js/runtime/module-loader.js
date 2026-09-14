@@ -6,6 +6,7 @@ import {
   PROJECTION_TIERS,
   writeDatasetValue,
   writeProjectionTier,
+  writeStyleProperty,
 } from '../kernel/dom-contracts.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from './catalog/constants.js';
 import { describeModuleOrchestration } from './catalog/normalize.js';
@@ -847,11 +848,11 @@ function updateRuntimeStateTokens(ctx) {
   const layerCount = activeLayers.size || 1;
   const avgModuleTime = count > 0 ? Math.round(totalDuration / count) : 0;
 
-  html.style.setProperty('--spw-runtime-enhancement-intensity', enhancementIntensity.toFixed(2));
-  html.style.setProperty('--spw-runtime-feature-intensity', featureIntensity.toFixed(2));
-  html.style.setProperty('--spw-runtime-layer-count', String(layerCount));
+  writeStyleProperty(html, '--spw-runtime-enhancement-intensity', enhancementIntensity.toFixed(2));
+  writeStyleProperty(html, '--spw-runtime-feature-intensity', featureIntensity.toFixed(2));
+  writeStyleProperty(html, '--spw-runtime-layer-count', String(layerCount));
   if (avgModuleTime > 0) {
-    html.style.setProperty('--spw-runtime-avg-module-ms', String(avgModuleTime));
+    writeStyleProperty(html, '--spw-runtime-avg-module-ms', String(avgModuleTime));
   }
 
   // Site rhythm tokens for the visual ornament (derived from the same load + layer data).
@@ -859,8 +860,8 @@ function updateRuntimeStateTokens(ctx) {
   const rhythmBase = avgModuleTime > 0 ? avgModuleTime : 180;
   const rhythmTempo = Math.max(0.35, Math.min(3.2, 1400 / rhythmBase));
   const rhythmDensity = Math.max(0.25, Math.min(1.6, 0.28 + layerCount * 0.19));
-  html.style.setProperty('--spw-site-rhythm-tempo', rhythmTempo.toFixed(2));
-  html.style.setProperty('--spw-site-rhythm-density', rhythmDensity.toFixed(2));
+  writeStyleProperty(html, '--spw-site-rhythm-tempo', rhythmTempo.toFixed(2));
+  writeStyleProperty(html, '--spw-site-rhythm-density', rhythmDensity.toFixed(2));
 
   ctx.bus.emit('spw:runtime-tokens-updated', {
     activeLayers: layersValue,
