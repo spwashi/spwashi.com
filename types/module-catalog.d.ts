@@ -133,9 +133,21 @@ export type SpwModuleDef = {
   familiarity?: string;
 };
 
+export type SpwModuleExportRequiredField = 'mount';
+export type SpwModuleExportPortableField = 'id' | 'refresh' | 'contract' | 'updates' | 'describes';
+export type SpwModuleExportMirrorField = 'evaluates' | 'timingArc' | 'timingChunk' | 'effectScope';
+export type SpwModuleExportOptionalField =
+  | SpwModuleExportPortableField
+  | SpwModuleExportMirrorField
+  | 'guild';
+export type SpwModuleExportField = SpwModuleExportRequiredField | SpwModuleExportOptionalField;
+
+export type SpwModuleCleanupOwnership = 'handle' | 'none';
+
 /**
  * Portable export shape from module-export-contract.js.
- * Catalog owns gates/schedule; this owns mount/refresh portability.
+ * Catalog owns gates, schedule, effects, and cost. This owns mount/refresh.
+ * Extra keys are inspectable extras — they must not reschedule the catalog.
  */
 export type SpwModuleExport = {
   mount: (
@@ -153,4 +165,21 @@ export type SpwModuleExport = {
   timingArc?: string;
   timingChunk?: string;
   effectScope?: string | readonly string[];
+};
+
+export type SpwModuleExportOrchestration = {
+  authority: 'catalog' | 'export';
+  status: 'aligned' | 'drift' | 'portable';
+  drift: string[];
+  catalogMirrors: readonly SpwModuleExportMirrorField[];
+  extras: string[];
+  cost: SpwModuleCost | null;
+  visual: SpwModuleVisualEffect | string | null;
+  lifecycle: {
+    mount: 'catalog-adapter' | 'portable-export' | string;
+    cleanup: 'catalog-unmount' | 'mount-result' | string;
+  } | null;
+  /** Stamped after mount: whether the instance returned a teardown handle. */
+  cleanup: SpwModuleCleanupOwnership | null;
+  refreshReturned: boolean;
 };

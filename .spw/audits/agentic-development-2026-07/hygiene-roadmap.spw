@@ -23,9 +23,8 @@
 
 ^"tracks"{
   track_a_typescript = .{
-    landed_2026_09 = `types/module-catalog.d.ts SpwModuleDef; cost axes closed; COST_CLASS gained listen+residue; public-sources in compile`
+    landed_2026_09 = `types/module-catalog.d.ts SpwModuleDef; cost axes; export orchestration stamps cleanup; catalog sources must not ctx.addCleanup; public/data/module-ecology.json is the structural wiring census (catalog-init-only / unwired-init) so agents cannot skip per-file English`
     next = #[
-      `Optional public/ts for module-export-contract field names only`,
       `JSDoc on composition-box-model DEFAULT_SELECTOR + pack-local opts`
     ][reg=set]
     avoid = `Wholesale public/js → TS conversion`

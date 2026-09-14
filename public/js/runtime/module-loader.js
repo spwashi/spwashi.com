@@ -83,6 +83,8 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
     'Module updates accept flat strings or scope:role:kind:name tokens; roles (structural|flourish|inspect|residue|measure|diagnostic) power flourish topology inspection.',
   moduleExportFallback:
     'Definitions may keep explicit mount adapters; definitions without one fall back to SPW_MODULE_EXPORT, spwModule, default.mount, or init* exports.',
+  cleanupOwnership:
+    'Loader-mounted modules return a cleanup handle. Catalog module sources must not call ctx.addCleanup — destroy would double-run it, and module unmount would miss stack-only observers. describeModuleExport.orchestration.cleanup is stamped handle|none after mount.',
   lifecycleEvent:
     'spw:module-lifecycle emits scheduled, loading, mounted, observed, settled, unmounting, unmounted, and failed so modules can respond through ctx.bus without polling registry state.',
   projectionTiers:
@@ -1225,6 +1227,13 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       `spw:module:${def.id}:mount-end`,
     );
     const handle = normalizeMountHandle(result);
+    if (record.exportContract) {
+      record.exportContract = {
+        ...record.exportContract,
+        cleanup: typeof handle.cleanup === 'function' ? 'handle' : 'none',
+        refreshReturned: Boolean(handle.refresh),
+      };
+    }
 
     Object.assign(record, {
       status: 'mounted',

@@ -430,6 +430,94 @@ function canImportTypedModule(relativeFilePath) {
     const [ownerDirectory] = relativeFilePath.split('/');
     return Boolean(ownerDirectory && ALLOWED_TYPED_IMPORT_DIRECTORIES.has(ownerDirectory));
 }
+export function seatJsModuleEcology(row) {
+    if (row.catalogLoad && row.moduleExport)
+        return 'catalog-export';
+    if (row.catalogLoad && row.initExport)
+        return 'catalog-init-only';
+    if (row.catalogLoad)
+        return 'catalog-unresolved';
+    if (row.moduleExport && !row.composeExport)
+        return 'export-unwired';
+    if (row.initExport && !row.composeExport && !row.inspectContract)
+        return 'unwired-init';
+    if (row.composeExport)
+        return 'compose';
+    return 'helper';
+}
+export function recommendJsModuleEcology(row) {
+    if (row.seat === 'helper' || row.seat === 'compose' || row.seat === 'catalog-export')
+        return null;
+    const handle = row.catalogIds[0] || row.file;
+    return `${row.seat} ${handle}`;
+}
+const MODULE_ECOLOGY_PATH = path.join(ROOT_DIR, 'public/data/module-ecology.json');
+const CATALOG_LOAD_IMPORT_RE = /\bload:\s*(?:async\s*)?\(\s*\)\s*=>\s*import\(\s*['"]([^'"]+)['"]/g;
+const COMPOSE_FROM_RE = /from\s+['"]\.\/([^'"]+)['"]/g;
+const INIT_EXPORT_FILE_RE = /\bexport\s+(?:async\s+)?function\s+init[A-Z]|\bexport\s+const\s+init[A-Z]|\bexport\s+\{[^}]*\binit[A-Z]/;
+async function collectJsModuleEcology(catalogIdsByFile = new Map()) {
+    const files = (await collectJsFilesUnder(PUBLIC_JS_DIR))
+        .filter((file) => !file.startsWith('typed/') && !file.startsWith('generated/'));
+    const catalogLoads = new Set();
+    const catalogDir = path.join(PUBLIC_JS_DIR, 'runtime/catalog');
+    for (const family of ['core.js', 'feature.js', 'region.js', 'enhancement.js']) {
+        const source = await fs.readFile(path.join(catalogDir, family), 'utf8');
+        for (const match of source.matchAll(CATALOG_LOAD_IMPORT_RE)) {
+            const resolved = path.resolve(catalogDir, match[1]);
+            if (!resolved.startsWith(PUBLIC_JS_DIR) || resolved.includes(`${path.sep}types${path.sep}`))
+                continue;
+            catalogLoads.add(toPosixPath(path.relative(PUBLIC_JS_DIR, resolved)));
+        }
+    }
+    let composeSource = '';
+    try {
+        composeSource = await fs.readFile(path.join(PUBLIC_JS_DIR, 'compose.js'), 'utf8');
+    }
+    catch {
+        composeSource = '';
+    }
+    const composeExports = new Set([...composeSource.matchAll(COMPOSE_FROM_RE)].map((match) => match[1].replace(/^\.\//, '')));
+    const rows = [];
+    for (const file of files) {
+        const source = await fs.readFile(path.join(PUBLIC_JS_DIR, file), 'utf8');
+        const flags = {
+            file,
+            moduleExport: /\bexport\s+const\s+SPW_MODULE_EXPORT\b/.test(source),
+            inspectContract: /export const SPW_[A-Z0-9_]*_CONTRACT\b/.test(source),
+            initExport: INIT_EXPORT_FILE_RE.test(source),
+            catalogLoad: catalogLoads.has(file),
+            composeExport: composeExports.has(file),
+            catalogIds: (catalogIdsByFile.get(file) || []).slice().sort(),
+        };
+        rows.push({
+            ...flags,
+            seat: seatJsModuleEcology(flags),
+        });
+    }
+    const seats = {
+        'catalog-export': [],
+        'catalog-init-only': [],
+        'catalog-unresolved': [],
+        'unwired-init': [],
+        'export-unwired': [],
+        compose: [],
+        helper: [],
+    };
+    const catalog = {};
+    for (const row of rows) {
+        const handle = row.catalogIds[0] || row.file;
+        seats[row.seat].push(handle);
+        for (const id of row.catalogIds) {
+            catalog[id] = { file: row.file, seat: row.seat };
+        }
+    }
+    for (const key of Object.keys(seats)) {
+        seats[key].sort();
+    }
+    const document = `${JSON.stringify({ catalog, seats }, null, 2)}\n`;
+    const recommendations = rows.map(recommendJsModuleEcology).filter((item) => Boolean(item));
+    return { rows, recommendations, document };
+}
 async function collectTypedImportViolations() {
     const errors = [];
     const files = await collectJsFilesUnder(PUBLIC_JS_DIR);
@@ -502,6 +590,10 @@ function importPathToAbsolute(importPath) {
 }
 const INIT_EXPORT_SOURCE_RE = /\bexport\s+(?:async\s+)?function\s+init[A-Z]\w*|\bexport\s+const\s+init[A-Z]\w*\s*=|\bexport\s+\{[^}]*\binit[A-Z]\w*|\bSPW_MODULE_EXPORT\b|\bspwModule\b|\bexport\s+default\s*\{[^}]*\bmount\b/;
 const NAMED_INIT_ADAPTER_RE = /\bmod\??\.(init[A-Z][A-Za-z0-9]*)\b/g;
+/** Catalog module sources must not call ctx.addCleanup; the loader owns teardown. */
+export function moduleSourceUsesContextCleanup(source = '') {
+    return /\bctx(?:\?\.|\.)addCleanup(?:\?\.)?\(/.test(String(source || ''));
+}
 /**
  * Loader-mounted modules return a cleanup handle. Registering that same
  * function with ctx.addCleanup makes destroy() run it twice (registry, then
@@ -509,7 +601,7 @@ const NAMED_INIT_ADAPTER_RE = /\bmod\??\.(init[A-Z][A-Za-z0-9]*)\b/g;
  */
 export function moduleSourceRegistersDuplicateCleanup(source = '') {
     const text = String(source || '');
-    if (!/\bctx(?:\?\.|\.)addCleanup(?:\?\.)?\(/.test(text))
+    if (!moduleSourceUsesContextCleanup(text))
         return false;
     if (/\breturn\s*\{[\s\S]*?\bcleanup\b/.test(text))
         return true;
@@ -710,8 +802,8 @@ function validateModule(module, errors, warnings, recommendations) {
             }
         }
     }
-    if (loadedSource && moduleSourceRegistersDuplicateCleanup(loadedSource)) {
-        errors.push(`${label} returns a mount cleanup and also ctx.addCleanup of it; destroy runs teardown twice and module unmount can leak observers. Return the handle only.`);
+    if (loadedSource && moduleSourceUsesContextCleanup(loadedSource)) {
+        errors.push(`${label} calls ctx.addCleanup; loader-mounted modules return a cleanup handle and must not register teardown on the context stack.`);
     }
     if (module.importPath) {
         if ((!module.importPath.startsWith('./') && !module.importPath.startsWith('../'))
@@ -914,6 +1006,23 @@ export async function collectRuntimeContractReport() {
     errors.push(...typedImportViolations);
     const kernelTypedShimReport = await collectKernelTypedShimIssues();
     errors.push(...kernelTypedShimReport.errors);
+    const catalogIdsByFile = new Map();
+    for (const module of modules) {
+        if (!module.importPath || !module.id)
+            continue;
+        const absoluteImport = importPathToAbsolute(module.importPath);
+        if (!absoluteImport.startsWith(PUBLIC_JS_DIR))
+            continue;
+        const file = toPosixPath(path.relative(PUBLIC_JS_DIR, absoluteImport));
+        const ids = catalogIdsByFile.get(file) || [];
+        ids.push(module.id);
+        catalogIdsByFile.set(file, ids);
+    }
+    const jsEcologyReport = await collectJsModuleEcology(catalogIdsByFile);
+    const existingEcology = await fs.readFile(MODULE_ECOLOGY_PATH, 'utf8').catch(() => '');
+    if (existingEcology !== jsEcologyReport.document) {
+        await fs.writeFile(MODULE_ECOLOGY_PATH, jsEcologyReport.document);
+    }
     const behaviorScopeReport = await collectBehaviorScopeModuleIssues();
     errors.push(...behaviorScopeReport.errors);
     const stylePropertyReport = await collectStylePropertyContractReport();
@@ -929,6 +1038,9 @@ export async function collectRuntimeContractReport() {
         cssCustomProperties: stylePropertyReport.cssCustomProperties,
         dynamicStyleWrites: stylePropertyReport.dynamicStyleWrites,
         errors,
+        inspectContracts: jsEcologyReport.rows.filter((row) => row.inspectContract).length,
+        jsEcology: jsEcologyReport.rows,
+        jsEcologyNotes: jsEcologyReport.recommendations,
         kernelTypedShims: kernelTypedShimReport.shims,
         modules,
         ownerDirectories,
@@ -972,7 +1084,10 @@ export async function main() {
         return acc;
     }, {});
     const paintCompositeImmediate = enhancementImmediate.filter((module) => module.costClass === 'paint_composite');
-    console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} topLevelModuleFiles=${report.topLevelModuleFiles.length} styleWrites=${report.stylePropertyWrites.length} cssCustomProperties=${report.cssCustomProperties.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length} behaviorScopes=${report.behaviorScopes.length}`);
+    const ecology = report.jsEcology || [];
+    const seatCount = (seat) => ecology.filter((row) => row.seat === seat).length;
+    console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} topLevelModuleFiles=${report.topLevelModuleFiles.length} styleWrites=${report.stylePropertyWrites.length} cssCustomProperties=${report.cssCustomProperties.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length} behaviorScopes=${report.behaviorScopes.length} inspectContracts=${report.inspectContracts}`);
+    console.log(`[runtime] jsEcology files=${ecology.length} catalog-export=${seatCount('catalog-export')} catalog-init-only=${seatCount('catalog-init-only')} catalog-unresolved=${seatCount('catalog-unresolved')} unwired-init=${seatCount('unwired-init')} export-unwired=${seatCount('export-unwired')}`);
     console.log(`[runtime] mountHygiene enhancementImmediate=${enhancementImmediate.length}/${enhancementModules.length} demandGated=${demandGatedImmediate.length}/${enhancementImmediate.length} timingArc=${enhancementImmediate.filter((module) => Boolean(module.timingArc)).length}/${enhancementImmediate.length} idleChunk=${idleChunked.length}/${idleModules.length} rolefulUpdates=${rolefulModules.length}/${report.modules.length} costClass=${costClassTagged.length}/${report.modules.length} paintCompositeImmediate=${paintCompositeImmediate.length}`);
     console.log(`[runtime] schedule byWhen=${Object.entries(byWhen).map(([k, v]) => `${k}:${v}`).join(' ')}`);
     console.log(`[runtime] timingArc stems=${Object.entries(byTimingStem).map(([k, v]) => `${k}:${v}`).join(' ')}`);
@@ -986,6 +1101,15 @@ export async function main() {
         }
         if (report.warnings.length > 12) {
             console.log(`  ... ${report.warnings.length - 12} more warnings`);
+        }
+    }
+    if (report.jsEcologyNotes.length) {
+        console.log(`[runtime] jsEcologyNotes=${report.jsEcologyNotes.length}`);
+        for (const note of report.jsEcologyNotes.slice(0, 12)) {
+            console.log(`  ${note}`);
+        }
+        if (report.jsEcologyNotes.length > 12) {
+            console.log(`  ... ${report.jsEcologyNotes.length - 12} more`);
         }
     }
     if (report.recommendations.length) {

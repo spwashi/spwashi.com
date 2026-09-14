@@ -6,6 +6,10 @@ import type {
   SpwModuleCostSpend,
   SpwModuleDef,
   SpwModuleExport,
+  SpwModuleExportMirrorField,
+  SpwModuleExportOrchestration,
+  SpwModuleExportPortableField,
+  SpwModuleExportRequiredField,
   SpwModuleLayer,
   SpwModuleMountWhen,
   SpwModuleRootMode,
@@ -22,6 +26,10 @@ export type {
   SpwModuleCostSpend,
   SpwModuleDef,
   SpwModuleExport,
+  SpwModuleExportMirrorField,
+  SpwModuleExportOrchestration,
+  SpwModuleExportPortableField,
+  SpwModuleExportRequiredField,
   SpwModuleLayer,
   SpwModuleMountWhen,
   SpwModuleRootMode,
@@ -277,6 +285,43 @@ export const VALID_VISUAL_EFFECTS = Object.freeze([
 
 const _visualEqual: SpwSameKeys<SpwModuleVisualEffect, (typeof VALID_VISUAL_EFFECTS)[number]> = true;
 void _visualEqual;
+
+export const SPW_MODULE_EXPORT_REQUIRED_FIELDS = Object.freeze([
+  'mount',
+] as const satisfies readonly SpwModuleExportRequiredField[]);
+
+const _exportRequiredEqual: SpwSameKeys<
+  SpwModuleExportRequiredField,
+  (typeof SPW_MODULE_EXPORT_REQUIRED_FIELDS)[number]
+> = true;
+void _exportRequiredEqual;
+
+export const SPW_MODULE_EXPORT_PORTABLE_FIELDS = Object.freeze([
+  'id',
+  'refresh',
+  'contract',
+  'updates',
+  'describes',
+] as const satisfies readonly SpwModuleExportPortableField[]);
+
+const _exportPortableEqual: SpwSameKeys<
+  SpwModuleExportPortableField,
+  (typeof SPW_MODULE_EXPORT_PORTABLE_FIELDS)[number]
+> = true;
+void _exportPortableEqual;
+
+export const SPW_MODULE_EXPORT_MIRROR_FIELDS = Object.freeze([
+  'evaluates',
+  'timingArc',
+  'timingChunk',
+  'effectScope',
+] as const satisfies readonly SpwModuleExportMirrorField[]);
+
+const _exportMirrorsEqual: SpwSameKeys<
+  SpwModuleExportMirrorField,
+  (typeof SPW_MODULE_EXPORT_MIRROR_FIELDS)[number]
+> = true;
+void _exportMirrorsEqual;
 
 /**
  * Hygiene posture for new catalog entries (agentic-development audit).

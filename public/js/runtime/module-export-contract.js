@@ -9,6 +9,7 @@
 
 import { describeModuleUpdates, normalizeModuleUpdates } from './module-updates-contract.js';
 
+/** @type {readonly import('../../../types/module-catalog').SpwModuleExportPortableField[]} */
 const PORTABLE_EXPORT_FIELDS = Object.freeze([
   'id',
   'refresh',
@@ -17,11 +18,19 @@ const PORTABLE_EXPORT_FIELDS = Object.freeze([
   'describes',
 ]);
 
+/** @type {readonly import('../../../types/module-catalog').SpwModuleExportMirrorField[]} */
 const CATALOG_MIRROR_FIELDS = Object.freeze([
   'evaluates',
   'timingArc',
   'timingChunk',
   'effectScope',
+]);
+
+const KNOWN_EXPORT_FIELDS = new Set([
+  'mount',
+  ...PORTABLE_EXPORT_FIELDS,
+  'guild',
+  ...CATALOG_MIRROR_FIELDS,
 ]);
 
 export const SPW_MODULE_EXPORT_SHAPE = Object.freeze({
@@ -49,7 +58,9 @@ export const SPW_MODULE_EXPORT_CONTRACT = Object.freeze({
   routeBoundary:
     'Routes replace the document; partial DOM replacement uses refresh/untracking. Do not tear down on pagehide because BFCache may restore the same document.',
   catalogParity:
-    'The catalog owns gates, schedule, effects, and cost. SPW_MODULE_EXPORT owns mount/refresh portability and may mirror descriptive fields; describeModuleExport reports mirror drift without letting an export silently reschedule itself.',
+    'The catalog owns gates, schedule, effects, and cost. SPW_MODULE_EXPORT owns mount/refresh portability and may mirror descriptive fields; describeModuleExport reports mirror drift, extra export keys, and catalog cost/visual/lifecycle without letting an export silently reschedule itself.',
+  inspect:
+    'describeModuleExport.orchestration is the inspect record. Loader stamps cleanup=handle|none after mount. Extra keys are extras, not catalog authority.',
   updatesTopology:
     'updates may use scope:role:kind:name (html:flourish:--token). Roles: structural|flourish|inspect|residue|measure|diagnostic.',
   datasetFields: Object.freeze({
@@ -115,6 +126,10 @@ export function describeModuleExport(mod, meta = {}) {
   const updatesDescribe = describeModuleUpdates(updates);
   const drift = listCatalogMirrorDrift(exportSurface, meta);
   const catalogBacked = Boolean(meta?.id);
+  const extras = exportSurface
+    ? Object.keys(exportSurface).filter((field) => !KNOWN_EXPORT_FIELDS.has(field))
+    : [];
+  const catalogView = meta.orchestration || null;
 
   return {
     id: exportSurface?.id || meta.id || null,
@@ -132,11 +147,20 @@ export function describeModuleExport(mod, meta = {}) {
     timingArc: exportSurface?.timingArc || meta.timingArc || null,
     timingChunk: exportSurface?.timingChunk || meta.timingChunk || null,
     effectScope: exportSurface?.effectScope || meta.effectScope || null,
+    extras,
+    cost: catalogView?.cost || meta.cost || null,
+    visual: catalogView?.effects?.visual || meta.visual || null,
     orchestration: {
       authority: catalogBacked ? 'catalog' : 'export',
       status: catalogBacked ? (drift.length ? 'drift' : 'aligned') : 'portable',
       drift,
       catalogMirrors: CATALOG_MIRROR_FIELDS,
+      extras,
+      cost: catalogView?.cost || meta.cost || null,
+      visual: catalogView?.effects?.visual || meta.visual || null,
+      lifecycle: catalogView?.lifecycle || null,
+      cleanup: null,
+      refreshReturned: false,
     },
   };
 }

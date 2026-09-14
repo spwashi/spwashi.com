@@ -9,6 +9,7 @@ const GENERATED_TS_GROUPS = [
         label: 'copy-manifests',
         paths: [
             'public/data/site-search-index.json',
+            'public/data/module-ecology.json',
             'public/js/generated/spw-expressions.js',
         ],
     },

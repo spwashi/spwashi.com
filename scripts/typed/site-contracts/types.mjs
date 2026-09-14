@@ -102,3 +102,25 @@ export const VALID_VISUAL_EFFECTS = Object.freeze([
 ]);
 const _visualEqual = true;
 void _visualEqual;
+export const SPW_MODULE_EXPORT_REQUIRED_FIELDS = Object.freeze([
+    'mount',
+]);
+const _exportRequiredEqual = true;
+void _exportRequiredEqual;
+export const SPW_MODULE_EXPORT_PORTABLE_FIELDS = Object.freeze([
+    'id',
+    'refresh',
+    'contract',
+    'updates',
+    'describes',
+]);
+const _exportPortableEqual = true;
+void _exportPortableEqual;
+export const SPW_MODULE_EXPORT_MIRROR_FIELDS = Object.freeze([
+    'evaluates',
+    'timingArc',
+    'timingChunk',
+    'effectScope',
+]);
+const _exportMirrorsEqual = true;
+void _exportMirrorsEqual;

@@ -15,6 +15,9 @@ import {
   listNamedInitAdapterExports,
   moduleSourceExportsName,
   moduleSourceRegistersDuplicateCleanup,
+  moduleSourceUsesContextCleanup,
+  recommendJsModuleEcology,
+  seatJsModuleEcology,
 } from '../typed/runtime-contracts.mjs';
 import {
   collectQuotedCustomProperties,
@@ -422,6 +425,54 @@ test('module orchestration groups one flat catalog definition for loaders and in
   assert.equal(orchestration.lifecycle.cleanup, 'catalog-unmount');
 });
 
+test('js ecology seats are tokens, not prose', () => {
+  const initOnly = {
+    file: 'interface/haptics.js',
+    moduleExport: false,
+    inspectContract: false,
+    initExport: true,
+    catalogLoad: true,
+    composeExport: false,
+    catalogIds: ['haptics'],
+    seat: seatJsModuleEcology({
+      file: 'interface/haptics.js',
+      moduleExport: false,
+      inspectContract: false,
+      initExport: true,
+      catalogLoad: true,
+      composeExport: false,
+    }),
+  };
+  assert.equal(initOnly.seat, 'catalog-init-only');
+  assert.equal(recommendJsModuleEcology(initOnly), 'catalog-init-only haptics');
+  assert.equal(
+    recommendJsModuleEcology({
+      file: 'interface/personas.js',
+      moduleExport: false,
+      inspectContract: false,
+      initExport: true,
+      catalogLoad: false,
+      composeExport: false,
+      catalogIds: [],
+      seat: 'unwired-init',
+    }),
+    'unwired-init interface/personas.js',
+  );
+  assert.equal(
+    recommendJsModuleEcology({
+      file: 'runtime/charge-field.js',
+      moduleExport: true,
+      inspectContract: true,
+      initExport: true,
+      catalogLoad: true,
+      composeExport: false,
+      catalogIds: ['charge-field'],
+      seat: 'catalog-export',
+    }),
+    null,
+  );
+});
+
 test('catalog modules must not addCleanup the same handle they return', () => {
   assert.equal(
     moduleSourceRegistersDuplicateCleanup(`
@@ -442,6 +493,20 @@ test('catalog modules must not addCleanup the same handle they return', () => {
     moduleSourceRegistersDuplicateCleanup(`
       const cleanup = () => {};
       return { cleanup, refresh: () => {} };
+    `),
+    false,
+  );
+  assert.equal(
+    moduleSourceUsesContextCleanup(`
+      ctx.addCleanup(() => observer.disconnect());
+      return;
+    `),
+    true,
+  );
+  assert.equal(
+    moduleSourceUsesContextCleanup(`
+      const cleanup = () => {};
+      return { cleanup };
     `),
     false,
   );
@@ -502,17 +567,31 @@ test('module export inspection reports catalog mirror drift without changing aut
       updates: ['flourish:--material-crop'],
       timingArc: 'idle-visual',
       effectScope: 'local-dom css-vars',
+      costClass: 'demand_coupled',
     },
   }, {
     id: 'material-probe',
     updates: ['flourish:--material-crop'],
     timingArc: 'visible-media',
     effectScope: 'css-vars local-dom',
+    visual: 'inspect',
+    cost: { commitment: 'listen', spend: 'none', copy: null },
+    orchestration: {
+      cost: { commitment: 'listen', spend: 'none', copy: null },
+      effects: { visual: 'inspect' },
+      lifecycle: { mount: 'portable-export', cleanup: 'mount-result' },
+    },
   });
 
   assert.equal(report.orchestration.authority, 'catalog');
   assert.equal(report.orchestration.status, 'drift');
   assert.deepEqual(report.orchestration.drift, ['timingArc']);
+  assert.deepEqual(report.orchestration.extras, ['costClass']);
+  assert.deepEqual(report.orchestration.cost, { commitment: 'listen', spend: 'none', copy: null });
+  assert.equal(report.orchestration.visual, 'inspect');
+  assert.equal(report.orchestration.lifecycle.cleanup, 'mount-result');
+  assert.equal(report.orchestration.cleanup, null);
+  assert.equal(report.orchestration.refreshReturned, false);
 });
 
 test('console lifecycle binds document listeners to its abort signal', async () => {
