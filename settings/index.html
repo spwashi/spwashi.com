@@ -270,42 +270,78 @@
             </header>
 
             <p data-spw-textual-role="note">
-                These are the fastest useful controls. Choose a preset for an immediate baseline, then set author workflow,
-                climate, reading comfort, or appearance before opening the deeper registers below.
+                Start with the surface controls you can see immediately. Deeper registers remain available when you want a
+                more exact adjustment.
             </p>
 
             <div class="vibe-widget-grid settings-quickstart-grid" data-spw-box-model="choice-field" data-spw-composition-flow="grid" data-spw-feature="settings-quickstart">
                 <article class="vibe-widget vibe-widget--feature" data-site-settings-panel data-spw-box-model="control-card">
                     <div class="vibe-widget-header" data-spw-slot="header">
-                        <p class="vibe-widget-kicker">Quick presets</p>
-                        <h3 class="vibe-widget-title">Choose a whole-site starting point</h3>
+                        <p class="vibe-widget-kicker">Immediate surface</p>
+                        <h3 class="vibe-widget-title">Set the room before reading further</h3>
                     </div>
                     <p class="vibe-widget-copy" data-spw-slot="body" data-spw-interaction="tap">
-                        Presets apply coherent baselines so uncurious visitors get an immediate, useful surface while active learners and playful wanderers have clear starting points to explore or tune. You can still refine every setting afterward. Tap or click a preset to feel the difference instantly across desktop, tablet, or phone.
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="vertical-align:-2px;opacity:.6;margin-left:.3em;" aria-hidden="true"><path d="M12 2v20M2 12h20"/></svg>
+                        Lighting, atmosphere, type scale, and flourish all apply in this browser. Each active mark stays visible; the detailed controls below explain the full range.
                     </p>
-                    <div class="settings-presets" data-settings-presets data-spw-feature="presets-as-ingredients">
-                        <button class="settings-preset-btn" data-preset="hearth" type="button" data-spw-ingredient-type="climate-base">
-                            <strong>Hearth</strong>
-                            <span>Quiet defaults. Draft-friendly, minimal enhancement, low grain, and stable orientation.</span>
-                        </button>
-                        <button class="settings-preset-btn" data-preset="loom" type="button" data-spw-ingredient-type="semantic-weave">
-                            <strong>Loom</strong>
-                            <span>Richer semantic weave. Revision-friendly, active handles, richer density, and adaptive infospace.</span>
-                        </button>
-                        <button class="settings-preset-btn" data-preset="workshop" type="button" data-spw-ingredient-type="inspection-layer">
-                            <strong>Workshop</strong>
-                            <span>Developer-facing inspection. Expanded console, metadata visibility, and implementation focus.</span>
-                        </button>
-                        <button class="settings-preset-btn" data-preset="access" type="button" data-spw-ingredient-type="accessibility-base">
-                            <strong>Access</strong>
-                            <span>High contrast, reduced motion, larger type, looser spacing, and stronger guidance cues.</span>
-                        </button>
-                        <button class="settings-preset-btn" data-preset="contemplative-hearth" type="button" data-spw-ingredient-type="relational-attention">
-                            <strong>Contemplative Hearth</strong>
-                            <span>Quiet reading, breath-led self relation, witness-local context, and stewardship as the wider horizon.</span>
-                        </button>
+                    <div class="settings-immediate-grid" aria-label="Immediate surface controls">
+                        <fieldset class="settings-immediate-control">
+                            <legend>Lighting</legend>
+                            <div class="settings-quick-scale" role="group" aria-label="Lighting mode">
+                                <button class="settings-quick-option" data-site-setting-set="colorMode:auto" type="button">Auto</button>
+                                <button class="settings-quick-option" data-site-setting-set="colorMode:light" type="button">Light</button>
+                                <button class="settings-quick-option" data-site-setting-set="colorMode:dark" type="button">Dark</button>
+                            </div>
+                        </fieldset>
+                        <fieldset class="settings-immediate-control settings-immediate-control--theme">
+                            <legend>Theme</legend>
+                            <div class="settings-quick-scale settings-quick-scale--themes" role="group" aria-label="Theme pack">
+                                <button class="settings-quick-option" data-site-setting-set="themePack:neutral-paper" type="button">Paper</button>
+                                <button class="settings-quick-option" data-site-setting-set="themePack:oxide-ledger" type="button">Oxide</button>
+                                <button class="settings-quick-option" data-site-setting-set="themePack:electric-studio" type="button">Studio</button>
+                                <button class="settings-quick-option" data-site-setting-set="themePack:ritual-vellum" type="button">Vellum</button>
+                                <button class="settings-quick-option" data-site-setting-set="themePack:copper-brace" type="button">Copper</button>
+                                <button class="settings-quick-option" data-site-setting-set="themePack:glass-console" type="button">Glass</button>
+                                <button class="settings-quick-option" data-site-setting-set="themePack:banked-ember" type="button">Ember</button>
+                            </div>
+                        </fieldset>
+                        <fieldset class="settings-immediate-control settings-immediate-control--type">
+                            <legend>Type scale</legend>
+                            <div class="settings-quick-scale settings-quick-scale--type" role="group" aria-label="Font size scale">
+                                <button class="settings-quick-option" data-site-setting-set="fontSizeScale:70" type="button">70%</button>
+                                <button class="settings-quick-option" data-site-setting-set="fontSizeScale:80" type="button">80%</button>
+                                <button class="settings-quick-option" data-site-setting-set="fontSizeScale:90" type="button">90%</button>
+                                <button class="settings-quick-option" data-site-setting-set="fontSizeScale:100" type="button">100%</button>
+                                <button class="settings-quick-option" data-site-setting-set="fontSizeScale:110" type="button">110%</button>
+                                <button class="settings-quick-option" data-site-setting-set="fontSizeScale:120" type="button">120%</button>
+                            </div>
+                        </fieldset>
+                        <fieldset class="settings-immediate-control">
+                            <legend>Flourish</legend>
+                            <div class="settings-quick-scale" role="group" aria-label="Visual flourish level">
+                                <button class="settings-quick-option" data-site-setting-set="enhancementLevel:minimal" type="button">Quiet</button>
+                                <button class="settings-quick-option" data-site-setting-set="enhancementLevel:balanced" type="button">Balanced</button>
+                                <button class="settings-quick-option" data-site-setting-set="enhancementLevel:rich" type="button">Rich</button>
+                            </div>
+                        </fieldset>
                     </div>
+                    <section class="settings-resonance" aria-labelledby="settings-memory-rail-title">
+                        <p class="spw-ornament-kicker" id="settings-memory-rail-title">Wonder carry</p>
+                        <div
+                            aria-describedby="settings-memory-rail-note"
+                            aria-label="Wonder memory carry"
+                            class="spw-ornament-rail settings-resonance-rail"
+                            data-spw-ornament-axis="inline"
+                            data-spw-ornament-density="medium"
+                            data-spw-ornament-state="idle"
+                            role="group"
+                        >
+                            <button class="spw-ornament-node settings-resonance-option" data-site-setting-set="wonderMemory:off" data-spw-handle="true" type="button">Focused</button>
+                            <button class="spw-ornament-node settings-resonance-option" data-site-setting-set="wonderMemory:nearby" data-spw-handle="true" type="button">Connected</button>
+                            <button class="spw-ornament-node settings-resonance-option" data-site-setting-set="wonderMemory:sitewide" data-spw-handle="true" type="button">Immersive</button>
+                        </div>
+                        <p class="settings-resonance-note" id="settings-memory-rail-note">Choose how a recent route colors the next one. The active mark stays visible and can be changed with the keyboard.</p>
+                        <p class="settings-resonance-readout" data-settings-state="wonderMemory">Connected</p>
+                    </section>
                     <span aria-live="polite" class="settings-status vibe-widget-status" data-site-settings-status role="status"></span>
                 </article>
 

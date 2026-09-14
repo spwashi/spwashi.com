@@ -587,8 +587,26 @@ const syncSettingsReadouts = (root = document, settings = getSiteSettings()) => 
   syncSettingTriggers(root, normalized);
 };
 
+const WONDER_MEMORY_ORNAMENT = Object.freeze({
+  off: Object.freeze({state: 'idle', density: 'low'}),
+  nearby: Object.freeze({state: 'settled', density: 'medium'}),
+  sitewide: Object.freeze({state: 'active', density: 'high'}),
+});
+
+const syncSettingsResonanceRails = (root = document, settings = getSiteSettings()) => {
+  const normalized = normalizeSiteSettings(settings);
+  const ornament = WONDER_MEMORY_ORNAMENT[normalized.wonderMemory] || WONDER_MEMORY_ORNAMENT.nearby;
+
+  root.querySelectorAll?.('.settings-resonance-rail').forEach((rail) => {
+    if (!(rail instanceof HTMLElement)) return;
+    rail.dataset.spwOrnamentState = ornament.state;
+    rail.dataset.spwOrnamentDensity = ornament.density;
+  });
+};
+
 const syncSettingsUx = (root = document, settings = getSiteSettings()) => {
   syncSettingsReadouts(root, settings);
+  syncSettingsResonanceRails(root, settings);
   syncDeviationReadouts(root, settings);
   syncPresetControls(root, settings);
   syncUxRecipeControls(root);
@@ -1436,6 +1454,7 @@ export {
   syncFeatureScopeReadouts,
   syncPresetControls,
   syncSettingsReadouts,
+  syncSettingsResonanceRails,
   syncSettingsUx,
   syncUxRecipeControls,
   writeSettingsToScope,

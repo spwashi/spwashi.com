@@ -220,6 +220,166 @@
   border: 1px solid color-mix(in srgb, var(--op-probe-color, #4a2180) 30%, transparent);
 }
 
+/* Fast controls compare state before the longer form asks for closer reading. */
+:where(body[data-spw-surface="settings"] .settings-immediate-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-sm, 0.75rem);
+  margin-block: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-immediate-control) {
+  min-inline-size: 0;
+  margin: 0;
+  padding: var(--space-sm, 0.75rem);
+  border: 1px solid var(--settings-control-line-soft);
+  border-radius: var(--shape-component, 6px);
+  background: var(--settings-panel-bg-quiet);
+}
+
+:where(body[data-spw-surface="settings"] .settings-immediate-control legend) {
+  color: var(--settings-ink-strong);
+  font-size: var(--text-size-sm, 0.9rem);
+  font-weight: 700;
+  padding-inline: 0.2rem;
+}
+
+:where(body[data-spw-surface="settings"] .settings-quick-scale) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+:where(body[data-spw-surface="settings"] .settings-quick-option) {
+  min-block-size: 2.25rem;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--settings-control-line-soft);
+  border-radius: var(--shape-element, 4px);
+  background: var(--settings-control-bg);
+  color: var(--settings-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.1;
+}
+
+:where(body[data-spw-surface="settings"] .settings-quick-option:is(:hover, [data-site-setting-active="true"])) {
+  border-color: color-mix(in srgb, var(--settings-accent) 58%, transparent);
+  background: var(--settings-control-bg-active);
+  color: var(--settings-ink-strong);
+}
+
+:where(body[data-spw-surface="settings"] .settings-quick-option[data-site-setting-active="true"]) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--settings-accent) 20%, transparent);
+  font-weight: 700;
+}
+
+:where(body[data-spw-surface="settings"] .settings-quick-option:focus-visible) {
+  outline: 2px solid var(--settings-accent);
+  outline-offset: 2px;
+}
+
+:where(body[data-spw-surface="settings"] .settings-quick-scale--themes) {
+  gap: 0.3rem;
+}
+
+:where(body[data-spw-surface="settings"] .settings-quick-scale--themes .settings-quick-option::before) {
+  content: "";
+  display: inline-block;
+  inline-size: 0.62rem;
+  block-size: 0.62rem;
+  margin-inline-end: 0.3rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+:where(body[data-spw-surface="settings"] [data-site-setting-set="themePack:neutral-paper"]::before) { color: #a67c00; }
+:where(body[data-spw-surface="settings"] [data-site-setting-set="themePack:oxide-ledger"]::before) { color: #53756a; }
+:where(body[data-spw-surface="settings"] [data-site-setting-set="themePack:electric-studio"]::before) { color: #2563b8; }
+:where(body[data-spw-surface="settings"] [data-site-setting-set="themePack:ritual-vellum"]::before) { color: #6c365f; }
+:where(body[data-spw-surface="settings"] [data-site-setting-set="themePack:copper-brace"]::before) { color: #a34f30; }
+:where(body[data-spw-surface="settings"] [data-site-setting-set="themePack:glass-console"]::before) { color: #3b7296; }
+:where(body[data-spw-surface="settings"] [data-site-setting-set="themePack:banked-ember"]::before) { color: #b8781f; }
+
+:where(body[data-spw-surface="settings"] .settings-quick-scale--type) {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: end;
+  min-block-size: 4.5rem;
+}
+
+:where(body[data-spw-surface="settings"] .settings-quick-scale--type .settings-quick-option) {
+  min-inline-size: 0;
+  padding-inline: 0.15rem;
+}
+
+:where(body[data-spw-surface="settings"] [data-site-setting-set="fontSizeScale:70"]) { min-block-size: 2rem; }
+:where(body[data-spw-surface="settings"] [data-site-setting-set="fontSizeScale:80"]) { min-block-size: 2.4rem; }
+:where(body[data-spw-surface="settings"] [data-site-setting-set="fontSizeScale:90"]) { min-block-size: 2.8rem; }
+:where(body[data-spw-surface="settings"] [data-site-setting-set="fontSizeScale:100"]) { min-block-size: 3.2rem; }
+:where(body[data-spw-surface="settings"] [data-site-setting-set="fontSizeScale:110"]) { min-block-size: 3.6rem; }
+:where(body[data-spw-surface="settings"] [data-site-setting-set="fontSizeScale:120"]) { min-block-size: 4rem; }
+
+/* Wonder carry reuses the ornament rail as a native setting handle. */
+:where(body[data-spw-surface="settings"] .settings-resonance) {
+  display: grid;
+  gap: var(--space-2xs, 0.4rem);
+  margin-block: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-resonance-rail) {
+  flex-wrap: wrap;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  white-space: normal;
+}
+
+:where(body[data-spw-surface="settings"] .settings-resonance-option) {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: var(--shape-element, 4px);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  padding: 0.25rem 0.35rem;
+}
+
+:where(body[data-spw-surface="settings"] .settings-resonance-option:hover) {
+  background: color-mix(in srgb, var(--settings-accent) 8%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-resonance-option[data-site-setting-active="true"]) {
+  border-color: color-mix(in srgb, var(--settings-accent) 58%, transparent);
+  background: color-mix(in srgb, var(--settings-accent) 12%, transparent);
+  color: var(--settings-ink-strong);
+}
+
+:where(body[data-spw-surface="settings"] .settings-resonance-option[data-site-setting-active="true"]::before) {
+  opacity: 1;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--settings-accent) 20%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-resonance-option:focus-visible) {
+  outline: 2px solid var(--settings-accent);
+  outline-offset: 2px;
+}
+
+:where(body[data-spw-surface="settings"] .settings-resonance-note,
+       body[data-spw-surface="settings"] .settings-resonance-readout) {
+  margin: 0;
+  color: var(--settings-muted);
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.45;
+}
+
+:where(body[data-spw-surface="settings"] .settings-resonance-readout) {
+  color: var(--settings-ink-soft);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+}
+
 :where(body[data-spw-surface="settings"] .settings-preset-btn.is-applied) {
   border-color: color-mix(in srgb, var(--settings-accent) 64%, transparent);
   background: color-mix(in srgb, var(--settings-accent) 10%, var(--surface-strong, rgba(255, 255, 255, 0.94)));
