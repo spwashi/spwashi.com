@@ -1,6 +1,7 @@
 import {
   COMPONENT_KIND_MIRROR_SELECTOR,
   syncComponentKindMirrors,
+  writeDatasetValue,
   writeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
 import {
@@ -79,22 +80,19 @@ function auditLayoutContracts(root = document) {
     const slots = host.querySelector('[data-spw-slot]');
     const feature = host.hasAttribute('data-spw-feature');
     const gesture = host.matches(GESTURE_SELECTOR) || host.querySelector(GESTURE_SELECTOR);
-    if (slots) {
-      host.dataset.spwLayoutContract = 'slotted';
-    } else if (feature && gesture) {
-      host.dataset.spwLayoutContract = 'feature-gestural';
-    } else if (feature) {
-      host.dataset.spwLayoutContract = 'feature-only';
-    } else {
-      host.dataset.spwLayoutContract = 'implicit';
-    }
+    /* The ledger re-audits on every dom-sync flush; an unchanged contract is not
+       a mutation, and each mutation wakes every subtree observer again. */
+    const contract = slots
+      ? 'slotted'
+      : feature && gesture ? 'feature-gestural' : feature ? 'feature-only' : 'implicit';
+    writeDatasetValue(host, 'spwLayoutContract', contract);
   });
 }
 
 function annotateFeatureClusters(root = document) {
   root.querySelectorAll(FEATURE_SELECTOR).forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
-    node.dataset.spwLearnabilityTier = inferFeatureTier(node);
+    writeDatasetValue(node, 'spwLearnabilityTier', inferFeatureTier(node));
   });
 }
 
