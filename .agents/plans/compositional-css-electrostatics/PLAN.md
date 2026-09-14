@@ -58,6 +58,21 @@ Compose local output tokens from five independent channels: authored semantics, 
 
 ## Validation
 
+### Finite interaction pulses — 2026-09-14
+
+- Operation `align`, fixity `stable`; field and ornament altitude.
+- Sense: charge-field schedules only one decay step; discharge timers overlap
+  and survive unmount. Hidden-page events can still emit freshness pulses.
+- Patch: typed charge decay edge, owned frame timers, idempotent field writes,
+  and pulse cancellation on hidden/reduced-motion settings.
+- Preserve copy, offers, CSS amplitude, module stages, and gesture vocabulary.
+- Verify: deterministic lifecycle tests, typecheck, check:local, ecology,
+  and the home-opening pocket attention fixture; preview timing before landing.
+- Receipt: 342 tests and `check:local -- --allow-dirty` pass (new generated
+  output awaits staging). Typecheck and pocket fixture pass. Real Chrome on
+  the promo card preserves a repeated discharge, clears frame residue, reaches
+  quiet, honors reduced motion, and reports no horizontal overflow.
+
 - `npm run css:payload`
 - `npm run check:css && npm run check:runtime`
 - `npm run ecology:language && npm run manifest:expressions` when fixtures change

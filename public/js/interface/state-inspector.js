@@ -47,10 +47,9 @@ const TOGGLES = [
     key: 'learning',
     label: 'Learning toasts',
     datasetKey: 'spwFeatureLearning',
-    on: null,
-    off: 'off',
+    on: 'on',
+    off: null,
     dimension: 'feedback discovery learnability',
-    inverted: true,
   },
 ];
 

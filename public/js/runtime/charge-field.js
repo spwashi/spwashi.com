@@ -1,16 +1,7 @@
 import { bus } from '/public/js/kernel/bus.js';
-import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import { writeDatasetValues, writeStyleProperty } from '/public/js/kernel/dom-contracts.js';
 import { detectOperator } from '/public/js/kernel/shared.js';
-
-const PHASE_INTENSITY = Object.freeze({
-  armed: 0.22,
-  preview: 0.48,
-  charged: 0.82,
-  discharging: 0.34,
-  settled: 0,
-  grounded: 0.55,
-  transferring: 0.65,
-});
+import { PHASE_INTENSITY, CHARGE_TIMING, decayCharge } from '/public/js/kernel/charge-field-contract.js';
 
 const OPERATOR_DISCHARGE = Object.freeze({
   wonder: 'release',
@@ -140,9 +131,9 @@ function writeRelationReward(intensity = 0, relation = '') {
   const relationship = relation === 'relationship' ? reward : 0;
   const architecture = relation === 'architecture' ? reward : 0;
 
-  document.documentElement.style.setProperty('--spw-curiosity-reward', curiosity.toFixed(2));
-  document.documentElement.style.setProperty('--spw-relationship-reward', relationship.toFixed(2));
-  document.documentElement.style.setProperty('--spw-architecture-reward', architecture.toFixed(2));
+  writeStyleProperty(document.documentElement, '--spw-curiosity-reward', curiosity.toFixed(2));
+  writeStyleProperty(document.documentElement, '--spw-relationship-reward', relationship.toFixed(2));
+  writeStyleProperty(document.documentElement, '--spw-architecture-reward', architecture.toFixed(2));
 }
 
 function syncReadouts(root = document) {
@@ -166,6 +157,16 @@ function clearFrameLiveState(frame) {
 function createChargeFieldInstance(ctx = null) {
   let activeIntensity = 0;
   let decayTimer = null;
+  let disposed = false;
+  const frameTimers = new Map();
+  const activeFrames = new Set();
+
+  const clearFrame = (frame) => {
+    if (frameTimers.has(frame)) window.clearTimeout(frameTimers.get(frame));
+    frameTimers.delete(frame);
+    activeFrames.delete(frame);
+    clearFrameLiveState(frame);
+  };
 
   const syncRoot = (state = {}) => {
     const relation = state.relation
@@ -182,7 +183,8 @@ function createChargeFieldInstance(ctx = null) {
     };
 
     writeDatasetValues(document.documentElement, entries);
-    document.documentElement.style.setProperty(
+    writeStyleProperty(
+      document.documentElement,
       '--spw-charge-field',
       String(state.intensity ?? 0)
     );
@@ -191,35 +193,36 @@ function createChargeFieldInstance(ctx = null) {
   };
 
   const scheduleDecay = () => {
-    if (decayTimer) window.clearTimeout(decayTimer);
+    if (decayTimer !== null) window.clearTimeout(decayTimer);
+    decayTimer = null;
+    if (disposed || activeIntensity === 0) return;
     decayTimer = window.setTimeout(() => {
-      activeIntensity = Math.max(0, activeIntensity - 0.18);
-      if (activeIntensity < 0.08) {
-        activeIntensity = 0;
-        syncRoot({ field: 'quiet', intensity: 0 });
-        return;
-      }
-      syncRoot({ field: 'bleeding', intensity: activeIntensity });
-    }, 2800);
+      decayTimer = null;
+      if (disposed) return;
+      const state = decayCharge(activeIntensity);
+      activeIntensity = state.intensity;
+      syncRoot(state);
+      if (activeIntensity === 0) activeFrames.forEach(clearFrame);
+      else scheduleDecay();
+    }, CHARGE_TIMING.decayMs);
   };
 
   const applyFramePhase = (frame, phase, discharge = null) => {
     if (!(frame instanceof HTMLElement)) return;
+    // A new gesture supersedes the previous discharge, even on the same frame.
+    if (frameTimers.has(frame)) clearFrame(frame);
+    activeFrames.add(frame);
 
-    if (phase) frame.dataset.spwChargePhase = phase;
+    if (phase) writeDatasetValues(frame, { spwChargePhase: phase });
 
     if (phase === 'preview' || phase === 'charged') {
-      frame.dataset.spwConsequenceLive = frame.dataset.spwConsequence || 'attention';
+      writeDatasetValues(frame, { spwConsequenceLive: frame.dataset.spwConsequence || 'attention' });
     }
 
     if (discharge) {
       frame.dataset.spwDischargeKind = discharge;
       frame.dataset.spwConsequenceLive = discharge;
-      window.setTimeout(() => {
-        if (frame.dataset.spwDischargeKind === discharge) {
-          delete frame.dataset.spwDischargeKind;
-        }
-      }, 1400);
+      frameTimers.set(frame, window.setTimeout(() => clearFrame(frame), CHARGE_TIMING.dischargeMs));
     }
   };
 
@@ -276,9 +279,9 @@ function createChargeFieldInstance(ctx = null) {
     bus.on('charge:preview', (event) => onChargePhase('preview', event)),
     bus.on('charge:charged', (event) => onChargePhase('charged', event)),
     bus.on('charge:settled', (event) => {
-      const frame = nearestFrame(eventElement(event));
-      if (frame) clearFrameLiveState(frame);
+      activeFrames.forEach(clearFrame);
       activeIntensity = 0;
+      scheduleDecay();
       syncRoot({ field: 'quiet', intensity: 0, carrier: null, discharge: null });
     }),
     bus.on('brace:discharged', onDischarge),
@@ -339,9 +342,13 @@ function createChargeFieldInstance(ctx = null) {
   syncRoot({ field: 'quiet', intensity: 0 });
 
   const cleanup = () => {
+    if (disposed) return;
+    disposed = true;
     unsubscribers.forEach((off) => off?.());
     document.removeEventListener('spw:interaction-phase', onInteractionPhase);
-    if (decayTimer) window.clearTimeout(decayTimer);
+    if (decayTimer !== null) window.clearTimeout(decayTimer);
+    decayTimer = null;
+    activeFrames.forEach(clearFrame);
     syncRoot({});
     document.documentElement.style.removeProperty('--spw-charge-field');
     RELATION_STYLE_PROPERTIES.forEach((property) => {

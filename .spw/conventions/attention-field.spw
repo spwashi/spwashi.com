@@ -177,6 +177,12 @@ expression = attention[field]{gradient.uptake.scarcity}<spend>
 }
 
 ^"practice_and_resonance_rhythms"{
+  finite_pulses: .{
+    evidence = "align / stable, 2026-09-14: charge decayed once; repeated discharges shared no timer ownership."
+    rule = "Charge decays to quiet with no timer left running. A frame owns one discharge timeout; settle and unmount cancel it. Hidden or motion-disabled pages clear transient freshness pulses."
+    impl_ref = "public/ts/charge-field-contract.ts + public/js/runtime/charge-field.js + public/js/runtime/pulse-beat-tuner.js"
+    probe_ref = "scripts/tests/charge-field.test.mjs + scripts/tests/pulse-beat-tuner.test.mjs + visual:checks -- --ids=home-opening"
+  }[reg=facet]
   definition: "Attention-bearing features should support a cycle of noticing, adjustment, resonance, and sedimentation without making every interaction loud."
   notice: .{
     role = "A reader detects an available handle, operator, surface, or cluster."

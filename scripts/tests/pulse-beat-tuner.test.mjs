@@ -42,6 +42,9 @@ test('beat cycle keeps its phase through settings gestures and rests while hidde
     globalThis.document.dispatchEvent(new CustomEvent('visibilitychange'));
     assert.equal(intervals.size, 0, 'hidden documents stop advancing the beat');
     assert.equal(html.dataset.spwBeat, '3', 'hidden documents keep the beat they rest on');
+    assert.equal(html.dataset.spwFreshnessPulse, undefined, 'hiding clears the active pulse');
+    globalThis.document.dispatchEvent(new CustomEvent('spw:component-lifecycle', { detail: { beat: 'ready' } }));
+    assert.equal(html.dataset.spwFreshnessPulse, undefined, 'background lifecycle work cannot pulse');
 
     globalThis.document.hidden = false;
     globalThis.document.dispatchEvent(new CustomEvent('visibilitychange'));
@@ -49,10 +52,19 @@ test('beat cycle keeps its phase through settings gestures and rests while hidde
     assert.equal(html.dataset.spwBeat, '3', 'resuming continues from the resting beat');
     [...intervals.values()][0].fn();
     assert.equal(html.dataset.spwBeat, '4');
+
+    globalThis.document.dispatchEvent(new CustomEvent('spw:interaction-phase', { detail: { phase: 'charge' } }));
+    assert.equal(html.dataset.spwFreshnessPulse, 'phase-charge');
+    html.dataset.spwReduceMotion = 'on';
+    globalThis.document.dispatchEvent(new CustomEvent('spw:settings-change'));
+    await flushMicrotasks();
+    assert.equal(intervals.size, 0, 'motion preference stops the beat');
+    assert.equal(html.dataset.spwFreshnessPulse, undefined, 'motion preference clears the current pulse');
   } finally {
     dispose();
     globalThis.window.setInterval = originalSetInterval;
     globalThis.window.clearInterval = originalClearInterval;
     delete globalThis.document.hidden;
+    delete html.dataset.spwReduceMotion;
   }
 });

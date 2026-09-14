@@ -85,6 +85,16 @@ fixity = "tending"
   falsification: "A number in measured_2026_08_13 does not reproduce from its stated probe."
 }
 
+^"home_reading_surface_alignment_2026_09"{
+  #:operation #!align
+  #:fixity #!stable
+  focus = "first-visit reading continuity"
+  owner = "discovery-notices.js + state-inspector.js"
+  evidence = "The pocket home capture showed a runtime ‘Feature learned’ toast covering the opening lede and working-view controls before any visitor action."
+  alignment = "Runtime mount literacy is opt-in from the existing inspector; visitor-facing reward notices remain available without that developer-facing interruption."
+  probe = `npm run visual:capture -- --stills --ids home-opening --viewports pocket,broadsheet && node scripts/check-site.mjs && git diff --check`
+}[reg=facet]
+
 ^"brochure_region_alignment_2026_08_19"{
   #:operation #!align
   #:fixity #!tending

@@ -100,7 +100,7 @@ function writeBeat(html, beat) {
 }
 
 function pulseFreshness(html, source = 'interaction', detail = {}) {
-  if (!html) return;
+  if (!html || document.hidden || !isRhythmEnabled(html)) return;
   const duration = readPulseDurationMs(html);
   html.dataset.spwFreshnessPulse = source;
   document.dispatchEvent(new CustomEvent(FRESHNESS_EVENT, {
@@ -110,6 +110,7 @@ function pulseFreshness(html, source = 'interaction', detail = {}) {
 
   if (freshnessTimer) window.clearTimeout(freshnessTimer);
   freshnessTimer = window.setTimeout(() => {
+    freshnessTimer = null;
     delete html.dataset.spwFreshnessPulse;
   }, duration);
 }
@@ -118,6 +119,12 @@ function pulseFreshness(html, source = 'interaction', detail = {}) {
    settings tuning emits several events per gesture, and restarting the interval
    on each one stalled the beat for as long as the gesture lasted. */
 let scheduledInterval = 0;
+
+function clearFreshnessPulse(html) {
+  if (freshnessTimer !== null) window.clearTimeout(freshnessTimer);
+  freshnessTimer = null;
+  delete html.dataset.spwFreshnessPulse;
+}
 
 function stopBeatTimer() {
   if (beatTimer) window.clearInterval(beatTimer);
@@ -128,6 +135,7 @@ function stopBeatTimer() {
 function scheduleBeatCycle(html) {
   if (!isRhythmEnabled(html)) {
     stopBeatTimer();
+    clearFreshnessPulse(html);
     delete html.dataset.spwBeat;
     delete html.dataset.spwBeatPrime;
     delete html.dataset.spwPlaying;
@@ -137,6 +145,7 @@ function scheduleBeatCycle(html) {
   /* Hidden documents keep their beat attributes but stop advancing them. */
   if (typeof document !== 'undefined' && document.hidden) {
     stopBeatTimer();
+    clearFreshnessPulse(html);
     return;
   }
 
@@ -158,10 +167,9 @@ export function readMicrointeractionPulseMs(root = document) {
 
 export function initPulseBeatTuner(root = document) {
   if (initialized) return () => {};
-  initialized = true;
-
   const html = root?.documentElement || (root?.nodeType === 1 ? root : typeof document !== 'undefined' ? document.documentElement : null);
   if (!html) return () => {};
+  initialized = true;
 
   const controller = new AbortController();
   const { signal } = controller;
@@ -235,8 +243,7 @@ export function initPulseBeatTuner(root = document) {
 
   controller.signal.addEventListener('abort', () => {
     stopBeatTimer();
-    if (freshnessTimer) window.clearTimeout(freshnessTimer);
-    freshnessTimer = null;
+    clearFreshnessPulse(html);
     currentBeat = 0;
     delete html.dataset.spwBeat;
     delete html.dataset.spwBeatPrime;

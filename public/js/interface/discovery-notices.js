@@ -828,7 +828,10 @@ function handleFeatureLearningToast(event) {
   const detail = event.detail || {};
   const id = cleanText(detail.baseId || detail.id || '');
   if (!id || id === 'discovery-notices') return;
-  if (document.documentElement.dataset.spwFeatureLearning === 'off') return;
+  // Mount diagnostics explain the runtime, not the visitor's task. Keep them
+  // available from the state inspector, but never let an initial page visit
+  // spend the reading surface on a developer-facing prompt.
+  if (document.documentElement.dataset.spwFeatureLearning !== 'on') return;
   if (document.body?.dataset?.spwDiscoveryNotices === 'off') return;
 
   const state = readFeatureLearningState();
