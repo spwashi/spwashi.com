@@ -188,6 +188,14 @@ main > :where(h1, h2, h3, p, ul, ol, figure):last-child {
   min-width: 0;
 }
 
+/* Infix sigil hosts: zero border floor. handles/operators/sigils-and-chips.css
+   restyles infix borders dashed without a width; a host that authors no width
+   (a lede, a kicker) otherwise resolves `medium` and draws a 3px dashed box.
+   Any width a later layer authors still wins. */
+:where([data-spw-sigil-position="infix"]) {
+  border-width: 0;
+}
+
 /* ── 3. Media & Objects ─────────────────────────────────────────────────── */
 
 img,

@@ -191,6 +191,14 @@ main > :where(h1, h2, h3, p, ul, ol, figure):last-child {
   min-width: 0;
 }
 
+/* Infix sigil hosts: zero border floor. handles/operators/sigils-and-chips.css
+   restyles infix borders dashed without a width; a host that authors no width
+   (a lede, a kicker) otherwise resolves `medium` and draws a 3px dashed box.
+   Any width a later layer authors still wins. */
+:where([data-spw-sigil-position="infix"]) {
+  border-width: 0;
+}
+
 /* ── 3. Media & Objects ─────────────────────────────────────────────────── */
 
 img,
@@ -39879,6 +39887,11 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   );
 }
 
+/* Infix restyles a border the host already draws; it never draws one.
+   sigil-annotation.js stamps infix on any semantic-expression host, and a
+   paragraph with no authored width resolved `medium` (3px) dashed boxes.
+   The zero-width floor lives in reset/base.css so every later layer's
+   authored width still wins. */
 :where([data-spw-sigil-position="infix"]) {
   border-style: dashed;
   border-color: color-mix(in srgb, currentColor 22%, transparent);
