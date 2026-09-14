@@ -472,3 +472,36 @@
     align-items: flex-start;
   }
 }
+
+/* Rhythm authority readout: the site-rhythm rail beside the resolved tempo and
+   the name of who set it. Wraps under the rail on narrow screens. */
+:where(body[data-spw-surface="settings"] .settings-rhythm-readout) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-block: 0.25rem 0.5rem;
+}
+
+:where(body[data-spw-surface="settings"] .settings-rhythm-readout output) {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Where the reader chooses the authority, the rail is the subject, not ambient
+   chrome: large enough to see the tempo, the author's color, and prime beats. */
+body[data-spw-surface="settings"] .settings-rhythm-readout .spw-site-rhythm {
+  font-size: 0.85rem;
+  opacity: 1;
+}
+
+body[data-spw-surface="settings"] .settings-rhythm-readout .spw-site-rhythm__rail {
+  height: 0.75rem;
+  min-width: 6.5rem;
+  padding-inline: 0.35rem;
+  justify-content: space-between;
+}
+
+body[data-spw-surface="settings"] .settings-rhythm-readout .spw-site-rhythm__node {
+  width: 0.45rem;
+  height: 0.45rem;
+}

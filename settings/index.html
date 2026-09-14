@@ -1477,6 +1477,27 @@
                             </label>
                         </fieldset>
 
+                        <fieldset class="settings-fieldset settings-rhythm-authority">
+                            <legend>Rhythm authority</legend>
+                            <p data-spw-textual-role="note">Chooses who sets the site's ambient tempo: the authored baseline, your interaction tuner, or this page's live runtime. The rail plays at the tempo that wins, and one node brightens on each prime beat.</p>
+                            <p class="settings-rhythm-readout">
+                                <span class="spw-site-rhythm" data-spw-ornament="site-rhythm" aria-hidden="true"><span class="spw-site-rhythm__rail"><span class="spw-site-rhythm__node"></span><span class="spw-site-rhythm__node"></span><span class="spw-site-rhythm__node"></span></span></span>
+                                <span>Tempo <output data-spw-site-rhythm-readout="tempo">1.00×</output>, set by <strong data-spw-site-rhythm-readout="authority">the live runtime</strong></span>
+                            </p>
+                            <label class="settings-option">
+                                <input name="rhythmAuthority" type="radio" value="authored" />
+                                <span class="settings-option-copy"><strong>Authored</strong><span>Hold the baseline tempo the stylesheet ships with.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="rhythmAuthority" type="radio" value="tuner" />
+                                <span class="settings-option-copy"><strong>Your tuner</strong><span>Follow the interaction tuner: calm is slower, expressive is livelier.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input checked name="rhythmAuthority" type="radio" value="runtime" />
+                                <span class="settings-option-copy"><strong>Live runtime</strong><span>Follow how quickly this page's modules load and settle.</span></span>
+                            </label>
+                        </fieldset>
+
                         <fieldset class="settings-fieldset">
                             <legend>Component lifecycle</legend>
                             <label class="settings-option">

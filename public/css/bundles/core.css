@@ -26949,6 +26949,25 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     --spw-region-profile-intensity var(--spw-region-profile-refresh-duration, 220ms) var(--ease-settle, ease);
 }
 
+/* Rhythm authority: the reader chooses who sets the ambient tempo
+   (data-spw-site-rhythm-authority, the rhythmAuthority setting). The settings
+   engine writes --spw-tuner-rhythm-tempo and module-loader writes
+   --spw-runtime-rhythm-tempo; only this rule writes --spw-site-rhythm-tempo.
+   Its specificity outranks the :where() pulse nudges in this layer and the
+   settings-momentum nudge in tokens — the precedence the engine's and loader's
+   inline writes used to have — so the chosen author is the one you see. */
+html[data-spw-site-rhythm-authority="authored"] {
+  --spw-site-rhythm-tempo: 1;
+}
+
+html[data-spw-site-rhythm-authority="tuner"] {
+  --spw-site-rhythm-tempo: var(--spw-tuner-rhythm-tempo, 1);
+}
+
+html[data-spw-site-rhythm-authority="runtime"] {
+  --spw-site-rhythm-tempo: var(--spw-runtime-rhythm-tempo, var(--spw-tuner-rhythm-tempo, 1));
+}
+
 /* Page lifecycle cascade — region metadata enrichment is deferred until interactive. */
 :where(html[data-spw-page-state="booting"], html[data-spw-page-state="interactive"]) {
   --spw-layout-cascade-hold: 1;
@@ -36534,38 +36553,43 @@ body[data-spw-micro-world="true"]::before {
   --spw-palette-treat-depth-gain: 1;
 }
 
-/* These live-state overrides target the root element, so they must out-specify
-   the :root defaults above — otherwise :root (specificity 0,1,0) wins and the
-   sprinkle strength/accent stay pinned to their resting values. :root[attr]
-   (0,2,0) clears that bar; :where(html[attr]) does NOT (it is specificity 0),
-   so do not "simplify" these back to :where — it silently disables the treat. */
-:root[data-spw-palette-treat-depth="1"] { --spw-palette-treat-depth-gain: 1.12; }
-:root[data-spw-palette-treat-depth="2"] { --spw-palette-treat-depth-gain: 1.26; }
-:root[data-spw-palette-treat-depth="3"] { --spw-palette-treat-depth-gain: 1.42; }
-:root[data-spw-palette-treat-depth="4"] { --spw-palette-treat-depth-gain: 1.6; }
+/* Treat state lives on the elements that spend it. palette-treat-discovery.js
+   toggles these attributes on <html> for every splash, including prime beats;
+   setting the properties on :root re-resolved style for the whole document each
+   time. On a descendant, any declaration beats the inherited :root default, so
+   :where() specificity is enough here.
 
-:root[data-spw-palette-treat-active="on"] {
+   Readers: probe chips and shell resonance utilities (this file and
+   surfaces/palette-depth.css) and the operator echo rules below.
+
+   The treat used to scale --palette-depth-strength by itself, which CSS treats
+   as a cycle: every palette depth color went invalid for the length of a splash. */
+:where(html[data-spw-palette-treat-depth="1"]) :where(.palette-probe, .spw-shell-resonance-utility, .palette-probe-chip, [data-spw-operator]) { --spw-palette-treat-depth-gain: 1.12; }
+:where(html[data-spw-palette-treat-depth="2"]) :where(.palette-probe, .spw-shell-resonance-utility, .palette-probe-chip, [data-spw-operator]) { --spw-palette-treat-depth-gain: 1.26; }
+:where(html[data-spw-palette-treat-depth="3"]) :where(.palette-probe, .spw-shell-resonance-utility, .palette-probe-chip, [data-spw-operator]) { --spw-palette-treat-depth-gain: 1.42; }
+:where(html[data-spw-palette-treat-depth="4"]) :where(.palette-probe, .spw-shell-resonance-utility, .palette-probe-chip, [data-spw-operator]) { --spw-palette-treat-depth-gain: 1.6; }
+
+:where(html[data-spw-palette-treat-active="on"]) :where(.palette-probe, .spw-shell-resonance-utility, .palette-probe-chip, [data-spw-operator]) {
   --spw-palette-treat-strength: calc(
     var(--spw-freshness-weight, 0.62)
     * var(--spw-microinteraction-pulse-intensity, 1)
     * var(--spw-palette-treat-depth-gain, 1)
   );
-  --palette-depth-strength: calc(var(--palette-depth-strength, 1) * (1 + (var(--spw-palette-treat-strength) * 0.1)));
 }
 
-:root[data-spw-palette-treat-probe="1"] {
+:where(html[data-spw-palette-treat-probe="1"]) :where(.palette-probe, .spw-shell-resonance-utility, .palette-probe-chip, [data-spw-operator]) {
   --spw-palette-treat-accent: var(--spw-palette-probe-1, var(--active-op-color, #008080));
 }
 
-:root[data-spw-palette-treat-probe="2"] {
+:where(html[data-spw-palette-treat-probe="2"]) :where(.palette-probe, .spw-shell-resonance-utility, .palette-probe-chip, [data-spw-operator]) {
   --spw-palette-treat-accent: var(--spw-palette-probe-2, var(--op-object-color, #c68a22));
 }
 
-:root[data-spw-palette-treat-probe="3"] {
+:where(html[data-spw-palette-treat-probe="3"]) :where(.palette-probe, .spw-shell-resonance-utility, .palette-probe-chip, [data-spw-operator]) {
   --spw-palette-treat-accent: var(--spw-palette-probe-3, var(--op-ref-color, #1d57a3));
 }
 
-:root[data-spw-palette-treat-probe="4"] {
+:where(html[data-spw-palette-treat-probe="4"]) :where(.palette-probe, .spw-shell-resonance-utility, .palette-probe-chip, [data-spw-operator]) {
   --spw-palette-treat-accent: var(--spw-palette-probe-4, var(--op-probe-color, #6a3fb8));
 }
 
@@ -36602,10 +36626,6 @@ body[data-spw-micro-world="true"]::before {
     inset 0 1px 0 color-mix(in srgb, #fff 30%, transparent),
     0 0 0 2px color-mix(in srgb, var(--spw-palette-treat-accent, var(--spw-palette-probe-1)) 34%, transparent),
     0 0 12px color-mix(in srgb, var(--spw-palette-treat-accent, var(--spw-palette-probe-1)) 22%, transparent);
-}
-
-:where(html[data-spw-palette-splash="arrow-reward"]) {
-  --spw-salience-weight: max(var(--spw-salience-weight, 0.34), calc(0.52 + (var(--spw-freshness-weight, 0.62) * 0.18)));
 }
 
 :where(html[data-spw-palette-splash="arrow-reward"]) :where(
@@ -36664,7 +36684,7 @@ body[data-spw-micro-world="true"]::before {
 }
 
 /* Beat-aware idle resonance on probe chips */
-:where(html[data-spw-playing="on"][data-spw-beat="1"]) :where(
+:where(html[data-spw-playing="on"][data-spw-beat-prime="1"]) :where(
   .palette-probe-swatches:not(.palette-probe-swatches--depth) .palette-probe-chip:nth-child(1),
   .spw-shell-resonance-utility .palette-probe-chip:nth-child(1)
 ) {
@@ -36673,7 +36693,7 @@ body[data-spw-micro-world="true"]::before {
     0 0 0 1px color-mix(in srgb, var(--spw-palette-probe-1) 22%, transparent);
 }
 
-:where(html[data-spw-playing="on"][data-spw-beat="5"]) :where(
+:where(html[data-spw-playing="on"][data-spw-beat-prime="5"]) :where(
   .palette-probe-swatches:not(.palette-probe-swatches--depth) .palette-probe-chip:nth-child(2),
   .spw-shell-resonance-utility .palette-probe-chip:nth-child(2)
 ) {
@@ -36682,7 +36702,7 @@ body[data-spw-micro-world="true"]::before {
     0 0 0 1px color-mix(in srgb, var(--spw-palette-probe-2) 22%, transparent);
 }
 
-:where(html[data-spw-playing="on"][data-spw-beat="9"]) :where(
+:where(html[data-spw-playing="on"][data-spw-beat-prime="9"]) :where(
   .palette-probe-swatches:not(.palette-probe-swatches--depth) .palette-probe-chip:nth-child(3),
   .spw-shell-resonance-utility .palette-probe-chip:nth-child(3)
 ) {
@@ -36691,7 +36711,7 @@ body[data-spw-micro-world="true"]::before {
     0 0 0 1px color-mix(in srgb, var(--spw-palette-probe-3) 22%, transparent);
 }
 
-:where(html[data-spw-playing="on"][data-spw-beat="13"]) :where(
+:where(html[data-spw-playing="on"][data-spw-beat-prime="13"]) :where(
   .palette-probe-swatches:not(.palette-probe-swatches--depth) .palette-probe-chip:nth-child(4),
   .spw-shell-resonance-utility .palette-probe-chip:nth-child(4)
 ) {
@@ -36717,7 +36737,7 @@ body[data-spw-micro-world="true"]::before {
   --spw-resonance: calc(var(--spw-palette-treat-strength, 0.62) * 0.72);
 }
 
-html[data-spw-reduce-motion="on"][data-spw-palette-treat-active="on"] {
+:where(html[data-spw-reduce-motion="on"][data-spw-palette-treat-active="on"]) :where(.palette-probe, .spw-shell-resonance-utility, .palette-probe-chip, [data-spw-operator]) {
   --spw-palette-treat-strength: 0;
 }
 

@@ -19,6 +19,8 @@ export const CORE_DEFS = [
       'html:structural:data-spw-semantic-density',
       'html:structural:data-spw-operator-saturation',
       'html:flourish:data-spw-reward-display',
+      'html:structural:data-spw-site-rhythm-authority',
+      'html:flourish:--spw-tuner-rhythm-tempo',
     ],
     timingArc: 'boot-core',
     effectScope: 'root-state storage settings',

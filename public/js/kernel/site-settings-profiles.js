@@ -460,6 +460,9 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   spacingTuner: 'balanced',
   layoutTuner: 'reading',
   interactionTuner: 'calm',
+  /* Who sets the ambient site tempo. runtime matches the previous behavior,
+     where the loader's load-speed tempo overwrote the tuner after mount. */
+  rhythmAuthority: 'runtime',
   componentLifecycle: 'stable',
 
   debugMode: 'off',
@@ -560,6 +563,7 @@ const SETTING_OPTIONS = Object.freeze({
   spacingTuner: new Set(['compact', 'balanced', 'roomy']),
   layoutTuner: new Set(['reading', 'newspaper', 'wide', 'atlas']),
   interactionTuner: new Set(['calm', 'responsive', 'expressive']),
+  rhythmAuthority: new Set(['authored', 'tuner', 'runtime']),
   componentLifecycle: new Set(['draft', 'stable', 'active', 'archived']),
 
   debugMode: new Set(['off', 'on']),
@@ -848,6 +852,7 @@ const SETTING_VALUE_LABELS = Object.freeze({
   spacingTuner: Object.freeze({compact: 'Compact', balanced: 'Balanced', roomy: 'Roomy'}),
   layoutTuner: Object.freeze({reading: 'Reading', newspaper: 'Newspaper', wide: 'Wide', atlas: 'Atlas'}),
   interactionTuner: Object.freeze({calm: 'Calm', responsive: 'Responsive', expressive: 'Expressive'}),
+  rhythmAuthority: Object.freeze({authored: 'Authored', tuner: 'Your tuner', runtime: 'Live runtime'}),
   componentLifecycle: Object.freeze({draft: 'Draft', stable: 'Stable', active: 'Active', archived: 'Archived'}),
   narrativeMode: Object.freeze({off: 'Off', on: 'On'}),
   debugMode: Object.freeze({off: 'Off', on: 'On'}),

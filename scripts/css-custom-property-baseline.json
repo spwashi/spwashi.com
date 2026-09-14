@@ -1,0 +1,164 @@
+{
+  "public/css/components/cards.css": {
+    "--card-rhythm": 1
+  },
+  "public/css/components/cards/profile-card.css": {
+    "--card-charge": 4
+  },
+  "public/css/components/cards/seed-card.css": {
+    "--card-charge": 3
+  },
+  "public/css/components/foundation.css": {
+    "--spw-variant-accent": 1,
+    "--spw-runtime-layer-count": 1,
+    "--spw-motion-scale": 5,
+    "--spw-architecture-salience": 4
+  },
+  "public/css/components/frames.css": {
+    "--surface-gap": 2
+  },
+  "public/css/components/gesture-anatomy.css": {
+    "--spw-interaction-phase-weight": 1
+  },
+  "public/css/components/runtime-inspect.css": {
+    "--spw-site-rhythm-density": 1
+  },
+  "public/css/components/runtime-states.css": {
+    "--spw-region-profile-intensity": 2,
+    "--spw-runtime-enhancement-intensity": 4,
+    "--spw-site-rhythm-tempo": 4,
+    "--component-accent": 1,
+    "--spw-runtime-feature-intensity": 1,
+    "--spw-site-rhythm-density": 2,
+    "--spw-layout-cascade-hold": 1,
+    "--spw-ecology-readiness-ring-strength": 1
+  },
+  "public/css/components/semantic-variants.css": {
+    "--spw-interaction-phase-weight": 4,
+    "--spw-ecology-settle-weight": 1
+  },
+  "public/css/components/signals.css": {
+    "--spw-site-rhythm-tempo": 1
+  },
+  "public/css/components/site-search.css": {
+    "--spw-interaction-phase-weight": 1
+  },
+  "public/css/components/typography-packing.css": {
+    "--spw-grid-min-active": 1
+  },
+  "public/css/effects/enrichment.css": {
+    "--spw-perspective-salience": 2
+  },
+  "public/css/effects/grain-texture.css": {
+    "--grain-scope-opacity-multiplier": 16,
+    "--grain-scope-scale-multiplier": 7,
+    "--grain-scope-contrast-multiplier": 6,
+    "--grain-panel-overlay-local-opacity": 2,
+    "--grain-body-opacity": 2,
+    "--grain-surface-opacity": 2
+  },
+  "public/css/grammar/syntax.css": {
+    "--grammar-motion-budget": 3,
+    "--grammar-boundary-weight": 1
+  },
+  "public/css/handles/operators/bias-and-phrases.css": {
+    "--handle-line": 6,
+    "--handle-ink": 5
+  },
+  "public/css/handles/operators/geometry-projection.css": {
+    "--spw-operator-color": 1
+  },
+  "public/css/handles/operators/sigils-and-chips.css": {
+    "--spw-field-intensity": 3
+  },
+  "public/css/ornament/ornament.css": {
+    "--ornament-field-intensity": 1,
+    "--ornament-collection-mark": 1,
+    "--ornament-deviation-visibility": 1,
+    "--ornament-wonder-trail": 1,
+    "--ornament-resonance": 1
+  },
+  "public/css/shell/chrome/adaptive.css": {
+    "--cauldron-chip-border": 1
+  },
+  "public/css/shell/chrome/header.css": {
+    "--spw-bottom-chrome-clearance": 8
+  },
+  "public/css/systems/arrival-electrostatics.css": {
+    "--spw-lifecycle-presence": 3
+  },
+  "public/css/systems/electrostatic-affordances.css": {
+    "--spw-projected-field": 1,
+    "--spw-e-edge": 6,
+    "--spw-induced-field": 1,
+    "--spw-resonance": 1,
+    "--spw-electrode-ring": 2,
+    "--field-intensity": 3,
+    "--coherence": 2
+  },
+  "public/css/systems/interaction-progression.css": {
+    "--spw-pre-state-visibility": 1,
+    "--spw-variant-selection-weight": 1,
+    "--spw-ecology-twinkle": 2,
+    "--spw-salience-weight": 1,
+    "--spw-ecology-settle-weight": 1,
+    "--spw-electrode-ring": 1,
+    "--spw-interaction-phase-weight": 1,
+    "--palette-depth-strength": 2,
+    "--spw-copy-depth-bg-mix": 2,
+    "--spw-copy-depth-line-mix": 2
+  },
+  "public/css/systems/layout-postures.css": {
+    "--spw-variant-selection-weight": 2,
+    "--spw-layout-posture-grid-bias": 1,
+    "--spw-pre-state-visibility": 1
+  },
+  "public/css/systems/pretext-physics.css": {
+    "--pretext-rail-width": 4,
+    "--pretext-edge-opacity": 5,
+    "--pretext-scaffold-opacity": 2,
+    "--pretext-line-scale": 2,
+    "--pretext-line-shift": 1
+  },
+  "public/css/systems/print-precipitation.css": {
+    "--spw-semantic-density-factor": 1
+  },
+  "public/css/systems/projection-attenuation.css": {
+    "--spw-field-intensity": 1,
+    "--spw-resonance": 1
+  },
+  "public/css/systems/region-seats.css": {
+    "--component-accent": 1,
+    "--spw-region-wash": 1
+  },
+  "public/css/systems/registers.css": {
+    "--spw-resonance": 1
+  },
+  "public/css/systems/semantic-copy-lens.css": {
+    "--spw-copy-depth-line-mix": 1,
+    "--spw-copy-depth-bg-mix": 1
+  },
+  "public/css/systems/substrate-ecology.css": {
+    "--spw-surface-local-clarity": 3,
+    "--spw-surface-local-pressure": 1,
+    "--spw-field-orientation": 1,
+    "--spw-field-inquiry": 1,
+    "--spw-field-comparison": 1,
+    "--spw-field-memory": 1,
+    "--spw-field-projection": 1,
+    "--spw-field-constraint": 1,
+    "--spw-field-resonance": 1,
+    "--spw-field-charge": 1,
+    "--spw-surface-local-resonance": 1
+  },
+  "public/css/systems/surfaces/learnability-ledger.css": {
+    "--spw-perspective-salience": 4
+  },
+  "public/css/tokens/core.css": {
+    "--climate-outline-strength": 1
+  },
+  "public/css/tokens/dimensions.css": {
+    "--spw-pre-state-visibility": 1,
+    "--spw-variant-selection-weight": 2
+  }
+}

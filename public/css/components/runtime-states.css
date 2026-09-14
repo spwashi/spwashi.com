@@ -783,6 +783,25 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     --spw-region-profile-intensity var(--spw-region-profile-refresh-duration, 220ms) var(--ease-settle, ease);
 }
 
+/* Rhythm authority: the reader chooses who sets the ambient tempo
+   (data-spw-site-rhythm-authority, the rhythmAuthority setting). The settings
+   engine writes --spw-tuner-rhythm-tempo and module-loader writes
+   --spw-runtime-rhythm-tempo; only this rule writes --spw-site-rhythm-tempo.
+   Its specificity outranks the :where() pulse nudges in this layer and the
+   settings-momentum nudge in tokens — the precedence the engine's and loader's
+   inline writes used to have — so the chosen author is the one you see. */
+html[data-spw-site-rhythm-authority="authored"] {
+  --spw-site-rhythm-tempo: 1;
+}
+
+html[data-spw-site-rhythm-authority="tuner"] {
+  --spw-site-rhythm-tempo: var(--spw-tuner-rhythm-tempo, 1);
+}
+
+html[data-spw-site-rhythm-authority="runtime"] {
+  --spw-site-rhythm-tempo: var(--spw-runtime-rhythm-tempo, var(--spw-tuner-rhythm-tempo, 1));
+}
+
 /* Page lifecycle cascade — region metadata enrichment is deferred until interactive. */
 :where(html[data-spw-page-state="booting"], html[data-spw-page-state="interactive"]) {
   --spw-layout-cascade-hold: 1;

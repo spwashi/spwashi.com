@@ -30,6 +30,7 @@ export const SETTINGS_TO_QUERY = Object.freeze({
   enhancementLevel: ['enhancement'],
   metacognitiveStance: ['stance', 'posture-stance'],
   interactionTuner: ['interaction'],
+  rhythmAuthority: ['rhythm'],
   colorMode: ['color-mode', 'color'],
   themePack: ['theme', 'theme-pack'],
   pack: ['pack'],

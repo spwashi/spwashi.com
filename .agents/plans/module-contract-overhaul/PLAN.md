@@ -57,6 +57,14 @@ $[html]{single} ~[idle]{enhance-rhythm}
 - Beat root custom properties: scope to consumers vs keep root inheritance.
 - Twinkle/phase/momentum JS constants reading their CSS tokens under tempo and reduced motion.
 
+## 2026-09-14 Rhythm Authority And Scoped Beats
+
+- `rhythmAuthority` (authored | tuner | runtime, query `rhythm`) picks the tempo author. Settings writes `--spw-tuner-rhythm-tempo`, module-loader writes `--spw-runtime-rhythm-tempo`, and only `components/runtime-states.css` writes `--spw-site-rhythm-tempo`. The settings page shows the site-rhythm rail in the author's operator color with a readout of tempo and author.
+- CSS keys beats on `data-spw-beat-prime`; `data-spw-beat` (every tick) is named by no stylesheet. Beat and treat properties sit on their consumers. `audit:css-custom-properties` (check:css) rejects root rules keyed on periodic attributes and holds 197 self-referencing declarations (cycles, not accumulators) as a baseline.
+- Cycles removed on the beat path: phase pulses reset `--spw-interaction-phase-weight` to 0, tuning reset rhythm density, treat splashes invalidated every palette depth color, blog prime beats dropped the accent to 0%.
+- Forced recalc per change, laptop /topics/software/: non-prime tick 8ms (root) → 100ms (scoped) → 0ms (prime attribute); prime enter/exit ~200ms → 184ms; idle 13s recalc 8.2s → 7.1s (phone 10.5s → 8.0s).
+- Open (sensation): prime beats still cost ~180ms because every chip, operator, and module is a consumer. Narrow the beat's consumers to the rail, probe chips, and settle windows.
+
 ## Non-Goals
 
 - No new `data-spw-*` families; no catalog field fill for its own sake (@module_ecology_kinship thesis).

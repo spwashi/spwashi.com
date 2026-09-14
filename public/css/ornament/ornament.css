@@ -1182,6 +1182,51 @@
   to   { opacity: 0.72; transform: scale(1.02); }
 }
 
+/* Rhythm authority is visible, not only felt. The rail takes the operator
+   color of whoever sets the tempo: ground for the authored baseline, binding
+   for the reader's tuner (their setting binds it), action for the live
+   runtime. Perspective is an alias of action in tokens/core.css, so it could
+   not tell the tuner from the runtime. The tempo
+   itself resolves in components/runtime-states.css, which always loads; this
+   pack only paints it. */
+:where(html[data-spw-site-rhythm-authority="authored"]) .spw-site-rhythm {
+  --ornament-local-accent: var(--op-ground-color, var(--ornament-accent));
+}
+
+:where(html[data-spw-site-rhythm-authority="tuner"]) .spw-site-rhythm {
+  --ornament-local-accent: var(--op-binding-color, var(--ornament-accent));
+}
+
+:where(html[data-spw-site-rhythm-authority="runtime"]) .spw-site-rhythm {
+  --ornament-local-accent: var(--op-action-color, var(--ornament-accent));
+}
+
+/* Scoped beats: prime beats 1, 5, and 9 each brighten one node and 13 lifts the
+   rail. These are descendant rules, so a beat restyles three nodes, not the
+   document. */
+:where(html[data-spw-playing="on"][data-spw-beat-prime="1"]) .spw-site-rhythm__node:nth-child(1),
+:where(html[data-spw-playing="on"][data-spw-beat-prime="5"]) .spw-site-rhythm__node:nth-child(2),
+:where(html[data-spw-playing="on"][data-spw-beat-prime="9"]) .spw-site-rhythm__node:nth-child(3) {
+  background: color-mix(in srgb, currentColor 82%, #fff);
+  box-shadow: 0 0 0 0.12rem color-mix(in srgb, currentColor 24%, transparent);
+}
+
+:where(html[data-spw-playing="on"][data-spw-beat-prime="13"]) .spw-site-rhythm__rail {
+  background: color-mix(in srgb, currentColor 18%, transparent);
+}
+
+/* While the reader tunes settings, the rail gains presence locally. */
+:where(html[data-spw-freshness-pulse="settings-tuning"]) .spw-site-rhythm {
+  --rhythm-density: max(
+    var(--spw-site-rhythm-density, 0.5),
+    calc(0.62 + (var(--spw-freshness-weight, 0.62) * 0.28))
+  );
+}
+
+:where(html[data-spw-reduce-motion="on"]) .spw-site-rhythm__node {
+  animation: none;
+}
+
 /* When the runtime reports high layer activity or recent enhancement work,
    the whole rhythm ornament becomes more present (still subtle). */
 :root[data-spw-active-layers~="enhancement"] .spw-site-rhythm,

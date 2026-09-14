@@ -860,7 +860,9 @@ function updateRuntimeStateTokens(ctx) {
   const rhythmBase = avgModuleTime > 0 ? avgModuleTime : 180;
   const rhythmTempo = Math.max(0.35, Math.min(3.2, 1400 / rhythmBase));
   const rhythmDensity = Math.max(0.25, Math.min(1.6, 0.28 + layerCount * 0.19));
-  writeStyleProperty(html, '--spw-site-rhythm-tempo', rhythmTempo.toFixed(2));
+  /* A tempo source, not the tempo: the reader's rhythm authority setting picks
+     between this, the interaction tuner, and the authored baseline. */
+  writeStyleProperty(html, '--spw-runtime-rhythm-tempo', rhythmTempo.toFixed(2));
   writeStyleProperty(html, '--spw-site-rhythm-density', rhythmDensity.toFixed(2));
 
   ctx.bus.emit('spw:runtime-tokens-updated', {
@@ -1930,7 +1932,7 @@ function refreshRuntime(ctx) {
       html?.style?.removeProperty('--spw-runtime-feature-intensity');
       html?.style?.removeProperty('--spw-runtime-layer-count');
       html?.style?.removeProperty('--spw-runtime-avg-module-ms');
-      html?.style?.removeProperty('--spw-site-rhythm-tempo');
+      html?.style?.removeProperty('--spw-runtime-rhythm-tempo');
       html?.style?.removeProperty('--spw-site-rhythm-density');
       writeDatasetValue(html, 'spwActiveLayers', null);
       writeDatasetValue(html, 'spwSiteRhythm', null);

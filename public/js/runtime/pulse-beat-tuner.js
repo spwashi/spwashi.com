@@ -70,10 +70,21 @@ function isRhythmEnabled(html) {
   return true;
 }
 
+/* CSS reads only prime beats, through data-spw-beat-prime. Any change to an
+   attribute that a descendant selector names schedules invalidation for every
+   element that selector could match, so the every-tick count stays in
+   data-spw-beat, which no stylesheet names, for inspection and JS readers. */
 function writeBeat(html, beat) {
   currentBeat = beat;
   html.dataset.spwBeat = String(beat);
-  html.dataset.spwPlaying = beat > 0 ? 'on' : 'off';
+  const playing = beat > 0 ? 'on' : 'off';
+  if (html.dataset.spwPlaying !== playing) html.dataset.spwPlaying = playing;
+  const prime = PRIME_BEATS.has(beat) ? String(beat) : null;
+  if (prime) {
+    if (html.dataset.spwBeatPrime !== prime) html.dataset.spwBeatPrime = prime;
+  } else if ('spwBeatPrime' in html.dataset) {
+    delete html.dataset.spwBeatPrime;
+  }
   if (PRIME_BEATS.has(beat)) {
     pulseFreshness(html, 'beat-prime', { beat });
   }
@@ -109,6 +120,7 @@ function scheduleBeatCycle(html) {
   if (!isRhythmEnabled(html)) {
     stopBeatTimer();
     delete html.dataset.spwBeat;
+    delete html.dataset.spwBeatPrime;
     delete html.dataset.spwPlaying;
     currentBeat = 0;
     return;
@@ -218,6 +230,7 @@ export function initPulseBeatTuner(root = document) {
     freshnessTimer = null;
     currentBeat = 0;
     delete html.dataset.spwBeat;
+    delete html.dataset.spwBeatPrime;
     delete html.dataset.spwPlaying;
     delete html.dataset.spwFreshnessPulse;
     initialized = false;

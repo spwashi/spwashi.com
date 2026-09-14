@@ -299,47 +299,61 @@ html[data-spw-reduce-motion="on"] {
    Pulse-beat tuner: settings-driven freshness + baker's-dozen beat cycle
    -------------------------------------------------------------------------- */
 
-:where(html[data-spw-playing="on"]) {
+/* Beats are scoped to the elements that spend them. data-spw-beat and
+   data-spw-freshness-pulse change on <html> every beat; a custom property set
+   on the root there re-resolves style for the whole tree (~200ms against
+   core.css), while a descendant rule touches only its consumers.
+   audit:css-custom-properties rejects root-subject rules keyed on these
+   periodic attributes.
+
+   Consumers: twinkle keyframes and settle stagger (geometry-projection.css) on
+   chips, tokens, operators, and interaction contracts; readiness rings
+   (runtime-states.css) on modules and image rewards. */
+:where(html[data-spw-playing="on"]) :where(
+  .spw-chip, .syntax-token, [data-spw-operator], [data-spw-interaction-contract],
+  [data-spw-module], [data-spw-image-reward], [data-spw-image-discovery]
+) {
   --spw-ecology-beat-align: calc(0.18 + (var(--spw-freshness-weight, 0.62) * 0.42));
 }
 
-:where(html[data-spw-playing="on"][data-spw-beat="1"]) {
+:where(html[data-spw-playing="on"][data-spw-beat-prime="1"]) :where(
+  .spw-chip, .syntax-token, [data-spw-operator], [data-spw-interaction-contract],
+  [data-spw-module], [data-spw-image-reward], [data-spw-image-discovery]
+) {
   --spw-ecology-beat-align: calc(0.34 + (var(--spw-freshness-weight, 0.62) * 0.48));
 }
 
-:where(html[data-spw-playing="on"][data-spw-beat="5"]),
-:where(html[data-spw-playing="on"][data-spw-beat="9"]),
-:where(html[data-spw-playing="on"][data-spw-beat="13"]) {
+:where(
+  html[data-spw-playing="on"][data-spw-beat-prime="5"],
+  html[data-spw-playing="on"][data-spw-beat-prime="9"],
+  html[data-spw-playing="on"][data-spw-beat-prime="13"]
+) :where(
+  .spw-chip, .syntax-token, [data-spw-operator], [data-spw-interaction-contract],
+  [data-spw-module], [data-spw-image-reward], [data-spw-image-discovery]
+) {
   --spw-ecology-beat-align: calc(0.52 + (var(--spw-freshness-weight, 0.62) * 0.38));
-  --spw-ecology-twinkle: max(var(--spw-ecology-twinkle, 0), calc(0.22 * var(--spw-freshness-weight, 0.62)));
+  --spw-ecology-twinkle: calc(0.22 * var(--spw-freshness-weight, 0.62));
 }
 
-html[data-spw-freshness-pulse] {
-  --spw-microinteraction-pulse-scale: calc(1 + (0.018 * var(--spw-microinteraction-pulse-intensity, 1) * var(--spw-freshness-weight, 0.62)));
+/* substrate-ecology.css reads the beat on the root while the page settles.
+   That window is bounded by loading-ecology, so the root write stays there. */
+:where(html[data-spw-loading-ecology-phase="settling"][data-spw-playing="on"]) {
+  --spw-ecology-beat-align: calc(0.18 + (var(--spw-freshness-weight, 0.62) * 0.42));
+}
+
+:where(html[data-spw-freshness-pulse]) :where(
+  .spw-chip, .syntax-token, [data-spw-operator], [data-spw-interaction-contract],
+  [data-spw-module], [data-spw-image-reward], [data-spw-image-discovery]
+) {
   --spw-ecology-twinkle: calc(0.34 * var(--spw-freshness-weight, 0.62));
-  transition:
-    --spw-microinteraction-pulse-scale var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease),
-    --spw-ecology-twinkle var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease);
 }
 
-:where(html[data-spw-freshness-pulse="beat-prime"]) {
-  --spw-salience-weight: max(var(--spw-salience-weight, 0.34), calc(0.48 + (var(--spw-freshness-weight, 0.62) * 0.22)));
-}
-
-:where(html[data-spw-freshness-pulse^="phase-"]) {
-  --spw-interaction-phase-weight: max(
-    var(--spw-interaction-phase-weight, 0),
-    calc(0.28 + (var(--spw-freshness-weight, 0.62) * 0.24))
-  );
-}
-
-:where(html[data-spw-freshness-pulse="component-lifecycle"]) {
-  --spw-interaction-loop-preview: 1;
-}
-
-:where(html[data-spw-freshness-pulse="settings-tuning"]) {
-  --spw-site-rhythm-density: max(var(--spw-site-rhythm-density, 0.5), calc(0.62 + (var(--spw-freshness-weight, 0.62) * 0.28)));
-}
+/* Removed root writes, each inert or harmful:
+   --spw-microinteraction-pulse-scale, salience weight, and loop preview had no
+   reader of the root value; `--x: max(var(--x), …)` on one element is a cycle,
+   so the phase-pulse rule reset --spw-interaction-phase-weight to 0 exactly when
+   a phase pulsed, and the settings-tuning rule reset rhythm density to its
+   initial value. The rhythm ornament now reads the tuning pulse locally. */
 
 :where(html[data-spw-freshness-pulse] :where(
   .spw-chip,
@@ -365,9 +379,15 @@ html[data-spw-freshness-pulse] {
   transform: scale(calc(1 + (0.06 * var(--spw-freshness-weight, 0.62))));
 }
 
-:where(html[data-spw-reduce-motion="on"][data-spw-playing="on"]),
-:where(html[data-spw-reduce-motion="on"][data-spw-freshness-pulse]) {
+:where(html[data-spw-reduce-motion="on"]) :where(
+  .spw-chip, .syntax-token, [data-spw-operator], [data-spw-interaction-contract],
+  [data-spw-module], [data-spw-image-reward], [data-spw-image-discovery]
+) {
   --spw-ecology-beat-align: 0;
   --spw-ecology-twinkle: 0;
+}
+
+:where(html[data-spw-reduce-motion="on"][data-spw-loading-ecology-phase="settling"]) {
+  --spw-ecology-beat-align: 0;
 }
 }

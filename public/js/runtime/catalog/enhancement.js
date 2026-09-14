@@ -1239,6 +1239,7 @@ export const ENHANCEMENT_DEFS = [
     describes: 'rhythm[beat|freshness]{13-cycle|prime} settings-tuned pulse cadence',
     updates: [
       'html:structural:data-spw-beat',
+      'html:structural:data-spw-beat-prime',
       'html:structural:data-spw-playing',
       'html:flourish:data-spw-freshness-pulse',
     ],

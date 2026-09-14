@@ -37,8 +37,8 @@
       "css-var:--spw-runtime-enhancement-intensity",
       "css-var:--spw-runtime-feature-intensity",
       "css-var:--spw-runtime-layer-count",
-      "css-var:--spw-site-rhythm-density",
-      "css-var:--spw-site-rhythm-tempo"
+      "css-var:--spw-runtime-rhythm-tempo",
+      "css-var:--spw-site-rhythm-density"
     ],
     "attention-section-handle": [
       "attr:data-spw-region-preview"
@@ -314,7 +314,6 @@
       "css-var:--spw-relational-factor",
       "css-var:--spw-semantic-density-factor",
       "css-var:--spw-semantic-metadata-factor",
-      "css-var:--spw-site-rhythm-tempo",
       "css-var:--spw-spacing-scale",
       "css-var:--spw-surface-permeability-base",
       "css-var:--spw-svg-caption-opacity",
@@ -470,10 +469,6 @@
     "css-var:--field-balance": [
       "(file:public/js/interface/wonder-memory.js)",
       "attention-section-handle"
-    ],
-    "css-var:--spw-site-rhythm-tempo": [
-      "(module-loader)",
-      "site-settings"
     ]
   }
 }

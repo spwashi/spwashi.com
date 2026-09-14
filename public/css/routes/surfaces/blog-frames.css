@@ -68,7 +68,7 @@
   --blog-frame-objective-opacity: 0.48;
   --blog-frame-subjective-opacity: 0.48;
   
-  border-color: color-mix(in srgb, var(--blog-accent) calc(48% + var(--blog-rhythm-accent-mix, 0%)), var(--blog-line));
+  border-color: color-mix(in srgb, var(--blog-accent) calc(48% + var(--blog-rhythm-accent-mix, 0%) + var(--blog-rhythm-beat-lift, 0%)), var(--blog-line));
   box-shadow:
     0 0 0 3px var(--blog-focus-ring),
     0 0.6rem 1.6rem rgba(0, 0, 0, var(--blog-rhythm-shadow-strength, 0.06));
@@ -235,12 +235,18 @@
    7. Beat-aware ambient emphasis
    ========================================================================== */
 
-:where(html[data-spw-playing="on"][data-spw-beat="1"] body[data-spw-surface="blog"]) {
-  --blog-rhythm-accent-mix: calc(var(--blog-rhythm-accent-mix) + 3%);
+/* The beat lift is its own term. `--blog-rhythm-accent-mix: calc(var(--blog-rhythm-accent-mix) + 3%)`
+   referenced itself on one element, which CSS resolves as a cycle: prime beats
+   dropped the phase accent to its 0% fallback instead of lifting it. The lift is
+   scoped to the frames that spend it, not written on body each beat. */
+:where(html[data-spw-playing="on"][data-spw-beat-prime="1"]) :where(body[data-spw-surface="blog"]) :where(.spw-frame) {
+  --blog-rhythm-beat-lift: 3%;
 }
 
-:where(html[data-spw-playing="on"][data-spw-beat="5"] body[data-spw-surface="blog"]),
-:where(html[data-spw-playing="on"][data-spw-beat="9"] body[data-spw-surface="blog"]),
-:where(html[data-spw-playing="on"][data-spw-beat="13"] body[data-spw-surface="blog"]) {
-  --blog-rhythm-accent-mix: calc(var(--blog-rhythm-accent-mix) + 2%);
+:where(
+  html[data-spw-playing="on"][data-spw-beat-prime="5"],
+  html[data-spw-playing="on"][data-spw-beat-prime="9"],
+  html[data-spw-playing="on"][data-spw-beat-prime="13"]
+) :where(body[data-spw-surface="blog"]) :where(.spw-frame) {
+  --blog-rhythm-beat-lift: 2%;
 }

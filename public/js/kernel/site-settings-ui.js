@@ -605,8 +605,38 @@ const syncSettingsResonanceRails = (root = document, settings = getSiteSettings(
   });
 };
 
+const RHYTHM_AUTHORITY_READOUT = Object.freeze({
+  authored: 'the authored baseline',
+  tuner: 'your interaction tuner',
+  runtime: 'the live runtime',
+});
+
+/* The rail ornament plays the resolved tempo in CSS; the readout names the
+   number and who set it. Sources are read from the root's inline style — the
+   settings engine and module loader own those values — so the readout reports
+   the chosen tempo without forcing a style recalc or catching a transition
+   mid-flight. */
+const syncSiteRhythmReadouts = (root = document, settings = getSiteSettings()) => {
+  const readouts = root.querySelectorAll?.('[data-spw-site-rhythm-readout]');
+  if (!readouts?.length) return;
+  const authority = normalizeSiteSettings(settings).rhythmAuthority || 'runtime';
+  const inlineTempo = (name) => Number.parseFloat(document.documentElement.style.getPropertyValue(name));
+  const tuner = inlineTempo('--spw-tuner-rhythm-tempo');
+  const runtime = inlineTempo('--spw-runtime-rhythm-tempo');
+  const tempo = authority === 'authored'
+    ? 1
+    : authority === 'tuner' || !Number.isFinite(runtime) ? tuner : runtime;
+
+  readouts.forEach((node) => {
+    const kind = node.getAttribute('data-spw-site-rhythm-readout');
+    if (kind === 'tempo') writeTextContent(node, `${(Number.isFinite(tempo) ? tempo : 1).toFixed(2)}×`);
+    if (kind === 'authority') writeTextContent(node, RHYTHM_AUTHORITY_READOUT[authority] || RHYTHM_AUTHORITY_READOUT.runtime);
+  });
+};
+
 const syncSettingsUx = (root = document, settings = getSiteSettings()) => {
   syncSettingsReadouts(root, settings);
+  syncSiteRhythmReadouts(root, settings);
   syncSettingsResonanceRails(root, settings);
   syncDeviationReadouts(root, settings);
   syncPresetControls(root, settings);
@@ -1426,6 +1456,9 @@ export const initSiteSettingsPage = () => {
   const bindings = initSiteSettingsBindings(manager);
   const routing = initSettingsCategoryRouting(manager);
   const queryLab = bindSettingsQueryLab();
+  /* The live runtime tempo changes as modules mount, without a settings change. */
+  const onRuntimeTokens = () => syncSiteRhythmReadouts(document);
+  document.addEventListener('spw:runtime-tokens-updated', onRuntimeTokens);
 
   let queryComposers = { cleanup() {}, refresh() {} };
   import('/public/js/runtime/query-link-composer.js')
@@ -1440,6 +1473,7 @@ export const initSiteSettingsPage = () => {
       routing?.cleanup?.();
       queryLab?.cleanup?.();
       queryComposers?.cleanup?.();
+      document.removeEventListener('spw:runtime-tokens-updated', onRuntimeTokens);
     },
     refresh() {
       bindings?.refresh?.();

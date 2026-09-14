@@ -100,6 +100,7 @@ const QUERY_SETTING_ALIASES = Object.freeze({
   layout: 'layoutTuner',
   spacing: 'spacingTuner',
   interaction: 'interactionTuner',
+  rhythm: 'rhythmAuthority',
   flavor: 'pedagogicalFlavor',
   lifecycle: 'componentLifecycle',
   narrative: 'narrativeMode',
@@ -932,6 +933,7 @@ const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
     spwSpacingTuner: normalized.spacingTuner,
     spwLayoutTuner: normalized.layoutTuner,
     spwInteractionTuner: normalized.interactionTuner,
+    spwSiteRhythmAuthority: normalized.rhythmAuthority,
     spwComponentLifecycle: normalized.componentLifecycle,
     spwDebugMode: normalized.debugMode,
     spwShowFrameMetadata: normalized.showFrameMetadata,
@@ -1093,7 +1095,9 @@ class SiteSettingsManager {
       '--spw-microinteraction-pulse-intensity': modifiers.tuning.pulseIntensity.toFixed(2),
       '--spw-beat-interval-ms': String(modifiers.tuning.beatIntervalMs),
       '--spw-freshness-weight': modifiers.tuning.freshnessWeight.toFixed(2),
-      '--spw-site-rhythm-tempo': modifiers.tuning.beatTempo.toFixed(2),
+      /* One source of site rhythm tempo; the ornament layer resolves
+         --spw-site-rhythm-tempo from data-spw-site-rhythm-authority. */
+      '--spw-tuner-rhythm-tempo': modifiers.tuning.beatTempo.toFixed(2),
       '--shape-element': modifiers.contour.shapeElement,
       '--shape-component': modifiers.contour.shapeComponent,
       '--shape-surface': modifiers.contour.shapeSurface,
