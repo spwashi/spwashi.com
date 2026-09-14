@@ -3,7 +3,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { writeTextContent } from '/public/js/kernel/dom-contracts.js';
+import { writeDatasetValue, writeTextContent } from '/public/js/kernel/dom-contracts.js';
 import {
   AUTHOR_WORKFLOW_DEFINITIONS,
   normalizeAuthorMode,
@@ -287,15 +287,15 @@ const writeSettingsToScope = (root, settings) => {
 
 const setPressedState = (node, isActive) => {
   if (!(node instanceof HTMLElement)) return;
-  node.dataset.siteSettingActive = isActive ? 'true' : 'false';
+  writeDatasetValue(node, 'siteSettingActive', isActive ? 'true' : 'false');
   if (node instanceof HTMLButtonElement || node.getAttribute('role') === 'button') {
-    node.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    writeAttributeIfChanged(node, 'aria-pressed', isActive ? 'true' : 'false');
   }
 };
 
 const primeButtonLikeControl = (node) => {
   if (!(node instanceof HTMLElement)) return;
-  if (!(node instanceof HTMLButtonElement)) node.setAttribute('role', 'button');
+  if (!(node instanceof HTMLButtonElement)) writeAttributeIfChanged(node, 'role', 'button');
   if (!(node instanceof HTMLButtonElement) && !(node instanceof HTMLAnchorElement) && !node.hasAttribute('tabindex')) {
     node.setAttribute('tabindex', '0');
   }
@@ -341,10 +341,10 @@ const primeSettingTriggerControl = primeButtonLikeControl;
 
 const setSettingTriggerState = (node, isActive) => {
   if (!(node instanceof HTMLElement)) return;
-  node.dataset.siteSettingActive = isActive ? 'true' : 'false';
-  if (node instanceof HTMLAnchorElement) node.removeAttribute('aria-current');
+  writeDatasetValue(node, 'siteSettingActive', isActive ? 'true' : 'false');
+  if (node instanceof HTMLAnchorElement && node.hasAttribute('aria-current')) node.removeAttribute('aria-current');
   if (node instanceof HTMLButtonElement || node.getAttribute('role') === 'button') {
-    node.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    writeAttributeIfChanged(node, 'aria-pressed', isActive ? 'true' : 'false');
   }
 };
 
@@ -513,6 +513,15 @@ const syncSettingTriggers = (root = document, settings = getSiteSettings()) => {
   });
 };
 
+/* Settings syncs rewrite the same controls on every change; an attribute write
+   that repeats the current value still queues mutation records and, between
+   the root style reads other modules make, re-invalidates style. */
+const writeAttributeIfChanged = (node, name, value) => {
+  if (node.getAttribute(name) === value) return false;
+  node.setAttribute(name, value);
+  return true;
+};
+
 const syncPresetControls = (root = document, settings = getSiteSettings()) => {
   const activePreset = findActivePreset(settings);
 
@@ -523,16 +532,16 @@ const syncPresetControls = (root = document, settings = getSiteSettings()) => {
     const subset = presetName && presetIsSubsetOfSettings(presetName, settings);
     primeButtonLikeControl(node);
     setPressedState(node, Boolean(exact || subset));
-    node.dataset.presetActive = exact ? 'exact' : subset ? 'partial' : 'false';
-    node.dataset.siteSettingActive = (exact || subset) ? 'true' : 'false';
+    writeDatasetValue(node, 'presetActive', exact ? 'exact' : subset ? 'partial' : 'false');
+    writeDatasetValue(node, 'siteSettingActive', (exact || subset) ? 'true' : 'false');
     if (presetName) {
-      node.setAttribute('aria-label', `${PRESET_LABELS[presetName] || presetName} preset. ${PRESET_DESCRIPTIONS[presetName] || ''}`.trim());
+      writeAttributeIfChanged(node, 'aria-label', `${PRESET_LABELS[presetName] || presetName} preset. ${PRESET_DESCRIPTIONS[presetName] || ''}`.trim());
     }
   });
 
   root.querySelectorAll?.('[data-site-active-preset]').forEach((node) => {
-    node.textContent = activePreset ? (PRESET_LABELS[activePreset] || activePreset) : 'Custom';
-    node.dataset.presetState = activePreset || 'custom';
+    writeTextContent(node, activePreset ? (PRESET_LABELS[activePreset] || activePreset) : 'Custom');
+    writeDatasetValue(node, 'presetState', activePreset || 'custom');
   });
 };
 
@@ -542,7 +551,7 @@ const syncUxRecipeControls = (root = document) => {
     const recipeName = node.getAttribute('data-site-settings-recipe');
     const recipe = getUxRecipe(recipeName);
     primeButtonLikeControl(node);
-    if (recipe) node.setAttribute('aria-label', recipe.label);
+    if (recipe) writeAttributeIfChanged(node, 'aria-label', recipe.label);
   });
 };
 
@@ -553,7 +562,7 @@ const syncSettingsFieldStates = (root = document, settings = getSiteSettings()) 
     if (!(field instanceof HTMLElement)) return;
     const name = field.getAttribute('name');
     if (!name || !isKnownSetting(name)) return;
-    field.dataset.siteSettingDefault = normalized[name] === DEFAULT_SITE_SETTINGS[name] ? 'true' : 'false';
+    writeDatasetValue(field, 'siteSettingDefault', normalized[name] === DEFAULT_SITE_SETTINGS[name] ? 'true' : 'false');
   });
 
   root.querySelectorAll?.('.settings-fieldset, fieldset, .settings-category').forEach((container) => {
@@ -565,8 +574,8 @@ const syncSettingsFieldStates = (root = document, settings = getSiteSettings()) 
     );
     if (!relevantNames.size) return;
     const deviationCount = [...relevantNames].filter((name) => normalized[name] !== DEFAULT_SITE_SETTINGS[name]).length;
-    container.dataset.siteSettingDeviationCount = String(deviationCount);
-    container.dataset.siteSettingDeviationState = deviationCount > 0 ? 'deviated' : 'default';
+    writeDatasetValue(container, 'siteSettingDeviationCount', String(deviationCount));
+    writeDatasetValue(container, 'siteSettingDeviationState', deviationCount > 0 ? 'deviated' : 'default');
   });
 };
 
@@ -644,6 +653,37 @@ const syncSettingsUx = (root = document, settings = getSiteSettings()) => {
   syncSettingsFieldStates(root, settings);
 };
 
+/* One settings change reaches the settings page through several bindings — the
+   form scope that saved it, standalone triggers, readouts, per-field bindings —
+   and each used to run a full sync synchronously inside the save, interleaved
+   with other modules' style reads. They now share one pass per root at the end
+   of the task, with the latest settings. A pending document pass covers any
+   element root inside it. */
+const pendingSettingsUx = new Map();
+let settingsUxFlushQueued = false;
+
+const flushSettingsUx = () => {
+  settingsUxFlushQueued = false;
+  const pending = [...pendingSettingsUx];
+  pendingSettingsUx.clear();
+  const documentPass = pending.find(([root]) => root === document);
+  if (documentPass) {
+    syncSettingsUx(document, documentPass[1]);
+    return;
+  }
+  pending.forEach(([root, settings]) => {
+    if (root?.isConnected === false) return;
+    syncSettingsUx(root, settings);
+  });
+};
+
+const scheduleSettingsUx = (root = document, settings = getSiteSettings()) => {
+  pendingSettingsUx.set(root, settings);
+  if (settingsUxFlushQueued) return;
+  settingsUxFlushQueued = true;
+  queueMicrotask(flushSettingsUx);
+};
+
 const writeFieldError = (root, name, message = '') => {
   root.querySelectorAll?.(`[data-site-setting-errors="${CSS.escape(name)}"]`).forEach((node) => {
     node.textContent = message;
@@ -680,7 +720,7 @@ const bindSettingsField = (field, options = {}) => {
 
   const syncFromStore = (settings = getSiteSettings()) => {
     writeSettingsToScope(root, settings);
-    syncSettingsUx(root, settings);
+    scheduleSettingsUx(root, settings);
   };
 
   const saveField = () => {
@@ -751,7 +791,7 @@ const bindSettingsScope = (root, options = {}) => {
   const setStatus = (message, type = 'info') => writeSettingsStatus(statusNode, message, type);
   const syncFromStore = (settings = getSiteSettings()) => {
     writeSettingsToScope(root, settings);
-    syncSettingsUx(root, settings);
+    scheduleSettingsUx(root, settings);
   };
 
   const saveScope = () => {
@@ -916,9 +956,9 @@ const bindStandaloneSettingTriggers = (root = document, options = {}) => {
 
   root.addEventListener('click', handleClick);
   root.addEventListener('keydown', handleKeydown);
-  syncSettingsUx(root);
+  scheduleSettingsUx(root);
 
-  const off = bus.on?.('settings:changed', (event) => syncSettingsUx(root, event.detail));
+  const off = bus.on?.('settings:changed', (event) => scheduleSettingsUx(root, event.detail));
 
   return {
     cleanup() {
@@ -933,7 +973,7 @@ const bindStandaloneSettingTriggers = (root = document, options = {}) => {
 };
 
 const bindSettingsReadouts = (root = document) => {
-  const sync = (settings = getSiteSettings()) => syncSettingsUx(root, settings);
+  const sync = (settings = getSiteSettings()) => scheduleSettingsUx(root, settings);
   sync();
   const off = bus.on?.('settings:changed', (event) => sync(event.detail));
   return {
