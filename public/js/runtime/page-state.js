@@ -296,6 +296,7 @@ function updateFixedViewportCorrection() {
 
 function initFixedViewportCorrection() {
   let frame = 0;
+  let measureTimer = 0;
   let observer = null;
   let lastRunAt = 0;
   let trailing = 0;
@@ -308,7 +309,7 @@ function initFixedViewportCorrection() {
     updateFixedViewportCorrection();
   };
   const schedule = () => {
-    if (frame) return;
+    if (frame || measureTimer) return;
     const since = Date.now() - lastRunAt;
     if (since < MIN_MEASURE_INTERVAL_MS) {
       if (trailing) return;
@@ -318,9 +319,16 @@ function initFixedViewportCorrection() {
       }, MIN_MEASURE_INTERVAL_MS - since);
       return;
     }
+    /* Measure after the frame's own style and layout pass. A frame callback runs
+       before that pass, so after a settings change or chrome mutation had
+       invalidated style, the rect reads here paid the whole pending
+       recalculation in script. A task queued from the frame finds layout clean. */
     frame = window.requestAnimationFrame(() => {
       frame = 0;
-      runUpdate();
+      measureTimer = window.setTimeout(() => {
+        measureTimer = 0;
+        runUpdate();
+      }, 0);
     });
   };
   /* Window scroll cannot displace fixed chrome while the visual viewport matches
@@ -385,6 +393,7 @@ function initFixedViewportCorrection() {
 
   return () => {
     if (frame) window.cancelAnimationFrame(frame);
+    if (measureTimer) window.clearTimeout(measureTimer);
     if (trailing) window.clearTimeout(trailing);
     document.removeEventListener(FLOATING_CHROME_SETTLED_EVENT, schedule);
     observer?.disconnect();
