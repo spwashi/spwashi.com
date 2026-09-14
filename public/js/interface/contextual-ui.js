@@ -531,7 +531,8 @@ function markAuthoredNavVisual(header) {
   }
   const prior = new Set((header.dataset.spwNavAnnotatedBy || '').split(/\s+/).filter(Boolean));
   prior.add('contextual-ui');
-  header.dataset.spwNavAnnotatedBy = [...prior].join(' ');
+  const next = [...prior].join(' ');
+  if (header.dataset.spwNavAnnotatedBy !== next) header.dataset.spwNavAnnotatedBy = next;
 }
 
 function updateRouteMenu() {
@@ -638,13 +639,10 @@ function updateHeaderFit() {
 
   if (host && hostWasHidden === false) host.hidden = false;
 
-  if (ratio > 1.12) {
-    header.dataset.spwNavFit = 'compressed';
-  } else if (ratio > 0.96) {
-    header.dataset.spwNavFit = 'tight';
-  } else {
-    header.dataset.spwNavFit = 'roomy';
-  }
+  const fit = ratio > 1.12 ? 'compressed' : ratio > 0.96 ? 'tight' : 'roomy';
+  /* The header ResizeObserver calls this on every header size change; an
+     unchanged fit is not a mutation. */
+  if (header.dataset.spwNavFit !== fit) header.dataset.spwNavFit = fit;
 }
 
 function bindRouteMenuDismissal() {

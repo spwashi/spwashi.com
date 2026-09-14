@@ -963,10 +963,13 @@ export function initSpwShellDisclosure(options = {}) {
     closeToggleMenu('hash');
   };
 
+  /* A settings save emits two change events and rewrites root style. Running
+     the shell sync synchronously in each read window.scrollY and nav widths
+     against that just-invalidated style, forcing a full layout inside the save,
+     twice. Settings do not move the scroll position; the measured sync after a
+     frame's style pass gives the same result, once. */
   const handleSettingsChanged = () => {
-    syncScrollState(header, state);
-    syncDisclosure(header, nav, navList, toggle, state, 'settings');
-    syncUtilityRow(utilityRow);
+    scheduleMeasuredSync('settings');
   };
 
   const handleTraceChange = () => {

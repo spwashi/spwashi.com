@@ -401,7 +401,8 @@ function markHeaderNavAnnotated() {
   if (!header.dataset.spwNavVisual) header.dataset.spwNavVisual = 'authored';
   const prior = new Set((header.dataset.spwNavAnnotatedBy || '').split(/\s+/).filter(Boolean));
   prior.add('navigation-spells');
-  header.dataset.spwNavAnnotatedBy = [...prior].join(' ');
+  const next = [...prior].join(' ');
+  if (header.dataset.spwNavAnnotatedBy !== next) header.dataset.spwNavAnnotatedBy = next;
 }
 
 function applyTokens(root = document) {

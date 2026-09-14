@@ -796,8 +796,11 @@ function annotateCauldronCandidates(root = document) {
   nodes.forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
     if (node.closest('[data-spw-groundable="false"]')) return;
-    node.dataset.spwCauldronCandidate = node.dataset.spwCauldronCandidate || 'true';
-    node.dataset.spwGestureContract = node.dataset.spwGestureContract || 'tap:inspect hold:prime-to-cauldron';
+    /* This pass re-walks every candidate whenever matching nodes are added
+       anywhere; assigning an existing value still queues a mutation record for
+       every subtree observer, so only missing values are written. */
+    if (!node.dataset.spwCauldronCandidate) node.dataset.spwCauldronCandidate = 'true';
+    if (!node.dataset.spwGestureContract) node.dataset.spwGestureContract = 'tap:inspect hold:prime-to-cauldron';
     if (!node.title) node.title = 'tap to inspect; hold to gather as a cauldron ingredient';
     annotateLivingTermRole(node);
   });
