@@ -79,39 +79,63 @@ const DEFAULT_FEED = Object.freeze({
       },
     },
   },
+  /* The cycle pair leads the section and matches the static HTML, so the first
+     thing a reader sees does not change when the feed hydrates. Attention runs
+     from what changed (try it), to a question worth carrying, to the close. */
+  cycle: {
+    promo: {
+      label: 'Try what changed',
+      operator: '@',
+      title: 'Change one setting and watch the page answer',
+      summary: 'Settings now resync once instead of four times, so a tuner change lands in about half the time.',
+      href: '/settings/#interaction-tuner-settings',
+      cta: 'Try the interaction tuner',
+      why: 'The measurements are on Now; the feel is one click away.',
+      copyUnit: 'home.promoWonderCycle.cycle.promo',
+      presentation: 'inline' as PromoPresentation,
+      promotion: {
+        kind: 'release' as PromotionKind,
+        audience: 'returning readers checking whether the new cycle changed anything they can feel',
+        offer: 'Faster settings changes and pages that rest once they settle',
+        proof: 'Now lists the September 14 before-and-after measurements.',
+        objection: 'A performance claim should be something you can try, not only read.',
+        urgency: 'Live now; the B-cycle closes September 26.',
+        tone: 'clear',
+        theme: 'signal',
+        handles: ['settings', 'performance', 'cycle', 'receipts'],
+        ctaStyle: 'primary',
+        presentation: 'inline' as PromoPresentation,
+      },
+    },
+    wonder: {
+      label: 'Cycle question',
+      operator: '?',
+      title: "Who should set the site's tempo: you, the page, or the stylesheet?",
+      summary: 'Rhythm authority is new this cycle. Choose an author, and the rail beside it plays the tempo that wins.',
+      href: '/settings/#rhythm-authority-settings',
+      cta: 'Choose a rhythm author',
+      why: 'Practice: pick one author, read a few pages, and notice whether the rhythm helps or distracts.',
+      copyUnit: 'home.promoWonderCycle.cycle.wonder',
+    },
+  },
   daily: [
     {
       promo: {
-                label: 'Release record',
-                operator: '@',
-                title: 'Start the new cycle from the September 13 record',
-                summary: 'Scan the three-surface close, inspect the receipts, then choose one route to carry toward the next close.',
-                href: '/now/',
-                cta: 'Read the release',
-                why: 'A completed close becomes a clear starting point for the next one.',
-        presentation: 'inline' as PromoPresentation,
-        promotion: {
-          kind: 'release' as PromotionKind,
-          audience: 'returning readers, collaborators, and patrons deciding what to follow after the close',
-          offer: 'A readable September 13 checkpoint across the site, workbench, and lore.land',
-          proof: 'The Now route names the shipped surfaces, local verification gate, and paths that remain open.',
-          objection: 'A release record should show consequence instead of reciting activity.',
-                    urgency: 'The release record is open; the next useful move begins from its receipts.',
-          tone: 'clear',
-          theme: 'signal',
-          handles: ['release', 'receipts', 'site', 'workbench', 'lore.land'],
-          ctaStyle: 'primary',
-          presentation: 'inline' as PromoPresentation,
-        },
+        label: 'Release record',
+        operator: '@',
+        title: 'Revisit the September 13 record',
+        summary: 'The three-surface close and its receipts stay on Now while this cycle builds on them.',
+        href: '/now/#release-receipts',
+        cta: 'Open the receipts',
+        why: 'A completed close is the ground this cycle stands on.',
       },
       wonder: {
-                label: 'Cycle question',
-                operator: '?',
-                title: 'What can become a practice before the next close?',
-                summary: 'Follow one receipt into its route. If the relation still helps there, give it a place in this cycle.',
-                href: '/now/#release-receipts',
-                cta: 'Follow the receipts',
-                why: 'Practice: pick one line, open its proof, and decide what should reach the next close.',
+        label: 'Daily wonder',
+        operator: '?',
+        title: 'Which receipt still matters a cycle later?',
+        summary: 'Pick one line from the close and follow it into its route. If it still helps there, it belongs in this cycle.',
+        href: '/now/#release-receipts',
+        cta: 'Pick one receipt',
       },
     },
     {
@@ -311,9 +335,10 @@ function renderCard(
     ariaHidden: true,
   });
   const headingText = cleanText(item.title || fallbackTitle(kind));
+  /* No title tooltip: it repeated the visible heading on hover and gave screen
+     readers the same words twice. */
   const heading = el('h3');
   heading.textContent = headingText;
-  heading.title = headingText;
   titleRow.append(operator, heading);
 
   article.append(label, titleRow);
@@ -392,7 +417,7 @@ function renderForecast(date: Date, locale: LocaleCode): HTMLElement {
     const selected = forecasts[selectedIndex];
     if (!selected) return;
     title.textContent = `Next close: ${selected.cycle} · ${forecastDateLabel(selected.date, locale)}`;
-    description.textContent = `${forecastTiming(selected)} Choose one path to carry toward it.`;
+    description.textContent = `${forecastTiming(selected)} Carry what you try here toward it.`;
     buttons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === selectedIndex)));
     steps.forEach((step, index) => step.classList.toggle('is-selected', index === selectedIndex));
   };
@@ -427,12 +452,17 @@ function renderForecast(date: Date, locale: LocaleCode): HTMLElement {
   return forecast;
 }
 
+/* Reading order is the attention order: what changed this cycle and a question
+   to carry (the pinned cycle pair, identical to the static HTML so hydration
+   does not swap the cards under the reader), then the days left to carry it,
+   then the week's quieter pair. The weekday pair stays in the feed for
+   discovery notices rather than competing here. */
 export function renderFeed(host: Element, feed: PromoWonderFeed, date = new Date()): void {
-  const daily = pickDaily(feed, date);
+  const cycle = feed.cycle?.promo || feed.cycle?.wonder ? feed.cycle : DEFAULT_FEED.cycle;
   const weekly = pickWeekly(feed, date);
   const locale = feedLocale(feed);
   const releaseCycle = releaseCycleForDate(date);
-  const dailyCadence = dailyCadenceForDate(date);
+  const nextClose = upcomingReleaseForecasts(date, 1)[0];
   const dayLabel = cleanText(date.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' }));
   const dayStamp = [
     date.getFullYear(),
@@ -450,17 +480,17 @@ export function renderFeed(host: Element, feed: PromoWonderFeed, date = new Date
   dayTime.dateTime = dayStamp;
   dayTime.textContent = dayLabel;
   meta.append(dayTime);
-  if (releaseCycle) {
-    const releaseMarker = el('strong', 'promo-wonder-cycle__release');
-    releaseMarker.textContent = `${releaseCycle} release day`;
-    meta.append(' · ', releaseMarker);
-  }
+  const releaseMarker = el('strong', 'promo-wonder-cycle__release');
+  releaseMarker.textContent = releaseCycle
+    ? `${releaseCycle} release day`
+    : `${nextClose?.cycle || 'Next cycle'} in progress`;
+  meta.append(' · ', releaseMarker);
 
   const grid = el('div', 'promo-wonder-cycle__grid');
   grid.dataset.spwRegionFlow = 'overlay';
   grid.append(
-    renderCard(daily.promo, 'promo', dailyCadence, locale),
-    renderCard(daily.wonder, 'wonder', dailyCadence, locale),
+    renderCard(cycle?.promo, 'promo', 'cycle', locale),
+    renderCard(cycle?.wonder, 'wonder', 'cycle', locale),
   );
 
   const weeklyGrid = el('div', 'promo-wonder-cycle__weekly');
@@ -476,7 +506,7 @@ export function renderFeed(host: Element, feed: PromoWonderFeed, date = new Date
 
   const mount = resolveMount(host);
   mount.classList.add('promo-wonder-cycle__live');
-  mount.replaceChildren(meta, renderForecast(date, locale), grid, weeklyGrid);
+  mount.replaceChildren(meta, grid, renderForecast(date, locale), weeklyGrid);
 }
 
 export async function initPromoWonderCycle(): Promise<void> {

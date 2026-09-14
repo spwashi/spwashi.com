@@ -83,6 +83,9 @@ export type PromoWonderFeed = {
   sourceLocale?: LocaleCode;
   localization?: LocalizationMeta;
   promotionPlaybook?: PromotionPlaybook;
+  /* Pinned for the current release cycle. It is what the static HTML shows, so
+     hydration keeps the same primary pair instead of swapping in the weekday's. */
+  cycle?: PromoWonderPair;
   daily?: PromoWonderPair[];
   weekly?: PromoWonderPair[];
 };

@@ -85,6 +85,9 @@ export function validatePromoWonderFeed(value) {
             validatePromoWonderPair(entry, `weekly[${index}]`, issues);
         });
     }
+    if (value.cycle != null) {
+        validatePromoWonderPair(value.cycle, 'cycle', issues);
+    }
     if (value.localization != null && !isRecord(value.localization)) {
         pushIssue(issues, 'localization', 'localization must be an object');
     }
