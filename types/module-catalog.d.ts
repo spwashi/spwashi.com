@@ -84,6 +84,11 @@ export type SpwModuleElectrostatics = {
   field?: string;
 };
 
+/**
+ * Loader-mounted modules return this handle. Do not also ctx.addCleanup the
+ * same function — destroy() would run it twice, and module unmount would miss
+ * observers registered only on the stack.
+ */
 export type SpwModuleMountResult =
   | void
   | (() => void)

@@ -203,8 +203,6 @@ export function initLearnabilityLedger(ctx = null) {
     window.clearTimeout(pulseTimer);
   };
 
-  ctx?.addCleanup?.(cleanup);
-
   return {
     cleanup,
     refresh: () => syncLearnabilityLedger(),

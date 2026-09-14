@@ -355,8 +355,6 @@ function createChargeFieldInstance(ctx = null) {
       document.documentElement.style.removeProperty(property);
     });
   };
-  ctx?.addCleanup?.(cleanup);
-
   return { cleanup, syncRoot, syncReadouts };
 }
 

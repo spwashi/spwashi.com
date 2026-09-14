@@ -504,8 +504,6 @@ export function initRewardUI(ctx = {}) {
     delete html.dataset.spwRewardSalience;
   };
 
-  ctx.addCleanup?.(cleanup);
-
   return {
     cleanup,
     refresh: () => { renderDock(); renderSettingsPanels(); },

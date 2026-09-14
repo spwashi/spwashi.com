@@ -288,8 +288,6 @@ export function initGestureAnatomy(ctx = null) {
     });
   };
 
-  ctx?.addCleanup?.(cleanup);
-
   return {
     cleanup,
     refresh: () => refreshGestureAnatomy(),

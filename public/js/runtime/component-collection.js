@@ -291,8 +291,6 @@ export function initComponentCollection(ctx = {}) {
     if (window.spwComponentCollection === api) delete window.spwComponentCollection;
   };
 
-  ctx.addCleanup?.(cleanup);
-
   return {
     cleanup,
     refresh: () => writeTokens(),

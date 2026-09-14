@@ -14,6 +14,7 @@ import { describeModuleExport } from '../../public/js/runtime/module-export-cont
 import {
   listNamedInitAdapterExports,
   moduleSourceExportsName,
+  moduleSourceRegistersDuplicateCleanup,
 } from '../typed/runtime-contracts.mjs';
 import {
   collectQuotedCustomProperties,
@@ -419,6 +420,31 @@ test('module orchestration groups one flat catalog definition for loaders and in
   assert.equal(orchestration.effects.electrostatics.role, 'capacitor');
   assert.equal(orchestration.lifecycle.mount, 'catalog-adapter');
   assert.equal(orchestration.lifecycle.cleanup, 'catalog-unmount');
+});
+
+test('catalog modules must not addCleanup the same handle they return', () => {
+  assert.equal(
+    moduleSourceRegistersDuplicateCleanup(`
+      const cleanup = () => {};
+      ctx.addCleanup(cleanup);
+      return { cleanup };
+    `),
+    true,
+  );
+  assert.equal(
+    moduleSourceRegistersDuplicateCleanup(`
+      ctx.addCleanup?.(cleanupEventApi);
+      return cleanupEventApi;
+    `),
+    true,
+  );
+  assert.equal(
+    moduleSourceRegistersDuplicateCleanup(`
+      const cleanup = () => {};
+      return { cleanup, refresh: () => {} };
+    `),
+    false,
+  );
 });
 
 test('named catalog mount adapters must match a real init export', () => {

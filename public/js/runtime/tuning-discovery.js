@@ -312,7 +312,6 @@ export function revealTuningSurfaces({ persist = true } = {}) {
 
 export function initTuningDiscovery(ctx = null) {
   const unregister = registerDomSyncTask('tuning-discovery', () => scanTuningSurfaces(), ctx);
-  ctx?.addCleanup?.(unregister);
 
   return {
     cleanup: unregister,

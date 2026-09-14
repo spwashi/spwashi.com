@@ -102,14 +102,8 @@ const ALLOWED_JS_OWNER_DIRECTORIES = new Set([
 ]);
 const ALLOWED_TYPED_IMPORT_DIRECTORIES = new Set(['kernel', 'typed']);
 const ALLOWED_TYPED_IMPORT_ROOT_FILES = new Set(['site.js']);
-const KERNEL_TYPED_SHIMS = new Map([
-  ['bus', 'kernel/bus.js'],
-  ['feed-utils', 'kernel/feed-utils.js'],
-  ['runtime-environment', 'kernel/runtime-environment.js'],
-  ['module-timing-contract', 'kernel/module-timing-contract.js'],
-]);
 const TYPED_IMPORT_RE = /(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"]([^'"]*typed\/[^'"]+)['"]/g;
-const TYPED_SHIM_RE = /export\s+\*\s+from\s+['"]([^'"]+)['"]/;
+const TYPED_EXPORT_FROM_RE = /(?:export\s+\*\s+from|export\s+(?:type\s+)?\{[^}]+\}\s+from)\s+['"]([^'"]+)['"]/g;
 
 type RuntimeFamily = (typeof RUNTIME_FAMILIES)[number];
 
@@ -578,33 +572,28 @@ async function collectTypedImportViolations(): Promise<string[]> {
 async function collectKernelTypedShimIssues(): Promise<{ errors: string[]; shims: string[] }> {
   const errors: string[] = [];
   const shims: string[] = [];
+  const kernelDir = path.join(PUBLIC_JS_DIR, 'kernel');
+  const entries = await fs.readdir(kernelDir);
 
-  for (const [basename, shimPath] of KERNEL_TYPED_SHIMS) {
-    const absoluteShimPath = path.join(PUBLIC_JS_DIR, shimPath);
+  for (const name of entries.sort()) {
+    if (!name.endsWith('.js')) continue;
+    const shimPath = `kernel/${name}`;
+    const source = await fs.readFile(path.join(PUBLIC_JS_DIR, shimPath), 'utf8');
+    const typedTargets = [...source.matchAll(TYPED_EXPORT_FROM_RE)]
+      .map((match) => match[1].replace(/\\/g, '/'))
+      .filter((target) => target.includes('typed/'));
+    if (!typedTargets.length) continue;
+
     shims.push(shimPath);
-
-    if (!(await pathExists(absoluteShimPath))) {
-      errors.push(`missing kernel typed shim public/js/${shimPath} for public/ts/${basename}.ts.`);
-      continue;
+    const basename = name.replace(/\.js$/, '');
+    if (!(await pathExists(path.join(PUBLIC_TS_DIR, `${basename}.ts`)))) {
+      errors.push(`public/js/${shimPath} re-exports typed output but public/ts/${basename}.ts is missing.`);
     }
-
-    const source = await fs.readFile(absoluteShimPath, 'utf8');
-    const exportMatch = source.match(TYPED_SHIM_RE);
-
-    if (!exportMatch) {
-      errors.push(`public/js/${shimPath} must re-export from ../typed/${basename}.js.`);
-      continue;
-    }
-
-    const exportTarget = exportMatch[1].replace(/\\/g, '/');
     const expectedTarget = `../typed/${basename}.js`;
-
-    if (exportTarget !== expectedTarget) {
-      errors.push(`public/js/${shimPath} must re-export from ${expectedTarget}, not ${exportTarget}.`);
-    }
-
-    if (exportTarget.startsWith('/public/js/typed/')) {
-      errors.push(`public/js/${shimPath} must use a relative typed re-export (${expectedTarget}), not an absolute path.`);
+    for (const exportTarget of typedTargets) {
+      if (exportTarget !== expectedTarget) {
+        errors.push(`public/js/${shimPath} must re-export from ${expectedTarget}, not ${exportTarget}.`);
+      }
     }
   }
 
@@ -643,6 +632,19 @@ function importPathToAbsolute(importPath: string): string {
 
 const INIT_EXPORT_SOURCE_RE = /\bexport\s+(?:async\s+)?function\s+init[A-Z]\w*|\bexport\s+const\s+init[A-Z]\w*\s*=|\bexport\s+\{[^}]*\binit[A-Z]\w*|\bSPW_MODULE_EXPORT\b|\bspwModule\b|\bexport\s+default\s*\{[^}]*\bmount\b/;
 const NAMED_INIT_ADAPTER_RE = /\bmod\??\.(init[A-Z][A-Za-z0-9]*)\b/g;
+
+/**
+ * Loader-mounted modules return a cleanup handle. Registering that same
+ * function with ctx.addCleanup makes destroy() run it twice (registry, then
+ * cleanupStack) and leaves observers attached if module unmount skips the stack.
+ */
+export function moduleSourceRegistersDuplicateCleanup(source = ''): boolean {
+  const text = String(source || '');
+  if (!/\bctx(?:\?\.|\.)addCleanup(?:\?\.)?\(/.test(text)) return false;
+  if (/\breturn\s*\{[\s\S]*?\bcleanup\b/.test(text)) return true;
+  if (/\breturn\s+\w*[Cc]leanup\w*/.test(text)) return true;
+  return false;
+}
 
 export function listNamedInitAdapterExports(objectLiteral = ''): string[] {
   return [...new Set(
@@ -866,6 +868,12 @@ function validateModule(
         );
       }
     }
+  }
+
+  if (loadedSource && moduleSourceRegistersDuplicateCleanup(loadedSource)) {
+    errors.push(
+      `${label} returns a mount cleanup and also ctx.addCleanup of it; destroy runs teardown twice and module unmount can leak observers. Return the handle only.`,
+    );
   }
 
   if (module.importPath) {

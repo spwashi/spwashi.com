@@ -877,22 +877,36 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
   document.addEventListener(DISCOVERY_REWARD_EVENT, handleDiscoveryReward);
   document.addEventListener('spw:module-mounted', handleFeatureLearningToast);
   let cleanupBus = () => {};
+  let materialObserver = null;
+
+  const adoptGlobalMaterial = () => {
+    const base = document.documentElement.dataset.spwBaseMetamaterial;
+    const notices = document.querySelectorAll(`[${NOTICE_ATTR}]`);
+    notices.forEach((n) => {
+      if (base && ['glass', 'matte', 'contrast', 'paper'].includes(base)) {
+        n.setAttribute('data-spw-metamaterial', base);
+      } else if (document.documentElement.dataset.spwHighContrast === 'on') {
+        n.setAttribute('data-spw-metamaterial', 'matte');
+      }
+    });
+  };
 
   const cleanupEventApi = () => {
     document.removeEventListener(DISCOVERY_REWARD_EVENT, handleDiscoveryReward);
     document.removeEventListener('spw:module-mounted', handleFeatureLearningToast);
+    document.removeEventListener('spw:settings-change', adoptGlobalMaterial);
     cleanupBus();
+    materialObserver?.disconnect();
+    materialObserver = null;
   };
 
   if (document.querySelector('[data-promo-wonder-cycle]')) {
-    ctx.addCleanup?.(cleanupEventApi);
     return cleanupEventApi;
   }
 
   const feed = await loadFeed();
   const { dismissals, visible } = buildVisibleNotices(feed);
   if (!visible.length) {
-    ctx.addCleanup?.(cleanupEventApi);
     return cleanupEventApi;
   }
 
@@ -920,7 +934,6 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
     syncDiscoveryChromeState('module-cleanup');
   };
 
-  ctx.addCleanup?.(cleanup);
   syncDiscoveryChromeState('module-mounted');
 
   // Reactive adoption of global material / matte-clear-contrast choice.
@@ -928,22 +941,11 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
   // the root dataset, open discovery notices / promos (like the collab modal in
   // the reference screenshot) immediately switch to the clear matte surface + strong
   // ink for legible text. Complements creation-time propagation.
-  const adoptGlobalMaterial = () => {
-    const base = document.documentElement.dataset.spwBaseMetamaterial;
-    const notices = document.querySelectorAll(`[${NOTICE_ATTR}]`);
-    notices.forEach((n) => {
-      if (base && ['glass', 'matte', 'contrast', 'paper'].includes(base)) {
-        n.setAttribute('data-spw-metamaterial', base);
-      } else if (document.documentElement.dataset.spwHighContrast === 'on') {
-        n.setAttribute('data-spw-metamaterial', 'matte');
-      }
-    });
-  };
   const sharedBus = await getSharedBus();
   cleanupBus = sharedBus?.on?.('settings:changed', adoptGlobalMaterial) || (() => {});
   document.addEventListener('spw:settings-change', adoptGlobalMaterial, { passive: true });
 
-  const mo = new MutationObserver((muts) => {
+  materialObserver = new MutationObserver((muts) => {
     for (const m of muts) {
       if (m.type === 'attributes' && (m.attributeName === 'data-spw-base-metamaterial' || m.attributeName === 'data-spw-high-contrast')) {
         adoptGlobalMaterial();
@@ -951,10 +953,9 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
       }
     }
   });
-  mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-spw-base-metamaterial', 'data-spw-high-contrast'] });
-
-  ctx.addCleanup?.(() => {
-    mo.disconnect();
+  materialObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-spw-base-metamaterial', 'data-spw-high-contrast'],
   });
 
   // Expose for pages / other modules to surface learnability/reward or module credits using the same ephemeral architecture.
