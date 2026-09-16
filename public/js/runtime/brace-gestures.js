@@ -121,6 +121,46 @@ const PREFIX_TO_TYPE = Object.freeze({
 });
 
 const LEADING_OPERATOR_RE = /^(#>|#:|\.|\^|~|\?|@|\*|&|=|\$|%|!|>)/;
+const SIGIL_SELECTOR = '.frame-sigil, .frame-card-sigil, .frame-panel-sigil';
+
+/* Haptic beats. A hold that arms a swap gets one short tick so a finger knows
+   release will commit; the commit itself gets a two-beat "swap" so it reads
+   differently from lens-modes' single 8ms mode tick. Quiet under
+   prefers-reduced-motion; vibration is fidget, not contract. */
+const HAPTIC_ARMED_SWAP = 4;
+const HAPTIC_SWAPPED = Object.freeze([6, 24, 6]);
+const CLICK_SUPPRESS_MS = 600;
+
+function tick(pattern) {
+  if (typeof navigator?.vibrate !== 'function') return;
+  if (globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches) return;
+  try {
+    navigator.vibrate(pattern);
+  } catch {
+    /* optional native haptic */
+  }
+}
+
+/* A hold that committed on a link must not also follow the link. The click
+   fires after pointerup; swallow exactly that one, then forget the target so
+   an ordinary tap a moment later still navigates. */
+const suppressedClicks = new WeakSet();
+
+function suppressFollowingClick(target) {
+  if (!(target instanceof HTMLElement)) return;
+  if (!target.closest?.('a[href], button')) return;
+  suppressedClicks.add(target);
+  const view = target.ownerDocument?.defaultView || globalThis;
+  view.setTimeout?.(() => suppressedClicks.delete(target), CLICK_SUPPRESS_MS);
+}
+
+function onClick(event) {
+  const target = braceTarget(event.target);
+  if (!target || !suppressedClicks.has(target)) return;
+  suppressedClicks.delete(target);
+  event.preventDefault();
+  event.stopPropagation();
+}
 
 const CSS_OBSERVED_SEMANTIC_DATA_KEYS = Object.freeze([
   'spwContext',
@@ -182,6 +222,7 @@ export function initBraceGestures() {
   body.addEventListener('pointerup', onPointerUp, true);
   body.addEventListener('pointercancel', onPointerCancel, true);
   body.addEventListener('dblclick', onDoubleClick, true);
+  body.addEventListener('click', onClick, true);
 
   body.addEventListener('keydown', onKeyDown, true);
   body.addEventListener('keyup', onKeyUp, true);
@@ -320,10 +361,19 @@ function resolveOperator(el) {
   return 'frame';
 }
 
+function isSwappableTarget(el, targetKind) {
+  return el.hasAttribute('data-spw-swappable') && /sigil|frame/.test(targetKind);
+}
+
 function resolveAffordances(el, targetKind) {
   const explicit = el.dataset.spwAffordance?.trim();
   if (explicit) {
-    return explicit.split(/\s+/).filter(Boolean);
+    // page-metadata / navigation-spells infer "navigate ground replay" onto
+    // link sigils. That is a reading of the element, not the author's word:
+    // data-spw-swappable is authored, so swap stays in the list.
+    const listed = explicit.split(/\s+/).filter(Boolean);
+    if (isSwappableTarget(el, targetKind) && !listed.includes('swap')) listed.push('swap');
+    return listed;
   }
 
   const affordances = new Set();
@@ -333,7 +383,7 @@ function resolveAffordances(el, targetKind) {
     || (el instanceof HTMLElement && typeof el.href === 'string' && el.hasAttribute('href'));
 
   if (isLink) affordances.add('navigate');
-  if (el.hasAttribute('data-spw-swappable') && /sigil|frame/.test(targetKind)) affordances.add('swap');
+  if (isSwappableTarget(el, targetKind)) affordances.add('swap');
   if (isPinnable(el, targetKind)) affordances.add('pin');
   if (targetKind === 'delimiter' || targetKind === 'syntax-token') affordances.add('hint');
   if (el.matches('[data-mode-group][data-set-mode], .mode-switch button')) affordances.add('toggle');
@@ -648,7 +698,7 @@ function applySemanticExpansion(target, meta, nextExpanded) {
   return true;
 }
 
-function handleOperatorSwap(el, meta) {
+function handleOperatorSwap(el, meta, direction = 1) {
   const swappable = el.dataset.spwSwappable;
   if (!swappable) return false;
 
@@ -661,18 +711,21 @@ function handleOperatorSwap(el, meta) {
     || operators[0];
 
   const currentIndex = Math.max(operators.indexOf(currentPrefix), 0);
-  const nextPrefix = operators[(currentIndex + 1) % operators.length];
+  const step = direction < 0 ? -1 : 1;
+  const nextPrefix = operators[(currentIndex + step + operators.length) % operators.length];
   const nextType = PREFIX_TO_TYPE[nextPrefix] || nextPrefix;
 
   writeDatasetValue(el, 'spwOperator', nextType);
   syncDiscoveredMarkup(el, { ...meta, operator: nextType }, { spwResolvedOperator: nextType });
 
-  const sigil = el.querySelector?.('.frame-sigil, .frame-card-sigil, .frame-panel-sigil');
+  const sigil = el.matches?.(SIGIL_SELECTOR) ? el : el.querySelector?.(SIGIL_SELECTOR);
   if (sigil) {
     const currentText = sigil.textContent || '';
     const matched = currentText.match(LEADING_OPERATOR_RE)?.[0];
     if (matched) {
-      sigil.textContent = currentText.replace(LEADING_OPERATOR_RE, nextPrefix);
+      const nextText = currentText.replace(LEADING_OPERATOR_RE, nextPrefix);
+      sigil.textContent = nextText;
+      if (el.dataset.spwSigil) writeDatasetValue(el, 'spwSigil', nextText.trim());
     }
   }
 
@@ -688,6 +741,7 @@ function handleOperatorSwap(el, meta) {
   );
 
   pulseLatch(el);
+  tick(HAPTIC_SWAPPED);
   return true;
 }
 
@@ -899,6 +953,7 @@ function onPointerDown(event) {
 
     current.armed = true;
     setGesture(target, current.meta, 'armed');
+    if (current.meta.affordances.includes('swap')) tick(HAPTIC_ARMED_SWAP);
 
     // Suppress native text selection on recognizable gesture targets during hold.
     // This prioritizes coincidental discovery (tap/hold/drag on cards, living terms, operators, seams, etc.)
@@ -1131,12 +1186,12 @@ function commitArmedInteraction(target, state) {
   let committed = false;
   let action = null;
 
-  if (meta.semantic?.family) {
-    committed = applySemanticExpansion(target, meta, target.dataset.spwInspectSemanticExpanded !== 'true');
-    action = committed ? 'semantic-expand' : null;
-  } else if (meta.affordances.includes('swap')) {
+  if (meta.affordances.includes('swap')) {
     committed = handleOperatorSwap(target, meta);
     action = committed ? 'swap' : null;
+  } else if (meta.semantic?.family) {
+    committed = applySemanticExpansion(target, meta, target.dataset.spwInspectSemanticExpanded !== 'true');
+    action = committed ? 'semantic-expand' : null;
   } else if (meta.affordances.includes('pin')) {
     togglePin(target, meta);
     committed = true;
@@ -1148,6 +1203,7 @@ function commitArmedInteraction(target, state) {
 
   if (committed) {
     setGesture(target, meta, 'committed');
+    suppressFollowingClick(target);
 
     emitBraceEvents(
       ['brace:committed'],
@@ -1206,7 +1262,42 @@ function ownsNativeKeyboard(event) {
   return isNativeControl(event.target) || event.target?.isContentEditable;
 }
 
+// Shift+Enter on a link is the browser's (new window), so a swappable link
+// sigil had no keyboard path to swap at all. Arrow keys cycle the operator
+// the way they cycle an image lens; plain Enter still follows the link.
+function onArrowSwap(event) {
+  if (event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+  if (event.target?.isContentEditable || event.target?.matches?.('input, select, textarea')) return;
+
+  const target = braceTarget(event.target);
+  if (!target || !target.hasAttribute?.('data-spw-swappable')) return;
+  if (!isOwnAffordanceTarget(target, event.target)) return;
+
+  const meta = classifyTarget(target);
+  if (!meta.affordances.includes('swap')) return;
+
+  event.preventDefault();
+  const direction = event.key === 'ArrowLeft' ? -1 : 1;
+  if (!handleOperatorSwap(target, meta, direction)) return;
+
+  setGesture(target, meta, 'committed', { source: 'keyboard' });
+  emitBraceEvents(
+    ['brace:committed'],
+    buildDetail(meta, {
+      keyboard: true,
+      committed: true,
+      affordance: 'swap',
+      direction,
+    }),
+    target
+  );
+}
+
 function onKeyDown(event) {
+  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    onArrowSwap(event);
+    return;
+  }
   if (event.key !== 'Enter' && event.key !== ' ') return;
   if (event.repeat) return;
 
@@ -1300,6 +1391,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
       body.removeEventListener('pointerup', onPointerUp, true);
       body.removeEventListener('pointercancel', onPointerCancel, true);
       body.removeEventListener('dblclick', onDoubleClick, true);
+      body.removeEventListener('click', onClick, true);
       body.removeEventListener('keydown', onKeyDown, true);
       body.removeEventListener('keyup', onKeyUp, true);
     };

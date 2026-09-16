@@ -362,6 +362,10 @@ function shouldIgnorePrimeCandidate(target, event) {
   if (!(target instanceof Element)) return true;
   if (target.closest('[data-spw-groundable="false"], input, textarea, select, button[data-spw-cauldron-action]')) return true;
   if (event?.pointerType === 'mouse' && target.closest('a[href]')) return true;
+  // An authored data-spw-swappable gives the hold to brace-gestures (swap
+  // operator). Both engines listen on the same sigil; without this a touch
+  // hold collected the sigil to the cauldron and swapped it in one beat.
+  if (target.hasAttribute('data-spw-swappable')) return true;
   if (!isOwnAffordanceTarget(target, event?.target)) return true;
   return false;
 }

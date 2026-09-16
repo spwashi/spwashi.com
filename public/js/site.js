@@ -701,7 +701,9 @@ function annotateDeepLinkTargets(root = document) {
 
     const sigil = el.querySelector?.(':scope > .frame-topline .frame-sigil[href^="#"], :scope > .frame-heading .frame-sigil[href^="#"]');
     if (sigil instanceof HTMLAnchorElement && !sigil.title) {
-      sigil.title = `Deep link: #${el.id}`;
+      sigil.title = sigil.hasAttribute('data-spw-swappable')
+        ? `Deep link: #${el.id} • hold or ←/→: swap operator`
+        : `Deep link: #${el.id}`;
     }
   });
 
