@@ -977,6 +977,7 @@ async function applyCapturePrepare(session, job) {
     const menuSels = ${JSON.stringify(contextmenu)};
     const wantsSearch = clickSels.some((sel) => sel.includes('site-search'));
     const wantsNote = clickSels.some((sel) => sel.includes('living-term') || sel.includes('spw-living-term') || sel.includes('spw-concept'));
+    const wantsLens = clickSels.some((sel) => sel.includes('data-set-mode') || sel.includes('mode-switch'));
     const wantsHint = chargeSels.length > 0;
     const wantsRegionMenu = menuSels.length > 0;
     const wantsTopic = holdSels.some((sel) => sel.includes('spw-topic') || sel.includes('data-spw-topic'));
@@ -985,7 +986,8 @@ async function applyCapturePrepare(session, job) {
       while (Date.now() < readyDeadline) {
         const searchReady = !wantsSearch || typeof window.spwSearch?.open === 'function';
         const noteReady = !wantsNote || Boolean(document.querySelector('.spw-living-term[role="button"], [data-spw-living-term][role="button"]'));
-        if (searchReady && noteReady) break;
+        const lensReady = !wantsLens || Boolean(document.querySelector('.mode-switch [data-set-mode][data-spw-variant-bound="true"]'));
+        if (searchReady && noteReady && lensReady) break;
         await new Promise((r) => requestAnimationFrame(r));
       }
       if (wantsSearch && typeof window.spwSearch?.open !== 'function') {
@@ -1018,6 +1020,12 @@ async function applyCapturePrepare(session, job) {
           mod.initTopicDiscovery?.();
         } catch { /* catalog may still win */ }
       }
+      if (wantsLens && !document.querySelector('.mode-switch [data-set-mode][data-spw-variant-bound="true"]')) {
+        try {
+          const mod = await import('/public/js/runtime/variant-selection.js');
+          mod.initVariantSelection?.(document);
+        } catch { /* catalog may still win */ }
+      }
     }
     const activate = (el) => {
       if (!el) return;
@@ -1029,6 +1037,14 @@ async function applyCapturePrepare(session, job) {
       activate(el);
       if (typeof el.click === 'function') el.click();
       else el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+      const mode = el.getAttribute?.('data-set-mode');
+      if (mode) {
+        const pressedDeadline = Date.now() + 1500;
+        while (Date.now() < pressedDeadline) {
+          if (el.getAttribute('aria-pressed') === 'true') break;
+          await new Promise((r) => requestAnimationFrame(r));
+        }
+      }
     }
     const point = (el) => {
       const rect = el.getBoundingClientRect();

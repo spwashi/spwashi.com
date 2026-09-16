@@ -628,7 +628,11 @@ body[data-spw-surface="about"] {
       align-items: start;
     }
 
-    [data-spw-surface="about"] #about-frame > .frame-body > #about-hook,
+    [data-spw-surface="about"] #about-frame > .frame-body > #about-hook {
+      grid-column: 1 / -1;
+      grid-row: 5;
+    }
+
     [data-spw-surface="about"] #about-frame > .frame-body > .about-years,
     [data-spw-surface="about"] #about-frame > .frame-body > .spw-reason-strip,
     [data-spw-surface="about"] #about-frame > .frame-body > .about-story-map,
