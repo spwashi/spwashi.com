@@ -299,6 +299,7 @@ html[data-spw-interaction-wonder="architecture"] {
   [data-spw-operator="address"],
   [data-spw-operator="object"],
   [data-spw-operator="integration"],
+  [data-spw-operator="integrate"],
   main [data-spw-region-role],
   main [data-spw-component-kind],
   main [data-spw-kind="frame"],
@@ -411,8 +412,8 @@ html[data-spw-interaction-wonder="architecture"] {
     --spw-resonance: 0.4;
   }
 
-  :where(main, body):has(:where([data-spw-operator="frame"], [data-spw-operator="address"], [data-spw-operator="object"], [data-spw-operator="integration"]):is(:hover, :focus-visible))
-    :where(main [data-spw-region-role], main [data-spw-component-kind], main [data-spw-kind], [data-spw-operator="frame"], [data-spw-operator="integration"]) {
+  :where(main, body):has(:where([data-spw-operator="frame"], [data-spw-operator="address"], [data-spw-operator="object"], [data-spw-operator="integration"], [data-spw-operator="integrate"]):is(:hover, :focus-visible))
+    :where(main [data-spw-region-role], main [data-spw-component-kind], main [data-spw-kind], [data-spw-operator="frame"], [data-spw-operator="integration"], [data-spw-operator="integrate"]) {
     --spw-reward-color: var(--spw-architecture-color);
     --spw-resonance: 0.38;
   }
@@ -447,7 +448,7 @@ html[data-spw-interaction-wonder="architecture"] {
     var(--op-probe-glow);
 }
 
-:where(.spw-chip, [data-spw-operator]):is([data-spw-operator="integration"], [data-spw-operator="object"]):is(:hover, :focus-visible) {
+:where(.spw-chip, [data-spw-operator]):is([data-spw-operator="integration"], [data-spw-operator="integrate"], [data-spw-operator="object"]):is(:hover, :focus-visible) {
   transform: translateY(var(--spw-control-hover-lift, -1px)) scale(var(--spw-hover-scale, 1.006));
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--op-object-color) 38%, transparent),
@@ -1239,8 +1240,8 @@ html[data-spw-active-layers="core"] :where(
     :where([data-spw-operator="frame"], [data-spw-operator="address"]):not(:hover):not(:focus-visible) {
     --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
   }
-  :where(main, body):has(:where([data-spw-operator="object"], [data-spw-operator="integration"]):is(:hover, :focus-visible))
-    :where([data-spw-operator="object"], [data-spw-operator="integration"]):not(:hover):not(:focus-visible) {
+  :where(main, body):has(:where([data-spw-operator="object"], [data-spw-operator="integration"], [data-spw-operator="integrate"]):is(:hover, :focus-visible))
+    :where([data-spw-operator="object"], [data-spw-operator="integration"], [data-spw-operator="integrate"]):not(:hover):not(:focus-visible) {
     --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
   }
   :where(main, body):has(:where([data-spw-operator="probe"], [data-spw-operator="wonder"]):is(:hover, :focus-visible))
@@ -1311,7 +1312,7 @@ html[data-spw-resonance-family="conceptual"] :where([data-spw-operator="concept-
    that exact operator (plus its authored aliases — a chip may still carry
    the pre-alignment sigil name directly in data-spw-operator). */
 html:is([data-spw-resonance-probe="frame"], [data-spw-resonance-probe="address"]) :where([data-spw-operator="frame"], [data-spw-operator="address"]):not(:hover):not(:focus-visible),
-html:is([data-spw-resonance-probe="object"], [data-spw-resonance-probe="integration"]) :where([data-spw-operator="object"], [data-spw-operator="integration"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="object"], [data-spw-resonance-probe="integration"], [data-spw-resonance-probe="integrate"]) :where([data-spw-operator="object"], [data-spw-operator="integration"], [data-spw-operator="integrate"]):not(:hover):not(:focus-visible),
 html:is([data-spw-resonance-probe="probe"], [data-spw-resonance-probe="wonder"]) :where([data-spw-operator="probe"], [data-spw-operator="wonder"]):not(:hover):not(:focus-visible),
 html:is([data-spw-resonance-probe="ref"], [data-spw-resonance-probe="potential"]) :where([data-spw-operator="ref"], [data-spw-operator="potential"]):not(:hover):not(:focus-visible),
 html:is([data-spw-resonance-probe="action"]) :where([data-spw-operator="action"]:not(:hover):not(:focus-visible)),
@@ -1323,7 +1324,7 @@ html:is([data-spw-resonance-probe="surface"], [data-spw-resonance-probe="concept
 }
 
 html:is([data-spw-resonance-probe="frame"], [data-spw-resonance-probe="address"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill):is([data-spw-operator="frame"], [data-spw-operator="address"]):not(:hover):not(:focus-visible),
-html:is([data-spw-resonance-probe="object"], [data-spw-resonance-probe="integration"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill):is([data-spw-operator="object"], [data-spw-operator="integration"]):not(:hover):not(:focus-visible),
+html:is([data-spw-resonance-probe="object"], [data-spw-resonance-probe="integration"], [data-spw-resonance-probe="integrate"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill):is([data-spw-operator="object"], [data-spw-operator="integration"], [data-spw-operator="integrate"]):not(:hover):not(:focus-visible),
 html:is([data-spw-resonance-probe="probe"], [data-spw-resonance-probe="wonder"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill):is([data-spw-operator="probe"], [data-spw-operator="wonder"]):not(:hover):not(:focus-visible),
 html:is([data-spw-resonance-probe="ref"], [data-spw-resonance-probe="potential"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill):is([data-spw-operator="ref"], [data-spw-operator="potential"]):not(:hover):not(:focus-visible),
 html:is([data-spw-resonance-probe="action"]) :where(a, button, .spw-chip, .frame-sigil, .spec-pill)[data-spw-operator="action"]:not(:hover):not(:focus-visible),

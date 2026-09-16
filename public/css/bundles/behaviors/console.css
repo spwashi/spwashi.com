@@ -346,7 +346,8 @@
 .cauldron-ingredient-op[data-spw-operator="probe"],
 .cauldron-ingredient-op[data-spw-operator="wonder"] { color: var(--op-probe-color, #8b5cf6); }
 .cauldron-ingredient-op[data-spw-operator="object"],
-.cauldron-ingredient-op[data-spw-operator="integration"] { color: var(--op-object-color, #c48a28); }
+.cauldron-ingredient-op[data-spw-operator="integration"],
+.cauldron-ingredient-op[data-spw-operator="integrate"] { color: var(--op-object-color, #c48a28); }
 .cauldron-ingredient-op[data-spw-operator="ref"],
 .cauldron-ingredient-op[data-spw-operator="potential"] { color: var(--op-ref-color, #3b82f6); }
 .cauldron-ingredient-op[data-spw-operator="action"] { color: var(--op-action-color, #0d9488); }

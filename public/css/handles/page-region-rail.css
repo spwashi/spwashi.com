@@ -66,7 +66,7 @@
   :where(.spw-page-region-rail__link[data-spw-operator="action"]) { --active-op-color: var(--op-action-color, #006b6b); }
   :where(.spw-page-region-rail__link[data-spw-operator="potential"], .spw-page-region-rail__link[data-spw-operator="ref"]) { --active-op-color: var(--op-ref-color, #2b6cb0); }
   :where(.spw-page-region-rail__link[data-spw-operator="wonder"], .spw-page-region-rail__link[data-spw-operator="probe"]) { --active-op-color: var(--op-probe-color, #8a4baf); }
-  :where(.spw-page-region-rail__link[data-spw-operator="integration"], .spw-page-region-rail__link[data-spw-operator="object"]) { --active-op-color: var(--op-object-color, #b7791f); }
+  :where(.spw-page-region-rail__link[data-spw-operator="integration"], .spw-page-region-rail__link[data-spw-operator="integrate"], .spw-page-region-rail__link[data-spw-operator="object"]) { --active-op-color: var(--op-object-color, #b7791f); }
   :where(.spw-page-region-rail__link[data-spw-operator="value"], .spw-page-region-rail__link[data-spw-operator="stream"]) { --active-op-color: var(--op-value-color, #b8860b); }
 
   :where(.spw-page-region-rail__link:is(:hover, :focus-visible)) {
