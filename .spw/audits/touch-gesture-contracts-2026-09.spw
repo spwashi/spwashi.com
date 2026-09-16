@@ -273,6 +273,26 @@ audit_run: .{
   }[reg=facet]
 }[reg=facet]
 
+^"verb_census_2026_09_16"{
+  operation = "audit"
+  ~#note: "f7 said stop authoring verbs with no engine. This is the per-verb census that f7 and interaction-microstates#reward_contract left open."
+  resolving = #[
+    `hold:gather-search-term ×7 — haptics gathers; the verb is an alias of prime-to-cauldron`,
+    `hold:cauldron-capture ×3 — haptics gathers; authored tap:prime behaves as tap:inspect`,
+    `swipe:toggle-lens ×6 on image-study figures — image-interaction owns it`,
+    `tap:discover ×1 — data-spw-image-discovery figure, image-interaction owns it`,
+    `swipe:cycle-nearby — runtime-written and handled by section-handle`
+  ][reg=set]
+  silent_then_fixed = #[
+    `tap:cycle-variant / surface-current / open-companion — Settings legend spans; now button.spw-effect-chip + data-companion-action, playground script resolves the primary card`,
+    `section.spw-scene-bed tap:prime swipe:toggle-lens hold:inspect — removed; the figure inside carries the study contract at runtime`,
+    `double-click:expand-trail ×2 + 8 title hints — removed; no engine follows a trail, a double tap gathers`,
+    `drag:cycle ×1 — removed; brace-gestures projects on drag, nothing cycles`
+  ][reg=set]
+  probe = `rg -o 'data-spw-gesture-contract="[^"]*"' --glob '**/index.html' | sort | uniq -c | sort -rn`
+  open = `Static plus one Settings browser pass. Re-touch the six image figures on a coarse pointer before calling swipe felt.`
+}[reg=facet]
+
 ^"control_class_not_event_floor"{
   at = `2026-09-06`
   operation = "cache"

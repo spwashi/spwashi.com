@@ -464,9 +464,9 @@
                         and watch how density, posture, wonder, and load timing surface different companion actions.
                     </p>
                     <div class="spw-effect-legend spw-effect-legend--settings" aria-label="How to read variant effects">
-                        <span class="spw-effect-chip spw-effect-chip--lens" data-spw-operator="frame" data-spw-sigil="#>" data-spw-image-lens-capacity="weigh" data-spw-semantic-expression="variant[frame]{weight.density}" data-spw-gesture-contract="tap:cycle-variant" aria-pressed="true" title="#> weigh"><span class="spw-effect-chip__sigil" aria-hidden="true">#&gt;</span><span class="spw-effect-chip__capacity spw-effect-verb">weigh</span></span>
-                        <span class="spw-effect-chip spw-effect-chip--lens" data-spw-operator="probe" data-spw-sigil="?" data-spw-image-lens-capacity="bias" data-spw-semantic-expression="variant[probe]{measure.bias}" data-spw-gesture-contract="tap:surface-current" title="? bias"><span class="spw-effect-chip__sigil" aria-hidden="true">?</span><span class="spw-effect-chip__capacity spw-effect-verb">bias</span></span>
-                        <span class="spw-effect-chip spw-effect-chip--lens" data-spw-operator="ref" data-spw-sigil="~" data-spw-image-lens-capacity="surface" data-spw-semantic-expression="variant[ref]{companion.actions}" data-spw-gesture-contract="tap:open-companion" title="~ surface"><span class="spw-effect-chip__sigil" aria-hidden="true">~</span><span class="spw-effect-chip__capacity spw-effect-verb">surface</span></span>
+                        <button type="button" class="spw-effect-chip spw-effect-chip--lens" data-spw-operator="frame" data-spw-sigil="#>" data-spw-image-lens-capacity="weigh" data-spw-semantic-expression="variant[frame]{weight.density}" data-spw-gesture-contract="tap:cycle-variant" data-companion-action="cycle-variant" aria-label="#> weigh — cycle the primary card through its variants" title="#> weigh"><span class="spw-effect-chip__sigil" aria-hidden="true">#&gt;</span><span class="spw-effect-chip__capacity spw-effect-verb">weigh</span></button>
+                        <button type="button" class="spw-effect-chip spw-effect-chip--lens" data-spw-operator="probe" data-spw-sigil="?" data-spw-image-lens-capacity="bias" data-spw-semantic-expression="variant[probe]{measure.bias}" data-spw-gesture-contract="tap:surface-current" data-companion-action="surface-current" aria-label="? bias — surface the current tuning cluster on the primary card" title="? bias"><span class="spw-effect-chip__sigil" aria-hidden="true">?</span><span class="spw-effect-chip__capacity spw-effect-verb">bias</span></button>
+                        <button type="button" class="spw-effect-chip spw-effect-chip--lens" data-spw-operator="ref" data-spw-sigil="~" data-spw-image-lens-capacity="surface" data-spw-semantic-expression="variant[ref]{companion.actions}" data-spw-gesture-contract="tap:open-companion" data-companion-action="open-companion" aria-label="~ surface — move focus to the primary card's companion actions" title="~ surface"><span class="spw-effect-chip__sigil" aria-hidden="true">~</span><span class="spw-effect-chip__capacity spw-effect-verb">surface</span></button>
                     </div>
 
                     <!-- Mini playground using real component patterns -->
@@ -506,10 +506,19 @@
                     if (!playground) return;
 
                     playground.addEventListener('click', (e) => {
-                        const card = e.target.closest('.frame-card');
-                        const action = e.target.closest('[data-companion-action]')?.dataset.companionAction;
+                        const actor = e.target.closest('[data-companion-action]');
+                        const action = actor?.dataset.companionAction;
+                        // Legend chips sit outside the cards and act on the primary card,
+                        // so tap:cycle-variant / surface-current / open-companion land
+                        // where the chip says they will instead of on nothing.
+                        const card = e.target.closest('.frame-card') || (actor ? playground.querySelector('.frame-card') : null);
 
-                        if (!card) return;
+                        if (!card || !action) return;
+                        if (actor.tagName === 'A') e.preventDefault();
+
+                        if (action === 'open-companion') {
+                            card.querySelector('[data-companion-action]')?.focus();
+                        }
 
                         if (action === 'cycle-variant') {
                             const variants = ['primary', 'reference', 'prompt', 'ambient'];
