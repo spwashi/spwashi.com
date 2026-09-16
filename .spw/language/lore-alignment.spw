@@ -75,4 +75,5 @@ fixity = "tending"
     borrowed_intuitions_first = `When introducing a sigil in copy, lean on the pre-installed lore (hashtag, email, URL anchor) before inventing new metaphor. Familiarity is a material.`
   }[reg=facet]
   accuracy_finding = `Two operator namespaces coexist: authored HTML values (data-spw-operator="route|action|stream|object|topic|...") and the detected sigil table (perspective, potential, integration, ground, ...). AGENTS.md's shorthand table reflects the authored set and disagrees with @definitions (@ is perspective in code, 'action' in the doc table). This needs a deliberate align operation — either a mapping table between namespaces or a migration — not a silent edit. Cached here as the next alignment move.`
+  resolved_by = ~"./operator-namespace-alignment.spw#audit_2026_09_16"  # 2026-09-16: mapping table landed; AGENTS.md half already closed; blog dialect words remain contested
 }[reg=facet]

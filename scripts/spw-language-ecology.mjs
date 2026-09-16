@@ -31,7 +31,7 @@ const KNOWN_OPERATOR_TYPES = new Set([
   'select', 'route', 'address', 'normalize', 'situate', 'act', 'merge',
   'substrate', 'meta', 'resource', 'support', 'measure', 'layer', 'bind',
   'vibration', 'intrinsic', 'observer', 'collapse', 'constraint', 'selector',
-  'annotation', 'ground_handle',
+  'annotation', 'ground_handle', 'direction', 'pragma',
 ]);
 
 async function walkFiles(dir, predicate, acc = []) {

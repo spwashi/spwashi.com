@@ -1,0 +1,95 @@
+# Operator Namespace Alignment — one sigil table, many site names
+#
+# Companion to lore-alignment#copy_presence_refinement, which cached "two
+# operator namespaces coexist" as the next align move. This file is that
+# move: a mapping table, not a migration. Characters are canon; names are
+# aliases; printed copy follows the character.
+
+#>operator_namespace_alignment
+#:language #!sigils #!operators #!copy #!alignment
+#:operation #!align
+#:fixity #!tending
+
+@definitions: ~"../../public/js/kernel/operator-detection.js"
+@operators_theory: ~"../_workbench/docs/theory/spw/operators.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@operator_alignment: ~"../conventions/operator-alignment.spw"
+@operator_site_projection: ~"../conventions/operator-site-projection.spw"
+@sigil_geometry_lore: ~"./sigil-geometry-lore.spw"
+@lore_alignment: ~"./lore-alignment.spw"
+@feature_utilization: ~"./feature-utilization.spw"
+@agents_md: ~"../../AGENTS.md"
+@atlas: ~"../../topics/software/spw/index.html"
+@bridge_table: ~"../../topics/software/index.html"
+@blog: ~"../../blog/index.html"
+@kinetic_stage: ~"../../_partials/spw-hero-kinetic-stage.html"
+@footer: ~"../../_partials/site-footer.html"
+@sensor: ~"../../scripts/spw-language-ecology.mjs"
+
+operation = "align"
+fixity = "tending"
+
+expression = sigil[canon]{alias.copy}<one_table>
+
+^"finding"{
+  claim = `There was never a second sigil table. Every authority — workbench theory, OPERATOR_DEFINITIONS, the AGENTS.md shorthand table, operator-semantics, the bridge table on /topics/software/, and all nineteen atlas operator pages — assigns the same character to the same force. What coexisted were two NAME sets for those characters: canonical runtime types (potential, wonder, integration, value, subject, substrate, ground, concept-edge) and atlas page slugs (ref, probe, object, stream, merge, meta, baseline, surface). Drift lived only where a surface printed a character that its own linked page denies, or carried an operator attribute that its visible sigil denies.`
+  supersedes = `@lore_alignment#copy_presence_refinement accuracy_finding, half of it: AGENTS.md now reads @ → perspective and ! → action, matching @definitions. The remaining half — a mapping table — is the table below.`
+}[reg=facet]
+
+^"table"{
+  ~note = `character · canonical type (@definitions) · workbench name (@operators_theory) · atlas slug / site alias · public gloss`
+  rows: #[
+    `#>  frame         frame          frame               address a named handle`,
+    `#:  layer         —              layer               declare the stratum a frame reads in`,
+    `#   vibration     vibration      vibration           name a structure so resonance can find it`,
+    `.   ground        ground         baseline            settle or return to the local default`,
+    `^   integration   ascension      object              lift parts into an inspectable relation`,
+    `~   potential     potential      ref                 hold a path without collapsing it`,
+    `?   wonder        wonder         probe               open a reversible inquiry`,
+    `@   perspective   perspective    —                   situate the viewer at the subject`,
+    `*   value         value          stream              mark material salience or flow`,
+    `&   subject       subject        merge · confluence  bind the focus of a relation`,
+    `=   binding       configuration  binding             pin a local value so it can be reused`,
+    `$   substrate     substrate      meta                name the support layer under a form`,
+    `%   normalize     measure        normalize           scale so comparison stays honest`,
+    `!   action        action         action · pragma     commit a move with observable consequence`,
+    `>   concept-edge  —              surface · topic     project onto another surface`,
+    `<   concept       coupling (<>)  concept · topic     open a topical boundary`,
+    `(   scene         scene          scene               stage a midprocess`,
+    `[   mode          mode           mode                select a variant, keep alternatives visible`,
+    `{   direction     definition     direction           hold bounded practice or motion`
+  ][reg=set]
+  alias_rule = `data-spw-operator may carry either name column — @definitions, the @operator_site_projection selectors, and @sensor accept both. The printed character is not negotiable: it is column one or the sigil is lying.`
+  no_type = `+ | : and _ are not operators in @definitions. + and | appear only in the blog dialect; _ is the label/escape mark; : exists only inside the #: layer compound. Copy that prints them as prefixes is untyped to every interpreter except the reader.`
+}[reg=facet]
+
+^"copy_rule"{
+  sigil_follows_canon = `A printed sigil is a claim every interpreter re-derives from the character alone (@sigil_geometry_lore invariants: text_first). A surface may name the force in site words — ref, object, stream, merge — but may not print a character the atlas page for that word denies.`
+  attribute_follows_sigil = `When a host prints a sigil and carries data-spw-operator, the attribute names the type of that character (@agents_md: "data-spw-operator matches the sigil"). A nav token .about cannot sit on operator="state"; @now cannot sit on operator="action".`
+  dialect_declares = `A page may declare a dialect (@blog: @profile:Spw.b). A dialect may rename a force; it may not reassign a character silently. Renames that collide with the runtime hover gloss are listed under contested, not fixed from a copy pass.`
+}[reg=facet]
+
+^"audit_2026_09_16"{
+  agreed: #[
+    `@definitions — nineteen types, one character each`,
+    `@operators_theory — twelve single-sigil operators plus <> couple; names differ (ascension, configuration, measure, definition), characters do not`,
+    `@agents_md — shorthand table plus alias line (object→integration, ref→potential, probe→wonder, surface→concept-edge, topic→concept)`,
+    `@bridge_table — every atlas slug hosted on its canonical operator value; !pragma on action`,
+    `atlas pages under /topics/software/spw/operators/ — nineteen pages, each printing the canon character for its slug`
+  ][reg=set]
+  fixed: #[
+    `@atlas ring: @action → !action, &stream → *stream, *merge → &merge, $pragma → !pragma — each node now prints what the page it links to prints`,
+    `@atlas specimen preview: data-spw-operator="#>" → "frame" — the attribute carried the character, not the type`,
+    `@kinetic_stage electrostatic chain: @action → !action`,
+    `@footer site map: @now and @contact moved from operator action to perspective; .about and .privacy from state to ground; *blog from vibration to value — the attribute now matches the nav token every reader sees`,
+    `@sensor: direction (canon type) and pragma (atlas slug, a styled chip value in sigils-and-chips.css) join KNOWN_OPERATOR_TYPES so ecology:language stops flagging canon as unknown`
+  ][reg=set]
+  contested: #[
+    `@blog Spw.b legend words: @ ref, ~ stream, * merge, ^ binding, = baseline, % meta, + normalize, | surface. The characters in the blog's own examples read correctly under canon (= as configuration/bias, ~ as potential/wave, * as value/repeat, ^ as integration/bind, % as measure/reduction); only the legend words diverge, and + | have no type. Owner decision: keep Spw.b as a named dialect and print the canon word beside each, or fold to canon. @operator_semantics#workbench_canon already holds @ as the one open decision — a copy pass does not settle it.`,
+    `@operator_site_projection perspective.site_aliases still lists action under @. Stale against @definitions; the selector union keeps resolving, so it waits for that file's own align pass rather than a copy pass.`,
+    `atlas pragma page says "the sigil is ! — the same commit mark as other actions" and the bridge table hosts !pragma on operator="action". Coherent. The ring node keeps data-spw-operator="pragma" because the chip stylesheet names that value.`
+  ][reg=set]
+  probe_ref = `npm run ecology:language && rg -n '@action|&amp;stream|\*merge|\$pragma|operator="(state|#>)"' --glob '*.html' --glob '!node_modules'`
+  falsification = `Any route that prints a sigil whose atlas page shows a different character; any data-spw-operator whose type column disagrees with the visible nav token or label on the same host.`
+  status = "active"
+}[reg=facet]
