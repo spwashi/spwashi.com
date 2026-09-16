@@ -792,7 +792,14 @@ test('discovery notices suppress scheduled promos on inspect-lab surfaces', () =
   document.body.dataset.spwSurface = 'topics';
   assert.equal(shouldSuppressScheduledNotices(), false);
 
+  document.body.dataset.spwSurface = 'now';
+  document.body.dataset.spwPageRole = 'current-sprint';
+  assert.equal(shouldSuppressScheduledNotices(), true);
+  const sprint = buildVisibleNotices(noticeFeed, date, {}, '/now/');
+  assert.equal(sprint.visible.length, 0);
+
   delete document.body.dataset.spwSurface;
+  delete document.body.dataset.spwPageRole;
 });
 
 test('discovery notices accept image reward popup presentation', () => {

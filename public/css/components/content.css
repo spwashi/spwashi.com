@@ -83,7 +83,10 @@
   display: grid;
   gap: var(--spw-grid-gap-active);
   align-items: stretch;
+  align-self: stretch;
   min-width: 0;
+  min-inline-size: 0;
+  inline-size: 100%;
 }
 
 /* These grid classes were authored for a plain <div>/<article> pack. None of

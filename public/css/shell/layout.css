@@ -643,9 +643,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 [data-spw-textual-role="kicker"],
 .hero-kicker,
 .section-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
+  display: inline-block;
   width: fit-content;
   max-width: 100%;
   min-height: 1.7rem;

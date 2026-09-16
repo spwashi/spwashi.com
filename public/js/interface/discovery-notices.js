@@ -189,6 +189,15 @@ function readInspectLabSurface() {
   }
 }
 
+function readCurrentSprintSurface() {
+  try {
+    if (typeof document === 'undefined') return false;
+    return document.body?.dataset?.spwPageRole === 'current-sprint';
+  } catch {
+    return false;
+  }
+}
+
 function readCompactViewport() {
   try {
     return typeof window !== 'undefined'
@@ -200,7 +209,7 @@ function readCompactViewport() {
 }
 
 export function shouldSuppressScheduledNotices() {
-  return readInspectLabSurface();
+  return readInspectLabSurface() || readCurrentSprintSurface();
 }
 
 export function resolveNoticePresentation(presentation, options = {}) {

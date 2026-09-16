@@ -4491,9 +4491,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 [data-spw-textual-role="kicker"],
 .hero-kicker,
 .section-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
+  display: inline-block;
   width: fit-content;
   max-width: 100%;
   min-height: 1.7rem;
@@ -16318,11 +16316,10 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   .frame-heading > [data-spw-slot="meta"],
   .frame-topline > [data-spw-slot="meta"]
 ) {
-  flex: 0 0 auto;
-  min-inline-size: min-content;
-  max-inline-size: none;
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   justify-content: flex-end;
-  white-space: nowrap;
 }
 
 :where(
@@ -21410,7 +21407,10 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   display: grid;
   gap: var(--spw-grid-gap-active);
   align-items: stretch;
+  align-self: stretch;
   min-width: 0;
+  min-inline-size: 0;
+  inline-size: 100%;
 }
 
 /* These grid classes were authored for a plain <div>/<article> pack. None of

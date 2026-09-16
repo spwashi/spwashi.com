@@ -726,11 +726,10 @@
   .frame-heading > [data-spw-slot="meta"],
   .frame-topline > [data-spw-slot="meta"]
 ) {
-  flex: 0 0 auto;
-  min-inline-size: min-content;
-  max-inline-size: none;
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   justify-content: flex-end;
-  white-space: nowrap;
 }
 
 :where(

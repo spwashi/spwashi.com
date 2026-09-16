@@ -560,6 +560,7 @@ test('named stills cover curriculum, software, and math openings', () => {
   assert.ok(jobs.some((job) => job.id === 'software-opening' && job.selector === '#software-surface'));
   assert.ok(jobs.some((job) => job.id === 'math-opening' && job.selector === '#math-hero'));
   assert.ok(jobs.some((job) => job.id === 'quest-opening' && job.selector === '#domain-frame'));
+  assert.ok(jobs.some((job) => job.id === 'now-opening' && job.selector === '#current-sprint'));
 });
 
 test('named stills crop the public card, panel, chip, and lede nouns', () => {

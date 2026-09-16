@@ -327,6 +327,22 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     ]),
   }),
   Object.freeze({
+    id: 'now-opening',
+    fixtureId: 'now-opening',
+    label: 'Now opening',
+    specimenRoute: '/now/',
+    selector: '#current-sprint',
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
+    wonder: 'The B-cycle receipt must sit in the first fold. Spec pills wrap; chips and braces do not clip.',
+    captureValue: 'Now hook: close record, since-the-close, sprint chips.',
+    sourceFiles: Object.freeze([
+      'now/index.html',
+      'public/css/components/frames.css',
+      'public/css/components/foundation.css',
+      'public/css/components/content.css',
+    ]),
+  }),
+  Object.freeze({
     id: 'membership-opening',
     fixtureId: 'membership-hook',
     label: 'Membership opening',
