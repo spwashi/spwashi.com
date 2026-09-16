@@ -29582,6 +29582,31 @@ html[data-spw-enhancement-level="minimal"] {
   grid-column: 1 / -1;
 }
 
+/* A lane nobody occupies is still a row, and auto-placement seats the first
+   leftover in the first empty row. Home's hook pack has no media, so its
+   "Beds on this page" rail landed between the working-view switch and the
+   panel that switch controls. Drop the lanes that are not present so a
+   leftover reads after the pack, where the DOM already put it. */
+[data-spw-pack-regions]:not(:has(> [data-spw-pack-region="media"])) {
+  grid-template-areas:
+    "context"
+    "body"
+    "actions";
+}
+
+[data-spw-pack-regions]:not(:has(> [data-spw-pack-region="context"])) {
+  grid-template-areas:
+    "media"
+    "body"
+    "actions";
+}
+
+[data-spw-pack-regions]:not(:has(> [data-spw-pack-region="context"])):not(:has(> [data-spw-pack-region="media"])) {
+  grid-template-areas:
+    "body"
+    "actions";
+}
+
 @supports (container-type: inline-size) {
   /* Split: spend two columns only when two real regions can occupy them. */
   @container spw-pack (min-width: 26rem) {
