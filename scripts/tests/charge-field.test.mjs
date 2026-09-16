@@ -107,13 +107,60 @@ test('the charged field paints with its carrier operator colour and lets go at q
     emit('charge:charged');
     assert.equal(
       styles.get('--spw-charge-field-color'),
-      'var(--op-probe-color, var(--active-op-color, #008080))',
-      'a probe carrier paints the field with the probe token',
+      'var(--op-probe-color, var(--op-wonder-color, var(--active-op-color, #008080)))',
+      'a probe carrier paints the field with the probe token, then the wonder alias',
     );
     emit('charge:settled');
     assert.equal(styles.get('--spw-charge-field-color'), undefined, 'settling releases the colour');
     unmountChargeField();
     assert.equal(styles.size, 0);
+  } finally {
+    unmountChargeField();
+    window.setTimeout = originalSet;
+    window.clearTimeout = originalClear;
+    document.documentElement.style = originalStyle;
+  }
+});
+
+test('an integrate alias paints, projects, and relates as integration', () => {
+  const originalSet = window.setTimeout;
+  const originalClear = window.clearTimeout;
+  const originalStyle = document.documentElement.style;
+  const styles = new Map();
+  window.setTimeout = () => 1;
+  window.clearTimeout = () => {};
+  document.documentElement.style = {
+    setProperty: (key, value) => { styles.set(key, value); },
+    getPropertyValue: (key) => styles.get(key) || '',
+    removeProperty: (key) => styles.delete(key),
+  };
+  const frame = Object.assign(new HTMLElement(), {
+    dataset: { spwOperator: 'integrate' },
+    closest: () => frame,
+  });
+  const emit = (name) => document.dispatchEvent(new CustomEvent(`spw:${name}`, {
+    detail: { element: frame },
+  }));
+  try {
+    initChargeField();
+    emit('charge:charged');
+    assert.equal(
+      styles.get('--spw-charge-field-color'),
+      'var(--op-integrate-color, var(--op-integration-color, var(--active-op-color, #008080)))',
+      'an integrate carrier reaches the integration token',
+    );
+    assert.equal(
+      document.documentElement.dataset.spwConceptRelation,
+      'architecture',
+      'integrate charges as architecture, not curiosity',
+    );
+    emit('brace:discharged');
+    assert.equal(
+      document.documentElement.dataset.spwLastDischarge,
+      'project',
+      'integrate discharges as project, not release',
+    );
+    unmountChargeField();
   } finally {
     unmountChargeField();
     window.setTimeout = originalSet;

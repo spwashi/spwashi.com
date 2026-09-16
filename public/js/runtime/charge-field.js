@@ -1,6 +1,6 @@
 import { bus } from '/public/js/kernel/bus.js';
 import { writeDatasetValues, writeStyleProperty } from '/public/js/kernel/dom-contracts.js';
-import { detectOperator } from '/public/js/kernel/shared.js';
+import { detectOperator, getOperatorDefinition } from '/public/js/kernel/shared.js';
 import { PHASE_INTENSITY, CHARGE_TIMING, decayCharge } from '/public/js/kernel/charge-field-contract.js';
 
 const OPERATOR_DISCHARGE = Object.freeze({
@@ -90,12 +90,27 @@ const RELATION_STYLE_PROPERTIES = Object.freeze([
    discharge on a probe and a discharge on a binding lit the same teal. The
    carrier operator's own token is the honest colour, and theme packs
    redefine --op-*-color, so the field follows the theme without a second
-   palette. Removed at quiet so the ambient accent returns. */
+   palette. Removed at quiet so the ambient accent returns.
+
+   Authored HTML still writes aliases (integrate, probe, route). The colour
+   keeps the authored token first so a pack that recolours --op-probe-color
+   still wins, then falls through to the canonical token so an integrate
+   chip reaches --op-integration-color instead of the ambient teal. */
 const CHARGE_FIELD_COLOR_PROPERTY = '--spw-charge-field-color';
+
+function canonicalOperatorType(type = '') {
+  const operator = String(type || '').trim().toLowerCase();
+  if (!operator) return '';
+  return getOperatorDefinition(operator)?.type || operator;
+}
 
 function chargeFieldColor(carrier = '') {
   const operator = String(carrier || '').trim().toLowerCase();
   if (!/^[a-z][a-z-]*$/.test(operator)) return '';
+  const canonical = canonicalOperatorType(operator);
+  if (canonical && canonical !== operator && /^[a-z][a-z-]*$/.test(canonical)) {
+    return `var(--op-${operator}-color, var(--op-${canonical}-color, var(--active-op-color, #008080)))`;
+  }
   return `var(--op-${operator}-color, var(--active-op-color, #008080))`;
 }
 
@@ -129,13 +144,29 @@ function resolveOperatorType(el, detail = {}) {
 function inferDischarge(operatorType, detail = {}) {
   if (detail.grounded) return 'ground';
   if (detail.collected || detail.primedBy) return 'transfer';
-  return OPERATOR_DISCHARGE[operatorType] || 'release';
+  return OPERATOR_DISCHARGE[operatorType]
+    || OPERATOR_DISCHARGE[canonicalOperatorType(operatorType)]
+    || 'release';
 }
 
 function inferRelation(operatorType = '', discharge = '') {
-  if (CURIOSITY_OPERATORS.has(operatorType) || discharge === 'release') return 'curiosity';
-  if (RELATIONSHIP_OPERATORS.has(operatorType) || discharge === 'transfer') return 'relationship';
-  if (ARCHITECTURE_OPERATORS.has(operatorType) || discharge === 'ground' || discharge === 'project') {
+  const canonical = canonicalOperatorType(operatorType);
+  if (
+    CURIOSITY_OPERATORS.has(operatorType)
+    || CURIOSITY_OPERATORS.has(canonical)
+    || discharge === 'release'
+  ) return 'curiosity';
+  if (
+    RELATIONSHIP_OPERATORS.has(operatorType)
+    || RELATIONSHIP_OPERATORS.has(canonical)
+    || discharge === 'transfer'
+  ) return 'relationship';
+  if (
+    ARCHITECTURE_OPERATORS.has(operatorType)
+    || ARCHITECTURE_OPERATORS.has(canonical)
+    || discharge === 'ground'
+    || discharge === 'project'
+  ) {
     return 'architecture';
   }
   return '';

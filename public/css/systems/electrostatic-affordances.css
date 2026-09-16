@@ -54,6 +54,7 @@
 
 :where(
   [data-spw-operator="integration"],
+  [data-spw-operator="integrate"],
   [data-spw-operator="object"],
   [data-spw-operator="value"]
 ) {

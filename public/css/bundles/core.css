@@ -28763,7 +28763,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
 }
 
 :where([data-spw-image-lens-active="integrate"]) {
-  --spw-image-lens-accent: var(--op-integrate-color, var(--teal, #008080));
+  --spw-image-lens-accent: var(--op-integration-color, var(--op-object-color, #a67c00));
 }
 
 :where([data-spw-image-lens-active="baseline"]) {
@@ -30063,7 +30063,7 @@ html[data-spw-explore-posture="workshop"], html[data-spw-layout-posture="worksho
 :where(.spw-effect-chip[data-spw-operator="frame"]) { --spw-effect-chip-accent: var(--op-frame-color, #1a9999); }
 :where(.spw-effect-chip[data-spw-operator="ref"]) { --spw-effect-chip-accent: var(--op-ref-color, #1d57a3); }
 :where(.spw-effect-chip[data-spw-operator="object"]) { --spw-effect-chip-accent: var(--op-object-color, #c68a22); }
-:where(.spw-effect-chip[data-spw-operator="integrate"]) { --spw-effect-chip-accent: var(--op-integrate-color, var(--teal, #008080)); }
+:where(.spw-effect-chip[data-spw-operator="integrate"]) { --spw-effect-chip-accent: var(--op-integration-color, var(--op-object-color, #a67c00)); }
 :where(.spw-effect-chip[data-spw-operator="stream"]) { --spw-effect-chip-accent: var(--op-stream-color, #2a8c76); }
 :where(.spw-effect-chip[data-spw-operator="route"]) { --spw-effect-chip-accent: var(--op-topic-color, #2e8b57); }
 :where(.spw-effect-chip[data-spw-operator="potential"]) { --spw-effect-chip-accent: var(--op-probe-color, #6a3fb8); }
@@ -31864,6 +31864,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .frame-card, :is(.spw-panel
 
 :where(
   [data-spw-operator="integration"],
+  [data-spw-operator="integrate"],
   [data-spw-operator="object"],
   [data-spw-operator="value"]
 ) {

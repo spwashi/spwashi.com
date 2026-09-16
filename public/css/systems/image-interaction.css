@@ -121,7 +121,7 @@
 }
 
 :where([data-spw-image-lens-active="integrate"]) {
-  --spw-image-lens-accent: var(--op-integrate-color, var(--teal, #008080));
+  --spw-image-lens-accent: var(--op-integration-color, var(--op-object-color, #a67c00));
 }
 
 :where([data-spw-image-lens-active="baseline"]) {
