@@ -84,15 +84,30 @@ export type SpwModuleElectrostatics = {
   field?: string;
 };
 
+/** Teardown may finish asynchronously; remount waits for it to settle. */
+export type SpwModuleCleanup = () => void | Promise<void>;
+
+export type SpwModuleRefresh = (ctx?: unknown, root?: unknown) => unknown;
+
 /**
- * Loader-mounted modules return this handle. Do not also ctx.addCleanup the
- * same function — destroy() would run it twice, and module unmount would miss
- * observers registered only on the stack.
+ * Loader-mounted modules return this handle. `destroy` is the supported legacy
+ * alias for cleanup; when both exist, cleanup wins. Do not also ctx.addCleanup
+ * the same function — site destruction would run it twice.
  */
 export type SpwModuleMountResult =
   | void
-  | (() => void)
-  | { cleanup?: () => void; refresh?: (ctx?: unknown) => unknown };
+  | SpwModuleCleanup
+  | { cleanup?: SpwModuleCleanup; destroy?: SpwModuleCleanup; refresh?: SpwModuleRefresh };
+
+/** The live instance passed to an authoritative catalog unmount adapter. */
+export type SpwModuleUnmountRecord = {
+  id: string;
+  baseId: string;
+  status: 'unmounting';
+  root: unknown;
+  cleanup: SpwModuleCleanup | null;
+  refresh: SpwModuleRefresh | null;
+};
 
 /**
  * One catalog definition. Authors keep this flat; normalize.js groups it for
@@ -101,17 +116,18 @@ export type SpwModuleMountResult =
  */
 export type SpwModuleDef = {
   id: string;
-  layer: SpwModuleLayer | string;
-  when: SpwModuleMountWhen | string;
+  layer: SpwModuleLayer;
+  when: SpwModuleMountWhen;
   load: () => Promise<unknown>;
   mount?: (mod?: unknown, ctx?: unknown, root?: unknown) => SpwModuleMountResult | Promise<SpwModuleMountResult>;
-  unmount?: (record?: unknown) => unknown;
+  /** Owns teardown when present; may delegate to record.cleanup exactly once. */
+  unmount?: (record: SpwModuleUnmountRecord) => void | Promise<void>;
   cost?: SpwModuleCost;
-  costClass?: SpwCostClass | string;
+  costClass?: SpwCostClass;
   features?: string | readonly string[];
   route?: string | readonly string[];
   selector?: string;
-  rootMode?: SpwModuleRootMode | string;
+  rootMode?: SpwModuleRootMode;
   debugOnly?: boolean;
   describes?: string;
   updates?: string | readonly string[];
@@ -119,7 +135,7 @@ export type SpwModuleDef = {
   timingArc?: string;
   timingChunk?: string;
   effectScope?: string | readonly string[];
-  visual?: SpwModuleVisualEffect | string;
+  visual?: SpwModuleVisualEffect;
   subfeatures?: readonly string[];
   triggers?: readonly string[];
   affordances?: readonly string[];
@@ -151,12 +167,11 @@ export type SpwModuleCleanupOwnership = 'handle' | 'none';
  */
 export type SpwModuleExport = {
   mount: (
-    mod?: unknown,
     ctx?: unknown,
     root?: unknown,
   ) => SpwModuleMountResult | Promise<SpwModuleMountResult>;
   id?: string;
-  refresh?: (ctx?: unknown) => unknown;
+  refresh?: SpwModuleRefresh;
   contract?: unknown;
   updates?: string | readonly string[];
   describes?: string;

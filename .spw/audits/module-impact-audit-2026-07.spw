@@ -12,7 +12,7 @@
 @javascript_module_census: ~"./javascript-module-census-2026-07.spw"
 @html_component_audit: ~"./html-component-audit-2026-07.spw"
 @feature_wiring_timing: ~"../caches/feature-wiring-timing-2026-07.spw"
-@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @effect_ledger: ~"../../public/js/runtime/effect-ledger.js"
 @module_effects: ~"../../public/js/runtime/module-effects.js"
 

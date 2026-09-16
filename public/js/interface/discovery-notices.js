@@ -17,7 +17,7 @@ import {
   STORAGE_KEYS,
   writeJson,
 } from '/public/js/kernel/storage-utils.js';
-import { isInspectLabSurface, isReadingQuietChrome } from '/public/js/runtime/runtime-helpers.js';
+import { isInspectLabSurface, isReadingQuietChrome } from '/public/js/runtime/orchestration/policy.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const STORAGE_KEY = STORAGE_KEYS.DISCOVERY_DISMISSALS;

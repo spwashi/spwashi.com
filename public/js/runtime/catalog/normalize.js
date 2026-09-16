@@ -22,7 +22,7 @@ import {
   describeModuleCost,
 } from './constants.js';
 import { summarizeCatalogTiming } from '../../kernel/module-timing-contract.js';
-import { parseModuleDescribes } from '../module-describes-contract.js';
+import { parseModuleDescribes } from './describes-contract.js';
 
 const COST_CLASS_SET = new Set(COST_CLASS_VALUES);
 const COMMITMENT_SET = new Set(COST_COMMITMENT_VALUES);

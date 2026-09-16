@@ -101,6 +101,28 @@ const SHELL_TUNE_SURFACES = Object.freeze({
   STRIP: 'strip',
 });
 
+// The menu projection belongs to this controller, including its teardown.
+const MENU_DATASET_KEYS = Object.freeze([
+  'spwMenuRole',
+  'spwMenuMode',
+  'spwMenuChanged',
+  'spwMenuClarity',
+  'spwMenu',
+  'spwMenuOverlay',
+  'spwMenuPhase',
+  'spwMenuSource',
+  'spwMenuViewport',
+  'spwMenuPointer',
+  'spwMenuPressure',
+  'spwMenuTopology',
+  'spwMenuIntent',
+  'spwMenuNavFit',
+  'spwMenuRouteCount',
+  'spwMenuOverflowCount',
+  'spwMenuLocking',
+  'spwMenuReturnPaths',
+]);
+
 const FOCUSABLE_SELECTOR = [
   'a[href]',
   'button:not([disabled])',
@@ -592,7 +614,7 @@ function applyMenuState(header, nav, navList, toggle, state, open, source = 'sys
   writeMenuDatasets(nav, snapshot, 'nav');
   writeMenuDatasets(toggle, snapshot, 'toggle');
   syncToggleCopy(toggle, snapshot);
-  syncShellLock(snapshot);
+  syncShellLock({ ...snapshot, open });
 
   state.lastTransitionSource = source;
   state.snapshot = snapshot;
@@ -869,8 +891,8 @@ export function initSpwShellDisclosure(options = {}) {
     if (!href) return;
 
     document.querySelectorAll('.spw-route-menu[open]').forEach((menu) => {
+      // contextual-ui owns the details toggle event and its state projection.
       menu.open = false;
-      syncRouteMenuMode(menu);
     });
 
     window.setTimeout(() => {

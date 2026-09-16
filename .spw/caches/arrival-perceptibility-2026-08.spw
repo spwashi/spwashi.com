@@ -17,7 +17,7 @@
 @folding_organelle: ~"../conventions/folding-chrome-organelle.spw"
 @load_trace: ~"../../public/js/runtime/load-trace.js"
 @familiarity_gate: ~"../../public/js/runtime/familiarity-gate.js"
-@module_loader: ~"../../public/js/runtime/module-loader.js"
+@module_loader: ~"../../public/js/runtime/orchestration/loader.js"
 @arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
 @page_reasons: ~"../../scripts/page-reasons.mjs"

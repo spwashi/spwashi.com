@@ -25,14 +25,15 @@ import {
   releaseCycleForDate,
   upcomingReleaseForecasts,
 } from '../../public/js/typed/promo-wonder-cycle.js';
-import { createModuleLoader } from '../../public/js/runtime/module-loader.js';
+import { createModuleLoader } from '../../public/js/runtime/orchestration/loader.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from '../../public/js/runtime/catalog/constants.js';
 import {
   SPW_FEATURE_DISCOVERY_CONTRACT,
   initFeatureDiscovery,
   normalizeFeatureTrigger,
 } from '../../public/js/runtime/feature-discovery.js';
-import { createRegistry, readRuntimePolicy } from '../../public/js/runtime/runtime-helpers.js';
+import { createRegistry } from '../../public/js/kernel/module-registry.js';
+import { readRuntimePolicy } from '../../public/js/runtime/orchestration/policy.js';
 import {
   resolvePackFillFromCount,
   resolvePackLayoutForWidth,

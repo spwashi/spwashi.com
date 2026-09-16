@@ -31,11 +31,11 @@ export {
   costModelFromClass,
   describeModuleCost,
   isFn,
-} from './catalog/constants.js';
-export { CORE_DEFS } from './catalog/core.js';
-export { FEATURE_DEFS } from './catalog/feature.js';
-export { REGION_DEFS } from './catalog/region.js';
-export { ENHANCEMENT_DEFS } from './catalog/enhancement.js';
+} from './constants.js';
+export { CORE_DEFS } from './core.js';
+export { FEATURE_DEFS } from './feature.js';
+export { REGION_DEFS } from './region.js';
+export { ENHANCEMENT_DEFS } from './enhancement.js';
 export {
   describeModuleOrchestration,
   filterEnhancementDefs,
@@ -46,16 +46,16 @@ export {
   normalizeCatalogDefinitions,
   resolveModuleCatalogSpecifier,
   summarizeModuleCatalogOptimization,
-} from './catalog/normalize.js';
+} from './normalize.js';
 
-import { CORE_DEFS } from './catalog/core.js';
-import { FEATURE_DEFS } from './catalog/feature.js';
-import { REGION_DEFS } from './catalog/region.js';
-import { ENHANCEMENT_DEFS } from './catalog/enhancement.js';
+import { CORE_DEFS } from './core.js';
+import { FEATURE_DEFS } from './feature.js';
+import { REGION_DEFS } from './region.js';
+import { ENHANCEMENT_DEFS } from './enhancement.js';
 import {
   listModuleCatalogIndex as indexCatalogDefinitions,
   normalizeCatalogDefinitions,
-} from './catalog/normalize.js';
+} from './normalize.js';
 
 /** Normalized catalog: schedule fields preserved, cost + costClass resolved. */
 export const MODULE_DEFS = normalizeCatalogDefinitions([

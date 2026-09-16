@@ -6,7 +6,7 @@
  */
 
 import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
-import { resolveOwnerDocument } from '/public/js/runtime/runtime-helpers.js';
+import { resolveOwnerDocument } from '/public/js/runtime/browser-primitives.js';
 
 const TARGET_SELECTOR = [
   '[data-spw-concept]',

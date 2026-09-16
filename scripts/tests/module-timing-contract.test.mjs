@@ -23,7 +23,7 @@ import {
 import { ENHANCEMENT_DEFS } from '../../public/js/runtime/catalog/enhancement.js';
 import { FEATURE_DEFS } from '../../public/js/runtime/catalog/feature.js';
 import { MOUNT_WHEN } from '../../public/js/runtime/catalog/constants.js';
-import { resolveOwnerDocument } from '../../public/js/runtime/runtime-helpers.js';
+import { resolveOwnerDocument } from '../../public/js/runtime/browser-primitives.js';
 
 test('timingArc stems and idle chunks are stable contracts', () => {
   assert.ok(TIMING_ARC_STEMS.includes('immediate'));

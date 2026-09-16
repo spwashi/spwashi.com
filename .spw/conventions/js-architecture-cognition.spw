@@ -21,8 +21,8 @@
 @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
 @attention_field: ~"./attention-field.spw"
 @data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
-@module_catalog: ~"../../public/js/runtime/module-catalog.js"
-@module_loader: ~"../../public/js/runtime/module-loader.js"
+@module_catalog: ~"../../public/js/runtime/catalog/index.js"
+@module_loader: ~"../../public/js/runtime/orchestration/loader.js"
 @site_entry: ~"../../public/js/site.js"
 @compose_entry: ~"../../public/js/compose.js"
 @js_readme: ~"../../public/js/README.md"
@@ -58,7 +58,7 @@ fixity = "tending"
 
   orchestration = .{
     role = `Control of elaboration order — catalog, loader, page-state, site bootstrap`
-    files = #[@site_entry, @module_catalog, @module_loader, `public/js/runtime/page-state.js`, `public/js/runtime/runtime-helpers.js`][reg=set]
+    files = #[@site_entry, @module_catalog, @module_loader, `public/js/runtime/orchestration/scheduler.js`, `public/js/runtime/orchestration/lifecycle.js`, `public/js/runtime/page-state.js`][reg=set]
     ecology = `taproot`
     rule = `Orchestration schedules guilds; it does not absorb feature logic`
     page_category = `body data-spw-page-family / page-role / page-modes / context / surface are authored load seats. Catalog defs may declare matching fields; the loader skips mismatches and may defer broad IMMEDIATE enhancements on orientation-only atlases or promote literacy modules (pronunciation-hints) on teaching pages. Reason + consequence live on the mount record.`

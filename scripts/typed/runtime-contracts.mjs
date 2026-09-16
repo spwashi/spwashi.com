@@ -8,6 +8,7 @@ import { extractObjectLiterals, extractRuntimeArrayLiteral, } from './site-contr
 import { STANDARD_IDLE_CHUNKS, TIMING_ARC_STEMS, VALID_COST_CLASSES, VALID_COST_COMMITMENTS, VALID_COST_COPIES, VALID_COST_SPENDS, VALID_MODULE_LAYERS, VALID_MOUNT_WHEN, VALID_VISUAL_EFFECTS, } from './site-contracts/types.mjs';
 import { toPosixPath } from './shared/build-topology.mjs';
 import { collectStylePropertyContractReport, } from './style-property-contract.mjs';
+import { ALLOWED_JS_OWNER_DIRECTORIES, collectJsFilesUnder, collectRuntimeImportReport, } from './runtime-contracts/imports.mjs';
 const BEHAVIOR_SCOPE_KEYS = new Set(Object.keys(BEHAVIOR_SCOPES));
 /**
  * Body feature tokens that gate JS catalog mounts without a CSS behavior bundle.
@@ -32,8 +33,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..', '..');
 const PUBLIC_JS_DIR = path.join(ROOT_DIR, 'public/js');
-const MODULES_DIR = path.join(PUBLIC_JS_DIR, 'modules');
-const PUBLIC_TS_DIR = path.join(ROOT_DIR, 'public/ts');
 const MODULE_CATALOG_DIR = path.join(PUBLIC_JS_DIR, 'runtime');
 /** Family imports resolve from their owning catalog directory. */
 const MODULE_CATALOG_IMPORT_DIR = path.join(MODULE_CATALOG_DIR, 'catalog');
@@ -43,32 +42,13 @@ const MODULE_CATALOG_FAMILY_FILES = Object.freeze({
     REGION_DEFS: 'catalog/region.js',
     ENHANCEMENT_DEFS: 'catalog/enhancement.js',
 });
-const MODULE_UPDATES_CONTRACT_PATH = path.join(PUBLIC_JS_DIR, 'runtime/module-updates-contract.js');
+const MODULE_UPDATES_CONTRACT_PATH = path.join(PUBLIC_JS_DIR, 'runtime/catalog/updates-contract.js');
 const SITE_RUNTIME_PATH = path.join(PUBLIC_JS_DIR, 'site.js');
 const RUNTIME_FAMILIES = ['CORE_DEFS', 'FEATURE_DEFS', 'REGION_DEFS', 'ENHANCEMENT_DEFS'];
 const VALID_LAYERS = new Set(VALID_MODULE_LAYERS);
 const VALID_MOUNT_TIMINGS = new Set(VALID_MOUNT_WHEN);
 const VALID_ROOT_MODES = new Set(['single', 'each']);
 const CONTRACT_TOKEN_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const ALLOWED_ROOT_JS_FILES = new Set(['compose.js', 'site.js']);
-const ALLOWED_JS_OWNER_DIRECTORIES = new Set([
-    // Build output, never hand-edited: parsed artifacts the browser reads so it
-    // does not have to compute them. Kept as its own family precisely so the
-    // authored/generated boundary stays visible in the import path — see
-    // scripts/build-expression-manifest.mjs.
-    'generated',
-    'interface',
-    'kernel',
-    'media',
-    'modules',
-    'runtime',
-    'semantic',
-    'typed',
-]);
-const ALLOWED_TYPED_IMPORT_DIRECTORIES = new Set(['kernel', 'typed']);
-const ALLOWED_TYPED_IMPORT_ROOT_FILES = new Set(['site.js']);
-const TYPED_IMPORT_RE = /(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"]([^'"]*typed\/[^'"]+)['"]/g;
-const TYPED_EXPORT_FROM_RE = /(?:export\s+\*\s+from|export\s+(?:type\s+)?\{[^}]+\}\s+from)\s+['"]([^'"]+)['"]/g;
 const VALID_COST_CLASS_TOKENS = new Set(VALID_COST_CLASSES);
 const VALID_COST_COMMITMENT_TOKENS = new Set(VALID_COST_COMMITMENTS);
 const VALID_COST_SPEND_TOKENS = new Set(VALID_COST_SPENDS);
@@ -374,62 +354,6 @@ function parseRuntimeModule(objectLiteral, family, index) {
 function normalizeModuleLabel(module) {
     return module.id || `${module.family}[${module.index}]`;
 }
-async function collectRootJsEntrypoints() {
-    const entries = await fs.readdir(PUBLIC_JS_DIR, { withFileTypes: true });
-    return entries
-        .filter((entry) => entry.isFile() && entry.name.endsWith('.js'))
-        .map((entry) => entry.name)
-        .sort();
-}
-async function collectTopLevelJsDirectories() {
-    const entries = await fs.readdir(PUBLIC_JS_DIR, { withFileTypes: true });
-    return entries
-        .filter((entry) => entry.isDirectory())
-        .map((entry) => entry.name)
-        .sort();
-}
-async function collectTopLevelModuleJsFiles() {
-    if (!(await pathExists(MODULES_DIR)))
-        return [];
-    const entries = await fs.readdir(MODULES_DIR, { withFileTypes: true });
-    return entries
-        .filter((entry) => entry.isFile() && entry.name.endsWith('.js'))
-        .map((entry) => `public/js/modules/${entry.name}`)
-        .sort();
-}
-async function collectTypedOutputs() {
-    const typedDir = path.join(PUBLIC_JS_DIR, 'typed');
-    if (!(await pathExists(typedDir)))
-        return [];
-    const entries = await fs.readdir(typedDir, { withFileTypes: true });
-    return entries
-        .filter((entry) => entry.isFile() && entry.name.endsWith('.js'))
-        .map((entry) => `public/js/typed/${entry.name}`)
-        .sort();
-}
-async function collectJsFilesUnder(directory, prefix = '') {
-    const entries = await fs.readdir(directory, { withFileTypes: true });
-    const files = [];
-    for (const entry of entries) {
-        const relativePath = prefix ? `${prefix}/${entry.name}` : entry.name;
-        const absolutePath = path.join(directory, entry.name);
-        if (entry.isDirectory()) {
-            files.push(...await collectJsFilesUnder(absolutePath, relativePath));
-            continue;
-        }
-        if (entry.isFile() && entry.name.endsWith('.js')) {
-            files.push(relativePath);
-        }
-    }
-    return files.sort();
-}
-function canImportTypedModule(relativeFilePath) {
-    if (ALLOWED_TYPED_IMPORT_ROOT_FILES.has(relativeFilePath)) {
-        return true;
-    }
-    const [ownerDirectory] = relativeFilePath.split('/');
-    return Boolean(ownerDirectory && ALLOWED_TYPED_IMPORT_DIRECTORIES.has(ownerDirectory));
-}
 export function seatJsModuleEcology(row) {
     if (row.catalogLoad && row.moduleExport)
         return 'catalog-export';
@@ -531,53 +455,6 @@ async function collectJsModuleEcology(catalogIdsByFile = new Map()) {
     }
     const document = `${JSON.stringify({ catalog, attention }, null, 2)}\n`;
     return { rows, document };
-}
-async function collectTypedImportViolations() {
-    const errors = [];
-    const files = await collectJsFilesUnder(PUBLIC_JS_DIR);
-    for (const relativeFilePath of files) {
-        if (relativeFilePath.startsWith('typed/'))
-            continue;
-        const absolutePath = path.join(PUBLIC_JS_DIR, relativeFilePath);
-        const source = await fs.readFile(absolutePath, 'utf8');
-        const matches = [...source.matchAll(TYPED_IMPORT_RE)];
-        if (!matches.length)
-            continue;
-        if (!canImportTypedModule(relativeFilePath)) {
-            const importTargets = [...new Set(matches.map((match) => match[1]))].join(', ');
-            errors.push(`${relativeRepoPath(absolutePath)} imports generated typed output (${importTargets}); route through kernel/ shims or site.js dynamic imports.`);
-        }
-    }
-    return errors;
-}
-async function collectKernelTypedShimIssues() {
-    const errors = [];
-    const shims = [];
-    const kernelDir = path.join(PUBLIC_JS_DIR, 'kernel');
-    const entries = await fs.readdir(kernelDir);
-    for (const name of entries.sort()) {
-        if (!name.endsWith('.js'))
-            continue;
-        const shimPath = `kernel/${name}`;
-        const source = await fs.readFile(path.join(PUBLIC_JS_DIR, shimPath), 'utf8');
-        const typedTargets = [...source.matchAll(TYPED_EXPORT_FROM_RE)]
-            .map((match) => match[1].replace(/\\/g, '/'))
-            .filter((target) => target.includes('typed/'));
-        if (!typedTargets.length)
-            continue;
-        shims.push(shimPath);
-        const basename = name.replace(/\.js$/, '');
-        if (!(await pathExists(path.join(PUBLIC_TS_DIR, `${basename}.ts`)))) {
-            errors.push(`public/js/${shimPath} re-exports typed output but public/ts/${basename}.ts is missing.`);
-        }
-        const expectedTarget = `../typed/${basename}.js`;
-        for (const exportTarget of typedTargets) {
-            if (exportTarget !== expectedTarget) {
-                errors.push(`public/js/${shimPath} must re-export from ${expectedTarget}, not ${exportTarget}.`);
-            }
-        }
-    }
-    return { errors, shims };
 }
 async function collectBehaviorScopeModuleIssues() {
     const errors = [];
@@ -984,42 +861,8 @@ export async function collectRuntimeContractReport() {
             errors.push(`public/js/site.js does not schedule ${requirement.timings.join('/')} non-core definitions through NON_CORE_DEFS.`);
         }
     }
-    for (const module of modules) {
-        if (!module.importPath)
-            continue;
-        const absoluteImport = importPathToAbsolute(module.importPath);
-        if (!(await pathExists(absoluteImport))) {
-            errors.push(`${normalizeModuleLabel(module)} imports missing file ${module.importPath}.`);
-        }
-    }
-    const rootEntrypoints = await collectRootJsEntrypoints();
-    for (const entrypoint of rootEntrypoints) {
-        if (!ALLOWED_ROOT_JS_FILES.has(entrypoint)) {
-            errors.push(`public/js/${entrypoint} is a root-level JS file; add owned modules under kernel/, runtime/, interface/, semantic/, modules/, media/, or typed/.`);
-        }
-    }
-    const ownerDirectories = await collectTopLevelJsDirectories();
-    for (const directory of ownerDirectories) {
-        if (!ALLOWED_JS_OWNER_DIRECTORIES.has(directory)) {
-            errors.push(`public/js/${directory}/ is not a recognized JS ownership directory; update the runtime contract before adding a new top-level module family.`);
-        }
-    }
-    const topLevelModuleFiles = await collectTopLevelModuleJsFiles();
-    for (const file of topLevelModuleFiles) {
-        errors.push(`${file} should move into a public/js/modules/<family>/ subdirectory.`);
-    }
-    const typedOutputs = await collectTypedOutputs();
-    for (const output of typedOutputs) {
-        const basename = path.basename(output, '.js');
-        const source = path.join(PUBLIC_TS_DIR, `${basename}.ts`);
-        if (!(await pathExists(source))) {
-            errors.push(`${output} has no matching public/ts/${basename}.ts source.`);
-        }
-    }
-    const typedImportViolations = await collectTypedImportViolations();
-    errors.push(...typedImportViolations);
-    const kernelTypedShimReport = await collectKernelTypedShimIssues();
-    errors.push(...kernelTypedShimReport.errors);
+    const importReport = await collectRuntimeImportReport(ROOT_DIR);
+    errors.push(...importReport.errors);
     const behaviorScopeReport = await collectBehaviorScopeModuleIssues();
     errors.push(...behaviorScopeReport.errors);
     const stylePropertyReport = await collectStylePropertyContractReport();
@@ -1035,15 +878,15 @@ export async function collectRuntimeContractReport() {
         cssCustomProperties: stylePropertyReport.cssCustomProperties,
         dynamicStyleWrites: stylePropertyReport.dynamicStyleWrites,
         errors,
-        kernelTypedShims: kernelTypedShimReport.shims,
+        kernelTypedShims: importReport.kernelTypedShims,
         modules,
-        ownerDirectories,
+        ownerDirectories: importReport.ownerDirectories,
         recommendations,
-        rootEntrypoints,
+        rootEntrypoints: importReport.rootEntrypoints,
         stylePropertyWrites: stylePropertyReport.runtimeStyleWrites,
-        topLevelModuleFiles,
-        typedImportViolations,
-        typedOutputs,
+        topLevelModuleFiles: importReport.topLevelModuleFiles,
+        typedImportViolations: importReport.typedImportViolations,
+        typedOutputs: importReport.typedOutputs,
         unknownDynamicStyleWrites: stylePropertyReport.unknownDynamicStyleWrites,
         unknownStylePropertyWrites: stylePropertyReport.unknownStyleWrites,
         warnings,

@@ -154,7 +154,7 @@ function selectorHosted(selector, tags) {
 }
 
 async function loadCatalog() {
-  const catalog = await import('../public/js/runtime/module-catalog.js');
+  const catalog = await import('../public/js/runtime/catalog/index.js');
   return [
     ...(catalog.CORE_DEFS || []),
     ...(catalog.FEATURE_DEFS || []),

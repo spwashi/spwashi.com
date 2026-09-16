@@ -14,7 +14,7 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-import { MODULE_DEFS } from '../public/js/runtime/module-catalog.js';
+import { MODULE_DEFS } from '../public/js/runtime/catalog/index.js';
 import {
   combinatorDepth,
   indexHtmlElements,

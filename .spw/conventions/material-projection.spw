@@ -24,7 +24,7 @@
 @inert_audit: ~"../../scripts/spw-inert-audit.mjs"
 @rehearsal: ~"../../public/js/interface/cauldron/rehearsal.js"
 @fluency: ~"../../public/js/interface/cauldron/fluency.js"
-@loader: ~"../../public/js/runtime/module-loader.js"
+@loader: ~"../../public/js/runtime/orchestration/loader.js"
 
 operation = "contract"
 fixity = "tending"

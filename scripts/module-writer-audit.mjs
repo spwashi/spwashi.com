@@ -37,8 +37,8 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-import { MODULE_DEFS } from '../public/js/runtime/module-catalog.js';
-import { normalizeModuleUpdates } from '../public/js/runtime/module-updates-contract.js';
+import { MODULE_DEFS } from '../public/js/runtime/catalog/index.js';
+import { normalizeModuleUpdates } from '../public/js/runtime/catalog/updates-contract.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC_JS = path.join(ROOT, 'public/js');
@@ -55,7 +55,7 @@ const SHARED_TRANSPORT = new Set([
 ].map((file) => path.join(PUBLIC_JS, file)));
 
 const PSEUDO_MODULES = Object.freeze([
-  { id: '(module-loader)', file: path.join(PUBLIC_JS, 'runtime/module-loader.js'), updates: [] },
+  { id: '(module-loader)', file: path.join(PUBLIC_JS, 'runtime/orchestration/loader.js'), updates: [] },
 ]);
 
 const ROOT_REF = '(?:html|root|rootEl|htmlEl|body|this\\.root|this\\.body|document\\.documentElement|document\\.body)';

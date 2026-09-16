@@ -19,7 +19,7 @@
 @module_granularity_lifecycle: ~"./module-granularity-lifecycle-2026-07/index.spw"
 @export_uniformity_wip: ~"../../.agents/plans/module-export-uniformity/wip.spw"
 @decomposition_wip: ~"../../.agents/plans/runtime-module-decomposition/wip.spw"
-@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @module_catalog_constants: ~"../../public/js/runtime/catalog/constants.js"
 @module_catalog_normalize: ~"../../public/js/runtime/catalog/normalize.js"
 

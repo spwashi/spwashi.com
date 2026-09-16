@@ -11,9 +11,9 @@
 @cognition: ~"../conventions/js-architecture-cognition.spw"
 @export_contract: ~"../conventions/module-export-contract.spw"
 @audit: ~"../audits/module-export-standalone-2026-07.spw"
-@catalog: ~"../../public/js/runtime/module-catalog.js"
+@catalog: ~"../../public/js/runtime/catalog/index.js"
 @build_graph: ~"../../scripts/ts/build/index.mts"
-@loader: ~"../../public/js/runtime/module-loader.js"
+@loader: ~"../../public/js/runtime/orchestration/loader.js"
 @load_trace: ~"../../public/js/runtime/load-trace.js"
 
 ^"substrate"{

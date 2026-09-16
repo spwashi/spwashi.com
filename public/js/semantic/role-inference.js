@@ -8,7 +8,7 @@ import {
   REGION_SELECTOR,
   inferTopographyKind,
 } from '../kernel/dom-contracts.js';
-import { safeQueryAll } from '../runtime/runtime-helpers.js';
+import { safeQueryAll } from '../runtime/browser-primitives.js';
 
 export const SPW_ROLE_INFERENCE_CONTRACT = Object.freeze({
   authoredTruth: 'data-spw-role',

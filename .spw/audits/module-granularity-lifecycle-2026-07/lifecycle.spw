@@ -8,7 +8,7 @@
 #:fixity #!tending
 
 @index: ~"./index.spw"
-@loader: ~"../../../public/js/runtime/module-loader.js"
+@loader: ~"../../../public/js/runtime/orchestration/loader.js"
 @page_state: ~"../../../public/js/runtime/page-state.js"
 @site: ~"../../../public/js/site.js"
 @alignment: ~"../alignment-shell-lifecycle-sensitivity-2026-07/index.spw"

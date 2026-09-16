@@ -26,6 +26,7 @@ const allowDirty = process.argv.includes('--allow-dirty') || process.argv.includ
 
 const VALIDATORS = [
   { label: 'check-site', script: 'scripts/check-site.mjs' },
+  { label: 'check-runtime-bindings', script: 'scripts/check-runtime-bindings.mjs' },
   { label: 'pwa-contracts', script: 'scripts/pwa-contracts.mjs' },
   {
     label: 'check-generated',

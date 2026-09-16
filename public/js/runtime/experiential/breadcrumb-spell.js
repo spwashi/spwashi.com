@@ -25,7 +25,7 @@ import {
   isRegionMenuOpen,
   openRegionMenuForElement,
 } from '/public/js/runtime/region-menu.js';
-import { isReadingQuietChrome } from '/public/js/runtime/runtime-helpers.js';
+import { isReadingQuietChrome } from '/public/js/runtime/orchestration/policy.js';
 
 /* ── Constants ──────────────────────────────────────────────────────────── */
 

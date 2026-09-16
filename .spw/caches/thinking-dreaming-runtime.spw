@@ -13,7 +13,7 @@
 @recursive: ~"../conventions/recursive-improvement.spw"
 @serialize: ~"../conventions/spw-serialization-hydration.spw"
 @bus: ~"../../public/js/typed/bus.js"
-@idle: ~"../../public/js/runtime/module-loader.js"
+@idle: ~"../../public/js/runtime/orchestration/loader.js"
 @salience: ~"../../public/js/runtime/expression-resonance.js"
 @capture: ~"../conventions/component-capture-pipeline.spw"
 @assets: ~"../assets.spw"

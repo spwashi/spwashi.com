@@ -9,7 +9,7 @@
 @attention_section_handle_js: ~"../../../public/js/runtime/attention/section-handle.js"
 @page_region_rail_css: ~"../../../public/css/handles/page-region-rail.css"
 @contextual_ui_js: ~"../../../public/js/interface/contextual-ui.js"
-@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@module_catalog: ~"../../../public/js/runtime/catalog/index.js"
 @dom_sync_hub: ~"../../../public/js/runtime/dom-sync-hub.js"
 @region_profiler: ~"../../../public/js/runtime/region-profiler.js"
 @component_collection: ~"../../../public/js/runtime/component-collection.js"
@@ -88,7 +88,7 @@ image_resource_contract: .{
 
 validation: #[
  `node --check public/js/runtime/page-region-rail.js`,
- `node --check public/js/runtime/module-catalog.js`,
+ `node --check public/js/runtime/catalog/index.js`,
  `node --check public/js/runtime/attention/section-handle.js`,
  `node --check public/js/kernel/dom-contracts.js`,
  `node --check scripts/image-resource-manifest.mjs`,

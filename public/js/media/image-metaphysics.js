@@ -745,7 +745,6 @@ function registerHoldGesture(host) {
 
         if (shouldAddPoint) {
             pathBuffer.push({ x, y, time: now });
-            lastPathPointTime = now;
         }
 
         // Emit particles from buffered path segment

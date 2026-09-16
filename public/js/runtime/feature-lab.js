@@ -8,10 +8,8 @@
  * of settings preferences.
  */
 
-import {
-  parseFeatureList,
-  normalizeRuntimeToken,
-} from './runtime-helpers.js';
+import { parseFeatureList } from './orchestration/features.js';
+import { normalizeRuntimeToken } from './orchestration/policy.js';
 
 export const FEATURE_LAB_STORAGE_KEY = 'spw-feature-lab';
 

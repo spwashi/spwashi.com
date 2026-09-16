@@ -9,7 +9,7 @@ import {
   REGION_ECOLOGY_FIXTURES,
   getRegionEcologyFixture,
 } from '../../public/js/kernel/region-ecology-fixtures.js';
-import { MODULE_DEFS } from '../../public/js/runtime/module-catalog.js';
+import { MODULE_DEFS } from '../../public/js/runtime/catalog/index.js';
 import { accountStillCoverage } from '../lib/still-module-coverage.mjs';
 import {
   DEVICE_REASONS,

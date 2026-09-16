@@ -10,7 +10,7 @@
 @export_audit: ~"../module-export-standalone-2026-07.spw"
 @cognition: ~"../../conventions/js-architecture-cognition.spw"
 @ecology: ~"../../conventions/runtime-medium-ecology.spw"
-@loader: ~"../../../public/js/runtime/module-loader.js"
+@loader: ~"../../../public/js/runtime/orchestration/loader.js"
 @compose: ~"../../../public/js/compose.js"
 
 ^"emerging_conventions"{

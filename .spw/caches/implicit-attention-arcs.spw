@@ -10,7 +10,7 @@
 #:layer #!pragmatics
 
 @page_state: ~"../../public/js/runtime/page-state.js"
-@module_loader: ~"../../public/js/runtime/module-loader.js"
+@module_loader: ~"../../public/js/runtime/orchestration/loader.js"
 @attention_field: ~"../conventions/attention-field.spw"
 @page_category: ~"../../public/js/runtime/page-category.js"
 

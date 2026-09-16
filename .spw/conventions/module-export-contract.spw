@@ -11,14 +11,17 @@
 @naming_grammar_js_types_audit: ~"../audits/naming-grammar-js-types-2026-07/index.spw"
 @ecology: ~"./runtime-medium-ecology.spw"
 @medium_map: ~"../surfaces/runtime-module-medium.spw"
-@loader: ~"../../public/js/runtime/module-loader.js"
+@loader: ~"../../public/js/runtime/orchestration/loader.js"
 @shared_resolver: ~"../../public/js/kernel/shared.js"
+@registry: ~"../../public/ts/module-registry.ts"
+@scheduler: ~"../../public/js/runtime/orchestration/scheduler.js"
+@lifecycle: ~"../../public/js/runtime/orchestration/lifecycle.js"
 
 ^"target_shape"{
   canonical: `SPW_MODULE_EXPORT frozen object`
   fields: #[
     `id — optional; defaults from catalog def.id`
-    `mount — required function (mod, ctx, root?) => cleanup | { cleanup, refresh } | void`
+    `mount — required portable function (ctx, root?) => cleanup | { cleanup, destroy?, refresh } | void; catalog mount adapters receive (mod, ctx, root)`
     `refresh — optional`
     `contract — optional SPW_*_CONTRACT reference`
     `updates — optional; normalized by module-updates-contract (scope:role:kind:name)`
@@ -30,10 +33,10 @@
 
   compatibility_alias: `export const spwModule = SPW_MODULE_EXPORT — one release tolerance`
 
-  mount_result: `mount may return void, one cleanup function, or { cleanup?, refresh? }. Cleanup owns only state/listeners/observers created by that mount and should be idempotent.`
+  mount_result: `mount may return void, one cleanup function, or { cleanup?, destroy?, refresh? }. cleanup wins over the legacy destroy alias and may return Promise<void>. Cleanup owns only state/listeners/observers created by that mount and should be idempotent.`
   refresh_precedence: `A refresh returned by mount is instance-local and wins. When mount returns no refresh, module-loader attaches SPW_MODULE_EXPORT.refresh so the optional export field is operational rather than documentary.`
   cleanup_ownership: `A loader-mounted module returns its handle; it does not call ctx.addCleanup. describeModuleExport.orchestration.cleanup is stamped handle|none after mount.`
-  release_composition: `Overlapping single-module and whole-runtime unmounts join one pending cleanup per record. The record is unmounting until release completes; a remount waits before creating a fresh instance. Cleanup errors keep the existing log-and-release policy. This coordinates mounted handles, not cancellation of imports or unfinished mounts.`
+  release_composition: `Catalog unmount(record) owns teardown when present and may delegate to record.cleanup; otherwise the returned handle owns teardown. Registry destruction, single-module unmount, and whole-runtime unmount join one pending disposal per record. The record is unmounting until release completes; a remount waits before creating a fresh instance. Cleanup errors keep the existing log-and-release policy. This coordinates mounted handles, not cancellation of imports or unfinished mounts.`
   route_boundary: `Cross-route navigation replaces the document. Partial DOM replacement is handled by module refresh/untracking; pagehide teardown is not used because it breaks BFCache restoration.`
 
   legacy_mount_names: #[
@@ -41,6 +44,15 @@
     `export async function initX()`
   ][reg=set]
 }
+
+^"source_ownership"{
+  catalog = `runtime/catalog owns staged definitions, normalization, and export/update/description vocabulary. index.js is the complete-catalog entrypoint; bootstrap loads individual families lazily.`
+  orchestration = `runtime/orchestration splits instance loading and inspection (loader), scheduling strategies (scheduler), mount/disposal coordination (lifecycle), feature gates (features), and query/dataset disposition (policy).`
+  primitives = `runtime/browser-primitives owns browser readiness, idle scheduling, observer lanes, queries, and mount-root resolution; it cannot depend on catalog policy.`
+  registry = `public/ts/module-registry.ts is a strict, generic, DOM-independent ownership primitive behind kernel/module-registry.js. A cleanup wave joins in-flight disposal and preserves replacement instances.`
+  entrypoints = `site.js and compose.js preserve their public exports. All internal imports and build/audit consumers use the new owners directly.`
+  direction = `Catalog static dependencies cannot reach orchestration. Policy and feature gates cannot import active loader processes. The emitted registry has no runtime imports. imports.mts enforces these boundaries.`
+}[reg=facet]
 
 ^"resolver_order"{
   steps: ?<
@@ -59,7 +71,8 @@
 }
 
 ^"catalog_comprehensiveness"{
-  required_fields = #[`id`, `layer`, `when`, `load`, `mount`][reg=set]
+  required_fields = #[`id`, `layer`, `when`, `load`][reg=set]
+  mount_adapter = `mount is optional when the loaded namespace has a resolvable portable or init export. Missing both produces a failed lifecycle record.`
   hygiene_fields = #[
     `describes` (subject[mode]{direction} clauses; gloss optional; prose is a hygiene finding)
     `evaluates`
@@ -79,9 +92,8 @@
 
 ^"binding_integrity"{
   claim = `A name a module reads must resolve to a declaration, an import, or a
-    platform global. Nothing in this tree checks that at build time on its own:
-    the runtime is hand-authored ES modules with no bundler, so an unbound name
-    is not an error until a browser evaluates the line that reads it.`
+    platform global. Hand-authored ES modules need a compiler binding gate:
+    otherwise an unbound name can survive until a browser evaluates that line.`
   found = `Two were live when the check was written. site-settings-ui.js read
     settingsManager inside bindSettingsScope, where only manager is in scope, so
     every preset button on /settings/ threw ReferenceError after saving and before
@@ -97,16 +109,22 @@
     inputs and rootDir rejects them. So emit and checking are two projects.
     tsconfig.public-sources.json checks public/ts strictly with the JS types in view;
     tsconfig.public.json feeds the binding gate.`
-  executable_contract = `npm run check:bindings, also inside npm run check:runtime.
-    Reads only TS2304 and TS2305 from tsconfig.public.json. Inference and strictness
-    findings are ignored on purpose — there are about 1200 and they would make the
-    output unreadable.`
-  baseline_rule = `The gate carries a short baseline of findings owned by files a
-    concurrent patch was holding. It is a list to empty. The check fails when a
-    baseline entry is fixed but still listed, so it cannot go stale.`
-  successor = `The ~1200 open inference findings are a separate project. Do not
-    enable strict checkJs across public/js in one sweep; take one folder, add JSDoc
-    where the type is load-bearing, and leave the gate reading the same two codes.`
+  executable_contract = `npm run check:bindings, inside check:runtime and check:local.
+    scripts/ts/runtime-contracts/bindings.mts uses the compiler API, rejects
+    configuration and syntax failures, and selects unresolved name/export/import
+    diagnostics including spelling suggestions and side-effect imports. Other JS
+    inference diagnostics remain outside this gate.`
+  baseline_rule = `No unresolved-binding baseline remains. Shell teardown and route
+    menu calls are repaired; the image brush no longer writes an undeclared timestamp.`
+  emit_policy = `All emit projects inherit noEmitOnError. The source-check project
+    remains strict; the emit project still cannot infer imported JS independently.`
+  folder_contract = `scripts/ts/runtime-contracts/imports.mts owns syntax-aware
+    static/re-export/dynamic import checks and recursive public/ts to public/js/typed
+    parity. Browser-local imports name existing .js files. Kernel facades may import
+    typed implementations eagerly; bootstrap and catalog families load them lazily.
+    Computed imports require a named gateway; HTTP(S) imports are external.`
+  successor = `Remaining JS inference findings are separate work. Add load-bearing
+    JSDoc by owner rather than enabling strict checkJs across the entire tree.`
 }[reg=facet]
 
 ^"inspection_dataset"{
@@ -121,8 +139,8 @@
 }
 
 validation: #[
-  `npm run check:runtime warns when catalog import target lacks resolvable mount`,
-  `npm run check:bindings fails on a name that resolves to nothing (TS2304/TS2305)`,
+  `npm run check:runtime checks import and folder ownership; loader fails an unresolved mount`,
+  `npm run check:bindings fails on unresolved bindings, imports, compiler configuration, or syntax`,
   `node --check on module-export-contract.js`,
   `describeModuleExport() returns stable JSON for all catalog ids (goal)`
   `A module-export refresh is preserved by module-loader when mount itself returns no refresh.`

@@ -12,7 +12,7 @@
 
 @feature_utilization: ~"../../conventions/feature-utilization.spw"
 @behavior_scopes: ~"../../../public/js/runtime/behavior-scopes.js"
-@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@module_catalog: ~"../../../public/js/runtime/catalog/index.js"
 @runtime_contracts: ~"../../../scripts/ts/runtime-contracts.mts"
 @tokens_core: ~"../../../public/css/tokens/core.css"
 @runtime_states: ~"../../../public/css/components/runtime-states.css"

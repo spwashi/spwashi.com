@@ -15,7 +15,7 @@
 @javascript_module_census: ~"./javascript-module-census-2026-07.spw"
 @css_specificity_pe: ~"./css-specificity-pe-2026-07/index.spw"
 @html_component_audit: ~"./html-component-audit-2026-07.spw"
-@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @region_selector: ~"../../public/js/runtime/catalog/constants.js"
 @audit_script: ~"../../scripts/module-selector-depth-audit.mjs"
 @css_instruction: ~"../conventions/css-instruction.spw"

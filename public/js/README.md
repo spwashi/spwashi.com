@@ -27,8 +27,8 @@ For console-oriented work, it exports `createSpwLogger`,
 If you are trying to learn the runtime, read in this order:
 
 1. `public/js/site.js` for boot orchestration and `__SPW_SITE__` surfaces.
-2. `public/js/runtime/module-catalog.js` for staged module definitions by layer.
-3. `public/js/runtime/module-loader.js` for mount scheduling, batching, and token cascades.
+2. `public/js/runtime/catalog/index.js` for staged module definitions by layer.
+3. `public/js/runtime/orchestration/loader.js` for mount scheduling, batching, and token cascades.
 4. `public/js/kernel/dom-contracts.js` for shared selector and dataset helpers.
 5. `public/js/semantic/role-inference.js` for canonical region collection and role inference.
 6. `public/js/kernel/shared.js` for the canonical operator registry and shared semantics.
@@ -46,7 +46,7 @@ The runtime keeps immediate core modules ordered because settings, shell state,
 and minimal page behavior seed later layers. Feature, region, and enhancement
 catalog families load after that core wave so their definition text is not part
 of the first parse. Then `site.js` mounts eligible feature and enhancement
-immediate layers in parallel through `runtime/module-loader.js`. Module definitions that require strict ordering
+immediate layers in parallel through `runtime/orchestration/loader.js`. Module definitions that require strict ordering
 should stay in `CORE_DEFS` or move behind `VISIBLE`, `IDLE`, `INTERACTION`, or
 `REGION` scheduling instead of depending on feature/enhancement array order.
 Interaction helpers, reward affordances, prompt utilities, and route-local labs
@@ -63,7 +63,10 @@ wave.
 - `kernel/`: durable primitives, settings (profiles/engine/ui split), shared contracts, and runtime bridges.
 - `semantic/`: operator grammar, projection machinery, region role inference, narrative token lenses, and pretext helpers.
 - `runtime/`: module catalog/loader, active processes, route grounding, page-state, frame-state, spells, inspectors, gates, and lifecycle loops.
-- `runtime/catalog/`: staged family definitions (`core`, `feature`, `region`, `enhancement`), constants, and normalization. `runtime/module-catalog.js` remains the full-catalog entrypoint; `site.js` imports individual families to preserve lazy loading. Catalog load paths resolve relative to `catalog/`; source audits and the deploy builder use the same base.
+- `runtime/catalog/`: staged family definitions (`core`, `feature`, `region`, `enhancement`), constants, normalization, and export/update/description contracts. `runtime/catalog/index.js` remains the full-catalog entrypoint; `site.js` imports individual families to preserve lazy loading. Catalog load paths resolve relative to `catalog/`; source audits and the deploy builder use the same base.
+- `runtime/orchestration/`: `loader.js` owns instances and inspection; `scheduler.js` owns mount strategies; `lifecycle.js` owns invocation and disposal; `features.js` and `policy.js` own eligibility inputs.
+- `runtime/browser-primitives.js`: DOM queries, root resolution, idle callbacks, shared intersection lanes, and document readiness. It does not depend on catalog or orchestration.
+- `kernel/module-registry.js`: facade for the DOM-independent typed registry in `public/ts/module-registry.ts`; cleanup waves preserve replacement instances and join pending disposal.
 - `runtime/interaction/`: visitor-gesture vocabulary (`loop`, `hops`, `vocabulary`, `progression`, `story`). The catalog id `interaction-progression` is unchanged; its load path resolves from `catalog/` into this folder.
 - `runtime/page-hooks.js`: page-unique hooks, named handles, and console-facing page play helpers.
 - `interface/`: visible affordances, guide behavior, haptics, local controls, and chrome response.
@@ -71,19 +74,44 @@ wave.
 - `media/`: image storage, image metaphysics, and SVG/media helpers.
 - `typed/`: generated browser-ready modules from `public/ts/`; do not hand-edit generated output.
 
+The build checker keeps its import/folder rules in
+`scripts/ts/runtime-contracts/imports.mts` and its compiler binding rules in
+`scripts/ts/runtime-contracts/bindings.mts`. `scripts/ts/runtime-contracts.mts`
+composes the runtime report; browser code does not import this tooling.
+The gate rejects static catalog imports of orchestration, browser primitive
+dependencies on runtime policy, and registry dependencies on browser modules.
+Catalog dynamic imports still schedule feature implementations in their owning folders.
+
+## Lifecycle Contracts
+
+Portable exports mount with `(ctx, root)`. Catalog adapters mount with
+`(module, ctx, root)`. Either may return a cleanup function or a handle with
+`cleanup` (legacy alias: `destroy`) and `refresh`; cleanup may be asynchronous.
+An explicit catalog `unmount(record)` owns teardown and may call
+`record.cleanup()`. The loader never invokes both owners independently.
+Registry destruction and explicit module unmount share disposal; remount waits
+for that disposal to finish. This covers mounted instances, not cancellation
+of an import or mount that is still in flight.
+
+Shared types in `types/module-catalog.d.ts` use closed catalog vocabularies.
+Type and lifecycle regression tests cover the actual calling conventions.
+A loaded namespace without a mount adapter or resolvable export fails its
+lifecycle record instead of appearing mounted.
+
 ## Portable Modules
 
 These are the best candidates when you want to reuse a file on another site:
 
 - `compose.js` for a single import surface over the portable runtime helpers.
-- `runtime/module-catalog.js` + `runtime/module-loader.js` for staged mount
+- `runtime/catalog/index.js` + `runtime/orchestration/loader.js` for staged mount
   contracts without inlining bootstrap policy in a host page.
 - `runtime/gesture-contract.js` + `runtime/region-profiler.js` for gesture and
   region harmony vocabulary shared with `site.js`.
 - `semantic/role-inference.js` for `collectRegions()`, `collectAnnotationRegions()`,
   and shared role/kind/context inference.
-- `runtime/runtime-helpers.js` for shared timing, parsing, mount, and registry
-  helpers that can be reused without booting `site.js`.
+- `runtime/browser-primitives.js` for browser scheduling and DOM roots;
+  `runtime/orchestration/policy.js` for query policy; `kernel/module-registry.js`
+  for typed instance ownership. `compose.js` preserves their portable exports.
 - `SPW_RUNTIME_HELPERS_CONTRACT` for a compact summary of the helper layer's
   timing and mount vocabulary.
 - `SPW_MODULE_LOADER_CONTRACT` + `MODULE_TIMING_STAGES` for mount lifecycle stages.
@@ -221,13 +249,27 @@ Import implementation modules from the folder that owns the behavior. Keep
 compatibility wrappers unless a file truly needs a migration shim.
 
 `npm run check:runtime` enforces the hard part of that rule: runtime module IDs
-must be unique, dynamic imports must resolve inside `public/js/`, generated
-`typed/` modules must have `public/ts/` sources, only `site.js` plus
+must be unique, local static imports, re-exports, and literal dynamic imports
+must name existing `.js` files inside `public/js/`. HTTP(S) imports remain external;
+computed imports require an explicit owner allowance. Generated
+`typed/` modules and `public/ts/` sources must match in both directions, including
+nested folders. Only `site.js` plus
 `compose.js` may live as root-level JavaScript entrypoints, and top-level
 implementation folders must stay in the recognized ownership set:
 `kernel/`, `runtime/`, `interface/`, `semantic/`, `modules/`, `media/`, and
-`typed/`. Adding a new top-level family should be a contract change, not an
+`typed/`, plus build-owned `generated/`. Adding a new top-level family should be a contract change, not an
 incidental file placement.
+
+Kernel facades and generated typed modules may statically import typed output.
+Bootstrap and the four catalog definition families may load it dynamically;
+ordinary runtime/UI modules use the kernel facade. This preserves lazy scheduling
+without adding wrappers around the two existing typed feature entrypoints.
+
+`npm run check:bindings` uses compiler diagnostics to reject unresolved names,
+missing exports/imports (including side-effect imports), invalid configuration,
+and syntax errors. It is included in `check:runtime` and `check:local`. Legacy JS
+inference findings remain a separate audit. Emit projects inherit
+`noEmitOnError`, so a failed compile cannot overwrite generated modules.
 
 The same check also audits `element.style.setProperty(...)` calls. Literal
 custom-property writes should either be consumed or defined somewhere under

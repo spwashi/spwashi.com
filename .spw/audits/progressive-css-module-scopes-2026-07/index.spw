@@ -26,7 +26,7 @@
 @behavior_scopes_runtime: ~"../../../public/js/runtime/behavior-scopes.js"
 @module_catalog_constants: ~"../../../public/js/runtime/catalog/constants.js"
 @module_normalize: ~"../../../public/js/runtime/catalog/normalize.js"
-@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@module_loader: ~"../../../public/js/runtime/orchestration/loader.js"
 @payload_report: ~"../../../scripts/css-payload-report.mjs"
 @layout_qa: ~"../layout-qa-measurement-2026-07/index.spw"
 

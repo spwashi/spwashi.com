@@ -242,7 +242,7 @@ function ensurePublicImportHook(): Promise<void> {
 
 async function loadCatalogDefinitionsForBuild(): Promise<CatalogDefinitionForBuild[]> {
   await ensurePublicImportHook();
-  const catalogUrl = pathToFileURL(path.join(ROOT_DIR, 'public/js/runtime/module-catalog.js')).href;
+  const catalogUrl = pathToFileURL(path.join(ROOT_DIR, 'public/js/runtime/catalog/index.js')).href;
   try {
     const catalog = await import(catalogUrl) as { MODULE_DEFS?: CatalogDefinitionForBuild[] };
     return catalog.MODULE_DEFS || [];

@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { MODULE_DEFS } from '../../public/js/runtime/module-catalog.js';
+import { MODULE_DEFS } from '../../public/js/runtime/catalog/index.js';
 import { listModuleCatalogIndex } from '../../public/js/runtime/catalog/normalize.js';
 import {
   parseModuleDescribes,
-} from '../../public/js/runtime/module-describes-contract.js';
+} from '../../public/js/runtime/catalog/describes-contract.js';
 
 test('catalog hosts use current public nouns without compatibility aliases', () => {
   for (const def of MODULE_DEFS) {

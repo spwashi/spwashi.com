@@ -10,7 +10,7 @@ import {
   resolveModuleCatalogSpecifier,
   resolveRuntimeModuleSpecifier,
 } from '../../public/js/runtime/catalog/normalize.js';
-import { describeModuleExport } from '../../public/js/runtime/module-export-contract.js';
+import { describeModuleExport } from '../../public/js/runtime/catalog/export-contract.js';
 import {
   listNamedInitAdapterExports,
   moduleSourceExportsName,
@@ -196,6 +196,7 @@ test('composite build pipelines compile each TypeScript project once', async () 
   for (const validator of [
     'scripts/css-build.mjs',
     'scripts/check-site.mjs',
+    'scripts/check-runtime-bindings.mjs',
     'scripts/pwa-contracts.mjs',
     'scripts/check-generated.mjs',
     'scripts/component-contracts.mjs',
@@ -316,7 +317,7 @@ test('site build registers the public-js import hook before loading the catalog'
       '--import',
       hook,
       '-e',
-      "import { MODULE_DEFS } from './public/js/runtime/module-catalog.js'; if (!Array.isArray(MODULE_DEFS) || !MODULE_DEFS.length) process.exit(2);",
+      "import { MODULE_DEFS } from './public/js/runtime/catalog/index.js'; if (!Array.isArray(MODULE_DEFS) || !MODULE_DEFS.length) process.exit(2);",
     ],
     { cwd: ROOT, encoding: 'utf8' },
   );

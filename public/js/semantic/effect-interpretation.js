@@ -9,7 +9,7 @@ import {
   getOperatorDefinition,
   getOperatorGeometry,
 } from '/public/js/kernel/shared.js';
-import { resolveOwnerDocument } from '/public/js/runtime/runtime-helpers.js';
+import { resolveOwnerDocument } from '/public/js/runtime/browser-primitives.js';
 
 const FIGURE_SELECTOR = [
   '.topic-photo-card',

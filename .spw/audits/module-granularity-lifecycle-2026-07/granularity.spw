@@ -13,7 +13,7 @@
 @decomposition: ~"../../../.agents/plans/runtime-module-decomposition/PLAN.md"
 @medium: ~"../../surfaces/runtime-module-medium.spw"
 @brp_runtime: ~"../build-runtime-performance-2026-07/runtime.spw"
-@catalog: ~"../../../public/js/runtime/module-catalog.js"
+@catalog: ~"../../../public/js/runtime/catalog/index.js"
 
 ^"subclassification_levels"{
   rule = `Do not conflate levels. Prefer the lowest level that meets the need.`

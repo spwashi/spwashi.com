@@ -7,7 +7,7 @@
  * modules by what they name rather than by id.
  */
 
-import { writeDatasetValue } from '../kernel/dom-contracts.js';
+import { writeDatasetValue } from '../../kernel/dom-contracts.js';
 
 export const MODULE_DESCRIBES_GRADES = Object.freeze(['expression', 'mixed', 'prose']);
 

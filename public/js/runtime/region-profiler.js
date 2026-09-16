@@ -14,7 +14,7 @@ import {
   inferRegionKind,
   inferRegionRole,
 } from '../semantic/role-inference.js';
-import { parseFeatureList } from './runtime-helpers.js';
+import { parseFeatureList } from './orchestration/features.js';
 
 export const REGION_STATES = Object.freeze({
   QUEUED: 'queued',

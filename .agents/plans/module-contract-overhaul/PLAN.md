@@ -76,3 +76,38 @@ $[html]{single} ~[idle]{enhance-rhythm}
 2. `npm run check:runtime`
 3. `npm run test:modules:run`
 4. `git diff --check`
+
+## Source And Lifecycle Alignment (2026-09-16)
+
+Operation: `align`. Fixity: `stable`. Public goal: modules load and release
+reliably, with source contracts that catch browser failures before deployment.
+
+Sense: `typecheck`, `check:runtime`, and the selector census passed. Inspection
+found a three-argument type for a two-argument portable mount, an unused catalog
+unmount hook, dynamic imports bypassing typed ownership, flat-only output checks,
+and unresolved runtime names held in the binding baseline.
+
+One patch spans the shared module types, loader lifecycle, runtime-contract
+checker children, binding gate, and the two affected runtime modules. Compiler
+diagnostics must fail on broken configuration, syntax, and unresolved imports;
+unrelated inference debt remains outside the binding gate. Import ownership and
+source/output parity must follow nested folders and lazy imports. Existing
+schedules, route HTML, CSS, dependency versions, and public entry URLs stay fixed.
+
+Proof: targeted lifecycle, import, and binding regression tests; `typecheck`,
+`check:runtime`, `ecology`, `check:local -- --allow-dirty`, deploy build, and
+`git diff --check`. Generated modules accompany their source edits.
+
+Landed design: catalog definitions and vocabulary live under `runtime/catalog/`;
+loader, scheduler, lifecycle, feature gates, and policy under `runtime/orchestration/`.
+The generic registry is a strict typed kernel edge; browser primitives have no
+catalog dependency. Active consumers and build/audit paths use their owners.
+
+Verified: local gate passed 375 tests; deploy build passed; Chrome home/settings/
+software reached ready with zero console errors; `visual:checks -- --ids=home-opening`
+passed one pocket still. All 315 named `compose.js` exports remain unchanged.
+Binding baseline is empty. Catalog token types are closed unions, erroneous
+TypeScript cannot overwrite emitted output, and import checks enforce direction
+between catalog, orchestration, primitives, and the portable registry.
+In-flight mount cancellation and broad strict-JS inference cleanup remain outside
+this alignment.

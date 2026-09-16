@@ -19,7 +19,7 @@
 @floating_chrome_coherence: ~"../conventions/floating-chrome-coherence.spw"
 @viewing_reason: ~"../conventions/viewing-reason.spw"
 @css_manifest: ~"../../scripts/typed/css-manifest.mjs"
-@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @vocabulary_metaphor_growth_synthesis: ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
 
 audit_run: .{

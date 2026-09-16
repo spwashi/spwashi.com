@@ -18,6 +18,7 @@ Open this file for agent/editor environment work. Do not append contribution
 diaries here.
 
 - Failure ledger below (do not relearn in session)
+- Runtime source/lifecycle checks: [module contract owner](../module-contract-overhaul/PLAN.md#source-and-lifecycle-alignment-2026-09-16).
 - Markdown spend: `.spw/caches/agent-markdown-spend-2026-09.spw`
 - Pre-2026-09-06 contributions: `.agents/plans/archive/2026-09-06-agent-optimization-diary.md`
 - Verified misses: `.agents/MEMORY.md`

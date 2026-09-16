@@ -8,6 +8,7 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "noEmit": true,
+    "noEmitOnError": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,

@@ -9,7 +9,7 @@
 #:operation #!audit
 #:layer #!pragmatics
 
-@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @module_export_contract: ~"../conventions/module-export-contract.spw"
 @module_export_audit: ~"./module-export-standalone-2026-07.spw"
 @runtime_medium_ecology: ~"../conventions/runtime-medium-ecology.spw"
@@ -19,7 +19,7 @@
 @page_spacing_runtime_synthesis: ~"./page-spacing-runtime-synthesis-2026-07.spw"
 @vocabulary_metaphor_growth_synthesis: ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
 @site_js: ~"../../public/js/site.js"
-@module_loader: ~"../../public/js/runtime/module-loader.js"
+@module_loader: ~"../../public/js/runtime/orchestration/loader.js"
 @dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
 
 audit_run: .{

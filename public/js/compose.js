@@ -94,26 +94,26 @@ export {
 
 export {
   cancelIdle,
-  createRegistry,
-  describeRuntimePolicy,
-  inferRuntimePosture,
   isFn,
-  normalizeRuntimeToken,
-  normalizeMountHandle,
   onIdle,
   once,
-  matchesFeatures,
-  normalizeFeatureRequirements,
-  parseFeatureList,
-  readDelimitedSet,
-  readModuleTimingMap,
-  readRuntimePolicy,
   safeQuery,
   safeQueryAll,
   whenDocumentReady,
   whenWindowLoaded,
+} from './runtime/browser-primitives.js';
+export { createRegistry } from './kernel/module-registry.js';
+export {
+  describeRuntimePolicy,
+  inferRuntimePosture,
+  normalizeRuntimeToken,
+  readDelimitedSet,
+  readModuleTimingMap,
+  readRuntimePolicy,
   SPW_RUNTIME_HELPERS_CONTRACT,
-} from './runtime/runtime-helpers.js';
+} from './runtime/orchestration/policy.js';
+export { normalizeMountHandle } from './runtime/orchestration/lifecycle.js';
+export { matchesFeatures, normalizeFeatureRequirements, parseFeatureList } from './runtime/orchestration/features.js';
 
 export {
   PAGE_ARRIVAL,
@@ -281,13 +281,13 @@ export {
   inferModuleCost,
   listModuleCatalogIndex,
   summarizeModuleCatalogOptimization,
-} from './runtime/module-catalog.js';
+} from './runtime/catalog/index.js';
 
 export {
   MODULE_TIMING_STAGES,
   SPW_MODULE_LOADER_CONTRACT,
   createModuleLoader,
-} from './runtime/module-loader.js';
+} from './runtime/orchestration/loader.js';
 
 export {
   MODULE_DESCRIBES_GRADES,
@@ -296,7 +296,7 @@ export {
   describeModuleDescribes,
   formatModuleDescribesSpell,
   parseModuleDescribes,
-} from './runtime/module-describes-contract.js';
+} from './runtime/catalog/describes-contract.js';
 
 export {
   SPW_MODULE_UPDATES_CONTRACT,
@@ -315,7 +315,7 @@ export {
   readModuleUpdatesFromTarget,
   summarizeModuleUpdates,
   validateModuleUpdateToken,
-} from './runtime/module-updates-contract.js';
+} from './runtime/catalog/updates-contract.js';
 
 export {
   SPW_MODULE_EXPORT_CONTRACT,
@@ -323,7 +323,7 @@ export {
   createModuleExport,
   describeModuleExport,
   resolveModuleMount,
-} from './runtime/module-export-contract.js';
+} from './runtime/catalog/export-contract.js';
 
 export {
   BEHAVIOR_SCOPE_BUNDLES,

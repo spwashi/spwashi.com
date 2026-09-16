@@ -5,7 +5,7 @@
  * Catalog authors keep flat strings; runtime derives kind, scope, and summaries.
  */
 
-import { writeDatasetValue } from '../kernel/dom-contracts.js';
+import { writeDatasetValue } from '../../kernel/dom-contracts.js';
 
 export const MODULE_UPDATE_KINDS = Object.freeze([
   'attr',

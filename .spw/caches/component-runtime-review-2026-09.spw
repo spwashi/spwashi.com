@@ -16,7 +16,7 @@
 @css_plan: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
 @interaction_cost: ~"./interaction-paint-cost-2026-09.spw"
 @runtime_entry: ~"../../public/js/site.js"
-@module_loader: ~"../../public/js/runtime/module-loader.js"
+@module_loader: ~"../../public/js/runtime/orchestration/loader.js"
 @enhancement_catalog: ~"../../public/js/runtime/catalog/enhancement.js"
 @interaction_progression: ~"../../public/js/runtime/interaction/progression.js"
 @console: ~"../../public/js/interface/console.js"

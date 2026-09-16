@@ -4,12 +4,12 @@
  * Canonical module export shape for catalog mounting, compose portability,
  * and runtime-medium guild inspection.
  *
- * @typedef {import('../../../types/module-catalog').SpwModuleExport} SpwModuleExport
+ * @typedef {import('../../../../types/module-catalog').SpwModuleExport} SpwModuleExport
  */
 
-import { describeModuleUpdates, normalizeModuleUpdates } from './module-updates-contract.js';
+import { describeModuleUpdates, normalizeModuleUpdates } from './updates-contract.js';
 
-/** @type {readonly import('../../../types/module-catalog').SpwModuleExportPortableField[]} */
+/** @type {readonly import('../../../../types/module-catalog').SpwModuleExportPortableField[]} */
 const PORTABLE_EXPORT_FIELDS = Object.freeze([
   'id',
   'refresh',
@@ -18,7 +18,7 @@ const PORTABLE_EXPORT_FIELDS = Object.freeze([
   'describes',
 ]);
 
-/** @type {readonly import('../../../types/module-catalog').SpwModuleExportMirrorField[]} */
+/** @type {readonly import('../../../../types/module-catalog').SpwModuleExportMirrorField[]} */
 const CATALOG_MIRROR_FIELDS = Object.freeze([
   'evaluates',
   'timingArc',

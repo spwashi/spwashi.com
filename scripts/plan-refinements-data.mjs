@@ -162,7 +162,7 @@ export const PLAN_REFINEMENTS = {
     conceptual: {
       thesis: 'Census-driven attribute/event lexicon clusters with trace coverage and event-grammar boundaries.',
       concepts: ['attribute-cluster', 'event-grammar', 'trace-coverage', 'nutritious-architecture', 'census-driven'],
-      surfaces: ['.spw/audits/language-census.spw', 'public/js/runtime/module-catalog.js'],
+      surfaces: ['.spw/audits/language-census.spw', 'public/js/runtime/catalog/index.js'],
     },
     refinement: {
       tone: 'Taxonomist — rename only with echo-vs-homonym verdict.',
@@ -262,7 +262,7 @@ export const PLAN_REFINEMENTS = {
     conceptual: {
       thesis: 'Staged loading with observability — shrink serial work and IMMEDIATE width without losing inspectability.',
       concepts: ['MOUNT_WHEN', 'cache-stratum', 'bootstrap-budget', 'module-catalog', 'warm-return'],
-      surfaces: ['public/js/runtime/module-catalog.js', 'public/js/kernel/', 'npm run check:runtime'],
+      surfaces: ['public/js/runtime/catalog/index.js', 'public/js/kernel/', 'npm run check:runtime'],
     },
     refinement: {
       tone: 'Performance engineer who keeps the console — measure before claiming.',

@@ -132,7 +132,7 @@ function ensurePublicImportHook() {
 }
 async function loadCatalogDefinitionsForBuild() {
     await ensurePublicImportHook();
-    const catalogUrl = pathToFileURL(path.join(ROOT_DIR, 'public/js/runtime/module-catalog.js')).href;
+    const catalogUrl = pathToFileURL(path.join(ROOT_DIR, 'public/js/runtime/catalog/index.js')).href;
     try {
         const catalog = await import(catalogUrl);
         return catalog.MODULE_DEFS || [];

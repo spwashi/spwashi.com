@@ -1,7 +1,7 @@
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { getSiteSettings, resolveTuningDiscoverability } from '/public/js/kernel/site-settings.js';
 import { registerDomSyncTask } from '/public/js/runtime/dom-sync-hub.js';
-import { isReadingQuietChrome } from '/public/js/runtime/runtime-helpers.js';
+import { isReadingQuietChrome } from '/public/js/runtime/orchestration/policy.js';
 
 const SLOT_SIGILS = Object.freeze({
   header: '⌁',

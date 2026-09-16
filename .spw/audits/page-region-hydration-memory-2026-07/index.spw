@@ -27,7 +27,7 @@
 @spells: ~"../../../public/js/runtime/spells.js"
 @wonder_memory: ~"../../../public/js/interface/wonder-memory.js"
 @site_js: ~"../../../public/js/site.js"
-@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@module_catalog: ~"../../../public/js/runtime/catalog/index.js"
 @css_attr_audit: ~"../css-module-attribute-impact-2026-07/index.spw"
 @alignment_audit: ~"../alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
 @feature_partial_theatrics: ~"../../conventions/feature-partial-theatrics.spw"

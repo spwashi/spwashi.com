@@ -63,7 +63,7 @@ import {
   BEHAVIOR_SCOPE_BUNDLES,
   BEHAVIOR_SCOPE_KEYS,
 } from '/public/js/runtime/behavior-scopes.js';
-import { parseFeatureList } from '/public/js/runtime/runtime-helpers.js';
+import { parseFeatureList } from '/public/js/runtime/orchestration/features.js';
 import {
   bindFeatureLabControls,
   syncFeatureLabControls,

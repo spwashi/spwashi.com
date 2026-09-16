@@ -20,7 +20,7 @@
 @css_combinatorics: ~"./css-combinatorics.spw"
 @deferred_styles: ~"../../public/js/kernel/deferred-styles.js"
 @flourish_pack: ~"../../public/css/effects/flourish-pack.css"
-@module_loader: ~"../../public/js/runtime/module-loader.js"
+@module_loader: ~"../../public/js/runtime/orchestration/loader.js"
 @catalog_constants: ~"../../public/js/runtime/catalog/constants.js"
 @page_state: ~"../../public/js/runtime/page-state.js"
 

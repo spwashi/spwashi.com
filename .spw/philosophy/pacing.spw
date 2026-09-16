@@ -35,7 +35,7 @@
 @cinematic_css: ~"../../public/css/effects/cinematic.css"
 @material_css: ~"../../public/css/effects/material.css"
 @component_biome_css: ~"../../public/css/systems/component-biome.css"
-@module_loader: ~"../../public/js/runtime/module-loader.js"
+@module_loader: ~"../../public/js/runtime/orchestration/loader.js"
 @page_state: ~"../../public/js/runtime/page-state.js"
 
 operation = "prime"

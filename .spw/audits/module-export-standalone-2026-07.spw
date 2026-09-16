@@ -12,9 +12,9 @@
 @runtime_medium_ecology: ~"../conventions/runtime-medium-ecology.spw"
 @module_export_contract: ~"../conventions/module-export-contract.spw"
 @runtime_module_medium: ~"../surfaces/runtime-module-medium.spw"
-@module_updates_contract: ~"../../public/js/runtime/module-updates-contract.js"
+@module_updates_contract: ~"../../public/js/runtime/catalog/updates-contract.js"
 @compose_entry: ~"../../public/js/compose.js"
-@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @plan: ~"../../.agents/plans/module-export-uniformity/PLAN.md"
 @naming_grammar_js_types_audit: ~"./naming-grammar-js-types-2026-07/index.spw"
 

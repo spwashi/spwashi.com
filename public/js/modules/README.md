@@ -22,6 +22,6 @@ opening individual files.
 ## Rules
 
 - Route HTML may direct-link a clustered module when the route owns the behavior.
-- Shared lazy-loaded modules should be registered in `public/js/runtime/module-catalog.js`.
+- Shared lazy-loaded modules should be registered in `public/js/runtime/catalog/index.js`.
 - If a feature grows internal helpers, keep them inside its cluster and use explicit absolute imports.
 - Update `.spw/conventions/site-semantics.spw` when a new durable cluster is introduced.

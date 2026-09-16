@@ -8,7 +8,7 @@
 
 @module: ~"../../public/js/kernel/text-normalization.js"
 @semantic_utils: ~"../../public/js/semantic/semantic-utils.js"
-@runtime_helpers: ~"../../public/js/runtime/runtime-helpers.js"
+@runtime_helpers: ~"../../public/js/runtime/orchestration/policy.js"
 @naming_structured_values: ~"./naming-and-structured-values.spw"
 
 operation = "contract"

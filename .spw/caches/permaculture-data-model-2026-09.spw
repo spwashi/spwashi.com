@@ -26,7 +26,7 @@
 @cauldron: ~"../conventions/cauldron-dynamics.spw"
 @spatial_gravity: ~"../conventions/spatial-gravity.spw"
 @daily_kernel: ~"../conventions/daily-kernel.spw"
-@module_export: ~"../../public/js/runtime/module-export-contract.js"
+@module_export: ~"../../public/js/runtime/catalog/export-contract.js"
 @catalog_constants: ~"../../public/js/runtime/catalog/constants.js"
 @grower_start: ~"../../recipes/index.html"
 @product_lines: ~"../surfaces/product-lines.spw"

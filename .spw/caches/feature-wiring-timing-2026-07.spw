@@ -8,7 +8,7 @@
 #:operation #!cache
 #:fixity #!cold
 
-@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @runtime_contracts: ~"../../scripts/ts/runtime-contracts.mts"
 @feature_utilization: ~"../conventions/feature-utilization.spw"
 @feature_theatrics: ~"../conventions/feature-partial-theatrics.spw"

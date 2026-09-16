@@ -18,10 +18,10 @@
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @wonder_architecture: ~"./wonder-architecture.spw"
 @charge_cycle: ~"./charge-cycle.spw"
-@module_updates_contract: ~"../../public/js/runtime/module-updates-contract.js"
+@module_updates_contract: ~"../../public/js/runtime/catalog/updates-contract.js"
 @module_catalog_constants: ~"../../public/js/runtime/catalog/constants.js"
 @module_catalog_normalize: ~"../../public/js/runtime/catalog/normalize.js"
-@module_export_contract: ~"../../public/js/runtime/module-export-contract.js"
+@module_export_contract: ~"../../public/js/runtime/catalog/export-contract.js"
 @catalog_types: ~"../../types/module-catalog.d.ts"  # SpwModuleDef + cost axes; costClass is the projection
 
 operation = "contract"

@@ -6,8 +6,8 @@
 #:layer #!pragmatics
 
 @runtime: ~"../../../public/js/site.js"
-@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
-@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@module_catalog: ~"../../../public/js/runtime/catalog/index.js"
+@module_loader: ~"../../../public/js/runtime/orchestration/loader.js"
 @role_inference: ~"../../../public/js/semantic/role-inference.js"
 @settings: ~"../../../public/js/kernel/site-settings.js"
 @settings_engine: ~"../../../public/js/kernel/site-settings-engine.js"

@@ -15,7 +15,7 @@
 @module_export_contract: ~"../conventions/module-export-contract.spw"
 @css_instruction: ~"../conventions/css-instruction.spw"
 @page_state: ~"../../public/js/runtime/page-state.js"
-@module_loader: ~"../../public/js/runtime/module-loader.js"
+@module_loader: ~"../../public/js/runtime/orchestration/loader.js"
 @dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
 @core_bundle: ~"../../public/css/bundles/core.css"
 

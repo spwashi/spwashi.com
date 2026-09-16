@@ -58,18 +58,16 @@ import {
 } from './runtime/debug-qa-posture.js';
 import {
   cancelIdle,
-  createRegistry,
-  describeRuntimePolicy,
-  inferRuntimePosture,
   isFn,
   onIdle,
-  parseFeatureList,
-  readRuntimePolicy,
   safeQuery,
   safeQueryAll,
   whenDocumentReady,
   whenWindowLoaded,
-} from './runtime/runtime-helpers.js';
+} from './runtime/browser-primitives.js';
+import { createRegistry } from './kernel/module-registry.js';
+import { describeRuntimePolicy, inferRuntimePosture, readRuntimePolicy } from './runtime/orchestration/policy.js';
+import { parseFeatureList } from './runtime/orchestration/features.js';
 import {
   ensureFlourishStyles,
   ensureInspectStyles,
@@ -94,7 +92,7 @@ import {
   primeRegions,
   refreshRegionProfiles,
 } from './runtime/region-profiler.js';
-import { createModuleLoader } from './runtime/module-loader.js';
+import { createModuleLoader } from './runtime/orchestration/loader.js';
 import { describePageCategory, readPageCategory } from './runtime/page-category.js';
 import * as expressionGeometry from './semantic/spw-expression-geometry.js';
 import * as moduleTimingContract from './kernel/module-timing-contract.js';

@@ -9,7 +9,7 @@ import {
   inferTopographyKind,
 } from '../kernel/dom-contracts.js';
 import { normalizeRoutePath } from '/public/js/kernel/route-utils.js';
-import { safeQueryAll } from './runtime-helpers.js';
+import { safeQueryAll } from './browser-primitives.js';
 
 export { normalizeRoutePath };
 

@@ -8,8 +8,8 @@
 #:fixity #!tending
 
 @index: ~"./index.spw"
-@catalog: ~"../../../public/js/runtime/module-catalog.js"
-@loader: ~"../../../public/js/runtime/module-loader.js"
+@catalog: ~"../../../public/js/runtime/catalog/index.js"
+@loader: ~"../../../public/js/runtime/orchestration/loader.js"
 @site: ~"../../../public/js/site.js"
 @cognition: ~"../../conventions/js-architecture-cognition.spw"
 @harmony: ~"../component-philosophy-harmony-2026-07.spw"
