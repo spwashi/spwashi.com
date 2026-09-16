@@ -1,0 +1,210 @@
+# Cognitive Toy (2026-09)
+#
+# operation: prime
+# spwashi.com as an adult cognitive toy: interactive playfulness, electrostatic
+# cognitive loops, promo/wonder as a play mechanic, and gamification aligned
+# with material play. Held as named expansion paths with evidence.
+# Not a points system. Not a new data-spw-* family. Not an eighth wonder type.
+# Not a motion pack for the arrival. Public HTML is not rewritten in this pass.
+
+#>cognitive_toy_2026_09
+#:cache #!prime #!play #!charge #!wonder #!material #!promo #!collection
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@charge_cycle: ~"../conventions/charge-cycle.spw"
+@electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
+@electrostatic_spend: ~"./electrostatic-spend-2026-09.spw"
+@signs_of_life: ~"./signs-of-life-2026-09.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@material_physics: ~"../conventions/material-physics.spw"
+@design_whimsy: ~"../conventions/design-whimsy.spw"
+@discovery_powerups: ~"../conventions/discovery-powerups.spw"
+@cauldron_dynamics: ~"../conventions/cauldron-dynamics.spw"
+@learnability_ledger: ~"../conventions/learnability-ledger.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@creative_capacity: ~"./creative-capacity-2026-09.spw"
+@touch_control_class: ~"./touch-control-class-2026-09.spw"
+@promo_wonder_plan: ~"../../.agents/plans/promo-wonder-cycle/PLAN.md"
+@fidget_plan: ~"../../.agents/plans/expressive-layout-tropes-fidget-manuscript/PLAN.md"
+@promo_feed: ~"../../public/data/promo-wonder-cycle.json"
+@charge_field: ~"../../public/js/runtime/charge-field.js"
+@brace_gestures: ~"../../public/js/runtime/brace-gestures.js"
+@effect_ledger: ~"../../public/js/runtime/effect-ledger.js"
+@component_collection: ~"../../public/js/runtime/component-collection.js"
+@reward_ui: ~"../../public/js/runtime/reward-ui.js"
+@familiarity_gate: ~"../../public/js/runtime/familiarity-gate.js"
+@state_inspector: ~"../../public/js/interface/state-inspector.js"
+@wonder_memory: ~"../../public/js/interface/wonder-memory.js"
+@play_route: ~"../../play/index.html"
+
+operation = "prime"
+fixity = "experimental"
+source = "chat 2026-09-16: improve interactive playfulness, cognitive loops related to electrostatics, promo/wonder as a play mechanic, gamification aligned with material play development, spwashi.com as an adult cognitive toy"
+
+^"thesis"{
+  claim = `A toy is a material whose response is predictable enough to be learned and rich enough to be worth touching again. This site already owns the material: a signed charge ladder, four discharge kinds, rest/lift optics, cauldron metabolism, an effect ledger, a component collection, and a familiarity gate. It does not need more mechanics. It needs its loops to close where a hand can feel them.`
+  adult = `Adult means agency without obligation. The toy never scores the visitor, never punishes absence, never hides content behind progress, and always lets them see the mechanism. Reversibility and inspectability are the maturity, not restraint.`
+  cognitive = `The loop the toy teaches is the charge cycle itself: arm, preview, commit, named consequence, residue, return. Each pass through it is a small act of prediction. Wonder in the doctrine sense (@wonder_doctrine) is what a correct prediction feels like when the structure was derivable all along.`
+  refuse = `No points, XP, leaderboards, streaks-as-obligation, or loss-aversion timers. No data-spw-toy, data-spw-score, or a fourth reward attribute. No wonder type beyond the seven. No new motion at the arrival (@signs_of_life sol-001 already measured the entrance as the loud part). No third material state (@material_physics#states).`
+}[reg=facet]
+
+^"toy_test"{
+  ~#note: "Seven falsifiers. A surface that fails one is a poster, wallpaper, or a trap. Apply before calling anything a play mechanic."
+  predictable = `The same operator yields the same discharge kind every time (@charge_cycle#operator_charge_consequence). A ? that grounds once and releases once is broken, not surprising.`
+  recausable = `The visitor can cause the consequence again on purpose. If it fired once by accident and cannot be re-found, it was noise.`
+  nameable = `The state inspector, ledger, or a toast can say what just happened in the site's own words (@interaction_microstates#reward_contract). An unnamed effect cannot be learned.`
+  reversible = `Nothing traps; every state is recoverable without reload (@design_whimsy#whimsy_principles). Clearing local memory loses residue only.`
+  pocketable = `The rung is reachable by a finger. :active is the contact rung; a mechanic that only :hover reaches does not exist on a phone (@electrostatic_affordances#sign). Ground-control targets stay at --touch-target-min (@touch_control_class).`
+  quiet_at_rest = `Calm at rest, delight on contact. A resting toy does not beg.`
+  js_off = `The HTML still teaches what would happen: the operator sigil, the gesture contract, the copy-depth spans. JS intensifies; it does not invent the affordance.`
+}[reg=facet]
+
+^"ct-001_five_loops"{
+  id = "ct-001"
+  operation = "prime"
+  claim = `The electrostatic model already describes five cognitive loops. Each is a toy mechanic with a real code path. Naming them as loops, rather than as phases, is what lets copy, CSS, and runtime aim at the same feel.`
+  loops = .{
+    spark = `release — ? and ! terminals. Tap a living term, an inspect surface opens, the echo decays. The toy's click. Owner: @charge_field, @brace_gestures. Feel target: the visitor can predict the spark from the sigil before touching.`
+    carry = `transfer — ~ and @ terminals, hold-prime into the cauldron. The object you take between rooms. Owner: @cauldron_dynamics#intake (3023 operators, 494 expressions, 85 living terms capturable). Feel target: the hand knows when the ingredient has landed.`
+    ground = `ground — #> sigil hop, section handle, pinned constraint. The click that says this is home. Owner: attention-architecture, kernel dom-contracts groundInteraction. Feel target: a dead touch reads as grounded, never as nothing.`
+    project = `project — ^ and * terminals. Proof card, folio, screenshot, playable route. The thing you can take out of the box. Owner: capture mode, reward-ui docked window, /tools/. Feel target: the artifact is legible when captured (data-spw-capture-mode).`
+    return = `residue — @effect_ledger, @wonder_memory, @familiarity_gate, @component_collection. The toy remembers your hands: the site mounts faster and denser as it is learned. Feel target: a return visit is visibly different from a first one without hiding anything from the first.`
+  }[reg=facet]
+  evidence = #[
+    `charge-cycle.spw#phase_machine: eight phases, four discharge kinds, one field token on html`,
+    `electrostatic-affordances.spw#sign: contact outranks proximity; grounded is the negative pole (2026-09-08)`,
+    `electrostatic-spend-2026-09.spw#es-001: --spw-charge-field is read 62 times; it is the spine`,
+    `familiarity-gate.js header: the site gets faster and denser as you learn it, which is the reward`,
+    `component-collection.js: achievements first-sight, wayfarer, hooked, lens-keen, measured, kind-spectrum name kinds touched, not points`
+  ][reg=set]
+  pattern_consideration = `@fidget_plan already frames tunable surfaces as fidget toys for senior engineers. This cache does not replace that framing; it narrows it to the five loops a reader with no console open can feel.`
+  expansion_prime = `Each loop gets one felt-closure patch (ct-005). Do not open all five in one session.`
+  validation = `rg 'PHASE_INTENSITY|discharge' public/js/runtime/charge-field.js | head; node scripts/wonder.mjs --surface cognitive-toy`
+}[reg=facet]
+
+^"ct-002_where_the_loops_are_open"{
+  id = "ct-002"
+  operation = "audit"
+  dated = `2026-09-16`
+  claim = `The loops are declared far more often than they close. The toy is mostly a description of a toy.`
+  measured = #[
+    `147 routes author data-spw-wonder types on body`,
+    `39 data-spw-gesture-contract authorings in 11 verb shapes; 13 (tap:prime hold:inspect on every route hook) were fully silent until 2026-09-03 (@interaction_microstates ~#probed)`,
+    `24 contracts across 7 verbs (gather-search-term, toggle-lens, expand-trail, cycle-nearby, surface-current, open-companion, cycle-variant) still not audited element by element`,
+    `12 modules dispatch spw:discovery-reward; three real dispatches never rendered until 2026-09-05 because normalizeNotice unwrapped a string source`,
+    `111 site wonders across 49 surfaces, 24 without a probe`,
+    `cold home route: 1 infinite animation, 0 collected concepts, 0 theme clusters (@signs_of_life sol-001)`,
+    `the cauldron keeps a parallel charge and never hears --spw-charge-field (@electrostatic_spend thesis)`
+  ][reg=set]
+  reading = `Spark and ground are the strongest loops. Carry is half-wired: intake works, but the field does not feel the transfer. Project works for captures but is not felt as a discharge. Return is the least visible: familiarity changes mount order, which nobody sees, and the collection dock reveals only after hydration.`
+  falsifier = `Run the reward_contract probe (enumerate, touch, record) on one route. If the silent set is empty, this audit is stale and ct-005 should skip to carry and return.`
+}[reg=facet]
+
+^"ct-003_promo_wonder_as_play"{
+  id = "ct-003"
+  operation = "prime"
+  claim = `Promo and wonder are the two poles of one play mechanic, not two content lanes. Wonder is the field; promo is a quest card the field can charge. A promo nobody can touch is a poster. A wonder nobody can charge is wallpaper.`
+  loop = `wonder (field, ambient, slow) → charge (gather a term, hold a chip) → promo (a bounded ask with proof and next action, per @product_lines offer shape) → residue (ledger, collection) → return (the daily/weekly cycle has moved).`
+  cycle = `@promo_feed already carries daily and weekly entries and a promotion playbook (event, deal, service). The cadence is the toy's edition clock: a returning hand should find the card has turned. Do not add a second clock.`
+  quest_card = `A promo entry earns quest-card status when it names: audience, offer, proof, resonance, extension, next_action (@product_lines) and one reachable arc on the host (an existing gesture contract or operator chip). Six fields, one arc, no new attribute.`
+  wonder_side = `The wonder entry names 1 to 3 of the seven types and deposits vocabulary that matches (@wonder_architecture#authoring). It is charged when a term from it lands in the cauldron; the charge is what makes the paired promo feel earned rather than pushed.`
+  evidence = #[
+    `promo-wonder-cycle.json: sourceLocale, localization, promotionPlaybook, cycle, daily, weekly`,
+    `product-lines.spw: offers already carry audience/offer/proof/resonance/extension/next_action`,
+    `promo-wonder-cycle/PLAN.md: static fallback, deterministic date selection, no CMS`,
+    `discovery-powerups.spw#contract: conduit_event names the route from curiosity to artifact`
+  ][reg=set]
+  pattern_consideration = `Compare against the newyear.life edition model and the pricing/services card before inventing a card shape. The seed-card infrastructure is the same lego.`
+  expansion_prime = `Add a gesture contract or operator chip to the home promo host so the daily card has one arc; write the six offer fields into the feed entry, not the HTML.`
+  validation = `node -e "const j=require('./public/data/promo-wonder-cycle.json'); console.log(j.daily.length, j.weekly.length)"; npm run audit:copy:accessor`
+}[reg=facet]
+
+^"ct-004_gamification_is_material"{
+  id = "ct-004"
+  operation = "prime"
+  claim = `The honest gamification on this site is a collection of materials touched, not a score. An achievement should certify that the hand has learned what a material does: what glass returns, what paper absorbs, what lift means. Gamification aligns with material play when every unlock names an optics property or a loop, never a number.`
+  already_true = #[
+    `component-collection.js unlocks on kinds (hook, lens, metric) and route breadth (wayfarer), never on time or count-of-clicks alone`,
+    `material-physics.spw#states: two states, rest and lift; texture-slice consumers already include charge and hold`,
+    `effect-ledger.js: residue is remembered to make return visits feel earned, never load-bearing; clearing loses nothing but residue`,
+    `reward-ui.js: dock waits for spw:page-hydrated; toasts are suppressed in clean capture`
+  ][reg=set]
+  rule = `An unlock reads as a material sentence: "you lifted a card", "you carried a term across three rooms", "you grounded a room". If the toast could be a number instead, it is the wrong unlock.`
+  anti = `Collector V and Collector X are counts. Keep them, but do not add more count tiers; the next unlocks should be loop completions (spark, carry, ground, project, return) so the collection teaches the five loops by name.`
+  pattern_consideration = `Palette treats and image-discovery rewards already run through the generic field guide. New loop unlocks belong in component-collection's achievement table, not in a new reward module.`
+  expansion_prime = `Five achievements, one per loop, each testable from state the collection already sees or the ledger already records. Copy first; no new event.`
+  validation = `sed -n 50,70p public/js/runtime/component-collection.js; rg 'spw:achievement-unlocked' public/js`
+}[reg=facet]
+
+^"ct-005_first_patches"{
+  ~#note: "One per session. Each ends at a proposal plus a browser demo; the human approves the sensation before it lands (feedback: sensation review gates). Order is by how much loop closes per line changed."
+  a_verb_census = `audit — enumerate the 24 unaudited gesture-contract verbs on real hosts, touch each in a browser, mark the silent ones grounded through the existing groundInteraction path. No sensation gate: grounded is already the signed negative pole.`
+  b_cauldron_hears_the_field = `align — when an ingredient lands, write discharge:transfer on html and let the chip take the carrier colour the field already paints (commit db96c962). The carry loop becomes felt. Demo-gated.`
+  c_promo_quest_card = `prime → align — give the home promo host one reachable arc and write the six offer fields into the daily feed entry. No attribute added. Copy through data-spw-copy-unit. Demo-gated for placement only.`
+  d_loop_achievements = `contract — five loop-named unlocks in component-collection, worded as material sentences (ct-004 rule). Copy and one test each.`
+  e_first_touch_life = `align — invert @signs_of_life sol-002 at the smallest point: a cold page earns its first sign after the first contact, not before. One rule, one host, the twinkle that already exists. Demo-gated.`
+  do_not = `Do not open all five. Do not add a scoreboard to Settings. Do not restyle the arrival. Do not make the play route the only toy; the toy is the site.`
+}[reg=facet]
+
+^"surfaces"{
+  loud = #[`/`, `/play/`, `/topics/search/`, `/design/`, `/settings/`][reg=set]
+  quiet = #[`/blog/*`, `/research/*`, `/privacy/`][reg=set]
+  rule = `Loud surfaces may carry rich regional easter eggs; reading routes keep the same signal calm or omit the trigger (@discovery_powerups#regional_attention_memory playful_scope).`
+  play_route = `@play_route already names projection, resonance, consequence on body and seats four lenses. It is the demo bed for ct-005 b and d, not the whole toy.`
+}[reg=facet]
+
+# Harvestable questions. `npm run wonder -- --surface cognitive-toy` prints them.
+# They are inquiry, not a backlog. Do not implement the implied feature here.
+
+#>wonder_cognitive_toy_predictability
+?["Can a first-time visitor predict the discharge kind from the sigil alone, before touching it?"]{
+  #:depth #!experiential ~#lens(orientation)
+  ~#with: @charge_cycle
+  ~#hypothesis: "the operator table is legible to the site but not to the hand; the sigil teaches after the fact, which is wonder in the doctrine sense only if the visitor can then re-cause it"
+  ~#tension: "pre-announcing the discharge on every chip is the three-stickers error @electrostatic_affordances refuses; teaching nothing leaves the toy unpredictable"
+  !probe{ "show five chips (? ~ #> ^ !) to someone who has not used the site. ask what each will do. touch. count matches. if fewer than three match after one round and five after two, the loop is learnable; if never, the sigil is decoration." }
+  $%[sigil.predictedKind, sigil.actualKind, rounds.toLearn]
+}
+
+#>wonder_cognitive_toy_carry_felt
+?["When a term lands in the cauldron, does anything outside the cauldron change?"]{
+  #:depth #!computational ~#lens(resonance)
+  ~#with: @electrostatic_spend
+  ~#hypothesis: "the cauldron keeps a parallel charge; the field, the chip, and the room do not hear the transfer, so carrying is storage rather than a loop"
+  !probe{ "hold-prime one living term; read html[data-spw-last-discharge] and the chip's data-spw-charge before and after. if neither moved, the carry loop is open at the field." }
+  $%[html.lastDischarge, chip.charge, cauldron.count]
+}
+
+#>wonder_cognitive_toy_return_visible
+?["Is a fiftieth visit visibly different from a first one anywhere a reader looks without opening the inspector?"]{
+  #:depth #!experiential ~#lens(memory)
+  ~#with: @familiarity_gate
+  ~#hypothesis: "familiarity changes mount order and the collection dock, both of which are invisible or late; the return loop has residue but no face"
+  ~#tension: "showing return too loudly is a loyalty wall; showing nothing means learning the site earns nothing a reader can feel"
+  !probe{ "seed familiarity to practiced in localStorage, load the home route, screenshot at 6s. diff against a cold screenshot. if the diff is only the dock, the return loop has no face." }
+  $%[familiarity.tier, still.diffRegions, dock.visible]
+}
+
+dispatch: .{
+  physics = @charge_cycle
+  ladder = @electrostatic_affordances
+  spend = @electrostatic_spend
+  life = @signs_of_life
+  reward = @interaction_microstates
+  material = @material_physics
+  promo = @product_lines
+  cycle = @promo_wonder_plan
+  fidget = @fidget_plan
+}[reg=facet]
+
+validation: #[
+  `rg 'data-spw-(toy|score|xp)' --glob '*.html'  # expect 0`
+  `rg -o 'data-spw-gesture-contract="[^"]*"' --glob '**/index.html' | sort | uniq -c | sort -rn`
+  `node scripts/wonder.mjs --surface cognitive-toy`
+  `rg 'cognitive_toy' .spw/caches/index.spw .spw/site.spw`
+  `npm run spw:integrity`
+][reg=set]

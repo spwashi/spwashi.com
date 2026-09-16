@@ -30,6 +30,7 @@
 @still_recipe_agency: ~"./caches/still-recipe-agency-2026-09.spw"
 @taste_research: ~"./caches/taste-research-2026-09.spw"
 @permaculture_data_model: ~"./caches/permaculture-data-model-2026-09.spw"
+@cognitive_toy: ~"./caches/cognitive-toy-2026-09.spw"
 @living_medium_copy: ~"./conventions/living-medium-copy.spw"
 @assets: ~"./assets.spw"
 @composable_art: ~"./conventions/composable-art-system.spw"
@@ -240,7 +241,7 @@ translations: .{
  relational_design = #[@spw_architecture_ecology, @owner_registry, @graph, @semantic_capacity][reg=set]
  reviews = #[@reviews, @site_semantics][reg=set]
  planning_tracks = #[@interaction_loop_contract, @gesture_state_refinement, @navigation_header_disclosure, @floating_chrome_stack, @semantic_copy_depth, @component_region_personality_plan, @spw_architecture_ecology_plan, @modular_experience_slices][reg=set]
- interaction_model = #[@page_model, @attention_field, @ornament_contract, @wonder_architecture, @site_semantics][reg=set]
+ interaction_model = #[@page_model, @attention_field, @ornament_contract, @wonder_architecture, @cognitive_toy, @site_semantics][reg=set]
  semantic_navigation_geometry = #[@cognitive_navigation, @semantic_navigation_plan, @expression_geometry_runtime, @attention_field, @semantic_braces][reg=set]
  literal_parser_proof = #[@literal_parser_tool, @literal_parser_runtime, @literal_parser_bundle, @literal_parser_build, @cognitive_navigation, @language_utilization][reg=set]
  annotation_layer = #[@annotation_layer, @attention_field, @site_semantics][reg=set]
