@@ -84,36 +84,42 @@
   line-height: 1.5;
 }
 
-:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.48rem;
-}
-
+/* The timeline step is the control when hydration hands it a button: one
+   date, one cycle, one days-left count, pressable. The static list keeps the
+   same box without the button. */
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-button {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.42rem;
+  align-items: baseline;
+  inline-size: 100%;
   min-block-size: var(--touch-target-min, 2.75rem);
-  padding: 0.42rem 0.72rem;
-  border: 1px solid color-mix(in srgb, var(--op-object-color, #a67c00) 34%, transparent);
-  border-radius: var(--home-radius-pill);
-  background: color-mix(in srgb, var(--home-surface-bg) 88%, var(--op-object-color, #a67c00) 12%);
-  color: var(--ink, #1b1f23);
+  padding: 0.48rem 0.58rem;
+  border: 0;
+  border-radius: 0 var(--home-radius-sm, 0.4rem) var(--home-radius-sm, 0.4rem) 0;
+  background: transparent;
+  color: inherit;
   font: inherit;
-  font-size: 0.82rem;
-  font-weight: 680;
-  line-height: 1.2;
   text-align: start;
   cursor: pointer;
+  transition: background var(--home-transition-base), color var(--home-transition-base);
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-button[aria-pressed="true"] {
-  border-color: color-mix(in srgb, var(--op-object-color, #a67c00) 68%, transparent);
-  background: color-mix(in srgb, var(--op-object-color, #a67c00) 20%, var(--home-surface-bg-strong) 80%);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #a67c00) 15%, transparent);
+  background: color-mix(in srgb, var(--op-object-color, #a67c00) 9%, transparent);
+  color: var(--ink, #1b1f23);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-button[aria-pressed="false"]:hover {
+    background: color-mix(in srgb, var(--op-object-color, #a67c00) 5%, transparent);
+    color: var(--ink, #1b1f23);
+  }
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-button:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--op-object-color, #a67c00) 46%, transparent);
-  outline-offset: 2px;
+  outline-offset: -3px;
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-timeline {
@@ -135,6 +141,12 @@
   color: var(--ink-soft, rgba(27, 31, 35, 0.72));
   font-size: 0.8rem;
   line-height: 1.35;
+  transition: border-color var(--home-transition-base);
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-step:has(> .promo-wonder-cycle__forecast-button) {
+  display: block;
+  padding: 0;
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-step time {
@@ -145,8 +157,11 @@
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-step.is-selected {
   border-inline-start-color: var(--op-object-color, #a67c00);
-  background: color-mix(in srgb, var(--op-object-color, #a67c00) 9%, transparent);
   color: var(--ink, #1b1f23);
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__forecast-step.is-selected:not(:has(> .promo-wonder-cycle__forecast-button)) {
+  background: color-mix(in srgb, var(--op-object-color, #a67c00) 9%, transparent);
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__static-fallback, .promo-wonder-cycle__live) {
@@ -155,7 +170,7 @@
   min-width: 0;
 }
 
-:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) {
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
   gap: var(--home-gap-md);
@@ -164,19 +179,23 @@
   justify-items: stretch;
 }
 
+/* The week's kicker stacks above its own pair grid instead of spanning the
+   pair's tracks; a spanning kicker kept every auto-fit track open and left the
+   two compact cards holding half the row. */
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__weekly {
+  display: grid;
+  gap: 0.55rem;
+  min-width: 0;
   padding-block-start: clamp(0.7rem, 1.4vw, 0.95rem);
   border-block-start: 1px solid color-mix(in srgb, var(--home-accent-primary) 14%, transparent);
 }
 
-:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) > * {
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__grid > * {
   width: 100%;
 }
 
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__weekly-kicker {
-  grid-column: 1 / -1;
   margin: 0;
-  width: auto;
   justify-self: start;
 }
 
@@ -411,15 +430,9 @@
 
 @supports (container-type: inline-size) {
   @container (max-width: 56rem) {
-    :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) {
+    :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__grid {
       grid-template-columns: 1fr;
       gap: var(--home-gap-md);
-    }
-
-    :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) > * {
-      width: 100%;
-      grid-area: auto;
-      justify-self: stretch;
     }
 
     :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card:is(:hover, :focus-within) {

@@ -337,6 +337,16 @@ function forecastTiming(forecast) {
     const days = forecast.daysAway === 1 ? '1 day' : `${forecast.daysAway} days`;
     return `${days} until the ${forecast.cycle} close.`;
 }
+function forecastStepCopy(forecast, index) {
+    const order = index === 0 ? 'Next' : 'Then';
+    if (forecast.daysAway === 0)
+        return `${order} \u00b7 ${forecast.cycle} closes today`;
+    const days = forecast.daysAway === 1 ? 'in 1 day' : `in ${forecast.daysAway} days`;
+    return `${order} \u00b7 ${forecast.cycle} \u00b7 ${days}`;
+}
+/* One timeline, not a button row above a list that repeats it. Each step is
+   the control: pressing it moves the heading and the days-left line to that
+   close, so the count of days appears once and the choice is the reward. */
 function renderForecast(date, locale) {
     const forecasts = upcomingReleaseForecasts(date);
     const forecast = el('section', 'promo-wonder-cycle__forecast', {
@@ -350,32 +360,26 @@ function renderForecast(date, locale) {
     const description = el('p', 'promo-wonder-cycle__forecast-description', {
         'aria-live': 'polite',
     });
-    const controls = el('div', 'promo-wonder-cycle__forecast-controls', {
-        role: 'group',
+    const timeline = el('ol', 'promo-wonder-cycle__forecast-timeline', {
         'aria-label': 'Release forecast horizon',
     });
-    const timeline = el('ol', 'promo-wonder-cycle__forecast-timeline');
     const buttons = [];
     const steps = [];
     const selectForecast = (selectedIndex) => {
         const selected = forecasts[selectedIndex];
         if (!selected)
             return;
-        title.textContent = `Next close: ${selected.cycle} · ${forecastDateLabel(selected.date, locale)}`;
+        title.textContent = `Next close: ${selected.cycle} \u00b7 ${forecastDateLabel(selected.date, locale)}`;
         description.textContent = `${forecastTiming(selected)} Carry what you try here toward it.`;
         buttons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === selectedIndex)));
         steps.forEach((step, index) => step.classList.toggle('is-selected', index === selectedIndex));
     };
     forecasts.forEach((item, index) => {
+        const step = el('li', 'promo-wonder-cycle__forecast-step');
         const button = el('button', 'promo-wonder-cycle__forecast-button', {
             type: 'button',
             'aria-pressed': 'false',
         });
-        button.textContent = `${index === 0 ? 'Next' : 'Then'} · ${item.cycle} · ${forecastDateLabel(item.date, locale, true)}`;
-        button.addEventListener('click', () => selectForecast(index));
-        buttons.push(button);
-        controls.append(button);
-        const step = el('li', 'promo-wonder-cycle__forecast-step');
         const stepDate = el('time');
         stepDate.dateTime = [
             item.date.getFullYear(),
@@ -384,12 +388,15 @@ function renderForecast(date, locale) {
         ].join('-');
         stepDate.textContent = forecastDateLabel(item.date, locale, true);
         const stepCopy = el('span');
-        stepCopy.textContent = `${item.cycle} · ${forecastTiming(item)}`;
-        step.append(stepDate, stepCopy);
+        stepCopy.textContent = forecastStepCopy(item, index);
+        button.append(stepDate, stepCopy);
+        button.addEventListener('click', () => selectForecast(index));
+        buttons.push(button);
+        step.append(button);
         steps.push(step);
         timeline.append(step);
     });
-    forecast.append(kicker, title, description, controls, timeline);
+    forecast.append(kicker, title, description, timeline);
     selectForecast(0);
     return forecast;
 }
@@ -424,18 +431,21 @@ export function renderFeed(host, feed, date = new Date()) {
         ? `${releaseCycle} release day`
         : `${nextClose?.cycle || 'Next cycle'} in progress`;
     meta.append(' · ', releaseMarker);
+    /* No region-flow overlay: the pair sits side by side, like the static fallback. */
     const grid = el('div', 'promo-wonder-cycle__grid');
-    grid.dataset.spwRegionFlow = 'overlay';
     grid.append(renderCard(cycle?.promo, 'promo', 'cycle', locale), renderCard(cycle?.wonder, 'wonder', 'cycle', locale));
-    const weeklyGrid = el('div', 'promo-wonder-cycle__weekly');
-    weeklyGrid.dataset.spwRegionFlow = 'overlay';
-    weeklyGrid.setAttribute('aria-label', 'This week');
+    /* The kicker sits above its own pair grid rather than spanning the pair's
+       tracks, so the two compact cards share the row the way the cycle pair does. */
+    const weeklyGroup = el('div', 'promo-wonder-cycle__weekly');
+    weeklyGroup.setAttribute('aria-label', 'This week');
     const weeklyKicker = el('p', 'spec-kicker promo-wonder-cycle__weekly-kicker');
     weeklyKicker.textContent = 'This week';
-    weeklyGrid.append(weeklyKicker, renderCard(weekly.promo, 'promo', 'weekly', locale, true), renderCard(weekly.wonder, 'wonder', 'weekly', locale, true));
+    const weeklyGrid = el('div', 'promo-wonder-cycle__grid');
+    weeklyGrid.append(renderCard(weekly.promo, 'promo', 'weekly', locale, true), renderCard(weekly.wonder, 'wonder', 'weekly', locale, true));
+    weeklyGroup.append(weeklyKicker, weeklyGrid);
     const mount = resolveMount(host);
     mount.classList.add('promo-wonder-cycle__live');
-    mount.replaceChildren(meta, grid, renderForecast(date, locale), weeklyGrid);
+    mount.replaceChildren(meta, grid, renderForecast(date, locale), weeklyGroup);
 }
 export async function initPromoWonderCycle() {
     const hosts = Array.from(document.querySelectorAll('[data-promo-wonder-cycle]'));
