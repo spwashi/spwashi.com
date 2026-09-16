@@ -37,6 +37,14 @@
 operation = "contract"
 fixity = "tending"
 
+^"variant_selection_alignment"{
+  operation = "align"
+  fixity = "stable"
+  claim = "Authored text/content variants outrank inferred text, climate, and content tone. Compact and rich content layouts consume shared component spacing tokens."
+  runtime = "Unavailable mode requests preserve visibility, keyboard selection, and events; selection marks belong to the activated panel."
+  plan = ~"../../.agents/plans/component-variant-alignment/PLAN.md"
+}
+
 ^"thesis"{
   claim: "Public HTML should feel like a developing component ecology with region personality, not a repeated meta-documentation scaffold. Mechanical voice belongs in referential components; invitation copy should route attention into tunable surfaces; screenshots should be treated as first-class interpretable media."
   audience: "Editing team launching a media company; returning readers; models interpreting captured surfaces."

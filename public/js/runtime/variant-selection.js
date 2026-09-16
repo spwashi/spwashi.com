@@ -135,7 +135,9 @@ function syncModeSwitch(group, mode, root, source = 'mode') {
   const previous = readActiveMode(group, root);
   const buttons = [...root.querySelectorAll(`.mode-switch [data-mode-group="${CSS.escape(group)}"][data-set-mode]`)];
   const panels = [...root.querySelectorAll(`[data-mode-group="${CSS.escape(group)}"][data-mode-panel]`)];
-  if (!buttons.length && !panels.length) return null;
+  // Reject unavailable modes before clearing selection or hiding panels.
+  if (!panels.some((panel) => panel.getAttribute('data-mode-panel') === mode)) return null;
+  clearGroupVariantMarks(root, group);
 
   buttons.forEach((button) => {
     const active = button.getAttribute('data-set-mode') === mode;
@@ -148,7 +150,8 @@ function syncModeSwitch(group, mode, root, source = 'mode') {
     panel.hidden = !active;
     if (active) {
       const host = panel.closest(VARIANT_CONTAINER_SELECTOR) || panel;
-      if (host) applyVariant(host, variantFromPanel(panel), source);
+      if (host) applyVariant(host, variantFromPanel(panel), source, { markSelected: false });
+      panel.dataset.spwVariantSelected = 'true';
     }
   });
 
@@ -172,8 +175,8 @@ export function selectMode(button, root = document, source = 'mode-switch') {
   const group = button.getAttribute('data-mode-group');
   const mode = button.getAttribute('data-set-mode');
   if (!group || !mode) return null;
-  clearGroupVariantMarks(root, group);
   const edge = syncModeSwitch(group, mode, root, source);
+  if (!edge) return null;
   writeLiveModeExpression(button.closest('.mode-switch'), mode);
   const html = root.documentElement || document.documentElement;
   pulseRootSelection(html, source, mode);

@@ -523,8 +523,9 @@
    Environmental Physics & Pretext Text-Variant Extensions
    ========================================================================== */
 
+/* Authored text variants own layout; measured text and climate are fallbacks. */
 /* 1. Punchy / Monument variant: concise, high-impact headline, compact body */
-:where(.spw-card[data-spw-text-variant="punchy"], .spw-card[data-text-density="dense"], .spw-card[data-text-width-class="xs"]) {
+:where(.spw-card[data-spw-text-variant="punchy"], .spw-card:not([data-spw-text-variant])[data-text-density="dense"], .spw-card:not([data-spw-text-variant])[data-text-width-class="xs"]) {
   --card-internal-gap: 0.32rem;
   --card-rhythm: clamp(0.35rem, 1.2cqi, 0.55rem);
   padding: clamp(0.65rem, 2cqi, 0.95rem);
@@ -539,7 +540,7 @@
 }
 
 /* 2. Editorial / Story variant: measured reading rhythm, relaxed leading, warm tint */
-:where(.spw-card[data-spw-text-variant="editorial"], .spw-card[data-text-density="soft"], .spw-card[data-text-kind="prose"]) {
+:where(.spw-card[data-spw-text-variant="editorial"], .spw-card:not([data-spw-text-variant])[data-text-density="soft"], .spw-card:not([data-spw-text-variant])[data-text-kind="prose"]) {
   --card-internal-gap: 0.65rem;
   --card-rhythm: clamp(0.7rem, 2.2cqi, 1.1rem);
   padding: clamp(0.85rem, 2.8cqi, 1.4rem);
@@ -547,13 +548,13 @@
   border-color: color-mix(in srgb, var(--line) 82%, var(--component-accent, var(--teal)) 18%);
 }
 
-:where(.spw-card[data-spw-text-variant="editorial"] p, .spw-card[data-text-kind="prose"] p) {
+:where(.spw-card[data-spw-text-variant="editorial"] p, .spw-card:not([data-spw-text-variant])[data-text-kind="prose"] p) {
   font-size: clamp(0.88rem, 1.9cqi, 0.98rem);
   color: var(--ink-secondary, rgba(14, 18, 20, 0.78));
 }
 
 /* 3. Matrix / Register variant: dense specification, monospace precision, high containment */
-:where(.spw-card[data-spw-text-variant="matrix"], .spw-card[data-text-kind="operator-dense"]) {
+:where(.spw-card[data-spw-text-variant="matrix"], .spw-card:not([data-spw-text-variant])[data-text-kind="operator-dense"]) {
   --card-internal-gap: 0.28rem;
   --card-rhythm: clamp(0.3rem, 1cqi, 0.5rem);
   padding: clamp(0.55rem, 1.8cqi, 0.85rem);
@@ -568,7 +569,7 @@
 }
 
 /* 4. Ludic / Craft variant: spring physics transitions, playful borders, lively accents */
-:where(.spw-card[data-spw-text-variant="ludic"], :where([data-spw-climate="ludic"]) .spw-card) {
+:where(.spw-card[data-spw-text-variant="ludic"], :where([data-spw-climate="ludic"]) .spw-card:not([data-spw-text-variant])) {
   --card-internal-gap: 0.5rem;
   transition:
     transform calc(var(--duration-base, 200ms) * var(--spw-physics-mass, 1)) cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -576,7 +577,7 @@
     border-color var(--spw-control-transition-fast, 120ms ease);
 }
 
-:where(.spw-card[data-spw-text-variant="ludic"]:hover, :where([data-spw-climate="ludic"]) .spw-card:hover) {
+:where(.spw-card[data-spw-text-variant="ludic"]:hover, :where([data-spw-climate="ludic"]) .spw-card:not([data-spw-text-variant]):hover) {
   transform: translateY(var(--spw-control-hover-lift, -1px)) scale(var(--spw-hover-scale, 1.006));
   box-shadow: 0 8px 24px color-mix(in srgb, var(--component-accent, var(--teal)) 14%, transparent);
 }
@@ -684,15 +685,15 @@
 }
 
 :where([data-spw-content-variant="compact"]) {
-  --spw-content-variant-pad: 0.72rem;
-  --spw-content-variant-gap: 0.34rem;
+  --spw-content-variant-pad: var(--component-pad-tight, 0.72rem);
+  --spw-content-variant-gap: var(--component-gap-tight, 0.34rem);
   padding: var(--spw-content-variant-pad);
   gap: var(--spw-content-variant-gap);
 }
 
 :where([data-spw-content-variant="rich"]) {
-  --spw-content-variant-pad: clamp(0.9rem, 1.6vw, 1.05rem);
-  --spw-content-variant-gap: 0.52rem;
+  --spw-content-variant-pad: var(--component-pad-loose, clamp(0.9rem, 1.6vw, 1.05rem));
+  --spw-content-variant-gap: var(--component-gap, 0.52rem);
   padding: var(--spw-content-variant-pad);
   gap: var(--spw-content-variant-gap);
 }
@@ -701,23 +702,24 @@
   max-inline-size: 48ch;
 }
 
-:where(:is(.spw-panel, .frame-panel)[data-spw-content-tone="dense"],
-       :is(.spw-panel, .frame-panel)[data-spw-content-tone="operator-heavy"],
-       .frame-card[data-spw-content-tone="dense"],
-       .frame-card[data-spw-content-tone="operator-heavy"]) {
+:where(:is(.spw-panel, .frame-panel)[data-spw-content-tone="dense"]:not([data-spw-content-variant]),
+       :is(.spw-panel, .frame-panel)[data-spw-content-tone="operator-heavy"]:not([data-spw-content-variant]),
+       .frame-card[data-spw-content-tone="dense"]:not([data-spw-content-variant]),
+       .frame-card[data-spw-content-tone="operator-heavy"]:not([data-spw-content-variant])) {
   --spw-content-variant-gap: 0.36rem;
   --spw-content-variant-pad: calc(var(--component-pad, 0.85rem) * 0.9);
   padding: var(--spw-content-variant-pad);
   gap: var(--spw-content-variant-gap);
 }
 
-:where(:is(.spw-panel, .frame-panel)[data-spw-content-tone="text-long"],
-       .frame-card[data-spw-content-tone="text-long"]) {
-  --spw-content-variant-gap: 0.5rem;
+:where(:is(.spw-panel, .frame-panel)[data-spw-content-tone="text-long"]:not([data-spw-content-variant]),
+       .frame-card[data-spw-content-tone="text-long"]:not([data-spw-content-variant])) {
+  --spw-content-variant-gap: var(--component-gap, 0.5rem);
+  gap: var(--spw-content-variant-gap);
 }
 
-:where(:is(.spw-panel, .frame-panel)[data-spw-content-tone="light"],
-       .frame-card[data-spw-content-tone="light"]) {
+:where(:is(.spw-panel, .frame-panel)[data-spw-content-tone="light"]:not([data-spw-content-variant]),
+       .frame-card[data-spw-content-tone="light"]:not([data-spw-content-variant])) {
   --spw-content-variant-pad: calc(var(--component-pad, 0.85rem) * 1.06);
   padding: var(--spw-content-variant-pad);
 }

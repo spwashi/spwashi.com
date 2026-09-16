@@ -246,6 +246,15 @@ test('variant selection initializes roving tabindex and arrow key navigation', (
     assert.equal(edge.to, 'beta');
     assert.equal(btnBeta.getAttribute('aria-pressed'), 'true');
 
+    // Invalid requests preserve the current panel, keyboard stop, and event stream.
+    const eventCount = emittedEvents.length;
+    assert.equal(selectMode(createMockButton('missing', false), mockRoot, 'api'), null);
+    assert.equal(panelBeta.hidden, false);
+    assert.equal(btnBeta.getAttribute('aria-pressed'), 'true');
+    assert.equal(btnBeta.getAttribute('tabindex'), '0');
+    assert.equal(emittedEvents.length, eventCount);
+    assert.equal(panelBeta.dataset.spwVariantSelected, 'true');
+
     assert.ok(emittedEvents.length >= 3);
     assert.equal(emittedEvents.at(-1).variant, 'beta');
     assert.equal(emittedEvents.at(-1).source, 'api');
