@@ -8,6 +8,15 @@ A visitor (or Spwashi on camera) can *write* a spell, not merely accumulate one:
 
 ## Current State (read 2026-07-03)
 
+### Resumable trail alignment — 2026-09-16
+
+- Public goal: a first-time reader can save a navigation trail, clear the current one, and still restore or reopen the save in the cauldron.
+- Operation `align`, fixity `tending`; focus is the return loop. Evidence is in `index.spw#return_loop_audit_2026_09_16`.
+- Owners: `runtime/spells.js`, the spell block in `handles/operators/spell-breadcrumbs.css`, and the existing Settings spell-board introduction.
+- Keep useful actions ahead of optional notation; use canonical chips and existing reading tokens. Preserve controls on unchanged refreshes; batch event bursts and react only to dock breakpoint crossings.
+- Boundaries: no new operators, storage schema, runtime dependencies, or autonomous spell execution.
+- Verify save → clear → restore → reopen, unchanged control identity, event batching/cleanup, pocket containment, `audit:module-selectors`, `visual:checks`, and `check:local`.
+
 - `runtime/spells.js` (864 lines): spells are serialized navigation paths over grounded tokens; actions cast/checkpoint/reset; no edit, no selection verb, no styling verb.
 - `interface/cauldron/` (contract.js, storage.js, trace.js, resonance.js, undo.js, chrome.js, helpers.js): real bones - `CAULDRON_CONTRACT` centralizes phases (`empty -> primed -> mixing -> spell-ready`), ingredient lifecycle (`gathering -> resonant -> mature -> decayed`), eight actions, max six ingredients, garden pruning. Composes "extension drafts," not reopenable spells.
 - `components/cauldron.css` (332 lines) + `handles/operators/spell-breadcrumbs.css` (869-line chapter).

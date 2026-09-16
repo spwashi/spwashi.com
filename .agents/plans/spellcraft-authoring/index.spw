@@ -11,6 +11,16 @@
 operation = "prime"
 fixity = "tending"
 
+^"return_loop_audit_2026_09_16"{
+ operation = "audit"
+ fixity = "tending"
+ focus = `First-use interpretation and recovery of a saved navigation spell.`
+ evidence = `spells.js returns before rendering saved bundles when the current trail is empty; every attention/transition/resize event replaces board controls; generated actions still use operator-chip; spell notes bypass shared reading tokens.`
+ selection = `One align patch: keep saved trails independently reachable, explain restore versus cauldron reopening, retain unchanged controls, coalesce refreshes, and spend existing type tokens.`
+ falsification = `Save, clear, restore, and reopen a trail; an unchanged refresh must retain the same focused button, and a long expression must fit a pocket viewport.`
+ boundary = `Existing storage, operators, route paths, and cauldron capture events remain the owners. No new semantic families or language grammar.`
+}
+
 intent: .{
  goal = `A visitor (or Spwashi on camera) can *write* a spell, not merely accumulate one: select things on the page, drop them in the cauldron, compose them into a named spell, cast it to see the page change, reopen it later to edit. Spells graduate from navigation traces to small legible programs whose two primary verb families are select (element, concept, artifact) and style (bias, swap, remember, screenshot). The taste note is workshop, not ledger: the cauldron is a bench where things are made and remade, and the spellbook is a shelf you take things down from.`
  owner = `spellcraft-authoring`

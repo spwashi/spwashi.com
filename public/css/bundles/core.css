@@ -42941,9 +42941,10 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
 }
 
 .spell-ingredient {
-  display: inline-grid;
-  grid-auto-flow: column;
-  grid-auto-columns: max-content;
+  display: inline-flex;
+  flex-wrap: wrap;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   align-items: center;
   gap: 0.08rem;
   min-height: 2rem;
@@ -42951,9 +42952,15 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
   border: 1px solid color-mix(in srgb, var(--teal, #008080) 20%, transparent);
   border-radius: 0.42rem;
   background: color-mix(in srgb, var(--surface-strong, #fff) 96%, transparent);
+  color: inherit;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.76rem;
+  font-size: var(--text-size-xs, 0.8rem);
   line-height: 1.1;
+  text-decoration: none;
+}
+
+a.spell-ingredient:hover {
+  text-decoration: none;
 }
 
 .spell-ingredient[data-spw-operator-left-role],
@@ -42996,12 +43003,19 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
 }
 
 .spell-ingredient-nucleus {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
   color: var(--ink, rgba(14, 18, 20, 0.92));
 }
 
-.spell-ledger {
+.spell-ledger[open] {
   display: grid;
   gap: 0.55rem;
+}
+
+.spell-ledger > summary {
+  cursor: pointer;
+  font-size: var(--text-size-sm, 0.9rem);
 }
 
 .spell-register-strip {
@@ -43021,14 +43035,15 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
   border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 74%, transparent);
   color: var(--ink-soft, rgba(14, 18, 20, 0.72));
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.68rem;
+  font-size: var(--text-size-xs, 0.8rem);
 }
 
 .spell-note {
   margin: 0;
   color: var(--ink-soft, rgba(14, 18, 20, 0.72));
-  font-size: 0.8rem;
-  line-height: 1.55;
+  max-inline-size: var(--measure-reading, 68ch);
+  font-size: var(--text-size-sm, 0.9rem);
+  line-height: var(--site-line-height, 1.64);
 }
 
 .spell-source {
@@ -43043,8 +43058,8 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
 .spell-source code {
   display: block;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.74rem;
-  line-height: 1.6;
+  font-size: var(--text-size-xs, 0.8rem);
+  line-height: var(--line-height-mono, 1.42);
 }
 
 .spell-source--compact {

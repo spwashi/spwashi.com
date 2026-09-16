@@ -44,6 +44,22 @@ const bundleDateFormatter = new Intl.DateTimeFormat('en-US', {
 
 let initialized = false;
 let cleanupCallbacks = [];
+let pendingRender = null;
+let lastModelSignature = '';
+let lastModel = null;
+let renderedMarkup = new WeakMap();
+
+// Compare authored markup, not innerHTML: semantic enhancement annotates these
+// nodes after rendering. Retaining them preserves focus and open disclosures.
+function renderMarkup(host, markup) {
+  if (renderedMarkup.get(host) === markup) return false;
+  const disclosureOpen = host.querySelector('.spell-ledger')?.open;
+  host.innerHTML = markup;
+  renderedMarkup.set(host, markup);
+  const disclosure = host.querySelector('.spell-ledger');
+  if (disclosure && disclosureOpen !== undefined) disclosure.open = disclosureOpen;
+  return true;
+}
 
 function isCompactSpellDockViewport() {
   return window.matchMedia('(max-width: 720px)').matches;
@@ -207,7 +223,7 @@ function buildSpellModel() {
     narrationMode,
   };
 
-  return {
+  const model = {
     entries,
     prefixCounts,
     destinationCounts,
@@ -215,8 +231,12 @@ function buildSpellModel() {
     narrationMode,
     cognitiveState,
     deepLinkState,
-    snippet: constructSpell(entries, cognitiveState, deepLinkState),
   };
+  const signature = JSON.stringify([getSpellSurface(), model]);
+  if (signature === lastModelSignature) return lastModel;
+  lastModelSignature = signature;
+  lastModel = { ...model, snippet: constructSpell(entries, cognitiveState, deepLinkState) };
+  return lastModel;
 }
 
 function countBy(items, getKey) {
@@ -386,7 +406,7 @@ function ensureSpellDock() {
   summary.className = 'spw-spell-dock-summary';
   summary.innerHTML = `
     <span class="spw-spell-dock-op">@</span>
-    <span class="spw-spell-dock-label">path extensions</span>
+    <span class="spw-spell-dock-label">Saved link trail</span>
     <span class="spw-spell-dock-count">0</span>
   `;
 
@@ -410,13 +430,13 @@ function updateSpellDock(model) {
   dock.dataset.spwSpellLiminality = model.cognitiveState.liminality;
   dock.dataset.spwSpellCognitive = model.cognitiveState.gradient;
   dock.dataset.spwSpellMeaningMode = model.narrationMode;
-  if (parts.count) parts.count.textContent = String(model.entries.length);
-  if (parts.label) parts.label.textContent = model.entries.length ? 'path extensions' : 'link trail';
+  if (parts.count && parts.count.textContent !== String(model.entries.length)) parts.count.textContent = String(model.entries.length);
+  if (parts.label && parts.label.textContent !== 'Link trail') parts.label.textContent = 'Link trail';
 
   if (!parts.body) return;
 
   if (!model.entries.length) {
-    parts.body.innerHTML = renderEmptySpellDock();
+    renderMarkup(parts.body, renderEmptySpellDock());
     return;
   }
 
@@ -429,11 +449,11 @@ function updateSpellDock(model) {
   const collection = renderSigilCollectionRegister();
 
   if (compactViewport) {
-    parts.body.innerHTML = renderCompactSpellDock(preview, cognitive, effects, destinations, collection, model.narrationMode);
+    renderMarkup(parts.body, renderCompactSpellDock(preview, cognitive, effects, destinations, collection, model.narrationMode));
     return;
   }
 
-  parts.body.innerHTML = renderExpandedSpellDock(preview, cognitive, effects, destinations, collection, model.snippet, model.narrationMode);
+  renderMarkup(parts.body, renderExpandedSpellDock(preview, cognitive, effects, destinations, collection, model.snippet, model.narrationMode));
 }
 
 function getSpellDockParts(dock) {
@@ -446,8 +466,8 @@ function getSpellDockParts(dock) {
 
 function renderEmptySpellDock() {
   return `
-    ${renderCapabilityStrip()}
-    <p class="spell-note">Ground links, page sections, or operator chips to extend the document with a resumable trail. The dock shows when the path is still <strong>fresh</strong>, when it becomes <strong>familiar</strong>, and when it is ready to replay.</p>
+    <p class="spell-note">Keep links and sections you want to revisit. Focus a link and press <kbd>Space</kbd> to remember it in this browser.</p>
+    <a href="/settings/#spell-board">Open saved trails and spell board</a>
   `;
 }
 
@@ -570,11 +590,13 @@ function renderSpellBoard(board, model) {
   board.dataset.spwSpellMeaningMode = model.narrationMode;
 
   if (!model.entries.length) {
-    board.innerHTML = `
+    const changed = renderMarkup(board, `
       <p class="frame-note">
-        No path extension assembled yet. Follow links, section lines, or operator chips to build a readable sequence you can replay. Fresh paths become familiar when you ground a few more signals.
+        Your current trail is empty. To remember a link or section, focus its link and press <kbd>Space</kbd>. You can then save the trail here and return to it later.
       </p>
-    `;
+      ${buildSavedBundlesUI()}
+    `);
+    if (changed) bindSpellActions(board);
     return;
   }
 
@@ -603,38 +625,37 @@ function renderSpellBoard(board, model) {
       ? ' <strong>Quiet mode</strong> keeps the spellboard compact while it still rewards return visits.'
       : '';
 
-  board.innerHTML = `
-    ${renderCapabilityStrip([
-      { key: 'output', label: 'output', value: 'copy or cast a portable snippet' },
-    ])}
+  const changed = renderMarkup(board, `
+    <p class="spell-note"><strong>Your current trail</strong> holds ${model.entries.length} remembered ${model.entries.length === 1 ? 'item' : 'items'}. Save it with a name to return later. Clearing this trail keeps your named saves.</p>
     <div class="spell-visual">
       ${model.entries.map(renderSpellAtom).join('')}
     </div>
-    <div class="spell-ledger">
-      <p class="spell-note"><strong>A spell is a hypermedia extension.</strong> It saves route and hash anchors beside settings, page state, and operator geometry. The left side of an operator carries source, stance, or evidence; the right side carries argument, containment, target, or consequence. <strong>Familiarity</strong> tells you how quickly the page should feel readable. <strong>Liminality</strong> tells you whether you are entering, holding, or settled.${narrationNote}</p>
+    <div class="spell-actions">
+      <button class="spw-chip" type="button" data-spw-groundable="false" data-spw-spell-action="${SPELL_ACTION.CHECKPOINT}" data-spw-operator="action" data-spw-op-disposition="reference">
+        ! Save trail
+      </button>
+      <button class="spw-chip" type="button" data-spw-groundable="false" data-spw-spell-action="${SPELL_ACTION.CAST}" data-spw-operator="action" data-spw-op-disposition="discharge">
+        ! Copy Spw notation
+      </button>
+      <button class="spw-chip" type="button" data-spw-groundable="false" data-spw-spell-action="${SPELL_ACTION.RESET}" data-spw-operator="binding" data-spw-op-disposition="discharge">
+        = Clear current trail
+      </button>
+    </div>
+    ${buildSavedBundlesUI()}
+    <details class="spell-ledger">
+      <summary>Read this trail as a Spw spell</summary>
+      <p class="spell-note">A spell is a written form of this trail. <strong>Familiarity</strong> reflects remembered items and recent routes; <strong>liminality</strong> names the page's current stage of arrival.${narrationNote}</p>
       <div class="spell-register-strip spell-register-strip--cognitive">${cognitiveSummary}</div>
       <div class="spell-register-strip spell-register-strip--effects">${effectSummary}</div>
       <div class="spell-register-strip spell-register-strip--sigils">${collectionSummary}</div>
       <div class="spell-register-strip">${prefixSummary}</div>
       <div class="spell-register-strip">${destinationSummary}</div>
       <div class="spell-register-strip">${comboSummary}</div>
-    </div>
-    <pre class="spell-source"><code>${escapeHtml(model.snippet)}</code></pre>
-    <div class="spell-actions">
-      <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.CAST}" data-spw-operator="action" data-spw-op-disposition="discharge">
-        ! copy extension
-      </button>
-      <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.CHECKPOINT}" data-spw-operator="pragma" data-spw-op-disposition="reference">
-        ! save trail
-      </button>
-      <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.RESET}" data-spw-operator="binding" data-spw-op-disposition="discharge">
-        = clear trail
-      </button>
-    </div>
-    ${buildSavedBundlesUI()}
-  `;
+      <pre class="spell-source"><code>${escapeHtml(model.snippet)}</code></pre>
+    </details>
+  `);
 
-  bindSpellActions(board);
+  if (changed) bindSpellActions(board);
 }
 
 function buildSavedBundlesUI() {
@@ -665,7 +686,7 @@ function parseSpellBundleEntry(key) {
 function renderSavedBundles(bundles) {
   return `
     <div class="spell-bundle-bank">
-      <p class="spell-note">Saved working sets preserve named learning or build threads so you can return without rebuilding the whole path. A good bundle should feel <strong>easier to resume than to rediscover</strong>.</p>
+      <p class="spell-note"><strong>Saved trails — in this browser.</strong> Restore replaces your current trail with a saved one. Reopen adds its items to the <a href="#memory-garden-cauldron">cauldron</a>, where you can gather and mix them again.</p>
       <div class="spell-bundle-grid">
         ${bundles.map(renderSavedBundleCard).join('')}
       </div>
@@ -678,15 +699,15 @@ function renderSavedBundleCard(bundle) {
     <article class="spell-bundle-card">
       <div class="spell-bundle-card__header">
         <strong class="spell-bundle-card__title">${escapeHtml(bundle.name)}</strong>
-        <span class="spell-register">working set</span>
+        <span class="spell-register">saved trail</span>
       </div>
       <p class="spell-bundle-card__meta">${escapeHtml(formatSpellBundleMeta(bundle))}</p>
       <div class="spell-actions spell-actions--bundles">
-        <button class="operator-chip" type="button" data-spw-spell-restore="${escapeHtml(bundle.name)}" data-spw-operator="ref" data-spw-op-disposition="dereference">
-          ~ restore "${escapeHtml(bundle.name)}"
+        <button class="spw-chip" type="button" data-spw-groundable="false" data-spw-spell-restore="${escapeHtml(bundle.name)}" data-spw-operator="ref" data-spw-op-disposition="dereference">
+          ~ Restore "${escapeHtml(bundle.name)}"
         </button>
-        <button class="operator-chip" type="button" data-spw-spell-decompose="${escapeHtml(bundle.name)}" data-spw-operator="substrate" data-spw-op-disposition="dereference" title="Reopen this spell as cauldron ingredients for editing">
-          $ decompose
+        <button class="spw-chip" type="button" data-spw-groundable="false" data-spw-spell-decompose="${escapeHtml(bundle.name)}" data-spw-operator="substrate" data-spw-op-disposition="dereference" aria-label="Reopen ${escapeHtml(bundle.name)} in cauldron">
+          $ Reopen in cauldron
         </button>
       </div>
     </article>
@@ -704,10 +725,23 @@ function parseSpellBundle(raw) {
 
 function formatSpellBundleMeta(bundle) {
   const parts = [];
-  if (bundle.count) parts.push(`${bundle.count} grounded`);
+  parts.push(`${bundle.count} remembered ${bundle.count === 1 ? 'item' : 'items'}`);
   if (bundle.path) parts.push(bundle.path);
   if (bundle.savedAt) parts.push(bundleDateFormatter.format(bundle.savedAt));
   return parts.join(' · ') || 'Saved working set';
+}
+
+function sameOriginSpellHref(value) {
+  const raw = String(value || '').trim();
+  if (!raw || !/^(https?:\/\/|\/|#)/i.test(raw)) return '';
+  try {
+    const base = new URL(window.location.href);
+    const destination = new URL(raw, base);
+    if (destination.origin !== base.origin || !/^https?:$/.test(destination.protocol)) return '';
+    return `${destination.pathname}${destination.search}${destination.hash}`;
+  } catch {
+    return '';
+  }
 }
 
 function renderSpellAtom(entry) {
@@ -718,6 +752,9 @@ function renderSpellAtom(entry) {
     ? `<span class="spell-provenance__chip" aria-hidden="true">✧</span>`
     : '';
   const geometry = entry.operatorGeometry || {};
+  const href = sameOriginSpellHref(entry.deepLink || entry.href);
+  const tag = href ? 'a' : 'span';
+  const linkAttrs = href ? ` href="${escapeHtml(href)}" data-spw-groundable="false"` : '';
   const geometryAttrs = [
     ['data-spw-operator-left-role', geometry.leftRole],
     ['data-spw-operator-right-role', geometry.rightRole],
@@ -734,12 +771,12 @@ function renderSpellAtom(entry) {
     .join(' ');
 
   return `
-    <span class="spell-ingredient" data-spw-atom="chip" data-spw-grounded="true" data-spw-operator="${escapeHtml(entry.operatorType)}" data-spw-op="${escapeHtml(composeOpBundle(entry.expression || entry.nucleus || ''))}" title="${escapeHtml(`${entry.operatorLabel} — affords: ${getOperatorAffordances(entry.operatorType).join(', ')}`)}" ${geometryAttrs}${provenanceAttr}>
+    <${tag} class="spell-ingredient"${linkAttrs} data-spw-atom="chip" data-spw-grounded="true" data-spw-operator="${escapeHtml(entry.operatorType)}" data-spw-op="${escapeHtml(composeOpBundle(entry.expression || entry.nucleus || ''))}" title="${escapeHtml(href ? `Open ${entry.label || entry.nucleus}` : `${entry.operatorLabel} — affords: ${getOperatorAffordances(entry.operatorType).join(', ')}`)}" ${geometryAttrs}${provenanceAttr}>
       <span class="spell-ingredient-prefix">${escapeHtml(entry.prefix || '')}</span>
       <span class="spell-ingredient-nucleus">${escapeHtml(entry.nucleus || entry.expression)}</span>
       <span class="spell-ingredient-postfix">${escapeHtml(entry.postfix || '')}</span>
       ${provenanceChip}
-    </span>
+    </${tag}>
   `;
 }
 
@@ -806,7 +843,7 @@ function registerSpellActions() {
       if (!name) return;
       bus.emit('spell:checkpoint', { name });
       if (button instanceof HTMLElement) button.textContent = `! trail saved: ${name}`;
-      renderAllSpellSurfaces();
+      scheduleSpellRender();
     },
     restore(name, button) {
       if (!name) return;
@@ -829,16 +866,24 @@ function registerSpellActions() {
         if (button instanceof HTMLElement) button.textContent = '$ nothing to decompose';
         return;
       }
-      registry.slice(0, CAULDRON_CONTRACT.maxIngredients).forEach((key) => {
-        const tail = String(key).split(':').pop() || String(key);
+      const couplings = parsed.couplings?.global || parsed.couplings?.path
+        ? { ...parsed.couplings.global, ...parsed.couplings.path }
+        : parsed.couplings || {};
+      registry.slice(0, CAULDRON_CONTRACT.maxIngredients).forEach((key, index) => {
+        const entry = buildSpellEntry(key, couplings[key], index);
+        if (!entry) return;
         bus.emit(CAULDRON_CONTRACT.events.capture, {
-          expression: tail,
-          label: tail,
+          expression: entry.expression,
+          label: entry.label,
+          operator: entry.operatorType,
+          prefix: entry.prefix,
+          deepLink: entry.deepLink || entry.href,
+          deepLinkLabel: entry.deepLinkLabel,
           origin: 'spellbook-decompose',
           originLabel: name,
           primedBy: 'decompose',
           sourceElement: String(key),
-          gestureHistory: `spell->decompose->gather:${tail}`,
+          gestureHistory: `spell->decompose->gather:${entry.expression}`,
         }, { target: document });
       });
       bus.emit(CAULDRON_CONTRACT.events.decomposed, {
@@ -858,6 +903,14 @@ function renderAllSpellSurfaces() {
   updateSpellBoards(model);
 }
 
+function scheduleSpellRender() {
+  if (pendingRender !== null) return;
+  pendingRender = window.requestAnimationFrame(() => {
+    pendingRender = null;
+    if (initialized) renderAllSpellSurfaces();
+  });
+}
+
 export function initSpwSpells() {
   if (initialized) {
     return {
@@ -873,20 +926,18 @@ export function initSpwSpells() {
   renderAllSpellSurfaces();
 
   cleanupCallbacks = [
-    bus.on('memory:recent-path', renderAllSpellSurfaces),
-    bus.on('settings:changed', renderAllSpellSurfaces),
-    bus.on('page-attention-state', renderAllSpellSurfaces),
-    bus.on('page-transition-state', renderAllSpellSurfaces),
-    bus.on('spell:reset', renderAllSpellSurfaces),
-    bus.on('spell:grounded', renderAllSpellSurfaces),
-    bus.on('spell:ungrounded', renderAllSpellSurfaces),
-    bus.on('spell:checkpoint-saved', renderAllSpellSurfaces),
-    bus.on('spell:checkpoint-restored', renderAllSpellSurfaces),
+    bus.on('memory:recent-path', scheduleSpellRender),
+    bus.on('settings:changed', scheduleSpellRender),
+    bus.on('page-attention-state', scheduleSpellRender),
+    bus.on('page-transition-state', scheduleSpellRender),
+    bus.on('spell:reset', scheduleSpellRender),
+    bus.on('spell:grounded', scheduleSpellRender),
+    bus.on('spell:ungrounded', scheduleSpellRender),
+    bus.on('spell:checkpoint-saved', scheduleSpellRender),
+    bus.on('spell:checkpoint-restored', scheduleSpellRender),
   ];
 
-  const handleResize = () => {
-    renderAllSpellSurfaces();
-  };
+  const dockViewport = window.matchMedia('(max-width: 720px)');
   const handleStorage = (event) => {
     if (
       !event.key
@@ -894,19 +945,24 @@ export function initSpwSpells() {
       || event.key.startsWith('spw-coupling')
       || event.key.startsWith(SPELL_BUNDLE_PREFIX)
     ) {
-      renderAllSpellSurfaces();
+      scheduleSpellRender();
     }
   };
 
-  window.addEventListener('resize', handleResize);
+  dockViewport.addEventListener('change', scheduleSpellRender);
   window.addEventListener('storage', handleStorage);
 
   return {
     cleanup() {
       cleanupCallbacks.forEach((off) => off?.());
       cleanupCallbacks = [];
-      window.removeEventListener('resize', handleResize);
+      dockViewport.removeEventListener('change', scheduleSpellRender);
       window.removeEventListener('storage', handleStorage);
+      if (pendingRender !== null) window.cancelAnimationFrame(pendingRender);
+      pendingRender = null;
+      lastModelSignature = '';
+      lastModel = null;
+      renderedMarkup = new WeakMap();
       initialized = false;
     },
     refresh() {
