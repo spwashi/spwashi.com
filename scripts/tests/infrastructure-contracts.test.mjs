@@ -264,6 +264,20 @@ test('generated-output check names uncommitted files, not stale outputs', async 
   assert.match(source, /uncommitted=/);
   assert.match(source, /--allow-dirty/);
   assert.doesNotMatch(source, /\[generated\] stale=/);
+  assert.doesNotMatch(source, /module-ecology\.json/);
+});
+
+test('module ecology census is agent state, not a public feed', async () => {
+  const source = await readFile(path.join(ROOT, 'scripts/ts/runtime-contracts.mts'), 'utf8');
+  const collect = source.slice(
+    source.indexOf('export async function collectRuntimeContractReport'),
+    source.indexOf('export async function main'),
+  );
+  const main = source.slice(source.indexOf('export async function main'));
+  assert.match(source, /\.agents\/state\/runtime\/module-ecology\.json/);
+  assert.doesNotMatch(source, /public\/data\/module-ecology\.json/);
+  assert.doesNotMatch(collect, /writeFile\(MODULE_ECOLOGY_PATH/);
+  assert.match(main, /writeFile\(MODULE_ECOLOGY_PATH/);
 });
 
 test('public specifiers resolve onto a filesystem root', () => {
