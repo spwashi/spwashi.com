@@ -160,4 +160,22 @@ describe('renderTemplate body personality', () => {
     assert.deepEqual(warnings, []);
     assert.match(output, /<meta name="robots" content="noindex" \/>/);
   });
+
+  it('keeps Search beside the brand so pocket toggle chrome can still open it', async () => {
+    const source = `<spw-page title="Home" description="Home" canonical="https://spwashi.com/"></spw-page>
+<!doctype html>
+<html lang="en">
+<head><spw-site-head></spw-site-head></head>
+<body>
+<spw-site-header current="Home"></spw-site-header>
+<main></main>
+</body>
+</html>`;
+    const { output } = await renderTemplate(source, { sourceLabel: 'test-search-brand' });
+    assert.match(output, /class="header-brand"[\s\S]*data-spw-site-search-open[\s\S]*<\/div>/);
+    assert.doesNotMatch(
+      output,
+      /class="spw-header-actions"[^>]*>[\s\S]*data-spw-site-search-open/,
+    );
+  });
 });

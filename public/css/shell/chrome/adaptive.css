@@ -1321,8 +1321,8 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
       transform 160ms var(--shell-ease, ease);
   }
 
-  html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]),
-  html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]) {
+  html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]:not([data-spw-chrome-role="site-search"])),
+  html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]:not([data-spw-chrome-role="site-search"])) {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;

@@ -132,9 +132,9 @@ main > aside {
   min-width: 0;
 }
 
-article,
-section,
-aside {
+article:not([data-spw-floating-chrome="true"]),
+section:not([data-spw-floating-chrome="true"]),
+aside:not([data-spw-floating-chrome="true"]) {
   contain: inline-size style;
 }
 
@@ -5538,6 +5538,7 @@ body > header:empty {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
+  flex-wrap: nowrap;
   min-width: 0;
   max-width: 100%;
 }
@@ -5649,6 +5650,7 @@ body > header:empty {
 }
 
 .spw-header-action--search {
+  min-block-size: var(--touch-target-min, 2.75rem);
   flex: 0 0 auto;
   inline-size: auto;
   min-inline-size: var(--touch-target-min, 2.75rem);
@@ -5658,6 +5660,16 @@ body > header:empty {
   font-weight: 720;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+.header-brand > .spw-header-action--search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-block-size: var(--touch-target-min, 2.75rem);
+  min-inline-size: var(--touch-target-min, 2.75rem);
+  padding-inline: 0.55rem;
 }
 
 .spw-header-action--cauldron {
@@ -10104,8 +10116,8 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
       transform 160ms var(--shell-ease, ease);
   }
 
-  html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]),
-  html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]) {
+  html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]:not([data-spw-chrome-role="site-search"])),
+  html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell, .hook-invitation, [data-spw-floating-chrome]:not([data-spw-chrome-role="site-search"])) {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -10556,7 +10568,7 @@ html[data-spw-reduce-motion="on"] .spw-section-handle-shell[data-spw-cauldron-re
 .spw-section-handle-shell {
   gap: 0.24rem;
   min-height: calc(var(--touch-target-compact, 2.25rem) + 0.08rem);
-  max-width: min(42rem, calc(100vw - 1rem));
+  max-width: min(42rem, var(--spw-floating-handle-max-inline-size, calc(100vw - 1rem)));
   padding: 0.2rem;
   white-space: nowrap;
   overflow: hidden;
@@ -11140,7 +11152,7 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
       + env(safe-area-inset-bottom)
       + var(--spw-floating-menu-clearance, 0px)
     );
-    max-width: calc(100vw - 0.75rem);
+    max-width: var(--spw-floating-handle-max-inline-size, calc(100vw - 0.75rem));
     padding: 0.16rem;
     gap: 0.16rem;
     border-radius: calc(var(--shape-control, 0.78rem) + 0.28rem);
@@ -11241,7 +11253,7 @@ html[data-spw-section-handle="off"] .spw-section-handle-shell {
   }
 
   .spw-section-handle-shell {
-    max-width: calc(100vw - 0.5rem);
+    max-width: var(--spw-floating-handle-max-inline-size, calc(100vw - 0.5rem));
   }
 }
 
@@ -15755,8 +15767,8 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
    annotates them with data-spw-kind; containing those labels collapses their
    max-content width to zero. */
 :where(
-  [data-spw-component-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch),
-  [data-spw-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch),
+  [data-spw-component-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch):not([data-spw-floating-chrome="true"]),
+  [data-spw-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch):not([data-spw-floating-chrome="true"]),
   .spw-frame,
   .spw-card,
   .frame-card,
@@ -24999,6 +25011,12 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
   }
 }
 
+/* Viewport docks keep their intrinsic contents; semantic enrichment must not
+   turn the satchel into a size-contained 16px box. */
+:where([data-spw-floating-chrome="true"]) {
+  container-type: normal;
+}
+
 /* The section rail is a shrinking flex row. Preserve real button targets while
    allowing its current-room sentence to yield before the next-room control. */
 :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) {
@@ -25795,6 +25813,18 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
     transition: none;
   }
 }
+
+/* A dock is a stable gravity well. Feedback presses the control, not its anchor. */
+:where(.spw-state-inspector__launch, .spw-section-handle-step, .spw-section-handle-current, .spw-section-handle-toggle, .spw-header-action--search):focus-visible {
+  outline: 2px solid var(--active-op-color, var(--op-probe-color, #6a3fb8));
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :where(html:not([data-spw-reduce-motion="on"])) :where(.spw-section-handle-step, .spw-section-handle-current, .spw-section-handle-toggle, .spw-header-action--search):not(:disabled):not([aria-disabled="true"]):active {
+    translate: 0 var(--spw-control-press-depth, 1px);
+  }
+}
 }
 
 /* /public/css/components/site-search.css */
@@ -25813,6 +25843,9 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 .spw-site-search {
   position: fixed;
   inset: 0;
+  max-inline-size: none;
+  max-block-size: 100dvh;
+  overflow-y: auto;
   z-index: calc(var(--z-priority, 2000) + 20);
   display: grid;
   /* Stretch the column so max-content hits cannot center-expand the panel. */
@@ -26158,6 +26191,13 @@ html[data-spw-search-selection-pulse] {
 @media (prefers-reduced-motion: reduce) {
   .spw-site-search__result {
     transition: none;
+  }
+}
+
+@media (max-width: 45rem) {
+  .spw-site-search__input {
+    /* Keep focus from zooming the viewport on mobile Safari. */
+    font-size: max(1rem, 16px);
   }
 }
 }
@@ -32026,7 +32066,7 @@ html[data-spw-interaction-phase="charge"] :where(.spw-frame, .frame-card) {
 
 /* Edge magnetism: the current room and the handle are closer, not louder. */
 :where([data-spw-section-state="active"], :target) {
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.72);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.72);
 }
 
 :where(
@@ -32035,15 +32075,15 @@ html[data-spw-interaction-phase="charge"] :where(.spw-frame, .frame-card) {
   .spw-section-handle-shell[data-spw-handle-phase="traveling"],
   .spw-section-handle[data-spw-handle-phase="traveling"]
 ) {
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.86);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.86);
 }
 
 :where([data-spw-approach="approaching"]) {
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.55);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.55);
 }
 
 :where([data-spw-approach="arrival"]) {
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.82);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.82);
 }
 
 /* Attention chrome is material too: landmarks leak (a path), the handle stores. */
@@ -32133,12 +32173,12 @@ html[data-spw-interaction-phase="discover"] :where([data-spw-section-state="acti
 /* Lifecycle beats already resolved on components — they join the same field. */
 :where([data-spw-lifecycle-beat-resolved="approach"], [data-spw-lifecycle-beat-resolved="gather"]) {
   --spw-electrode: armed;
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.42);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.42);
 }
 
 :where([data-spw-lifecycle-beat-resolved="commit"]) {
   --spw-electrode: acted;
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.7);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.7);
 }
 
 :where([data-spw-lifecycle-beat-resolved="release"], [data-spw-lifecycle-beat-resolved="settle"]) {

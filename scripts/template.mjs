@@ -831,6 +831,7 @@ function renderSiteHeader(vars) {
     + '    <div class="header-surface" aria-hidden="true" data-spw-layout-owner="header-surface"></div>\n'
     + '    <div class="header-brand">\n'
     + '        <a aria-label="Spwashi home" class="header-sigil" href="/" data-spw-operator="frame" data-spw-sigil="#&gt;spwashi" data-spw-semantic-expression="identity[brand]{route.home}">#&gt;spwashi</a>\n'
+    + '        <a href="/topics/search/" class="spw-header-action spw-header-action--search" data-spw-site-search-open data-spw-operator="probe" aria-label="Search routes (Control or Command K)" title="Search routes (Ctrl/⌘K)">Search</a>\n'
     + (annotation
       ? `        <button type="button" class="header-annotation" data-spw-annotation-handle data-spw-annotation-kind="${attrEscape(annotation)}" aria-label="Inspect ${attrEscape(annotation)} annotation">${htmlEscape(annotation)}</button>\n`
       : '')
@@ -841,7 +842,6 @@ function renderSiteHeader(vars) {
     + '        </ul>\n'
     + '    </nav>\n\n'
     + '    <div class="spw-header-actions" data-spw-feature="shell-primary-actions" data-spw-semantic-expression="shell[actions]{attention.cauldron.tune.search}">\n'
-    + '        <button type="button" class="spw-header-action spw-header-action--search" data-spw-site-search-open data-spw-operator="probe" aria-label="Search routes (Control or Command K)" title="Search routes (Ctrl/⌘K)">Search</button>\n'
     + '        <a class="spw-header-action spw-header-action--cauldron" href="/play/#media-cauldron" data-spw-operator="action" data-spw-shell-action="open-media-cauldron" aria-label="Open saved fragments in the Media Cauldron">Cauldron</a>\n'
     + '        <button type="button" class="spw-attention-posture-pill" data-spw-shell-action="preview-attention-posture" data-spw-attention-posture="self-local-global" aria-label="Preview attention scope">\n'
     + '            <span class="spw-attention-posture-pill__kicker">Attention</span>\n'

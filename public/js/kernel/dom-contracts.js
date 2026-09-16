@@ -984,10 +984,18 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
       ? Math.ceil(launchMeasure.width + 16)
       : Math.min(184, ((viewportInlinePx() || 360) * 0.5) - 13);
     const gutterPx = Math.max(BOTTOM_LANE_SLOT_GAP_PX, safeSidePx);
-    const leftLaneMaxPx = Math.max(
-      152,
-      viewportInlinePx() - satchelLanePx - (gutterPx * 2) - BOTTOM_LANE_SLOT_GAP_PX
-    );
+    // Mobile docks occupy separate rows: current-room text must not compete
+    // with the satchel's intrinsic label width.
+    const leftLaneMaxPx = Math.max(1, viewportInlinePx() - (gutterPx * 2));
+    if (handleMeasure && launchMeasure) {
+      const satchelBottomPx = travelRowBottomPx + handleMeasure.height + BOTTOM_LANE_SLOT_GAP_PX;
+      const navBottomPx = satchelBottomPx + launchMeasure.height + BOTTOM_LANE_SLOT_GAP_PX;
+      vars['--spw-floating-slot-satchel'] = pxToRem(satchelBottomPx);
+      vars['--spw-floating-bottom-rail'] = pxToRem(satchelBottomPx);
+      vars['--spw-floating-slot-parallel-nav'] = pxToRem(navBottomPx);
+      clearancePx = Math.max(clearancePx, navBottomPx + (surfaceMeasure?.height || 0));
+      vars['--spw-bottom-chrome-clearance'] = pxToRem(clearancePx + BOTTOM_LANE_SLOT_GAP_PX);
+    }
 
     vars['--spw-floating-inline-gutter'] = pxToRem(gutterPx);
     vars['--spw-floating-satchel-lane'] = pxToRem(satchelLanePx);
@@ -996,7 +1004,7 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
     vars['--spw-floating-handle-transform'] = 'none';
     vars['--spw-floating-handle-max-inline-size'] = pxToRem(leftLaneMaxPx);
 
-    if (handleMeasure && launchMeasure) laneMode = 'split';
+    if (handleMeasure && launchMeasure && laneMode !== 'stacked') laneMode = 'split';
     else if (handleMeasure) laneMode = 'handle-only';
     else laneMode = 'satchel-only';
   } else if (!mobile) {

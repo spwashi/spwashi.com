@@ -12,6 +12,9 @@
 .spw-site-search {
   position: fixed;
   inset: 0;
+  max-inline-size: none;
+  max-block-size: 100dvh;
+  overflow-y: auto;
   z-index: calc(var(--z-priority, 2000) + 20);
   display: grid;
   /* Stretch the column so max-content hits cannot center-expand the panel. */
@@ -357,5 +360,12 @@ html[data-spw-search-selection-pulse] {
 @media (prefers-reduced-motion: reduce) {
   .spw-site-search__result {
     transition: none;
+  }
+}
+
+@media (max-width: 45rem) {
+  .spw-site-search__input {
+    /* Keep focus from zooming the viewport on mobile Safari. */
+    font-size: max(1rem, 16px);
   }
 }

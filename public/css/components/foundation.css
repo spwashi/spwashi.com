@@ -165,8 +165,8 @@
    annotates them with data-spw-kind; containing those labels collapses their
    max-content width to zero. */
 :where(
-  [data-spw-component-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch),
-  [data-spw-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch),
+  [data-spw-component-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch):not([data-spw-floating-chrome="true"]),
+  [data-spw-kind]:not(body):not(main):not(.site-header):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch):not([data-spw-floating-chrome="true"]),
   .spw-frame,
   .spw-card,
   .frame-card,

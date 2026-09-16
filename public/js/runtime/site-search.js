@@ -575,7 +575,6 @@ function pulseOpen() {
 
 export async function openSearch({ query = '', facet = null, source = 'api' } = {}) {
   ensureDialog();
-  await loadIndex();
 
   lastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   dialog.hidden = false;
@@ -589,8 +588,13 @@ export async function openSearch({ query = '', facet = null, source = 'api' } = 
   filterText = query || '';
   input.value = filterText;
   renderResults();
+  if (!entries.length) status.textContent = 'Loading search…';
   input.focus();
   input.select();
+
+  await loadIndex();
+  if (!isSearchOpen()) return;
+  renderResults();
 
   emitSpwAction('@search.open', `Site search (${source})`);
   document.dispatchEvent(new CustomEvent('spw:site-search', {

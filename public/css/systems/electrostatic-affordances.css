@@ -216,7 +216,7 @@ html[data-spw-interaction-phase="charge"] :where(.spw-frame, .frame-card) {
 
 /* Edge magnetism: the current room and the handle are closer, not louder. */
 :where([data-spw-section-state="active"], :target) {
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.72);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.72);
 }
 
 :where(
@@ -225,15 +225,15 @@ html[data-spw-interaction-phase="charge"] :where(.spw-frame, .frame-card) {
   .spw-section-handle-shell[data-spw-handle-phase="traveling"],
   .spw-section-handle[data-spw-handle-phase="traveling"]
 ) {
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.86);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.86);
 }
 
 :where([data-spw-approach="approaching"]) {
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.55);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.55);
 }
 
 :where([data-spw-approach="arrival"]) {
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.82);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.82);
 }
 
 /* Attention chrome is material too: landmarks leak (a path), the handle stores. */
@@ -323,12 +323,12 @@ html[data-spw-interaction-phase="discover"] :where([data-spw-section-state="acti
 /* Lifecycle beats already resolved on components — they join the same field. */
 :where([data-spw-lifecycle-beat-resolved="approach"], [data-spw-lifecycle-beat-resolved="gather"]) {
   --spw-electrode: armed;
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.42);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.42);
 }
 
 :where([data-spw-lifecycle-beat-resolved="commit"]) {
   --spw-electrode: acted;
-  --spw-e-edge: max(var(--spw-e-edge, 0), 0.7);
+  --spw-e-edge: max(var(--spw-edge-proximity, 0), 0.7);
 }
 
 :where([data-spw-lifecycle-beat-resolved="release"], [data-spw-lifecycle-beat-resolved="settle"]) {

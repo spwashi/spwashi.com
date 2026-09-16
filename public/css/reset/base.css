@@ -129,9 +129,9 @@ main > aside {
   min-width: 0;
 }
 
-article,
-section,
-aside {
+article:not([data-spw-floating-chrome="true"]),
+section:not([data-spw-floating-chrome="true"]),
+aside:not([data-spw-floating-chrome="true"]) {
   contain: inline-size style;
 }
 

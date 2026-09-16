@@ -322,6 +322,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
+  flex-wrap: nowrap;
   min-width: 0;
   max-width: 100%;
 }
@@ -433,6 +434,7 @@
 }
 
 .spw-header-action--search {
+  min-block-size: var(--touch-target-min, 2.75rem);
   flex: 0 0 auto;
   inline-size: auto;
   min-inline-size: var(--touch-target-min, 2.75rem);
@@ -442,6 +444,16 @@
   font-weight: 720;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+.header-brand > .spw-header-action--search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-block-size: var(--touch-target-min, 2.75rem);
+  min-inline-size: var(--touch-target-min, 2.75rem);
+  padding-inline: 0.55rem;
 }
 
 .spw-header-action--cauldron {

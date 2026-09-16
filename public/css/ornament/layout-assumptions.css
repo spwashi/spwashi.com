@@ -32,7 +32,7 @@ html[data-spw-layout-assumptions-active="true"][data-spw-layout-correction*="chr
 html[data-spw-layout-assumptions-active="true"][data-spw-layout-correction*="travel-row-split"] :where(
   .spw-section-handle-shell[data-spw-layout-assumption-correction="travel-row-split"]
 ) {
-  max-inline-size: min(9.25rem, var(--spw-floating-handle-max-inline-size, 42vw)) !important;
+  max-inline-size: var(--spw-floating-handle-max-inline-size, calc(100vi - 1.3rem));
   opacity: var(--spw-floating-secondary-opacity, 0.86);
 }
 

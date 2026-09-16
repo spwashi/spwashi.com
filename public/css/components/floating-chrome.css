@@ -136,6 +136,12 @@
   }
 }
 
+/* Viewport docks keep their intrinsic contents; semantic enrichment must not
+   turn the satchel into a size-contained 16px box. */
+:where([data-spw-floating-chrome="true"]) {
+  container-type: normal;
+}
+
 /* The section rail is a shrinking flex row. Preserve real button targets while
    allowing its current-room sentence to yield before the next-room control. */
 :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) {
@@ -930,5 +936,17 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 @media (prefers-reduced-motion: reduce) {
   :where([data-spw-bottom-lane-mode]) :where(.spw-reward-dock-trigger) {
     transition: none;
+  }
+}
+
+/* A dock is a stable gravity well. Feedback presses the control, not its anchor. */
+:where(.spw-state-inspector__launch, .spw-section-handle-step, .spw-section-handle-current, .spw-section-handle-toggle, .spw-header-action--search):focus-visible {
+  outline: 2px solid var(--active-op-color, var(--op-probe-color, #6a3fb8));
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :where(html:not([data-spw-reduce-motion="on"])) :where(.spw-section-handle-step, .spw-section-handle-current, .spw-section-handle-toggle, .spw-header-action--search):not(:disabled):not([aria-disabled="true"]):active {
+    translate: 0 var(--spw-control-press-depth, 1px);
   }
 }
