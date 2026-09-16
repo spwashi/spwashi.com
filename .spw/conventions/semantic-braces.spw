@@ -33,6 +33,7 @@
   refuse: "Do not use ~ as a generic link. Do not pair ! copy with a potential operator. Do not use @ for action or ^ for a mere nickname."
   audience_seat: "[variant] may name who the surface is for: reader · client · expert. data-spw-audience mirrors that seat as space-separated tokens."
   lens_seat: "<lens> may name a revealed preference: public · brief · crawl · commission. data-spw-semantic-lens mirrors it. Workshop/inspect postures may surface expert seats; reading posture keeps them quiet."
+  ~#aligned(2026-09-16, brace-gestures): `The gesture engine kept its own prefix table beside operator-detection.js and broke this rule on two prefixes (@ read as action, $ as meta) while emitting probe/object/ref where CSS and copy say wonder/integration/potential. It now resolves prefixes, aliases, and swap targets through detectOperator / getOperatorDefinition, so a swapped sigil writes the parser's type and wonder is keyed by that type. One owner: the kernel. Legacy names still resolve on input via OPERATOR_TYPE_ALIASES; nothing writes them.`
 }
 
 ^"operational_fixity"{

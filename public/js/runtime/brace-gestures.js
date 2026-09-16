@@ -43,6 +43,11 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import {
+  detectOperator,
+  extractOperatorPrefix,
+  getOperatorDefinition,
+} from '/public/js/kernel/shared.js';
+import {
   groundInteraction,
   isLensModeControl,
   isNativeControl,
@@ -103,25 +108,27 @@ const FIELD_WONDERS = Object.freeze([
   'resonance',
 ]);
 
-const PREFIX_TO_TYPE = Object.freeze({
-  '#>': 'frame',
-  '#:': 'layer',
-  '.': 'baseline',
-  '^': 'object',
-  '~': 'ref',
-  '?': 'probe',
-  '@': 'action',
-  '*': 'stream',
-  '&': 'merge',
-  '=': 'binding',
-  '$': 'meta',
-  '%': 'normalize',
-  '!': 'pragma',
-  '>': 'surface',
-});
-
-const LEADING_OPERATOR_RE = /^(#>|#:|\.|\^|~|\?|@|\*|&|=|\$|%|!|>)/;
+/* Operator vocabulary is the kernel's (operator-detection.js), not a second
+   table here. semantic-braces.spw#sigil_consequence: data-spw-operator must
+   resolve to the parser's type or a declared alias. The table this replaced
+   read @ as action and $ as meta, and emitted probe/object/ref where the
+   site's CSS and copy say wonder/integration/potential. Legacy names still
+   resolve through the kernel alias map; they no longer get written. */
 const SIGIL_SELECTOR = '.frame-sigil, .frame-card-sigil, .frame-panel-sigil';
+
+function canonicalOperatorType(value) {
+  if (!value) return '';
+  return getOperatorDefinition(value)?.type || String(value).trim();
+}
+
+function operatorTypeFromPrefix(prefix) {
+  if (!prefix) return '';
+  return detectOperator(prefix)?.type || '';
+}
+
+function operatorPrefixForType(type) {
+  return getOperatorDefinition(type)?.prefix || '';
+}
 
 /* Haptic beats. A hold that arms a swap gets one short tick so a finger knows
    release will commit; the commit itself gets a two-beat "swap" so it reads
@@ -341,21 +348,22 @@ function resolveTargetKind(el) {
 }
 
 function resolveOperator(el) {
-  if (el.dataset.spwOperator) return el.dataset.spwOperator;
+  if (el.dataset.spwOperator) return canonicalOperatorType(el.dataset.spwOperator) || 'frame';
 
   const explicitText = (
     el.dataset.spwSigil
     || el.textContent
-    || el.querySelector?.('.frame-sigil, .frame-card-sigil, .frame-panel-sigil')?.textContent
+    || el.querySelector?.(SIGIL_SELECTOR)?.textContent
     || ''
   ).trim();
 
-  const prefix = explicitText.match(LEADING_OPERATOR_RE)?.[0];
-  if (prefix && PREFIX_TO_TYPE[prefix]) return PREFIX_TO_TYPE[prefix];
+  const fromText = operatorTypeFromPrefix(extractOperatorPrefix(explicitText));
+  if (fromText) return fromText;
 
   if (el.dataset.spwSwappable) {
     const first = el.dataset.spwSwappable.split(',')[0]?.trim();
-    if (PREFIX_TO_TYPE[first]) return PREFIX_TO_TYPE[first];
+    const fromSwappable = operatorTypeFromPrefix(first);
+    if (fromSwappable) return fromSwappable;
   }
 
   return 'frame';
@@ -412,27 +420,34 @@ function resolveWonder(el, operator, targetKind, affordances) {
   if (affordances.includes('swap')) return 'comparison';
   if (targetKind === 'delimiter') return 'orientation';
 
-  switch (operator) {
+  // Wonder is the seven-type field of wonder-architecture.spw, keyed here by
+  // the kernel's operator type. Legacy names arrive already canonical.
+  switch (canonicalOperatorType(operator)) {
     case 'frame':
     case 'layer':
+    case 'vibration':
+    case 'concept':
       return 'orientation';
-    case 'probe':
+    case 'wonder':
       return 'inquiry';
-    case 'ref':
-    case 'stream':
+    case 'potential':
+    case 'value':
       return 'resonance';
     case 'action':
-    case 'surface':
+    case 'concept-edge':
+    case 'scene':
+    case 'direction':
       return 'projection';
     case 'binding':
-    case 'pragma':
     case 'normalize':
+    case 'mode':
       return 'constraint';
-    case 'merge':
-    case 'meta':
+    case 'subject':
+    case 'substrate':
+    case 'perspective':
       return 'comparison';
-    case 'object':
-    case 'baseline':
+    case 'integration':
+    case 'ground':
       return 'memory';
     default:
       return 'orientation';
@@ -705,15 +720,13 @@ function handleOperatorSwap(el, meta, direction = 1) {
   const operators = swappable.split(',').map((s) => s.trim()).filter(Boolean);
   if (operators.length < 2) return false;
 
-  const currentType = meta.operator || operators[0];
-  const currentPrefix =
-    Object.keys(PREFIX_TO_TYPE).find((prefix) => PREFIX_TO_TYPE[prefix] === currentType)
-    || operators[0];
+  const currentType = canonicalOperatorType(meta.operator) || operatorTypeFromPrefix(operators[0]);
+  const currentPrefix = operatorPrefixForType(currentType) || operators[0];
 
   const currentIndex = Math.max(operators.indexOf(currentPrefix), 0);
   const step = direction < 0 ? -1 : 1;
   const nextPrefix = operators[(currentIndex + step + operators.length) % operators.length];
-  const nextType = PREFIX_TO_TYPE[nextPrefix] || nextPrefix;
+  const nextType = operatorTypeFromPrefix(nextPrefix) || nextPrefix;
 
   writeDatasetValue(el, 'spwOperator', nextType);
   syncDiscoveredMarkup(el, { ...meta, operator: nextType }, { spwResolvedOperator: nextType });
@@ -721,9 +734,9 @@ function handleOperatorSwap(el, meta, direction = 1) {
   const sigil = el.matches?.(SIGIL_SELECTOR) ? el : el.querySelector?.(SIGIL_SELECTOR);
   if (sigil) {
     const currentText = sigil.textContent || '';
-    const matched = currentText.match(LEADING_OPERATOR_RE)?.[0];
-    if (matched) {
-      const nextText = currentText.replace(LEADING_OPERATOR_RE, nextPrefix);
+    const matched = extractOperatorPrefix(currentText);
+    if (matched && currentText.trimStart().startsWith(matched)) {
+      const nextText = currentText.replace(matched, nextPrefix);
       sigil.textContent = nextText;
       if (el.dataset.spwSigil) writeDatasetValue(el, 'spwSigil', nextText.trim());
     }
