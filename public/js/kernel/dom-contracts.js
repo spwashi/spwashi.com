@@ -507,6 +507,32 @@ function measureFloatingChromeOcclusion(nodes = []) {
   };
 }
 
+/*
+ * Stranded chrome: docked chrome that is rendered, has a box, and lies wholly
+ * outside the visual viewport. Occlusion cannot see it, because nothing
+ * overlaps an element that is not on screen, and the lane reads it as a
+ * healthy occupant. The shape it catches is a fixed box whose containing
+ * block stopped being the viewport: a transform, contain, or position on html
+ * or on a floating ancestor (css-instruction.spw#flow_ownership), or a slot
+ * offset pushed past an edge. Only docked roles are measured; transient
+ * toasts and the skip link park off-canvas by design.
+ */
+export function measureFloatingChromeStranding(nodes = [], viewport = readViewportBox()) {
+  const stranded = [];
+  nodes.forEach((node) => {
+    const role = node?.dataset?.spwChromeRole || 'chrome';
+    if (!FLOATING_CHROME_DOCKED_ROLES.includes(role)) return;
+    const rect = node.getBoundingClientRect?.();
+    if (!rect || rect.width <= 0 || rect.height <= 0) return;
+    const outside = rect.bottom <= viewport.top
+      || rect.top >= viewport.bottom
+      || rect.right <= viewport.left
+      || rect.left >= viewport.right;
+    if (outside) stranded.push(`${role}:${node.dataset?.spwChromeSlot || 'unassigned'}`);
+  });
+  return stranded;
+}
+
 function resolveFloatingChromeCompetition(openCount, dockedOpenCount, overlap = false) {
   if (overlap) return 'crowded';
   if (openCount <= 1 && dockedOpenCount <= 1) return 'clear';
@@ -1082,6 +1108,7 @@ export function syncFloatingChromeState(root = document, options = {}) {
   const dockedOpen = open.filter((node) => FLOATING_CHROME_DOCKED_ROLES.includes(node.dataset.spwChromeRole));
   const dockedOpenCount = dockedOpen.length;
   const occlusion = measureFloatingChromeOcclusion(open);
+  const stranded = measureFloatingChromeStranding(rendered);
   const overlap = occlusion.state === 'overlap';
   /* Reduction is a response, not a new layout to re-test. Once overlap crowds
      the lane it stays crowded until its occupants or the viewport width change;
@@ -1115,6 +1142,7 @@ export function syncFloatingChromeState(root = document, options = {}) {
     spwFloatingChromeBottom: dockedOpenCount ? 'occupied' : 'clear',
     spwFloatingChromeOcclusion: open.length > 1 ? occlusion.state : 'clear',
     spwFloatingChromeOcclusionPairs: occlusion.collisions.join('|') || null,
+    spwFloatingChromeStranded: stranded.join(' ') || null,
     spwFloatingChromeCollapsed: collapsedCount ? String(collapsedCount) : null,
     spwRuntimeMutator: options.source || 'floating-chrome',
     spwRuntimeMutationReason: options.reason || 'chrome-state-sync',
@@ -1128,6 +1156,7 @@ export function syncFloatingChromeState(root = document, options = {}) {
     openRoles.join(' '),
     competition,
     occlusion.state,
+    stranded.join(' '),
     collapsedCount,
     bottomLane?.laneMode || '',
     bottomLane?.handleLane || '',
@@ -1157,6 +1186,7 @@ export function syncFloatingChromeState(root = document, options = {}) {
     openSlots,
     competition,
     occlusion,
+    stranded,
     collapsedCount,
     bottomLane,
   };

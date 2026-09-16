@@ -27,6 +27,7 @@ export const LAYOUT_ASSUMPTION_IDS = Object.freeze({
   TRAVEL_ROW_COLLISION: 'travel-row-collision',
   CLEARANCE_DRIFT: 'clearance-drift',
   FLOATING_CHROME_CROWDED: 'floating-chrome-crowded',
+  FLOATING_CHROME_STRANDED: 'floating-chrome-stranded',
   USER_SATCHEL_POSITION: 'user-satchel-position',
 });
 
@@ -135,6 +136,16 @@ function runAlignmentChecks(ctx, doc) {
       id: 'chrome-pressure-compact',
       correction: 'chrome-pressure',
       target: 'html',
+    });
+  }
+
+  const stranded = html.dataset.spwFloatingChromeStranded || '';
+  if (stranded) {
+    // Measured, not corrected: a stranded box means the containing block is
+    // wrong somewhere above it, and nudging the slot would hide the cause.
+    compromises.push({
+      id: LAYOUT_ASSUMPTION_IDS.FLOATING_CHROME_STRANDED,
+      note: `Docked chrome outside the viewport: ${stranded}.`,
     });
   }
 
