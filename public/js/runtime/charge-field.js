@@ -83,6 +83,22 @@ const RELATION_STYLE_PROPERTIES = Object.freeze([
   '--spw-architecture-reward',
 ]);
 
+/* The colour the charged field paints with. Eight system sheets (arrival,
+   roles, affordance and probe legibility, module potential, expression and
+   theme resonance, the legibility lens) already funnel their accent through
+   this one hook and fall back to --active-op-color, but nothing set it, so a
+   discharge on a probe and a discharge on a binding lit the same teal. The
+   carrier operator's own token is the honest colour, and theme packs
+   redefine --op-*-color, so the field follows the theme without a second
+   palette. Removed at quiet so the ambient accent returns. */
+const CHARGE_FIELD_COLOR_PROPERTY = '--spw-charge-field-color';
+
+function chargeFieldColor(carrier = '') {
+  const operator = String(carrier || '').trim().toLowerCase();
+  if (!/^[a-z][a-z-]*$/.test(operator)) return '';
+  return `var(--op-${operator}-color, var(--active-op-color, #008080))`;
+}
+
 function clamp01(value = 0) {
   const next = Number(value);
   if (!Number.isFinite(next)) return 0;
@@ -187,6 +203,11 @@ function createChargeFieldInstance(ctx = null) {
       document.documentElement,
       '--spw-charge-field',
       String(state.intensity ?? 0)
+    );
+    writeStyleProperty(
+      document.documentElement,
+      CHARGE_FIELD_COLOR_PROPERTY,
+      clamp01(state.intensity) > 0 ? chargeFieldColor(state.carrier) : ''
     );
     writeRelationReward(state.intensity ?? 0, relation);
     syncReadouts();
@@ -351,6 +372,7 @@ function createChargeFieldInstance(ctx = null) {
     activeFrames.forEach(clearFrame);
     syncRoot({});
     document.documentElement.style.removeProperty('--spw-charge-field');
+    document.documentElement.style.removeProperty(CHARGE_FIELD_COLOR_PROPERTY);
     RELATION_STYLE_PROPERTIES.forEach((property) => {
       document.documentElement.style.removeProperty(property);
     });
@@ -379,6 +401,7 @@ export const SPW_CHARGE_FIELD_CONTRACT = Object.freeze({
   operatorDischarge: OPERATOR_DISCHARGE,
   readoutKeys: READOUT_KEYS,
   rewardProperties: RELATION_STYLE_PROPERTIES,
+  fieldColorProperty: CHARGE_FIELD_COLOR_PROPERTY,
   portableUse:
     'Electrostatic charge and discharge field model tracking operator carrier, phase intensity, and relation rewards.',
 });

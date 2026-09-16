@@ -84,3 +84,40 @@ test('charge settles, repeated discharge owns its timer, and unmount cancels wor
     document.documentElement.style = originalStyle;
   }
 });
+
+test('the charged field paints with its carrier operator colour and lets go at quiet', () => {
+  const originalSet = window.setTimeout;
+  const originalClear = window.clearTimeout;
+  const originalStyle = document.documentElement.style;
+  const styles = new Map();
+  window.setTimeout = () => 1;
+  window.clearTimeout = () => {};
+  document.documentElement.style = {
+    setProperty: (key, value) => { styles.set(key, value); },
+    getPropertyValue: (key) => styles.get(key) || '',
+    removeProperty: (key) => styles.delete(key),
+  };
+  const frame = Object.assign(new HTMLElement(), { dataset: { spwOperator: 'probe' }, closest: () => frame });
+  const emit = (name) => document.dispatchEvent(new CustomEvent(`spw:${name}`, {
+    detail: { element: frame },
+  }));
+  try {
+    initChargeField();
+    assert.equal(styles.get('--spw-charge-field-color'), undefined, 'quiet field has no colour of its own');
+    emit('charge:charged');
+    assert.equal(
+      styles.get('--spw-charge-field-color'),
+      'var(--op-probe-color, var(--active-op-color, #008080))',
+      'a probe carrier paints the field with the probe token',
+    );
+    emit('charge:settled');
+    assert.equal(styles.get('--spw-charge-field-color'), undefined, 'settling releases the colour');
+    unmountChargeField();
+    assert.equal(styles.size, 0);
+  } finally {
+    unmountChargeField();
+    window.setTimeout = originalSet;
+    window.clearTimeout = originalClear;
+    document.documentElement.style = originalStyle;
+  }
+});
