@@ -169,7 +169,7 @@
 :where([data-spw-op~="flavor:integrate"]) { --active-op-color: var(--op-integration-color, var(--op-object-color)); }
 :where([data-spw-op~="flavor:surface"]) { --active-op-color: var(--op-surface-color, var(--op-concept-color)); }
 :where([data-spw-op~="flavor:action"]) { --active-op-color: var(--op-action-color); }
-:where([data-spw-op~="flavor:route"]) { --active-op-color: var(--op-route-color, var(--op-frame-color)); }
+:where([data-spw-op~="flavor:route"]) { --active-op-color: var(--op-concept-edge-color, var(--op-surface-color)); }
 
 /* Sigil anatomy (hydrated): raw HTML keeps fused text; the sigil-anatomy
    module wraps sigil and operand in distinct spans with spacing preserved,

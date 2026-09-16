@@ -10208,8 +10208,8 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
      changes for free — a granted seventh slot makes the same six ingredients
      sit visibly lower in the pot. */
   --spw-cauldron-fill: var(--spw-cauldron-load-ratio, 0);
-  --spw-cauldron-fluid-cool: var(--op-thread-color, #4fb5a8);
-  --spw-cauldron-fluid-warm: var(--op-seed-color, #d9a441);
+  --spw-cauldron-fluid-cool: var(--op-stream-color, #4fb5a8);
+  --spw-cauldron-fluid-warm: var(--op-object-color, #d9a441);
 }
 
 /* The rim warms as the vessel fills — the interior glow in the study, which is
@@ -32842,7 +32842,7 @@ html[data-spw-page-section-phase="idle"] {
   --spw-expression-accent: var(--op-probe-color, #7a4fb5);
 }
 :where([data-spw-expression-kin="part"]) {
-  --spw-expression-accent: var(--op-thread-color, var(--active-op-color, #008080));
+  --spw-expression-accent: var(--op-potential-color, var(--op-ref-color, var(--active-op-color, #008080)));
 }
 :where([data-spw-expression-kin="projection"]) {
   --spw-expression-accent: var(--op-concept-color, var(--op-frame-color, #178282));
@@ -39972,7 +39972,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 :where([data-spw-op~="flavor:integrate"]) { --active-op-color: var(--op-integration-color, var(--op-object-color)); }
 :where([data-spw-op~="flavor:surface"]) { --active-op-color: var(--op-surface-color, var(--op-concept-color)); }
 :where([data-spw-op~="flavor:action"]) { --active-op-color: var(--op-action-color); }
-:where([data-spw-op~="flavor:route"]) { --active-op-color: var(--op-route-color, var(--op-frame-color)); }
+:where([data-spw-op~="flavor:route"]) { --active-op-color: var(--op-concept-edge-color, var(--op-surface-color)); }
 
 /* Sigil anatomy (hydrated): raw HTML keeps fused text; the sigil-anatomy
    module wraps sigil and operand in distinct spans with spacing preserved,

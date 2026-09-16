@@ -1425,8 +1425,8 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
      changes for free — a granted seventh slot makes the same six ingredients
      sit visibly lower in the pot. */
   --spw-cauldron-fill: var(--spw-cauldron-load-ratio, 0);
-  --spw-cauldron-fluid-cool: var(--op-thread-color, #4fb5a8);
-  --spw-cauldron-fluid-warm: var(--op-seed-color, #d9a441);
+  --spw-cauldron-fluid-cool: var(--op-stream-color, #4fb5a8);
+  --spw-cauldron-fluid-warm: var(--op-object-color, #d9a441);
 }
 
 /* The rim warms as the vessel fills — the interior glow in the study, which is

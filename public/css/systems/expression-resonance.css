@@ -71,7 +71,7 @@
   --spw-expression-accent: var(--op-probe-color, #7a4fb5);
 }
 :where([data-spw-expression-kin="part"]) {
-  --spw-expression-accent: var(--op-thread-color, var(--active-op-color, #008080));
+  --spw-expression-accent: var(--op-potential-color, var(--op-ref-color, var(--active-op-color, #008080)));
 }
 :where([data-spw-expression-kin="projection"]) {
   --spw-expression-accent: var(--op-concept-color, var(--op-frame-color, #178282));
