@@ -729,7 +729,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   background: color-mix(
     in srgb,
     var(--component-surface) 92%,
-    var(--op-action-color, var(--teal-dark)) 8%
+    var(--op-action-color, var(--teal-deep)) 8%
   );
 }
 

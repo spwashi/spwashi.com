@@ -8396,7 +8396,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 .spw-discovery-notice--modal {
   gap: 0.6rem; /* tighter for role as quick brief, better internal spacing without feeling cramped */
   padding: 0.95rem 1rem 0.9rem;
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark, #006b6b)) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep, #006b6b)) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
   /* Stronger modal material: higher surface mix + more gradient weight so it competes less with page content.
      Still glass by default for atmosphere, but opaque enough for its focal role. When global matte or high-contrast
      is active the data-spw-metamaterial rule below wins for clear-contrast "credits-like" readability. */
@@ -8471,7 +8471,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 }
 
 .spw-discovery-notice[data-spw-promo-theme="signal"] {
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark, #006b6b)) 24%, var(--line, rgba(14, 18, 20, 0.14)) 76%);
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep, #006b6b)) 24%, var(--line, rgba(14, 18, 20, 0.14)) 76%);
 }
 
 .spw-discovery-notice.is-dismissing {
@@ -8620,7 +8620,7 @@ html[data-spw-color-mode="dark"] .spw-discovery-notice--modal {
     linear-gradient(180deg, rgba(255, 255, 255, 0.11), transparent 46%),
     color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.97)) 99%, transparent);
   box-shadow: 0 22px 48px rgba(0, 0, 0, 0.42);
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark, #006b6b)) 32%, var(--line, rgba(246, 248, 248, 0.18)) 68%);
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep, #006b6b)) 32%, var(--line, rgba(246, 248, 248, 0.18)) 68%);
 }
 
 html[data-spw-color-mode="dark"] .spw-discovery-notice__label,
@@ -9397,7 +9397,7 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
 }
 
 .site-footer__cauldron[data-spw-cauldron-state~="phase:spell-ready"] .site-footer__spell-preview {
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 28%, transparent);
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep)) 28%, transparent);
 }
 
 /* Visual state reflection on footer cauldron (phase axis of data-spw-cauldron-state from computeCauldronPhase + sync).
@@ -9407,7 +9407,7 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent), var(--card-shadow);
 }
 .site-footer__cauldron[data-spw-cauldron-garden-phase="mature"] {
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 24%, var(--line));
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep)) 24%, var(--line));
 }
 .site-footer__cauldron[data-spw-cauldron-state~="phase:empty"] {
   opacity: 0.85;
@@ -9814,7 +9814,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 .site-footer__cauldron[data-spw-cauldron-garden-phase="mature"] [data-spw-cauldron-action="prune"],
 .site-footer__cauldron[data-spw-cauldron-garden-phase="decayed"] [data-spw-cauldron-action="prune"] {
   opacity: 1;
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 34%, transparent);
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep)) 34%, transparent);
 }
 
 [data-spw-cauldron-mirror] {
@@ -10341,7 +10341,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   --spw-handle-base-op-color: var(--op-ref-color, var(--blue, #2d68c4));
 }
 :where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="@"], [data-spw-handle-op="action"], [data-spw-operator="action"]) {
-  --spw-handle-base-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f));
+  --spw-handle-base-op-color: var(--op-action-color, var(--teal-deep, #0d5f5f));
 }
 :where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="<"], [data-spw-handle-op="topic"], [data-spw-operator="topic"]) {
   --spw-handle-base-op-color: var(--op-topic-color, #227c67);
@@ -10360,7 +10360,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   --spw-handle-base-op-color: var(--op-object-color, var(--amber, #c07a1e));
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="practice"] {
-  --spw-handle-base-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f));
+  --spw-handle-base-op-color: var(--op-action-color, var(--teal-deep, #0d5f5f));
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="spell"] {
   --spw-handle-base-op-color: var(--op-probe-color, #7a4fb5);
@@ -15522,7 +15522,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 :where([data-spw-phase="ground"], [data-spw-element="earth"])    { --active-op-color: var(--op-frame-color, var(--teal, #008080)); --spw-tangibility: 0.95; }
 :where([data-spw-phase="fluid"], [data-spw-element="water"])     { --active-op-color: var(--op-ref-color, var(--blue, #2d68c4)); --spw-tangibility: 0.35; }
 :where([data-spw-phase="radiant"], [data-spw-element="air"])     { --active-op-color: var(--op-probe-color, #7a4fb5); --spw-tangibility: 0.15; }
-:where([data-spw-phase="plastic"], [data-spw-element="fire"])    { --active-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f)); --spw-tangibility: 0.55; }
+:where([data-spw-phase="plastic"], [data-spw-element="fire"])    { --active-op-color: var(--op-action-color, var(--teal-deep, #0d5f5f)); --spw-tangibility: 0.55; }
 :where([data-spw-phase="lattice"], [data-spw-element="metal"])   { --active-op-color: var(--op-object-color, var(--amber, #c07a1e)); --spw-tangibility: 0.75; }
 :where([data-spw-phase="membrane"], [data-spw-element="wood"])   { --active-op-color: var(--op-topic-color, #227c67); --spw-tangibility: 0.50; }
 
@@ -21270,7 +21270,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   background: color-mix(
     in srgb,
     var(--component-surface) 92%,
-    var(--op-action-color, var(--teal-dark)) 8%
+    var(--op-action-color, var(--teal-deep)) 8%
   );
 }
 
@@ -42891,7 +42891,7 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
 }
 
 .spell-ingredient[data-spw-operator-flow*="subjective-to-objective"] {
-  --spell-geometry-rail: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 22%, transparent);
+  --spell-geometry-rail: color-mix(in srgb, var(--op-action-color, var(--teal-deep)) 22%, transparent);
 }
 
 .spell-ingredient[data-spw-operator-flow*="objective-to-subjective"] {

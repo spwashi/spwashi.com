@@ -192,7 +192,7 @@
 }
 
 .spw-cauldron-chip[data-spw-cauldron-state~="phase:spell-ready"] {
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 32%, var(--line));
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep)) 32%, var(--line));
 }
 
 .site-footer__cauldron-phase-step[data-spw-phase-complete="true"] {
@@ -236,7 +236,7 @@
 }
 
 .site-footer__cauldron-actions .spw-chip[data-spw-cauldron-action-state="cast"] {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 18%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--op-action-color, var(--teal-deep)) 18%, transparent);
 }
 
 .site-footer__cauldron-actions .spw-chip[data-spw-cauldron-action-state="plant"] {
@@ -571,7 +571,7 @@ html[data-spw-cauldron-cue="hold-to-gather"] .site-footer__cauldron-availability
 }
 
 html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-cauldron-state~="phase:spell-ready"] {
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 30%, var(--footer-panel-line));
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep)) 30%, var(--footer-panel-line));
 }
 
 [data-spw-cauldron-collected="true"]:not(.cauldron-ingredient) {

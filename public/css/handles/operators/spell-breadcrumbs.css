@@ -744,7 +744,7 @@
 }
 
 .spell-ingredient[data-spw-operator-flow*="subjective-to-objective"] {
-  --spell-geometry-rail: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 22%, transparent);
+  --spell-geometry-rail: color-mix(in srgb, var(--op-action-color, var(--teal-deep)) 22%, transparent);
 }
 
 .spell-ingredient[data-spw-operator-flow*="objective-to-subjective"] {

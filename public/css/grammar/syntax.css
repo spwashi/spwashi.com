@@ -2461,7 +2461,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 :where([data-spw-phase="ground"], [data-spw-element="earth"])    { --active-op-color: var(--op-frame-color, var(--teal, #008080)); --spw-tangibility: 0.95; }
 :where([data-spw-phase="fluid"], [data-spw-element="water"])     { --active-op-color: var(--op-ref-color, var(--blue, #2d68c4)); --spw-tangibility: 0.35; }
 :where([data-spw-phase="radiant"], [data-spw-element="air"])     { --active-op-color: var(--op-probe-color, #7a4fb5); --spw-tangibility: 0.15; }
-:where([data-spw-phase="plastic"], [data-spw-element="fire"])    { --active-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f)); --spw-tangibility: 0.55; }
+:where([data-spw-phase="plastic"], [data-spw-element="fire"])    { --active-op-color: var(--op-action-color, var(--teal-deep, #0d5f5f)); --spw-tangibility: 0.55; }
 :where([data-spw-phase="lattice"], [data-spw-element="metal"])   { --active-op-color: var(--op-object-color, var(--amber, #c07a1e)); --spw-tangibility: 0.75; }
 :where([data-spw-phase="membrane"], [data-spw-element="wood"])   { --active-op-color: var(--op-topic-color, #227c67); --spw-tangibility: 0.50; }
 

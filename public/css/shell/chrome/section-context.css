@@ -40,7 +40,7 @@
   --spw-handle-base-op-color: var(--op-ref-color, var(--blue, #2d68c4));
 }
 :where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="@"], [data-spw-handle-op="action"], [data-spw-operator="action"]) {
-  --spw-handle-base-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f));
+  --spw-handle-base-op-color: var(--op-action-color, var(--teal-deep, #0d5f5f));
 }
 :where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="<"], [data-spw-handle-op="topic"], [data-spw-operator="topic"]) {
   --spw-handle-base-op-color: var(--op-topic-color, #227c67);
@@ -59,7 +59,7 @@
   --spw-handle-base-op-color: var(--op-object-color, var(--amber, #c07a1e));
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="practice"] {
-  --spw-handle-base-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f));
+  --spw-handle-base-op-color: var(--op-action-color, var(--teal-deep, #0d5f5f));
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="spell"] {
   --spw-handle-base-op-color: var(--op-probe-color, #7a4fb5);

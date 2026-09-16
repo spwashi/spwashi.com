@@ -556,7 +556,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 .spw-discovery-notice--modal {
   gap: 0.6rem; /* tighter for role as quick brief, better internal spacing without feeling cramped */
   padding: 0.95rem 1rem 0.9rem;
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark, #006b6b)) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep, #006b6b)) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
   /* Stronger modal material: higher surface mix + more gradient weight so it competes less with page content.
      Still glass by default for atmosphere, but opaque enough for its focal role. When global matte or high-contrast
      is active the data-spw-metamaterial rule below wins for clear-contrast "credits-like" readability. */
@@ -631,7 +631,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 }
 
 .spw-discovery-notice[data-spw-promo-theme="signal"] {
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark, #006b6b)) 24%, var(--line, rgba(14, 18, 20, 0.14)) 76%);
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep, #006b6b)) 24%, var(--line, rgba(14, 18, 20, 0.14)) 76%);
 }
 
 .spw-discovery-notice.is-dismissing {
@@ -780,7 +780,7 @@ html[data-spw-color-mode="dark"] .spw-discovery-notice--modal {
     linear-gradient(180deg, rgba(255, 255, 255, 0.11), transparent 46%),
     color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.97)) 99%, transparent);
   box-shadow: 0 22px 48px rgba(0, 0, 0, 0.42);
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark, #006b6b)) 32%, var(--line, rgba(246, 248, 248, 0.18)) 68%);
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep, #006b6b)) 32%, var(--line, rgba(246, 248, 248, 0.18)) 68%);
 }
 
 html[data-spw-color-mode="dark"] .spw-discovery-notice__label,
