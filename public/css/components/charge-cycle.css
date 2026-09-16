@@ -2,11 +2,18 @@
    charge-cycle.css
    --------------------------------------------------------------------------
    Field-level charge/discharge projection when explore posture reveals anatomy.
+
+   Colour follows the carrier. charge-field.js writes --spw-charge-field-color
+   from the operator the reader touched (var(--op-<carrier>-color)) while the
+   field is live and removes it at quiet, so the wash, the charged ring, and
+   the discharge echo take that operator's colour and fall back to the
+   ambient accent. Theme packs recolour the operator tokens, so the field
+   follows the pack without a palette of its own.
    ========================================================================== */
 
 :root {
   --spw-charge-field: 0;
-  --spw-arc-color: var(--active-op-color, var(--semantic-accent, #008080));
+  --spw-arc-color: var(--spw-charge-field-color, var(--active-op-color, var(--semantic-accent, #008080)));
 }
 
 /* Ambient field wash — stronger in workshop, subtle in field */
@@ -14,7 +21,7 @@
   background-image:
     radial-gradient(
       ellipse 120% 80% at 50% -10%,
-      color-mix(in srgb, var(--op-probe-color, #4a2180) calc(var(--spw-charge-field, 0) * 14%), transparent),
+      color-mix(in srgb, var(--spw-charge-field-color, var(--op-probe-color, #4a2180)) calc(var(--spw-charge-field, 0) * 14%), transparent),
       transparent 58%
     ),
     radial-gradient(
@@ -29,7 +36,7 @@
   background-image:
     radial-gradient(
       ellipse 120% 80% at 50% -10%,
-      color-mix(in srgb, var(--op-probe-color, #4a2180) calc(var(--spw-charge-field, 0) * 18%), transparent),
+      color-mix(in srgb, var(--spw-charge-field-color, var(--op-probe-color, #4a2180)) calc(var(--spw-charge-field, 0) * 18%), transparent),
       transparent 58%
     ),
     radial-gradient(
@@ -48,9 +55,9 @@
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(.spw-frame[data-spw-charge-phase="preview"], .spw-frame[data-spw-charge-phase="charged"]) {
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, #008080) 16%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--spw-charge-field-color, var(--active-op-color, #008080)) 16%, transparent),
     0 0 0 calc(1px + (var(--spw-charge-field, 0) * 2px))
-    color-mix(in srgb, var(--op-probe-color, #4a2180) calc(var(--spw-charge-field, 0) * 28%), transparent);
+    color-mix(in srgb, var(--spw-charge-field-color, var(--op-probe-color, #4a2180)) calc(var(--spw-charge-field, 0) * 28%), transparent);
 }
 
 :where(
