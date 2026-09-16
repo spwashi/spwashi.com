@@ -455,6 +455,21 @@ const MODULE_ECOLOGY_PATH = path.join(ROOT_DIR, '.agents/state/runtime/module-ec
 const CATALOG_LOAD_IMPORT_RE = /\bload:\s*(?:async\s*)?\(\s*\)\s*=>\s*import\(\s*['"]([^'"]+)['"]/g;
 const COMPOSE_FROM_RE = /from\s+['"]\.\/([^'"]+)['"]/g;
 const INIT_EXPORT_FILE_RE = /\bexport\s+(?:async\s+)?function\s+init[A-Z]|\bexport\s+const\s+init[A-Z]|\bexport\s+\{[^}]*\binit[A-Z]/;
+function catalogIdsByFileFromModules(modules) {
+    const catalogIdsByFile = new Map();
+    for (const module of modules) {
+        if (!module.importPath || !module.id)
+            continue;
+        const absoluteImport = importPathToAbsolute(module.importPath);
+        if (!absoluteImport.startsWith(PUBLIC_JS_DIR))
+            continue;
+        const file = toPosixPath(path.relative(PUBLIC_JS_DIR, absoluteImport));
+        const ids = catalogIdsByFile.get(file) || [];
+        ids.push(module.id);
+        catalogIdsByFile.set(file, ids);
+    }
+    return catalogIdsByFile;
+}
 async function collectJsModuleEcology(catalogIdsByFile = new Map()) {
     const files = (await collectJsFilesUnder(PUBLIC_JS_DIR))
         .filter((file) => !file.startsWith('typed/') && !file.startsWith('generated/'));
@@ -515,8 +530,7 @@ async function collectJsModuleEcology(catalogIdsByFile = new Map()) {
         attention[key].sort();
     }
     const document = `${JSON.stringify({ catalog, attention }, null, 2)}\n`;
-    const recommendations = rows.map(recommendJsModuleEcology).filter((item) => Boolean(item));
-    return { rows, recommendations, document };
+    return { rows, document };
 }
 async function collectTypedImportViolations() {
     const errors = [];
@@ -1006,19 +1020,6 @@ export async function collectRuntimeContractReport() {
     errors.push(...typedImportViolations);
     const kernelTypedShimReport = await collectKernelTypedShimIssues();
     errors.push(...kernelTypedShimReport.errors);
-    const catalogIdsByFile = new Map();
-    for (const module of modules) {
-        if (!module.importPath || !module.id)
-            continue;
-        const absoluteImport = importPathToAbsolute(module.importPath);
-        if (!absoluteImport.startsWith(PUBLIC_JS_DIR))
-            continue;
-        const file = toPosixPath(path.relative(PUBLIC_JS_DIR, absoluteImport));
-        const ids = catalogIdsByFile.get(file) || [];
-        ids.push(module.id);
-        catalogIdsByFile.set(file, ids);
-    }
-    const jsEcologyReport = await collectJsModuleEcology(catalogIdsByFile);
     const behaviorScopeReport = await collectBehaviorScopeModuleIssues();
     errors.push(...behaviorScopeReport.errors);
     const stylePropertyReport = await collectStylePropertyContractReport();
@@ -1034,8 +1035,6 @@ export async function collectRuntimeContractReport() {
         cssCustomProperties: stylePropertyReport.cssCustomProperties,
         dynamicStyleWrites: stylePropertyReport.dynamicStyleWrites,
         errors,
-        jsEcology: jsEcologyReport.rows,
-        jsEcologyDocument: jsEcologyReport.document,
         kernelTypedShims: kernelTypedShimReport.shims,
         modules,
         ownerDirectories,
@@ -1052,10 +1051,11 @@ export async function collectRuntimeContractReport() {
 }
 export async function main() {
     const report = await collectRuntimeContractReport();
+    const ecology = await collectJsModuleEcology(catalogIdsByFileFromModules(report.modules));
     await fs.mkdir(path.dirname(MODULE_ECOLOGY_PATH), { recursive: true });
     const existingEcology = await fs.readFile(MODULE_ECOLOGY_PATH, 'utf8').catch(() => '');
-    if (existingEcology !== report.jsEcologyDocument) {
-        await fs.writeFile(MODULE_ECOLOGY_PATH, report.jsEcologyDocument);
+    if (existingEcology !== ecology.document) {
+        await fs.writeFile(MODULE_ECOLOGY_PATH, ecology.document);
     }
     const enhancementModules = report.modules.filter((module) => module.layer === 'enhancement' && !module.debugOnly);
     const enhancementImmediate = enhancementModules.filter((module) => module.when === 'immediate');
@@ -1084,8 +1084,7 @@ export async function main() {
         return acc;
     }, {});
     const paintCompositeImmediate = enhancementImmediate.filter((module) => module.costClass === 'paint_composite');
-    const ecology = report.jsEcology || [];
-    const seatCount = (seat) => ecology.filter((row) => row.seat === seat).length;
+    const seatCount = (seat) => ecology.rows.filter((row) => row.seat === seat).length;
     console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length}`);
     console.log(`[runtime] jsEcology catalog-export=${seatCount('catalog-export')} catalog-init-only=${seatCount('catalog-init-only')} unwired-init=${seatCount('unwired-init')} export-unwired=${seatCount('export-unwired')}`);
     console.log(`[runtime] mountHygiene enhancementImmediate=${enhancementImmediate.length}/${enhancementModules.length} demandGated=${demandGatedImmediate.length}/${enhancementImmediate.length} timingArc=${enhancementImmediate.filter((module) => Boolean(module.timingArc)).length}/${enhancementImmediate.length} idleChunk=${idleChunked.length}/${idleModules.length} rolefulUpdates=${rolefulModules.length}/${report.modules.length} costClass=${costClassTagged.length}/${report.modules.length} paintCompositeImmediate=${paintCompositeImmediate.length}`);

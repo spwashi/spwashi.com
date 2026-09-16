@@ -277,7 +277,9 @@ test('module ecology census is agent state, not a public feed', async () => {
   assert.match(source, /\.agents\/state\/runtime\/module-ecology\.json/);
   assert.doesNotMatch(source, /public\/data\/module-ecology\.json/);
   assert.doesNotMatch(collect, /writeFile\(MODULE_ECOLOGY_PATH/);
+  assert.doesNotMatch(collect, /collectJsModuleEcology/);
   assert.match(main, /writeFile\(MODULE_ECOLOGY_PATH/);
+  assert.match(main, /collectJsModuleEcology/);
 });
 
 test('public specifiers resolve onto a filesystem root', () => {
