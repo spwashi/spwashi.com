@@ -172,7 +172,7 @@ test('composite build pipelines compile each TypeScript project once', async () 
   assert.equal(scripts['check:local:serial'], 'node scripts/check-local.mjs --serial');
   assert.equal(
     scripts.build,
-    'npm run build:compile && node scripts/css-build.mjs && node --import ./scripts/lib/register-public-imports.mjs scripts/build.mjs',
+    'node scripts/build-compile.mjs --with-css && node --import ./scripts/lib/register-public-imports.mjs scripts/build.mjs',
   );
   assert.equal(scripts.check, 'npm run audit && npm run check:local');
   assert.equal(scripts['check:pwa'], 'npm run build:tools && npm run check:pwa:run');
@@ -182,19 +182,21 @@ test('composite build pipelines compile each TypeScript project once', async () 
 
   // Each TypeScript project is compiled exactly once per compile wave.
   const compileSource = await readFile(path.join(ROOT, 'scripts/build-compile.mjs'), 'utf8');
+  const compileArgs = [...compileSource.matchAll(/args: \[([^\]]*)\]/g)].map((match) => match[1]).join('\n');
   for (const project of ['--noEmit', 'tsconfig.scripts.json', 'tsconfig.runtime.json', 'tsconfig.public-sources.json']) {
     assert.equal(
-      compileSource.split(project).length - 1,
+      compileArgs.split(project).length - 1,
       1,
-      `build-compile.mjs should reference ${project} exactly once`,
+      `build-compile.mjs should pass ${project} to tsc exactly once`,
     );
   }
   assert.ok(compileSource.includes('fix-typed-imports'));
+  assert.ok(compileSource.includes('scripts/css-build.mjs'), 'build-compile.mjs should run css-build when --with-css');
+  assert.ok(compileSource.includes('withCss'), 'build-compile.mjs should overlap css-build with remaining compile');
 
   // check:local still covers every validator the former npm-run chain ran.
   const checkLocalSource = await readFile(path.join(ROOT, 'scripts/check-local.mjs'), 'utf8');
   for (const validator of [
-    'scripts/css-build.mjs',
     'scripts/check-site.mjs',
     'scripts/check-runtime-bindings.mjs',
     'scripts/pwa-contracts.mjs',
@@ -205,6 +207,17 @@ test('composite build pipelines compile each TypeScript project once', async () 
     assert.ok(checkLocalSource.includes(validator), `check-local.mjs should run ${validator}`);
   }
   assert.ok(checkLocalSource.includes('runCompile'), 'check-local.mjs should run the compile wave');
+  assert.ok(checkLocalSource.includes('withCss: true'), 'check-local.mjs should overlap css-build with compile');
+});
+
+test('compile fingerprints are stable and skip generated copies', async () => {
+  const { fingerprintInputs } = await import('../build-compile.mjs');
+  const first = await fingerprintInputs(['tsconfig.json', 'types']);
+  const second = await fingerprintInputs(['types', 'tsconfig.json']);
+  assert.equal(first.hash, second.hash);
+  assert.ok(first.files.includes('tsconfig.json'));
+  assert.equal(first.files.some((file) => file.startsWith('public/js/typed/')), false);
+  assert.equal(first.files.some((file) => file.startsWith('public/css/bundles/')), false);
 });
 
 test('check:local module tests match the test:modules script', async () => {

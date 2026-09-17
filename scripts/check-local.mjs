@@ -2,11 +2,11 @@
  * `check:local` — the full local validation gate.
  *
  * Runs as one process instead of a chain of `npm run` calls (each of those cost
- * a full npm boot), in three waves:
+ * a full npm boot), in two waves:
  *
- *   1. compile   four tsc passes, concurrent (see build-compile.mjs)
- *   2. css       css-build, which the contract validators read
- *   3. validate  the validators, concurrent — all are read-only over the tree
+ *   1. compile   four tsc passes, concurrent (see build-compile.mjs);
+ *                css-build starts as soon as build:tools is green
+ *   2. validate  the validators, concurrent — all are read-only over the tree
  *                and generated output, so they cannot race each other
  *
  * Output is buffered per stage and printed in declaration order, so a parallel
@@ -42,6 +42,7 @@ const VALIDATORS = [
 ];
 
 const serial = process.argv.includes('--serial');
+const force = process.argv.includes('--force') || process.env.SPW_TSC_FORCE === '1';
 const started = Date.now();
 
 const runNode = ({ label, script, args }) => runCommand(process.execPath, script ? [script] : args, label);
@@ -72,8 +73,9 @@ async function runWave(validators, limit) {
   return results;
 }
 
-bail('compile', await runCompile({ serial }));
-bail('css', [await runNode({ label: 'css-build', script: 'scripts/css-build.mjs' })]);
+const { compileResults, cssResult } = await runCompile({ serial, withCss: true, force });
+bail('compile', compileResults);
+if (cssResult) bail('css', [cssResult]);
 bail('validate', await runWave(VALIDATORS, serial ? 1 : Math.max(2, availableParallelism() - 1)));
 
 console.log(`[check:local] passed ${((Date.now() - started) / 1000).toFixed(2)}s`);

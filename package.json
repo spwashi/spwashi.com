@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "npm run build:compile && node scripts/css-build.mjs && node --import ./scripts/lib/register-public-imports.mjs scripts/build.mjs",
+    "build": "node scripts/build-compile.mjs --with-css && node --import ./scripts/lib/register-public-imports.mjs scripts/build.mjs",
     "build:local": "npm run build -- --local",
     "build:compile": "node scripts/build-compile.mjs",
     "build:compile:serial": "node scripts/build-compile.mjs --serial",

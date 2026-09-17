@@ -168,6 +168,14 @@
     direction = `data-spw-stylesheet-mode=scoped sitewide; template rewrites to core+route+behavior bundles; ROUTE_SURFACE_ALIASES.software→topics`
     landed = `2026-07-12 route aliases, orphan CSS ownership, sitewide scoped attribute, css:payload report`
   }
+  .{
+    id = `compile-stamp-and-css-overlap`
+    cost_class = `premature_commitment`
+    seam = `check:local and npm run build waited for all four tsc passes before css-build, and a no-change loop still paid a full typecheck`
+    direction = `Hash authored inputs into .tmp/tsc/*.stamp and skip the pass when the sentinel still exists; start css-build as soon as build:tools is green. --force or SPW_TSC_FORCE=1 ignores stamps.`
+    landed = `2026-09-17 build-compile.mjs stamps + --with-css; check:local and package.json build consume it`
+    sample = `warm miss 12.47s compile+css; warm cache 1.83s; deleting typecheck:root.stamp rebuilt only that pass`
+  }
 }[reg=set]
 
 ^"defaults"{
@@ -177,6 +185,7 @@
     `CSS: build:css or check:css; avoid full typecheck if only CSS`,
     `Deps: full check including audit`,
     `Sample non-overlapping stage walls: npm run bench:build (skip site) or bench:build:full`,
+    `Repeat compile+css: node scripts/build-compile.mjs --with-css (stamps under .tmp/tsc; --force to ignore)`,
     `Headless route smoke: npm run smoke:nav · with layout/debugQa: npm run smoke:nav:qa`,
     `CSS agent loop: npm run build:css:fast or build:css -- --only home,settings --skip-core --bundles-only`,
     `CSS single file: npm run build:css:run -- --bundles-only --from-change public/css/routes/surfaces/home.css`,
