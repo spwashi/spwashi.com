@@ -86,7 +86,8 @@
   border: 1px solid var(--settings-control-line-soft);
   background: var(--settings-control-bg);
   padding: var(--inset-component, 1.2rem);
-  margin-bottom: var(--space-md, 1rem);
+  margin: 0 0 var(--space-md, 1rem);
+  margin-inline: 0;
   border-radius: var(--shape-component, 6px);
 }
 

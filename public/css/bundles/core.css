@@ -22739,6 +22739,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   display: grid;
   gap: 0.52rem;
   min-width: 0;
+  margin-inline: 0;
   padding: var(--component-pad);
   border: var(--component-border-quiet);
   border-radius: var(--component-radius-tight);
