@@ -23,6 +23,12 @@ design/components/captures/
 # show up as untracked files and confuse a filesystem census.
 .claude/worktrees/
 
+# Local model-tool settings. The harness file is .claude/settings.json
+# (tracked; check:agents). Personal allow-lists live in settings.local.json
+# or in .gemini/, which are machine-local.
+.claude/settings.local.json
+.gemini/
+
 # Neighboring checkouts for crawl (Dregg sidecar curriculum, lore.land).
 # Catalog and README stay tracked; clones and crawl output do not.
 .references/*
