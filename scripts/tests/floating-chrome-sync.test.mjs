@@ -28,10 +28,13 @@ test('idempotent floating chrome annotation still wires size observation', () =>
   }
 });
 
-test('floating chrome sync requests coalesce into one frame', () => {
-  const saved = globalThis.requestAnimationFrame;
+test('floating chrome sync requests coalesce into one measured pass', () => {
+  const savedFrame = globalThis.requestAnimationFrame;
+  const savedTimeout = globalThis.setTimeout;
   const frames = [];
+  const tasks = [];
   globalThis.requestAnimationFrame = (fn) => frames.push(fn);
+  globalThis.setTimeout = (fn) => tasks.push(fn);
   try {
     requestFloatingChromeSync({ source: 'a', reason: 'mount' });
     requestFloatingChromeSync({ source: 'b', reason: 'resize' });
@@ -39,11 +42,18 @@ test('floating chrome sync requests coalesce into one frame', () => {
     assert.equal(frames.length, 1, 'three requests schedule one pass');
 
     frames.shift()();
+    assert.equal(tasks.length, 1, 'the pass runs as a task after the frame\'s own style pass');
+    requestFloatingChromeSync({ reason: 'while-pending' });
+    assert.equal(frames.length, 0, 'a request while the task is pending joins it');
+
+    tasks.shift()();
     requestFloatingChromeSync({ reason: 'after-pass' });
     assert.equal(frames.length, 1, 'a request after the pass schedules the next one');
     frames.shift()();
+    tasks.shift()();
   } finally {
-    globalThis.requestAnimationFrame = saved;
+    globalThis.requestAnimationFrame = savedFrame;
+    globalThis.setTimeout = savedTimeout;
   }
 });
 

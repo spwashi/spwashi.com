@@ -12,6 +12,7 @@ import {
   writeProjectionTier,
   PROJECTION_TIERS,
 } from '/public/js/kernel/dom-contracts.js';
+import { readViewportInlineSize } from '/public/js/kernel/viewport.js';
 
 export const SHELL_MODES = Object.freeze({
   INLINE: 'inline',
@@ -75,7 +76,7 @@ export function prefersDrawerMenu(view = globalThis) {
   return view?.matchMedia?.(DRAWER_MENU_QUERY)?.matches === true;
 }
 
-export function getViewportTier(width = (globalThis.innerWidth || 1024), config = SHELL_MEASUREMENT_DEFAULTS) {
+export function getViewportTier(width = (readViewportInlineSize() || 1024), config = SHELL_MEASUREMENT_DEFAULTS) {
   if (width < 420) return VIEWPORT_TIERS.COMPACT;
   if (width < (config?.narrowBreakpointPx ?? SHELL_MEASUREMENT_DEFAULTS.narrowBreakpointPx)) {
     return VIEWPORT_TIERS.NARROW;
@@ -102,7 +103,7 @@ export function getHoverMode(view = globalThis) {
 }
 
 export function syncDeviceContext(state, root = globalThis.document, view = globalThis) {
-  const width = view?.innerWidth || 1024;
+  const width = readViewportInlineSize(view) || 1024;
   const tier = getViewportTier(width, state?.config || SHELL_MEASUREMENT_DEFAULTS);
   const pointer = getPointerMode(view);
   const hover = getHoverMode(view);
@@ -275,7 +276,7 @@ export function resolveMenuPressure({
   return PRESSURES.CALM;
 }
 
-export function resolveViewportVariant(widthOrTier = (globalThis.innerWidth || 1024), variantMap = {}, fallback = '') {
+export function resolveViewportVariant(widthOrTier = (readViewportInlineSize() || 1024), variantMap = {}, fallback = '') {
   if (!variantMap || typeof variantMap !== 'object') return fallback;
   const tier = typeof widthOrTier === 'number'
     ? getViewportTier(widthOrTier)

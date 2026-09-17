@@ -7,6 +7,7 @@
  */
 
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
 import { projectFeatureRouteContext } from '/public/js/kernel/feature-route-context.js';
 import { presenceToken as normalizeToken } from '/public/js/kernel/text-normalization.js';
 import {
@@ -57,7 +58,6 @@ const ROUTE_ATTRS = Object.freeze([
 ]);
 
 let initialized = false;
-let syncRaf = 0;
 let lastSignature = '';
 let deviceObserver = null;
 let hostObserver = null;
@@ -310,36 +310,36 @@ function applyInteractiveMedium(snapshot, html = readHtml()) {
   html.style.setProperty('--spw-medium-intensity', String(snapshot.intensity));
 }
 
-function syncInteractiveMedium(root = document, { force = false } = {}) {
-  const html = readHtml();
-  const snapshot = collectInteractiveMedium(root);
+function commitInteractiveMedium(snapshot, { force = false } = {}) {
   const signature = buildSignature(snapshot);
-
   if (!force && signature === lastSignature) return snapshot;
 
   lastSignature = signature;
-  applyInteractiveMedium(snapshot, html);
+  applyInteractiveMedium(snapshot, readHtml());
   return snapshot;
 }
 
-/* A frame callback runs before the browser recalculates style for that frame,
-   so when a settings change has just invalidated root style, the medium-token
-   read inside it paid the whole pending recalculation in script. The sync now
-   runs in a task queued from the frame callback, after the frame's own style
-   pass, where the same read finds style already clean. */
-let syncTimer = 0;
+function syncInteractiveMedium(root = document, options = {}) {
+  return commitInteractiveMedium(collectInteractiveMedium(root), options);
+}
+
+/* The medium-token read pays a full style recalculation when a settings change
+   has just invalidated root style, so the sync runs after the frame's own style
+   pass (kernel/measured-frame.js), where the same read finds style clean. */
+let pendingSyncRoot = null;
+const syncLane = createMeasuredLane({
+  name: 'interactive-medium',
+  measure: () => {
+    const root = pendingSyncRoot || document;
+    pendingSyncRoot = null;
+    return collectInteractiveMedium(root);
+  },
+  apply: (snapshot) => commitInteractiveMedium(snapshot),
+});
 
 function scheduleSync(root = document) {
-  if (syncRaf) window.cancelAnimationFrame(syncRaf);
-  if (syncTimer) window.clearTimeout(syncTimer);
-  syncTimer = 0;
-  syncRaf = window.requestAnimationFrame(() => {
-    syncRaf = 0;
-    syncTimer = window.setTimeout(() => {
-      syncTimer = 0;
-      syncInteractiveMedium(root);
-    }, 0);
-  });
+  pendingSyncRoot = root;
+  syncLane.schedule();
 }
 
 function publishApi(root = document) {
@@ -417,10 +417,8 @@ export function initInteractiveMedium(root = document) {
 
 function cleanup() {
   initialized = false;
-  if (syncRaf) window.cancelAnimationFrame(syncRaf);
-  syncRaf = 0;
-  if (syncTimer) window.clearTimeout(syncTimer);
-  syncTimer = 0;
+  syncLane.cancel();
+  pendingSyncRoot = null;
   lastSignature = '';
   invalidateMediumTokens();
 

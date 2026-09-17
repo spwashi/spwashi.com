@@ -3,6 +3,7 @@ import {
   FLOATING_CHROME_SETTLED_EVENT,
   writeDatasetValue,
 } from '/public/js/kernel/dom-contracts.js';
+import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
 
 /**
  * Page state models the visible lifecycle of a page shell: booting,
@@ -176,9 +177,52 @@ const parseCssTimeMs = (value, fallback = 0) => {
   return raw.endsWith('s') && !raw.endsWith('ms') ? numeric * 1000 : numeric;
 };
 
+/* Every timing token this module reads. They resolve from
+   html[data-spw-page-tempo] / [data-spw-tempo-field] (components/signals.css)
+   and from the inline tokens region-profiler writes on the root, and from
+   nothing else, so those three attributes are the whole cache key. */
+const ROOT_TIME_TOKENS = Object.freeze([
+  '--spw-page-arrival-step-1-delay',
+  '--spw-page-arrival-step-2-delay',
+  '--spw-page-arrival-step-3-delay',
+  '--spw-page-arrival-duration',
+  '--spw-page-return-duration',
+  '--spw-region-profile-refresh-duration',
+  '--spw-settle-stagger-step',
+  '--spw-page-settle-quiet-window',
+  '--spw-page-settle-max-delay',
+  '--spw-page-arrival-guard-delay',
+]);
+
+/* getComputedStyle(html) forces a full style recalculation against the whole
+   stylesheet whenever anything has dirtied style since the last frame — during
+   boot, always — and this module read one token at a time from separate call
+   sites (the guard delay, then each arrival step, then the settle bounds).
+   Snapshot every token from one computed-style object and keep it until an
+   input attribute changes; reading attributes never forces a recalculation. */
+let rootTimeTokenKey = null;
+let rootTimeTokenSnapshot = null;
+
+const readRootTimeTokenKey = (html) => [
+  html.dataset.spwPageTempo || '',
+  html.dataset.spwTempoField || '',
+  ...ROOT_TIME_TOKENS.map((token) => html.style.getPropertyValue(token)),
+].join('|');
+
 const readRootTimeToken = (name, fallback = 0) => {
   if (!name || typeof getComputedStyle !== 'function') return fallback;
-  return parseCssTimeMs(getComputedStyle(document.documentElement).getPropertyValue(name), fallback);
+  const html = document.documentElement;
+  if (!html) return fallback;
+  const key = readRootTimeTokenKey(html);
+  if (key !== rootTimeTokenKey || !rootTimeTokenSnapshot) {
+    const style = getComputedStyle(html);
+    rootTimeTokenSnapshot = new Map(ROOT_TIME_TOKENS.map((token) => [token, style.getPropertyValue(token)]));
+    rootTimeTokenKey = key;
+  }
+  if (!rootTimeTokenSnapshot.has(name)) {
+    rootTimeTokenSnapshot.set(name, getComputedStyle(html).getPropertyValue(name));
+  }
+  return parseCssTimeMs(rootTimeTokenSnapshot.get(name), fallback);
 };
 
 const computeArrivalSettleDelay = (arrival = PAGE_ARRIVAL.ENTERING) => {
@@ -272,11 +316,10 @@ function measureFixedViewportCorrection(root = document) {
     }, 0);
 }
 
-function updateFixedViewportCorrection() {
+function applyFixedViewportCorrection(correctionY) {
   const html = document.documentElement;
   if (!html) return;
 
-  const correctionY = measureFixedViewportCorrection(document);
   if (correctionY === 0) {
     if (appliedCorrectionY === 0) return;
     html.style.removeProperty('--spw-fixed-viewport-correction-y');
@@ -295,21 +338,24 @@ function updateFixedViewportCorrection() {
 }
 
 function initFixedViewportCorrection() {
-  let frame = 0;
-  let measureTimer = 0;
   let observer = null;
   let lastRunAt = 0;
   let trailing = 0;
   // The measurement forces style + layout against the full stylesheet, and the
   // subtree observer below fires on every DOM mutation. Throttle so mutation
-  // storms and scroll cost one measured pass per interval, not one per frame.
+  // storms and scroll cost one measured pass per interval, not one per frame,
+  // and take that pass after the frame's style pass (kernel/measured-frame.js).
   const MIN_MEASURE_INTERVAL_MS = 240;
-  const runUpdate = () => {
-    lastRunAt = Date.now();
-    updateFixedViewportCorrection();
-  };
+  const lane = createMeasuredLane({
+    name: 'fixed-viewport-correction',
+    measure: () => measureFixedViewportCorrection(document),
+    apply: (correctionY) => {
+      lastRunAt = Date.now();
+      applyFixedViewportCorrection(correctionY);
+    },
+  });
   const schedule = () => {
-    if (frame || measureTimer) return;
+    if (lane.pending) return;
     const since = Date.now() - lastRunAt;
     if (since < MIN_MEASURE_INTERVAL_MS) {
       if (trailing) return;
@@ -319,17 +365,7 @@ function initFixedViewportCorrection() {
       }, MIN_MEASURE_INTERVAL_MS - since);
       return;
     }
-    /* Measure after the frame's own style and layout pass. A frame callback runs
-       before that pass, so after a settings change or chrome mutation had
-       invalidated style, the rect reads here paid the whole pending
-       recalculation in script. A task queued from the frame finds layout clean. */
-    frame = window.requestAnimationFrame(() => {
-      frame = 0;
-      measureTimer = window.setTimeout(() => {
-        measureTimer = 0;
-        runUpdate();
-      }, 0);
-    });
+    lane.schedule();
   };
   /* Window scroll cannot displace fixed chrome while the visual viewport matches
      the layout viewport. A pinch, an on-screen keyboard, or a collapsing browser
@@ -392,8 +428,7 @@ function initFixedViewportCorrection() {
   }
 
   return () => {
-    if (frame) window.cancelAnimationFrame(frame);
-    if (measureTimer) window.clearTimeout(measureTimer);
+    lane.cancel();
     if (trailing) window.clearTimeout(trailing);
     document.removeEventListener(FLOATING_CHROME_SETTLED_EVENT, schedule);
     observer?.disconnect();

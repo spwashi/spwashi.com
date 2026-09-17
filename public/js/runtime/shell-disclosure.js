@@ -6,6 +6,7 @@ import {
   writeDatasetValue,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
+import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
 import { TUNING_SURFACES_EVENT } from '/public/js/runtime/tuning-contract.js';
 import { releaseShellLock, syncShellLock } from './shell/scroll-lock.js';
 import {
@@ -403,17 +404,36 @@ function writeScrollDatasets(header, state) {
 }
 
 let appliedShellMenuOffset = '';
+let shellOffsetHeader = null;
+
+/* The header's bottom edge moves with the scroll band class and the menu
+   state, so the read must follow those writes. Taken synchronously it forced
+   style and layout against the full stylesheet on every band change and once
+   more at mount; the measured lane (kernel/measured-frame.js) reads it after
+   the frame's own pass, when the edge is already settled. */
+const shellOffsetLane = createMeasuredLane({
+  name: 'shell-menu-offset',
+  measure: () => {
+    const header = shellOffsetHeader;
+    shellOffsetHeader = null;
+    if (!(header instanceof HTMLElement) || !header.isConnected) return null;
+    const rect = header.getBoundingClientRect();
+    return `${Math.max(0, rect.bottom || 0).toFixed(1)}px`;
+  },
+  apply: (offset) => {
+    // A root write invalidates style for the whole document, and the lane only
+    // owes a pass when the header edge actually moved.
+    if (!offset || offset === appliedShellMenuOffset) return;
+    appliedShellMenuOffset = offset;
+    document.documentElement.style.setProperty('--spw-shell-menu-offset', offset);
+    requestFloatingChromeSync({ source: 'shell-disclosure', reason: 'shell-offset' });
+  },
+});
 
 function syncShellOffset(header) {
   if (!(header instanceof HTMLElement)) return;
-  const rect = header.getBoundingClientRect();
-  const offset = `${Math.max(0, rect.bottom || 0).toFixed(1)}px`;
-  // A root write invalidates style for the whole document, and the lane only
-  // owes a pass when the header edge actually moved.
-  if (offset === appliedShellMenuOffset) return;
-  appliedShellMenuOffset = offset;
-  document.documentElement.style.setProperty('--spw-shell-menu-offset', offset);
-  requestFloatingChromeSync({ source: 'shell-disclosure', reason: 'shell-offset' });
+  shellOffsetHeader = header;
+  shellOffsetLane.schedule();
 }
 
 function syncHeaderPointerField(header, event) {
@@ -624,7 +644,8 @@ function applyMenuState(header, nav, navList, toggle, state, open, source = 'sys
 }
 
 function syncDisclosure(header, nav, navList, toggle, state, source = 'sync') {
-  syncDeviceContext(state);
+  // The viewport tier is measured at mount and on resize; re-reading innerWidth
+  // here forced layout on every pointer, focus, and nav-structure sync.
   state.pointerMode = getPointerMode();
   const previousMode = state.mode;
   state.mode = resolveMenuMode(header, nav, navList, state);
@@ -666,6 +687,12 @@ export function initSpwShellDisclosure(options = {}) {
   if (!header || !nav || !navList || header.dataset.spwShellDisclosureInit === 'true') {
     return { cleanup() {}, refresh() {} };
   }
+
+  // Read scroll and viewport before this mount writes anything: taken after the
+  // toggle, utility row, and posture panel were inserted, each read forced
+  // style and layout against the full stylesheet.
+  const state = createState(config);
+  syncDeviceContext(state);
 
   writeDatasetValue(header, 'spwShellDisclosureInit', 'true');
   nav.id ||= 'spw-shell-nav';
@@ -712,8 +739,6 @@ export function initSpwShellDisclosure(options = {}) {
   const attentionPill = header.querySelector('.spw-attention-posture-pill');
   const attentionPanel = ensureAttentionPosturePanel(header, attentionPill);
 
-  const state = createState(config);
-  syncDeviceContext(state);
   state.mode = resolveMenuMode(header, nav, navList, state);
   writeDatasetValues(header, {
     spwMenu: state.mode === MODES.TOGGLE ? 'closed' : 'open',
@@ -951,19 +976,16 @@ export function initSpwShellDisclosure(options = {}) {
     toggle.focus();
   };
 
-  let measureRaf = 0;
-  let measureRafSettled = 0;
+  let measuredSyncSource = 'layout';
+  const measuredSyncLane = createMeasuredLane(() => {
+    syncScrollState(header, state);
+    syncDisclosure(header, nav, navList, toggle, state, measuredSyncSource);
+    syncUtilityRow(utilityRow);
+  });
   const scheduleMeasuredSync = (source = 'layout') => {
-    if (measureRaf || measureRafSettled) return;
-    measureRaf = window.requestAnimationFrame(() => {
-      measureRaf = 0;
-      measureRafSettled = window.requestAnimationFrame(() => {
-        measureRafSettled = 0;
-        syncScrollState(header, state);
-        syncDisclosure(header, nav, navList, toggle, state, source);
-        syncUtilityRow(utilityRow);
-      });
-    });
+    if (measuredSyncLane.pending) return;
+    measuredSyncSource = source;
+    measuredSyncLane.schedule();
   };
 
   const handleResize = () => {
@@ -1201,14 +1223,10 @@ export function initSpwShellDisclosure(options = {}) {
         window.cancelAnimationFrame(state.scrollRaf);
         state.scrollRaf = 0;
       }
-      if (measureRaf) {
-        window.cancelAnimationFrame(measureRaf);
-        measureRaf = 0;
-      }
-      if (measureRafSettled) {
-        window.cancelAnimationFrame(measureRafSettled);
-        measureRafSettled = 0;
-      }
+      measuredSyncLane.cancel();
+      shellOffsetLane.cancel();
+      shellOffsetHeader = null;
+      appliedShellMenuOffset = '';
       removeDatasetValues(header, [
         'spwShellDisclosureInit',
         'spwShellScroll',

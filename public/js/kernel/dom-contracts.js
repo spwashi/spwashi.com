@@ -10,6 +10,8 @@
  */
 
 import { detectOperator } from '/public/js/kernel/operator-detection.js';
+import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 
 export const CORE_COMPONENT_SELECTORS = Object.freeze([
   '.spw-frame',
@@ -560,30 +562,32 @@ const BOTTOM_LANE_MANAGED_STYLE_KEYS = Object.freeze([
 ]);
 
 let bottomLaneListenersBound = false;
-let floatingChromeSyncFrame = 0;
 let floatingChromeResizeObserver = null;
 const floatingChromeSeenConnected = new WeakSet();
 const pendingFloatingChromeSources = new Set();
 const pendingFloatingChromeReasons = new Set();
 
 /*
- * The lane measures geometry, so it settles at most once per frame. Callers that
- * do not read the returned snapshot request a pass instead of running one;
- * sources and reasons from the same frame travel together so the pass stays
- * attributable in the runtime mutation log.
+ * The lane measures geometry, so it settles at most once per frame, after that
+ * frame's own style pass (kernel/measured-frame.js): a pass taken inside the
+ * frame callback read the viewport box and root style against everything the
+ * frame's other writers had just dirtied. Callers that do not read the
+ * returned snapshot request a pass instead of running one; sources and reasons
+ * from the same frame travel together so the pass stays attributable in the
+ * runtime mutation log.
  */
+const floatingChromeSyncLane = createMeasuredLane(() => {
+  const source = [...pendingFloatingChromeSources].join(' ') || 'floating-chrome';
+  const reason = [...pendingFloatingChromeReasons].join(' ') || 'requested';
+  pendingFloatingChromeSources.clear();
+  pendingFloatingChromeReasons.clear();
+  syncFloatingChromeState(globalThis.document, { source, reason });
+});
+
 export function requestFloatingChromeSync(options = {}) {
   if (options.source) pendingFloatingChromeSources.add(options.source);
   if (options.reason) pendingFloatingChromeReasons.add(options.reason);
-  if (floatingChromeSyncFrame || typeof globalThis.requestAnimationFrame !== 'function') return;
-  floatingChromeSyncFrame = globalThis.requestAnimationFrame(() => {
-    floatingChromeSyncFrame = 0;
-    const source = [...pendingFloatingChromeSources].join(' ') || 'floating-chrome';
-    const reason = [...pendingFloatingChromeReasons].join(' ') || 'requested';
-    pendingFloatingChromeSources.clear();
-    pendingFloatingChromeReasons.clear();
-    syncFloatingChromeState(globalThis.document, { source, reason });
-  });
+  floatingChromeSyncLane.schedule();
 }
 
 /*
@@ -766,7 +770,7 @@ const groundedTimers = new WeakMap();
  * the window.
  */
 function viewportInlinePx() {
-  return Math.max(1, globalThis.visualViewport?.width || globalThis.innerWidth || 360);
+  return Math.max(1, readViewportBox().width || 360);
 }
 
 /* One lane pass holds one root computed style. Resolving it again for every
@@ -1204,22 +1208,6 @@ function clearPopupPlacementStyles(popover) {
   ['left', 'right', 'top', 'bottom', 'width', 'maxWidth', 'maxHeight'].forEach((property) => {
     popover.style[property] = '';
   });
-}
-
-function readViewportBox() {
-  const viewport = globalThis.visualViewport;
-  const offsetLeft = viewport?.offsetLeft || 0;
-  const offsetTop = viewport?.offsetTop || 0;
-  const width = Math.max(1, viewport?.width || globalThis.innerWidth || 1);
-  const height = Math.max(1, viewport?.height || globalThis.innerHeight || 1);
-  return {
-    left: offsetLeft,
-    top: offsetTop,
-    right: offsetLeft + width,
-    bottom: offsetTop + height,
-    width,
-    height,
-  };
 }
 
 function resolvePopupCollision(horizontalClamped, verticalFlipped) {

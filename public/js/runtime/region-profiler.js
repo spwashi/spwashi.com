@@ -15,6 +15,7 @@ import {
   inferRegionRole,
 } from '../semantic/role-inference.js';
 import { parseFeatureList } from './orchestration/features.js';
+import { readViewportInlineSize } from '../kernel/viewport.js';
 
 export const REGION_STATES = Object.freeze({
   QUEUED: 'queued',
@@ -326,7 +327,7 @@ function inferRegionPackOccupancy(el, profile) {
 }
 
 export function inferSpaceMotion() {
-  const width = window.innerWidth || document.documentElement.clientWidth || 0;
+  const width = readViewportInlineSize() || document.documentElement.clientWidth || 0;
   if (width && width < 520) return 'fold';
   if (width && width < 840) return 'condense';
   if (width && width > 1320) return 'expand';
