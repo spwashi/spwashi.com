@@ -62,7 +62,7 @@ Current repo shape:
 - `/tools/profile/` uses the shared card system as a local-only professional profile builder.
 - `/tools/character-sheet/` already proves that the same substrate can support a character-to-application translation lens.
 - `public/js/modules/profile/builder.js` and `public/js/modules/profile/tool.js` provide one shared data and rendering path.
-- `public/css/profile-card.css` already carries development-state semantics such as depth, completeness, focus, and card charge.
+- `public/css/components/cards/profile-card.css` already carries development-state semantics such as depth, completeness, focus, and card charge.
 - `/play/rpg-wednesday/cast/` currently has no card implementation, but its eventual recurring-character references fit the same family.
 
 The concept gap is not renderer capability. The gap is doctrine: what kind of thing this card is, when it should be used, and how its lenses relate.

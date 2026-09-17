@@ -16,9 +16,9 @@ The desired end state is a site where the design hub, component glossary, recipe
 [NEW] `.agents/plans/story-prompt-surface-pass/PLAN.md` - plan and guardrails.  
 [NEW] `.agents/plans/story-prompt-surface-pass/wip.spw` - branch memory for promptability, trope boxes, and route differentiation.  
 [MOD] `public/js/site.js` - mount prompt utilities when promptable surfaces are present.  
-[MOD] `public/js/spw-prompt-utils.js` - make prompt controls opt-in, frame-aware, reversible, and useful for route-local prompt hosts.  
+[MOD] `public/js/interface/prompt-utils.js` - make prompt controls opt-in, frame-aware, reversible, and useful for route-local prompt hosts.
 [MOD] `public/css/spw-components.css` - shared demo-control, trope-box, and prompt deck composition.  
-[MOD] `public/css/spw-wonder.css` - prompt copy button styling and route-adjustable wonder block treatment.  
+[MOD] `public/css/effects/wonder.css` - prompt copy button styling and route-adjustable wonder block treatment.
 [MOD] `public/css/website-surface.css` - design-route promptability and direct-wiring polish.  
 [MOD] `public/css/recipes-surface.css` - recipe storytelling / media-prose rhythm.  
 [MOD] `public/css/blog-surface.css` - blog prompt lab / image-backed thread treatment.  

@@ -24,7 +24,7 @@ Make the education direction useful without scattering the site into many top-le
 - The route remains namespaced to RPG Wednesday because the town library is currently campaign canon and a live playtest surface.
 - `data-spw-feature` names coherent clusters on the new route instead of creating top-level route families prematurely.
 - Primary sigils declare `data-spw-operator` and `data-spw-sigil`; runtime inference remains a fallback, not the source of truth.
-- Existing `public/js/spw-operators.js` now projects parsed sigil parts to the DOM so inspection can read prefix, normalized name, and label.
+- Existing `public/js/semantic/operators.js` now projects parsed sigil parts to the DOM so inspection can read prefix, normalized name, and label.
 - Quest cards are authored as static, printable-oriented cards first. Interactive storage, upload, PDF, or share-image generation stays out of scope until a specific workflow proves useful.
 
 ## Out Of Scope

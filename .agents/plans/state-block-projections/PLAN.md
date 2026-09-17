@@ -40,7 +40,7 @@ Craft guard:
 
 - Rebase target: `main@e04c8c0`
 - Rebase cadence: before commit 1, before merge
-- Hygiene split: current working tree already contains in-scope concurrent edits in `public/js/site.js`, `public/css/spw-components.css`, `public/css/spw-grammar.css`, and `public/js/spw-image-metaphysics.js`; preserve and extend those local changes rather than reverting them
+- Hygiene split: current working tree already contains in-scope concurrent edits in `public/js/site.js`, `public/css/spw-components.css`, `public/css/spw-grammar.css`, and `public/js/media/image-metaphysics.js`; preserve and extend those local changes rather than reverting them
 
 ## Dependencies
 

@@ -14,8 +14,8 @@ Turn the breadcrumb and hamburger menu into inspectable, semantically meaningful
 ## Files
 
 - [NEW] `.agents/plans/shell-semantic-physics/PLAN.md`
-- [MOD] `public/js/spw-shell-disclosure.js` - explicit shell-menu state machine, datasets, and external intent events
-- [MOD] `public/js/spw-experiential.js` - structured interactive breadcrumb trace with shell affordances
+- [MOD] `public/js/runtime/shell-disclosure.js` - explicit shell-menu state machine, datasets, and external intent events
+- [MOD] `public/js/runtime/experiential.js` - structured interactive breadcrumb trace with shell affordances
 - [MOD] `public/css/spw-chrome.css` - nav-toggle and header state styling keyed to shell physics datasets
 - [MOD] `public/css/spw-handles.css` - breadcrumb component styling and behavioral documentation
 - [MOD] `.spw/conventions/cognitive-navigation.spw` - shell disclosure, breadcrumb semantics, and reversibility rules

@@ -16,7 +16,7 @@ Make the settings page easier to enter and scan by adding deep-linkable shortcut
 - [NEW] `.agents/plans/settings-discoverability-consolidation/PLAN.md`
 - [MOD] `settings/index.html` - add shortcut clusters and stable anchors for key settings groups.
 - [MOD] `public/css/settings-surface.css` - style shortcut cards and tighter entry affordances.
-- [MOD] `public/js/site-settings.js` - open targeted settings categories when a settings hash points into the large register.
+- [MOD] `public/js/kernel/site-settings.js` - open targeted settings categories when a settings hash points into the large register.
 - [MOD] `_partials/site-footer.html` - promote a shared settings-aware footer partial with live local-state readouts.
 - [MOD] `public/css/spw-chrome.css` - support the richer footer settings strip.
 - [MOD] key route `index.html` files - replace repeated rich footer markup with the shared partial where the footer contract already matches.

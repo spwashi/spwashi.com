@@ -33,7 +33,7 @@ This branch also needs to avoid the shallow-accumulation problem from recent fas
 
 - `public/css/spw-components.css` is already over the preferred size and has multiple responsibilities due active cognitive-surface work. Keep changes there narrow and prefer `spw-grammar.css` / `spw-handles.css` for new semantics.
 - `settings/index.html` is already large; only edit the existing settings bands and notes instead of adding a new independent section.
-- `public/js/site-settings.js` and `public/js/spw-component-semantics.js` already centralize several concerns. Avoid growing them with route-specific logic.
+- `public/js/kernel/site-settings.js` and `public/js/semantic/component-semantics.js` already centralize several concerns. Avoid growing them with route-specific logic.
 
 ## Commits
 

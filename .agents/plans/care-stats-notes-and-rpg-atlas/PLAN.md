@@ -15,11 +15,11 @@ Add a practical page about low-cost supports when therapy is inaccessible, then 
 - `settings/index.html`
 - `_partials/site-footer.html`
 - `public/js/site.js`
-- `public/js/spw-local-notes.js`
+- `public/js/interface/local-notes.js`
 - `public/css/spw-chrome.css`
 - `public/css/settings-surface.css`
 - `public/js/rpg-wednesday-asset-atlas.js`
-- `public/css/spw-surfaces.css`
+- `public/css/components/surfaces.css`
 - `play/rpg-wednesday/index.html`
 
 ## Patch shape

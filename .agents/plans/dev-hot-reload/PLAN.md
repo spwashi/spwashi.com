@@ -30,8 +30,8 @@ Current implementation:
 [MOD] `vite.config.ts` - route HTML discovery, template rendering, and dev reload handling
 [MOD?] `package.json` - only if new scripts are needed for watch loops
 [MOD?] `scripts/template.mjs` - only when template caching or dependency behavior affects reload
-[MOD] `public/js/spw-pwa-update-handler.js` - skip or unregister service worker in local development
-[MOD] `public/js/site-settings.js` - only if PWA status output needs a clean dev-state branch
+[MOD] `public/js/runtime/pwa-update-handler.js` - skip or unregister service worker in local development
+[MOD] `public/js/kernel/site-settings.js` - only if PWA status output needs a clean dev-state branch
 [MOD] `sw.js` - only if a dev guard is cleaner than client-side unregister logic
 
 ## Semantic And Runtime Seams

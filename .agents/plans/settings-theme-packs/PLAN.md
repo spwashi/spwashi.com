@@ -14,9 +14,9 @@ The site already has working browser-local settings controls and a dormant theme
 ### Files
 
 - [NEW] `.agents/plans/settings-theme-packs/PLAN.md`
-- [MOD] `public/js/site-settings.js` - canonical `themePack` setting, labels, presets, and root dataset projection
-- [MOD] `public/css/spw-tokens.css` - authored theme-pack token overrides and light/dark variants
-- [MOD] `public/css/spw-surfaces.css` - shared theme-pack chooser and compact chip styling
+- [MOD] `public/js/kernel/site-settings.js` - canonical `themePack` setting, labels, presets, and root dataset projection
+- [MOD] `public/css/handles/operators/tokens.css` - authored theme-pack token overrides and light/dark variants
+- [MOD] `public/css/components/surfaces.css` - shared theme-pack chooser and compact chip styling
 - [MOD] `settings/index.html` - live theme-pack chooser, readouts, and full-form fieldset
 - [MOD] `index.html` - homepage quick-tune readouts and palette chooser controls
 - [MOD] `design/index.html` - design hub global context chooser and explanatory copy

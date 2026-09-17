@@ -30,7 +30,7 @@ The site already uses deep pedagogical models (Constructionism, ZPD, Cognitive S
 ## Files Likely To Change
 
 [MOD] `topics/pedagogy/index.html` - Add explicit LS section and mapping.
-[MOD] `public/css/spw-surfaces.css` - Add styles for pedagogical markers.
+[MOD] `public/css/components/surfaces.css` - Add styles for pedagogical markers.
 [MOD] `.spw/philosophy/cognitive-surface.spw` - Align with standard LS terms.
 [MOD] `topics/software/index.html` - Add principle annotations.
 [MOD] `topics/math/index.html` - Add principle annotations.

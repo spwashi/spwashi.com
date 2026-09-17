@@ -6,7 +6,7 @@ Completed reference retained in place. The `data-spw-overlay` marker contract ha
 
 ## Failure
 
-- `public/css/spw-canvas-accents.css` treated every direct child of `.spw-accent-host` as a flow child by forcing `position: relative; z-index: 2;`.
+- `public/css/ornament/canvas-accents.css` treated every direct child of `.spw-accent-host` as a flow child by forcing `position: relative; z-index: 2;`.
 - Image chrome and overlay-mounted inspectors already rely on direct-child absolute positioning.
 - Because `spw-canvas-accents.css` lives in `layer(ornament)`, that blanket rule overrode lower-layer overlay geometry and made the layout contract harder to reason about.
 

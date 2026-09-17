@@ -14,9 +14,9 @@ The site should reward two kinds of visitors without making either one parse the
 - `index.html`
 - `settings/index.html`
 - `scripts/template.mjs`
-- `public/js/interface/spw-contextual-ui.js`
+- `public/js/interface/contextual-ui.js`
 - `public/js/kernel/site-settings.js`
-- `public/js/kernel/spw-instrumentation.js`
+- `public/js/kernel/instrumentation.js`
 
 ## Semantic Seams
 

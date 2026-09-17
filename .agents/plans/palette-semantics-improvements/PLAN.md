@@ -55,7 +55,7 @@ Creator identity preserved: "I'm Spwashi. I build software and make art." — pa
 - New JS-driven palette mixer or canvas experiments (those belong in `/design/experiments/` or SVG lab).
 - Heavy refactors of theme-pack CSS blocks or accent-palette.js inference.
 - Moving the "Spell and Cauldron Hooks" section (it can be lightly linked/tuned in place).
-- Any change to `public/css/style.css` import order or `public/js/site-settings.js` public API.
+- Any change to `public/css/style.css` import order or `public/js/kernel/site-settings.js` public API.
 
 **Semantic seams to respect:**
 - `data-spw-palette-resonance` (root dataset, 4 values) vs `data-spw-theme-pack` (surface material family).

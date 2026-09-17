@@ -15,10 +15,10 @@ Make guide-badge collections easier to undo and easier to clear in bulk without 
 
 ## Affected Files
 
-- `public/js/spw-guide-badge.js`
-- `public/js/spw-spells.js`
+- `public/js/interface/guide-badge.js`
+- `public/js/runtime/spells.js`
 - `public/css/spw-handles.css`
-- `public/css/spw-ornament.css`
+- `public/css/ornament/ornament.css`
 - `settings/index.html`
 - `.spw/conventions/ornament-contract.spw`
 - `public/js/runtime/component-collection.js`

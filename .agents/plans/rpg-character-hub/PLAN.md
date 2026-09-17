@@ -13,8 +13,8 @@
 - `public/js/rpg-wednesday-state.js`
 - `public/js/rpg-wednesday-dom.js`
 - `public/js/rpg-wednesday-shortcuts.js`
-- `public/js/spw-image-store.js` (reuse only if needed, avoid new storage infra)
-- `public/css/spw-surfaces.css`
+- `public/js/media/image-store.js` (reuse only if needed, avoid new storage infra)
+- `public/css/components/surfaces.css`
 - `public/css/rpg-wednesday-surface.css`
 
 ## Validation

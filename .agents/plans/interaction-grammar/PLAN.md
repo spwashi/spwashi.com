@@ -15,7 +15,7 @@ much larger implemented system. Reconciling that drift:
   itself (`site-semantics.spw#brace_physics`, `operator-semantics.spw` caution note).
   That is a bridge, not a replacement — the taste note in this plan's Goal held.
 - **Circuit/familiarity ladder — landed as `interaction-microstates.spw`, not the
-  planned files.** `public/js/spw-component-semantics.js` and
+  planned files.** `public/js/semantic/component-semantics.js` and
   `public/js/spw-interaction-runtime.js` (listed below under Files) were never
   written under those names; the runtime reorganized into `public/js/runtime/` and
   `public/js/semantic/`. The actual circuit grammar is a phase ladder —

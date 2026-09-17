@@ -25,7 +25,7 @@ The desired end state is a settings route that begins with obvious, high-impact 
 
 ### Craft guard
 
-`public/js/site-settings.js` is already large, so the changes must stay focused on binding/wiring instead of accumulating unrelated policy. `settings/index.html` is long and concept-dense; the reordering should reduce cognitive load rather than add another parallel control vocabulary. Shared widget styling should live in `public/css/spw-surfaces.css`, with route-specific emphasis in `public/css/settings-surface.css` only where the settings page truly differs.
+`public/js/kernel/site-settings.js` is already large, so the changes must stay focused on binding/wiring instead of accumulating unrelated policy. `settings/index.html` is long and concept-dense; the reordering should reduce cognitive load rather than add another parallel control vocabulary. Shared widget styling should live in `public/css/components/surfaces.css`, with route-specific emphasis in `public/css/settings-surface.css` only where the settings page truly differs.
 
 ## Commits
 
@@ -39,7 +39,7 @@ The desired end state is a settings route that begins with obvious, high-impact 
 
 - Rebase target: `main@81d5e5205d70`
 - Rebase cadence: before commit 2 and before merge
-- Hygiene split: unrelated uncommitted edits already exist in `play/rpg-wednesday/index.html`, `public/css/spw-components.css`, and `public/css/spw-metaphysical-paper.css`; this pass will avoid them and commit only the new plan artifacts plus the settings/widget files above.
+- Hygiene split: unrelated uncommitted edits already exist in `play/rpg-wednesday/index.html`, `public/css/spw-components.css`, and `public/css/effects/metaphysical-paper.css`; this pass will avoid them and commit only the new plan artifacts plus the settings/widget files above.
 
 ## Dependencies
 

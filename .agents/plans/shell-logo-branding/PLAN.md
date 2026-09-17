@@ -6,13 +6,13 @@
 - Keep the SVG mark geometry consistent across runtime, shared assets, and public presentation.
 
 ## Surfaces
-- `public/js/spw-attention-architecture.js`
-- `public/js/spw-shell-disclosure.js`
-- `public/js/spw-experiential.js`
-- `public/js/spw-logo-runtime.js`
+- `public/js/runtime/attention-architecture.js`
+- `public/js/runtime/shell-disclosure.js`
+- `public/js/runtime/experiential.js`
+- `public/js/interface/logo-runtime.js`
 - `public/css/spw-chrome.css`
 - `public/css/spw-handles.css`
-- `public/css/spw-logo.css`
+- `public/css/handles/logo.css`
 - `public/css/home-surface.css`
 - `index.html`
 - `public/images/logo/spw-brand-plate.svg`

@@ -45,8 +45,8 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
 - The build/export path will likely need a stronger notion of layered outputs if the site is later whitelabeled without forking the whole repo.
 - The highest-complexity browser surfaces remain plain JS:
   - `public/js/site.js`
-  - `public/js/site-settings.js`
-  - `public/js/spw-page-metadata.js`
+  - `public/js/kernel/site-settings.js`
+  - `public/js/kernel/page-metadata.js`
   - `public/js/spw-shared.js`
 - The workbench has its own TS world, but the site should not inherit that build model by default.
 
@@ -168,8 +168,8 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
 - Keep the browser runtime in JS initially.
 - Add JSDoc typedefs and explicit normalization to the biggest shared registries:
   - `public/js/site.js`
-  - `public/js/site-settings.js`
-  - `public/js/spw-page-metadata.js`
+  - `public/js/kernel/site-settings.js`
+  - `public/js/kernel/page-metadata.js`
   - `public/js/spw-shared.js`
 - Prefer extracting contract modules before converting full behavior-heavy files.
 
@@ -206,8 +206,8 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
   - route-to-css/js ownership manifests
 - Harden in JS first:
   - `public/js/site.js`
-  - `public/js/site-settings.js`
-  - `public/js/spw-page-metadata.js`
+  - `public/js/kernel/site-settings.js`
+  - `public/js/kernel/page-metadata.js`
   - `public/js/spw-shared.js`
 - Avoid for now:
   - route HTML

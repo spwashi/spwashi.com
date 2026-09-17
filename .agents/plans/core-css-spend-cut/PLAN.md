@@ -56,6 +56,7 @@ The 1638 KiB core line is a **soft** budget (`--strict-budget` to fail); current
 - Do not treat a soft core overage as a blocker when the extra is PE substrate.
 
 ## Research bridges
+- Evidence 2026-09-17: on the about route at pocket, every full style recalculation forced from script costs ~300ms against the current core bundle (devtools.timeline trace; `runtime-bootstrap-performance/PLAN.md` Phase 3 data). The runtime now halves how often it forces one; the per-pass cost is this plan's to cut.
 - `.spw/conventions/css-instruction.spw#cascade_vs_delivery`
 - `.spw/conventions/stylesheet-ecology.spw#progressive_enhancement`
 - `.spw/audits/progressive-css-module-scopes-2026-07`

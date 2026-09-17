@@ -23,7 +23,7 @@ Superseded reference retained in place. The missing visitation/bootstrap and rou
 ## Planned Fixes
 
 ### Commit 1: `![runtime] — restore visitation bootstrap and repair software route structure`
-- Add `public/js/spw-visitation.js` as the missing bootstrap module.
+- Add `public/js/runtime/visitation.js` as the missing bootstrap module.
 - Replace `topics/software/compilers/index.html` with a coherent compilers surface.
 - Replace `topics/software/distributed/index.html` with a coherent distributed systems surface.
 - Remove stray closers from `topics/software/compression/index.html` and restore `</article></main>`.

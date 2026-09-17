@@ -57,7 +57,7 @@ intent: .{
 @site_settings_profiles: ~"../../../public/js/kernel/site-settings-profiles.js"
 @site_settings_engine: ~"../../../public/js/kernel/site-settings-engine.js"
 @shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"
-@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@module_catalog: ~"../../../public/js/runtime/catalog/index.js"
 
 dispatch: .{
  plan = @plan

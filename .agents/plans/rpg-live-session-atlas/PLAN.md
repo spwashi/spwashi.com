@@ -29,7 +29,7 @@ RPG Wednesday should be easier to run live across phone, tablet, and desktop wid
 ## Runtime Seams
 
 - `public/js/rpg-wednesday.js` remains the single route-specific controller for RPG local behavior.
-- `public/js/spw-image-store.js` is reused for local blobs so image payloads do not move into `localStorage`.
+- `public/js/media/image-store.js` is reused for local blobs so image payloads do not move into `localStorage`.
 - `localStorage` keeps only lightweight asset metadata such as ids, namespace, timeline, preset, and collectible/collapsed state.
 
 ## Risks

@@ -16,7 +16,7 @@ Refresh the main hub routes so they reward repeat visitors instead of re-explain
 - `services/index.html`
 - `play/index.html`
 - `about/index.html`
-- `public/css/spw-surfaces.css`
+- `public/css/components/surfaces.css`
 
 ## Strategy
 

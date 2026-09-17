@@ -24,8 +24,8 @@ The site should stop depending on a small number of viewport breakpoints and ins
 [MOD] public/js/pretext-lab.js — derive lab surface widths from CSS tokens instead of hardcoded ratios  
 
 Craft guard:
-- `public/css/spw-components.css` and `public/css/spw-surfaces.css` are already large and multi-concept; edits must stay localized and token-driven.
-- `public/js/pretext-lab.js` should remain a narrow integration shim, not become a second layout system.
+- `public/css/spw-components.css` and `public/css/components/surfaces.css` are already large and multi-concept; edits must stay localized and token-driven.
+- `public/js/semantic/pretext-lab.js` should remain a narrow integration shim, not become a second layout system.
 
 ## Commits
 
@@ -37,7 +37,7 @@ Craft guard:
 
 - Rebase target: `main@9783be0`
 - Rebase cadence: before commit 1, before merge
-- Hygiene split: unrelated dirty worktree files already exist in `public/js/spw-image-metaphysics.js`, `public/js/spw-state-inspector.js`, `public/js/spw-interaction-loop.js`, and `.agents/plans/interaction-loop-contract/`; this pass will not touch them
+- Hygiene split: unrelated dirty worktree files already exist in `public/js/media/image-metaphysics.js`, `public/js/spw-state-inspector.js`, `public/js/spw-interaction-loop.js`, and `.agents/plans/interaction-loop-contract/`; this pass will not touch them
 
 ## Dependencies
 

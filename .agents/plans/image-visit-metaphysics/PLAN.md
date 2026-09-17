@@ -24,8 +24,8 @@ The desired end state is an image system that behaves like the rest of the site:
 [MOD?] index.html — only if a small number of existing study figures need explicit metadata to read better under the new image model
 
 Craft guard:
-- `public/js/spw-image-metaphysics.js` should stay a focused interaction module, not absorb settings, canvas, persona, or gate logic.
-- `public/css/spw-metaphysical-paper.css` should own the image metaphysics presentation instead of leaking rules into `style.css`.
+- `public/js/media/image-metaphysics.js` should stay a focused interaction module, not absorb settings, canvas, persona, or gate logic.
+- `public/css/effects/metaphysical-paper.css` should own the image metaphysics presentation instead of leaking rules into `style.css`.
 - Image placements should remain sparse and intentional. A new image must improve phrasing, spacing, or continuity.
 - Visited state must remain understandable with motion off and without relying on color alone.
 
@@ -45,7 +45,7 @@ Fuzz strategy:
 
 - Rebase target: `historical@2569d51` (current local basis; mainline reachability unverified in this workspace)
 - Rebase cadence: before commit 1, before merge
-- Hygiene split: shared hot files already exist from parallel work in `public/js/site.js`, `public/css/style.css`, `public/js/spw-svg-filters.js`, and `topics/software/compression/index.html`; this pass should stay additive and avoid rewriting those surfaces beyond the image semantics it needs.
+- Hygiene split: shared hot files already exist from parallel work in `public/js/site.js`, `public/css/style.css`, `public/js/media/svg-filters.js`, and `topics/software/compression/index.html`; this pass should stay additive and avoid rewriting those surfaces beyond the image semantics it needs.
 
 ## Dependencies
 

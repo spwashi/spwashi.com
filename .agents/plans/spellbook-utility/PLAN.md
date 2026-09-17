@@ -14,7 +14,7 @@ The desired end state is a spell surface that earns its metaphor by doing useful
 ## First Two Spells
 
 1. `! restore_checkpoint("<name>")`
-   Restore a previously saved grounded registry and coupling state. This is the strongest low-friction win because `public/js/spw-haptics.js` already saves checkpoints and already exposes `restoreCheckpoint(name)`, but the current spell surface never lets a visitor browse or restore those saved states.
+   Restore a previously saved grounded registry and coupling state. This is the strongest low-friction win because `public/js/interface/haptics.js` already saves checkpoints and already exposes `restoreCheckpoint(name)`, but the current spell surface never lets a visitor browse or restore those saved states.
 
 2. `@ resume_pins`
    Turn the existing pinned-frame registry into a replayable working set. This should not mean "open everything in tabs"; it should mean "resume the bookmarked set as a navigable sequence" with obvious links and a current-step affordance. The runtime already stores pins in `spw-pins`; the spell layer needs to project them as a working-memory tool rather than a static preformatted block.
@@ -23,13 +23,13 @@ The desired end state is a spell surface that earns its metaphor by doing useful
 
 [NEW] `.agents/plans/spellbook-utility/PLAN.md`
 [NEW] `.agents/plans/spellbook-utility/wip.spw`
-[MOD?] `public/js/spw-spells.js` - pivot from passive serialization to executable spell catalog, recent spells, and outcome-focused board rendering
-[MOD?] `public/js/spw-haptics.js` - expose checkpoint enumeration and restore metadata in a stable helper the spell UI can call
-[MOD?] `public/js/spw-experiential.js` - expose bookmark registry data in a way the spell runtime can reuse for working-set replay
+[MOD?] `public/js/runtime/spells.js` - pivot from passive serialization to executable spell catalog, recent spells, and outcome-focused board rendering
+[MOD?] `public/js/interface/haptics.js` - expose checkpoint enumeration and restore metadata in a stable helper the spell UI can call
+[MOD?] `public/js/runtime/experiential.js` - expose bookmark registry data in a way the spell runtime can reuse for working-set replay
 [MOD?] `settings/index.html` - restructure the spell board into useful sections: current trace, saved checkpoints, pinned working set
 [MOD?] `public/css/spw-handles.css` - spell-board interaction states, checkpoint rows, working-set controls
-[MOD?] `public/css/spw-surfaces.css` - board-level layout for spell actions and utility-oriented summaries
-[MOD?] `public/js/spw-console.js` - optional lightweight reporting for spell restore/cast outcomes
+[MOD?] `public/css/components/surfaces.css` - board-level layout for spell actions and utility-oriented summaries
+[MOD?] `public/js/interface/console.js` - optional lightweight reporting for spell restore/cast outcomes
 [MOD?] `public/js/spw-shared.js` - shared spell action helpers only if action wiring would otherwise duplicate logic
 
 Craft guard:

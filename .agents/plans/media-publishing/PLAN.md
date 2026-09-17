@@ -14,7 +14,7 @@ Create a lightweight publishing layer that can market and reference current site
 ## Files
 
 [NEW] `public/data/media-focus.json` - editorial focus, featured pages, topics, and components.
-[NEW] `public/js/media-publishing.js` - progressive renderer for focus and collection hosts.
+[NEW] `public/js/typed/media-publishing.js` - progressive renderer for focus and collection hosts.
 [MOD] `public/js/site.js` - optional feature loader.
 [MOD] `index.html` - home media focus host and feature opt-in.
 [MOD] `about/website/index.html` - field-guide publishing register host and feature opt-in.

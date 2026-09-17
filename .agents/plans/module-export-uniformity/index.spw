@@ -58,7 +58,7 @@ intent: .{
 @runtime_medium_ecology: ~"../../../.spw/conventions/runtime-medium-ecology.spw"
 @runtime_module_medium: ~"../../../.spw/surfaces/runtime-module-medium.spw"
 @spw_conventions_module_export_contract_spw: ~"../../../.spw/conventions/module-export-contract.spw"
-@public_js_runtime_module_export_contract_js: ~"../../../public/js/runtime/module-export-contract.js"
+@public_js_runtime_module_export_contract_js: ~"../../../public/js/runtime/catalog/export-contract.js"
 
 dispatch: .{
  plan = @plan

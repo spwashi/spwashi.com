@@ -4,11 +4,11 @@
 
 | # | File | Test/Error | Class | Priority |
 |---|---|---|---|---|
-| 1 | `public/js/site-settings.js` + `public/css/*` | Many saved settings never affect rendering or runtime behavior | ui-interaction | P1 |
+| 1 | `public/js/kernel/site-settings.js` + `public/css/*` | Many saved settings never affect rendering or runtime behavior | ui-interaction | P1 |
 | 2 | `public/js/site.js` | `viewportActivation` only applies at boot; changing it in Settings is not live | ui-interaction | P1 |
 | 3 | `public/css/blog-surface.css` + `public/js/blog-specimens.js` | Blog route-level theme swatches conflict with global dark mode | ui-visual | P1 |
 | 4 | `settings/index.html` | Settings page exposes speculative controls with no consumers | ui-visual | P1 |
-| 5 | `public/css/grain-texture.css` + `public/js/site-settings.js` | Grain controls fight each other; semantic density comments do not match runtime behavior | regression | P2 |
+| 5 | `public/css/effects/grain-texture.css` + `public/js/kernel/site-settings.js` | Grain controls fight each other; semantic density comments do not match runtime behavior | regression | P2 |
 
 ## Diagnosis
 
@@ -20,11 +20,11 @@
 ## Planned Fixes
 
 ### Commit 1: `&[settings] — wire live runtime preferences`
-- Update `public/js/site-settings.js`
+- Update `public/js/kernel/site-settings.js`
 - Update `public/js/site.js`
 - Update `public/js/blog-specimens.js`
-- Update `public/css/enhancements.css`
-- Update `public/css/grain-texture.css`
+- Update `public/css/effects/enhancements.css`
+- Update `public/css/effects/grain-texture.css`
 - Update `public/css/spirit-phases.css`
 - Ripple risk: medium
 

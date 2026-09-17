@@ -15,7 +15,7 @@ Make high-traffic pages easier for naive models to edit in place by moving repea
 - `scripts/template.mjs` - add site head and site header directives.
 - `_partials/` - keep existing footer/social partials compatible.
 - `settings/index.html` - pilot route because it has a large head, visible investor-facing settings polish, and a clear runtime-observatory role.
-- `public/css/spw-chrome.css` and `public/js/spw-shell-disclosure.js` - centralize subtle shell microinteraction behavior.
+- `public/css/spw-chrome.css` and `public/js/runtime/shell-disclosure.js` - centralize subtle shell microinteraction behavior.
 - `.spw/surfaces/page-model.spw` - record the page-shell directive contract if it becomes inspectable beyond this patch.
 
 ## Constraints

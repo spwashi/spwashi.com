@@ -53,3 +53,9 @@ Owner: those route HTML files plus `public/data/promo-wonder-cycle.json`.
 Do not open sales. Do not mix working folio bands into live commission prices. Do not publish chat identities or treat community art as inventory.
 Proof: Art chip, collect-a-folio links, and one promo/wonder pair that names originals, prints, collages, the lore.land pantry, and RPG Wednesday.
 Landing copy is in the person-magazine / design-surface clusters. Do not let a model rewrite it for whimsy. First-fold copy should stay local to the room it sits in — see `.spw/caches/copy-hypermedia-key-2026-09.spw`.
+
+## Request card and soil prime — 2026-09-17
+Operation: align; fixity: tending. Owner: folio route plus `public/js/modules/cards/seed-card.js`.
+`/design/folios/#folio-request` hosts a seed card (`data-template="folio"`, `data-templates="folio"`): piece, form, story, range, relay; copied as a Spw block; browser storage only. Sales stay closed; the card is the ask. The seed-card mount list gained the `folios` surface, and a host can now scope its templates so a request card never pivots into a new-year seed.
+The creator's framing — folios as soil artists add nutrients to over years, years of TikTok lore, a Wonder About Pi(e) clown-lore series that teaches design and computer science, and where parent discernment must not sit — is cached at `.spw/caches/folio-soil-ecosystem-2026-09.spw` as a prime, not route copy. `product-lines.spw#folio_editions` names the card as proof and next action.
+Next: confirm one request arrives through the card; document two series before "soil" reaches the route.

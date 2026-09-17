@@ -14,8 +14,8 @@ Keep the existing semantic image-treatment contract, but make the control chrome
 ## Files
 
 [NEW] `.agents/plans/image-metaphysics-aesthetic-pass/PLAN.md`  
-[MOD] `public/js/spw-image-metaphysics.js` - expose richer helper state without changing the underlying effect contract  
-[MOD] `public/css/spw-metaphysical-paper.css` - redesign helper chrome, responsive layout, and effect styling
+[MOD] `public/js/media/image-metaphysics.js` - expose richer helper state without changing the underlying effect contract
+[MOD] `public/css/effects/metaphysical-paper.css` - redesign helper chrome, responsive layout, and effect styling
 
 ## Decisions
 

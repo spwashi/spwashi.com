@@ -16,11 +16,11 @@ Create a discoverable `/settings/` page where visitors can quiet or hide the sur
 
 ## Files
 
-[NEW] `public/js/site-settings.js` - owns settings defaults, persistence, document attributes, and settings-form hydration.
+[NEW] `public/js/kernel/site-settings.js` - owns settings defaults, persistence, document attributes, and settings-form hydration.
 [NEW] `settings/index.html` - static configuration page.
 [MOD] `public/js/site.js` - applies settings before runtime feature mounting and gates viewport activation.
-[MOD] `public/js/frame-navigator.js` - respects hidden mode and links to settings.
-[MOD] `public/js/spw-console.js` - respects hidden/collapsed modes and links to settings.
+[MOD] `public/js/runtime/frame-navigator.js` - respects hidden mode and links to settings.
+[MOD] `public/js/interface/console.js` - respects hidden/collapsed modes and links to settings.
 [MOD] `public/css/style.css` - adds settings page layout and quiet/hidden runtime states.
 [MOD] `sw.js` - caches settings route and settings module.
 [MOD] `manifest.webmanifest` - bumps app version with service worker.

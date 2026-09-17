@@ -78,7 +78,7 @@ Weak examples to normalize over time:
 
 ### Slice 5: Prompt and Evidence Integration
 
-- Candidate files: `public/js/spw-prompt-utils.js`, `tools/midjourney/index.html`, `play/rpg-wednesday/index.html`.
+- Candidate files: `public/js/interface/prompt-utils.js`, `tools/midjourney/index.html`, `play/rpg-wednesday/index.html`.
 - Express operator paths like `~ prompt -> $ substrate -> ! transform -> ^ proof`.
 - Use operator metadata to help prompt mining, screenshot interpretation, and evidence briefs.
 

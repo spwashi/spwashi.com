@@ -16,7 +16,7 @@
 - Public framing: volume is evidence of repeated visual judgment only when images are selected, named, captioned, routed, and promoted into durable site memory.
 
 ### Files likely to change
-- `public/js/spw-prompt-utils.js`
+- `public/js/interface/prompt-utils.js`
 - `play/rpg-wednesday/index.html`
 - `design/index.html`
 - `design/components/index.html`

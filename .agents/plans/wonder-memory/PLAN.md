@@ -28,7 +28,7 @@ The end state is a coherent loop where recent route and operator selections leav
 
 ### Craft guard
 
-`public/js/site-settings.js` and `public/js/spw-canvas-accents.js` are already large and need surgical changes only; avoid widening responsibilities beyond settings normalization and accent/runtime response. The new structural ornament work should live in a separate helper rather than bloating the canvas renderer. No file should exceed 600 lines, and route HTML edits should stay localized to hero/copy surfaces.
+`public/js/kernel/site-settings.js` and `public/js/interface/canvas-accents.js` are already large and need surgical changes only; avoid widening responsibilities beyond settings normalization and accent/runtime response. The new structural ornament work should live in a separate helper rather than bloating the canvas renderer. No file should exceed 600 lines, and route HTML edits should stay localized to hero/copy surfaces.
 
 ## Commits
 

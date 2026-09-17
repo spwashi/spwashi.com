@@ -56,7 +56,7 @@ intent: .{
 @runtime_contracts: ~"../../../scripts/ts/runtime-contracts.mts"
 @check_site: ~"../../../scripts/ts/check-site.mts"
 @lifecycles: ~"../../../.spw/reviews/runtime-audit/lifecycles.spw"
-@public_js_runtime_module_catalog_js: ~"../../../public/js/runtime/module-catalog.js"
+@public_js_runtime_module_catalog_js: ~"../../../public/js/runtime/catalog/index.js"
 
 dispatch: .{
  plan = @plan

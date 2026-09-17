@@ -25,7 +25,7 @@ Topic pages become more legible and memorable when abstract ideas are paired wit
 [MOD] `topics/craft/svg/index.html` - improve the hero SVG and add a photo-backed reference section.
 [NEW] `topics/site-design/index.html` - stub route for readable web surfaces, motifs, and publishing systems.
 [NEW] `topics/math/index.html` - stub route linking geometry, lattices, rendering, and parser-adjacent math.
-[MOD] `public/css/spw-surfaces.css` - shared topic photo/reference grid styles.
+[MOD] `public/css/components/surfaces.css` - shared topic photo/reference grid styles.
 [MOD] `sw.js` - register new routes for precache/navigation resilience.
 
 ## Design guardrails

@@ -76,10 +76,10 @@ intent: .{
 @plan_js_runtime_composability: ~"../js-runtime-composability/index.spw"
 
 @site: ~"../../../public/js/site.js"
-@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@module_loader: ~"../../../public/js/runtime/orchestration/loader.js"
 @dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
 @dom_sync_hub: ~"../../../public/js/runtime/dom-sync-hub.js"
-@module_export_contract: ~"../../../public/js/runtime/module-export-contract.js"
+@module_export_contract: ~"../../../public/js/runtime/catalog/export-contract.js"
 @region_profiler: ~"../../../public/js/runtime/region-profiler.js"
 @spatial_gravity: ~"../../../public/js/runtime/spatial-gravity.js"
 @expression_geometry: ~"../../../public/js/semantic/spw-expression-geometry.js"
@@ -148,7 +148,7 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `The runtime's canonical contracts — writeDatasetValue, dom-render el(), dom-sync-hub, module-export-contract, spw-expression-geometry — are correct and validated but optional, and making them the default path removes more lines, payload, and recalc than any decomposition or rewrite would.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../public/js/runtime/module-loader.js"
+ impl_ref = ~"../../../public/js/runtime/orchestration/loader.js"
  probe_ref = `rg -c 'writeDatasetValue' public/js && rg -cE '\.dataset\.[A-Za-z]+\s*=' public/js`
  falsification = `A patch cannot satisfy the public goal while leaving public/js/runtime/module-loader.js and public/js/kernel/dom-contracts.js unchanged. If the canonical contracts remain optional after a phase lands, that phase did not do its job.`
  status = "active"

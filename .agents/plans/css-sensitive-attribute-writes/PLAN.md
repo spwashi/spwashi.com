@@ -6,11 +6,11 @@ Keep interaction state visually responsive without letting runtime discovery cas
 
 ## Scope
 
-- `public/js/brace-gestures.js`
+- `public/js/runtime/brace-gestures.js`
   - Treat gesture/charge/pin attributes as transient visual state.
   - Treat `data-spw-resolved-*` attributes as optional inspection hints.
   - Avoid rewriting `data-spw-context`, `data-spw-wonder`, or `data-spw-operator` except for explicit user actions or future explicit opt-in.
-- `public/js/spw-dom-contracts.js`
+- `public/js/kernel/dom-contracts.js`
   - Own the shared DOM write helpers for dataset and CSS custom-property mutation.
   - Make writes idempotent so repeated state sync does not force avoidable style work.
 - Existing semantic runtimes that already import DOM contracts

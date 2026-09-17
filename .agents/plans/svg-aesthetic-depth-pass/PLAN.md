@@ -79,7 +79,7 @@ Without this priming, the model is more likely to recommend:
 
 ### Wonder and interaction logic
 
-- `public/css/spw-wonder.css` is additive and should not redefine baseline layout.
+- `public/css/effects/wonder.css` is additive and should not redefine baseline layout.
 - Existing wonder-ready targets include cards, panels, chips, topics, and `.spw-svg-surface`.
 - The shared lifecycle already suggests:
   - idle
@@ -119,7 +119,7 @@ Without this priming, the model is more likely to recommend:
 - `.agents/plans/svg-surface-integration/svg-surface-integration.spw`
 - `.agents/plans/agentic-dev-contracts/PLAN.md`
 - `public/css/spw-shell.css`
-- `public/css/spw-wonder.css`
+- `public/css/effects/wonder.css`
 - `public/css/spw-chrome.css`
 - `topics/craft/svg/index.html`
 - `index.html`

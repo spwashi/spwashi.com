@@ -26,7 +26,7 @@ The desired end state is a site whose light and dark themes feel deliberately co
 
 ### Craft guard
 
-`public/css/spw-tokens.css`, `public/css/spw-surfaces.css`, `public/css/topics-surface.css`, and `public/css/website-surface.css` are already large and concept-dense, so this pass must stay inside palette and surface relationships rather than adding new structural patterns. `public/css/settings-surface.css` and `public/css/home-surface.css` should only absorb color-balance changes, not broaden into new layout or copy work. Shared color shifts should favor existing tokens and `color-mix()` relationships over one-off literal values.
+`public/css/handles/operators/tokens.css`, `public/css/components/surfaces.css`, `public/css/topics-surface.css`, and `public/css/website-surface.css` are already large and concept-dense, so this pass must stay inside palette and surface relationships rather than adding new structural patterns. `public/css/settings-surface.css` and `public/css/home-surface.css` should only absorb color-balance changes, not broaden into new layout or copy work. Shared color shifts should favor existing tokens and `color-mix()` relationships over one-off literal values.
 
 ## Commits
 
@@ -39,7 +39,7 @@ The desired end state is a site whose light and dark themes feel deliberately co
 
 - Rebase target: `main@761b833`
 - Rebase cadence: before commit 2 and before merge
-- Hygiene split: the worktree already carries uncommitted settings/resonance follow-up edits plus unrelated drift in `public/css/services-surface.css`, `public/css/spw-chrome.css`, and `public/js/spw-spells.js`; this pass will avoid those files and only touch the scoped CSS layers listed above.
+- Hygiene split: the worktree already carries uncommitted settings/resonance follow-up edits plus unrelated drift in `public/css/services-surface.css`, `public/css/spw-chrome.css`, and `public/js/runtime/spells.js`; this pass will avoid those files and only touch the scoped CSS layers listed above.
 
 ## Dependencies
 

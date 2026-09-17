@@ -6,9 +6,9 @@ Refine recent developmental-climate and semantic-chrome changes so component ins
 
 ## Scope
 
-- Shared climate styling: `public/css/spw-developmental-climate.css`
-- Shared component/chrome styling: `public/css/spw-components.css`, `public/css/spw-handles.css`, `public/css/spw-wonder.css`
-- Runtime metadata producers: `public/js/spw-component-semantics.js`, `public/js/spw-semantic-chrome.js`, `public/js/spw-state-inspector.js`, `public/js/spw-prompt-utils.js`, `public/js/site-settings.js`
+- Shared climate styling: `public/css/effects/developmental-climate.css`
+- Shared component/chrome styling: `public/css/spw-components.css`, `public/css/spw-handles.css`, `public/css/effects/wonder.css`
+- Runtime metadata producers: `public/js/semantic/component-semantics.js`, `public/js/interface/semantic-chrome.js`, `public/js/spw-state-inspector.js`, `public/js/interface/prompt-utils.js`, `public/js/kernel/site-settings.js`
 - Inspectable model: `.spw/surfaces/page-model.spw`
 
 ## Contract

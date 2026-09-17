@@ -29,7 +29,7 @@ Taste note: improve containment, clarity, and expressiveness without adding a se
 
 Craft guard:
 - `public/js/site.js` already has multiple responsibilities; keep new shell/brace logic in dedicated modules.
-- `public/css/spw-components.css` and `public/css/spw-surfaces.css` are large; keep edits localized to existing sections and avoid broad re-theming.
+- `public/css/spw-components.css` and `public/css/components/surfaces.css` are large; keep edits localized to existing sections and avoid broad re-theming.
 
 ## Commits
 

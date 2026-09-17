@@ -41,6 +41,27 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.
 
+## Maintenance Snapshot - 2026-09-17
+
+Referential integrity pass over the live plan tree, run from `npm run plans:index:check` and a citation scan of every non-archived `PLAN.md` / `FIX.md` (backticked repo paths checked against the working tree).
+
+- **Enforced refs:** the 7 broken `index.spw` targets (four runtime files that moved when ownership was split into `runtime/catalog/` and `runtime/orchestration/`) now point at their homes. `plans:index:check` passes: 312 authored decisions, local refs resolved.
+- **Citations in prose:** 96 citations across 46 plans named a file by its pre-reorganization flat name and had exactly one home in the current tree (same basename, `spw-` prefix dropped). Those were rewritten in place — `public/js/spw-shell-disclosure.js` → `public/js/runtime/shell-disclosure.js`, `public/css/spw-surfaces.css` → `public/css/components/surfaces.css`, and so on. A rewrite is not a touch: those folders keep their `since_2026_07_12` bucket.
+- **Left as written (161 citations):** paths whose file was split, not moved. Read them through this legend rather than editing 119 plans for history:
+  - `public/css/spw-chrome.css`, `public/css/shell/chrome.css` → `public/css/shell/chrome/*.css` (header, navigation, footer, section-context, adaptive)
+  - `public/css/spw-components.css`, `public/css/components/spw-components.css` → `public/css/components/*.css`
+  - `public/css/spw-handles.css`, `public/css/handles/operators.css` → `public/css/handles/operators/*.css`
+  - `public/css/<route>-surface.css`, `public/css/routes/<route>-surface.css` → `public/css/routes/surfaces/<route>.css`
+  - `public/css/spw-grammar.css` → `public/css/grammar/`; `public/css/spw-tokens.css` → `public/css/tokens/`; `public/css/spw-shell.css` → `public/css/shell/`
+  - `public/js/rpg-wednesday*.js` → `public/js/modules/rpg-wednesday/`; `public/js/spw-math-diagrams.js` → `public/js/modules/math/`
+  - `public/js/runtime/module-catalog.js` → `public/js/runtime/catalog/index.js`; `module-loader.js` → `runtime/orchestration/loader.js`; `module-export-contract.js` → `runtime/catalog/export-contract.js`; `runtime-helpers.js` → `runtime/browser-primitives.js`
+  - `public/js/spw-shared.js` is ambiguous on purpose: operator registry → `kernel/shared.js`; attention helpers → `runtime/attention/shared.js`
+  - `.agents/state/plans-index.json`, `skills-index.json`, `checks/last-local-check.json` were never committed; the plans that cite them (`agentic-dev-contracts`, `plan-wip-index-conventions`, `spw-architecture-ecology`) describe a precipitate that stdout now carries (`npm run census:json`, `ecology:json`).
+- **Recency:** 225 live folders; last touched 2026-06: 2, 2026-07: 146, 2026-08: 19, 2026-09: 58. The 2026-07-12 cohort is the reviewed-and-shelved body; nothing there was moved. Folders did not move. No `--force-generated`.
+- **Value, this pass:** owner plans that today's landings advance carry a dated note — `runtime-bootstrap-performance` (measured-frame lane, viewport cache, A/B receipts), `core-css-spend-cut` (per-recalc cost measured), `folio-worktable` (request card, soil prime). The alignment audit's blog and home fixes are receipts in history, not a plan.
+
+Open-first plans still lacking `index.spw`: `history-reflow`, `core-css-spend-cut`, `dimensional-expression-navigation`. Unchanged; author those on next substantive touch.
+
 ## Maintenance Snapshot - 2026-09-07
 
 Census and root-index truth: `.spw/audits/plan-spw-tree-2026-09.spw`.
@@ -99,7 +120,7 @@ pass did not have standing to guess for plans it did not implement.
 
 Separately, a smaller pattern worth watching: several older plans (confirmed in
 `interaction-loop-contract/PLAN.md`) still name pre-reorg flat paths
-(`public/js/spw-state-inspector.js`, `public/js/spw-image-metaphysics.js`) for
+(`public/js/spw-state-inspector.js`, `public/js/media/image-metaphysics.js`) for
 work that landed under `public/js/runtime/` (`interaction-loop.js`,
 `state-inspector.js`) instead. Treat any plan citing a bare `public/js/spw-*.js`
 path as a stale-path candidate until confirmed against the current tree, the

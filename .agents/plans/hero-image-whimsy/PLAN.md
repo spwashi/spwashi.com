@@ -16,9 +16,9 @@ The desired end state is a site where important routes introduce themselves with
 [NEW] `.agents/plans/hero-image-whimsy/PLAN.md` - human-facing scope and craft guard.  
 [NEW] `.agents/plans/hero-image-whimsy/wip.spw` - living branch memory.  
 [MOD] `public/js/site.js` - mount SVG filters, canvas accents, and image metaphysics where the DOM needs them.  
-[MOD] `public/js/spw-image-metaphysics.js` - add drag/touch energy, palette resonance, and prominence-aware state.  
-[MOD] `public/css/spw-metaphysical-paper.css` - style tactile image response, hero emphasis, and reduced-motion fallbacks.  
-[MOD] `public/css/spw-surfaces.css` - add reusable hero image/grid surface primitives.  
+[MOD] `public/js/media/image-metaphysics.js` - add drag/touch energy, palette resonance, and prominence-aware state.
+[MOD] `public/css/effects/metaphysical-paper.css` - style tactile image response, hero emphasis, and reduced-motion fallbacks.
+[MOD] `public/css/components/surfaces.css` - add reusable hero image/grid surface primitives.
 [MOD] `public/css/topics-surface.css` - apply topic-surface hero atmospheres to the shared hero-image pattern.  
 [MOD] `topics/software/index.html` - add a hero image and deeper inline route links.  
 [MOD] `topics/software/parsers/index.html` - add a parser hero figure tied to the new interaction layer.  

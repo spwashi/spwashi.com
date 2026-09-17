@@ -18,7 +18,7 @@ The desired end state is a site where a few top-level routes immediately feel mo
 [EDIT] `index.html` - refresh the home hero studies and artifact cards with curated renders.  
 [EDIT] `topics/index.html` - add a stronger image-backed hero and illustrated topic cards.  
 [EDIT] `topics/software/index.html` - give the software hub a more tactile hero image tied to parser/runtime language.  
-[EDIT] `public/css/spw-surfaces.css` - introduce a reusable illustrated-card pattern shared across surfaces.  
+[EDIT] `public/css/components/surfaces.css` - introduce a reusable illustrated-card pattern shared across surfaces.
 [EDIT] `public/css/topics-surface.css` - align topic-route hero/card styling with the new imagery.  
 [EDIT] `public/css/home-surface.css` - tune the home surface so illustrated cards and hero studies match the existing palette and screenshot rhythm.
 
