@@ -48,8 +48,24 @@
   lore_land = `What lore.land needs from spwashi.com: a pantry index, chapter anchors the folio records can point at, or only the art.`
 }
 
+^"novel_production"{
+  #:prime 2026-09-17 — three ingredients a new production keeps needing; the site already has the beats
+  seed = `A laminated folio from a set or series. It has a picture, a material history, and a scan that travels; the series is the bed the studio adds to each season, so a seed keeps its lineage when the production outgrows it. Field: productionSeed (timing-data-localization.spw#data_contract).`
+  frame = `A TikTok group chat with a streak is already a room with a clock. It is the common frame for dialogue and show beats: seed in on Monday (probe.prepare), table on Wednesday (frame.play), 13th/26th closes (close.bind), the day after (reflect.produce), streak milestone (celebrate.transform). Dialogue becomes beats when the room agrees on the calendar.`
+  anchor = `A popcorn streak pet: a small customizable mascot the group names and dresses, grown by return rather than points, standing for a team or one scene. Proposed as a card in the seed-card family (fill, screenshot, send), not as a points system — cognitive-toy-2026-09.spw#refuse still holds.`
+  surfaces = #[
+    `/about/plans/#production-seeds — the public statement of the triad`,
+    `/design/folios/#folio-request — the seed's ask`,
+    `/play/rpg-wednesday/ — the frame's table`,
+    `public/js/modules/cards/seed-card.js — where the anchor would be a template`
+  ][reg=set]
+  risks = `Storyline metaphor leaking into system semantics (the pet must not become a data-spw-* family); streak-as-obligation. Route both through the queue-and-protocol posture, not upfront prohibition.`
+  open = `"Popcorn" is the creator's word and is not expanded here; ask before it names a template. Which group owns the first pet, and does a scene pet outlive its scene?`
+}
+
 ^"next_session"{
   1 = `Read this cache and product-lines.spw#folio_editions before touching /design/folios/.`
   2 = `Confirm the request card renders at /design/folios/#folio-request on pocket and desktop; check copy seed output.`
   3 = `Draft the series model (one soil bed per series) as a cache extension, then a daily kernel if it crosses into illustration or curriculum.`
+  4 = `If the popcorn streak pet moves, it is a seed-card template first (piece → pet: name · look · scene · streak · relay); demo in the browser before any catalog or attribute change.`
 }
