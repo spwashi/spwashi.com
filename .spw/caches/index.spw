@@ -56,7 +56,7 @@
 @module_effect_arc_options_2026_09: ~"./module-effect-arc-options-2026-09.spw"  # four clocks: cascade, delivery, mount, arc; none selected
 @component_runtime_review_2026_09: ~"./component-runtime-review-2026-09.spw"  # measured component/runtime findings; crr-001 starts with desktop speculation
 @cognitive_toy_2026_09: ~"./cognitive-toy-2026-09.spw"  # the site as an adult cognitive toy; five electrostatic loops, promo/wonder as one mechanic; ct-005 is the demo-gated patch order
-@folio_soil_ecosystem_2026_09: ~"./folio-soil-ecosystem-2026-09.spw"  # laminated folios as soil artists add nutrients to over years; creator notes 2026-09-17; WAP series unexpanded
+@folio_soil_ecosystem_2026_09: ~"./folio-soil-ecosystem-2026-09.spw"  # laminated folios as soil artists add nutrients to over years; creator notes 2026-09-17; WAP = Wonder About Pi(e)
 
 operation = "align"
 fixity = "tending"

@@ -34,15 +34,16 @@
   #:verbatim-ish, 2026-09-17, in the order given
   soil = `Market the laminated folios as soil for a marketing ecosystem that artists can maintain and add nutrients to over years.`
   lore = `Years of TikTok posts about the folios; ready to integrate their lore into spwashi.com and make other art for lore.land.`
-  clown_lore = `The folios carry a lot of WAP-themed clown lore meant to teach design and computer science.`
+  clown_lore = `The folios carry a lot of WAP-themed clown lore meant to teach design and computer science. (WAP = Wonder About Pi(e); see wap below.)`
   curriculum = `Parents could discern which folios suit their children and share a curriculum.`
   discernment_risk = `A product that requires parents to discern sets some of them up for failure.`
   placement = `So the discernment piece may not sit directly beside the folio contents, and the WAP theme may become a more specific series rather than the whole line.`
+  wap = `WAP expands to "Wonder About Pi(e)" — given as a reply after the session asked; the series name keeps the parenthesis.`
 }
 
 ^"open_questions"{
-  wap = `"WAP-themed" was not expanded in the session; ask before any route copy names the series.`
-  series = `Which folios form the clown-lore series, and does that series get its own soil bed (route section) apart from the general stack?`
+  series = `Which folios form the Wonder About Pi(e) clown-lore series, and does that series get its own soil bed (route section) apart from the general stack?`
+  pi_pie = `Pi(e) holds both readings at once: the constant (the math modules under public/js/modules/math and /topics/) and the baked thing (the recipes route, culinary + learning science). Which reading leads a given folio, and does the clown carry the pun on purpose?`
   curriculum_home = `If a shared curriculum exists, it belongs with /curriculum/ and the parent-facing register, not beside the folio scans; the route should carry the pictures and the practice, and let the curriculum route carry the discernment.`
   lore_land = `What lore.land needs from spwashi.com: a pantry index, chapter anchors the folio records can point at, or only the art.`
 }
