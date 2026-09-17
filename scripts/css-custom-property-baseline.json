@@ -89,7 +89,6 @@
   },
   "public/css/systems/electrostatic-affordances.css": {
     "--spw-projected-field": 1,
-    "--spw-e-edge": 6,
     "--spw-induced-field": 1,
     "--spw-resonance": 1,
     "--spw-electrode-ring": 2,
