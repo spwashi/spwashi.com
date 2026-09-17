@@ -29,7 +29,7 @@ fixity = "tending"
 }[reg=facet]
 @plan: ~".agents/plans/language-ladder-runtime-instrumentation/PLAN.md"
 @related: ~"../runtime-module-fluency/PLAN.md"
-@related: ~"../runtime-load-instrumentation/PLAN.md"
+@related: ~"../archive/runtime-load-instrumentation/PLAN.md"
 @related: ~"../typescript-integration/PLAN.md"
 
 #>language_ladder_runtime_instrumentation

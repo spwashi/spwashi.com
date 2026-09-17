@@ -1,0 +1,102 @@
+# Review 2026-07-12 — keep as the observability owner; instrumentation must be cheap, optional, and useful to falsify load claims.
+# Plan Index — Runtime Load Instrumentation
+#
+# Make the staged runtime bootstrap and dynamic module loading (core → feature → region → enhancement layers) first-class observable behavior for editors, debuggers, and performance…
+
+#>plan_runtime_load_instrumentation_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "cold"
+
+intent: .{
+ goal = `Make the staged runtime bootstrap and dynamic module loading (core → feature → region → enhancement layers) first-class observable behavior for editors, debuggers, and performance tooling. - Use the standard Performance API (marks + measures under spw:* namespace) so DevTools timelines, traces, and RUM see boot phases and per-module import/mount costs with zero custom code. - Wire the existing createSpwLogger + spw-log / log-level query controls into the load path using the LIFECYCLE relation so structured load traces respect site-wide diagnostics posture. - Extend the public modules surface (window.__SPW_SITE__.modules, spwCompose.modules) with a timings() snapshot that correlates Performance entries with the existing per-module loadMs/durationMs records and spell expressions. - Preserve all current behavior, data attributes, bus events, audit, and snapshots. No new visual weight, no new data-spw-* state unless it emerges from existing page/module state. This improves editor inspectability and runtime debug surface for the load process, extending the module fluency, instrumentation legibility, and timing-data-localization work.`
+ owner = `runtime-load-instrumentation`
+ kind = `plan`
+ bucket = `archive`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "runtime_js_validation"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Make the staged runtime bootstrap and dynamic module loading (core → feature → region → enhancement layers) first-class…`
+ concepts = #[
+  `load`,
+  `runtime`,
+  `module`,
+  `performance`,
+  `existing`,
+ ][reg=set]
+ surfaces = #[
+  `js/site.js`,
+  `.spw/conventions/narrative-instrumentation.spw`,
+  `css/ornament/ornament.css`,
+  `.spw/conventions/ornament-contract.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@site: ~"../../../../public/js/site.js"
+@narrative_instrumentation: ~"../../../../.spw/conventions/narrative-instrumentation.spw"
+@ornament: ~"../../../../public/css/ornament/ornament.css"
+@ornament_contract: ~"../../../../.spw/conventions/ornament-contract.spw"
+
+dispatch: .{
+ plan = @plan
+ site = @site
+ narrative_instrumentation = @narrative_instrumentation
+ ornament = @ornament
+ ornament_contract = @ornament_contract
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `javascript_module_census` ; path = `.spw/audits/javascript-module-census-2026-07.spw` }[reg=facet],
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `instrumentation-legibility`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-runtime_load_instrumentation-001"
+ layer = "pragmatic"
+ hypothesis = `Make the staged runtime bootstrap and dynamic module loading (core → feature → region → enhancement layers) first-class observable behavior for editors, debuggers, and performance tooling. - Use the standard Performance API (marks + measures under spw:* namespace) so DevTools timelines, traces, and RUM see boot phases and per-module import/mount costs with zero custom code. - Wire the existing createSpwLogger + spw-log / log-level query controls into the load path using the LIFECYCLE relation so structured load traces respect site-wide diagnostics posture. - Extend the public modules surface (window.__SPW_SITE__.modules, spwCompose.modules) with a timings() snapshot that correlates Performance entries with the existing per-module loadMs/durationMs records and spell expressions. - Preserve all current behavior, data attributes, bus events, audit, and snapshots. No new visual weight, no new data-spw-* state unless it emerges from existing page/module state. This improves editor inspectability and runtime debug surface for the load process, extending the module fluency, instrumentation legibility, and timing-data-localization work.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../public/js/site.js"
+ probe_ref = `rg 'runtime-load-instrumentation' .agents/plans/archive/runtime-load-instrumentation`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does runtime-load-instrumentation own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of runtime-load-instrumentation?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make the staged runtime bootstrap and dynamic module loading (core → feature → region → enhancement layers) first-class observable behavior…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

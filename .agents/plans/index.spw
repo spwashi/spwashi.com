@@ -32,6 +32,12 @@ intent: .{
  regeneration_rule = `Do not regenerate these decisions. Re-read the affected file and edit its disposition deliberately.`
 }[reg=facet]
 
+^"archive_sweep_2026_09_17"{
+ census = `57 folders moved under archive/: the 30 citation-safe merge dispositions and all 11 completed references from 2026-07-12, plus 16 landed slices with evidence in their own Status or in the tree (zero manual heads remain; resume-record and wrap-job features present)`
+ rule = `Physical move only with citations retargeted in the same patch; moved index.spw carry operation archive, fixity cold; hook-region-anatomy stays in place, cited by CSS and the expression harvest.`
+ ledger = ~"./archive/README.md"
+}[reg=facet]
+
 ^"review_sweep_2026_09_07"{
  census = `214 live dirs, 201 PLAN.md, 196 index.spw, 14 FIX.md; 30 dirs absent from this file; 36 merge + 12 completed_reference still treated as live work`
  audit = ~"../../.spw/audits/plan-spw-tree-2026-09.spw"
@@ -75,7 +81,7 @@ reading_order: .{
 @plan_reference_assignment_template: ~"./reference-assignment-template/index.spw"
 ^"semantic_rails"{
  label = "semantic rails"
- count = 17
+ count = 16
  members = #[
   `agent-optimization`,
   `agentic-dev-contracts`,
@@ -87,7 +93,6 @@ reading_order: .{
   `model-guided-refinement`,
   `modular-experience-slices`,
   `module-export-uniformity`,
-  `plan-wip-index-conventions`,
   `relational-attention-media`,
   `semantic-copy-depth`,
   `spw-architecture-ecology`,
@@ -107,7 +112,7 @@ reading_order: .{
 @plan_model_guided_refinement: ~"./model-guided-refinement/index.spw"
 @plan_modular_experience_slices: ~"./modular-experience-slices/index.spw"
 @plan_module_export_uniformity: ~"./module-export-uniformity/index.spw"
-@plan_plan_wip_index_conventions: ~"./plan-wip-index-conventions/index.spw"
+@plan_plan_wip_index_conventions: ~"./archive/plan-wip-index-conventions/index.spw"
 @plan_relational_attention_media: ~"./relational-attention-media/index.spw"
 @plan_semantic_copy_depth: ~"./semantic-copy-depth/index.spw"
 @plan_spw_architecture_ecology: ~"./spw-architecture-ecology/index.spw"
@@ -137,7 +142,7 @@ reading_order: .{
 
 @plan_card_grid_density_audit: ~"./card-grid-density-audit/index.spw"
 @plan_chrome_navigation_wonder: ~"./chrome-navigation-wonder/index.spw"
-@plan_component_box_model_responsive_audit: ~"./component-box-model-responsive-audit/index.spw"
+@plan_component_box_model_responsive_audit: ~"./archive/component-box-model-responsive-audit/index.spw"
 @plan_compositional_css_electrostatics: ~"./compositional-css-electrostatics/index.spw"
 @plan_core_css_spend_cut: ~"./core-css-spend-cut/index.spw"
 @plan_css_maintainability_refactor: ~"./archive/css-maintainability-refactor/index.spw"
@@ -150,15 +155,14 @@ reading_order: .{
 @plan_navigation_header_disclosure: ~"./navigation-header-disclosure/index.spw"
 @plan_page_region_discoverability: ~"./page-region-discoverability/index.spw"
 @plan_shell_model_vocabulary_consolidation: ~"./shell-model-vocabulary-consolidation/index.spw"
-@plan_space_menu_arcs_electrical: ~"./space-menu-arcs-electrical/index.spw"
+@plan_space_menu_arcs_electrical: ~"./archive/space-menu-arcs-electrical/index.spw"
 @plan_vertical_rhythm_container_audit: ~"./vertical-rhythm-container-audit/index.spw"
 ^"runtime_js_validation"{
  label = "runtime js validation"
- count = 8
+ count = 7
  members = #[
   `js-surface-ecology`,
   `runtime-bootstrap-performance`,
-  `runtime-load-instrumentation`,
   `runtime-module-fluency`,
   `runtime-plane-consolidation`,
   `runtime-settings`,
@@ -170,9 +174,9 @@ reading_order: .{
 @plan_curricularize_codebase_typescript: ~"./archive/curricularize-codebase-typescript/index.spw"
 @plan_javascript_standalone_utility: ~"./archive/javascript-standalone-utility/index.spw"
 @plan_js_surface_ecology: ~"./js-surface-ecology/index.spw"
-@plan_js_taxonomy_cleanup: ~"./js-taxonomy-cleanup/index.spw"
+@plan_js_taxonomy_cleanup: ~"./archive/js-taxonomy-cleanup/index.spw"
 @plan_runtime_bootstrap_performance: ~"./runtime-bootstrap-performance/index.spw"
-@plan_runtime_load_instrumentation: ~"./runtime-load-instrumentation/index.spw"
+@plan_runtime_load_instrumentation: ~"./archive/runtime-load-instrumentation/index.spw"
 @plan_runtime_module_fluency: ~"./runtime-module-fluency/index.spw"
 @plan_runtime_plane_consolidation: ~"./runtime-plane-consolidation/index.spw"
 @plan_runtime_settings: ~"./runtime-settings/index.spw"
@@ -191,12 +195,12 @@ reading_order: .{
 }[reg=facet]
 
 @plan_image_metaphysics_aesthetic_pass: ~"./image-metaphysics-aesthetic-pass/index.spw"
-@plan_image_visit_metaphysics: ~"./image-visit-metaphysics/index.spw"
+@plan_image_visit_metaphysics: ~"./archive/image-visit-metaphysics/index.spw"
 @plan_palette_semantics_improvements: ~"./palette-semantics-improvements/index.spw"
 @plan_palette_theme_composability_instrumentability: ~"./palette-theme-composability-instrumentability/index.spw"
 @plan_site_color_tuning: ~"./site-color-tuning/index.spw"
 @plan_style_image_cohesion: ~"./style-image-cohesion/index.spw"
-@plan_unsorted_image_rollout: ~"./unsorted-image-rollout/index.spw"
+@plan_unsorted_image_rollout: ~"./archive/unsorted-image-rollout/index.spw"
 ^"public_route_proof_genre"{
  label = "public route proof genre"
  count = 12
@@ -243,14 +247,14 @@ reading_order: .{
 
 @plan_attention_shell_contrast: ~"./attention-shell-contrast/index.spw"
 @plan_chrome_copy_collision: ~"./chrome-copy-collision/index.spw"
-@plan_component_semantics_document_host: ~"./component-semantics-document-host/index.spw"
+@plan_component_semantics_document_host: ~"./archive/component-semantics-document-host/index.spw"
 @plan_floating_chrome_stack: ~"./floating-chrome-stack/index.spw"
 @plan_gesture_aria_hygiene: ~"./gesture-aria-hygiene/index.spw"
 @plan_settings_theme_wiring: ~"./settings-theme-wiring/index.spw"
 @plan_theme_palette_marketability: ~"./archive/theme-palette-marketability/index.spw"
 ^"active_backlog"{
  label = "active backlog"
- count = 75
+ count = 73
  members = #[
   `algorithm-scale-statistics-rpg-bridges`,
   `audience-onboarding-copy`,
@@ -258,7 +262,6 @@ reading_order: .{
   `cadence-text-resonance`,
   `calculus-trigonometry-field-guides`,
   `care-stats-notes-and-rpg-atlas`,
-  `catalog-demo-splits`,
   `cognitive-navigation`,
   `content-responsive-layout`,
   `context-sensitive-variants-and-agent-qa`,
@@ -318,7 +321,6 @@ reading_order: .{
   `story-prompt-surface-pass`,
   `svg-aesthetic-depth-pass`,
   `svg-surface-integration`,
-  `team-orientation`,
   `template-shell-refactor`,
   `theming-icon-packs-public-versioning`,
   `top-level-route-seo`,
@@ -331,62 +333,62 @@ reading_order: .{
 }[reg=facet]
 
 @plan_algorithm_scale_statistics_rpg_bridges: ~"./algorithm-scale-statistics-rpg-bridges/index.spw"
-@plan_attention_cue_gestures: ~"./attention-cue-gestures/index.spw"
+@plan_attention_cue_gestures: ~"./archive/attention-cue-gestures/index.spw"
 @plan_audience_onboarding_copy: ~"./audience-onboarding-copy/index.spw"
-@plan_author_craft_ramps: ~"./author-craft-ramps/index.spw"
-@plan_author_rpg_notebooks: ~"./author-rpg-notebooks/index.spw"
+@plan_author_craft_ramps: ~"./archive/author-craft-ramps/index.spw"
+@plan_author_rpg_notebooks: ~"./archive/author-rpg-notebooks/index.spw"
 @plan_blog_blob_spw: ~"./blog-blob-spw/index.spw"
-@plan_blog_input_interpreter: ~"./blog-input-interpreter/index.spw"
-@plan_brace_cauldron_primed_collection: ~"./brace-cauldron-primed-collection/index.spw"
-@plan_brace_literacy_guides: ~"./brace-literacy-guides/index.spw"
+@plan_blog_input_interpreter: ~"./archive/blog-input-interpreter/index.spw"
+@plan_brace_cauldron_primed_collection: ~"./archive/brace-cauldron-primed-collection/index.spw"
+@plan_brace_literacy_guides: ~"./archive/brace-literacy-guides/index.spw"
 @plan_cadence_text_resonance: ~"./cadence-text-resonance/index.spw"
 @plan_calculus_trigonometry_field_guides: ~"./calculus-trigonometry-field-guides/index.spw"
 @plan_care_stats_notes_and_rpg_atlas: ~"./care-stats-notes-and-rpg-atlas/index.spw"
-@plan_catalog_demo_splits: ~"./catalog-demo-splits/index.spw"
-@plan_chrome_distribution_momentum_pass: ~"./chrome-distribution-momentum-pass/index.spw"
+@plan_catalog_demo_splits: ~"./archive/catalog-demo-splits/index.spw"
+@plan_chrome_distribution_momentum_pass: ~"./archive/chrome-distribution-momentum-pass/index.spw"
 @plan_cinematic_handles: ~"./archive/cinematic-handles/index.spw"
 @plan_cognitive_navigation: ~"./cognitive-navigation/index.spw"
-@plan_component_rhythm_variety: ~"./component-rhythm-variety/index.spw"
+@plan_component_rhythm_variety: ~"./archive/component-rhythm-variety/index.spw"
 @plan_content_responsive_layout: ~"./content-responsive-layout/index.spw"
 @plan_context_sensitive_variants_and_agent_qa: ~"./context-sensitive-variants-and-agent-qa/index.spw"
 @plan_copy_localization: ~"./copy-localization/index.spw"
 @plan_css_progressive_ornaments: ~"./archive/css-progressive-ornaments/index.spw"
 @plan_css_sensitive_attribute_writes: ~"./css-sensitive-attribute-writes/index.spw"
 @plan_culinary_excellence: ~"./culinary-excellence/index.spw"
-@plan_dark_contrast_pass: ~"./dark-contrast-pass/index.spw"
+@plan_dark_contrast_pass: ~"./archive/dark-contrast-pass/index.spw"
 @plan_deep_link_feature_discovery: ~"./deep-link-feature-discovery/index.spw"
 @plan_designer_conversation_canvas: ~"./designer-conversation-canvas/index.spw"
-@plan_dev_hot_reload: ~"./dev-hot-reload/index.spw"
-@plan_discovery_notice_popups: ~"./discovery-notice-popups/index.spw"
-@plan_editable_page_shell: ~"./editable-page-shell/index.spw"
+@plan_dev_hot_reload: ~"./archive/dev-hot-reload/index.spw"
+@plan_discovery_notice_popups: ~"./archive/discovery-notice-popups/index.spw"
+@plan_editable_page_shell: ~"./archive/editable-page-shell/index.spw"
 @plan_explore_anatomy: ~"./explore-anatomy/index.spw"
 @plan_fairytale_cookbook_theory: ~"./fairytale-cookbook-theory/index.spw"
 @plan_funding_proof_cards: ~"./funding-proof-cards/index.spw"
-@plan_gesture_inspectability_metaphysics: ~"./gesture-inspectability-metaphysics/index.spw"
-@plan_hero_image_whimsy: ~"./hero-image-whimsy/index.spw"
-@plan_instrumentation_legibility: ~"./instrumentation-legibility/index.spw"
+@plan_gesture_inspectability_metaphysics: ~"./archive/gesture-inspectability-metaphysics/index.spw"
+@plan_hero_image_whimsy: ~"./archive/hero-image-whimsy/index.spw"
+@plan_instrumentation_legibility: ~"./archive/instrumentation-legibility/index.spw"
 @plan_interaction_grammar: ~"./interaction-grammar/index.spw"
 @plan_js_runtime_composability: ~"./js-runtime-composability/index.spw"
 @plan_language_ladder_runtime_instrumentation: ~"./language-ladder-runtime-instrumentation/index.spw"
-@plan_learning_science_community_pass: ~"./learning-science-community-pass/index.spw"
+@plan_learning_science_community_pass: ~"./archive/learning-science-community-pass/index.spw"
 @plan_learning_science_enhancement: ~"./learning-science-enhancement/index.spw"
 @plan_living_learning_surface: ~"./living-learning-surface/index.spw"
 @plan_living_medium_copy_pass: ~"./archive/living-medium-copy-pass/index.spw"
 @plan_locomotion_collapse_redistribution: ~"./locomotion-collapse-redistribution/index.spw"
 @plan_lore_land_marketing: ~"./lore-land-marketing/index.spw"
-@plan_math_topic_expansion: ~"./math-topic-expansion/index.spw"
+@plan_math_topic_expansion: ~"./archive/math-topic-expansion/index.spw"
 @plan_media_feature_brief: ~"./media-feature-brief/index.spw"
 @plan_media_publishing: ~"./media-publishing/index.spw"
 @plan_mindful_collection_controls: ~"./mindful-collection-controls/index.spw"
 @plan_minimal_brace_disclosure: ~"./minimal-brace-disclosure/index.spw"
-@plan_mobile_brace_path_polish: ~"./mobile-brace-path-polish/index.spw"
+@plan_mobile_brace_path_polish: ~"./archive/mobile-brace-path-polish/index.spw"
 @plan_mobile_runtime_foundation: ~"./mobile-runtime-foundation/index.spw"
 @plan_narration_markup_cold_reads: ~"./narration-markup-cold-reads/index.spw"
 @plan_narrative_grammar_infrastructure: ~"./narrative-grammar-infrastructure/index.spw"
 @plan_nutrition_crop_language: ~"./nutrition-crop-language/index.spw"
 @plan_operator_resonance_alignment: ~"./operator-resonance-alignment/index.spw"
 @plan_operator_semantics_refinement: ~"./operator-semantics-refinement/index.spw"
-@plan_palette_resonance: ~"./palette-resonance/index.spw"
+@plan_palette_resonance: ~"./archive/palette-resonance/index.spw"
 @plan_pretext_whimsy_lab: ~"./pretext-whimsy-lab/index.spw"
 @plan_production_demonstration_pass: ~"./production-demonstration-pass/index.spw"
 @plan_profile_character_card_development: ~"./profile-character-card-development/index.spw"
@@ -396,39 +398,39 @@ reading_order: .{
 @plan_pwa_experience: ~"./pwa-experience/index.spw"
 @plan_reader_builder_entrances: ~"./reader-builder-entrances/index.spw"
 @plan_return_visitor_surface_pass: ~"./return-visitor-surface-pass/index.spw"
-@plan_review_surfaces_babbling: ~"./review-surfaces-babbling/index.spw"
+@plan_review_surfaces_babbling: ~"./archive/review-surfaces-babbling/index.spw"
 @plan_rpg_asset_capture_frames: ~"./rpg-asset-capture-frames/index.spw"
 @plan_rpg_boonwap_fabric: ~"./rpg-boonwap-fabric/index.spw"
 @plan_rpg_character_hub: ~"./rpg-character-hub/index.spw"
-@plan_rpg_live_session_atlas: ~"./rpg-live-session-atlas/index.spw"
+@plan_rpg_live_session_atlas: ~"./archive/rpg-live-session-atlas/index.spw"
 @plan_rpg_playable_copy: ~"./rpg-playable-copy/index.spw"
-@plan_rpg_seed_metacognition_pass: ~"./rpg-seed-metacognition-pass/index.spw"
+@plan_rpg_seed_metacognition_pass: ~"./archive/rpg-seed-metacognition-pass/index.spw"
 @plan_rpg_session_notes: ~"./rpg-session-notes/index.spw"
-@plan_rpg_wednesday_kit_refactor: ~"./rpg-wednesday-kit-refactor/index.spw"
+@plan_rpg_wednesday_kit_refactor: ~"./archive/rpg-wednesday-kit-refactor/index.spw"
 @plan_runtime_module_decomposition: ~"./runtime-module-decomposition/index.spw"
 @plan_screenshot_semantics: ~"./screenshot-semantics/index.spw"
 @plan_semantic_html_normalization: ~"./semantic-html-normalization/index.spw"
-@plan_settings_discoverability_consolidation: ~"./settings-discoverability-consolidation/index.spw"
+@plan_settings_discoverability_consolidation: ~"./archive/settings-discoverability-consolidation/index.spw"
 @plan_settings_theme_packs: ~"./settings-theme-packs/index.spw"
-@plan_settings_widgets_low_friction: ~"./settings-widgets-low-friction/index.spw"
+@plan_settings_widgets_low_friction: ~"./archive/settings-widgets-low-friction/index.spw"
 @plan_shell_harmony_pass: ~"./archive/shell-harmony-pass/index.spw"
 @plan_shell_logo_branding: ~"./shell-logo-branding/index.spw"
-@plan_shell_semantic_physics: ~"./shell-semantic-physics/index.spw"
+@plan_shell_semantic_physics: ~"./archive/shell-semantic-physics/index.spw"
 @plan_site_copy_component_settings_june_2026: ~"./archive/site-copy-component-settings-june-2026/index.spw"
 @plan_site_starter_component_kit: ~"./site-starter-component-kit/index.spw"
 @plan_skill_folio_operating_system: ~"./skill-folio-operating-system/index.spw"
 @plan_spell_cauldron_lifecycle_memory_gardening: ~"./spell-cauldron-lifecycle-memory-gardening/index.spw"
-@plan_spell_cauldron_microinteractions: ~"./spell-cauldron-microinteractions/index.spw"
+@plan_spell_cauldron_microinteractions: ~"./archive/spell-cauldron-microinteractions/index.spw"
 @plan_spell_cognition_familiarity: ~"./spell-cognition-familiarity/index.spw"
 @plan_spellbook_utility: ~"./spellbook-utility/index.spw"
 @plan_spw_operator_pages: ~"./spw-operator-pages/index.spw"
 @plan_state_block_projections: ~"./state-block-projections/index.spw"
 @plan_story_prompt_surface_pass: ~"./story-prompt-surface-pass/index.spw"
 @plan_svg_aesthetic_depth_pass: ~"./svg-aesthetic-depth-pass/index.spw"
-@plan_svg_handoff_copy_alignment: ~"./svg-handoff-copy-alignment/index.spw"
+@plan_svg_handoff_copy_alignment: ~"./archive/svg-handoff-copy-alignment/index.spw"
 @plan_svg_surface_integration: ~"./svg-surface-integration/index.spw"
-@plan_symphonic_loading_layered_editions: ~"./symphonic-loading-layered-editions/index.spw"
-@plan_team_orientation: ~"./team-orientation/index.spw"
+@plan_symphonic_loading_layered_editions: ~"./archive/symphonic-loading-layered-editions/index.spw"
+@plan_team_orientation: ~"./archive/team-orientation/index.spw"
 @plan_template_shell_refactor: ~"./template-shell-refactor/index.spw"
 @plan_theming_icon_packs_public_versioning: ~"./theming-icon-packs-public-versioning/index.spw"
 @plan_top_level_route_seo: ~"./top-level-route-seo/index.spw"
@@ -439,44 +441,91 @@ reading_order: .{
 @plan_wonder_memory: ~"./wonder-memory/index.spw"
 ^"completed_reference"{
  label = "completed reference"
- count = 11
+ count = 0
+ note = `2026-09-17: all eleven moved to archive/ with their citations retargeted; the bucket stays for the next completed reference.`
  members = #[
-  `author-craft-ramps`,
-  `blog-input-interpreter`,
-  `brace-cauldron-primed-collection`,
-  `card-anatomy-interactions`,
-  `component-semantics-document-host`,
-  `dev-hot-reload`,
-  `menu-containment-navigation`,
-  `mobile-image-effects`,
-  `overlay-layer-ownership`,
-  `runtime-route-css-regressions`,
-  `state-satchel-card-gesture-fixes`,
  ][reg=set]
 }[reg=facet]
 
-@plan_card_anatomy_interactions: ~"./card-anatomy-interactions/index.spw"
-@plan_menu_containment_navigation: ~"./menu-containment-navigation/index.spw"
-@plan_mobile_image_effects: ~"./mobile-image-effects/index.spw"
-@plan_overlay_layer_ownership: ~"./overlay-layer-ownership/index.spw"
-@plan_runtime_route_css_regressions: ~"./runtime-route-css-regressions/index.spw"
-@plan_state_satchel_card_gesture_fixes: ~"./state-satchel-card-gesture-fixes/index.spw"
+@plan_card_anatomy_interactions: ~"./archive/card-anatomy-interactions/index.spw"
+@plan_menu_containment_navigation: ~"./archive/menu-containment-navigation/index.spw"
+@plan_mobile_image_effects: ~"./archive/mobile-image-effects/index.spw"
+@plan_overlay_layer_ownership: ~"./archive/overlay-layer-ownership/index.spw"
+@plan_runtime_route_css_regressions: ~"./archive/runtime-route-css-regressions/index.spw"
+@plan_state_satchel_card_gesture_fixes: ~"./archive/state-satchel-card-gesture-fixes/index.spw"
 ^"archive"{
  label = "archive"
- count = 12
+ count = 69
  members = #[
+  `attention-cue-gestures`,
+  `author-craft-ramps`,
+  `author-rpg-notebooks`,
+  `blog-input-interpreter`,
+  `brace-cauldron-primed-collection`,
+  `brace-literacy-guides`,
+  `card-anatomy-interactions`,
+  `catalog-demo-splits`,
+  `chrome-distribution-momentum-pass`,
   `cinematic-handles`,
+  `component-box-model-responsive-audit`,
+  `component-rhythm-variety`,
+  `component-semantics-document-host`,
   `css-maintainability-refactor`,
   `css-progressive-ornaments`,
   `css-semantic-modules`,
   `curricularize-codebase-typescript`,
+  `dark-contrast-pass`,
+  `design-experiment-template-migration`,
+  `dev-hot-reload`,
+  `discovery-notice-popups`,
+  `domain-route-template-migration`,
+  `editable-page-shell`,
+  `film-route-template-migration`,
+  `gesture-inspectability-metaphysics`,
+  `hero-image-whimsy`,
+  `image-visit-metaphysics`,
+  `instrumentation-legibility`,
   `javascript-standalone-utility`,
+  `js-taxonomy-cleanup`,
+  `learning-science-community-pass`,
   `living-medium-copy-pass`,
+  `math-route-template-migration`,
+  `math-topic-expansion`,
+  `menu-containment-navigation`,
+  `mobile-brace-path-polish`,
+  `mobile-image-effects`,
+  `operator-route-template-migration`,
+  `overlay-layer-ownership`,
+  `palette-resonance`,
+  `plan-wip-index-conventions`,
+  `portable-experiment-template-migration`,
+  `production-season-rhythm`,
+  `public-entrance-runtime-payload`,
+  `resume-record`,
+  `review-surfaces-babbling`,
+  `rpg-live-session-atlas`,
+  `rpg-seed-metacognition-pass`,
+  `rpg-wednesday-kit-refactor`,
+  `runtime-load-instrumentation`,
+  `runtime-route-css-regressions`,
+  `semantic-classname-layers`,
   `semantic-navigation-geometry`,
+  `settings-discoverability-consolidation`,
+  `settings-widgets-low-friction`,
   `shell-harmony-pass`,
+  `shell-semantic-physics`,
   `site-copy-component-settings-june-2026`,
+  `space-menu-arcs-electrical`,
+  `spell-cauldron-microinteractions`,
   `spw-css-architecture`,
+  `state-satchel-card-gesture-fixes`,
+  `svg-handoff-copy-alignment`,
+  `symphonic-loading-layered-editions`,
+  `team-orientation`,
+  `template-dimensional-editorial-refinement`,
   `theme-palette-marketability`,
+  `unsorted-image-rollout`,
+  `wrap-job-utility`,
  ][reg=set]
 }[reg=facet]
 
@@ -484,75 +533,39 @@ reading_order: .{
 @plan_spw_css_architecture: ~"./archive/spw-css-architecture/index.spw"
 ^"merged"{
  label = "merged"
- count = 31
- note = `2026-07-12 disposition=merge, still citation-bound. Route new work through the owner named in archive/2026-07-12-review-execution.md. Citation-safe members moved to archive on 2026-09-07.`
+ count = 1
+ note = `2026-07-12 disposition=merge, still citation-bound. Route new work through the owner named in archive/2026-07-12-review-execution.md. Citation-safe members moved to archive on 2026-09-07. 2026-09-17: every citation-safe member moved to archive/; hook-region-anatomy stays because CSS and the expression harvest cite it.`
  members = #[
-  `attention-cue-gestures`,
-  `author-rpg-notebooks`,
-  `brace-literacy-guides`,
-  `chrome-distribution-momentum-pass`,
-  `component-box-model-responsive-audit`,
-  `component-rhythm-variety`,
-  `dark-contrast-pass`,
-  `discovery-notice-popups`,
-  `editable-page-shell`,
-  `gesture-inspectability-metaphysics`,
-  `hero-image-whimsy`,
   `hook-region-anatomy`,
-  `image-visit-metaphysics`,
-  `instrumentation-legibility`,
-  `js-taxonomy-cleanup`,
-  `learning-science-community-pass`,
-  `math-topic-expansion`,
-  `mobile-brace-path-polish`,
-  `palette-resonance`,
-  `review-surfaces-babbling`,
-  `rpg-live-session-atlas`,
-  `rpg-seed-metacognition-pass`,
-  `rpg-wednesday-kit-refactor`,
-  `settings-discoverability-consolidation`,
-  `settings-widgets-low-friction`,
-  `shell-semantic-physics`,
-  `space-menu-arcs-electrical`,
-  `spell-cauldron-microinteractions`,
-  `svg-handoff-copy-alignment`,
-  `symphonic-loading-layered-editions`,
-  `unsorted-image-rollout`,
  ][reg=set]
 }[reg=facet]
 ^"since_2026_07_12"{
  label = "since 2026-07-12"
- count = 23
- note = `Live folders the 2026-07-12 root index never named. Not automatic backlog. Author index.spw on next touch; do not batch-generate. Open-first without index.spw: history-reflow, dimensional-expression-navigation. Graduated on touch once a hand-authored index declared a bucket: core-css-spend-cut + landing-page-hierarchy-2026-08-21 -> css_layout_interaction; microinteraction-motion-lifecycle + region-attenuation-coverage -> active_backlog. production-season-rhythm and visual-capture-ecology carry an index but no declared bucket yet.`
+ count = 17
+ note = `Live folders the 2026-07-12 root index never named. Not automatic backlog. Author index.spw on next touch; do not batch-generate. Open-first without index.spw: history-reflow, dimensional-expression-navigation. Graduated on touch once a hand-authored index declared a bucket: core-css-spend-cut + landing-page-hierarchy-2026-08-21 -> css_layout_interaction; microinteraction-motion-lifecycle + region-attenuation-coverage -> active_backlog. production-season-rhythm and visual-capture-ecology carry an index but no declared bucket yet. 2026-09-17: six folders this index never named join here (component-variant-alignment, interaction-cache, mobile-chrome-alignment, module-contract-overhaul, release-day-resonance-2026-09-13, settings-ornament-resonance); sixteen landed slices left for archive/ (template migrations, catalog-demo-splits, production-season-rhythm, public-entrance-runtime-payload, semantic-classname-layers, resume-record, wrap-job-utility) with team-orientation, plan-wip-index-conventions, and runtime-load-instrumentation.`
  members = #[
   `alignment-content-fit`,
   `canopy-material-depth`,
+  `component-variant-alignment`,
   `creator-pathways`,
   `deploy-module-graph`,
-  `design-experiment-template-migration`,
   `desktop-lens-alignment`,
   `dimensional-expression-navigation`,
-  `domain-route-template-migration`,
-  `film-route-template-migration`,
   `folio-worktable`,
   `history-reflow`,
+  `interaction-cache`,
   `layout-seat-squeeze`,
-  `math-route-template-migration`,
-  `operator-route-template-migration`,
+  `mobile-chrome-alignment`,
+  `module-contract-overhaul`,
   `page-frame-sizing`,
-  `portable-experiment-template-migration`,
-  `production-season-rhythm`,
-  `public-entrance-runtime-payload`,
-  `resume-record`,
-  `semantic-classname-layers`,
-  `template-dimensional-editorial-refinement`,
+  `release-day-resonance-2026-09-13`,
+  `settings-ornament-resonance`,
   `visual-capture-ecology`,
-  `wrap-job-utility`,
  ][reg=set]
 }[reg=facet]
 @plan_landing_page_hierarchy_2026_08_21: ~"./landing-page-hierarchy-2026-08-21/index.spw"
 @plan_microinteraction_motion_lifecycle: ~"./microinteraction-motion-lifecycle/index.spw"
-@plan_production_season_rhythm: ~"./production-season-rhythm/index.spw"
+@plan_production_season_rhythm: ~"./archive/production-season-rhythm/index.spw"
 @plan_region_attenuation_coverage: ~"./region-attenuation-coverage/index.spw"
 @plan_visual_capture_ecology: ~"./visual-capture-ecology/index.spw"
 ^"templates_tooling"{

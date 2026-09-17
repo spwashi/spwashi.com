@@ -64,7 +64,7 @@ intent: .{
 @plan_agentic_dev_contracts: ~"../agentic-dev-contracts/index.spw"
 @plan_runtime_bootstrap_performance: ~"../runtime-bootstrap-performance/index.spw"
 @plan_modular_experience_slices: ~"../modular-experience-slices/index.spw"
-@plan_state_satchel_card_gesture_fixes: ~"../state-satchel-card-gesture-fixes/index.spw"
+@plan_state_satchel_card_gesture_fixes: ~"../archive/state-satchel-card-gesture-fixes/index.spw"
 @commit_skill_induction_2026_07: ~"../../../.spw/audits/commit-skill-induction-2026-07/"
 @site: ~"../../../.spw/site.spw"
 @operator_site_projection: ~"../../../.spw/conventions/operator-site-projection.spw"

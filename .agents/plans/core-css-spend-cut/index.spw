@@ -93,8 +93,8 @@ intent: .{
 @stylesheet_ecology: ~"../../../.spw/conventions/stylesheet-ecology.spw"
 @arrival_perceptibility: ~"../../../.spw/caches/arrival-perceptibility-2026-08.spw"
 @css_architecture_readability: ~"../css-architecture-readability/index.spw"
-@public_entrance_runtime_payload: ~"../public-entrance-runtime-payload/PLAN.md"
-@semantic_classname_layers: ~"../semantic-classname-layers/PLAN.md"
+@public_entrance_runtime_payload: ~"../archive/public-entrance-runtime-payload/PLAN.md"
+@semantic_classname_layers: ~"../archive/semantic-classname-layers/PLAN.md"
 
 dispatch: .{
  plan = @plan

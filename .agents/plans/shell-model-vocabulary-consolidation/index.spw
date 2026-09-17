@@ -58,7 +58,7 @@ intent: .{
 @plan: ~"./PLAN.md"
 @plan_floating_chrome_stack: ~"../floating-chrome-stack/index.spw"
 @plan_navigation_header_disclosure: ~"../navigation-header-disclosure/index.spw"
-@plan_symphonic_loading_layered_editions: ~"../symphonic-loading-layered-editions/index.spw"
+@plan_symphonic_loading_layered_editions: ~"../archive/symphonic-loading-layered-editions/index.spw"
 @readme: ~"../../../public/css/README.md"
 @dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
 @compositional_css_electrostatics: ~"../compositional-css-electrostatics/index.spw"

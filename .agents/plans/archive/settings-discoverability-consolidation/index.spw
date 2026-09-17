@@ -1,0 +1,107 @@
+# Review 2026-07-12 — merge into runtime-settings; deep links and shortcuts are navigation into one canonical register.
+# Plan Index — settings-discoverability-consolidation
+#
+# Make the settings page easier to enter and scan by adding deep-linkable shortcut paths into the large runtime register, then improve cross-site discoverability with a shared…
+
+#>plan_settings_discoverability_consolidation_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "cold"
+
+intent: .{
+ goal = `Make the settings page easier to enter and scan by adding deep-linkable shortcut paths into the large runtime register, then improve cross-site discoverability with a shared footer surface that reflects the current browser-local atmosphere and links back into the most useful settings slices.`
+ owner = `settings-discoverability-consolidation`
+ kind = `plan`
+ bucket = `archive`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "merged"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Make the settings page easier to enter and scan by adding deep-linkable shortcut paths into the large runtime register,…`
+ concepts = #[
+  `settings`,
+  `settings-discoverability-consolidation`,
+  `page`,
+  `easier`,
+  `enter`,
+ ][reg=set]
+ surfaces = #[
+  `settings/index.html`,
+  `.agents/plans/archive/settings-discoverability-consolidation/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@index: ~"../../../../settings/index.html"
+
+dispatch: .{
+ plan = @plan
+ index = @index
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `runtime-settings`,
+ ][reg=set]
+ retain = `deep links and shortcuts as navigation into one register`
+ status = `superseded`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-settings_discoverability_consolidation-001"
+ layer = "pragmatic"
+ hypothesis = `Make the settings page easier to enter and scan by adding deep-linkable shortcut paths into the large runtime register, then improve cross-site discoverability with a shared footer surface that reflects the current browser-local atmosphere and links back into the most useful settings slices.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../settings/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../settings/index.html unchanged or untested.`
+ status = "superseded"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: settings-route shortcut copy and anchors, light settings-page JS for opening deep-linked categories, shared footer partial consolidation, and shared footer styling for browser-local settings readouts.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/site-settings.js`,
+ `targeted rg for new settings anchors and spw-include src="site-footer"`,
+ `sanity-check that footer readouts still bind on non-settings routes via the shared settings runtime`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does settings-discoverability-consolidation own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of settings-discoverability-consolidation?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether settings-discoverability-consolidation still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make the settings page easier to enter and scan by adding deep-linkable shortcut paths into the large runtime register, then improve…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

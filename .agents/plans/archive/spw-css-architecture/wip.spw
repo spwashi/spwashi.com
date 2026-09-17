@@ -29,7 +29,7 @@ fixity = "tending"
 }[reg=facet]
 ^["roots"]{
  @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
- @plan: ~".agents/plans/spw-css-architecture/PLAN.md"
+ @plan: ~".agents/plans/archive/spw-css-architecture/PLAN.md"
  @style: ~"public/css/style.css?v=0.0.2"
  @svg: ~"public/css/svg-surfaces.css"
  @whimsy: ~"public/css/spw-whimsy.css"

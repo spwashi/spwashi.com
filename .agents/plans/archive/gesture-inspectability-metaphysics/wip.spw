@@ -1,0 +1,67 @@
+# Review 2026-07-12 — retain route specimens and falsifiers as test evidence; drop the umbrella metaphysics framing for execution.
+# wip — gesture-inspectability-metaphysics
+#
+#>plan_gesture_inspectability_metaphysics_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'gesture-inspectability-metaphysics' public/js/runtime/brace-gestures.js`, `git diff --check`, `test -f public/js/runtime/brace-gestures.js`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `Turn the site’s current interaction grammar into a coherent, browser-tested system instead of a set of adjacent local passes. The public result should be: - brace gestures that feel deliberate on touch, pointer, and keyboard - inspect surfaces that explain what the runtime believes is happening - metaphysics layers that stay legible as interaction grammar, not decorative lore - a validation loop that exercises real routes and real state transitions in the browser before further semantic expansion Taste note: inspectable wonder with operational discipline.`
+ owner = `gesture-inspectability-metaphysics`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `git diff --check`, `node --check for every edited JS runtime module`, `targeted rg checks for data-spw-* state families and duplicated ownership`, `browser verification on the canonical specimen routes at:`, `mobile narrow touch`, `desktop pointer`, ][reg=set]
+ hot_files = #[ `public/js/runtime/brace-gestures.js`, `public/js/runtime/attention-architecture.js`, `public/js/runtime/spells.js`, `public/js/runtime/experiential.js`, `public/js/media/image-metaphysics.js`, `public/js/interface/discovery-notices.js`, ][reg=set]
+}[reg=facet]
+#>gesture_inspectability_metaphysics
+#:plan #!runtime
+#:layer #!pragmatics
+
+@plan: ~".agents/plans/archive/gesture-inspectability-metaphysics/PLAN.md"
+@site_semantics: ~".spw/conventions/site-semantics.spw"
+@attention_field: ~".spw/conventions/attention-field.spw"
+@ornament_contract: ~".spw/conventions/ornament-contract.spw"
+@cognitive_surface: ~".spw/philosophy/cognitive-surface.spw"
+
+~#goal: "Unify gesture grammar, inspectability, and metaphysics into one browser-tested runtime ecology."
+~#taste: "inspectable wonder with operational discipline"
+
+develops: [#brace_gestures, #attention_locomotion, #spell_replayability, #image_metaphysics, #inspectability, #browser_audit]
+primary: [#state_ownership, #gesture_vocab, #specimen_routes, #metaphysics_alignment, #validation_loop]
+
+^"route_specimens"{
+ home: "/"
+ settings: "/settings/"
+ design_components: "/design/components/"
+ spw_atlas: "/topics/software/spw/"
+ rpg_library: "/play/rpg-wednesday/library/"
+ profile_tool: "/tools/profile/"
+}
+
+^"working_hypotheses"{
+ canonical_vs_transient: "The site currently mixes stable semantic truth and temporary gesture traces too freely."
+ browser_gap: "A lot of interaction design has matured faster than route-by-route browser verification."
+ inspect_surface_gap: "The runtime knows more than the public inspect surfaces currently reveal."
+ metaphysics_gap: "Some metaphysical terms are implemented, some are partial, and some still behave like aspirations."
+}
+
+^"falsifiers"{
+ `If the same gesture means different things on brace, card, and image surfaces without an inspectable reason, the grammar is incoherent.`
+ `If a state survives refresh or route return without a clear owner, the persistence model is incoherent.`
+ `If a term in .spw cannot be tied to a visible runtime consequence, the metaphysics is ahead of the implementation.`
+ `If a canonical route specimen cannot be audited quickly in-browser, the validation loop is too weak.`
+}

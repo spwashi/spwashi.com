@@ -28,7 +28,7 @@ fixity = "tending"
  hot_files = #[ `play/rpg-wednesday/index.html`, `about/index.html`, `about/plans/index.html`, `topics/index.html`, `topics/software/index.html`, `topics/software/parsers/index.html`, ][reg=set]
 }[reg=facet]
 ^["roots"]{
- @plan: ~".agents/plans/css-maintainability-refactor/PLAN.md"
+ @plan: ~".agents/plans/archive/css-maintainability-refactor/PLAN.md"
  @contracts: ~"public/js/spw-dom-contracts.js"
  @site_runtime: ~"public/js/site.js"
  @component_semantics: ~"public/js/spw-component-semantics.js"

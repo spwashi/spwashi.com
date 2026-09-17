@@ -111,3 +111,7 @@ TypeScript cannot overwrite emitted output, and import checks enforce direction
 between catalog, orchestration, primitives, and the portable registry.
 In-flight mount cancellation and broad strict-JS inference cleanup remain outside
 this alignment.
+
+## Rest has an observable now — 2026-09-17
+
+The missing field this plan names ("what wakes a module after mount, whether its writes can wake itself") gained a concrete shape on the read side: `kernel/measured-frame.js` runs every geometry lane in one pass with a declared `measure()` and `apply()`. A module that reads geometry can therefore say which lane it measures on and whether it writes root tokens in `apply()`. Candidate contract fields: `measures = lane name | none` and `applies = root tokens | host datasets | none`, checked against the writer census that already exists for `updates`. A module whose `apply()` writes a token that another lane's `measure()` reads is the self-waking shape the a7ceccd2 loop had; the lane ordering (split lanes read first, whole lanes between, split lanes write last) is the rule that keeps it a no-op.

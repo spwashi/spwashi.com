@@ -15,7 +15,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"selection_probes"{
- probes = #[ `rg 'cinematic-handles' .agents/plans/cinematic-handles/cinematic-handles.spw`, `Hypotheses: named timing tokens will make motion decisions auditable and consistent; token-level reduced-motion overrides will produce more complete safety than per-rule approaches; layer depth vocabulary will make z-stacking decisions semantically legible.`, `test -f .agents/plans/cinematic-handles/cinematic-handles.spw`, ][reg=set]
+ probes = #[ `rg 'cinematic-handles' .agents/plans/archive/cinematic-handles/cinematic-handles.spw`, `Hypotheses: named timing tokens will make motion decisions auditable and consistent; token-level reduced-motion overrides will produce more complete safety than per-rule approaches; layer depth vocabulary will make z-stacking decisions semantically legible.`, `test -f .agents/plans/archive/cinematic-handles/cinematic-handles.spw`, ][reg=set]
  rule = "Run probes before trusting cached plan_context."
 }[reg=facet]
 
@@ -25,14 +25,14 @@ fixity = "tending"
  operation = "prime"
  bucket = "active_backlog"
  validation = #[ `Hypotheses: named timing tokens will make motion decisions auditable and consistent; token-level reduced-motion overrides will produce more complete safety than per-rule approaches; layer depth vocabulary will make z-stacking decisions semantically legible.`, `Negative controls: all interactions remain fully functional without motion; static screenshots are informationally equivalent to animated states.`, `Demo sequence: trigger a brace pivot, a frame reveal, and a charge discharge — compare before/after timing token naming; disable motion and verify each transition remains semantically understandable; check that ambient, settled, and active layers are distinguishable without color alone.`, ][reg=set]
- hot_files = #[ `.agents/plans/cinematic-handles/cinematic-handles.spw`, ][reg=set]
+ hot_files = #[ `.agents/plans/archive/cinematic-handles/cinematic-handles.spw`, ][reg=set]
 }[reg=facet]
 ^["roots"]{
- @plan: ~".agents/plans/cinematic-handles/PLAN.md"
- @artifact: ~".agents/plans/cinematic-handles/cinematic-handles.spw"
+ @plan: ~".agents/plans/archive/cinematic-handles/PLAN.md"
+ @artifact: ~".agents/plans/archive/cinematic-handles/cinematic-handles.spw"
  @semantics: ~".spw/conventions/site-semantics.spw"
  @style_development: ~".spw/conventions/style-development.spw"
- @css_plan: ~".agents/plans/css-progressive-ornaments/wip.spw"
+ @css_plan: ~".agents/plans/archive/css-progressive-ornaments/wip.spw"
  @runtime_plan: ~".agents/plans/mobile-runtime-foundation/wip.spw"
  @svg_plan: ~".agents/plans/svg-surface-integration/wip.spw"
  @screenshot_plan: ~".agents/plans/screenshot-semantics/wip.spw"

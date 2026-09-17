@@ -97,3 +97,7 @@ The JS root wrapper surface has now been removed.
 - `spw-wonder-memory.js` moved into `public/js/interface/`.
 
 CSS wrappers still exist at the root because route-level stylesheets are part of the public stylesheet contract; remove those only after updating route links and the CSS contract in a dedicated CSS pass.
+
+## Kernel measurement seam — 2026-09-17
+
+Two kernel modules now own timing and geometry reads that runtime and interface files used to take for themselves: `kernel/measured-frame.js` (when to measure: one shared pass after the frame's style pass) and `kernel/viewport.js` (what the viewport is: one cached box). This is the call-graph reallocation the 2026-05-05 note asked for, moved inward to the kernel layer because every layer above reads geometry. Next reallocations, in order of boot cost: the four `runtime/` readers of `window.innerWidth` (`layout-qa`, `observation-beats`, `spatial-gravity`, `positioning-orchestration`), then any module that calls `getComputedStyle(document.documentElement)` on its own schedule (`rg 'getComputedStyle\(document\.documentElement' public/js`).

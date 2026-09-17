@@ -34,7 +34,7 @@
 @component_taxonomy: ~"./component-taxonomy.spw"
 @wip_notebook: ~"./wip-notebook.spw"
 @plan_directory_indexes: ~"../../scripts/maintain-plan-directory-indexes.mjs"
-@plan_wip_index_conventions: ~"../../.agents/plans/plan-wip-index-conventions/PLAN.md"
+@plan_wip_index_conventions: ~"../../.agents/plans/archive/plan-wip-index-conventions/PLAN.md"
 @plan_index: ~"./plan-index.spw"
 @plans_root: ~"../../.agents/plans/index.spw"
 @spw_language_v04_plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"

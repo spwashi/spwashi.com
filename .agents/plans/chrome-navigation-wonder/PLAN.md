@@ -104,7 +104,7 @@ This is not a new feature request — it is naming and deepening the existing co
 - Kept the existing shell disclosure state machine as the owner of menu mode, topology, pressure, phase, and dismissal.
 - Added a small arc lifecycle as haptics composition rather than a parallel interaction bus.
 - Documented the projected route-menu field in `.spw/surfaces/menu-field.spw` and the opt-in electrical vocabulary in `.spw/conventions/circuit-components.spw`.
-- New implementation owner plan: `.agents/plans/space-menu-arcs-electrical/PLAN.md`.
+- Implementation owner plan, merged and archived 2026-09-17: `.agents/plans/archive/space-menu-arcs-electrical/PLAN.md`; live arc work continues here and in `spellcraft-authoring`.
 
 ### 2026-05-31 shared polish patch
 - Preserve route label integrity in the primary header by preventing inline nav links from shrinking into each other; let the shell disclosure state choose inline vs toggle based on real overflow.
@@ -187,3 +187,7 @@ Next concrete patch or deeper modeling session should reference this plan.
 - Phase 2: dimensional breadcrumbs as a first-class collectible surface.
 - Phase 3: operator-forces / semantic-accent two-layer doc pass in `tokens/core.css` and operator atlas.
 - Re-run `npm run check:local` after landing; validate mobile on home, design hub, and one long topic route.
+
+## Shell offset receipt — 2026-09-17
+
+`--spw-shell-menu-offset` (menu panel top, search overlay top, route-menu max-height) is now written from a measured lane in `shell-disclosure.js`: the header rect is read after the frame's style pass, once per band change or trace change, instead of synchronously after the class toggle that moves it. The shell also reads scroll and viewport before its mount writes and no longer re-reads `innerWidth` on every pointer, focus, and nav-structure sync. Any new chrome that positions itself off the header edge should consume that token, not measure the header again.

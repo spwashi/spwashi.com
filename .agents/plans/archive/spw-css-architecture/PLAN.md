@@ -13,8 +13,8 @@ The site should express Spw grammar visibly and consistently: braces should read
 
 ## Files
 
-[NEW] `.agents/plans/spw-css-architecture/PLAN.md`
-[NEW] `.agents/plans/spw-css-architecture/wip.spw`
+[NEW] `.agents/plans/archive/spw-css-architecture/PLAN.md`
+[NEW] `.agents/plans/archive/spw-css-architecture/wip.spw`
 [MOD] `public/css/style.css` - shrink toward root imports, global tokens, and minimal base/layout ownership
 [NEW] `public/css/spw-tokens.css` - operator/bracket/color/timing custom-property bank
 [NEW] `public/css/spw-grammar.css` - brace physics, operator states, semantic handles, and shared structural selectors

@@ -19,7 +19,7 @@
 @plans_root: ~"../../.agents/plans/index.spw"
 @agent_optimization_plan: ~"../../.agents/plans/agent-optimization/PLAN.md"
 @agentic_contracts_plan: ~"../../.agents/plans/agentic-dev-contracts/PLAN.md"
-@wip_index_plan: ~"../../.agents/plans/plan-wip-index-conventions/PLAN.md"
+@wip_index_plan: ~"../../.agents/plans/archive/plan-wip-index-conventions/PLAN.md"
 @maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"
 @plan_ecology_semantics: ~"../audits/plan-ecology-semantics-2026-07.spw"
 @markdown_spend: ~"../caches/agent-markdown-spend-2026-09.spw"

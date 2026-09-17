@@ -1,0 +1,99 @@
+# Review 2026-07-12 — completed reference; route future menu containment issues through the chrome owner.
+# Plan Index — Menu Containment And Navigation Fix
+#
+# Add shared containment rules for route bridges and their card links.
+
+#>plan_menu_containment_navigation_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "cold"
+
+intent: .{
+ goal = `Add shared containment rules for route bridges and their card links.`
+ owner = `menu-containment-navigation`
+ kind = `fix`
+ bucket = `archive`
+ artifact_shape = `FIX.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "cold"
+ bucket = "completed_reference"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Add shared containment rules for route bridges and their card links.`
+ concepts = #[
+  `containment`,
+  `menu`,
+  `navigation`,
+  `fix`,
+  `add`,
+ ][reg=set]
+ fixity_tier = `cold`
+}[reg=facet]
+
+
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@fix: ~"./FIX.md"
+
+dispatch: .{
+ fix = @fix
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `archive_sweep` ; path = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md` }[reg=facet],
+  .{ label = `commit_history_deep` ; path = `.spw/audits/commit-history-deep-2026-07/index.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"archive_status"{
+ status = `completed_reference`
+ archive_note = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md`
+ retain_reason = `Direct citations preserved — virtual bucket not physical move.`
+ research_pointer = `chrome-navigation-wonder`
+ kind = `fix`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `completed_reference`
+ note = `route future menu containment through the chrome owner`
+ status = `superseded`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-menu_containment_navigation-001"
+ layer = "pragmatic"
+ hypothesis = `Add shared containment rules for route bridges and their card links.`
+ spec_ref = ~"./FIX.md"
+ impl_ref = ~"./FIX.md"
+ probe_ref = `rg 'menu-containment-navigation' .agents/plans/archive/menu-containment-navigation`
+ falsification = `The listed failure mode returns after the planned fix lands.`
+ status = "superseded"
+}[reg=facet]
+
+next_action: .{
+ step = `Add shared containment rules for route bridges and their card links.`
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does menu-containment-navigation own, and what should stay out of scope?`, see = @fix }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of menu-containment-navigation?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Add shared containment rules for route bridges and their card links.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

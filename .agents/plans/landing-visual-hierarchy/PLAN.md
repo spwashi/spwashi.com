@@ -42,7 +42,7 @@ Named in `session-2026-08-21.spw`. One packet per agent. Do not run two packets 
 - Primary navigation HTML: `index.html`, `about/`, `topics/`, `play/`, `design/folios/`, `services/`, `now/`, `settings/`
 - Adjacent exemplars: `design/`, `recipes/`
 - CSS: `public/css/routes/surfaces/home.css`, `grammar/syntax.css`, `handles/operators/sigils-and-chips.css`, `components/cards.css`
-- Adjacent: `.agents/plans/wrap-job-utility/`, `card-grid-density-audit/`, `page-region-discoverability/`, `.spw/conventions/typography-packing.spw`, `region-component-ecology.spw`, `component-biome.spw`, `electrostatic-affordances.spw`
+- Adjacent: `.agents/plans/archive/wrap-job-utility/`, `card-grid-density-audit/`, `page-region-discoverability/`, `.spw/conventions/typography-packing.spw`, `region-component-ecology.spw`, `component-biome.spw`, `electrostatic-affordances.spw`
 
 ## Validation
 1. Identity remains the first readable claim on each landing.

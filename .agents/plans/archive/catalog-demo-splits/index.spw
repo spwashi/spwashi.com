@@ -1,0 +1,115 @@
+# Review 2026-09-03 — implement as a small set of purposeful rooms backed by one canonical scan.
+# Plan Index — catalog-demo-splits
+#
+# The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster lookup and less scrolling. The CSS and SVG experiment routes…
+
+#>plan_catalog_demo_splits_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "cold"
+
+intent: .{
+ goal = `Turn the generated design catalog into a visitor-readable field guide where curated stills support component, typography, layout, and trope study, while one canonical JSON scan feeds a small set of purposeful review rooms.`
+ owner = `catalog-demo-splits`
+ kind = `plan`
+ bucket = `archive`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster…`
+ concepts = #[
+  `its`,
+  `review`,
+  `pages`,
+  `catalog-demo-splits`,
+  `design`,
+ ][reg=set]
+ surfaces = #[
+  `design/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@index: ~"../../../../design/index.html"
+
+dispatch: .{
+ plan = @plan
+ index = @index
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-09-03`
+ disposition = `implement`
+ note = `One overview plus asset, token, and systems rooms; local capture pixels remain private review evidence.`
+ rescope = `complete`
+ status = `active`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `review-surfaces-babbling`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-catalog_demo_splits-001"
+ layer = "pragmatic"
+ hypothesis = `A field-guide overview plus focused generated indexes makes the complete catalog easier for visitors, editors, and models to interpret without publishing uncurated capture packs.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../design/index.html"
+ probe_ref = `git diff --check`
+ falsification = `The first viewport is still a raw inventory dump, still cards cannot name a live route or reusable brief, or the split pages drift from catalog.json.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `Generated overview, asset, token, and systems rooms; route-use context for public images; local search/filter/copy behavior; route-local responsive CSS.`,
+ ][reg=set]
+ out = #[
+  `Uncurated capture publishing, image generation, global runtime changes, dependencies, CSS layer changes, or a redesign of the wider design hub.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check scripts/generate-design-catalog.mjs`,
+ `npm run catalog && node scripts/generate-design-catalog.mjs --check`,
+ `npm run check:local`,
+ `Pocket and broadsheet review of all generated catalog rooms`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does catalog-demo-splits own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of catalog-demo-splits?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether catalog-demo-splits still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster lookup and less…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

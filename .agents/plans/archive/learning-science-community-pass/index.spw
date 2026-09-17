@@ -1,0 +1,109 @@
+# Review 2026-07-12 — merge community entrances into audience-onboarding and pedagogy into learning-science-enhancement.
+# Plan Index — Learning Science Community Pass
+#
+# Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people enter difficult material with clearer…
+
+#>plan_learning_science_community_pass_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "cold"
+
+intent: .{
+ goal = `Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people enter difficult material with clearer scaffolds - stabilization: help people find smaller next steps, safer boundaries, and better re-entry - play: protect experimentation, wonder, and artifact-making as real learning modes`
+ owner = `learning-science-community-pass`
+ kind = `plan`
+ bucket = `archive`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "merged"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: -…`
+ concepts = #[
+  `learning`,
+  `community`,
+  `help`,
+  `people`,
+  `science`,
+ ][reg=set]
+ surfaces = #[
+  `about/index.html`,
+  `topics/index.html`,
+  `topics/pedagogy/index.html`,
+  `play/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@about_index_html: ~"../../../../about/index.html"
+@topics_index_html: ~"../../../../topics/index.html"
+@topics_pedagogy_index_html: ~"../../../../topics/pedagogy/index.html"
+@play_index_html: ~"../../../../play/index.html"
+@workbench: ~"../../../../.spw/_workbench"
+
+dispatch: .{
+ plan = @plan
+ about_index_html = @about_index_html
+ topics_index_html = @topics_index_html
+ topics_pedagogy_index_html = @topics_pedagogy_index_html
+ play_index_html = @play_index_html
+ workbench = @workbench
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `audience-onboarding-copy`,
+  `learning-science-enhancement`,
+ ][reg=set]
+ status = `superseded`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-learning_science_community_pass-001"
+ layer = "pragmatic"
+ hypothesis = `Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people enter difficult material with clearer scaffolds - stabilization: help people find smaller next steps, safer boundaries, and better re-entry - play: protect experimentation, wonder, and artifact-making as real learning modes`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../about/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../about/index.html unchanged or untested.`
+ status = "superseded"
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted markup sanity checks with rg`,
+ `balanced structure review on edited routes`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does learning-science-community-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of learning-science-community-pass?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether learning-science-community-pass still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

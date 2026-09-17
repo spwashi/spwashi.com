@@ -156,7 +156,7 @@ Tree commands as invitations, not audits:
 - `html[data-spw-debug-layers="on"]` — paints layer ownership so readers see
   which stratum is speaking.
 - Editors tuning `@layer` order or chapter membership should do it in a demo
-  copy first (see `.agents/plans/symphonic-loading-layered-editions/demo/`),
+  copy first (see `.agents/plans/archive/symphonic-loading-layered-editions/demo/`),
   because layer choreography is a felt decision reviewed in a browser.
 
 ### Microinteraction and state documentation

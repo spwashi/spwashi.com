@@ -34,7 +34,7 @@ It should not require:
 
 [NEW] .agents/plans/blog-blob-spw/PLAN.md
 [NEW] .agents/plans/blog-blob-spw/blog-blob-spw.spw
-[MOD?] .agents/plans/blog-input-interpreter/PLAN.md — reference blob as the next durable state after local interpretation
+[MOD?] .agents/plans/archive/blog-input-interpreter/PLAN.md — reference blob as the next durable state after local interpretation
 [MOD?] blog/index.html — add visible blob framing only when the public blog route needs it
 [MOD?] public/js/spw-blog-interpreter.js — optional future output mode that emits a blob scaffold instead of only a seed
 [MOD?] .spw/conventions/copy-localization.spw — if blobs become translation-facing source objects for multilingual editorial work
@@ -111,7 +111,7 @@ That makes it a plausible source object for future Spw-informed translation work
 ## Validation
 
 - `git diff --check`
-- semantic read-through against `.agents/plans/blog-input-interpreter/PLAN.md`
+- semantic read-through against `.agents/plans/archive/blog-input-interpreter/PLAN.md`
 - semantic read-through against `.spw/conventions/copy-localization.spw`
 - confirm the distinctions between note, seed, blob, and post are crisp enough to use in later implementation
 

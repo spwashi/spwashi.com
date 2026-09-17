@@ -1,0 +1,107 @@
+# Review 2026-07-12 — completed-reference candidate; route future cauldron interaction work through spellcraft-authoring.
+# Plan Index — brace-cauldron-primed-collection
+#
+# Braces (already rich with data-spw-gesture, data-spw-charge, semantic expressions) become live priming vessels. - Charging/holding a brace containment now feeds the cauldron with…
+
+#>plan_brace_cauldron_primed_collection_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "cold"
+
+intent: .{
+ goal = `Braces (already rich with data-spw-gesture, data-spw-charge, semantic expressions) become live priming vessels. - Charging/holding a brace containment now feeds the cauldron with a "primed" ingredient carrying the expression + origin context. - Cauldron footer/mirrors react subtly; copy in grammar lens and Spw docs teaches "braces hold local value attached to a stable root." - Everything stays additive, progressive, inspectable via bus + data attrs, reversible via existing prune.`
+ owner = `brace-cauldron-primed-collection`
+ kind = `plan`
+ bucket = `archive`
+ artifact_shape = `PLAN.md | alignment-note.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "completed_reference"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Braces (already rich with data-spw-gesture, data-spw-charge, semantic expressions) become live priming vessels. -…`
+ concepts = #[
+  `braces`,
+  `cauldron`,
+  `via`,
+  `brace-cauldron-primed-collection`,
+  `already`,
+ ][reg=set]
+ surfaces = #[
+  `js/runtime/brace-gestures.js`,
+  `js/interface/composition.js`,
+  `.spw/conventions/semantic-braces.spw`,
+  `topics/software/spw/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@alignment_note: ~"./alignment-note.spw"
+@plan_spellcraft_authoring: ~"../../spellcraft-authoring/index.spw"
+@brace_gestures: ~"../../../../public/js/runtime/brace-gestures.js"
+@composition: ~"../../../../public/js/interface/composition.js"
+@semantic_braces: ~"../../../../.spw/conventions/semantic-braces.spw"
+@index: ~"../../../../topics/software/spw/index.html"
+
+dispatch: .{
+ plan = @plan
+ alignment_note = @alignment_note
+ plan_spellcraft_authoring = @plan_spellcraft_authoring
+ brace_gestures = @brace_gestures
+ composition = @composition
+ semantic_braces = @semantic_braces
+ index = @index
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `spellcraft-authoring`,
+ ][reg=set]
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `completed_reference`
+ note = `route future cauldron interaction work through spellcraft-authoring`
+ route_to = #[
+  `spellcraft-authoring`,
+ ][reg=set]
+ status = `superseded`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-brace_cauldron_primed_collection-001"
+ layer = "pragmatic"
+ hypothesis = `Braces (already rich with data-spw-gesture, data-spw-charge, semantic expressions) become live priming vessels. - Charging/holding a brace containment now feeds the cauldron with a "primed" ingredient carrying the expression + origin context. - Cauldron footer/mirrors react subtly; copy in grammar lens and Spw docs teaches "braces hold local value attached to a stable root." - Everything stays additive, progressive, inspectable via bus + data attrs, reversible via existing prune.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../public/js/runtime/brace-gestures.js"
+ probe_ref = `rg 'brace-cauldron-primed-collection' .agents/plans/archive/brace-cauldron-primed-collection`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/brace-gestures.js unchanged or untested.`
+ status = "superseded"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does brace-cauldron-primed-collection own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of brace-cauldron-primed-collection?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Braces (already rich with data-spw-gesture, data-spw-charge, semantic expressions) become live priming vessels. - Charging/holding a brace…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

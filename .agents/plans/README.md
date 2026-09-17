@@ -60,6 +60,10 @@ Referential integrity pass over the live plan tree, run from `npm run plans:inde
 - **Recency:** 225 live folders; last touched 2026-06: 2, 2026-07: 146, 2026-08: 19, 2026-09: 58. The 2026-07-12 cohort is the reviewed-and-shelved body; nothing there was moved. Folders did not move. No `--force-generated`.
 - **Value, this pass:** owner plans that today's landings advance carry a dated note — `runtime-bootstrap-performance` (measured-frame lane, viewport cache, A/B receipts), `core-css-spend-cut` (per-recalc cost measured), `folio-worktable` (request card, soil prime). The alignment audit's blog and home fixes are receipts in history, not a plan.
 
+**Archive pass, same day.** 57 folders moved under `archive/` in one citation-safe patch: the 30 citation-safe merge dispositions and all 11 completed references from the 2026-07-12 review, plus 16 landed slices whose own Status or the tree proves the landing (the seven template-migration plans: zero manual heads remain across routes; `catalog-demo-splits`, `production-season-rhythm`, `public-entrance-runtime-payload`, `semantic-classname-layers`, `resume-record`, `wrap-job-utility`) and three superseded tracks (`team-orientation`, whose reading dump was already archived; `plan-wip-index-conventions`, a worktree-era convention now carried by the maintain script and `planning-ecology.spw`; `runtime-load-instrumentation`, 0 of 11 items since July while `runtime/load-trace.js` and `language-ladder-runtime-instrumentation` carry the work). Moved `index.spw` files carry `operation = "archive"`, `fixity = "cold"`. The root index gained the six folders it had never named (`since_2026_07_12`) and a dated `archive_sweep_2026_09_17` record. Reasons per folder: `archive/README.md`.
+
+**Ideas sharpened, with receipts:** `alignment-content-fit` (the column-wrap failure class, the border-box seam, and the home sibling ladders as the next measured slice), `runtime-plane-consolidation` (measured-frame and viewport as the read-side canonical contracts, with the 20 remaining `innerWidth` readers and the synchronous floating-chrome callers named), `js-surface-ecology` (the kernel measurement seam as the next inward reallocation), `chrome-navigation-wonder` (the shell offset lane; its arc owner archived), `module-contract-overhaul` (a `measures` / `applies` field shape for the missing rest contract), `compositional-css-electrostatics` (self-reference baseline rule).
+
 Open-first plans still lacking `index.spw`: `history-reflow`, `core-css-spend-cut`, `dimensional-expression-navigation`. Unchanged; author those on next substantive touch.
 
 ## Maintenance Snapshot - 2026-09-07
@@ -223,12 +227,12 @@ High-signal active owners:
 Meta / ecology work:
 - `agent-optimization/PLAN.md` - maturing the `.agents/`, skills, `.spw` bridges, and public editor surfaces for lower friction agent and editor operation (follows from the prior active plans review).
 
-Completed/merged references retained in place (full routing ledger: `archive/2026-07-12-review-execution.md`):
+Completed/merged references (full routing ledger: `archive/2026-07-12-review-execution.md`) moved under `archive/` on 2026-09-17 with their citations retargeted; `hook-region-anatomy/` is the one merge disposition still in place, because CSS and the expression harvest cite it:
 
-- `overlay-layer-ownership/FIX.md` - `data-spw-overlay` is now a documented site contract and remains as rationale.
-- `menu-containment-navigation/FIX.md` - the primary route/menu containment work landed on 2026-06-28; deferred items now route through shell and floating-chrome tracks.
-- `mobile-image-effects/FIX.md` - the mobile raster effect work is superseded by the current `metaphysical-paper.css` and `image-metaphysics.js` locations.
-- `runtime-route-css-regressions/FIX.md` - the missing visitation/bootstrap and route-structure failures have been repaired or superseded by current runtime and route sources.
+- `archive/overlay-layer-ownership/FIX.md` - `data-spw-overlay` is now a documented site contract and remains as rationale.
+- `archive/menu-containment-navigation/FIX.md` - the primary route/menu containment work landed on 2026-06-28; deferred items now route through shell and floating-chrome tracks.
+- `archive/mobile-image-effects/FIX.md` - the mobile raster effect work is superseded by the current `metaphysical-paper.css` and `image-metaphysics.js` locations.
+- `archive/runtime-route-css-regressions/FIX.md` - the missing visitation/bootstrap and route-structure failures have been repaired or superseded by current runtime and route sources.
 - `component-semantics-document-host/FIX.md` - the document-host contract landed and remains available as implementation rationale.
 
 ## Archived Notes

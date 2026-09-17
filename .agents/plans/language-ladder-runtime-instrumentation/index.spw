@@ -52,7 +52,7 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @plan_runtime_module_fluency: ~"../runtime-module-fluency/index.spw"
-@plan_runtime_load_instrumentation: ~"../runtime-load-instrumentation/index.spw"
+@plan_runtime_load_instrumentation: ~"../archive/runtime-load-instrumentation/index.spw"
 @plan_typescript_integration: ~"../typescript-integration/index.spw"
 @plan_agent_optimization: ~"../agent-optimization/index.spw"
 @public_js_site_js: ~"../../../public/js/site.js"

@@ -15,9 +15,9 @@ The desired end state is a motion system where every transition has a name deriv
 
 ## Files
 
-[NEW] .agents/plans/cinematic-handles/PLAN.md
-[NEW] .agents/plans/cinematic-handles/wip.spw
-[NEW] .agents/plans/cinematic-handles/cinematic-handles.spw
+[NEW] .agents/plans/archive/cinematic-handles/PLAN.md
+[NEW] .agents/plans/archive/cinematic-handles/wip.spw
+[NEW] .agents/plans/archive/cinematic-handles/cinematic-handles.spw
 [MOD?] .spw/conventions/site-semantics.spw — extend with timing vocabulary, layer model, and lighting/attention semantics
 [MOD?] .spw/conventions/style-development.spw — log timing vocabulary as a deliberate style development record
 [MOD?] public/css/style.css → public/css/tokens.css — timing and layer tokens migrate into the token layer (depends on css-progressive-ornaments split)
@@ -75,4 +75,4 @@ Fuzz strategy:
 
 ## Spw Artifact
 
-`.agents/plans/cinematic-handles/cinematic-handles.spw`
+`.agents/plans/archive/cinematic-handles/cinematic-handles.spw`

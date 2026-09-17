@@ -38,7 +38,7 @@ intent: .{
  ][reg=set]
  surfaces = #[
   `.spw/conventions/copy-localization.spw`,
-  `.agents/plans/blog-input-interpreter/PLAN.md`,
+  `.agents/plans/archive/blog-input-interpreter/PLAN.md`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -49,7 +49,7 @@ intent: .{
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @blog_blob_spw: ~"./blog-blob-spw.spw"
-@plan_blog_input_interpreter: ~"../blog-input-interpreter/index.spw"
+@plan_blog_input_interpreter: ~"../archive/blog-input-interpreter/index.spw"
 @copy_localization: ~"../../../.spw/conventions/copy-localization.spw"
 
 dispatch: .{
@@ -88,7 +88,7 @@ scope: .{
 
 validation: #[
  `git diff --check`,
- `semantic read-through against .agents/plans/blog-input-interpreter/PLAN.md`,
+ `semantic read-through against .agents/plans/archive/blog-input-interpreter/PLAN.md`,
  `semantic read-through against .spw/conventions/copy-localization.spw`,
  `confirm the distinctions between note, seed, blob, and post are crisp enough to use in later implementation`,
 ][reg=set]

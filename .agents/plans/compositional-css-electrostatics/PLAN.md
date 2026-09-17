@@ -80,3 +80,7 @@ Compose local output tokens from five independent channels: authored semantics, 
 - `npm run plans:index:check && npm run spw:integrity && git diff --check`
 
 Primary references, checked 2026-09-04: [Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/), [Design Tokens Resolver Module 2025.10](https://www.designtokens.org/tr/2025.10/resolver/), and [CSS Containment Module Level 3](https://www.w3.org/TR/css-contain-3/).
+
+## Baseline note — 2026-09-17
+
+`--spw-e-edge` in `systems/electrostatic-affordances.css` no longer references itself; the custom-property audit's self-reference baseline dropped that key (191 self-referencing declarations remain in 35 files). When an electrostatic token stops being self-relative, move the baseline in the same patch, or `check:css` fails on the improvement.

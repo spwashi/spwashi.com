@@ -17,7 +17,7 @@
 @runtime_medium_ecology: ~"../../conventions/runtime-medium-ecology.spw"
 @harmony_audit: ~"../component-philosophy-harmony-2026-07.spw"
 @runtime_bootstrap_plan: ~"../../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
-@runtime_load_instrumentation: ~"../../../.agents/plans/runtime-load-instrumentation/PLAN.md"
+@runtime_load_instrumentation: ~"../../../.agents/plans/archive/runtime-load-instrumentation/PLAN.md"
 @module_catalog: ~"../../../public/js/runtime/catalog/index.js"
 @module_loader: ~"../../../public/js/runtime/orchestration/loader.js"
 @site_js: ~"../../../public/js/site.js"

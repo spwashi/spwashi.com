@@ -1,0 +1,123 @@
+# Review 2026-07-12 — rework: this audit disproves the value of generated mini-ontologies; indexes should stay thin and optional.
+# Plan Index — plan-wip-index-conventions
+#
+# Every plan folder should expose a small index.spw dispatch surface, and every wip.spw should declare operation, fixity, and plan linkage without pretending to be cold convention.…
+
+#>plan_plan_wip_index_conventions_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "cold"
+
+intent: .{
+ goal = `Use index.spw only when it provides navigation or a decision that PLAN.md does not. Keep WIP linkage legible when the notebook is live, and cool or archive WIPs whose status no longer matches the work.`
+ owner = `plan-wip-index-conventions`
+ kind = `plan`
+ bucket = `archive`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "semantics | pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "warm"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Plan surfaces earn their existence by reducing discovery cost; uniform generated mini-ontologies failed that test in the 279-file review.`
+ concepts = #[
+  `optional-index`,
+  `reviewed-disposition`,
+  `live-wip`,
+  `cold-evidence`,
+  `discovery-cost`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/wip-notebook.spw`,
+  `.spw/conventions/plan-index.spw`,
+  `.spw/surfaces/index.spw`,
+  `scripts/maintain-plan-directory-indexes.mjs`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
+
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@plan_index: ~"../../../../.spw/conventions/plan-index.spw"
+@spw_surfaces_index_spw: ~"../../../../.spw/surfaces/index.spw"
+@maintain_plan_directory_indexes: ~"../../../../scripts/maintain-plan-directory-indexes.mjs"
+@plans: ~"../../../../.agents/plans/"
+@agents_plans_index_spw: ~"../../../../.agents/plans/index.spw"
+
+dispatch: .{
+ plan = @plan
+ plan_index = @plan_index
+ spw_surfaces_index_spw = @spw_surfaces_index_spw
+ maintain_plan_directory_indexes = @maintain_plan_directory_indexes
+ plans = @plans
+ agents_plans_index_spw = @agents_plans_index_spw
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `indexes should stay thin and optional`
+ rescope = `required`
+ status = `active`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-plan_wip_index_conventions-001"
+ layer = "pragmatic"
+ hypothesis = `An index or WIP is useful only when it makes the next decision cheaper than reading the owner plan directly.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../.spw/conventions/wip-notebook.spw"
+ probe_ref = `Compare time-to-owner with and without the index; inspect the file-local review disposition before trusting generated status.`
+ falsification = `The surface repeats PLAN.md, carries stale hot state, or adds generated concepts without changing what an editor should do next.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: .spw/conventions/wip-notebook.spw, .spw/conventions/plan-index.spw, .agents/plans/index.spw, .spw/surfaces/index.spw, scripts/maintain-plan-directory-indexes.mjs, plan-specific index.spw / wip.spw / named .spw with Spw features (dimensions, owner_claim, editor_prompts, selection_probes, operational_hooks, virtual buckets), dispatch wiring in planning-ecology.spw and conventions/index.spw.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node scripts/maintain-plan-directory-indexes.mjs --check`,
+ `git diff --check`,
+ `npm run check:local when only plan/.spw/script files change`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does plan-wip-index-conventions own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of plan-wip-index-conventions?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether plan-wip-index-conventions still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Every plan folder should expose a small index.spw dispatch surface, and every wip.spw should declare operation, fixity, and plan linkage…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

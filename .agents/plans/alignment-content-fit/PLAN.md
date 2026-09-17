@@ -44,3 +44,12 @@ Keep reading, controls, and inspectable frames aligned from phone to wide deskto
 - Runtime fit and frame measurements refresh after typography-setting changes without turning Pretext into a sitewide renderer.
 - The 0D–4D navigator and HUD now share a clearer order/role/body/evidence rhythm, with horizontally aligned headers and evenly distributed transition feet.
 - Brochure routes share the same shell edge but no longer share the same page silhouette: about opens its intended wide hero and register matrix; services packs offers and proof into editorial tracks; home keeps its atlas cadence with route-colored cluster seams.
+
+## Audit receipts — 2026-09-17
+
+`npm run qa:alignment` (bottom-up near-miss probe) is now the instrument for this plan; it reports clipped overflow, sibling ladders, and near-flush edges per route and viewport.
+
+- **Failure class named:** a wrapping flex container that a route rule turns into a column, while the handles layer gives its children a 100% basis, makes that basis a height and opens one column per child. Every blog topline overran its frame by 140–196px this way; fixed by keeping the row. Rule for the containment seam: route CSS may change `align-items` and `gap` on `.frame-topline` / `.frame-heading`, never `flex-direction`.
+- **Box-sizing seam:** full-width slot strips (`[data-spw-slot]`, `.spec-strip`, `.frame-operators`) now size as border-box in `runtime-states.css`, so the route-marker padding stays inside the width the card gave them.
+- **Accepted, not a defect:** the hero's `.spw-living-term` inline highlight bleeds 3px past the copy box on purpose; it stays inside the frame's padding and is never clipped. Exclude inline highlights from clipped-overflow triage.
+- **Next measured slice (home, pocket):** sibling ladders, not overflow — `#home-entry-panels` six panels with content edges at 44/44/44/44/47/44, the promo-wonder-cycle cards spreading label/why/cta edges by 4.5px, the returner grid by 2px, and `#choose-your-entrance` role hooks vs the depth disclosure by 6px. Each is a shared inset token missing on one member, which is the shape this plan's "cluster edge" contract forbids. Settings at pocket reports 153 near-flush edges in 36 sites and is the largest single target.

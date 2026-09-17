@@ -1,0 +1,94 @@
+# Review 2026-07-12 — merge into vertical-rhythm-container-audit; component specificity is the validation lens, not a separate track.
+# Plan Index — Component Rhythm Variety
+#
+# Make shared components feel more specific and scannable by tightening vertical rhythm, differentiating frame/card roles more clearly, and sharpening copy toward concrete outputs.
+
+#>plan_component_rhythm_variety_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "cold"
+
+intent: .{
+ goal = `Make shared components feel more specific and scannable by tightening vertical rhythm, differentiating frame/card roles more clearly, and sharpening copy toward concrete outputs.`
+ owner = `component-rhythm-variety`
+ kind = `plan`
+ bucket = `archive`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "merged"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Make shared components feel more specific and scannable by tightening vertical rhythm, differentiating frame/card roles…`
+ concepts = #[
+  `rhythm`,
+  `component`,
+  `variety`,
+  `components`,
+  `feel`,
+ ][reg=set]
+ surfaces = #[
+  `css/components/frames.css`,
+  `css/components/cards.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@frames: ~"../../../../public/css/components/frames.css"
+@cards: ~"../../../../public/css/components/cards.css"
+
+dispatch: .{
+ plan = @plan
+ frames = @frames
+ cards = @cards
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `vertical-rhythm-container-audit`,
+ ][reg=set]
+ retain = `component specificity as validation lens`
+ status = `superseded`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-component_rhythm_variety-001"
+ layer = "pragmatic"
+ hypothesis = `Make shared components feel more specific and scannable by tightening vertical rhythm, differentiating frame/card roles more clearly, and sharpening copy toward concrete outputs.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../public/css/components/frames.css"
+ probe_ref = `rg 'component-rhythm-variety' .agents/plans/archive/component-rhythm-variety`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/components/frames.css unchanged or untested.`
+ status = "superseded"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does component-rhythm-variety own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of component-rhythm-variety?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make shared components feel more specific and scannable by tightening vertical rhythm, differentiating frame/card roles more clearly, and…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

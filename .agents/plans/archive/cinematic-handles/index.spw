@@ -37,7 +37,7 @@ intent: .{
   `state`,
  ][reg=set]
  surfaces = #[
-  `.agents/plans/cinematic-handles/cinematic-handles.spw`,
+  `.agents/plans/archive/cinematic-handles/cinematic-handles.spw`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]

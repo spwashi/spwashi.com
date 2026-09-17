@@ -1,0 +1,103 @@
+# Review 2026-07-12 — merge brace safety into gesture-state and PATH behavior into chrome navigation; keep only mobile proofs.
+# Plan Index — Mobile Brace And Path Polish
+#
+# Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove dead vertical space above closing braces…
+
+#>plan_mobile_brace_path_polish_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "cold"
+
+intent: .{
+ goal = `Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove dead vertical space above closing braces when a frame footer only carries the brace marker.`
+ owner = `mobile-brace-path-polish`
+ kind = `plan`
+ bucket = `archive`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "merged"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more…`
+ concepts = #[
+  `brace`,
+  `mobile`,
+  `path`,
+  `polish`,
+  `interactions`,
+ ][reg=set]
+ surfaces = #[
+  `js/runtime/experiential.js`,
+  `js/runtime/region-menu.js`,
+  `js/runtime/shell-disclosure.js`,
+  `css/components/frames.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@experiential: ~"../../../../public/js/runtime/experiential.js"
+@region_menu: ~"../../../../public/js/runtime/region-menu.js"
+@shell_disclosure: ~"../../../../public/js/runtime/shell-disclosure.js"
+@frames: ~"../../../../public/css/components/frames.css"
+@index: ~"../../../../settings/index.html"
+
+dispatch: .{
+ plan = @plan
+ experiential = @experiential
+ region_menu = @region_menu
+ shell_disclosure = @shell_disclosure
+ frames = @frames
+ index = @index
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `gesture-state-refinement`,
+  `chrome-navigation-wonder`,
+ ][reg=set]
+ retain = `mobile proofs`
+ status = `superseded`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-mobile_brace_path_polish-001"
+ layer = "pragmatic"
+ hypothesis = `Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove dead vertical space above closing braces when a frame footer only carries the brace marker.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../public/js/runtime/experiential.js"
+ probe_ref = `rg 'mobile-brace-path-polish' .agents/plans/archive/mobile-brace-path-polish`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/experiential.js unchanged or untested.`
+ status = "superseded"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does mobile-brace-path-polish own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of mobile-brace-path-polish?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

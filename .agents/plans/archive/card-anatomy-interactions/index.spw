@@ -1,0 +1,126 @@
+# Review 2026-07-12 — completed reference; the generated owner claim is not an active falsifiable contract.
+# Plan Index — Card Anatomy & Interaction Semantics Enhancement
+#
+# Status: Planning / Audit complete
+
+#>plan_card_anatomy_interactions_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "cold"
+
+intent: .{
+ goal = `Status: Planning / Audit complete`
+ owner = `card-anatomy-interactions`
+ kind = `plan`
+ bucket = `archive`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "return"
+ memory_tier = "cold"
+ bucket = "completed_reference"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Card gesture and anatomy prior art — landed patterns for RPG portal and frame grammar.`
+ concepts = #[
+  `frame-card`,
+  `gesture-anatomy`,
+  `satchel`,
+  `prior-art`,
+ ][reg=set]
+ surfaces = #[
+  `public/css/components/`,
+  `play/ RPG routes`,
+ ][reg=set]
+ fixity_tier = `cold`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Museum label — what was tried and what stuck.`
+ accuracy = `Implementation complete; superseded by rpg-portal-fantasy for active work.`
+ direction = `Cite, do not extend — new card work routes through RPG portal plan.`
+ inspiration = `Honest prior art speeds the next gesture pass.`
+ alignment = `rpg-portal-fantasy, component-philosophy-harmony audit`
+}[reg=facet]
+
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@plan_agent_optimization: ~"../../agent-optimization/index.spw"
+@play_rpg_wednesday_library_index_html: ~"../../../../play/rpg-wednesday/library/index.html"
+@page_model: ~"../../../../.spw/surfaces/page-model.spw"
+@css: ~"../../../../public/css/"
+@design_components_index_html: ~"../../../../design/components/index.html"
+@site_semantics: ~"../../../../.spw/conventions/site-semantics.spw"
+@site: ~"../../../../public/js/site.js"
+
+dispatch: .{
+ plan = @plan
+ plan_agent_optimization = @plan_agent_optimization
+ play_rpg_wednesday_library_index_html = @play_rpg_wednesday_library_index_html
+ page_model = @page_model
+ css = @css
+ design_components_index_html = @design_components_index_html
+ site_semantics = @site_semantics
+ site = @site
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `archive_sweep` ; path = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md` }[reg=facet],
+  .{ label = `commit_history_deep` ; path = `.spw/audits/commit-history-deep-2026-07/index.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ related_plans = #[
+  `agent-optimization`,
+ ][reg=set]
+ superseded_by = `rpg-portal-fantasy`
+}[reg=facet]
+
+^"archive_status"{
+ status = `completed_reference`
+ archive_note = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md`
+ retain_reason = `Direct citations preserved — virtual bucket not physical move.`
+ research_pointer = `page-component-census-2026-07`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `completed_reference`
+ note = `generated owner claim is not an active falsifiable contract`
+ status = `superseded`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-card_anatomy_interactions-001"
+ layer = "pragmatic"
+ hypothesis = `Status: Planning / Audit complete`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../play/rpg-wednesday/library/index.html"
+ probe_ref = `rg 'card-anatomy-interactions' .agents/plans/archive/card-anatomy-interactions`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../play/rpg-wednesday/library/index.html unchanged or untested.`
+ status = "superseded"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does card-anatomy-interactions own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of card-anatomy-interactions?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for card-anatomy-interactions?`, see = @index#plan_refinement }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Status: Planning / Audit complete`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

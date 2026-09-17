@@ -228,7 +228,7 @@ This patch keeps the earnest, informative, wonder-inviting spirit while making t
 ## References
 
 - Image: User-provided screenshot of home in read/inspect mode with live kernel inspector + DevTools attribute view.
-- Prior plan: `.agents/plans/card-anatomy-interactions/PLAN.md` (Patch 001 generational copy + Grounding Rod exemplar live on Library).
+- Prior plan: `.agents/plans/archive/card-anatomy-interactions/PLAN.md` (Patch 001 generational copy + Grounding Rod exemplar live on Library).
 - Home: `index.html` (semantic-portal, kernel-atlas, town-library-gateway frame with "library" component tag).
 - Library: `play/rpg-wednesday/library/index.html` (portal category, daily/weekly copy, frame-cards with intents).
 - JS: `public/js/interface/semantic-chrome.js`, `public/js/semantic/component-semantics.js`, state-inspector, attention architecture.

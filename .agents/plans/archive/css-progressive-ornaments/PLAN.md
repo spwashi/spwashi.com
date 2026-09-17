@@ -15,9 +15,9 @@ The desired end state is a CSS architecture that keeps the GitHub Pages static d
 
 ## Files
 
-[NEW] `.agents/plans/css-progressive-ornaments/PLAN.md`
-[NEW] `.agents/plans/css-progressive-ornaments/wip.spw`
-[NEW] `.agents/plans/css-progressive-ornaments/css-progressive-ornaments.spw`
+[NEW] `.agents/plans/archive/css-progressive-ornaments/PLAN.md`
+[NEW] `.agents/plans/archive/css-progressive-ornaments/wip.spw`
+[NEW] `.agents/plans/archive/css-progressive-ornaments/css-progressive-ornaments.spw`
 [MOD] `public/css/style.css` - become the stable import entrypoint during the split
 [NEW?] `public/css/tokens.css` - design tokens, operator colors, timing/disclosure constants, seasonal token hooks
 [NEW?] `public/css/base.css` - reset, typography, page shell, header/footer, generic media defaults
@@ -88,4 +88,4 @@ Fuzz strategy:
 
 ## Spw Artifact
 
-`.agents/plans/css-progressive-ornaments/css-progressive-ornaments.spw`
+`.agents/plans/archive/css-progressive-ornaments/css-progressive-ornaments.spw`

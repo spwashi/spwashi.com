@@ -32,7 +32,7 @@ fixity = "tending"
  @plan: ~".agents/plans/state-block-projections/PLAN.md"
  @pattern: ~".spw/patterns/literate-ui.spw"
  @references: ~".agents/plans/interaction-grammar/PLAN.md"
- @references: ~".agents/plans/brace-literacy-guides/PLAN.md"
+ @references: ~".agents/plans/archive/brace-literacy-guides/PLAN.md"
  @artifact: ~".agents/plans/state-block-projections/state-block-projections.spw"
 }
 

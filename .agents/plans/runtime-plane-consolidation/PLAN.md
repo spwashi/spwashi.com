@@ -235,4 +235,12 @@ Gate: both are visible chrome. Demo before catalog/gating changes that alter whe
 
 ## Falsification
 
-A patch cannot satisfy this plan's goal while leaving `public/js/runtime/module-loader.js` and `public/js/kernel/dom-contracts.js` unchanged. If the canonical contracts remain optional after a phase lands, that phase did not do its job.
+A patch cannot satisfy this plan's goal while leaving `public/js/runtime/orchestration/loader.js` and `public/js/kernel/dom-contracts.js` unchanged. If the canonical contracts remain optional after a phase lands, that phase did not do its job.
+
+## Phase 3 receipt — 2026-09-17
+
+The read side of write/observe consolidation landed as two kernel contracts, and the evidence for them is the trace this plan asked for in Validation.
+
+- `kernel/measured-frame.js`: one pass per frame, after the frame's style pass, read phase then write phase; fixed-viewport correction, shell menu offset, and interactive medium are split lanes, floating chrome and the shell's measured sync run whole. `kernel/viewport.js`: the viewport box read once and invalidated on resize, orientation, and visual-viewport moves.
+- Trace (devtools.timeline with stacks, about route, pocket, four interleaved runs per side): script-forced style/layout passes median 18.5 → 10.5, cost 7141 → 3657ms. Each forced pass costs ~300ms against the current core bundle, which is Phase 7's number.
+- Making the contract the default, per this plan's falsification rule: 20 readers of `window.innerWidth` remain outside `viewport.js` — popup placement in `interface/` (guide-badge, pronunciation, haptics, semantic-chrome, topic-discovery, state-inspector), `runtime/layout-qa.js`, `observation-beats.js`, `spatial-gravity.js`, `positioning-orchestration.js`, `interactive-expression-lab.js`. Popup placement runs at interaction time and may stay direct; the four runtime readers should take the cached box. Direct `syncFloatingChromeState` callers (site-search, region-menu, section-handle, navigation-locomotion, frame-navigator, attention-posture-panel, state-inspector, discovery-notices, layout-assumptions) still read synchronously; each is a candidate for `requestFloatingChromeSync` unless it consumes the returned snapshot.

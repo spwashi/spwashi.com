@@ -6,7 +6,7 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
-@plan: ~"../../../.agents/plans/production-season-rhythm/PLAN.md"
+@plan: ~"../../../.agents/plans/archive/production-season-rhythm/PLAN.md"
 @recipes: ~"../../../recipes/index.html#production-season"
 @recipe_css: ~"../../../public/css/routes/surfaces/recipes.css"
 @attention: ~"../../../public/js/runtime/attention/section-handle.js"
