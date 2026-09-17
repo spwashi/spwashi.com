@@ -67,7 +67,12 @@
         "urgency": "Live now; the B-cycle closes September 26.",
         "tone": "clear",
         "theme": "glass",
-        "handles": ["runtime", "ownership", "cycle", "receipts"],
+        "handles": [
+          "runtime",
+          "ownership",
+          "cycle",
+          "receipts"
+        ],
         "ctaStyle": "primary",
         "presentation": "modal"
       }
@@ -107,39 +112,6 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
-        "title": "The group streak pet has outfits now",
-        "summary": "314 days. Share one small, otherwise inconsequential wonder — a leaf, a joke, a hat on the pet, a soup. Autumn is a season of small returns.",
-        "href": "/topics/mental-health/#streak-math",
-        "cta": "Open streak math",
-        "why": "The pet is visible state. The invitation is a tiny wonder, not a thesis.",
-        "presentation": "modal",
-        "promotion": {
-          "kind": "event",
-          "audience": "streak chats, Wednesday players, and anyone keeping an autumn rhythm",
-          "offer": "See the 314-day pet and share one incremental, whimsical wonder",
-          "proof": "/topics/mental-health/#streak-math names the count, the outfits, and the low-cost return.",
-          "objection": "A streak is not a clinical result; it is a room that kept showing up.",
-          "urgency": "Autumn is open; Wednesday is the repeating door.",
-          "tone": "inviting",
-          "theme": "glass",
-          "handles": ["streak", "wonder", "rpg-wednesday", "recipes"],
-          "ctaStyle": "primary",
-          "presentation": "modal"
-        }
-      },
-      "wonder": {
-        "label": "Daily wonder",
-        "operator": "?",
-        "title": "What tiny thing is still worth sharing this autumn?",
-        "summary": "Not a thesis. A leaf, a soup, a hat on the streak pet. The site is for that kind of return.",
-        "href": "/recipes/#chicagoland-season",
-        "cta": "Open this week's kitchen"
-      }
-    },
-    {
-      "promo": {
-        "label": "Daily promo",
-        "operator": "@",
         "title": "Keep a configuration that fits how you read",
         "summary": "Presets, workflow, and climate stay in this browser. One change is enough to feel the page answer.",
         "href": "/settings/#presets",
@@ -155,7 +127,12 @@
           "urgency": "The first useful change is a preset.",
           "tone": "clear",
           "theme": "signal",
-          "handles": ["settings", "presets", "climate", "workflow"],
+          "handles": [
+            "settings",
+            "presets",
+            "climate",
+            "workflow"
+          ],
           "ctaStyle": "primary",
           "presentation": "inline"
         }
@@ -164,7 +141,7 @@
         "label": "Daily wonder",
         "operator": "?",
         "title": "What if this page had a different climate?",
-        "summary": "Climate is the attention posture. Try one, then leave — the site keeps it.",
+        "summary": "Climate is the attention posture. Try one, then leave \u2014 the site keeps it.",
         "href": "/settings/#climate-settings",
         "cta": "Try climate"
       }
@@ -187,7 +164,12 @@
           "urgency": "A quick reply path lowers the cost of saying yes.",
           "tone": "inviting",
           "theme": "glass",
-          "handles": ["collaboration", "contact", "modal", "invite"],
+          "handles": [
+            "collaboration",
+            "contact",
+            "modal",
+            "invite"
+          ],
           "ctaStyle": "primary",
           "presentation": "modal"
         }
@@ -227,7 +209,7 @@
         "summary": "Collage and laminate what is current. Paint a season across the stack, then paint those same surfaces again next year. Originals, prints, and custom collages mint from that practice. Sales are not open yet.",
         "href": "/design/folios/#studio-practice",
         "cta": "Open the folio practice",
-        "why": "The Art room names the returning stack — collage, laminate, yearly paint — then formats and working prices.",
+        "why": "The Art room names the returning stack \u2014 collage, laminate, yearly paint \u2014 then formats and working prices.",
         "presentation": "modal",
         "promotion": {
           "kind": "release",
@@ -238,7 +220,12 @@
           "urgency": "The practice is current; scans and the first documented release are the next public step.",
           "tone": "inviting",
           "theme": "glass",
-          "handles": ["folio", "lore.land", "rpg-wednesday", "art"],
+          "handles": [
+            "folio",
+            "lore.land",
+            "rpg-wednesday",
+            "art"
+          ],
           "ctaStyle": "primary",
           "presentation": "modal"
         }
@@ -271,7 +258,12 @@
           "urgency": "The layers are already live on the page you are reading.",
           "tone": "clear",
           "theme": "glass",
-          "handles": ["design", "layers", "settings", "slots"],
+          "handles": [
+            "design",
+            "layers",
+            "settings",
+            "slots"
+          ],
           "ctaStyle": "primary",
           "presentation": "inline"
         }
@@ -302,6 +294,44 @@
         "href": "/play/rpg-wednesday/",
         "cta": "Visit play"
       }
+    },
+    {
+      "promo": {
+        "label": "Daily promo",
+        "operator": "@",
+        "title": "The group streak pet has outfits now",
+        "summary": "314 days. Share one small, otherwise inconsequential wonder \u2014 a leaf, a joke, a hat on the pet, a soup. Autumn is a season of small returns.",
+        "href": "/topics/mental-health/#streak-math",
+        "cta": "Open streak math",
+        "why": "The pet is visible state. The invitation is a tiny wonder, not a thesis.",
+        "presentation": "modal",
+        "promotion": {
+          "kind": "event",
+          "audience": "streak chats, Wednesday players, and anyone keeping an autumn rhythm",
+          "offer": "See the 314-day pet and share one incremental, whimsical wonder",
+          "proof": "/topics/mental-health/#streak-math names the count, the outfits, and the low-cost return.",
+          "objection": "A streak is not a clinical result; it is a room that kept showing up.",
+          "urgency": "Autumn is open; Wednesday is the repeating door.",
+          "tone": "inviting",
+          "theme": "glass",
+          "handles": [
+            "streak",
+            "wonder",
+            "rpg-wednesday",
+            "recipes"
+          ],
+          "ctaStyle": "primary",
+          "presentation": "modal"
+        }
+      },
+      "wonder": {
+        "label": "Daily wonder",
+        "operator": "?",
+        "title": "What tiny thing is still worth sharing this autumn?",
+        "summary": "Not a thesis. A leaf, a soup, a hat on the streak pet. The site is for that kind of return.",
+        "href": "/recipes/#chicagoland-season",
+        "cta": "Open this week's kitchen"
+      }
     }
   ],
   "weekly": [
@@ -324,7 +354,12 @@
           "urgency": "The first pass is a preset; deeper registers wait until something still feels off.",
           "tone": "direct",
           "theme": "signal",
-          "handles": ["settings", "configuration", "layers", "presets"],
+          "handles": [
+            "settings",
+            "configuration",
+            "layers",
+            "presets"
+          ],
           "ctaStyle": "primary",
           "presentation": "inline"
         }
@@ -356,7 +391,12 @@
           "urgency": "A better map reduces the cost of onboarding this week.",
           "tone": "clear",
           "theme": "glass",
-          "handles": ["onboarding", "software", "deal", "clear"],
+          "handles": [
+            "onboarding",
+            "software",
+            "deal",
+            "clear"
+          ],
           "ctaStyle": "secondary",
           "presentation": "toast"
         }
@@ -425,7 +465,12 @@
           "urgency": "Wednesday is the repeating door; autumn is a season of small returns.",
           "tone": "inviting",
           "theme": "glass",
-          "handles": ["rpg-wednesday", "lore.land", "folio", "art"],
+          "handles": [
+            "rpg-wednesday",
+            "lore.land",
+            "folio",
+            "art"
+          ],
           "ctaStyle": "primary",
           "presentation": "modal"
         }

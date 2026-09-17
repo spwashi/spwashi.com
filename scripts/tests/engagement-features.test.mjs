@@ -915,7 +915,12 @@ test('live promo feed can pick the folio stack on a known weekday', () => {
   assert.ok(weeklyFolio, 'weekly feed should keep the RPG Wednesday / lore.land promo');
   assert.equal(weeklyFolio.promo.href, '/play/rpg-wednesday/');
   assert.equal(weeklyFolio.promo.promotion?.kind, 'event');
-  assert.equal(weeklyFolio.wonder.href, '/design/folios/#collect-a-folio');
+  assert.equal(weeklyFolio.wonder.href, '/topics/mental-health/#streak-math');
+
+  const streakDaily = liveFeed.daily.find((entry) => /streak pet has outfits/i.test(entry.promo.title));
+  assert.ok(streakDaily, 'daily feed should keep the 314-day streak pet pair');
+  assert.equal(streakDaily.promo.href, '/topics/mental-health/#streak-math');
+  assert.match(streakDaily.wonder.href, /\/recipes\//);
 
   const renderer = readFileSync(
     join(dirname(fileURLToPath(import.meta.url)), '../../public/js/typed/promo-wonder-cycle.js'),
