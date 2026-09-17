@@ -107,6 +107,39 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
+        "title": "The group streak pet has outfits now",
+        "summary": "314 days. Share one small, otherwise inconsequential wonder — a leaf, a joke, a hat on the pet, a soup. Autumn is a season of small returns.",
+        "href": "/topics/mental-health/#streak-math",
+        "cta": "Open streak math",
+        "why": "The pet is visible state. The invitation is a tiny wonder, not a thesis.",
+        "presentation": "modal",
+        "promotion": {
+          "kind": "event",
+          "audience": "streak chats, Wednesday players, and anyone keeping an autumn rhythm",
+          "offer": "See the 314-day pet and share one incremental, whimsical wonder",
+          "proof": "/topics/mental-health/#streak-math names the count, the outfits, and the low-cost return.",
+          "objection": "A streak is not a clinical result; it is a room that kept showing up.",
+          "urgency": "Autumn is open; Wednesday is the repeating door.",
+          "tone": "inviting",
+          "theme": "glass",
+          "handles": ["streak", "wonder", "rpg-wednesday", "recipes"],
+          "ctaStyle": "primary",
+          "presentation": "modal"
+        }
+      },
+      "wonder": {
+        "label": "Daily wonder",
+        "operator": "?",
+        "title": "What tiny thing is still worth sharing this autumn?",
+        "summary": "Not a thesis. A leaf, a soup, a hat on the streak pet. The site is for that kind of return.",
+        "href": "/recipes/#chicagoland-season",
+        "cta": "Open this week's kitchen"
+      }
+    },
+    {
+      "promo": {
+        "label": "Daily promo",
+        "operator": "@",
         "title": "Keep a configuration that fits how you read",
         "summary": "Presets, workflow, and climate stay in this browser. One change is enough to feel the page answer.",
         "href": "/settings/#presets",
@@ -378,18 +411,18 @@
         "label": "Weekly promo",
         "operator": "@",
         "title": "RPG Wednesday makes art around the lore.land canon",
-        "summary": "Some TikTok group chats with streaks spend Wednesday making art and telling stories from that pantry. My laminated folios grow alongside that play — originals, prints, and custom collages in development.",
+        "summary": "The group streak is 314 days and the pet has outfits. Wednesday is still art and story from the lore.land pantry. Bring one small, otherwise inconsequential wonder.",
         "href": "/play/rpg-wednesday/",
         "cta": "Sit at the table",
-        "why": "The table is the practice; the Art room is where a scene can become an object.",
+        "why": "The table is the practice; streak math names the 314-day pet; Art is where a scene can become an object.",
         "presentation": "modal",
         "promotion": {
           "kind": "event",
           "audience": "players, streak chats, and people who want a physical piece from the world",
-          "offer": "Join the weekly art-and-story practice, then look at the folio worktable",
-          "proof": "RPG Wednesday is the live table; lore.land is the pantry; Art holds the minting path.",
+          "offer": "Join Wednesday with one small wonder, then look at the folio worktable",
+          "proof": "RPG Wednesday is the live table; /topics/mental-health/#streak-math names 314 days and outfits; lore.land is the pantry.",
           "objection": "Community art is not automatically folio inventory.",
-          "urgency": "Wednesday is the repeating door; the folio page is the object door.",
+          "urgency": "Wednesday is the repeating door; autumn is a season of small returns.",
           "tone": "inviting",
           "theme": "glass",
           "handles": ["rpg-wednesday", "lore.land", "folio", "art"],
@@ -400,10 +433,10 @@
       "wonder": {
         "label": "Weekly wonder",
         "operator": "?",
-        "title": "Which scene wants a physical folio?",
-        "summary": "Bring a motif. The folio worktable can become a custom collage or a new source piece. Sales are not open yet.",
-        "href": "/design/folios/#collect-a-folio",
-        "cta": "Ask about a custom piece"
+        "title": "What tiny, otherwise inconsequential thing is still worth sharing?",
+        "summary": "A hat on the streak pet. A leaf. A soup. Autumn is a season of small returns, not a thesis.",
+        "href": "/topics/mental-health/#streak-math",
+        "cta": "Open streak math"
       }
     }
   ]
