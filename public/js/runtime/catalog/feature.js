@@ -88,7 +88,7 @@ export const FEATURE_DEFS = [
     id: 'seed-cards',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,
-    route: ['services', 'newyear'],
+    route: ['services', 'newyear', 'folios'],
     selector: '[data-seed-card]',
     describes: 'seed-card[template|field|copy|screenshot] generator',
     updates: [

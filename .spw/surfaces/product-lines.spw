@@ -181,16 +181,18 @@ product_lines: .{
   ][reg=set]
   integration_contract = .{
    audience = `people who want a durable studio practice, bridging to collectors, homebrew players, and component designers.`
-   offer = `Look at the returning-stack practice and working original-price bands; talk about a custom piece before sales open.`
-   proof = `/design/folios/#studio-practice names collage, lamination, yearly paint, paint seasons, and stackable materials; #collect-a-folio keeps formats and planning ranges without checkout.`
+   offer = `Look at the returning-stack practice and working original-price bands; fill the request card or talk about a custom piece before sales open.`
+   proof = `/design/folios/#studio-practice names collage, lamination, yearly paint, paint seasons, and stackable materials; #collect-a-folio keeps formats and planning ranges without checkout; #folio-request is a seed card (piece · form · story · range · relay) that copies as a Spw block.`
    resonance = `Authenticity is the return to the same surface. A paint season can connect several folios; the stack is also a source of pictures and posts.`
    extension = `studio stack → lore.land pantry → RPG Wednesday table → folio worktable.`
-   next_action = `/design/folios/#studio-practice → /design/folios/#collect-a-folio → /contact/ → /services/#pricing for existing commissions.`
+   next_action = `/design/folios/#studio-practice → /design/folios/#collect-a-folio → #folio-request card → /contact/ → /services/#pricing for existing commissions.`
   }[reg=facet]
   current_state = .{
    summary = `Practice named on the worktable; invitation live; sales not open.`
    evidence = #[
     `route copy at /design/folios/#studio-practice and #collect-a-folio`,
+    `request card at /design/folios/#folio-request (seed-card template folio; no checkout)`,
+    `soil / nutrient framing cached in .spw/caches/folio-soil-ecosystem-2026-09.spw, not yet on the route`,
     `today's receipt on /now/ (2026-09-17)`,
     `promo pair in public/data/promo-wonder-cycle.json`,
     `landing invitations on home, about, services, now, play, RPG Wednesday, lore.land, design hub`

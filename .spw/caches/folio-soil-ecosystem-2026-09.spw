@@ -1,0 +1,54 @@
+# Cache 2026-09-17 — laminated folios as soil for a marketing ecosystem.
+# Source: creator notes in a Claude session, given as six mid-turn messages.
+# Operation: prime. Nothing here is route copy yet; product-lines.spw#folio_editions stays the offer of record.
+
+#>folio_soil_ecosystem
+#:cache #!prime #!experimental
+#:layer #!pragmatics
+
+^"insight"{
+  id = "folio-soil-ecosystem-2026-09"
+  operation = "prime"
+  fixity = "experimental"
+  source = "chat"
+  claim = "The laminated folios can be marketed as soil: a substrate artists maintain and add nutrients to over years, not a catalogue of finished pictures."
+  evidence = #[
+    `design/folios/index.html#studio-practice — the returning stack (collage → laminate → seasonal paint → restack) already reads as maintenance over years`,
+    `design/folios/index.html#collect-a-folio — planning ranges, no checkout; #folio-request seed card lands 2026-09-17`,
+    `.spw/surfaces/product-lines.spw#folio_editions — lore.land is the pantry, RPG Wednesday the shared table`,
+    `public/js/modules/cards/seed-card.js — folio template: piece · form · story · range · relay`,
+    `TikTok: the creator has posted the folios for years; the lore predates the route`
+  ][reg=set]
+  pattern_consideration = #[
+    `newyear seed card — a vessel that is filled, copied, and revisited; the request card reuses it rather than adding a checkout`,
+    `.spw/caches/permaculture-data-model-2026-09.spw — soil / nutrient vocabulary may already have a data shape to reuse before a new one is named`,
+    `.spw/conventions/model-guided-refinement.spw#creative_marketing_engine — audience · offer · proof · resonance · extension · next action per offer`,
+    `feedback: brand emerges from the work; do not print "soil" on the route before the practice shows it`
+  ][reg=set]
+  expansion_prime = "A folio series page keeps one series as one soil bed: what was laid down (collage, laminate), what was added each season (paint, story, post), and what a collector or player can add next. The request card is the first nutrient a visitor can offer."
+  validation = "rg 'folio' design/folios/index.html .spw/surfaces/product-lines.spw; npm run audit:copy:accessor; browser on /design/folios/#folio-request at pocket and desktop."
+  do_not_promote_until = "Two series are documented on the route and one request has arrived through the card; then decide whether soil / nutrient becomes route copy or stays creator vocabulary."
+}
+
+^"creator_notes"{
+  #:verbatim-ish, 2026-09-17, in the order given
+  soil = `Market the laminated folios as soil for a marketing ecosystem that artists can maintain and add nutrients to over years.`
+  lore = `Years of TikTok posts about the folios; ready to integrate their lore into spwashi.com and make other art for lore.land.`
+  clown_lore = `The folios carry a lot of WAP-themed clown lore meant to teach design and computer science.`
+  curriculum = `Parents could discern which folios suit their children and share a curriculum.`
+  discernment_risk = `A product that requires parents to discern sets some of them up for failure.`
+  placement = `So the discernment piece may not sit directly beside the folio contents, and the WAP theme may become a more specific series rather than the whole line.`
+}
+
+^"open_questions"{
+  wap = `"WAP-themed" was not expanded in the session; ask before any route copy names the series.`
+  series = `Which folios form the clown-lore series, and does that series get its own soil bed (route section) apart from the general stack?`
+  curriculum_home = `If a shared curriculum exists, it belongs with /curriculum/ and the parent-facing register, not beside the folio scans; the route should carry the pictures and the practice, and let the curriculum route carry the discernment.`
+  lore_land = `What lore.land needs from spwashi.com: a pantry index, chapter anchors the folio records can point at, or only the art.`
+}
+
+^"next_session"{
+  1 = `Read this cache and product-lines.spw#folio_editions before touching /design/folios/.`
+  2 = `Confirm the request card renders at /design/folios/#folio-request on pocket and desktop; check copy seed output.`
+  3 = `Draft the series model (one soil bed per series) as a cache extension, then a daily kernel if it crosses into illustration or curriculum.`
+}

@@ -63,6 +63,18 @@ export const SEED_TEMPLATES = {
     ],
   },
 
+  folio: {
+    label: 'folio',
+    sigil: '^seed[Folio.Request ref:',
+    fields: [
+      { key: 'piece',     op: '>', label: 'piece',     placeholder: 'which folio, tier, or motif', hint: 'A scan you saw, a Seed / Chapter / Landmark tier, or a motif you want painted.' },
+      { key: 'form',      op: '^', label: 'form',      placeholder: 'original, print, collage, or custom', hint: 'The physical form you want. Prints and collages mint from the same scanned source.' },
+      { key: 'story',     op: '~', label: 'story',     placeholder: 'a lore.land scene, or your own', hint: 'A chapter, character, or scene the piece should carry. Leave empty if the picture is enough.' },
+      { key: 'range',     op: '@', label: 'range',     placeholder: 'what you can put toward it', hint: 'A number or a range. The planning bands sit above this card; commissions live on the services ladder.' },
+      { key: 'relay',     op: '~', label: 'relay',     placeholder: 'how to reach you, roughly where it ships', hint: 'Email, handle, or the chat we already share. A city is enough until packed weight is known.' },
+    ],
+  },
+
   ask: {
     label: 'ask',
     sigil: '^seed[Ask.Card ref:',
@@ -101,6 +113,19 @@ function chargeToState(charge) {
   return 'filling';
 }
 
+/**
+ * A host names the templates it offers with data-templates="folio,ask"; a host
+ * that names none offers every template. The pivot only shows when there is a
+ * choice to make.
+ */
+function readTemplateKeys(el) {
+  const named = String(el.dataset.templates || '')
+    .split(/[\s,]+/)
+    .map((key) => key.trim())
+    .filter((key) => key && SEED_TEMPLATES[key]);
+  return named.length ? named : Object.keys(SEED_TEMPLATES);
+}
+
 export class SeedCard {
   /**
    * @param {HTMLElement} el — the .seed-card element
@@ -109,7 +134,8 @@ export class SeedCard {
     this.el = el;
     this.id = el.id || 'seed-card';
     this.storageKey = STORAGE_PREFIX + this.id;
-    this.templateKey = el.dataset.template || 'newyear';
+    this.templateKeys = readTemplateKeys(el);
+    this.templateKey = this.templateKeys.includes(el.dataset.template) ? el.dataset.template : this.templateKeys[0];
     this.template = SEED_TEMPLATES[this.templateKey];
     this.values = {};
     this._saveTimer = null;
@@ -148,9 +174,10 @@ export class SeedCard {
       header.after(pivot);
     }
     pivot.setAttribute('data-spw-region-flow', 'cluster');
-    pivot.innerHTML = Object.entries(SEED_TEMPLATES).map(([key, tmpl]) => `
+    pivot.hidden = this.templateKeys.length < 2;
+    pivot.innerHTML = this.templateKeys.map((key) => `
       <button type="button" class="seed-pivot-btn" data-pivot="${key}" aria-pressed="${key === this.templateKey}">
-        ${tmpl.label}
+        ${SEED_TEMPLATES[key].label}
       </button>
     `).join('');
 
@@ -388,7 +415,7 @@ export class SeedCard {
 
   /** Switch to a different template */
   _pivot(key) {
-    if (!SEED_TEMPLATES[key]) return;
+    if (!SEED_TEMPLATES[key] || !this.templateKeys.includes(key)) return;
     this._save(); // save current before switching
     this.templateKey = key;
     this.template = SEED_TEMPLATES[key];
