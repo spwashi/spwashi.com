@@ -889,7 +889,7 @@ test('promo wonder forecast carries the next two closes across a month boundary'
   );
 });
 
-test('live promo feed can pick the folio worktable on a known weekday', () => {
+test('live promo feed can pick the folio stack on a known weekday', () => {
   const liveFeed = JSON.parse(readFileSync(
     join(dirname(fileURLToPath(import.meta.url)), '../../public/data/promo-wonder-cycle.json'),
     'utf8',
@@ -904,8 +904,8 @@ test('live promo feed can pick the folio worktable on a known weekday', () => {
   assert.match(settingsDay.wonder.href, /\/settings\//);
 
   const daily = pickDaily(liveFeed, thursday);
-  assert.match(daily.promo.title, /folio worktable/i);
-  assert.equal(daily.promo.href, '/design/folios/#collect-a-folio');
+  assert.match(daily.promo.title, /laminated folio stack/i);
+  assert.equal(daily.promo.href, '/design/folios/#studio-practice');
   assert.equal(daily.promo.promotion?.kind, 'release');
   assert.match(daily.wonder.href, /lore\.land/);
 
