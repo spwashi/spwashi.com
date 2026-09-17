@@ -27387,6 +27387,9 @@ html[data-spw-site-rhythm-authority="runtime"] {
 
     :where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {
       width: 100%;
+      /* The route-marker strip below adds padding and a border; a content-box
+         strip at 100% then overran its card by that padding on both sides. */
+      box-sizing: border-box;
       gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
     }
 
