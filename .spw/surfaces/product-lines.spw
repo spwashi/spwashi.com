@@ -169,31 +169,33 @@ product_lines: .{
   }[reg=facet]
  }[reg=facet]
  folio_editions = .{
-  pitch = `Printer-paper-sized laminated originals, with prints and custom collages minted from the same source record. lore.land is the pantry; RPG Wednesday is the shared art-and-story practice.`
-  feature_shape = `One source folio → original, print, or collage release, plus new story-led art that becomes a new source.`
+  pitch = `Printer-paper-sized laminated originals kept as a returning stack: collage and laminate what is current, paint a season across several folios, then paint those same surfaces again the next year. Tempera and matte varnish keep the stack from welding. Prints and custom collages mint from the same source. lore.land is the pantry; RPG Wednesday is the shared table.`
+  feature_shape = `Studio practice (collage → laminate → seasonal paint → restack) feeds one source folio → original, print, or collage release, plus new story-led art that becomes a new source.`
   collectible_unit = `A minted original, a numbered or open print, a handmade or printed collage, a provenance card.`
   audience_primary = illustrator
   audience_bridge = #[
    `homebrew players read it as a physical ingredient`,
    `collectors read it as a lore object`,
-   `commissioners read it as a custom collage or story-led piece`
+   `commissioners read it as a custom collage or story-led piece`,
+   `followers read the stack as a meditative process that also yields posts`
   ][reg=set]
   integration_contract = .{
-   audience = `art collectors, bridging to homebrew players and component designers.`
-   offer = `Look at formats and working original-price bands; talk about a custom piece before sales open.`
-   proof = `/design/folios/#collect-a-folio names originals, prints, collages, and planning ranges without checkout.`
-   resonance = `A still from play can become an object you can hold.`
-   extension = `lore.land pantry → RPG Wednesday practice → folio worktable.`
-   next_action = `/design/folios/#collect-a-folio → /contact/ → /services/#pricing for existing commissions.`
+   audience = `people who want a durable studio practice, bridging to collectors, homebrew players, and component designers.`
+   offer = `Look at the returning-stack practice and working original-price bands; talk about a custom piece before sales open.`
+   proof = `/design/folios/#studio-practice names collage, lamination, yearly paint, paint seasons, and stackable materials; #collect-a-folio keeps formats and planning ranges without checkout.`
+   resonance = `Authenticity is the return to the same surface. A paint season can connect several folios; the stack is also a source of pictures and posts.`
+   extension = `studio stack → lore.land pantry → RPG Wednesday table → folio worktable.`
+   next_action = `/design/folios/#studio-practice → /design/folios/#collect-a-folio → /contact/ → /services/#pricing for existing commissions.`
   }[reg=facet]
   current_state = .{
-   summary = `Invitation live; sales not open. Landing pages and promo-wonder-cycle now point at the worktable.`
+   summary = `Practice named on the worktable; invitation live; sales not open.`
    evidence = #[
-    `route copy at /design/folios/#collect-a-folio`,
+    `route copy at /design/folios/#studio-practice and #collect-a-folio`,
+    `today's receipt on /now/ (2026-09-17)`,
     `promo pair in public/data/promo-wonder-cycle.json`,
     `landing invitations on home, about, services, now, play, RPG Wednesday, lore.land, design hub`
    ][reg=set]
-   next_step = `First scan census, then a small named release. Do not list live folio prices on /services/#pricing.`
+   next_step = `Keep the practice current. First scan census, then a small named release. Do not list live folio prices on /services/#pricing.`
   }[reg=facet]
  }[reg=facet]
  skill_os = .{
