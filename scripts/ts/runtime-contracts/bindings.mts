@@ -27,8 +27,16 @@ export type BindingFinding = {
   message: string;
 };
 
+/** Optional bag so fixture tests can reuse parsed lib files across createProgram calls. */
+export type BindingProgramReuse = {
+  program?: ts.Program;
+};
+
 /** Configuration and syntax must succeed before semantic filtering is meaningful. */
-export function collectRuntimeBindingFindings(project: string): BindingFinding[] {
+export function collectRuntimeBindingFindings(
+  project: string,
+  reuse?: BindingProgramReuse,
+): BindingFinding[] {
   const configPath = path.resolve(project);
   const root = path.dirname(configPath);
   const config = ts.readConfigFile(configPath, ts.sys.readFile);
@@ -41,13 +49,36 @@ export function collectRuntimeBindingFindings(project: string): BindingFinding[]
     ...parsed.errors,
   ];
   if (!diagnostics.length) {
-    const program = ts.createProgram(parsed.fileNames, parsed.options);
-    diagnostics = [
+    const options = {
+      ...parsed.options,
+      noEmit: true,
+      noUncheckedSideEffectImports: true,
+    };
+    const collect = (program: ts.Program | ts.BuilderProgram): ts.Diagnostic[] => [
       ...program.getOptionsDiagnostics(),
       ...program.getGlobalDiagnostics(),
       ...program.getSyntacticDiagnostics(),
       ...program.getSemanticDiagnostics().filter((item) => BINDING_CODES.has(item.code)),
     ];
+    if (options.incremental && !reuse) {
+      const builder = ts.createIncrementalProgram({
+        rootNames: parsed.fileNames,
+        options,
+        configFileParsingDiagnostics: parsed.errors,
+      });
+      diagnostics = collect(builder);
+      builder.emit();
+    } else {
+      const program = ts.createProgram(
+        parsed.fileNames,
+        options,
+        ts.createCompilerHost(options),
+        reuse?.program,
+        parsed.errors,
+      );
+      if (reuse) reuse.program = program;
+      diagnostics = collect(program);
+    }
   }
   return diagnostics.map((item) => {
     const position = item.file?.getLineAndCharacterOfPosition(item.start ?? 0);

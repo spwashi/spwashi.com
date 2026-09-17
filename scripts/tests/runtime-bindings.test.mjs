@@ -6,6 +6,8 @@ import test from 'node:test';
 import ts from 'typescript';
 import { collectRuntimeBindingFindings } from '../typed/runtime-contracts/bindings.mjs';
 
+const reuse = {};
+
 async function fixture(t, files, options = {}) {
   const root = await mkdtemp(path.join(os.tmpdir(), 'spw-bindings-'));
   t.after(() => rm(root, { recursive: true, force: true }));
@@ -13,6 +15,7 @@ async function fixture(t, files, options = {}) {
     compilerOptions: {
       allowJs: true, checkJs: true, noEmit: true, strict: false,
       target: 'ES2022', module: 'ESNext', moduleResolution: 'Bundler',
+      skipLibCheck: true,
       types: [], ...options,
     },
     include: ['*.js'],
@@ -31,7 +34,7 @@ test('binding gate checks suggestions, unexported names, and every literal impor
       console.log(gretingName, greetng, hidden, greting, greeting);
       import('./absent-lazy.js');`,
   });
-  const findings = collectRuntimeBindingFindings(project);
+  const findings = collectRuntimeBindingFindings(project, reuse);
   assert.ok(findings.some((item) => item.code === 2459));
   assert.ok(findings.some((item) => item.code === 2724));
   assert.ok(findings.some((item) => item.code === 2304));
@@ -43,19 +46,19 @@ test('binding gate checks suggestions, unexported names, and every literal impor
 
 test('binding gate fails malformed source and configuration', async (t) => {
   const project = await fixture(t, { 'source.js': 'export const = ;' });
-  assert.ok(collectRuntimeBindingFindings(project).some((item) => item.code < 2000));
+  assert.ok(collectRuntimeBindingFindings(project, reuse).some((item) => item.code < 2000));
   await writeFile(project, '{ "compilerOptions": { "module": "not-a-module-kind" } }');
-  assert.ok(collectRuntimeBindingFindings(project).some((item) => item.code === 6046));
+  assert.ok(collectRuntimeBindingFindings(project, reuse).some((item) => item.code === 6046));
   await writeFile(project, '{');
-  assert.ok(collectRuntimeBindingFindings(project).length > 0);
-  assert.ok(collectRuntimeBindingFindings(`${project}.missing`).length > 0);
+  assert.ok(collectRuntimeBindingFindings(project, reuse).length > 0);
+  assert.ok(collectRuntimeBindingFindings(`${project}.missing`, reuse).length > 0);
 });
 
 test('binding gate leaves ordinary JS inference errors to the type audit', async (t) => {
   const project = await fixture(t, {
     'source.js': '/** @param {string} value */ export function length(value) { return value.length; } length(123);',
   });
-  assert.deepEqual(collectRuntimeBindingFindings(project), []);
+  assert.deepEqual(collectRuntimeBindingFindings(project, reuse), []);
 });
 
 test('inherited compile policy preserves generated output when a source has type errors', async (t) => {
@@ -64,7 +67,7 @@ test('inherited compile policy preserves generated output when a source has type
   await writeFile(path.join(root, 'source.ts'), 'export const value: string = 42;');
   await writeFile(project, JSON.stringify({
     extends: new URL('../../tsconfig.json', import.meta.url).pathname,
-    compilerOptions: { noEmit: false, outDir: './output', types: [] },
+    compilerOptions: { noEmit: false, outDir: './output', types: [], skipLibCheck: true },
     include: ['source.ts'],
   }));
   const config = ts.readConfigFile(project, ts.sys.readFile);

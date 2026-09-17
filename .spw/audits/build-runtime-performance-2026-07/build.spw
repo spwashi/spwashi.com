@@ -176,6 +176,14 @@
     landed = `2026-09-17 build-compile.mjs stamps + --with-css; check:local and package.json build consume it`
     sample = `warm miss 12.47s compile+css; warm cache 1.83s; deleting typecheck:root.stamp rebuilt only that pass`
   }
+  .{
+    id = `pre-push-bindings-and-tests`
+    cost_class = `premature_commitment`
+    seam = `pre-push check:local waited on check-runtime-bindings (~43s createProgram ignoring tsconfig.public incremental) and test:modules (~32s), including an 840ms real sleep in feature-discovery`
+    direction = `createIncrementalProgram + .tmp/tsc/runtime-bindings.stamp; mock timers for ATTENTION_SETTLE_DWELL_MS`
+    landed = `2026-09-17 bindings collector incremental; check-runtime-bindings.mjs stamp; engagement-features.test.mjs ticks instead of sleeping`
+    sample = `bindings miss 54s → stamp 2.67s; settle test 908ms → 11ms; check:local wall was max(bindings, tests, check-site)`
+  }
 }[reg=set]
 
 ^"defaults"{

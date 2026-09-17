@@ -18,7 +18,7 @@ const BINDING_CODES = new Set([
     2882, // unresolved side-effect import
 ]);
 /** Configuration and syntax must succeed before semantic filtering is meaningful. */
-export function collectRuntimeBindingFindings(project) {
+export function collectRuntimeBindingFindings(project, reuse) {
     const configPath = path.resolve(project);
     const root = path.dirname(configPath);
     const config = ts.readConfigFile(configPath, ts.sys.readFile);
@@ -31,13 +31,32 @@ export function collectRuntimeBindingFindings(project) {
         ...parsed.errors,
     ];
     if (!diagnostics.length) {
-        const program = ts.createProgram(parsed.fileNames, parsed.options);
-        diagnostics = [
+        const options = {
+            ...parsed.options,
+            noEmit: true,
+            noUncheckedSideEffectImports: true,
+        };
+        const collect = (program) => [
             ...program.getOptionsDiagnostics(),
             ...program.getGlobalDiagnostics(),
             ...program.getSyntacticDiagnostics(),
             ...program.getSemanticDiagnostics().filter((item) => BINDING_CODES.has(item.code)),
         ];
+        if (options.incremental && !reuse) {
+            const builder = ts.createIncrementalProgram({
+                rootNames: parsed.fileNames,
+                options,
+                configFileParsingDiagnostics: parsed.errors,
+            });
+            diagnostics = collect(builder);
+            builder.emit();
+        }
+        else {
+            const program = ts.createProgram(parsed.fileNames, options, ts.createCompilerHost(options), reuse?.program, parsed.errors);
+            if (reuse)
+                reuse.program = program;
+            diagnostics = collect(program);
+        }
     }
     return diagnostics.map((item) => {
         const position = item.file?.getLineAndCharacterOfPosition(item.start ?? 0);

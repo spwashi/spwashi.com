@@ -319,7 +319,9 @@ test('feature discovery keeps regional attention opt-in and bounded', () => {
   assert.equal(document.documentElement.dataset.spwFeatureDiscoveryInit, undefined);
 });
 
-test('feature discovery waits for settled regional attention before recording an encounter', async () => {
+test('feature discovery waits for settled regional attention before recording an encounter', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'], now: 0 });
+  t.after(() => t.mock.timers.reset());
   const originalQuerySelectorAll = document.querySelectorAll;
   const originalGetElementById = document.getElementById;
   const originalAddEventListener = document.addEventListener;
@@ -373,7 +375,7 @@ test('feature discovery waits for settled regional attention before recording an
     });
     assert.equal(attributes.has('data-spw-feature-encounter'), false, 'the region is not recorded immediately');
 
-    await new Promise((resolve) => setTimeout(resolve, 900));
+    t.mock.timers.tick(900);
     assert.equal(attributes.get('data-spw-feature-encounter'), 'novel');
     assert.equal(
       window.spwFeatureDiscovery.get().species['regional-surprise'],
