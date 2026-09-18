@@ -41244,6 +41244,14 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   isolation: isolate;
 }
 
+/* The footer cauldron's vessel switch waits behind Show while the panel is
+   compact: a first visit read five vessel buttons and a Spw expression before
+   any sentence. The rule lives here, not in components/cauldron.css, because
+   this layer's `.mode-switch { display: flex }` outranks the components layer. */
+.site-footer__cauldron[data-spw-cauldron-panel="compact"] .mode-switch.site-footer__cauldron-vessels {
+  display: none;
+}
+
 /* Cluster B — labeled chrome (default when aria-label is authored) */
 .mode-switch[aria-label]::before {
   content: attr(aria-label);
@@ -41487,6 +41495,12 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     gap: 0.32rem;
     width: 100%;
     inline-size: 100%;
+  }
+
+  /* The compact footer cauldron keeps its vessel switch hidden on narrow
+     tracks too; this outranks the 2×2 fallback above (five selectors, later). */
+  .site-footer__cauldron[data-spw-cauldron-panel="compact"] .mode-switch[aria-label].site-footer__cauldron-vessels {
+    display: none;
   }
 
   .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil {

@@ -18,7 +18,7 @@ function createFloatingChip() {
   chip.href = '#memory-garden-cauldron';
   chip.id = 'spw-cauldron-chip';
   chip.dataset.spwHypermediaExtension = 'state resume';
-  chip.setAttribute('aria-label', 'Open extension pocket');
+  chip.setAttribute('aria-label', 'Open the cauldron — what you are holding');
   chip.hidden = true;
   chip.innerHTML = `
     <span class="spw-cauldron-chip__sigil" aria-hidden="true">◎</span>
@@ -143,7 +143,7 @@ function syncPanelToggleLabels(host) {
   const open = host.dataset.spwCauldronPanel !== 'compact';
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   toggle.textContent = open ? 'hide' : 'show';
-  toggle.title = open ? 'Hide extension pocket' : 'Show extension pocket';
+  toggle.title = open ? 'Hide the cauldron' : 'Show the cauldron';
 }
 
 export function syncCauldronPanelCollapse(count) {

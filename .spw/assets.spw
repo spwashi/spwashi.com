@@ -56,7 +56,8 @@
         { name: "boon-crown-splash", spirit: "boon-crown-splash", role: "boonhonk-valence-study" },
         { name: "lore-seed-pod-nebula", spirit: "lore-seed-pod-nebula", role: "series-home-study" },
         { name: "craft-paper-crane-unfurling", spirit: "craft-paper-crane-unfurling", role: "craft-fold-study" },
-        { name: "boon-dough-pearl-skin", spirit: "boon-dough-pearl-skin", role: "culinary-boon-study" }
+        { name: "boon-dough-pearl-skin", spirit: "boon-dough-pearl-skin", role: "culinary-boon-study" },
+        { name: "garden-bed-atlas", spirit: "garden-bed-atlas", role: "mechanism-illustration" }
       ]
     }
 

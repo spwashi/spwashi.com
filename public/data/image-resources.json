@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-11T03:52:21.403Z",
+  "generatedAt": "2026-09-18T01:13:21.928Z",
   "sourceRoot": "/public/images/",
-  "count": 784,
+  "count": 822,
   "concepts": [
     "about",
     "algorithm",
@@ -26,6 +26,7 @@
     "style-reference",
     "support",
     "surface",
+    "town",
     "website",
     "worldbuilding"
   ],
@@ -825,6 +826,90 @@
         "design"
       ],
       "swapHint": "Use /public/images/assets/illustrations/design-papergami-layout-machine-thumb.webp when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "garden-bed-atlas",
+      "title": "Garden Bed Atlas",
+      "path": "/public/images/assets/illustrations/garden-bed-atlas-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 10317,
+      "role": "display",
+      "concepts": [
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/garden-bed-atlas-display.avif when a site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "garden-bed-atlas",
+      "title": "Garden Bed Atlas",
+      "path": "/public/images/assets/illustrations/garden-bed-atlas-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 10446,
+      "role": "display",
+      "concepts": [
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/garden-bed-atlas-display.webp when a site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "garden-bed-atlas",
+      "title": "Garden Bed Atlas",
+      "path": "/public/images/assets/illustrations/garden-bed-atlas-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 32961,
+      "role": "hero",
+      "concepts": [
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/garden-bed-atlas-hero.avif when a site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "garden-bed-atlas",
+      "title": "Garden Bed Atlas",
+      "path": "/public/images/assets/illustrations/garden-bed-atlas-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 61420,
+      "role": "hero",
+      "concepts": [
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/garden-bed-atlas-hero.webp when a site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "garden-bed-atlas",
+      "title": "Garden Bed Atlas",
+      "path": "/public/images/assets/illustrations/garden-bed-atlas-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 2778,
+      "role": "thumbnail",
+      "concepts": [
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/garden-bed-atlas-thumb.avif when a site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "garden-bed-atlas",
+      "title": "Garden Bed Atlas",
+      "path": "/public/images/assets/illustrations/garden-bed-atlas-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 3094,
+      "role": "thumbnail",
+      "concepts": [
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/garden-bed-atlas-thumb.webp when a site-design / route-architecture visual needs a stable tracked asset."
     },
     {
       "id": "home-og-card",
@@ -5650,6 +5735,414 @@
       "role": "render",
       "concepts": [],
       "swapHint": "Use /public/images/renders/_raw/2026-08-31-morning/woven_fabric_linen_texture_close-up_macro_weave_pattern_soft__6a147e5f-f967-42af-befa-3ca69cb560f2_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_0",
+      "title": "A Dragons Egg Warm And Faintly Glowing Resting In Straw Insid 7812337c Bafb 4130 B5ef 5fcdead9f320 0",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_0.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1420688,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_1",
+      "title": "A Dragons Egg Warm And Faintly Glowing Resting In Straw Insid 7812337c Bafb 4130 B5ef 5fcdead9f320 1",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_1.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1518252,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_2",
+      "title": "A Dragons Egg Warm And Faintly Glowing Resting In Straw Insid 7812337c Bafb 4130 B5ef 5fcdead9f320 2",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_2.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1580508,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_3",
+      "title": "A Dragons Egg Warm And Faintly Glowing Resting In Straw Insid 7812337c Bafb 4130 B5ef 5fcdead9f320 3",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_3.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1475330,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/a_dragons_egg_warm_and_faintly_glowing_resting_in_straw_insid_7812337c-bafb-4130-b5ef-5fcdead9f320_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_0",
+      "title": "A Single Pie Tipping Off A Windowsill Filling Mid Spill Warm 573ae2f4 4e76 40e6 Acb9 724cd344a891 0",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_0.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1692743,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_1",
+      "title": "A Single Pie Tipping Off A Windowsill Filling Mid Spill Warm 573ae2f4 4e76 40e6 Acb9 724cd344a891 1",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_1.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1286441,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_2",
+      "title": "A Single Pie Tipping Off A Windowsill Filling Mid Spill Warm 573ae2f4 4e76 40e6 Acb9 724cd344a891 2",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_2.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1430663,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_3",
+      "title": "A Single Pie Tipping Off A Windowsill Filling Mid Spill Warm 573ae2f4 4e76 40e6 Acb9 724cd344a891 3",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_3.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1459233,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/a_single_pie_tipping_off_a_windowsill_filling_mid-spill_warm__573ae2f4-4e76-40e6-acb9-724cd344a891_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_0",
+      "title": "An Open Atlas On A Candlelit Desk Glowing Teal Lattice Struct 1a3768bc 037c 448f 8270 326483577434 0",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_0.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1540258,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_0.png when a software / algorithm / architecture / site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_1",
+      "title": "An Open Atlas On A Candlelit Desk Glowing Teal Lattice Struct 1a3768bc 037c 448f 8270 326483577434 1",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_1.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1464077,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_1.png when a software / algorithm / architecture / site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_2",
+      "title": "An Open Atlas On A Candlelit Desk Glowing Teal Lattice Struct 1a3768bc 037c 448f 8270 326483577434 2",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_2.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1575912,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_2.png when a software / algorithm / architecture / site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_3",
+      "title": "An Open Atlas On A Candlelit Desk Glowing Teal Lattice Struct 1a3768bc 037c 448f 8270 326483577434 3",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_3.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1369926,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_3.png when a software / algorithm / architecture / site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_0",
+      "title": "Bonk City At Dusk Lantern Lit Town On A Hillside Warm Gold Wi B20269f7 A348 4cd8 A7a7 D9be8fb44a2f 0",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_0.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1454930,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding",
+        "town"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_0.png when a library / worldbuilding / town visual needs a stable tracked asset."
+    },
+    {
+      "id": "Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_1",
+      "title": "Bonk City At Dusk Lantern Lit Town On A Hillside Warm Gold Wi B20269f7 A348 4cd8 A7a7 D9be8fb44a2f 1",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_1.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1538931,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding",
+        "town"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_1.png when a library / worldbuilding / town visual needs a stable tracked asset."
+    },
+    {
+      "id": "Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_2",
+      "title": "Bonk City At Dusk Lantern Lit Town On A Hillside Warm Gold Wi B20269f7 A348 4cd8 A7a7 D9be8fb44a2f 2",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_2.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1790341,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding",
+        "town"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_2.png when a library / worldbuilding / town visual needs a stable tracked asset."
+    },
+    {
+      "id": "Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_3",
+      "title": "Bonk City At Dusk Lantern Lit Town On A Hillside Warm Gold Wi B20269f7 A348 4cd8 A7a7 D9be8fb44a2f 3",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_3.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1530489,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding",
+        "town"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/Bonk_City_at_dusk_lantern-lit_town_on_a_hillside_warm_gold_wi_b20269f7-a348-4cd8-a7a7-d9be8fb44a2f_3.png when a library / worldbuilding / town visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_0",
+      "title": "Boonberry Bramble In A Frosted Winter Field A Line Of Ants Te 0be8d527 5405 41e0 95e9 B2454e5374c6 0",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_0.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1582687,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_1",
+      "title": "Boonberry Bramble In A Frosted Winter Field A Line Of Ants Te 0be8d527 5405 41e0 95e9 B2454e5374c6 1",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_1.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1576987,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_2",
+      "title": "Boonberry Bramble In A Frosted Winter Field A Line Of Ants Te 0be8d527 5405 41e0 95e9 B2454e5374c6 2",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_2.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1377350,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_3",
+      "title": "Boonberry Bramble In A Frosted Winter Field A Line Of Ants Te 0be8d527 5405 41e0 95e9 B2454e5374c6 3",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_3.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1557423,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/boonberry_bramble_in_a_frosted_winter_field_a_line_of_ants_te_0be8d527-5405-41e0-95e9-b2454e5374c6_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_0",
+      "title": "Faint Teal Lattice On Warm Cream Paper Subtle Amber Flecks Lo 5fbc8b91 55f9 431c 9085 8c967cea73eb 0",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_0.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1934318,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_0.png when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_1",
+      "title": "Faint Teal Lattice On Warm Cream Paper Subtle Amber Flecks Lo 5fbc8b91 55f9 431c 9085 8c967cea73eb 1",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_1.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1987780,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_1.png when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_2",
+      "title": "Faint Teal Lattice On Warm Cream Paper Subtle Amber Flecks Lo 5fbc8b91 55f9 431c 9085 8c967cea73eb 2",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_2.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1801287,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_2.png when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_3",
+      "title": "Faint Teal Lattice On Warm Cream Paper Subtle Amber Flecks Lo 5fbc8b91 55f9 431c 9085 8c967cea73eb 3",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_3.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 2019436,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/faint_teal_lattice_on_warm_cream_paper_subtle_amber_flecks_lo_5fbc8b91-55f9-431c-9085-8c967cea73eb_3.png when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_0",
+      "title": "Grid Of 9 Simple Emblematic Marks On Warm Cream Paper Seedlin B9e9a3c3 C7b6 41f0 Bbb8 74c8beba130e 0",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_0.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1613798,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_1",
+      "title": "Grid Of 9 Simple Emblematic Marks On Warm Cream Paper Seedlin B9e9a3c3 C7b6 41f0 Bbb8 74c8beba130e 1",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_1.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1417969,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_2",
+      "title": "Grid Of 9 Simple Emblematic Marks On Warm Cream Paper Seedlin B9e9a3c3 C7b6 41f0 Bbb8 74c8beba130e 2",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_2.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1657349,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_3",
+      "title": "Grid Of 9 Simple Emblematic Marks On Warm Cream Paper Seedlin B9e9a3c3 C7b6 41f0 Bbb8 74c8beba130e 3",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_3.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1763485,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/grid_of_9_simple_emblematic_marks_on_warm_cream_paper_seedlin_b9e9a3c3-c7b6-41f0-bbb8-74c8beba130e_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_0",
+      "title": "Layered Translucent World Glass Stacked Luminous Planes In Te F0c3c902 Ed08 4c45 Bd1e Ace7ba92057a 0",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_0.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1560223,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_1",
+      "title": "Layered Translucent World Glass Stacked Luminous Planes In Te F0c3c902 Ed08 4c45 Bd1e Ace7ba92057a 1",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_1.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1558839,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_2",
+      "title": "Layered Translucent World Glass Stacked Luminous Planes In Te F0c3c902 Ed08 4c45 Bd1e Ace7ba92057a 2",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_2.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1525692,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_3",
+      "title": "Layered Translucent World Glass Stacked Luminous Planes In Te F0c3c902 Ed08 4c45 Bd1e Ace7ba92057a 3",
+      "path": "/public/images/renders/_raw/2026-09-17-session-5/layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_3.png",
+      "directory": "public/images/renders/_raw/2026-09-17-session-5",
+      "format": "png",
+      "bytes": 1946796,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-09-17-session-5/layered_translucent_world-glass_stacked_luminous_planes_in_te_f0c3c902-ed08-4c45-bd1e-ace7ba92057a_3.png when a render visual needs a stable tracked asset."
     },
     {
       "id": "Brainstorming sketch with robot and text",

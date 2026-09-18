@@ -207,8 +207,8 @@ export function initRewardUI(ctx = {}) {
     const summary = el('p', {
       className: 'spw-reward-summary',
       text: kinds.length
-        ? `${kinds.length} distinct kinds found so far — a ${latest.tier} field`
-        : 'No component kinds found yet. They accumulate as you move through the site.',
+        ? `${kinds.length} kinds of piece seen so far — a ${latest.tier} field. Each name below is a kind of thing on these pages.`
+        : 'Nothing collected yet. Kinds of piece — cards, chips, panels, frames — are collected as you read.',
     });
     const children = [summary, kindsRow, badges];
     const hasState = kinds.length > 0 || latest.achievements.length > 0 || latest.distinctKinds > 0;
@@ -244,19 +244,31 @@ export function initRewardUI(ctx = {}) {
      * the dock's styling, and it belongs in the description a reader gets when
      * they ask rather than in the two words they see first.
      */
+    /*
+     * "3 kinds found" still made a first-time reader ask: kinds of what? The
+     * kinds have names — card, chip, panel, frame — and those names are the
+     * things on the page in front of the reader, so the trigger shows the
+     * first two by name and folds the rest into a count. The full sentence,
+     * with what a kind is and what opening does, stays in the title and label.
+     */
     const kindCount = latest.distinctKinds;
-    dockCount.textContent = kindCount === 1 ? '1 kind found' : `${kindCount} kinds found`;
+    const kinds = collectionKinds();
+    const named = kinds.slice(0, 2).join(' · ');
+    const rest = Math.max(0, kindCount - 2);
+    dockCount.textContent = kindCount === 0
+      ? 'collecting kinds'
+      : rest ? `${named} +${rest}` : named;
     dockTrigger?.setAttribute(
       'title',
       kindCount === 0
-        ? 'Component collection — nothing found yet'
-        : `Component collection — ${kindCount} distinct kinds, a ${latest.tier} field`,
+        ? 'Your collection — nothing found yet. Kinds of piece (cards, chips, panels) are collected as you read.'
+        : `Your collection — ${kindCount} kinds of piece seen so far: ${kinds.join(', ')}. Open to see them; a ${latest.tier} field.`,
     );
     dockTrigger?.setAttribute(
       'aria-label',
       kindCount === 0
-        ? 'Component collection, nothing found yet'
-        : `Component collection, ${kindCount} kinds found`,
+        ? 'Your collection, nothing found yet'
+        : `Your collection, ${kindCount} kinds of piece seen: ${kinds.join(', ')}`,
     );
     dock.dataset.spwRewardTier = latest.tier;
     if (dockExpanded) renderCollectionInto(dockBody);

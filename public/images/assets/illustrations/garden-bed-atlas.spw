@@ -1,0 +1,45 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "garden-bed-atlas"
+  description: "An open book on a candlelit desk. Translucent teal lattice trees and small amber blooms grow up out of its pages; a candle and a stack of books sit blurred behind. The memory garden as a picture: what you hold grows out of the page."
+  visual_qualities: "candlelit, translucent, lattice, sprouting, warm-on-teal, shallow focus, quiet"
+}
+
+^"thematic_mapping"{
+  operator: "potential"
+  valence: "boon"
+  spirit_phase: "gather"
+  liminality: "threshold"
+  role: "mechanism-illustration"
+  context: "the footer cauldron (memory garden): held words become a bed that grows across issues"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "supporting-figure"
+  dimensions: { width: 1680, height: 720 }
+  formats_available: ["avif", "webp"]
+  alt_text: "An open book on a candlelit desk; translucent teal lattice trees and small amber blooms grow up out of its pages."
+  placements: ["/#living-concepts — supporting figure beside the tap / hold / mix key"]
+}
+
+^"optimization"{
+  optimized_on: "2026-09-17T20:30:00Z"
+  source_render: ~"../../renders/_raw/2026-09-17-session-5/"
+  source_file: "an_open_atlas_on_a_candlelit_desk_glowing_teal_lattice_struct_1a3768bc-037c-448f-8270-326483577434_0.png"
+  variants: [
+    { tier: "thumb", size: "256x110", formats: ["avif", "webp"] },
+    { tier: "display", size: "512x219", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x439", formats: ["avif", "webp"] }
+  ]
+  notes: "Landscape master; tiers are widths. The raw session folder is gitignored, so source_render names it for the person who holds the zip."
+}
+
+^"discovery"{
+  tags: ["cauldron", "memory-garden", "atlas", "book", "lattice", "candle", "sprout", "living-concepts"]
+  spirit_name: "garden-bed-atlas"
+  midjourney_prompt: "an open atlas on a candlelit desk, glowing teal lattice structures growing from the pages"
+  session: "2026-09-17 session 5; plan seed: .agents/plans/midjourney-design-concepts/PLAN.md#garden-bed-atlas-and-cauldron-marks--session-2026-09-17"
+}

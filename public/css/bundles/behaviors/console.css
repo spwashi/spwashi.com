@@ -126,8 +126,12 @@
   margin-bottom: 0.45rem;
 }
 
+/* Compact is what a first visit sees. The vessel switch waits behind Show
+   (the rule sits in handles/operators/state-semantics.css, beside the
+   .mode-switch it has to outrank) and the kicker carries the one instruction
+   that matters. */
 .site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-kicker::after {
-  content: " · hold to stash";
+  content: " · press and hold a highlighted word to drop it in";
   color: var(--ink-muted, rgba(14, 18, 20, 0.58));
   font-weight: 500;
   letter-spacing: normal;

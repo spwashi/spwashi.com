@@ -144,6 +144,61 @@ Promotion decision:
 - Translate into CSS material behavior before considering image use.
 - Reject broad texture overlays if they make text or slot anatomy harder to read.
 
+### Garden Bed Atlas and Cauldron Marks — session 2026-09-17
+
+Reference type: cauldron concreteness seed. Source: `public/images/renders/_raw/2026-09-17-session-5/` (32 renders, eight prompts; the zip is not a published asset).
+
+What the session holds:
+
+- **Open atlas, candlelit desk, teal lattice trees growing from the pages** — the memory garden as a picture: what you hold grows out of the page. Promoted 2026-09-17 as `assets/illustrations/garden-bed-atlas` (1680×720 master; hero 1024 wide) with a sidecar, and placed once, on Home `#living-concepts`, as the supporting figure beside the tap/hold/mix key.
+- **Nine emblematic marks on cream paper** — seedling, skillet, arched door, diamond lattice, compass star, open hand, plank door, candle, star. Read as a glyph set for the cauldron phases (seedling gather · candle prime · skillet compose · star extend) and for collected kinds. Kept as reference: extract as inline SVG marks for the phase rail before any raster is promoted.
+- **Layered translucent world-glass planes in teal** — paper-substrate atmosphere; overlaps `papergami`. Reference only.
+- **Faint teal lattice on warm cream paper** — a tileable ground; candidate for a `data-spw-biome` texture, reference only.
+- **Dragon's egg glowing in straw, candlelit alcove** — a candidate face for the streak-pet anchor (`/about/plans/#production-seeds`); reference until the pet has an owner and a card.
+- **Pie tipping off a windowsill** — Wonder About Pi(e) series seed; reference for the folio series bed.
+- **Bonk City at dusk; boonberry bramble with a line of ants** — lore.land pantry; reference for the RPG Wednesday and lore.land routes.
+
+Design question answered: the cauldron felt abstract on first entry because nothing on screen showed what it was for. The picture says it in one look (held things grow out of the page), and the copy now says it in one sentence (press and hold a highlighted word to drop it in).
+
+Promotion decision:
+
+- `garden-bed-atlas`: promoted, one placement, supporting prominence, alt text names the mechanism.
+- Marks: reference, then SVG. Everything else: reference.
+
+Next prompts (for the creator, who has Midjourney):
+
+```text
+Focused visual study for spwashi.com footer cauldron panel.
+Design question: what does a cauldron look like when it holds words instead of soup?
+Visual lane: material and operator.
+Mood: warm, exact, handmade, slightly comic, calm.
+Palette: warm cream paper, deep teal, copper, one amber ember; no purple.
+Material: cast iron and paper; the ingredients are small paper slips with single marks on them.
+Light cue: ember from below, table light from the side.
+Composition: one skillet-cauldron centered on a paper ground, three slips half-sunk in it, one slip rising as steam that becomes a sprout; generous margin.
+Motifs: skillet, seedling, candle, star, brace.
+Spell or cauldron: gather → prime → compose → extend.
+Grounding point: _partials/site-footer.html #memory-garden-cauldron; interface/cauldron/*.
+Avoid: legible text, logos, fake UI, cauldron-witch clichés, purple-white gradients, photoreal people.
+Output goal: one supporting illustration for the panel, and SVG-able marks.
+```
+
+```text
+Focused visual study for spwashi.com streak pet anchor.
+Design question: what small creature grows from a group's return rather than from points?
+Visual lane: route-specific art direction (RPG Wednesday, lore.land).
+Mood: tender, dressed-up, a little absurd, durable.
+Palette: warm cream, deep teal, copper scales, one amber glow.
+Material: papier-mâché and cloth; a costume that can change.
+Light cue: candle in an alcove.
+Composition: one egg-sized creature on straw wearing one removable outfit piece; room around it for a second outfit.
+Motifs: egg, straw, hat, seam.
+Spell or cauldron: return → dress → keep.
+Grounding point: /about/plans/#production-seeds; a seed-card template.
+Avoid: mascots from existing games, legible text, logos, photoreal people.
+Output goal: a customizable anchor the group can name and dress.
+```
+
 ## Literate Output Rule
 
 - A promoted concept needs a named principle, not just a prompt.

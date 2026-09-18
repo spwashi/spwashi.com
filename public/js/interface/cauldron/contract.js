@@ -156,7 +156,7 @@ export const CAULDRON_VESSEL_KEY = 'spw:cauldron-vessel';
 /** Open set. Named demos first; any other id still writes cauldron[id]{gather.mix.cast}. */
 export const CAULDRON_VESSELS = Object.freeze({
   garden: {
-    kicker: 'garden bed · this issue',
+    kicker: 'garden bed · what you hold here',
     expression: 'cauldron[garden]{sow.tend.harvest}',
     phases: ['sow', 'tend', 'mix', 'harvest'],
     mix: '!mix[harvest]',
@@ -319,18 +319,18 @@ export function computeCauldronPhase(ingredients = []) {
 export function getCauldronStatusCopy(count, phase) {
   const available = countPrimeableSources();
   const availabilityCopy = available
-    ? `${available} prime sources are visible on this page.`
-    : 'No prime sources are visible in this viewport yet.';
+    ? `${available} highlighted words on this page can be held.`
+    : 'Nothing on this screen can be held yet; scroll to a highlighted word.';
   if (phase === 'empty') {
-    return `Hold a living term or brace to save it as a fragment. Kin from this page can cluster into this issue's gathering. ${availabilityCopy}`;
+    return `The cauldron is empty. Press and hold a highlighted word to drop it in. ${availabilityCopy}`;
   }
   if (phase === 'primed') {
-    return '1 saved fragment. Add another fragment to compose an extension, or nourish this one for later.';
+    return '1 ingredient in the cauldron. Hold one more to make a mix, or nourish this one for later.';
   }
   if (phase === 'mixing') {
-    return '2 saved fragments. An extension draft is available; mix to inspect the combination before planting.';
+    return '2 ingredients in the cauldron. Mix them to see the extension they make before you plant it.';
   }
-  return `${count} saved fragments. Extension draft available: refine, copy, plant, or turn it into a vision seed.`;
+  return `${count} ingredients in the cauldron. The extension is ready: refine it, copy it, plant it, or turn it into a vision seed.`;
 }
 
 export function countPrimeableSources() {
