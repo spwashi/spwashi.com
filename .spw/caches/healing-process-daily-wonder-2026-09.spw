@@ -1,0 +1,126 @@
+# Healing Process as Daily Wonder (2026-09)
+#
+# operation: cache
+# Civic offer: emotionally regulating structures most people can return to.
+# The site illustrates a walk through rooms that already exist.
+# Not a clinic. Not a product line. Not a wellness feed.
+
+#>healing_process_daily_wonder_2026_09
+#:cache #!copy #!care #!wonder #!cadence
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@marketing: ~"../conventions/model-guided-refinement.spw"
+@daily_kernel: ~"../conventions/daily-kernel.spw"
+@cognitive_toy: ~"./cognitive-toy-2026-09.spw"
+@copy_agentic_direction: ~"./copy-agentic-direction-2026-09.spw"
+@promo_feed: ~"../../public/data/promo-wonder-cycle.json"
+@mental_route: ~"../../topics/mental-health/index.html"
+@care_route: ~"../../care/index.html"
+@care_practices: ~"../../services/care/index.html"
+@now_route: ~"../../now/index.html"
+@promo_plan: ~"../../.agents/plans/promo-wonder-cycle/PLAN.md"
+
+operation = "cache"
+fixity = "tending"
+source = "chat 2026-09-17: moral imperative to make emotionally regulating structures available to most citizens; illustrate a healing process with daily wonder and dated updates, especially for people who have done therapy and cannot afford more sessions"
+
+^"thesis"{
+  claim = `Emotionally regulating structures should be cheap enough for most people to return to. This site illustrates that as a walk through rooms that already exist — not as a clinic, a feed, or a new attribute family.`
+  civic = `The moral claim is author intent. Public copy stays practical so a reader can refuse it. The site does not replace a welfare state, a licensed professional, or 988.`
+  illustration = `A healing process here is visible return: stabilize, keep a language, share one small wonder, leave a dated receipt. Art, nutrition, and shared time are languages for that return. They are not a cure.`
+  refuse = `Do not claim a platform cure. Do not diagnose or treat. Do not add data-spw-heal, data-spw-regulate, or data-spw-wonder-type. Do not mint a care product line. Do not insert a promo pair except at the end of the daily list. Do not turn Now into a wellness diary.`
+}[reg=facet]
+
+^"hp-001_audience"{
+  id = "hp-001"
+  operation = "cache"
+  claim = `The primary public reader is someone who already learned something in therapy and cannot keep paying for sessions. Uninsured and first-conversation readers stay on adjacent rooms.`
+  evidence = #[
+    `@mental_route#without-insurance — cost, time, and not-knowing-where as design constraints (SAMHSA / HRSA / Census)`,
+    `@care_route — first conversation, not continuation; "not a clinic"`,
+    `@care_practices — before or alongside therapy; intake form`,
+    `@mental_route#streak-math — mental.streak.lede: 314-day return, not a platform cure`
+  ][reg=set]
+  split = `Care interface prepares a brief for a professional you choose. Mental health keeps the language alive between sessions. Services/care holds repeatable practices. Do not collapse those three jobs into one lede.`
+  expansion_prime = `Name the continuation audience on mental.hook.lede. Leave /care/ as first-conversation. Leave /services/care/ as practices plus form.`
+}[reg=facet]
+
+^"hp-002_walk"{
+  id = "hp-002"
+  operation = "cache"
+  claim = `The healing illustration is a walk across existing rooms, not a new wizard.`
+  beats = #{
+    stabilize = `/care/#stabilize-first — name the state, reduce the demand, choose a witness, leave a local record`
+    language = `/topics/mental-health/ — words, art, nutrition, shared time; not an anti-therapy page`
+    wonder = `/topics/mental-health/#streak-math — one incremental, otherwise inconsequential wonder`
+    receipt = `/now/#since-the-close — dated, only when something actually happened`
+    witness = `/play/rpg-wednesday/ — weekly table; exportable memory`
+    handoff = `/care/#cards and /services/care/ — a card or form you can bring back to a professional you choose`
+    crisis = `988 in the United States — a different door`
+  }
+  wonder_altitude = `Copy and engaged-wonder loop. Body types on the owner stay memory comparison consequence inquiry. Do not add a seventh type.`
+  pattern_consideration = #[
+    `@wonder_architecture — six altitudes; mixing them invents a type`,
+    `@cognitive_toy — adult toy: no points, no streak-as-obligation, no hidden content`,
+    `@product_lines — folio_editions and play_sessions already carry return; this walk is civic, not a SKU`
+  ][reg=set]
+}[reg=facet]
+
+^"hp-003_cadence"{
+  id = "hp-003"
+  operation = "cache"
+  claim = `Daily value is weekday promo plus dated Now receipts. It is not a wellness newsletter.`
+  evidence = #[
+    `@promo_feed daily list — rotation is date.getDay(); the 314-day streak pair must sit at the end so Monday stays Settings and Thursday stays the folio stack`,
+    `@now_route#since-the-close — 2026-09-17 names the folio practice and the 314-day pet in the same day's receipt`,
+    `git log: .[tests] Keep weekday promo slots after the streak pair`
+  ][reg=set]
+  rule = `Relevant updates enhance value only when they are receipts: a route strengthened, a session held, a pet dressed, a soup shared. A mood is not a receipt.`
+  expansion_prime = `Keep inviting one small autumn wonder. Do not add a daily mental-health feed. Do not retarget Now's sprint lede.`
+}[reg=facet]
+
+^"hp-004_offer"{
+  id = "hp-004"
+  operation = "cache"
+  claim = `This is an invitation, not a product line. Fill the six marketing fields before touching promo copy.`
+  audience = `People who already did therapy and cannot keep paying; also anyone who needs a cheap regulating return.`
+  offer = `A walk you can afford: stabilize, keep a language, share one small daily wonder, leave a dated receipt.`
+  proof = `/topics/mental-health/#mental-health-lede, #streak-math, /care/#stabilize-first, /now/#since-the-close`
+  resonance = `Return small enough to survive a bad day. Visible state (pet, receipt, card) beats progress you are asked to imagine.`
+  extension = `Bring a card to a professional you choose. Sit Wednesday. Share one inconsequential wonder. Do not monetize the streak.`
+  next_action = `/topics/mental-health/#streak-math → /care/ → /now/`
+  not_yet = `Not a product line. Not a seed-card template. Not a streak-pet data family.`
+}[reg=facet]
+
+^"hp-005_working_set"{
+  id = "hp-005"
+  operation = "align"
+  claim = `This pass names the walk on the canonical owner only.`
+  owner = `/topics/mental-health/`
+  collectibles = #[`mental.hook.lede`, `mental.hook.walk`, `mental.streak.lede`][reg=set]
+  left = #{
+    care = `/care/ stays first-conversation; not a clinic`
+    practices = `/services/care/ stays practices plus intake form`
+    now = `/now/ stays sprint receipts; the 2026-09-17 streak paragraph already points here`
+    home = `/ stays person-magazine; do not load the civic claim into home.hook.lede`
+    promo = `weekday slots locked; streak pair already last in the daily list`
+    recipes = `kitchen issue stays the dated September 4 sale pile`
+  }
+  skip = #[`140-route copy`, `new data-spw-* family`, `wellness feed`, `promo insert except at end of daily`, `folio prices`, `popcorn pet as an attribute`][reg=set]
+}[reg=facet]
+
+^"next_session"{
+  id = "hp-006"
+  operation = "align"
+  claim = `Open this cache, then one named slice. Do not implement a clinic from the civic sentence.`
+  open = #[`this file`, `@mental_route`, `@care_route`][reg=set]
+  next_slice = `If the walk lede holds, consider one care-interface note that points continuation readers to mental.hook.lede — not a rewrite of the first-conversation job.`
+  skip = #[`product line`, `DEVELOPMENT_CLUSTERS until two copy-units live on /care/`, `visual pack`, `ASTRA.md`][reg=set]
+  prove = `npm run audit:copy:accessor; mental.hook.lede under 320 characters; rg data-spw-wonder-type --glob '*.html' stays 0`
+}[reg=facet]

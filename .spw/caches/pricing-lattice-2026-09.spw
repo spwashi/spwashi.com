@@ -1,0 +1,159 @@
+# Pricing Lattice (2026-09)
+#
+# operation: cache
+# Cited comparable bands against the live services ladder and folio
+# working ranges. Not a checkout. Not a public-copy rewrite.
+# Decision: DO NOT BUILD paywalls, clone SKUs, or a TikTok catalog price
+# from this file.
+
+#>pricing_lattice_2026_09
+#:cache #!pricing #!marketing #!offers
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@product_lines: ~"../surfaces/product-lines.spw"
+@marketing: ~"../conventions/model-guided-refinement.spw"
+@taste: ~"./taste-research-2026-09.spw"
+@folio_soil: ~"./folio-soil-ecosystem-2026-09.spw"
+@minting: ~"../../.agents/plans/folio-worktable/minting.spw"
+@services: ~"../../services/index.html"
+@folios: ~"../../design/folios/index.html"
+@creator: ~"../../services/creator/index.html"
+@systems: ~"../../services/systems/index.html"
+@quest: ~"../../about/domains/spw.quest/index.html"
+@lore: ~"../../about/domains/lore.land/index.html"
+@membership: ~"../../membership/index.html"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-09-18: research relevant pricing for folios as periodical or show input, lore.land premium, spwashi.com as cached labor, services and clones, workbench as mentorship, spw.quest as launch demo, 11k TikTok videos as algorithmic investment"
+
+^"thesis"{
+  claim = `The live ladder is already in-market. New SKUs should inherit an existing lane, not invent a seventh price family.`
+  live = `Scope $250–$750; creator $600–$12,000; systems $5,000–$12,000+; advisory $18,000+ or $225/hr and $4,000–$8,000/mo; ecosystem free–$500; folio originals Seed $35 / Chapter $75 / Landmark $150 / Relic $200–$275, three Seeds $95. Folios are not on the commission ladder. Sales settle in a reply; no checkout.`
+  refuse = `Do not mint a lore.land $6 paywall, a $79 site theme, a 1:1 mentorship SKU, or a TikTok-catalog price. Do not mix folio working ranges into /services/#pricing. Do not implement from this cache.`
+}[reg=facet]
+
+^"pl-001_folios_two_logics"{
+  id = "pl-001"
+  operation = "cache"
+  claim = `A laminated folio is either a periodical issue or a production object. Those are two prices. Do not average them.`
+  periodical_comps = #[
+    `Print/zine clubs cluster $7–$22/mo (Slow Zine Club $11; Museletter $12–$22; Paloma Kop $3 digital / $7 object; Talia Barnes Print Club $5/mo quarterly mail)`,
+    `Working Seed $35 already sits above a print-club issue and below a Chapter original $75`
+  ][reg=set]
+  production_comps = #[
+    `US non-union production designer $700–$2,000/day; props $400–$800/day (Need a Crew, May 2026)`,
+    `UK TV concept-artist minimum £387/day (BFD 2025–26 TV rate card)`,
+    `US freelance concept $600–$1,200/day or $300–$800 mid-level character (Rework / Drawphics 2026)`,
+    `Game concept sketches $100–$300; high-detail $800–$2,000+ (Kevuru 2026)`
+  ][reg=set]
+  judgment = `A 13th/26th issue of one Seed or Chapter original ($35 or $75, shipping extra) is the periodical. Landmark/Relic ($150–$275) is the show-table object — cheap as production design, honest as a handable original. Do not run a $12 print club that undercuts Seed. Do not bill IATSE day rates for printer-paper lamination.`
+  already = `@minting#price_ladder and @folios#folio-prices. Order-by-card is live; payment is not.`
+  do_not_build = `No subscription checkout. No folio SKU on /services/#pricing.`
+}[reg=facet]
+
+^"pl-002_lore_land_premium"{
+  id = "pl-002"
+  operation = "cache"
+  claim = `lore.land is a pantry and a serial, not worldbuilding software. Premium, if any, follows show extras — not World Anvil.`
+  tool_comps = #[
+    `World Anvil Guild: Master $4.50/mo annual, Grandmaster $8.25, Sage $25 (worldanvil.com/pricing, snippets 2026-09-18; Nanowrit Labs verified 2026-08-14 lists $4.99–$34.99/mo)`,
+    `Kanka $4.99–$24.99/mo; LegendKeeper $9/mo (Nanowrit Labs 2026-08-14)`
+  ][reg=set]
+  show_comps = #[
+    `Beacon (fetched beacon.tv 2026-09-18): $5.99/mo or $59.99/yr; 7-day trial then $5.99. Early VOD, exclusive Cooldown, Discord, 10% shop`,
+    `Dropout (fetched dropout.tv/plans 2026-09-18): $6.99/mo; $55.99 first year then $69.99/yr; Superfan $129.99/yr`
+  ][reg=set]
+  already = `$12,000 series home clones the reading room for another author; $500 taste pass is one orbit note; lore.land itself is the proof, currently free.`
+  judgment = `A $6–$7/mo “table seat” only earns if it adds early chapter, Wednesday extras, or a members room — Beacon logic. A wiki login at World Anvil prices sells the wrong product. Default: keep the pantry free; sell the series-home to other authors; keep membership as coordination plus Patreon / GitHub Sponsors.`
+  do_not_build = `No lore.land paywall in this pass. Do not hide pantry copy behind a sub.`
+}[reg=facet]
+
+^"pl-003_cached_labor"{
+  id = "pl-003"
+  operation = "cache"
+  claim = `spwashi.com is accumulated staff-level labor. License the engine; do not sell the person-magazine as a $79 theme.`
+  hourly_comps = #[
+    `Site advisory already $225/hr`,
+    `Stiple May 2026: software development median $197/hr (low $132, high $299); cloud architecture median $224`,
+    `TechCloudPro 2026: onshore senior ~$225/hr, architects $225–$400+`,
+    `IEEE consultant survey 2025: rates plateaued; ~1 in 5 full-fee consultants at $300+/hr; Mountain-region median $235`
+  ][reg=set]
+  site_comps = #[
+    `2026 SMB professional sites commonly $3,000–$15,000; boutique custom $8,000–$15,000 (BKND, Digital Applied, Nimbus)`,
+    `Webflow/Framer templates $39–$169 one-time — a layout, not 146 routes`,
+    `SaaS boilerplates $129–$599 lifetime (ShipFast ~$129–$299; MakerKit $299–$599)`
+  ][reg=set]
+  judgment = `$225/hr is correctly senior-independent, not FAANG-staff W-2 and not Upwork commodity. Cached labor as a deliverable maps to existing systems lanes: inspection $750–$5,000; durable clone $8,000–$12,000; engine license (runtime + CSS contracts + conventions, without identity copy) $12,000–$45,000. A theme at template prices would lie about what the site is.`
+  already = `@services#pricing Systems Sprint and Architecture. factshift remains the cloneable public app proof.`
+}[reg=facet]
+
+^"pl-004_services_clones"{
+  id = "pl-004"
+  operation = "cache"
+  claim = `A clone is a systems sprint with a named residue, not a new product line.`
+  evidence = #[
+    `Author site $2,500 is the cheap door (template-adjacent)`,
+    `Durable business site $8,000+ matches 2026 boutique custom`,
+    `Application sprint $12,000+ is the floor for a custom workflow`,
+    `Architecture memo $5,000–$12,000; fixed scope $18,000–$45,000+`
+  ][reg=set]
+  judgment = `Sell “a clone of this engine for your domain” as $8,000–$12,000 durable or $12,000+ application, with the $750 diagnostic as the first honest step. Do not add /clones/. factshift/app stays the inspectable proof.`
+  do_not_build = `No clone SKU, no template marketplace listing.`
+}[reg=facet]
+
+^"pl-005_workbench_mentorship"{
+  id = "pl-005"
+  operation = "cache"
+  claim = `The workbench is a cohort anchor. About already refuses long 1:1 mentorship as the product.`
+  comps = #[
+    `Maven Help (2026-04-02): cohort courses $800–$1,200 (6–8 live hours), $1,200–$1,800 (8–12), $1,800–$2,450 (12–20); floor $200`,
+    `Plato HQ ~$50/mo or $480/yr community mentorship (IGotAnOffer 2026 roundup)`,
+    `Independent leadership sessions ~€395 (Marian Kamenistak published 2026-09-12); quarter ~€1,975`
+  ][reg=set]
+  already = `$750 diagnostic + memo; $4,000–$8,000/mo advisory retainer; ecosystem cohort bundle is named and unpriced; About prefers Discord/creator channels with a shared pace.`
+  judgment = `Quote a workbench cohort at $800–$1,800 per person for a 6–12 live-hour season on the 13th/26th cadence. Keep 1:1 as the existing $750 diagnostic or the retainer — not a new mentor SKU. The workbench repo is the textbook; the cohort is the room.`
+  do_not_build = `No ADPList-style 1:1 booking grid. No workbench seat license that hides the public parser.`
+}[reg=facet]
+
+^"pl-006_quest_launch"{
+  id = "pl-006"
+  operation = "cache"
+  claim = `spw.quest is the free demo. The 13th/26th close is the launch occasion. Peer products pay for a reading, not for the guide.`
+  already = `@quest is the public crawl contract. $250 proof card and $500 taste pass already buy a screenshotable claim or one orbit note. Series opening $4,000 is a whole reading home.`
+  judgment = `Keep quest free. A peer tool launches as a Scope Card ($250–$750) or Taste pass ($500) timed to a close — not as a paid quest course. Maven-priced courses belong on the workbench cohort (pl-005), not on the demo.`
+  do_not_build = `No paid quest funnel. No Product Hunt clone.`
+}[reg=facet]
+
+^"pl-007_tiktok_catalog"{
+  id = "pl-007"
+  operation = "cache"
+  claim = `Eleven thousand videos are a distribution and relationship asset. RPM is the wrong price. Follower-tier brand deals are the wrong unit if the ask is career + creative-director proof.`
+  note = `Video count is the requester's figure; this cache did not census the TikTok account.`
+  rpm = `Creator Rewards (fka Creativity Program): third-party 2026 benchmarks $0.40–$1.00 per 1,000 qualified views on 60s+ FYP plays (Elev8or / Soundstripe via MakeViral 2026-09-15; Gigapay 2026-09-18). Old Creator Fund was ~$0.02–$0.04. Catalog size does not multiply RPM.`
+  deals = `2026 in-feed brand video: nano (1k–10k) ~$50–$400; micro (10k–100k) ~$300–$2,500; mid ~$2,000–$10,000 (InfluencerFee / Gigapay, reviewed 2026-09). Usage/Spark rights add 15–100%.`
+  labor = `Replacement cost at even 20 minutes/video × $150/hr × 11,000 ≈ $550k of sunk making. That is not a SKU; it is why the advisory and creator lanes exist.`
+  cd = `Fractional creative director 2026: Go Fractional median ~$150/hr (p25–p75 $100–$180); GTM 8020 freelance $100–$150 standard, $200–$500 premium; retainers $5,000–$15,000/mo.`
+  judgment = `Do not price the library. Point at it as proof for $225/hr, $4,000–$8,000/mo retainers, and creator work. A CD relationship is the same advisory lane plus the catalog as evidence — not a second hourly. Brand deals, if taken, price from recent average views, not from 11k.`
+  do_not_build = `No “buy the archive” checkout. No RPM on a public page.`
+}[reg=facet]
+
+^"lattice"{
+  note = `Proposed next prices, all inheriting a live lane. None of these are on sale until a named offer names audience, proof, and next action.`
+  folio_issue = `One Seed or Chapter original on a close — $35 or $75 plus shipping. Periodical.`
+  folio_show_object = `Landmark/Relic $150–$275 as a table object or story-led custom (quoted). Production input.`
+  lore_access = `Default free pantry. Optional later: Beacon-like $6–$12/mo extras. Do not ship now.`
+  engine_clone = `$8,000–$12,000 durable or $12,000–$45,000 engine license. Door: $750 diagnostic.`
+  workbench_cohort = `$800–$1,800/person per season. Not 1:1.`
+  quest_launch = `Free demo; $250–$750 launch card or $500 taste timed to a close.`
+  tiktok = `Not for sale. Proof for advisory and CD retainers.`
+}[reg=facet]
+
+^"next_session"{
+  1 = `Read this cache and /services/#pricing before changing any public number.`
+  2 = `If one SKU moves, pick folio_issue or workbench_cohort — not both, and not a paywall.`
+  3 = `A marketing card still needs audience, offer, proof, resonance, extension, next_action.`
+  skip = #[`checkout`, `lore.land paywall`, `template marketplace`, `1:1 mentor grid`, `services folio prices`, `TikTok RPM copy`][reg=set]
+}
