@@ -25,7 +25,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
       'public/css/shell/chrome/adaptive.css',
       'public/css/shell/chrome/section-context.css',
       'public/css/handles/operators/state-semantics.css',
-      'public/js/interface/canvas-accents.js',
+      'public/js/media/canvas-accents.js',
       'public/css/effects/wonder.css',
     ]),
   }),

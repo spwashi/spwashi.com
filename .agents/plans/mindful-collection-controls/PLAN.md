@@ -44,4 +44,4 @@ Component collection now persists distinct region component kinds under `spw-com
 - `node --check public/js/runtime/reward-ui.js`
 - `node --check public/js/kernel/site-settings-engine.js`
 - `node --check public/js/kernel/site-settings-profiles.js`
-- `node --check public/js/kernel/site-settings-ui.js`
+- `node --check public/js/interface/site-settings-ui.js`

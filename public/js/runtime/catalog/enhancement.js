@@ -357,7 +357,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-visual',
     effectScope: 'canvas css-vars media-query',
     visual: 'express',
-    load: () => import('../../interface/canvas-accents.js'),
+    load: () => import('../../media/canvas-accents.js'),
   },
   {
     id: 'electromagnetic-containers',

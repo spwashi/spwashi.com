@@ -342,7 +342,7 @@ export const FEATURE_DEFS = [
       'html:inspect:data-spw-deviation-state',
       'html:inspect:data-spw-deviation-count',
     ],
-    load: () => import('../../kernel/site-settings-ui.js'),
+    load: () => import('../../interface/site-settings-ui.js'),
   },
   {
     id: 'payment-settings',

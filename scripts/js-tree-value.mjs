@@ -24,6 +24,8 @@
  * Usage:
  *   node scripts/js-tree-value.mjs            summary + lists
  *   node scripts/js-tree-value.mjs --json     machine form
+ *   node scripts/js-tree-value.mjs --check    exit 1 on an orphan or on a static
+ *                                             upward import not named in NAMED_SEAMS
  */
 
 import fs from 'node:fs';
@@ -33,6 +35,13 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const JS_ROOT = path.join(ROOT, 'public/js');
 const JSON_OUT = process.argv.includes('--json');
+const CHECK = process.argv.includes('--check');
+// Static upward imports that are kept on purpose, each with its reason. A new
+// one is a layer decision, made here, not a side effect of an import line.
+const NAMED_SEAMS = new Map([
+  ['public/js/semantic/component-interaction-semantics.js → public/js/runtime/interaction/vocabulary.js',
+    'the interaction family (runtime/interaction/) owns its gesture→phase table; semantic reads it rather than the table leaving its family'],
+]);
 const SKIP_DIRS = new Set(['generated', 'typed']);
 const ROOT_ENTRYPOINTS = new Set([
   'public/js/site.js',
@@ -200,6 +209,17 @@ if (isMain) {
   // `| head` closes the pipe early; that is a reader's choice, not a failure.
   process.stdout.on('error', (error) => { if (error?.code === 'EPIPE') process.exit(0); throw error; });
   const report = auditJsTree();
+  if (CHECK) {
+    const unnamed = report.upward.filter((u) => u.kind === 'static' && !NAMED_SEAMS.has(`${u.file} → ${u.target}`));
+    const problems = [
+      ...report.orphans.map((o) => `orphan: nothing loads ${o.file} (${o.lines} lines); wire it through a catalog def, name it a root, or delete it`),
+      ...unnamed.map((u) => `upward: ${u.file} (${u.from}) imports ${u.target} (${u.to}); move one of them, make the import lazy, or name the seam in NAMED_SEAMS`),
+    ];
+    process.stdout.write(`[js-tree] files=${report.files} orphans=${report.orphans.length} upwardStatic=${report.upwardStatic} namedSeams=${NAMED_SEAMS.size}\n`);
+    for (const line of problems) process.stdout.write(`  ${line}\n`);
+    process.stdout.write(problems.length ? `[js-tree] FAILED ${problems.length} problem(s)\n` : '[js-tree] ok — every file is reached and every static import reads down or is a named seam\n');
+    process.exit(problems.length ? 1 : 0);
+  }
   if (JSON_OUT) {
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
   } else {

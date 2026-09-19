@@ -26,8 +26,8 @@ import {
   buildSettingsQueryHref,
   buildSettingsQuerySearch,
   getSettingsQueryRecipe,
-} from './site-settings-profiles.js';
-import { buildSettingsShareHref } from './settings-query-parity.js';
+} from '/public/js/kernel/site-settings-profiles.js';
+import { buildSettingsShareHref } from '/public/js/kernel/settings-query-parity.js';
 import {
   buildPersistenceRegistries,
   describeDeviation,
@@ -54,7 +54,7 @@ import {
   saveSiteSettings,
   validatePartialSettings,
   validateSetting,
-} from './site-settings-engine.js';
+} from '/public/js/kernel/site-settings-engine.js';
 import {
   clearPins,
   getPinStorageKey,

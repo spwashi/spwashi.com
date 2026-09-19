@@ -1412,7 +1412,7 @@ const SETTINGS_UI_BINDING_SELECTOR = [
 ].join(', ');
 
 function loadSettingsUi() {
-  settingsUiLoadPromise ??= import('./site-settings-ui.js').then((mod) => {
+  settingsUiLoadPromise ??= import('/public/js/interface/site-settings-ui.js').then((mod) => {
     settingsUiModule = mod;
     return mod;
   });

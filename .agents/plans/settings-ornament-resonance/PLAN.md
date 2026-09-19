@@ -14,11 +14,11 @@ Let a reader make immediate lighting, theme, type-scale, flourish, and memory ch
 
 - Route HTML: `settings/index.html` adds direct native-button controls with full labels.
 - Route CSS: `public/css/routes/surfaces/settings-forms.css` makes compact scales compare safely in horizontal and vertical space.
-- Runtime JS: `public/js/kernel/site-settings-ui.js` projects saved wonder-memory state into the existing ornament vocabulary; all other controls use the canonical trigger binding.
+- Runtime JS: `public/js/interface/site-settings-ui.js` projects saved wonder-memory state into the existing ornament vocabulary; all other controls use the canonical trigger binding.
 
 ## Validation Steps
 
-1. `node --check public/js/kernel/site-settings-ui.js`
+1. `node --check public/js/interface/site-settings-ui.js`
 2. `npm run audit:module-selectors`
 3. `git diff --check`
 4. `npm run check:local -- --allow-dirty`

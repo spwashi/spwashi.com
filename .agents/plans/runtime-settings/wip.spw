@@ -25,7 +25,7 @@ fixity = "tending"
  operation = "prime"
  bucket = "runtime_js_validation"
  validation = #[ `Hypotheses: visitors can reduce intrusive runtime chrome without losing route access.`, `Negative controls: RPG Wednesday local gameplay changes and existing optional feature loading still work.`, `Demo sequence: visit /settings/, choose quiet/hidden preferences, reload home/software pages, confirm runtime chrome follows preferences.`, ][reg=set]
- hot_files = #[ `settings/index.html`, `public/js/site.js`, `public/css/style.css`, `public/js/kernel/site-settings-profiles.js`, `public/js/kernel/site-settings-engine.js`, `public/js/kernel/site-settings-ui.js`, ][reg=set]
+ hot_files = #[ `settings/index.html`, `public/js/site.js`, `public/css/style.css`, `public/js/kernel/site-settings-profiles.js`, `public/js/kernel/site-settings-engine.js`, `public/js/interface/site-settings-ui.js`, ][reg=set]
 }[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/runtime-settings/PLAN.md"

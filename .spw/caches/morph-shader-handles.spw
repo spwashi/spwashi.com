@@ -11,7 +11,7 @@
 
 @comparison_differentials: ~"../conventions/comparison-differentials.spw"
 @expressive_registers: ~"../conventions/expressive-registers.spw"
-@canvas_accents: ~"../../public/js/interface/canvas-accents.js"
+@canvas_accents: ~"../../public/js/media/canvas-accents.js"
 @svg_filters: ~"../../public/js/media/svg-filters.js"
 @image_metaphysics: ~"../../public/js/media/image-metaphysics.js"
 

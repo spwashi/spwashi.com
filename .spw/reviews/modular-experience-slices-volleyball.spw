@@ -56,7 +56,7 @@ slices: .{
 
   wonder_ornament_celebration = .{
     description = `The highest expressive layer: whimsy, relational state, delight, structural revelation made visible, canvas accents, metaphysical paper, narrative ornament. Where the painting gets its final light and texture.`
-    current_locations = `public/css/ornament/*, public/css/effects/wonder.css + metaphysical-paper.css + narrative.css, public/js/interface/canvas-accents.js etc.`
+    current_locations = `public/css/ornament/*, public/css/effects/wonder.css + metaphysical-paper.css + narrative.css, public/js/media/canvas-accents.js etc.`
     natural_team = `Visual artists, ornament specialists, delight engineers`
   }
 

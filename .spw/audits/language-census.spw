@@ -109,7 +109,7 @@ audit_run: .{
 
 contract_objects: #[
   `SPW_COMPOSITION_CONTRACT — public/js/compose.js`,
-  `SPW_CANVAS_ACCENTS_CONTRACT — public/js/interface/canvas-accents.js`,
+  `SPW_CANVAS_ACCENTS_CONTRACT — public/js/media/canvas-accents.js`,
   `SPW_DEVELOPMENTAL_CLIMATE_CONTRACT — public/js/runtime/developmental-climate.js`,
   `SPW_WONDER_MEMORY_CONTRACT — public/js/runtime/wonder-memory.js`,
   `SPW_DOM_RENDER_CONTRACT — public/js/kernel/dom-render.js`,

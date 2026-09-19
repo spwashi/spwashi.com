@@ -42,7 +42,7 @@ import {
 import {
   describeCanvasAccentInstance,
   SPW_CANVAS_ACCENTS_CONTRACT,
-} from "../../public/js/interface/canvas-accents.js";
+} from "../../public/js/media/canvas-accents.js";
 
 import {
   initSpwHeroKineticStage,

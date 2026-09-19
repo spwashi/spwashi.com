@@ -119,7 +119,7 @@
       surfaces = #[
         `public/js/kernel/site-settings.js`,
         `public/js/kernel/site-settings-engine.js`,
-        `public/js/kernel/site-settings-ui.js`,
+        `public/js/interface/site-settings-ui.js`,
         `catalog/core.js`,
         `settings-page feature def`
       ][reg=set]

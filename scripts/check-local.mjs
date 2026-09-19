@@ -34,6 +34,9 @@ const VALIDATORS = [
   },
   { label: 'component-contracts', script: 'scripts/component-contracts.mjs' },
   { label: 'check-observation-locality', script: 'scripts/check-observation-locality.mjs' },
+  // Reach and layer order over public/js: an orphan or an unnamed static
+  // upward import fails; the named seams live in the script.
+  { label: 'audit-js-tree', args: ['scripts/js-tree-value.mjs', '--check'] },
   { label: 'check-agents', script: 'scripts/check-agent-contracts.mjs' },
   {
     label: 'test:modules',

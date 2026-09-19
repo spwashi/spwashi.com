@@ -22,7 +22,7 @@ For console-oriented work, it exports `createSpwLogger`,
 `installSpwCompositionConsole`. These helpers let a page expose
 `window.spwCompose` intentionally instead of relying on scattered ad hoc logs.
 
-Sense the tree before editing it: `npm run audit:js-tree` lists the files nothing loads and the imports that reach up the layer order (kernel < semantic < runtime < interface < modules); `npm run check:runtime` reads the catalog's contracts. The audit's ledger is `.spw/audits/js-tree-value-2026-09.spw`.
+Sense the tree before editing it: `npm run audit:js-tree` lists the files nothing loads and the imports that reach up the layer order (kernel < semantic < runtime < interface < modules, media beside runtime); `npm run check:runtime` reads the catalog's contracts. Since 2026-09-19 the audit is also a `check:local` gate (`--check`): a file nothing reaches, or a static import that reads up the order without being named a seam in `scripts/js-tree-value.mjs`, fails. A lazy `import()` is a bridge the caller pays for at call time and is reported apart. The audit's ledger is `.spw/audits/js-tree-value-2026-09.spw`.
 
 ## Reading Order
 
@@ -34,7 +34,7 @@ If you are trying to learn the runtime, read in this order:
 4. `public/js/kernel/dom-contracts.js` for shared selector and dataset helpers.
 5. `public/js/semantic/role-inference.js` for canonical region collection and role inference.
 6. `public/js/kernel/shared.js` for the canonical operator registry and shared semantics.
-7. `public/js/kernel/site-settings.js` (profiles + engine re-export). CORE mounts `site-settings-engine.js` to apply root datasets. `site-settings-ui.js` loads only when a settings form/scope exists or the settings route mounts.
+7. `public/js/kernel/site-settings.js` (profiles + engine re-export). CORE mounts `site-settings-engine.js` to apply root datasets. `interface/site-settings-ui.js` (the form and readout bindings) loads only when a settings form/scope exists or the settings route mounts; the kernel engine reaches it by a lazy import, which is the one sanctioned direction for kernel to see interface.
 8. `public/js/runtime/page-state.js` for the page lifecycle and attention contract.
 9. `public/js/runtime/page-hooks.js` for page-unique hooks and generalizable handles.
 10. `public/js/runtime/` for mounted processes, lifecycles, and page-state producers.

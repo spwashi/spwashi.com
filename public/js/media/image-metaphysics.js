@@ -20,7 +20,7 @@ import {
     IMAGE_REFRESH_EVENT,
     IMAGE_REFRESH_REASONS
 } from '/public/js/runtime/interaction/loop.js';
-import { getCanvasAccentInstance } from '/public/js/interface/canvas-accents.js';
+import { getCanvasAccentInstance } from '/public/js/media/canvas-accents.js';
 
 const PROMPT_MEMORY_KEY = STORAGE_KEYS.IMAGE_PROMPT_MEMORY;
 const HOLD_DURATION_MS = 480;

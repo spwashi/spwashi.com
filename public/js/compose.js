@@ -416,7 +416,7 @@ export {
 export {
   SPW_CANVAS_ACCENTS_CONTRACT,
   describeCanvasAccentInstance,
-} from './interface/canvas-accents.js';
+} from '/public/js/media/canvas-accents.js';
 
 export {
   SPW_HERO_KINETIC_STAGE_CONTRACT,

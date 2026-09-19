@@ -26,7 +26,7 @@ Create a discoverable `/settings/` page where visitors can quiet or hide the sur
 [MOD] `manifest.webmanifest` - bumps app version with service worker.
 [MOD] `public/js/kernel/site-settings-profiles.js` - declares `rewardDisplay` and shared storage keys for persistence registers.
 [MOD] `public/js/kernel/site-settings-engine.js` - writes `data-spw-reward-display` and exposes `component-collection` in the resettable persistence registry.
-[MOD] `public/js/kernel/site-settings-ui.js` - refreshes persistence readouts when component collection storage or events change.
+[MOD] `public/js/interface/site-settings-ui.js` - refreshes persistence readouts when component collection storage or events change.
 [MOD] `public/js/runtime/reward-ui.js` - reads `rewardDisplay` to separate docked, toasts-only, and hidden reward modes.
 
 ## Active Extension - 2026-06-30 Reward Display and Component Persistence
@@ -50,7 +50,7 @@ Fuzz strategy:
 - Explore: manually inspect current navigator/console/viewport activation boundaries.
 - Stabilize: syntax-check changed JS and manifest JSON.
 - Ship gate: `git diff --check` plus commit-review poll.
-- Targeted checks: `node --check public/js/kernel/site-settings-profiles.js`, `node --check public/js/kernel/site-settings-engine.js`, `node --check public/js/kernel/site-settings-ui.js`, and `node --check public/js/runtime/reward-ui.js`.
+- Targeted checks: `node --check public/js/kernel/site-settings-profiles.js`, `node --check public/js/kernel/site-settings-engine.js`, `node --check public/js/interface/site-settings-ui.js`, and `node --check public/js/runtime/reward-ui.js`.
 
 ## Agentic Hygiene
 

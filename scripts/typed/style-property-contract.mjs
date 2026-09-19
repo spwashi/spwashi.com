@@ -26,7 +26,7 @@ const RUNTIME_PROPERTY_ALLOWANCES = [
     { owner: 'wonder memory alternate color', test: (property) => property === '--spw-wonder-memory-alt-color' },
 ];
 const DYNAMIC_STYLE_WRITE_FILES = new Map([
-    ['public/js/interface/canvas-accents.js', 'accent palette token map'],
+    ['public/js/media/canvas-accents.js', 'accent palette token map'],
     ['public/js/kernel/dom-contracts.js', 'query disposition helpers'],
     ['public/js/kernel/instrumentation.js', 'debug instrumentation helper'],
     ['public/js/kernel/shared.js', 'operator token assignment helper'],
