@@ -1,0 +1,48 @@
+# Cluster feedback inbox — 2026-09-19
+#
+# Prime: autonomous.feedback paths are mind-culture doors.
+
+#>cluster_feedback_inbox
+#:cache #!prime #!inbox
+#:operation #!prime
+#:fixity #!experimental
+
+operation = "prime"
+fixity = "experimental"
+source = "chat"
+
+^"insight"{
+  claim = `Marketable paths on autonomous.feedback: /now, /wonder, /review, /practice, /brief, /for/{host}/{context}. Climate.v1 stays a public pulse with no visitor residue.`
+  path = `https://autonomous.feedback/wonder`
+  sibling = `wap.mom /file is host-local. intake.js stays on-device.`
+}
+
+^"verbs"{
+  describe = `GET /for/{host} — JSON contract. GET /wonder — HTML door.`
+  ingest = `POST /wonder or /for/{host}/{context} — public gift. 501 until KV.`
+  process = `GET /for/{host}/inbox — Authorization: Bearer. Periodic drain.`
+}
+
+^"paths"{
+  now = `/now`
+  contexts = #[`/wonder`, `/review`, `/practice`, `/brief`][reg=set]
+  subject = `/for/{host}`
+}
+
+^"bearer"{
+  header = `Authorization: Bearer …`
+  refuse_query = `?bearer= leaks.`
+  v0 = `PROCESS_KEY. NFT later, same header.`
+}
+
+^"rate_limit"{
+  claim = `10tok/s is a drain budget, not ingest QPS.`
+}
+
+^"safe_first_patch"{
+  now = `HTML doors + JSON contracts. POST 501. Guest module later.`
+  not_yet = `KV drawer, compose.js re-export, CORS * on POST, on-chain NFT.`
+}
+
+validation = `curl https://autonomous.feedback/wonder`
+do_not_promote_until = `A PROCESS_KEY, a KV namespace, and one successful drain of a planted note.`

@@ -1,0 +1,58 @@
+{
+  "version": "0.0.1",
+  "canon": "workers/",
+  "note": "This tree is the source for the public host cluster. Do not attach a Worker to spwashi.com. Do not mention infrastructure ownership in public HTML.",
+  "pages_subjects": ["spwashi.com", "resume.spwashi.com", "lore.land"],
+  "inbox": {
+    "worker": "feedback-quest",
+    "path": "/for/{host}",
+    "schema": "inbox.v0"
+  },
+  "units": [
+    {
+      "id": "site-hub-next",
+      "script": "site-hub-next",
+      "dir": "workers/site-hub-next",
+      "hosts": [
+        "texture.website",
+        "attention.productions",
+        "bane.land",
+        "bone.land",
+        "boon.land",
+        "brainstorm.monster",
+        "factshift.center",
+        "mutex.buzz",
+        "newyear.life",
+        "rpgwednesday.shop",
+        "spw.rest",
+        "spwashi.biz",
+        "spwashi.click",
+        "spwashi.ink",
+        "tealstripesvibes.com",
+        "trope.wiki"
+      ],
+      "origin": "worker"
+    },
+    {
+      "id": "smut-today",
+      "script": "smut-today",
+      "dir": "workers/smut-today",
+      "hosts": ["smut.today"],
+      "origin": "worker"
+    },
+    {
+      "id": "feedback-quest",
+      "script": "feedback-quest",
+      "dir": "workers/feedback-quest",
+      "hosts": ["autonomous.feedback", "spw.quest"],
+      "origin": "worker"
+    },
+    {
+      "id": "wap-mom",
+      "script": "wap-mom",
+      "dir": "workers/wap-mom",
+      "hosts": ["wap.mom"],
+      "origin": "worker"
+    }
+  ]
+}
