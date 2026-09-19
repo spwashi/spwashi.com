@@ -27,6 +27,8 @@
  * Public API kept as stable as possible for existing callers. New actions and phase attrs are additive.
  */
 
+import { requestLensMode } from '/public/js/runtime/lens-modes.js';
+import { composeLensPrompt } from '/public/js/semantic/cauldron/lens.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { ensureThemeResonanceStyles } from '/public/js/kernel/deferred-styles.js';
 import {
@@ -92,6 +94,7 @@ export function initCauldron() {
   document.body.addEventListener('click', handleIngredientInspect, true);
 
   setupCauldronChrome();
+  const cleanupLens = setupCompositionLens();
   bindCauldronPanelToggle();
   document.addEventListener('spw:settings:changed', syncCauldronState, { passive: true });
   document.addEventListener('spw:settings-change', syncCauldronState, { passive: true });
@@ -101,6 +104,7 @@ export function initCauldron() {
 
   cleanupHandle = () => {
     unsubCapture();
+    cleanupLens();
     document.body.removeEventListener('click', handleCauldronUIActions, true);
     document.body.removeEventListener('click', handleIngredientRemoval, true);
     document.body.removeEventListener('click', handleIngredientInspect, true);
@@ -678,6 +682,49 @@ function syncIngredientAvailability() {
   document.querySelectorAll('[data-cauldron-availability]').forEach((node) => {
     node.textContent = count > 0 ? ` ${count} possible ingredients nearby.` : ' Move through the page to find primeable handles.';
   });
+}
+
+function setupCompositionLens() {
+  const controls = document.getElementById('cauldron-composition-controls');
+  const select = document.getElementById('cauldron-page-lens');
+  const intent = document.getElementById('cauldron-compose-intent');
+  const feedback = document.getElementById('cauldron-lens-impact');
+  if (!controls || !select || !intent || !feedback) return () => {};
+  const choices = [...document.querySelectorAll('[data-mode-group][data-set-mode]')];
+  const seen = new Set();
+  select.replaceChildren(new Option('Page context', ''));
+  select.options[0].disabled = true;
+  for (const button of choices) {
+    const value = JSON.stringify([button.dataset.modeGroup, button.dataset.setMode]);
+    if (seen.has(value)) continue;
+    seen.add(value);
+    const groupLabel = button.closest('.mode-switch')?.getAttribute('aria-label')
+      || button.dataset.modeGroup.replace(/[-_]+/g, ' ');
+    select.add(new Option(`${groupLabel}: ${button.textContent.trim()}`, value));
+  }
+  select.disabled = !choices.length;
+  const sync = () => {
+    const root = document.documentElement.dataset;
+    const value = JSON.stringify([root.spwActiveLensGroup, root.spwActiveLensMode]);
+    select.value = seen.has(value) ? value : '';
+    const purpose = { connect: 'Find a relationship', compare: 'Find a meaningful difference', apply: 'Make a concrete next step' }[intent.value];
+    feedback.textContent = root.spwActiveLensMode
+      ? `${purpose} through ${root.spwActiveLensMode}: ${(root.spwActiveLensImpact || '').replace(/[-_]+/g, ' ')}. All ingredients stay included.`
+      : `${purpose} using all gathered ingredients. This page has no active lens.`;
+  };
+  const change = () => {
+    if (select.value) {
+      const [group, mode] = JSON.parse(select.value);
+      requestLensMode(bus, { group, mode, source: 'cauldron' });
+    }
+    hideOutput();
+    sync();
+  };
+  const unsubscribe = bus.on('frame:mode', () => { hideOutput(); sync(); });
+  controls.addEventListener('change', change);
+  controls.hidden = false;
+  sync();
+  return () => { unsubscribe(); controls.removeEventListener('change', change); };
 }
 
 function readStoredCauldronVessel() {
@@ -1379,6 +1426,13 @@ export function mixIngredients() {
     ingredients: ingredients.map(i => ({ ...i })),
     operators,
     expressions,
+    composition: {
+      intent: document.getElementById('cauldron-compose-intent')?.value || 'connect',
+      lens: document.documentElement.dataset.spwActiveLensMode || '',
+      group: document.documentElement.dataset.spwActiveLensGroup || '',
+      impact: document.documentElement.dataset.spwActiveLensImpact || '',
+      page: location.pathname,
+    },
     // Brace/physics context for enhanced emergence (reads current site state for "physics" of the cast)
     braceContext: document.documentElement?.dataset?.spwActiveBraceForm || 'brace',
     physicsContext: {
@@ -1412,7 +1466,7 @@ export function mixIngredients() {
   // One deliberately non-authoritative crystallization, now enhanced with brace/physics awareness
   const labels = ingredients.map(i => i.label);
   const physicsNote = ` (rhythm ${functionalMix.physicsContext.rhythmTempo}, ${functionalMix.physicsContext.climate} climate, ${functionalMix.braceContext} form)`;
-  const prompt = `One scene in which ${labels.join(' and ')} interact, organized by the expressions above${physicsNote}.`;
+  const prompt = composeLensPrompt(labels, functionalMix.composition) + physicsNote + '.';
 
   // Deeper semantic projection: suggest a "cast form" that names the emergent liminality + physics
   const forceCount = operators.length;

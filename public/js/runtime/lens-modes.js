@@ -265,7 +265,8 @@ export function writeLensModeState({
   const primaryHost = hosts[0] || activeButton?.closest?.('.site-frame, [data-spw-feature], [data-spw-kind]') || null;
   const activePanel = resolvedPanels.find((panel) => panel.getAttribute('data-mode-panel') === resolvedMode) || null;
   const deepLink = buildLensModeDeepLink(group, resolvedMode, primaryHost, getLocationRef(doc));
-  const lensImpact = LENS_MODE_IMPACTS[resolvedMode] || `${group}-emphasis`;
+  const lensImpact = activeButton?.dataset?.spwLensImpact
+    || LENS_MODE_IMPACTS[resolvedMode] || `${group}-emphasis`;
   const lensFeedback = describeLensFeedback({
     mode: resolvedMode,
     impact: lensImpact,

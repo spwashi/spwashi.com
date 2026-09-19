@@ -174,3 +174,11 @@ fixity = "tending"
     `A treatment switches itself off below a breakpoint instead of changing role.`
   ][reg=set]
 }
+
+#>footer_cauldron_chrome_2026_09
+#:operation #!align
+#:fixity #!tending
+owners = `shell/chrome/footer.css; components/floating-chrome.css; components/cauldron.css; kernel/dom-contracts.js`
+measured = `320px about: overflow 0; promo 484–666, cauldron 695–739 (29px gap) after modal padding consumed --spw-bottom-chrome-clearance. 1280px: footer 2fr/1fr; satchel at header; cauldron bottom-right; promo 585–806 vs cauldron 835–879.`
+change = `Footer controls shrink intrinsically; copyright spans the grid. Collection and cauldron consume measured slots instead of sharing the travel/satchel anchors. Discovery modal padding uses the reserved bottom lane.`
+probe = `check:local -- --allow-dirty; visual:checks -- --ids=home-opening; browser rectangle inspection`

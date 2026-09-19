@@ -148,7 +148,7 @@
 
 .spw-cauldron-chip {
   position: fixed;
-  inset: auto max(0.85rem, env(safe-area-inset-right)) calc(var(--spw-floating-slot-satchel, max(0.85rem, env(safe-area-inset-bottom))) + var(--spw-floating-menu-clearance, 0px)) auto;
+  inset: auto max(0.85rem, env(safe-area-inset-right)) var(--spw-floating-slot-cauldron, max(0.85rem, env(safe-area-inset-bottom))) auto;
   z-index: var(--spw-floating-tier-z, var(--z-docked, var(--layer-docked, 900)));
   display: inline-flex;
   align-items: center;
@@ -748,7 +748,7 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
   }
 
   .spw-cauldron-chip {
-    inset: auto max(0.65rem, env(safe-area-inset-right)) calc(max(0.65rem, env(safe-area-inset-bottom)) + 2.6rem) auto;
+    inset: auto max(0.65rem, env(safe-area-inset-right)) var(--spw-floating-slot-cauldron, calc(max(0.65rem, env(safe-area-inset-bottom)) + 2.6rem)) auto;
   }
 }
 
