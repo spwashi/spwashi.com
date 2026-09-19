@@ -684,6 +684,14 @@ function readNextFrameLabel() {
   return shortFrameLabel(readNextFrame());
 }
 
+function isTeachingWrapNav(nav) {
+  return Boolean(
+    nav instanceof HTMLElement
+    && nav.matches('[data-spw-feature="wrap-jobs"]')
+    && nav.querySelector('[data-spw-operator="mode"]'),
+  );
+}
+
 function writeWrapJobCopy(jobEl, wrap, { subject, seat, nextLabel } = {}) {
   if (!(jobEl instanceof HTMLElement)) return;
   const variants = formatWrapJobVariants({ wrap, subject, seat, nextLabel });
@@ -738,7 +746,7 @@ function syncWrapJobLabels() {
   const nextLabel = readNextFrameLabel();
 
   document.querySelectorAll('[data-spw-feature="wrap-jobs"]').forEach((nav) => {
-    if (!(nav instanceof HTMLElement)) return;
+    if (!isTeachingWrapNav(nav)) return;
     const subject = subjectFromExpression(nav.dataset.spwSemanticExpression)
       || subjectFromExpression(switchEl?.dataset?.spwSemanticExpression)
       || 'page';
@@ -765,6 +773,8 @@ function onWrapJobActivate(event) {
   const job = event.target?.closest?.('[data-spw-feature="wrap-jobs"] [data-spw-operator]');
   if (!(job instanceof HTMLElement)) return;
   if (hasLocalKeyScope(job)) return;
+  const nav = job.closest('[data-spw-feature="wrap-jobs"]');
+  if (!isTeachingWrapNav(nav)) return;
 
   const operator = job.dataset.spwOperator || '';
   const action = job.dataset.spwAction || '';
@@ -1398,6 +1408,7 @@ export {
   selectModeSeatIndex,
   traverseFrames,
   enterNearestScene,
+  isTeachingWrapNav,
   syncWrapJobLabels,
 };
 

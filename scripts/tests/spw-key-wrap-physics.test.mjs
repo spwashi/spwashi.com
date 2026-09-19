@@ -104,8 +104,15 @@ test('section-handle scan follows wrap context', () => {
 test('wrap-job clicks bind to existing wrap physics', () => {
   assert.match(keyEvents, /function onWrapJobActivate/);
   assert.match(keyEvents, /function syncWrapJobLabels/);
+  assert.match(keyEvents, /function isTeachingWrapNav/);
   assert.match(keyEvents, /data-spw-feature="wrap-jobs"/);
   assert.match(keyEvents, /addEventListener\('click', onWrapJobActivate\)/);
   assert.match(keyEvents, /function focusFrame/);
   assert.match(keyEvents, /\[wrap\]\{rail\}/);
+});
+
+test('teaching wrap rails require a mode job so collaborator chips stay links', () => {
+  assert.match(keyEvents, /isTeachingWrapNav\(nav\)/);
+  assert.match(keyEvents, /querySelector\('\[data-spw-operator="mode"\]'\)/);
+  assert.match(keyEvents, /if \(!isTeachingWrapNav\(nav\)\) return/);
 });
