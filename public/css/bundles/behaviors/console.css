@@ -346,7 +346,8 @@
   color: var(--spw-operator-color, var(--active-op-color, var(--teal)));
 }
 
-.cauldron-ingredient-op[data-spw-operator="frame"] { color: var(--op-frame-color, #008080); }
+.cauldron-ingredient-op[data-spw-operator="frame"],
+.cauldron-ingredient-op[data-spw-operator="address"] { color: var(--op-frame-color, #008080); }
 .cauldron-ingredient-op[data-spw-operator="probe"],
 .cauldron-ingredient-op[data-spw-operator="wonder"] { color: var(--op-probe-color, #8b5cf6); }
 .cauldron-ingredient-op[data-spw-operator="object"],
@@ -354,7 +355,9 @@
 .cauldron-ingredient-op[data-spw-operator="integrate"] { color: var(--op-object-color, #c48a28); }
 .cauldron-ingredient-op[data-spw-operator="ref"],
 .cauldron-ingredient-op[data-spw-operator="potential"] { color: var(--op-ref-color, #3b82f6); }
-.cauldron-ingredient-op[data-spw-operator="action"] { color: var(--op-action-color, #0d9488); }
+.cauldron-ingredient-op[data-spw-operator="action"],
+.cauldron-ingredient-op[data-spw-operator="act"],
+.cauldron-ingredient-op[data-spw-operator="pragma"] { color: var(--op-action-color, #0d9488); }
 .cauldron-ingredient-op[data-spw-operator="topic"],
 .cauldron-ingredient-op[data-spw-operator="concept"] { color: var(--op-topic-color, #10b981); }
 

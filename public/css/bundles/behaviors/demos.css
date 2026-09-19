@@ -371,12 +371,12 @@
   border-radius: 999px;
 }
 
-:where(.spw-demo-card[data-spw-operator="action"]) { --spw-demo-accent: var(--op-action-color, #005959); }
-:where(.spw-demo-card[data-spw-operator="frame"]) { --spw-demo-accent: var(--op-frame-color, #008080); }
-:where(.spw-demo-card[data-spw-operator="object"]) { --spw-demo-accent: var(--op-object-color, #a67c00); }
-:where(.spw-demo-card[data-spw-operator="probe"]) { --spw-demo-accent: var(--op-probe-color, #4a2180); }
-:where(.spw-demo-card[data-spw-operator="ref"]) { --spw-demo-accent: var(--op-ref-color, #1d57a3); }
-:where(.spw-demo-card[data-spw-operator="surface"]) { --spw-demo-accent: var(--op-surface-color, #178282); }
+:where(.spw-demo-card:is([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"])) { --spw-demo-accent: var(--op-action-color, #005959); }
+:where(.spw-demo-card:is([data-spw-operator="frame"], [data-spw-operator="address"])) { --spw-demo-accent: var(--op-frame-color, #008080); }
+:where(.spw-demo-card:is([data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"])) { --spw-demo-accent: var(--op-object-color, #a67c00); }
+:where(.spw-demo-card:is([data-spw-operator="wonder"], [data-spw-operator="probe"])) { --spw-demo-accent: var(--op-probe-color, #4a2180); }
+:where(.spw-demo-card:is([data-spw-operator="potential"], [data-spw-operator="ref"])) { --spw-demo-accent: var(--op-ref-color, #1d57a3); }
+:where(.spw-demo-card:is([data-spw-operator="concept-edge"], [data-spw-operator="route"], [data-spw-operator="surface"])) { --spw-demo-accent: var(--op-surface-color, #178282); }
 
 :where(.spw-demo-card h3) {
   margin: 0;

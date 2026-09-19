@@ -182,19 +182,19 @@
 }
 
 /* Operator echo during active treat */
-:where(html[data-spw-palette-treat-probe="1"]) :where([data-spw-operator="frame"], [data-spw-operator="surface"]) {
+:where(html[data-spw-palette-treat-probe="1"]) :where([data-spw-operator="frame"], [data-spw-operator="address"], [data-spw-operator="concept-edge"], [data-spw-operator="route"], [data-spw-operator="surface"]) {
   --spw-resonance: calc(var(--spw-palette-treat-strength, 0.62) * 0.72);
 }
 
-:where(html[data-spw-palette-treat-probe="2"]) :where([data-spw-operator="object"], [data-spw-operator="topic"]) {
+:where(html[data-spw-palette-treat-probe="2"]) :where([data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"], [data-spw-operator="concept"], [data-spw-operator="topic"]) {
   --spw-resonance: calc(var(--spw-palette-treat-strength, 0.62) * 0.72);
 }
 
-:where(html[data-spw-palette-treat-probe="3"]) :where([data-spw-operator="ref"], [data-spw-operator="stream"]) {
+:where(html[data-spw-palette-treat-probe="3"]) :where([data-spw-operator="potential"], [data-spw-operator="ref"], [data-spw-operator="value"], [data-spw-operator="stream"]) {
   --spw-resonance: calc(var(--spw-palette-treat-strength, 0.62) * 0.72);
 }
 
-:where(html[data-spw-palette-treat-probe="4"]) :where([data-spw-operator="probe"], [data-spw-operator="action"]) {
+:where(html[data-spw-palette-treat-probe="4"]) :where([data-spw-operator="wonder"], [data-spw-operator="probe"], [data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"]) {
   --spw-resonance: calc(var(--spw-palette-treat-strength, 0.62) * 0.72);
 }
 

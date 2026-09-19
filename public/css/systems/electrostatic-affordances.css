@@ -9,55 +9,31 @@
    ========================================================================== */
 
 /* Terminal → discharge kind. Same table as charge-field.js OPERATOR_DISCHARGE. */
-:where(
-  [data-spw-operator="wonder"],
-  [data-spw-operator="probe"],
-  [data-spw-operator="action"],
-  [data-spw-operator="normalize"],
-  [data-spw-operator="measure"]
-) {
+:where([data-spw-operator="wonder"], [data-spw-operator="probe"], [data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"], [data-spw-operator="normalize"]) {
   --spw-discharge-kind: release;
   --spw-discharge-color: var(--op-probe-color, #4a2180);
 }
 
+/* route/stream/surface once sat outside this table; they are concept-edge and
+   value, and ride with their operator's class now. */
 :where(
-  [data-spw-operator="potential"],
-  [data-spw-operator="ref"],
-  [data-spw-operator="perspective"],
-  [data-spw-operator="subject"],
-  [data-spw-operator="substrate"],
-  [data-spw-operator="meta"],
-  [data-spw-operator="resource"],
-  [data-spw-operator="support"],
-  [data-spw-operator="confluence"],
-  /* route/stream/surface: real operators (7/19/11 pages) missing from this
-     table and from charge-field.js's OPERATOR_DISCHARGE alike; both fixed
-     together so the CSS-only and runtime-driven paths agree. */
-  [data-spw-operator="route"],
-  [data-spw-operator="stream"],
-  [data-spw-operator="surface"]
+  [data-spw-operator="potential"], [data-spw-operator="ref"],
+  [data-spw-operator="perspective"], [data-spw-operator="situate"],
+  [data-spw-operator="subject"], [data-spw-operator="merge"], [data-spw-operator="confluence"],
+  [data-spw-operator="substrate"], [data-spw-operator="meta"], [data-spw-operator="resource"], [data-spw-operator="support"],
+  [data-spw-operator="concept-edge"], [data-spw-operator="route"], [data-spw-operator="surface"],
+  [data-spw-operator="value"], [data-spw-operator="stream"]
 ) {
   --spw-discharge-kind: transfer;
   --spw-discharge-color: var(--op-ref-color, #355f77);
 }
 
-:where(
-  [data-spw-operator="frame"],
-  [data-spw-operator="address"],
-  [data-spw-operator="binding"],
-  [data-spw-operator="vibration"],
-  [data-spw-operator="ground"]
-) {
+:where([data-spw-operator="frame"], [data-spw-operator="address"], [data-spw-operator="binding"], [data-spw-operator="vibration"], [data-spw-operator="ground"], [data-spw-operator="baseline"], [data-spw-operator="intrinsic"]) {
   --spw-discharge-kind: ground;
   --spw-discharge-color: var(--op-frame-color, #008080);
 }
 
-:where(
-  [data-spw-operator="integration"],
-  [data-spw-operator="integrate"],
-  [data-spw-operator="object"],
-  [data-spw-operator="value"]
-) {
+:where([data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"], [data-spw-operator="value"], [data-spw-operator="stream"]) {
   --spw-discharge-kind: project;
   --spw-discharge-color: var(--op-object-color, #a67c00);
 }

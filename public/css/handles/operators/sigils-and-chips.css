@@ -406,16 +406,14 @@ html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):focus-visible {
 
 /* Probe and pragma chips should not feel interchangeable.
    Probe stays open/reversible; pragma reads as a stronger local constraint. */
-:is(.spw-chip, .spw-chip)[data-spw-operator="probe"],
-:is(.spw-chip, .spw-chip)[data-spw-operator="wonder"] {
+:is(.spw-chip):is([data-spw-operator="wonder"], [data-spw-operator="probe"]) {
   --operator-chip-border-style: dashed;
   --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 95%, var(--op-probe-color, var(--active-op-color, var(--teal))) 5%);
   --operator-chip-border: color-mix(in oklab, var(--op-probe-color, var(--active-op-color, var(--teal))) 28%, transparent);
   --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--op-probe-color, var(--active-op-color, var(--teal))) 10%);
 }
 
-:is(.spw-chip, .spw-chip)[data-spw-operator="pragma"],
-:is(.spw-chip, .spw-chip)[data-spw-operator="action"] {
+:is(.spw-chip):is([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"]) {
   --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 12%);
   --operator-chip-border: color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 34%, transparent);
   --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 84%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%);

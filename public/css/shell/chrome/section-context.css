@@ -27,22 +27,22 @@
   --active-op-color: var(--spw-handle-base-op-color);
   --spw-handle-base-op-color: var(--semantic-accent, var(--spw-shell-chrome-accent, var(--teal, #008080)));
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="?"], [data-spw-handle-op="probe"], [data-spw-operator="probe"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="?"], [data-spw-handle-op="probe"], [data-spw-operator="wonder"], [data-spw-operator="probe"]) {
   --spw-handle-base-op-color: var(--op-probe-color, #7a4fb5);
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="#>"], [data-spw-handle-op="frame"], [data-spw-operator="frame"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="#>"], [data-spw-handle-op="frame"], [data-spw-operator="frame"], [data-spw-operator="address"]) {
   --spw-handle-base-op-color: var(--op-frame-color, var(--teal, #008080));
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="^"], [data-spw-handle-op="object"], [data-spw-operator="object"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="^"], [data-spw-handle-op="object"], [data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"]) {
   --spw-handle-base-op-color: var(--op-object-color, var(--amber, #c07a1e));
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="~"], [data-spw-handle-op="ref"], [data-spw-operator="ref"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="~"], [data-spw-handle-op="ref"], [data-spw-operator="potential"], [data-spw-operator="ref"]) {
   --spw-handle-base-op-color: var(--op-ref-color, var(--blue, #2d68c4));
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="@"], [data-spw-handle-op="action"], [data-spw-operator="action"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="@"], [data-spw-handle-op="action"], [data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"]) {
   --spw-handle-base-op-color: var(--op-action-color, var(--teal-deep, #0d5f5f));
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="<"], [data-spw-handle-op="topic"], [data-spw-operator="topic"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="<"], [data-spw-handle-op="topic"], [data-spw-operator="concept"], [data-spw-operator="topic"]) {
   --spw-handle-base-op-color: var(--op-topic-color, #227c67);
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="model"],

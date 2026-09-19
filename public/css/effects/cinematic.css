@@ -188,33 +188,32 @@
    5. Operator color resolution
    ========================================================================== */
 
-:where([data-spw-operator="frame"])     { --spw-operator-color: var(--op-frame-color, #008080); }
-:where([data-spw-operator="object"])    { --spw-operator-color: var(--op-object-color, #a67c00); }
-:where([data-spw-operator="ref"])       { --spw-operator-color: var(--op-ref-color, #1d57a3); }
-:where([data-spw-operator="probe"])     { --spw-operator-color: var(--op-probe-color, #4a2180); }
-:where([data-spw-operator="action"])    { --spw-operator-color: var(--op-action-color, #005959); }
-:where([data-spw-operator="stream"])    { --spw-operator-color: var(--op-stream-color, #208259); }
-:where([data-spw-operator="merge"])     { --spw-operator-color: var(--op-merge-color, #277a87); }
-:where([data-spw-operator="binding"])   { --spw-operator-color: var(--op-binding-color, #8f401f); }
-:where([data-spw-operator="meta"])      { --spw-operator-color: var(--op-meta-color, #324a85); }
+/* One rule per operator, keyed on every value the routes author for it: the
+   kernel table resolves address to frame, object and integrate to
+   integration, ref to potential, probe to wonder, stream to value, merge to
+   subject, meta to substrate, baseline and intrinsic to ground, topic to
+   concept, route and surface to concept-edge, act and pragma to action,
+   situate to perspective, select to mode. npm run audit:operator-css keeps
+   the lists whole. */
+:where([data-spw-operator="frame"], [data-spw-operator="address"]) { --spw-operator-color: var(--op-frame-color, #008080); }
+:where([data-spw-operator="layer"]) { --spw-operator-color: var(--op-layer-color, #404040); }
+:where([data-spw-operator="vibration"]) { --spw-operator-color: var(--op-vibration-color, var(--op-frame-color, #008080)); }
+:where([data-spw-operator="ground"], [data-spw-operator="baseline"], [data-spw-operator="intrinsic"]) { --spw-operator-color: var(--op-ground-color, var(--op-baseline-color, #594d3f)); }
+:where([data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"]) { --spw-operator-color: var(--op-integration-color, var(--op-object-color, #a67c00)); }
+:where([data-spw-operator="potential"], [data-spw-operator="ref"]) { --spw-operator-color: var(--op-potential-color, var(--op-ref-color, #1d57a3)); }
+:where([data-spw-operator="wonder"], [data-spw-operator="probe"]) { --spw-operator-color: var(--op-wonder-color, var(--op-probe-color, #4a2180)); }
+:where([data-spw-operator="perspective"], [data-spw-operator="situate"]) { --spw-operator-color: var(--op-perspective-color, var(--op-action-color, #005959)); }
+:where([data-spw-operator="value"], [data-spw-operator="stream"]) { --spw-operator-color: var(--op-value-color, var(--op-stream-color, #208259)); }
+:where([data-spw-operator="subject"], [data-spw-operator="merge"]) { --spw-operator-color: var(--op-subject-color, var(--op-merge-color, #277a87)); }
+:where([data-spw-operator="binding"]) { --spw-operator-color: var(--op-binding-color, #8f401f); }
+:where([data-spw-operator="substrate"], [data-spw-operator="meta"]) { --spw-operator-color: var(--op-substrate-color, var(--op-meta-color, #324a85)); }
 :where([data-spw-operator="normalize"]) { --spw-operator-color: var(--op-normalize-color, #4d7539); }
-:where([data-spw-operator="pragma"])    { --spw-operator-color: var(--op-pragma-color, #883a3a); }
-:where([data-spw-operator="surface"])   { --spw-operator-color: var(--op-surface-color, #178282); }
-:where([data-spw-operator="layer"])     { --spw-operator-color: var(--op-layer-color, #404040); }
-:where([data-spw-operator="baseline"])  { --spw-operator-color: var(--op-baseline-color, #594d3f); }
-:where([data-spw-operator="topic"])     { --spw-operator-color: var(--op-topic-color, #1f6b80); }
-:where([data-spw-operator="potential"])   { --spw-operator-color: var(--op-potential-color, var(--op-ref-color, #1d57a3)); }
-:where([data-spw-operator="vibration"])   { --spw-operator-color: var(--op-vibration-color, var(--op-frame-color, #008080)); }
-:where([data-spw-operator="ground"])      { --spw-operator-color: var(--op-ground-color, var(--op-baseline-color, #594d3f)); }
-:where([data-spw-operator="wonder"])      { --spw-operator-color: var(--op-wonder-color, var(--op-probe-color, #4a2180)); }
-:where([data-spw-operator="value"])       { --spw-operator-color: var(--op-value-color, var(--op-stream-color, #208259)); }
-:where([data-spw-operator="subject"])     { --spw-operator-color: var(--op-subject-color, var(--op-merge-color, #277a87)); }
-:where([data-spw-operator="perspective"]) { --spw-operator-color: var(--op-perspective-color, var(--op-action-color, #005959)); }
-:where([data-spw-operator="integration"], [data-spw-operator="integrate"]) { --spw-operator-color: var(--op-integration-color, var(--op-object-color, #a67c00)); }
-:where([data-spw-operator="concept"])     { --spw-operator-color: var(--op-concept-color, var(--op-topic-color, #1f6b80)); }
-:where([data-spw-operator="scene"])       { --spw-operator-color: var(--op-scene-color, var(--op-surface-color, #178282)); }
-:where([data-spw-operator="mode"])        { --spw-operator-color: var(--op-mode-color, var(--op-probe-color, #4a2180)); }
-:where([data-spw-operator="direction"])   { --spw-operator-color: var(--op-direction-color, var(--op-frame-color, #008080)); }
+:where([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"]) { --spw-operator-color: var(--op-action-color, #005959); }
+:where([data-spw-operator="concept-edge"], [data-spw-operator="route"], [data-spw-operator="surface"]) { --spw-operator-color: var(--op-concept-edge-color, var(--op-surface-color, #178282)); }
+:where([data-spw-operator="concept"], [data-spw-operator="topic"]) { --spw-operator-color: var(--op-concept-color, var(--op-topic-color, #1f6b80)); }
+:where([data-spw-operator="scene"]) { --spw-operator-color: var(--op-scene-color, var(--op-surface-color, #178282)); }
+:where([data-spw-operator="mode"], [data-spw-operator="select"]) { --spw-operator-color: var(--op-mode-color, var(--op-probe-color, #4a2180)); }
+:where([data-spw-operator="direction"]) { --spw-operator-color: var(--op-direction-color, var(--op-frame-color, #008080)); }
 :where([data-spw-sigil^="~"]) { --spw-operator-color: var(--op-potential-color, var(--op-ref-color, #1d57a3)); }
 :where([data-spw-sigil^="#"]) { --spw-operator-color: var(--op-vibration-color, var(--op-frame-color, #008080)); }
 :where([data-spw-sigil^="."]) { --spw-operator-color: var(--op-ground-color, var(--op-baseline-color, #594d3f)); }

@@ -10405,22 +10405,22 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   --active-op-color: var(--spw-handle-base-op-color);
   --spw-handle-base-op-color: var(--semantic-accent, var(--spw-shell-chrome-accent, var(--teal, #008080)));
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="?"], [data-spw-handle-op="probe"], [data-spw-operator="probe"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="?"], [data-spw-handle-op="probe"], [data-spw-operator="wonder"], [data-spw-operator="probe"]) {
   --spw-handle-base-op-color: var(--op-probe-color, #7a4fb5);
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="#>"], [data-spw-handle-op="frame"], [data-spw-operator="frame"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="#>"], [data-spw-handle-op="frame"], [data-spw-operator="frame"], [data-spw-operator="address"]) {
   --spw-handle-base-op-color: var(--op-frame-color, var(--teal, #008080));
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="^"], [data-spw-handle-op="object"], [data-spw-operator="object"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="^"], [data-spw-handle-op="object"], [data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"]) {
   --spw-handle-base-op-color: var(--op-object-color, var(--amber, #c07a1e));
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="~"], [data-spw-handle-op="ref"], [data-spw-operator="ref"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="~"], [data-spw-handle-op="ref"], [data-spw-operator="potential"], [data-spw-operator="ref"]) {
   --spw-handle-base-op-color: var(--op-ref-color, var(--blue, #2d68c4));
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="@"], [data-spw-handle-op="action"], [data-spw-operator="action"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="@"], [data-spw-handle-op="action"], [data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"]) {
   --spw-handle-base-op-color: var(--op-action-color, var(--teal-deep, #0d5f5f));
 }
-:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="<"], [data-spw-handle-op="topic"], [data-spw-operator="topic"]) {
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="<"], [data-spw-handle-op="topic"], [data-spw-operator="concept"], [data-spw-operator="topic"]) {
   --spw-handle-base-op-color: var(--op-topic-color, #227c67);
 }
 :where(.spw-section-handle, .spw-section-handle-shell)[data-spw-consequence="model"],
@@ -14645,52 +14645,47 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
 }
 
 /* operator-specific brace hues */
-:where([data-spw-form="brace"][data-spw-operator="frame"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="frame"], [data-spw-operator="address"])) {
   --brace-open-color: color-mix(in srgb, var(--op-frame-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-frame-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="object"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"])) {
   --brace-open-color: color-mix(in srgb, var(--op-object-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-object-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="ref"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="potential"], [data-spw-operator="ref"])) {
   --brace-open-color: color-mix(in srgb, var(--op-ref-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-ref-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="probe"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="wonder"], [data-spw-operator="probe"])) {
   --brace-open-color: color-mix(in srgb, var(--op-probe-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-probe-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="action"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"])) {
   --brace-open-color: color-mix(in srgb, var(--op-action-color) 42%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-action-color) 24%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="stream"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="value"], [data-spw-operator="stream"])) {
   --brace-open-color: color-mix(in srgb, var(--op-stream-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-stream-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="merge"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="subject"], [data-spw-operator="merge"])) {
   --brace-open-color: color-mix(in srgb, var(--op-merge-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-merge-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="pragma"]) {
-  --brace-open-color: color-mix(in srgb, var(--op-pragma-color) 36%, transparent);
-  --brace-close-color: color-mix(in srgb, var(--op-pragma-color) 18%, transparent);
-}
-
-:where([data-spw-form="brace"][data-spw-operator="meta"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="substrate"], [data-spw-operator="meta"])) {
   --brace-open-color: color-mix(in srgb, var(--op-meta-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-meta-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="surface"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="concept-edge"], [data-spw-operator="route"], [data-spw-operator="surface"])) {
   --brace-open-color: color-mix(in srgb, var(--op-surface-color) 40%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-surface-color) 22%, transparent);
 }
@@ -14710,7 +14705,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   --brace-close-color: color-mix(in srgb, var(--op-layer-color) 14%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="baseline"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="ground"], [data-spw-operator="baseline"], [data-spw-operator="intrinsic"])) {
   --brace-open-color: color-mix(in srgb, var(--op-baseline-color) 32%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-baseline-color) 16%, transparent);
 }
@@ -14992,7 +14987,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
    15. Topic lens
    ========================================================================== */
 
-:where([data-spw-operator="topic"]) {
+:where([data-spw-operator="concept"], [data-spw-operator="topic"]) {
   --spw-operator-color: var(--op-topic-color, hsl(192 62% 32%));
   --angle-open-color: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
   --angle-close-color: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
@@ -30215,17 +30210,14 @@ html[data-spw-explore-posture="workshop"], html[data-spw-layout-posture="worksho
   font-weight: 650;
 }
 
-:where(.spw-effect-chip[data-spw-operator="probe"]) { --spw-effect-chip-accent: var(--op-probe-color, #6a3fb8); }
-:where(.spw-effect-chip[data-spw-operator="frame"]) { --spw-effect-chip-accent: var(--op-frame-color, #1a9999); }
-:where(.spw-effect-chip[data-spw-operator="ref"]) { --spw-effect-chip-accent: var(--op-ref-color, #1d57a3); }
-:where(.spw-effect-chip[data-spw-operator="object"]) { --spw-effect-chip-accent: var(--op-object-color, #c68a22); }
-:where(.spw-effect-chip[data-spw-operator="integrate"]) { --spw-effect-chip-accent: var(--op-integration-color, var(--op-object-color, #a67c00)); }
-:where(.spw-effect-chip[data-spw-operator="stream"]) { --spw-effect-chip-accent: var(--op-stream-color, #2a8c76); }
-:where(.spw-effect-chip[data-spw-operator="route"]) { --spw-effect-chip-accent: var(--op-topic-color, #2e8b57); }
-:where(.spw-effect-chip[data-spw-operator="potential"]) { --spw-effect-chip-accent: var(--op-probe-color, #6a3fb8); }
-:where(.spw-effect-chip[data-spw-operator="baseline"]) { --spw-effect-chip-accent: var(--ink-soft, rgba(14, 18, 20, 0.68)); }
-:where(.spw-effect-chip[data-spw-operator="surface"]) { --spw-effect-chip-accent: var(--op-surface-color, #355f77); }
-:where(.spw-effect-chip[data-spw-operator="action"]) { --spw-effect-chip-accent: var(--op-action-color, #147a70); }
+:where(.spw-effect-chip:is([data-spw-operator="wonder"], [data-spw-operator="probe"])) { --spw-effect-chip-accent: var(--op-probe-color, #6a3fb8); }
+:where(.spw-effect-chip:is([data-spw-operator="frame"], [data-spw-operator="address"])) { --spw-effect-chip-accent: var(--op-frame-color, #1a9999); }
+:where(.spw-effect-chip:is([data-spw-operator="potential"], [data-spw-operator="ref"])) { --spw-effect-chip-accent: var(--op-potential-color, var(--op-ref-color, #1d57a3)); }
+:where(.spw-effect-chip:is([data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"])) { --spw-effect-chip-accent: var(--op-integration-color, var(--op-object-color, #a67c00)); }
+:where(.spw-effect-chip:is([data-spw-operator="value"], [data-spw-operator="stream"])) { --spw-effect-chip-accent: var(--op-stream-color, #2a8c76); }
+:where(.spw-effect-chip:is([data-spw-operator="concept-edge"], [data-spw-operator="route"], [data-spw-operator="surface"])) { --spw-effect-chip-accent: var(--op-surface-color, #355f77); }
+:where(.spw-effect-chip:is([data-spw-operator="ground"], [data-spw-operator="baseline"], [data-spw-operator="intrinsic"])) { --spw-effect-chip-accent: var(--ink-soft, rgba(14, 18, 20, 0.68)); }
+:where(.spw-effect-chip:is([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"])) { --spw-effect-chip-accent: var(--op-action-color, #147a70); }
 
 :where(.spw-effect-chip[aria-pressed="true"]) {
   border-color: color-mix(in srgb, var(--spw-effect-chip-accent, var(--spw-effect-accent)) 42%, var(--line, transparent));
@@ -31983,55 +31975,31 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .frame-card, :is(.spw-panel
    ========================================================================== */
 
 /* Terminal → discharge kind. Same table as charge-field.js OPERATOR_DISCHARGE. */
-:where(
-  [data-spw-operator="wonder"],
-  [data-spw-operator="probe"],
-  [data-spw-operator="action"],
-  [data-spw-operator="normalize"],
-  [data-spw-operator="measure"]
-) {
+:where([data-spw-operator="wonder"], [data-spw-operator="probe"], [data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"], [data-spw-operator="normalize"]) {
   --spw-discharge-kind: release;
   --spw-discharge-color: var(--op-probe-color, #4a2180);
 }
 
+/* route/stream/surface once sat outside this table; they are concept-edge and
+   value, and ride with their operator's class now. */
 :where(
-  [data-spw-operator="potential"],
-  [data-spw-operator="ref"],
-  [data-spw-operator="perspective"],
-  [data-spw-operator="subject"],
-  [data-spw-operator="substrate"],
-  [data-spw-operator="meta"],
-  [data-spw-operator="resource"],
-  [data-spw-operator="support"],
-  [data-spw-operator="confluence"],
-  /* route/stream/surface: real operators (7/19/11 pages) missing from this
-     table and from charge-field.js's OPERATOR_DISCHARGE alike; both fixed
-     together so the CSS-only and runtime-driven paths agree. */
-  [data-spw-operator="route"],
-  [data-spw-operator="stream"],
-  [data-spw-operator="surface"]
+  [data-spw-operator="potential"], [data-spw-operator="ref"],
+  [data-spw-operator="perspective"], [data-spw-operator="situate"],
+  [data-spw-operator="subject"], [data-spw-operator="merge"], [data-spw-operator="confluence"],
+  [data-spw-operator="substrate"], [data-spw-operator="meta"], [data-spw-operator="resource"], [data-spw-operator="support"],
+  [data-spw-operator="concept-edge"], [data-spw-operator="route"], [data-spw-operator="surface"],
+  [data-spw-operator="value"], [data-spw-operator="stream"]
 ) {
   --spw-discharge-kind: transfer;
   --spw-discharge-color: var(--op-ref-color, #355f77);
 }
 
-:where(
-  [data-spw-operator="frame"],
-  [data-spw-operator="address"],
-  [data-spw-operator="binding"],
-  [data-spw-operator="vibration"],
-  [data-spw-operator="ground"]
-) {
+:where([data-spw-operator="frame"], [data-spw-operator="address"], [data-spw-operator="binding"], [data-spw-operator="vibration"], [data-spw-operator="ground"], [data-spw-operator="baseline"], [data-spw-operator="intrinsic"]) {
   --spw-discharge-kind: ground;
   --spw-discharge-color: var(--op-frame-color, #008080);
 }
 
-:where(
-  [data-spw-operator="integration"],
-  [data-spw-operator="integrate"],
-  [data-spw-operator="object"],
-  [data-spw-operator="value"]
-) {
+:where([data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"], [data-spw-operator="value"], [data-spw-operator="stream"]) {
   --spw-discharge-kind: project;
   --spw-discharge-color: var(--op-object-color, #a67c00);
 }
@@ -36895,19 +36863,19 @@ body[data-spw-micro-world="true"]::before {
 }
 
 /* Operator echo during active treat */
-:where(html[data-spw-palette-treat-probe="1"]) :where([data-spw-operator="frame"], [data-spw-operator="surface"]) {
+:where(html[data-spw-palette-treat-probe="1"]) :where([data-spw-operator="frame"], [data-spw-operator="address"], [data-spw-operator="concept-edge"], [data-spw-operator="route"], [data-spw-operator="surface"]) {
   --spw-resonance: calc(var(--spw-palette-treat-strength, 0.62) * 0.72);
 }
 
-:where(html[data-spw-palette-treat-probe="2"]) :where([data-spw-operator="object"], [data-spw-operator="topic"]) {
+:where(html[data-spw-palette-treat-probe="2"]) :where([data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"], [data-spw-operator="concept"], [data-spw-operator="topic"]) {
   --spw-resonance: calc(var(--spw-palette-treat-strength, 0.62) * 0.72);
 }
 
-:where(html[data-spw-palette-treat-probe="3"]) :where([data-spw-operator="ref"], [data-spw-operator="stream"]) {
+:where(html[data-spw-palette-treat-probe="3"]) :where([data-spw-operator="potential"], [data-spw-operator="ref"], [data-spw-operator="value"], [data-spw-operator="stream"]) {
   --spw-resonance: calc(var(--spw-palette-treat-strength, 0.62) * 0.72);
 }
 
-:where(html[data-spw-palette-treat-probe="4"]) :where([data-spw-operator="probe"], [data-spw-operator="action"]) {
+:where(html[data-spw-palette-treat-probe="4"]) :where([data-spw-operator="wonder"], [data-spw-operator="probe"], [data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"]) {
   --spw-resonance: calc(var(--spw-palette-treat-strength, 0.62) * 0.72);
 }
 
@@ -40378,16 +40346,14 @@ html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):focus-visible {
 
 /* Probe and pragma chips should not feel interchangeable.
    Probe stays open/reversible; pragma reads as a stronger local constraint. */
-:is(.spw-chip, .spw-chip)[data-spw-operator="probe"],
-:is(.spw-chip, .spw-chip)[data-spw-operator="wonder"] {
+:is(.spw-chip):is([data-spw-operator="wonder"], [data-spw-operator="probe"]) {
   --operator-chip-border-style: dashed;
   --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 95%, var(--op-probe-color, var(--active-op-color, var(--teal))) 5%);
   --operator-chip-border: color-mix(in oklab, var(--op-probe-color, var(--active-op-color, var(--teal))) 28%, transparent);
   --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--op-probe-color, var(--active-op-color, var(--teal))) 10%);
 }
 
-:is(.spw-chip, .spw-chip)[data-spw-operator="pragma"],
-:is(.spw-chip, .spw-chip)[data-spw-operator="action"] {
+:is(.spw-chip):is([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"]) {
   --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 12%);
   --operator-chip-border: color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 34%, transparent);
   --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 84%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%);
@@ -44735,8 +44701,8 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
       color 160ms ease;
   }
 
-  :where(.spw-page-region-rail__link[data-spw-operator="frame"]) { --active-op-color: var(--op-frame-color, #008080); }
-  :where(.spw-page-region-rail__link[data-spw-operator="action"]) { --active-op-color: var(--op-action-color, #006b6b); }
+  :where(.spw-page-region-rail__link[data-spw-operator="frame"], .spw-page-region-rail__link[data-spw-operator="address"]) { --active-op-color: var(--op-frame-color, #008080); }
+  :where(.spw-page-region-rail__link[data-spw-operator="action"], .spw-page-region-rail__link[data-spw-operator="act"], .spw-page-region-rail__link[data-spw-operator="pragma"]) { --active-op-color: var(--op-action-color, #006b6b); }
   :where(.spw-page-region-rail__link[data-spw-operator="potential"], .spw-page-region-rail__link[data-spw-operator="ref"]) { --active-op-color: var(--op-ref-color, #2b6cb0); }
   :where(.spw-page-region-rail__link[data-spw-operator="wonder"], .spw-page-region-rail__link[data-spw-operator="probe"]) { --active-op-color: var(--op-probe-color, #8a4baf); }
   :where(.spw-page-region-rail__link[data-spw-operator="integration"], .spw-page-region-rail__link[data-spw-operator="integrate"], .spw-page-region-rail__link[data-spw-operator="object"]) { --active-op-color: var(--op-object-color, #b7791f); }

@@ -1507,52 +1507,47 @@
 }
 
 /* operator-specific brace hues */
-:where([data-spw-form="brace"][data-spw-operator="frame"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="frame"], [data-spw-operator="address"])) {
   --brace-open-color: color-mix(in srgb, var(--op-frame-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-frame-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="object"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"])) {
   --brace-open-color: color-mix(in srgb, var(--op-object-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-object-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="ref"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="potential"], [data-spw-operator="ref"])) {
   --brace-open-color: color-mix(in srgb, var(--op-ref-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-ref-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="probe"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="wonder"], [data-spw-operator="probe"])) {
   --brace-open-color: color-mix(in srgb, var(--op-probe-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-probe-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="action"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"])) {
   --brace-open-color: color-mix(in srgb, var(--op-action-color) 42%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-action-color) 24%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="stream"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="value"], [data-spw-operator="stream"])) {
   --brace-open-color: color-mix(in srgb, var(--op-stream-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-stream-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="merge"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="subject"], [data-spw-operator="merge"])) {
   --brace-open-color: color-mix(in srgb, var(--op-merge-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-merge-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="pragma"]) {
-  --brace-open-color: color-mix(in srgb, var(--op-pragma-color) 36%, transparent);
-  --brace-close-color: color-mix(in srgb, var(--op-pragma-color) 18%, transparent);
-}
-
-:where([data-spw-form="brace"][data-spw-operator="meta"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="substrate"], [data-spw-operator="meta"])) {
   --brace-open-color: color-mix(in srgb, var(--op-meta-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-meta-color) 20%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="surface"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="concept-edge"], [data-spw-operator="route"], [data-spw-operator="surface"])) {
   --brace-open-color: color-mix(in srgb, var(--op-surface-color) 40%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-surface-color) 22%, transparent);
 }
@@ -1572,7 +1567,7 @@
   --brace-close-color: color-mix(in srgb, var(--op-layer-color) 14%, transparent);
 }
 
-:where([data-spw-form="brace"][data-spw-operator="baseline"]) {
+:where([data-spw-form="brace"]:is([data-spw-operator="ground"], [data-spw-operator="baseline"], [data-spw-operator="intrinsic"])) {
   --brace-open-color: color-mix(in srgb, var(--op-baseline-color) 32%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-baseline-color) 16%, transparent);
 }
@@ -1854,7 +1849,7 @@
    15. Topic lens
    ========================================================================== */
 
-:where([data-spw-operator="topic"]) {
+:where([data-spw-operator="concept"], [data-spw-operator="topic"]) {
   --spw-operator-color: var(--op-topic-color, hsl(192 62% 32%));
   --angle-open-color: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
   --angle-close-color: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
