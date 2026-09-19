@@ -748,6 +748,7 @@ function snapshotSemanticExpressions() {
       vocab: el.dataset.spwVocab || null,
       topic: el.dataset.spwTopic || null,
       operator: el.dataset.spwOperator || null,
+      within: el.parentElement?.closest('[data-spw-semantic-expression]')?.dataset.spwSemanticExpression || null,
       href: el instanceof HTMLAnchorElement ? el.getAttribute('href') : null,
       route: window.location.pathname,
     }));

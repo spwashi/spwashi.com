@@ -626,7 +626,7 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-anatomy], [data-spw-vocabulary]',
     rootMode: 'single',
-    describes: 'page-anatomy[vocabulary]{focus.pin.reference}',
+    describes: 'page-anatomy[vocabulary]{focus.pin.reference} serialize[page]{frames.operators}<nested>',
     updates: [
       'structural:data-spw-anatomy-ready',
       'inspect:data-spw-anatomy-focus',

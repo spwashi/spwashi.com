@@ -675,6 +675,69 @@ function collectParallelRecords(root = document) {
   }));
 }
 
+/* Frames and the operator controls they hold, nested as the page nests them:
+   page > frame > operators. A frame is a .spw-frame or a section, article,
+   or aside that authors data-spw-semantic-expression; a control is a link or
+   button carrying data-spw-operator whose nearest frame is this one. The
+   token serialized is the control's own Spw — its semantic expression, its
+   authored sigil, or the label it opens with. */
+const FRAME_SELECTOR = '.spw-frame, section[data-spw-semantic-expression], article[data-spw-semantic-expression], aside[data-spw-semantic-expression]';
+const FRAME_CONTROL_SELECTOR = 'a[data-spw-operator], button[data-spw-operator]';
+const FRAME_RECORD_LIMIT = 24;
+const FRAME_CONTROL_LIMIT = 12;
+
+const CONTROL_SIGIL_RE = /^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<)/;
+
+/* The control's own Spw: its semantic expression, its authored sigil, or the
+   sigil-led token that opens its label. A card link that follows its sigil
+   with prose (?algorithm_labs Algorithm labs …) serializes as the token, not
+   the prose; a prose label with no sigil serializes as itself, trimmed. */
+function readControlToken(element) {
+  const own = element.dataset.spwSemanticExpression || element.dataset.spwSigil || '';
+  if (own) return own;
+  const text = normalizeText(element.textContent || '');
+  if (!CONTROL_SIGIL_RE.test(text)) return text.slice(0, 48);
+  const [first = '', second = ''] = text.split(' ');
+  const token = CONTROL_SIGIL_RE.test(first) && first.replace(CONTROL_SIGIL_RE, '') === '' ? `${first} ${second}` : first;
+  return token.slice(0, 48);
+}
+
+function describeFrame(frame, budget) {
+  const children = [];
+  const controls = [];
+  for (const element of frame.querySelectorAll(`${FRAME_SELECTOR}, ${FRAME_CONTROL_SELECTOR}`)) {
+    if (!(element instanceof HTMLElement)) continue;
+    const owner = element.parentElement?.closest(FRAME_SELECTOR);
+    if (owner !== frame) continue;
+    if (element.matches(FRAME_SELECTOR)) {
+      if (budget.count < FRAME_RECORD_LIMIT) children.push(element);
+    } else if (controls.length < FRAME_CONTROL_LIMIT) {
+      controls.push({
+        token: readControlToken(element),
+        operator: element.dataset.spwOperator || '',
+        action: element.dataset.spwAction || '',
+      });
+    }
+  }
+  budget.count += 1;
+  return {
+    path: frame.id ? `#${frame.id}` : `${describeElementPath(frame)}>${frame.localName}`,
+    expression: frame.dataset.spwSemanticExpression || '',
+    role: frame.dataset.spwRole || '',
+    operators: controls,
+    frames: children.map((child) => describeFrame(child, budget)),
+  };
+}
+
+function collectFrameRecords(root = document) {
+  const scope = root.querySelector?.('main') || root;
+  const budget = { count: 0 };
+  return Array.from(scope.querySelectorAll?.(FRAME_SELECTOR) || [])
+    .filter((frame) => frame instanceof HTMLElement && !frame.parentElement?.closest(FRAME_SELECTOR))
+    .slice(0, FRAME_RECORD_LIMIT)
+    .map((frame) => describeFrame(frame, budget));
+}
+
 function collectFloatingChromeRecords() {
   return Array.from(document.querySelectorAll('[data-spw-floating-chrome="true"]'))
     .slice(0, 12)
@@ -721,6 +784,7 @@ export function buildPageAnatomySnapshot(root = document) {
     family: body?.dataset?.spwPageFamily || '',
     role: body?.dataset?.spwPageRole || '',
     anatomy: collectAnatomyRecords(root),
+    frames: collectFrameRecords(root),
     parallels: collectParallelRecords(root),
     publisher: {
       audience: body?.dataset?.spwAudience || '',
@@ -759,6 +823,28 @@ export function serializePageAnatomy(snapshot = buildPageAnatomySnapshot()) {
       const parallel = entry.parallel ? ` parallel=${spwQuote(entry.parallel)}` : '';
       lines.push(`    .{ part=${spwQuote(entry.anatomy)} vocab=${spwQuote(entry.vocabulary)} label=${spwQuote(entry.label)}${parallel} path=${spwQuote(entry.path)} }`);
     });
+    lines.push('  ][reg=set]');
+  }
+
+  if (snapshot.frames?.length) {
+    const serializeFrame = (frame, depth) => {
+      const pad = '  '.repeat(depth);
+      const operators = frame.operators.length
+        ? ` operators=#[ ${frame.operators.map((entry) => `\`${entry.token}\``).join(', ')} ]`
+        : '';
+      const head = [`frame=${spwQuote(frame.path)}`];
+      if (frame.expression) head.push(`expression=${spwQuote(frame.expression)}`);
+      if (frame.role) head.push(`role=${spwQuote(frame.role)}`);
+      if (!frame.frames.length) {
+        lines.push(`${pad}.{ ${head.join(' ')}${operators} }`);
+        return;
+      }
+      lines.push(`${pad}.{ ${head.join(' ')}${operators} frames=#[`);
+      frame.frames.forEach((child) => serializeFrame(child, depth + 1));
+      lines.push(`${pad}][reg=set] }`);
+    };
+    lines.push('  frames = #[');
+    snapshot.frames.forEach((frame) => serializeFrame(frame, 2));
     lines.push('  ][reg=set]');
   }
 
