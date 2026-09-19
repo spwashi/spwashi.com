@@ -166,3 +166,7 @@ Defer until Phases 0–1 prove the boundary model. Obvious extraction order:
 - Framework introduction, npm dependencies
 - Attribute vocabulary migration (Phase 1b of shell-model plan)
 - Full `shared.js` deletion in one pass
+
+## 0c landed as the lens writer — 2026-09-19
+
+`runtime/lens-modes.js` is the one mode-switch writer (pressed, hidden, roving tabindex, live seat expression, `previousMode`); `site-core-minimal` owns the buttons, their arrow keys, and `LENS_MODE_REQUEST_EVENT` (`lens:request`) on the bus; `variant-selection` became the first adopter by listening for `frame:mode` instead of binding a second click writer, and `console`, `brace-actions`, and `operator-interactions` request instead of reaching for `window.spwInterface`. The generic `runtime/mode-switch.js` rename did not happen: the file keeps its name and its profile table until a second non-lens adopter (the design experiments' route-local panels) asks for the general shape. `spw-key-events` lost its copy of the expression writer.

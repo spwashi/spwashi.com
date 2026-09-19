@@ -64,3 +64,17 @@ Craft guard:
 ## Spw Artifact
 
 `.agents/plans/state-block-projections/state-block-projections.spw`
+
+## The lens is a state block — proposal and bench, 2026-09-19
+
+A lens switch already is the smallest state block on the site: it holds one mutable seat, and since the one-writer change the switch itself carries the live expression (`about[kernel]{open.sit}`) and the runtime reads it back as the page's Spw. What it does not do is *show* that. The authored chassis spends a 2×2 grid, a label capsule, a feedback line, and a state dot on four short seats — about 170px on a phone for a choice that is one line of chips.
+
+Bench: `/design/components/#lens-seats`, three live copies of the same four seats.
+
+- **A · chassis** — as authored today (grid, capsule, feedback, dot).
+- **B · seat row** — one row, `data-spw-lens-track="row" data-spw-lens-chrome="silent seat"`: the pressed seat carries its operator color through the existing `--mode-switch-active-*-intent` seam, the dot goes, and the switch's own `data-spw-semantic-expression` is shown as its consequence (`::after` reading the attribute the writer keeps current). Measured 121px on a phone including the expression line and the design page's kind tag.
+- **C · silent row** — the row and nothing else. 100px.
+
+Choosing which panel a frame shows is the same act as reading the block: the seat you press is the token that changes in the expression. That is the "tuning/priming" value the lens was missing — it names its own consequence in the site's notation rather than in a humanized feedback string.
+
+Gate: sensation. Approve A, B, or C in a browser before any route changes. If B or C, the treatment moves from `routes/surfaces/design.css` (scoped to `page_design_components`) into `handles/operators/state-semantics.css` as a lens-chrome value, and routes opt in per switch. Nothing on `/about/`, `/`, or the topics lanes changes until then.

@@ -73,3 +73,7 @@ The 1638 KiB core line is a **soft** budget (`--strict-budget` to fail); current
 2. `node --check` on edited JS
 3. Confirm flourish-pack begins with the same `@layer` list as `style-core.css`
 4. `npm run css:payload`
+
+## Selector cost measured — 2026-09-19
+
+Chrome's SelectorStats on `/about/` at phone: 2,563 selectors, 6.7M match attempts over 17 boot passes, 1.27s of matching inside 24.1s of style time — five percent. Multi-argument `:is()`/`:where()` in a rightmost compound do land in the universal bucket (4,783 attempts each, every element every pass) and it still does not matter. A per-layer ablation served fresh through CDP Fetch found the layers non-additive: `only:<layer>` pages cost 12–55ms per full pass, all layers 137ms, and removing `components` raised the pass to 279–333ms because it carries the containment that makes the rest cheap. Do not demote a layer for pass speed without measuring the page it leaves behind, fresh. Full record: `.spw/audits/runtime-recalc-cost-2026-09.spw`.

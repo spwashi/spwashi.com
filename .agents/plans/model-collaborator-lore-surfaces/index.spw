@@ -1,0 +1,69 @@
+# Plan Index — Model Collaborator Lore Surfaces
+#
+# Tools and lore a human model can work from for covers and supplemental materials, with
+# credit, consent, and usage terms authored before any image.
+
+#>plan_model_collaborator_lore_surfaces_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "experimental"
+
+intent: .{
+ goal = `Let a modeling collaborator find the lore, the frames, the prompts, and the terms without a walkthrough; the terms card gates the rest.`
+ owner = `model-collaborator-lore-surfaces`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "priming"
+ memory_tier = "warm"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `A lore surface is an atlas plate with a reading order; a shot book is the capture frames listed; a terms card is a seed card authored first. No parallel gallery.`
+ concepts = #[
+  `lore-reader`,
+  `shot-book`,
+  `terms-card`,
+  `working-folio`,
+  `capture-frame`,
+ ][reg=set]
+ surfaces = #[
+  `.agents/plans/rpg-asset-capture-frames/PLAN.md`,
+  `.agents/plans/town-atlas-story-kit/PLAN.md`,
+  `.agents/plans/promptable-image-library-pass/PLAN.md`,
+  `design/folios/index.html`,
+ ][reg=set]
+ fixity_tier = `experimental`
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@plan: ~"./PLAN.md"
+@capture_frames: ~"../rpg-asset-capture-frames/PLAN.md"
+@town_atlas: ~"../town-atlas-story-kit/PLAN.md"
+@image_library: ~"../promptable-image-library-pass/PLAN.md"
+@folio_soil: ~"../../../.spw/caches/folio-soil-ecosystem-2026-09.spw"
+@capture_ecology: ~"../../../.spw/conventions/capture-ecology.spw"
+
+dispatch: .{
+ plan = @plan
+ capture_frames = @capture_frames
+ town_atlas = @town_atlas
+ image_library = @image_library
+ folio_soil = @folio_soil
+ capture_ecology = @capture_ecology
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `folio-worktable`
+ gate = `the terms card is authored and exported before any plate`
+}[reg=facet]

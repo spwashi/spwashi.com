@@ -1,0 +1,123 @@
+# Runtime Recalc Cost — 2026-09
+#
+# Where a full style recalculation spends its time on a phone, measured with
+# Chrome's own counters rather than inferred from file sizes; which runtime
+# reads still force one; and what was landed against it. Read this before
+# rewriting selectors, splitting stylesheets, or adding a boot-time measure.
+
+#>runtime_recalc_cost_2026_09
+#:audit #!runtime #!css #!performance
+#:operation #!measure
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hot_paths: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@plane_consolidation: ~"../../.agents/plans/runtime-plane-consolidation/PLAN.md"
+@css_spend: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
+@decomposition: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@measured_frame: ~"../../public/js/kernel/measured-frame.js"
+@chrome_lane: ~"../../public/js/kernel/dom-contracts.js"
+@lens_writer: ~"../../public/js/runtime/lens-modes.js"
+@harness: ~"../../scripts/lib/chrome-headless-harness.mjs"
+
+operation = "measure"
+fixity = "tending"
+
+expression = recalc[cost]{selector.element.state}<phone>
+
+^"method"{
+  ~#note: "Every number below is from headless Chrome 153 at the phone viewport (390×844, dsf 3, touch) on /about/, the route the earlier hot-path trace used. The machine carried a load average of 8–20 during the session, so absolute times drift by 2× between identical runs; ratios inside one run and counts are the reliable readings."
+  selector_stats = `Tracing category disabled-by-default-blink.debug emits SelectorStats per style pass: per-selector elapsed, match attempts, matches, fast rejects. Aggregated over boot, one lens click, and one scroll.`
+  forced_passes = `devtools.timeline with stacks: UpdateLayoutTree events that carry a script stack are passes script forced; the top frame names the reader.`
+  full_pass = `In-page: write a root custom property nobody consumes, then read getComputedStyle(body) — the style half — then offsetHeight — the layout half. Median of nine.`
+  ablation = `Serve bundles/core.css through CDP Fetch with one @layer's top-level blocks removed per fresh no-script page; the in-place delete/insertRule variant was tried first and discarded, since re-parsed rules do not cost what parsed-once rules cost.`
+  census = `Bucket every element by first class token with scripts disabled and again live; the difference is what the runtime adds. checkVisibility() says whether an added node has a computed style at all.`
+}
+
+^"selector_matching_is_five_percent"{
+  ~#measured(boot, 17 passes): "style time 24.1s under tracing; selector matching 1.27s of it"
+  selectors = 2563
+  attempts = 6747261
+  ~#reading: "matching is 5% of a pass. The top selector costs 8ms across the whole boot. Rewriting selectors would change nothing a reader feels."
+  ~#finding(universal_bucket): "a multi-argument :is() or :where() as the rightmost compound falls into Blink's universal bucket and is attempted against every element on every pass (4,783 attempts per selector here); a single-argument :where() is bucketed by its inner compound (23–390 attempts). Real, and still only 5%."
+  ~#refuse: "a selector rewrite pass for speed. audit:operator-css keys rules on the whole class for correctness, not for this."
+  interaction: .{
+    lens_click = `3 passes, 18ms, 5,600 attempts — a lens change invalidates only what its attributes reach`
+    scroll = `1 pass, 9ms`
+    ~#reading: `interaction passes are cheap; boot passes are not, because boot writes root attributes and root attributes reach everything`
+  }[reg=facet]
+}
+
+^"where_a_pass_goes"{
+  ~#measured(no script, 1,269 elements): "full pass 115–180ms; core disabled 16–29ms; style 100% of it, layout 0"
+  ~#measured(live, 2,067 elements): "full pass 330–670ms"
+  ~#reading: "the cost is per-element style resolution against the live root state — the ~50 html[data-spw-*] registers the runtime writes switch on rules and custom-property redefinitions for every element — not selector matching and not layout"
+  ablation: .{
+    ~#result: "only:<layer> pages cost 12–55ms each; all layers cost 137ms; removing any single layer did not lower the pass and removing components raised it to 279–333ms"
+    ~#reading: `the layers are not additive. components carries the containment and container-type declarations that make the rest cheap to resolve; a layer cannot be demoted for speed on its own without measuring the page it leaves behind`
+    ~#caution: "all-again measured 118ms and 366ms in two runs of the same configuration; treat single-run layer deltas as noise"
+  }[reg=facet]
+  custom_properties: .{
+    unique = 1966
+    declarations = 4334
+    registered = 67
+    ~#hypothesis(untested): `each element that declares a custom property copies its inherited map; with ~1,000 root-level tokens and hundreds of declaring elements that copy is a plausible share of the per-element cost. Not measured this pass.`
+  }[reg=facet]
+}
+
+^"what_the_runtime_adds"{
+  ~#measured(/about/, phone): "798 elements added at rest: 1,269 → 2,067"
+  navigator = `300 (.spw-nav-item × 5 nodes each) — under .spw-nav-panel[hidden], display:none, no computed style, free`
+  sigils = `208 (.spw-sigil + .spw-operand) — visible; the operator markup the page is for`
+  brace_actions = `42 (.spw-brace-actions, .spw-brace-action) — visible; removing them lowered the live pass by 25–30ms (5%) in two of three paired rounds`
+  ~#reading: "DOM inflation is not the lever either: most of what the runtime adds has no computed style at rest"
+}
+
+^"forced_passes"{
+  ~#measured(before, two runs): "script-forced passes 67 and 25; 8.7s and 6.3s"
+  ~#measured(after chrome lane, four runs): "36, 29, 63, 39; 5.7s, 4.6s, 7.1s, 4.3s"
+  ~#reading: "the stranding read inside a synchronous syncFloatingChromeState (dom-contracts.js measureFloatingChromeStranding: 6 passes, 2.0s in one run) is gone; total style time is unchanged within noise because a deferred read moves its pass to the frame rather than removing it"
+  remaining: #[
+    `page-state.js measureFixedViewportCorrection — 5–7 per boot, one per floating-chrome settle wave; a 1200ms boot-phase hold was tried and did not reduce the count (the waves are already further apart than that) and was reverted unlanded`,
+    `shell-disclosure.js shell-menu-offset lane — 5 per boot; on the lane, still forced because module tasks dirty style between the frame and the lane's task`,
+    `shell/measurement.js getScrollY — 3, one at createState on mount`,
+    `dom-contracts.js readSafeAreaInsetPx — 2, the lane's own first read`,
+    `interactive-medium.js readMediumTokens — 2–3, one per cache invalidation`,
+    `section-handle.js resolveActiveIndex / updateSectionHandleState, reading-groove.js resolveLeadIndex, spatial-gravity.js measureElement, room-signal.js readRegionAccent — one each at mount`
+  ][reg=set]
+  ~#law: "during boot there is no clean frame to read in; a lane makes a read attributable and coalesced, not free. The count of passes is set by how many waves write to the root."
+}
+
+^"landed_2026_09_19"{
+  chrome_lane = `thirteen fire-and-forget syncFloatingChromeState callers request the lane (5956d510); layout-assumptions keeps its two synchronous calls because it reads the snapshot`
+  lens_writer = `one lens writer: lens-modes.js writes pressed, hidden, roving tabindex, the seat expression, and previousMode; site-core-minimal owns the buttons, arrows, and lens:request; variant-selection reacts to frame:mode (faced2cb). Before: two click writers per lens button, and the view transition captured a frame already changed.`
+  satchel_ownership = `the satchel's seams and tags toggles ask the settings engine; the engine owns the root attributes and the satchel mirrors settings:changed (6b1434eb)`
+  not_landed = #[
+    `selector probe cache in the loader: ~650 querySelector calls per boot cost ~13ms of script; recorded, not worth a cache with invalidation`,
+    `boot-phase hold on the viewport-correction lane: no measured change, reverted`
+  ][reg=set]
+}
+
+^"next"{
+  ~#note: "In the order the evidence supports."
+  per_element = `measure the custom-property hypothesis: count declaring elements per route and time a pass with component-local tokens registered inherits:false on a bench page before touching any sheet`
+  root_registers = `census which html[data-spw-*] registers switch on the most declarations per element (SelectorStats matches × declarations); a register that costs every element on every pass should earn it`
+  wave_count = `count root writes per boot wave; fewer waves is fewer passes, and that is pacing, so it ends at a browser demo`
+  mount_reads = `the six single-read mount sites above are lane candidates one at a time, each measured by its own row in the forced-pass table`
+  probes = #[
+    `node <scratch>/selector-stats.mjs <route> phone 30000 <out.json>`,
+    `node <scratch>/layer-ablation.mjs <route> phone 9`,
+    `node <scratch>/dom-census.mjs <route> phone 25000`,
+    `node <scratch>/ab.mjs <repo> <route> phone 26000 <label>`
+  ][reg=set]
+  ~#caution: "the probes live in the session scratchpad; promote selector-stats and layer-ablation to scripts/ when a second pass needs them, beside build-performance.mjs"
+}
+
+^"validation"{
+  probe: `npm run check:runtime && npm run check:local`
+  falsification: #[
+    `a selector rewrite lowers a full pass by more than 5%`,
+    `a layer demotion lowers the pass on the page it leaves, measured fresh, not in place`,
+    `a mount-time read is converted to a lane and its forced-pass row does not disappear`
+  ][reg=set]
+}
