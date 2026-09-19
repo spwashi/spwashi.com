@@ -72,8 +72,14 @@ const DOCUMENTED = [
   {
     domain: "spw.quest",
     title: "spw.quest",
-    href: "https://spwashi.com/about/domains/spw.quest/",
-    description: "Quest / parser door.",
+    href: "https://spw.quest/",
+    description: "Paced guide into Spw. Parser door; live specimens stay on spwashi.com.",
+  },
+  {
+    domain: "autonomous.feedback",
+    title: "autonomous.feedback",
+    href: "https://autonomous.feedback/",
+    description: "HTTP climate of public origins. Weather for lore and the Wednesday table.",
   },
   {
     domain: "factshift.center",
@@ -83,10 +89,9 @@ const DOCUMENTED = [
   },
 ];
 
-/** Hosts still in this Cloudflare account, now routed to this Worker. */
+/** Hosts this Worker currently serves. */
 const LEGACY_HUB_HOSTS = [
   "attention.productions",
-  "autonomous.feedback",
   "bane.land",
   "bone.land",
   "boon.land",
@@ -95,7 +100,6 @@ const LEGACY_HUB_HOSTS = [
   "mutex.buzz",
   "newyear.life",
   "rpgwednesday.shop",
-  "spw.quest",
   "spw.rest",
   "spwashi.biz",
   "spwashi.click",
@@ -298,7 +302,7 @@ function renderConstellation(requestUrl) {
     </section>
     <section class="panel" aria-labelledby="legacy-title">
       <h2 id="legacy-title">Also on this map</h2>
-      <p>These zones are in this Cloudflare account and now resolve here.</p>
+      <p>These hosts resolve here.</p>
       <ul>${legacyList}</ul>
     </section>
     <footer>
