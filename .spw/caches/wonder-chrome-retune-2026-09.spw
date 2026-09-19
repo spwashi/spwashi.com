@@ -1,0 +1,237 @@
+# Wonder, chrome, and tuning retune (2026-09)
+#
+# operation: prime (with one audit landed)
+# The creator's 2026-09-19 request, one breath long: readability, marketing
+# value, module interaction, haptics and electrostatic feedback, structural
+# metaphors, Spw between themes, wonder across old pages, tone, wonder arcs,
+# promo/wonder, feature learnability, immediacy of tuning, light/dark, ornament
+# and gradient feedback with tokens, pulses and oscillations across routes,
+# lens impact across modules and CSS, footer, nav menu, state satchel, settings.
+# One architecture read at many altitudes. Each line below names the owner that
+# already exists, the sensor that already runs, the smallest first patch, and
+# whether a human must feel it before it lands. Nothing here adds a wonder type
+# or a data-spw-* family.
+
+#>wonder_chrome_retune_2026_09
+#:cache #!wonder #!chrome #!settings #!tuning #!attention
+#:operation #!prime #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@ornament_contract: ~"../conventions/ornament-contract.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@charge_cycle: ~"../conventions/charge-cycle.spw"
+@composition_box_model: ~"../conventions/composition-box-model.spw"
+@floating_chrome_coherence: ~"../conventions/floating-chrome-coherence.spw"
+@cognitive_navigation: ~"../conventions/cognitive-navigation.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@menu_field: ~"../surfaces/menu-field.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@electrostatic_spend: ~"./electrostatic-spend-2026-09.spw"
+@interaction_paint_cost: ~"./interaction-paint-cost-2026-09.spw"
+@notice_attention: ~"./notice-attention-refinement-2026-09.spw"
+@touch_control_class: ~"./touch-control-class-2026-09.spw"
+@implicit_attention_arcs: ~"./implicit-attention-arcs.spw"
+@chrome_navigation_plan: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
+@floating_chrome_fix: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
+@satchel_proposal: ~"../../.agents/plans/settings-ornament-resonance/PLAN.md"
+@promo_plan: ~"../../.agents/plans/promo-wonder-cycle/PLAN.md"
+@theme_packs_plan: ~"../../.agents/plans/settings-theme-packs/PLAN.md"
+@palette_plan: ~"../../.agents/plans/palette-theme-composability-instrumentability/PLAN.md"
+@composition_js: ~"../../public/js/runtime/composition-box-model.js"
+@composition_test: ~"../../scripts/tests/composition-flow-authored.test.mjs"
+@content_css: ~"../../public/css/components/content.css"
+@region_seats_css: ~"../../public/css/systems/region-seats.css"
+@footer_css: ~"../../public/css/shell/chrome/footer.css"
+@footer_partial: ~"../../_partials/site-footer.html"
+@floating_chrome_css: ~"../../public/css/components/floating-chrome.css"
+@sigils_css: ~"../../public/css/handles/operators/sigils-and-chips.css"
+@core_tokens: ~"../../public/css/tokens/core.css"
+@pulse_tuner: ~"../../public/js/runtime/pulse-beat-tuner.js"
+@settings_route: ~"../../settings/index.html"
+@enhancement_catalog: ~"../../public/js/runtime/catalog/enhancement.js"
+
+operation = "prime"
+fixity = "tending"
+source = "creator request 2026-09-19 (Claude session); sensed on the live dev server at 1920×1200, plus npm run sense -- copy | nouns"
+do_not = `Do not implement pacing, pulses, or corner composition from this file — those end at a browser demo. Do not add a wonder type or a data-spw-* family. Do not 140-route copy. Do not raise compact chrome to the ground-control floor.`
+
+expression = retune[wonder]{settings.footer.nav.satchel}<altitudes>
+
+^"thesis"{
+  claim = `The request reads as twenty asks; it is one field read at six altitudes (doctrine, types, vocabulary, field, ornament, loop — @wonder_architecture) plus the chrome that carries a reader between them. Every ask already has an owner file and a sensor. The work is dispatch, one measured defect, and gates — not a new system.`
+  landable_now = `Defects a sensor can prove: geometry, contrast, missing reward, broken claim. Landed today: wr-001.`
+  demo_first = `Pacing, oscillation, corner packing, menu posture, promo cadence. Proposal plus demo; the human approves the sensation in a browser before code lands.`
+}[reg=facet]
+
+^"wr-001_settings_register_squeeze"{
+  id = "wr-001"
+  operation = "audit"
+  fixity = "stable"
+  status = "landed 2026-09-19"
+  claim = `The settings menu read as a registry dump because a runtime mirror overwrote the authored layout, not because the register is large.`
+  evidence = #[
+    `before, desktop 1920: page 23,616px tall; #runtime-preferences (Tune the Site) 458×10,986 beside Quick Start 6,090 and Runtime State 8,130 in one desk row`,
+    `.settings-form authored data-spw-composition-flow="stack"; composition-box-model mirrored computed display:grid back as flow="grid"; content.css cluster A then packed 13 <details> folds into five 250px columns; .settings-grid inside a fold resolved to one 216px track`,
+    `same mirror stamped flow="grid" onto each <details> (summary + note + grid = 3 children)`,
+    `after: authored flow kept, details are stages, #runtime-preferences and #stored-data carry data-spw-pack="fill" (an existing desk hook in @region_seats_css); Tune the Site 1,424×3,454; fieldsets 4×315px; page 8,730px settled`
+  ][reg=set]
+  root_cause = `@composition_js resolveCompositionFlow returned the computed display for every non-stage host. Annotation that changes geometry breaks @composition_box_model#performance_lifecycle_prime.lifecycle.mirror and the content.css promise "authored flow works without JS; annotation is enhancement".`
+  fix = #[@composition_js, @composition_test, @settings_route, @composition_box_model][reg=set]
+  validation = `node --test scripts/tests/composition-flow-authored.test.mjs; on /settings/ at desktop: document.querySelector('.settings-form').dataset.spwCompositionFlow === 'stack' and no details.settings-category carries flow=grid`
+  class = `Any catalog module whose updates list a structural: attribute that HTML also authors can do this. Probe: rg -n "'structural:data-spw-" @enhancement_catalog, then for each, rg the same attribute in route HTML. wr-016 holds the audit.`
+}[reg=facet]
+
+^"wr-002_settings_desk_mismatch"{
+  id = "wr-002"
+  operation = "prime"
+  fixity = "tending"
+  claim = `With the register full-width, the remaining desk rows still pair mismatched heights (Current Runtime State beside Local Notes; three schema atlases of 2–3k px). Dead space under a short seat is the leftover desk doing what it says.`
+  options = #[
+    `fill the tall registers (#applied-state) too — fewer rows, longer page`,
+    `reorder so equals sit together (Quick Start ↔ Runtime State; Notes ↔ Saved Data) — markup move, no CSS`,
+    `leave the desk; the folds now carry the reading`
+  ][reg=set]
+  gate = `sensation — screenshot the three options at 1280 and 1920 before choosing; do not add a settings-only grid`
+  also = `Fold summaries are bare labels while the shortcut cards above them carry kicker + one line (Writing task / Author Workflow / Draft, revise…). Echoing the kicker in each <summary> is markup-only learnability; run npm run sense -- copy after.`
+}[reg=facet]
+
+^"wr-003_footer_directory"{
+  id = "wr-003"
+  operation = "audit"
+  fixity = "tending"
+  claim = `The footer is a working area (cauldron, preferences, note) with a directory beside it; on desktop the directory is 251px tall next to a 1,274px identity column, so it leaves the viewport while the reader is still in the footer.`
+  evidence = #[
+    `_partials/site-footer.html: identity column = brand, summary, About this page, cauldron, preferences, local note; nav = 13 links + return-to-content`,
+    `footer.css 45rem: 2fr/1fr (604d4a1d); nav align-self start; site map links center their labels because the handles-layer chip rule in @sigils_css matches :where(a…):where(…,[data-spw-operator]) and beats the shell-layer flex-start at 48rem`,
+    `live probe: position:sticky on .site-footer__nav did not engage; footer.site-footer computes contain: layout style — check before spending on sticky`
+  ][reg=set]
+  first_patch = `Decide whether directory links are chips (then the centered token look is right and the 48rem flex-start rule is dead code) or a list (then exclude .site-footer__nav a from the chip rule at the handles altitude). One decision, one rule removed.`
+  gate = `visual:checks --ids=home-opening after any footer ink move`
+}[reg=facet]
+
+^"wr-004_pocket_corner"{
+  id = "wr-004"
+  operation = "prime"
+  fixity = "tending"
+  claim = `Promo, satchel, cauldron, and travel still stack as separate utilities in the bottom lane; 604d4a1d parked them in measured slots and named this pass: what yields, what stays, spacing, hierarchy.`
+  owner = #[@floating_chrome_css, @floating_chrome_fix, @touch_control_class][reg=set]
+  already_stated = `floating-chrome.css "order of sacrifice": navigation last, status next, collection first. Reduction is label-then-padding, never the target. Control size lives in one block (--spw-floating-control-size).`
+  gate = `sensation — step 2 of the control-size token (compact base, coarse-pointer step) and the corner hierarchy end at a phone demo. Pocket cannot be checked from the desktop Chrome here (viewport stayed 1920 after resize); use npm run sense -- ink about-opening.`
+}[reg=facet]
+
+^"wr-005_satchel"{
+  id = "wr-005"
+  operation = "align"
+  fixity = "tending"
+  claim = `The satchel is a projection of settings and page state, not a second register (@floating_chrome_coherence#satchel_ownership_2026_09_19). The rebuild is already proposed as a site-nav synthesizer in @satchel_proposal (2026-09-19): patch bay of the five settings that change what a page is, tokens as readout, current room plus neighbors, copy-page-Spw as output jack, no drag.`
+  do_not = `Do not fork a parallel satchel plan or touch state-inspector.js geometry before the /settings/ specimen is approved.`
+  gate = `build the bay on /settings/ as an authored specimen; approve there; then mount as the satchel`
+}[reg=facet]
+
+^"wr-006_nav_menu"{
+  id = "wr-006"
+  operation = "align"
+  fixity = "tending"
+  claim = `Nav menu work has two named next moves and no third: the open drawer's swipe-to-cycle (the fourth edge, reference implementations resolveHeaderRoomHop / resolveSectionHandleSwipe — @chrome_navigation_plan) and the menu-field postures (.ground [mode] (scene) &subject — @menu_field) whose pacing ends at design/experiments/menu-field.`
+  spw_between_themes = `Routes already spell themselves as operators in the footer directory (@now .about #>design >folios <topics> ~play ^tools *blog =settings via data-spw-nav-token). Theme packs are named as weather. Navigating between themes with Spw is therefore a copy and menu-field question, not a new attribute: which posture shows the token, and when.`
+  gate = `posture pacing — demo; drawer swipe — pocket CDP before/after on /about/`
+}[reg=facet]
+
+^"wr-007_haptics_feedback"{
+  id = "wr-007"
+  operation = "audit"
+  fixity = "tending"
+  claim = `Every interaction rewards with feedback or clarity about its arcs; silent absorption is the defect (@interaction_microstates#reward_contract). The charge model already earns and spends (@electrostatic_spend es-005 two-table finding; @charge_cycle phase machine).`
+  first_patch = `Audit, not paint: list controls in chrome and settings whose tap produces no dataset, aria, or copy change — rg data-site-setting-set and data-spw-cauldron-action hosts against the status/readout writers. Fix the silent ones with an existing readout, not a new pulse.`
+  gate = `a new pulse or haptic shape is sensation; a missing readout is a defect`
+}[reg=facet]
+
+^"wr-008_pulses_oscillations"{
+  id = "wr-008"
+  operation = "align"
+  fixity = "stable"
+  claim = `Rhythm is finite and owned: a 13-beat cycle with prime beats (@pulse_tuner), one discharge timeout per frame, cancelled on settle and unmount (@attention_field#practice_and_resonance_rhythms.finite_pulses). Trends across routes are the field's memory (wonder-memory), not more timers.`
+  do_not = `Do not add a timer, an oscillator, or a route-level cadence token. Measure first: @interaction_paint_cost ipc-013 handoff, npm run bench:nav:quick, scripts/tests/pulse-beat-tuner.test.mjs.`
+  gate = `any felt change in pacing — demo`
+}[reg=facet]
+
+^"wr-009_light_dark_tokens"{
+  id = "wr-009"
+  operation = "prime"
+  fixity = "tending"
+  claim = `Light and dark are one token table read through color-scheme and light-dark() (@core_tokens); shadows cannot ride light-dark so auto borrows the explicit-dark stacks under prefers-color-scheme. Two-way feedback with tokens already has a readout: the settings token navigator and the satchel proposal's token-as-readout.`
+  first_patch = `Run the dark fixtures before touching values: npm run sense -- ink home-hook-dark | about-opening-dark | topics-opening-dark; only a miss receipt justifies a token change. Theme-pack and resonance composability owners: @theme_packs_plan, @palette_plan.`
+  gate = `contrast is a sensor (WCAG AA); mood is a demo`
+}[reg=facet]
+
+^"wr-010_ornament_gradients"{
+  id = "wr-010"
+  operation = "align"
+  fixity = "stable"
+  claim = `An ornament renders field state — warm, resonant, collected, deviating — not decoration (@ornament_contract). Wonder paint idle-loads and may not move first-paint structure. Gradients that answer tokens belong in effects/wonder.css and effects/material.css, not core.`
+  gate = `visual:checks; attention-miss receipts, not JPEG goldens`
+}[reg=facet]
+
+^"wr-011_lens_geometry"{
+  id = "wr-011"
+  operation = "prime"
+  fixity = "experimental"
+  claim = `A lens changes what a module composes (cauldron composeLensPrompt, 604d4a1d) and what a handle reveals (five edges: direct, bound, situate, replay, return — dimensional-expression-navigation). Lens impact across CSS is the same edge grammar spent as geometry (@cognitive_navigation#locomotion_expression), and #cauldron-lens-impact already names the impact in copy.`
+  first_patch = `Make the cauldron's lens-impact sentence the model: one sentence per lens naming what changed. Do not implement a lens from a prime (@wonder_architecture#astra_prime.first_patch).`
+}[reg=facet]
+
+^"wr-012_wonder_across_old_pages"{
+  id = "wr-012"
+  operation = "audit"
+  fixity = "tending"
+  claim = `Wonder on an old page is the seven questions the body actually asks; a page that names none should not fake it in copy.`
+  probe = #[
+    `rg -L 'data-spw-wonder=' --glob 'index.html' -g '!dist/**' -g '!node_modules/**' . — routes that ask nothing`,
+    `npm run sense -- copy — today: 25 unclustered copy units across 10 seed routes; two dense-lede voice seams (recipes.soilCompanions.lede, services.bundle.lede)`,
+    `npm run wonder — 114 wonders, 24 without a probe`
+  ][reg=set]
+  first_patch = `The two dense-lede seams are the landable tone patch. Arcs across experiences: @implicit_attention_arcs and semantic-convenience-arcs own the read; name one arc per route before writing copy for it.`
+}[reg=facet]
+
+^"wr-013_promo_wonder"{
+  id = "wr-013"
+  operation = "align"
+  fixity = "tending"
+  claim = `A notice must answer subject, meaning, value, closure, shape, relevance, cadence before it takes the reading surface (@notice_attention). Offers name audience, offer, proof, resonance, extension, next action (@product_lines creative marketing contract).`
+  next = `@promo_plan 2026-09-18: measure shown / accepted / closed per cadence; prefer a here-shaped promo when the route already offers the capability; new modal promos wait for a phone demo.`
+}[reg=facet]
+
+^"wr-014_readability_marketing"{
+  id = "wr-014"
+  operation = "align"
+  fixity = "stable"
+  claim = `Readability is a measure (audit:copy pretext, line counts at width) and marketing value is the creator-first line landing in the first fold — not adjectives. The sensor is npm run audit:copy:accessor; the contract is @copy_accessor.`
+  do_not = `Do not invent a fourth accessor family; do not twin routes with .spw/<route>/index.spw.`
+}[reg=facet]
+
+^"wr-015_learnability_immediacy"{
+  id = "wr-015"
+  operation = "prime"
+  fixity = "tending"
+  claim = `Immediacy of tuning already exists at the top of /settings/ (immediate controls with pressed states) and on routes (Reveal tuners). Learnability fails lower: folds without a kicker, and pressed states that do not say which topographical distinction changed (@floating_chrome_fix 2026-06-30: mode and posture changes should produce skim-value feedback).`
+  first_patch = `wr-002.also (fold kickers), then one readout sentence per immediate control naming the distinction, reusing data-settings-state spans.`
+}[reg=facet]
+
+^"wr-016_module_interaction"{
+  id = "wr-016"
+  operation = "audit"
+  fixity = "tending"
+  claim = `Modules interact through attributes; a module that writes a structural: attribute HTML also authors is a second owner of one claim. wr-001 was one instance; the class deserves one census, not a per-module fix.`
+  probe = `rg -n "'structural:data-spw-" public/js/runtime/catalog/enhancement.js | sed "s/.*structural://" | sort -u — then rg each stem in route HTML. Expected: box-model, composition-flow, pack-layout, pack-fill are authored somewhere; size-context and content-tone are not.`
+  rule_candidate = `structural: updates keep authored values (missingOnly) unless the module's describes line says it resolves a conflict. Promote to @composition_box_model or dom-contracts PROJECTION_TIERS once the census confirms the second instance.`
+}[reg=facet]
+
+validation: #[
+  `node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/composition-flow-authored.test.mjs`
+  `npm run sense -- copy`
+  `npm run sense -- ink about-opening`
+  `npm run spw:integrity`
+][reg=set]
