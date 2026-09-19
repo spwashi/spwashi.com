@@ -34,6 +34,7 @@ const MAX_RESULTS = 28;
 const FACETS = Object.freeze([
   { id: 'all', label: 'All' },
   { id: 'nest', label: 'Nested' },
+  { id: 'frames', label: 'Frames' },
   { id: 'operators', label: 'Operators' },
   { id: 'places', label: 'Places' },
   { id: 'labs', label: 'Labs' },
@@ -110,6 +111,7 @@ function passesFacet(entry, facet) {
   if (facet === 'operators') return entry.kind === 'operator' || Boolean(entry.operatorSlug);
   if (facet === 'places') return entry.kind === 'place' || entry.kind === 'atlas';
   if (facet === 'labs') return entry.kind === 'lab' || entry.kind === 'play';
+  if (facet === 'frames') return entry.kind === 'frame';
   if (facet === 'components') return entry.kind === 'component' || Boolean(entry.componentId);
   if (facet === 'expressions') return Array.isArray(entry.expressions) && entry.expressions.length > 0;
   return true;
@@ -126,6 +128,17 @@ function scoreEntry(entry, tokens, sigilHints, query = '') {
 
   const handleHay = Array.isArray(entry.handles) ? entry.handles.join(' ').toLowerCase() : '';
   const operatorHay = Array.isArray(entry.operators) ? entry.operators.join(' ') : '';
+
+  /* A frame's own handle is the most Spw-native address on the site: the
+     sigil a reader sees on the page (#>collect_a_folio). Typed back, it
+     should land on that frame ahead of every route that merely uses #>. */
+  const queryHandle = String(query || '').trim().toLowerCase().replace(/\s+/g, '');
+  if (entry.kind === 'frame' && entry.handle && queryHandle.length > 1) {
+    const frameHandle = String(entry.handle).toLowerCase().replace(/\s+/g, '');
+    if (frameHandle === queryHandle) score += 240;
+    else if (frameHandle.startsWith(queryHandle)) score += 140;
+    else if (frameHandle.replace(/^[^a-z0-9]+/, '').startsWith(queryHandle.replace(/^[^a-z0-9]+/, '')) && queryHandle.replace(/^[^a-z0-9]+/, '').length > 2) score += 90;
+  }
 
   for (const hint of sigilHints) {
     if (entry.motion && hint.motion && entry.motion === hint.motion) score += 36;
@@ -183,8 +196,15 @@ function rankEntries(query, facet = activeFacet) {
   const pool = entries.filter((entry) => passesFacet(entry, facet));
 
   if (!tokens.length && !sigilHints.length) {
-    const seed = pool.slice(0, facet === 'operators' || facet === 'expressions' ? 20 : 14);
-    return seed.map((entry) => ({ entry, score: 0, matchedExpression: '' }));
+    /* Nothing typed yet: start where the reader is. The frames of the current
+       route come first, in page order, then the places the site opens on. */
+    const here = window.location.pathname;
+    const local = facet === 'all' || facet === 'nest' || facet === 'frames'
+      ? pool.filter((entry) => entry.kind === 'frame' && entry.frameOf === here)
+      : [];
+    const limit = facet === 'operators' || facet === 'expressions' ? 20 : 14;
+    const rest = pool.filter((entry) => !local.includes(entry) && entry.kind !== 'frame').slice(0, Math.max(6, limit - local.length));
+    return local.concat(rest).map((entry) => ({ entry, score: 0, matchedExpression: '' }));
   }
 
   return pool
@@ -215,7 +235,8 @@ function loadIndex() {
       const payload = await response.json();
       const routes = Array.isArray(payload?.routes) ? payload.routes : [];
       const components = Array.isArray(payload?.components) ? payload.components : [];
-      entries = routes.concat(components);
+      const frames = Array.isArray(payload?.frames) ? payload.frames : [];
+      entries = routes.concat(frames, components);
       facetsMeta = payload?.facets || null;
       geometryLegend = payload?.geometryLegend || null;
       return entries;
@@ -255,7 +276,7 @@ function ensureDialog() {
   input = document.createElement('input');
   input.className = 'spw-site-search__input';
   input.type = 'search';
-  input.placeholder = 'Route, wrap, or fragment ([reading] home{ open)…';
+  input.placeholder = 'A place, a frame sigil (#>collect_a_folio), or a wrap ([reading])…';
   input.setAttribute('aria-label', 'Search the site');
   input.setAttribute('aria-controls', 'spw-site-search-list');
   input.setAttribute('aria-autocomplete', 'list');
@@ -307,6 +328,7 @@ function ensureDialog() {
   footer.innerHTML = [
     '<span class="spw-spell">⌘K</span> open',
     '<span class="spw-spell">esc</span> close',
+    '<span class="spw-spell">#&gt;</span> frame',
     '<span class="spw-spell">[ { &lt;</span> expression',
     '<span class="spw-spell">? ^ ~</span> geometry',
     '<a href="/topics/search/">field guide</a>',
@@ -402,17 +424,17 @@ function appendResult(container, entry, index, matchedExpression = '') {
 
   const title = document.createElement('span');
   title.className = 'spw-site-search__title';
-  title.textContent = entry.title;
+  title.textContent = String(entry.title || '').replace(/^Spwashi\s*[•·]\s*/, '');
   titleRow.appendChild(title);
 
   const meta = document.createElement('span');
   meta.className = 'spw-site-search__meta';
   meta.textContent = [
-    entry.nestLabel || entry.route,
-    entry.kind,
-    entry.surface,
+    entry.kind === 'frame' ? (entry.handle || `#${entry.anchor}`) : (entry.nestLabel || entry.route),
+    entry.kind === 'frame' ? String(entry.routeTitle || entry.frameOf || '').replace(/^Spwashi\s*[•·]\s*/, '') : entry.kind,
+    entry.kind === 'frame' ? entry.regionRole || entry.region : entry.surface,
     geometryMeta(entry),
-    entry.wonder,
+    entry.kind === 'frame' ? (entry.expressions && entry.expressions[0]) : entry.wonder,
   ].filter(Boolean).join(' · ');
 
   link.append(titleRow, meta);
@@ -440,9 +462,9 @@ function renderResults() {
 
   if (!ranked.length) {
     status.textContent = filterText.trim()
-      ? `No routes match “${filterText.trim()}”.`
+      ? `Nothing matches “${filterText.trim()}”. Try a frame sigil (#>), a nest (topics), or a wrap ([reading]).`
       : entries.length
-        ? `${entries.length} routes indexed. Try a nest (topics), wrap ([reading]), or sigil (? ^ ~).`
+        ? `${entries.length} places, frames, and components indexed. Type a sigil you saw on a page to go there.`
         : 'Search index unavailable.';
     return;
   }
@@ -452,15 +474,34 @@ function renderResults() {
     ? ` · geometry ${sigilHints.map((h) => h.sigil || h.motion).join(' ')}`
     : '';
 
+  const localCount = filterText.trim() ? 0 : ranked.filter((row) => row.entry.kind === 'frame' && row.entry.frameOf === window.location.pathname).length;
   status.textContent = filterText.trim()
     ? `${ranked.length} match${ranked.length === 1 ? '' : 'es'}${hintNote}`
-    : `Showing ${ranked.length} · facet ${activeFacet}`;
+    : localCount
+      ? `${localCount} frame${localCount === 1 ? '' : 's'} on this page, then ${ranked.length - localCount} places · facet ${activeFacet}`
+      : `Showing ${ranked.length} · facet ${activeFacet}`;
 
   const useNest = activeFacet === 'nest' || (!filterText.trim() && activeFacet === 'all');
   let index = 0;
 
   if (useNest) {
-    const groups = groupByNest(ranked);
+    const here = window.location.pathname;
+    const local = filterText.trim() ? [] : ranked.filter((row) => row.entry.kind === 'frame' && row.entry.frameOf === here);
+    if (local.length) {
+      const group = document.createElement('section');
+      group.className = 'spw-site-search__group';
+      group.setAttribute('aria-label', 'this page');
+      const heading = document.createElement('h3');
+      heading.className = 'spw-site-search__group-label';
+      heading.textContent = `here · ${local.length}`;
+      group.appendChild(heading);
+      local.forEach((row) => {
+        appendResult(group, row.entry, index, row.matchedExpression);
+        index += 1;
+      });
+      list.appendChild(group);
+    }
+    const groups = groupByNest(ranked.filter((row) => !local.includes(row)));
     groups.forEach(([nestRoot, rows]) => {
       const group = document.createElement('section');
       group.className = 'spw-site-search__group';

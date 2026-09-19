@@ -118,6 +118,62 @@ function harvestRouteExpressions(html = '') {
   };
 }
 
+/* Frames are the site's navigable unit below the route: every
+   section.spw-frame[id] carries a sigil (#>collect_a_folio), a heading, an
+   expression, and region attributes. Indexing them lets a reader type the
+   sigil they see on one page and land on that frame on another. */
+function stripTags(html = '') {
+  return decodeHtmlEntities(String(html).replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+}
+
+function harvestRouteFrames(html = '', route = '') {
+  const frames = [];
+  const pattern = /<section\b([^>]*\bclass=["'][^"']*\bspw-frame\b[^"']*["'][^>]*)>/g;
+  let match;
+  while ((match = pattern.exec(html))) {
+    const attrs = match[1];
+    const id = (attrs.match(/\bid=["']([^"']+)["']/) || [])[1];
+    if (!id) continue;
+    const start = match.index + match[0].length;
+    const end = html.indexOf('</section>', start);
+    const body = html.slice(start, end === -1 ? start + 6000 : Math.min(end, start + 12000));
+    const sigilRaw = (body.match(/class=["'][^"']*\bframe-sigil\b[^"']*["'][^>]*>([\s\S]*?)<\/a>/) || [])[1] || '';
+    const handle = decodeChipText(sigilRaw).slice(0, 80);
+    const headingRaw = (body.match(/<h[1-3]\b[^>]*>([\s\S]*?)<\/h[1-3]>/) || [])[1] || '';
+    const title = stripTags(headingRaw).slice(0, 120);
+    if (!title && !handle) continue;
+    const read = (name) => decodeHtmlEntities((attrs.match(new RegExp(`\\b${name}=["']([^"']+)["']`)) || [])[1] || '').trim();
+    const expression = read('data-spw-semantic-expression').slice(0, 120);
+    const prefix = prefixFromHandle(handle);
+    const profile = prefix ? Object.values(OPERATOR_GEOMETRY_INDEX).find((item) => item.sigil === prefix) : null;
+    /* Haystack only: the first ~280 characters of the frame's own prose is
+       enough to match a term a reader remembers, and keeps 780 frames near
+       the weight of the route index rather than four times it. */
+    const text = stripTags(body).slice(0, 280);
+    frames.push({
+      route: `${route}#${id}`,
+      frameOf: route,
+      anchor: id,
+      title: title || handle,
+      handle,
+      kind: 'frame',
+      sigil: profile?.sigil || null,
+      operator: profile?.type || null,
+      geometry: profile?.geometry || null,
+      motion: profile?.motion || null,
+      brace: profile?.brace || null,
+      region: read('data-spw-region') || null,
+      regionRole: read('data-spw-region-role') || read('data-spw-role') || null,
+      liminality: read('data-spw-liminality') || null,
+      expressions: expression ? [expression] : [],
+      expressionHosts: expression ? { [expression]: id } : {},
+      haystack: [handle, expression, id.replace(/-/g, ' '), read('data-spw-region'), read('data-spw-role'), read('data-spw-liminality'), read('data-spw-wonder'), text]
+        .filter(Boolean).join(' ').toLowerCase(),
+    });
+  }
+  return frames;
+}
+
 /**
  * Geometry read off what a page is made of, for the 72% of routes whose path
  * matches none of the special cases in geometryFromRoute.
@@ -372,12 +428,14 @@ export async function generateSiteSearchIndex() {
     ecologyFixtures: REGION_ECOLOGY_FIXTURES,
   });
   const routes = [];
+  const frames = [];
   for (const record of manifest.routes || []) {
     let harvested = { handles: [], operators: [], expressions: [], expressionHosts: {} };
     if (record.file) {
       try {
         const html = await fs.readFile(path.join(ROOT, record.file), 'utf8');
         harvested = harvestRouteHandles(html);
+        frames.push(...harvestRouteFrames(html, record.route));
       } catch {
         harvested = { handles: [], operators: [], expressions: [], expressionHosts: {} };
       }
@@ -393,6 +451,17 @@ export async function generateSiteSearchIndex() {
     }
   }
   routes.sort((a, b) => a.route.localeCompare(b.route));
+  const routeByPath = new Map(routes.map((entry) => [entry.route, entry]));
+  for (const frame of frames) {
+    const parent = routeByPath.get(frame.frameOf);
+    if (!parent) continue;
+    frame.surface = parent.surface;
+    frame.nest = parent.nest;
+    frame.nestRoot = parent.nestRoot;
+    frame.nestLabel = parent.nestLabel;
+    frame.depth = (parent.depth || 0) + 1;
+    frame.routeTitle = parent.title;
+  }
 
   const byNestRoot = {};
   const byKind = {};
@@ -408,15 +477,17 @@ export async function generateSiteSearchIndex() {
     version: 2,
     routeCount: routes.length,
     componentCount: components.length,
+    frameCount: frames.length,
     facets: {
       nestRoots: Object.keys(byNestRoot).sort(),
       kinds: Object.keys(byKind).sort(),
       motions: Object.keys(byMotion).sort(),
-      counts: { byNestRoot, byKind, byMotion, components: components.length },
+      counts: { byNestRoot, byKind, byMotion, components: components.length, frames: frames.length },
     },
     components,
     geometryLegend: OPERATOR_GEOMETRY_INDEX,
     routes,
+    frames,
   };
 
   await fs.mkdir(path.dirname(OUTPUT), { recursive: true });
@@ -428,7 +499,7 @@ export async function main() {
   const payload = await generateSiteSearchIndex();
   console.log(`[search-index] wrote ${path.relative(ROOT, OUTPUT)}`);
   console.log(`[search-index] routes=${payload.routeCount} version=${payload.version}`);
-  console.log(`[search-index] kinds=${payload.facets.kinds.join(',')} components=${payload.componentCount}`);
+  console.log(`[search-index] kinds=${payload.facets.kinds.join(',')} components=${payload.componentCount} frames=${payload.frameCount}`);
 }
 
 const isMain = process.argv[1]
