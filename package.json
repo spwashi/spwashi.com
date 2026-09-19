@@ -65,6 +65,7 @@
     "audit:region-seats": "node scripts/spw-region-seat-audit.mjs",
     "audit:module-selectors": "node --import ./scripts/lib/register-public-imports.mjs scripts/module-selector-depth-audit.mjs",
     "audit:stills": "node --import ./scripts/lib/register-public-imports.mjs scripts/audit-still-coverage.mjs",
+    "audit:operator-controls": "node --import ./scripts/lib/register-public-imports.mjs scripts/audit-operator-controls.mjs",
     "audit:js-tree": "node scripts/js-tree-value.mjs",
     "audit:js-tree:json": "node scripts/js-tree-value.mjs --json",
     "audit:module-writers": "node --import ./scripts/lib/register-public-imports.mjs scripts/module-writer-audit.mjs",

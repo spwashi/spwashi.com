@@ -77,8 +77,22 @@
   }
 }
 
+^"attribute_agreement"{
+  rule: "When a control's visible label opens with a sigil and the element also authors data-spw-operator, the two name one operator. The label is the reading; the attribute follows it."
+  canon: "public/js/kernel/operator-detection.js OPERATOR_DEFINITIONS is the one character table. Atlas slugs (ref, probe, object, stream, address, route, integrate, select) are aliases and agree with the sigil they resolve to."
+  infix: "An expression may name its transformation infix — $sticker>$scene reads the projection — so an authored operator whose sigil appears past the prefix agrees by infix."
+  block_hosts: "A block host (div, section, li) that authors an operator describes its children; agreement is asked only of token hosts (button, a, span, strong, code and kin)."
+  missing: "A sigil-led control authors data-spw-operator in the markup. The operators module backfills it after boot, so without the attribute the CSS rails keyed on it reach the control only once JS has run."
+  composite: "A tab or card link may keep its sigil in a child element and follow it with prose. The chip grammar is not asked of it; the host still carries the operator its sigil names."
+  ~#now(landed 2026-09-19): "75 disagreements (mostly !verb[target] buttons tagged potential or perspective), 32 spaced labels, and 684 sigil-led controls without the attribute — 674 of them .frame-sigil anchors — found by the audit below and repaired in the routes."
+}
+
 ^"audit"{
-  script: "scripts/audit-operator-chip-grammar.mjs"
-  execution: "node scripts/audit-operator-chip-grammar.mjs"
-  trigger: "Should be run after any HTML changes that touch operator chips."
+  script: "scripts/audit-operator-controls.mjs"
+  execution: "npm run audit:operator-controls -- [--check] [--strict] [--json] [--list=<category>]"
+  reads: "every <button> or <a> that is a chip, sigil, pill, or export control, and every element carrying data-spw-operator; generated surfaces (design/catalog, capture runs) are skipped"
+  categories: ["tight", "container", "inline-payload", "composite", "prose", "spaced-violation", "disagreement", "missing", "unknown-operator"]
+  gate: "--check fails on disagreement, missing, or unknown-operator; --strict adds spaced-violation"
+  trigger: "Run after any HTML change that touches operator controls; check:local runs it with --check."
+  history: "Until 2026-09-19 this script looked for class=operator-chip, which no route uses, and reported a clean audit over zero controls."
 }
