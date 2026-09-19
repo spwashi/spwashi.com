@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/wrangler.json",
+  "name": "wap-mom",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-19",
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": true },
+  "kv_namespaces": [
+    { "binding": "FILINGS", "id": "5a3f67bf4b5b40e788787483619ba8d0" }
+  ]
+}

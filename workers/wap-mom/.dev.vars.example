@@ -1,0 +1,3 @@
+# Local reminder only. Set the live Worker secret separately.
+# Do not put a real key here.
+CABINET_KEY=
