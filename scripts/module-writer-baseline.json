@@ -366,7 +366,7 @@
     ]
   },
   "sharedWriters": {
-    "(file:public/js/interface/cauldron/contract.js)": [
+    "(file:public/js/semantic/cauldron/contract.js)": [
       "attr:data-spw-cauldron-capacity",
       "attr:data-spw-cauldron-load",
       "css-var:--spw-cauldron-load-ratio"

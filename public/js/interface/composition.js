@@ -47,7 +47,7 @@ import {
   getCauldronStatusCopy,
   getCauldronVesselSpec,
   normalizeCauldronVessel,
-} from './cauldron/contract.js';
+} from '/public/js/semantic/cauldron/contract.js';
 import {
   bindCauldronPanelToggle,
   setupCauldronChrome,
@@ -55,8 +55,8 @@ import {
   syncCauldronPhaseRail,
   syncFloatingChip,
 } from './cauldron/chrome.js';
-import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from './cauldron/helpers.js';
-import { broadcastCauldronSync, clusterIngredients, escapeHtml, getCauldron, inferOperator, ingredientNiche, normalizeIngredient, readSigilPayload, themeClusterCharge, toSpwExpression } from './cauldron/storage.js';
+import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from '/public/js/semantic/cauldron/helpers.js';
+import { broadcastCauldronSync, clusterIngredients, escapeHtml, getCauldron, inferOperator, ingredientNiche, normalizeIngredient, readSigilPayload, themeClusterCharge, toSpwExpression } from '/public/js/semantic/cauldron/storage.js';
 import { readSpwHydration } from '../semantic/expression-query.js';
 import { cauldronTrace, recordGestureTrace, recordPlantedTrail } from './cauldron/trace.js';
 import {

@@ -22,8 +22,8 @@
 @material: ~"./material-physics.spw"
 @lens: ~"../../scripts/build-legibility-lens.mjs"
 @inert_audit: ~"../../scripts/spw-inert-audit.mjs"
-@rehearsal: ~"../../public/js/interface/cauldron/rehearsal.js"
-@fluency: ~"../../public/js/interface/cauldron/fluency.js"
+@rehearsal: ~"../../public/js/semantic/cauldron/rehearsal.js"
+@fluency: ~"../../public/js/semantic/cauldron/fluency.js"
 @loader: ~"../../public/js/runtime/orchestration/loader.js"
 
 operation = "contract"

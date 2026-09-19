@@ -17,7 +17,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { readCauldronState } from '/public/js/interface/cauldron/contract.js';
+import { readCauldronState } from '/public/js/semantic/cauldron/contract.js';
 import {
   createSpwLogger,
   snapshotInstrumentationTarget,

@@ -5,7 +5,7 @@ import {
   clusterIngredients,
   readClusterKey,
   themeClusterCharge,
-} from '../../public/js/interface/cauldron/storage.js';
+} from '../../public/js/semantic/cauldron/storage.js';
 
 function fragment(overrides = {}) {
   return {

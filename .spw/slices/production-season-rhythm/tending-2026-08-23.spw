@@ -22,7 +22,7 @@ observation: .{
     `public/css/routes/surfaces/recipes.css`,
     `public/js/runtime/attention/section-handle.js`,
     `public/js/interface/haptics.js`,
-    `public/js/interface/cauldron/storage.js`,
+    `public/js/semantic/cauldron/storage.js`,
     `public/js/interface/composition.js`,
     `public/js/runtime/lens-modes.js`
   ][reg=set]

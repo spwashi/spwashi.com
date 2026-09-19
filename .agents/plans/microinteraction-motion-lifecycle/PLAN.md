@@ -17,7 +17,7 @@ partial reading of gathered conceptual payloads.
 
 | Layer | Change |
 |---|---|
-| `public/js/interface/cauldron/storage.js` | `clusterIngredients()` — operator / region / liminality / route; groups of one stay loose |
+| `public/js/semantic/cauldron/storage.js` | `clusterIngredients()` — operator / region / liminality / route; groups of one stay loose |
 | `public/js/interface/composition.js` | Wrap clustered chips in `.spw-ornament-cluster` with the winning axis stamped on existing attrs |
 | `public/js/interface/cauldron/resonance.js` | `--spw-cluster-index` is the cluster ordinal so kin twinkle together |
 | `public/js/runtime/interaction/progression.js` | Landmark hash hops write `discover`; gather `charge`; inspect `inspect`; release `settle` |

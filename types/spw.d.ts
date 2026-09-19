@@ -197,7 +197,7 @@ declare global {
        Bundles carry space-separated `axis:value` tokens so CSS can match
        combinatorially with [data-*~="axis:value"] and a reader can learn an
        element's whole story from one attribute. Contracts own the axes:
-       interface/cauldron/contract.js, kernel/shared.js, runtime/effect-ledger.js. */
+       semantic/cauldron/contract.js, kernel/shared.js, runtime/effect-ledger.js. */
 
     /** Cauldron vessel state bundle, e.g. "phase:mixing count:4".
         Axes: phase | count | garden | resonance | collected | discoverability. */
@@ -257,7 +257,7 @@ declare global {
   }
 }
 
-/** A cauldron ingredient as normalized by interface/cauldron/storage.js. */
+/** A cauldron ingredient as normalized by semantic/cauldron/storage.js. */
 export interface SpwIngredientPayload {
   scope?: string;
   page?: string;

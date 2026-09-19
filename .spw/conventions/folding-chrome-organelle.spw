@@ -18,7 +18,7 @@
 @literary_motifs: ~"./literary-operational-motifs.spw"
 @room_signal: ~"../../public/js/kernel/room-signal.js"
 @geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
-@cauldron_contract: ~"../../public/js/interface/cauldron/contract.js"
+@cauldron_contract: ~"../../public/js/semantic/cauldron/contract.js"
 
 operation = "prime"
 fixity = "experimental"

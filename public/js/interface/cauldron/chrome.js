@@ -1,8 +1,8 @@
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument, guardCall } from '/public/js/kernel/dom-render.js';
-import { applyCauldronState, computeCauldronPhase } from './contract.js';
+import { applyCauldronState, computeCauldronPhase } from '/public/js/semantic/cauldron/contract.js';
 import { isPhaseComplete } from './resonance.js';
-import { getCauldron } from './storage.js';
+import { getCauldron } from '/public/js/semantic/cauldron/storage.js';
 
 const CHIP_SELECTOR = '.spw-cauldron-chip';
 const PANEL_QUERY = '.site-footer__cauldron, [data-spw-cauldron]';

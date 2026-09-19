@@ -11,7 +11,7 @@
 @interaction_microstates: ~"./interaction-microstates.spw"
 @attention_field: ~"./attention-field.spw"
 @material_physics: ~"./material-physics.spw"
-@storage: ~"../../public/js/interface/cauldron/storage.js"
+@storage: ~"../../public/js/semantic/cauldron/storage.js"
 @composition: ~"../../public/js/interface/composition.js"
 @resonance: ~"../../public/js/runtime/expression-resonance.js"
 @dot_join: ~"../language/dot-join.spw"

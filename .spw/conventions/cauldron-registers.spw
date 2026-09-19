@@ -18,9 +18,9 @@
 @cauldron_dynamics: ~"./cauldron-dynamics.spw"
 @arrival: ~"./arrival-electrostatics.spw"
 @semantic_expression: ~"./semantic-expression-consequence.spw"
-@implementation: ~"../../public/js/interface/cauldron/registers.js"
+@implementation: ~"../../public/js/semantic/cauldron/registers.js"
 @probes: ~"../../public/js/runtime/dom-probes.js"
-@storage: ~"../../public/js/interface/cauldron/storage.js"
+@storage: ~"../../public/js/semantic/cauldron/storage.js"
 
 operation = "contract"
 fixity = "tending"
@@ -157,7 +157,7 @@ expression = ingredient[registers]{coordinate.projection.composition}<spell>
 }
 
 ^"validation"{
-  probe: `node --check public/js/interface/cauldron/registers.js && node scripts/check-site.mjs`
+  probe: `node --check public/js/semantic/cauldron/registers.js && node scripts/check-site.mjs`
   falsification: "an ingredient field exists that is computable from another field and is persisted anyway"
   ~#note(scope): "registers.js has no DOM and no parser, so it is testable by direct import rather than through a mounted page"
 }

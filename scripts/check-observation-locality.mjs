@@ -39,10 +39,10 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
  * shrink the invariant every time someone named a file differently.
  */
 const OBSERVING_MODULES = Object.freeze([
-  'public/js/interface/cauldron/rehearsal.js',
-  'public/js/interface/cauldron/registers.js',
-  'public/js/interface/cauldron/fluency.js',
-  'public/js/interface/cauldron/storage.js',
+  'public/js/semantic/cauldron/rehearsal.js',
+  'public/js/semantic/cauldron/registers.js',
+  'public/js/semantic/cauldron/fluency.js',
+  'public/js/semantic/cauldron/storage.js',
   'public/js/runtime/cauldron-fluency.js',
   'public/js/runtime/expression-resonance.js',
   'public/js/runtime/dom-probes.js',

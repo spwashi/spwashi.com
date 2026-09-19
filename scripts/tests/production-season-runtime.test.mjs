@@ -8,7 +8,7 @@ import { readCadenceAnnotation } from '../../public/js/runtime/attention/shared.
 // dynamic import and restore the test environment immediately afterwards.
 const NativeBroadcastChannel = globalThis.BroadcastChannel;
 globalThis.BroadcastChannel = undefined;
-const { readSigilPayload } = await import('../../public/js/interface/cauldron/storage.js');
+const { readSigilPayload } = await import('../../public/js/semantic/cauldron/storage.js');
 globalThis.BroadcastChannel = NativeBroadcastChannel;
 
 test('attention reads authored cadence without deriving a schedule', () => {

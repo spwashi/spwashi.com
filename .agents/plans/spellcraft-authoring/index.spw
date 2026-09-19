@@ -69,7 +69,7 @@ intent: .{
 @plan_literacy_precipitation_press: ~"../literacy-precipitation-press/index.spw"
 @spells: ~"../../../public/js/runtime/spells.js"
 @cauldron: ~"../../../public/js/interface/cauldron/"
-@contract: ~"../../../public/js/interface/cauldron/contract.js"
+@contract: ~"../../../public/js/semantic/cauldron/contract.js"
 @observation_beats: ~"../../../public/js/runtime/observation-beats.js"
 @shared: ~"../../../public/js/kernel/shared.js"
 @sigil_anatomy: ~"../../../public/js/runtime/sigil-anatomy.js"

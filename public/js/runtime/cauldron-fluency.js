@@ -27,8 +27,8 @@
  * on a scroll.
  */
 
-import { measureFluency } from '/public/js/interface/cauldron/fluency.js';
-import { measureSaturation, dueForRehearsal, recordEncounter } from '/public/js/interface/cauldron/rehearsal.js';
+import { measureFluency } from '/public/js/semantic/cauldron/fluency.js';
+import { measureSaturation, dueForRehearsal, recordEncounter } from '/public/js/semantic/cauldron/rehearsal.js';
 
 const ATTR = Object.freeze({
   operators: 'data-spw-fluency-operators',

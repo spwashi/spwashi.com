@@ -31,7 +31,7 @@ thesis: .{
 
 cauldron_payload_clusters: .{
   definition = `Partial groupings of gathered fragments that share an operator, region, liminality, or provenance route. Ornament cluster is the display; the payload attrs already on the ingredients are the concept.`
-  state_source = `clusterIngredients() in public/js/interface/cauldron/storage.js — a reading of stored payloads, not a new family.`
+  state_source = `clusterIngredients() in public/js/semantic/cauldron/storage.js — a reading of stored payloads, not a new family.`
   visual_range = `.spw-ornament-cluster + .spw-ornament-kicker; operator clusters inherit operator accent; liminality clusters reuse the landmark seam colors (entry frame, threshold object, middle probe, return/exit ref).`
   density = `data-spw-ornament-density medium at 2–3, high at 4+`
   sibling_resonance = `data-spw-sibling-resonance=true on clustered groups only`

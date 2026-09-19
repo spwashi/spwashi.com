@@ -32,7 +32,7 @@
  * page, not an error.
  */
 
-import { composeRegisters, composedExpression } from '/public/js/interface/cauldron/registers.js';
+import { composeRegisters, composedExpression } from '/public/js/semantic/cauldron/registers.js';
 
 const ATTR = Object.freeze({
   probe: 'data-spw-probe',

@@ -1,8 +1,8 @@
-import { CAULDRON_KEY } from './contract.js';
-import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from './helpers.js';
+import { CAULDRON_KEY } from '/public/js/semantic/cauldron/contract.js';
+import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from '/public/js/semantic/cauldron/helpers.js';
 import { getOperatorThresholdState, splitOperatorExpression } from '/public/js/kernel/shared.js';
 import { operatorSpaces } from '/public/js/semantic/operator-spaces.js';
-import { CAULDRON_REGISTERS, project } from './registers.js';
+import { CAULDRON_REGISTERS, project } from '/public/js/semantic/cauldron/registers.js';
 
 /* Delegates to the kernel's operator grammar (the old local regex required a
    literal backslash before ^ and ?, so those operators never matched). */

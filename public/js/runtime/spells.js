@@ -13,7 +13,7 @@ import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.j
 import { getGroundedCouplings, getGroundedRegistry, getSigilCollection, restoreCheckpoint } from '/public/js/interface/haptics.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
-import { CAULDRON_CONTRACT } from '/public/js/interface/cauldron/contract.js';
+import { CAULDRON_CONTRACT } from '/public/js/semantic/cauldron/contract.js';
 import { parseSpwExpression, describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 
 const SPELL_ACTION = Object.freeze({

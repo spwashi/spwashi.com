@@ -36,7 +36,7 @@ intent: .{
 @interaction_microstates: ~"../../../.spw/conventions/interaction-microstates.spw"
 @cauldron_dynamics: ~"../../../.spw/conventions/cauldron-dynamics.spw"
 @component_region_personality: ~"../../../.spw/conventions/component-region-personality.spw"
-@cauldron_storage: ~"../../../public/js/interface/cauldron/storage.js"
+@cauldron_storage: ~"../../../public/js/semantic/cauldron/storage.js"
 @interaction_hops: ~"../../../public/js/runtime/interaction/hops.js"
 @interaction_story: ~"../../../public/js/runtime/interaction/story.js"
 @cauldron_clusters_test: ~"../../../scripts/tests/cauldron-clusters.test.mjs"

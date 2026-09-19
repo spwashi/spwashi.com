@@ -3,8 +3,8 @@ import {
   computeCauldronBrew,
   computeIngredientPhase,
   publishCauldronCapacity,
-} from './contract.js';
-import { clusterIndexByExpression } from './storage.js';
+} from '/public/js/semantic/cauldron/contract.js';
+import { clusterIndexByExpression } from '/public/js/semantic/cauldron/storage.js';
 
 const GARDEN_PHASE_RANK = Object.freeze({
   empty: 0,

@@ -40,7 +40,7 @@
  * No DOM, no mount. One storage key, read defensively.
  */
 
-import { measureFluency } from './fluency.js';
+import { measureFluency } from '/public/js/semantic/cauldron/fluency.js';
 
 const LEDGER_KEY = 'spw-rehearsal';
 

@@ -509,7 +509,7 @@ const buildPersistenceRegistries = () => ([
     },
     clear() {
       localStorage.removeItem(CAULDRON_STORAGE_KEY);
-      // G1 bundle form (see interface/cauldron/contract.js); kernel avoids the interface import
+      // G1 bundle form (see semantic/cauldron/contract.js); kernel stays below semantic and keeps its own copy
       document.documentElement.dataset.spwCauldronState = 'phase:empty count:0';
       bus.emit?.('cauldron:cleared', {});
     },

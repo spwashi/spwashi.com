@@ -15,7 +15,7 @@ Make the annual October 1–January 4 production season legible as one reusable 
 - `recipes/index.html`: authored season, recipe episode, local/hybrid/remote participation, 96-day score.
 - `public/css/routes/surfaces/recipes.css`: route-local packing and season materials.
 - `public/js/runtime/attention/section-handle.js` + `attention/shared.js`: mirror authored cadence while the section is current.
-- `public/js/interface/cauldron/storage.js` + `composition.js`: preserve cadence and motion with a gathered ingredient.
+- `public/js/semantic/cauldron/storage.js` + `composition.js`: preserve cadence and motion with a gathered ingredient.
 - `.spw/philosophy/timing-data-localization.spw`: annual production-season boundary.
 - `.spw/slices/production-season-rhythm/index.spw`: durable ownership and negative boundaries.
 
@@ -36,7 +36,7 @@ Make the annual October 1–January 4 production season legible as one reusable 
 
 - `node --check public/js/runtime/attention/shared.js`
 - `node --check public/js/runtime/attention/section-handle.js`
-- `node --check public/js/interface/cauldron/storage.js`
+- `node --check public/js/semantic/cauldron/storage.js`
 - `node --check public/js/interface/composition.js`
 - `npm run spw:doctor`
 - `npm run spw:roots`

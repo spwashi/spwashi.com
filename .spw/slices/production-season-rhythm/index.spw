@@ -10,7 +10,7 @@
 @recipes: ~"../../../recipes/index.html#production-season"
 @recipe_css: ~"../../../public/css/routes/surfaces/recipes.css"
 @attention: ~"../../../public/js/runtime/attention/section-handle.js"
-@cauldron_storage: ~"../../../public/js/interface/cauldron/storage.js"
+@cauldron_storage: ~"../../../public/js/semantic/cauldron/storage.js"
 @svg_runtime: ~"../../../public/js/media/svg-tunability.js"
 @timing: ~"../../philosophy/timing-data-localization.spw"
 @tending: ~"./tending-2026-08-23.spw"

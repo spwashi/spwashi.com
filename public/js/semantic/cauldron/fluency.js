@@ -29,7 +29,7 @@
  */
 
 import { getOperatorThresholdState, OPERATOR_AFFORDANCES } from '/public/js/kernel/shared.js';
-import { CAULDRON_REGISTERS, REGISTER_NAMES } from './registers.js';
+import { CAULDRON_REGISTERS, REGISTER_NAMES } from '/public/js/semantic/cauldron/registers.js';
 
 /**
  * What each operator is for, in one clause. Used to phrase a gap as the thing

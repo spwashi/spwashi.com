@@ -20,8 +20,8 @@
 @still_alignment: ~"./still-alignment-ladder-2026-09.spw"
 @charge_field: ~"../../public/js/runtime/charge-field.js"
 @spells: ~"../../public/js/runtime/spells.js"
-@registers: ~"../../public/js/interface/cauldron/registers.js"
-@storage: ~"../../public/js/interface/cauldron/storage.js"
+@registers: ~"../../public/js/semantic/cauldron/registers.js"
+@storage: ~"../../public/js/semantic/cauldron/storage.js"
 @affordances_css: ~"../../public/css/systems/electrostatic-affordances.css"
 @wonder_css: ~"../../public/css/effects/wonder.css"
 
