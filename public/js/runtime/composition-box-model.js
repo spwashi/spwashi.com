@@ -174,18 +174,28 @@ function readDisplayFlow(style) {
   return FLOW_BY_DISPLAY[display] || display;
 }
 
+/* Vertical stages: site frames and panels, and folds (a <details> is summary +
+   content, never a card grid). Even when CSS uses display:grid for
+   stacking/gaps, packing them as composition-flow=grid activates the
+   multi-column auto-fit rules meant for inner card grids. */
+const STAGE_HOST_SELECTOR = '.spw-frame, .site-frame, .spw-panel, .frame-panel, .mode-panel, .site-hero, details';
+
 /**
- * Site frames and panels are vertical stages. Even when CSS uses display:grid
- * for stacking/gaps, packing them as composition-flow=grid activates multi-column
- * auto-fit rules meant for inner card grids — never mirror that onto stages.
+ * Authored flow is the author's claim about how children read, and CSS lays
+ * the page out from it before this module mounts. The mirror keeps that claim
+ * so annotation cannot change geometry: mirroring computed display:grid back
+ * as flow=grid onto an authored stack turned the settings register into a
+ * five-column grid of 250px folds. Without an authored flow, stages stay
+ * stacks and other hosts report their computed display.
  */
 function resolveCompositionFlow(el, style) {
-  if (el.matches?.('.spw-frame, .site-frame, .spw-panel, .frame-panel, .mode-panel, .site-hero')) {
-    const authored = normalizeToken(el.getAttribute('data-spw-composition-flow') || '');
-    if (authored && authored !== 'grid' && authored !== 'inline-grid') return authored;
-    return 'stack';
+  const authored = normalizeToken(el.getAttribute?.('data-spw-composition-flow') || '');
+  const isStage = Boolean(el.matches?.(STAGE_HOST_SELECTOR));
+  if (authored) {
+    if (isStage && (authored === 'grid' || authored === 'inline-grid')) return 'stack';
+    return authored;
   }
-  return readDisplayFlow(style);
+  return isStage ? 'stack' : readDisplayFlow(style);
 }
 
 function readBoxModel(el) {

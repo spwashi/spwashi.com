@@ -57,4 +57,5 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/module-writer-audit.test.mjs',
   'scripts/tests/css-custom-property-audit.test.mjs',
   'scripts/tests/experiential-organs.test.mjs',
+  'scripts/tests/composition-flow-authored.test.mjs',
 ]);
