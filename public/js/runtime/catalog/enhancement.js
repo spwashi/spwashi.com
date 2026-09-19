@@ -723,6 +723,7 @@ export const ENHANCEMENT_DEFS = [
     describes: 'state[satchel]{inspect.modify.serialize.feedback}',
     updates: [
       'html:inspect:data-spw-state-inspector',
+      'html:inspect:data-spw-state-inspector-changed',
       'html:inspect:data-spw-state-serialization-dimensions',
       'html:inspect:data-spw-debug-mode',
       'html:flourish:data-spw-module-visuals',

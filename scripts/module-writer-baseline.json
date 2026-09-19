@@ -353,7 +353,6 @@
       "attr:data-spw-satchel-rail",
       "attr:data-spw-satchel-snap",
       "attr:data-spw-snap",
-      "attr:data-spw-state-inspector-changed",
       "attr:data-spw-state-serialization",
       "css-var:--spw-room-accent"
     ],

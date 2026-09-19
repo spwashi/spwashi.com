@@ -13,6 +13,7 @@ import {
   writeJson,
 } from '/public/js/kernel/storage-utils.js';
 import { readRoom } from '/public/js/semantic/room-signal.js';
+import { saveSiteSettings } from '/public/js/kernel/site-settings.js';
 import { ensureDebugStyles } from '/public/js/kernel/deferred-styles.js';
 
 const ROOT_ATTR = 'data-spw-state-inspector-root';
@@ -23,6 +24,7 @@ const TOGGLES = [
     key: 'debug',
     label: 'Inspect seams',
     datasetKey: 'spwDebugMode',
+    settingKey: 'debugMode',
     on: 'on',
     off: null,
     dimension: 'accessibility inspectability layout',
@@ -39,6 +41,7 @@ const TOGGLES = [
     key: 'metadata',
     label: 'Show tags',
     datasetKey: 'spwShowSemanticMetadata',
+    settingKey: 'showSemanticMetadata',
     on: 'on',
     off: null,
     dimension: 'semantic-density component-tags',
@@ -554,14 +557,28 @@ function setToggleState(config, enabled) {
   const value = config.inverted
     ? (enabled ? null : config.off)
     : (enabled ? config.on : config.off);
-  writeRuntimeDatasetValues(document.documentElement, {
-    [config.datasetKey]: value,
+  const bookkeeping = {
     spwStateInspectorChanged: config.key,
     spwStateSerializationDimensions: TOGGLES.map((entry) => entry.dimension).join(' | '),
-  }, {
-    source: 'state-inspector',
-    reason: 'state-toggle',
-  });
+  };
+  if (config.settingKey) {
+    // Seams and tags are settings. The engine owns their root attributes, so
+    // the settings page, presets, and recipes see the same value and a later
+    // settings apply cannot silently undo the satchel. The satchel asks.
+    saveSiteSettings({ [config.settingKey]: enabled ? 'on' : 'off' });
+    writeRuntimeDatasetValues(document.documentElement, bookkeeping, {
+      source: 'state-inspector',
+      reason: 'state-toggle',
+    });
+  } else {
+    writeRuntimeDatasetValues(document.documentElement, {
+      [config.datasetKey]: value,
+      ...bookkeeping,
+    }, {
+      source: 'state-inspector',
+      reason: 'state-toggle',
+    });
+  }
 
   // Seam overlays live outside the core bundle; fetch them the first time
   // someone actually inspects. The attribute is already written above, so the
@@ -1220,7 +1237,12 @@ export function initStateInspector() {
   // open/inspect reads the current material/attention/wonder state).
   const l = root.querySelector('.spw-state-inspector__launch');
   const p = root.querySelector('#' + PANEL_ID);
-  const reapply = () => syncSatchelMaterial(root, l, p);
+  const reapply = () => {
+    syncSatchelMaterial(root, l, p);
+    // A settings change elsewhere (the settings page, a preset) moves the
+    // seams and tags toggles too; the satchel mirrors, it does not remember.
+    syncControls(root);
+  };
   document.addEventListener('spw:settings:changed', reapply, { passive: true });
   bus?.on?.('settings:changed', reapply);
   const mo = new MutationObserver(reapply);
