@@ -188,6 +188,15 @@
   text-transform: uppercase;
 }
 
+/* The region a note cites: its section's Spw expression, kept as code so
+   the note reads as a citation, not a tag. */
+:where(body[data-spw-surface="settings"] .local-note-card__expression) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  color: var(--settings-muted);
+  letter-spacing: 0.02em;
+}
+
 :where(body[data-spw-surface="settings"] .local-note-card__time) {
   color: var(--settings-muted);
   font-size: var(--text-size-2xs, 0.72rem);

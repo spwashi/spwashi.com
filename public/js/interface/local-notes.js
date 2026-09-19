@@ -35,7 +35,38 @@ const normalizeNote = (value = {}) => {
         context: typeof value.context === 'string' ? value.context : '',
         origin: typeof value.origin === 'string' ? value.origin : '',
         route: typeof value.route === 'string' ? value.route : '',
+        // A note can reference a region: the section it was written in and
+        // that section's Spw expression, so a note is also a citation.
+        anchor: typeof value.anchor === 'string' ? value.anchor : '',
+        expression: typeof value.expression === 'string' ? value.expression : '',
         createdAt
+    };
+};
+
+/* The region a note refers to. The section handle already tracks the
+   current section as it scrolls; a note written from the footer takes that
+   section, its Spw expression, and the dimensions authored on it, so a
+   later reader can revisit the exact frame rather than the page. */
+const readRegionReference = () => {
+    const handleLink = [...document.querySelectorAll('.spw-section-handle-shell a[href^="#"], .spw-section-handle[href^="#"]')]
+        .map((link) => link.getAttribute('href') || '')
+        .find((href) => href && href !== '#main-content' && document.getElementById(href.slice(1)));
+    let section = handleLink ? document.getElementById(handleLink.slice(1)) : null;
+    if (!(section instanceof HTMLElement)) {
+        const midpoint = window.innerHeight / 2;
+        section = [...document.querySelectorAll('main section[id]')].find((candidate) => {
+            const rect = candidate.getBoundingClientRect();
+            return rect.top <= midpoint && rect.bottom >= midpoint;
+        }) || null;
+    }
+    if (!(section instanceof HTMLElement) || !section.id) return { anchor: '', expression: '' };
+    const dims = ['spwRegion', 'spwForm', 'spwPhase', 'spwLiminality', 'spwFixity']
+        .map((key) => section.dataset[key] ? `${key.replace(/^spw/, '').toLowerCase()}:${section.dataset[key]}` : '')
+        .filter(Boolean)
+        .join(' ');
+    return {
+        anchor: `#${section.id}`,
+        expression: cleanLine(section.dataset.spwSemanticExpression || section.dataset.spwDefinition || dims)
     };
 };
 
@@ -141,8 +172,13 @@ const renderNoteRegister = (root, notes) => {
         createElement('div', { className: 'local-note-card__meta' }, [
             createElement('span', {
                 className: 'local-note-card__context',
-                text: cleanLine(note.context || note.origin || note.route || 'local note')
+                text: cleanLine(note.anchor ? `${note.route || ''}${note.anchor}` : (note.context || note.origin || note.route || 'local note'))
             }),
+            ...(note.expression ? [createElement('code', {
+                className: 'local-note-card__expression',
+                text: note.expression,
+                attrs: { 'data-spw-semantic-expression': note.expression }
+            })] : []),
             createElement('time', {
                 className: 'local-note-card__time',
                 text: formatTimestamp(note.createdAt),
@@ -191,7 +227,9 @@ const saveLocalNote = (payload, notes) => {
             text,
             context: cleanLine(payload.context || ''),
             origin: cleanLine(payload.origin || ''),
-            route: cleanLine(payload.route || window.location.pathname || '')
+            route: cleanLine(payload.route || window.location.pathname || ''),
+            anchor: cleanLine(payload.anchor || ''),
+            expression: cleanLine(payload.expression || '')
         }),
         ...notes
     ].slice(0, LOCAL_NOTE_LIMIT);
@@ -243,16 +281,19 @@ export const initSpwLocalNotes = () => {
                 return;
             }
 
+            const region = readRegionReference();
             notes = saveLocalNote({
                 text,
                 context: form.querySelector('[data-local-note-context]')?.value || '',
                 origin: form.dataset.localNoteOrigin || '',
-                route: window.location.pathname
+                route: window.location.pathname,
+                anchor: region.anchor,
+                expression: region.expression
             }, notes);
 
             input.value = '';
             syncAllLocalNotes(notes);
-            setStatus('Saved locally.', 'success');
+            setStatus(region.anchor ? `Saved locally, on ${region.anchor}.` : 'Saved locally.', 'success');
         };
 
         const clearDraft = () => {
@@ -303,6 +344,14 @@ export const initSpwLocalNotes = () => {
                     draftTarget.value = note.text;
                     draftTarget.focus();
                     setStatus('Loaded note into draft.', 'info');
+                }
+                // A note that references a region on this route goes back to it.
+                if (note?.anchor && (!note.route || note.route === window.location.pathname)) {
+                    const target = document.getElementById(note.anchor.slice(1));
+                    if (target instanceof HTMLElement) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        setStatus(`Revisiting ${note.anchor}.`, 'info');
+                    }
                 }
                 return;
             }
