@@ -44,6 +44,7 @@ const VALIDATORS = [
     args: ['--import', './scripts/lib/register-public-imports.mjs', 'scripts/audit-operator-controls.mjs', '--check'],
   },
   { label: 'check-agents', script: 'scripts/check-agent-contracts.mjs' },
+  { label: 'check-workers', script: 'scripts/check-workers.mjs' },
   {
     label: 'test:modules',
     script: 'scripts/run-module-tests.mjs',

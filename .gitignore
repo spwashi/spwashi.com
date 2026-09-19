@@ -37,3 +37,10 @@ design/components/captures/
 
 # Midjourney session exports — the zip is not a published asset.
 midjourney_session*.zip
+
+# Wrangler / Workers local. Secrets and state; never the cluster source.
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.wrangler/
+**/.wrangler/
