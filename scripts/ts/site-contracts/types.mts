@@ -281,6 +281,7 @@ export const VALID_VISUAL_EFFECTS = Object.freeze([
   'inspect',
   'layout',
   'express',
+  'behavior',
 ] as const satisfies readonly SpwModuleVisualEffect[]);
 
 const _visualEqual: SpwSameKeys<SpwModuleVisualEffect, (typeof VALID_VISUAL_EFFECTS)[number]> = true;

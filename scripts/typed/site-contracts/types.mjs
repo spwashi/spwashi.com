@@ -99,6 +99,7 @@ export const VALID_VISUAL_EFFECTS = Object.freeze([
     'inspect',
     'layout',
     'express',
+    'behavior',
 ]);
 const _visualEqual = true;
 void _visualEqual;

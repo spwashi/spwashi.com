@@ -75,7 +75,7 @@ export type SpwModuleCost = {
 };
 
 /** First-paint geometry permission. `express` is authored ornament, not layout. */
-export type SpwModuleVisualEffect = 'authored' | 'annotate' | 'inspect' | 'layout' | 'express';
+export type SpwModuleVisualEffect = 'authored' | 'annotate' | 'inspect' | 'layout' | 'express' | 'behavior';
 
 export type SpwModuleElectrostatics = {
   role?: string;
