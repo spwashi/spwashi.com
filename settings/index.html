@@ -76,7 +76,7 @@
             data-spw-wonder="comparison constraint locality"
             data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/topics/pedagogy/|/play/|/play/rpg-wednesday/library/|/curriculum/|/blog/|/about/website/">
             <div class="frame-topline" data-spw-slot="header">
-                <a class="frame-sigil" href="#settings-surface">#&gt;settings_surface</a>
+                <a class="frame-sigil" href="#settings-surface" data-spw-operator="frame">#&gt;settings_surface</a>
                 <div class="spec-strip">
                     <span class="spec-pill" data-spw-badge-type="state">browser-local state</span>
                     <span class="spec-pill" data-spw-badge-type="workflow">author workflow</span>
@@ -265,7 +265,7 @@
             id="presets"
         >
             <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#presets">^"quick_start"{</a>
+                <a class="frame-sigil" href="#presets" data-spw-operator="integration">^"quick_start"{</a>
                 <h2>Quick Start</h2>
             </header>
 
@@ -376,7 +376,7 @@
                         <button class="spw-chip" data-spw-handle="true" data-site-setting-set="authorMode:draft" type="button" data-spw-operator="potential" data-spw-action="explore">~draft</button>
                         <button class="spw-chip" data-spw-handle="true" data-site-setting-set="authorMode:revise" type="button" data-spw-operator="potential" data-spw-action="explore">~revise</button>
                         <button class="spw-chip" data-spw-handle="true" data-site-setting-set="authorMode:polish" type="button" data-spw-operator="potential" data-spw-action="explore">~polish</button>
-                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="authorMode:publish" type="button" data-spw-operator="potential">!publish</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-setting-set="authorMode:publish" type="button" data-spw-operator="action">!publish</button>
                         <button class="spw-chip" data-spw-handle="true" data-site-setting-set="authorMode:archive" type="button" data-spw-operator="potential" data-spw-action="explore">~archive</button>
                     </div>
                     <div class="vibe-widget-meta">
@@ -399,7 +399,7 @@
                     <div aria-label="Author writing recipes" class="vibe-widget-actions" role="group">
                         <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="draft" type="button" data-spw-operator="potential" data-spw-action="explore">~draft_comfortably</button>
                         <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="revise" type="button" data-spw-operator="potential" data-spw-action="explore">~revise_with_annotations</button>
-                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="publish" type="button" data-spw-operator="potential" data-spw-action="explore">!prepare[for_readers]</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="publish" type="button" data-spw-operator="action" data-spw-action="explore">!prepare[for_readers]</button>
                     </div>
                 </article>
 
@@ -564,9 +564,9 @@
                     </p>
                     <div aria-label="Common settings fixes" class="vibe-widget-actions" role="group">
                         <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="calm" type="button" data-spw-operator="potential" data-spw-action="explore">~calm_the_site</button>
-                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="readable" type="button" data-spw-operator="potential">!make[reading_easier]</button>
-                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="accessible" type="button" data-spw-operator="potential" data-spw-action="explore">!reduce[friction]</button>
-                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="expressive" type="button" data-spw-operator="potential">!make[it_expressive]</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="readable" type="button" data-spw-operator="action">!make[reading_easier]</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="accessible" type="button" data-spw-operator="action" data-spw-action="explore">!reduce[friction]</button>
+                        <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="expressive" type="button" data-spw-operator="action">!make[it_expressive]</button>
                         <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="focus" type="button" data-spw-operator="potential" data-spw-action="explore">~focus_the_page</button>
                         <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="developer" type="button" data-spw-operator="potential">~system_inspection</button>
                     </div>
@@ -649,7 +649,7 @@
             id="runtime-preferences"
         >
             <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#runtime-preferences">^"runtime_preferences"{</a>
+                <a class="frame-sigil" href="#runtime-preferences" data-spw-operator="integration">^"runtime_preferences"{</a>
                 <h2>Tune the Site</h2>
             </header>
 
@@ -827,7 +827,7 @@
                             <div class="vibe-widget-actions" role="group" aria-label="Author workflow recipes">
                                 <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="draft" type="button" data-spw-operator="potential" data-spw-action="explore">~draft_comfortably</button>
                                 <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="revise" type="button" data-spw-operator="potential" data-spw-action="explore">~revise_with_annotations</button>
-                                <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="publish" type="button" data-spw-operator="potential" data-spw-action="explore">!prepare[for_readers]</button>
+                                <button class="spw-chip" data-spw-handle="true" data-site-settings-recipe="publish" type="button" data-spw-operator="action" data-spw-action="explore">!prepare[for_readers]</button>
                             </div>
                             <p class="settings-option-hint">
                                 These apply multiple settings at once while keeping the full form editable.
@@ -2415,7 +2415,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                 </details>
 
                 <div class="settings-actions" data-spw-feature="settings-form-actions">
-                    <button class="spw-chip" data-spw-handle="true" type="submit" data-spw-operator="perspective" data-spw-action="enter">!save[settings]</button>
+                    <button class="spw-chip" data-spw-handle="true" type="submit" data-spw-operator="action" data-spw-action="enter">!save[settings]</button>
                     <button class="spw-chip" data-spw-handle="true" data-site-settings-reset type="button" data-spw-operator="action">!reset[authored_defaults]</button>
                     <span aria-live="polite" class="settings-status" data-site-settings-status role="status"></span>
                 </div>
@@ -2441,7 +2441,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             id="applied-state"
         >
             <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#applied-state">&gt;"applied_state"</a>
+                <a class="frame-sigil" href="#applied-state" data-spw-operator="concept-edge">&gt;"applied_state"</a>
                 <h2>Current Runtime State</h2>
             </header>
 
@@ -2664,7 +2664,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     <code class="spw-query-composer__preview settings-query-preview" data-spw-query-composer-preview>…</code>
                     <div class="spw-query-composer__actions vibe-widget-actions" data-spw-query-composer-actions>
                         <button type="button" class="spw-chip" data-spw-handle="true" data-spw-query-composer-copy data-spw-operator="potential">~copy_link</button>
-                        <button type="button" class="spw-chip" data-spw-handle="true" data-spw-query-composer-apply data-spw-operator="potential">!apply[setup]</button>
+                        <button type="button" class="spw-chip" data-spw-handle="true" data-spw-query-composer-apply data-spw-operator="action">!apply[setup]</button>
                         <button type="button" class="spw-chip" data-spw-handle="true" data-spw-query-composer-cauldron data-spw-operator="potential" data-spw-action="explore">~offer_to_cauldron</button>
                     </div>
                 </section>
@@ -2756,7 +2756,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             id="settings-notes"
         >
             <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#settings-notes">~"settings_notes"</a>
+                <a class="frame-sigil" href="#settings-notes" data-spw-operator="potential">~"settings_notes"</a>
                 <h2>Local Notes + Reset Paths</h2>
             </header>
 
@@ -2795,9 +2795,9 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                         ></textarea>
                         <input data-local-note-context type="hidden" value="settings" />
                         <div class="settings-note-form__actions">
-                            <button class="spw-chip" data-spw-handle="true" type="submit" data-spw-operator="perspective" data-spw-action="enter">!save[note]</button>
+                            <button class="spw-chip" data-spw-handle="true" type="submit" data-spw-operator="action" data-spw-action="enter">!save[note]</button>
                             <button class="spw-chip" data-spw-handle="true" data-local-note-draft-clear type="button" data-spw-operator="action">!clear[draft]</button>
-                            <button class="spw-chip" data-spw-handle="true" data-local-notes-clear type="button" data-spw-operator="potential">!clear[all]</button>
+                            <button class="spw-chip" data-spw-handle="true" data-local-notes-clear type="button" data-spw-operator="action">!clear[all]</button>
                         </div>
                         <p aria-live="polite" class="settings-status" data-local-note-status role="status"></p>
                     </form>
@@ -2854,7 +2854,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             id="stored-data"
         >
             <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#stored-data">~"stored_data"</a>
+                <a class="frame-sigil" href="#stored-data" data-spw-operator="potential">~"stored_data"</a>
                 <h2>Saved Data + App Status</h2>
             </header>
 
@@ -2956,7 +2956,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             id="runtime-map"
         >
             <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#runtime-map">^"runtime_map"{</a>
+                <a class="frame-sigil" href="#runtime-map" data-spw-operator="integration">^"runtime_map"{</a>
                 <h2>Runtime Map</h2>
             </header>
 
@@ -3061,7 +3061,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             id="token-navigator"
         >
             <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#token-navigator">^"token_navigator"{</a>
+                <a class="frame-sigil" href="#token-navigator" data-spw-operator="integration">^"token_navigator"{</a>
                 <h2>CSS Token Navigator</h2>
             </header>
 
@@ -3154,7 +3154,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             id="data-structures"
         >
             <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#data-structures">^"data_structures"{</a>
+                <a class="frame-sigil" href="#data-structures" data-spw-operator="integration">^"data_structures"{</a>
                 <h2>Underlying Data Structures</h2>
             </header>
 
@@ -3355,7 +3355,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             id="curriculum-control"
         >
             <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#curriculum-control">@curriculum_control</a>
+                <a class="frame-sigil" href="#curriculum-control" data-spw-operator="perspective">@curriculum_control</a>
                 <h2>Curriculum Management</h2>
             </header>
 
@@ -3389,7 +3389,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             id="spell-board"
         >
             <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#spell-board">@spell_board</a>
+                <a class="frame-sigil" href="#spell-board" data-spw-operator="perspective">@spell_board</a>
                 <h2>Spell Board</h2>
             </header>
 
@@ -3456,7 +3456,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             id="cognitive-trace"
         >
             <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#cognitive-trace">$cognitive_trace</a>
+                <a class="frame-sigil" href="#cognitive-trace" data-spw-operator="substrate">$cognitive_trace</a>
                 <h2>Cognitive Web Trace</h2>
             </header>
 

@@ -42,7 +42,7 @@
         <article data-design-experiments-root data-spw-feature="design-experiments">
             <section class="spw-frame design-experiment-hero" id="svg-experiments" data-spw-kind="frame" data-spw-role="orientation" data-spw-context="analysis" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="frame-topline" data-spw-slot="header">
-                    <a class="frame-sigil" href="/design/">#&gt;design</a>
+                    <a class="frame-sigil" href="/design/" data-spw-operator="frame">#&gt;design</a>
                     <div class="spec-strip">
                         <span class="spec-pill">path grammar</span>
                         <span class="spec-pill">label grammar</span>
@@ -104,7 +104,7 @@
 
             <section class="spw-frame design-experiment-frame" id="diagram-bundles" data-site-settings-scope data-spw-kind="frame" data-spw-role="control" data-spw-context="analysis">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#diagram-bundles">@ "svg_bundle_register"</a>
+                    <a class="frame-sigil" href="#diagram-bundles" data-spw-operator="perspective">@"svg_bundle_register"</a>
                     <h2>Pick A Diagram Posture</h2>
                 </header>
                 <p class="" data-spw-textual-role="note">
@@ -189,7 +189,7 @@
 
                 <p class="design-experiment-status" data-site-settings-status>These controls save locally and affect later routes.</p>
                 <div class="design-experiment-toolbar">
-                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-settings-reset data-spw-operator="potential">!reset[authored_defaults]</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-settings-reset data-spw-operator="action">!reset[authored_defaults]</button>
                     <a class="spw-chip" data-spw-handle="true" href="/design/experiments/svg/handoff/" data-spw-operator="potential">~svg_handoff</a>
                     <a class="spw-chip" data-spw-handle="true" href="/design/experiments/css/" data-spw-operator="potential" data-spw-action="explore">~css_comparison</a>
                     <a class="spw-chip" data-spw-handle="true" href="/settings/" data-spw-operator="potential">~runtime</a>
@@ -198,7 +198,7 @@
 
             <section class="spw-frame design-experiment-frame" id="svg-specimens" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis" data-spw-promptability="visible" data-spw-prompt-host data-spw-prompt-title="svg_specimen_handoff" data-spw-prompt-teaser="Reveal an SVG handoff seed from the current specimen: named nodes, diagram posture, material cues, and what another model may safely change.">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#svg-specimens">^ "svg_specimens"</a>
+                    <a class="frame-sigil" href="#svg-specimens" data-spw-operator="integration">^"svg_specimens"</a>
                     <h2>Diagram Surface Carryover</h2>
                 </header>
                 <p class="" data-spw-textual-role="note">
@@ -362,7 +362,7 @@
                         <div class="svg-workbench__actions">
                             <span class="spec-pill"><span data-spw-svg-workbench-count>0</span> params</span>
                             <button type="button" class="spw-chip" data-spw-handle="true" data-spw-svg-action="copy-url" data-spw-operator="potential">~copy_tuned_url</button>
-                            <button type="button" class="spw-chip" data-spw-handle="true" data-spw-svg-workbench-reset aria-label="Reset the workbench to authored defaults" data-spw-operator="potential">!reset</button>
+                            <button type="button" class="spw-chip" data-spw-handle="true" data-spw-svg-workbench-reset aria-label="Reset the workbench to authored defaults" data-spw-operator="action">!reset</button>
                         </div>
                     </div>
                 </aside>
@@ -370,7 +370,7 @@
 
             <section class="spw-frame design-experiment-frame" id="svg-tunability-contract" data-spw-kind="frame" data-spw-role="query-contract" data-spw-context="analysis">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#svg-tunability-contract">= "svg_tunability_contract"</a>
+                    <a class="frame-sigil" href="#svg-tunability-contract" data-spw-operator="binding">="svg_tunability_contract"</a>
                     <h2>SVG Tunability For Branding, QA, And Reuse</h2>
                 </header>
                 <p class="" data-spw-textual-role="note">
@@ -435,7 +435,7 @@ applySvgQueryTunability(document);</code></pre>
 
             <section class="spw-frame design-experiment-frame" id="svg-environments" data-spw-kind="frame" data-spw-role="capture" data-spw-context="analysis">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#svg-environments"># "svg_viewing_environments"</a>
+                    <a class="frame-sigil" href="#svg-environments" data-spw-operator="vibration"># "svg_viewing_environments"</a>
                     <h2>SVG Viewing Environments</h2>
                 </header>
                 <p class="" data-spw-textual-role="note">
@@ -467,7 +467,7 @@ applySvgQueryTunability(document);</code></pre>
 
             <section class="spw-frame design-experiment-frame" id="svg-persona-lens" data-spw-kind="frame" data-spw-role="lens" data-spw-context="analysis">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#svg-persona-lens">~ "svg_persona_lens"</a>
+                    <a class="frame-sigil" href="#svg-persona-lens" data-spw-operator="potential">~"svg_persona_lens"</a>
                     <h2>Audience Lens</h2>
                 </header>
                 <p class="" data-spw-textual-role="note">
@@ -484,7 +484,7 @@ applySvgQueryTunability(document);</code></pre>
 
             <section class="spw-frame design-experiment-frame" id="svg-brand-screenshot" data-spw-kind="frame" data-spw-role="screenshot-surface" data-spw-context="analysis" data-spw-promptability="visible">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#svg-brand-screenshot">? "svg_brand_screenshot"</a>
+                    <a class="frame-sigil" href="#svg-brand-screenshot" data-spw-operator="wonder">? "svg_brand_screenshot"</a>
                     <h2>Screenshot-Ready SVG Interpretation Surface</h2>
                 </header>
                 <p class="" data-spw-textual-role="note">
@@ -574,7 +574,7 @@ applySvgQueryTunability(document);</code></pre>
 
             <section class="spw-frame design-experiment-frame" id="svg-handoff-register" data-spw-kind="frame" data-spw-role="handoff" data-spw-context="analysis">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#svg-handoff-register">@ "svg_handoff_register"</a>
+                    <a class="frame-sigil" href="#svg-handoff-register" data-spw-operator="perspective">@"svg_handoff_register"</a>
                     <h2>What A Good SVG Handoff Includes</h2>
                 </header>
                 <p class="" data-spw-textual-role="note">
@@ -613,7 +613,7 @@ applySvgQueryTunability(document);</code></pre>
 
             <section class="spw-frame design-experiment-frame" id="svg-token-register" data-spw-kind="frame" data-spw-role="reference" data-spw-context="analysis">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#svg-token-register">? "svg_token_register"</a>
+                    <a class="frame-sigil" href="#svg-token-register" data-spw-operator="wonder">? "svg_token_register"</a>
                     <h2>Current Diagram Token Register</h2>
                 </header>
                 <p class="" data-spw-textual-role="note">

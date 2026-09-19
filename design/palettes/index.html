@@ -51,7 +51,7 @@
         <article>
             <section class="spw-frame" data-spw-role="orientation" data-spw-kind="frame" id="palettes-spectral-families" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="frame-topline" data-spw-slot="header">
-                    <a class="frame-sigil" href="/design/">#>design</a>
+                    <a class="frame-sigil" href="/design/" data-spw-operator="frame">#>design</a>
                     <div class="spec-strip">
                         <span class="spec-pill">color grammar</span>
                         <span class="spec-pill">theme handles</span>
@@ -80,9 +80,9 @@
                         <p>Change the light level and theme family using the root settings controls. The components below respond instantly via <code>data-site-setting-set</code>.</p>
 
                         <div class="theme-handle-test theme-handle-test--modes" data-spw-locality="global-controls" data-spw-component-locality="palette-modes">
-                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="colorMode:light" data-spw-operator="action" data-spw-action="apply">[light_mode]</button>
-                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="colorMode:dark" data-spw-operator="action" data-spw-action="apply">[dark_mode]</button>
-                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="colorMode:auto" data-spw-operator="action" data-spw-action="apply">[adaptive_mode]</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="colorMode:light" data-spw-operator="mode" data-spw-action="apply">[light_mode]</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="colorMode:dark" data-spw-operator="mode" data-spw-action="apply">[dark_mode]</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="colorMode:auto" data-spw-operator="mode" data-spw-action="apply">[adaptive_mode]</button>
                         </div>
                         <div class="theme-pack-chooser" role="group" aria-label="Palette lab theme pack variants" data-spw-locality="theme-packs">
                             <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper">
@@ -178,7 +178,7 @@
 
             <section class="spw-frame" id="theme-pack-role-map" aria-labelledby="theme-pack-role-map-title" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-attention="compare">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#theme-pack-role-map">^"theme_pack_role_map"</a>
+                    <a class="frame-sigil" href="#theme-pack-role-map" data-spw-operator="integration">^"theme_pack_role_map"</a>
                     <h2 id="theme-pack-role-map-title">Theme Pack Role Map</h2>
                 </header>
                 <p data-spw-textual-role="note">
@@ -283,7 +283,7 @@
 
             <section class="spw-frame" id="reference-color-seeds" aria-labelledby="reference-color-seeds-title" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-attention="compare">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#reference-color-seeds">^"reference_color_seeds"</a>
+                    <a class="frame-sigil" href="#reference-color-seeds" data-spw-operator="integration">^"reference_color_seeds"</a>
                     <h2 id="reference-color-seeds-title">Reference Color Seeds</h2>
                 </header>
                 <p data-spw-textual-role="note">
@@ -373,7 +373,7 @@
 
             <section class="spw-frame" id="material-theatre-directions" aria-labelledby="material-theatre-directions-title" data-spw-role="reference" data-spw-kind="frame" data-spw-context="learning" data-spw-attention="scan">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#material-theatre-directions">^"material_theatre_directions"</a>
+                    <a class="frame-sigil" href="#material-theatre-directions" data-spw-operator="integration">^"material_theatre_directions"</a>
                     <h2 id="material-theatre-directions-title">Material Theatre Directions</h2>
                 </header>
                 <p data-spw-textual-role="note">
@@ -423,7 +423,7 @@
                 data-spw-attention="scan"
                 data-spw-interaction-contract="tap inspect hold prime drag project double-click inspect-prime keyboard commit">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#spell-cauldron-hooks">^"spell_cauldron_hooks"</a>
+                    <a class="frame-sigil" href="#spell-cauldron-hooks" data-spw-operator="integration">^"spell_cauldron_hooks"</a>
                     <h2 id="spell-cauldron-hooks-title">Spell And Cauldron Hooks</h2>
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align: -4px; margin-left: 0.5em; opacity: 0.7;">
                         <path d="M3 6h18M5 6v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6"/>
@@ -529,7 +529,7 @@
 
             <section class="spw-frame" id="environment-synchronization" data-spw-role="sync" data-spw-kind="frame" data-spw-context="analysis">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#environment-synchronization">^"environment_synchronization"</a>
+                    <a class="frame-sigil" href="#environment-synchronization" data-spw-operator="integration">^"environment_synchronization"</a>
                     <h2>Environment Synchronization</h2>
                 </header>
                 <p data-spw-textual-role="note">Key tokens are mapped to the <code>html</code> element's <code>data-spw-color-mode</code>. In "Auto" mode, these adapt dynamically without a page refresh.</p>
@@ -560,7 +560,7 @@
 
             <section class="spw-frame" id="spectral-resonance-mapping" data-spw-role="mapping" data-spw-kind="frame" data-spw-context="analysis">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#spectral-resonance-mapping">&lt;"spectral_resonance_mapping"</a>
+                    <a class="frame-sigil" href="#spectral-resonance-mapping" data-spw-operator="concept">&lt;"spectral_resonance_mapping"</a>
                     <h2>Spectral Resonance Mapping</h2>
                 </header>
                 <p data-spw-textual-role="note">Palette biases are ink facets, not content lenses. They retune how a charged viewpoint answers color. Topic copy stays; the accent family changes.</p>
@@ -587,7 +587,7 @@
 
             <section class="spw-frame" id="spectral-workshop" aria-labelledby="spectral-workshop-title" data-spw-role="workshop" data-spw-kind="frame" data-spw-context="play" data-spw-feature="spectral-workshop" data-spw-concept="palette-play resonance-probe seed-composition" data-spw-interaction-contract="tap toggle hold prime" data-spw-semantic-expression="workshop[palette]{resonance.play}">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#spectral-workshop">^"spectral_workshop"</a>
+                    <a class="frame-sigil" href="#spectral-workshop" data-spw-operator="integration">^"spectral_workshop"</a>
                     <h2 id="spectral-workshop-title">Spectral Workshop</h2>
                 </header>
 
@@ -690,7 +690,7 @@
 
             <section class="spw-frame" id="granular-spectral-families" data-spw-kind="frame" data-spw-role="reference">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#spectral-families">^"spectral_families"</a>
+                    <a class="frame-sigil" href="#spectral-families" data-spw-operator="integration">^"spectral_families"</a>
                     <h2>Granular Spectral Families</h2>
                 </header>
                 <p data-spw-textual-role="note">These are pure pigment tokens from <code>tokens/core.css</code>. They provide stability for textural backgrounds, SVG charts, and specific art direction where theme-agnostic identity is required. (The workshop above demonstrates how resonance modes re-interpret the same underlying hues.)</p>
@@ -714,7 +714,7 @@
 
             <section class="spw-frame" id="palette-projection" data-spw-role="projection" data-spw-kind="frame" data-spw-context="ritual" data-spw-semantic-cluster="material-projection-combinatoric" data-spw-wonder="locality flow mathematics">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#palette-projection">^"palette_projection"</a>
+                    <a class="frame-sigil" href="#palette-projection" data-spw-operator="integration">^"palette_projection"</a>
                     <h2>Palette Projection Registry</h2>
                 </header>
                 <p data-spw-textual-role="note">When an image is surface-promoted, we extract a spectral signature and project it onto the surrounding frame. This ensures that the structural bounds of the site feel connected to the content being displayed. These same seeds and resonance dials are the material basis for modernization: page architecture as tunable substance, not decoration. The combinatoric play of salience, clustering, timing, locality, and flow here is the mathematics of experience as a physical dimension — the same handles become lighting probes, surface response curves, gesture affordances, and attentional flow fields in augmented or virtual reality. Unique material semantics (a pigment as "spatial probe" or "binding warmth") give component utility a clear segue from screen to spatial computing without redundancy; each seed stays distinct in identity while earning compositional esteem only when it earns its place in a scene.</p>

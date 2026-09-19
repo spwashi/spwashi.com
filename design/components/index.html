@@ -63,7 +63,7 @@
             <section class="spw-frame" id="structural-vocabulary" data-spw-role="orientation" data-spw-kind="frame" data-spw-liminality="entry" data-spw-region="hook"
         data-spw-semantic-expression="components[hook]{anatomy}<kit>" data-spw-promptability="visible" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <header class="frame-topline" data-spw-slot="header">
-                    <a class="frame-sigil" href="/design/">#>design</a>
+                    <a class="frame-sigil" href="/design/" data-spw-operator="frame">#>design</a>
                     <div class="spec-strip" data-spw-slot="meta">
                         <span class="spec-pill">structural vocabulary</span>
                         <span class="spec-pill">live specimens</span>
@@ -457,7 +457,7 @@
 
             <section class="spw-frame" id="disclosure-sponsor-specimens" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="threshold" data-spw-region="disclosure">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#disclosure-sponsor-specimens">#&gt;"dense_disclosure_sponsor"</a>
+                    <a class="frame-sigil" href="#disclosure-sponsor-specimens" data-spw-operator="frame">#&gt;"dense_disclosure_sponsor"</a>
                     <h2>Dense Cards, Disclosure, and Sponsor Slots</h2>
                 </header>
                 <p data-spw-textual-role="note">These are useful when a route needs to stay mobile-legible, keep options collapsible, or host a sponsor/affiliate surface without blowing apart the reading flow.</p>
@@ -507,7 +507,7 @@
                  ============================================================ -->
             <section class="spw-frame" id="frame-internals" data-spw-role="anatomy" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="threshold" data-spw-region="frames">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#frame-internals">#&gt;"frame_internals"</a>
+                    <a class="frame-sigil" href="#frame-internals" data-spw-operator="frame">#&gt;"frame_internals"</a>
                     <h2>Frame Internals</h2>
                 </header>
                 <p data-spw-textual-role="note">Every <code>.site-frame</code> or <code>.frame-card</code> is composed from a fixed set of named slots. These are the sub-components available inside any frame-level container.</p>
@@ -541,7 +541,7 @@
                         <p>The primary heading wrapper inside a frame. Contains <code>h1</code>–<code>h3</code> and an optional sigil anchor. Adds appropriate vertical rhythm and max-width capping.</p>
                         <div style="margin-top: 0.75rem; border: 1px dashed var(--line); border-radius: var(--component-radius-tight); padding: 0.4rem 0.6rem;">
                             <header class="frame-heading" data-spw-slot="header">
-                                <a class="frame-sigil" href="#frame-internals">^"heading_slot"</a>
+                                <a class="frame-sigil" href="#frame-internals" data-spw-operator="integration">^"heading_slot"</a>
                                 <h4 style="margin: 0;">Section Title</h4>
                             </header>
                         </div>
@@ -552,11 +552,11 @@
                         <h3>.frame-sigil</h3>
                         <p>A small monospaced anchor that links to the section's own <code>id</code>. Visually marks the operator prefix (e.g. <code>#&gt;</code>, <code>^</code>, <code>?</code>) and gets colored by the operator token system.</p>
                         <p style="margin-top: 0.5rem;">
-                            <a class="frame-sigil" href="#frame-internals">#&gt;"this_section"</a>
+                            <a class="frame-sigil" href="#frame-internals" data-spw-operator="frame">#&gt;"this_section"</a>
                             &nbsp;&nbsp;
-                            <a class="frame-sigil" href="#operator-intent-registry">?"probe_section"</a>
+                            <a class="frame-sigil" href="#operator-intent-registry" data-spw-operator="wonder">?"probe_section"</a>
                             &nbsp;&nbsp;
-                            <a class="frame-sigil" href="#component-anatomy-slots">^"object_section"</a>
+                            <a class="frame-sigil" href="#component-anatomy-slots" data-spw-operator="integration">^"object_section"</a>
                         </p>
                     </article>
 
@@ -599,7 +599,7 @@
 
             <section class="spw-frame" id="hook-region-anatomy" data-spw-role="anatomy" data-spw-kind="frame" data-spw-context="analysis" data-spw-feature="hook-region-anatomy" data-spw-liminality="threshold" data-spw-region="hooks">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#hook-region-anatomy">?"hook_region"</a>
+                    <a class="frame-sigil" href="#hook-region-anatomy" data-spw-operator="wonder">?"hook_region"</a>
                     <h2>Hook Region Anatomy</h2>
                 </header>
                 <p data-spw-textual-role="note">
@@ -669,7 +669,7 @@
                  ============================================================ -->
             <section class="spw-frame" id="chips-strips" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="deep" data-spw-region="chips">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#chips-strips">#&gt;"chips_strips"</a>
+                    <a class="frame-sigil" href="#chips-strips" data-spw-operator="frame">#&gt;"chips_strips"</a>
                     <h2>Chips &amp; Strips</h2>
                 </header>
                 <p data-spw-textual-role="note">Inline labels, status badges, and horizontal runs of metadata. These are the smallest named vocabulary units.</p>
@@ -741,7 +741,7 @@
                  ============================================================ -->
             <section class="spw-frame" id="metamaterial-states" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="deep" data-spw-region="metamaterial">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#metamaterial-states">^"metamaterial_states"</a>
+                    <a class="frame-sigil" href="#metamaterial-states" data-spw-operator="integration">^"metamaterial_states"</a>
                     <h2>Metamaterial States</h2>
                 </header>
                 <p data-spw-textual-role="note">Any <code>.frame-card</code> or <code>.spw-panel</code> can receive a <code>data-spw-metamaterial</code> attribute to shift its visual posture. These are the four primary states.</p>
@@ -804,7 +804,7 @@
                  ============================================================ -->
             <section class="spw-frame" id="inline-annotations" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="deep" data-spw-region="annotations">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#inline-annotations">~"inline_annotations"</a>
+                    <a class="frame-sigil" href="#inline-annotations" data-spw-operator="potential">~"inline_annotations"</a>
                     <h2>Inline Annotations</h2>
                 </header>
                 <p data-spw-textual-role="note">Prose-level sidenotes and callouts that don't require a card or panel. These live inside content flow without breaking the reading rhythm.</p>
@@ -842,7 +842,7 @@
 
             <section class="spw-frame" id="interactive-physics-lab" data-spw-role="lab" data-spw-kind="frame" data-spw-context="ritual" data-spw-promptability="visible" data-spw-liminality="deep" data-spw-region="physics" data-spw-prompt-host data-spw-prompt-title="component_physics_specimen" data-spw-prompt-teaser="Reveal a compact seed for the current component posture and settings.">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#interactive-physics-lab">@ "interactive_physics_lab"</a>
+                    <a class="frame-sigil" href="#interactive-physics-lab" data-spw-operator="perspective">@"interactive_physics_lab"</a>
                     <h2>Live Composition Playground</h2>
                 </header>
                 <p data-spw-textual-role="note">This is the most direct-wired surface on the page. Nudge the room, watch the specimen respond, then decide whether the route wants to feel denser, calmer, sharper, or more explicitly inspectable.</p>
@@ -934,7 +934,7 @@
 
             <section class="spw-frame" id="operator-intent-registry" data-spw-role="registry" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="deep" data-spw-region="operators">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#operator-intent-registry">? "operator_intent_registry"</a>
+                    <a class="frame-sigil" href="#operator-intent-registry" data-spw-operator="wonder">? "operator_intent_registry"</a>
                     <h2>Operator Intent Registry</h2>
                 </header>
                 <p data-spw-textual-role="note">Operators are the primary semantic markers in Spw. Each one carries a specific functional intent and a "wonder" category that drives sensory feedback (haptics, sound, and resonance).</p>
@@ -957,7 +957,7 @@
                                 <td>orient a stable structural unit</td>
                             </tr>
                             <tr>
-                                <td><span class="spw-chip" data-spw-handle="true" data-spw-operator="integration" data-spw-action="publish">!publish</span></td>
+                                <td><span class="spw-chip" data-spw-handle="true" data-spw-operator="action" data-spw-action="publish">!publish</span></td>
                                 <td>object</td>
                                 <td>memory</td>
                                 <td>hold an inspectable structure</td>
@@ -999,7 +999,7 @@
 
             <section class="spw-frame" id="component-anatomy-slots" data-spw-role="anatomy" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="projected" data-spw-region="slots">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#component-anatomy-slots">^"component_anatomy_slots"</a>
+                    <a class="frame-sigil" href="#component-anatomy-slots" data-spw-operator="integration">^"component_anatomy_slots"</a>
                     <h2>Slot-Based Composition</h2>
                 </header>
                 <p data-spw-textual-role="note">Most Spw components follow a strictly ordered slot contract. This consistency allows the runtime to reliably find sub-elements for animations, metadata projections, and accessibility labels.</p>
@@ -1037,7 +1037,7 @@
 
             <section class="spw-frame" id="component-recipes-capture" data-spw-role="reference" data-spw-kind="frame" data-spw-context="making" data-spw-liminality="projected" data-spw-region="recipes">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#component-recipes-capture">#&gt;"component_recipes_capture"</a>
+                    <a class="frame-sigil" href="#component-recipes-capture" data-spw-operator="frame">#&gt;"component_recipes_capture"</a>
                     <h2>Copy a recipe, then capture the evidence</h2>
                 </header>
                 <p data-spw-textual-role="note">These small recipes preserve the slot order and portable CSS boundary without copying the full site shell. Start with the live HTML, adapt its labels and responsibility, then compare it at phone and desktop widths.</p>
@@ -1149,7 +1149,7 @@
 
             <section class="spw-frame" id="markup-model-kit" data-spw-role="modeling" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="projected" data-spw-region="kit">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#markup-model-kit">#&gt;"markup_model_kit"</a>
+                    <a class="frame-sigil" href="#markup-model-kit" data-spw-operator="frame">#&gt;"markup_model_kit"</a>
                     <h2>Model the markup, then adapt it</h2>
                 </header>
                 <p data-spw-textual-role="note">When a human or external model wants to design a new component, the safest starting point is usually an existing Spw specimen. Copy the slot order, keep the same semantic family, and only change the pieces that the new job truly needs.</p>
@@ -1183,7 +1183,7 @@
 
             <section class="spw-frame" id="specimen-builder-rail" data-spw-role="builder-index" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="projected" data-spw-region="rail" data-spw-promptability="visible" data-spw-semantic-expression="specimen-builder[component]{choose.create.carry}" data-spw-related-routes="/design/#component-ecology-specimens|/tools/character-sheet/|/tools/profile/|/cards/|/tools/midjourney/">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#specimen-builder-rail">@specimen_builder_rail</a>
+                    <a class="frame-sigil" href="#specimen-builder-rail" data-spw-operator="perspective">@specimen_builder_rail</a>
                     <h2>Build a specimen from the component contract</h2>
                 </header>
                 <p data-spw-textual-role="note">
@@ -1229,7 +1229,7 @@
 
             <section class="spw-frame" id="brace-grammar-specimens" data-spw-role="grammar" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="settled" data-spw-region="cluster">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#brace-grammar-specimens">^"brace_grammar_specimens"</a>
+                    <a class="frame-sigil" href="#brace-grammar-specimens" data-spw-operator="integration">^"brace_grammar_specimens"</a>
                     <h2>Brace Grammar Forms</h2>
                 </header>
                 <p data-spw-textual-role="note">The Spw language uses brace delimiters to anchor specific semantic intentions. We project these into HTML using <code>data-spw-form="brace"</code>.</p>
@@ -1258,7 +1258,7 @@
 
             <section class="spw-frame" id="data-attribute-decoration" data-spw-role="schema" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-liminality="settled" data-spw-region="decoration">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#data-attribute-decoration">^"data_attribute_decoration"</a>
+                    <a class="frame-sigil" href="#data-attribute-decoration" data-spw-operator="integration">^"data_attribute_decoration"</a>
                     <h2>Data Attribute Distinction</h2>
                 </header>
 

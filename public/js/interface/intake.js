@@ -19,8 +19,8 @@
  */
 
 const DEFAULT_LABELS = Object.freeze({
-  generate: '@ generate',
-  regenerate: '@ regenerate',
+  generate: '!generate',
+  regenerate: '!regenerate',
 });
 
 function readState(storageKey) {

@@ -224,7 +224,7 @@ export function mount(ctxOrRoot, rootArg) {
     noteKey: 'note',
     render: buildProfileCard,
     onChange: (_state, charge) => root.style.setProperty('--care-charge', charge.toFixed(2)),
-    labels: { generate: '@ generate care profile', regenerate: '@ regenerate profile' },
+    labels: { generate: '!generate[care_profile]', regenerate: '!regenerate[care_profile]' },
   });
 
   const unbindExits = bindSeedExits(root, {
