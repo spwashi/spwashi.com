@@ -1,0 +1,73 @@
+# Audit 2026-09-19 — what the routes' operator controls say, and whether the attribute, the label, and the stylesheet agree.
+# Instruments: npm run audit:operator-controls (scripts/audit-operator-controls.mjs) reads the markup;
+# npm run audit:operator-css (scripts/audit-operator-css.mjs) reads the stylesheets against the kernel alias map.
+# Both gate: the controls audit in check:local with --check; the CSS audit on demand until its holes stay at zero for a while.
+
+#>operator_controls
+#:audit #!operators #!html #!css
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@controls_instrument: ~"../../scripts/audit-operator-controls.mjs"
+@css_instrument: ~"../../scripts/audit-operator-css.mjs"
+@chip_grammar: ~"../conventions/operator-chip-grammar.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@operator_alignment: ~"../conventions/operator-alignment.spw"
+@canon: ~"../../public/js/kernel/operator-detection.js"
+@resonance_plan: ~"../../.agents/plans/operator-resonance-alignment/PLAN.md"
+
+^"rubric"{
+  #:what a control is asked, in the order a reader asks
+  grammar = `Does the label follow the chip grammar — a sigil bound tight to its noun, !verb[target] for actions, spaced prose only after # and ?`
+  agreement = `When the label opens with a sigil and the element authors data-spw-operator, do they name one operator? The kernel table is canon; atlas slugs resolve through its alias map.`
+  presence = `Does a sigil-led control author the attribute at all? The operators module backfills it after boot; the CSS rails keyed on it hold with JS off only if the markup carries it.`
+  stylesheet = `Does every rule keyed on data-spw-operator key on the whole class the kernel resolves — value and stream, integration and object and integrate — or on one spelling?`
+}
+
+^"census_2026_09_19"{
+  #:after this pass; the first honest run of the controls audit is in the scene line of commit 4e96100b
+  routes = 149
+  controls = 4570
+  grammar = `tight 2974 · container 155 · inline-payload 225 · composite 13 · prose 529 · spaced-violation 0`
+  disagreement = 0
+  missing = 0
+  unknown_operator = 0
+  authored_values = `3,482 data-spw-operator attributes before the frame-sigil pass: 2,944 canon, 538 aliases, 0 unknown — potential 932, frame 515, wonder 286, integration 216, value 194, perspective 174, action 168, mode 134, stream 103, address 92`
+  css_rules = 107
+  css_holes = 0
+  generated_skipped = `design/catalog (5,664 copy buttons) and design/components/captures — their controls come from scripts`
+}
+
+^"landed_2026_09_19"{
+  instrument = `the chip-grammar audit had looked for class=operator-chip, which no route uses, and passed over zero controls; it now reads every chip, sigil, pill, export control, and operator host`
+  agreement = `75 controls whose attribute named a different operator than their sigil follow the sigil: 22 !verb[target] buttons tagged potential, 4 tagged perspective, mode-switch lenses tagged select, the atlas tab's @ span tagged action, <software links tagged route (the kernel reads < as concept)`
+  grammar = `32 spaced labels bind tight — #>architecture, ~cinematic_handles_plan, !author[craft], @character[lens]; the intake's JS labels speak !generate[care_profile]`
+  presence = `684 sigil-led controls author their operator, 674 of them frame sigils across 106 routes`
+  stylesheet = `114 rules keyed on one spelling of an operator closed; three color tables (cinematic, effect-interpretation, demos) are one rule per operator; pragma resolves to action; the commit value nothing authors is gone`
+  labeling = `22 operator clusters that read as bare paragraphs are named groups`
+  serialization = `page anatomy serializes frames and the operator controls they hold, nested as the page nests them (runtime/page-anatomy.js frames = #[ .{ frame expression operators=#[ … ] frames=#[ … ] } ])`
+  material = `the operators-on-material theory (material-physics.spw#operators_on_material) with a bench on /design/materials/: six materials, one operator row each, intents set on the route and consumed by the chip`
+}
+
+^"tolerances"{
+  infix = `$sticker>$scene authored concept-edge agrees by infix — an expression may name its transformation past the prefix`
+  block_hosts = `a div, section, or li that authors an operator describes its children; agreement is asked only of token hosts`
+  composite = `a tab or card link keeping its sigil in a span and following it with prose is composite; the host still carries the operator its sigil names`
+  aliases = `ref, probe, object, stream, address, route, integrate, select, situate, act, pragma, merge, meta, baseline, intrinsic, surface, topic stay authored where they are; the kernel resolves them and the CSS keys on the class`
+}
+
+^"findings"{
+  layer_order = `The CSS bundles carry no @layer ordering statement. style-core.css declares reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament in that order; the built core.css opens each layer as it first appears and never names routes, so the route bundle loaded after it declares routes last. On every route with a route bundle, a routes-layer rule beats handles, effects, and ornament — the reverse of the source order. Found when the materials bench set chip intents on its panels and website.css's :where(body[data-spw-surface="website"] .spw-chip) { background } won anyway.`
+  consequence = `Any route stylesheet that paints a control directly (background, border-color, box-shadow) overrides the shared handle state instead of feeding it. website.css's chip paint moved to intents on the surface; other surfaces have not been read for the same pattern.`
+  ~#rule: "Deciding the order is a site-wide cascade change, not a wiring fix: adding the ordering statement to the bundle would flip every route override at once. It waits for a browser review of the routes that lean on it. Until then a route that wants to color a chip sets --operator-chip-*-intent on its surface and lets the handle paint."
+  probe = `grep -n "^@layer" public/css/bundles/core.css | awk '!seen[$2]++'; grep -c "^@layer [a-z, ]*;" public/css/bundles/core.css`
+}
+
+^"next"{
+  1 = `the materials bench is a demo: approve the six readings in a browser, then move the intent blocks from routes/surfaces/design.css to effects/material.css`
+  2 = `route-local pressed states (care-chip, profile-export-btn, specimen-lens-btn) still own their own idle/hover/pressed; css-state-legibility wants the shared handle layer to own state and the route to pass palette through intents — the idle chip intents landed here are the seam to use`
+  3 = `--strict on the controls audit once the composite category has a browser-approved treatment (the atlas tabs keep sigil spans on purpose)`
+  4 = `audit:operator-css into check:local after a few sessions at zero holes`
+  5 = `the 529 prose-labeled operator controls could carry data-spw-semantic-expression so serialization reads an expression, not a label; author only where the label is not already the Spw`
+}

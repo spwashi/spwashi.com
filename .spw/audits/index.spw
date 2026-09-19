@@ -43,6 +43,7 @@
 @module_ecology_kinship: ~"./module-ecology-kinship-2026-09.spw"
 @module_selector_depth: ~"./module-selector-depth-2026-09.spw"
 @js_tree_value: ~"./js-tree-value-2026-09.spw"  # per-file reach, wiring, layer; npm run audit:js-tree
+@operator_controls: ~"./operator-controls-2026-09.spw"  # sigil ↔ data-spw-operator ↔ stylesheet agreement; npm run audit:operator-controls, audit:operator-css
 @component_anatomy_theme_module: ~"./component-anatomy-theme-module-2026-07.spw"
 @module_granularity_lifecycle: ~"./module-granularity-lifecycle-2026-07/index.spw"
 @layout_qa_measurement: ~"./layout-qa-measurement-2026-07/index.spw"

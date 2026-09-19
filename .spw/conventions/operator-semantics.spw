@@ -43,6 +43,7 @@
     "?": "Wonder speech. A wonder control should open a reversible lens, filter, or inquiry path without forcing commitment."
     "!": "Action speech. An action should announce a visible move, reset, or rule with observable consequence."
     note: "Wonder and action should not feel interchangeable even when both are rendered as compact chips."
+    ~#now(landed 2026-09-19): "sigil-annotation.js applyOperatorMetadata writes data-spw-operator-family, -speech, -reversibility, and data-spw-transformation on every operator control the operators module reaches; attention-states.css reads reversibility. The markup half is gated: scripts/audit-operator-controls.mjs fails check:local when a label's sigil and its authored data-spw-operator disagree or when a sigil-led control authors none."
   }
 
   physics_interpretation: "The original meanings define not what operators do in isolation, but what they do when composed, sequenced, and brought into relationship through interaction."

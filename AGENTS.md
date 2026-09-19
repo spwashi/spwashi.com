@@ -229,7 +229,7 @@ Public chips: `a.spw-chip[data-spw-operator]`. Braces: `data-spw-form="brace"` +
 | `{` `}` | direction | hold a practice |
 | `(` `)` | scene | stage midprocess |
 
-`data-spw-operator` matches the sigil (aliases: `object`→integration, `ref`→potential, `probe`→wonder, `surface`→concept-edge, `topic`→concept). Do not use `~` as a generic link.
+`data-spw-operator` matches the sigil (aliases: `object`→integration, `ref`→potential, `probe`→wonder, `surface`→concept-edge, `topic`→concept); `audit:operator-controls` gates it, `audit:operator-css` keeps rules keyed on the whole class. Do not use `~` as a generic link.
 
 Do not: change `style.css` layer order; add runtime frameworks; inline styles except JS-driven values; rename CSS without the `@import`; invent `data-spw-voice` / `data-spw-style` / a fourth copy-accessor; author `.site-frame` or `.operator-chip`; `contain:layout` or `position:relative` on `html` or `[data-spw-floating-chrome]`; spend `--spw-attention-opacity` from a `:root` calc of `--charge` / `--spw-resonance`.
 

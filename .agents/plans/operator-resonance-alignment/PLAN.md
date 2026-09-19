@@ -62,6 +62,7 @@ Weak examples to normalize over time:
 - Candidate files: `index.html`, `tools/index.html`, `tools/midjourney/index.html`, `tools/budgeting/index.html`, `tools/character-sheet/index.html`, `play/rpg-wednesday/index.html`.
 - Normalize `@` to perspective, `*` to play/run, `$` to substrate, `^` to proof/publish, `%` to estimate/measure, and `#` to anchors.
 - Prefer chip anatomy: visible sigil, verb, target, optional `data-spw-action`, optional `data-spw-target`.
+- 2026-09-19: landed across the routes, not only the candidates. `scripts/audit-operator-controls.mjs` (`npm run audit:operator-controls`, a `check:local` gate) reads every chip, sigil, and operator host: 75 controls whose attribute disagreed with their sigil now follow the sigil (`!clear` was potential, `@character[lens]` was action), 32 spaced labels bind tight, 684 sigil-led frame sigils author the operator the runtime used to backfill. `scripts/audit-operator-css.mjs` closed 114 stylesheet rules that keyed on one spelling of an operator (`stream` but not `value`).
 
 ### Slice 3: Runtime Resolver
 

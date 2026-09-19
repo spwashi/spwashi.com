@@ -223,6 +223,7 @@
     "change basic gestures unpredictably"
   ]
   additive_attributes: ["data-spw-operator-resolved", "data-spw-operator-family", "data-spw-operator-phase", "data-spw-operator-public-label", "data-spw-transformation"]
+  ~#now(landed 2026-09-19): "the authored half has its own gate — scripts/audit-operator-controls.mjs — and the stylesheet half its own: scripts/audit-operator-css.mjs reads every rule keyed on data-spw-operator against OPERATOR_TYPE_ALIASES and fails when a rule reaches an operator through some of its authored spellings but not all. 114 such rules were closed; the ref/potential, probe/wonder, object/integration, stream/value pairs the resonance probe already echoed now hold with JS off too."
   ~#now(landed 2026-09-03): "data-spw-operator-family was already written by applyOperatorMetadata in sigil-annotation.js, but nothing read it — pinning an operator via the resonance probe (attention/resonance-probe.js) only ever echoed its own exact type, never its OPERATOR_DEFINITIONS family kin. wonder.css now reads a matching html[data-spw-resonance-family] to give frame/layer/vibration, ground/binding, integration/subject, and concept-edge/concept a fainter shared echo. See AGENTS.md Resonance probe."
 }
 
