@@ -149,7 +149,7 @@
   margin: 0;
   color: var(--ink-soft, rgba(0, 0, 0, 0.62));
   line-height: 1.48;
-  max-width: 68ch;
+  max-inline-size: 100%;
   overflow-wrap: anywhere;
 }
 

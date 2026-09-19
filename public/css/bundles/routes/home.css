@@ -612,7 +612,8 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
 :where([data-spw-feature="home-kernel-entry"] .spw-page-landmarks) {
   margin: 0;
-  padding: 0.42rem 0.5rem 0.28rem;
+  padding: 0.42rem 0.58rem 0.28rem;
+  border-inline-start: 0.2rem solid transparent;
   border-radius: var(--home-radius-sm);
   background: color-mix(in srgb, var(--home-surface-bg-strong) 88%, var(--home-accent-primary) 6%);
 }
@@ -1293,6 +1294,10 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   text-transform: uppercase;
 }
 
+:where([data-spw-feature="home-entrance-sorter"]) {
+  padding: var(--home-hero-padding);
+}
+
 :where([data-spw-feature="home-entrance-sorter"] .entrance-lede) {
   margin: 0;
   max-inline-size: var(--home-measure);
@@ -1398,6 +1403,10 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 
 :where(#town-library-gateway .kernel-carry-note) {
   max-inline-size: var(--home-measure-wide);
+}
+
+:where(#town-library-gateway .garden-carried) {
+  padding-inline: 0.82rem;
 }
 
 :where(#town-library-gateway .kernel-carry-strip) {
@@ -1851,10 +1860,14 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
 }
 
 :where([data-spw-feature="home-entrance-sorter"] .home-depth-disclosure) {
-  padding: 0.34rem;
+  padding: 0;
   border: 1px solid color-mix(in srgb, var(--home-accent-primary) 16%, transparent);
   border-radius: var(--home-radius-md);
   background: color-mix(in srgb, var(--home-surface-bg-muted) 88%, transparent);
+}
+
+:where([data-spw-feature="home-entrance-sorter"] .home-depth-disclosure__body) {
+  padding: 0 0.68rem 0.68rem;
 }
 
 :where(.home-disclosure-summary__note) {
@@ -1962,6 +1975,34 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
 
   :where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"] :is(.spw-chip, .spw-chip)) {
     inline-size: 100%;
+  }
+}
+
+/* Pocket stills crop the working-view when the pack container is not yet
+   established, or when the intro + four lens buttons stay on one flex row. */
+@media (max-width: 45rem) {
+  :where([data-spw-feature="home-kernel-entry"] .home-working-view) {
+    flex-direction: column;
+  }
+
+  :where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex: 1 1 auto;
+    inline-size: 100%;
+    gap: 0.38rem;
+  }
+
+  :where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch > .frame-sigil) {
+    inline-size: 100%;
+    min-inline-size: var(--touch-target-min, 2.75rem);
+    min-block-size: var(--touch-target-min, 2.75rem);
+  }
+
+  :where([data-spw-feature="home-kernel-entry"] .home-production-note) {
+    font-size: 0.78rem;
+    line-height: 1.38;
+    padding: 0.36rem 0.5rem;
   }
 }
 
@@ -2241,7 +2282,7 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
   flex-wrap: wrap;
   align-items: stretch;
   gap: clamp(0.72rem, 1.4vw, 1rem);
-  padding: clamp(0.58rem, 1.2vw, 0.82rem);
+  padding: clamp(0.8rem, 2vw, 1rem);
   border: 1px solid color-mix(in srgb, var(--home-accent-primary, var(--teal)) 18%, var(--home-accent-line, rgba(0, 0, 0, 0.14)) 82%);
   border-radius: var(--home-radius-md);
   background:
@@ -2503,10 +2544,11 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
 
 :where(body[data-spw-surface="home"] #returner-drift .returner-card, body[data-spw-surface="home"] #returner-drift .returner-ledger) {
   border-radius: var(--home-radius-sm);
+  border-inline-start: 0.22rem solid transparent;
 }
 
 :where(body[data-spw-surface="home"] #returner-drift .returner-card--warm) {
-  border-inline-start: 0.22rem solid color-mix(in srgb, var(--home-accent-ember) 46%, transparent);
+  border-inline-start-color: color-mix(in srgb, var(--home-accent-ember) 46%, transparent);
 }
 
 :where(body[data-spw-surface="home"] #town-library-gateway) {
@@ -2699,7 +2741,7 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
   grid-template-columns: minmax(0, 1fr);
   gap: var(--home-gap-md, 0.9rem);
   margin-block: var(--home-gap-lg, 1.25rem);
-  padding: clamp(0.8rem, 1.6vw, 1.05rem);
+  padding: clamp(0.8rem, 2vw, 1rem);
   border: 1px solid color-mix(in srgb, var(--home-accent-primary) 18%, var(--line, rgba(14, 18, 20, 0.14)));
   border-radius: var(--home-radius-md, 8px);
   background:
@@ -2710,6 +2752,10 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
 :where(body[data-spw-surface="home"] .home-component-discovery__header) {
   display: grid;
   gap: 0.2rem;
+}
+
+:where(body[data-spw-surface="home"] .home-component-discovery__header .spec-kicker) {
+  max-inline-size: 100%;
 }
 
 :where(body[data-spw-surface="home"] .home-component-discovery__header h3) {
@@ -2817,6 +2863,7 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
 
   :where([data-spw-feature="home-kernel-entry"] .home-quick-start),
   :where(#town-library-gateway .kernel-carry-strip),
+  :where(#town-library-gateway .garden-carried),
   :where(#learning-use-pattern .learning-route-strip) {
     padding: 0.62rem 0.68rem;
   }
@@ -2844,8 +2891,12 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
   :where(#operator-field),
   :where(#climate-tuning),
   :where(#entry-loops),
+  :where(#promo-wonder-cycle),
   :where(#returner-drift),
+  :where(#integration-atlas),
   :where(#town-library-gateway),
+  :where(#local-record-thesis),
+  :where(#wonder-rewards),
   :where([data-spw-region-role="reading-layers"]) {
     padding: 0.9rem;
     border-radius: var(--home-radius-sm);

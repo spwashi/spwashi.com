@@ -85,7 +85,7 @@
   flex-wrap: wrap;
   align-items: stretch;
   gap: clamp(0.72rem, 1.4vw, 1rem);
-  padding: clamp(0.58rem, 1.2vw, 0.82rem);
+  padding: clamp(0.8rem, 2vw, 1rem);
   border: 1px solid color-mix(in srgb, var(--home-accent-primary, var(--teal)) 18%, var(--home-accent-line, rgba(0, 0, 0, 0.14)) 82%);
   border-radius: var(--home-radius-md);
   background:
@@ -347,10 +347,11 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
 
 :where(body[data-spw-surface="home"] #returner-drift .returner-card, body[data-spw-surface="home"] #returner-drift .returner-ledger) {
   border-radius: var(--home-radius-sm);
+  border-inline-start: 0.22rem solid transparent;
 }
 
 :where(body[data-spw-surface="home"] #returner-drift .returner-card--warm) {
-  border-inline-start: 0.22rem solid color-mix(in srgb, var(--home-accent-ember) 46%, transparent);
+  border-inline-start-color: color-mix(in srgb, var(--home-accent-ember) 46%, transparent);
 }
 
 :where(body[data-spw-surface="home"] #town-library-gateway) {
@@ -543,7 +544,7 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
   grid-template-columns: minmax(0, 1fr);
   gap: var(--home-gap-md, 0.9rem);
   margin-block: var(--home-gap-lg, 1.25rem);
-  padding: clamp(0.8rem, 1.6vw, 1.05rem);
+  padding: clamp(0.8rem, 2vw, 1rem);
   border: 1px solid color-mix(in srgb, var(--home-accent-primary) 18%, var(--line, rgba(14, 18, 20, 0.14)));
   border-radius: var(--home-radius-md, 8px);
   background:
@@ -554,6 +555,10 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
 :where(body[data-spw-surface="home"] .home-component-discovery__header) {
   display: grid;
   gap: 0.2rem;
+}
+
+:where(body[data-spw-surface="home"] .home-component-discovery__header .spec-kicker) {
+  max-inline-size: 100%;
 }
 
 :where(body[data-spw-surface="home"] .home-component-discovery__header h3) {
@@ -661,6 +666,7 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
 
   :where([data-spw-feature="home-kernel-entry"] .home-quick-start),
   :where(#town-library-gateway .kernel-carry-strip),
+  :where(#town-library-gateway .garden-carried),
   :where(#learning-use-pattern .learning-route-strip) {
     padding: 0.62rem 0.68rem;
   }
@@ -688,8 +694,12 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
   :where(#operator-field),
   :where(#climate-tuning),
   :where(#entry-loops),
+  :where(#promo-wonder-cycle),
   :where(#returner-drift),
+  :where(#integration-atlas),
   :where(#town-library-gateway),
+  :where(#local-record-thesis),
+  :where(#wonder-rewards),
   :where([data-spw-region-role="reading-layers"]) {
     padding: 0.9rem;
     border-radius: var(--home-radius-sm);

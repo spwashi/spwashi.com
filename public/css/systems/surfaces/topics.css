@@ -57,6 +57,8 @@
   gap: 0.35rem;
   padding: 0.95rem 1rem 1.05rem;
   color: var(--ink-soft);
+  inline-size: 100%;
+  box-sizing: border-box;
 }
 
 :where(.topic-photo-card figcaption strong) {
@@ -142,7 +144,7 @@
   align-items: stretch;
   gap: var(--spw-shell-panel-gap, 1rem);
   margin-block: 1.2rem;
-  padding: 1rem;
+  padding: clamp(0.8rem, 2vw, 1rem);
   border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 18%, var(--card-border, rgba(0, 0, 0, 0.08)));
   border-radius: var(--radius-md, 8px);
   background: color-mix(in srgb, var(--surface, #fff) 94%, var(--active-op-color, #008080) 6%);

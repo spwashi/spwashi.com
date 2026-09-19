@@ -15124,8 +15124,12 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   border: 1px solid color-mix(in srgb, var(--grammar-line, rgba(14, 18, 20, 0.14)) 72%, var(--active-op-color, var(--teal, #008080)) 28%);
   border-radius: var(--grammar-radius);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 52%),
-    var(--floating-bg, color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.97)) 96%, transparent));
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal, #008080)) 12%),
+      var(--surface-strong, #fff) 46%
+    ),
+    var(--surface-strong, #fff);
   box-shadow:
     var(--floating-shadow, 0 14px 34px rgba(0, 0, 0, 0.16)),
     0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
@@ -15204,8 +15208,8 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
 
 html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popover, .spw-concept-popover) {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 48%),
-    color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.96)) 98%, transparent);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), var(--surface-strong, #192025) 48%),
+    var(--surface-strong, #192025);
   box-shadow:
     0 16px 36px rgba(0, 0, 0, 0.38),
     0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
@@ -15369,7 +15373,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 
 :where(.spw-concept-popover__row) {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: minmax(5.2rem, auto) minmax(8rem, 1fr);
   gap: 0.55rem;
   align-items: start;
 }
@@ -15383,6 +15387,8 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 
 :where(.spw-concept-popover__value) {
   min-width: 0;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
   color: var(--grammar-ink);
 }
 
@@ -18660,6 +18666,14 @@ html[data-spw-color-mode="dark"] :where(
   overflow-wrap: break-word;
 }
 
+:where(.frame-card > .frame-card__supplement) {
+  margin: 0.2rem 0 0;
+  padding-inline-start: 4px;
+  font-size: var(--text-size-xs, 0.82rem);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  line-height: 1.42;
+}
+
 /* Light upgrade for :is(.spw-panel, .frame-panel) used in card-like roles on landing pages.
    Gives them better wrapping, rhythm, and hover behavior without requiring a full class change.
    This is especially useful on design, blog, about, math, and play hubs. */
@@ -20061,7 +20075,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   margin: 0;
   color: var(--ink-soft, rgba(0, 0, 0, 0.62));
   line-height: 1.48;
-  max-width: 68ch;
+  max-inline-size: 100%;
   overflow-wrap: anywhere;
 }
 
@@ -22563,6 +22577,12 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   font-size: var(--text-size-sm, 0.88rem);
   line-height: 1.45;
   text-wrap: pretty;
+}
+
+main :where(.frame-card-media, .image-study, .topic-photo-card, figure) figcaption {
+  max-width: 100%;
+  inline-size: 100%;
+  box-sizing: border-box;
 }
 
 /* Tighter, more balanced spacing for long narration / "Current Direction" style blocks on desktop */
@@ -31285,6 +31305,14 @@ html[data-spw-loading-ecology-phase="settled"] {
   --spw-region-track: 16.25rem;
 }
 
+/* Pocket still of the curriculum hook should name the three practice beds,
+   not a second prose wall after the lede. Fold stills keep the cauldron note. */
+@media (max-width: 45rem) {
+  :where(body[data-spw-page-family="curriculum"] #curriculum-hero .topic-hero-copy > [data-spw-textual-role="note"]) {
+    display: none;
+  }
+}
+
 /* Lede / orientation: one breath. Do not columnize a greeting. */
 :where(
   .spw-frame[data-spw-region] :is([data-spw-textual-role="lede"], .entrance-lede),
@@ -34840,6 +34868,8 @@ html[data-spw-page-section-phase="idle"] {
   gap: 0.35rem;
   padding: 0.95rem 1rem 1.05rem;
   color: var(--ink-soft);
+  inline-size: 100%;
+  box-sizing: border-box;
 }
 
 :where(.topic-photo-card figcaption strong) {
@@ -34925,7 +34955,7 @@ html[data-spw-page-section-phase="idle"] {
   align-items: stretch;
   gap: var(--spw-shell-panel-gap, 1rem);
   margin-block: 1.2rem;
-  padding: 1rem;
+  padding: clamp(0.8rem, 2vw, 1rem);
   border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 18%, var(--card-border, rgba(0, 0, 0, 0.08)));
   border-radius: var(--radius-md, 8px);
   background: color-mix(in srgb, var(--surface, #fff) 94%, var(--active-op-color, #008080) 6%);
@@ -37178,8 +37208,8 @@ html[data-spw-reveal-phase="settling"] {
   --spw-control-min-height: 1.7rem;
   --spw-control-padding-block: 0.16rem;
   --spw-control-padding-inline: 0.5rem;
-  flex: 1 1 7.2rem;
-  min-inline-size: min(100%, 7.2rem);
+  flex: 1 1 5.2rem;
+  min-inline-size: min(100%, 5.2rem);
   justify-content: center;
   text-align: center;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
@@ -37187,6 +37217,9 @@ html[data-spw-reveal-phase="settling"] {
   line-height: 1.2;
   white-space: nowrap;
   max-inline-size: 100%;
+  background: var(--surface-strong, #fff);
+  color: var(--ink-strong, CanvasText);
+  border-color: color-mix(in srgb, var(--line-strong, rgba(14, 18, 20, 0.18)) 68%, var(--active-op-color, var(--teal, #008080)) 32%);
 }
 
 :where([data-spw-feature="wrap-jobs"] .spw-chip[aria-current="true"]) {

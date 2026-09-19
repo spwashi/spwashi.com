@@ -654,6 +654,14 @@
   overflow-wrap: break-word;
 }
 
+:where(.frame-card > .frame-card__supplement) {
+  margin: 0.2rem 0 0;
+  padding-inline-start: 4px;
+  font-size: var(--text-size-xs, 0.82rem);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  line-height: 1.42;
+}
+
 /* Light upgrade for :is(.spw-panel, .frame-panel) used in card-like roles on landing pages.
    Gives them better wrapping, rhythm, and hover behavior without requiring a full class change.
    This is especially useful on design, blog, about, math, and play hubs. */

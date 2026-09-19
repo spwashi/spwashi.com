@@ -1162,6 +1162,12 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   text-wrap: pretty;
 }
 
+main :where(.frame-card-media, .image-study, .topic-photo-card, figure) figcaption {
+  max-width: 100%;
+  inline-size: 100%;
+  box-sizing: border-box;
+}
+
 /* Tighter, more balanced spacing for long narration / "Current Direction" style blocks on desktop */
 :where(.spw-narration, [data-spw-box-model="narration-card"]) {
   max-inline-size: 72ch;
