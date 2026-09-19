@@ -2457,6 +2457,93 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   --operator-chip-shadow-intent: none;
   --operator-chip-hover-bg-intent: linear-gradient(0deg, color-mix(in srgb, var(--active-op-color, var(--teal)) 80%, transparent) 0 2px, color-mix(in srgb, var(--active-op-color, var(--teal)) 6%, transparent) 2px);
 }
+
+/* ==========================================================================
+   Lens seats — /design/components/#lens-seats bench (experimental, 2026-09-19)
+   A lens chooses the panel a frame shows. The authored chassis (A) spends a
+   2×2 grid, a label capsule, and a feedback line on four short seats. B is a
+   seat row: one line of chips, the pressed seat carrying its operator color,
+   and the expression the lens owner already writes on the switch shown as
+   its consequence. C is the same row, silent. Scoped to this page until one
+   is approved in a browser; the approved treatment then moves to
+   handles/operators/state-semantics.css as a lens-chrome value.
+   See .agents/plans/state-block-projections/PLAN.md (2026-09-19).
+   ========================================================================== */
+
+:where(body[data-spw-page-seed="page_design_components"]) #lens-seats .mode-switch[data-spw-lens-track="row"] {
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  padding: 0.18rem;
+}
+
+/* The panel is a kind host with inline-size containment; as a flex item of
+   the specimen card it could not shrink-to-fit, so it stretches. */
+:where(body[data-spw-page-seed="page_design_components"]) #lens-seats .spw-panel > .mode-panel {
+  align-self: stretch;
+  inline-size: 100%;
+  margin-block-start: 0.6rem;
+}
+
+/* The design page appends its kind tag inside every kind host; in a row it
+   took a seat. It wraps to its own line here, after the seats. */
+:where(body[data-spw-page-seed="page_design_components"]) #lens-seats .mode-switch[data-spw-lens-track="row"] > .spw-component-meta {
+  flex: 1 1 100%;
+  order: 2;
+  justify-content: flex-end;
+}
+
+/* The dot restated what the pressed seat's color already says. */
+:where(body[data-spw-page-seed="page_design_components"]) #lens-seats .mode-switch[data-spw-lens-track="row"] > .frame-sigil::after {
+  display: none;
+}
+
+/* The pressed seat carries its operator through the intent seam the
+   handles layer already reads; the chip never reads the bench. The seat
+   color comes from the operator tokens the sigil already resolves to. */
+:where(body[data-spw-page-seed="page_design_components"]) #lens-seats .mode-switch[data-spw-lens-track="row"] > .frame-sigil {
+  --spw-lens-seat-color: var(--spw-operator-color, var(--active-op-color, var(--teal, #008080)));
+  --mode-switch-active-bg-intent: color-mix(in oklab, var(--spw-lens-seat-color) 26%, var(--surface-strong, #fff));
+  --mode-switch-active-ink-intent: color-mix(in oklab, var(--ink, #14181b) 80%, var(--spw-lens-seat-color) 20%);
+  flex: 1 1 0;
+  min-inline-size: 0;
+  justify-content: center;
+}
+
+:where(body[data-spw-page-seed="page_design_components"]) #lens-seats .mode-switch[data-spw-lens-track="row"] > .frame-sigil[data-spw-operator="ground"] {
+  --spw-lens-seat-color: var(--op-ground-color, var(--op-baseline-color, #6b6b6b));
+}
+
+:where(body[data-spw-page-seed="page_design_components"]) #lens-seats .mode-switch[data-spw-lens-track="row"] > .frame-sigil[data-spw-operator="integration"] {
+  --spw-lens-seat-color: var(--op-integration-color, var(--op-object-color, #b8741a));
+}
+
+:where(body[data-spw-page-seed="page_design_components"]) #lens-seats .mode-switch[data-spw-lens-track="row"] > .frame-sigil[data-spw-operator="potential"] {
+  --spw-lens-seat-color: var(--op-potential-color, var(--op-ref-color, #1d57a3));
+}
+
+:where(body[data-spw-page-seed="page_design_components"]) #lens-seats .mode-switch[data-spw-lens-track="row"] > .frame-sigil[data-spw-operator="perspective"] {
+  --spw-lens-seat-color: var(--op-perspective-color, var(--op-action-color, #8a3b8f));
+}
+
+/* B: the seat expression the runtime writes on the switch is its consequence. */
+:where(body[data-spw-page-seed="page_design_components"]) #lens-seats .mode-switch[data-spw-lens-chrome~="seat"]::after {
+  content: attr(data-spw-semantic-expression);
+  display: block;
+  flex: 1 1 100%;
+  min-inline-size: 0;
+  max-inline-size: none;
+  overflow: visible;
+  padding: 0.12rem 0.36rem 0.06rem;
+  border-radius: 0;
+  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.64)) 72%, var(--spw-lens-cascade-color) 28%);
+  font-family: var(--handle-meta-font, var(--site-mono-font, monospace));
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  text-transform: none;
+  white-space: normal;
+}
 }
 
 /* /public/css/routes/surfaces/design-experiments.css */

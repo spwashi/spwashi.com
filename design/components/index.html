@@ -739,6 +739,63 @@
             <!-- ============================================================
                  Metamaterial States: glass / paper / matte / field side by side
                  ============================================================ -->
+            <section class="spw-frame" id="lens-seats" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="deep" data-spw-region="lens-seats" data-spw-semantic-expression="lens[seat]{chassis.row.silent}<compare>">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#lens-seats" data-spw-operator="frame">#&gt;"lens_seats"</a>
+                    <h2>Lens seats</h2>
+                </header>
+                <p data-spw-textual-role="note" data-spw-semantic-expression="lens[seat]{choose}<display>">A lens chooses which panel a frame shows. The same four seats three ways. Every switch below is live: one owner writes the pressed seat, the panel, the roving focus, and the expression on the switch, and the runtime reads the expression back as the page's Spw.</p>
+
+                <div class="frame-grid frame-grid--dense" data-spw-slot="body">
+                    <article class="spw-panel" id="lens-seat-a">
+                        <p data-spw-textual-role="note">as authored · 2×2 when narrow, capsule and feedback line</p>
+                        <h3>A · chassis</h3>
+                        <div class="mode-switch" role="group" aria-label="Bench lens A" data-spw-kind="lens" data-spw-operator="mode" data-spw-semantic-expression="bench_a[reading]{open.sit}">
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-a" data-set-mode="reading" aria-pressed="true" data-spw-operator="ground">.reading</button>
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-a" data-set-mode="kernel" aria-pressed="false" data-spw-operator="integration">^kernel</button>
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-a" data-set-mode="lattice" aria-pressed="false" data-spw-operator="potential">~lattice</button>
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-a" data-set-mode="hospitality" aria-pressed="false" data-spw-operator="perspective">@hospitality</button>
+                        </div>
+                            <p class="mode-panel" data-mode-group="bench-lens-a" data-mode-panel="reading" data-spw-kind="lens">Reading: the page as a map around one sentence.</p>
+                            <p class="mode-panel" data-mode-group="bench-lens-a" data-mode-panel="kernel" data-spw-kind="lens" hidden>Kernel: the identity that does not change.</p>
+                            <p class="mode-panel" data-mode-group="bench-lens-a" data-mode-panel="lattice" data-spw-kind="lens" hidden>Lattice: the crossings that carry it into other media.</p>
+                            <p class="mode-panel" data-mode-group="bench-lens-a" data-mode-panel="hospitality" data-spw-kind="lens" hidden>Hospitality: the room where it is served.</p>
+                    </article>
+
+                    <article class="spw-panel" id="lens-seat-b">
+                        <p data-spw-textual-role="note">one row · the pressed seat carries its operator · the expression is the consequence</p>
+                        <h3>B · seat row</h3>
+                        <div class="mode-switch" role="group" aria-label="Bench lens B" data-spw-kind="lens" data-spw-operator="mode" data-spw-semantic-expression="bench_b[reading]{open.sit}" data-spw-lens-track="row" data-spw-lens-chrome="silent seat">
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-b" data-set-mode="reading" aria-pressed="true" data-spw-operator="ground">.reading</button>
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-b" data-set-mode="kernel" aria-pressed="false" data-spw-operator="integration">^kernel</button>
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-b" data-set-mode="lattice" aria-pressed="false" data-spw-operator="potential">~lattice</button>
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-b" data-set-mode="hospitality" aria-pressed="false" data-spw-operator="perspective">@hospitality</button>
+                        </div>
+                            <p class="mode-panel" data-mode-group="bench-lens-b" data-mode-panel="reading" data-spw-kind="lens">Reading: the page as a map around one sentence.</p>
+                            <p class="mode-panel" data-mode-group="bench-lens-b" data-mode-panel="kernel" data-spw-kind="lens" hidden>Kernel: the identity that does not change.</p>
+                            <p class="mode-panel" data-mode-group="bench-lens-b" data-mode-panel="lattice" data-spw-kind="lens" hidden>Lattice: the crossings that carry it into other media.</p>
+                            <p class="mode-panel" data-mode-group="bench-lens-b" data-mode-panel="hospitality" data-spw-kind="lens" hidden>Hospitality: the room where it is served.</p>
+                    </article>
+
+                    <article class="spw-panel" id="lens-seat-c">
+                        <p data-spw-textual-role="note">one row · silent · only the pressed seat's color says which</p>
+                        <h3>C · silent row</h3>
+                        <div class="mode-switch" role="group" aria-label="Bench lens C" data-spw-kind="lens" data-spw-operator="mode" data-spw-semantic-expression="bench_c[reading]{open.sit}" data-spw-lens-track="row" data-spw-lens-chrome="silent">
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-c" data-set-mode="reading" aria-pressed="true" data-spw-operator="ground">.reading</button>
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-c" data-set-mode="kernel" aria-pressed="false" data-spw-operator="integration">^kernel</button>
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-c" data-set-mode="lattice" aria-pressed="false" data-spw-operator="potential">~lattice</button>
+                            <button class="frame-sigil" type="button" data-mode-group="bench-lens-c" data-set-mode="hospitality" aria-pressed="false" data-spw-operator="perspective">@hospitality</button>
+                        </div>
+                            <p class="mode-panel" data-mode-group="bench-lens-c" data-mode-panel="reading" data-spw-kind="lens">Reading: the page as a map around one sentence.</p>
+                            <p class="mode-panel" data-mode-group="bench-lens-c" data-mode-panel="kernel" data-spw-kind="lens" hidden>Kernel: the identity that does not change.</p>
+                            <p class="mode-panel" data-mode-group="bench-lens-c" data-mode-panel="lattice" data-spw-kind="lens" hidden>Lattice: the crossings that carry it into other media.</p>
+                            <p class="mode-panel" data-mode-group="bench-lens-c" data-mode-panel="hospitality" data-spw-kind="lens" hidden>Hospitality: the room where it is served.</p>
+                    </article>
+                </div>
+
+                <p data-spw-textual-role="note">Approve one here before any route changes. B takes the label out of the capsule and the consequence out of the feedback line and shows the expression the switch already carries; C keeps the row and nothing else. Both keep the 44px floor on coarse pointers and the operator chip grammar.</p>
+            </section>
+
             <section class="spw-frame" id="metamaterial-states" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-liminality="deep" data-spw-region="metamaterial">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#metamaterial-states" data-spw-operator="integration">^"metamaterial_states"</a>
