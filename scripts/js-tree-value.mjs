@@ -9,10 +9,17 @@
  * this reads the import graph's facts, so a file that keeps a valid contract
  * but that nothing loads is still reported.
  *
+ * Reach is transitive from the roots: the two entrypoints, the catalog's
+ * dynamic loads, script tags in routes, the source the page template inlines
+ * into <head>, the documented catalog barrel, and the kernel shims the build
+ * scripts import. A file only an orphan imports is still an orphan.
+ *
  * Layers, low to high: kernel < semantic < runtime < interface < modules.
  * media sits beside runtime. A kernel file importing interface, runtime, or
  * modules is an upward import; the catalog's dynamic loads are the one
- * sanctioned crossing and are excluded.
+ * sanctioned crossing and are excluded. A lazy import() from any other file
+ * is reported beside the static ones but counted apart: it is a bridge the
+ * caller pays for at call time, not a load-order dependency.
  *
  * Usage:
  *   node scripts/js-tree-value.mjs            summary + lists
@@ -27,9 +34,18 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const JS_ROOT = path.join(ROOT, 'public/js');
 const JSON_OUT = process.argv.includes('--json');
 const SKIP_DIRS = new Set(['generated', 'typed']);
-const ROOT_ENTRYPOINTS = new Set(['public/js/site.js', 'public/js/compose.js']);
+const ROOT_ENTRYPOINTS = new Set([
+  'public/js/site.js',
+  'public/js/compose.js',
+  // README reading order #2: the full-catalog entrypoint; site.js imports the
+  // families one by one to keep them lazy, so nothing imports the barrel.
+  'public/js/runtime/catalog/index.js',
+]);
+// Sources a build script inlines or imports; the page never names them.
+const TEMPLATE_FILE = 'scripts/template.mjs';
+const SCRIPTS_ROOT = path.join(ROOT, 'scripts');
 const LAYER_RANK = { kernel: 0, semantic: 1, runtime: 2, media: 2, interface: 3, modules: 4 };
-const IMPORT_RE = /(?:import\s*(?:[^'"`]*?from\s*)?|import\()\s*['"`]([^'"`]+)['"`]/g;
+const IMPORT_RE = /(import\s*(?:[^'"`]*?from\s*)?|import\()\s*['"`]([^'"`]+)['"`]/g;
 const CATALOG_FILES = ['core', 'feature', 'region', 'enhancement'].map((f) => `public/js/runtime/catalog/${f}.js`);
 
 function walk(dir, out = []) {
@@ -57,6 +73,33 @@ function layerOf(file) {
   return LAYER_RANK[segment] === undefined ? null : segment;
 }
 
+function templateReferences() {
+  const refs = new Set();
+  const source = fs.readFileSync(path.join(ROOT, TEMPLATE_FILE), 'utf8');
+  for (const match of source.matchAll(/public\/js\/[^"'\s)]+\.js/g)) refs.add(match[0]);
+  return refs;
+}
+
+// Build scripts that import a browser module (the typed fixture shims) give it
+// reach outside the page; tests are excluded because a test is not a consumer.
+function scriptReferences() {
+  const refs = new Set();
+  const stack = [SCRIPTS_ROOT];
+  while (stack.length) {
+    const dir = stack.pop();
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (entry.name !== 'tests' && entry.name !== 'node_modules') stack.push(full);
+      } else if (entry.name.endsWith('.mjs') || entry.name.endsWith('.mts')) {
+        const source = fs.readFileSync(full, 'utf8');
+        for (const match of source.matchAll(/['"](\.\.\/)+public\/js\/([^'"]+\.js)['"]/g)) refs.add(`public/js/${match[2]}`);
+      }
+    }
+  }
+  return refs;
+}
+
 function htmlReferences() {
   const refs = new Set();
   const stack = [ROOT];
@@ -79,17 +122,22 @@ function htmlReferences() {
 export function auditJsTree() {
   const files = walk(JS_ROOT).sort();
   const edges = new Map();
+  const lazy = new Map();
   const fanIn = new Map(files.map((f) => [f, 0]));
   const lines = new Map();
   for (const file of files) {
     const source = fs.readFileSync(path.join(ROOT, file), 'utf8');
     lines.set(file, source.split('\n').length);
     const targets = new Set();
+    const lazyTargets = new Set();
     for (const match of source.matchAll(IMPORT_RE)) {
-      const target = resolveSpecifier(match[1], file);
-      if (target && fanIn.has(target)) targets.add(target);
+      const target = resolveSpecifier(match[2], file);
+      if (!target || !fanIn.has(target)) continue;
+      targets.add(target);
+      if (match[1].startsWith('import(')) lazyTargets.add(target);
     }
     edges.set(file, targets);
+    lazy.set(file, lazyTargets);
     for (const target of targets) fanIn.set(target, fanIn.get(target) + 1);
   }
   const catalogTargets = new Set();
@@ -101,8 +149,18 @@ export function auditJsTree() {
     }
   }
   const html = htmlReferences();
-  const orphans = files.filter((f) => fanIn.get(f) === 0 && !catalogTargets.has(f) && !html.has(f) && !ROOT_ENTRYPOINTS.has(f))
-    .map((f) => ({ file: f, lines: lines.get(f) }));
+  const template = templateReferences();
+  const tooling = scriptReferences();
+  const roots = files.filter((f) => ROOT_ENTRYPOINTS.has(f) || catalogTargets.has(f) || html.has(f) || template.has(f) || tooling.has(f));
+  const reached = new Set(roots);
+  const queue = [...roots];
+  while (queue.length) {
+    for (const target of edges.get(queue.pop()) || []) {
+      if (!reached.has(target)) { reached.add(target); queue.push(target); }
+    }
+  }
+  const orphans = files.filter((f) => !reached.has(f))
+    .map((f) => ({ file: f, lines: lines.get(f), importedBy: fanIn.get(f) }));
   const upward = [];
   for (const [file, targets] of edges) {
     const from = layerOf(file);
@@ -110,9 +168,12 @@ export function auditJsTree() {
     if (CATALOG_FILES.includes(file)) continue;
     for (const target of targets) {
       const to = layerOf(target);
-      if (to && LAYER_RANK[to] > LAYER_RANK[from]) upward.push({ file, target, from, to });
+      if (to && LAYER_RANK[to] > LAYER_RANK[from]) {
+        upward.push({ file, target, from, to, kind: lazy.get(file).has(target) ? 'lazy' : 'static' });
+      }
     }
   }
+  const upwardStatic = upward.filter((u) => u.kind === 'static');
   const byDir = {};
   for (const file of files) {
     const dir = path.posix.dirname(file).replace('public/js', '') || '/';
@@ -124,9 +185,13 @@ export function auditJsTree() {
     byDir,
     catalogTargets: catalogTargets.size,
     htmlReferences: html.size,
+    templateReferences: template.size,
+    toolingReferences: tooling.size,
+    reached: reached.size,
     orphans,
     orphanLines: orphans.reduce((sum, o) => sum + o.lines, 0),
     upward,
+    upwardStatic: upwardStatic.length,
   };
 }
 
@@ -138,10 +203,13 @@ if (isMain) {
   if (JSON_OUT) {
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
   } else {
-    process.stdout.write(`[js-tree] files=${report.files} lines=${report.lines} catalogTargets=${report.catalogTargets} htmlRefs=${report.htmlReferences}\n`);
+    process.stdout.write(`[js-tree] files=${report.files} lines=${report.lines} reached=${report.reached} catalogTargets=${report.catalogTargets} htmlRefs=${report.htmlReferences} templateRefs=${report.templateReferences} toolingRefs=${report.toolingReferences}\n`);
     process.stdout.write(`[js-tree] orphans=${report.orphans.length} (${report.orphanLines} lines nothing loads)\n`);
-    for (const o of report.orphans) process.stdout.write(`  orphan  ${String(o.lines).padStart(5)}  ${o.file}\n`);
-    process.stdout.write(`[js-tree] upward imports=${report.upward.length}\n`);
-    for (const u of report.upward) process.stdout.write(`  upward  ${u.from} → ${u.to}  ${u.file} → ${u.target}\n`);
+    for (const o of report.orphans) {
+      const via = o.importedBy ? `  (imported only by other orphans: ${o.importedBy})` : '';
+      process.stdout.write(`  orphan  ${String(o.lines).padStart(5)}  ${o.file}${via}\n`);
+    }
+    process.stdout.write(`[js-tree] upward imports=${report.upwardStatic} static, ${report.upward.length - report.upwardStatic} lazy\n`);
+    for (const u of report.upward) process.stdout.write(`  upward  ${u.kind === 'lazy' ? 'lazy  ' : 'static'}  ${u.from} → ${u.to}  ${u.file} → ${u.target}\n`);
   }
 }

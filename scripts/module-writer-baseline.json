@@ -198,9 +198,6 @@
     "precipitation-request": [
       "attr:data-spw-capture-mode"
     ],
-    "prompt-utils": [
-      "attr:data-spw-lattice-phase"
-    ],
     "pwa-update-handler": [
       "attr:data-spw-pwa-cache-count",
       "attr:data-spw-pwa-cache-entries",
@@ -423,6 +420,9 @@
       "attr:data-spw-resolved-composition-stability-field",
       "attr:data-spw-space-motion",
       "attr:data-spw-tempo-field"
+    ],
+    "(file:public/js/semantic/lattice.js)": [
+      "attr:data-spw-lattice-phase"
     ]
   },
   "multiWriter": {

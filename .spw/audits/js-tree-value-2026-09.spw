@@ -31,10 +31,13 @@
   files = 267
   lines = 103087
   by_dir = `kernel 35 · semantic 36 · runtime 81 (+7 attention, 10 catalog, 9 experiential, 8 interaction, 5 orchestration, 4 shell) · interface 24 (+10 cauldron) · media 5 · modules 31 across 12 folders · roots 2`
-  catalog_targets = 120
+  catalog_targets = 130
   html_referenced = 8
-  orphans = `13 files, 1,843 lines nothing loads (list below); the four tool modules were wired the same day (landed below)`
-  upward = `32 imports against the layer order: kernel→runtime 9, kernel→interface 3, kernel→semantic 2, runtime→interface 13, semantic→interface 3, semantic→runtime 1, media→interface 1`
+  template_inlined = 3
+  tooling_imported = 5
+  reached = `267 of 267 once reach is counted transitively from the roots (landed.instrument_reach)`
+  orphans = `0 after the wiring pass (landed.orphans_wired); before it the transitive count was 12 files, 2,056 lines — three more than the fan-in count showed, because kernel/core.js, semantic/cognitive-surface.js, and interface/persona-selector.js were imported only by other orphans`
+  upward = `25 static imports against the layer order plus 6 lazy import() bridges: kernel→interface 3 (core→haptics resolved by the move; site-settings-engine/profiles→palette-resonance), kernel→runtime 4 static (site-settings-ui) + 5 lazy (instrumentation, engine, ui), kernel→semantic 2, runtime→interface 12 static + 1 lazy, semantic→interface 3, semantic→runtime 1, media→interface 1`
   transport = `boot closure 265,058 B raw / 82,063 B gzip in 8 files; packs by timing (gzip): immediate 21 KB (1 pack), visible 197 KB (58), idle 117 KB (4), settled 6 KB, invited 4 KB, region 0.6 KB; the expression harvest is 264 KB raw and loads whole at idle for every route`
 }
 
@@ -46,20 +49,23 @@
   tools_wired = `Four feature defs in runtime/catalog/feature.js: budgeting-bench (#budget-app-root), profile-tool (#builder-form), care-intake ([data-care-intake]), spw-literal-parser ([data-parser-tool]); each VISIBLE on its own route, each with a describes line a hand can test. budgeting.js drops its DOMContentLoaded self-runner for initBudgetingBench(ctx, root); spw-literal-parser.js drops its import-time querySelectorAll for initSpwLiteralParser(ctx, root); profile/tool.js takes (ctx, root) beside its options form and widens a section root to the page, and its private escapeHtml is the kernel's; care-intake.js exports SPW_MODULE_EXPORT and escapes every string it renders. Verified in headless Chrome with ?spw-module-audit=1: all four reach mounted, and the bench, preview, card, and token readout respond.`
   care_card = `The care profile card now has the site's three exits — copy a ^seed[Care.Profile ref:YYYY]{…} block, download it as .spw.txt, screenshot mode — plus a chip to the practices section; the same shape as the folio order card and the services bundle.`
   tools_hub = `/tools/ gains a Year mix card (it had only a chip); the search index and expression harvest follow.`
+  instrument_reach = `audit:js-tree now counts reach transitively from the roots (entrypoints, catalog loads, route script tags, the source scripts/template.mjs inlines into <head>, the documented catalog barrel, and the kernel shims build scripts import), so prepaint-state.js, the two fixture shims, and runtime/catalog/index.js stop reading as orphans and a file only an orphan imports starts to. Upward imports split static from lazy import() bridges; the static count is the number to drive down.`
+  orphans_wired = `Ten catalog defs, each with a describes line a hand can test. operator-phases (runtime/states.js, moved from kernel/: a bus-listening process is not a primitive) VISIBLE on [data-spw-stateful]; sequence-projection VISIBLE on .spw-delimiter; recipe-semantics IDLE on the recipes route; personas INVITED on an authored [data-spw-surface="personas"] host, the rail rendering into that host instead of the header; pretext-presets IDLE where the page declares metrics; smart-console (interface/smart-console.js, moved from semantic/: it renders cards) VISIBLE beside the settings page's transparent block, using the kernel escape; visitation VISIBLE on the image hosts image-metaphysics remembers; semantics-gate IDLE; page-universe IDLE where the page declares promptability; cognition IDLE (runtime/cognitive-core.js, moved from kernel/) mounting the knowledge-gain listener and the cognitive-surface panel together, both answering to the cognitiveHandles setting, off by default, checked per hold. Verified by direct import in headless Chrome: the phase ladder steps inquiry→observation with --charge 0.65, three delimiter taps select and delight three, the persona rail mounts three chips in its host and a tap shifts body to scribe, the cognition panel mounts and the cleanup removes the console hook, the smart console host lands beside the block and stays hidden with handles off.`
 }
 
 ^"orphans"{
-  #:13 files nothing loads after the tool wiring. Disposition is the creator's call; the July standalone-script audit graded reusability, not reach.
-  duplicate_or_shim = #[
-    `kernel/component-fixtures.js (5) and kernel/region-ecology-fixtures.js (3) — kernel shims to typed outputs, reached by build tooling; keep`,
-    `runtime/catalog/index.js (72) — the documented barrel, reading order #2; keep as the tree's entry, nothing imports it`
+  #:zero after 2026-09-18. What the list was, and where each went, so the next reader does not re-derive it.
+  instrument_blind_spots = #[
+    `runtime/prepaint-state.js — inlined into <head> by scripts/template.mjs; the audit reads the template now`,
+    `kernel/component-fixtures.js and kernel/region-ecology-fixtures.js — imported by build scripts; the audit reads scripts/ now`,
+    `runtime/catalog/index.js — the documented barrel; a root by declaration`
   ][reg=set]
-  tools_without_a_loader = `resolved 2026-09-18 — see landed.tools_wired; /tools/character-sheet/ still loads nothing from profile/tool.js, which is correct: the sheet has its own module.`
-  semantic_and_runtime_helpers = #[
-    `interface/personas.js (129)`, `kernel/states.js (121)`, `runtime/gate.js (53)`, `runtime/prepaint-state.js (209)`, `runtime/visitation.js (58)`,
-    `semantic/page-universe.js (189)`, `semantic/pretext-presets.js (457)`, `semantic/projection.js (140)`, `semantic/recipe-semantics.js (174)`, `semantic/smart.js (233)`
+  wired = #[
+    `operator-phases ← runtime/states.js`, `sequence-projection ← semantic/projection.js`, `recipe-semantics`, `personas (+ persona-selector)`, `pretext-presets`,
+    `smart-console ← interface/smart-console.js`, `visitation`, `semantics-gate ← runtime/gate.js`, `page-universe`, `cognition ← runtime/cognitive-core.js (+ semantic/cognitive-surface.js)`
   ][reg=set]
-  rule = `Each is wired (a catalog def with a describes line the hand can test), or archived with its plan citation retargeted, or deleted. Conventions that cite them (visitation-memory, viewing-reason, operator-semantics) describe runtime that does not run; the citation is the first thing to fix either way.`
+  awaiting_a_host = `operator-phases and personas mount only where a page authors [data-spw-stateful] or [data-spw-surface="personas"]; no route does today. The catalog now states the offer; the first host is a page decision, and a sensation change, so it waits for a browser demo.`
+  rule = `A def with a selector nobody authors is wired potential, not dead code: the loader reports it as selector-missing on every route, which is the honest reading. Delete only what no convention or plan still claims.`
 }
 
 ^"upward_imports"{
@@ -86,7 +92,7 @@
 }
 
 ^"next"{
-  1 = `Orphans: 13 remain (semantic and runtime helpers plus two fixture shims and the catalog barrel); the creator names delete / wire / archive per file. The live-route tools are wired.`
+  1 = `Orphans: zero. Give operator-phases and personas a first host when a page wants the phase ladder or the lens rail; demo in a browser first.`
   2 = `site-settings-ui.js → interface/; then re-run audit:js-tree and check:runtime.`
   3 = `Decide the hub layer for haptics, accent-palette, wonder-memory, cauldron; move or rename, one hub per patch.`
   4 = `Split the expression harvest per route with kin edges; measure idle gzip before and after.`

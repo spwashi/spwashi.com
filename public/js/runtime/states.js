@@ -34,22 +34,31 @@ const SEMANTIC_PHASES = Object.freeze({
 // Charge levels that correspond to each phase position (prefix/mid/postfix)
 const PHASE_CHARGE = [0.30, 0.65, 0.90];
 
-export function initSpwStates() {
+/**
+ * Mounted by the catalog on the first `[data-spw-stateful]` host (rootMode
+ * single); one document-level listener serves every stateful frame on the
+ * page. A direct caller may pass nothing and get the same.
+ */
+export function initSpwStates(ctx, root) {
+    const scope = root instanceof Element ? (root.closest('main') || document) : document;
+
+    // Set initial phase for all stateful components
+    scope.querySelectorAll('[data-spw-stateful]').forEach(frame => {
+        if (!frame.dataset.spwPhase) {
+            frame.dataset.spwPhase = getInitialPhase(frame);
+        }
+        updateFrameUI(frame);
+    });
+
     // Phase cycle on brace activation inside a stateful frame
-    bus.on('brace:activated', (e) => {
+    const off = bus.on('brace:activated', (e) => {
         const frame = e.target?.closest?.('.spw-frame, .site-frame');
         if (frame?.hasAttribute('data-spw-stateful')) {
             cycleFramePhase(frame);
         }
     });
 
-    // Set initial phase for all stateful components
-    document.querySelectorAll('[data-spw-stateful]').forEach(frame => {
-        if (!frame.dataset.spwPhase) {
-            frame.dataset.spwPhase = getInitialPhase(frame);
-        }
-        updateFrameUI(frame);
-    });
+    return () => { if (typeof off === 'function') off(); };
 }
 
 function cycleFramePhase(frame) {

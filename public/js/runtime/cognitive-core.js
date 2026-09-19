@@ -11,11 +11,18 @@
  *
  * The cluster wonder-accent is a brief, ambient highlight that draws
  * the reader's attention toward conceptually related elements.
+ *
+ * The reader's cognition setting (cognitiveHandles, off by default) is the
+ * switch: with it off a sustained hold is only a hold. The cognitive surface
+ * panel (semantic/cognitive-surface.js) mounts with the core so the web it
+ * gains is inspectable on the same page.
  */
 
 import { bus } from '/public/js/kernel/bus.js';
 import { groundElement } from '/public/js/interface/haptics.js';
 import { createSpwLogger, markInstrumented } from '/public/js/kernel/instrumentation.js';
+import { getSiteSettings } from '/public/js/kernel/site-settings.js';
+import { initCognitiveSurface } from '/public/js/semantic/cognitive-surface.js';
 
 const KNOWLEDGE_TARGET_SELECTOR = [
     '.spw-chip',
@@ -34,9 +41,12 @@ const KNOWLEDGE_TARGET_SELECTOR = [
 ].join(', ');
 const logger = createSpwLogger('spw-core');
 
-export function initSpwCore() {
+const cognitionOn = () => getSiteSettings().cognitiveHandles === 'on';
+
+export function initSpwCognitiveCore() {
     // Sustained hold on any operator chip or syntax token marks knowledge gained
-    bus.on('brace:sustained', (e) => {
+    const off = bus.on('brace:sustained', (e) => {
+        if (!cognitionOn()) return;
         const target = e.target?.closest?.(KNOWLEDGE_TARGET_SELECTOR);
         if (!target) return;
 
@@ -51,7 +61,16 @@ export function initSpwCore() {
         highlightClusterWonder(clusterName);
         logger.info('guiding attention', { clusterName });
     };
+
+    initCognitiveSurface();
+
+    return () => {
+        if (typeof off === 'function') off();
+        delete window.spwGuideHuman;
+    };
 }
+
+export const initSpwCore = initSpwCognitiveCore;
 
 function highlightClusterWonder(clusterName) {
     document.querySelectorAll(`[data-spw-cluster="${clusterName}"]`).forEach(el => {

@@ -8,37 +8,46 @@
  * The goal is not prediction for its own sake. The cards should explain what
  * the page is currently asking the reader to do: which substrate dominates,
  * whether the trace is conceptual or realized, and what phrasing is active.
+ *
+ * Mounted where a page authors `#spw-smart-spw-block` (the transparent
+ * cognitive/web block) or `#spw-smart-console`; the cards render beside the
+ * block rather than at the end of the body, so the reader finds them where
+ * the page said they would be. The cognition setting (cognitiveHandles) is
+ * the reader's switch; off leaves the host empty and hidden.
  */
 
-import { getKnowledgeMap } from '/public/js/kernel/core.js';
+import { escapeHtml } from '/public/js/kernel/dom-render.js';
+import { getKnowledgeMap } from '/public/js/runtime/cognitive-core.js';
 import { getGroundedRegistry } from '/public/js/interface/haptics.js';
 import { LATTICE } from '/public/js/semantic/lattice.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 import { getCouplingMap, getCurrentPageMetadata } from '/public/js/semantic/cognitive-surface.js';
 
-const escapeHtml = (value) => String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+const REFRESH_EVENTS = [
+    'spw:core:knowledge',
+    'spw:spell:grounded',
+    'spw:spell:ungrounded',
+    'spw:settings-change',
+    'spw:component-semantics-ready',
+];
 
-export function initSpwSmart() {
-    renderSmartConsole();
-    updateSmartSpwBlock();
+let hostAnchor = null;
 
-    [
-        'spw:core:knowledge',
-        'spw:spell:grounded',
-        'spw:spell:ungrounded',
-        'spw:settings-change',
-        'spw:component-semantics-ready'
-    ].forEach((eventName) => {
-        document.addEventListener(eventName, () => {
-            renderSmartConsole();
-            updateSmartSpwBlock();
-        });
-    });
+export function initSpwSmartConsole(ctx, root) {
+    hostAnchor = root instanceof Element ? root : null;
+    const refresh = () => {
+        renderSmartConsole();
+        updateSmartSpwBlock();
+    };
+    refresh();
+    REFRESH_EVENTS.forEach((eventName) => document.addEventListener(eventName, refresh));
+    return () => {
+        REFRESH_EVENTS.forEach((eventName) => document.removeEventListener(eventName, refresh));
+        hostAnchor = null;
+    };
 }
+
+export const initSpwSmart = initSpwSmartConsole;
 
 function getSmartHost() {
     let container = document.getElementById('spw-smart-console');
@@ -46,7 +55,10 @@ function getSmartHost() {
         container = document.createElement('div');
         container.id = 'spw-smart-console';
         container.className = 'spw-smart-console-host';
-        document.body.appendChild(container);
+        // Beside the authored block when there is one; the body is the fallback.
+        const block = hostAnchor?.closest('pre') || hostAnchor;
+        if (block?.parentElement) block.parentElement.insertBefore(container, block.nextSibling);
+        else document.body.appendChild(container);
     }
     return container;
 }

@@ -15,10 +15,14 @@ const logger = createSpwLogger('spw-personas');
 
 let scribeTooltip = null;
 
-export function initSpwPersonas() {
+/**
+ * Mounted by the catalog on an authored `[data-spw-surface="personas"]` host
+ * the reader has accepted (INVITED); the selector rail renders into that host.
+ */
+export function initSpwPersonas(ctx, root) {
     const active = readStorageText(STORAGE_KEY, 'viewer');
     runCriticalPath('personas:init', () => applyPersona(active), null);
-    initPersonaSelector();
+    initPersonaSelector(root instanceof HTMLElement ? root : null);
 
     bus.on('persona:shift', (e) => {
         const next = e.detail?.persona;

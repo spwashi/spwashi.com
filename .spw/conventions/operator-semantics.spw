@@ -189,7 +189,7 @@
   runtime_surface: [
     "public/js/kernel/shared.js parseSigilPosition + resolveOperationalFixity"
     "public/js/semantic/operators.js data-spw-sigil-position + data-spw-fixity-tier"
-    "public/js/kernel/states.js phase prefix/mid/postfix charge ladder"
+    "public/js/runtime/states.js phase prefix/mid/postfix charge ladder"
     "public/css/handles/operators.css positional seam hints"
   ]
   @semantic_hierarchy: ~"./semantic-hierarchy.spw#positional_ladder"

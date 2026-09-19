@@ -4,8 +4,8 @@ import { createFrameSigil } from '/public/js/kernel/dom-contracts.js';
 let isBuilt = false;
 const chipButtons = {};
 
-export function initPersonaSelector() {
-    let mount = document.querySelector('[data-spw-surface="personas"]');
+export function initPersonaSelector(host = null) {
+    let mount = host || document.querySelector('[data-spw-surface="personas"]');
     if (!mount) {
         const header = document.querySelector('header');
         mount = document.createElement('div');
