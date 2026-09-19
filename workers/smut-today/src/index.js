@@ -1,7 +1,10 @@
 /**
- * smut.today — a small daily erotic zine.
- * Attached only to smut.today. Does not serve spwashi.com.
+ * smut.today — a small daily erotic zine, a letter to the person in the room,
+ * and a shelf of book pitches. The wink lives off-page.
  */
+
+const VERSION = "0.0.1";
+
 
 const STORIES = [
   {
@@ -45,6 +48,38 @@ const STORIES = [
       "knees a rumor",
       "without theater",
     ],
+  },
+];
+
+const LETTER = {
+  slug: "to-you",
+  title: "For the one who sits",
+  kicker: "not a follower. a person in the room.",
+  body: [
+    "I keep meaning to say this without making it a caption. You sit and the room has a job. I draw, I write, I ruin a paragraph trying to keep up with a mouth I am not allowed to rush.",
+    "This site is the private heat. The periodical next door is the public one: Wondering About Pi, a ministry, a pie that is also a proof. You would look ridiculous and perfect holding Issue 22/7 to a camera. I will not tell anyone what the letters are for. They already know.",
+    "If we work, we work like this: you in the chair, me on the sentence, both of us pretending the oven is the only thing that is hot. Come sit. Bring the look you use when you are about to laugh.",
+  ],
+};
+
+const PITCHES = [
+  {
+    slug: "ministry",
+    title: "The Ministry of Circumference",
+    hook: "A math office that files wonders about a number that never ends. Domestic. Exact. Warm.",
+    why: "BookTok likes a premise they can hold up without a synopsis. A ministry. A pie. A proof that flakes.",
+  },
+  {
+    slug: "issue-pie",
+    title: "Issue pie",
+    hook: "A periodical that arrives the way a pie arrives: steam, a knife, a claim.",
+    why: "Short enough for a stitch. Serious enough for a shelf. The innuendo is optional and not printed.",
+  },
+  {
+    slug: "sits-for-proofs",
+    title: "She sits for the proof",
+    hook: "A sitting. A circle. A kitchen that is also a department of wonder.",
+    why: "The model is the argument. The math is the alibi. The comments will do the rest.",
   },
 ];
 
@@ -156,8 +191,8 @@ function layout({ title, description, canonical, body }) {
   <main>
     ${body}
     <footer>
-      <p>Adults only. 18+. Short, disposable, rewritten when the day turns. No accounts. No feed.</p>
-      <p><a href="/">smut.today</a> · <a href="/today.json">today.json</a></p>
+      <p>Adults only. 18+. ${escapeHtml(VERSION)}. The periodical is next door.</p>
+      <p><a href="/">smut.today</a> · <a href="/to-you/">to you</a> · <a href="/pitches/">pitches</a> · <a href="https://wap.mom/">wap.mom</a></p>
     </footer>
   </main>
 </body>
@@ -175,12 +210,12 @@ function renderIndex(now) {
     .join("");
   return layout({
     title: "smut.today — today's piece",
-    description: "A short erotic scene for today. No account. No feed. Ten minutes if you have them.",
+    description: "A short erotic scene, a letter to the person who sits, and book pitches for a shelf that already knows.",
     canonical: "https://smut.today/",
     body: `<header>
-  <p class="kicker">smut.today</p>
+  <p class="kicker">smut.today · ${escapeHtml(VERSION)}</p>
   <h1>Today’s smut is a scene, not a tab.</h1>
-  <p class="lede">One short piece, turned over with the date. Read it. Come. Go back to your life.</p>
+  <p class="lede">One short piece. A letter for the chair in the room. A shelf of books the comments can finish.</p>
 </header>
 <article>
   <p class="kicker">featured</p>
@@ -188,10 +223,52 @@ function renderIndex(now) {
   <p>${escapeHtml(featured.kicker)}</p>
   <p>${escapeHtml(featured.summary)}</p>
 </article>
+<article>
+  <p class="kicker">for you</p>
+  <h2><a href="/to-you/">${escapeHtml(LETTER.title)}</a></h2>
+  <p>${escapeHtml(LETTER.kicker)}</p>
+</article>
+<article>
+  <p class="kicker">for the shelf</p>
+  <h2><a href="/pitches/">Book pitches</a></h2>
+  <p>Premises a camera can hold. The periodical is <a href="https://wap.mom/">Wondering About Pi</a>.</p>
+</article>
 <nav aria-label="Also in the drawer">
   <p class="kicker">also here</p>
   <ul>${list}</ul>
 </nav>`,
+  });
+}
+
+function renderLetter() {
+  return layout({
+    title: `${LETTER.title} — smut.today`,
+    description: LETTER.kicker,
+    canonical: "https://smut.today/to-you/",
+    body: `<p class="kicker"><a href="/">smut.today</a> · ${escapeHtml(LETTER.kicker)}</p>
+<article>
+  <h1>${escapeHtml(LETTER.title)}</h1>
+  ${renderParagraphs(LETTER.body)}
+</article>`,
+  });
+}
+
+function renderPitches() {
+  const cards = PITCHES.map(
+    (p) => `<article>
+  <h2>${escapeHtml(p.title)}</h2>
+  <p>${escapeHtml(p.hook)}</p>
+  <p class="note">${escapeHtml(p.why)}</p>
+</article>`
+  ).join("");
+  return layout({
+    title: "Pitches — smut.today",
+    description: "Book premises for a shelf that already knows how to caption.",
+    canonical: "https://smut.today/pitches/",
+    body: `<p class="kicker"><a href="/">smut.today</a> · for the shelf</p>
+<h1>What would be hot to pass.</h1>
+<p>Three premises. None of them explain the domain next door. <a href="https://wap.mom/">wap.mom</a> is the ministry; this page is the heat.</p>
+${cards}`,
   });
 }
 
@@ -257,7 +334,7 @@ export default {
     }
 
     if (url.pathname === "/today.json") {
-      return new Response(JSON.stringify(jsonToday(now), null, 2), {
+      return new Response(JSON.stringify({ version: VERSION, ...jsonToday(now) }, null, 2), {
         headers: {
           ...BASE_SECURITY,
           "Content-Type": "application/json; charset=UTF-8",
@@ -276,6 +353,14 @@ export default {
 
     if (url.pathname === "/" || url.pathname === "") {
       return new Response(renderIndex(now), { headers: htmlHeaders });
+    }
+
+    if (url.pathname === "/to-you" || url.pathname === "/to-you/") {
+      return new Response(renderLetter(), { headers: htmlHeaders });
+    }
+
+    if (url.pathname === "/pitches" || url.pathname === "/pitches/") {
+      return new Response(renderPitches(), { headers: htmlHeaders });
     }
 
     const slug = url.pathname.replace(/^\/+|\/+$/g, "");
