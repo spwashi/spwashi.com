@@ -9,6 +9,11 @@
  * Operator node color contexts (.op-node--{type}) are ungated — they apply
  * to any SVG that uses the naming convention, not just svg-surfaces contexts.
  * This lets inline SVG diagrams live anywhere and still pick up the palette.
+ *
+ * Device: consume html[data-spw-pointer-mode], [data-spw-hover-mode],
+ * [data-spw-viewport-tier] from the shell register. Per-figure
+ * data-spw-svg-device is a host stamp, not the only input. Do not invent
+ * a new data-spw-* family. Viewport media queries stay as the JS-off fallback.
  * ========================================================================== */
 
 /* ─── Flow animation ─────────────────────────────────────────────────────── */
@@ -54,6 +59,8 @@
     --spw-svg-hit-min: var(--spw-medium-touch-min, var(--touch-target-compact, 2.15rem));
     --spw-svg-surface-max: calc(var(--measure-panel, 52rem) * var(--spw-svg-scale-factor, 1));
     --spw-svg-device-pointer-lift: var(--spw-svg-pointer-lift, 0.42);
+    --spw-svg-device-stroke: 1;
+    --spw-svg-label-scale: 1;
     --spw-svg-brand-accent: var(--active-op-color, #008080);
     --spw-svg-brand-field: var(--surface, #ffffff);
     --spw-svg-surface-border: var(--spw-shell-line, rgba(14, 18, 20, 0.14));
@@ -124,13 +131,13 @@
 [data-spw-features~="svg-surfaces"] .spw-svg-frame {
     fill: var(--surface-soft, rgba(255, 255, 255, 0.52));
     stroke: var(--line, rgba(14, 18, 20, 0.14));
-    stroke-width: calc(var(--line-mid, 1.2px) * var(--spw-svg-stroke-scale, 1));
+    stroke-width: calc(var(--line-mid, 1.2px) * var(--spw-svg-stroke-scale, 1) * var(--spw-svg-device-stroke, 1));
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-node {
     fill: var(--surface-strong, rgba(255, 255, 255, 0.88));
     stroke: var(--active-op-border, rgba(0, 128, 128, 0.34));
-    stroke-width: calc(var(--line-thick, 2.5px) * var(--spw-svg-stroke-scale, 1));
+    stroke-width: calc(var(--line-thick, 2.5px) * var(--spw-svg-stroke-scale, 1) * var(--spw-svg-device-stroke, 1));
 }
 
 /* * Operator-colored node fills 
@@ -157,19 +164,41 @@
 [data-spw-features~="svg-surfaces"] .spw-svg-flow {
     fill: none;
     stroke: var(--active-op-color, #008080);
-    stroke-width: calc(var(--line-mid, 1.5px) * var(--spw-svg-stroke-scale, 1));
+    stroke-width: calc(var(--line-mid, 1.5px) * var(--spw-svg-stroke-scale, 1) * var(--spw-svg-device-stroke, 1));
     stroke-linecap: round;
     stroke-dasharray: var(--spw-svg-flow-dash, 5) var(--spw-svg-flow-gap, 9);
     opacity: 0.58;
 }
 
+html[data-spw-pointer-mode="coarse"] [data-spw-features~="svg-surfaces"] .spw-svg-figure,
+html[data-spw-hover-mode="touch"] [data-spw-features~="svg-surfaces"] .spw-svg-figure,
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="coarse"],
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="hoverless"] {
     --spw-svg-device-pointer-lift: 0.12;
     --spw-svg-hit-min: var(--spw-medium-touch-min, var(--touch-target-min, 2.75rem));
+    --spw-svg-device-stroke: 1.15;
     gap: max(0.8rem, var(--spw-svg-space, 0.6rem));
 }
 
+html[data-spw-viewport-tier="compact"] [data-spw-features~="svg-surfaces"] .spw-svg-figure,
+html[data-spw-viewport-tier="narrow"] [data-spw-features~="svg-surfaces"] .spw-svg-figure {
+    --spw-svg-label-scale: 0.85;
+    --spw-svg-gap-scale: 0.92;
+    --spw-svg-device-pointer-lift: 0.08;
+}
+
+html[data-spw-viewport-tier="compact"][data-spw-pointer-mode="coarse"] [data-spw-features~="svg-surfaces"] .spw-svg-figure,
+html[data-spw-viewport-tier="narrow"][data-spw-pointer-mode="coarse"] [data-spw-features~="svg-surfaces"] .spw-svg-figure {
+    --spw-svg-device-stroke: 1.2;
+    --spw-svg-hit-min: var(--spw-medium-touch-min, var(--touch-target-min, 2.75rem));
+}
+
+html[data-spw-viewport-tier="wide"] [data-spw-features~="svg-surfaces"] .spw-svg-figure {
+    --spw-svg-gap-scale: 1.04;
+}
+
+html[data-spw-pointer-mode="coarse"] [data-spw-features~="svg-surfaces"] .spw-svg-figure .spw-svg-surface,
+html[data-spw-hover-mode="touch"] [data-spw-features~="svg-surfaces"] .spw-svg-figure .spw-svg-surface,
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="coarse"] .spw-svg-surface,
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="hoverless"] .spw-svg-surface {
     transform: none;
@@ -182,8 +211,10 @@
     touch-action: manipulation;
 }
 
+html[data-spw-pointer-mode="coarse"] [data-spw-features~="svg-surfaces"] .spw-svg-figure .spw-svg-rail > *,
+html[data-spw-hover-mode="touch"] [data-spw-features~="svg-surfaces"] .spw-svg-figure .spw-svg-rail > *,
 [data-spw-features~="svg-surfaces"] .spw-svg-figure:is([data-spw-svg-device="coarse"], [data-spw-svg-device="hoverless"]) .spw-svg-rail > * {
-    min-height: max(2.15rem, var(--spw-svg-hit-min, var(--touch-target-compact, 2.15rem)));
+    min-height: max(2.15rem, var(--spw-svg-hit-min, var(--touch-target-min, 2.75rem)));
     display: flex;
     align-items: center;
 }
@@ -214,6 +245,29 @@
 
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="compact"] .spw-svg-surface {
     margin-inline: auto;
+}
+
+/* data-spw-svg-responsive is the layout personality; scale is how much column. */
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-responsive="fluid"] {
+    --spw-svg-surface-max: 100%;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-responsive="fixed"] {
+    --spw-svg-surface-max: calc(var(--measure-panel, 52rem) * var(--spw-svg-scale-factor, 1));
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-responsive="contain"] .spw-svg-surface {
+    max-height: min(70dvh, 32rem);
+    object-fit: contain;
+}
+
+html[data-spw-viewport-tier="compact"] [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-responsive="contain"] .spw-svg-surface,
+html[data-spw-viewport-tier="narrow"] [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-responsive="contain"] .spw-svg-surface {
+    max-height: min(52dvh, 22rem);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-responsive="project"] {
+    --spw-svg-surface-max: 100%;
 }
 
 /* ─── Anchor positioning ────────────────────────────────────────────────── */
@@ -419,7 +473,7 @@
 /* ─── Typography & Labels ───────────────────────────────────────────────── */
 
 [data-spw-features~="svg-surfaces"] .spw-svg-label {
-    font-size: var(--text-size-sm, 0.92rem);
+    font-size: calc(var(--text-size-sm, 0.92rem) * var(--spw-svg-label-scale, 1));
     font-weight: 700;
     letter-spacing: var(--spw-svg-label-spacing, 0.04em);
     opacity: var(--spw-svg-caption-opacity, 1);
@@ -471,7 +525,7 @@
 
 :where([data-spw-svg-layer="structure"], .svg-layer--structure) {
     opacity: 0.88;
-    stroke-width: calc(var(--line-mid, 1.5px) * var(--spw-svg-stroke-scale, 1));
+    stroke-width: calc(var(--line-mid, 1.5px) * var(--spw-svg-stroke-scale, 1) * var(--spw-svg-device-stroke, 1));
 }
 
 :where([data-spw-svg-layer="content"], .svg-layer--content) {
@@ -712,6 +766,23 @@ html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-f
     }
 }
 
+/* Fold + coarse: keep the stacked rail even when the viewport is past 45rem. */
+html[data-spw-viewport-tier="mid"][data-spw-pointer-mode="coarse"] [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "surface"
+        "rail"
+        "caption";
+}
+
+html[data-spw-viewport-tier="mid"][data-spw-pointer-mode="coarse"] [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] > .spw-svg-rail {
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: static;
+    max-height: none;
+    overflow: visible;
+}
+
 @supports (container-type: inline-size) {
   @container (max-width: 30rem) {
       [data-spw-features~="svg-surfaces"] .spw-svg-surface {
@@ -723,11 +794,11 @@ html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-f
       }
 
       [data-spw-features~="svg-surfaces"] .spw-svg-label {
-          font-size: 0.8rem;
+          font-size: calc(0.8rem * var(--spw-svg-label-scale, 1));
       }
 
       [data-spw-features~="svg-surfaces"] .spw-svg-note {
-          font-size: 0.62rem;
+          font-size: calc(0.62rem * var(--spw-svg-label-scale, 1));
       }
 
       .spw-svg-rail {
@@ -748,6 +819,8 @@ html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-f
 @media (max-width: 45rem) {
     [data-spw-features~="svg-surfaces"] .spw-svg-figure {
         --spw-svg-resolved-radius: var(--shape-component, 8px);
+        --spw-svg-label-scale: 0.85;
+        --spw-svg-device-pointer-lift: 0.08;
     }
 
     [data-spw-features~="svg-surfaces"] .spw-svg-surface {
@@ -759,15 +832,11 @@ html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-f
     }
 
     [data-spw-features~="svg-surfaces"] .spw-svg-label {
-        font-size: 0.78rem;
+        font-size: calc(0.78rem * var(--spw-svg-label-scale, 1));
     }
 
     [data-spw-features~="svg-surfaces"] .spw-svg-note {
-        font-size: 0.58rem;
-    }
-
-    [data-spw-features~="svg-surfaces"] .spw-svg-figure {
-        --spw-svg-device-pointer-lift: 0.08;
+        font-size: calc(0.58rem * var(--spw-svg-label-scale, 1));
     }
 
     /* Smaller operator diagrams on mobile: hide intent labels */

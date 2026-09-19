@@ -665,11 +665,25 @@ const clearPointerHost = (host) => {
 };
 
 const getDeviceMode = () => {
+  const html = typeof document !== 'undefined' ? document.documentElement : null;
+  const hover = normalizeToken(html?.dataset?.spwHoverMode || '');
+  const pointer = normalizeToken(html?.dataset?.spwPointerMode || '');
+  if (hover === 'touch') return 'hoverless';
+  if (pointer === 'coarse') return 'coarse';
   if (typeof window === 'undefined' || !window.matchMedia) return 'fine';
   if (!supportsHoverEnvironment(window)) return 'hoverless';
   if (isCoarsePointerEnvironment(window)) return 'coarse';
   return 'fine';
 };
+
+function initDeviceHost(host) {
+  if (!(host instanceof HTMLElement)) return;
+  const explicit = DEVICE_MODES.has(normalizeToken(host.getAttribute('data-spw-svg-device') || ''));
+  if (explicit) return;
+  writeDatasetValues(host, { spwSvgDevice: getDeviceMode() });
+  DEVICE_TRACKED_HOSTS.add(host);
+  startDeviceWatcher();
+}
 
 const hostHasActivePointerMode = (host) => POINTER_MODES.has(normalizeToken(host?.dataset?.spwSvgPointer || ''));
 
@@ -722,13 +736,10 @@ function initPointerHost(host) {
   const pointerMode = normalizeToken(host.dataset.spwSvgPointer || '');
   if (!POINTER_MODES.has(pointerMode) || host.dataset.spwSvgPointerManaged === 'true') return;
 
-  const authoredDevice = normalizeToken(host.dataset.spwSvgDevice || '');
   writeDatasetValues(host, {
     spwSvgPointerManaged: 'true',
     spwSvgPointerState: host.dataset.spwSvgPointerState || 'rest',
-    spwSvgDevice: DEVICE_MODES.has(authoredDevice) ? authoredDevice : getDeviceMode(),
   });
-  if (!DEVICE_MODES.has(authoredDevice)) DEVICE_TRACKED_HOSTS.add(host);
   POINTER_MANAGED_HOSTS.add(host);
   startDeviceWatcher();
   markInstrumented(host, 'spw-svg-tunability', { tags: ['svg-pointer', pointerMode] });
@@ -986,6 +997,7 @@ export function initSpwSvgTunability(ctx, root, options = {}) {
   applySvgQueryTunability(root, options);
   applySvgPersonaQuery(root, options);
   hosts.forEach((host) => {
+    initDeviceHost(host);
     initPointerHost(host);
     initRailCompanion(host);
     initActionChips(host);
