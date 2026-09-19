@@ -162,3 +162,30 @@ source = "chat 2026-09-07: sitewide copy vs recent direction; TikTok on AI / dev
   prove = `broadsheet openings 13-02-47--4d97f7; recapture about/town/research/membership 13-09-34--a22237`
   cli = `npm run harness · npm run sense -- copy|nouns|ink`
 }[reg=facet]
+
+^"ad-008_recency_pass_2026_09_19"{
+  id = "ad-008"
+  operation = "align"
+  fixity = "tending"
+  source = "chat 2026-09-19: freshen copy for recency and updated focus; dense value for Spw semantics, linking, Midjourney references, linguistic development"
+  claim = `Recency lives on the surfaces that already carry dates — Now, the home live note, the cycle promo — plus every sentence that says "currently", "next table", or quotes a measured count. Freshen those. Do not re-date prose that is deliberately historical: 2023 conference art, the January 2023 rhythm, the 2024 Games window.`
+  working_set = #{
+    person-magazine = `/now/ kicker, meta, and since-the-close receipts for 09-18 and 09-19 · / home.hook.live, the promo static fallback, promo-wonder-cycle.json and DEFAULT_FEED cycle.promo · /about/ the AI-loop note names Codex, Claude, and Grok, the gate, and the crawl prompt`
+    voice-seams = `services.bundle.lede and recipes.soilCompanions.lede split into a mechanism lede and a neighbor note (audit f5); math.combinatorics.lab.lede points boonhonk at /about/#boonhonk-register (audit f4); play hook and sessions "next table" re-dated`
+    measured-copy = `the atlas walker count on /topics/software/spw/ is dated to the probe that produced it (workbench-report#walk_cost) instead of saying "currently"`
+  }
+  dense_value = #{
+    spw_semantics = `the 09-19 receipt names the operator pass — 674 sigils now author the operator they read as — and a touched lede without an expression gains one`
+    linking = `every new sentence that names a surface links the id that enacts it: folio-request, runtime-preferences, memory-garden-cauldron, crawl-prompt, AGENTS.md`
+    midjourney = `name the promoted render, its session, and the mechanism it pictures — garden-bed-atlas, 2026-09-17 session 5, the footer cauldron; the other thirty-one renders stay reference; no new placement`
+    linguistic = `the since-the-close aside stages its cycle as a scene, (progress), because the B-cycle is midprocess; [mode] keeps alternatives`
+  }
+  left = #[
+    `recipes #chicagoland-season is still titled Early September; the produce list is the cook's — re-season it from the kitchen, not from here`,
+    `spw.quest "coming soon" kicker is intentional while the remote is quiet (ad-005)`,
+    `cycle.wonder (rhythm authority) still holds this cycle; only cycle.promo moves`,
+    `Wonder About Pi(e) stays on the RPG routes where it already lives; the folio series is not named on Now until two series are documented`
+  ][reg=set]
+  refuse = `No fourth accessor. No rewrite past the working set. No "soil" on the folio route. No unverified count: every number in a receipt comes from a commit body or a run today.`
+  validation = `npm run audit:copy:accessor; npm run spw:integrity; npm run check:local -- --allow-dirty`
+}[reg=facet]
