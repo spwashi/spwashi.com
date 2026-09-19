@@ -70,6 +70,16 @@
                     </li>
                 </ol>
                 <div class="site-footer__cauldron-body" id="memory-garden-cauldron-body">
+                    <fieldset id="cauldron-composition-controls" class="site-footer__composition-controls" hidden>
+                        <legend>Compose through a lens</legend>
+                        <p><label>Page lens <select id="cauldron-page-lens"></select></label></p>
+                        <p><label>Intent <select id="cauldron-compose-intent">
+                            <option value="connect">Connect</option>
+                            <option value="compare">Compare</option>
+                            <option value="apply">Apply</option>
+                        </select></label></p>
+                        <p id="cauldron-lens-impact" class="site-footer__composition-impact" role="status"></p>
+                    </fieldset>
                     <p class="site-footer__cauldron-copy">
                         <span data-cauldron-count>0</span> ingredients held — words, links, and settings you pressed and held<span class="site-footer__cauldron-force-note" data-spw-cauldron-operators></span>.
                     </p>

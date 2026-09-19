@@ -548,6 +548,8 @@ const BOTTOM_LANE_MENU_CLEARANCE_PX = 68;
 const BOTTOM_LANE_MANAGED_STYLE_KEYS = Object.freeze([
   '--spw-floating-slot-section-handle',
   '--spw-floating-slot-satchel',
+  '--spw-floating-slot-collection',
+  '--spw-floating-slot-cauldron',
   '--spw-floating-slot-console',
   '--spw-floating-slot-parallel-nav',
   '--spw-floating-bottom-rail',
@@ -900,6 +902,7 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
     : null;
   const launchMeasure = measureElementChrome(inspectorLaunch);
   const dockMeasure = measureElementChrome(findBottomLaneCollectionDock(doc));
+  const cauldronMeasure = measureElementChrome(doc.querySelector('.spw-cauldron-chip:not([hidden])'));
   const panelMeasure = measureElementChrome(inspectorPanel);
   const navOpen = mobile && (
     surfaceMapEl?.classList?.contains('is-open')
@@ -916,7 +919,7 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
     ? measureElementChrome(surfaceMapEl?.querySelector?.('.spw-nav-strip') || surfaceMapEl)
     : null;
 
-  if (!handleMeasure && !launchMeasure && !consoleMeasure && !surfaceMeasure && !panelMeasure && !navPanelMeasure) {
+  if (!handleMeasure && !launchMeasure && !consoleMeasure && !surfaceMeasure && !panelMeasure && !navPanelMeasure && !dockMeasure && !cauldronMeasure) {
     clearBottomLaneManagedStyles(html);
     writeRuntimeDatasetValues(html, {
       spwBottomLaneManaged: null,
@@ -1041,6 +1044,18 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
     vars['--spw-floating-satchel-lane'] = pxToRem(satchelLanePx);
     laneMode = 'desktop-snap';
   }
+
+  // Collection shares the utility row with the satchel, never the travel rail.
+  // The cauldron shortcut gets the next free row; toast clearance includes it.
+  const utilityBottomPx = mobile && handleMeasure
+    ? travelRowBottomPx + handleMeasure.height + BOTTOM_LANE_SLOT_GAP_PX
+    : travelRowBottomPx;
+  vars['--spw-floating-slot-collection'] = pxToRem(utilityBottomPx);
+  if (dockMeasure) clearancePx = Math.max(clearancePx, utilityBottomPx + dockMeasure.height);
+  const cauldronBottomPx = clearancePx + BOTTOM_LANE_SLOT_GAP_PX;
+  vars['--spw-floating-slot-cauldron'] = pxToRem(cauldronBottomPx);
+  if (cauldronMeasure) clearancePx = cauldronBottomPx + cauldronMeasure.height;
+  vars['--spw-bottom-chrome-clearance'] = pxToRem(clearancePx + BOTTOM_LANE_SLOT_GAP_PX);
 
   const overlap = occlusion?.state === 'overlap';
   if (competition === 'crowded' || overlap) {

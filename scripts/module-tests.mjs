@@ -35,6 +35,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/plan-ia-tooling.test.mjs',
   'scripts/tests/module-describes-contract.test.mjs',
   'scripts/tests/lens-modes.test.mjs',
+  'scripts/tests/cauldron-lens.test.mjs',
   'scripts/tests/production-season-runtime.test.mjs',
   'scripts/tests/template-migration.test.mjs',
   'scripts/tests/template-personality.test.mjs',

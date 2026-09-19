@@ -7907,7 +7907,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   width: min(100%, var(--spw-shell-frame-max, var(--page-width)));
   margin-inline: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(0.9rem, 2vw, 1.45rem) clamp(1.2rem, 3.2vw, 2.35rem);
   align-items: start;
 }
@@ -8123,6 +8123,8 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 
 .site-footer__note-input {
   flex: 1 1 12rem;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   min-height: 2.2rem;
   padding: 0.5rem 0.72rem;
   border: 1px solid var(--footer-panel-line);
@@ -8853,6 +8855,82 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   outline: none;
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, transparent);
   transform: translateY(-1px);
+}
+
+/* Give the working footer more room than the directory; legal copy gets a row. */
+.site-footer__inner > * {
+  min-inline-size: 0;
+}
+
+.site-footer__legal {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 45rem) {
+  .site-footer__inner {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+}
+
+@media (pointer: coarse) {
+  .site-footer :is(button, select, input, .site-footer__nav a, .site-footer__settings-link, .site-footer__return-top) {
+    min-block-size: 2.75rem;
+  }
+}
+
+/* Native composition controls wrap within the vessel, including long lens names. */
+.site-footer__composition-controls:not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.65rem;
+  min-inline-size: 0;
+  margin: 0 0 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--footer-panel-line);
+  border-radius: var(--shape-control, 0.78rem);
+}
+
+.site-footer__composition-controls :is(p, label) {
+  min-inline-size: 0;
+  margin: 0;
+}
+
+.site-footer__composition-controls label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.site-footer__composition-controls select {
+  inline-size: 100%;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  min-block-size: 2.75rem;
+  padding: 0.5rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface-strong);
+  border: 1px solid var(--footer-panel-line);
+  border-radius: var(--shape-control, 0.5rem);
+}
+
+.site-footer__composition-controls select:focus-visible {
+  outline: 2px solid var(--active-op-color, var(--teal));
+  outline-offset: 2px;
+}
+
+.site-footer__composition-impact {
+  grid-column: 1 / -1;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.site-footer__cauldron :is(pre, code, .site-footer__cauldron-expression) {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+.site-footer__cauldron pre {
+  white-space: pre-wrap;
 }
 }
 
@@ -25382,6 +25460,15 @@ html[data-spw-discovery-notices-active="true"][data-spw-bottom-lane-managed="tru
   );
 }
 
+/* Centered promo briefs keep the reserved bottom lane for satchel and cauldron. */
+html[data-spw-discovery-notices-active="true"][data-spw-bottom-lane-managed="true"] .spw-discovery-notice-modal {
+  padding-block-end: calc(
+    max(1rem, env(safe-area-inset-bottom))
+    + var(--spw-bottom-chrome-clearance, 0px)
+    + var(--spw-floating-discovery-stack-lift, 0.75rem)
+  );
+}
+
 html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :where(
   [data-spw-floating-chrome="true"][data-spw-chrome-role$="toast-stack"]
 ) {
@@ -25566,8 +25653,7 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 :where(.spw-reward-dock[data-spw-chrome-role="collection-dock"]) {
   position: fixed;
   inset-block-end: calc(
-    var(--spw-floating-slot-bottom-base, max(0.75rem, env(safe-area-inset-bottom)))
-    + var(--spw-floating-menu-clearance, 0px)
+    var(--spw-floating-slot-collection, var(--spw-floating-slot-bottom-base, max(0.75rem, env(safe-area-inset-bottom))))
   );
   inset-inline-start: 50%;
   translate: -50% 0;
@@ -25915,6 +26001,32 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 @media (prefers-reduced-motion: no-preference) {
   :where(html:not([data-spw-reduce-motion="on"])) :where(.spw-section-handle-step, .spw-section-handle-current, .spw-section-handle-toggle, .spw-header-action--search):not(:disabled):not([aria-disabled="true"]):active {
     translate: 0 var(--spw-control-press-depth, 1px);
+  }
+}
+
+/* Pocket utility row: collection yields its label before covering navigation. */
+@media (max-width: 45rem), (pointer: coarse) {
+  .spw-reward-dock[data-spw-chrome-role="collection-dock"] {
+    inset-inline-start: var(--spw-floating-inline-gutter);
+    translate: none;
+    align-items: flex-start;
+    max-inline-size: calc(100vi - 2 * var(--spw-floating-inline-gutter));
+  }
+
+  .spw-reward-dock .spw-reward-dock-count {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .spw-reward-dock .spw-reward-dock-trigger {
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+    padding-inline: 0.55rem;
+    gap: 0;
   }
 }
 }
