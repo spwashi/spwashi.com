@@ -533,9 +533,16 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   margin-inline: 0.1em;
 }
 
-:where(body[data-spw-surface="website"] .spw-chip) {
-  border-color: color-mix(in srgb, var(--website-accent) 18%, transparent);
-  background: var(--website-chip-bg);
+/* The surface names its chip palette; the chip itself is painted once, in
+   handles/operators/sigils-and-chips.css, from --operator-chip-*-intent. A
+   nearer host (a metamaterial panel) may set the same intents and win by
+   proximity, which a direct background here would have blocked — the route
+   bundle's @layer routes is declared after core's handles and beat it.
+   See .spw/audits/operator-controls-2026-09.spw#findings. */
+:where(body[data-spw-surface="website"]) {
+  --operator-chip-bg-intent: var(--website-chip-bg);
+  --operator-chip-border-intent: color-mix(in srgb, var(--website-accent) 18%, transparent);
+  --operator-chip-hover-bg-intent: var(--website-chip-bg);
 }
 
 :where(body[data-spw-surface="website"] .spw-chip:hover) {
@@ -2391,6 +2398,64 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   :where(body[data-spw-page-seed="page_design_folios"]) :is(.folio-probe__card, .folio-probe__edge, .folio-probe__unit, .folio-probe__branches, .folio-probe__branches circle) {
     transition: none;
   }
+}
+
+/* ==========================================================================
+   Operators on material — /design/materials/ bench (experimental, 2026-09-19)
+   An operator is a force; the material is what the surface does with it.
+   The chip consumes --operator-chip-*-intent (handles/operators/
+   sigils-and-chips.css); each material sets them here, on this route only.
+   Promotion: once the six readings are approved in a browser, these blocks
+   move to effects/material.css beside each material's tokens.
+   See .spw/conventions/material-physics.spw#operators_on_material
+   ========================================================================== */
+
+/* paper absorbs: the press sinks into the fiber; soft ink fill, no return */
+:where(body[data-spw-page-seed="page_design_materials"]) :where([data-spw-metamaterial="paper"]) {
+  --operator-chip-bg-intent: color-mix(in oklab, var(--active-op-color, var(--teal)) 9%, var(--material-surface-matte, var(--surface-matte, #f7f4ee)));
+  --operator-chip-border-intent: color-mix(in oklab, var(--active-op-color, var(--teal)) 12%, transparent);
+  --operator-chip-shadow-intent: inset 0 1px 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
+  --operator-chip-hover-bg-intent: color-mix(in oklab, var(--active-op-color, var(--teal)) 14%, var(--material-surface-matte, var(--surface-matte, #f7f4ee)));
+}
+
+/* glass returns: a specular edge at the top; the force comes back as highlight */
+:where(body[data-spw-page-seed="page_design_materials"]) :where([data-spw-metamaterial="glass"]) {
+  --operator-chip-bg-intent: linear-gradient(180deg, color-mix(in srgb, #fff 46%, transparent), color-mix(in srgb, #fff 8%, transparent));
+  --operator-chip-border-intent: color-mix(in oklab, var(--active-op-color, var(--teal)) 26%, #fff);
+  --operator-chip-shadow-intent: inset 0 1px 0 color-mix(in srgb, #fff 70%, transparent), 0 1px 2px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+  --operator-chip-hover-bg-intent: linear-gradient(180deg, color-mix(in srgb, #fff 60%, transparent), color-mix(in srgb, #fff 14%, transparent));
+}
+
+/* matte holds: flat; the chip reads as printed, nothing raised */
+:where(body[data-spw-page-seed="page_design_materials"]) :where([data-spw-metamaterial="matte"]) {
+  --operator-chip-bg-intent: transparent;
+  --operator-chip-border-intent: color-mix(in oklab, var(--active-op-color, var(--teal)) 30%, var(--material-line, var(--line, rgba(14, 18, 20, 0.14))));
+  --operator-chip-shadow-intent: none;
+  --operator-chip-hover-bg-intent: color-mix(in oklab, var(--active-op-color, var(--teal)) 6%, transparent);
+}
+
+/* field charges: a halo gathers around the chip; the medium is already energetic */
+:where(body[data-spw-page-seed="page_design_materials"]) :where([data-spw-metamaterial="field"]) {
+  --operator-chip-bg-intent: color-mix(in oklab, var(--active-op-color, var(--teal)) 16%, transparent);
+  --operator-chip-border-intent: color-mix(in oklab, var(--active-op-color, var(--teal)) 48%, transparent);
+  --operator-chip-shadow-intent: 0 0 0 3px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent), 0 0 12px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
+  --operator-chip-hover-bg-intent: color-mix(in oklab, var(--active-op-color, var(--teal)) 24%, transparent);
+}
+
+/* bioplastic transmits: the prime color shows through as a tint; the chip is a window */
+:where(body[data-spw-page-seed="page_design_materials"]) :where([data-spw-metamaterial="bioplastic"]) {
+  --operator-chip-bg-intent: color-mix(in oklab, var(--material-prime-color, var(--active-op-color, var(--teal))) 14%, color-mix(in srgb, #fff 30%, transparent));
+  --operator-chip-border-intent: color-mix(in oklab, var(--material-prime-color, var(--active-op-color, var(--teal))) 28%, transparent);
+  --operator-chip-shadow-intent: inset 0 0 0 1px color-mix(in srgb, #fff 40%, transparent);
+  --operator-chip-hover-bg-intent: color-mix(in oklab, var(--material-prime-color, var(--active-op-color, var(--teal))) 22%, color-mix(in srgb, #fff 30%, transparent));
+}
+
+/* ledger rules: a baseline under the chip and no frame; the force is recorded, not staged */
+:where(body[data-spw-page-seed="page_design_materials"]) :where([data-spw-metamaterial="ledger"]) {
+  --operator-chip-bg-intent: linear-gradient(0deg, color-mix(in srgb, var(--active-op-color, var(--teal)) 55%, transparent) 0 2px, transparent 2px);
+  --operator-chip-border-intent: transparent;
+  --operator-chip-shadow-intent: none;
+  --operator-chip-hover-bg-intent: linear-gradient(0deg, color-mix(in srgb, var(--active-op-color, var(--teal)) 80%, transparent) 0 2px, color-mix(in srgb, var(--active-op-color, var(--teal)) 6%, transparent) 2px);
 }
 }
 

@@ -49,7 +49,7 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>
-            <section class="spw-frame" id="metamaterial-attributes" data-spw-role="orientation" data-spw-kind="frame" data-spw-attentional-weight="1.25" data-spw-semantic-expression="materials[spec]{paper,glass,matte,field}<metamaterial>" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+            <section class="spw-frame" id="metamaterial-attributes" data-spw-role="orientation" data-spw-kind="frame" data-spw-attentional-weight="1.25" data-spw-semantic-expression="materials[spec]{paper,glass,matte,field,bioplastic,ledger}<metamaterial>" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="/design/" data-spw-operator="frame">#>design</a>
                     <div class="spec-strip" data-spw-cluster="spec">
@@ -64,6 +64,9 @@
                 <p data-spw-textual-role="lede">
                     Metamaterials dictate how a surface responds to the scroll canvas beneath it. It affects opacity, blur, and base contrast.
                 </p>
+                <p data-spw-textual-role="note" data-spw-semantic-expression="operator[force]{press.lens.thread.lift}<material>">
+                    An operator is a force; a material is what the surface does with it. The same four chips sit on every panel below: paper absorbs the press, glass returns it as a highlight, matte holds it flat, field charges around it, bioplastic lets a tint through, and a ledger rules it to a baseline.
+                </p>
 
                 <div class="frame-grid frame-grid--dense" data-spw-slot="body">
                     <article class="spw-panel" data-spw-metamaterial="paper">
@@ -72,6 +75,12 @@
                         </figure>
                         <h3>Material: Paper</h3>
                         <p>Opaque and warm. Used for stable documents that want full reading focus without the distraction of layers passing underneath.</p>
+                        <p class="frame-operators" role="group" aria-label="Operators on paper" data-spw-slot="actions">
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/probe/" data-spw-operator="wonder">?inspect</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/action/" data-spw-operator="action">!press</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/ref/" data-spw-operator="potential">~thread</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/object/" data-spw-operator="integration">^lift</a>
+                        </p>
                     </article>
                     <article class="spw-panel" data-spw-metamaterial="glass">
                         <figure class="image-study" data-spw-slot="figure" style="margin: 0 0 0.75rem 0;">
@@ -79,6 +88,12 @@
                         </figure>
                         <h3>Material: Glass</h3>
                         <p>Translucent with a heavily blurred backdrop (like `backdrop-filter: blur`). Best for floating panels that should feel lightweight and aware of their environment.</p>
+                        <p class="frame-operators" role="group" aria-label="Operators on glass" data-spw-slot="actions">
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/probe/" data-spw-operator="wonder">?inspect</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/action/" data-spw-operator="action">!press</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/ref/" data-spw-operator="potential">~thread</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/object/" data-spw-operator="integration">^lift</a>
+                        </p>
                     </article>
                     <article class="spw-panel" data-spw-metamaterial="matte">
                         <figure class="image-study" data-spw-slot="figure" style="margin: 0 0 0.75rem 0;">
@@ -86,6 +101,12 @@
                         </figure>
                         <h3>Material: Matte</h3>
                         <p>Flat, low-contrast, and solid. Used for background structures, secondary asides, or anything that needs to recede from primary attention.</p>
+                        <p class="frame-operators" role="group" aria-label="Operators on matte" data-spw-slot="actions">
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/probe/" data-spw-operator="wonder">?inspect</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/action/" data-spw-operator="action">!press</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/ref/" data-spw-operator="potential">~thread</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/object/" data-spw-operator="integration">^lift</a>
+                        </p>
                     </article>
                     <article class="spw-panel" data-spw-metamaterial="field">
                         <figure class="image-study" data-spw-slot="figure" style="margin: 0 0 0.75rem 0;">
@@ -93,8 +114,33 @@
                         </figure>
                         <h3>Material: Field</h3>
                         <p>High-contrast, saturated environment used for interactive staging, active tests, or alert states.</p>
+                        <p class="frame-operators" role="group" aria-label="Operators on field" data-spw-slot="actions">
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/probe/" data-spw-operator="wonder">?inspect</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/action/" data-spw-operator="action">!press</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/ref/" data-spw-operator="potential">~thread</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/object/" data-spw-operator="integration">^lift</a>
+                        </p>
                     </article>
-                </div>
+                                    <article class="spw-panel" data-spw-metamaterial="bioplastic">
+                        <h3>Material: Bioplastic</h3>
+                        <p>Translucent and slightly warm. A grown film that lets the prime color through as a tint; used for surfaces that should read as living rather than manufactured.</p>
+                        <p class="frame-operators" role="group" aria-label="Operators on bioplastic" data-spw-slot="actions">
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/probe/" data-spw-operator="wonder">?inspect</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/action/" data-spw-operator="action">!press</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/ref/" data-spw-operator="potential">~thread</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/object/" data-spw-operator="integration">^lift</a>
+                        </p>
+                    </article>
+                    <article class="spw-panel" data-spw-metamaterial="ledger">
+                        <h3>Material: Ledger</h3>
+                        <p>Ruled and opaque. A record surface with a single accent rule across the top; used for records, tallies, and anything that should read as kept rather than composed.</p>
+                        <p class="frame-operators" role="group" aria-label="Operators on ledger" data-spw-slot="actions">
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/probe/" data-spw-operator="wonder">?inspect</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/action/" data-spw-operator="action">!press</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/ref/" data-spw-operator="potential">~thread</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/object/" data-spw-operator="integration">^lift</a>
+                        </p>
+                    </div>
 
                 <section class="spw-frame" id="staged-theme-sets" data-spw-kind="frame" data-spw-role="specimen" data-spw-feature="staged-theme-sets">
                     <p class="spec-kicker" data-spw-textual-role="kicker">Staged primitives · replace later</p>

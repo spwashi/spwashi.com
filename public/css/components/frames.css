@@ -604,6 +604,15 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   --component-material-border: 1px solid color-mix(in srgb, var(--line, transparent) 82%, var(--component-accent-soft));
 }
 
+:where([data-spw-metamaterial="bioplastic"]) {
+  --component-material-bg: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent-soft) 24%, transparent) 0%,
+      color-mix(in srgb, var(--component-surface) 94%, var(--component-accent) 6%) 100%
+  );
+  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent) 22%, var(--line, transparent));
+}
+
 :where([data-spw-metamaterial="ledger"]) {
   --component-material-bg: linear-gradient(
       180deg,

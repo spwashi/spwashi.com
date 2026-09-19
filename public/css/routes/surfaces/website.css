@@ -530,9 +530,16 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   margin-inline: 0.1em;
 }
 
-:where(body[data-spw-surface="website"] .spw-chip) {
-  border-color: color-mix(in srgb, var(--website-accent) 18%, transparent);
-  background: var(--website-chip-bg);
+/* The surface names its chip palette; the chip itself is painted once, in
+   handles/operators/sigils-and-chips.css, from --operator-chip-*-intent. A
+   nearer host (a metamaterial panel) may set the same intents and win by
+   proximity, which a direct background here would have blocked — the route
+   bundle's @layer routes is declared after core's handles and beat it.
+   See .spw/audits/operator-controls-2026-09.spw#findings. */
+:where(body[data-spw-surface="website"]) {
+  --operator-chip-bg-intent: var(--website-chip-bg);
+  --operator-chip-border-intent: color-mix(in srgb, var(--website-accent) 18%, transparent);
+  --operator-chip-hover-bg-intent: var(--website-chip-bg);
 }
 
 :where(body[data-spw-surface="website"] .spw-chip:hover) {

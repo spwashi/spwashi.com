@@ -234,6 +234,17 @@
   --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 22%, var(--material-line));
 }
 
+:where([data-spw-metamaterial="ledger"]) {
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--material-prime-color) 26%, transparent) 0 1px,
+      transparent 1px 100%
+    ),
+    var(--material-surface-matte);
+  --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 22%, var(--material-line));
+}
+
 :where([data-spw-metamaterial="field"]) {
   --material-local-background:
     radial-gradient(

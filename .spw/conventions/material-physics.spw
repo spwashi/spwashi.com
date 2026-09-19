@@ -105,6 +105,30 @@ expression = material[optics]{transmission.specular.shadow}<surface>
   probe = `node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/infrastructure-contracts.test.mjs && npm run check:runtime`
 }
 
+^"operators_on_material"{
+  operation = "prime"
+  fixity = "experimental"
+  ~#thesis: "An operator is a force; a material is what the surface does with it. The same chip on six materials should read six ways without the chip changing: the sigil names the force, the host names the medium."
+  transformation: .{
+    paper = `absorbs — the press sinks into the fiber; soft ink fill, no return, no lift`
+    glass = `returns — a specular edge at the top; the force comes back as highlight`
+    matte = `holds — flat; the chip reads as printed, nothing raised`
+    field = `charges — a halo gathers around the chip; the medium is already energetic`
+    bioplastic = `transmits — the prime color shows through as a tint; the chip is a window`
+    ledger = `rules — a baseline under the chip and no frame; the force is recorded, not staged`
+  }[reg=facet]
+  owners: .{
+    force = `data-spw-operator on the control (operator-chip-grammar.spw attribute_agreement) — cinematic.css resolves --spw-operator-color from it`
+    medium = `data-spw-metamaterial on the host — material.css and frames.css own the surface; the operator treatment rides on the same attribute`
+    seam = `handles/operators/sigils-and-chips.css: the chip consumes --operator-chip-bg-intent, --operator-chip-border-intent, --operator-chip-shadow-intent (idle) beside the active intents it already read; a material sets them, the chip never reads the material directly`
+  }[reg=facet]
+  bench = `/design/materials/#metamaterial-attributes — six panels, one operator row each (?inspect !press ~thread ^lift), the intents set in routes/surfaces/design.css scoped to page_design_materials`
+  ~#rule(promotion): "The bench is the demo. Once the six readings are approved in a browser, the intent blocks move from design.css to effects/material.css beside each material's tokens and the bench keeps only its copy. Until then no other route changes how a chip sits on a material."
+  ~#refuse: "a chip that reads the material itself ([data-spw-metamaterial] .spw-chip in handles) — the medium sets intents, the handle consumes them, or the layer order stops meaning anything"
+  probe: `npm run audit:operator-css && grep -n "operator-chip-bg-intent" public/css/handles/operators/sigils-and-chips.css public/css/routes/surfaces/design.css`
+  landed_2026_09_19: `bioplastic gained its frames.css half and ledger its material.css half — each was a material in one sheet and inert in the other; the bench hosts both so neither value is written and read by nothing`
+}
+
 #>wonder_material_physics_1
 ?["Is specular a property of the material or of the light?"]{
   #:depth #!computational ~#lens(optics)
