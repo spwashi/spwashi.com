@@ -63,6 +63,16 @@
   open = `"Popcorn" is the creator's word and is not expanded here; ask before it names a template. Which group owns the first pet, and does a scene pet outlive its scene?`
 }
 
+^"creator_notes_2026_09_18"{
+  archive = `The laminated folios are an archive of wonder over the past few years; the continuing canon is all original and overlaps no one else's work specifically.`
+  order = `People can send a screenshot of an order and ask for a folio. The order card is the seed card; it copies a seed, downloads a .spw.txt, or screenshots.`
+  spw_script = `A .spw script should be downloadable with a .txt extension or copied to the clipboard — landed on every seed card (download .txt).`
+  card_anatomy = `Card anatomy, Spw integration, and Spw linguistics across components asked for; seed cards now carry slot anatomy (header · meta · body · actions) and each field is an expression atom (op + key). Tiny-expression axis: @collectible_expressions.`
+  toy = `Toys "R" Us is reopening stores; the aspiration is a product someone finds relatable and worth wondering about for a long time. The folio is that product candidate; the cognitive-toy prime (cognitive-toy-2026-09.spw) is the site-side half.`
+  @collectible_expressions: ~"./collectible-expressions-2026-09.spw"
+  @archive_surface: ~"../surfaces/folio-archive.spw"
+}
+
 ^"next_session"{
   1 = `Read this cache and product-lines.spw#folio_editions before touching /design/folios/.`
   2 = `Confirm the request card renders at /design/folios/#folio-request on pocket and desktop; check copy seed output.`

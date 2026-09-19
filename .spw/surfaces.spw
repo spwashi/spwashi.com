@@ -12,6 +12,7 @@
 @language_utilization: ~"./language/feature-utilization.spw"
 @operator_semantics: ~"./conventions/operator-semantics.spw"
 @menu_field: ~"./surfaces/menu-field.spw"
+@folio_archive: ~"./surfaces/folio-archive.spw"  # the laminated folio archive as record shapes + order flow; original canon
 @site: ~"./site.spw"
 @domains: ~"./domains.spw"
 @conventions: ~"./conventions/index.spw"

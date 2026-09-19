@@ -1,0 +1,62 @@
+# Surface 2026-09-18 — the laminated folio archive as a workbench-walkable record surface.
+# Operation: contract (record shapes) over a prime (the archive itself is still being scanned).
+
+#>folio_archive
+#:surface #!archive #!folios
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@route: ~"../../design/folios/index.html"
+@product_line: ~"./product-lines.spw"
+@minting: ~"../../.agents/plans/folio-worktable/minting.spw"
+@soil_cache: ~"../caches/folio-soil-ecosystem-2026-09.spw"
+@asset_registry: ~"../assets.spw"
+
+^"archive"{
+  what = `Laminated folios — printer-paper-sized originals: collage and laminate what is current, paint a season across the stack, paint the same surfaces again the next year.`
+  span = `An archive of wonder over the past few years, still being painted and not yet scanned.`
+  canon = `Original and continuous. The continuing canon overlaps no one else's work; lore.land is a second source for new pieces, never the origin of the archive.`
+  owner = `Spwashi. Community art and lore.land contributions are not folio inventory.`
+}
+
+^"record_shapes"{
+  #:from minting.spw#lineage — one file per record under this surface once scanning begins
+  source = .{
+    id = `stable id, one physical folio`
+    scan = `master front/back scans and a detail photo`
+    material = `paper, laminate, sidedness, measured dimensions (do not assume Letter vs A4)`
+    history = `known painting dates and later changes; unknown stays unknown`
+    series = `optional series id (a soil bed: Wonder About Pi(e) is the first named candidate)`
+    provenance = `verified story or process links only`
+  }[reg=facet]
+  release = .{
+    id = `own id`
+    sources = `one or more source ids; a collage may draw on several`
+    form = `original | print | collage | custom`
+    made = `handmade | printed`
+    format = `dimensions, substrate, finish, edition policy`
+    price = `from the working ranges, fixed in the reply`
+    order = `the order card seed (piece · form · story · range · relay) or its screenshot, as received`
+    delivery = `destination and packed weight before shipping is set`
+    availability = `held | offered | sold; a sold original stays in the source archive`
+  }[reg=facet]
+  series = .{
+    id = `slug`
+    bed = `what was laid down, what each season added, what a collector or player can add next`
+    canon_note = `original; names no one else's work`
+  }[reg=facet]
+}
+
+^"order_flow"{
+  card = `/design/folios/#folio-request — seed-card template folio`
+  send = `copy seed · download .spw.txt · screenshot`
+  receive = `a screenshot of a filled card is an order; the reply names the piece, price, and shipping once known`
+  record = `every accepted order becomes a release record here before it ships`
+}
+
+^"workbench"{
+  validate = `npm run spw:format:check · npm run spw:doctor · npm run spw:lattice`
+  walk = `npm run spw:tree — this surface is a root the tree should list; records nest as ./folio-archive/<id>.spw when scanning begins`
+  rule = `Records are hand-authored, one per physical folio; no generator writes them.`
+}

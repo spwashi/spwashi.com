@@ -64,14 +64,14 @@ export const SEED_TEMPLATES = {
   },
 
   folio: {
-    label: 'folio',
-    sigil: '^seed[Folio.Request ref:',
+    label: 'folio order',
+    sigil: '^seed[Folio.Order ref:',
     fields: [
       { key: 'piece',     op: '>', label: 'piece',     placeholder: 'which folio, tier, or motif', hint: 'A scan you saw, a Seed / Chapter / Landmark tier, or a motif you want painted.' },
       { key: 'form',      op: '^', label: 'form',      placeholder: 'original, print, collage, or custom', hint: 'The physical form you want. Prints and collages mint from the same scanned source.' },
       { key: 'story',     op: '~', label: 'story',     placeholder: 'a lore.land scene, or your own', hint: 'A chapter, character, or scene the piece should carry. Leave empty if the picture is enough.' },
       { key: 'range',     op: '@', label: 'range',     placeholder: 'what you can put toward it', hint: 'A number or a range. The planning bands sit above this card; commissions live on the services ladder.' },
-      { key: 'relay',     op: '~', label: 'relay',     placeholder: 'how to reach you, roughly where it ships', hint: 'Email, handle, or the chat we already share. A city is enough until packed weight is known.' },
+      { key: 'relay',     op: '~', label: 'relay',     placeholder: 'how to reach you, roughly where it ships', hint: 'Email, handle, or the chat we already share. A city is enough until packed weight is known. A screenshot of this card is an order.' },
     ],
   },
 
@@ -158,6 +158,7 @@ export class SeedCard {
       el.prepend(header);
     }
     header.setAttribute('data-spw-region-flow', 'cluster');
+    header.setAttribute('data-spw-slot', 'header');
     header.innerHTML = `
       <span class="seed-card-sigil">
         ${template.sigil}<span class="seed-card-year" contenteditable="true" spellcheck="false" aria-label="year">${year}</span>]
@@ -174,6 +175,7 @@ export class SeedCard {
       header.after(pivot);
     }
     pivot.setAttribute('data-spw-region-flow', 'cluster');
+    pivot.setAttribute('data-spw-slot', 'meta');
     pivot.hidden = this.templateKeys.length < 2;
     pivot.innerHTML = this.templateKeys.map((key) => `
       <button type="button" class="seed-pivot-btn" data-pivot="${key}" aria-pressed="${key === this.templateKey}">
@@ -189,8 +191,9 @@ export class SeedCard {
       pivot.after(fieldsEl);
     }
     fieldsEl.setAttribute('data-spw-region-flow', 'stack');
+    fieldsEl.setAttribute('data-spw-slot', 'body');
     fieldsEl.innerHTML = template.fields.map(f => `
-      <div class="seed-field" data-field="${f.key}" data-spw-touch="edit">
+      <div class="seed-field" data-field="${f.key}" data-spw-touch="edit" data-spw-expression-atom="${f.op}${f.key}">
         <span class="seed-field-op" aria-hidden="true">${f.op}</span>
         <label class="seed-field-label" title="${f.hint}">${f.label}</label>
         <span
@@ -214,11 +217,13 @@ export class SeedCard {
       fieldsEl.after(footer);
     }
     footer.setAttribute('data-spw-region-flow', 'stack');
+    footer.setAttribute('data-spw-slot', 'actions');
     footer.innerHTML = `
       <code class="seed-output" aria-live="polite" aria-label="seed notation"></code>
       <div class="seed-card-footer-row" data-spw-region-flow="cluster">
         <div class="seed-card-actions" data-spw-touch="tap" data-spw-region-flow="cluster">
           <button type="button" class="seed-action" data-action="copy">copy seed</button>
+          <button type="button" class="seed-action" data-action="download" title="Save the seed as a .spw.txt file you can attach or send">download .txt</button>
           <button type="button" class="seed-action" data-action="screenshot">screenshot</button>
           <button type="button" class="seed-action" data-action="clear">clear</button>
         </div>
@@ -313,6 +318,7 @@ export class SeedCard {
       if (!btn) return;
       const action = btn.dataset.action;
       if (action === 'copy') this._copy(btn);
+      if (action === 'download') this._download(btn);
       if (action === 'screenshot') this._toggleScreenshot();
       if (action === 'clear') this._clear();
     });
@@ -391,6 +397,44 @@ export class SeedCard {
     }, 1800);
   }
 
+  /** The seed text as the card would copy it. */
+  _seedText() {
+    const yearEl = this.el.querySelector('.seed-card-year');
+    const year = yearEl ? yearEl.textContent.trim() : new Date().getFullYear().toString();
+    return buildSeedText(this.template, year, this.values);
+  }
+
+  /**
+   * Save the seed as a file. A phone that cannot paste a block into a chat
+   * can still attach a file, so the script goes out as `.spw.txt`: the .spw
+   * names the grammar, the .txt lets every mail and chat client open it.
+   */
+  _download(btn) {
+    const original = btn.textContent;
+    try {
+      const text = this._seedText();
+      const blob = new Blob([`${text}\n`], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${this.id}-${this.templateKey}.spw.txt`;
+      link.rel = 'noopener';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      btn.textContent = '✓ saved';
+      btn.dataset.state = 'success';
+    } catch {
+      btn.textContent = '! failed';
+      btn.dataset.state = 'fail';
+    }
+    setTimeout(() => {
+      btn.textContent = original;
+      delete btn.dataset.state;
+    }, 1800);
+  }
+
   /** Toggle screenshot mode */
   _toggleScreenshot() {
     this.el.classList.toggle('seed-card--screenshot');
@@ -447,7 +491,7 @@ export class SeedCard {
     const fieldsEl = this.el.querySelector('.seed-card-fields');
     if (!fieldsEl) return;
     fieldsEl.innerHTML = this.template.fields.map(f => `
-      <div class="seed-field" data-field="${f.key}">
+      <div class="seed-field" data-field="${f.key}" data-spw-touch="edit" data-spw-expression-atom="${f.op}${f.key}">
         <span class="seed-field-op" aria-hidden="true">${f.op}</span>
         <label class="seed-field-label" title="${f.hint}">${f.label}</label>
         <span

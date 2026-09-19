@@ -1,4 +1,4 @@
-# Review 2026-09-06 — keep as evidence; price ladder, study probes, and landing list still match design/folios/index.html.
+# Review 2026-09-18 — keep as evidence; orders now open by card (screenshot / seed / .spw.txt); ranges settle per reply. Archive record: .spw/surfaces/folio-archive.spw.
 #>folio_minting
 #:operation #!cache
 #:fixity #!tending
@@ -48,8 +48,24 @@
 ^"price_ladder"{
   source = "User request to make pricing more tangible, 2026-09-05"
   public_projection = "Visible planning asks: Seed $35, Chapter $75, Landmark $150, Relic $200-275 or hold, three selected Seeds $95, prints/collages/custom quoted."
-  boundary = "Planning ranges, not live offers. Do not mix into /services/#pricing. Shipping remains unset."
+  boundary = "Working ranges; each order settles in the reply until the first documented release. Do not mix into /services/#pricing. Shipping remains unset until packed weight and destination are known."
   validation = "design/folios/index.html#folio-prices names amounts beside the formats."
+}
+
+^"order_by_card"{
+  source = "Creator clarification, 2026-09-18"
+  claim = "People can send a screenshot of a filled order card and ask for a folio; the creator sends the folio."
+  card = "design/folios/index.html#folio-request — seed-card template folio (piece · form · story · range · relay); copy seed, download .spw.txt, or screenshot."
+  reply = "Piece, price from the working ranges, shipping once destination and packed weight are known. Settle reproduction permissions and buyer terms in the same reply."
+  boundary = "A screenshot is an order, not a payment. No checkout, no token platform. Record each order as a release record before it ships."
+  validation = "The card renders five fields, its Spw block validates in the workbench (spw-syntax-validate), and the download names the grammar (.spw.txt)."
+}
+
+^"canon"{
+  source = "Creator clarification, 2026-09-18"
+  claim = "The laminated folios are an archive of wonder over the past few years; the continuing canon is all original and overlaps no one else's work."
+  projection = "Route copy says the archive is an original, continuous canon; lore.land stays a second source for new pieces, not the origin of the archive."
+  boundary = "Community art and lore.land contributions are never folio inventory; folio lineage is the creator's own."
 }
 
 ^"study_probes"{

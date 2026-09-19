@@ -1,0 +1,49 @@
+# Cache 2026-09-18 — tiny expressions as collectibles: the smallest Spw that still means something.
+# Source: creator note in a Claude session. Operation: prime. Language work; Open first: language/feature-utilization.spw + npm run ecology:language.
+
+#>collectible_expressions
+#:cache #!prime #!experimental
+#:layer #!semantics
+
+@feature_utilization: ~"../language/feature-utilization.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@cognitive_toy: ~"./cognitive-toy-2026-09.spw"
+@folio_soil: ~"./folio-soil-ecosystem-2026-09.spw"
+
+^"insight"{
+  id = "collectible-expressions-2026-09"
+  operation = "prime"
+  fixity = "experimental"
+  source = "chat"
+  claim = "Expressions like ?[mode] or ?<setting> are small enough to feel collectible; Spw can develop along that axis — an operator and one bracket form, holdable in one glance, pocketable in one tap."
+  evidence = #[
+    `feature-utilization.spw#braces_and_forms — [mode] selects posture without consuming alternatives; <lens> is an interpretive conduit; (scene) stages midprocess; {brace} closes objective to subjective`,
+    `operator table: ? wonder · ^ integration · ~ potential · > direction · @ perspective · ! action · * value · & subject · $ substrate · . ground`,
+    `public/js/modules/cards/seed-card.js — every field is already an atom: >piece ^form ~story @range ~relay; data-spw-expression-atom names it on the field`,
+    `footer cauldron actions: !mix[harvest] ^plant — verb + mode is the smallest working spell`,
+    `route chips: ?"plans_now" #>buckets ~production *relationships — one operator, one noun, one bracket at most`
+  ][reg=set]
+  pattern_consideration = #[
+    `copy-accessor.spw#collectible — copy-units and semantic expressions are the collectible copy families; an atom is smaller than both and must not become a fourth accessor`,
+    `cognitive-toy-2026-09.spw#refuse — no points, XP, streaks-as-obligation; a collected atom is a held meaning, not a score`,
+    `cauldron ingredients — a held living term is already a collected atom; the pocket exists, the grammar of what fits in it does not`
+  ][reg=set]
+  expansion_prime = "Name the atom grammar: operator + noun + at most one bracket form. Four bracket forms give four kinds of pocketable meaning — [mode] a posture you can switch, <lens> a way of reading, (scene) a moment you can stage, {scope} a boundary you can close. A card, a chip, or a cauldron ingredient can carry one atom each; a mix is two atoms; a spell is a sequence. Start by letting the cauldron accept an atom typed or tapped, not only a held term."
+  validation = "npm run ecology:language (forms census: brace dominant, angle/square/circle present, diamond rare); rg 'data-spw-expression-atom' public/js; workbench spw-syntax-validate on any atom list written as a .spw."
+  do_not_promote_until = "Ten atoms are held by real visitors through the cauldron or a card, and the census shows [mode] and <lens> used on at least three routes each without a new data-spw-* family."
+}
+
+^"atoms_by_form"{
+  square = `?[mode] · !mix[harvest] · #>home_frame[read] — a posture: switch it, the alternatives stay`
+  angle = `?<setting> · plans[production]{seed.frame.anchor}<strategic> — a lens: read through it`
+  circle = `(scene) · ~(wednesday) — a moment: stage it, watch the middle`
+  brace = `{studio_practice} · {Spwashi} — a boundary: close it, then say what it meant`
+  bare = `>piece ^form ~story @range ~relay — operator + noun, the atom with no bracket; the seed card's field row`
+}
+
+^"product_note"{
+  #:creator note, same day
+  toy = `Toys "R" Us is reopening stores. Aspiration: a product someone finds relatable and worth wondering about for a long time. A folio is the physical candidate; a pocket of atoms is the linguistic one. Both should pass the same test: still worth wondering about a year later.`
+  boundary = `Do not print "collectible" on a route until the atom grammar has an owner and a demo; do not add data-spw-collectible.`
+}
