@@ -7,56 +7,43 @@ const STORIES = [
   {
     slug: "meeting",
     title: "Before the meeting",
+    register: "slow",
+    since: "2026-09-19",
     kicker: "twelve minutes, glass walls, a lock that actually works",
     summary: "You already know how the pitch will go. You do not know if you can stand up without giving yourself away.",
-    setup: [
-      "The twelfth-floor conference room still smells like dry-erase and the coffee nobody finished. Your deck is open on the laptop you are not looking at. Two desks over, Jules has been watching your mouth all morning like it is a problem they intend to solve.",
-      "You have been wet since the standup. Not poetic-wet. Ruin-your-afternoon wet. Every time you uncross your legs the fabric drags and you have to swallow. Jules notices. Of course they notice. They mouth conference B when the calendar ping hits, and you stand up like a person who has somewhere professional to be.",
-      "The lock clicks. Blinds down. Jules does not rush you. That is the filthy part. They wait until you put your palms on the table, until you look back, until you say it.",
+    body: [
+      "The twelfth-floor conference room still smells like dry-erase and the coffee nobody finished. Your deck is open on a laptop you are not looking at. Two desks over, Jules has been watching your mouth all morning like it is a problem they intend to solve carefully, with both hands.",
+      "You have been wet since the standup. Not the poetic kind. The kind that ruins an afternoon by degrees, so that every time you uncross your legs the fabric drags and you have to swallow before you can say a number out loud. Jules notices. Jules always notices; it is the least professional thing about them and the reason you are still here. When the calendar pings they mouth conference B without looking up, and you stand like a person with somewhere to be.",
+      "The lock clicks. The blinds come down one slat at a time, which is a cruelty, because you have to stand there while the room turns private. Jules does not touch you. That is the filthy part. They lean on the far end of the table and wait: for your palms to find the wood, for you to look back over your shoulder, for you to say it.",
+      "“Please.” It comes out under the HVAC. They cross the room slowly enough that you feel each step in your knees. The first kiss lands on the hinge of your jaw, the second under your ear, in the place that makes your knees dishonest. Your skirt goes up an inch at a time. Their knuckles trace the soaked cotton the way a hand traces a sentence it wants to remember, and then they are on the floor, and their tongue takes one long, mean stripe through you and stops, breathing, until you rock back onto their mouth and ask again without words.",
+      "They take their time because time is the whole point. Circling. Sucking just enough to make you say their name into your own wrist. Two fingers slide in when you are already shaking and curl until your thighs try to close; they hold you open with a forearm and keep going, patient as a proof, until you come on their tongue with your teeth in your sleeve, ugly and grateful and quieter than you thought you could be.",
+      "Only then do they stand. Spit-slick, smiling, unhurried. They push into you in one stroke slow enough to count, a hand on your clit in the same rhythm, their breath on the back of your neck saying nothing at all. You come again with the table edge in your palms, clenching around them, and Jules follows with a sound they will deny in the hallway.",
+      "Eleven minutes. The blinds go up one slat at a time. You fix your hair in the black of the screen and they fix your collar, and when the room fills you sit across from each other and you give the pitch, and you are very good, and nobody on the twelfth floor ever finds out why.",
     ],
-    slow: [
-      "“Please.” It comes out quieter than the HVAC. Jules kisses the hinge of your jaw first, then the place under your ear that makes your knees dishonest. Skirt up. Knuckles tracing the soaked cotton like they are reading. They drop to a crouch and drag their tongue in one long, mean stripe, then stop, breathing on you until you rock back onto their mouth.",
-      "They take their time. Circling. Sucking just enough. Two fingers slide in when you are already shaking, curling until your thighs try to close and they hold you open with a forearm. You come on their tongue with your wrist in your teeth, ugly and grateful.",
-      "Only then do they stand, spit-slick and smiling, and push into you in one unhurried stroke. Slow enough that you feel every inch. A hand on your clit in the same rhythm. You come again, clenching. Jules follows with a sound they will deny in the hallway.",
-    ],
-    fast: [
-      "Blinds. Lock. Jules is on their knees before your back hits the table, panties yanked aside, mouth on your clit like they have been starving since nine. Two fingers, no ceremony. You come in under a minute, shaking, laughing once because it is ridiculous and perfect.",
-      "They stand, turn you, fold you over the table, and fuck you hard enough the laptop hops. You come again, muffling it in your own sleeve. Jules spills with a bitten-off groan against your shoulder. You both have eleven minutes to look like people.",
+    keeps: [
+      "dishonest knees",
+      "the room turns private",
+      "patient as a proof",
+      "ugly and grateful",
     ],
   },
   {
     slug: "train",
     title: "The last car",
+    register: "dirty",
+    since: "2026-09-19",
     kicker: "coat, pole, a question asked with a look",
-    summary: "Late train. Almost empty. You do not pretend you got on this car by accident.",
-    setup: [
-      "The last car is fluorescent and rattling and yours. A kid’s balloon from three stops ago is still stuck to the ceiling. Ren stands close enough that their coat brushes yours when the train leans. They smell like cold air and the peppermint they had on the platform.",
-      "You look at their mouth. They look at your hand on the pole. The look is the consent form. You nod, small. Ren’s gloved fingers find the inside of your wrist, then the gap of your coat, then the heat of you through clothes that were not designed for this.",
-      "Nobody else in the car is paying attention. That is the lie you both agree to keep.",
+    summary: "Late train. Almost empty. You did not get on this car by accident.",
+    body: [
+      "Last car. Fluorescent. A balloon from three stops ago stuck to the ceiling. Ren stands close enough that their coat brushes yours when the train leans, and they smell like cold air and the peppermint from the platform.",
+      "You look at their mouth. They look at your hand on the pole. The look is the consent form. You nod. Ren’s gloved fingers find the inside of your wrist, the gap in your coat, the heat of you through clothes that were not designed for this.",
+      "The tunnel takes the lights. Their hand is already in your underwear, already slick, already rubbing you in tight filthy circles while the car rattles. Nobody is watching. That is the lie you both keep. You come before the announcement finishes saying the name of the stop, biting the collar of your own coat, knees a rumor.",
+      "Ren licks their fingers without theater, straightens your coat, and steps off at your stop as if they had only ever been holding the pole. You ride one more. Because you can.",
     ],
-    slow: [
-      "Ren does not go under your waistband at first. They press, patient, finding the seam and working it until you have to hang on the pole with both hands. Your breath fogs. They watch your face like a map. When you mouth yes they slip inside, two fingers, slow because the train is not, curling in time with the joints in the track.",
-      "You come standing, biting the collar of your own coat, knees a rumor. Ren kisses the corner of your mouth like a secret they will not spend. At the next stop they get off first. You ride one more, because you can.",
-    ],
-    fast: [
-      "The tunnel takes the lights. Ren’s hand is already in your clothes, already slick, already rubbing you in tight filthy circles. You come before the station announcement finishes the name of the stop. They lick their fingers without theater, straighten your coat, and step off at yours as if they had only been holding the pole.",
-    ],
-  },
-  {
-    slug: "dishes",
-    title: "Leave the dishes",
-    kicker: "soap, tile, the kind of hunger that lives in a house",
-    summary: "The sink is full. You are not going to finish it. That is the point.",
-    setup: [
-      "Io is behind you with dishwater still on their wrists. The radio is doing something old and too loud. You feel them get hard against the small of your back before they say a word. You keep washing one plate like a person with standards.",
-      "“Leave it,” they say into your neck. You leave it. The plate clinks. Their wet hands find your hips, your belly, the button you already knew they would open. The kitchen is the opposite of discreet and you do not care.",
-    ],
-    slow: [
-      "Io kisses down your spine while they work you with a soapy hand that shouldn’t feel this good and does. You brace on the counter, laughing once when a fork skitters into the sink. They drop to their knees on the kitchen mat, tug you back onto their mouth, and eat you like the chores can wait until morning.",
-      "You come on their tongue with the tap still running. They stand, turn you, lift you onto the only dry stretch of counter, and push in slow, forehead to yours, fucking you in the rhythm of a house that has decided to be kind. You come again. They follow, biting your shoulder through your shirt.",
-    ],
-    fast: [
-      "Pants down. You up on your toes. Io spits, lines up, and fucks you against the counter with the tap screaming behind you. You come fast, loud, no performance. They come with their mouth open on your name. Someone’s neighbor has opinions. Not your problem tonight.",
+    keeps: [
+      "the look is the consent form",
+      "knees a rumor",
+      "without theater",
     ],
   },
 ];
@@ -94,6 +81,36 @@ function featuredStory(now) {
 
 function storyBySlug(slug) {
   return STORIES.find((s) => s.slug === slug) || null;
+}
+
+function otherStory(story) {
+  return STORIES.find((s) => s.slug !== story.slug) || null;
+}
+
+/* The zine keeps its own words. Each piece names the phrases it adds, dated
+   to the day it ran, so the language grows one issue at a time and a later
+   piece can lean on a phrase an earlier one earned. */
+const LEXICON = STORIES.flatMap((story) =>
+  (story.keeps || []).map((phrase) => ({ phrase, from: story.slug, register: story.register, since: story.since }))
+);
+
+const REGISTER_LINE = Object.freeze({
+  slow: "slow · make me wait",
+  dirty: "dirty · now",
+});
+
+const REGISTER_NAME = Object.freeze({
+  slow: "slow and well-written",
+  dirty: "quick and dirty",
+});
+
+function renderKeeps(story) {
+  const items = (story.keeps || []).map((phrase) => `<li>${escapeHtml(phrase)}</li>`).join("");
+  if (!items) return "";
+  return `<section aria-label="Words this piece keeps">
+    <p class="kicker">words this piece keeps · since ${escapeHtml(story.since)}</p>
+    <ul>${items}</ul>
+  </section>`;
 }
 
 function renderParagraphs(lines) {
@@ -179,23 +196,22 @@ function renderIndex(now) {
 }
 
 function renderStory(story) {
+  const other = otherStory(story);
+  const registerLine = REGISTER_LINE[story.register] || REGISTER_LINE.slow;
+  const otherLine = other
+    ? `<p class="note">The other register: <a href="/${escapeHtml(other.slug)}/">${escapeHtml(other.title)}</a> — ${escapeHtml(REGISTER_NAME[other.register] || "")}.</p>`
+    : "";
   return layout({
     title: `${story.title} — smut.today`,
     description: story.summary,
     canonical: `https://smut.today/${story.slug}/`,
-    body: `<p class="kicker"><a href="/">smut.today</a> · ${escapeHtml(story.kicker)}</p>
+    body: `<p class="kicker"><a href="/">smut.today</a> · ${escapeHtml(registerLine)} · ${escapeHtml(story.kicker)}</p>
 <article>
   <h1>${escapeHtml(story.title)}</h1>
-  ${renderParagraphs(story.setup)}
-  <details>
-    <summary>Slow — make me wait</summary>
-    ${renderParagraphs(story.slow)}
-  </details>
-  <details>
-    <summary>Fast — now</summary>
-    ${renderParagraphs(story.fast)}
-  </details>
-</article>`,
+  ${renderParagraphs(story.body)}
+  ${renderKeeps(story)}
+</article>
+${otherLine}`,
   });
 }
 
@@ -205,7 +221,8 @@ function jsonToday(now) {
     site: "smut.today",
     date: new Date(now).toISOString().slice(0, 10),
     featured: featured.slug,
-    stories: STORIES.map(({ slug, title, summary }) => ({ slug, title, summary })),
+    stories: STORIES.map(({ slug, title, summary, register, since }) => ({ slug, title, summary, register, since })),
+    language: LEXICON,
   };
 }
 
