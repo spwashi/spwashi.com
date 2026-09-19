@@ -38,7 +38,7 @@
 @reward_ui: ~"../../public/js/runtime/reward-ui.js"
 @familiarity_gate: ~"../../public/js/runtime/familiarity-gate.js"
 @state_inspector: ~"../../public/js/interface/state-inspector.js"
-@wonder_memory: ~"../../public/js/interface/wonder-memory.js"
+@wonder_memory: ~"../../public/js/runtime/wonder-memory.js"
 @play_route: ~"../../play/index.html"
 
 operation = "prime"

@@ -25,7 +25,7 @@
 @graph: ~"../graph.spw"
 @flourish_pack: ~"../../public/css/effects/flourish-pack.css"
 @wonder_css: ~"../../public/css/effects/wonder.css"
-@wonder_memory: ~"../../public/js/interface/wonder-memory.js"
+@wonder_memory: ~"../../public/js/runtime/wonder-memory.js"
 @lsp_editor_lenses: ~"../language/v04/pillars/lsp-editor-lenses.spw"
 @workbench_report: ~"../workbench-report.spw"
 @wonder_script: ~"../../scripts/wonder.mjs"

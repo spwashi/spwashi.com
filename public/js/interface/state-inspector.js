@@ -12,7 +12,7 @@ import {
   STORAGE_KEYS,
   writeJson,
 } from '/public/js/kernel/storage-utils.js';
-import { readRoom } from '/public/js/kernel/room-signal.js';
+import { readRoom } from '/public/js/semantic/room-signal.js';
 import { ensureDebugStyles } from '/public/js/kernel/deferred-styles.js';
 
 const ROOT_ATTR = 'data-spw-state-inspector-root';

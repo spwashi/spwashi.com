@@ -3,7 +3,7 @@ import {
   syncFloatingChromeState,
 } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
-import { computeLocomotionFieldBalance } from '/public/js/interface/wonder-memory.js';
+import { computeLocomotionFieldBalance } from '/public/js/runtime/wonder-memory.js';
 import { describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 import { describeWrapScan } from '/public/js/semantic/spw-compose.js';
 import { kinIds, nextKinRelation, pickRegionKin, prevKinRelation } from '/public/js/runtime/region-kin.js';

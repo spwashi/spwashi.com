@@ -12,8 +12,8 @@ import {
     samplePaletteFromImage,
     uniqueAccentValues,
     withAlpha
-} from '/public/js/interface/accent-palette.js';
-import { applyWonderMemoryState } from '/public/js/interface/wonder-memory.js';
+} from '/public/js/semantic/accent-palette.js';
+import { applyWonderMemoryState } from '/public/js/runtime/wonder-memory.js';
 const INSTANCE_MAP = new WeakMap();
 const activeInstances = new Set();
 const PARTICLE_TYPES = new Set(['wave', 'vortex', 'crystal', 'resonance']);

@@ -16,7 +16,7 @@
 @projection: ~"./projection-attenuation.spw"
 @region_ecology: ~"./region-component-ecology.spw"
 @literary_motifs: ~"./literary-operational-motifs.spw"
-@room_signal: ~"../../public/js/kernel/room-signal.js"
+@room_signal: ~"../../public/js/semantic/room-signal.js"
 @geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
 @cauldron_contract: ~"../../public/js/semantic/cauldron/contract.js"
 
@@ -101,7 +101,7 @@ fixity = "experimental"
 ^"validation"{
   probe: "Not yet implementable. This convention is a design prime; nothing below the room-signal expression hook has been built."
   built_so_far: #[
-    `kernel/room-signal.js - environment term (family, region, accent) plus the region's parsed expression`,
+    `semantic/room-signal.js - environment term (family, region, accent) plus the region's parsed expression`,
     `runtime/charge-field.js - energy term, phase machine, discharge kinds`,
     `systems/projection-attenuation.css - channel material per seat and slot`
   ][reg=set]

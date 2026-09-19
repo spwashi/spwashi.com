@@ -10,7 +10,7 @@ import {
     resolveAccentTokenColors,
     tokensFromHref,
     uniqueAccentValues
-} from './accent-palette.js';
+} from '/public/js/semantic/accent-palette.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 
 const MEMORY_TARGET_SELECTOR = [

@@ -8,8 +8,8 @@
 @settings: ~"../../../public/js/kernel/site-settings.js"
 @brace_pivots: ~"../../../public/js/runtime/brace-pivots.js"
 @bus: ~"../../../public/js/kernel/bus.js"
-@wonder_memory: ~"../../../public/js/interface/wonder-memory.js"
-@accent_palette: ~"../../../public/js/interface/accent-palette.js"
+@wonder_memory: ~"../../../public/js/runtime/wonder-memory.js"
+@accent_palette: ~"../../../public/js/semantic/accent-palette.js"
 @runtime: ~"../../../public/js/site.js"
 
 thesis: .{

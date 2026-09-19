@@ -37,7 +37,7 @@ import {
   getPaletteDepthSwatches,
   getPaletteResonanceSwatches,
   normalizePaletteResonance
-} from '/public/js/interface/palette-resonance.js';
+} from '/public/js/kernel/palette-resonance.js';
 import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/runtime-environment.js';
 
 import {

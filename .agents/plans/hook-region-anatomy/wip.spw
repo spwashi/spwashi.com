@@ -10,7 +10,7 @@
  operation = "prime"
  bucket = "css_layout_interaction"
  validation = #[ `Author the plan first (this document).`, `Make the dom-contracts selector addition + CSS + page-model + site-semantics updates + 3-4 route examples.`, `Run after each meaningful edit:`, `git diff --check`, `node --check public/js/kernel/dom-contracts.js (and any other touched .js)`, `npm run check (includes audit, typecheck, CSS contracts, manifest, route runtime validation)`, ][reg=set]
- hot_files = #[ `public/js/kernel/dom-contracts.js`, `public/js/kernel/page-metadata.js`, `public/css/components/frames.css`, `public/css/effects/wonder.css`, `public/css/routes/surfaces/home.css`, `public/js/site.js`, ][reg=set]
+ hot_files = #[ `public/js/kernel/dom-contracts.js`, `public/js/semantic/page-metadata.js`, `public/css/components/frames.css`, `public/css/effects/wonder.css`, `public/css/routes/surfaces/home.css`, `public/js/site.js`, ][reg=set]
 }[reg=facet]
 # wip — hook-region-anatomy
 #

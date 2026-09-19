@@ -118,7 +118,7 @@ Creator identity preserved: "I'm Spwashi. I build software and make art." — pa
 
 **No changes anticipated to:**
 - `public/css/...` (beyond possible one-line ornament tweak inside existing file if a demo truly needs it — avoid).
-- `public/js/interface/palette-resonance.js` or `accent-palette.js`.
+- `public/js/kernel/palette-resonance.js` or `accent-palette.js`.
 - `public/js/kernel/site-settings.js`.
 - Any route `index.html` outside the three listed.
 - `package.json`, build scripts, or `vite.config.ts`.

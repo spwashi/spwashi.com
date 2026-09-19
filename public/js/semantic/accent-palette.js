@@ -1,7 +1,7 @@
 import {
     DEFAULT_PALETTE_RESONANCE,
     getPaletteResonanceTokens
-} from '/public/js/interface/palette-resonance.js';
+} from '/public/js/kernel/palette-resonance.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { semanticToken } from '/public/js/kernel/text-normalization.js';
 

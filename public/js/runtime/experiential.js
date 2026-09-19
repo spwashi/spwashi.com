@@ -14,7 +14,7 @@
  * - Keep everything optional and progressive.
  */
 
-import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
+import { getActiveRecentPathMemory } from '/public/js/semantic/accent-palette.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 import { initBookmarkRegistry } from './experiential/bookmark-registry.js';
 import { initContextualMemos } from './experiential/contextual-memos.js';

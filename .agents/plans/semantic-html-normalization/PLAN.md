@@ -43,7 +43,7 @@ The desired end state is a site where the static HTML carries a clearer, more co
 
 ### Craft guard
 
-This pass touches many HTML files, so the danger is churn without a tighter contract. The HTML changes should stay mostly mechanical: landmarks, ids, skip targets, and accessible names. `public/js/kernel/page-metadata.js` is already concept-dense and should absorb inference/normalization logic instead of spreading another semantics helper across the runtime. Any CSS simplification should remove duplicated semantic-state rules, not introduce a new styling vocabulary.
+This pass touches many HTML files, so the danger is churn without a tighter contract. The HTML changes should stay mostly mechanical: landmarks, ids, skip targets, and accessible names. `public/js/semantic/page-metadata.js` is already concept-dense and should absorb inference/normalization logic instead of spreading another semantics helper across the runtime. Any CSS simplification should remove duplicated semantic-state rules, not introduce a new styling vocabulary.
 
 ## Commits
 
@@ -57,7 +57,7 @@ This pass touches many HTML files, so the danger is churn without a tighter cont
 
 - Rebase target: `main@9511b53`
 - Rebase cadence: before commit 2 and before merge
-- Hygiene split: the worktree already carries uncommitted follow-up edits in `about/website/index.html`, `index.html`, `settings/index.html`, `topics/math/index.html`, `topics/site-design/index.html`, `topics/software/index.html`, `public/css/settings-surface.css`, `public/css/components/surfaces.css`, `public/js/kernel/site-settings.js`, `public/js/interface/palette-resonance.js`, and `.agents/plans/vibe-setting-widgets/wip.spw`; this pass will preserve that drift, integrate only the overlapping HTML files deliberately, and avoid unrelated settings/runtime files unless a direct semantic consolidation requires them.
+- Hygiene split: the worktree already carries uncommitted follow-up edits in `about/website/index.html`, `index.html`, `settings/index.html`, `topics/math/index.html`, `topics/site-design/index.html`, `topics/software/index.html`, `public/css/settings-surface.css`, `public/css/components/surfaces.css`, `public/js/kernel/site-settings.js`, `public/js/kernel/palette-resonance.js`, and `.agents/plans/vibe-setting-widgets/wip.spw`; this pass will preserve that drift, integrate only the overlapping HTML files deliberately, and avoid unrelated settings/runtime files unless a direct semantic consolidation requires them.
 
 ## Dependencies
 

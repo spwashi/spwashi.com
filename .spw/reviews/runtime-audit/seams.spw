@@ -6,14 +6,14 @@
 #:layer #!pragmatics
 
 @runtime: ~"../../../public/js/site.js"
-@page_metadata: ~"../../../public/js/kernel/page-metadata.js"
+@page_metadata: ~"../../../public/js/semantic/page-metadata.js"
 @component_semantics: ~"../../../public/js/semantic/component-semantics.js"
 @semantic_chrome: ~"../../../public/js/interface/semantic-chrome.js"
 @contextual_ui: ~"../../../public/js/interface/contextual-ui.js"
 @settings: ~"../../../public/js/kernel/site-settings.js"
 @brace_pivots: ~"../../../public/js/runtime/brace-pivots.js"
-@wonder_memory: ~"../../../public/js/interface/wonder-memory.js"
-@accent_palette: ~"../../../public/js/interface/accent-palette.js"
+@wonder_memory: ~"../../../public/js/runtime/wonder-memory.js"
+@accent_palette: ~"../../../public/js/semantic/accent-palette.js"
 
 thesis: .{
  claim = `The application's seams are real and mostly well-intentioned, but several are implicit rather than declared.`
@@ -22,7 +22,7 @@ thesis: .{
 
 handoff_stream: ?<
  `page HTML authors explicit data-spw-* fields`,
- `kernel/page-metadata.js normalizes page shell, landmarks, and missing route metadata`,
+ `semantic/page-metadata.js normalizes page shell, landmarks, and missing route metadata`,
  `site.js collects regions and assigns region state, harmony, tempo, and density`,
  `semantic/component-semantics.js snapshots richer component semantics onto datasets`,
  `interface/semantic-chrome.js projects those semantics into helper controls and meta tags`,

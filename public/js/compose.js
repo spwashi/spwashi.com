@@ -222,7 +222,7 @@ export {
   getPaletteResonanceSwatches,
   getPaletteResonanceTokens,
   normalizePaletteResonance,
-} from './interface/palette-resonance.js';
+} from '/public/js/kernel/palette-resonance.js';
 
 export {
   SPW_INSTRUMENTATION_CONTRACT,
@@ -403,7 +403,7 @@ export {
 export {
   SPW_WONDER_MEMORY_CONTRACT,
   describeWonderMemorySnapshot,
-} from './interface/wonder-memory.js';
+} from '/public/js/runtime/wonder-memory.js';
 
 export {
   DEVELOPMENTAL_CLIMATES,
@@ -411,7 +411,7 @@ export {
   applyDevelopmentalClimate,
   describeDevelopmentalClimate,
   normalizeDevelopmentalClimate,
-} from './interface/developmental-climate.js';
+} from '/public/js/runtime/developmental-climate.js';
 
 export {
   SPW_CANVAS_ACCENTS_CONTRACT,

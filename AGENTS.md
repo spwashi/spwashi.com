@@ -204,7 +204,7 @@ CSS layers are cascade priority, not a load schedule: `reset → tokens → shel
 | Brace / structural grammar | `public/css/grammar/syntax.css` |
 | Shared / feature-gated layout | `public/css/systems/surfaces/*.css` or `public/css/components/*.css` |
 | Route-only layout | `public/css/routes/*.css` |
-| Wonder memory / ornament | `public/js/interface/wonder-memory.js` + `public/css/effects/wonder.css` + `public/css/ornament/ornament.css` |
+| Wonder memory / ornament | `public/js/runtime/wonder-memory.js` + `public/css/effects/wonder.css` + `public/css/ornament/ornament.css` |
 | Settings / root dataset | `public/js/kernel/site-settings.js` + `site-settings-engine.js` (`setDatasetEntries`) |
 | Navigation / spells / haptics | `public/js/runtime/navigation-spells.js`, `spells.js`, `experiential.js` |
 | Section-handle / resonance | `public/js/runtime/attention-architecture.js` |

@@ -19,8 +19,8 @@
 
 import { describeChargeFieldState, SPW_CHARGE_FIELD_CONTRACT } from "./charge-field.js";
 import { describePulseBeatTunerState, SPW_PULSE_BEAT_TUNER_CONTRACT } from "./pulse-beat-tuner.js";
-import { describeWonderMemorySnapshot, SPW_WONDER_MEMORY_CONTRACT } from "../interface/wonder-memory.js";
-import { describeDevelopmentalClimate, SPW_DEVELOPMENTAL_CLIMATE_CONTRACT } from "../interface/developmental-climate.js";
+import { describeWonderMemorySnapshot, SPW_WONDER_MEMORY_CONTRACT } from "/public/js/runtime/wonder-memory.js";
+import { describeDevelopmentalClimate, SPW_DEVELOPMENTAL_CLIMATE_CONTRACT } from "/public/js/runtime/developmental-climate.js";
 import { SPW_SPATIAL_GRAVITY_CONTRACT } from "./spatial-gravity.js";
 
 export const SPW_PHYSICAL_MODEL_CONTRACT = Object.freeze({

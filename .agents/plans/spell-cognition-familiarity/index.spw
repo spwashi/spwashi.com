@@ -53,7 +53,7 @@ intent: .{
 @plan_spellcraft_authoring: ~"../spellcraft-authoring/index.spw"
 @spells: ~"../../../public/js/runtime/spells.js"
 @experiential: ~"../../../public/js/runtime/experiential.js"
-@wonder_memory: ~"../../../public/js/interface/wonder-memory.js"
+@wonder_memory: ~"../../../public/js/runtime/wonder-memory.js"
 @cognitive_surface: ~"../../../.spw/philosophy/cognitive-surface.spw"
 
 dispatch: .{
@@ -85,7 +85,7 @@ dispatch: .{
 
 scope: .{
  in = #[
-  `In scope: shared runtime copy/state in public/js/runtime/spells.js, public/js/runtime/experiential.js, and public/js/interface/wonder-memory.js.`,
+  `In scope: shared runtime copy/state in public/js/runtime/spells.js, public/js/runtime/experiential.js, and public/js/runtime/wonder-memory.js.`,
   `In scope: small state projection updates in shared CSS only if a new readable register needs visual support.`,
   `In scope: public data attributes or helper outputs that let the console, settings, and spell surfaces describe familiarity and liminality clearly.`,
   `-`,

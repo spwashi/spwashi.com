@@ -26,6 +26,7 @@
  * makes the same source available to chrome.
  */
 
+import { bus } from '/public/js/kernel/bus.js';
 import { describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 
 /* getComputedStyle forces a style recalc, and callers sit on paths that fire
@@ -85,6 +86,10 @@ function readExpression(el) {
 export function invalidateRoomAccent() {
   accentMemo = { key: null, value: null };
 }
+
+/* A deferred stylesheet arriving (kernel/deferred-styles.js) can change the
+   resolved accent under the same theme, so the memo listens for it. */
+bus.on?.('deferred-styles:loaded', invalidateRoomAccent);
 
 export function readRoom(referenceEl = null) {
   const html = document.documentElement;

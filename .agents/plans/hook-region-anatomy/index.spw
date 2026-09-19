@@ -52,7 +52,7 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
-@page_metadata: ~"../../../public/js/kernel/page-metadata.js"
+@page_metadata: ~"../../../public/js/semantic/page-metadata.js"
 @frames: ~"../../../public/css/components/frames.css"
 @wonder: ~"../../../public/css/effects/wonder.css"
 @home: ~"../../../public/css/routes/surfaces/home.css"

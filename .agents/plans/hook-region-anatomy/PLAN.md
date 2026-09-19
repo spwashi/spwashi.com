@@ -29,7 +29,7 @@ Copy constraint: first-fold sentences must pass a no-context clicker test (ident
 
 **Shared contracts / runtime (small, recognition + description only):**
 - `public/js/kernel/dom-contracts.js` — add `'[data-spw-kind="hook"]'` to `REGION_SELECTORS` (and therefore `REGION_SELECTOR`, `SEMANTIC_CHROME_SELECTOR` etc.) so hooks are automatically treated as regions by `primeRegions`, inspection, and the runtime registry. No behavior change required.
-- (Review only, likely no edit) `public/js/kernel/page-metadata.js` — `inferRegionRole`/`inferRegionKind` already handle authored `data-spw-*` gracefully; hook will inherit `spwSeed`, `spwWonder`, `spwConsequence`, etc.
+- (Review only, likely no edit) `public/js/semantic/page-metadata.js` — `inferRegionRole`/`inferRegionKind` already handle authored `data-spw-*` gracefully; hook will inherit `spwSeed`, `spwWonder`, `spwConsequence`, etc.
 
 **CSS (surgical visual + resonance treatment):**
 - `public/css/components/frames.css` — add base `.spw-hook`, `[data-spw-kind="hook"]` anatomy (brace/block variants, volatile affordance treatment, integration with frame-topline when nested, vertical progression cues). Keep it thin; reuse existing card/frame tokens, active-op-color, wonder accents.

@@ -8,7 +8,7 @@ The site already has several adjacent ideas that point at the same thing: spells
 
 ## Scope
 
-- In scope: shared runtime copy/state in `public/js/runtime/spells.js`, `public/js/runtime/experiential.js`, and `public/js/interface/wonder-memory.js`.
+- In scope: shared runtime copy/state in `public/js/runtime/spells.js`, `public/js/runtime/experiential.js`, and `public/js/runtime/wonder-memory.js`.
 - In scope: small state projection updates in shared CSS only if a new readable register needs visual support.
 - In scope: public data attributes or helper outputs that let the console, settings, and spell surfaces describe familiarity and liminality clearly.
 - Out of scope: route-specific copy rewrites, new spell mechanics, or a broader taxonomy rewrite.
@@ -25,7 +25,7 @@ The site already has several adjacent ideas that point at the same thing: spells
 
 - `public/js/runtime/spells.js`
 - `public/js/runtime/experiential.js`
-- `public/js/interface/wonder-memory.js`
+- `public/js/runtime/wonder-memory.js`
 - `public/css/handles/operators.css` only if the new state needs shared visual treatment
 - `.spw/philosophy/cognitive-surface.spw` or a related `.spw` surface if the semantic model should stay inspectable beyond one patch
 

@@ -15,7 +15,7 @@ The desired end state is a site where image interactions feel less generic and m
 
 [NEW] `.agents/plans/archive/palette-resonance/PLAN.md` - human-facing scope and craft guard.
 [NEW] `.agents/plans/archive/palette-resonance/wip.spw` - living branch memory.
-[NEW] `public/js/interface/accent-palette.js` - shared palette inference, image sampling, and recent-path memory helpers for canvas accents.
+[NEW] `public/js/semantic/accent-palette.js` - shared palette inference, image sampling, and recent-path memory helpers for canvas accents.
 [MOD] `public/js/interface/canvas-accents.js` - add image sampling, recent-path memory, override parsing, and the new `resonance` accent archetype.
 [MOD] `public/css/ornament/canvas-accents.css` - style resonance opacity/blend behavior and keep mobile/reduced-motion behavior calm.
 [MOD] `topics/software/index.html` - opt the software hero into resonance with parser/software-specific override hints.  

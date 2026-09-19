@@ -32,12 +32,12 @@ import {
 import {
   describeDevelopmentalClimate,
   SPW_DEVELOPMENTAL_CLIMATE_CONTRACT,
-} from "../../public/js/interface/developmental-climate.js";
+} from "../../public/js/runtime/developmental-climate.js";
 
 import {
   describeWonderMemorySnapshot,
   SPW_WONDER_MEMORY_CONTRACT,
-} from "../../public/js/interface/wonder-memory.js";
+} from "../../public/js/runtime/wonder-memory.js";
 
 import {
   describeCanvasAccentInstance,

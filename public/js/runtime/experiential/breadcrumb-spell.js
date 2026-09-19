@@ -12,7 +12,7 @@
  * contract. The orchestrator delegates here.
  */
 
-import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
+import { getActiveRecentPathMemory } from '/public/js/semantic/accent-palette.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { escapeAttr as escapeAttribute, escapeHtml } from '/public/js/kernel/dom-render.js';
 import {

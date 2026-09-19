@@ -25,7 +25,7 @@
 @storage_topology: ~"../../conventions/storage-topology.spw"
 @feature_discovery: ~"../../../public/js/runtime/feature-discovery.js"
 @spells: ~"../../../public/js/runtime/spells.js"
-@wonder_memory: ~"../../../public/js/interface/wonder-memory.js"
+@wonder_memory: ~"../../../public/js/runtime/wonder-memory.js"
 @site_js: ~"../../../public/js/site.js"
 @module_catalog: ~"../../../public/js/runtime/catalog/index.js"
 @css_attr_audit: ~"../css-module-attribute-impact-2026-07/index.spw"

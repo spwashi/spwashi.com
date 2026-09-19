@@ -371,7 +371,7 @@
       "attr:data-spw-cauldron-load",
       "css-var:--spw-cauldron-load-ratio"
     ],
-    "(file:public/js/interface/wonder-memory.js)": [
+    "(file:public/js/runtime/wonder-memory.js)": [
       "css-var:--delight-color",
       "css-var:--field-balance",
       "css-var:--spw-wonder-memory-alt-color",
@@ -467,7 +467,7 @@
       "blog-specimens"
     ],
     "css-var:--field-balance": [
-      "(file:public/js/interface/wonder-memory.js)",
+      "(file:public/js/runtime/wonder-memory.js)",
       "attention-section-handle"
     ]
   }

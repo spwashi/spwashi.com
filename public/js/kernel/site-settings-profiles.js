@@ -5,7 +5,7 @@
 import {
   DEFAULT_PALETTE_RESONANCE,
   PALETTE_RESONANCE_OPTIONS,
-} from '/public/js/interface/palette-resonance.js';
+} from '/public/js/kernel/palette-resonance.js';
 import { AUTHOR_WORKFLOW_MODES } from '/public/js/kernel/shared.js';
 import { STORAGE_KEYS } from '/public/js/kernel/storage-utils.js';
 

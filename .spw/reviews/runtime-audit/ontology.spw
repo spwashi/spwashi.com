@@ -6,7 +6,7 @@
 #:layer #!pragmatics
 
 @runtime: ~"../../../public/js/site.js"
-@page_metadata: ~"../../../public/js/kernel/page-metadata.js"
+@page_metadata: ~"../../../public/js/semantic/page-metadata.js"
 @component_semantics: ~"../../../public/js/semantic/component-semantics.js"
 @contextual_ui: ~"../../../public/js/interface/contextual-ui.js"
 @semantic_chrome: ~"../../../public/js/interface/semantic-chrome.js"

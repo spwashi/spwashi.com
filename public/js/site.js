@@ -1,7 +1,7 @@
 import {
   enrichRegionMetadata,
   normalizeDocumentMetadata,
-} from './kernel/page-metadata.js';
+} from '/public/js/semantic/page-metadata.js';
 import {
   FEATURE_CLUSTER_CONTRACT,
   describeFeatureClusterElement,

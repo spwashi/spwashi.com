@@ -20,7 +20,7 @@
  * or switching palettes should not re-fetch.
  */
 
-import { invalidateRoomAccent } from './room-signal.js';
+import { bus } from '/public/js/kernel/bus.js';
 
 const LOADED = new Map();
 
@@ -49,7 +49,10 @@ export function ensureDeferredStyles(id, href) {
   // A deferred sheet lands after callers may already have resolved and cached
   // computed values from it (room-signal memoizes --component-accent). Its own
   // cache key cannot see a stylesheet arriving, so invalidate on load.
-  link.addEventListener('load', invalidateRoomAccent, { once: true });
+  // A deferred sheet can change a region's resolved accent without the theme
+  // changing; readers that memoize on the theme (semantic/room-signal.js)
+  // listen for this instead of the kernel reaching up to invalidate them.
+  link.addEventListener('load', () => bus.emit('deferred-styles:loaded', { href: link.href }), { once: true });
   document.head.append(link);
   LOADED.set(id, link);
   return true;
