@@ -211,3 +211,6 @@ All changes keep the attribute-driven, inspectable model and feed directly into 
 - Gesture affordances wired in experiential.js (keyboard `s`/`?`/`b` for capture/status/beat in QA mode; long-press on frames starts beat; touch-friendly).
 - Design copy lightly updated in `design/runtime/index.html` for discoverability of the new surfaces.
 - All changes surgical, gated, and aligned with cauldron lifecycle + existing interaction semantics. Validated with node --check + git diff --check.
+
+### 2026-09-19 — the mirror must not change geometry
+- `resolveCompositionFlow` returned the computed display for every non-stage host, so `.settings-form` (authored `stack`, laid out with `display:grid` for gaps) came back as `flow=grid` and content.css packed thirteen folds into five 250px columns; each `<details>` was stamped `grid` too. Authored flow now wins for every host and `details` counts as a stage. Test: `scripts/tests/composition-flow-authored.test.mjs`. Measured before/after and the class of the defect (any `structural:` update over an authored attribute): `.spw/caches/wonder-chrome-retune-2026-09.spw#wr-001`, `#wr-016`.

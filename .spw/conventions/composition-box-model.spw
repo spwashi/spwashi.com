@@ -19,7 +19,7 @@ purpose: .{
 
 attributes: .{
  data_spw_box_model = `component role: stage, fold, control-card, control-group, choice-field, token-card, runtime-step, figure-rail, or local extension.`
- data_spw_composition_flow = `layout flow: stack, grid, flex, inline, or the computed display fallback.`
+ data_spw_composition_flow = `layout flow: stack, grid, flex, inline, or the computed display fallback. An authored value is kept by the mirror (2026-09-19): CSS packs from it before mount, and display:grid used for stacking gaps must not come back as flow=grid. Stages — frames, panels, details folds — report stack unless authored otherwise.`
  data_spw_box_measure = `computed measure band: narrow, compact, comfortable, wide.`
  data_spw_box_presence = `presence state: hidden, waiting, present, overfull.`
  data_spw_box_overflow = `true when scroll size exceeds visible box size.`
