@@ -335,6 +335,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'svg tunability pointer query device responsiveness',
     timingArc: 'visible-media',
     effectScope: 'svg element-state css-vars',
+    visual: 'behavior',
     load: () => import('../../media/svg-tunability.js'),
   },
   {
@@ -355,6 +356,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'visual accents canvas resonance reduced-motion',
     timingArc: 'visible-visual',
     effectScope: 'canvas css-vars media-query',
+    visual: 'express',
     load: () => import('../../interface/canvas-accents.js'),
   },
   {
@@ -1311,6 +1313,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'wrap-jobs sit-travel-enter teaching-rail',
     timingArc: 'visible-keyboard',
     effectScope: 'local-dom listeners',
+    visual: 'behavior',
     load: () => import('../wrap-jobs.js'),
   },
   {

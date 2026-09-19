@@ -18,13 +18,15 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     }),
     layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'Identity leads. The working view is a local instrument, not the subject.',
-    captureValue: 'One pocket frame: person, then the working view, then the first motifs.',
+    captureValue: 'One pocket frame: person, then the working view, then the first motifs. Accent figures keep environmental wonder behind the names.',
     sourceFiles: Object.freeze([
       'index.html',
       'public/css/routes/surfaces/home.css',
       'public/css/shell/chrome/adaptive.css',
       'public/css/shell/chrome/section-context.css',
       'public/css/handles/operators/state-semantics.css',
+      'public/js/interface/canvas-accents.js',
+      'public/css/effects/wonder.css',
     ]),
   }),
   Object.freeze({
@@ -365,10 +367,11 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     selector: '#svg-storytelling',
     layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
     wonder: 'Glyph, creature, divider, token stay named in the kit still.',
-    captureValue: 'Motif kit plus material rail.',
+    captureValue: 'Motif kit plus material rail. Device stamp and pocket wrap are the packing subjects.',
     sourceFiles: Object.freeze([
       'topics/craft/svg/index.html',
       'public/css/systems/svg-surfaces.css',
+      'public/js/media/svg-tunability.js',
       'public/css/ornament/ornament.css',
     ]),
   }),
@@ -577,6 +580,7 @@ export const VIEWPORT_STILL_CHECKS = Object.freeze([
     sourceFiles: Object.freeze([
       'index.html',
       'public/css/effects/texture-slice.css',
+      'public/js/media/texture-slice.js',
       'public/css/tokens/core.css',
     ]),
   }),
@@ -931,6 +935,21 @@ export const VIEWPORT_STILL_CHECKS = Object.freeze([
     sourceFiles: Object.freeze([
       'play/rpg-wednesday/index.html',
       'public/css/effects/texture-slice.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'rpg-wrap-jobs',
+    fixtureId: 'rpg-wrap-jobs',
+    label: 'RPG wrap-jobs rail',
+    specimenRoute: '/play/rpg-wednesday/',
+    selector: '#rpg-wednesday',
+    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    wonder: 'Sit, travel, and enter stay named. Collaborator chips must not rewrite this rail.',
+    captureValue: 'Teaching wrap-jobs rail: module behavior on the RPG Wednesday opening.',
+    sourceFiles: Object.freeze([
+      'play/rpg-wednesday/index.html',
+      'public/js/runtime/wrap-jobs.js',
+      'public/js/runtime/spw-key-events.js',
     ]),
   }),
   Object.freeze({

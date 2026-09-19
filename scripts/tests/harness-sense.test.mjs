@@ -26,8 +26,10 @@ test('ink ids accept bare names and --ids forms', () => {
 
 test('menu and id list name the cheap path', () => {
   assert.ok(SENSE_KINDS.ink.needsId);
+  assert.equal(SENSE_KINDS.stills.script, 'audit:stills');
   const menu = formatSenseMenu([{ id: 'about-opening' }]);
   assert.match(menu, /npm run sense -- copy/);
+  assert.match(menu, /npm run sense -- stills/);
   assert.match(menu, /full pack/);
   const listed = formatStillIds([
     { id: 'about-opening', specimenRoute: '/about/', label: 'About opening' },
@@ -37,5 +39,6 @@ test('menu and id list name the cheap path', () => {
   const fixtures = listSenseFixtures();
   assert.ok(fixtures.some((recipe) => recipe.id === 'about-opening'));
   assert.ok(fixtures.some((recipe) => recipe.id === 'about-opening-dark'));
+  assert.ok(fixtures.some((recipe) => recipe.id === 'rpg-wrap-jobs'));
   assert.ok(fixtures.length > 17);
 });

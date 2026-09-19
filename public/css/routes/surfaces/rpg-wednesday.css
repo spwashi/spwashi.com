@@ -93,8 +93,10 @@
 }
 
 :where(body[data-spw-surface="rpg-wednesday"] [data-spw-region-role="entry-spine"] > :where(
+  .frame-topline,
   .spec-kicker,
   h1,
+  [data-spw-feature="wrap-jobs"],
   .rpg-quick-actions,
   .mode-panels,
   .campaign-mood-grid,
@@ -102,6 +104,23 @@
 )) {
   position: relative;
   z-index: 1;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] [data-spw-feature="wrap-jobs"]) {
+  isolation: isolate;
+  z-index: 2;
+  margin-block: 0.28rem 0.42rem;
+  padding: 0.22rem;
+  border-radius: var(--shape-surface, 10px);
+  background: color-mix(in srgb, var(--rpg-paper) 88%, #fff 12%);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] [data-spw-feature="wrap-jobs"] .spw-chip) {
+  flex: 1 1 4.8rem;
+  max-inline-size: 100%;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ink-strong, #161c1d);
+  border-color: color-mix(in srgb, var(--rpg-accent) 28%, rgba(18, 24, 28, 0.16));
 }
 
 :where(body[data-spw-surface="rpg-wednesday"] .mode-panels) {
@@ -1047,10 +1066,41 @@
 
 }
 
-@media (max-width: 35rem) {
-  :where(body[data-spw-surface="rpg-wednesday"] .mode-switch button) {
+@media (max-width: 45rem) {
+  :where(body[data-spw-surface="rpg-wednesday"] .frame-topline) {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    isolation: isolate;
+    z-index: 2;
+    background: color-mix(in srgb, var(--rpg-paper) 92%, #fff 8%);
+  }
+
+  :where(body[data-spw-surface="rpg-wednesday"] .frame-topline > .frame-sigil) {
+    align-self: flex-start;
+    flex: 0 0 auto;
+  }
+
+  :where(body[data-spw-surface="rpg-wednesday"] .frame-topline .mode-switch) {
     width: 100%;
+    flex: 0 0 auto;
     min-width: 0;
+  }
+
+  :where(body[data-spw-surface="rpg-wednesday"] .frame-topline .mode-switch button) {
+    width: auto;
+    min-width: 0;
+  }
+
+  :where(body[data-spw-surface="rpg-wednesday"] [data-spw-feature="wrap-jobs"]) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.32rem;
+  }
+
+  :where(body[data-spw-surface="rpg-wednesday"] [data-spw-feature="wrap-jobs"] .spw-chip) {
+    inline-size: 100%;
+    white-space: normal;
   }
 
   :where(body[data-spw-surface="rpg-wednesday"] .rpg-quick-actions) {

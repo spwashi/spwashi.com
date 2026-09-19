@@ -1049,6 +1049,10 @@ test('starved clips are misses, and recapture ids skip generic page blanks', () 
 
 test('page stills get their own nav and a longer evaluate budget', () => {
   assert.ok(evaluateTimeoutMsFor({ flow: 'page' }) > evaluateTimeoutMsFor({ flow: 'component' }));
+  assert.ok(
+    evaluateTimeoutMsFor({ flow: 'page', still: true, prepare: { click: ['.spw-living-term'] } })
+      > evaluateTimeoutMsFor({ flow: 'page', still: true }),
+  );
   assert.ok(screenshotTimeoutMsFor({ flow: 'page' }) > screenshotTimeoutMsFor({ flow: 'component' }));
   const homeA = {
     id: 'home-opening',
@@ -1110,6 +1114,10 @@ test('visitor overlay modules have a still, and recipe seats resolve', () => {
     'topic-discovery',
   ]);
   assert.deepEqual(report.visitorMiss, []);
+  assert.deepEqual(report.behavior.sort(), ['svg-tunability', 'wrap-jobs']);
+  assert.deepEqual(report.behaviorMiss, []);
+  assert.deepEqual(report.environment.sort(), ['canvas-accents', 'texture-slice']);
+  assert.deepEqual(report.environmentMiss, []);
   assert.deepEqual(report.danglingFixtureIds, []);
   assert.equal(report.unguardedOverlays.includes('pronunciation-hints'), false);
   assert.equal(report.unguardedOverlays.includes('region-menu'), false);

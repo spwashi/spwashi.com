@@ -283,8 +283,8 @@ html[data-spw-reveal-phase="settling"] {
   --spw-control-min-height: 1.7rem;
   --spw-control-padding-block: 0.16rem;
   --spw-control-padding-inline: 0.5rem;
-  flex: 1 1 7.2rem;
-  min-inline-size: min(100%, 7.2rem);
+  flex: 1 1 5.2rem;
+  min-inline-size: min(100%, 5.2rem);
   justify-content: center;
   text-align: center;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
@@ -292,6 +292,9 @@ html[data-spw-reveal-phase="settling"] {
   line-height: 1.2;
   white-space: nowrap;
   max-inline-size: 100%;
+  background: var(--surface-strong, #fff);
+  color: var(--ink-strong, CanvasText);
+  border-color: color-mix(in srgb, var(--line-strong, rgba(14, 18, 20, 0.18)) 68%, var(--active-op-color, var(--teal, #008080)) 32%);
 }
 
 :where([data-spw-feature="wrap-jobs"] .spw-chip[aria-current="true"]) {

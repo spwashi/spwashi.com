@@ -24,6 +24,8 @@ export function stillCaptureRole(def = {}) {
   if (def.debugOnly) return 'inspect';
   if (def.visual === 'inspect') return 'inspect';
   if (def.visual === 'layout') return 'visitor';
+  if (def.visual === 'behavior') return 'behavior';
+  if (def.visual === 'express') return 'environment';
   return 'none';
 }
 
@@ -64,6 +66,8 @@ export function accountStillCoverage({
 } = {}) {
   const catalog = [...recipes, ...checks];
   const visitor = [];
+  const behavior = [];
+  const environment = [];
   const inspect = [];
   const unguardedOverlays = [];
 
@@ -74,6 +78,8 @@ export function accountStillCoverage({
     const coveredBy = catalog.filter((recipe) => recipeCoversFile(recipe, file)).map((recipe) => recipe.id);
     const row = { id: def.id, file, coveredBy };
     if (role === 'visitor') visitor.push(row);
+    else if (role === 'behavior') behavior.push(row);
+    else if (role === 'environment') environment.push(row);
     else if (role === 'inspect') inspect.push(row);
     else {
       const scope = String(def.effectScope || '');
@@ -84,12 +90,34 @@ export function accountStillCoverage({
     }
   }
 
+  const covered = (rows) => rows.filter((row) => row.coveredBy.length).map((row) => row.id);
+  const miss = (rows) => rows.filter((row) => !row.coveredBy.length).map((row) => row.id);
+
   return {
     visitor: visitor.map((row) => row.id),
-    visitorCovered: visitor.filter((row) => row.coveredBy.length).map((row) => row.id),
-    visitorMiss: visitor.filter((row) => !row.coveredBy.length).map((row) => row.id),
+    visitorCovered: covered(visitor),
+    visitorMiss: miss(visitor),
+    behavior: behavior.map((row) => row.id),
+    behaviorCovered: covered(behavior),
+    behaviorMiss: miss(behavior),
+    environment: environment.map((row) => row.id),
+    environmentCovered: covered(environment),
+    environmentMiss: miss(environment),
     inspect: inspect.map((row) => row.id),
     unguardedOverlays: unguardedOverlays.map((row) => row.id),
     danglingFixtureIds: danglingStillFixtureIds(catalog, { ecologyFixtures, componentFixtures }),
   };
+}
+
+export function formatStillCoverage(report = {}) {
+  const line = (label, ids = []) => `${label}  ${ids.length ? ids.join(', ') : 'none'}`;
+  return [
+    line('visitor      ', report.visitor),
+    line('visitor miss ', report.visitorMiss),
+    line('behavior     ', report.behavior),
+    line('behavior miss', report.behaviorMiss),
+    line('environment  ', report.environment),
+    line('env miss     ', report.environmentMiss),
+    line('unguarded    ', report.unguardedOverlays),
+  ].join('\n');
 }

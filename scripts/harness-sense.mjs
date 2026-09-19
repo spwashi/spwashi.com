@@ -23,6 +23,7 @@ export function listSenseFixtures() {
 export const SENSE_KINDS = Object.freeze({
   copy: { script: 'audit:copy:accessor', label: 'copy / voice' },
   nouns: { script: 'audit:module-selectors', label: 'catalog nouns' },
+  stills: { script: 'audit:stills', label: 'still / module coverage' },
   ink: { script: 'visual:checks', label: 'ink / chrome', needsId: true },
 });
 
@@ -61,6 +62,7 @@ export function formatSenseMenu(recipes = listSenseFixtures()) {
   return [
     '[sense] copy    npm run sense -- copy',
     '[sense] nouns   npm run sense -- nouns',
+    '[sense] stills  npm run sense -- stills',
     '[sense] ink     npm run sense -- ink <fixture>',
     `[sense] ids     ${recipes.length} fixtures — npm run sense -- ids`,
     '[sense] ink without an id lists fixtures instead of starting the full pack.',

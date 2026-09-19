@@ -27,6 +27,7 @@ export const DEFAULT_SOCIAL_ASPECTS = Object.freeze(['fit', 'square']);
 export const CAPTURE_MEASURE = Object.freeze({
   evaluateTimeoutMs: 8000,
   pageEvaluateTimeoutMs: 16000,
+  pagePrepareEvaluateTimeoutMs: 24000,
   screenshotTimeoutMs: 12000,
   pageScreenshotTimeoutMs: 20000,
   fontWaitMs: 1200,
@@ -34,8 +35,12 @@ export const CAPTURE_MEASURE = Object.freeze({
   importWaitMs: 2500,
 });
 
-/** Page stills of `/` measured 9–12s; the clip budget is too tight for that flow. */
+/** Page stills of `/` measured 9–12s; click-prepare notes need the longer clip. */
 export function evaluateTimeoutMsFor(job = {}) {
+  const hasPrepareClick = Boolean(job?.prepare?.click?.length);
+  if (hasPrepareClick && (job?.flow === 'page' || job?.still)) {
+    return CAPTURE_MEASURE.pagePrepareEvaluateTimeoutMs;
+  }
   if (job?.flow === 'page' || job?.still) return CAPTURE_MEASURE.pageEvaluateTimeoutMs;
   return CAPTURE_MEASURE.evaluateTimeoutMs;
 }

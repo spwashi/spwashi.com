@@ -857,12 +857,19 @@ function annotateLivingTermRole(node) {
   if (!node.hasAttribute('aria-expanded')) node.setAttribute('aria-expanded', 'false');
 }
 
+function formatWonderPhrase(wonder) {
+  if (typeof wonder !== 'string') return '';
+  const tokens = wonder.trim().split(/\s+/).filter(Boolean);
+  if (tokens.length <= 1) return wonder.trim();
+  return tokens.join(' · ');
+}
+
 function conceptRowsFor(detail) {
   return [
     ['expression', detail.expression],
     ['reads as', detail.substrate],
     ['climate', detail.context],
-    ['wonder', detail.wonder],
+    ['wonder', formatWonderPhrase(detail.wonder)],
     ['sits beside', detail.adjacent],
     ['not to be confused with', detail.contrast],
     ['practised as', detail.practice],

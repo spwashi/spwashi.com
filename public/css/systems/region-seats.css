@@ -228,6 +228,14 @@
   --spw-region-track: 16.25rem;
 }
 
+/* Pocket still of the curriculum hook should name the three practice beds,
+   not a second prose wall after the lede. Fold stills keep the cauldron note. */
+@media (max-width: 45rem) {
+  :where(body[data-spw-page-family="curriculum"] #curriculum-hero .topic-hero-copy > [data-spw-textual-role="note"]) {
+    display: none;
+  }
+}
+
 /* Lede / orientation: one breath. Do not columnize a greeting. */
 :where(
   .spw-frame[data-spw-region] :is([data-spw-textual-role="lede"], .entrance-lede),

@@ -1986,8 +1986,12 @@
   border: 1px solid color-mix(in srgb, var(--grammar-line, rgba(14, 18, 20, 0.14)) 72%, var(--active-op-color, var(--teal, #008080)) 28%);
   border-radius: var(--grammar-radius);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 52%),
-    var(--floating-bg, color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.97)) 96%, transparent));
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal, #008080)) 12%),
+      var(--surface-strong, #fff) 46%
+    ),
+    var(--surface-strong, #fff);
   box-shadow:
     var(--floating-shadow, 0 14px 34px rgba(0, 0, 0, 0.16)),
     0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
@@ -2066,8 +2070,8 @@
 
 html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popover, .spw-concept-popover) {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 48%),
-    color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.96)) 98%, transparent);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), var(--surface-strong, #192025) 48%),
+    var(--surface-strong, #192025);
   box-shadow:
     0 16px 36px rgba(0, 0, 0, 0.38),
     0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
@@ -2231,7 +2235,7 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 
 :where(.spw-concept-popover__row) {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: minmax(5.2rem, auto) minmax(8rem, 1fr);
   gap: 0.55rem;
   align-items: start;
 }
@@ -2245,6 +2249,8 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 
 :where(.spw-concept-popover__value) {
   min-width: 0;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
   color: var(--grammar-ink);
 }
 

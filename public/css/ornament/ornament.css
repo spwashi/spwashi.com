@@ -1512,10 +1512,17 @@ main > :where(.spw-frame, .spw-frame):last-of-type:not(:first-of-type):not([data
 }
 
 .frame-topline > .spw-ornament-rail {
-  flex: 1 1 100%;
+  flex: 1 1 12rem;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
+}
+
+@media (max-width: 45rem) {
+  .frame-topline > .spw-ornament-rail {
+    flex: 1 1 auto;
+    max-inline-size: 100%;
+  }
 }
 
 .frame-topline > .spw-ornament-rail > :is(.spw-chip, .frame-sigil, .spw-ornament-kicker) {
