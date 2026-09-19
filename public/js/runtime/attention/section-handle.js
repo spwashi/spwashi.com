@@ -472,7 +472,7 @@ function createHandleShell(origin, doc = document) {
   // many) rather than visual state, so no CSS selector targets them — per
   // attention-field.spw#operational_semantics ("observable... without
   // reverse-engineering CSS"), that identity belongs in the state inspector
-  // instead. Opts into runtime/state-inspector.js's generic dataset reader.
+  // instead. Opts into interface/state-inspector.js's generic dataset reader.
   shell.dataset.spwInspectDatasets = [
     'handleAvailability',
     'handleOrigin',

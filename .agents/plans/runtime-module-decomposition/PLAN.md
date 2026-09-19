@@ -105,7 +105,7 @@ Extract spell/surface modules; each declares `updates` via `module-updates-contr
 | Current | Proposed | Role |
 |---------|----------|------|
 | `interface/state-inspector.js` | `interface/state-satchel.js` | floating satchel, drag/snap, snapshots, copy |
-| `runtime/state-inspector.js` | `runtime/state-block.js` | per-component state block render/mutate |
+| `runtime/state-inspector.js` (deleted 2026-09-18 as an unreachable duplicate; the owner is `interface/state-inspector.js`) | `runtime/state-block.js` | per-component state block render/mutate |
 
 Alias old ids in `module-catalog.js` for one release; update `interaction-loop-contract` plan paths.
 

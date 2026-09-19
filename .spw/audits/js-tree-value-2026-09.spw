@@ -1,0 +1,85 @@
+# Audit 2026-09-18 — what each file under public/js earns: reach, wiring, layer, and per-file value.
+# Instrument: npm run audit:js-tree (scripts/js-tree-value.mjs). Reads the import graph's facts;
+# npm run check:runtime reads the catalog's promises. A file can keep a valid contract and still be loaded by nothing.
+
+#>js_tree_value
+#:audit #!runtime #!tree
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@instrument: ~"../../scripts/js-tree-value.mjs"
+@runtime_contracts: ~"../../scripts/runtime-contracts.mjs"
+@readme: ~"../../public/js/README.md"
+@deploy_plan: ~"../../.agents/plans/deploy-module-graph/PLAN.md"
+@decomposition_plan: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@consolidation_plan: ~"../../.agents/plans/runtime-plane-consolidation/PLAN.md"
+@surface_plan: ~"../../.agents/plans/js-surface-ecology/PLAN.md"
+@manifest: ~"../../dist/asset-manifest.json"
+
+^"rubric"{
+  #:per-file value, in the order a reader asks
+  reach = `Does anything load it — an importer, a catalog def, a route's script tag? No reach, no runtime value; the file is reference at best.`
+  wiring = `Is its way in named — a catalog def with describes / updates / when — or does it rely on a side import? check:runtime seats: catalog-export, catalog-init-only, unwired-init, export-unwired.`
+  layer = `Does it import only from below? kernel < semantic < runtime (media beside it) < interface < modules; the catalog's dynamic loads are the sanctioned crossing.`
+  contract = `Does its describes line say what the hand can do, or what the runtime did? The notice pass (notice-attention-refinement-2026-09.spw) is the reader's test of the same line.`
+  transport = `Which pack carries it and when — foundation (immediate), 58 visible packs, four idle chunks, settled, invited — and does the pack's timing match the file's promise?`
+}
+
+^"census_2026_09_18"{
+  #:after this pass; before it: 268 files, 103,877 lines, 18 orphans (4,797 lines), 38 upward imports
+  files = 267
+  lines = 102950
+  by_dir = `kernel 35 · semantic 36 · runtime 81 (+7 attention, 10 catalog, 9 experiential, 8 interaction, 5 orchestration, 4 shell) · interface 24 (+10 cauldron) · media 5 · modules 31 across 12 folders · roots 2`
+  catalog_targets = 116
+  html_referenced = 8
+  orphans = `17 files, 3,867 lines nothing loads (list below)`
+  upward = `32 imports against the layer order: kernel→runtime 9, kernel→interface 3, kernel→semantic 2, runtime→interface 13, semantic→interface 3, semantic→runtime 1, media→interface 1`
+  transport = `boot closure 265,058 B raw / 82,063 B gzip in 8 files; packs by timing (gzip): immediate 21 KB (1 pack), visible 197 KB (58), idle 117 KB (4), settled 6 KB, invited 4 KB, region 0.6 KB; the expression harvest is 264 KB raw and loads whole at idle for every route`
+}
+
+^"landed_2026_09_18"{
+  primitives = `runtime/browser-primitives.js → kernel/browser-primitives.js. It was already kernel by role ("no catalog or policy dependencies"; the import contract only let it import kernel/) and five semantic files reached up into runtime/ to get it. 19 importers, the contract rule, the tests, and the README follow the move.`
+  inspector = `runtime/state-inspector.js (930 lines) deleted: an unreachable duplicate of interface/state-inspector.js, which the enhancement catalog loads. Citations in three plans and one convention now name the owner.`
+  route_utils = `kernel/route-utils.js stops importing semantic/semantic-utils.js for a one-line unique(); the kernel keeps its own.`
+  instrument = `scripts/js-tree-value.mjs and npm run audit:js-tree / audit:js-tree:json.`
+}
+
+^"orphans"{
+  #:17 files nothing loads. Disposition is the creator's call; the July standalone-script audit graded reusability, not reach.
+  duplicate_or_shim = #[
+    `kernel/component-fixtures.js (5) and kernel/region-ecology-fixtures.js (3) — kernel shims to typed outputs, reached by build tooling; keep`,
+    `runtime/catalog/index.js (72) — the documented barrel, reading order #2; keep as the tree's entry, nothing imports it`
+  ][reg=set]
+  tools_without_a_loader = #[
+    `modules/tools/budgeting.js (639) — /tools/budgeting/ declares no script and no catalog def loads it; the bench renders without it`,
+    `modules/profile/tool.js (655) — /tools/profile/ and /tools/character-sheet/ load nothing from it`,
+    `modules/services/care-intake.js (327) — /services/care/ loads nothing from it`,
+    `modules/tools/spw-literal-parser.js (403) — /tools/spw-parser/ loads nothing from it`
+  ][reg=set]
+  semantic_and_runtime_helpers = #[
+    `interface/personas.js (129)`, `kernel/states.js (121)`, `runtime/gate.js (53)`, `runtime/prepaint-state.js (209)`, `runtime/visitation.js (58)`,
+    `semantic/page-universe.js (189)`, `semantic/pretext-presets.js (457)`, `semantic/projection.js (140)`, `semantic/recipe-semantics.js (174)`, `semantic/smart.js (233)`
+  ][reg=set]
+  rule = `Each is wired (a catalog def with a describes line the hand can test), or archived with its plan citation retargeted, or deleted. Conventions that cite them (visitation-memory, viewing-reason, operator-semantics) describe runtime that does not run; the citation is the first thing to fix either way.`
+}
+
+^"upward_imports"{
+  kernel = `site-settings-ui.js (1,452 lines) imports five runtime files and is interface work living in kernel/; site-settings-engine.js and -profiles.js import interface/palette-resonance.js; instrumentation.js imports three runtime QA files; core.js imports interface/haptics.js for groundElement; page-metadata.js and room-signal.js import semantic/. The honest moves: site-settings-ui → interface/; palette-resonance's pure parts → kernel/; groundElement → a kernel or runtime primitive haptics consumes.`
+  runtime = `13 imports into interface/: haptics.js, accent-palette.js, wonder-memory.js, cauldron/* are hubs used below their layer. Either they are runtime primitives with interface skins, or the layer names are wrong. Decide per hub, not per import.`
+  semantic = `three files import interface/haptics.js; the same groundElement / prime primitives as above.`
+}
+
+^"transport_value"{
+  harvest = `public/js/generated/spw-expressions.js: 264 KB raw, every route's expressions, loaded whole at idle by runtime/expression-resonance.js to build a kin index. Per-route entries plus precomputed kin edges would let a route load its own slice; the kin index is the only cross-route need.`
+  visible = `58 visible packs, 197 KB gzip in total: the largest transport class. Group by route family where members always mount together (design experiments, settings page, rpg-wednesday) before splitting further.`
+  boot = `82 KB gzip across 8 files is the price of Rolldown's loader plus shared boundaries (deploy-module-graph#measured_result); measure again after the visible packs settle.`
+}
+
+^"next"{
+  1 = `Orphans: the creator names delete / wire / archive per file; the tools without a loader are the first question, because their routes are live.`
+  2 = `site-settings-ui.js → interface/; then re-run audit:js-tree and check:runtime.`
+  3 = `Decide the hub layer for haptics, accent-palette, wonder-memory, cauldron; move or rename, one hub per patch.`
+  4 = `Split the expression harvest per route with kin edges; measure idle gzip before and after.`
+  5 = `Consider audit:js-tree as a check:local gate once orphans reach zero — until then it is a sensor, not a block.`
+}

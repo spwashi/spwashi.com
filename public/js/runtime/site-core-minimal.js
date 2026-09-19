@@ -3,7 +3,7 @@
  */
 
 import { FRAME_SELECTOR } from '../kernel/dom-contracts.js';
-import { safeQuery, safeQueryAll } from './browser-primitives.js';
+import { safeQuery, safeQueryAll } from '/public/js/kernel/browser-primitives.js';
 import {
   LENS_MODE_SETTLE_MS,
   findLensModeSwitches,

@@ -21,7 +21,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { observeIntersections } from '/public/js/runtime/browser-primitives.js';
+import { observeIntersections } from '/public/js/kernel/browser-primitives.js';
 import {
   writeDatasetValues,
   writeStyleValue,

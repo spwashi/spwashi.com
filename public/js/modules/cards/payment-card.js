@@ -13,7 +13,7 @@
  * the matched host: #payment-settings-container → settings toggles, else cards.
  */
 
-import { resolveMountRoot, resolveOwnerDocument } from '/public/js/runtime/browser-primitives.js';
+import { resolveMountRoot, resolveOwnerDocument } from '/public/js/kernel/browser-primitives.js';
 
 // ── Identity ──────────────────────────────────────────────────────────────────
 const HANDLE = 'spwashi';

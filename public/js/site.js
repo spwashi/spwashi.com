@@ -64,7 +64,7 @@ import {
   safeQueryAll,
   whenDocumentReady,
   whenWindowLoaded,
-} from './runtime/browser-primitives.js';
+} from './kernel/browser-primitives.js';
 import { createRegistry } from './kernel/module-registry.js';
 import { describeRuntimePolicy, inferRuntimePosture, readRuntimePolicy } from './runtime/orchestration/policy.js';
 import { parseFeatureList } from './runtime/orchestration/features.js';

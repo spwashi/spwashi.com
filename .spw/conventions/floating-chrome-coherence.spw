@@ -7,7 +7,7 @@
 #:layer #!pragmatics
 
 @interface_satchel: ~"../../public/js/interface/state-inspector.js"
-@runtime_state_blocks: ~"../../public/js/runtime/state-inspector.js"
+@runtime_state_blocks: ~"../../public/js/interface/state-inspector.js"
 @dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
 @navigation_locomotion: ~"../../public/js/runtime/navigation-locomotion.js"
 @attention_field: ~"./attention-field.spw"
@@ -28,7 +28,7 @@ fixity = "tending"
     chrome_role = "state-inspector"
   }[reg=facet]
   runtime_blocks: .{
-    file = "runtime/state-inspector.js"
+    file = "interface/state-inspector.js"
     role = "inline opt-in state blocks on data-spw-inspect surfaces"
     selector = "data-spw-inspect | data-spw-image-managed"
   }[reg=facet]

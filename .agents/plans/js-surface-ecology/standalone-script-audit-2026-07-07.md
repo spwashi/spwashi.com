@@ -57,7 +57,7 @@ These are the files whose standalone boundary is weakest. Treat this as a queue 
 | C | `public/js/site.js` | 1035 lines, 13 imports, 4 event refs, 0 storage refs, 11 direct dataset writes | Keep as boot shell; extract only policy/helper seams. |
 | C | `public/js/runtime/attention/section-handle.js` | 1016 lines, 4 imports, 8 event refs, 0 storage refs, 8 direct dataset writes | Route new custom events through bus unless DOM compatibility requires raw dispatch. |
 | C | `public/js/interface/discovery-notices.js` | 939 lines, 3 imports, 19 event refs, 4 storage refs, 25 direct dataset writes | Move JSON storage reads/writes behind shared storage helpers. |
-| C | `public/js/runtime/state-inspector.js` | 930 lines, 3 imports, 18 event refs, 0 storage refs, 28 direct dataset writes | Rename as state-block inspector; keep per-component mutation isolated. |
+| C | `public/js/interface/state-inspector.js` | 930 lines, 3 imports, 18 event refs, 0 storage refs, 28 direct dataset writes | Rename as state-block inspector; keep per-component mutation isolated. |
 | C | `public/js/runtime/spells.js` | 909 lines, 7 imports, 12 event refs, 3 storage refs, 21 direct dataset writes | Move JSON storage reads/writes behind shared storage helpers. |
 | C | `public/js/modules/services/configurator.js` | 771 lines, 2 imports, 15 event refs, 0 storage refs, 18 direct dataset writes | Prefer kernel/dom-contracts dataset writers for projection state. |
 | C | `public/js/interface/semantic-chrome.js` | 763 lines, 3 imports, 12 event refs, 0 storage refs, 21 direct dataset writes | Prefer kernel/dom-contracts dataset writers for projection state. |
@@ -222,7 +222,7 @@ These are the files whose standalone boundary is weakest. Treat this as a queue 
 | B | `public/js/runtime/site-core-minimal.js` | runtime | L294 I4/0 E10 S0 D19 Q2 | bounded feature script; standalone with local DOM/runtime assumptions | Prefer kernel/dom-contracts dataset writers for projection state. |
 | C | `public/js/runtime/spells.js` | runtime | L909 I7/0 E12 S3 D21 Q10 | mixed boundary; keep behavior but extract repeated primitives | Move JSON storage reads/writes behind shared storage helpers. |
 | B | `public/js/runtime/spw-key-events.js` | runtime | L688 I3/0 E18 S0 D9 Q12 | bounded feature script; standalone with local DOM/runtime assumptions | Route new custom events through bus unless DOM compatibility requires raw dispatch. |
-| C | `public/js/runtime/state-inspector.js` | runtime | L930 I3/0 E18 S0 D28 Q20 | mixed boundary; keep behavior but extract repeated primitives | Rename as state-block inspector; keep per-component mutation isolated. |
+| C | `public/js/interface/state-inspector.js` | runtime | L930 I3/0 E18 S0 D28 Q20 | mixed boundary; keep behavior but extract repeated primitives | Rename as state-block inspector; keep per-component mutation isolated. |
 | A | `public/js/runtime/state-orchestrator.js` | runtime | L74 I0/0 E1 S0 D0 Q4 | bounded module; reusable with low side-effect pressure | Leave alone except normal maintenance. |
 | A | `public/js/runtime/topical-payload.js` | runtime | L350 I2/0 E5 S0 D0 Q9 | bounded module; reusable with low side-effect pressure | Leave alone except normal maintenance. |
 | B | `public/js/runtime/tuning-discovery.js` | runtime | L322 I3/1 E2 S0 D21 Q13 | bounded feature script; standalone with local DOM/runtime assumptions | Prefer kernel/dom-contracts dataset writers for projection state. |

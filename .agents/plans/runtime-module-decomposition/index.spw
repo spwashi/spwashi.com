@@ -55,7 +55,7 @@ intent: .{
 @dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
 @bus: ~"../../../public/js/kernel/bus.js"
 @public_js_interface_state_inspector_js: ~"../../../public/js/interface/state-inspector.js"
-@public_js_runtime_state_inspector_js: ~"../../../public/js/runtime/state-inspector.js"
+@public_js_runtime_state_inspector_js: ~"../../../public/js/interface/state-inspector.js"
 @shared: ~"../../../public/js/kernel/shared.js"
 
 dispatch: .{

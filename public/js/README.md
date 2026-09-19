@@ -22,6 +22,8 @@ For console-oriented work, it exports `createSpwLogger`,
 `installSpwCompositionConsole`. These helpers let a page expose
 `window.spwCompose` intentionally instead of relying on scattered ad hoc logs.
 
+Sense the tree before editing it: `npm run audit:js-tree` lists the files nothing loads and the imports that reach up the layer order (kernel < semantic < runtime < interface < modules); `npm run check:runtime` reads the catalog's contracts. The audit's ledger is `.spw/audits/js-tree-value-2026-09.spw`.
+
 ## Reading Order
 
 If you are trying to learn the runtime, read in this order:
@@ -65,7 +67,7 @@ wave.
 - `runtime/`: module catalog/loader, active processes, route grounding, page-state, frame-state, spells, inspectors, gates, and lifecycle loops.
 - `runtime/catalog/`: staged family definitions (`core`, `feature`, `region`, `enhancement`), constants, normalization, and export/update/description contracts. `runtime/catalog/index.js` remains the full-catalog entrypoint; `site.js` imports individual families to preserve lazy loading. Catalog load paths resolve relative to `catalog/`; source audits and the deploy builder use the same base.
 - `runtime/orchestration/`: `loader.js` owns instances and inspection; `scheduler.js` owns mount strategies; `lifecycle.js` owns invocation and disposal; `features.js` and `policy.js` own eligibility inputs.
-- `runtime/browser-primitives.js`: DOM queries, root resolution, idle callbacks, shared intersection lanes, and document readiness. It does not depend on catalog or orchestration.
+- `kernel/browser-primitives.js`: DOM queries, root resolution, idle callbacks, shared intersection lanes, and document readiness. It does not depend on catalog or orchestration.
 - `kernel/module-registry.js`: facade for the DOM-independent typed registry in `public/ts/module-registry.ts`; cleanup waves preserve replacement instances and join pending disposal.
 - `runtime/interaction/`: visitor-gesture vocabulary (`loop`, `hops`, `vocabulary`, `progression`, `story`). The catalog id `interaction-progression` is unchanged; its load path resolves from `catalog/` into this folder.
 - `runtime/page-hooks.js`: page-unique hooks, named handles, and console-facing page play helpers.
@@ -109,7 +111,7 @@ These are the best candidates when you want to reuse a file on another site:
   region harmony vocabulary shared with `site.js`.
 - `semantic/role-inference.js` for `collectRegions()`, `collectAnnotationRegions()`,
   and shared role/kind/context inference.
-- `runtime/browser-primitives.js` for browser scheduling and DOM roots;
+- `kernel/browser-primitives.js` for browser scheduling and DOM roots;
   `runtime/orchestration/policy.js` for query policy; `kernel/module-registry.js`
   for typed instance ownership. `compose.js` preserves their portable exports.
 - `SPW_RUNTIME_HELPERS_CONTRACT` for a compact summary of the helper layer's

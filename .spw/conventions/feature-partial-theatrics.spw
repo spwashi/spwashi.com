@@ -12,7 +12,7 @@
 @behavior_scopes_js: ~"../../public/js/runtime/behavior-scopes.js"
 @css_manifest: ~"../../scripts/ts/css-manifest.mts"
 @module_catalog: ~"../../public/js/runtime/catalog/index.js"
-@runtime_helpers: ~"../../public/js/runtime/browser-primitives.js"
+@runtime_helpers: ~"../../public/js/kernel/browser-primitives.js"
 @feature_discovery: ~"../../public/js/runtime/feature-discovery.js"
 @site_settings_engine: ~"../../public/js/kernel/site-settings-engine.js"
 @settings_route: ~"../../settings/index.html"

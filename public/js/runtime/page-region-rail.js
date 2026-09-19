@@ -2,7 +2,7 @@ import { REGION_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { registerDomSyncTask } from '/public/js/runtime/dom-sync-hub.js';
 import { collectRegions as collectRoleRegions } from '/public/js/semantic/role-inference.js';
-import { observeIntersections } from '/public/js/runtime/browser-primitives.js';
+import { observeIntersections } from '/public/js/kernel/browser-primitives.js';
 import {
   classifyRegionRelation,
   kinIds,

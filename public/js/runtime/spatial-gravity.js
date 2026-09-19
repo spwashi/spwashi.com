@@ -48,7 +48,7 @@ import {
 } from '../kernel/spatial-bands.js';
 import { createSpwLogger, markInstrumented } from '../kernel/instrumentation.js';
 import { ensureSpatialGravityStyles } from '../kernel/deferred-styles.js';
-import { observeIntersections } from './browser-primitives.js';
+import { observeIntersections } from '/public/js/kernel/browser-primitives.js';
 
 const GRAVITY_SELECTOR = '[data-spw-gravity]';
 

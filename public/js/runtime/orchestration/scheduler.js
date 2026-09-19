@@ -3,7 +3,7 @@ import { writeDatasetValue } from '../../kernel/dom-contracts.js';
 import { setRegionState } from '../region-profiler.js';
 import { annotateModuleDescribesTarget } from '../catalog/describes-contract.js';
 import { normalizeRuntimeToken } from './policy.js';
-import { onIdle, once } from '../browser-primitives.js';
+import { onIdle, once } from '/public/js/kernel/browser-primitives.js';
 
 export function createModuleScheduler({ mountWhen, regionStates, html, setPageState, pageStates, getRoots, shouldScheduleDefinition, mountDefinition, beginMountBatch, endMountBatch, annotateModuleTrigger }) {
   async function mountImmediateLayer(defs, ctx, options = {}) {

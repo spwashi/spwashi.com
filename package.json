@@ -64,6 +64,8 @@
     "audit:copy:accessor": "node scripts/page-copy-audit.mjs accessor",
     "audit:region-seats": "node scripts/spw-region-seat-audit.mjs",
     "audit:module-selectors": "node --import ./scripts/lib/register-public-imports.mjs scripts/module-selector-depth-audit.mjs",
+    "audit:js-tree": "node scripts/js-tree-value.mjs",
+    "audit:js-tree:json": "node scripts/js-tree-value.mjs --json",
     "audit:module-writers": "node --import ./scripts/lib/register-public-imports.mjs scripts/module-writer-audit.mjs",
     "audit:css-custom-properties": "node scripts/css-custom-property-audit.mjs",
     "ecology": "node scripts/spw-ecology-inventory.mjs",

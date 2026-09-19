@@ -4,8 +4,11 @@
  * Route normalization, list parsing, transition priming, and hydration context.
  */
 
-import { unique } from '/public/js/semantic/semantic-utils.js';
 import { writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+
+/* Local, not semantic/semantic-utils.js: the kernel must not import from the
+   layers above it for a one-line set. */
+const unique = (values = []) => [...new Set(values.filter(Boolean))];
 
 const primedRoutes = new Set();
 

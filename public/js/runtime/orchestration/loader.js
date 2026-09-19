@@ -40,7 +40,7 @@ import { REGION_STATES, setRegionState } from '../region-profiler.js';
 import { applyFamiliarityGate } from '../familiarity-gate.js';
 import { matchesFeatures, normalizeFeatureRequirements } from './features.js';
 import { normalizeRuntimeToken, SPW_RUNTIME_HELPERS_CONTRACT } from './policy.js';
-import { safeQuery, safeQueryAll } from '../browser-primitives.js';
+import { safeQuery, safeQueryAll } from '/public/js/kernel/browser-primitives.js';
 import {
   describePageCategory,
   isLiteracyPage,

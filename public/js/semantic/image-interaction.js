@@ -6,7 +6,7 @@
  */
 
 import { isOwnAffordanceTarget, observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
-import { resolveOwnerDocument } from '/public/js/runtime/browser-primitives.js';
+import { resolveOwnerDocument } from '/public/js/kernel/browser-primitives.js';
 import { syncEffectInterpretation } from './effect-interpretation.js';
 
 const INTERACTIVE_FIGURE_SELECTOR = [

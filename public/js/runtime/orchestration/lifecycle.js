@@ -1,5 +1,5 @@
 /** Mount invocation, lifecycle records, and coordinated teardown. Scheduling lives in loader.js. */
-import { isFn } from '../browser-primitives.js';
+import { isFn } from '/public/js/kernel/browser-primitives.js';
 import { resolveModuleMount } from '../catalog/export-contract.js';
 
 export const MODULE_TIMING_STAGES = Object.freeze([

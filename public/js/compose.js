@@ -101,7 +101,7 @@ export {
   safeQueryAll,
   whenDocumentReady,
   whenWindowLoaded,
-} from './runtime/browser-primitives.js';
+} from './kernel/browser-primitives.js';
 export { createRegistry } from './kernel/module-registry.js';
 export {
   describeRuntimePolicy,

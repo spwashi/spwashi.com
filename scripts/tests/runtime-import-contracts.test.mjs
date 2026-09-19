@@ -177,7 +177,7 @@ test('entrypoints and module families keep their existing folder boundaries', as
 
 test('lower runtime layers cannot import the orchestration that consumes them', async (t) => {
   const report = await inspectFixture(t, {
-    'public/js/runtime/browser-primitives.js': "import './orchestration/policy.js';",
+    'public/js/kernel/browser-primitives.js': "import '../runtime/orchestration/policy.js';",
     'public/js/runtime/catalog/constants.js': "export * from '../orchestration/loader.js';",
     'public/js/runtime/orchestration/policy.js': "import './loader.js';",
     'public/js/runtime/orchestration/features.js': "import './lifecycle.js';",

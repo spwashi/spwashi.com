@@ -156,7 +156,7 @@ export async function collectRuntimeImportReport(rootDir) {
             const target = resolved.file;
             if (!fileSet.has(target))
                 errors.push(`${label} imports missing file ${entry.specifier}.`);
-            if (file === 'runtime/browser-primitives.js' && !target.startsWith('kernel/')) {
+            if (file === 'kernel/browser-primitives.js' && !target.startsWith('kernel/')) {
                 errors.push(`${label} makes browser primitives depend on ${target}; keep catalog, policy, and feature ownership outside browser primitives.`);
             }
             if (file.startsWith('runtime/catalog/') && entry.kind !== 'dynamic' && target.startsWith('runtime/orchestration/')) {

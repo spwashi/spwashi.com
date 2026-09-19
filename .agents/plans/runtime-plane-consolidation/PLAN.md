@@ -219,7 +219,7 @@ Gate: both are visible chrome. Demo before catalog/gating changes that alter whe
 
 ## Out Of Scope
 
-- Merging `interface/state-inspector.js` and `runtime/state-inspector.js` — noted as duplication evidence; belongs to `runtime-module-decomposition`.
+- Merging the two state inspectors — resolved 2026-09-18: `runtime/state-inspector.js` was an unreachable duplicate (no importer, not a catalog target) and was deleted; `interface/state-inspector.js` is the one owner. Previously noted as duplication evidence; belongs to `runtime-module-decomposition`.
 - New npm dependencies beyond a build-time minifier/bundler.
 - Any new visual chrome or data attribute that does not fall out of existing token writers.
 - CSS layer ordering and the `ornament` contract.

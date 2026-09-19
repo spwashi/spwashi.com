@@ -54,7 +54,7 @@ Referential integrity pass over the live plan tree, run from `npm run plans:inde
   - `public/css/<route>-surface.css`, `public/css/routes/<route>-surface.css` → `public/css/routes/surfaces/<route>.css`
   - `public/css/spw-grammar.css` → `public/css/grammar/`; `public/css/spw-tokens.css` → `public/css/tokens/`; `public/css/spw-shell.css` → `public/css/shell/`
   - `public/js/rpg-wednesday*.js` → `public/js/modules/rpg-wednesday/`; `public/js/spw-math-diagrams.js` → `public/js/modules/math/`
-  - `public/js/runtime/module-catalog.js` → `public/js/runtime/catalog/index.js`; `module-loader.js` → `runtime/orchestration/loader.js`; `module-export-contract.js` → `runtime/catalog/export-contract.js`; `runtime-helpers.js` → `runtime/browser-primitives.js`
+  - `public/js/runtime/module-catalog.js` → `public/js/runtime/catalog/index.js`; `module-loader.js` → `runtime/orchestration/loader.js`; `module-export-contract.js` → `runtime/catalog/export-contract.js`; `runtime-helpers.js` → `kernel/browser-primitives.js`
   - `public/js/spw-shared.js` is ambiguous on purpose: operator registry → `kernel/shared.js`; attention helpers → `runtime/attention/shared.js`
   - `.agents/state/plans-index.json`, `skills-index.json`, `checks/last-local-check.json` were never committed; the plans that cite them (`agentic-dev-contracts`, `plan-wip-index-conventions`, `spw-architecture-ecology`) describe a precipitate that stdout now carries (`npm run census:json`, `ecology:json`).
 - **Recency:** 225 live folders; last touched 2026-06: 2, 2026-07: 146, 2026-08: 19, 2026-09: 58. The 2026-07-12 cohort is the reviewed-and-shelved body; nothing there was moved. Folders did not move. No `--force-generated`.

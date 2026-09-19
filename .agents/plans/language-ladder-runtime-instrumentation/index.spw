@@ -57,7 +57,7 @@ intent: .{
 @plan_agent_optimization: ~"../agent-optimization/index.spw"
 @public_js_site_js: ~"../../../public/js/site.js"
 @instrumentation: ~"../../../public/js/kernel/instrumentation.js"
-@runtime_helpers: ~"../../../public/js/runtime/browser-primitives.js"
+@runtime_helpers: ~"../../../public/js/kernel/browser-primitives.js"
 @index: ~"../../../settings/index.html"
 @readme: ~"../../../public/js/README.md"
 @conventions: ~"../../../.spw/conventions/"
