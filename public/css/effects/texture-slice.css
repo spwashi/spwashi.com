@@ -30,20 +30,20 @@
 
 :root {
   --spw-texture-paper: image-set(
-    url('/public/images/assets/motifs/texture-paper-fiber-display.avif') type('image/avif'),
-    url('/public/images/assets/motifs/texture-paper-fiber-display.webp') type('image/webp')
+    url('../../images/assets/motifs/texture-paper-fiber-display.avif') type('image/avif'),
+    url('../../images/assets/motifs/texture-paper-fiber-display.webp') type('image/webp')
   );
   --spw-texture-linen: image-set(
-    url('/public/images/assets/motifs/texture-linen-weave-display.avif') type('image/avif'),
-    url('/public/images/assets/motifs/texture-linen-weave-display.webp') type('image/webp')
+    url('../../images/assets/motifs/texture-linen-weave-display.avif') type('image/avif'),
+    url('../../images/assets/motifs/texture-linen-weave-display.webp') type('image/webp')
   );
   --spw-texture-harlequin: image-set(
-    url('/public/images/assets/motifs/texture-harlequin-diamonds-display.avif') type('image/avif'),
-    url('/public/images/assets/motifs/texture-harlequin-diamonds-display.webp') type('image/webp')
+    url('../../images/assets/motifs/texture-harlequin-diamonds-display.avif') type('image/avif'),
+    url('../../images/assets/motifs/texture-harlequin-diamonds-display.webp') type('image/webp')
   );
   --spw-texture-wash: image-set(
-    url('/public/images/assets/motifs/texture-cream-ochre-wash-display.avif') type('image/avif'),
-    url('/public/images/assets/motifs/texture-cream-ochre-wash-display.webp') type('image/webp')
+    url('../../images/assets/motifs/texture-cream-ochre-wash-display.avif') type('image/avif'),
+    url('../../images/assets/motifs/texture-cream-ochre-wash-display.webp') type('image/webp')
   );
 
   --spw-texture-slice-image: var(--spw-texture-paper);

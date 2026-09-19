@@ -105,6 +105,7 @@ lifecycle record instead of appearing mounted.
 These are the best candidates when you want to reuse a file on another site:
 
 - `compose.js` for a single import surface over the portable runtime helpers.
+- `media/texture-slice.js` plus `/public/css/effects/texture-slice.css` when another origin only needs `[data-spw-texture-slice]`. Motif URLs are stylesheet-relative so they keep resolving from this host. Do not load `site.js` there.
 - `runtime/catalog/index.js` + `runtime/orchestration/loader.js` for staged mount
   contracts without inlining bootstrap policy in a host page.
 - `runtime/gesture-contract.js` + `runtime/region-profiler.js` for gesture and
