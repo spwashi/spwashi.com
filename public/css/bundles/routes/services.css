@@ -1953,6 +1953,141 @@
     }
   }
 }
+
+/* ==========================================================================
+   Compose a bundle — skills as checkable chips, one readout, one block
+   -------------------------------------------------------------------------- */
+:where(body[data-spw-surface="services"] .bundle-composer) {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+@media (min-width: 61.25rem) {
+  :where(body[data-spw-surface="services"] .bundle-composer) {
+    grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 1fr);
+    align-items: start;
+  }
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__lanes) {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+:where(body[data-spw-surface="services"] .bundle-lane) {
+  margin: 0;
+  padding: 0.55rem 0.7rem 0.7rem;
+  border: 1px solid var(--services-line);
+  border-radius: var(--shape-component, 0.6rem);
+  background: var(--services-panel, var(--surface, #fff));
+  min-width: 0;
+}
+
+:where(body[data-spw-surface="services"] .bundle-lane > legend) {
+  padding-inline: 0.3rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.7));
+}
+
+:where(body[data-spw-surface="services"] .bundle-skill) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.55rem;
+  align-items: baseline;
+  padding: 0.42rem 0.5rem;
+  min-height: var(--touch-target-min, 2.75rem);
+  border-radius: var(--shape-element, 0.4rem);
+  cursor: pointer;
+  transition: background-color var(--duration-fast, 120ms) ease;
+}
+
+:where(body[data-spw-surface="services"] .bundle-skill:hover),
+:where(body[data-spw-surface="services"] .bundle-skill:focus-within) {
+  background: color-mix(in srgb, var(--services-accent) 8%, transparent);
+}
+
+:where(body[data-spw-surface="services"] .bundle-skill[data-checked]) {
+  background: color-mix(in srgb, var(--services-accent) 14%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--services-accent) 38%, transparent);
+}
+
+:where(body[data-spw-surface="services"] .bundle-skill > input) {
+  margin: 0;
+  inline-size: 1.05rem;
+  block-size: 1.05rem;
+  accent-color: var(--services-accent);
+}
+
+:where(body[data-spw-surface="services"] .bundle-skill > span) {
+  font-weight: 600;
+}
+
+:where(body[data-spw-surface="services"] .bundle-skill > small) {
+  grid-column: 2;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.7));
+  font-size: var(--text-size-xs, 0.84rem);
+  line-height: 1.4;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__readout) {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.9rem;
+  border: 1px solid var(--services-line-strong);
+  border-radius: var(--shape-component, 0.6rem);
+  background: var(--services-paper, var(--surface, #fff));
+  position: sticky;
+  top: calc(var(--spw-shell-menu-offset, 4rem) + 0.6rem);
+  min-width: 0;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__name) {
+  margin: 0;
+  font-size: var(--text-size-lg, 1.2rem);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__range) {
+  margin: 0;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-sm, 0.92rem);
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__expression) {
+  font-size: var(--text-size-2xs, 0.72rem);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.7));
+  overflow-wrap: anywhere;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__block) {
+  margin: 0;
+  padding: 0.6rem 0.7rem;
+  max-height: 14rem;
+  overflow: auto;
+  border-radius: var(--shape-element, 0.4rem);
+  background: color-mix(in srgb, var(--ink, #1b2a2a) 5%, transparent);
+  font-size: var(--text-size-2xs, 0.72rem);
+  line-height: 1.5;
+  white-space: pre;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__block:empty) {
+  display: none;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer[data-bundle-state="empty"] .bundle-composer__actions [data-bundle-action]) {
+  opacity: 0.6;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer .spw-chip[data-state="success"]) {
+  background: color-mix(in srgb, var(--services-glow) 30%, transparent);
+}
 }
 
 /* /public/css/routes/widgets/services-configurator.css */

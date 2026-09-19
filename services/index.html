@@ -149,7 +149,7 @@
                 <p data-spw-textual-role="note">If this needs to circulate in a business context, the short version is simple: I help teams make software, stories, and public surfaces more legible so delivery, trust, and handoff improve instead of decaying under pressure.</p>
 
                 <ul class="frame-list frame-list--inline">
-                    <li><strong>What I build directly</strong> — cover design, illustration, ebook formatting, web systems, consulting, QA. Split across <a href="/services/creator/">creator work</a> and <a href="/services/systems/">systems work</a>, with the <a href="/tools/">tools</a> page for reusable self-description and planning.</li>
+                    <li><strong>What I build directly</strong> — art, illustration, logo and cover design, concept doodles, ebook formatting, websites and web systems, software, video, content curation, digital media marketing, Discord moderation, consulting, and QA across real devices with a team. <a href="#compose-a-bundle">Compose them into one bundle.</a> Split across <a href="/services/creator/">creator work</a> and <a href="/services/systems/">systems work</a>, with the <a href="/tools/">tools</a> page for reusable self-description and planning.</li>
                     <li><strong>Who the network can connect you with</strong> — an <a href="/services/ecosystem/">ecosystem</a> of authors, editors, engineers, entrepreneurs, and makers. Referrals stay threaded, and the ramp is useful for someone still early in their path.</li>
                     <li><strong>How I keep the work honest</strong> — a <a href="/care/">care interface</a> for language, cards, witness, and safety boundaries, plus <a href="/services/care/">care practices</a> and the local intake form when someone wants a practical next step.</li>
                 </ul>
@@ -179,6 +179,7 @@
                     </ol>
                 </div>
                 <nav class="frame-operators" aria-label="Services lanes">
+                    <a class="spw-chip" data-spw-handle="true" href="#compose-a-bundle" data-spw-operator="integration" data-spw-action="publish">^compose_a_bundle</a>
                     <a class="spw-chip" data-spw-handle="true" href="/cards/" data-spw-operator="integration">^proof_cards</a>
                     <a class="spw-chip" data-spw-handle="true" href="/membership/" data-spw-operator="frame" data-spw-action="address">#&gt;membership</a>
                     <a class="spw-chip" data-spw-handle="true" href="#render-queue" data-spw-operator="value" data-spw-action="materialize">*render_queue</a>
@@ -428,6 +429,90 @@
                         <h3>Taste note</h3>
                         <p>A short reading of a page or a flow from people already in orbit. One note back, one close. <a href="/services/ecosystem/#taste">How taste works →</a></p>
                     </article>
+                </div>
+            </section>
+
+            <!-- COMPOSE A BUNDLE -->
+            <section
+                class="spw-frame"
+                id="compose-a-bundle"
+                data-spw-role="vessel"
+                data-spw-form="brace"
+                data-spw-meaning="compose the skills you want into one bundle with the range the ladder already states"
+                data-spw-operator="integration"
+                data-spw-feature="bundle-composer"
+                data-spw-semantic-expression="services[bundle]{compose.range.send}<product>"
+                data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="projection consequence locality" data-spw-affordance="act" data-spw-liminality="threshold" data-spw-region="compose"
+                aria-labelledby="compose-a-bundle-title">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#compose-a-bundle" data-spw-operator="integration" data-spw-sigil="^bundle">^bundle</a>
+                    <h2 id="compose-a-bundle-title">Compose a bundle</h2>
+                </header>
+                <p data-spw-textual-role="lede" data-spw-copy-unit="services.bundle.lede" data-spw-semantic-expression="services[bundle]{compose}">
+                    One person, several hands. I make art and illustration, design logos and pages, build websites, and write software that has shipped to production in real time since 2013 — Project Lead The Way was the start of that career. I make videos, curate content, run digital media marketing, and moderate Discord servers, and a team I work with tests releases across real devices. Pick the skills you want in one engagement; the range comes from the <a href="#pricing">pricing ladder</a>, and anything the ladder does not price says so.
+                </p>
+                <div class="bundle-composer" data-bundle-composer data-spw-touch="tap" data-spw-role="vessel" data-spw-form="brace">
+                    <div class="bundle-composer__lanes">
+                        <fieldset class="bundle-lane" data-lane="art">
+                            <legend>Art &amp; illustration</legend>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="plate" data-lane="art" data-label="Plate" data-min="250" data-max="250"> <span>Plate</span> <small>$250 · one illustration, one close</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="cover" data-lane="art" data-label="Illustrated cover" data-min="1200" data-max="1200"> <span>Illustrated cover</span> <small>$1,200 · genre-aware image and type</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="logo" data-lane="art" data-label="Logo design" data-quoted="true"> <span>Logo design</span> <small>quoted · mark, lockup, and a use sheet</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="doodle" data-lane="art" data-label="Concept doodle" data-quoted="true"> <span>Concept doodle</span> <small>quoted · a sketch of your idea; can become a <a href="/design/folios/#collect-a-folio">laminated folio</a> or be painted onto an existing one</small></label>
+                        </fieldset>
+                        <fieldset class="bundle-lane" data-lane="design">
+                            <legend>Design &amp; websites</legend>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="scope-note" data-lane="design" data-label="Scope note" data-min="500" data-max="500"> <span>Scope note</span> <small>$500 · recommendation, risks, next move</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="taste-pass" data-lane="design" data-label="Taste pass" data-min="500" data-max="500"> <span>Taste pass</span> <small>$500 · a page or flow read by the network</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="interactive-cover" data-lane="design" data-label="Interactive cover page" data-min="1500" data-max="1500"> <span>Interactive cover page</span> <small>$1,500 · a small hosted page with motion or touch</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="author-site" data-lane="design" data-label="Author site" data-min="2500" data-max="2500"> <span>Author site</span> <small>$2,500 · portfolio or launch surface</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="repair-pass" data-lane="design" data-label="Launch / repair pass" data-min="5000" data-max="5000" data-open="true"> <span>Launch / repair pass</span> <small>$5,000+ · stabilize a site or product surface</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="business-site" data-lane="design" data-label="Durable business site" data-min="8000" data-max="8000" data-open="true"> <span>Durable business site</span> <small>$8,000+ · routes, copy, components, handoff</small></label>
+                        </fieldset>
+                        <fieldset class="bundle-lane" data-lane="engineering">
+                            <legend>Software &amp; advisory</legend>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="diagnostic" data-lane="engineering" data-label="Diagnostic session + memo" data-min="750" data-max="750"> <span>Diagnostic session + memo</span> <small>$750 · call plus a written memo</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="arch-memo" data-lane="engineering" data-label="Architecture memo" data-min="5000" data-max="12000"> <span>Architecture memo</span> <small>$5,000–$12,000 · codebase review and sequence</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="app-sprint" data-lane="engineering" data-label="Application sprint" data-min="12000" data-max="12000" data-open="true"> <span>Application sprint</span> <small>$12,000+ · workflow, internal tool, or product UI</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="retainer" data-lane="engineering" data-label="Advisory retainer" data-min="4000" data-max="8000" data-unit="mo"> <span>Advisory retainer</span> <small>$4,000–$8,000/mo · weekly advisory and decision support</small></label>
+                        </fieldset>
+                        <fieldset class="bundle-lane" data-lane="qa">
+                            <legend>QA across devices</legend>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="qa-pass" data-lane="qa" data-label="QA pass" data-min="2500" data-max="6000"> <span>QA pass</span> <small>$2,500–$6,000 · a team tests the release on real phones, tablets, and desktops; accessibility and launch readiness</small></label>
+                        </fieldset>
+                        <fieldset class="bundle-lane" data-lane="media">
+                            <legend>Video, community &amp; media</legend>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="video" data-lane="media" data-label="Video" data-quoted="true"> <span>Video</span> <small>quoted · short-form or explainer, from outline to cut</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="discord" data-lane="media" data-label="Discord moderation" data-quoted="true"> <span>Discord moderation</span> <small>quoted · monthly; rules, roles, and a calm room</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="curation" data-lane="media" data-label="Content curation" data-quoted="true"> <span>Content curation</span> <small>quoted · a shelf, a series, or a feed kept in order</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="media-marketing" data-lane="media" data-label="Digital media marketing" data-quoted="true"> <span>Digital media marketing</span> <small>quoted · calendar, campaign, and receipts</small></label>
+                        </fieldset>
+                        <fieldset class="bundle-lane" data-lane="ecosystem">
+                            <legend>Ecosystem</legend>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="intro-card" data-lane="ecosystem" data-label="Curated intro card" data-min="100" data-max="250"> <span>Curated intro card</span> <small>$100–$250 · a handoff with context</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="routing" data-lane="ecosystem" data-label="Project routing" data-min="500" data-max="500"> <span>Project routing</span> <small>$500 · a shortlist and a recommendation</small></label>
+                        </fieldset>
+                    </div>
+                    <div class="bundle-composer__readout" data-bundle-readout aria-live="polite">
+                        <p class="bundle-composer__name" data-bundle-name>Pick skills to compose a bundle</p>
+                        <p class="bundle-composer__range"><span data-bundle-count>0</span> chosen · <span data-bundle-range>the range appears here</span></p>
+                        <code class="bundle-composer__expression" data-bundle-expression>^bundle[]{}</code>
+                        <pre class="bundle-composer__block" data-bundle-block aria-label="bundle as Spw"></pre>
+                        <div class="bundle-composer__presets frame-operators" aria-label="Starting bundles">
+                            <button type="button" class="spw-chip" data-spw-handle="true" data-bundle-preset="cover,author-site,qa-pass" data-spw-operator="potential">~author_launch</button>
+                            <button type="button" class="spw-chip" data-spw-handle="true" data-bundle-preset="logo,business-site,media-marketing,discord" data-spw-operator="potential">~studio_launch</button>
+                            <button type="button" class="spw-chip" data-spw-handle="true" data-bundle-preset="doodle,plate,video" data-spw-operator="potential">~illustrated_idea</button>
+                            <button type="button" class="spw-chip" data-spw-handle="true" data-bundle-preset="repair-pass,arch-memo,retainer" data-spw-operator="potential">~stabilize_and_advise</button>
+                        </div>
+                        <div class="bundle-composer__actions frame-operators" aria-label="Take the bundle with you">
+                            <button type="button" class="spw-chip" data-spw-handle="true" data-bundle-action="copy" data-spw-operator="wonder">? copy bundle</button>
+                            <button type="button" class="spw-chip" data-spw-handle="true" data-bundle-action="download" data-spw-operator="value">*download .txt</button>
+                            <button type="button" class="spw-chip" data-spw-handle="true" data-bundle-action="share" data-spw-operator="concept-edge">&gt;copy link</button>
+                            <a class="spw-chip" data-spw-handle="true" href="/contact/" data-spw-operator="perspective" data-spw-action="enter">@send it</a>
+                            <button type="button" class="spw-chip" data-spw-handle="true" data-bundle-action="clear" data-spw-operator="action">!clear</button>
+                        </div>
+                        <p data-spw-textual-role="note">The block above is Spw: paste it into <a href="/contact/">contact</a> or the chat we share and I reply with a scoped proposal. Quoted lines get their number in that reply; the <a href="#configure">field below</a> can still tune the lane.</p>
+                    </div>
                 </div>
             </section>
             </div>
