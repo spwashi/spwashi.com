@@ -1,0 +1,68 @@
+# Plan Index — Workers Wonder Kit
+#
+# wap.mom and smut.today share one worker skeleton by copy; make the shared third one kit,
+# keep each voice its own, and give both a return-visit loop.
+
+#>plan_workers_wonder_kit_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "experimental"
+
+intent: .{
+ goal = `Make the shared third of the wap.mom and smut.today workers one kit, keep each worker's voice its own, and give both a reason to be returned to.`
+ owner = `workers-wonder-kit`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "priming"
+ memory_tier = "warm"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Four workers carry the same skeleton by copy. A kit is the maintainability; offices, filing, pacing, and craft notes are the wonder.`
+ concepts = #[
+  `worker-kit`,
+  `ministry-office`,
+  `filing-cabinet`,
+  `daily-form`,
+  `pass-along`,
+ ][reg=set]
+ surfaces = #[
+  `workers/wap-mom/src/index.js`,
+  `workers/smut-today/src/index.js`,
+  `workers/site-hub-next/src/index.js`,
+  `workers/feedback-quest/src/index.js`,
+ ][reg=set]
+ audience = `wap.mom: mothers with master's degrees and professionals who own verticals and brands — ambition and depth of wonder, never named`
+ fixity_tier = `experimental`
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@plan: ~"./PLAN.md"
+@wap_mom: ~"../../../workers/wap-mom/src/index.js"
+@smut_today: ~"../../../workers/smut-today/src/index.js"
+@folio_soil: ~"../../../.spw/caches/folio-soil-ecosystem-2026-09.spw"
+@what_im_learning: ~"../../../.spw/conventions/what-im-learning.spw"
+
+dispatch: .{
+ plan = @plan
+ wap_mom = @wap_mom
+ smut_today = @smut_today
+ folio_soil = @folio_soil
+ what_im_learning = @what_im_learning
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `folio-worktable`
+ hold = `both workers are dirty in a sibling session's tree on 2026-09-19; nothing lands until that tree is clean`
+}[reg=facet]

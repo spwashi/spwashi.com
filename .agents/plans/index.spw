@@ -286,6 +286,7 @@ reading_order: .{
   `mindful-collection-controls`,
   `minimal-brace-disclosure`,
   `mobile-runtime-foundation`,
+  `model-collaborator-lore-surfaces`,
   `narration-markup-cold-reads`,
   `narrative-grammar-infrastructure`,
   `nutrition-crop-language`,
@@ -329,6 +330,7 @@ reading_order: .{
   `vibe-setting-widgets`,
   `voice-grounding-pass`,
   `wonder-memory`,
+  `workers-wonder-kit`,
  ][reg=set]
 }[reg=facet]
 
@@ -383,6 +385,7 @@ reading_order: .{
 @plan_minimal_brace_disclosure: ~"./minimal-brace-disclosure/index.spw"
 @plan_mobile_brace_path_polish: ~"./archive/mobile-brace-path-polish/index.spw"
 @plan_mobile_runtime_foundation: ~"./mobile-runtime-foundation/index.spw"
+@plan_model_collaborator_lore_surfaces: ~"./model-collaborator-lore-surfaces/index.spw"
 @plan_narration_markup_cold_reads: ~"./narration-markup-cold-reads/index.spw"
 @plan_narrative_grammar_infrastructure: ~"./narrative-grammar-infrastructure/index.spw"
 @plan_nutrition_crop_language: ~"./nutrition-crop-language/index.spw"
@@ -439,6 +442,7 @@ reading_order: .{
 @plan_vibe_setting_widgets: ~"./vibe-setting-widgets/index.spw"
 @plan_voice_grounding_pass: ~"./voice-grounding-pass/index.spw"
 @plan_wonder_memory: ~"./wonder-memory/index.spw"
+@plan_workers_wonder_kit: ~"./workers-wonder-kit/index.spw"
 ^"completed_reference"{
  label = "completed reference"
  count = 0

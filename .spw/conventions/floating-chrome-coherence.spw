@@ -19,6 +19,13 @@
 operation = "align"
 fixity = "tending"
 
+^"satchel_ownership_2026_09_19"{
+  ~#finding: "the satchel's seams and tags toggles wrote data-spw-debug-mode and data-spw-show-semantic-metadata straight onto the root while the settings engine wrote the same two from debugMode and showSemanticMetadata — two owners of one attribute, so a satchel toggle did not persist and the next settings apply reset it"
+  rule = `a satchel toggle that names a setting asks the engine (saveSiteSettings) and mirrors settings:changed; the engine owns the root attribute. Mount visuals and learning toasts stay satchel-local until they earn a setting.`
+  ~#reading: "the satchel is a projection of settings and page state, not a second register — which is the ground the site-nav-synthesizer proposal in settings-ornament-resonance builds on"
+  probe: `grep -n "saveSiteSettings\|settingKey" public/js/interface/state-inspector.js`
+}
+
 ^"naming_collision"{
   problem: "Two modules share the state-inspector name with different jobs."
   interface_satchel: .{

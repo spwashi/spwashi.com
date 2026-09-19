@@ -45,3 +45,16 @@ Component collection now persists distinct region component kinds under `spw-com
 - `node --check public/js/kernel/site-settings-engine.js`
 - `node --check public/js/kernel/site-settings-profiles.js`
 - `node --check public/js/interface/site-settings-ui.js`
+
+## Lens changes should count — proposal, 2026-09-19
+
+The collection ingests only `spw:regions-profiled` and `spw:regions-primed`; a lens change reveals a `data-spw-kind="lens"` panel but emits `frame:mode` and `spw:variant-selected`, which nothing in the reward path hears. So the interaction the user most often makes on a frame is one the site never rewards, and `lens-keen` is earned by scrolling past a lens panel rather than by using one.
+
+Proposal (ends at a demo, since it changes what is felt):
+
+- `component-collection.js` listens for `spw:variant-selected` with a `group` and ingests `{ kinds: ['lens'], route, reason: 'lens' }` once per group per session — a lens used, not a lens seen. `newKinds` stays honest: the first lens use on a route is the discovery.
+- One new achievement, `seat-changer` ("Seat Changer"): `s.lensSeats >= 3` distinct `group:mode` seats sat in, tracked in the collection record beside `routes`. No new storage key; the record already persists under `spw-component-collection`.
+- The reward toast for a lens use reads the seat expression the switch now carries (`about[kernel]{open.sit}`) rather than a label, so the reward is the notation.
+- The cauldron already accepts fragments with an operator and a route; a sat seat is a fragment (`@lens`, the expression, the route). Offer it to the cauldron on the second use, not the first, so the first is a reward and the second is an ingredient.
+
+Seams: `public/js/runtime/component-collection.js` (`ingest`, `ACHIEVEMENTS`), `public/js/runtime/reward-ui.js` (`onUnlock`, `popToast`), `public/js/semantic/cauldron/registers.js`, `interaction-microstates.spw#awareness` (never silent absorption). Gate: approve the toast and the cauldron offer in a browser first.
