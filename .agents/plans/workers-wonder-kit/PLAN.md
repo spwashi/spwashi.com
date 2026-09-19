@@ -79,3 +79,38 @@ smut.today is a daily erotic zine for adults; its wonder is pacing and variety, 
 - `wrangler dev` for each worker: the eight wap.mom routes and the four smut.today routes
   answer as before; new routes answer; the security header set is unchanged.
 - Read both home pages aloud once for the audience rule.
+
+## Landed and held — 2026-09-19
+
+- **smut.today, landed (94a0dc27):** two pieces, one register each. "Before the meeting" is
+  slow and written to be read; "The last car" is dirty and four paragraphs. Each piece names
+  the phrases it keeps, dated to the day it ran, shown at its foot and exposed in
+  `today.json` as `language`; each links the other register. Only those hunks were
+  committed; eight pre-existing uncommitted hunks in that file (a letter, pitches, index
+  cards, routes) belong to another author and stay in the worktree.
+- **wap.mom, edited in place, uncommitted:** the file is untracked and its author has not
+  staged it, so the UX changes wait there. What changed: a skip link and `main` landmark;
+  the footer links are a `nav`; the home page leads with the issue on the counter today
+  (one a day, in order) and a pass-along link, lists issues as an ordered list with their
+  kickers, shows the offices as 44px chips, and ends with a file-a-wish card; issue pages
+  gain previous/next and a chrome-free `?pass=1` copy with `noindex` and the canonical
+  pointing home; the filing form groups the two wish fields in a fieldset with hints wired
+  by `aria-describedby`; the filed page links to today's issue. Verified by importing the
+  worker in Node and fetching thirteen routes (all 200/404 as expected); `check:workers`
+  passes; no banned lemma.
+- **autonomous.feedback, proposal only:** the worker was modified twice by someone else
+  during this session (11:43, 11:49), so nothing was edited. Proposed:
+  - The weather page leads with a sentence, not a word: `clear · five origins answered in
+    under a second` reads; `CLEAR` alone does not. Keep the big glyph, add the sentence.
+  - The probe table names hosts, not roles: `primary` and `grain` mean nothing to a
+    visitor; `spwashi.com` and `texture.website` do. Role becomes the secondary label.
+  - `/for/{host}` drawers open with what a gift is and what happens to it, in two lines,
+    before the contract JSON; the four contexts are chips with their prompt as the visible
+    label (`The thing that would not round.`), and `accepting: false` is said in words
+    ("not taking gifts yet") rather than left to the JSON.
+  - The quest page shows the three quests as a numbered path with the first step of each
+    visible and the rest disclosed, so the page reads as a walk rather than a manual.
+  - Server-Timing already rides on HTML responses; surface it as a footer line
+    (`this page: 84ms`) so the climate page demonstrates its own subject.
+  - Shared with wap.mom through the kit once it exists: skip link, `nav` footer, chip
+    targets, the bare pass-along layout.
