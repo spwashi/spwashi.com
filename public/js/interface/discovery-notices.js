@@ -357,9 +357,22 @@ function createNoticeElement(notice) {
     article.setAttribute('data-spw-metamaterial', 'matte');
   }
 
+  const head = document.createElement('div');
+  head.className = 'spw-discovery-notice__head';
+
   const label = document.createElement('p');
   label.className = 'spw-discovery-notice__label';
   label.textContent = notice.label;
+
+  /* Closure is the first thing a card owes: a way out that costs nothing and
+     names where you go. The head row carries it; the action row still offers
+     the same exit in words. */
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.className = 'spw-discovery-notice__close';
+  close.setAttribute('aria-label', `Close ${notice.label.toLowerCase()} and go back to reading`);
+  close.textContent = '×';
+  head.append(label, close);
 
   const title = document.createElement('p');
   title.className = 'spw-discovery-notice__title';
@@ -395,7 +408,16 @@ function createNoticeElement(notice) {
     const link = document.createElement('a');
     link.className = 'spw-discovery-notice__cta';
     link.href = notice.href;
-    link.textContent = notice.cta || 'Open';
+    /* Three CTA shapes, by where the link goes, so the button's form says
+       what accepting it costs: `here` stays on this page (an anchor),
+       `there` moves to another route, `out` leaves the site. */
+    const shape = resolveCtaShape(notice.href);
+    link.dataset.spwCtaShape = shape;
+    if (shape === 'out') {
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+    }
+    link.textContent = notice.cta || (shape === 'here' ? 'Show me' : shape === 'out' ? 'Open elsewhere' : 'Go there');
     actions.append(link);
   }
 
@@ -403,7 +425,7 @@ function createNoticeElement(notice) {
   dismiss.type = 'button';
   dismiss.className = 'spw-discovery-notice__dismiss';
   dismiss.setAttribute('aria-label', `Dismiss ${notice.label.toLowerCase()}`);
-  dismiss.textContent = 'Dismiss';
+  dismiss.textContent = isModal ? 'Back to reading' : 'Not now';
   actions.append(dismiss);
 
   if (isModal) {
@@ -422,7 +444,7 @@ function createNoticeElement(notice) {
     article.setAttribute('aria-label', `${notice.label} notice. ${notice.cta || 'Open related documentation'}`);
   }
 
-  const body = [label, title, summary];
+  const body = [head, title, summary];
   if (offerEl) body.push(offerEl);
   if (notice.handles.length) body.push(createHandleStrip(notice.handles));
   if (why) body.push(why);
@@ -431,7 +453,22 @@ function createNoticeElement(notice) {
 
   article.append(...body);
 
-  return { article, dismiss };
+  return { article, dismiss, close };
+}
+
+export function resolveCtaShape(href = '') {
+  const value = String(href || '').trim();
+  if (!value) return 'there';
+  if (value.startsWith('#')) return 'here';
+  if (/^https?:\/\//i.test(value)) {
+    try {
+      return new URL(value, window.location.href).origin === window.location.origin ? 'there' : 'out';
+    } catch {
+      return 'out';
+    }
+  }
+  const [path] = value.split(/[?#]/);
+  return path && path === window.location.pathname && value.includes('#') ? 'here' : 'there';
 }
 
 function ensureStackRoot() {
@@ -593,7 +630,7 @@ export function normalizeNotice(raw, cadence, scheduleKey, index, locale) {
     title,
     summary,
     href,
-    cta: cleanText(source.cta || 'Open'),
+    cta: cleanText(source.cta || ''),
     why: cleanText(source.why || promotion.proof || ''),
     presentation: resolveNoticePresentation(promotion.presentation),
     kind: promotion.kind,
@@ -640,14 +677,25 @@ function mountNotices(visible, stack, dismissals) {
   const creditsRoot = ensureCreditsRoot();
 
   visible.forEach((notice) => {
-    const { article, dismiss } = createNoticeElement(notice);
+    const { article, dismiss, close } = createNoticeElement(notice);
     let root;
     if (notice.presentation === 'modal') root = modalRoot;
     else if (notice.presentation === 'credits') root = creditsRoot;
     else root = stack;
     root.append(article);
 
-    dismiss.addEventListener('click', () => dismissNotice({ ...notice, article }, root, dismissals));
+    const leave = () => {
+      dismissNotice({ ...notice, article }, root, dismissals);
+      if (notice.presentation === 'modal') {
+        const main = document.getElementById('main-content') || document.querySelector('main');
+        if (main instanceof HTMLElement) {
+          if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+          main.focus({ preventScroll: true });
+        }
+      }
+    };
+    dismiss.addEventListener('click', leave);
+    close.addEventListener('click', leave);
     article.querySelector('.spw-discovery-notice__cta')?.addEventListener('click', () => {
       dismissNotice({ ...notice, article }, root, dismissals);
     });
@@ -728,7 +776,7 @@ export function showSpwDiscoveryNotice(raw = {}, options = {}) {
   const modalRoot = notice.presentation === 'modal' ? ensureModalRoot() : null;
   const creditsRoot = notice.presentation === 'credits' ? ensureCreditsRoot() : null;
   const root = modalRoot || creditsRoot || stack;
-  const { article, dismiss } = createNoticeElement(notice);
+  const { article, dismiss, close } = createNoticeElement(notice);
   article.dataset.spwRuntimeReward = 'true';
   if (rewardPolicy.rewardKey) article.dataset.spwRewardKey = rewardPolicy.rewardKey;
 
@@ -754,7 +802,18 @@ export function showSpwDiscoveryNotice(raw = {}, options = {}) {
     if (rewardPolicy.rewardKey) runtimeRewardNotices.delete(rewardPolicy.rewardKey);
     removeNotice(article, root);
   };
-  dismiss.addEventListener('click', cleanup, { once: true });
+  const leave = () => {
+    cleanup();
+    if (notice.presentation === 'modal') {
+      const main = document.getElementById('main-content') || document.querySelector('main');
+      if (main instanceof HTMLElement) {
+        if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+        main.focus({ preventScroll: true });
+      }
+    }
+  };
+  dismiss.addEventListener('click', leave, { once: true });
+  close.addEventListener('click', leave, { once: true });
   article.querySelector('.spw-discovery-notice__cta')?.addEventListener('click', cleanup, { once: true });
 
   if (notice.presentation === 'credits' && notice.href) {
@@ -833,13 +892,83 @@ function buildFeatureLearningHref(detail = {}) {
   return target?.id ? `#${target.id}` : window.location.pathname || '/';
 }
 
+/* What a feature lets the hand do, read off the contracts its root already
+   carries. A module with no root or no verb has nothing to teach a visitor
+   and stays out of the card. */
+function readFeatureVerbs(root) {
+  if (!(root instanceof HTMLElement)) return [];
+  const verbs = [];
+  const tap = cleanText(root.dataset.spwInteractionTap || '');
+  const hold = cleanText(root.dataset.spwInteractionHold || '');
+  if (tap) verbs.push(`tap: ${tap}`);
+  if (hold) verbs.push(`hold: ${hold}`);
+  const contract = cleanText(root.dataset.spwGestureContract || root.dataset.spwInteractionContract || '');
+  if (!verbs.length && contract) {
+    contract.split(/\s+/).slice(0, 3).forEach((pair) => {
+      const [gesture, effect] = pair.split(':');
+      if (gesture && effect) verbs.push(`${gesture}: ${effect.replace(/-/g, ' ')}`);
+    });
+  }
+  return verbs.slice(0, 2);
+}
+
+function readFeatureName(detail = {}, root) {
+  const heading = root?.querySelector?.('h1, h2, h3, [class*="kicker"], .frame-sigil');
+  const text = cleanText(heading?.textContent || '');
+  if (text) return text.slice(0, 60);
+  return cleanText(detail.baseId || detail.id || '').replace(/-/g, ' ');
+}
+
+let featureLearningBuffer = [];
+let featureLearningTimer = 0;
+
+function flushFeatureLearning() {
+  featureLearningTimer = 0;
+  const items = featureLearningBuffer.splice(0);
+  if (!items.length) return;
+  const state = readFeatureLearningState();
+  if (Number(state.count || 0) >= FEATURE_LEARNING_LIMIT) return;
+
+  const lines = items.map((item) => `${item.name} — ${item.verbs.join(' · ')}`);
+  const first = items[0];
+  showSpwDiscoveryNotice({
+    label: 'On this page',
+    title: items.length === 1
+      ? `You can ${first.verbs[0].replace(/^[a-z-]+:\s*/, '')} here`
+      : `${items.length} things you can do here`,
+    summary: lines.slice(0, 3).join('. '),
+    href: first.root?.id ? `#${first.root.id}` : (window.location.pathname || '/'),
+    cta: first.root?.id ? 'Show me' : 'Inspect route',
+    why: 'Read off the gestures these frames declare; nothing here is about the runtime.',
+    presentation: 'toast',
+    source: 'feature-learning',
+    promotion: {
+      kind: 'learning',
+      theme: 'signal',
+      handles: items.map((item) => item.id).slice(0, 3),
+      rewardKind: 'runtime-literacy',
+      productionSeed: first.id,
+    },
+  }, {
+    cadence: 'learning',
+    scheduleKey: `features-${window.location.pathname}`,
+  });
+
+  const shown = Array.isArray(state.shown) ? state.shown : [];
+  writeFeatureLearningState({
+    shown: [...shown, ...items.map((item) => item.id)].slice(-12),
+    count: Number(state.count || 0) + 1,
+  });
+}
+
 function handleFeatureLearningToast(event) {
   const detail = event.detail || {};
   const id = cleanText(detail.baseId || detail.id || '');
   if (!id || id === 'discovery-notices') return;
-  // Mount diagnostics explain the runtime, not the visitor's task. Keep them
-  // available from the state inspector, but never let an initial page visit
-  // spend the reading surface on a developer-facing prompt.
+  /* Mount diagnostics explain the runtime, not the visitor's task. Even with
+     feature learning on, a card earns the reading surface only by naming
+     something the hand can do, and one card per page says it for all of
+     them: "3 things you can do here", not twelve "x mounted" toasts. */
   if (document.documentElement.dataset.spwFeatureLearning !== 'on') return;
   if (document.body?.dataset?.spwDiscoveryNotices === 'off') return;
 
@@ -847,38 +976,12 @@ function handleFeatureLearningToast(event) {
   const shown = Array.isArray(state.shown) ? state.shown : [];
   if (shown.includes(id) || Number(state.count || 0) >= FEATURE_LEARNING_LIMIT) return;
 
-  const layer = cleanText(detail.layer || 'feature');
-  const when = cleanText(detail.effectiveWhen || detail.requestedWhen || 'runtime');
-  const evaluates = cleanText(detail.evaluates || 'semantics');
   const root = detail.root instanceof HTMLElement ? detail.root : null;
-  const title = `${id.replace(/-/g, ' ')} mounted`;
-  const summary = `This ${layer} feature mounted because the page matched its ${when} trigger. It evaluates ${evaluates}.`;
+  const verbs = readFeatureVerbs(root);
+  if (!verbs.length || featureLearningBuffer.some((item) => item.id === id)) return;
 
-  showSpwDiscoveryNotice({
-    label: 'Feature learned',
-    title,
-    summary,
-    href: buildFeatureLearningHref(detail),
-    cta: root?.id ? 'Jump to feature' : 'Inspect route',
-    why: cleanText(detail.reason || 'Feature triggers are now visible in markup and console discovery.'),
-    presentation: 'toast',
-    source: 'feature-learning',
-    promotion: {
-      kind: 'learning',
-      theme: 'signal',
-      handles: [layer, when, 'mount-trigger'].filter(Boolean),
-      rewardKind: 'runtime-literacy',
-      productionSeed: id,
-    },
-  }, {
-    cadence: 'learning',
-    scheduleKey: `feature-${id}`,
-  });
-
-  writeFeatureLearningState({
-    shown: [...shown, id].slice(-12),
-    count: Number(state.count || 0) + 1,
-  });
+  featureLearningBuffer.push({ id, root, verbs, name: readFeatureName(detail, root) });
+  if (!featureLearningTimer) featureLearningTimer = window.setTimeout(flushFeatureLearning, 1600);
 }
 
 export async function initSpwDiscoveryNotices(ctx = {}) {

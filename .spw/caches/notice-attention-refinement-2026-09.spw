@@ -1,0 +1,47 @@
+# Cache 2026-09-18 — the daily wonder / discovery notice as an attention object: subject, meaning, value, closure.
+# Source: creator critique in a Claude session; Open first: conventions/attention-field.spw (budget full — cite, do not extend), conventions/interaction-microstates.spw#reward_contract.
+
+#>notice_attention_refinement
+#:cache #!prime #!tending
+#:layer #!pragmatics
+
+@attention_field: ~"../conventions/attention-field.spw"
+@reward_contract: ~"../conventions/interaction-microstates.spw"
+@timing: ~"../philosophy/timing-data-localization.spw"
+@promo_plan: ~"../../.agents/plans/promo-wonder-cycle/PLAN.md"
+@notices: ~"../../public/js/interface/discovery-notices.js"
+@feed: ~"../../public/data/promo-wonder-cycle.json"
+
+^"critique_2026_09_18"{
+  #:the creator's words, kept as the spec
+  closure = `There is no closure or way to navigate back to main.`
+  cta_shape = `More variety in CTA interaction shape.`
+  relevance = `More relevance for discovering capabilities.`
+  noise = `Some of the prompts about which modules are loaded feel meaningless, hard to learn from, lacking actionability, noisy.`
+  model = `The attention model needs refinement, consideration across dimensions.`
+}
+
+^"dimensions"{
+  #:what a notice must answer before it may take the reading surface
+  subject = `Who is this for and what is it about — the label says the cadence (Today · This week · On this page), the title says the thing.`
+  meaning = `Why now, on this page — the why line; a notice with no why is decoration.`
+  value = `What the reader gets by accepting — offer or verb; never a mount reason.`
+  closure = `How the reader leaves and where they land — close × in the head row, "Back to reading" on a modal (focus returns to main), "Not now" on a toast, Escape on either.`
+  shape = `What accepting costs, shown by the button's form — here (stays on this page: anchor), there (another route), out (leaves the site, new tab).`
+  relevance = `A capability card names what the hand can do on this page, read off the frame's own gesture contract; modules with no verb say nothing.`
+  cadence = `Dismissal keys to the cadence so today's card can return tomorrow — @timing#notice_surface already says so.`
+}
+
+^"landed_2026_09_18"{
+  closure = `discovery-notices.js: head row with a close control; dismiss reads Back to reading (modal, focus → #main-content) or Not now (toast); Escape unchanged.`
+  shape = `data-spw-cta-shape = here | there | out on the CTA, resolved from the href; out opens in a new tab; default CTA copy follows the shape (Show me · Go there · Open elsewhere).`
+  noise = `Feature-learning toasts collapse into one "On this page" card per route: N things you can do here, each named by its frame heading and its tap/hold verbs from data-spw-interaction-* or the gesture contract; modules with no root or no verb are skipped; still opt-in behind html[data-spw-feature-learning="on"].`
+  not_landed = `Relevance beyond gesture contracts (a promo chosen by what the current page can do), and the attention-model dimensions as measured fields on the notice — see next.`
+}
+
+^"next"{
+  measure = `Count, per route and cadence, notices shown / accepted / closed / dismissed-by-Escape; the reward contract's silent-absorption probe applied to notices.`
+  relevance = `Let the daily promo prefer a card whose href is a capability on the current route (here-shape) when one exists in the feed; otherwise the scheduled card.`
+  model = `Attention across dimensions: presence (foreground/background), arrival (entering/settled), reading quiet (chrome), and now closure — a notice that arrives before settle or during reading-quiet is noise by definition (@attention_field#ink_and_light_spend).`
+  demo = `Sensation gate: a human sees the closed → open → back-to-reading arc on a phone before the modal presentation is scheduled for any new promo.`
+}

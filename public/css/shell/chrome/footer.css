@@ -648,6 +648,40 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   text-transform: uppercase;
 }
 
+/* Closure sits in the head row: the label on the left, a way out on the
+   right, before the reader has read a word of the offer. */
+.spw-discovery-notice__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.spw-discovery-notice__close {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 1.85rem;
+  block-size: 1.85rem;
+  margin-inline-end: -0.3rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font: inherit;
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.spw-discovery-notice__close:hover,
+.spw-discovery-notice__close:focus-visible {
+  border-color: color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 78%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+}
+
 .spw-discovery-notice__title {
   margin: 0;
   color: var(--ink, rgba(14, 18, 20, 0.92));
@@ -756,6 +790,37 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 
 .spw-discovery-notice--modal .spw-discovery-notice__cta {
   background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent);
+}
+
+/* Three CTA shapes say what accepting costs. `here` stays on the page: an
+   outlined chip with a down mark. `there` moves to another route: the filled
+   chip. `out` leaves the site: underlined, with the outward mark, in a new tab. */
+.spw-discovery-notice__cta[data-spw-cta-shape="here"] {
+  background: transparent;
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, transparent);
+}
+
+.spw-discovery-notice__cta[data-spw-cta-shape="here"]::after {
+  content: " ↓";
+  opacity: 0.7;
+}
+
+.spw-discovery-notice__cta[data-spw-cta-shape="there"]::after {
+  content: " →";
+  opacity: 0.7;
+}
+
+.spw-discovery-notice__cta[data-spw-cta-shape="out"] {
+  background: transparent;
+  border-color: transparent;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+.spw-discovery-notice__cta[data-spw-cta-shape="out"]::after {
+  content: " ↗";
+  opacity: 0.7;
 }
 
 .spw-discovery-notice__dismiss {

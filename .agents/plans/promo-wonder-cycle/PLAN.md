@@ -55,3 +55,6 @@ The current site already has rich route surfaces, but the rotating layer is not 
 - Remote editing workflows
 - Replacing the current site topology
 
+## Notice attention refinement — 2026-09-18
+The creator's critique of the daily wonder: no closure or way back, one CTA shape, little relevance to what a page can do, and module-load prompts that are noise. The cache `.spw/caches/notice-attention-refinement-2026-09.spw` holds the seven dimensions a notice must answer (subject, meaning, value, closure, shape, relevance, cadence) and what landed: a close control and presentation-aware exits that return focus to main, three CTA shapes by destination (`data-spw-cta-shape` here | there | out), and feature-learning collapsed to one "On this page" card that names verbs from frame contracts. Next: measure shown / accepted / closed per cadence, prefer a here-shaped promo when the current route offers the capability, and gate new modal promos on a phone demo.
+

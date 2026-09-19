@@ -58,6 +58,7 @@
 @cognitive_toy_2026_09: ~"./cognitive-toy-2026-09.spw"  # the site as an adult cognitive toy; five electrostatic loops, promo/wonder as one mechanic; ct-005 is the demo-gated patch order
 @folio_soil_ecosystem_2026_09: ~"./folio-soil-ecosystem-2026-09.spw"  # laminated folios as soil artists add nutrients to over years; creator notes 2026-09-17; WAP = Wonder About Pi(e)
 @collectible_expressions_2026_09: ~"./collectible-expressions-2026-09.spw"  # ?[mode] / ?<setting> as pocketable atoms; operator + noun + one bracket form; owner still open
+@notice_attention_refinement_2026_09: ~"./notice-attention-refinement-2026-09.spw"  # daily wonder as an attention object: subject · meaning · value · closure · shape · relevance · cadence; landed closure, CTA shapes, one on-this-page card
 @healing_process_daily_wonder_2026_09: ~"./healing-process-daily-wonder-2026-09.spw"  # civic walk: cheap return after therapy; daily wonder + dated receipts; not a clinic
 @pricing_lattice_2026_09: ~"./pricing-lattice-2026-09.spw"  # cited comps vs live ladder; no checkout from this cache
 
@@ -116,6 +117,7 @@ fixity = "tending"
   cognitive_toy_2026_09 = @cognitive_toy_2026_09
   folio_soil_ecosystem_2026_09 = @folio_soil_ecosystem_2026_09
   collectible_expressions_2026_09 = @collectible_expressions_2026_09
+  notice_attention_refinement_2026_09 = @notice_attention_refinement_2026_09
   healing_process_daily_wonder_2026_09 = @healing_process_daily_wonder_2026_09
   pricing_lattice_2026_09 = @pricing_lattice_2026_09
 }[reg=facet]
