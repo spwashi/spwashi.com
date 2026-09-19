@@ -37,6 +37,12 @@ const VALIDATORS = [
   // Reach and layer order over public/js: an orphan or an unnamed static
   // upward import fails; the named seams live in the script.
   { label: 'audit-js-tree', args: ['scripts/js-tree-value.mjs', '--check'] },
+  // Operator controls in the routes: a visible sigil and its authored
+  // data-spw-operator must agree, and a sigil-led control must author one.
+  {
+    label: 'audit-operator-controls',
+    args: ['--import', './scripts/lib/register-public-imports.mjs', 'scripts/audit-operator-controls.mjs', '--check'],
+  },
   { label: 'check-agents', script: 'scripts/check-agent-contracts.mjs' },
   {
     label: 'test:modules',

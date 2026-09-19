@@ -49,7 +49,7 @@
         <article>
             <section class="spw-frame" id="folios-hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="frame-topline" data-spw-slot="header">
-                    <a class="frame-sigil" href="#folios-hero">#>folio_archive</a>
+                    <a class="frame-sigil" href="#folios-hero" data-spw-operator="frame">#>folio_archive</a>
                     <div class="spec-strip">
                         <span class="spec-pill">returning stack</span>
                         <span class="spec-pill">laminated art</span>
@@ -96,7 +96,7 @@
 
             <section class="spw-frame" id="studio-practice" data-spw-kind="frame" data-spw-role="reference" data-spw-region="read">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#studio-practice">{studio_practice}</a>
+                    <a class="frame-sigil" href="#studio-practice" data-spw-operator="direction">{studio_practice}</a>
                     <h2>A stack I return to</h2>
                 </header>
                 <p id="folios-practice-lede" data-spw-textual-role="lede" data-spw-copy-unit="folios.practice.lede" data-spw-semantic-expression="folio[studio]{return}&lt;stack&gt;">
@@ -132,7 +132,7 @@
 
             <section class="spw-frame" id="seed-studies" data-spw-kind="frame" data-spw-role="register" data-spw-region="cluster">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#seed-studies">^seed_studies</a>
+                    <a class="frame-sigil" href="#seed-studies" data-spw-operator="integration">^seed_studies</a>
                     <h2>Seed Studies for the Folio Archive</h2>
                 </header>
                 <p>
@@ -153,10 +153,10 @@
                         </figure>
 
                         <div class="mode-switch folio-lens-switcher" data-spw-kind="lens" data-spw-lens-chrome="silent quiet" role="group" aria-label="Folio reading lens" data-spw-operator="mode" data-spw-semantic-expression="folio[art]{crease.open}">
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="art" aria-pressed="true">.art</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="design" aria-pressed="false">^design</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="skill" aria-pressed="false">#skill</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="community" aria-pressed="false">~community</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="art" aria-pressed="true" data-spw-operator="ground">.art</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="design" aria-pressed="false" data-spw-operator="integration">^design</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="skill" aria-pressed="false" data-spw-operator="vibration">#skill</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-01" data-set-mode="community" aria-pressed="false" data-spw-operator="potential">~community</button>
                         </div>
                         <dl class="folio-card__readings">
                             <div data-mode-group="folio-study-01" data-mode-panel="art" data-spw-kind="lens">
@@ -212,10 +212,10 @@
                         </figure>
 
                         <div class="mode-switch folio-lens-switcher" data-spw-kind="lens" data-spw-lens-chrome="silent quiet" role="group" aria-label="Folio reading lens" data-spw-operator="mode" data-spw-semantic-expression="folio[art]{branch.open}">
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="art" aria-pressed="true">.art</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="design" aria-pressed="false">^design</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="skill" aria-pressed="false">#skill</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="community" aria-pressed="false">~community</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="art" aria-pressed="true" data-spw-operator="ground">.art</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="design" aria-pressed="false" data-spw-operator="integration">^design</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="skill" aria-pressed="false" data-spw-operator="vibration">#skill</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-02" data-set-mode="community" aria-pressed="false" data-spw-operator="potential">~community</button>
                         </div>
                         <dl class="folio-card__readings">
                             <div data-mode-group="folio-study-02" data-mode-panel="art" data-spw-kind="lens">
@@ -286,10 +286,10 @@
                         </figure>
 
                         <div class="mode-switch folio-lens-switcher" data-spw-kind="lens" data-spw-lens-chrome="silent quiet" role="group" aria-label="Folio reading lens" data-spw-operator="mode" data-spw-semantic-expression="folio[art]{stack.open}">
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="art" aria-pressed="true">.art</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="design" aria-pressed="false">^design</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="skill" aria-pressed="false">#skill</button>
-                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="community" aria-pressed="false">~community</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="art" aria-pressed="true" data-spw-operator="ground">.art</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="design" aria-pressed="false" data-spw-operator="integration">^design</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="skill" aria-pressed="false" data-spw-operator="vibration">#skill</button>
+                            <button type="button" class="frame-sigil" data-mode-group="folio-study-03" data-set-mode="community" aria-pressed="false" data-spw-operator="potential">~community</button>
                         </div>
                         <dl class="folio-card__readings">
                             <div data-mode-group="folio-study-03" data-mode-panel="art" data-spw-kind="lens">
@@ -316,7 +316,7 @@
 
             <section class="spw-frame" id="collect-a-folio" data-spw-kind="frame" data-spw-role="reference" data-spw-region="read">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#collect-a-folio">#&gt;collect_a_folio</a>
+                    <a class="frame-sigil" href="#collect-a-folio" data-spw-operator="frame">#&gt;collect_a_folio</a>
                     <h2>From my worktable to yours.</h2>
                 </header>
                 <p>One painted surface can have several lives. I’m developing a minting process that gives each source folio a record, then traces the originals, prints, and derivative collages released from it.</p>
@@ -397,7 +397,7 @@
 
             <section class="spw-frame" id="how-to-read" data-spw-kind="frame" data-spw-role="reference" data-spw-region="read">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#how-to-read">?how_to_read</a>
+                    <a class="frame-sigil" href="#how-to-read" data-spw-operator="wonder">?how_to_read</a>
                     <h2>How to Read a Folio</h2>
                 </header>
                 <p>
@@ -425,7 +425,7 @@
 
             <section class="spw-frame" id="processing-loop" data-spw-kind="frame" data-spw-role="reference" data-spw-region="read">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#processing-loop">~processing_loop</a>
+                    <a class="frame-sigil" href="#processing-loop" data-spw-operator="potential">~processing_loop</a>
                     <h2>How a folio becomes a release</h2>
                 </header>
                 <p>
@@ -461,7 +461,7 @@
 
             <section class="spw-frame" id="training-value" data-spw-kind="frame" data-spw-role="reference" data-spw-region="read">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#training-value">#training_value</a>
+                    <a class="frame-sigil" href="#training-value" data-spw-operator="vibration">#training_value</a>
                     <h2>Training Value</h2>
                 </header>
                 <p>
@@ -471,7 +471,7 @@
 
             <section class="spw-frame" id="community-value" data-spw-kind="frame" data-spw-role="reference" data-spw-region="read">
                 <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#community-value">~community_value</a>
+                    <a class="frame-sigil" href="#community-value" data-spw-operator="potential">~community_value</a>
                     <h2>Community and Brand Value</h2>
                 </header>
                 <p>
