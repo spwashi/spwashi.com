@@ -399,4 +399,10 @@ function initLiteralParser(root) {
   }
 }
 
-document.querySelectorAll('[data-parser-tool]').forEach(initLiteralParser);
+/** Catalog mount: the loader passes (ctx, root); root is the [data-parser-tool] host. */
+export function initSpwLiteralParser(ctx, root) {
+  const host = root instanceof Element && root.matches('[data-parser-tool]')
+    ? root
+    : (root?.querySelector?.('[data-parser-tool]') || document.querySelector('[data-parser-tool]'));
+  if (host instanceof HTMLElement) initLiteralParser(host);
+}

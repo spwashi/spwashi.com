@@ -29,11 +29,11 @@
 ^"census_2026_09_18"{
   #:after this pass; before it: 268 files, 103,877 lines, 18 orphans (4,797 lines), 38 upward imports
   files = 267
-  lines = 102950
+  lines = 103087
   by_dir = `kernel 35 · semantic 36 · runtime 81 (+7 attention, 10 catalog, 9 experiential, 8 interaction, 5 orchestration, 4 shell) · interface 24 (+10 cauldron) · media 5 · modules 31 across 12 folders · roots 2`
-  catalog_targets = 116
+  catalog_targets = 120
   html_referenced = 8
-  orphans = `17 files, 3,867 lines nothing loads (list below)`
+  orphans = `13 files, 1,843 lines nothing loads (list below); the four tool modules were wired the same day (landed below)`
   upward = `32 imports against the layer order: kernel→runtime 9, kernel→interface 3, kernel→semantic 2, runtime→interface 13, semantic→interface 3, semantic→runtime 1, media→interface 1`
   transport = `boot closure 265,058 B raw / 82,063 B gzip in 8 files; packs by timing (gzip): immediate 21 KB (1 pack), visible 197 KB (58), idle 117 KB (4), settled 6 KB, invited 4 KB, region 0.6 KB; the expression harvest is 264 KB raw and loads whole at idle for every route`
 }
@@ -43,20 +43,18 @@
   inspector = `runtime/state-inspector.js (930 lines) deleted: an unreachable duplicate of interface/state-inspector.js, which the enhancement catalog loads. Citations in three plans and one convention now name the owner.`
   route_utils = `kernel/route-utils.js stops importing semantic/semantic-utils.js for a one-line unique(); the kernel keeps its own.`
   instrument = `scripts/js-tree-value.mjs and npm run audit:js-tree / audit:js-tree:json.`
+  tools_wired = `Four feature defs in runtime/catalog/feature.js: budgeting-bench (#budget-app-root), profile-tool (#builder-form), care-intake ([data-care-intake]), spw-literal-parser ([data-parser-tool]); each VISIBLE on its own route, each with a describes line a hand can test. budgeting.js drops its DOMContentLoaded self-runner for initBudgetingBench(ctx, root); spw-literal-parser.js drops its import-time querySelectorAll for initSpwLiteralParser(ctx, root); profile/tool.js takes (ctx, root) beside its options form and widens a section root to the page, and its private escapeHtml is the kernel's; care-intake.js exports SPW_MODULE_EXPORT and escapes every string it renders. Verified in headless Chrome with ?spw-module-audit=1: all four reach mounted, and the bench, preview, card, and token readout respond.`
+  care_card = `The care profile card now has the site's three exits — copy a ^seed[Care.Profile ref:YYYY]{…} block, download it as .spw.txt, screenshot mode — plus a chip to the practices section; the same shape as the folio order card and the services bundle.`
+  tools_hub = `/tools/ gains a Year mix card (it had only a chip); the search index and expression harvest follow.`
 }
 
 ^"orphans"{
-  #:17 files nothing loads. Disposition is the creator's call; the July standalone-script audit graded reusability, not reach.
+  #:13 files nothing loads after the tool wiring. Disposition is the creator's call; the July standalone-script audit graded reusability, not reach.
   duplicate_or_shim = #[
     `kernel/component-fixtures.js (5) and kernel/region-ecology-fixtures.js (3) — kernel shims to typed outputs, reached by build tooling; keep`,
     `runtime/catalog/index.js (72) — the documented barrel, reading order #2; keep as the tree's entry, nothing imports it`
   ][reg=set]
-  tools_without_a_loader = #[
-    `modules/tools/budgeting.js (639) — /tools/budgeting/ declares no script and no catalog def loads it; the bench renders without it`,
-    `modules/profile/tool.js (655) — /tools/profile/ and /tools/character-sheet/ load nothing from it`,
-    `modules/services/care-intake.js (327) — /services/care/ loads nothing from it`,
-    `modules/tools/spw-literal-parser.js (403) — /tools/spw-parser/ loads nothing from it`
-  ][reg=set]
+  tools_without_a_loader = `resolved 2026-09-18 — see landed.tools_wired; /tools/character-sheet/ still loads nothing from profile/tool.js, which is correct: the sheet has its own module.`
   semantic_and_runtime_helpers = #[
     `interface/personas.js (129)`, `kernel/states.js (121)`, `runtime/gate.js (53)`, `runtime/prepaint-state.js (209)`, `runtime/visitation.js (58)`,
     `semantic/page-universe.js (189)`, `semantic/pretext-presets.js (457)`, `semantic/projection.js (140)`, `semantic/recipe-semantics.js (174)`, `semantic/smart.js (233)`
@@ -70,6 +68,17 @@
   semantic = `three files import interface/haptics.js; the same groundElement / prime primitives as above.`
 }
 
+^"load_precedence"{
+  #:what each mount tier means to a visitor, so a def's `when` is a claim about attention, not a scheduling knob. Counts from check:runtime after the tool wiring.
+  immediate = `6 — the page's ground: settings, shell disclosure, medium register, the minimal core. Nothing here answers a question; it keeps the first paint honest. A feature def never belongs here.`
+  visible = `65 — a thing the reader is looking at starts working: benches, cards, composers, brace physics. The selector names the host; the loader waits for it to enter the viewport. The four tools sit here because their host is the thing the route is for.`
+  idle = `43 — texture that can arrive late without anyone noticing it was late: collectibles, chrome residue, lab instruments. If a reader would notice its absence in the first second it is not idle.`
+  invited = `3 — arrives only when asked (a chip, a setting). The cost is the reader's, so the reward has to be legible before the tap.`
+  region = `1 — mounts per region as regions declare themselves; the profiler, not a feature.`
+  settled = `2 — after layout stops moving: layout assumptions and the measurements that would be wrong earlier.`
+  rule = `Read the tier as the sentence "this begins when the reader …". If the sentence has no reader in it, the tier is wrong or the module is core.`
+}
+
 ^"transport_value"{
   harvest = `public/js/generated/spw-expressions.js: 264 KB raw, every route's expressions, loaded whole at idle by runtime/expression-resonance.js to build a kin index. Per-route entries plus precomputed kin edges would let a route load its own slice; the kin index is the only cross-route need.`
   visible = `58 visible packs, 197 KB gzip in total: the largest transport class. Group by route family where members always mount together (design experiments, settings page, rpg-wednesday) before splitting further.`
@@ -77,7 +86,7 @@
 }
 
 ^"next"{
-  1 = `Orphans: the creator names delete / wire / archive per file; the tools without a loader are the first question, because their routes are live.`
+  1 = `Orphans: 13 remain (semantic and runtime helpers plus two fixture shims and the catalog barrel); the creator names delete / wire / archive per file. The live-route tools are wired.`
   2 = `site-settings-ui.js → interface/; then re-run audit:js-tree and check:runtime.`
   3 = `Decide the hub layer for haptics, accent-palette, wonder-memory, cauldron; move or rename, one hub per patch.`
   4 = `Split the expression harvest per route with kin edges; measure idle gzip before and after.`

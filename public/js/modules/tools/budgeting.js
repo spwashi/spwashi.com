@@ -39,9 +39,16 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 0,
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const appRoot = document.getElementById('budget-app-root');
-    if (!appRoot) return;
+/**
+ * The catalog mounts this when /tools/budgeting/ shows its bench, and the
+ * loader passes (ctx, root). It used to wait for DOMContentLoaded on its own,
+ * which no route ever loaded it for — so the bench rendered its static
+ * ledger and nothing else.
+ */
+export function initBudgetingBench(ctx, root = document) {
+    const scope = root instanceof Element ? root : document;
+    const appRoot = scope.matches?.('#budget-app-root') ? scope : document.getElementById('budget-app-root');
+    if (!appRoot) return () => {};
 
     const descInput = document.getElementById('budget-desc');
     const amountInput = document.getElementById('budget-amount');
@@ -635,4 +642,4 @@ document.addEventListener('DOMContentLoaded', () => {
             else capacityPanel.prepend(indicator);
         }
     }
-});
+}

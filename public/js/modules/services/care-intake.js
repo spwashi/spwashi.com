@@ -11,6 +11,8 @@
  * already knowing what they want to say.
  */
 
+import { escapeHtml } from '/public/js/kernel/dom-render.js';
+
 const STORAGE_KEY = 'spw:care-intake';
 
 // Maps selections → therapy approaches (each approach scores a point per match)
@@ -110,12 +112,12 @@ function buildProfileCard(state) {
   const approaches = suggestApproaches(state);
   const questions = approaches.filter(a => APPROACH_QUESTIONS[a]).slice(0, 3);
 
-  const situations = (state.situation || []).map(s => SITUATION_LABELS[s] || s);
-  const supports   = (state.support || []).map(s => SUPPORT_LABELS[s] || s);
-  const readiness  = state.readiness ? READINESS_LABELS[state.readiness] || state.readiness : null;
-  const format     = state.format || null;
-  const medium     = state.medium || null;
-  const note       = (state.note || '').trim();
+  const situations = (state.situation || []).map(s => escapeHtml(SITUATION_LABELS[s] || s));
+  const supports   = (state.support || []).map(s => escapeHtml(SUPPORT_LABELS[s] || s));
+  const readiness  = state.readiness ? escapeHtml(READINESS_LABELS[state.readiness] || state.readiness) : null;
+  const format     = state.format ? escapeHtml(state.format) : null;
+  const medium     = state.medium ? escapeHtml(state.medium) : null;
+  const note       = escapeHtml((state.note || '').trim());
 
   const row = (key, val) => val
     ? `<div class="care-profile-row"><span class="care-profile-key">${key}</span><span class="care-profile-val">${val}</span></div>`
@@ -172,10 +174,56 @@ function buildProfileCard(state) {
     </div>
   </footer>
 
-  <div class="care-profile-controls" data-screenshot-hidden>
-    <button class="operator-chip" data-care-screenshot aria-label="Toggle screenshot mode">@ screenshot mode</button>
+  <div class="care-profile-controls frame-operators" data-screenshot-hidden>
+    <button class="spw-chip" data-spw-handle="true" data-care-copy data-spw-operator="wonder">? copy profile</button>
+    <button class="spw-chip" data-spw-handle="true" data-care-download data-spw-operator="value" title="Save the profile as a .spw.txt you can bring to a first conversation">*download .txt</button>
+    <button class="spw-chip" data-spw-handle="true" data-care-screenshot data-spw-operator="perspective" aria-label="Toggle screenshot mode">@ screenshot mode</button>
+    <a class="spw-chip" data-spw-handle="true" href="#practices" data-spw-operator="potential" data-spw-action="explore">~book a first conversation</a>
   </div>
 </div>`.trim();
+}
+
+/* The profile as Spw, the way the order card and the services bundle
+   serialize: one block a person can paste into a message or keep. */
+function buildProfileSeed(state) {
+  const year = new Date().getFullYear();
+  const line = (key, value) => `  ${key.padEnd(10)}: "${String(value || '').replace(/"/g, '\\"')}"`;
+  const approaches = suggestApproaches(state);
+  return [
+    `^seed[Care.Profile ref:${year}]{`,
+    line('situation', (state.situation || []).map(s => SITUATION_LABELS[s] || s).join(' · ')),
+    line('support', (state.support || []).map(s => SUPPORT_LABELS[s] || s).join(' · ')),
+    line('setting', [state.format, state.medium].filter(Boolean).join(', ')),
+    line('readiness', state.readiness ? READINESS_LABELS[state.readiness] || state.readiness : ''),
+    line('note', (state.note || '').trim()),
+    line('approaches', approaches.join(' · ')),
+    line('next', 'bring this to a first conversation; nothing here is a diagnosis'),
+    '}',
+  ].join('\n');
+}
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  ta.remove();
+}
+
+function flash(button, text) {
+  const original = button.textContent;
+  button.textContent = text;
+  button.dataset.state = 'success';
+  setTimeout(() => {
+    button.textContent = original;
+    delete button.dataset.state;
+  }, 1800);
 }
 
 // ─── Charge ───────────────────────────────────────────────────────────────────
@@ -202,8 +250,10 @@ function saveState(state) {
 
 // ─── Mount ────────────────────────────────────────────────────────────────────
 
-export function mount(root) {
-  if (!root) return;
+export function mount(ctxOrRoot, rootArg) {
+  // The catalog loader passes (ctx, root); a direct caller passes (root).
+  const root = rootArg instanceof Element ? rootArg : (ctxOrRoot instanceof Element ? ctxOrRoot : null);
+  if (!root) return () => {};
 
   let state = loadState();
 
@@ -239,8 +289,33 @@ export function mount(root) {
     }
   });
 
-  // Screenshot toggle (delegated — card is dynamically inserted)
+  // Card exits (delegated — the card is dynamically inserted): copy the
+  // profile as Spw, save it as .spw.txt, or toggle screenshot mode.
   root.addEventListener('click', e => {
+    const copyBtn = e.target.closest('[data-care-copy]');
+    if (copyBtn) {
+      copyText(buildProfileSeed(state)).then(() => flash(copyBtn, '✓ copied')).catch(() => flash(copyBtn, '! failed'));
+      return;
+    }
+    const downloadBtn = e.target.closest('[data-care-download]');
+    if (downloadBtn) {
+      try {
+        const blob = new Blob([`${buildProfileSeed(state)}\n`], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `care-profile-${new Date().getFullYear()}.spw.txt`;
+        link.rel = 'noopener';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+        flash(downloadBtn, '✓ saved');
+      } catch {
+        flash(downloadBtn, '! failed');
+      }
+      return;
+    }
     const btn = e.target.closest('[data-care-screenshot]');
     if (!btn) return;
     const card = root.querySelector('[data-care-profile]');
@@ -324,3 +399,11 @@ function reset(root, state) {
   }
   refresh(root, state);
 }
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'care-intake',
+  mount,
+  describes: 'care[situation|support|setting|readiness]{profile.card} copy[spw] download[.spw.txt] screenshot',
+  timingArc: 'visible-feature',
+  effectScope: 'local-dom storage',
+});

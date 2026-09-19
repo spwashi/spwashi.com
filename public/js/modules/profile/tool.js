@@ -5,6 +5,7 @@ import {
   profileToSpw,
   renderProfileCard,
 } from '/public/js/modules/profile/builder.js';
+import { escapeHtml } from '/public/js/kernel/dom-render.js';
 
 const DEFAULT_STORAGE_PREFIX = 'spw-profile-tool';
 const ATTRIBUTE_RANDOM_VALUES = {
@@ -77,8 +78,16 @@ const ATTRIBUTE_RANDOM_VALUES = {
   ]
 };
 
-export function initSpwProfileTool(options = {}) {
-  const root = options.root || document;
+export function initSpwProfileTool(ctxOrOptions = {}, rootArg) {
+  // The catalog loader passes (ctx, root); an author calling this directly
+  // passes ({ root, storageKey, … }). Both land here.
+  const options = rootArg instanceof Element ? {} : (ctxOrOptions || {});
+  // The fields, preview, and import area sit in sibling sections, so a
+  // section root widens to the page it belongs to.
+  const given = rootArg instanceof Element ? rootArg : (options.root || document);
+  const root = given instanceof Element && !given.querySelector('#f-name, #json-import-area')
+    ? (given.closest('main') || document)
+    : given;
   const storageKey = options.storageKey || `${DEFAULT_STORAGE_PREFIX}:${window.location.pathname}`;
   const defaultProfile = resolveDefaultProfile(root, options);
   let currentPresetScriptId = options.defaultProfileScriptId || '';
@@ -643,12 +652,4 @@ function readJSONScript(scriptId, root = document) {
   } catch {
     return null;
   }
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
 }
