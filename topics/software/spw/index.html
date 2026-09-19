@@ -1226,7 +1226,7 @@
                     <details>
                         <summary>Reproduce a finding and carry a fix back here</summary>
                         <p>Start with <code>npm run spw:doctor</code>. Reduce the slow or incorrect input to a fixture in the workbench. Test the smallest fix there, update this site's pinned revision, then rerun the original consumer probe. Enumeration, parse health and semantic validity are separate measurements.</p>
-                        <p>The shared walker currently finds 681 files under this site's <code>.spw</code>, including 374 mounted files; excluding the mount leaves 307. Query already adds that exclusion itself. Aligning scan policy is still useful, but it does not establish the cause of the query timeout.</p>
+                        <p>In the September 2026 probe recorded in <code>.spw/workbench-report.spw#walk_cost</code>, the shared walker found 681 files under this site's <code>.spw</code>, including 374 mounted files; excluding the mount left 307. Default walks now skip the mount, and the doctor prints its scan exclusions. Aligning scan policy was useful; it did not establish the cause of the query timeout.</p>
                         <p>Read <code>.spw/workbench-report.spw</code> before proposing a lens. <a href="https://github.com/spwashi/spw-workbench">Open the workbench repository</a> · <a href="#operator-symmetry">Try the symmetry question</a></p>
                     </details>
                 </div>
