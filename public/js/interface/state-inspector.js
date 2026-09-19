@@ -1,7 +1,7 @@
 import {
   annotateFloatingChromeElement,
   isMobileBottomLane,
-  syncFloatingChromeState,
+  requestFloatingChromeSync,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
 import { bus } from '/public/js/kernel/bus.js';
@@ -218,7 +218,7 @@ function clearSatchelInlinePosition(root) {
 }
 
 function syncInspectorBottomLane(reason = 'state-inspector') {
-  syncFloatingChromeState(document, {
+  requestFloatingChromeSync({
     source: 'state-inspector',
     reason,
   });

@@ -4,10 +4,10 @@ import {
   isMobileBottomLane,
   isOwnAffordanceTarget,
   positionFloatingChromePopover,
-  syncFloatingChromeState,
+  PROJECTION_TIERS,
+  requestFloatingChromeSync,
   writeDatasetValue,
   writeProjectionTier,
-  PROJECTION_TIERS,
 } from '/public/js/kernel/dom-contracts.js';
 
 import { measureSpatialGravity } from '/public/js/runtime/spatial-gravity.js';
@@ -443,7 +443,7 @@ function openMenu(target) {
   writeDatasetValue(target, 'spwRegionMenuTarget', 'true');
   writeProjectionTier(document.documentElement, PROJECTION_TIERS.TRANSIENT, { spwRegionMenu: 'open' });
 
-  syncFloatingChromeState(document, {
+  requestFloatingChromeSync({
     source: 'region-menu',
     reason: 'region-menu-opened',
   });
@@ -1056,7 +1056,7 @@ function closeMenu(options = {}) {
   activeTarget = null;
 
   if (wasOpen) {
-    syncFloatingChromeState(document, {
+    requestFloatingChromeSync({
       source: 'region-menu',
       reason: 'region-menu-closed',
     });

@@ -19,7 +19,7 @@
 
 import {
   annotateFloatingChromeElement,
-  syncFloatingChromeState,
+  requestFloatingChromeSync,
 } from '/public/js/kernel/dom-contracts.js';
 import { emitSpwAction, isInputFocused } from '/public/js/kernel/shared.js';
 import { bestExpressionMatch, parseExpressionQuery } from '/public/js/semantic/expression-query.js';
@@ -624,7 +624,7 @@ export async function openSearch({ query = '', facet = null, source = 'api' } = 
   if (facet && FACETS.some((item) => item.id === facet)) activeFacet = facet;
   syncFacetBar();
   pulseOpen();
-  syncFloatingChromeState(document, { source: 'site-search', reason: 'open' });
+  requestFloatingChromeSync({ source: 'site-search', reason: 'open' });
 
   filterText = query || '';
   input.value = filterText;
@@ -657,7 +657,7 @@ export function closeSearch({ restoreFocus = true } = {}) {
   dialog.setAttribute(ROOT_ATTR, 'closed');
   delete document.documentElement.dataset.spwSiteSearch;
   delete document.documentElement.dataset.spwSearchSelectionPulse;
-  syncFloatingChromeState(document, { source: 'site-search', reason: 'close' });
+  requestFloatingChromeSync({ source: 'site-search', reason: 'close' });
 
   if (restoreFocus && lastFocus?.focus) {
     try { lastFocus.focus(); } catch { /* detached */ }

@@ -4,7 +4,7 @@
  * Coordinates section travel, page transitions, spell momentum, and chrome lanes.
  */
 
-import { syncFloatingChromeState, writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { requestFloatingChromeSync, writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 import { primeRouteTransition } from '/public/js/kernel/route-utils.js';
 import { emitSpwAction } from '/public/js/kernel/shared.js';
 import { PAGE_SECTION_EVENT } from './attention/shared.js';
@@ -59,7 +59,7 @@ function syncNavigationLocomotionState(detail = {}, reason = 'section-locomotion
     writeDatasetValue(html, 'spwNavigationSection', detail.currentId || null);
   }
 
-  syncFloatingChromeState(document, {
+  requestFloatingChromeSync({
     source: 'navigation-locomotion',
     reason,
   });
@@ -142,7 +142,7 @@ export function initNavigationLocomotion(ctx) {
   document.addEventListener('focusin', onInternalLinkIntent);
 
   const unsubNav = ctx?.bus?.on?.('spw:layout-assumptions-updated', () => {
-    syncFloatingChromeState(document, {
+    requestFloatingChromeSync({
       source: 'navigation-locomotion',
       reason: 'layout-assumptions-updated',
     });

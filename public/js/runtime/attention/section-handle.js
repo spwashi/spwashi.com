@@ -1,6 +1,6 @@
 import {
   annotateFloatingChromeElement,
-  syncFloatingChromeState,
+  requestFloatingChromeSync,
 } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import { computeLocomotionFieldBalance } from '/public/js/runtime/wonder-memory.js';
@@ -611,7 +611,7 @@ function syncSectionHandlePhase(shell, handle, phase) {
 function syncSectionHandleVisibility(handle, shell, visible) {
   setHandleState(handle, visible ? 'visible' : 'hidden');
   setHandleState(shell, visible ? 'visible' : 'hidden');
-  syncFloatingChromeState(document, {
+  requestFloatingChromeSync({
     source: 'attention-architecture',
     reason: visible ? 'section-handle-visible' : 'section-handle-hidden',
   });
@@ -1044,7 +1044,7 @@ function createSectionHandleController({
         state.manualCompact = true;
         setSectionHandleCompactMode(state, shell, refs.toggleButton);
         updateActiveState('toggle');
-        syncFloatingChromeState(document, {
+        requestFloatingChromeSync({
           source: 'attention-architecture',
           reason: 'section-handle-compact-toggle',
         });

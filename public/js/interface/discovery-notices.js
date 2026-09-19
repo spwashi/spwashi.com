@@ -7,7 +7,7 @@ import {
 } from '/public/js/kernel/feed-utils.js';
 import {
   annotateFloatingChromeElement,
-  syncFloatingChromeState,
+  requestFloatingChromeSync,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
 import { semanticToken } from '/public/js/kernel/text-normalization.js';
@@ -78,7 +78,7 @@ function syncDiscoveryChromeState(reason = 'discovery-notices') {
   });
 
   runCriticalPath('discovery:chrome-sync', () => {
-    syncFloatingChromeState(document, { source: 'discovery-notices', reason });
+    requestFloatingChromeSync({ source: 'discovery-notices', reason });
   }, null);
 }
 

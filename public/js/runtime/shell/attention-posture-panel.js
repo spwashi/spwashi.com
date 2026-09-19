@@ -4,7 +4,7 @@
 
 import {
   annotateFloatingChromeElement,
-  syncFloatingChromeState,
+  requestFloatingChromeSync,
   writeDatasetValue,
   writeTextContent,
 } from '/public/js/kernel/dom-contracts.js';
@@ -141,7 +141,7 @@ export function setAttentionPosturePanelOpen(header, open, { focusPill = false }
   header.dataset.spwAttentionPosturePanel = nextOpen ? 'open' : 'closed';
   writeDatasetValue(panel, 'spwPopupState', nextOpen ? 'open' : 'closed');
   syncAttentionPosturePanel(panel);
-  syncFloatingChromeState(document, {
+  requestFloatingChromeSync({
     source: 'shell-disclosure',
     reason: nextOpen ? 'attention-posture-opened' : 'attention-posture-closed',
   });

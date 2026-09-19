@@ -1,7 +1,7 @@
 /** Surface map: native route links, visible frames, and reversible keyboard navigation. */
 import {
-    annotateFloatingChromeElement,
-    syncFloatingChromeState,
+  annotateFloatingChromeElement,
+  requestFloatingChromeSync,
 } from '/public/js/kernel/dom-contracts.js';
 import { projectFeatureRouteContext } from '/public/js/kernel/feature-route-context.js';
 import { normalizePathname } from '/public/js/kernel/route-utils.js';
@@ -608,7 +608,7 @@ class SpwFrameNavigator {
         this.refresh();
         requestAnimationFrame(() => { if (this.isOpen()) this.searchInput.focus(); });
         emitSpwAction('#>map.open', 'surface map');
-        syncFloatingChromeState(document, {
+        requestFloatingChromeSync({
             source: 'frame-navigator',
             reason: 'surface-map-open',
         });
@@ -623,7 +623,7 @@ class SpwFrameNavigator {
         this.triggerBtn.setAttribute('aria-expanded', 'false');
         if (options.restoreFocus) this.triggerBtn.focus();
         if (wasOpen) emitSpwAction('!map.close', 'surface map');
-        syncFloatingChromeState(document, {
+        requestFloatingChromeSync({
             source: 'frame-navigator',
             reason: 'surface-map-close',
         });
