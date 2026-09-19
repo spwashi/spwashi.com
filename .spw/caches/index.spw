@@ -62,6 +62,7 @@
 @notice_attention_refinement_2026_09: ~"./notice-attention-refinement-2026-09.spw"  # daily wonder as an attention object: subject · meaning · value · closure · shape · relevance · cadence; landed closure, CTA shapes, one on-this-page card
 @healing_process_daily_wonder_2026_09: ~"./healing-process-daily-wonder-2026-09.spw"  # civic walk: cheap return after therapy; daily wonder + dated receipts; not a clinic
 @pricing_lattice_2026_09: ~"./pricing-lattice-2026-09.spw"  # cited comps vs live ladder; no checkout from this cache
+@wonder_chrome_retune_2026_09: ~"./wonder-chrome-retune-2026-09.spw"  # the 2026-09-19 retune request as sixteen owned lines; wr-001 is the settings register squeeze, landed
 
 operation = "align"
 fixity = "tending"
@@ -121,6 +122,7 @@ fixity = "tending"
   notice_attention_refinement_2026_09 = @notice_attention_refinement_2026_09
   healing_process_daily_wonder_2026_09 = @healing_process_daily_wonder_2026_09
   pricing_lattice_2026_09 = @pricing_lattice_2026_09
+  wonder_chrome_retune_2026_09 = @wonder_chrome_retune_2026_09
 }[reg=facet]
 
 ^"cache_rules"{
