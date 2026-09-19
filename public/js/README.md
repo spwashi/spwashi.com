@@ -71,7 +71,7 @@ wave.
 - `kernel/module-registry.js`: facade for the DOM-independent typed registry in `public/ts/module-registry.ts`; cleanup waves preserve replacement instances and join pending disposal.
 - `runtime/interaction/`: visitor-gesture vocabulary (`loop`, `hops`, `vocabulary`, `progression`, `story`). The catalog id `interaction-progression` is unchanged; its load path resolves from `catalog/` into this folder.
 - `runtime/page-hooks.js`: page-unique hooks, named handles, and console-facing page play helpers.
-- `interface/`: visible affordances, guide behavior, haptics, local controls, and chrome response.
+- `interface/`: visible affordances, guide behavior, haptics, local controls, and chrome response. `interface/seed-exits.js` is how a card leaves the page (copy, `.spw.txt` download, screenshot posture); `interface/intake.js` is the chips → note → charge → card process that care intake is the first consumer of.
 - `modules/`: page or feature bundles clustered by owner. Keep the first level folder-only; see `public/js/modules/README.md`.
 - `media/`: image storage, image metaphysics, and SVG/media helpers.
 - `typed/`: generated browser-ready modules from `public/ts/`; do not hand-edit generated output.

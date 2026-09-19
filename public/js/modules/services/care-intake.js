@@ -12,8 +12,11 @@
  */
 
 import { escapeHtml } from '/public/js/kernel/dom-render.js';
+import { createIntake } from '/public/js/interface/intake.js';
+import { bindSeedExits } from '/public/js/interface/seed-exits.js';
 
 const STORAGE_KEY = 'spw:care-intake';
+const CHARGE_FIELDS = ['situation', 'support', 'format', 'medium', 'readiness'];
 
 // Maps selections → therapy approaches (each approach scores a point per match)
 const APPROACH_MATRIX = {
@@ -202,208 +205,47 @@ function buildProfileSeed(state) {
   ].join('\n');
 }
 
-async function copyText(text) {
-  if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(text);
-    return;
-  }
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
-  document.body.appendChild(ta);
-  ta.select();
-  document.execCommand('copy');
-  ta.remove();
-}
-
-function flash(button, text) {
-  const original = button.textContent;
-  button.textContent = text;
-  button.dataset.state = 'success';
-  setTimeout(() => {
-    button.textContent = original;
-    delete button.dataset.state;
-  }, 1800);
-}
-
-// ─── Charge ───────────────────────────────────────────────────────────────────
-
-function computeCharge(state) {
-  const fields = ['situation', 'support', 'format', 'medium', 'readiness'];
-  const filled = fields.filter(k => {
-    const v = state[k];
-    return Array.isArray(v) ? v.length > 0 : !!v;
-  }).length;
-  return Math.min((filled + (state.note ? 0.5 : 0)) / (fields.length + 0.5), 1);
-}
-
-// ─── Storage ──────────────────────────────────────────────────────────────────
-
-function loadState() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
-  catch { return {}; }
-}
-
-function saveState(state) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
 // ─── Mount ────────────────────────────────────────────────────────────────────
 
+/**
+ * Care is one intake (interface/intake.js): chips keyed data-care-*, a note,
+ * a charge, a generated card. The card's exits are the site's (interface/
+ * seed-exits.js): copy the ^seed block, download it as .spw.txt, screenshot
+ * posture. The catalog loader passes (ctx, root); a direct caller passes (root).
+ */
 export function mount(ctxOrRoot, rootArg) {
-  // The catalog loader passes (ctx, root); a direct caller passes (root).
   const root = rootArg instanceof Element ? rootArg : (ctxOrRoot instanceof Element ? ctxOrRoot : null);
   if (!root) return () => {};
 
-  let state = loadState();
-
-  // Restore selections
-  root.querySelectorAll('[data-care-key][data-care-val]').forEach(chip => {
-    const { careKey: key, careVal: val } = chip.dataset;
-    const saved = state[key];
-    const active = Array.isArray(saved) ? saved.includes(val) : saved === val;
-    chip.setAttribute('aria-pressed', active ? 'true' : 'false');
+  const intake = createIntake(root, {
+    ns: 'care',
+    storageKey: STORAGE_KEY,
+    fields: CHARGE_FIELDS,
+    noteKey: 'note',
+    render: buildProfileCard,
+    onChange: (_state, charge) => root.style.setProperty('--care-charge', charge.toFixed(2)),
+    labels: { generate: '@ generate care profile', regenerate: '@ regenerate profile' },
   });
 
-  // Restore textarea
-  const textarea = root.querySelector('[data-care-key="note"]');
-  if (textarea && state.note) textarea.value = state.note;
-
-  refresh(root, state);
-
-  // Chip toggles
-  root.addEventListener('click', e => {
-    const chip = e.target.closest('[data-care-key][data-care-val]');
-    if (chip) {
-      handleChip(chip, state, root);
-      return;
-    }
-    const generateBtn = e.target.closest('[data-care-generate]');
-    if (generateBtn) {
-      generate(root, state);
-      return;
-    }
-    const resetBtn = e.target.closest('[data-care-reset]');
-    if (resetBtn) {
-      reset(root, state);
-    }
+  const unbindExits = bindSeedExits(root, {
+    seed: () => buildProfileSeed(intake.state),
+    filename: () => `care-profile-${new Date().getFullYear()}`,
+    card: () => root.querySelector('[data-care-profile]'),
+    actions: { copy: '[data-care-copy]', download: '[data-care-download]', screenshot: '[data-care-screenshot]' },
+    hook: 'data-screenshot-mode',
+    labels: { screenshotOn: '@ exit screenshot mode', screenshotOff: '@ screenshot mode' },
   });
 
-  // Card exits (delegated — the card is dynamically inserted): copy the
-  // profile as Spw, save it as .spw.txt, or toggle screenshot mode.
-  root.addEventListener('click', e => {
-    const copyBtn = e.target.closest('[data-care-copy]');
-    if (copyBtn) {
-      copyText(buildProfileSeed(state)).then(() => flash(copyBtn, '✓ copied')).catch(() => flash(copyBtn, '! failed'));
-      return;
-    }
-    const downloadBtn = e.target.closest('[data-care-download]');
-    if (downloadBtn) {
-      try {
-        const blob = new Blob([`${buildProfileSeed(state)}\n`], { type: 'text/plain;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `care-profile-${new Date().getFullYear()}.spw.txt`;
-        link.rel = 'noopener';
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 4000);
-        flash(downloadBtn, '✓ saved');
-      } catch {
-        flash(downloadBtn, '! failed');
-      }
-      return;
-    }
-    const btn = e.target.closest('[data-care-screenshot]');
-    if (!btn) return;
-    const card = root.querySelector('[data-care-profile]');
-    if (!card) return;
-    const on = card.hasAttribute('data-screenshot-mode');
-    card.toggleAttribute('data-screenshot-mode', !on);
-    btn.textContent = on ? '@ screenshot mode' : '@ exit screenshot mode';
-  });
-
-  // Textarea
-  if (textarea) {
-    textarea.addEventListener('input', () => {
-      state.note = textarea.value.trim();
-      saveState(state);
-      refresh(root, state);
-    });
-  }
-}
-
-function handleChip(chip, state, root) {
-  const { careKey: key, careVal: val, careMulti } = chip.dataset;
-  const multi = careMulti === 'true';
-
-  if (multi) {
-    const current = Array.isArray(state[key]) ? state[key] : [];
-    const idx = current.indexOf(val);
-    if (idx >= 0) {
-      current.splice(idx, 1);
-      chip.setAttribute('aria-pressed', 'false');
-    } else {
-      current.push(val);
-      chip.setAttribute('aria-pressed', 'true');
-    }
-    state[key] = current;
-  } else {
-    root.querySelectorAll(`[data-care-key="${key}"][data-care-val]`).forEach(c => {
-      c.setAttribute('aria-pressed', 'false');
-    });
-    state[key] = val;
-    chip.setAttribute('aria-pressed', 'true');
-  }
-
-  saveState(state);
-  refresh(root, state);
-}
-
-function refresh(root, state) {
-  const charge = computeCharge(state);
-  root.style.setProperty('--care-charge', charge.toFixed(2));
-
-  const generateBtn = root.querySelector('[data-care-generate]');
-  if (generateBtn) {
-    generateBtn.disabled = charge < 0.1;
-    generateBtn.textContent = charge >= 0.1
-      ? (root.querySelector('[data-care-profile]') ? '@ regenerate profile' : '@ generate care profile')
-      : '@ generate care profile';
-  }
-}
-
-function generate(root, state) {
-  const output = root.querySelector('[data-care-output]');
-  if (!output) return;
-  output.innerHTML = buildProfileCard(state);
-  output.removeAttribute('hidden');
-  output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  refresh(root, state);
-}
-
-function reset(root, state) {
-  localStorage.removeItem(STORAGE_KEY);
-  Object.keys(state).forEach(k => delete state[k]);
-  root.querySelectorAll('[data-care-key][data-care-val]').forEach(c => {
-    c.setAttribute('aria-pressed', 'false');
-  });
-  const textarea = root.querySelector('[data-care-key="note"]');
-  if (textarea) textarea.value = '';
-  const output = root.querySelector('[data-care-output]');
-  if (output) {
-    output.innerHTML = '';
-    output.setAttribute('hidden', '');
-  }
-  refresh(root, state);
+  return () => {
+    unbindExits();
+    intake.destroy();
+  };
 }
 
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'care-intake',
   mount,
-  describes: 'care[situation|support|setting|readiness]{profile.card} copy[spw] download[.spw.txt] screenshot',
+  describes: 'care[situation|support|setting|readiness]{profile.card} intake[chips|note|charge] exits[copy|download|screenshot]',
   timingArc: 'visible-feature',
   effectScope: 'local-dom storage',
 });

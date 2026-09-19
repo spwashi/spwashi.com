@@ -13,6 +13,7 @@
  * Share: /services/?bundle=plate,author-site#compose-a-bundle
  */
 import { emitSpwAction } from '/public/js/kernel/shared.js';
+import { copySeed, downloadSpwText } from '/public/js/interface/seed-exits.js';
 
 const HOST_SELECTOR = '[data-bundle-composer]';
 const PARAM = 'bundle';
@@ -112,30 +113,6 @@ function shareHref(skills) {
   return url.toString();
 }
 
-async function copyText(text) {
-  if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(text);
-    return;
-  }
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
-  document.body.appendChild(ta);
-  ta.select();
-  document.execCommand('copy');
-  ta.remove();
-}
-
-function flash(button, text) {
-  const original = button.textContent;
-  button.textContent = text;
-  button.dataset.state = 'success';
-  setTimeout(() => {
-    button.textContent = original;
-    delete button.dataset.state;
-  }, 1800);
-}
-
 export class BundleComposer {
   constructor(host) {
     this.host = host;
@@ -206,30 +183,16 @@ export class BundleComposer {
       return;
     }
     if (action === 'copy') {
-      copyText(block(skills, summary)).then(() => flash(button, '✓ copied')).catch(() => flash(button, '! failed'));
+      void copySeed(block(skills, summary), button);
       emitSpwAction('^bundle.copy', bundleName(summary.lanes));
       return;
     }
     if (action === 'share') {
-      copyText(shareHref(skills)).then(() => flash(button, '✓ link copied')).catch(() => flash(button, '! failed'));
+      void copySeed(shareHref(skills), button, { copied: '✓ link copied' });
       return;
     }
     if (action === 'download') {
-      try {
-        const blob = new Blob([`${block(skills, summary)}\n`], { type: 'text/plain;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `services-bundle-${new Date().getFullYear()}.spw.txt`;
-        link.rel = 'noopener';
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 4000);
-        flash(button, '✓ saved');
-      } catch {
-        flash(button, '! failed');
-      }
+      downloadSpwText(block(skills, summary), `services-bundle-${new Date().getFullYear()}`, button);
     }
   }
 

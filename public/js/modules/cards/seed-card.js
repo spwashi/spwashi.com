@@ -12,6 +12,8 @@
  * Serialization: ^seed[Template year:YYYY]{...} Spw block
  */
 
+import { copySeed, downloadSpwText, toggleScreenshotMode } from '/public/js/interface/seed-exits.js';
+
 const STORAGE_PREFIX = 'seed-card:';
 const SAVE_DEBOUNCE = 600;
 
@@ -365,36 +367,9 @@ export class SeedCard {
     this._statusTimer = setTimeout(() => { status.textContent = ''; }, durationMs);
   }
 
-  /** Copy seed text to clipboard */
-  async _copy(btn) {
-    const { el, template, values } = this;
-    const yearEl = el.querySelector('.seed-card-year');
-    const year = yearEl ? yearEl.textContent.trim() : new Date().getFullYear().toString();
-    const text = buildSeedText(template, year, values);
-
-    const original = btn.textContent;
-    try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-      } else {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        ta.remove();
-      }
-      btn.textContent = '✓ copied';
-      btn.dataset.state = 'success';
-    } catch {
-      btn.textContent = '! failed';
-      btn.dataset.state = 'fail';
-    }
-    setTimeout(() => {
-      btn.textContent = original;
-      delete btn.dataset.state;
-    }, 1800);
+  /** Copy the seed block; the button reports the outcome (interface/seed-exits.js). */
+  _copy(btn) {
+    void copySeed(this._seedText(), btn);
   }
 
   /** The seed text as the card would copy it. */
@@ -410,34 +385,12 @@ export class SeedCard {
    * names the grammar, the .txt lets every mail and chat client open it.
    */
   _download(btn) {
-    const original = btn.textContent;
-    try {
-      const text = this._seedText();
-      const blob = new Blob([`${text}\n`], { type: 'text/plain;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${this.id}-${this.templateKey}.spw.txt`;
-      link.rel = 'noopener';
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 4000);
-      btn.textContent = '✓ saved';
-      btn.dataset.state = 'success';
-    } catch {
-      btn.textContent = '! failed';
-      btn.dataset.state = 'fail';
-    }
-    setTimeout(() => {
-      btn.textContent = original;
-      delete btn.dataset.state;
-    }, 1800);
+    downloadSpwText(this._seedText(), `${this.id}-${this.templateKey}`, btn);
   }
 
   /** Toggle screenshot mode */
   _toggleScreenshot() {
-    this.el.classList.toggle('seed-card--screenshot');
+    toggleScreenshotMode(this.el, { hook: 'seed-card--screenshot' });
     // ensure seed output is visible in screenshot mode
     this._update();
   }
