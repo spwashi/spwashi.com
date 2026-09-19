@@ -2,6 +2,7 @@ import {
   isCoarsePointerEnvironment,
   supportsHoverEnvironment,
 } from '/public/js/kernel/dom-contracts.js';
+import { composeModeSeatExpression } from '/public/js/semantic/spw-compose.js';
 
 const LENS_MODE_QUERY_KEYS = Object.freeze(['spw-lens', 'lens', 'mode']);
 const DOCUMENT_NODE = 9;
@@ -48,6 +49,49 @@ const queryModePanels = (group, root = document) =>
   [...getDocument(root).querySelectorAll(`[data-mode-group="${CSS.escape(group)}"][data-mode-panel]`)];
 
 export const LENS_MODE_SETTLE_MS = 720;
+
+/* One writer. A click, an arrow key, the console, a brace edge, a probe sigil,
+   and a query all ask for a lens through this request; the core owner
+   (site-core-minimal) answers by writing. Nothing else sets aria-pressed,
+   hidden, tabindex, or the live seat expression on a lens. */
+export const LENS_MODE_REQUEST_EVENT = 'lens:request';
+
+export function requestLensMode(bus, { group, mode, source = 'request' } = {}) {
+  if (!group || !mode || typeof bus?.emit !== 'function') return false;
+  bus.emit(LENS_MODE_REQUEST_EVENT, { group, mode, source });
+  return true;
+}
+
+export function hasLensMode(buttons = [], mode = '') {
+  return buttons.some((button) => button?.getAttribute?.('data-set-mode') === mode);
+}
+
+/* Roving tabindex: arrows move within the group and wrap, Home and End jump.
+   Returns -1 when the key is not a roving key or there is nowhere to go. */
+export function resolveLensRovingIndex(count, currentIndex, key) {
+  if (!(count > 1) || currentIndex < 0 || currentIndex >= count) return -1;
+  switch (key) {
+    case 'ArrowRight':
+    case 'ArrowDown':
+      return (currentIndex + 1) % count;
+    case 'ArrowLeft':
+    case 'ArrowUp':
+      return (currentIndex - 1 + count) % count;
+    case 'Home':
+      return 0;
+    case 'End':
+      return count - 1;
+    default:
+      return -1;
+  }
+}
+
+/* The seat expression keeps the authored subject (`about` in
+   `about[reading]{open.sit}`) and swaps the seat; a switch with no authored
+   expression takes its frame's id. */
+export function resolveLensSeatSubject(expression = '', fallback = 'lens') {
+  return String(expression || '').trim().match(/^([A-Za-z_][\w-]*)/)?.[1] || fallback || 'lens';
+}
 
 export function shouldUseLensViewTransition({
   source = 'mode-switch',
@@ -161,11 +205,15 @@ export function writeLensModeState({
   const doc = getDocument(root);
   const resolvedPanels = Array.isArray(panels) ? panels : queryModePanels(group, doc);
   const { activeButton, activeIndex, resolvedMode } = resolveLensMode(buttons, mode);
+  const previousMode = buttons
+    .find((button) => button.getAttribute('aria-pressed') === 'true')
+    ?.getAttribute('data-set-mode') || null;
 
   const applyDomUpdates = () => {
     for (const button of buttons) {
       const isActive = button.getAttribute('data-set-mode') === resolvedMode;
       button.setAttribute('aria-pressed', String(isActive));
+      button.setAttribute('tabindex', isActive ? '0' : '-1');
       button.dataset.spwLensOptionState = isActive ? 'active' : 'idle';
     }
 
@@ -234,6 +282,11 @@ export function writeLensModeState({
     switchEl.title = lensFeedback ? `Lens: ${lensFeedback}` : switchEl.title;
     switchEl.style.setProperty('--spw-lens-count', String(Math.max(1, buttons.length)));
     switchEl.style.setProperty('--spw-lens-index', String(activeIndex));
+    const subject = resolveLensSeatSubject(
+      switchEl.dataset.spwSemanticExpression,
+      switchEl.closest?.('.spw-frame, [data-spw-kind="frame"]')?.id || 'lens',
+    );
+    switchEl.dataset.spwSemanticExpression = composeModeSeatExpression({ subject, seat: resolvedMode });
     setTransientState?.(switchEl);
   }
 
@@ -256,6 +309,7 @@ export function writeLensModeState({
     group,
     groupName: group,
     mode: resolvedMode,
+    previousMode,
     label: activeButton?.textContent?.trim() || resolvedMode,
     index: activeIndex,
     count: buttons.length,

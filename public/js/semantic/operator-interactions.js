@@ -466,11 +466,15 @@ export function wireProbeSigils(root = document) {
       sigil.addEventListener('click', (event) => {
         if (sigil.tagName === 'A') event.preventDefault();
 
-        if (target.dataset.modeGroup && target.dataset.modePanel && window.spwInterface?.setGroupMode) {
-          window.spwInterface.setGroupMode(target.dataset.modeGroup, target.dataset.modePanel, {
-            source: 'probe',
-            force: true,
-          });
+        if (target.dataset.modeGroup && target.dataset.modePanel) {
+          // The lens owner lives a layer up; a probe asks it at click time.
+          const request = { group: target.dataset.modeGroup, mode: target.dataset.modePanel, source: 'probe' };
+          import('/public/js/runtime/lens-modes.js')
+            .then((mod) => mod.requestLensMode(bus, request))
+            .catch(() => {
+              target.hidden = false;
+              target.classList.add('is-active-panel');
+            });
         } else {
           target.hidden = false;
           target.classList.add('is-active-panel');

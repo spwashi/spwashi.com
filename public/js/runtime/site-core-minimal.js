@@ -5,9 +5,12 @@
 import { FRAME_SELECTOR } from '../kernel/dom-contracts.js';
 import { safeQuery, safeQueryAll } from '/public/js/kernel/browser-primitives.js';
 import {
+  LENS_MODE_REQUEST_EVENT,
   LENS_MODE_SETTLE_MS,
   findLensModeSwitches,
+  hasLensMode,
   parseLensModeQuery,
+  resolveLensRovingIndex,
   writeLensModeState,
 } from './lens-modes.js';
 import {
@@ -78,6 +81,9 @@ function bindModeGroups(ctx) {
 
   function applyMode(group, mode, options = {}) {
     const groupButtons = grouped.get(group) || [];
+    // An unavailable mode leaves the group as it is: no fallback to the first
+    // button, no event, no settle.
+    if (!hasLensMode(groupButtons, mode)) return null;
     const detail = writeLensModeState({
       group,
       mode,
@@ -86,6 +92,7 @@ function bindModeGroups(ctx) {
       setTransientState: (element) => setTransientState(element, options.initial ? 'settled' : 'changed'),
     });
     if (detail) ctx.bus.emit('frame:mode', detail);
+    return detail;
   }
 
   const handlers = [];
@@ -98,9 +105,36 @@ function bindModeGroups(ctx) {
       if (!group || !mode) return;
       applyMode(group, mode, { source: 'mode-switch' });
     };
+    // Roving tabindex lives with the writer: arrows move within the group and
+    // select as they go, Home and End jump. The tabindex itself is written by
+    // writeLensModeState with the pressed state.
+    const onKeydown = (event) => {
+      const group = button.getAttribute('data-mode-group');
+      const groupButtons = grouped.get(group) || [];
+      const index = groupButtons.indexOf(button);
+      const targetIndex = resolveLensRovingIndex(groupButtons.length, index, event.key);
+      if (targetIndex === -1 || targetIndex === index) return;
+      event.preventDefault();
+      const next = groupButtons[targetIndex];
+      next.focus?.({ preventScroll: true });
+      applyMode(group, next.getAttribute('data-set-mode'), { source: 'keyboard' });
+    };
     button.addEventListener('click', handler);
-    handlers.push(() => button.removeEventListener('click', handler));
+    button.addEventListener('keydown', onKeydown);
+    handlers.push(() => {
+      button.removeEventListener('click', handler);
+      button.removeEventListener('keydown', onKeydown);
+    });
   }
+
+  // Everything else asks. The console, brace edges, probe sigils, and the
+  // variant query all emit this request; the answer is one write here.
+  const offRequest = ctx.bus?.on?.(LENS_MODE_REQUEST_EVENT, (event) => {
+    const request = event?.detail || {};
+    if (!request.group || !request.mode || !grouped.has(request.group)) return;
+    applyMode(request.group, request.mode, { source: request.source || 'request' });
+  });
+  if (typeof offRequest === 'function') handlers.push(offRequest);
 
   const initial = parseLensModeQuery(grouped);
   for (const [group, groupButtons] of grouped.entries()) {

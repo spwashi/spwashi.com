@@ -6,7 +6,7 @@ import {
 import { bus } from '/public/js/kernel/bus.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 import { annotateFloatingChromeElement, requestFloatingChromeSync } from '/public/js/kernel/dom-contracts.js';
-import { writeLensModeState } from '/public/js/runtime/lens-modes.js';
+import { requestLensMode } from '/public/js/runtime/lens-modes.js';
 
 let initialized = false;
 let activeConsoleCleanup = null;
@@ -72,23 +72,9 @@ const createConsoleInterface = () => ({
         }));
     },
     setGroupMode(group, mode, options = {}) {
-        if (!group || !mode) return;
-        const buttons = [...document.querySelectorAll(`[data-mode-group="${CSS.escape(group)}"][data-set-mode]`)];
-        const detail = writeLensModeState({
-            group,
-            mode,
-            buttons,
-            source: options.source || 'console',
-            setTransientState: (element) => {
-                element.dataset.spwLensState = 'changed';
-            },
-        });
-        if (detail) {
-            bus.emit('frame:mode', {
-                ...detail,
-                frameMeta: getFrameMeta(getActiveFrame()),
-            });
-        }
+        // The console asks; the lens owner (site-core-minimal) writes and
+        // emits frame:mode, which the console already listens to.
+        requestLensMode(bus, { group, mode, source: options.source || 'console' });
     },
 });
 

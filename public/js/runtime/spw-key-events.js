@@ -17,7 +17,6 @@ import { writeDatasetValue, writeStyleValue } from '/public/js/kernel/dom-contra
 import { isInputFocused } from '/public/js/kernel/shared.js';
 import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
 import {
-  composeModeSeatExpression,
   composeWrapJobExpression,
   formatWrapJobVariants,
 } from '/public/js/semantic/spw-compose.js';
@@ -656,21 +655,11 @@ function subjectFromExpression(expression = '') {
   return String(expression).trim().match(/^([A-Za-z_][\w-]*)/)?.[1] || '';
 }
 
-function writeLiveModeExpression(switchEl) {
-  if (!(switchEl instanceof HTMLElement)) return '';
-  const pressed = readModeButtons(switchEl)
-    .find((button) => button.getAttribute('aria-pressed') === 'true');
-  const seat = pressed?.getAttribute('data-set-mode') || 'mode';
-  const subject = subjectFromExpression(switchEl.dataset.spwSemanticExpression)
-    || switchEl.closest('.spw-frame, [data-spw-kind="frame"]')?.id
-    || 'lens';
-  const expression = composeModeSeatExpression({ subject, seat });
-  writeDatasetValue(switchEl, 'spwSemanticExpression', expression, {
-    source: 'spw-key-events',
-    reason: 'mode-seat-live',
-  });
+/* The live seat expression on a switch is written by the lens owner
+   (runtime/lens-modes.js) with every mode change; opening or closing the seat
+   only needs the wrap labels re-read. */
+function syncSeatLabels() {
   syncWrapJobLabels();
-  return expression;
 }
 
 function shortFrameLabel(frame) {
@@ -907,7 +896,7 @@ function openModeSeat() {
     switchEl.setAttribute('data-spw-operator', 'mode');
   }
   switchEl.setAttribute('aria-expanded', 'true');
-  writeLiveModeExpression(switchEl);
+  syncSeatLabels();
   writeInteractionContext('inspecting', switchEl);
 
   const pressed = buttons.find((button) => button.getAttribute('aria-pressed') === 'true') || buttons[0];
@@ -936,7 +925,7 @@ function closeModeSeat({ commit = true, switchEl = readOpenModeSwitch() } = {}) 
   const focused = buttons.find((button) => button === document.activeElement);
   const pressed = buttons.find((button) => button.getAttribute('aria-pressed') === 'true');
   if (commit && focused && focused !== pressed) focused.click();
-  writeLiveModeExpression(switchEl);
+  syncSeatLabels();
 
   writeDatasetValue(switchEl, 'spwModeSeat', null, {
     source: 'spw-key-events',

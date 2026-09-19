@@ -98,7 +98,7 @@ test('resolveMeasureTierVariant resolves variants from measure bands or tiers', 
   assert.equal(resolveMeasureTierVariant('compact', null, 'fallback-variant'), 'fallback-variant');
 });
 
-test('variant selection initializes roving tabindex and arrow key navigation', () => {
+test('variant selection marks the panel a lens change reveals and reports the edge', () => {
   const createMockButton = (mode, pressed = false) => {
     const attrs = new Map([
       ['data-mode-group', 'test-group'],
@@ -187,10 +187,6 @@ test('variant selection initializes roving tabindex and arrow key navigation', (
     querySelectorAll(selector) {
       if (selector.includes('data-set-mode')) return buttons;
       if (selector.includes('data-mode-panel')) return panels;
-      if (selector.includes('data-spw-variant-selected')) return [];
-      if (selector.includes('data-spw-component-variant-active')) return [];
-      if (selector.includes('data-spw-semantic-variant')) return [];
-      if (selector.includes('data-spw-variant-bound')) return buttons.filter((b) => b.dataset.spwVariantBound);
       return [];
     },
     querySelector(selector) {
@@ -206,65 +202,57 @@ test('variant selection initializes roving tabindex and arrow key navigation', (
   const emittedEvents = [];
   const onVariantSelected = (e) => emittedEvents.push(e.detail);
   document.addEventListener(VARIANT_EVENT, onVariantSelected);
+  const requests = [];
+  const onRequest = (e) => requests.push(e.detail);
+  document.addEventListener('spw:lens:request', onRequest);
 
   try {
     const cleanup = initVariantSelection(mockRoot);
 
-    // Initial roving tabindex
-    assert.equal(btnAlpha.getAttribute('tabindex'), '0');
-    assert.equal(btnBeta.getAttribute('tabindex'), '-1');
-    assert.equal(btnGamma.getAttribute('tabindex'), '-1');
+    // Authored state is marked; the control itself is never written here.
+    assert.equal(panelAlpha.dataset.spwVariantSelected, 'true');
+    assert.equal(btnAlpha.getAttribute('tabindex'), null);
+    assert.equal(emittedEvents.length, 0);
 
-    // ArrowRight advances from Alpha to Beta
-    btnAlpha.dispatchEvent({ type: 'keydown', key: 'ArrowRight', preventDefault() {} });
-    assert.equal(btnBeta.isFocused, true);
-    assert.equal(btnAlpha.getAttribute('aria-pressed'), 'false');
-    assert.equal(btnBeta.getAttribute('aria-pressed'), 'true');
-    assert.equal(btnAlpha.getAttribute('tabindex'), '-1');
-    assert.equal(btnBeta.getAttribute('tabindex'), '0');
-    assert.equal(panelAlpha.hidden, true);
-    assert.equal(panelBeta.hidden, false);
-
-    // ArrowLeft wraps from Alpha to Gamma if dispatched on Alpha
-    btnAlpha.isFocused = false;
-    btnAlpha.dispatchEvent({ type: 'keydown', key: 'ArrowLeft', preventDefault() {} });
-    assert.equal(btnGamma.isFocused, true);
-    assert.equal(btnGamma.getAttribute('aria-pressed'), 'true');
-    assert.equal(btnGamma.getAttribute('tabindex'), '0');
-
-    // End key jumps to Gamma
-    btnBeta.dispatchEvent({ type: 'keydown', key: 'End', preventDefault() {} });
-    assert.equal(btnGamma.getAttribute('aria-pressed'), 'true');
-
-    // Home key jumps to Alpha
-    btnGamma.dispatchEvent({ type: 'keydown', key: 'Home', preventDefault() {} });
-    assert.equal(btnAlpha.getAttribute('aria-pressed'), 'true');
-    assert.equal(btnAlpha.getAttribute('tabindex'), '0');
-
-    // Programmatic selectMode
-    const edge = selectMode(btnBeta, mockRoot, 'api');
-    assert.equal(edge.to, 'beta');
-    assert.equal(btnBeta.getAttribute('aria-pressed'), 'true');
-
-    // Invalid requests preserve the current panel, keyboard stop, and event stream.
-    const eventCount = emittedEvents.length;
-    assert.equal(selectMode(createMockButton('missing', false), mockRoot, 'api'), null);
-    assert.equal(panelBeta.hidden, false);
-    assert.equal(btnBeta.getAttribute('aria-pressed'), 'true');
-    assert.equal(btnBeta.getAttribute('tabindex'), '0');
-    assert.equal(emittedEvents.length, eventCount);
+    // The lens owner's change arrives: marks move and the edge is reported once.
+    panelAlpha.hidden = true;
+    panelBeta.hidden = false;
+    btnAlpha.setAttribute('aria-pressed', 'false');
+    btnBeta.setAttribute('aria-pressed', 'true');
+    document.dispatchEvent({ type: 'spw:mode-change', detail: { group: 'test-group', mode: 'beta', previousMode: 'alpha', source: 'mode-switch' } });
     assert.equal(panelBeta.dataset.spwVariantSelected, 'true');
+    assert.equal(panelAlpha.dataset.spwVariantSelected, undefined);
+    assert.equal(emittedEvents.length, 1);
+    assert.equal(emittedEvents[0].variant, 'beta');
+    assert.equal(emittedEvents[0].edge.from, 'alpha');
+    assert.equal(emittedEvents[0].edge.to, 'beta');
+    assert.equal(emittedEvents[0].source, 'mode-switch');
 
-    assert.ok(emittedEvents.length >= 3);
-    assert.equal(emittedEvents.at(-1).variant, 'beta');
-    assert.equal(emittedEvents.at(-1).source, 'api');
+    // The boot restatement marks without reporting a selection.
+    document.dispatchEvent({ type: 'spw:mode-change', detail: { group: 'test-group', mode: 'beta', source: 'initial' } });
+    assert.equal(emittedEvents.length, 1);
+
+    // A mode the group does not have leaves marks and the event stream alone.
+    document.dispatchEvent({ type: 'spw:mode-change', detail: { group: 'test-group', mode: 'missing', source: 'mode-switch' } });
+    assert.equal(panelBeta.dataset.spwVariantSelected, 'true');
+    assert.equal(emittedEvents.length, 1);
+
+    // selectMode asks the owner, names the edge, and writes nothing itself.
+    const edge = selectMode(btnGamma, mockRoot, 'api');
+    assert.equal(edge.from, 'beta');
+    assert.equal(edge.to, 'gamma');
+    assert.equal(requests.length, 1);
+    assert.equal(requests[0].group, 'test-group');
+    assert.equal(requests[0].mode, 'gamma');
+    assert.equal(requests[0].source, 'api');
+    assert.equal(btnGamma.getAttribute('aria-pressed'), 'false');
+    assert.equal(selectMode(createMockButton('missing', false), mockRoot, 'api'), null);
+    assert.equal(requests.length, 1);
 
     cleanup();
-    assert.equal(btnAlpha.hasAttribute('tabindex'), false);
-    assert.equal(btnBeta.hasAttribute('tabindex'), false);
-    assert.equal(btnGamma.hasAttribute('tabindex'), false);
   } finally {
     document.removeEventListener(VARIANT_EVENT, onVariantSelected);
+    document.removeEventListener('spw:lens:request', onRequest);
   }
 });
 

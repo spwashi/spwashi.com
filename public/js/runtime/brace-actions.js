@@ -1,4 +1,6 @@
 import { emitSpwAction } from '/public/js/kernel/shared.js';
+import { bus } from '/public/js/kernel/bus.js';
+import { requestLensMode } from '/public/js/runtime/lens-modes.js';
 
 const TARGET_SELECTOR = [
     '.spw-frame[data-spw-form="brace"], [data-spw-kind="frame"][data-spw-form="brace"]',
@@ -43,10 +45,7 @@ function cycleMode(target) {
         || buttons.find((button) => button.classList.contains('is-selected'))
         || buttons[0];
     const next = buttons[(buttons.indexOf(active) + 1) % buttons.length];
-    window.spwInterface?.setGroupMode?.(groupName, next.dataset.setMode, {
-        source: 'brace-edge',
-        force: true
-    });
+    requestLensMode(bus, { group: groupName, mode: next.dataset.setMode, source: 'brace-edge' });
     return true;
 }
 

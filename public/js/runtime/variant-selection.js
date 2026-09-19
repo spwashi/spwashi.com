@@ -1,19 +1,28 @@
 /**
  * variant-selection.js
  * ---------------------------------------------------------------------------
- * Component variant selection: mode panels, semantic variants, query override.
- * Couples selection to measure/frame theory via selection weight + micro pulse.
+ * Component variant marks: which panel a lens reveals, which semantic or
+ * content variant a host shows, and the query override for either.
+ *
+ * This module does not write the lens. The lens owner (site-core-minimal via
+ * runtime/lens-modes.js) sets aria-pressed, hidden, tabindex, and the seat
+ * expression, then emits frame:mode; this module hears that change and marks
+ * the variant the change revealed, pulses the root, and reports the edge as
+ * spw:variant-selected. A query or an API caller that wants a lens asks the
+ * owner through LENS_MODE_REQUEST_EVENT instead of touching the buttons.
  */
 
-import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
+import { bus } from '/public/js/kernel/bus.js';
 import { parseModularQuery } from '/public/js/kernel/query-composer.js';
 import { queryParamsToSettingsPartial } from '/public/js/kernel/settings-query-parity.js';
-import { composeModeSeatExpression } from '/public/js/semantic/spw-compose.js';
+import { requestLensMode } from './lens-modes.js';
 import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
 
 const VARIANT_CONTAINER_SELECTOR = '.spw-frame, [data-spw-kind="frame"], .spw-card, .frame-card, [data-spw-feature]';
 const MODE_BUTTON_SELECTOR = '.mode-switch [data-set-mode]';
 const VARIANT_EVENT = 'spw:variant-selected';
+const LENS_CHANGE_EVENT = 'spw:mode-change';
+const DOCUMENT_NODE = 9;
 
 let initialized = false;
 let selectionPulseTimer = null;
@@ -119,10 +128,14 @@ function emitVariantSelected(detail) {
   }));
 }
 
+function readGroupPanels(group, root) {
+  return [...root.querySelectorAll(`[data-mode-group="${CSS.escape(group)}"][data-mode-panel]`)];
+}
+
 function readActiveMode(group, root) {
   const escaped = CSS.escape(group);
   const buttons = [...root.querySelectorAll(`.mode-switch [data-mode-group="${escaped}"][data-set-mode]`)];
-  const panels = [...root.querySelectorAll(`[data-mode-group="${escaped}"][data-mode-panel]`)];
+  const panels = readGroupPanels(group, root);
   const pressed = buttons.find((button) => button.getAttribute('aria-pressed') === 'true');
   const visible = panels.find((panel) => !panel.hidden);
   return resolveVariantChoice({
@@ -131,63 +144,51 @@ function readActiveMode(group, root) {
   });
 }
 
-function syncModeSwitch(group, mode, root, source = 'mode') {
-  const previous = readActiveMode(group, root);
-  const buttons = [...root.querySelectorAll(`.mode-switch [data-mode-group="${CSS.escape(group)}"][data-set-mode]`)];
-  const panels = [...root.querySelectorAll(`[data-mode-group="${CSS.escape(group)}"][data-mode-panel]`)];
-  // Reject unavailable modes before clearing selection or hiding panels.
-  if (!panels.some((panel) => panel.getAttribute('data-mode-panel') === mode)) return null;
+/* Mark the panel a lens change revealed. Returns the panel, or null when the
+   group has no panel for that mode. */
+function markGroupVariant(group, mode, root, source) {
+  const panel = readGroupPanels(group, root).find((candidate) => candidate.getAttribute('data-mode-panel') === mode);
+  if (!panel) return null;
   clearGroupVariantMarks(root, group);
-
-  buttons.forEach((button) => {
-    const active = button.getAttribute('data-set-mode') === mode;
-    button.setAttribute('aria-pressed', active ? 'true' : 'false');
-    button.setAttribute('tabindex', active ? '0' : '-1');
-  });
-
-  panels.forEach((panel) => {
-    const active = panel.getAttribute('data-mode-panel') === mode;
-    panel.hidden = !active;
-    if (active) {
-      const host = panel.closest(VARIANT_CONTAINER_SELECTOR) || panel;
-      if (host) applyVariant(host, variantFromPanel(panel), source, { markSelected: false });
-      panel.dataset.spwVariantSelected = 'true';
-    }
-  });
-
-  return buildVariantEdge(previous, mode);
+  const host = panel.closest(VARIANT_CONTAINER_SELECTOR) || panel;
+  applyVariant(host, variantFromPanel(panel), source, { markSelected: false });
+  panel.dataset.spwVariantSelected = 'true';
+  return panel;
 }
 
-function subjectFromExpression(expression = '') {
-  return String(expression).trim().match(/^([A-Za-z_][\w-]*)/)?.[1] || '';
-}
-
-function writeLiveModeExpression(switchEl, seat) {
-  if (!(switchEl instanceof HTMLElement) || !seat) return;
-  const subject = subjectFromExpression(switchEl.dataset.spwSemanticExpression)
-    || switchEl.closest('.spw-frame, [data-spw-kind="frame"]')?.id
-    || 'lens';
-  switchEl.dataset.spwSemanticExpression = composeModeSeatExpression({ subject, seat });
-}
-
-export function selectMode(button, root = document, source = 'mode-switch') {
-  if (!(button instanceof HTMLElement)) return null;
-  const group = button.getAttribute('data-mode-group');
-  const mode = button.getAttribute('data-set-mode');
-  if (!group || !mode) return null;
-  const edge = syncModeSwitch(group, mode, root, source);
-  if (!edge) return null;
-  writeLiveModeExpression(button.closest('.mode-switch'), mode);
+function onLensChange(event, root) {
+  const detail = event?.detail || {};
+  const group = detail.group || detail.groupName || '';
+  const mode = detail.mode || '';
+  if (!group || !mode) return;
+  const source = detail.source || 'mode-switch';
+  if (!markGroupVariant(group, mode, root, source)) return;
+  // The boot pass restates authored state; it is not a selection anyone made.
+  if (source === 'initial') return;
+  const previous = detail.previousMode || null;
   const html = root.documentElement || document.documentElement;
   pulseRootSelection(html, source, mode);
   emitVariantSelected({
     group,
     variant: mode,
-    previousVariant: edge?.from || null,
-    edge,
+    previousVariant: previous,
+    edge: buildVariantEdge(previous, mode),
     source,
   });
-  return edge;
+}
+
+/* Ask the lens owner for a mode. Returns the edge the request would traverse,
+   or null when the group has no such mode; the marks and the event follow
+   from the owner's frame:mode, not from here. */
+export function selectMode(button, root = document, source = 'mode-switch') {
+  if (!(button instanceof HTMLElement)) return null;
+  const group = button.getAttribute('data-mode-group');
+  const mode = button.getAttribute('data-set-mode');
+  if (!group || !mode) return null;
+  if (!readGroupPanels(group, root).some((panel) => panel.getAttribute('data-mode-panel') === mode)) return null;
+  const previous = readActiveMode(group, root);
+  requestLensMode(bus, { group, mode, source });
+  return buildVariantEdge(previous, mode);
 }
 
 export function resolveMeasureTierVariant(measureBandOrTier = '', variantMap = {}, fallback = '') {
@@ -196,55 +197,6 @@ export function resolveMeasureTierVariant(measureBandOrTier = '', variantMap = {
     return variantMap[key];
   }
   return fallback;
-}
-
-function bindModeSwitches(root, controller) {
-  root.querySelectorAll(MODE_BUTTON_SELECTOR).forEach((button) => {
-    if (!(button instanceof HTMLElement)) return;
-    // Re-runs per added-node batch; without this guard every pass stacks a
-    // duplicate click listener on every button.
-    if (button.dataset.spwVariantBound === 'true') return;
-    button.dataset.spwVariantBound = 'true';
-
-    // Establish initial roving tabindex if not already assigned.
-    if (!button.hasAttribute('tabindex')) {
-      const isPressed = button.getAttribute('aria-pressed') === 'true';
-      button.setAttribute('tabindex', isPressed ? '0' : '-1');
-    }
-
-    button.addEventListener('click', () => {
-      selectMode(button, root, 'mode-switch');
-    }, { signal: controller.signal });
-
-    button.addEventListener('keydown', (event) => {
-      const group = button.getAttribute('data-mode-group');
-      if (!group) return;
-      const buttons = [...root.querySelectorAll(`.mode-switch [data-mode-group="${CSS.escape(group)}"][data-set-mode]`)];
-      if (buttons.length <= 1) return;
-      const currentIndex = buttons.indexOf(button);
-      if (currentIndex === -1) return;
-
-      let targetIndex = -1;
-      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-        targetIndex = (currentIndex + 1) % buttons.length;
-      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-        targetIndex = (currentIndex - 1 + buttons.length) % buttons.length;
-      } else if (event.key === 'Home') {
-        targetIndex = 0;
-      } else if (event.key === 'End') {
-        targetIndex = buttons.length - 1;
-      }
-
-      if (targetIndex !== -1 && targetIndex !== currentIndex) {
-        event.preventDefault();
-        const nextButton = buttons[targetIndex];
-        if (nextButton instanceof HTMLElement) {
-          nextButton.focus();
-          selectMode(nextButton, root, 'keyboard');
-        }
-      }
-    }, { signal: controller.signal });
-  });
 }
 
 function primeFromQuery(root) {
@@ -257,29 +209,27 @@ function primeFromQuery(root) {
 
   if (!(target instanceof HTMLElement)) return;
 
-  const host = target.closest(VARIANT_CONTAINER_SELECTOR) || target;
-  const group = target.getAttribute('data-mode-group');
-  const mode = target.getAttribute('data-mode-panel') || variant;
-  const previous = group
-    ? readActiveMode(group, root)
-    : host.dataset.spwComponentVariantActive || '';
-
-  if (group) clearGroupVariantMarks(root, group);
-  else clearVariantMarks(host);
-
-  applyVariant(host, variant, 'query');
-  const edge = group
-    ? syncModeSwitch(group, mode, root, 'query')
-    : buildVariantEdge(previous, variant);
-
   const html = root.documentElement || document.documentElement;
   html.dataset.spwQueryVariant = variant;
+
+  const group = target.getAttribute('data-mode-group');
+  if (group) {
+    // A lens panel: the owner writes the lens and this module marks the
+    // variant when frame:mode arrives.
+    requestLensMode(bus, { group, mode: target.getAttribute('data-mode-panel') || variant, source: 'query' });
+    return;
+  }
+
+  const host = target.closest(VARIANT_CONTAINER_SELECTOR) || target;
+  const previous = host.dataset.spwComponentVariantActive || '';
+  clearVariantMarks(host);
+  applyVariant(host, variant, 'query');
   pulseRootSelection(html, 'query', variant);
   emitVariantSelected({
-    group: group || null,
+    group: null,
     variant,
-    previousVariant: edge?.from || null,
-    edge,
+    previousVariant: previous || null,
+    edge: buildVariantEdge(previous, variant),
     source: 'query',
   });
 }
@@ -290,7 +240,6 @@ export function initVariantSelection(root = document) {
 
   const controller = new AbortController();
   clearVariantMarks(root);
-  bindModeSwitches(root, controller);
 
   const groups = new Set(
     [...root.querySelectorAll(MODE_BUTTON_SELECTOR)]
@@ -299,12 +248,7 @@ export function initVariantSelection(root = document) {
   );
   groups.forEach((group) => {
     const mode = readActiveMode(group, root);
-    if (mode) {
-      syncModeSwitch(group, mode, root, 'authored');
-    } else {
-      const buttons = [...root.querySelectorAll(`.mode-switch [data-mode-group="${CSS.escape(group)}"][data-set-mode]`)];
-      buttons.forEach((b, idx) => b.setAttribute('tabindex', idx === 0 ? '0' : '-1'));
-    }
+    if (mode) markGroupVariant(group, mode, root, 'authored');
   });
 
   root.querySelectorAll('[data-spw-semantic-variant], [data-spw-content-variant]')
@@ -318,24 +262,16 @@ export function initVariantSelection(root = document) {
   // local starting point, preserving a truthful from → to edge in the event.
   primeFromQuery(root);
 
-  const disconnect = observeAddedMatches(MODE_BUTTON_SELECTOR, () => bindModeSwitches(root, controller), {
-    root: root.body || root.documentElement,
-  });
+  const onChange = (event) => onLensChange(event, root);
+  document.addEventListener(LENS_CHANGE_EVENT, onChange, { signal: controller.signal });
 
   controller.signal.addEventListener('abort', () => {
-    disconnect();
     if (selectionPulseTimer) window.clearTimeout(selectionPulseTimer);
     selectionPulseTimer = null;
     const html = root.documentElement || document.documentElement;
     delete html.dataset.spwVariantSelectionPulse;
     delete html.dataset.spwVariantSelectionWeight;
     delete html.dataset.spwVariantSelectionSource;
-    root.querySelectorAll('[data-spw-variant-bound]').forEach((button) => {
-      if (button instanceof HTMLElement) {
-        delete button.dataset.spwVariantBound;
-        button.removeAttribute('tabindex');
-      }
-    });
     initialized = false;
   }, { once: true });
 
@@ -355,7 +291,11 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     'flourish:data-spw-variant-selection-weight',
   ]),
   mount(ctx, root) {
-    const targetRoot = root instanceof Node ? root : ctx?.root || document;
+    // Variant marks follow every lens on the page, so the scope is the
+    // document whichever host the catalog matched first.
+    const targetRoot = root?.nodeType === DOCUMENT_NODE
+      ? root
+      : root?.ownerDocument || ctx?.root?.ownerDocument || document;
     return initVariantSelection(targetRoot);
   },
 });
