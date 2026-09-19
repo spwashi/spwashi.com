@@ -32,24 +32,32 @@
 import { bus } from '/public/js/kernel/bus.js';
 import { COMPONENT_KIND_MIRROR_SELECTOR, groundInteraction, isOwnAffordanceTarget, observeAddedMatches, writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { guardCall } from '/public/js/kernel/dom-render.js';
-import { normalizePathname } from '/public/js/kernel/route-utils.js';
+import { runCriticalPath } from '/public/js/kernel/storage-utils.js';
 import {
-  readJson,
-  removeJson,
-  runCriticalPath,
-  STORAGE_KEYS,
-  writeJson,
-} from '/public/js/kernel/storage-utils.js';
+  addToGroundedRegistry as addToRegistry,
+  clearGroundedMemory,
+  getGlobalCouplings,
+  getGroundedCouplings,
+  getGroundedRegistry,
+  getPathCouplings,
+  getSigilCollection,
+  isGlobalCouplingKey as isGlobalKey,
+  removeCoupling,
+  removeFromGroundedRegistry as removeFromRegistry,
+  restoreGroundedCheckpoint,
+  saveGroundedCheckpoint,
+  writeCoupling,
+  writeSigilCollection,
+} from '/public/js/kernel/grounded-registry.js';
 import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
 import { detectOperator, getOperatorDefinition } from '/public/js/kernel/shared.js';
 import { bindArcLifecycle } from '/public/js/interface/arc-lifecycle.js';
 
-const STORAGE_KEY = STORAGE_KEYS.GROUNDED_REGISTRY;
-const SIGIL_COLLECTION_KEY = STORAGE_KEYS.SIGIL_COLLECTION;
-const CHECKPOINT_PREFIX = STORAGE_KEYS.CHECKPOINT_PREFIX;
-const GLOBAL_COUPLING_KEY = STORAGE_KEYS.COUPLING_GLOBAL;
-const couplingKeyForPath = (path = normalizePathname(window.location.pathname)) => `spw-coupling:${path}`;
-const COUPLING_KEY = couplingKeyForPath;
+/* The grounded memory itself (registry, couplings, sigils) is kernel storage
+   in kernel/grounded-registry.js; this file is the hand that writes it.
+   Readers that only need the memory import the kernel file; these re-exports
+   keep the older import path working. */
+export { getGroundedCouplings, getGroundedRegistry, getSigilCollection };
 
 const GROUND_SELECTORS = [
   '.spw-chip',
@@ -178,22 +186,6 @@ function clearGroundedMetadata(el) {
   }
 }
 
-function updateRegistryStore(transform) {
-  const current = getGroundedRegistry();
-  const next = transform(current);
-  writeJson(STORAGE_KEY, next);
-  return next;
-}
-
-function updateCouplingStore(key, transform) {
-  const global = isGlobalKey(key);
-  const current = global ? getGlobalCouplings() : getPathCouplings();
-  const next = transform(current);
-  if (global) writeJson(GLOBAL_COUPLING_KEY, next);
-  else writeJson(COUPLING_KEY(), next);
-  return next;
-}
-
 export function initSpwHaptics() {
   if (initialized) return () => {};
   initialized = true;
@@ -220,8 +212,11 @@ export function initSpwHaptics() {
   document.addEventListener('click', onConceptInspectOutsideClick);
 
   unsubscribeBus = [
-    bus.on('spell:reset', () => guardCall('haptics:reset', resetHaptics)),
-    bus.on('spell:checkpoint', (event) => guardCall('haptics:checkpoint', () => saveCheckpoint(event))),
+    // guardCall(fn, source) returns the guarded function; it is the handler,
+    // not something to call inside one.
+    bus.on('spell:reset', guardCall(resetHaptics, 'haptics:reset')),
+    bus.on('spell:checkpoint', guardCall(saveCheckpoint, 'haptics:checkpoint')),
+    bus.on('spell:checkpoint-restored', guardCall(reprojectGroundedState, 'haptics:checkpoint-restore')),
   ];
 
   return () => {
@@ -706,69 +701,9 @@ function cancelPassiveCharge(el) {
    Persistence
    ========================================================================== */
 
-export function getGroundedRegistry() {
-  return readJson(STORAGE_KEY, [], { requireArray: true });
-}
-
-function isGlobalKey(key = '') {
-  return String(key).startsWith('global:') || String(key).startsWith('shared:');
-}
-
-function getPathCouplings() {
-  return readJson(COUPLING_KEY(), {}, { requireObject: true });
-}
-
-function getGlobalCouplings() {
-  return readJson(GLOBAL_COUPLING_KEY, {}, { requireObject: true });
-}
-
-function getStoredCouplings() {
-  return {
-    ...getGlobalCouplings(),
-    ...getPathCouplings(),
-  };
-}
-
-export function getGroundedCouplings() {
-  return getStoredCouplings();
-}
-
-function setPathCouplings(value) {
-  writeJson(COUPLING_KEY(), value);
-}
-
-function setGlobalCouplings(value) {
-  writeJson(GLOBAL_COUPLING_KEY, value);
-}
-
-function addToRegistry(key) {
-  updateRegistryStore((registry) => (
-    registry.includes(key) ? registry : [...registry, key]
-  ));
-}
-
-function removeFromRegistry(key) {
-  updateRegistryStore((registry) => registry.filter((entry) => entry !== key));
-}
-
-function writeCoupling(key, value) {
-  updateCouplingStore(key, (couplings) => ({
-    ...couplings,
-    [key]: value
-  }));
-}
-
-function removeCoupling(key) {
-  updateCouplingStore(key, (couplings) => {
-    const next = { ...couplings };
-    delete next[key];
-    return next;
-  });
-}
-
 function restoreGroundedState(root = document) {
   const registry = getGroundedRegistry();
-  const couplings = getStoredCouplings();
+  const couplings = getGroundedCouplings();
 
   queryGroundables(root).forEach((el) => {
     const key = getElementKey(el);
@@ -1071,59 +1006,28 @@ function onConceptInspectOutsideClick(event) {
    ========================================================================== */
 
 export function saveCheckpoint(event) {
-  const name = event?.detail?.name || `checkpoint_${Date.now()}`;
-  const payload = {
-    registry: getGroundedRegistry(),
-    couplings: {
-      global: getGlobalCouplings(),
-      path: getPathCouplings(),
-    },
-    savedAt: Date.now(),
-    path: window.location.pathname
-  };
+  saveGroundedCheckpoint(event?.detail?.name || undefined);
+}
 
-  writeJson(`${CHECKPOINT_PREFIX}${name}`, payload);
-
-  bus.emit(
-    'spell:checkpoint-saved',
-    { name, count: payload.registry.length, path: payload.path },
-    { target: document }
-  );
+/* Storage is the kernel's; the hand re-projects. Whoever restores (this file,
+   the spell board through the kernel, another tab) emits the same event, so
+   the projection lives once, in the listener below. */
+function reprojectGroundedState() {
+  document.querySelectorAll('[data-spw-grounded="true"]').forEach(clearGroundedState);
+  restoreGroundedState(document);
 }
 
 export function restoreCheckpoint(name) {
   if (!name) return false;
-
-  const parsed = readJson(`${CHECKPOINT_PREFIX}${name}`, null);
-  if (!parsed) return false;
-
   try {
-    const registry = Array.isArray(parsed?.registry) ? parsed.registry : [];
-    const couplings = resolveCheckpointCouplings(parsed?.couplings);
-
-    writeJson(STORAGE_KEY, registry);
-    setGlobalCouplings(couplings.global);
-    setPathCouplings(couplings.path);
-
-    document.querySelectorAll('[data-spw-grounded="true"]').forEach(clearGroundedState);
-    restoreGroundedState(document);
-
-    bus.emit(
-      'spell:checkpoint-restored',
-      { name, count: registry.length, path: window.location.pathname },
-      { target: document }
-    );
-
-    return true;
+    return restoreGroundedCheckpoint(name) !== null;
   } catch {
     return false;
   }
 }
 
 export function resetHaptics() {
-  removeJson(STORAGE_KEY);
-  removeJson(COUPLING_KEY());
-  removeJson(GLOBAL_COUPLING_KEY);
+  clearGroundedMemory();
 
   document
     .querySelectorAll('[data-spw-passive-charge], [data-spw-charge], [data-spw-charge-pending]')
@@ -1132,10 +1036,6 @@ export function resetHaptics() {
   document.querySelectorAll('[data-spw-grounded="true"]').forEach((el) => {
     clearGroundedState(el);
   });
-}
-
-export function getSigilCollection() {
-  return readJson(SIGIL_COLLECTION_KEY, {}, { requireObject: true });
 }
 
 function collectSigil(detail = {}) {
@@ -1157,7 +1057,7 @@ function collectSigil(detail = {}) {
     }
   };
 
-  writeJson(SIGIL_COLLECTION_KEY, next);
+  writeSigilCollection(next);
   writeRuntimeDatasetValues(document.documentElement, {
     spwSigilCollectionCount: String(Object.keys(next).length),
   }, {
@@ -1493,38 +1393,4 @@ function animateSettle(el, className) {
 
   el.classList.add(className);
   window.setTimeout(() => el.classList.remove(className), 200);
-}
-
-function resolveCheckpointCouplings(source) {
-  if (!source || typeof source !== 'object') {
-    return { global: {}, path: {} };
-  }
-
-  if (
-    source.global && typeof source.global === 'object'
-    || source.path && typeof source.path === 'object'
-  ) {
-    return {
-      global: source.global && typeof source.global === 'object' ? source.global : {},
-      path: source.path && typeof source.path === 'object' ? source.path : {},
-    };
-  }
-
-  const legacy = {};
-  Object.entries(source).forEach(([key, value]) => {
-    legacy[key] = value;
-  });
-
-  const global = {};
-  const path = {};
-
-  Object.entries(legacy).forEach(([key, value]) => {
-    if (isGlobalKey(key)) {
-      global[key] = value;
-    } else {
-      path[key] = value;
-    }
-  });
-
-  return { global, path };
 }

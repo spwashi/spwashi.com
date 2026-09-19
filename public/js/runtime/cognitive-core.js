@@ -19,7 +19,6 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { groundElement } from '/public/js/interface/haptics.js';
 import { createSpwLogger, markInstrumented } from '/public/js/kernel/instrumentation.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 import { initCognitiveSurface } from '/public/js/semantic/cognitive-surface.js';
@@ -90,7 +89,11 @@ function gainKnowledge(el) {
     const text = el.textContent.trim();
 
     if (el.dataset.spwGrounded !== 'true') {
-        groundElement(el, { key, text });
+        // Grounding is the hand's gesture (interface/haptics.js); cognition
+        // borrows it when a hold completes rather than importing it at load.
+        import('/public/js/interface/haptics.js')
+            .then((haptics) => haptics.groundElement(el, { key, text }))
+            .catch((error) => logger.warn('grounding failed', { key, error: String(error?.message || error) }));
     }
 
     markInstrumented(el, 'spw-core', { tags: ['knowledge'] });

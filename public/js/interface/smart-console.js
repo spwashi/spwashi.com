@@ -18,7 +18,7 @@
 
 import { escapeHtml } from '/public/js/kernel/dom-render.js';
 import { getKnowledgeMap } from '/public/js/runtime/cognitive-core.js';
-import { getGroundedRegistry } from '/public/js/interface/haptics.js';
+import { getGroundedRegistry } from '/public/js/kernel/grounded-registry.js';
 import { LATTICE } from '/public/js/semantic/lattice.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 import { getCouplingMap, getCurrentPageMetadata } from '/public/js/semantic/cognitive-surface.js';

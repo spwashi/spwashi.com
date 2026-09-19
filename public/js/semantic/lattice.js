@@ -5,7 +5,7 @@
  * cycles. Serializes developmental weights as Spw scripts.
  */
 
-import { getGroundedRegistry } from '/public/js/interface/haptics.js';
+import { getGroundedRegistry } from '/public/js/kernel/grounded-registry.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { isLocalDevelopmentRuntime } from '/public/js/kernel/runtime-environment.js';
 

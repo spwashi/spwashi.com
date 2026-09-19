@@ -8,7 +8,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { getGroundedRegistry } from '/public/js/interface/haptics.js';
+import { getGroundedRegistry } from '/public/js/kernel/grounded-registry.js';
 import { LATTICE } from '/public/js/semantic/lattice.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 

@@ -62,7 +62,7 @@ wave.
 
 ## Folder Roles
 
-- `kernel/`: durable primitives, settings (profiles/engine/ui split), shared contracts, and runtime bridges.
+- `kernel/`: durable primitives, settings (profiles/engine/ui split), shared contracts, and runtime bridges. `kernel/grounded-registry.js` is the reader's grounded memory (registry, couplings, sigils, checkpoints) as storage; `interface/haptics.js` is the hand that writes it, and every other reader imports the kernel file.
 - `semantic/`: operator grammar, projection machinery, region role inference, narrative token lenses, and pretext helpers.
 - `runtime/`: module catalog/loader, active processes, route grounding, page-state, frame-state, spells, inspectors, gates, and lifecycle loops.
 - `runtime/catalog/`: staged family definitions (`core`, `feature`, `region`, `enhancement`), constants, normalization, and export/update/description contracts. `runtime/catalog/index.js` remains the full-catalog entrypoint; `site.js` imports individual families to preserve lazy loading. Catalog load paths resolve relative to `catalog/`; source audits and the deploy builder use the same base.

@@ -10,7 +10,7 @@ import { bus } from '/public/js/kernel/bus.js';
 import { escapeHtml } from '/public/js/kernel/dom-render.js';
 import { composeOpBundle, detectOperator, getOperatorAffordances, getOperatorDefinition, getOperatorGeometry } from '/public/js/kernel/shared.js';
 import { getActiveRecentPathMemory } from '/public/js/semantic/accent-palette.js';
-import { getGroundedCouplings, getGroundedRegistry, getSigilCollection, restoreCheckpoint } from '/public/js/interface/haptics.js';
+import { getGroundedCouplings, getGroundedRegistry, getSigilCollection, restoreGroundedCheckpoint } from '/public/js/kernel/grounded-registry.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 import { CAULDRON_CONTRACT } from '/public/js/semantic/cauldron/contract.js';
@@ -847,7 +847,8 @@ function registerSpellActions() {
     },
     restore(name, button) {
       if (!name) return;
-      if (restoreCheckpoint(name) && button instanceof HTMLElement) {
+      // Storage is the kernel's; the hand re-projects on spell:checkpoint-restored.
+      if (restoreGroundedCheckpoint(name) && button instanceof HTMLElement) {
         button.textContent = '~ restored';
       }
     },
