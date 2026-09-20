@@ -1533,3 +1533,98 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) .
   outline: 1px dashed color-mix(in srgb, var(--ornament-local-accent, var(--ornament-accent)) 24%, transparent);
   outline-offset: 3px;
 }
+
+/* ==========================================================================
+   18. Authored marks: rule and corner
+   --------------------------------------------------------------------------
+   Two marks a page can author, both reading field state only:
+
+     hr[data-spw-ornament="rule"] — a hairline with an operator-colored notch
+       at the start. The notch lengthens with --ornament-resonance; the line
+       brightens with the host frame's --spw-attention-light.
+     .spw-ornament-corner — an empty child of a frame or panel; four ticks at
+       the host's corners, spending the same attention light. It is one
+       absolutely positioned element painted with gradients, so its arrival
+       with the idle pack moves nothing and needs no pseudo-element of the
+       host. A dimmed host sets it down.
+
+   Map: /design/ornaments/. Gate: ornament-contract.spw (calm at rest; read
+   the field, do not invent semantics). No new attribute family.
+   ========================================================================== */
+hr[data-spw-ornament="rule"] {
+  --ornament-rule-light: clamp(0, var(--spw-attention-light, 0.48), 1);
+  position: relative;
+  block-size: 1px;
+  margin-block: var(--ornament-gap-3, 0.8rem);
+  border: 0;
+  background: color-mix(in srgb, var(--ornament-local-line, var(--line, rgba(14, 18, 20, 0.14))) 88%, transparent);
+  opacity: calc(0.62 + (var(--ornament-rule-light) * 0.38));
+  overflow: visible;
+}
+
+hr[data-spw-ornament="rule"]::before {
+  content: "";
+  position: absolute;
+  inset-block-start: -1px;
+  inset-inline-start: 0;
+  block-size: 3px;
+  inline-size: calc(1.4rem + (2.2rem * clamp(0, var(--ornament-resonance, 0), 1)));
+  border-radius: 999px;
+  background: var(--ornament-local-accent, var(--ornament-accent, var(--active-op-color, #008080)));
+  opacity: calc(0.72 + (var(--ornament-rule-light) * 0.28));
+  transition:
+    inline-size var(--ornament-duration-base, 220ms) var(--ornament-ease, ease),
+    opacity var(--ornament-duration-base, 220ms) var(--ornament-ease, ease);
+}
+
+:where(.spw-frame, .spw-panel, .frame-card):has(> .spw-ornament-corner) {
+  position: relative;
+}
+
+.spw-ornament-corner {
+  --ornament-corner-light: clamp(0, var(--spw-attention-light, 0.48), 1);
+  --ornament-corner-ink: color-mix(in srgb, var(--ornament-local-accent, var(--ornament-accent, var(--active-op-color, #008080))) 70%, var(--ink, #161c1d) 30%);
+  --ornament-corner-len: 0.7rem;
+  position: absolute;
+  inset: 0.42rem;
+  display: block;
+  pointer-events: none;
+  z-index: var(--material-layer-content, 1);
+  background-image:
+    linear-gradient(var(--ornament-corner-ink), var(--ornament-corner-ink)),
+    linear-gradient(var(--ornament-corner-ink), var(--ornament-corner-ink)),
+    linear-gradient(var(--ornament-corner-ink), var(--ornament-corner-ink)),
+    linear-gradient(var(--ornament-corner-ink), var(--ornament-corner-ink)),
+    linear-gradient(var(--ornament-corner-ink), var(--ornament-corner-ink)),
+    linear-gradient(var(--ornament-corner-ink), var(--ornament-corner-ink)),
+    linear-gradient(var(--ornament-corner-ink), var(--ornament-corner-ink)),
+    linear-gradient(var(--ornament-corner-ink), var(--ornament-corner-ink));
+  background-size:
+    var(--ornament-corner-len) 1px, 1px var(--ornament-corner-len),
+    var(--ornament-corner-len) 1px, 1px var(--ornament-corner-len),
+    var(--ornament-corner-len) 1px, 1px var(--ornament-corner-len),
+    var(--ornament-corner-len) 1px, 1px var(--ornament-corner-len);
+  background-position:
+    left top, left top,
+    right top, right top,
+    left bottom, left bottom,
+    right bottom, right bottom;
+  background-repeat: no-repeat;
+  opacity: calc(0.28 + (var(--ornament-corner-light) * 0.62));
+  transition: opacity var(--ornament-duration-base, 220ms) var(--ornament-ease, ease);
+}
+
+:where([data-spw-attention="dimmed"]) > .spw-ornament-corner {
+  opacity: 0.12;
+}
+
+:where(.spw-frame, .spw-panel, .frame-card):is(:hover, :focus-within) > .spw-ornament-corner {
+  --ornament-corner-len: 0.95rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  hr[data-spw-ornament="rule"]::before,
+  .spw-ornament-corner {
+    transition: none;
+  }
+}

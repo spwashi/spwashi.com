@@ -73,6 +73,48 @@
                     Research note (for interns + designers): "rich" / high-density often compelling in business/inspection/tool contexts (high information per inch, registers, settings lists). "minimal" + roomy more useful for experiential/relationship reading (breathing room, calm presence). Use data-spw-density + data-spw-locality + data-spw-physics-reason in your own components for granular, vocabulary-building architecture. See /design/ bench and .spw page_architecture_vocabulary.
                 </p>
 
+                <figure class="spw-svg-figure"
+                        data-spw-svg-host="density-ladder"
+                        data-spw-svg-kind="addressable-diagram"
+                        data-spw-svg-scale="narrow-wide"
+                        data-spw-svg-motion="static"
+                        data-spw-svg-pointer="field"
+                        data-spw-svg-persona="designer builder"
+                        data-spw-slot="figure"
+                        data-spw-operator="frame">
+                    <svg class="spw-svg-surface spw-svg-surface--density-ladder" viewBox="0 0 720 220" role="img" aria-labelledby="density-ladder-title density-ladder-desc">
+                        <title id="density-ladder-title">Three density tiers as padding, gap, and grid minimum</title>
+                        <desc id="density-ladder-desc">Three stacked card outlines labeled dense, soft, and roomy. Each shows its padding inset as a dashed inner rectangle and its gap as a bracket between two blocks. Dense has the thinnest inset and bracket; roomy the widest. Beside each, the tokens it sets: component pad, component gap, and grid minimum.</desc>
+                        <g font-family="var(--site-mono-font, 'JetBrains Mono', monospace)" font-size="12" fill="currentColor" stroke="currentColor">
+                            <g transform="translate(20 18)">
+                                <rect width="200" height="52" rx="8" fill="none" stroke-opacity=".8"/>
+                                <rect x="8" y="8" width="184" height="36" rx="5" fill="var(--spw-svg-brand-accent, var(--active-op-color, #008080))" fill-opacity=".1" stroke="var(--spw-svg-brand-accent, var(--active-op-color, #008080))" stroke-dasharray="3 3"/>
+                                <rect x="14" y="14" width="82" height="24" rx="3" fill="currentColor" fill-opacity=".18" stroke="none"/>
+                                <rect x="104" y="14" width="82" height="24" rx="3" fill="currentColor" fill-opacity=".18" stroke="none"/>
+                                <text x="216" y="22" stroke="none" font-weight="700">dense</text>
+                                <text x="216" y="42" stroke="none" fill-opacity=".72">pad ↓ gap ↓ grid-min ↓ · registers, chips, settings lists</text>
+                            </g>
+                            <g transform="translate(20 84)">
+                                <rect width="200" height="60" rx="8" fill="none" stroke-opacity=".8"/>
+                                <rect x="14" y="14" width="172" height="32" rx="5" fill="var(--spw-svg-brand-accent, var(--active-op-color, #008080))" fill-opacity=".1" stroke="var(--spw-svg-brand-accent, var(--active-op-color, #008080))" stroke-dasharray="3 3"/>
+                                <rect x="20" y="20" width="72" height="20" rx="3" fill="currentColor" fill-opacity=".18" stroke="none"/>
+                                <rect x="108" y="20" width="72" height="20" rx="3" fill="currentColor" fill-opacity=".18" stroke="none"/>
+                                <text x="216" y="26" stroke="none" font-weight="700">soft</text>
+                                <text x="216" y="46" stroke="none" fill-opacity=".72">the default cadence · prose and article blocks</text>
+                            </g>
+                            <g transform="translate(20 158)">
+                                <rect width="200" height="52" rx="8" fill="none" stroke-opacity=".8"/>
+                                <rect x="20" y="12" width="160" height="28" rx="5" fill="var(--spw-svg-brand-accent, var(--active-op-color, #008080))" fill-opacity=".1" stroke="var(--spw-svg-brand-accent, var(--active-op-color, #008080))" stroke-dasharray="3 3"/>
+                                <rect x="26" y="18" width="58" height="16" rx="3" fill="currentColor" fill-opacity=".18" stroke="none"/>
+                                <rect x="116" y="18" width="58" height="16" rx="3" fill="currentColor" fill-opacity=".18" stroke="none"/>
+                                <text x="216" y="22" stroke="none" font-weight="700">roomy</text>
+                                <text x="216" y="42" stroke="none" fill-opacity=".72">pad ↑ gap ↑ grid-min ↑ · heroes, orientation, a pause in the scroll</text>
+                            </g>
+                        </g>
+                    </svg>
+                    <figcaption>Dashed inset is <code>--component-pad</code>; the space between the two blocks is <code>--component-gap</code>. A tier sets both plus <code>--spw-grid-min-active</code>. On a live page the packing runtime resolves the active tier per frame from measured occupancy, so a panel takes its frame's tier rather than a hard-coded one; the base tier lives in <a href="/settings/#semantic-settings">Settings</a>.</figcaption>
+                </figure>
+
                 <div class="frame-grid frame-grid--dense" data-spw-slot="body">
                     <article class="spw-panel" data-spw-density="dense">
                         <h3>Density: dense</h3>
