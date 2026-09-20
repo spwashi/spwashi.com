@@ -73,6 +73,58 @@
                     <strong>For producers and directors tuning visual style:</strong> The same slot contract used in rendered character/profile cards (header → meta → body → figure → actions → footer) is the grammar you tune in <a href="/design/palettes/">palettes</a>, <a href="/design/components/">components</a>, and <a href="/design/materials/">materials</a>. When a card from the character builder is used as a style packet in the Midjourney bench, its rendered slots become the testable surface for material, light, and rhythm decisions. This is the ergonomic loop: edit card → see rendered output → tune slots/palettes → send packet → iterate images with coherence.
                 </p>
 
+                <div class="spw-ornament-rail" data-spw-ornament-state="revealed" data-spw-operator="mode" role="group" aria-label="Reveal semantic metadata on this page">
+                    <span class="spw-ornament-kicker">metadata</span>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="showSemanticMetadata:on" data-spw-operator="mode" aria-label="Show semantic metadata">[show]</button>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-site-setting-set="showSemanticMetadata:off" data-spw-operator="mode" aria-label="Hide semantic metadata">[hide]</button>
+                </div>
+                <p data-spw-textual-role="note" data-spw-copy-depth="normal">Show, and every operator chip and allocated slot on the site, including this page, names its token in place. Hide to read again. The diagram is the same contract drawn once.</p>
+
+                <figure class="spw-svg-figure"
+                        data-spw-svg-host="slot-anatomy"
+                        data-spw-svg-kind="addressable-diagram"
+                        data-spw-svg-scale="narrow-wide"
+                        data-spw-svg-motion="static"
+                        data-spw-svg-pointer="field"
+                        data-spw-svg-persona="designer builder rendering-model"
+                        data-spw-slot="figure"
+                        data-spw-operator="frame">
+                    <svg class="spw-svg-surface spw-svg-surface--slot-anatomy" viewBox="0 0 720 260" role="img" aria-labelledby="slot-anatomy-title slot-anatomy-desc">
+                        <title id="slot-anatomy-title">The universal slot stack of a frame or panel</title>
+                        <desc id="slot-anatomy-desc">A card outline containing six stacked bands labeled header, meta, figure, body, actions, and footer. Header and meta are thin bands at the top; figure and body are the tall middle; actions and footer are thin bands at the bottom. A bracket on the right names the order: identity first, evidence and prose in the middle, exits last.</desc>
+                        <g font-family="var(--site-mono-font, 'JetBrains Mono', monospace)" font-size="12" fill="currentColor">
+                            <rect x="24" y="16" width="420" height="228" rx="12" fill="none" stroke="currentColor" stroke-opacity=".82"/>
+                            <g stroke="var(--spw-svg-brand-accent, var(--active-op-color, #008080))" stroke-opacity=".7" fill="var(--spw-svg-brand-accent, var(--active-op-color, #008080))">
+                                <rect x="36" y="28" width="396" height="22" rx="5" fill-opacity=".16"/>
+                                <rect x="36" y="56" width="396" height="16" rx="4" fill-opacity=".1"/>
+                                <rect x="36" y="80" width="190" height="98" rx="6" fill-opacity=".08"/>
+                                <rect x="236" y="80" width="196" height="98" rx="6" fill-opacity=".05"/>
+                                <rect x="36" y="186" width="396" height="24" rx="5" fill-opacity=".14"/>
+                                <rect x="36" y="216" width="396" height="18" rx="4" fill-opacity=".06"/>
+                            </g>
+                            <g fill-opacity=".9">
+                                <text x="46" y="43">[data-spw-slot="header"]</text>
+                                <text x="46" y="68">[data-spw-slot="meta"]</text>
+                                <text x="46" y="134">[data-spw-slot="figure"]</text>
+                                <text x="246" y="134">[data-spw-slot="body"]</text>
+                                <text x="46" y="202">[data-spw-slot="actions"]</text>
+                                <text x="46" y="229">[data-spw-slot="footer"]</text>
+                            </g>
+                            <g stroke="currentColor" stroke-opacity=".5" fill="none">
+                                <path d="M470 30 h14 v58 h-14"/>
+                                <path d="M470 84 h14 v92 h-14"/>
+                                <path d="M470 190 h14 v42 h-14"/>
+                            </g>
+                            <g fill-opacity=".78">
+                                <text x="496" y="62">identity before interaction</text>
+                                <text x="496" y="134">evidence, then prose</text>
+                                <text x="496" y="214">exits and traces last</text>
+                            </g>
+                        </g>
+                    </svg>
+                    <figcaption>Order is the contract: a slot may be empty, but it may not move.</figcaption>
+                </figure>
+
                 <div class="frame-grid frame-grid--dense" data-spw-slot="body">
                     <article class="spw-panel" data-spw-slot-specimen="header">
                         <h3>[data-spw-slot="header"]</h3>
@@ -101,9 +153,12 @@
                 </div>
 
                 <div class="frame-actions" data-spw-slot="actions" data-spw-cluster="actions">
-                    <a class="spw-chip" data-spw-handle="true" href="/design/materials/" data-spw-operator="concept-edge">>materials</a>
-                    <a class="spw-chip" data-spw-handle="true" href="/design/density/" data-spw-operator="probe">?density</a>
-                    <a class="spw-chip" data-spw-handle="true" href="/design/components/" data-spw-operator="frame">#>components</a>
+                    <nav class="frame-operators" aria-label="Slot routes">
+                        <a class="spw-chip" data-spw-handle="true" href="/design/materials/" data-spw-operator="concept-edge">>materials</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/design/density/" data-spw-operator="probe">?density</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/design/components/" data-spw-operator="frame">#>components</a>
+                        <a class="spw-chip" data-spw-handle="true" href="/design/ornaments/" data-spw-operator="concept-edge">>ornaments</a>
+                    </nav>
                 </div>
             </section>
         </article>
