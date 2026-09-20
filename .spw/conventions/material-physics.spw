@@ -66,6 +66,17 @@ expression = material[optics]{transmission.specular.shadow}<surface>
   }[reg=facet]
 }
 
+^"carriers"{
+  ~#note: "Two altitudes of surface read one material. The primary carrier is a frame or card; a secondary carrier sits on it."
+  primary = #[`.spw-frame`, `.frame-card`, `.media-card`, `.operator-card`, `.spw-panel`, `.mode-panel`, `[data-spw-kind]`][reg=set]
+  secondary = #[`.spw-route-bridge`, `.spw-route-bridge__links > li > a`, `.spw-reason-strip > *`, `.mode-switch:not([data-spw-lens-chrome~="quiet"])`][reg=set]
+  ~#reading(secondary): `background is the host's resolved --material-local-background under a veil of the strong surface; the veil thins with tangibility and thins again on glass; matte drops the specular inset`
+  ~#refuse: "a secondary carrier that declares its own surface color in the components layer — the veil is the only paint it owns"
+  owner = `public/css/effects/material.css#2b`
+  seat = `the lens track paints its seat as a gradient bar at the pressed slot from --spw-lens-index / --spw-lens-count (handles/operators/state-semantics.css Cluster D2); the material owns the track, the handle owns the bar`
+  probe: `rg -n "2b. Secondary carriers" public/css/effects/material.css && rg -n "Cluster D2" public/css/handles/operators/state-semantics.css`
+}
+
 ^"grounds"{
   ~#note: "Three depths of ground, light and dark aware, so a surface knows what it sits on."
   deep = `--bg-deep`

@@ -326,6 +326,73 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   text-align: center;
 }
 
+/* Cluster D2 — the seat glides.
+   The pressed option names itself as an anchor and the track's ::after is a
+   bar positioned to it: wherever the pressed option sits (a row, a wrapped
+   pocket track, a 2×2 grid) the bar sits under it, and because anchor()
+   resolves to lengths, the inset transitions and the bar slides to the next
+   option instead of blinking. Silent chrome leaves ::after free (Cluster C);
+   labeled chrome keeps ::after for its feedback chip and keeps the pressed
+   dot. anchor-scope keeps each track's bar on its own pressed option when a
+   page hosts several switches. Browsers without anchor positioning keep the
+   pressed state as it was. Reduced motion keeps the bar and drops the slide. */
+@supports (anchor-name: --spw-lens-seat) and (anchor-scope: --spw-lens-seat) {
+  .mode-switch[data-spw-lens-mode][data-spw-lens-chrome~="silent"]:not([data-spw-mode-seat="open"]) {
+    --spw-lens-seat-color: color-mix(in srgb, var(--spw-lens-cascade-color) 58%, var(--ink, #111) 42%);
+    position: relative;
+    anchor-scope: --spw-lens-seat;
+  }
+
+  .mode-switch[data-spw-lens-mode][data-spw-lens-chrome~="silent"]:not([data-spw-mode-seat="open"]) > .frame-sigil[aria-pressed="true"] {
+    anchor-name: --spw-lens-seat;
+  }
+
+  .mode-switch[data-spw-lens-mode][data-spw-lens-chrome~="silent"]:not([data-spw-mode-seat="open"])::after {
+    content: "";
+    display: block;
+    position: absolute;
+    position-anchor: --spw-lens-seat;
+    inset-inline-start: calc(anchor(left) + 0.42rem);
+    inset-block-start: calc(anchor(bottom) - 0.46rem);
+    inline-size: calc(anchor-size(width) - 0.84rem);
+    block-size: 0.18rem;
+    border-radius: 999px;
+    background: var(--spw-lens-seat-color);
+    pointer-events: none;
+    z-index: 1;
+    transition:
+      inset-inline-start var(--spw-interaction-settle, var(--touch-recover, 320ms) var(--ease-settle, cubic-bezier(0.2, 0.8, 0.2, 1))),
+      inset-block-start var(--spw-interaction-settle, var(--touch-recover, 320ms) var(--ease-settle, cubic-bezier(0.2, 0.8, 0.2, 1))),
+      inline-size var(--spw-interaction-settle, var(--touch-recover, 320ms) var(--ease-settle, cubic-bezier(0.2, 0.8, 0.2, 1)));
+  }
+
+  /* Hover previews the move: the idle option under the pointer takes the seat
+     ink, so the reader feels where the bar goes before pressing. Fine pointers
+     only; a thumb has no hover to preview with. */
+  @media (hover: hover) and (pointer: fine) {
+    .mode-switch[data-spw-lens-mode][data-spw-lens-chrome~="silent"] > .frame-sigil:not([aria-pressed="true"]):hover {
+      color: var(--spw-lens-seat-color);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mode-switch[data-spw-lens-mode]::after {
+      transition: none;
+    }
+  }
+}
+
+/* Row tracks pack tighter: the label sits closer to its neighbours and the
+   chassis loses the breathing room a 2×2 grid needed. The 44px floor stays. */
+.mode-switch[data-spw-lens-track="row"] {
+  gap: calc(var(--spw-control-gap, 0.24rem) + 0.1rem);
+  padding: 0.16rem;
+}
+
+.mode-switch[data-spw-lens-track="row"] > .frame-sigil {
+  padding-block: calc(var(--spw-control-padding-block, 0.24rem) - 0.08rem);
+}
+
 /* Cluster E — tablet / narrow shells: flex equal-share, not 2×2 masonry.
    A rigid 2×2 grid clipped 3-button lenses (read|inspect|reuse). */
 @media (max-width: 56rem) {
