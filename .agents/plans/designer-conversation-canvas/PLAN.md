@@ -48,3 +48,15 @@ See `.spw/conventions/typography-packing.spw`.
 - State inspector panel for measurement bus snapshots
 - Export conversation bundle (specimen URL + token list + telemetry JSON) for async designer review
 - View-transition handoffs between settings preview and design specimens
+
+## Evidence And Next Experiment — 2026-09-20
+
+Operation `align`, fixity `tending`. The measurement bus, typography preview,
+frame metrics, and `design/#conversation-canvas` are present in source. This
+supports implementation presence, not a fresh claim of browser correctness.
+The three Next items remain proposals; exports and transitions were not proved.
+For one integrated handoff, pair a specimen URL and chosen token values with
+optional telemetry and separately labeled author observations. Use the
+[capability pilot](../site-starter-component-kit/BUNDLING.md) as the consumer:
+its artifact manifest describes dependencies; the review describes intent.
+Test reproduction by a second author before generalizing the export schema.

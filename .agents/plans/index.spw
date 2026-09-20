@@ -51,6 +51,19 @@ intent: .{
 }[reg=facet]
 
 @readme: ~"./README.md"
+@capability_design_prime: ~"./site-starter-component-kit/bundling.spw#integrated_design_tree"
+
+^"refresh_2026_09_20"{
+ operation = "align"
+ fixity = "tending"
+ census = "154 live PLAN.md; 64 archived PLAN.md after archiving input-cauldron"
+ method = "Immediate child PLAN.md census, recursive archive PLAN.md census; counts are files, not validated completion percentages."
+ review_scope = "Tree-wide census; focused source reconciliation of starter kit, design hub, designer conversation, modular slices, module contracts, and input handoff."
+ route = @capability_design_prime
+ sequence = "specimen -> measured review -> portable capability -> independent reproduction -> second-site evidence"
+ archived = ~"./archive/input-cauldron/PLAN.md"
+ rule = "Implementation present, historically validated, freshly validated, and proposed are distinct progress states."
+}
 @planning_ecology: ~"../../.spw/conventions/planning-ecology.spw"
 @plan_index_convention: ~"../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../.spw/conventions/wip-notebook.spw"

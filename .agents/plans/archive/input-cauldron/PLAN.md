@@ -16,3 +16,11 @@ Make writable inputs and textareas readable, keyboard/touch usable, and able to 
 
 ## Validation
 Selector census; CSS payload; focused unit/browser tests on care, profile, and settings at phone/desktop widths; visual attention receipt; ecology; manifest; check:local -- --allow-dirty.
+
+## Archived — 2026-09-20
+
+Operation `archive`, fixity `cold`. Landed in `f1672070`: field-composition,
+lazy enhancement registration, and registered tests are present. The commit
+records 406 passing module tests and browser checks; those are historical
+receipts, not rerun by this refresh. Future composition work belongs to
+[spellcraft-authoring](../../spellcraft-authoring/PLAN.md) and cauldron-dynamics.

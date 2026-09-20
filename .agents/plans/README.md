@@ -41,6 +41,21 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.
 
+## Maintenance Snapshot - 2026-09-20
+
+Tree census: **154 live plans, 64 archived plans**, including untracked work.
+Reviewed the design/reuse cluster against source, not just old checkboxes.
+Initial slice definitions and design specimens exist; portable distribution and
+designer-review exports remain proposals. Archived the landed input-cauldron
+slice with `f1672070` and current module/test registration as evidence.
+
+Integrated design path: [specimen and review through second-site proof](site-starter-component-kit/bundling.spw#integrated_design_tree).
+Design hub owns the specimen, designer-conversation-canvas owns measurement and
+interpretation, modular slices map source ownership, and starter-kit owns the
+portable artifact. One texture-slice experiment connects them before expansion.
+The detailed census records scope and remaining uncertainty in
+`.spw/audits/plan-spw-tree-2026-09.spw#recensus_2026_09_20`.
+
 ## Maintenance Snapshot - 2026-09-17
 
 Referential integrity pass over the live plan tree, run from `npm run plans:index:check` and a citation scan of every non-archived `PLAN.md` / `FIX.md` (backticked repo paths checked against the working tree).

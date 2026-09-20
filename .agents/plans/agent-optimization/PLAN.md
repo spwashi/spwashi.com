@@ -34,7 +34,7 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 - Skills are thin wrappers over the pinned workbench. Site-workflow holds layers and focuses.
 - `agentic-dev-contracts` landed the cheap "what is this route?" + "did I break it?" questions.
 - Public `/about/plans/` is still a hand-maintenance tax.
-- Archive quota is the success metric. 2026-09-09: 195 live `PLAN.md`, 11 archived (still inverted vs 2026-09-06's 199/5). Census: `.spw/audits/plan-spw-tree-2026-09.spw`.
+- Archive quota is the success metric. 2026-09-20: 154 live `PLAN.md`, 64 archived; input-cauldron archived with commit/source evidence. Census and focused design/reuse review: `.spw/audits/plan-spw-tree-2026-09.spw#recensus_2026_09_20`.
 
 ## Failure ledger (do not relearn)
 

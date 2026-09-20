@@ -77,3 +77,9 @@ Archive policy:
 - Archive broad conversational audit bundles once their work is redistributed into concrete owner plans.
 - Use virtual buckets before physical folder moves when the active tree is large or heavily cross-referenced.
 - Treat WIP-only folders as maintenance friction: revive, merge, or archive them the next time they are touched.
+
+## 2026-09-20 — Input handoff
+
+Archived [input-cauldron](./input-cauldron/PLAN.md): implementation and tests
+landed in `f1672070`. Repository text search found no path citations to retarget.
+Future composition work stays with spellcraft-authoring and cauldron-dynamics.
