@@ -309,8 +309,16 @@ export function describeAttentionArchitecture(root = typeof document !== 'undefi
   };
 }
 
+/* Root inline style: a same-value write still costs a style pass for the whole
+   document on some engines, so the write only lands when the value moves. */
 export function writeSectionProgressStyle(node, progress, step) {
   if (!(node instanceof HTMLElement)) return;
-  node.style.setProperty('--spw-section-progress', progress.toFixed(4));
-  node.style.setProperty('--spw-section-step', step.toFixed(4));
+  const nextProgress = progress.toFixed(4);
+  const nextStep = step.toFixed(4);
+  if (node.style.getPropertyValue('--spw-section-progress') !== nextProgress) {
+    node.style.setProperty('--spw-section-progress', nextProgress);
+  }
+  if (node.style.getPropertyValue('--spw-section-step') !== nextStep) {
+    node.style.setProperty('--spw-section-step', nextStep);
+  }
 }

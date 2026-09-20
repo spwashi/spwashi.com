@@ -146,7 +146,6 @@ function createState(config) {
     scrollY,
     scrollBand: resolveScrollBand(scrollY, config),
     scrollDirection: SCROLL_DIRECTIONS.STILL,
-    scrollRaf: 0,
     settleTimer: 0,
     lastTransitionSource: 'init',
     navMeasure: {
@@ -995,12 +994,17 @@ export function initSpwShellDisclosure(options = {}) {
     scheduleMeasuredSync('resize-layout');
   };
 
+  /* The scroll band and direction come from one scrollY read. Taken in a
+     frame callback it landed after the other scroll-time writers and forced
+     the whole style pass; the measured lane reads it after that pass, in the
+     same read phase as theirs. */
+  const scrollLane = createMeasuredLane({
+    name: 'shell-scroll',
+    measure: () => getScrollY(),
+    apply: (nextScrollY) => syncScrollState(header, state, nextScrollY),
+  });
   const handleScroll = () => {
-    if (state.scrollRaf) return;
-    state.scrollRaf = window.requestAnimationFrame(() => {
-      state.scrollRaf = 0;
-      syncScrollState(header, state);
-    });
+    scrollLane.schedule();
   };
 
   const handleHashChange = () => {
@@ -1219,10 +1223,7 @@ export function initSpwShellDisclosure(options = {}) {
       document.removeEventListener('spw:frame-change', handleSettingsChanged);
       navObserver.disconnect();
       clearSettleTimer(state);
-      if (state.scrollRaf) {
-        window.cancelAnimationFrame(state.scrollRaf);
-        state.scrollRaf = 0;
-      }
+      scrollLane.cancel();
       measuredSyncLane.cancel();
       shellOffsetLane.cancel();
       shellOffsetHeader = null;

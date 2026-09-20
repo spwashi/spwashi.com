@@ -4,6 +4,8 @@
  * Home-route section filter and jump index behavior.
  */
 
+import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
+
 const INDEX_SELECTOR = '[data-home-section-index]';
 const FILTER_SELECTOR = '[data-home-section-filter]';
 const CLEAR_SELECTOR = '[data-home-section-filter-clear]';
@@ -116,9 +118,9 @@ function initHomeSectionIndex(ctx = {}) {
     ctx?.bus?.emit?.('spw:home-section-current', { id: nextId, route: ctx.route || 'home' });
   }
 
-  function resolveCurrentFromScroll() {
+  function measureCurrentFromScroll() {
     const visibleEntries = entries.filter((entry) => !entry.item.hidden && entry.section);
-    if (!visibleEntries.length) return;
+    if (!visibleEntries.length) return '';
 
     const anchorY = window.scrollY + Math.min(Math.max(window.innerHeight * 0.24, 120), 260);
     let nextEntry = visibleEntries[visibleEntries.length - 1];
@@ -129,8 +131,26 @@ function initHomeSectionIndex(ctx = {}) {
       nextEntry = entry;
     }
 
-    setCurrent(nextEntry.id);
+    return nextEntry.id;
   }
+
+  function resolveCurrentFromScroll() {
+    const id = measureCurrentFromScroll();
+    if (id) setCurrent(id);
+  }
+
+  // Scroll reads every section rect; the lane (kernel/measured-frame.js) takes
+  // that read once per frame after the frame's style pass, then writes.
+  const scrollLane = createMeasuredLane({
+    name: 'home-section-index',
+    measure: measureCurrentFromScroll,
+    apply: (id) => {
+      if (id) setCurrent(id);
+    },
+  });
+  const onScroll = () => {
+    scrollLane.schedule();
+  };
 
   const handleInput = () => {
     applyFilter(filterInput.value);
@@ -166,7 +186,7 @@ function initHomeSectionIndex(ctx = {}) {
 
   filterInput.addEventListener('input', handleInput);
   clearButton?.addEventListener('click', handleClear);
-  window.addEventListener('scroll', resolveCurrentFromScroll, { passive: true });
+  window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('hashchange', resolveCurrentFromScroll);
 
   applyFilter(filterInput.value);
@@ -176,7 +196,8 @@ function initHomeSectionIndex(ctx = {}) {
     observer.disconnect();
     filterInput.removeEventListener('input', handleInput);
     clearButton?.removeEventListener('click', handleClear);
-    window.removeEventListener('scroll', resolveCurrentFromScroll);
+    scrollLane.cancel();
+    window.removeEventListener('scroll', onScroll);
     window.removeEventListener('hashchange', resolveCurrentFromScroll);
   };
 }
