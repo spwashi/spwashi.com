@@ -19,7 +19,7 @@
     route_family="editorial playfield live"
     layout="wide"
     features="operators navigator console route-discovery"
-    related_routes="/|/about/|/topics/|/topics/search/|/topics/software/|/blog/|/contact/|/tools/|/tools/character-sheet/|/tools/midjourney/|/settings/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/play/rpg-wednesday/sessions/|/rpg/"
+    related_routes="/|/about/|/topics/|/topics/search/|/topics/software/|/blog/|/contact/|/tools/|/tools/character-sheet/|/tools/midjourney/|/settings/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/play/rpg-wednesday/sessions/|/rpg/|/recipes/|/topics/craft/|/services/|/design/folios/|/newyear/"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -43,7 +43,7 @@
         current_href="/play/"
         indicator="frame"
         seed="page_play_play__site_header"
-        related_routes="/|/about/|/topics/|/topics/search/|/topics/software/|/blog/|/contact/|/tools/|/tools/character-sheet/|/tools/midjourney/|/settings/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/play/rpg-wednesday/sessions/|/rpg/"
+        related_routes="/|/about/|/topics/|/topics/search/|/topics/software/|/blog/|/contact/|/tools/|/tools/character-sheet/|/tools/midjourney/|/settings/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/play/rpg-wednesday/sessions/|/rpg/|/recipes/|/topics/craft/|/services/|/design/folios/"
         context_relevance="play campaign active games rpg wednesday session log"
         nav_items="Home:/|About:/about/|Topics:/topics/|Play:/play/|Art:/design/folios/|Services:/services/|Now:/now/|Settings:/settings/"
     ></spw-site-header>
@@ -570,6 +570,22 @@
                     </li>
                 </ul>
                 <p data-spw-textual-role="note">The route structure follows the Spw operator model. Sessions use <code>/YYYY-MM-DD/</code> dates because they are stable, sortable, and readable without sequential IDs. The grammar is introduced on the <a href="/topics/software/#spw-grammar-surface">software surface</a> and developed more deeply in <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>.</p>
+            </section>
+
+            <section class="spw-frame" id="wonder-kin" data-spw-kind="frame" data-spw-role="routing" data-spw-region="path" data-spw-liminality="settled" data-spw-wonder="projection resonance consequence" data-spw-seed="page_play_play__wonder_kin">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#wonder-kin" data-spw-operator="wonder">?[same_questions]</a>
+                    <h2 id="wonder-kin-title">Same Questions, Other Rooms</h2>
+                </header>
+                <p data-spw-textual-role="note" data-spw-copy-depth="normal">Play asks what points elsewhere (point), what responds (respond), and what follows (follow). Each chip names the room and, in brackets, which of those it shares; the kitchen shares all three.</p>
+                <nav class="frame-operators" aria-labelledby="wonder-kin-title">
+                    <a class="spw-chip" data-spw-handle="true" href="/recipes/" data-spw-operator="concept-edge" data-spw-wonder="projection resonance consequence" title="what points elsewhere · what responds · what follows. Material practice that teaches composition the way a session does.">&gt;recipes[point.respond.follow]</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/craft/" data-spw-operator="concept-edge" data-spw-wonder="projection resonance" title="what points elsewhere · what responds. Residue, pressure, motif, then public memory: a session loop for authors.">&gt;craft[point.respond]</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/services/" data-spw-operator="concept-edge" data-spw-wonder="projection consequence" title="what points elsewhere · what follows. When play turns into scoped work.">&gt;services[point.follow]</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/design/folios/" data-spw-operator="concept-edge" data-spw-wonder="resonance projection" title="what responds · what points elsewhere. Laminated seasons, painted again next year.">&gt;folios[respond.point]</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/tools/" data-spw-operator="concept-edge" data-spw-wonder="projection consequence" title="what points elsewhere · what follows. Benches for character sheets, prompts, and the year-mix ledger.">&gt;tools[point.follow]</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/newyear/" data-spw-operator="concept-edge" data-spw-wonder="projection resonance" title="what points elsewhere · what responds. The threshold surface: time feels writable again.">&gt;newyear[point.respond]</a>
+                </nav>
             </section>
             </div>
         </article>

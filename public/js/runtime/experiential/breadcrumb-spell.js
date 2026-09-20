@@ -294,11 +294,36 @@ export function describeBreadcrumbRoute(pathname = '') {
     };
   }
 
+  const authored = describeAuthoredBridgeRoute(normalized);
+  if (authored) return authored;
+
   return {
     href: normalized,
     label: titleFromPath(normalized),
     note: 'Related route from this page.',
   };
+}
+
+/**
+ * A route bridge authored in the page (.spw-route-bridge__links) already
+ * says why the next surface exists. Borrow its label and note instead of
+ * humanizing the path, so the spell reads what the HTML reads.
+ */
+function describeAuthoredBridgeRoute(normalized) {
+  if (typeof document === 'undefined' || !normalized) return null;
+  const links = document.querySelectorAll('.spw-route-bridge__links a[href]');
+  for (const link of links) {
+    if (normalizeRouteHref(link.getAttribute('href')) !== normalized) continue;
+    const label = stripWhitespace(link.querySelector('strong')?.textContent || '');
+    if (!label) continue;
+    const note = stripWhitespace(link.querySelector('span')?.textContent || '');
+    return {
+      href: normalized,
+      label,
+      note: note || 'Related route from this page.',
+    };
+  }
+  return null;
 }
 
 export function collectRelatedBreadcrumbRoutes(currentPath = '') {
