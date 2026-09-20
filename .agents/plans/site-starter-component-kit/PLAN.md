@@ -173,6 +173,14 @@ from becoming a maintenance burden.
 
 ## Status
 
+### Capability Bundling Prime — 2026-09-20
+
+Next extraction phase: [capability bundling plan](./BUNDLING.md), with an
+[imagined authored and distribution tree](./bundling.spw). Operation `prime`,
+fixity `experimental`; proposes a texture-slice pilot before broader extraction.
+The current census finds 37 CSS imports and 315 JS exports; inventory path
+resolution needs repair before its portability result can be trusted.
+
 - [x] Plan created
 - [x] Starter inventory script added
 - [x] npm script added

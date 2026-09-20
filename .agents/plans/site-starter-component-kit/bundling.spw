@@ -1,0 +1,119 @@
+# Review 2026-09-20 — keep as an experimental distribution sketch; texture-slice and a real second consumer gate expansion.
+# Capability distribution imagination; paths inside trees are proposals, not live references.
+#>starter_capability_bundling
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "experimental"
+@plan: ~"./BUNDLING.md"
+@owner: ~"./PLAN.md"
+@boundary: ~"../../../.spw/conventions/site-starter-component-kit.spw"
+@texture_js: ~"../../../public/js/media/texture-slice.js"
+@texture_css: ~"../../../public/css/effects/texture-slice.css"
+
+^"intent"{
+  audience = "Authors of independent static sites and applications"
+  element = "metal: explicit dependency boundaries; wood: capability growth after use"
+  resonance = "One useful behavior can travel with its styling and leave host identity intact."
+  extension = "Texture-slice first; compare SVG tuning and frames/chips before generalizing."
+  source = "2026-09-20 repository audit and user request for a bundling plan"
+}
+
+^"authored_tree"{
+  status = "Imagined additions alongside existing public sources; create only the pilot's needed files."
+  tree = `
+public/                              # existing implementation owners remain authoritative
+  js/media/texture-slice.js
+  css/effects/texture-slice.css
+  images/...                         # actual referenced motifs selected by dependency audit
+packages/
+  spw-compose/                       # provisional package directory; not a registered name
+    package.json                     # version, exports, files, CSS side-effect metadata
+    README.md                        # adoption, markup, tokens, lifecycle, license
+    LICENSE                          # only after code and asset rights are established
+    entries/
+      texture-slice.js                # narrow build entry referencing existing owner
+      texture-slice.css               # style entry; no copied implementation
+    capabilities/
+      texture-slice.json             # JS/CSS/assets/markup/tokens/host-policy manifest
+    examples/
+      texture-slice/
+        index.html                   # consumer owns its document and surrounding styles
+        host.css
+        main.js
+    dist/                            # generated, ignored, reproducible
+scripts/
+  build-compose.mjs                  # proposed distribution build entry
+  tests/
+    compose-portability.test.mjs      # artifact and relocation checks
+`
+  ownership = "Package entries select source; they never fork implementations. Existing site.js and compose.js remain compatible."
+}
+
+^"artifact_tree"{
+  status = "Proposed texture-slice release shape; paths become real only through the pilot."
+  tree = `
+dist/
+  esm/
+    texture-slice.js                  # modular entry, relative imports
+    shared/                          # only genuinely shared dependencies, if any
+  browser/
+    texture-slice.js                  # ready-to-host ESM; no consumer build required
+  css/
+    texture-slice.css                 # flattened with layers and rebased asset URLs
+  assets/
+    texture-slice/                    # required, licensed motifs only
+  types/
+    texture-slice.d.ts                # public lifecycle/configuration surface
+  manifest.json                      # capabilities, dependencies, sizes, version
+  ...                                # maps adjacent to their JS/CSS artifacts
+`
+  relocation = "The whole artifact subtree works under any host prefix; no /public/ assumption. Cross-origin hosting additionally needs appropriate server CORS."
+  asset_rule = "Resolve URLs from original stylesheet locations, then rewrite relative to emitted CSS; preserve query/hash and external/data URLs."
+}
+
+^"growth_candidates"{
+  names = #["dom", "lifecycle", "frames", "chips", "attention", "svg", "texture-slice"][reg=set]
+  css = "tokens -> opt-in components; document typography and effects remain separately selectable"
+  js = "Explicit mounts, narrow static graphs, deliberate lazy imports, host-provided policies"
+  aggregate = "compose remains convenient but is not the minimum adoption unit"
+  caution = "Do not create every directory or publish every candidate in the first patch."
+}
+
+^"integrated_design_tree"{
+  operation = "prime"
+  fixity = "experimental"
+  tree = `
+one capability
+  author intent       -> design-hub specimen and chosen sensory variable
+  component anatomy   -> existing HTML slots, state, accessibility
+  implementation      -> existing CSS/JS owner; slice maps cross-layer relations
+  measurement         -> designer-conversation-canvas telemetry
+  interpretation      -> separately labeled human observation
+  distribution        -> capability entry + CSS + required assets
+  reproduction        -> isolated consumer, then a real second site
+  feedback            -> smallest source-owner change; rerun the same specimen
+`
+  innovation = "Vary one meaningful material or interaction parameter across two host contexts; discover which contract travels and which assumption belongs to the site."
+  first_experiment = "Illustrator + engineer; texture-slice; crop response; quiet intensity; static and reduced-motion baselines beside pointer response."
+  design_success = "A second author can reproduce the intended effect and name the token that changes it without importing unrelated site behavior."
+  engineering_success = "Relocatable artifacts, bounded dependency graph, cleanup, style isolation, and measured payload."
+  failure = "A visually attractive demo needs undocumented global state, or a technically portable bundle loses the authored effect."
+  related = #[
+    ~"../design-hub/PLAN.md",
+    ~"../designer-conversation-canvas/PLAN.md",
+    ~"../modular-experience-slices/PLAN.md",
+    ~"../daily-kernel-development/PLAN.md",
+    ~"../module-contract-overhaul/PLAN.md"
+  ][reg=set]
+  boundary = "Workers-wonder-kit shares the reuse question but keeps server routing and deployment separate from browser capability bundles."
+}
+
+^"proof"{
+  first_patch = "Repair inventory path resolution and its tests; pilot packaging follows as a separate bounded implementation."
+  fixture = "Serve packaged texture-slice below /consumer/nested/vendor/ with no site public tree."
+  probes = #["all assets resolve", "unrelated host styles remain intact", "two instances", "cleanup and remount", "reduced motion", "no unrelated runtime requests", "native ESM and bundled consumer"][reg=set]
+  promotion = "A real second-site consumer plus repeatable artifact checks precedes a stable distribution contract."
+  falsification = "The consumer requires site.js, root /public paths, undocumented global settings, or unrelated compose capabilities."
+}
