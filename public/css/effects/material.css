@@ -171,6 +171,85 @@
 }
 
 /* ==========================================================================
+   2b. Secondary carriers
+   --------------------------------------------------------------------------
+   Route bridges, reason strips, and the lens track are surfaces that sit on
+   a frame rather than beside it. They kept their own color-mix chrome, so a
+   reader who set paper, glass, matte, or field saw the frame change and the
+   bridge inside it stay put. They now read the host's resolved material
+   (--material-local-background is inherited from the frame that owns them)
+   through a thin veil of the strong surface, so the same setting reaches
+   both altitudes: glass returns a specular edge, matte holds flat, paper
+   absorbs, field charges. Layout stays with the owning component sheet;
+   only surface, seam, shadow, and the two material states move here.
+   ========================================================================== */
+:where(
+  .spw-route-bridge,
+  .spw-route-bridge__links > li > a,
+  .spw-reason-strip > *,
+  .mode-switch:not([data-spw-lens-chrome~="quiet"])
+) {
+  --spw-debug-layer-owner: "effects";
+  --material-veil-opacity: calc(0.34 + (0.26 * var(--spw-tangibility, 0.5)));
+  --material-secondary-veil: color-mix(
+    in oklab,
+    var(--material-surface-strong) calc(var(--material-veil-opacity) * 100%),
+    transparent
+  );
+  --material-secondary-border: color-mix(
+    in oklab,
+    var(--material-local-border-color, var(--material-line)) 78%,
+    var(--material-prime-color) 22%
+  );
+  --material-secondary-shadow: var(--material-shadow-rest);
+  background:
+    linear-gradient(var(--material-secondary-veil), var(--material-secondary-veil)),
+    var(--material-local-background, var(--material-surface));
+  border-color: var(--material-secondary-border);
+  box-shadow:
+    var(--material-highlight-inset),
+    var(--material-secondary-shadow);
+  transition:
+    box-shadow   var(--material-local-duration-base, var(--material-duration-base)) var(--material-settle-ease),
+    border-color var(--material-local-duration-base, var(--material-duration-base)) var(--material-glide-ease),
+    background   var(--material-local-duration-base, var(--material-duration-base)) var(--material-glide-ease),
+    transform    var(--material-local-duration-fast, var(--material-duration-fast)) var(--material-lift-ease);
+}
+
+/* The two states, same as the primary carrier: rest and lift. A link inside a
+   bridge lifts on hover or focus; the aside and the strip item stay at rest. */
+:where(.spw-route-bridge__links > li > a):is(:hover, :focus-visible) {
+  --material-secondary-shadow: var(--material-shadow-lift);
+  --material-secondary-border: color-mix(
+    in oklab,
+    var(--material-prime-color) 42%,
+    var(--material-local-border-color, var(--material-line))
+  );
+}
+
+/* Matte is the clear-contrast safeguard at every altitude: no specular return
+   on a secondary surface either, and a flat one-pixel foot instead of a lift. */
+:where([data-spw-metamaterial="matte"]) :where(
+  .spw-route-bridge,
+  .spw-route-bridge__links > li > a,
+  .spw-reason-strip > *,
+  .mode-switch:not([data-spw-lens-chrome~="quiet"])
+) {
+  --material-highlight-inset: none;
+  --material-secondary-shadow: 0 1px 0 color-mix(in oklab, var(--material-ink-matte) 8%, transparent);
+}
+
+/* Glass returns light through the veil too, so the veil thins. */
+:where([data-spw-metamaterial="glass"]) :where(
+  .spw-route-bridge,
+  .spw-route-bridge__links > li > a,
+  .spw-reason-strip > *,
+  .mode-switch:not([data-spw-lens-chrome~="quiet"])
+) {
+  --material-veil-opacity: calc(0.22 + (0.2 * var(--spw-tangibility, 0.5)));
+}
+
+/* ==========================================================================
    3. Material kinds (Refined with oklab)
    ========================================================================== */
 

@@ -41725,6 +41725,73 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   text-align: center;
 }
 
+/* Cluster D2 — the seat glides.
+   The pressed option names itself as an anchor and the track's ::after is a
+   bar positioned to it: wherever the pressed option sits (a row, a wrapped
+   pocket track, a 2×2 grid) the bar sits under it, and because anchor()
+   resolves to lengths, the inset transitions and the bar slides to the next
+   option instead of blinking. Silent chrome leaves ::after free (Cluster C);
+   labeled chrome keeps ::after for its feedback chip and keeps the pressed
+   dot. anchor-scope keeps each track's bar on its own pressed option when a
+   page hosts several switches. Browsers without anchor positioning keep the
+   pressed state as it was. Reduced motion keeps the bar and drops the slide. */
+@supports (anchor-name: --spw-lens-seat) and (anchor-scope: --spw-lens-seat) {
+  .mode-switch[data-spw-lens-mode][data-spw-lens-chrome~="silent"]:not([data-spw-mode-seat="open"]) {
+    --spw-lens-seat-color: color-mix(in srgb, var(--spw-lens-cascade-color) 58%, var(--ink, #111) 42%);
+    position: relative;
+    anchor-scope: --spw-lens-seat;
+  }
+
+  .mode-switch[data-spw-lens-mode][data-spw-lens-chrome~="silent"]:not([data-spw-mode-seat="open"]) > .frame-sigil[aria-pressed="true"] {
+    anchor-name: --spw-lens-seat;
+  }
+
+  .mode-switch[data-spw-lens-mode][data-spw-lens-chrome~="silent"]:not([data-spw-mode-seat="open"])::after {
+    content: "";
+    display: block;
+    position: absolute;
+    position-anchor: --spw-lens-seat;
+    inset-inline-start: calc(anchor(left) + 0.42rem);
+    inset-block-start: calc(anchor(bottom) - 0.46rem);
+    inline-size: calc(anchor-size(width) - 0.84rem);
+    block-size: 0.18rem;
+    border-radius: 999px;
+    background: var(--spw-lens-seat-color);
+    pointer-events: none;
+    z-index: 1;
+    transition:
+      inset-inline-start var(--spw-interaction-settle, var(--touch-recover, 320ms) var(--ease-settle, cubic-bezier(0.2, 0.8, 0.2, 1))),
+      inset-block-start var(--spw-interaction-settle, var(--touch-recover, 320ms) var(--ease-settle, cubic-bezier(0.2, 0.8, 0.2, 1))),
+      inline-size var(--spw-interaction-settle, var(--touch-recover, 320ms) var(--ease-settle, cubic-bezier(0.2, 0.8, 0.2, 1)));
+  }
+
+  /* Hover previews the move: the idle option under the pointer takes the seat
+     ink, so the reader feels where the bar goes before pressing. Fine pointers
+     only; a thumb has no hover to preview with. */
+  @media (hover: hover) and (pointer: fine) {
+    .mode-switch[data-spw-lens-mode][data-spw-lens-chrome~="silent"] > .frame-sigil:not([aria-pressed="true"]):hover {
+      color: var(--spw-lens-seat-color);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mode-switch[data-spw-lens-mode]::after {
+      transition: none;
+    }
+  }
+}
+
+/* Row tracks pack tighter: the label sits closer to its neighbours and the
+   chassis loses the breathing room a 2×2 grid needed. The 44px floor stays. */
+.mode-switch[data-spw-lens-track="row"] {
+  gap: calc(var(--spw-control-gap, 0.24rem) + 0.1rem);
+  padding: 0.16rem;
+}
+
+.mode-switch[data-spw-lens-track="row"] > .frame-sigil {
+  padding-block: calc(var(--spw-control-padding-block, 0.24rem) - 0.08rem);
+}
+
 /* Cluster E — tablet / narrow shells: flex equal-share, not 2×2 masonry.
    A rigid 2×2 grid clipped 3-button lenses (read|inspect|reuse). */
 @media (max-width: 56rem) {
@@ -45272,6 +45339,85 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     outline-offset: 0;
     filter: saturate(0.82);
   }
+}
+
+/* ==========================================================================
+   2b. Secondary carriers
+   --------------------------------------------------------------------------
+   Route bridges, reason strips, and the lens track are surfaces that sit on
+   a frame rather than beside it. They kept their own color-mix chrome, so a
+   reader who set paper, glass, matte, or field saw the frame change and the
+   bridge inside it stay put. They now read the host's resolved material
+   (--material-local-background is inherited from the frame that owns them)
+   through a thin veil of the strong surface, so the same setting reaches
+   both altitudes: glass returns a specular edge, matte holds flat, paper
+   absorbs, field charges. Layout stays with the owning component sheet;
+   only surface, seam, shadow, and the two material states move here.
+   ========================================================================== */
+:where(
+  .spw-route-bridge,
+  .spw-route-bridge__links > li > a,
+  .spw-reason-strip > *,
+  .mode-switch:not([data-spw-lens-chrome~="quiet"])
+) {
+  --spw-debug-layer-owner: "effects";
+  --material-veil-opacity: calc(0.34 + (0.26 * var(--spw-tangibility, 0.5)));
+  --material-secondary-veil: color-mix(
+    in oklab,
+    var(--material-surface-strong) calc(var(--material-veil-opacity) * 100%),
+    transparent
+  );
+  --material-secondary-border: color-mix(
+    in oklab,
+    var(--material-local-border-color, var(--material-line)) 78%,
+    var(--material-prime-color) 22%
+  );
+  --material-secondary-shadow: var(--material-shadow-rest);
+  background:
+    linear-gradient(var(--material-secondary-veil), var(--material-secondary-veil)),
+    var(--material-local-background, var(--material-surface));
+  border-color: var(--material-secondary-border);
+  box-shadow:
+    var(--material-highlight-inset),
+    var(--material-secondary-shadow);
+  transition:
+    box-shadow   var(--material-local-duration-base, var(--material-duration-base)) var(--material-settle-ease),
+    border-color var(--material-local-duration-base, var(--material-duration-base)) var(--material-glide-ease),
+    background   var(--material-local-duration-base, var(--material-duration-base)) var(--material-glide-ease),
+    transform    var(--material-local-duration-fast, var(--material-duration-fast)) var(--material-lift-ease);
+}
+
+/* The two states, same as the primary carrier: rest and lift. A link inside a
+   bridge lifts on hover or focus; the aside and the strip item stay at rest. */
+:where(.spw-route-bridge__links > li > a):is(:hover, :focus-visible) {
+  --material-secondary-shadow: var(--material-shadow-lift);
+  --material-secondary-border: color-mix(
+    in oklab,
+    var(--material-prime-color) 42%,
+    var(--material-local-border-color, var(--material-line))
+  );
+}
+
+/* Matte is the clear-contrast safeguard at every altitude: no specular return
+   on a secondary surface either, and a flat one-pixel foot instead of a lift. */
+:where([data-spw-metamaterial="matte"]) :where(
+  .spw-route-bridge,
+  .spw-route-bridge__links > li > a,
+  .spw-reason-strip > *,
+  .mode-switch:not([data-spw-lens-chrome~="quiet"])
+) {
+  --material-highlight-inset: none;
+  --material-secondary-shadow: 0 1px 0 color-mix(in oklab, var(--material-ink-matte) 8%, transparent);
+}
+
+/* Glass returns light through the veil too, so the veil thins. */
+:where([data-spw-metamaterial="glass"]) :where(
+  .spw-route-bridge,
+  .spw-route-bridge__links > li > a,
+  .spw-reason-strip > *,
+  .mode-switch:not([data-spw-lens-chrome~="quiet"])
+) {
+  --material-veil-opacity: calc(0.22 + (0.2 * var(--spw-tangibility, 0.5)));
 }
 
 /* ==========================================================================
