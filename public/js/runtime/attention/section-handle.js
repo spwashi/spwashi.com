@@ -3,6 +3,7 @@ import {
   requestFloatingChromeSync,
 } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
+import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
 import { computeLocomotionFieldBalance } from '/public/js/runtime/wonder-memory.js';
 import { describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 import { describeWrapScan } from '/public/js/semantic/spw-compose.js';
@@ -537,7 +538,7 @@ function createSectionHandleState() {
   return {
     activeIndex: 0,
     phase: 'settled',
-    raf: 0,
+    lastReading: '',
     travelTimer: 0,
     travelTargetId: '',
     compact: window.matchMedia(HANDLE_COMPACT_QUERY).matches,
@@ -800,6 +801,46 @@ function syncSectionVocabularyHint(sections, activeIndex, handle, shell) {
   }
 }
 
+/* Scroll and resize drive this update every frame, and a frame during a plain
+   scroll usually changes nothing the handle shows. The reading gathers every
+   layout-dependent value first (the section rects, the viewport, scroll depth)
+   so no write sits between two reads, and a passive source whose reading
+   matches the last applied one ends before any attribute, text, or root style
+   is touched. Explicit sources (travel, story, toggle) always apply. */
+const PASSIVE_UPDATE_SOURCES = new Set(['scroll', 'resize']);
+
+function measureSectionHandleState(sections, state) {
+  const activeIndex = resolveActiveIndex(sections);
+  const activeSection = sections[activeIndex] || null;
+  const compactViewport = Boolean(window.matchMedia?.(HANDLE_COMPACT_QUERY).matches);
+  const viewportHeight = window.innerHeight || 800;
+  const scrollThreshold = compactViewport
+    ? Math.min(HANDLE_VISIBILITY_SCROLL, Math.max(160, viewportHeight * 0.18))
+    : Math.max(HANDLE_VISIBILITY_SCROLL, viewportHeight * 0.34);
+  const scrolledPast = window.scrollY > scrollThreshold;
+  const visible = sections.length > 1 && (scrolledPast || activeIndex > 0);
+  const hasCauldronResonance = Boolean(activeSection && (
+    activeSection.classList.contains('is-cauldron-jump-target')
+    || activeSection.hasAttribute('data-spw-cauldron-category')
+    || activeSection.querySelector('[data-spw-ingredient-primed], [data-spw-spell-candidate], [data-spw-component-variant="cauldron-candidate"]')
+  ));
+  const root = document.documentElement?.dataset || {};
+  const signature = [
+    activeIndex,
+    visible,
+    hasCauldronResonance,
+    state.phase,
+    state.storyOverlay,
+    state.compact,
+    sections.length,
+    root.spwBottomLaneHandle || '',
+    root.spwActiveRegionSimilar || root.spwRegionSimilar || '',
+    root.spwActiveRegionContrast || root.spwRegionContrast || '',
+    root.spwActiveRegionResonate || root.spwRegionResonate || '',
+  ].join('|');
+  return { activeIndex, visible, hasCauldronResonance, signature };
+}
+
 function updateSectionHandleState({
   sections,
   state,
@@ -809,8 +850,11 @@ function updateSectionHandleState({
   generated,
   source = 'sync',
   updateActiveState,
+  reading = measureSectionHandleState(sections, state),
 }) {
-  state.activeIndex = resolveActiveIndex(sections);
+  if (PASSIVE_UPDATE_SOURCES.has(source) && reading.signature === state.lastReading) return;
+  state.lastReading = reading.signature;
+  state.activeIndex = reading.activeIndex;
   const activeSection = sections[state.activeIndex];
   const info = describeSection(activeSection, state.activeIndex, sections);
   if (!info) return;
@@ -849,12 +893,7 @@ function updateSectionHandleState({
   syncSectionHandleSwipeHint(shell, state.compact, state.activeIndex, sections.length);
 
   syncSectionHandleAttributes(handle, shell, info, state.activeIndex, sections.length, snapshot, source);
-  const compactViewport = window.matchMedia?.(HANDLE_COMPACT_QUERY).matches;
-  const scrollThreshold = compactViewport
-    ? Math.min(HANDLE_VISIBILITY_SCROLL, Math.max(160, (window.innerHeight || 800) * 0.18))
-    : Math.max(HANDLE_VISIBILITY_SCROLL, (window.innerHeight || 800) * 0.34);
-  const scrolledPast = window.scrollY > scrollThreshold;
-  const visible = sections.length > 1 && (scrolledPast || state.activeIndex > 0);
+  const { visible } = reading;
   const approach = resolveHandleApproach(visible, state.phase, sections.length);
   syncSectionHandleSections(sections, state.activeIndex, approach);
   syncSectionHandleAvailability(refs, state.activeIndex, sections.length);
@@ -875,12 +914,7 @@ function updateSectionHandleState({
   // Gives the section handle a "rehearsal" cue so locomotion feels like subvocal inner-speech (speech bubble metaphysics).
   // Resonance probe already echoes operators; this extends the field to cauldron/spell bidirectional gestures.
   // Enhancement-level (from settings) modulates how rich the transient cues feel (see floating-chrome + notices).
-  const hasCauldronResonance = !!(activeSection && (
-    activeSection.classList.contains('is-cauldron-jump-target') ||
-    activeSection.hasAttribute('data-spw-cauldron-category') ||
-    activeSection.querySelector('[data-spw-ingredient-primed], [data-spw-spell-candidate], [data-spw-component-variant="cauldron-candidate"]')
-  ));
-  if (hasCauldronResonance) {
+  if (reading.hasCauldronResonance) {
     handle.setAttribute(SUBVOCAL_REHEARSAL_ATTR, 'cauldron');
     handle.setAttribute(CAULDRON_RESONANCE_ATTR, 'active');
     if (shell) shell.setAttribute(CAULDRON_RESONANCE_ATTR, 'active');
@@ -998,7 +1032,7 @@ function createSectionHandleController({
   const refs = getSectionHandleRefs(handle, shell);
   const state = createSectionHandleState();
 
-  const updateActiveState = (source = 'sync') => {
+  const updateActiveState = (source = 'sync', reading = undefined) => {
     updateSectionHandleState({
       sections,
       state,
@@ -1008,15 +1042,23 @@ function createSectionHandleController({
       generated,
       source,
       updateActiveState,
+      ...(reading ? { reading } : {}),
     });
   };
 
+  /* Scroll and resize measure after the frame's style pass, in the shared
+     lane (kernel/measured-frame.js) beside the shell and page-state reads, so
+     one clean style serves every scroll-time read. A frame callback read
+     scrollY after this update's own writes and forced the whole pass. */
+  let pendingUpdateSource = 'scroll';
+  const updateLane = createMeasuredLane({
+    name: 'section-handle',
+    measure: () => measureSectionHandleState(sections, state),
+    apply: (reading) => updateActiveState(pendingUpdateSource, reading),
+  });
   const runUpdate = (source = 'scroll') => {
-    if (state.raf) return;
-    state.raf = window.requestAnimationFrame(() => {
-      state.raf = 0;
-      updateActiveState(source);
-    });
+    pendingUpdateSource = source;
+    updateLane.schedule();
   };
 
   const syncCompactPreference = () => {
@@ -1408,10 +1450,7 @@ function createSectionHandleController({
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onResize);
     window.removeEventListener('orientationchange', onResize);
-    if (state.raf) {
-      window.cancelAnimationFrame(state.raf);
-      state.raf = 0;
-    }
+    updateLane.cancel();
     window.clearTimeout(state.travelTimer);
     shell.remove();
     handle.hidden = false;

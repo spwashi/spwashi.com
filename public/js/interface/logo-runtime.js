@@ -10,6 +10,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
 
 const SCROLL_CHARGE_DEPTH = 320; // px of scroll over which charge builds
 
@@ -52,15 +53,25 @@ function bindLogo(logo) {
     }, 420);
   }, { signal });
 
+  // Scroll charge: one scrollY read per frame after the frame's style pass
+  // (kernel/measured-frame.js), and a write only when the state or the charge
+  // (in hundredths) moves. Writing on every scroll event dirtied style between
+  // the frame and the lanes that measure after it, so each of them paid a
+  // full pass.
+  const scrollLane = createMeasuredLane({
+    name: 'logo-scroll',
+    measure: () => window.scrollY || 0,
+    apply: (scrollY) => {
+      if (logo.dataset.logoState === 'charged' || logo.dataset.logoState === 'emitting') return;
+      const charge = Math.min(1, scrollY / SCROLL_CHARGE_DEPTH);
+      const state = charge > 0.05 ? 'preview' : 'settled';
+      const level = state === 'preview' ? Math.round(charge * 40) / 100 : 0;
+      if (logo.dataset.logoState === state && logo.style.getPropertyValue('--logo-charge') === level.toFixed(3)) return;
+      setLogoState(logo, state, level);
+    },
+  });
   const onScroll = () => {
-    if (logo.dataset.logoState === 'charged' || logo.dataset.logoState === 'emitting') return;
-    const scrollY = window.scrollY || 0;
-    const charge = Math.min(1, scrollY / SCROLL_CHARGE_DEPTH);
-    if (charge > 0.05) {
-      setLogoState(logo, 'preview', charge * 0.4);
-    } else {
-      setLogoState(logo, 'settled', 0);
-    }
+    scrollLane.schedule();
   };
   window.addEventListener('scroll', onScroll, { passive: true, signal });
 
@@ -76,6 +87,7 @@ function bindLogo(logo) {
 
   activeUnsubscribes.push(() => {
     controller.abort();
+    scrollLane.cancel();
     if (typeof u1 === 'function') u1();
     if (typeof u2 === 'function') u2();
   });

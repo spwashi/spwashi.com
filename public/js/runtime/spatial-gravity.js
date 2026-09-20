@@ -49,6 +49,7 @@ import {
 import { createSpwLogger, markInstrumented } from '../kernel/instrumentation.js';
 import { ensureSpatialGravityStyles } from '../kernel/deferred-styles.js';
 import { observeIntersections } from '/public/js/kernel/browser-primitives.js';
+import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
 
 const GRAVITY_SELECTOR = '[data-spw-gravity]';
 
@@ -74,7 +75,6 @@ const readoutSnapshots = new Map();
 let intersectionObserver = null;
 let resizeObserver = null;
 let mutationObserver = null;
-let rafId = 0;
 let listenersBound = false;
 
 const GENERATED_DATASET_KEYS = Object.freeze([
@@ -250,14 +250,25 @@ const resolveSpatial = (rect, vw, vh) => {
   };
 };
 
-const measureElement = (el) => {
-  if (!isElement(el) || !el.isConnected) return;
+/* Read phase: the viewport once, and each on-screen rect, before any write. */
+const readViewport = () => ({
+  viewportWidth: window.innerWidth || document.documentElement.clientWidth || 1,
+  viewportHeight: window.innerHeight || document.documentElement.clientHeight || 1,
+});
 
+const readElement = (el) => {
+  if (!isElement(el) || !el.isConnected) return null;
   const rect = el.getBoundingClientRect();
-  if (!rect.width || !rect.height) return;
+  if (!rect.width || !rect.height) return null;
+  return { el, rect };
+};
 
-  const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 1;
-  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+/* Write phase. A caller with no reading in hand (a single element just
+   tracked) reads synchronously and pays the pass knowingly. */
+const measureElement = (el, rect = readElement(el)?.rect, viewport = readViewport()) => {
+  if (!isElement(el) || !el.isConnected || !rect) return;
+
+  const { viewportWidth, viewportHeight } = viewport;
 
   // Current values engage the deadband: a band is held until the geometry
   // clearly leaves it, so a squeeze cannot chase its own trigger across an edge.
@@ -346,16 +357,24 @@ const resolveOverlaps = () => {
   }
 };
 
-const measureOnScreen = () => {
-  rafId = 0;
-  onScreen.forEach(measureElement);
-  resolveOverlaps();
-};
+/* One pass per frame, after the frame's style pass (kernel/measured-frame.js):
+   every on-screen rect is read against one clean style, then every element is
+   written. In a frame callback each rect was read after the previous element's
+   writes, so a scroll frame forced one full style pass per tracked element. */
+const measureLane = createMeasuredLane({
+  name: 'spatial-gravity',
+  measure: () => ({
+    viewport: readViewport(),
+    readings: [...onScreen].map(readElement).filter(Boolean),
+  }),
+  apply: ({ viewport, readings }) => {
+    readings.forEach(({ el, rect }) => measureElement(el, rect, viewport));
+    resolveOverlaps();
+  },
+});
 
 const scheduleMeasure = () => {
-  if (rafId) return;
-  rafId = window.requestAnimationFrame?.(measureOnScreen) || 0;
-  if (!rafId) measureOnScreen();
+  measureLane.schedule();
 };
 
 const ensureIntersectionObserver = () => {
@@ -531,8 +550,7 @@ export function initSpwSpatialGravity(ctx, root, options = {}) {
   };
 
   const cleanup = () => {
-    if (rafId) window.cancelAnimationFrame?.(rafId);
-    rafId = 0;
+    measureLane.cancel();
     intersectionObserver?.disconnect();
     resizeObserver?.disconnect();
     mutationObserver?.disconnect();
