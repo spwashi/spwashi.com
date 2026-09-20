@@ -1,3 +1,4 @@
+# Review 2026-09-20 — keep as a separate server-side reuse experiment; route refinements do not prove shared-kit extraction.
 # Plan Index — Workers Wonder Kit
 #
 # wap.mom and smut.today share one worker skeleton by copy; make the shared third one kit,

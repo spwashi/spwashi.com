@@ -171,7 +171,7 @@ The slice should support both rhythms:
 
 - [x] Plan created with primary artifact in `.spw/reviews/modular-experience-slices-volleyball.spw`
 - [x] Practice-bed pilot and tending-note template path added
-- [ ] Slice definitions formalized in .spw
+- [x] Initial slice definitions formalized in `.spw/slices/` (math, page-region discovery, dimensional navigation, production rhythm; source verified 2026-09-20)
 - [ ] `math-practice-labs` pilot reviewed and either ported, split, or rejected with a tending note
 - [ ] Bolder tree prototype (CSS) implemented and validated
 - [ ] First human volleyball pilot completed with handoff artifacts
@@ -179,5 +179,15 @@ The slice should support both rhythms:
 - [x] First `attention-resonance-field` ownership seam clarified: attention observes; feature discovery owns opt-in bounded memory
 - [x] Attention children independently scheduled with the authored HTML/CSS prior preserved
 - [ ] Full `attention-resonance-field` slice contract clarified alongside the current attention-field / wonder / ornament surfaces
+
+## Progress Reconciliation — 2026-09-20
+
+Operation `align`, fixity `tending`. The math slice and runtime exist in this
+checkout; the earlier sibling-worktree description is historical context.
+Existence does not close the pilot's accessibility, fallback, or handoff review.
+Keep those checks open. A slice maps ownership across existing CSS/JS folders;
+it does not require relocating their sources. Connect validated specimens to
+[portable capability proof](../site-starter-component-kit/BUNDLING.md): package
+entries select those owners rather than duplicate their implementations.
 
 This plan treats the site as a living, multi-author artwork that improves through deliberate, inspectable, volleyed contributions rather than big-bang rewrites.

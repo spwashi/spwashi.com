@@ -19,7 +19,7 @@ The hub should do three things at once:
 
 Optional only if the route genuinely needs new styling beyond shared surfaces:
 
-- `public/css/design-surface.css`
+- `public/css/routes/surfaces/design.css`
 - `public/css/style.css`
 
 ## Semantic / Runtime Seams
@@ -74,7 +74,18 @@ Optional only if the route genuinely needs new styling beyond shared surfaces:
 
 - `/design/#component-ecology-specimens` now acts as the embedded feature specimen for component/environment state exploration.
 - `public/js/modules/design/experiments.js` owns the route-local wiring through `data-design-ecology-*`, writes corresponding `data-spw-*` state, emits `design:ecology-state`, and exposes `inspectEcologySpecimen()` / `setEcologySpecimen(...)` on `spwDesignExperiments`.
-- `public/css/routes/design-surface.css` projects the same state into the visible message-surface display, resonance meter, active controls, and compact readout.
+- `public/css/routes/surfaces/design.css` projects the same state into the visible message-surface display, resonance meter, active controls, and compact readout.
+
+### Progress And Integrated Design — 2026-09-20
+
+Operation `align`, fixity `tending`. Route source contains
+`#component-ecology-specimens` and `#conversation-canvas`; creating those surfaces
+is implemented, while current browser behavior is not revalidated here.
+Connect one specimen to one measured review and one portable capability using
+the [starter bundling plan](../site-starter-component-kit/BUNDLING.md).
+Success: a second-site author reproduces the specimen and explains one token
+change without loading the site shell. Export mechanics stay with the starter
+owner; measurement and annotation stay with designer-conversation-canvas.
 
 ### Link updates
 
