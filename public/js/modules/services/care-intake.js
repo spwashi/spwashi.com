@@ -1,14 +1,13 @@
 /**
  * modules/services/care-intake.js
  *
- * A reflective intake form for people considering therapy.
+ * A reflective check-in for continuing conversations.
  * Not a diagnostic tool — a thinking aid and care-profile generator.
  *
  * State: localStorage under key 'spw:care-intake'
  * Output: a screenshottable care profile card
  *
- * Design intent: help someone arrive at a first conversation with a therapist
- * already knowing what they want to say.
+ * Design intent: hold onto something to revisit in a continuing conversation.
  */
 
 import { escapeHtml } from '/public/js/kernel/dom-render.js';
@@ -159,7 +158,7 @@ function buildProfileCard(state) {
 
     ${questions.length ? `
     <div class="care-profile-section">
-      <span class="care-profile-section-label">questions to ask a prospective therapist</span>
+      <span class="care-profile-section-label">questions to revisit together</span>
       <ol class="care-questions-list">
         ${questions.map(a => `<li>${APPROACH_QUESTIONS[a]}</li>`).join('')}
       </ol>
@@ -179,9 +178,9 @@ function buildProfileCard(state) {
 
   <div class="care-profile-controls frame-operators" data-screenshot-hidden>
     <button class="spw-chip" data-spw-handle="true" data-care-copy data-spw-operator="wonder">? copy profile</button>
-    <button class="spw-chip" data-spw-handle="true" data-care-download data-spw-operator="value" title="Save the profile as a .spw.txt you can bring to a first conversation">*download .txt</button>
+    <button class="spw-chip" data-spw-handle="true" data-care-download data-spw-operator="value" title="Save the profile as a .spw.txt you can bring to our next conversation">*download .txt</button>
     <button class="spw-chip" data-spw-handle="true" data-care-screenshot data-spw-operator="perspective" aria-label="Toggle screenshot mode">@ screenshot mode</button>
-    <a class="spw-chip" data-spw-handle="true" href="#practices" data-spw-operator="potential" data-spw-action="explore">~book a first conversation</a>
+    <a class="spw-chip" data-spw-handle="true" href="#practices" data-spw-operator="potential" data-spw-action="explore">~revisit the practices</a>
   </div>
 </div>`.trim();
 }
@@ -200,7 +199,7 @@ function buildProfileSeed(state) {
     line('readiness', state.readiness ? READINESS_LABELS[state.readiness] || state.readiness : ''),
     line('note', (state.note || '').trim()),
     line('approaches', approaches.join(' · ')),
-    line('next', 'bring this to a first conversation; nothing here is a diagnosis'),
+    line('next', 'bring this to our next conversation; nothing here is a diagnosis'),
     '}',
   ].join('\n');
 }

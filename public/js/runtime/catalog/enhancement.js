@@ -34,6 +34,19 @@ const ATTENTION_READING_SELECTOR = [
 /** @type {SpwModuleDef[]} */
 export const ENHANCEMENT_DEFS = [
   {
+    id: 'field-composition',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.VISIBLE,
+    selector: 'main',
+    rootMode: 'single',
+    describes: 'field[write]{cauldron.preview.insert.undo} deliberate local fragment handoff',
+    updates: [],
+    evaluates: 'text inputs textareas selection maxlength cauldron preview undo',
+    timingArc: 'visible-enhancement',
+    effectScope: 'local-dom',
+    load: () => import('../../interface/field-composition.js'),
+  },
+  {
     id: 'layout-shift-audit',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,

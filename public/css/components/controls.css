@@ -489,3 +489,99 @@
     transform: none;
   }
 }
+
+/* Writing surfaces: native fields keep their form semantics; cauldron tools
+   appear only at the field being used. Route-specific skins remain owners. */
+:where(main input:not([type]), main input:is([type="text"], [type="search"], [type="email"], [type="url"], [type="tel"], [type="password"]), main textarea) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  min-block-size: var(--touch-target-min, 2.75rem);
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--line, currentColor);
+  border-radius: var(--component-radius-tight, 0.4rem);
+  background: var(--component-surface-strong, var(--surface));
+  color: var(--ink);
+  caret-color: var(--component-accent, currentColor);
+  line-height: 1.5;
+}
+
+:where(main textarea) {
+  inline-size: 100%;
+  min-block-size: 6rem;
+  resize: vertical;
+  overflow-wrap: anywhere;
+  tab-size: 2;
+}
+
+:where(main input, main textarea):focus-visible {
+  outline: 2px solid var(--component-accent, currentColor);
+  outline-offset: 3px;
+}
+
+:where(main input, main textarea):disabled { cursor: not-allowed; }
+:where(main textarea[readonly], main input[readonly]) { border-style: dashed; }
+:where(main fieldset) { min-inline-size: 0; }
+
+.spw-field-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.65rem;
+  grid-column: 1 / -1;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  margin-block: 0.45rem 0.8rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.spw-field-tools[hidden], .spw-field-tools button[hidden] { display: none; }
+.spw-field-tools output { font-variant-numeric: tabular-nums; }
+.spw-field-tools [role="status"] { overflow-wrap: anywhere; }
+
+.spw-field-picker {
+  box-sizing: border-box;
+  inline-size: min(36rem, calc(100% - 2rem));
+  max-inline-size: calc(100% - 2rem);
+  max-block-size: calc(100dvh - 2rem);
+  margin: auto;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  overflow: auto;
+  border: 1px solid var(--line, currentColor);
+  border-radius: var(--component-radius, 0.75rem);
+  background: var(--bg-field, var(--bg));
+  color: var(--ink);
+  box-shadow: 0 1rem 4rem #0004;
+}
+
+.spw-field-picker[open] { display: grid; gap: 0.8rem; }
+.spw-field-picker::backdrop { background: #0007; }
+.spw-field-picker :where(h2, p) { margin: 0; }
+.spw-field-picker label { display: grid; gap: 0.35rem; min-inline-size: 0; }
+.spw-field-picker :is(select, textarea) {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  padding: 0.65rem;
+  border: 1px solid var(--line, currentColor);
+  border-radius: var(--component-radius-tight, 0.4rem);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+}
+.spw-field-picker textarea { resize: vertical; line-height: 1.5; }
+.spw-field-picker :is(button, select, textarea):focus-visible,
+.spw-field-tools button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.spw-field-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.spw-field-picker button, .spw-field-tools button {
+  min-block-size: var(--touch-target-min, 2.75rem);
+  white-space: normal;
+}
+.spw-field-picker :is(p, button) { overflow-wrap: anywhere; }
+
+@media (pointer: coarse) {
+  :where(main input:not([type]), main input:is([type="text"], [type="search"], [type="email"], [type="url"], [type="tel"], [type="password"]), main textarea),
+  .spw-field-picker :is(select, textarea) { font-size: max(1rem, 16px); }
+}
