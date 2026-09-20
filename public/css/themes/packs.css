@@ -17,6 +17,12 @@
 
 @layer tokens {
 
+/* Theme packs. Secondary text retains each palette's hue with enough pigment
+   for small labels on both page grounds and raised panels. */
+html[data-spw-theme-pack] {
+  --ink-muted: var(--ink-mid);
+}
+
 /* Theme packs */
 html[data-spw-theme-pack="neutral-paper"] {
   --bg: light-dark(hsl(42 28% 93%), hsl(34 14% 11%));
@@ -35,8 +41,8 @@ html[data-spw-theme-pack="neutral-paper"] {
   --amber: light-dark(hsl(35 68% 42%), hsl(36 66% 62%));
   --ink-strong: light-dark(rgba(28, 26, 22, 0.98), rgba(242, 237, 230, 0.97));
   --ink: light-dark(rgba(36, 33, 28, 0.94), rgba(234, 228, 220, 0.93));
-  --ink-soft: light-dark(rgba(62, 56, 48, 0.76), rgba(197, 188, 177, 0.78));
-  --ink-mid: light-dark(rgba(62, 56, 48, 0.6), rgba(197, 188, 177, 0.6));
+  --ink-soft: light-dark(rgba(62, 56, 48, 0.86), rgba(197, 188, 177, 0.94));
+  --ink-mid: light-dark(rgba(62, 56, 48, 0.82), rgba(197, 188, 177, 0.90));
   --line: light-dark(rgba(58, 48, 36, 0.14), rgba(234, 228, 220, 0.14));
   --line-strong: light-dark(rgba(22, 110, 118, 0.26), rgba(112, 196, 196, 0.3));
 }
@@ -59,8 +65,8 @@ html[data-spw-theme-pack="ritual-vellum"] {
   --violet: light-dark(hsl(320 22% 40%), hsl(330 30% 68%));
   --ink-strong: light-dark(rgba(34, 26, 20, 0.98), rgba(245, 233, 224, 0.97));
   --ink: light-dark(rgba(42, 33, 25, 0.94), rgba(237, 225, 216, 0.93));
-  --ink-soft: light-dark(rgba(78, 60, 44, 0.78), rgba(201, 183, 169, 0.78));
-  --ink-mid: light-dark(rgba(78, 60, 44, 0.6), rgba(201, 183, 169, 0.6));
+  --ink-soft: light-dark(rgba(78, 60, 44, 0.86), rgba(201, 183, 169, 0.94));
+  --ink-mid: light-dark(rgba(78, 60, 44, 0.82), rgba(201, 183, 169, 0.90));
   --line: light-dark(rgba(84, 61, 42, 0.15), rgba(237, 225, 216, 0.14));
   --line-strong: light-dark(rgba(126, 82, 39, 0.26), rgba(196, 145, 86, 0.32));
 }
@@ -82,8 +88,8 @@ html[data-spw-theme-pack="oxide-ledger"] {
   --amber: light-dark(hsl(24 48% 40%), hsl(28 46% 61%));
   --ink-strong: light-dark(rgba(19, 30, 28, 0.98), rgba(231, 244, 239, 0.97));
   --ink: light-dark(rgba(24, 39, 36, 0.94), rgba(223, 236, 231, 0.93));
-  --ink-soft: light-dark(rgba(48, 72, 67, 0.78), rgba(181, 201, 194, 0.78));
-  --ink-mid: light-dark(rgba(48, 72, 67, 0.6), rgba(181, 201, 194, 0.6));
+  --ink-soft: light-dark(rgba(48, 72, 67, 0.86), rgba(181, 201, 194, 0.94));
+  --ink-mid: light-dark(rgba(48, 72, 67, 0.82), rgba(181, 201, 194, 0.90));
   --line: light-dark(rgba(31, 74, 66, 0.15), rgba(223, 236, 231, 0.14));
   --line-strong: light-dark(hsla(172, 58%, 26%, 0.32), rgba(92, 204, 183, 0.32));
 }
@@ -107,8 +113,8 @@ html[data-spw-theme-pack="electric-studio"] {
   --resonance-accent: light-dark(hsl(192 78% 50%), hsl(194 84% 62%));
   --ink-strong: light-dark(rgba(18, 24, 35, 0.98), rgba(235, 241, 250, 0.97));
   --ink: light-dark(rgba(24, 30, 42, 0.94), rgba(226, 233, 244, 0.93));
-  --ink-soft: light-dark(rgba(53, 67, 92, 0.76), rgba(185, 197, 220, 0.79));
-  --ink-mid: light-dark(rgba(53, 67, 92, 0.6), rgba(185, 197, 220, 0.6));
+  --ink-soft: light-dark(rgba(53, 67, 92, 0.86), rgba(185, 197, 220, 0.94));
+  --ink-mid: light-dark(rgba(53, 67, 92, 0.82), rgba(185, 197, 220, 0.90));
   --line: light-dark(rgba(39, 83, 130, 0.16), rgba(226, 233, 244, 0.14));
   --line-strong: light-dark(rgba(34, 138, 156, 0.3), rgba(105, 191, 224, 0.34));
 }
@@ -131,8 +137,8 @@ html[data-spw-theme-pack="copper-brace"] {
   --op-binding-color: light-dark(hsl(20 58% 34%), hsl(20 62% 66%));
   --ink-strong: light-dark(rgba(34, 23, 18, 0.98), rgba(244, 234, 226, 0.97));
   --ink: light-dark(rgba(42, 29, 23, 0.94), rgba(236, 226, 218, 0.93));
-  --ink-soft: light-dark(rgba(80, 58, 45, 0.78), rgba(201, 184, 171, 0.78));
-  --ink-mid: light-dark(rgba(80, 58, 45, 0.6), rgba(201, 184, 171, 0.6));
+  --ink-soft: light-dark(rgba(80, 58, 45, 0.86), rgba(201, 184, 171, 0.94));
+  --ink-mid: light-dark(rgba(80, 58, 45, 0.82), rgba(201, 184, 171, 0.90));
   --line: light-dark(rgba(94, 63, 36, 0.16), rgba(236, 226, 218, 0.14));
   --line-strong: light-dark(rgba(153, 91, 31, 0.28), rgba(214, 141, 77, 0.32));
 }
@@ -154,8 +160,8 @@ html[data-spw-theme-pack="glass-console"] {
   --blue: light-dark(hsl(214 62% 42%), hsl(214 70% 66%));
   --ink-strong: light-dark(rgba(var(--charcoal-rgb), 0.98), rgba(236, 241, 238, 0.96));
   --ink: light-dark(rgba(var(--charcoal-rgb), 0.94), rgba(228, 235, 232, 0.92));
-  --ink-soft: light-dark(rgba(var(--charcoal-rgb), 0.82), rgba(190, 202, 198, 0.78));
-  --ink-mid: light-dark(rgba(var(--charcoal-rgb), 0.7), rgba(190, 202, 198, 0.6));
+  --ink-soft: light-dark(rgba(var(--charcoal-rgb), 0.86), rgba(190, 202, 198, 0.94));
+  --ink-mid: light-dark(rgba(var(--charcoal-rgb), 0.82), rgba(190, 202, 198, 0.90));
   --line: light-dark(rgba(28, 64, 88, 0.14), rgba(228, 235, 232, 0.14));
   --line-strong: light-dark(rgba(26, 122, 146, 0.24), rgba(96, 210, 210, 0.34));
   --material-blur: 10px;
@@ -214,7 +220,7 @@ html[data-spw-theme-pack="banked-ember"] {
   --blue: hsl(258 34% 64%);
   --ink-strong: rgba(240, 247, 244, 0.98);
   --ink: rgba(230, 241, 237, 0.93);
-  --ink-soft: rgba(190, 211, 206, 0.78);
+  --ink-soft: rgba(211, 228, 223, 0.94);
   --ink-mid: rgba(211, 228, 223, 0.86);
   --line: color-mix(in oklab, var(--ember-copper) 22%, transparent);
   --line-strong: color-mix(in oklab, var(--ember-copper) 44%, transparent);

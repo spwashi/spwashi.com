@@ -270,8 +270,18 @@ export function initMediaCauldron(ctx, root) {
   copyMarkdown?.addEventListener('click', handleCopyMarkdown);
   const fields = [...cauldron.querySelectorAll('select, textarea, input')];
   fields.forEach((field) => field.addEventListener('change', handleGenerate));
+  const textFields = [...cauldron.querySelectorAll('textarea:not([data-media-cauldron-output])')];
+  const handleShortcut = (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+      event.preventDefault();
+      handleGenerate();
+      generate?.focus();
+    }
+  };
+  textFields.forEach((field) => field.addEventListener('keydown', handleShortcut));
 
   handleGenerate();
+  if (status) status.textContent = 'Ready locally. The seed above comes from the example fields; replace an ingredient and generate again.';
 
   return {
     cleanup() {
@@ -281,6 +291,7 @@ export function initMediaCauldron(ctx, root) {
       copyTownNote?.removeEventListener('click', handleCopyTownNote);
       copyMarkdown?.removeEventListener('click', handleCopyMarkdown);
       fields.forEach((field) => field.removeEventListener('change', handleGenerate));
+      textFields.forEach((field) => field.removeEventListener('keydown', handleShortcut));
     },
     refresh() {
       handleGenerate();

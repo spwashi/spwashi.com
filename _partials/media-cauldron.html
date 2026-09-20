@@ -48,7 +48,8 @@
                     <span>Optional short note before the seed is generated.</span>
                 </span>
             </label>
-            <textarea id="media-attention-prime" name="attentionPrime" rows="4">one breath, one room detail, one horizon pressure</textarea>
+            <textarea id="media-attention-prime" name="attentionPrime" rows="4" aria-describedby="media-attention-prime-help">one breath, one room detail, one horizon pressure</textarea>
+            <small id="media-attention-prime-help" class="settings-help">Use a short note to set the emotional or sensory direction.</small>
         </fieldset>
 
         <fieldset class="settings-fieldset">
@@ -104,7 +105,8 @@
                     <span>A phrase, route, object, character, proof claim, memory, or visual detail.</span>
                 </span>
             </label>
-            <textarea id="media-source-ingredient" name="sourceIngredient" rows="4">a route handle, table memory, visual motif, or claim that should become portable</textarea>
+            <textarea id="media-source-ingredient" name="sourceIngredient" rows="4" aria-describedby="media-source-ingredient-help">a route handle, table memory, visual motif, or claim that should become portable</textarea>
+            <small id="media-source-ingredient-help" class="settings-help">This is the only required ingredient. Replace the example with something specific.</small>
         </fieldset>
     </div>
 
@@ -113,16 +115,17 @@
             <p class="vibe-widget-kicker">Copyable output</p>
             <h3 class="vibe-widget-title">Structured media seed</h3>
         </div>
-        <textarea data-media-cauldron-output rows="16" aria-label="Generated media seed"></textarea>
+        <textarea data-media-cauldron-output rows="16" readonly aria-label="Generated media seed" aria-describedby="media-cauldron-output-help"></textarea>
+        <p id="media-cauldron-output-help" class="vibe-widget-help">Generated locally from the fields above. Press Generate after changing an ingredient, or use ⌘/Ctrl&nbsp;+&nbsp;Enter from a text field.</p>
         <p class="vibe-widget-status media-cauldron-posture" data-media-cauldron-posture>
             Shaped by the current attention posture.
         </p>
         <div class="vibe-widget-actions" role="group" aria-label="Media cauldron actions">
-            <button class="spw-chip" data-spw-handle="true" data-media-cauldron-action="generate" type="button" data-spw-operator="action">!generate[seed]</button>
-            <button class="spw-chip" data-spw-handle="true" data-media-cauldron-action="copy" type="button" data-spw-operator="potential">~copy_seed</button>
-            <button class="spw-chip" data-spw-handle="true" data-media-cauldron-action="copy-proof-card" type="button" data-spw-operator="integration">^proof_card</button>
-            <button class="spw-chip" data-spw-handle="true" data-media-cauldron-action="copy-town-note" type="button" data-spw-operator="frame" data-spw-action="address">#&gt;town_note</button>
-            <button class="spw-chip" data-spw-handle="true" data-media-cauldron-action="copy-markdown" type="button" data-spw-operator="potential" data-spw-action="explore">~markdown</button>
+            <button class="spw-chip" data-spw-handle="true" data-media-cauldron-action="generate" type="button" data-spw-operator="action" aria-label="Generate media seed">!generate[seed]</button>
+            <button class="spw-chip" data-spw-handle="true" data-media-cauldron-action="copy" type="button" data-spw-operator="potential" aria-label="Copy seed to the clipboard">~copy_seed</button>
+            <button class="spw-chip" data-spw-handle="true" data-media-cauldron-action="copy-proof-card" type="button" data-spw-operator="integration" aria-label="Copy proof card draft">^proof_card</button>
+            <button class="spw-chip" data-spw-handle="true" data-media-cauldron-action="copy-town-note" type="button" data-spw-operator="frame" data-spw-action="address" aria-label="Copy town note draft for the Town Atlas">#&gt;town_note</button>
+            <button class="spw-chip" data-spw-handle="true" data-media-cauldron-action="copy-markdown" type="button" data-spw-operator="potential" data-spw-action="explore" aria-label="Copy markdown seed">~markdown</button>
             <a class="spw-chip" data-spw-handle="true" href="/settings/#attention-posture-settings" data-spw-operator="binding">=tune[posture]</a>
         </div>
         <nav class="frame-operators media-cauldron-related" aria-label="Related canon surfaces">

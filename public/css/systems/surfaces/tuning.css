@@ -150,6 +150,18 @@
   font-size: var(--text-size-xs, 0.8rem);
 }
 
+/* Field help under a textarea or beside an output: one quiet line that says
+   what the field is for, tied to it through aria-describedby. */
+:where(.vibe-widget-help, .settings-help) {
+  display: block;
+  margin-block: 0.28rem 0;
+  color: var(--ink-soft);
+  font-size: var(--text-size-xs, 0.8rem);
+  line-height: 1.45;
+  max-inline-size: var(--component-measure, 62ch);
+  text-wrap: pretty;
+}
+
 :where(.vibe-widget-status[data-status="info"]) {
   color: color-mix(in srgb, var(--spw-palette-probe-3, var(--op-ref-color, #1d57a3)) 68%, var(--ink) 32%);
 }
