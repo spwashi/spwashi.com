@@ -7951,6 +7951,32 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
     justify-content: flex-start;
     padding-top: 0.35rem;
   }
+
+  .site-footer__nav-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .site-footer__nav a {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* Very narrow phones need one unambiguous tap target per footer task. */
+@media (max-width: 24rem) {
+  .site-footer__nav-links {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer__note-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer__note-row .spw-chip {
+    justify-content: center;
+  }
 }
 
 .site-footer__identity {
@@ -35554,6 +35580,18 @@ html[data-spw-page-section-phase="idle"] {
   min-block-size: 1.15rem;
   color: var(--ink-soft);
   font-size: var(--text-size-xs, 0.8rem);
+}
+
+/* Field help under a textarea or beside an output: one quiet line that says
+   what the field is for, tied to it through aria-describedby. */
+:where(.vibe-widget-help, .settings-help) {
+  display: block;
+  margin-block: 0.28rem 0;
+  color: var(--ink-soft);
+  font-size: var(--text-size-xs, 0.8rem);
+  line-height: 1.45;
+  max-inline-size: var(--component-measure, 62ch);
+  text-wrap: pretty;
 }
 
 :where(.vibe-widget-status[data-status="info"]) {

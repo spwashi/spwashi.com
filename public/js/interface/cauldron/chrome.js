@@ -144,6 +144,7 @@ function syncPanelToggleLabels(host) {
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   toggle.textContent = open ? 'hide' : 'show';
   toggle.title = open ? 'Hide the cauldron' : 'Show the cauldron';
+  toggle.setAttribute('aria-label', open ? 'Hide memory cauldron' : 'Show memory cauldron');
 }
 
 export function syncCauldronPanelCollapse(count) {

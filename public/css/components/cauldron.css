@@ -749,6 +749,39 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
   }
 }
 
+/* The compact cauldron is often met at the end of a phone page. Keep its one
+   instruction readable and preserve a distinct, comfortably reachable reveal. */
+@media (max-width: 32rem) {
+  .site-footer__cauldron-header {
+    align-items: flex-start;
+  }
+
+  .site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-kicker {
+    flex: 1 1 12rem;
+  }
+
+  .site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-kicker::after {
+    display: block;
+    margin-top: 0.16rem;
+  }
+
+  .site-footer__cauldron-panel-toggle {
+    min-block-size: var(--touch-target-min, 2.75rem);
+    padding-inline: 0.72rem;
+  }
+
+  .site-footer__cauldron-actions .spw-chip[data-spw-action-tier="cleanup"] {
+    flex: 1 1 calc(50% - 0.125rem);
+    justify-content: center;
+  }
+}
+
+@media (max-width: 24rem) {
+  .spw-cauldron-chip {
+    max-inline-size: calc(100vw - 1.3rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-footer__cauldron[data-spw-cauldron-discoverability="primable"] .site-footer__cauldron-phase-step[data-spw-phase-step="empty"],
   .cauldron-ingredient.is-cauldron-ingredient-new,
