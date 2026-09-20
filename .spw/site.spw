@@ -19,6 +19,7 @@
 @intergenerational_literacy: ~"./conventions/intergenerational-literacy.spw"
 @page_pretext_measurement: ~"./audits/page-pretext-measurement-2026-08/index.spw"
 @conventions: ~"./conventions/index.spw"
+@cauldron_field_handoff: ~"./conventions/cauldron-dynamics.spw#field_handoff"
 @site_semantics: ~"./conventions/site-semantics.spw"
 @css_instruction: ~"./conventions/css-instruction.spw"
 @style_development: ~"./conventions/style-development.spw"

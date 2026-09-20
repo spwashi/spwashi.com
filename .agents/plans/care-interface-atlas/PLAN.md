@@ -31,3 +31,11 @@ Make Spwashi more useful for engineers and other analytical processors who have 
 - `git diff --check`
 - targeted `rg` checks for `/care/` and `data-spw-feature`
 - `npm run check`
+
+## September 2026 — Familiar Conversations
+
+Operation: `align`. Fixity: `tending`. Replace first-conversation and intake framing on `/care/` and `/services/care/` with reflection for people Spwashi already knows. Preserve anchors, storage, and non-clinical boundaries. Validate copy audits, manifest, and `check:local`.
+
+Follow-on scope: journal entries, nested image prompts, scene slots, and color handles. Inspect the existing image bench, scene runtime, and palette controls before selecting a small implementation. Authorship: each visitor privately on their device. Named implementation slice: a route-local journal workbench inside the existing journaling section. Operation `align`, experimental fixity. Files: services/care/index.html, modules/services/care-journal.js, runtime/catalog/feature.js. Reuse care form classes and native disclosures. Explicit save, entry recall/delete, JSON export, nested image questions, three scene slots, and local SVG color preview. No network, AI generation, sharing links, or automatic persistence. Test reload, malicious/corrupt storage, quota failure, deletion, export, and narrow layout.
+
+Validation receipt: copy/accessor and selector audits run; manifest refreshed; `check:local -- --allow-dirty` passed (402 tests; generated search index intentionally uncommitted). Disposable Chrome pocket checks passed explicit save, recall after reload, deletion, prompt privacy, escaped scene text, color updates, no horizontal overflow, storage-quota draft retention, and corrupt-storage protection. Tests registered in scripts/module-tests.mjs.

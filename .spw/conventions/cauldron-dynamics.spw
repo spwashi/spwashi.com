@@ -145,3 +145,15 @@ vessel_join = `cauldron[garden]{sow.tend.harvest} — live vessel identifier. No
   ][reg=set]
   next: capture[refusal]{author.boundary} ^ consent[decided]{}
 }
+
+
+^"field_handoff"{
+  operation = "align"
+  fixity = "tending"
+  owner = "public/js/interface/field-composition.js"
+  surface = "public/css/components/controls.css"
+  claim = "Writable text fields can receive a chosen gathered fragment through preview, cursor insertion or append, and guarded undo."
+  privacy = "Read the existing cauldron only when invited. Never capture field contents, add storage, or send a network request. A destination retains its existing save behavior."
+  boundary = "Exclude credentials, readonly and disabled fields, and controls in dialogs or floating chrome. Preserve selection, maxlength, input/change events, and edits made since insertion."
+  probe = "scripts/tests/field-composition.test.mjs plus browser checks on care and profile at pocket and desktop widths."
+}
