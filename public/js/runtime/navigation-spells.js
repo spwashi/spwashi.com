@@ -222,13 +222,18 @@ function buildNavigationSpellRecord(link, url) {
   };
 }
 
+/* Every settled section re-annotates every same-origin link, so a same-value
+   write here lands on every link on the page per section change: a mutation
+   record and a style invalidation each, for nothing the reader can see. Write
+   only what moved, remove only what is there. */
 function setLinkDataset(link, entries = {}) {
   Object.entries(entries).forEach(([key, value]) => {
     if (value == null || value === '') {
-      delete link.dataset[key];
+      if (key in link.dataset) delete link.dataset[key];
       return;
     }
-    link.dataset[key] = String(value);
+    const next = String(value);
+    if (link.dataset[key] !== next) link.dataset[key] = next;
   });
 }
 
