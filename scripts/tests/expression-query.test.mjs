@@ -7,9 +7,54 @@ import {
   readJoinChain,
   readSpwHydration,
   scoreExpressionShape,
+  shapeFromExpression,
   PRECIPITATES,
 } from '../../public/js/semantic/expression-query.js';
 import { formatWrapJobVariants } from '../../public/js/semantic/spw-compose.js';
+
+test('charge, scene, and a capsule after the scene survive the shape', () => {
+  assert.deepEqual(shapeFromExpression('home[hook]{software.art}(atlas)<person>'), {
+    subject: 'home',
+    mode: 'hook',
+    parts: ['software', 'art'],
+    projection: 'person',
+    scope: 'atlas',
+    charge: [],
+    join: 'ident',
+  });
+  assert.deepEqual(shapeFromExpression('cycle[b]{receipt}(progress)<live>'), {
+    subject: 'cycle',
+    mode: 'b',
+    parts: ['receipt'],
+    projection: 'live',
+    scope: 'progress',
+    charge: [],
+    join: 'none',
+  });
+  assert.deepEqual(shapeFromExpression('(look){stage}<learn>'), {
+    subject: '',
+    mode: '',
+    parts: ['stage'],
+    projection: 'learn',
+    scope: 'look',
+    charge: [],
+    join: 'none',
+  });
+  assert.deepEqual(shapeFromExpression('boon.honk home[hook]{orient}'), {
+    subject: 'home',
+    mode: 'hook',
+    parts: ['orient'],
+    projection: '',
+    scope: '',
+    charge: ['boon', 'honk'],
+    join: 'none',
+  });
+  const pair = shapeFromExpression('boon[honk]{invite}');
+  assert.deepEqual(pair.charge, ['boon']);
+  assert.equal(pair.subject, '');
+  assert.equal(pair.mode, 'honk');
+  assert.deepEqual(pair.parts, ['invite']);
+});
 
 test('partial wraps name slots without requiring a full expression', () => {
   assert.deepEqual(parseExpressionQuery('[reading]').mode, 'reading');

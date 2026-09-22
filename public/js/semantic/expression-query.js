@@ -23,6 +23,42 @@ export const JOIN_KINDS = Object.freeze({
 /** Tight `mill.laminate.cure` — one IDENTIFIER. Parser keeps it whole. */
 const TIGHT_IDENT = /^[A-Za-z_][\w-]*(?:\.[A-Za-z_][\w-]*)+$/;
 
+/** Valence words the workbench lexes as modifiers. A leading chain is charge, not the subject. */
+const VALENCE_WORD = 'bone|boon|bane|bonk|honk';
+const EXPRESSION_SLOTS = new RegExp(
+  `^(?:((?:${VALENCE_WORD})(?:\\.(?:${VALENCE_WORD}))*)(?:\\s+|(?=\\[)))?`
+  + '(?:\\(([^)]*)\\))?'
+  + '([^[{<(]*)'
+  + '(?:\\[([^\\]]*)\\])?'
+  + '(?:\\{([^}]*)\\})?'
+  + '(?:\\(([^)]*)\\))?'
+  + '(?:<([^>]*)>)?',
+);
+
+/**
+ * Authored slots, including the ones a flatter regex used to drop.
+ * charge is a leading valence chain. scope is a scene, before the subject or after the body.
+ * A capsule after the scene stays the projection.
+ */
+export function readExpressionSlots(expression = '') {
+  const raw = trim(expression);
+  const match = raw.match(EXPRESSION_SLOTS);
+  if (!match) {
+    return { charge: [], scope: '', subject: raw, mode: '', body: '', projection: '' };
+  }
+  const charge = match[1] ? match[1].split('.').filter(Boolean) : [];
+  const leadingScope = trim(match[2]);
+  const trailingScope = trim(match[6]);
+  return {
+    charge,
+    scope: trailingScope || leadingScope,
+    subject: trim(match[3]),
+    mode: trim(match[4]),
+    body: match[5] || '',
+    projection: trim(match[7]),
+  };
+}
+
 const BRACED_CRAWL = /^(?:\{[^{}]+\}\s*\.\s*)+\{[^{}]+\}$/;
 
 /**
@@ -72,7 +108,10 @@ export function parseExpressionQuery(query = '') {
   const mode = captureGroup(raw, '[', ']');
   const body = captureGroup(raw, '{', '}');
   const projection = captureGroup(raw, '<', '>');
-  const subject = raw.match(/^([A-Za-z_][\w-]*)/)?.[1] || '';
+  const chargePrefix = raw.match(/^(?:bone|boon|bane|bonk|honk)(?:\.(?:bone|boon|bane|bonk|honk))*(?:\s+|(?=\[))/);
+  const afterCharge = chargePrefix ? raw.slice(chargePrefix[0].length) : raw;
+  const subject = afterCharge.match(/^([A-Za-z_][\w-]*)/)?.[1] || '';
+  const charge = chargePrefix ? chargePrefix[0].trim().split('.').filter(Boolean) : [];
   const join = body.value ? readBodyJoins(body.value) : { kind: JOIN_KINDS.none, parts: [] };
   const parts = join.parts;
   const wrapped = mode.present || body.present || projection.present;
@@ -87,6 +126,7 @@ export function parseExpressionQuery(query = '') {
   return {
     raw,
     subject,
+    charge,
     mode: mode.value,
     hasModeSlot: mode.present,
     parts,
@@ -261,19 +301,18 @@ export function shapeFromExpression(expression = '') {
     };
   }
   const chain = readJoinChain(raw);
-  const match = raw.match(/^([^[{<]+)(?:\[([^\]]*)\])?(?:\{([^}]*)\})?(?:<([^>]*)>)?/);
-  if (!match) {
-    return { subject: trim(raw), mode: '', parts: chain.parts, projection: '', join: chain.kind };
-  }
-  const body = readBodyJoins(match[3] || '');
+  const slots = readExpressionSlots(raw);
+  const body = readBodyJoins(slots.body);
   const parts = chain.kind === JOIN_KINDS.crawl || chain.kind === JOIN_KINDS.project
     ? chain.parts
     : body.parts;
   return {
-    subject: trim(match[1]),
-    mode: trim(match[2]),
+    subject: slots.subject,
+    mode: slots.mode,
     parts,
-    projection: trim(match[4]),
+    projection: slots.projection,
+    scope: slots.scope,
+    charge: slots.charge,
     join: chain.kind === JOIN_KINDS.none ? body.kind : chain.kind,
   };
 }

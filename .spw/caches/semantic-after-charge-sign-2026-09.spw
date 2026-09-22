@@ -57,6 +57,61 @@ expression = semantic[after]{charge.scope.capsule}<manifest>
   stale_manifest = `honk[signal]{resonance} is still stored from an older parse. After the gate, a rebuild should structure it, or drop it on purpose. It should not remain a remembered shape the current parser refuses.`
 }[reg=facet]
 
+^"spine"{
+  when = `2026-09-22, after pin 3eaab6377672. The gate probe is green.`
+  readers = `readExpressionSlots keeps charge, scope, and a capsule that follows the scope. The manifest omits an empty charge and an empty scope. Kinship banks both, and skips a one-letter scope so a cycle half does not glue unrelated hosts.`
+  hosts = #[
+    `home[hook]{software.art}(atlas)<person>`,
+    `home[live]{cycle.progress}(b)<now>`,
+    `now[hook]{design.wonder}(b)<cycle>`,
+    `about[reading]{software.art}(person)<lattice>`,
+    `about[kernel]{identity.compass}<person>`,
+    `about[lattice]{code.print.lore.artifact}<crossing>`,
+    `operator[atlas]{move.mark}(brace)<anchor>`
+  ][reg=set]
+  stable = `software.art, identity.compass, and move.mark are the values a later tone pass should keep.`
+  updating = `(b) is the cycle half. person, lattice, now, and cycle are the projections a voice pass can retune without renaming the subject.`
+  routes = #[
+    `membership[read]{issue}(near)<shape>`,
+    `membership[join]{role.offer}(card)<cycle>`,
+    `membership[coordination]{issue.visit}(return)<shape>`,
+    `folio[hook]{collage.laminate.season}(year)<scan>`,
+    `folio[table]{seed.custom}(scene)<order>`,
+    `folio[studio]{collage.laminate.paint}(year)<stack>`,
+    `quest[spw]{construct.sensor.grammar}(quiet)<guide>`,
+    `quest[agent]{try.check.refuse}(sensor)<map>`,
+    `cycle[opening]{notice.stay.form}(meditation)<mind>`,
+    `practice[study]{math.art.language}(session)<trace>`,
+    `services[lane]{service.product.commission}(ask)<shape>`,
+    `services[register]{software.art}(lane)<product>`,
+    `services[bundle]{art.page.software}(person)<ladder>`,
+    `design[worktable]{slots.kinds.contracts}(route)<part>`,
+    `play[orientation]{table.canon.humor}(session)<evidence>`,
+    `play[memory]{log.pressure.canon}<recap>`,
+    `play[making]{sheet.card.prompt}(table)<studio>`,
+    `play[table]{space.laughter.stakes}<share>`,
+    `about[hospitality]{recipe.venue.learning}(table)<horizon>`,
+    `mental[return]{wonder.receipt.card}(walk)<care>`,
+    `mental[walk]{stabilize.wonder.receipt}<now>`
+  ][reg=set]
+  loops = #[
+    `materials[skill]{origin;want;fail;repair;after}(material)<process>`,
+    `materials[hook]{paper.laminate.tempera.varnish}(year)<folio>`,
+    `materials[bench]{sheet;collage;laminate;paint;varnish;repaint}(year)<folio>`,
+    `topics[atlas]{question;neighbor;issue}(return)<shelf>`,
+    `plans[hook]{enter;inspect;continue}(door)<route>`,
+    `proof[parser]{source;tokens;ast;diagnostics;reconstruction}(browser)<exact>`,
+    `components[machine]{size;name;card;chip}(desk)<attention>`,
+    `components[specimen]{invitation;operator;handoff}(threshold)<prose>`,
+    `ornament[map]{operator;warmth;collection;drift}(field)<rule>`,
+    `creator[offer]{author,illustrator,musician,actor,maker}(land)<season>`,
+    `ecosystem[orbit]{close,taste,seed,series,referral}(room)<hold>`,
+    `streak[return]{leaf,joke,hat,soup}(count)<pet>`,
+    `composition[bundle]{contract}(home)<route>`,
+    `culture[context]{input;dose;condition;consequence}(cook)<residue>`
+  ][reg=set]
+}[reg=facet]
+
 ^"resonance"{
   home = @expression_resonance
   claim = `Kinship reads projection from the manifest. Restoring the two capsules lets those hosts enter the projection channel. A charge field is available for a later kinship pass. It is not required for the first patch to light anything.`
