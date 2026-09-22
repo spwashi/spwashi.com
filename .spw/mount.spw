@@ -43,8 +43,8 @@
 workbench: .{
  # Pin tracks submodule HEAD (see git submodule status .spw/_workbench).
  version = `0.3.0`
- workbench_pin = `14b4b47763aa`
- pin_note = `f92382f fingerprint/resolve/lint/walk isolation/query --stats; f681d04 ~> as one project-join; 5f18124 lattice ~#name: colon species; HEAD 14b4b47 closes consumer-cli-instruments`
+ workbench_pin = `3eaab6377672`
+ pin_note = `3eaab63 preserves a valence modifier chain on the expression (boon.honk rides the noun; no prose-degradation). Prior pin 14b4b47763aa closed consumer-cli-instruments`
  canon = @canon
  canon_mount = @canon_mount
  workspace = @workbench_workspace

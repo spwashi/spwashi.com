@@ -167,12 +167,14 @@ expression = consumer[report]{defect.gap.built}<upstream>
 }
 
 ^"wonder_harvest_absent"{
-  pin = `14b4b47`
-  claim: "The consumer-cli-instruments pin landed fingerprint, resolve, lint, walk isolation, and query --stats. It did not land a wonder harvest. scripts/wonder.mjs still walks ?[…]{ !probe{} $%[…] }. Answers authored as grok = inside the wonder body are invisible to that harvest, to LSP parseWonderBlock (12-line cap, lens from // lens: not ~#lens()), and to probe-measure (question / !probe / $% only)."
+  pin = `3eaab6377672`
+  prior_pin = `14b4b47763aa`
+  charge_sign = `3eaab63 attaches the modifier chain to the expression. 2026-09-22: parseExpression("boon.honk home[hook]{orient}") is complete, mods=boon.honk, no prose-degradation. honk[signal]{resonance} and boon[honk]{invite} structure the same way. Scope and capsule on cycle[b]{receipt}(progress)<live> still bind.`
+  claim: "The consumer-cli-instruments pin landed fingerprint, resolve, lint, walk isolation, and query --stats. 3eaab63 adds charge-signs and does not add a wonder harvest. scripts/wonder.mjs still walks ?[…]{ !probe{} $%[…] }. Answers authored as grok = inside the wonder body are invisible to that harvest, to LSP parseWonderBlock (12-line cap, lens from // lens: not ~#lens()), and to probe-measure (question / !probe / $% only)."
   astra_pass = `npm run wonder -- --surface astra-design still prints four open questions after grok=/claude=/agy=/astra= have landed in the cache.`
   refuse = `Do not add a seventh wonder type or ASTRA.md. Reuse ~#model plus a ~#grok: cell, or a neighboring !land{} / !boon{} procedure after the probe — flow-protocol already names procedure-after-probe.`
   first_patch = `Either consume: author landings as ~#grok: so field() sees them; or upstream: brace-walk parseWonderBlock, count the ~#model binding, and add spw wonder --unanswered.`
-  probe = `npm run spw -- wonder --help — not a command at this pin`
+  probe = `npm run spw -- wonder --help — still an unknown command at 3eaab63`
 }[reg=facet]
 
 #>wonder_workbench_report_landings
@@ -181,7 +183,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   ~#with: @wonder
   ~#hypothesis: "question, !probe, and $% are visible. grok = is an assignment no harvest, lattice, or probe-measure counts. ~#grok: would already be a cell."
   ~#tension: "a completed Astra prime still harvests as four open questions. Adding a seventh wonder type would be the counterfeit."
-  !probe{ "npm run wonder -- --surface astra-design after grok=/astra= land. if the output cannot say answered, the landing is invisible. npm run spw -- wonder --help should fail as an unknown command at pin 14b4b47." }
+  !probe{ "npm run wonder -- --surface astra-design after grok=/astra= land. if the output cannot say answered, the landing is invisible. npm run spw -- wonder --help should fail as an unknown command. It still does at pin 3eaab63." }
   $%[wonder.answered, landing.form, cli.wonder]
 }
 
