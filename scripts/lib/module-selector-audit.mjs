@@ -313,8 +313,20 @@ function parseCompound(compound) {
   return parsed;
 }
 
-function matchCompound(el, compound) {
-  const parsed = parseCompound(compound);
+/* A selector list is matched against every route, so the same compound string
+   is seen thousands of times. Parse it once. */
+const compoundCache = new Map();
+
+function parsedCompound(compound) {
+  let parsed = compoundCache.get(compound);
+  if (!parsed) {
+    parsed = parseCompound(compound);
+    compoundCache.set(compound, parsed);
+  }
+  return parsed;
+}
+
+function matchCompound(el, parsed) {
   if (parsed.tag && el.tag !== parsed.tag) return false;
   if (parsed.id && el.id !== parsed.id) return false;
   for (const cls of parsed.classes) {
@@ -334,54 +346,64 @@ function matchCompound(el, compound) {
   return true;
 }
 
-function isAncestor(elements, maybeAncestor, node) {
-  let cursor = node;
-  while (cursor.parentIndex >= 0) {
-    if (cursor.parentIndex === maybeAncestor.index) return true;
-    cursor = elements[cursor.parentIndex];
+/* Previous-sibling index per element, derived once per element list. */
+const previousSiblingCache = new WeakMap();
+
+function previousSiblingIndexes(elements) {
+  let previous = previousSiblingCache.get(elements);
+  if (previous) return previous;
+  previous = new Int32Array(elements.length).fill(-1);
+  const lastChild = new Map();
+  for (const el of elements) {
+    previous[el.index] = lastChild.get(el.parentIndex) ?? -1;
+    lastChild.set(el.parentIndex, el.index);
   }
-  return false;
+  previousSiblingCache.set(elements, previous);
+  return previous;
 }
 
-function previousSiblings(elements, node) {
-  return elements.filter((other) => (
-    other.parentIndex === node.parentIndex
-    && other.index < node.index
-  ));
+/* Each step keeps the right-hand matches whose relation reaches a left-hand
+   match: one pass over the right side with a set lookup, not a left × right
+   product. Hits come back in document order. */
+function stepCombinator(elements, leftIndexes, rights, combinator) {
+  if (combinator === '>') return rights.filter((right) => leftIndexes.has(right.parentIndex));
+  if (combinator === ' ') {
+    return rights.filter((right) => {
+      for (let cursor = right.parentIndex; cursor >= 0; cursor = elements[cursor].parentIndex) {
+        if (leftIndexes.has(cursor)) return true;
+      }
+      return false;
+    });
+  }
+  const previous = previousSiblingIndexes(elements);
+  if (combinator === '+') return rights.filter((right) => leftIndexes.has(previous[right.index]));
+  if (combinator === '~') {
+    return rights.filter((right) => {
+      for (let cursor = previous[right.index]; cursor >= 0; cursor = previous[cursor]) {
+        if (leftIndexes.has(cursor)) return true;
+      }
+      return false;
+    });
+  }
+  return [];
 }
 
 export function matchSelector(elements, selector) {
-  const hits = [];
+  const hits = new Set();
   for (const branch of splitSelectorList(selector)) {
     const { compounds, combinators } = splitCompounds(branch);
     if (!compounds.length) continue;
-    let candidates = elements.filter((el) => matchCompound(el, compounds[0]));
-    for (let i = 1; i < compounds.length; i += 1) {
-      const combinator = combinators[i - 1] || ' ';
-      const next = [];
-      for (const left of candidates) {
-        for (const right of elements) {
-          if (!matchCompound(right, compounds[i])) continue;
-          if (combinator === ' ' && isAncestor(elements, left, right)) next.push(right);
-          else if (combinator === '>' && right.parentIndex === left.index) next.push(right);
-          else if (combinator === '+' ) {
-            const sibs = previousSiblings(elements, right);
-            if (sibs.length && sibs[sibs.length - 1].index === left.index) next.push(right);
-          } else if (combinator === '~' && previousSiblings(elements, right).some((sib) => sib.index === left.index)) {
-            next.push(right);
-          }
-        }
-      }
-      candidates = next;
+    const first = parsedCompound(compounds[0]);
+    let candidates = elements.filter((el) => matchCompound(el, first));
+    for (let i = 1; i < compounds.length && candidates.length; i += 1) {
+      const parsed = parsedCompound(compounds[i]);
+      const rights = elements.filter((el) => matchCompound(el, parsed));
+      const leftIndexes = new Set(candidates.map((el) => el.index));
+      candidates = stepCombinator(elements, leftIndexes, rights, combinators[i - 1] || ' ');
     }
-    hits.push(...candidates);
+    for (const el of candidates) hits.add(el);
   }
-  const seen = new Set();
-  return hits.filter((el) => {
-    if (seen.has(el.index)) return false;
-    seen.add(el.index);
-    return true;
-  });
+  return [...hits];
 }
 
 export function summarizeHostDepths(hits = []) {
