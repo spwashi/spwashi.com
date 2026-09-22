@@ -302,6 +302,6 @@ test('the meter answers in a sentence and says what to do next', async () => {
 });
 
 test('the page script compiles', () => {
-  assert.doesNotThrow(() => new Function(CLIENT_SCRIPT));
+  assert.doesNotThrow(() => new Function(`var __defProp=(t,p,d)=>Object.defineProperty(t,p,d);var __name=(t,v)=>__defProp(t,"name",{value:v,configurable:true});${CLIENT_SCRIPT}`));
   assert.doesNotMatch(CLIENT_SCRIPT, /<\/script/i);
 });

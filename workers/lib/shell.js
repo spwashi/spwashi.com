@@ -250,6 +250,8 @@ export function layout({ title, description, canonical, climate, body, quiet = f
   </main>
   <p id="status" class="sr-only" role="status" aria-live="polite"></p>
   <script>
+    var __defProp = (target, prop, desc) => Object.defineProperty(target, prop, desc);
+    var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
     document.documentElement.classList.add("js");
     const announce = (message) => {
       const status = document.getElementById("status");

@@ -34,6 +34,7 @@ test('quest negotiation, HEAD, methods, and redirects', async () => {
   const page = await (await get('spw.quest', '/')).text();
   // Instruction sets are tabs, Shell first and selected.
   assert.match(page, /role="tablist" aria-label="Who runs the setup"/);
+  assert.match(page, /var __name = /);
   const tabs = [...page.matchAll(/role="tab" id="tab-([a-z]+)"[^>]*aria-selected="(true|false)"/g)].map((m) => [m[1], m[2]]);
   assert.deepEqual(tabs[0], ['shell', 'true']);
   assert.equal(tabs.filter(([, selected]) => selected === 'true').length, 1);
