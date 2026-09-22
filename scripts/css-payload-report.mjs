@@ -16,7 +16,9 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+import { gzipSync } from 'node:zlib';
 
+import { cssForDelivery } from './typed/css-delivery.mjs';
 import {
   BEHAVIOR_SCOPES,
   CSS_BUNDLE_SOFT_BUDGETS,
@@ -143,9 +145,15 @@ Usage:
 
   const coreTarget = listBundleTargets().find((t) => t.kind === 'core');
   let coreBytes = 0;
+  let coreDeliveredBytes = 0;
+  let coreDeliveredGzipBytes = 0;
   if (coreTarget) {
     try {
-      coreBytes = (await fs.stat(path.join(ROOT, coreTarget.href.replace(/^\//, '')))).size;
+      const source = await fs.readFile(path.join(ROOT, coreTarget.href.replace(/^\//, '')), 'utf8');
+      const delivered = cssForDelivery(source);
+      coreBytes = Buffer.byteLength(source, 'utf8');
+      coreDeliveredBytes = Buffer.byteLength(delivered, 'utf8');
+      coreDeliveredGzipBytes = gzipSync(delivered, { level: 9 }).length;
     } catch {
       coreBytes = 0;
     }
@@ -155,6 +163,9 @@ Usage:
     generatedAt: new Date().toISOString(),
     coreKiB: Math.round(coreBytes / 1024),
     coreSoftBudgetKiB: Math.round(CSS_BUNDLE_SOFT_BUDGETS.core / 1024),
+    // What dist ships: the same rules without prose (scripts/ts/css-delivery.mts).
+    coreDeliveredKiB: Math.round(coreDeliveredBytes / 1024),
+    coreDeliveredGzipKiB: Math.round(coreDeliveredGzipBytes / 1024),
     fullAllBundlesKiB: Math.round(full.bytes / 1024),
     aliases: ROUTE_SURFACE_ALIASES,
     routeSurfacesWithCss: Object.entries(ROUTE_SCOPES)
@@ -169,7 +180,8 @@ Usage:
   }
 
   console.log('CSS payload report (scoped delivery vs all bundles)');
-  console.log(`  core.css: ${report.coreKiB} KiB (soft budget ${report.coreSoftBudgetKiB} KiB)`);
+  console.log(`  core.css: ${report.coreKiB} KiB committed (soft budget ${report.coreSoftBudgetKiB} KiB)`);
+  console.log(`            ${report.coreDeliveredKiB} KiB delivered, ${report.coreDeliveredGzipKiB} KiB gzip — dist strips prose, rules unchanged`);
   console.log(`  all bundles (full approx): ${report.fullAllBundlesKiB} KiB`);
   console.log(`  aliases: ${JSON.stringify(ROUTE_SURFACE_ALIASES)}`);
   console.log('');

@@ -39,6 +39,7 @@ The literature is the selectors: `>` a child, `+` the next sibling, `:has()` a p
 - theme-resonance paint loads with the cauldron when clustered kin exist; the QA bench keeps a static specimen
 - developmental-climate weather and enrichment inspection paint load with the climate runtime; coarse-pointer press stays in gesture-anatomy (first paint)
 - electromagnetic containers mount only on authored `[data-container-type]`; CSS owns the field, JS steps charge
+- 2026-09-22 delivery form: the deploy build strips comments and indentation from `dist/public/css` (`scripts/ts/css-delivery.mts`), keeping file provenance lines. Core ships ~1273 KiB / ~191 KiB gzip against 1679 KiB committed; `npm run css:payload` prints both. The soft budget still measures the committed bundle — do not cut prose from sources to meet it.
 
 ## Remaining
 - Split route-local enhancement families further if the website route budget needs a hard ceiling; do not move their grid geometry into an idle sheet.
