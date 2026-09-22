@@ -67,8 +67,9 @@
   check_local = `Right default for non-dep patches — no registry audit`
   check_full = `Includes npm audit — network; use before dep landings only`
   plans_index = `plans:index:check mechanical; cheap vs typecheck`
+  ci_2026_09_22 = `deploy and validate run Node 22 and restore .tmp/tsc (stamps + tsbuildinfo; a stale entry misses its hash and runs). nightly.yml: smoke:nav on five routes plus plans:index:check and spw:integrity with the submodule, never blocking a deploy`
   direction = #[
-    `CI: cache tsc incremental / node_modules; shard typecheck if wall grows`,
+    `CI: cache tsc incremental / node_modules; shard typecheck if wall grows — tsc cache landed 2026-09-22`,
     `Local: prefer npm run build:runtime or build:css alone when scope is known`,
     `Do not require full build:site for pure .spw contract caches`
   ][reg=set]
@@ -81,6 +82,7 @@
   manifest_cache = `check-site remains read-only while comparing the ignored cache to the live semantic manifest; generatedAt + repoRoot are volatile, stale/invalid caches fail with npm run manifest guidance, absent caches warn`
   local_capture_boundary = `design/components/captures is local review evidence, excluded from build copy, route validation, recursive authored-HTML inventories, and check:watch triggers`
   watch = `check:watch defaults to check:local; check:watch:full opts into the network-backed audit path`
+  watch_2026_09_22 = `one recursive fs.watch on darwin/win32 (per-directory fallback elsewhere); ignores .tmp, .claude, .spw/gen, public/js/typed, scripts/typed so the gate's own emit and stamps cannot retrigger it; 1000 ms debounce (SPW_CHECK_WATCH_DELAY_MS); check:local spawned as node, not through npm`
   validation = #[
     `npm run build:tools`,
     `node --test scripts/tests/infrastructure-contracts.test.mjs`,
@@ -184,6 +186,31 @@
     landed = `2026-09-17 bindings collector incremental; check-runtime-bindings.mjs stamp; engagement-features.test.mjs ticks instead of sleeping`
     sample = `bindings miss 54s → stamp 2.67s; settle test 908ms → 11ms; check:local wall was max(bindings, tests, check-site)`
   }
+  .{
+    id = `module-suite-reruns-unchanged-tree`
+    cost_class = `premature_commitment`
+    seam = `test:modules was the check:local long pole (18s alone, 85s CPU); run serially most of ~45s is one Node boot per file plus the public-import hooks worker, so a pre-push after a green check:local paid it twice`
+    direction = `path → git blob id fingerprint of the tree as it sits on disk (scripts/lib/tree-fingerprint.mjs); run-module-tests --cached skips when it matches the last green run; staging or committing unchanged content keeps the key. --force or SPW_TEST_FORCE=1 runs; CI has no stamp`
+    refused = `--experimental-test-isolation=none cancels every test: files share timers and DOM globals and rolldown's exit hooks end the shared loop`
+    landed = `2026-09-22 d8aa1f2c`
+    sample = `repeat check:local over an unchanged tree: test:modules 12.7s → 0.9s`
+  }
+  .{
+    id = `sitemap-catalog-serial-in-build`
+    cost_class = `premature_commitment`
+    seam = `build ran generate-sitemap (2.2s) and generate-design-catalog (3.8s) as blocking spawnSync before the JS bundle, though neither writes what the bundle, minify, or CSS strip passes touch`
+    direction = `runNodeScript spawns and buffers; both start after copy and settle before the first pass that rewrites every .html (boot modulepreload, then fingerprints)`
+    landed = `2026-09-22 d5daf9a6`
+    sample = `copy-end → preload-inject 17.5s → 9.7s and 55.0s → 8.6s in two back-to-back pairs at load 23–60; outputs identical but for the catalog generatedAt`
+  }
+  .{
+    id = `selector-audit-reparse`
+    cost_class = `working_memory_pressure`
+    seam = `audit:module-selectors, the first sensor AGENTS names, re-parsed the right-hand compound inside a left × right loop (parseCompound 8.6s self time)`
+    direction = `compound parse cache; each combinator step filters the right side once against a set of left indexes; previous siblings derived once per element list`
+    landed = `2026-09-22 f9ce4eaa`
+    sample = `11.7s → 2.3s; text report byte-identical`
+  }
 }[reg=set]
 
 ^"defaults"{
@@ -194,6 +221,8 @@
     `Deps: full check including audit`,
     `Sample non-overlapping stage walls: npm run bench:build (skip site) or bench:build:full`,
     `Repeat compile+css: node scripts/build-compile.mjs --with-css (stamps under .tmp/tsc; --force to ignore)`,
+    `Repeat gate: check:local skips test:modules on an unchanged tree (.tmp/stage-stamps); check:local --force runs every stage`,
+    `Slow sensors: spw:integrity is ~80s of workbench parse (.spw/workbench-report.spw#parse_cost); CI runs it nightly, so run it locally only when citations moved`,
     `Headless route smoke: npm run smoke:nav · with layout/debugQa: npm run smoke:nav:qa`,
     `CSS agent loop: npm run build:css:fast or build:css -- --only home,settings --skip-core --bundles-only`,
     `CSS single file: npm run build:css:run -- --bundles-only --from-change public/css/routes/surfaces/home.css`,
