@@ -207,8 +207,13 @@ function normalizeDescriptor(input = {}) {
 // can opt in from markup with no JS at all.
 function descriptorFromElement(el) {
   const d = SPW_FEATURE_DISCOVERY_CONTRACT.declares;
+  const labelled = el.getAttribute('aria-label')
+    || el.querySelector?.('h1, h2, h3')?.textContent
+    || '';
+  const label = String(labelled).replace(/\s+/g, ' ').trim();
   return normalizeDescriptor({
     species: el.dataset.spwFeature,
+    label,
     traits: el.getAttribute(d.traits) || '',
     progression: el.getAttribute(d.progression) || '',
     memory: el.getAttribute(d.memory) || '',
