@@ -98,13 +98,25 @@ async function walk(directoryPath: string, results: string[] = []): Promise<stri
   return results;
 }
 
-async function loadPostcssPipeline() {
+async function loadPostcssPlugins(): Promise<unknown[] | null> {
   if (!(await pathExists(POSTCSS_CONFIG_PATH))) return null;
 
   try {
-    const postcss = await import('postcss');
     const configModule = await import(pathToFileURL(POSTCSS_CONFIG_PATH).href);
     const plugins = configModule.default?.plugins || configModule.plugins || [];
+    return plugins.length ? plugins : null;
+  } catch (error) {
+    console.warn(`[css-build] PostCSS config unreadable; copying native CSS sources. ${error instanceof Error ? error.message : String(error)}`);
+    return null;
+  }
+}
+
+async function loadPostcssPipeline() {
+  const plugins = await loadPostcssPlugins();
+  if (!plugins) return null;
+
+  try {
+    const postcss = await import('postcss');
     return postcss.default(plugins);
   } catch (error) {
     console.warn(`[css-build] PostCSS unavailable; copying native CSS sources. ${error instanceof Error ? error.message : String(error)}`);
@@ -130,16 +142,16 @@ function outputMapPathForEntry(entryPath: string): string {
 
 export async function collectCssBuildPlan(): Promise<CssBuildPlanEntry[]> {
   const entries = (await walk(SOURCE_ENTRIES_DIR)).sort();
-  const hasPostcssConfig = await pathExists(POSTCSS_CONFIG_PATH);
+  const usePostcss = Boolean(await loadPostcssPlugins());
   return entries.map((entry) => {
     const outputPath = outputPathForEntry(entry);
     const mapOutputPath = outputMapPathForEntry(entry);
     return {
-      mode: hasPostcssConfig ? 'postcss' : 'copy',
+      mode: usePostcss ? 'postcss' : 'copy',
       output: relativeRepoPath(outputPath),
       outputPath,
-      mapOutput: hasPostcssConfig ? relativeRepoPath(mapOutputPath) : undefined,
-      mapOutputPath: hasPostcssConfig ? mapOutputPath : undefined,
+      mapOutput: usePostcss ? relativeRepoPath(mapOutputPath) : undefined,
+      mapOutputPath: usePostcss ? mapOutputPath : undefined,
       source: relativeRepoPath(entry),
       sourcePath: entry,
     };

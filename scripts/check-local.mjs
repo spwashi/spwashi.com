@@ -5,7 +5,7 @@
  * a full npm boot), in two waves:
  *
  *   1. compile   four tsc passes, concurrent (see build-compile.mjs);
- *                css-build starts as soon as build:tools is green
+ *                css-build --check --strict-budget starts as soon as build:tools is green
  *   2. validate  the validators, concurrent — all are read-only over the tree
  *                and generated output, so they cannot race each other
  *

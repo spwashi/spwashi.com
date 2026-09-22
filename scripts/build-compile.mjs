@@ -213,7 +213,7 @@ async function runCssBuild({ force = false } = {}) {
   if (cached.cache) {
     return { label: CSS_BUILD.name, status: 0, output: '', ms: Date.now() - started, cache: true };
   }
-  const result = await runCommand(process.execPath, [CSS_BUILD.script], CSS_BUILD.name);
+  const result = await runCommand(process.execPath, [CSS_BUILD.script, '--check', '--strict-budget'], CSS_BUILD.name);
   if (result.status === 0 && cached.hash) await writeStamp(CSS_BUILD.name, cached.hash);
   return { ...result, ms: Date.now() - started, cache: false };
 }
