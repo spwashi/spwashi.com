@@ -1,0 +1,54 @@
+name: Nightly drift
+
+# Work lands on main directly, so validate.yml's pull_request trigger rarely
+# fires and its browser smoke never runs. This job runs the checks that are too
+# slow or too environment-bound for every push, once a day, where a red run is
+# the notice. It never blocks a deploy.
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightly-drift
+  cancel-in-progress: true
+
+jobs:
+  browser-smoke:
+    name: Browser smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run smoke:nav -- --routes /,/settings/,/topics/software/,/tools/spw-parser/,/about/ --settle-ms 4000
+
+  citations:
+    name: Plan index and .spw citations
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            .spw/_workbench/package-lock.json
+      - run: npm ci
+      - run: npm ci --prefix .spw/_workbench --ignore-scripts
+      - name: Plan directory indexes
+        run: npm run plans:index:check
+      - name: Every .spw citation resolves
+        if: always()
+        run: npm run spw:integrity

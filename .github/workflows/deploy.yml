@@ -22,11 +22,22 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
+
+      # tsc incremental state and input-hash stamps. A stale entry is safe: a pass
+      # whose inputs changed misses its stamp and runs. Test stamps are not cached,
+      # so the module suite always runs here.
+      - name: Restore compile stamps
+        uses: actions/cache@v4
+        with:
+          path: .tmp/tsc
+          key: tsc-${{ runner.os }}-node22-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
+          restore-keys: |
+            tsc-${{ runner.os }}-node22-${{ hashFiles('package-lock.json') }}-
 
       - name: Validate source and generated contracts
         run: npm run check:local
