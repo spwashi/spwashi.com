@@ -231,34 +231,43 @@
    properties above so ornament.css and effects can remain decoupled from
    the full field model implementation.
 
-   Ornament should prefer these over inventing parallel --ornament-* state
-   variables where possible.
+   These inherited measures are producer inputs, not aliases that each mark
+   should redeclare. Zero means this channel contributes no signal. Rendering
+   may combine independent inputs; zero in one channel does not mute another.
+   Keep collection, deviation and trail distinct from transient resonance.
+   The number registration checks type, not a 0–1 range; clamp at bounded
+   paint consumers rather than changing the meaning of the stored measure.
    ========================================================================== */
 
+/* Transient field strength: context/media/runtime input to ornament opacity. */
 @property --ornament-field-intensity {
   syntax: "<number>";
   inherits: true;
   initial-value: 0;
 }
 
+/* Collection signal; inheritable vocabulary, not a claim of a painted mark. */
 @property --ornament-collection-mark {
   syntax: "<number>";
   inherits: true;
   initial-value: 0;
 }
 
+/* Departure from a default; distinct from hover or field strength. */
 @property --ornament-deviation-visibility {
   syntax: "<number>";
   inherits: true;
   initial-value: 0;
 }
 
+/* Memory residue; a separate channel from present attention. */
 @property --ornament-wonder-trail {
   syntax: "<number>";
   inherits: true;
   initial-value: 0;
 }
 
+/* Inherited ornament resonance; --spw-resonance above stays element-local. */
 @property --ornament-resonance {
   syntax: "<number>";
   inherits: true;
