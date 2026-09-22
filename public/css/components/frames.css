@@ -86,8 +86,8 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   opacity: 0.92;
 }
 
-:where(.spw-frame[data-state~="active"], .spw-frame[data-state~="active"]),
-:where(.spw-frame[data-spw-active="true"], .spw-frame[data-spw-active="true"]) {
+:where(.spw-frame[data-state~="active"]),
+:where(.spw-frame[data-spw-active="true"]) {
   border-color: var(--line-strong, color-mix(in srgb, var(--component-accent) 34%, transparent));
   background: var(--component-surface-strong);
   box-shadow:
@@ -199,7 +199,6 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   letter-spacing: -0.005em;
 }
 
-[data-spw-textual-role="lede"],
 [data-spw-textual-role="lede"] {
   font-size: clamp(1rem, 0.88rem + 0.7cqi, 1.2rem);
   font-weight: 500;
@@ -210,7 +209,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   color: color-mix(in srgb, var(--ink, #161c1d) 86%, transparent);
 }
 
-:where(:is(.spw-frame, .spw-frame) > p:not([data-spw-textual-role="note"]):not(.inline-note):not([data-spw-textual-role="lede"]):not([data-spw-textual-role="lede"]):not(.spec-kicker):not([data-spw-textual-role="kicker"])) {
+:where(.spw-frame > p:not([data-spw-textual-role="note"]):not(.inline-note):not([data-spw-textual-role="lede"]):not([data-spw-textual-role="lede"]):not(.spec-kicker):not([data-spw-textual-role="kicker"])) {
   max-inline-size: min(66ch, 100%);
   text-wrap: pretty;
   overflow-wrap: break-word;
@@ -288,7 +287,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 }
 
 /* Title → first body paragraph: keep the lede glued to the heading. */
-:where(.spw-frame > :is(h1, h2, h3, [data-spw-textual-role="lede"], [data-spw-textual-role="lede"]) + p) {
+:where(.spw-frame > :is(h1, h2, h3, [data-spw-textual-role="lede"]) + p) {
   margin-block-start: 0;
 }
 
@@ -296,7 +295,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   margin-block-start: 0;
 }
 
-:where(.spw-frame > :is(h1, h2) + :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"])) {
+:where(.spw-frame > :is(h1, h2) + [data-spw-textual-role="lede"]) {
   margin-block-start: var(--space-3xs, 0.125rem);
 }
 
@@ -440,7 +439,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   --surface-gap: clamp(0.95rem, 1.9cqi, 1.32rem);
 }
 
-:where(:is(.spw-frame, .spw-frame)[data-spw-role="schema"]) {
+:where(.spw-frame[data-spw-role="schema"]) {
   background: linear-gradient(
       180deg,
       color-mix(in srgb, var(--component-accent) 6%, transparent),
@@ -450,7 +449,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   --surface-gap: clamp(0.82rem, 1.6cqi, 1.08rem);
 }
 
-:where(:is(.spw-frame, .spw-frame)[data-spw-role="gallery"]) {
+:where(.spw-frame[data-spw-role="gallery"]) {
   background: radial-gradient(
       circle at top left,
       color-mix(in srgb, var(--component-accent) 8%, transparent),
@@ -459,7 +458,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   var(--component-surface);
 }
 
-:where(:is(.spw-frame, .spw-frame)[data-spw-role="broadcast"]) {
+:where(.spw-frame[data-spw-role="broadcast"]) {
   background: linear-gradient(
       90deg,
       color-mix(in srgb, var(--component-accent) 10%, transparent),
@@ -473,7 +472,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
    14. Hero + heading thresholds
    ========================================================================== */
 
-:where([data-spw-region-role="entry-spine"], [data-spw-region-role="entry-spine"]) {
+:where([data-spw-region-role="entry-spine"]) {
   gap: var(--spw-hero-gap, clamp(1.1rem, 2cqi, 1.5rem));
 }
 
@@ -489,20 +488,20 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   min-width: 0;
 }
 
-:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) {
+:where([data-spw-anatomy="hero-split"]) {
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
   align-content: start;
 }
 
-:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="body"] {
+:where([data-spw-anatomy="hero-split"]) > [data-spw-slot="body"] {
   display: grid;
   gap: var(--spw-surface-gap, var(--space-md, 1rem));
   align-content: start;
 }
 
-:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="figure"] {
+:where([data-spw-anatomy="hero-split"]) > [data-spw-slot="figure"] {
   align-self: start;
 }
 
@@ -565,14 +564,14 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
    Explicit author values win; the rules below are additive and safe.
    ========================================================================== */
 
-:where(:is(.spw-frame, .spw-frame)[data-spw-size-context="narrow-hero"],
-       :is(.spw-frame, .spw-frame)[data-spw-size-context="narrow-panel"]) {
+:where(.spw-frame[data-spw-size-context="narrow-hero"],
+       .spw-frame[data-spw-size-context="narrow-panel"]) {
   --surface-padding: clamp(0.7rem, 2.2cqi, 1.05rem);
   --surface-gap: clamp(0.7rem, 1.6cqi, 0.95rem);
 }
 
-:where(:is(.spw-frame, .spw-frame)[data-spw-content-tone="dense"],
-       :is(.spw-frame, .spw-frame)[data-spw-content-tone="operator-heavy"]) {
+:where(.spw-frame[data-spw-content-tone="dense"],
+       .spw-frame[data-spw-content-tone="operator-heavy"]) {
   --surface-gap: calc(var(--surface-gap, 1rem) * 0.82);
 }
 

@@ -584,8 +584,8 @@ main :where(
 }
 
 main :where(
-  h1 + :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"], [data-spw-textual-role="lede"], .shell-lede),
-  h2 + :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"], [data-spw-textual-role="lede"], .shell-lede)
+  h1 + :is([data-spw-textual-role="lede"], .shell-lede),
+  h2 + :is([data-spw-textual-role="lede"], .shell-lede)
 ) {
   margin-block-start: var(--space-2xs, 0.25rem);
 }

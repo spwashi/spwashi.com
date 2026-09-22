@@ -341,7 +341,6 @@ article a,
 :is(.spw-panel, .frame-panel) a,
 .inline-note a,
 [data-spw-textual-role="lede"] a,
-[data-spw-textual-role="lede"] a,
 [data-spw-textual-role="note"] a {
   text-decoration: underline;
   text-underline-offset: 3px;

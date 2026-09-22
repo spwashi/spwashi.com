@@ -400,26 +400,26 @@
    When the page was loaded in a "quiet" or "defer" posture (user or editor choice),
    tone down the physical feedback (lift, shadow) for calmer feel.
    This is rule refinement using the explicit load attrs we added for discovery/customization. */
-html[data-spw-load-posture="quiet"] :is(.spw-chip, .spw-chip):hover,
-html[data-spw-load-posture="quiet"] :is(.spw-chip, .spw-chip):focus-visible,
-html[data-spw-load-timing="quiet"] :is(.spw-chip, .spw-chip):hover,
-html[data-spw-load-timing="quiet"] :is(.spw-chip, .spw-chip):focus-visible,
-html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):hover,
-html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):focus-visible {
+html[data-spw-load-posture="quiet"] .spw-chip:hover,
+html[data-spw-load-posture="quiet"] .spw-chip:focus-visible,
+html[data-spw-load-timing="quiet"] .spw-chip:hover,
+html[data-spw-load-timing="quiet"] .spw-chip:focus-visible,
+html[data-spw-load-timing="defer"] .spw-chip:hover,
+html[data-spw-load-timing="defer"] .spw-chip:focus-visible {
   transform: none;
   box-shadow: var(--operator-chip-hover-shadow, 0 1px 3px rgba(0,0,0,0.06));
 }
 
 /* Probe and pragma chips should not feel interchangeable.
    Probe stays open/reversible; pragma reads as a stronger local constraint. */
-:is(.spw-chip):is([data-spw-operator="wonder"], [data-spw-operator="probe"]) {
+.spw-chip:is([data-spw-operator="wonder"], [data-spw-operator="probe"]) {
   --operator-chip-border-style: dashed;
   --operator-chip-bg: var(--operator-chip-bg-intent, color-mix(in oklab, var(--surface-strong, #fff) 95%, var(--op-probe-color, var(--active-op-color, var(--teal))) 5%));
   --operator-chip-border: var(--operator-chip-border-intent, color-mix(in oklab, var(--op-probe-color, var(--active-op-color, var(--teal))) 28%, transparent));
   --operator-chip-hover-bg: var(--operator-chip-hover-bg-intent, color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--op-probe-color, var(--active-op-color, var(--teal))) 10%));
 }
 
-:is(.spw-chip):is([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"]) {
+.spw-chip:is([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"]) {
   --operator-chip-bg: var(--operator-chip-bg-intent, color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 12%));
   --operator-chip-border: var(--operator-chip-border-intent, color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 34%, transparent));
   --operator-chip-hover-bg: var(--operator-chip-hover-bg-intent, color-mix(in oklab, var(--surface-strong, #fff) 84%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%));
@@ -427,7 +427,7 @@ html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):focus-visible {
     inset 0 0 0 1px color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%, transparent);
 }
 
-:where(.spw-chip, .spw-chip, .spec-pill, .syntax-token)[data-spw-collected="true"] {
+:where(.spw-chip, .spec-pill, .syntax-token)[data-spw-collected="true"] {
   --operator-chip-border-style: solid;
   --operator-chip-hover-lift: -1px;
   box-shadow:
@@ -436,7 +436,7 @@ html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):focus-visible {
     0 0 calc(0.7rem + var(--spw-collection-strength, 0) * 0.4rem) color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 14%, transparent);
 }
 
-:where(.spw-chip, .spw-chip):is([aria-pressed="true"], [aria-current="true"], [data-site-setting-active="true"]) {
+:where(.spw-chip):is([aria-pressed="true"], [aria-current="true"], [data-site-setting-active="true"]) {
   background: var(--operator-chip-active-bg);
   border-color: var(--operator-chip-active-border);
   color: var(--operator-chip-active-ink);
@@ -446,7 +446,7 @@ html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):focus-visible {
   animation: var(--operator-chip-active-animation);
 }
 
-html[data-spw-color-mode="dark"] :is(.spw-chip, .spw-chip) {
+html[data-spw-color-mode="dark"] .spw-chip {
   --operator-chip-bg: var(--operator-chip-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%));
   --operator-chip-border: var(--operator-chip-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%));
   --operator-chip-ink: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
@@ -499,7 +499,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .spw-chip) {
 }
 
 @media (prefers-color-scheme: dark) {
-  html[data-spw-color-mode="auto"] :is(.spw-chip, .spw-chip) {
+  html[data-spw-color-mode="auto"] .spw-chip {
     --operator-chip-bg: var(--operator-chip-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%));
     --operator-chip-border: var(--operator-chip-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%));
     --operator-chip-ink: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
