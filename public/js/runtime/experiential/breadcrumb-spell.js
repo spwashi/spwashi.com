@@ -26,6 +26,7 @@ import {
   openRegionMenuForElement,
 } from '/public/js/runtime/region-menu.js';
 import { isReadingQuietChrome } from '/public/js/runtime/orchestration/policy.js';
+import { collapseText as stripWhitespace } from '/public/js/kernel/text-normalization.js';
 
 /* ── Constants ──────────────────────────────────────────────────────────── */
 
@@ -163,9 +164,7 @@ export function titleFromPath(pathname = '') {
     ?.replace(/\b\w/g, (letter) => letter.toUpperCase()) || 'Home';
 }
 
-export function stripWhitespace(value = '') {
-  return String(value).replace(/\s+/g, ' ').trim();
-}
+export { stripWhitespace };
 
 export function ensureHeaderTraceHost(header) {
   let host = header.querySelector('.spw-header-trace');

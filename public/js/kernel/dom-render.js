@@ -8,6 +8,7 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import { createSpwLogger } from '/public/js/kernel/instrumentation.js';
+import { collapseText as cleanText } from '/public/js/kernel/text-normalization.js';
 
 const renderLogger = createSpwLogger('spw-render');
 
@@ -131,9 +132,7 @@ export function appendToDocument(node, options = {}) {
   return false;
 }
 
-export function cleanText(value = '') {
-  return String(value).replace(/\s+/g, ' ').trim();
-}
+export { cleanText };
 
 export function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, (char) => ({

@@ -11,6 +11,7 @@ import {
 } from '/public/js/kernel/dom-contracts.js';
 import { normalizeToken } from '/public/js/kernel/shared.js';
 import { formatMicrointeractionExpression } from '/public/js/semantic/interaction-expression.js';
+import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
 
 const SIGIL_TRANSITION_SELECTOR = [
   '.frame-sigil',
@@ -91,10 +92,6 @@ export function snapshotSigilTransition(html = document.documentElement) {
     from: html.dataset.spwSigilTransitionFrom || '',
     to: html.dataset.spwSigilTransitionTo || '',
   };
-}
-
-function normalizeText(value = '') {
-  return String(value).replace(/\s+/g, ' ').trim();
 }
 
 function safeDatasetToken(value = '') {
