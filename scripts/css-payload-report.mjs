@@ -147,11 +147,13 @@ Usage:
   let coreBytes = 0;
   let coreDeliveredBytes = 0;
   let coreDeliveredGzipBytes = 0;
+  let coreGzipBytes = 0;
   if (coreTarget) {
     try {
       const source = await fs.readFile(path.join(ROOT, coreTarget.href.replace(/^\//, '')), 'utf8');
       const delivered = cssForDelivery(source);
       coreBytes = Buffer.byteLength(source, 'utf8');
+      coreGzipBytes = gzipSync(source, { level: 9 }).length;
       coreDeliveredBytes = Buffer.byteLength(delivered, 'utf8');
       coreDeliveredGzipBytes = gzipSync(delivered, { level: 9 }).length;
     } catch {
@@ -166,6 +168,10 @@ Usage:
     // What dist ships: the same rules without prose (scripts/ts/css-delivery.mts).
     coreDeliveredKiB: Math.round(coreDeliveredBytes / 1024),
     coreDeliveredGzipKiB: Math.round(coreDeliveredGzipBytes / 1024),
+    coreGzipKiB: Math.round(coreGzipBytes / 1024),
+    coreTransferSavedPercent: coreGzipBytes
+      ? Number(((1 - coreDeliveredGzipBytes / coreGzipBytes) * 100).toFixed(1))
+      : 0,
     fullAllBundlesKiB: Math.round(full.bytes / 1024),
     aliases: ROUTE_SURFACE_ALIASES,
     routeSurfacesWithCss: Object.entries(ROUTE_SCOPES)
@@ -181,7 +187,8 @@ Usage:
 
   console.log('CSS payload report (scoped delivery vs all bundles)');
   console.log(`  core.css: ${report.coreKiB} KiB committed (soft budget ${report.coreSoftBudgetKiB} KiB)`);
-  console.log(`            ${report.coreDeliveredKiB} KiB delivered, ${report.coreDeliveredGzipKiB} KiB gzip — dist strips prose, rules unchanged`);
+  console.log(`            ${report.coreDeliveredKiB} KiB delivered — dist strips prose, rules unchanged`);
+  console.log(`  over the wire (gzip): ${report.coreGzipKiB} → ${report.coreDeliveredGzipKiB} KiB, ${report.coreTransferSavedPercent}% smaller`);
   console.log(`  all bundles (full approx): ${report.fullAllBundlesKiB} KiB`);
   console.log(`  aliases: ${JSON.stringify(ROUTE_SURFACE_ALIASES)}`);
   console.log('');
