@@ -16,6 +16,7 @@
     "build:css:touched": "npm run build:tools && node scripts/css-build.mjs --bundles-only --from-change",
     "css:payload": "node scripts/css-payload-report.mjs",
     "css:payload:json": "node scripts/css-payload-report.mjs --json",
+    "css:history": "node scripts/css-history.mjs",
     "build:runtime": "node node_modules/typescript/bin/tsc -p tsconfig.runtime.json && node scripts/fix-typed-imports.mjs",
     "build:spw-parser": "node scripts/build-spw-literal-parser.mjs",
     "build:tools": "node node_modules/typescript/bin/tsc -p tsconfig.scripts.json",
