@@ -15,6 +15,7 @@
 @morph_shader_handles: ~"./morph-shader-handles.spw"
 @workbench_report: ~"../workbench-report.spw"
 @boonhonk: ~"./boonhonk-combinatoric-genre.spw"
+@semantic_after: ~"./semantic-after-charge-sign-2026-09.spw"
 
 operation = "prime"
 fixity = "experimental"
@@ -32,7 +33,7 @@ expression = expression[charge]{modifier.noun.scope}<anchor>
 ^"paired_consumer"{
   claim = `A scene between body and capsule already binds in the workbench. The site shape readers have no scene slot, so a following capsule disappears with it.`
   measured = `cycle[b]{receipt}(progress)<live> and play[hook]{table.canon}(stage)<orientation> keep scope and capsule under parseExpression. readShape and shapeFromExpression store an empty projection.`
-  job = `When this enhancement lands, the consumer patch teaches those two readers the order [mode]{body}(scene)<capsule> and a leading scope. One field name, shared with the grammar's scope node. That patch is not a second grammar.`
+  job = `When this enhancement lands, the site pass in @semantic_after records charge, scope, and a capsule that follows the scope. One field name for scope, shared with the grammar. That pass is not a second grammar, and it waits on the gate in that file.`
 }[reg=facet]
 
 ^"anchors_stay_site"{

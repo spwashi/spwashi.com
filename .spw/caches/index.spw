@@ -64,6 +64,7 @@
 @pricing_lattice_2026_09: ~"./pricing-lattice-2026-09.spw"  # cited comps vs live ladder; no checkout from this cache
 @wonder_chrome_retune_2026_09: ~"./wonder-chrome-retune-2026-09.spw"  # the 2026-09-19 retune request as sixteen owned lines; wr-001 is the settings register squeeze, landed
 @expression_charge_sign_2026_09: ~"./expression-charge-sign-2026-09.spw"  # prime: a valence modifier rides an expression as a charge-sign
+@semantic_after_charge_sign_2026_09: ~"./semantic-after-charge-sign-2026-09.spw"  # prime: site shape records charge, scope, and capsule after that workbench gate
 
 operation = "align"
 fixity = "tending"
@@ -125,6 +126,7 @@ fixity = "tending"
   pricing_lattice_2026_09 = @pricing_lattice_2026_09
   wonder_chrome_retune_2026_09 = @wonder_chrome_retune_2026_09
   expression_charge_sign_2026_09 = @expression_charge_sign_2026_09
+  semantic_after_charge_sign_2026_09 = @semantic_after_charge_sign_2026_09
 }[reg=facet]
 
 ^"cache_rules"{
