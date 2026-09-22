@@ -1,0 +1,76 @@
+# Portable CSS (2026-09)
+#
+# operation: cache
+# Another origin links one built sheet. style.css and bundles/core.css stay
+# the delivery for spwashi.com. Do not implement the bundle from this cache.
+
+#>portable_css_2026_09
+#:cache #!css #!delivery #!tokens
+#:operation #!cache
+#:fixity #!seed
+#:layer #!pragmatics
+
+@stylesheet_ecology: ~"../conventions/stylesheet-ecology.spw"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@style_css: ~"../../public/css/style.css"
+@style_core: ~"../../public/css/style-core.css"
+@core_bundle: ~"../../public/css/bundles/core.css"
+@fonts: ~"../../public/css/tokens/fonts.css"
+@spend: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
+@readability: ~"../../.agents/plans/css-architecture-readability/PLAN.md"
+@tokens: ~"../../.agents/plans/data-attribute-css-token-refinement/PLAN.md"
+@runtime: ~"../../.agents/plans/js-runtime-composability/PLAN.md"
+@mobile: ~"../../.agents/plans/mobile-runtime-foundation/PLAN.md"
+
+operation = "cache"
+fixity = "seed"
+measured_at = `2026-09-22`
+do_not = `Do not reorder @layer in style.css. Do not add a data-spw family. Do not mount site.js on a foreign origin. Do not grow bundles/core.css to serve other hosts.`
+
+^"pc-001_not_style_css"{
+  id = "pc-001"
+  claim = `style.css is the manifest for this site. It imports style-core and the route sheets. Another host does not link it.`
+  evidence = `public/css/style.css opens with style-core, then route imports for home, blog, settings, recipes, and RPG.`
+  check = `The portable entry, when it exists, is not public/css/style.css.`
+}[reg=facet]
+
+^"pc-002_not_core_bundle"{
+  id = "pc-002"
+  claim = `bundles/core.css is first paint for spwashi.com, including shell chrome. A portable sheet stops before shell/chrome, systems, and routes.`
+  evidence = `style-core.css imports shell/chrome/header.css, navigation.css, and footer.css before components.`
+  check = `portable.css, when built, contains no selector from public/css/shell/chrome/.`
+}[reg=facet]
+
+^"pc-003_font_urls"{
+  id = "pc-003"
+  claim = `tokens/fonts.css uses root-relative /public/fonts/ URLs. On another origin those resolve against the other host.`
+  evidence = `url("/public/fonts/jetbrains-mono-latin.woff2") and the Newsreader files in tokens/fonts.css.`
+  check = `The portable target rewrites url("/public/") to https://spwashi.com/public/. The spwashi.com bundles keep root-relative URLs.`
+}[reg=facet]
+
+^"pc-004_attributes_already_exist"{
+  id = "pc-004"
+  claim = `A host sets html attributes that already exist: color-mode, spacing, accent. The sheet does not invent a family.`
+  evidence = `tokens/core.css keys spacing and type scale on html[data-spw-spacing-tuner] and html[data-spw-font-size-scale].`
+  check = `No new data-spw-* stem is added for portability.`
+}[reg=facet]
+
+^"pc-005_runtime_stays_here"{
+  id = "pc-005"
+  claim = `deferred-styles.js and body[data-spw-features] load packs for this site. Portable paint does not require a pack or site.js.`
+  evidence = `core-css-spend-cut: delivery is style-core, route bundles, and deferred-styles.js.`
+  check = `A foreign page can show frames and chips with the stylesheet link alone.`
+}[reg=facet]
+
+^"pc-006_entry"{
+  id = "pc-006"
+  claim = `The entry to build, when implemented, is public/css/style-portable.css, emitted to public/css/bundles/portable.css, pinned with the compile stamp.`
+  layers = `reset, tokens (fonts, core, dimensions), typography, grammar, and the component files for .spw-frame and .spw-chip`
+  refuse = `shell/chrome, systems, routes`
+}[reg=facet]
+
+^"pc-007_workers"{
+  id = "pc-007"
+  claim = `autonomous-feedback and spw-quest keep workers/lib/shell.js until the portable bundle exists. Linking it is a later patch.`
+  check = `This cache does not change those workers.`
+}[reg=facet]

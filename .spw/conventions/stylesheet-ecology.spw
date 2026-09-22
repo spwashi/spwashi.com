@@ -24,6 +24,7 @@
 @paper_motif: ~"../../public/css/systems/paper-motif.css"
 @css_architecture: ~"../../.agents/plans/css-architecture-readability/PLAN.md"
 @core_css_spend_cut: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
+@portable_css: ~"../caches/portable-css-2026-09.spw"
 @flourish_pack: ~"../../public/css/effects/flourish-pack.css"
 @public_entrance: ~"../../.agents/plans/archive/public-entrance-runtime-payload/PLAN.md"
 @compositional_css_plan: ~"../../.agents/plans/compositional-css-electrostatics/index.spw"

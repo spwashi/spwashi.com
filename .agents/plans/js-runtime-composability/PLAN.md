@@ -20,6 +20,7 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 ## Constraints
 - Do not add alias wrappers.
 - Do not change the public page-state tokens or timing semantics.
+- Other origins that only need the look link a CSS bundle. Do not extend `site.js` to theme them. See `.spw/caches/portable-css-2026-09.spw`.
 - Keep page attention and visibility handling reversible and readable.
 
 ## Validation
