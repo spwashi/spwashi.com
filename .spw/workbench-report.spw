@@ -52,6 +52,30 @@ expression = consumer[report]{defect.gap.built}<upstream>
   probe: `spw query --from .spw/conventions --selector pathRefs --count --stats`
 }
 
+^"parse_cost"{
+  ~#severity(highest): "with the walk fixed, parse is the whole cost; the next saving is not reading the same surface twice"
+  claim: "Every query, resolve, and lint call parses every surface from scratch, and a few syntax shapes cost far more than their size."
+  measured: .{
+    conventions_parse_share = `22.6 s of 23.7 s wall (95%); walk, read, evaluate, and format together about 1 s`
+    corpus = `378 surfaces, 3.29 MB, pin 3eaab63; 209 s of 219 s is parse`
+    clean_rate = `341 surfaces at 18.7 KB/s`
+    error_rate = `37 surfaces with parse errors at 7.8 KB/s: 10% of files, 15% of bytes, 31% of parse time`
+    spread = `0.7 to 137 KB/s across surfaces over 8 KB; the slowest 20 hold 46% of parse time`
+    record_rows = `32 rows of .{ … }[reg=facet] inside #[ … ][reg=set]: about 20 ms a row; without the postfix 13, without the inner list 10.5; quote, brace, and binding spelling change nothing`
+    stray_backtick = `one unbalanced backtick in the first of those 32 rows: 579 → 4034 ms (7×)`
+    boot = `about 1.0 s per CLI call through the tsx loader, before any surface is read`
+    cache_hits = 0
+  }[reg=facet]
+  ~#load: "measured 2026-09-22 with a machine load average between 10 and 60 from concurrent sessions; the ratios are the finding"
+  fix: .{
+    architecture = `let query, resolve, and lint host the corpus scan memo (census and graph already do), or a per-file plane keyed by file hash, dialect, and selector; one walk for several products; emitted JS beside the tsx route`
+    syntax = `bound error recovery for an unterminated backtick string; before any parser change, a lexer-only check for unbalanced backticks lets authors remove the cost`
+    hypothesis = `memoize alternatives at bracket starts in the record grammar; the retry path has not been traced, so the 32-row block is a regression fixture, not a diagnosis`
+  }[reg=facet]
+  ~#consequence: "spw:integrity takes about 80 s here, and the gate cannot afford it; it runs nightly in CI instead"
+  probe: `spw query --from .spw --selector pathRefs --count --stats --profile`
+}
+
 ^"parse_entry_points_disagree"{
   claim: "parseExpression truncates where parse structures, and reports success while doing it."
   ~#resolved(2026-09-03, workbench 75d8f9d26253, commit f3061c5): "verified live: surfaces[route]{path.role.archetype}<publish> now consumes the full 45 characters under parseExpression and returns one Expression node — the same fix that binds same-line [frame]/{body}/<capsule> onto one noun for parse() too. The fix asked for below (`fix:`) landed. Kept this facet rather than deleting it: the cost line is the reason the gap mattered, and the site's own tooling (spw-runtime-parser.js, spw-block-association.js) still names entry: 'parse' as the default on principle, not because parseExpression is broken anymore."
