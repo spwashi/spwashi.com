@@ -1,9 +1,12 @@
 # autonomous.feedback as a product (2026-09)
 #
 # operation: prime
-# A card a reader carries by hand is the free product and the marketing at
-# once. A desk that keeps every note for a site is what a site owner would pay
-# for. Nothing here sets a price, and no page may promise one from this file.
+# Anyone can write a card about any site today; no install comes first. So the
+# reader is the first user, the card is the free product and the marketing at
+# once, and a site owner's first contact is a card that arrives by hand. Owners
+# then climb: claim the site for free with one file, and pay for a desk that
+# keeps every card. Nothing here sets a price, and no page may promise one from
+# this file.
 
 #>feedback_product_2026_09
 #:cache #!product #!feedback #!marketing
@@ -21,49 +24,150 @@ operation = "prime"
 fixity = "experimental"
 source = `creator, 2026-09-22: market autonomous.feedback as a product; consider freemium, with a rewarded habit of screenshotting a filled form or rendered card and sending it to the site's owner by DM or in a post that names the site`
 
+^"fb-001_reader_first"{
+  id = "fb-001"
+  claim = `The product does not wait for owners. /{host}/{kind} works for any public site whether or not its owner pasted anything, so growth starts with a reader who has something to say, not with an owner who installs a widget.`
+  evidence = `validSubject() accepts any public hostname; nothing in the Worker checks that the site opted in.`
+  consequence = `The owner's first contact is a card sent to them by DM or in a post. The form on their own site is the second step, not the first.`
+  risk = `A reader can also send a card to a site that does not want feedback. See fb-005 for what keeps that humane.`
+}[reg=facet]
+
 ^"offer"{
-  audience = `people who build or keep a small site (indie makers, artists, shops, open-source docs) and want honest notes without running a form backend; and their readers, who want to say something without an account`
-  offer = `a form for one site in one paste, and a card for every note that the writer can send by hand`
+  reader = .{
+    audience = `fans, peers, and customers of small sites who want to say one true thing without making an account`
+    offer = `a card with your words on it, addressed to the site, that you send yourself`
+    next_action = `autonomous.feedback/{host}/wonder → write → screenshot or Post → the owner receives it`
+  }[reg=facet]
+  owner = .{
+    audience = `people who build or keep a small site (indie makers, artists, shops, open-source docs) and want honest notes without running a form backend`
+    offer = `notes that already arrive as cards; a form in one paste; a claim with one file; later, a desk that keeps them`
+    next_action = `receive a card → autonomous.feedback/{host} → Hang a form → publish the client file → ask for a desk`
+  }[reg=facet]
   proof = `the card itself: a screenshot carries the site name, the note, the date, and autonomous.feedback/{host}`
-  resonance = `a letter, not a ticket; the four kinds (wonder, review, practice, brief) ask for a gift, not stars`
+  resonance = `a letter, not a ticket; the four kinds (wonder, review, practice, brief) ask for a gift, not stars. "Autonomous" is literal: the note travels without the site's backend`
   extension = `each card seen in a feed is an address where the next reader can leave one; the owner who receives a few by hand is the one who wants a desk`
-  next_action = `homepage → Check it answers → Hang a form → a reader's card arrives by DM or post`
 }[reg=facet]
 
-^"tiers"{
-  free = .{
-    what = `meter, iframe and plain form, four kinds of note, a card per note, Share / Post / Copy`
-    stores = `nothing; the card lives on the page and in whatever the writer sends`
-    landed = `2026-09-22, card and share row in the Worker`
-  }[reg=facet]
-  desk = .{
-    what = `a queue per site that keeps every card, an owner inbox behind a verified identity, and a digest`
-    needs = #[`site verification`, `identity provider`, `storage with retention rules`, `rate limits on public intake`][reg=set]
-    status = `proposed; the inbox route answers 401/501 until a queue is attached`
-  }[reg=facet]
-  price = `unset. Compare against @pricing before naming a number; the homepage says only "Free while cards travel by hand. A desk that keeps every note for a site comes later."`
+^"fb-002_ladder"{
+  id = "fb-002"
+  claim = `Four rungs, each earned by the one below. Only the last one costs money.`
+  rungs = #[
+    .{ rung = `reader` ; gets = `write to any site, a card, Share / Post / Copy` ; costs = `nothing` ; status = `landed 2026-09-22` }[reg=facet],
+    .{ rung = `unclaimed site` ; gets = `the meter, an iframe or a plain form to paste; cards still travel by hand` ; costs = `nothing` ; status = `landed` }[reg=facet],
+    .{ rung = `claimed site` ; gets = `the client file (fb-client-route): which kinds show, theme, frame ancestors, and a "kept by the site" mark on its pages and cards` ; costs = `nothing; publishing the file is the proof of control` ; status = `proposed` }[reg=facet],
+    .{ rung = `desk` ; gets = `a queue that keeps every card, an owner inbox, a digest, and reply cards` ; costs = `the paid tier` ; status = `proposed; the inbox route answers 401/501 until a queue is attached` }[reg=facet]
+  ][reg=set]
+  why_claim_is_free = `Claiming costs the owner one file and costs us one cached fetch. It turns a stranger's address into a customer we can name, and it is the verification the desk needs anyway.`
+  desk_needs = #[`a claimed site (fb-client-route as http-01-style proof)`, `an identity provider for the owner`, `storage with retention rules`, `rate limits on public intake`, `moderation for stored notes`][reg=set]
 }[reg=facet]
 
-^"reward_loop"{
+^"client_route"{
+  id = "fb-client-route"
+  claim = `A client site publishes https://{host}/.well-known/autonomous-feedback.json. autonomous.feedback fetches that URL when serving /{host} or /embed/{host}. The file configures only that host.`
+  url = `/.well-known/autonomous-feedback.json`
+  schema = `autonomous-feedback.client.v0`
+  fields = #[`host`, `frame`, `contexts`, `theme`, `queue.want`][reg=set]
+  unlocks = #[`frame ancestors beyond the host and www`, `which note kinds the embed shows`, `theme.href or tone and accent`, `a later queue drain the owner asked for`][reg=set]
+  defaults = `Missing file, timeout, non-JSON, or a host field that does not match the URL host: keep the free behavior. Meter, iframe, four kinds, slip, queue unattached.`
+  check = `Fetch the file from the host in the path only. Do not apply lore.land's file to spwashi.com. Do not read it from a query string.`
+  role_in_ladder = `The file is the claim rung of fb-002: its presence is the proof of control, and queue.want is the owner asking for a desk.`
+  fetch_guards = `isPublicSite() before any fetch, as the meter does; a short timeout; a size cap; cache per host for minutes, not per request, so a card page never waits on a slow client site`
+}[reg=facet]
+
+^"fb-003_reward_loop"{
+  id = "fb-003"
   landed = #[
     `the card is designed to be screenshotted: large site name, the prompt, the note, the date, the address`,
     `Share (native), Post on Bluesky, Post on X, and Copy each stamp the card "Sent by hand", so sending answers visibly`,
     `post text is prefilled with an excerpt, the kind, the site, and the address; the writer edits it before it goes anywhere`
   ][reg=set]
-  candidates = #[
-    `an owner reply card: the owner answers a card and the writer gets a card back (needs the desk)`,
-    `a count on the owner's desk of cards received by hand, never a public leaderboard`,
-    `card themes the owner picks for their site once verified`
+  honest_limit = `The stamp records that the writer reached for a channel, not that anything arrived. Say "Sent by hand", never "Delivered", until a desk can prove delivery.`
+  writer_rewards = #[
+    `now: the craft of the card — it should look good enough that people want it in their feed`,
+    `candidate: a frame view that shows the card alone, sized for a phone screenshot (square and 4:5), so screenshotting is the obvious move`,
+    `candidate: a card link that carries the note in the URL fragment, so a card can travel as a link without being stored; the fragment never reaches the server, so the page renders it client-side`,
+    `desk: a reply card from the owner, the one reward that proves the note landed`
   ][reg=set]
+  owner_rewards = #[
+    `now: notes arrive already legible, in the owner's own DMs, with the kind and prompt attached`,
+    `claimed: the "kept by the site" mark tells readers the owner is listening, which draws better notes`,
+    `desk: a private count of cards received, and every card kept in one place — never a public leaderboard`
+  ][reg=set]
+  trade_off = `A fragment link keeps the note off the server but gets no link preview. A preview image needs the note in the query string, which reaches request logs. Choose per channel; never claim "nothing stored" for the query form without checking the logs.`
 }[reg=facet]
 
-^"guardrails"{
+^"fb-004_measures"{
+  id = "fb-004"
+  claim = `Know whether the loop turns without keeping anyone's words.`
+  count = #[
+    `cards issued per week, by kind — a counter, not the note`,
+    `share-row reach by channel (Share, Bluesky, X, Copy), counted at the click, no content attached`,
+    `visits to /{host} and /{host}/{kind} arriving from social referrers — the screenshot or link bringing the next reader`,
+    `client files first seen per week — owners who claimed, the conversion that matters`,
+    `queue.want requests — owners asking for the desk before it exists`
+  ][reg=set]
+  refuse = `note text, hostnames paired with writers, or any per-writer history in analytics`
+}[reg=facet]
+
+^"fb-005_guardrails"{
+  id = "fb-005"
   dm_first = `the lede names a DM before a post; criticism sent in public can read as a callout, so the page never makes posting the default`
+  signed_by_sending = `The Worker keeps no author, but a card only travels through the writer's own account. Accountability sits in the channel the writer chose. Keep it that way: no anonymous relay that sends cards for someone.`
   no_handles = `the Worker never looks up or inserts an @handle; the writer names the owner themselves`
+  unclaimed_wording = `On an unclaimed site the page says the owner will only see a card if someone sends it. Do not imply the site asked for notes.`
   no_storage_claims = `copy says "Nothing was stored" because nothing is; do not change that sentence before the desk exists`
   no_rank = `no star rating, score, or leaderboard on any card or page`
+  opt_out = `a claimed site can hide kinds or all public cards through its client file; honor it before rendering`
   infrastructure = `public spwashi.com pages do not describe who runs the cluster (workers/cluster.json note)`
 }[reg=facet]
 
-do_not_promote_until = `a site outside this cluster pastes the form and a card reaches its owner by hand, observed once`
-validation = `node --test workers/autonomous-feedback/test/routes.test.mjs; post a note to /{host}/wonder and screenshot the card at pocket and desktop`
+^"fb-006_search"{
+  id = "fb-006"
+  claim = `Social carries cards; search should carry owners. Today search carries nothing: robots.txt disallows every path, and every page sends noindex, nofollow in a header and a meta tag.`
+  index = #[
+    `the homepage, rewritten as the answer to "a feedback form for a static site, no backend"`,
+    `one page per kind of note (wonder, review, practice, brief) as an idea worth linking to, with a sample card`,
+    `a short "how it works" that says plainly what is and is not stored`,
+    `paste guides only where the steps really differ by host (plain HTML and GitHub Pages, Neocities, Carrd, Squarespace), each with the snippet that works there`
+  ][reg=set]
+  never_index = #[
+    `/{host} and /{host}/{kind}: a page about every site on the web is thin, unasked-for, and reads as speaking for owners who never opted in`,
+    `/embed/*, /meter, card pages, /climate.json`,
+    `claimed sites, until the owner's client file asks for it explicitly`
+  ][reg=set]
+  mechanics = `robots.txt allows the indexed paths only; indexed pages drop the noindex header and meta; canonical URLs, a sitemap of those paths, a homepage share image showing a sample card, and SoftwareApplication structured data with no invented rating`
+  voice = `Search copy states the job in the searcher's words first ("feedback form", "no backend", "static site"), then the site's own imagery. Titles stay honest: no "best", no "#1".`
+  risk = `Indexed guides are marketing pages on a cluster domain; keep spwashi.com out of them (fb-005 infrastructure).`
+}[reg=facet]
+
+^"fb-007_utility"{
+  id = "fb-007"
+  claim = `The design explains the product before it shows it. The homepage never shows a card, which is the product and the reason to paste the form.`
+  proposals = #[
+    `show a sample card on the homepage, the one image that explains everything`,
+    `preview the embed live under the snippet as the owner types their site, so they see it before pasting`,
+    `the meter also looks for the form on the site's page and says whether one is already hung, which feeds fb-004's claim count without asking anyone`,
+    `a "Save image" button that draws the card to a PNG on the device, because screenshotting is easy on a phone and fiddly on a desktop`,
+    `an optional "who keeps it?" field on the card page where the writer types the owner's handle themselves; it goes into the post text only, never stored or looked up (fb-005 no_handles)`,
+    `fix the pasteable form: its textarea has no label, so the snippet teaches owners an inaccessible form`
+  ][reg=set]
+  order = `the label fix first (a defect in what we hand people), then the sample card and live preview (they sell the paste), then Save image (it serves the screenshot habit), then the meter's form detection`
+}[reg=facet]
+
+^"price"{
+  status = `unset`
+  unit = `per claimed site (the host), not per seat or per note — the address is the identity everywhere else in the product`
+  lane = `@pricing thesis: new offers inherit an existing lane. The desk would inherit the ecosystem lane (free–$500), not a new SaaS price family. Compare there before naming a number.`
+  copy_now = `the homepage says only "Free while cards travel by hand. A desk that keeps every note for a site comes later."`
+}[reg=facet]
+
+^"open"{
+  questions = #[
+    `Does the "kept by the site" mark need the desk, or should a claimed site earn it for free?`,
+    `Should an owner be able to answer a card before the desk exists, as a card they post themselves?`,
+    `Which comes first after claiming: the frame view for writers, or the fragment link?`
+  ][reg=set]
+}[reg=facet]
+
+do_not_promote_until = `a card about a site outside this cluster reaches its owner by hand and the owner answers — a reply, a pasted form, or a published client file — observed once`
+validation = `node --test workers/autonomous-feedback/test/routes.test.mjs; post a note to /{host}/wonder and screenshot the card at pocket and desktop; once fb-client-route lands, a planted client file changes the kinds on /embed/{host} and a mismatched host field does not`
