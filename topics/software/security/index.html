@@ -1,0 +1,105 @@
+<spw-page
+    title="Spwashi • Security: Who May Do What"
+    description="Starting from what you protect and from whom: input checks, content security policies, and the duty data about people carries."
+    canonical="https://spwashi.com/topics/software/security/"
+    og_title="Spwashi • Security: Who May Do What"
+    og_description="Starting from what you protect and from whom: input checks, content security policies, and the duty data about people carries."
+    og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
+    og_image_alt="Security: Who May Do What illustrated metadata card on Spwashi."
+    keywords="security, threat model, owasp, content security policy, privacy, data protection, input validation, trust"
+    breadcrumb_label="Security: Who May Do What"
+    header_current="Security: Who May Do What"
+    header_current_href="/topics/software/security/"
+    header_indicator="software"
+    surface="software"
+    page_family="curriculum"
+    page_role="topic-register"
+    page_modes="reading inspect compare build"
+    wonder="constraint consequence locality"
+    route_family="editorial systems curriculum"
+    context="analysis"
+    features="operators navigator console"
+    related_routes="/topics/software/|/topics/software/protocols/|/topics/software/databases/|/topics/software/browser/|/privacy/"
+    stylesheet_mode="scoped"
+    extra_styles="/public/css/effects/cinematic.css"
+></spw-page>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+</head>
+<body data-spw-surface="software"
+    data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial systems curriculum" data-spw-context="analysis" data-spw-wonder="constraint consequence locality" data-spw-page-family="curriculum" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_software_security" data-spw-page-role="topic-register" data-spw-related-routes="/topics/software/|/topics/software/protocols/|/topics/software/databases/|/topics/software/browser/|/privacy/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+    <spw-site-header
+        current="Security"
+        current_href="/topics/software/security/"
+        indicator="software"
+        seed="page_topics_topics_software_security__site_header"
+        related_routes="/topics/software/|/topics/software/protocols/|/topics/software/databases/|/topics/software/browser/|/privacy/"
+        context_relevance="security threat model owasp content security policy privacy"
+        nav_items="Home:/|About:/about|Software:/topics/software/|Security:/topics/software/security/|Play:/play/|Blog:/blog/"
+    ></spw-site-header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_software_security__main_surface" data-spw-wonder="constraint consequence locality" id="main-content" tabindex="-1" aria-labelledby="security-title">
+        <article>
+            <section class="spw-frame" data-spw-region-role="entry-spine" id="security-hero" data-spw-role="orientation" data-spw-liminality="entry" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="constraint consequence locality" data-spw-affordance="orient" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_security__hero" data-spw-context-relevance="security threat model owasp content security policy privacy" data-spw-related-routes="/topics/software/|/topics/software/protocols/|/topics/software/databases/|/topics/software/browser/|/privacy/" data-spw-region-purpose="public-spine">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#security-hero" data-spw-operator="frame">#&gt;who_may</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">threat models</span>
+                        <span class="spec-pill">csp</span>
+                        <span class="spec-pill">privacy</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Software / Trust</p>
+                <h1 id="security-title">Who May Do What</h1>
+                <p>Security starts with a list: what you are protecting, from whom, and what a mistake would cost. On the web that means trusting input only after checking it, limiting what a page may load with a <strong>Content Security Policy</strong>, and keeping personal data to what a feature actually needs. Data work adds a duty of its own: a dataset about people can harm them even when no one breaks in.</p>
+                <nav class="frame-operators" aria-label="Security next steps">
+                    <a class="spw-chip" data-spw-handle="true" href="/privacy/" data-spw-operator="ref" data-spw-action="explore">~this_site_privacy</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/protocols/" data-spw-operator="ref" data-spw-action="explore">~protocols</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/">← software</a>
+                </nav>
+            </section>
+
+            <section class="spw-frame" id="security-essentials" data-spw-role="reference" data-spw-form="square" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="constraint consequence locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_security__essentials" data-spw-context-relevance="security threat model owasp content security policy privacy" data-spw-related-routes="/topics/software/|/topics/software/protocols/|/topics/software/databases/|/topics/software/browser/|/privacy/">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#security-essentials" data-spw-operator="frame">#&gt;security_essentials</a>
+                    <h2>Security Essentials</h2>
+                </header>
+                <div class="frame-grid ref-grid" data-spw-density="dense">
+                    <article class="spw-panel ref-card" data-spw-form="circle">
+                        <h3>The common failures</h3>
+                        <p>OWASP&#x27;s list of the web application risks that keep recurring.</p>
+                        <a class="ref-link" href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener noreferrer">owasp: top ten</a>
+                    </article>
+                    <article class="spw-panel ref-card" data-spw-form="circle">
+                        <h3>Limit what loads</h3>
+                        <p>A policy header that tells the browser which sources a page may trust.</p>
+                        <a class="ref-link" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank" rel="noopener noreferrer">mdn: CSP</a>
+                    </article>
+                    <article class="spw-panel ref-card" data-spw-form="circle">
+                        <h3>Web security basics</h3>
+                        <p>Origins, cookies, and transport, explained from the browser&#x27;s side.</p>
+                        <a class="ref-link" href="https://developer.mozilla.org/en-US/docs/Web/Security" target="_blank" rel="noopener noreferrer">mdn: web security</a>
+                    </article>
+                </div>
+            </section>
+
+            <aside class="spw-route-bridge" aria-labelledby="security-bridge-title">
+                <header>
+                    <h3 id="security-bridge-title">Where this connects</h3>
+                    <p>Trust is designed at every boundary a record crosses.</p>
+                </header>
+                <ul class="spw-route-bridge__links">
+                    <li><a href="/topics/software/protocols/"><strong>Protocols</strong><span>Every message is a boundary.</span></a></li>
+                    <li><a href="/topics/software/databases/"><strong>Databases</strong><span>Where personal records rest, and who can read them.</span></a></li>
+                    <li><a href="/topics/software/browser/"><strong>Browser reference</strong><span>The platform rules a page runs under.</span></a></li>
+                    <li><a href="/privacy/"><strong>This site&#x27;s privacy</strong><span>How the site handles what you leave here.</span></a></li>
+                </ul>
+            </aside>
+        </article>
+    </main>
+<spw-site-footer></spw-site-footer>
+</body>
+</html>

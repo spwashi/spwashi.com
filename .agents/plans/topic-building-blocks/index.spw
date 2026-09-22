@@ -1,0 +1,54 @@
+# Review 2026-09-22 — hand-authored on first touch. Owner of topic breadth, building-block order, field portals, and the topic-wiring test.
+# Plan Index — topic-building-blocks
+#
+# Topics read as a course, not only a shelf: building blocks in order, a next
+# page from every leaf, and portals from the fields of the creator's peers,
+# mentors, and family into the topics where their questions already live.
+
+#>plan_topic_building_blocks_index
+#:index #!plan
+#:operation #!align
+#:layer #!pragmatics
+
+operation = "align"
+fixity = "tending"
+
+intent: .{
+ goal = `Widen software and math with foundational and working-practice stubs, order them as building blocks on each hub, open andragogy and fields as routes of their own, and keep every topic leaf reachable from its hub and pointing to a neighbor.`
+ owner = `topic-building-blocks`
+ kind = `plan`
+ bucket = `content_learning`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `A stub earns its place by saying one specific thing and pointing to the next page; breadth without wiring is a shelf, wiring without breadth is a loop.`
+ concepts = #[
+  `building-blocks-in-order`,
+  `working-practice`,
+  `field-portals`,
+  `two of the site's kinds of play: outward wonder (pedagogy), introspective practice (andragogy)`,
+  `stub-shape-hero-essentials-bridge`,
+  `topic-wiring-listed-and-neighbors`
+ ][reg=set]
+ refuse = #[
+  `generated filler bodies`,
+  `naming private people`,
+  `new data-spw families or components for stubs`
+ ][reg=set]
+}[reg=facet]
+
+^"open"{
+ pnsb = `A future knowledge base under /topics/biochemistry/. PNSB read as purple non-sulfur bacteria is unconfirmed; confirm before any public page names it.`
+ portals = `Add portals as more peers and mentors name their fields.`
+}[reg=facet]
+
+^"validation"{
+ commands = #[
+  `node --test scripts/tests/topic-wiring.test.mjs`,
+  `npm run manifest`,
+  `node --import ./scripts/lib/register-public-imports.mjs scripts/check-site.mjs`,
+  `npm run audit:copy:accessor`,
+  `git diff --check`
+ ][reg=set]
+}[reg=facet]
