@@ -37,6 +37,7 @@
  */
 
 import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
+import { expressionLayers, GESTURE_CHARGE } from '/public/js/semantic/expression-query.js';
 
 const STORAGE_KEY = 'spw-expression-salience';
 
@@ -52,10 +53,26 @@ const ATTR = Object.freeze({
   crawlPole: 'data-spw-crawl-pole',
   projection: 'data-spw-projection',
   channel: 'data-spw-channel',
+  layer: 'data-spw-expression-layer',
 });
 
 /** Dwell past this reads as an encounter rather than a glance. */
 const ENCOUNTER_MS = 700;
+/** A tap's layer stays lit this long on a coarse pointer, then settles. */
+const LAYER_SETTLE_MS = 1400;
+const SWIPE_MIN_PX = 28;
+const SWIPE_DOMINANCE = 1.2;
+const HOLD_MS = 480;
+const TRACE_CARD = '[data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame';
+/** A tap collects the layer's tokens. Rarer layers are worth more than the address. */
+const LAYER_WEIGHT = Object.freeze({
+  subject: 1,
+  mode: 1,
+  part: 2,
+  scope: 2,
+  charge: 3,
+  projection: 2,
+});
 /** Salience bands. Discrete so CSS can key off them without parsing numbers. */
 const SALIENCE_BANDS = [0, 2, 5, 12, 30];
 
@@ -67,6 +84,10 @@ let salience = null;
 let lit = [];
 let sourceRef = null;
 let dwellTimer = null;
+let settleTimer = null;
+let layerCursor = 0;
+let gesture = null;
+let traceNodes = [];
 let cleanup = null;
 
 const LIVING_SELECTOR = '[data-spw-living-term][data-spw-concept], .spw-living-term[data-spw-concept]';
@@ -233,7 +254,73 @@ function clearResonance() {
   sourceRef = null;
   document.querySelectorAll(`[${ATTR.source}]`).forEach((node) => {
     node.removeAttribute(ATTR.source);
+    node.removeAttribute(ATTR.layer);
   });
+  for (const node of traceNodes) {
+    if (node.getAttribute('data-spw-charge') === 'preview'
+      || node.getAttribute('data-spw-charge') === 'sustained'
+      || node.getAttribute('data-spw-charge') === 'charging') {
+      node.removeAttribute('data-spw-charge');
+    }
+    node.style.removeProperty('--spw-trace-shift');
+  }
+  traceNodes = [];
+}
+
+function rememberTrace(node) {
+  if (!node || traceNodes.includes(node)) return;
+  traceNodes.push(node);
+}
+
+function markCharge(node, state) {
+  if (!node) return;
+  node.setAttribute('data-spw-charge', state);
+  rememberTrace(node);
+}
+
+function placeSheen(card, clientX) {
+  if (!card || gesture?.reduce) return;
+  const rect = card.getBoundingClientRect();
+  if (!rect.width) return;
+  const shift = ((clientX - rect.left) / rect.width - 0.5) * 56;
+  card.style.setProperty('--spw-trace-shift', `${shift.toFixed(1)}px`);
+  markCharge(card, 'charging');
+}
+
+function noteTraceHost(host, expression) {
+  if (!gesture || !host || !expression || gesture.seen.has(expression)) return;
+  gesture.seen.add(expression);
+  gesture.path.push(expression);
+  if (!gesture.startExpr) {
+    gesture.startExpr = expression;
+    gesture.startHost = host;
+  }
+  if (gesture.endHost && gesture.endHost !== host) {
+    gesture.endHost.setAttribute(ATTR.source, 'path');
+    markCharge(gesture.endHost, 'charging');
+  }
+  gesture.endExpr = expression;
+  gesture.endHost = host;
+  host.setAttribute(ATTR.source, gesture.path.length === 1 ? 'start' : 'end');
+  if (gesture.startHost && gesture.startHost !== host) {
+    gesture.startHost.setAttribute(ATTR.source, 'start');
+  }
+  markCharge(host, 'charging');
+}
+
+function lightLayer(expression, sourceNode, layer) {
+  const shape = manifest?.[expression];
+  if (!shape) return;
+  for (const { expression: other, relation, token } of kinOf(expression)) {
+    if (layer && relation !== layer) continue;
+    for (const node of elementsByExpression.get(other) || []) {
+      lightNode(node, relation, token, {});
+    }
+  }
+  for (const { token, relation } of shapeTokens(shape)) {
+    if (layer && relation !== layer) continue;
+    lightLiving(token, relation, {}, sourceNode);
+  }
 }
 
 function kinTrail() {
@@ -273,12 +360,24 @@ function onKinKey(event) {
  * Light the kin of one expression. Transient: this is potential display, so it
  * settles on leave and deposits nothing.
  */
-function resonate(expression, sourceNode) {
+function layersFor(expression) {
+  return expressionLayers(manifest?.[expression]);
+}
+
+function activeLayer(expression) {
+  const layers = layersFor(expression);
+  if (!layers.length) return '';
+  const index = ((layerCursor % layers.length) + layers.length) % layers.length;
+  return layers[index];
+}
+
+function resonate(expression, sourceNode, layer = '') {
   clearResonance();
   const shape = manifest?.[expression];
   if (!shape) return 0;
 
   sourceNode?.setAttribute(ATTR.source, 'source');
+  if (layer) sourceNode?.setAttribute(ATTR.layer, layer);
   sourceRef = sourceNode || null;
   const sourceJoin = sourceNode?.getAttribute?.(ATTR.join)
     || sourceNode?.closest?.(`[${ATTR.join}]`)?.getAttribute(ATTR.join);
@@ -289,14 +388,38 @@ function resonate(expression, sourceNode) {
   };
 
   for (const { expression: other, relation, token } of kinOf(expression)) {
+    if (layer && relation !== layer) continue;
     for (const node of elementsByExpression.get(other) || []) {
       lightNode(node, relation, token, poles);
     }
   }
   for (const { token, relation } of shapeTokens(shape)) {
+    if (layer && relation !== layer) continue;
     lightLiving(token, relation, poles, sourceNode);
   }
   return lit.length;
+}
+
+/** Bank only the tokens on one layer. A tap is a collect, not a smear of the whole expression. */
+function depositLayer(expression, layer, times = 1) {
+  const shape = manifest?.[expression];
+  if (!shape || !layer) return 0;
+  const weight = (LAYER_WEIGHT[layer] || 1) * times;
+  const store = readSalience();
+  let banked = 0;
+  for (const entry of shapeTokens(shape)) {
+    if (entry.relation !== layer || !entry.token) continue;
+    store[entry.token] = (store[entry.token] || 0) + weight;
+    banked += 1;
+  }
+  if (!banked) return 0;
+  try {
+    writeJson(STORAGE_KEY, store);
+  } catch {
+    // Storage is optional; the lit layer still showed.
+  }
+  paintSalience(expression);
+  return banked;
 }
 
 /** A living term joins the field by its authored concept name. */
@@ -470,8 +593,10 @@ function paintSalience(expression) {
   const band = Math.max(
     salienceBand(shape.subject),
     salienceBand(shape.mode),
+    salienceBand(shape.scope),
     salienceBand(shape.projection),
     ...(shape.parts || []).map(salienceBand),
+    ...(shape.charge || []).map(salienceBand),
     0,
   );
   for (const node of elementsByExpression.get(expression) || []) {
@@ -513,6 +638,8 @@ export async function initExpressionResonance(ctx = {}) {
   paintLivingSalience();
 
   const onEnter = (event) => {
+    if (event.pointerType === 'touch') return;
+    clearTimeout(settleTimer);
     const host = event.target?.closest?.(`[${ATTR.expression}]`);
     if (host) {
       const expression = host.getAttribute(ATTR.expression);
@@ -532,14 +659,155 @@ export async function initExpressionResonance(ctx = {}) {
   };
 
   const onLeave = (event) => {
+    if (gesture || event.pointerType === 'touch') return;
     const next = event.relatedTarget;
     if (next?.closest?.(`[${ATTR.source}], [${ATTR.kin}]`)) return;
     clearTimeout(dwellTimer);
     clearResonance();
   };
 
+  const blocksGesture = (node) => node?.closest?.('button, input, textarea, select, summary, [role="button"]');
+
+  const armSettle = () => {
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(() => clearResonance(), LAYER_SETTLE_MS);
+  };
+
+  const sampleTrace = () => {
+    if (!gesture) return;
+    gesture.frame = 0;
+    placeSheen(gesture.card, gesture.x);
+    const hit = document.elementFromPoint(gesture.x, gesture.y);
+    const host = hit?.closest?.(`[${ATTR.expression}]`);
+    if (!host || (gesture.card && !gesture.card.contains(host))) return;
+    const expression = host.getAttribute(ATTR.expression);
+    noteTraceHost(host, expression);
+  };
+
+  const onPointerMove = (event) => {
+    if (!gesture || gesture.id !== event.pointerId) return;
+    gesture.x = event.clientX;
+    gesture.y = event.clientY;
+    const moved = Math.hypot(gesture.x - gesture.downX, gesture.y - gesture.downY);
+    if (moved > 10 && gesture.holdTimer) {
+      clearTimeout(gesture.holdTimer);
+      gesture.holdTimer = null;
+    }
+    if (gesture.frame) return;
+    gesture.frame = requestAnimationFrame(sampleTrace);
+  };
+
+  const onPointerDown = (event) => {
+    if (event.button !== 0 || blocksGesture(event.target)) return;
+    const host = event.target?.closest?.(`[${ATTR.expression}]`);
+    const expression = host?.getAttribute(ATTR.expression);
+    if (!host || !expression) return;
+    const card = host.closest(TRACE_CARD);
+    gesture = {
+      id: event.pointerId,
+      downX: event.clientX,
+      downY: event.clientY,
+      x: event.clientX,
+      y: event.clientY,
+      host,
+      expression,
+      card,
+      startExpr: '',
+      startHost: null,
+      endExpr: '',
+      endHost: null,
+      path: [],
+      seen: new Set(),
+      holdTimer: null,
+      frame: 0,
+      held: false,
+      reduce: globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches,
+    };
+    noteTraceHost(host, expression);
+    gesture.holdTimer = setTimeout(() => {
+      if (!gesture || gesture.id !== event.pointerId) return;
+      gesture.held = true;
+      markCharge(host, GESTURE_CHARGE.hold);
+      resonate(expression, host, activeLayer(expression));
+    }, HOLD_MS);
+    document.addEventListener('pointermove', onPointerMove, { passive: true });
+  };
+
+  const finishGesture = (event) => {
+    if (!gesture || gesture.id !== event.pointerId) return;
+    const dx = event.clientX - gesture.downX;
+    const dy = event.clientY - gesture.downY;
+    const absX = Math.abs(dx);
+    const absY = Math.abs(dy);
+    const current = gesture;
+    if (current.holdTimer) clearTimeout(current.holdTimer);
+    if (current.frame) cancelAnimationFrame(current.frame);
+    document.removeEventListener('pointermove', onPointerMove);
+    gesture = null;
+    if (!current.host.isConnected) return;
+
+    const coarse = event.pointerType === 'touch' || event.pointerType === 'pen';
+    const traced = current.path.length > 1;
+    clearTimeout(dwellTimer);
+
+    if (current.held && !traced && absX < 10 && absY < 10) {
+      const layer = activeLayer(current.expression);
+      resonate(current.expression, current.host, layer);
+      markCharge(current.host, GESTURE_CHARGE.hold);
+      current.host?.setAttribute(ATTR.source, 'start');
+      depositLayer(current.expression, layer, 2);
+      if (coarse) armSettle();
+      return;
+    }
+
+    if (traced) {
+      current.startHost?.setAttribute(ATTR.source, 'start');
+      current.endHost?.setAttribute(ATTR.source, 'end');
+      markCharge(current.startHost, GESTURE_CHARGE.swipe);
+      markCharge(current.endHost, GESTURE_CHARGE.swipe);
+      depositLayer(current.startExpr, activeLayer(current.startExpr));
+      if (current.endExpr !== current.startExpr) {
+        depositLayer(current.endExpr, activeLayer(current.endExpr));
+      }
+      for (const mid of current.path.slice(1, -1)) depositLayer(mid, 'subject');
+      lightLayer(current.endExpr, current.endHost, activeLayer(current.endExpr));
+      if (coarse) armSettle();
+      return;
+    }
+
+    if (absX >= SWIPE_MIN_PX && absX > absY * SWIPE_DOMINANCE) {
+      layerCursor += dx < 0 ? 1 : -1;
+      const layer = activeLayer(current.expression);
+      resonate(current.expression, current.host, layer);
+      markCharge(current.host, GESTURE_CHARGE.swipe);
+      current.host?.setAttribute(ATTR.source, 'start');
+      if (coarse) armSettle();
+      return;
+    }
+
+    if (absX < 10 && absY < 10) {
+      const layer = activeLayer(current.expression);
+      resonate(current.expression, current.host, layer);
+      markCharge(current.host, GESTURE_CHARGE.tap);
+      current.host?.setAttribute(ATTR.source, 'start');
+      depositLayer(current.expression, layer);
+      if (coarse) armSettle();
+    }
+  };
+
+  const onPointerCancel = (event) => {
+    if (!gesture || gesture.id !== event.pointerId) return;
+    if (gesture.holdTimer) clearTimeout(gesture.holdTimer);
+    if (gesture.frame) cancelAnimationFrame(gesture.frame);
+    document.removeEventListener('pointermove', onPointerMove);
+    gesture = null;
+  };
+
   document.addEventListener('pointerover', onEnter, { passive: true });
   document.addEventListener('pointerout', onLeave, { passive: true });
+  document.addEventListener('pointerdown', onPointerDown, { passive: true });
+  document.addEventListener('pointerup', finishGesture, { passive: true });
+  document.addEventListener('pointercancel', onPointerCancel, { passive: true });
   document.addEventListener('focusin', onEnter, { passive: true });
   document.addEventListener('focusout', onLeave, { passive: true });
   document.addEventListener('keydown', onKinKey);
@@ -598,9 +866,15 @@ export async function initExpressionResonance(ctx = {}) {
     offGathered?.();
     offComposted?.();
     clearTimeout(dwellTimer);
+    clearTimeout(settleTimer);
+    gesture = null;
     clearResonance();
     document.removeEventListener('pointerover', onEnter);
     document.removeEventListener('pointerout', onLeave);
+    document.removeEventListener('pointerdown', onPointerDown);
+    document.removeEventListener('pointerup', finishGesture);
+    document.removeEventListener('pointercancel', onPointerCancel);
+    document.removeEventListener('pointermove', onPointerMove);
     document.removeEventListener('focusin', onEnter);
     document.removeEventListener('focusout', onLeave);
     document.removeEventListener('keydown', onKinKey);
@@ -633,7 +907,7 @@ export const EXPRESSION_RESONANCE_CONTRACT = Object.freeze({
   storageKey: STORAGE_KEY,
   encounterMs: ENCOUNTER_MS,
   salienceBands: SALIENCE_BANDS,
-  rule: 'hover previews kinship (pulse); dwell banks salience (residue); never the reverse. Capsule projection is a kinship dimension and a live channel when a lab names the next region. [ and ] travel lit kin while a source is held. Living terms join the field by authored data-spw-concept. Crawl is authored, never inferred from tight dots. Parser lives at `__SPW_SITE__.parser.parse`.',
+  rule: 'A fine pointer hover previews every kin layer and dwell banks the whole expression. A tap collects the active layer as preview. A hold sustains that layer at double weight. A finger tracing a card charges each expression it crosses: the first is the start anchor, the last is the end anchor, and the hosts between bank only their subject. A swipe that stays on one host still walks the layers. Touch does not dwell. The move listener exists only while the pointer is down.',
 });
 
 export const SPW_MODULE_EXPORT = Object.freeze({
