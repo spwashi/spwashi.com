@@ -37,6 +37,7 @@ export function defaultConfig(host) {
     found: false,
     name: "",
     intro: "",
+    title: "",
     button: "Make the card",
     kinds: CONTEXTS.map((c) => c.slug),
     labels: {},
@@ -129,6 +130,7 @@ export function readConfig(raw, host) {
   }
 
   config.name = cleanText(raw.name, 60);
+  config.title = cleanText(raw.title, 80);
   config.intro = cleanText(raw.intro, 300);
   if (raw.button != null) config.button = cleanText(raw.button, 40) || config.button;
 
@@ -207,7 +209,8 @@ export function starterConfig(host) {
     schema: CONFIG_SCHEMA,
     host,
     name: "",
-    intro: "Tell us what worked and what did not. We read every card we are sent.",
+    title: "Feedback",
+    intro: "Tell us what was hard to use and what was clear.",
     kinds: ["problem", "suggestion", "question", "appreciation"],
     labels: { problem: { title: "Bug report", prompt: "What broke, and on which page?" } },
     from: "optional",
@@ -222,6 +225,7 @@ export function starterConfig(host) {
 export function configToFile(config) {
   const file = { schema: CONFIG_SCHEMA, host: config.host };
   if (config.name) file.name = config.name;
+  if (config.title) file.title = config.title;
   if (config.intro) file.intro = config.intro;
   file.kinds = [...config.kinds];
   if (Object.keys(config.labels).length) file.labels = config.labels;

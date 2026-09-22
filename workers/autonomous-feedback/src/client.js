@@ -21,10 +21,31 @@ function clientMain() {
 
   // A pasted link becomes a domain as soon as the field is left.
   document.querySelectorAll("[data-host-field]").forEach((field) => {
+    const visit = field.parentElement?.querySelector("[data-visit]") || document.querySelector("[data-visit]");
+    const paintVisit = () => {
+      const clean = normalizeHost(field.value);
+      if (!visit) return;
+      if (validSubject(clean)) {
+        visit.href = `https://${clean}/`;
+        visit.hidden = false;
+        visit.textContent = `Open ${clean}`;
+      } else {
+        visit.hidden = true;
+        visit.removeAttribute("href");
+      }
+    };
+    field.addEventListener("input", paintVisit);
     field.addEventListener("change", () => {
       const clean = normalizeHost(field.value);
       if (clean && clean !== field.value) field.value = clean;
+      paintVisit();
+      const form = field.closest("form");
+      if (!form || form.querySelector('input[type="hidden"][name="host"]') || !validSubject(clean)) return;
+      const kind = form.querySelector('input[name="kind"]:checked')?.value || "problem";
+      const next = `/${clean}/${kind}${location.search}`;
+      if (next !== location.pathname + location.search) history.pushState(null, "", next);
     });
+    paintVisit();
   });
 
   // Setup: the code, preview, and test commands follow the form.

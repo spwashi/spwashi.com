@@ -179,6 +179,8 @@ const SHELL = `
     .fields dd { margin: 0; color: var(--muted); }
     @media (max-width: 40rem) { .fields { grid-template-columns: 1fr; } .fields dd { margin-bottom: .4rem; } }
     .lede { font-size: 1.12rem; line-height: 1.45; margin: 0 0 1rem; }
+    .visit { margin: .15rem 0 .8rem; }
+    .visit a { display: inline-flex; align-items: center; min-height: 44px; }
     .steps { list-style: none; counter-reset: step; padding: 0; margin: 1.4rem 0 .8rem; display: grid; gap: .7rem; }
     .steps li { counter-increment: step; display: grid; grid-template-columns: 2rem 1fr; gap: .2rem .6rem; margin: 0; }
     .steps li::before { content: counter(step); grid-row: span 2; display: grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid var(--line); border-radius: 50%; color: var(--accent); font-variant-numeric: tabular-nums; }

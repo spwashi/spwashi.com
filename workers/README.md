@@ -39,7 +39,7 @@ request asks for JSON.
 A site configures its own form and theme by publishing
 `https://{host}/.well-known/autonomous-feedback.json`
 (`autonomous-feedback.client.v0`): kinds and their order, per-kind labels, a
-display name, an intro, the button text, an optional or required name field,
+display name, a form heading (`title`), an intro, the button text, an optional or required name field,
 note length bounds, extra frame ancestors, and theme tokens (mode, background,
 text, accent, corners, font). The file only configures the host that served it,
 is cached for five minutes, and falls back to defaults field by field; colours
