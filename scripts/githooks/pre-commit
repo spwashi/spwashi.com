@@ -8,6 +8,11 @@ fi
 
 git diff --cached --check
 
+# Route HTML and catalog inputs stamp the committed search index. A commit
+# that stages those inputs without the regenerated index fails here, before
+# push. The hour-long shared cache is not the failure.
+node scripts/lib/manifest-stamp.mjs --staged
+
 # node --check parses JS. tsc owns .ts/.mts on check:local / pre-push.
 staged=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(js|mjs|cjs)$' || true)
 fail=0

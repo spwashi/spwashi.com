@@ -12,6 +12,7 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
+import { computeManifestSourceStamp, writeManifestCacheStamp } from './lib/manifest-stamp.mjs';
 import { buildRouteRuntimeManifest } from './typed/site-contracts/index.mjs';
 import { COMPONENT_FIXTURES } from '../public/js/kernel/component-fixtures.js';
 import { REGION_ECOLOGY_FIXTURES } from '../public/js/kernel/region-ecology-fixtures.js';
@@ -472,8 +473,10 @@ export async function generateSiteSearchIndex() {
     if (entry.motion) byMotion[entry.motion] = (byMotion[entry.motion] || 0) + 1;
   }
 
+  const sourceStamp = await computeManifestSourceStamp();
   const payload = {
     generatedAt: new Date().toISOString(),
+    sourceStamp,
     version: 2,
     routeCount: routes.length,
     componentCount: components.length,
@@ -492,6 +495,7 @@ export async function generateSiteSearchIndex() {
 
   await fs.mkdir(path.dirname(OUTPUT), { recursive: true });
   await fs.writeFile(OUTPUT, `${JSON.stringify(payload)}\n`, 'utf8');
+  await writeManifestCacheStamp(sourceStamp, payload.generatedAt);
   return payload;
 }
 

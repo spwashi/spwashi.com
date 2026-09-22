@@ -1,15 +1,34 @@
+import { promises as fs } from 'node:fs';
 import process from 'node:process';
 import { buildRouteRuntimeManifest, collectManifestIssues, inspectRouteRuntimeManifestCache, runGitDiffCheck, runSyntaxChecks, } from './site-contracts/index.mjs';
+import { inspectManifestStamp, ROUTE_MANIFEST_CACHE } from './manifest-stamp.mjs';
 import { collectCssContractReport } from './css-contracts.mjs';
 import { collectJsonContractReport } from './json-contracts.mjs';
 import { collectRuntimeContractReport } from './runtime-contracts.mjs';
 export async function main() {
     // Validation should not mutate the repo-local agent cache. `npm run manifest`
-    // is the explicit refresh command; checks derive the same data in memory.
+    // is the explicit refresh command. A matching search-index stamp younger
+    // than an hour reuses that shared cache; the committed stamp is the failure.
     console.log('[check] phase=manifest');
-    const manifest = await buildRouteRuntimeManifest();
+    const stamp = await inspectManifestStamp();
+    let manifest;
+    let manifestCache;
+    if (stamp.withinWindow) {
+        try {
+            manifest = JSON.parse(await fs.readFile(ROUTE_MANIFEST_CACHE, 'utf8'));
+            manifestCache = { cachePath: ROUTE_MANIFEST_CACHE, details: [], status: 'reused' };
+            console.log(`[check] manifest=cache cache=reused age=${Math.round((stamp.ageMs || 0) / 60000)}m`);
+        }
+        catch {
+            manifest = await buildRouteRuntimeManifest();
+            manifestCache = await inspectRouteRuntimeManifestCache(manifest);
+        }
+    }
+    else {
+        manifest = await buildRouteRuntimeManifest();
+        manifestCache = await inspectRouteRuntimeManifestCache(manifest);
+    }
     const manifestIssues = collectManifestIssues(manifest);
-    const manifestCache = await inspectRouteRuntimeManifestCache(manifest);
     console.log('[check] phase=syntax');
     const syntaxReport = await runSyntaxChecks();
     console.log('[check] phase=css');
@@ -19,7 +38,7 @@ export async function main() {
     console.log('[check] phase=json');
     const jsonReport = await collectJsonContractReport();
     const gitDiffResult = runGitDiffCheck();
-    console.log(`[check] manifest=in-memory cache=${manifestCache.status}`);
+    console.log(`[check] manifest=${manifestCache.status === 'reused' ? 'cache' : 'in-memory'} cache=${manifestCache.status} index=${stamp.indexStatus}`);
     console.log(`[check] routes=${manifest.routeCount} svgRoutes=${manifest.maps.svgRoutes.length} specRoutes=${manifest.maps.specRoutes.length}`);
     console.log(`[check] syntax targets=${syntaxReport.targets.length} mode=${syntaxReport.mode} concurrency=${syntaxReport.concurrency}`);
     console.log(`[check] css files=${cssReport.cssFiles.length} imports=${cssReport.imports.length} routeStylesheets=${cssReport.linkedStylesheets.length} sources=${cssReport.sourceFiles.length}`);
@@ -28,7 +47,13 @@ export async function main() {
     const warnings = [
         ...manifestIssues.warnings.map((warning) => `[manifest] ${warning}`),
         ...(manifestCache.status === 'missing'
-            ? ['[manifest-cache] cache absent; run npm run manifest before relying on agent route/runtime summaries']
+            ? ['[manifest-cache] shared cache absent; this check parsed the routes. npm run manifest refills the one-hour window']
+            : []),
+        ...(manifestCache.status === 'stale' && stamp.indexStatus === 'fresh'
+            ? ['[manifest-cache] shared cache drifted from the routes; the committed search index stamp still matches. npm run manifest refreshes the cache']
+            : []),
+        ...(manifestCache.status === 'invalid' && stamp.indexStatus === 'fresh'
+            ? ['[manifest-cache] shared cache is unreadable; the committed search index stamp still matches']
             : []),
         ...cssReport.warnings.map((warning) => `[css] ${warning}`),
         ...runtimeReport.warnings.map((warning) => `[runtime] ${warning}`),
@@ -43,12 +68,9 @@ export async function main() {
         }
     }
     const failures = [];
-    if (manifestCache.status === 'stale' || manifestCache.status === 'invalid') {
-        failures.push(`[manifest-cache] ${manifestCache.status}; run npm run manifest`);
-        for (const detail of manifestCache.details.slice(0, 12)) {
-            console.log(`  manifest-cache: ${detail}`);
-        }
-        console.log('  hint: copy or body metadata can stale this cache; commit public/data/site-search-index.json and public/js/generated/spw-expressions.js if they moved');
+    if (stamp.indexStatus !== 'fresh') {
+        failures.push(`[manifest-stamp] search index is ${stamp.indexStatus}; run npm run manifest and commit public/data/site-search-index.json and public/js/generated/spw-expressions.js if they moved`);
+        console.log(`  manifest-stamp: committed=${stamp.committedStamp ? stamp.committedStamp.slice(0, 12) : 'none'} live=${stamp.liveStamp.slice(0, 12)}`);
     }
     if (manifestIssues.errors.length) {
         failures.push(`[manifest] ${manifestIssues.errors.length} error(s)`);
