@@ -6,6 +6,7 @@
  */
 
 import { isOwnAffordanceTarget, observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
+import { GESTURE_MEASURE } from '/public/js/runtime/interaction/gesture-measure.js';
 import { resolveOwnerDocument } from '/public/js/kernel/browser-primitives.js';
 import { syncEffectInterpretation } from './effect-interpretation.js';
 
@@ -21,9 +22,9 @@ const INTERACTIVE_FIGURE_SELECTOR = [
 const DISCOVERY_SELECTOR = '[data-spw-image-reward], [data-spw-image-discovery]';
 const STUDY_GESTURE_CONTRACT = 'tap:prime swipe:toggle-lens hold:inspect';
 const DISCOVERY_GESTURE_CONTRACT = 'tap:discover swipe:toggle-lens hold:inspect';
-const HOLD_MS = 420;
-const SWIPE_MIN_PX = 48;
-const SWIPE_DOMINANCE = 1.45;
+const HOLD_MS = GESTURE_MEASURE.holdMs;
+const SWIPE_MIN_PX = GESTURE_MEASURE.swipeMinPx;
+const SWIPE_DOMINANCE = GESTURE_MEASURE.swipeDominance;
 const LENS_FEEDBACK_MS = 720;
 const PRIME_SETTLE_MS = 1600;
 const DEFAULT_LENS_CUES = ['probe', 'frame', 'surface'];
