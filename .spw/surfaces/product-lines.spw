@@ -250,6 +250,36 @@ product_lines: .{
    next_step = `Design one box pair that shares residue. Do not implement kits from the data-model prime. Do not put PDC ethics in a first fold.`
   }[reg=facet]
  }[reg=facet]
+ development_services = .{
+  pitch = `Website code and development services, proven on this site first. Pacing is the craft: what a page owes a reader first, what can wait, and a measured result — core CSS 40% lighter over the wire with no rule changed.`
+  feature_shape = `The engineering register on /about/website/ as proof; /services/systems/#web and #curricularize as the offers; css:payload and the dist delivery form as the numbers a client can rerun.`
+  collectible_unit = `A paced site, a measured before-and-after, or a codebase whose plans, checks, and change notes teach the team that inherits it.`
+  audience_primary = shared
+  audience_bridge = #[
+   `independent creators read it as a fast site that stays theirs`,
+   `small teams read it as a codebase their next hire can learn from`,
+   `engineers read the measured delivery form and the change grammar`,
+   `mentees read it as decentralized apprenticeship`
+   `peers with SOAP or REST pipelines read /services/systems/#protocols and the process-and-flow lineage behind it`
+  ][reg=set]
+  integration_contract = .{
+   audience = `creators and small teams who need a site or a codebase, and the community threads that keep returning: learning in the open, the Wednesday table, what I am learning.`
+   offer = `Web development paced for first paint; protocol and integration pipelines (SOAP, REST) built so a failure says where it happened; codebase curricularization. All three live on /services/systems/.`
+   proof = `/about/website/#engineering-register: 320 → 191 KiB gzip core CSS, reproducible with npm run css:payload.`
+   resonance = `Speed a visitor feels, without deleting the commentary that makes the code learnable.`
+   extension = `A client reruns the measure; a mentee picks up a plan; a conversation starts from a thread the community already cares about.`
+   next_action = `/services/systems/#web or /services/systems/#curricularize.`
+  }[reg=facet]
+  monetization_prime = .{
+   operation = `prime`
+   claim = `The code serves the creator's own ecosystem first. Paid structure arrives later as niche features or support channels, not as a gate on the site that proves the work.`
+   do_not_promote_until = `The creator names which niche features or support channels exist; do not invent tiers, prices, or a support SKU from this prime.`
+  }[reg=facet]
+  current_state = .{
+   summary = `Offers exist on /services/systems/. Proof now lives on /about/website/ and links back. No new tier or price.`
+   next_step = `Pick one support channel to name, then give it a card_shape before it gets a route.`
+  }[reg=facet]
+ }[reg=facet]
  spw_language_medium = .{
   pitch = `Spw as an expressive plain-text language, zero-framework browser projection engine, and human-agent co-creation medium. Proven across 144+ routes and 279 verified convention surfaces.`
   feature_shape = `Language hub, live AST parser (/tools/spw-parser/), operator atlas (/topics/software/spw/), and executable knowledge audits (spw-integrity.mjs).`
