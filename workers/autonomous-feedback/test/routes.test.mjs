@@ -67,10 +67,10 @@ test('setup fills every codeblock with the domain, kind, and method', async () =
   try {
     const empty = await page('/start');
     assert.match(empty, /Showing example\.com until you enter your domain/);
-    assert.match(empty, /href=&quot;https:\/\/autonomous\.feedback\/example\.com\/review&quot;/);
-    const setup = await page('/start?host=https%3A%2F%2Fshop.example%2F&how=form&kind=brief');
+    assert.match(empty, /href=&quot;https:\/\/autonomous\.feedback\/example\.com\/problem&quot;/);
+    const setup = await page('/start?host=https%3A%2F%2Fshop.example%2F&how=form&kind=question');
     assert.match(setup, /action=&quot;https:\/\/autonomous\.feedback\/shop\.example&quot;/);
-    assert.match(setup, /name=&quot;kind&quot; value=&quot;brief&quot;/);
+    assert.match(setup, /name=&quot;kind&quot; value=&quot;question&quot;/);
     assert.match(setup, /Question for shop\.example/);
     assert.match(setup, /curl -X POST https:\/\/autonomous\.feedback\/shop\.example/);
     assert.match(setup, /No configuration applied for shop\.example/);
@@ -91,25 +91,32 @@ test('setup fills every codeblock with the domain, kind, and method', async () =
 test('the write page is a labelled form with the kind as a choice', async () => {
   const restore = stubFetch();
   try {
-    const write = await page('/example.org/brief');
+    const write = await page('/example.org/question');
     assert.match(write, /<h1>Feedback for example\.org<\/h1>/);
-    assert.match(write, /name="kind" value="brief" checked/);
+    assert.match(write, /name="kind" value="question" checked/);
+    assert.match(write, /data-href="\/example\.org\/question"/);
     assert.match(write, /<legend>Kind of note<\/legend>/);
     assert.match(write, /<label for="note">Your note<\/label>/);
     assert.match(write, /aria-describedby="note-hint note-count"/);
     assert.match(write, /class="hp" aria-hidden="true"/);
     assert.match(write, />Make the card</);
     assert.match(write, /Something you want the person who runs the site to answer\./);
-    assert.match(await page('/review?host=example.org'), /id="host"[^>]*value="example\.org"/);
-    const moved = await get('autonomous.feedback', '/WWW.Example.org/review');
+    assert.match(await page('/problem?host=example.org'), /id="host"[^>]*value="example\.org"/);
+    const moved = await get('autonomous.feedback', '/WWW.Example.org/problem');
     assert.equal(moved.status, 301);
-    assert.equal(moved.headers.get('location'), 'https://autonomous.feedback/example.org/review');
+    assert.equal(moved.headers.get('location'), 'https://autonomous.feedback/example.org/problem');
+    // The URL names the kind by its label; old slugs move to the matching address.
+    const legacy = await get('autonomous.feedback', '/example.org/brief');
+    assert.equal(legacy.status, 301);
+    assert.equal(legacy.headers.get('location'), 'https://autonomous.feedback/example.org/question');
+    assert.equal((await get('autonomous.feedback', '/wonder?host=example.org')).headers.get('location'), 'https://autonomous.feedback/appreciation?host=example.org');
+    assert.equal((await get('autonomous.feedback', '/embed/example.org/review')).headers.get('location'), 'https://autonomous.feedback/embed/example.org/problem');
     const framed = await get('autonomous.feedback', '/embed/new-project.example');
     assert.equal(framed.headers.get('x-frame-options'), null);
     const policy = framed.headers.get('content-security-policy');
     assert.match(policy, /frame-ancestors https:\/\/new-project\.example/);
     assert.match(policy, /'self'/);
-    assert.equal((await get('autonomous.feedback', '/example.org/review')).headers.get('x-frame-options'), 'DENY');
+    assert.equal((await get('autonomous.feedback', '/example.org/problem')).headers.get('x-frame-options'), 'DENY');
   } finally {
     restore();
   }
@@ -118,20 +125,20 @@ test('the write page is a labelled form with the kind as a choice', async () => 
 test('a rejected note comes back in the form, not as JSON', async () => {
   const restore = stubFetch();
   try {
-    const short = await get('autonomous.feedback', '/example.org', form({ kind: 'review', note: '<b>no' }));
+    const short = await get('autonomous.feedback', '/example.org', form({ kind: 'problem', note: '<b>no' }));
     assert.equal(short.status, 400);
     const html = await short.text();
     assert.match(html, /class="error-summary" role="alert"/);
     assert.match(html, /Write at least 8 characters\. This note has 5\./);
     assert.match(html, /aria-invalid="true"/);
     assert.match(html, />&lt;b&gt;no<\/textarea>/);
-    const noSite = await get('autonomous.feedback', '/review', form({ host: 'not a site', note: 'Something is broken here.' }));
+    const noSite = await get('autonomous.feedback', '/problem', form({ host: 'not a site', note: 'Something is broken here.' }));
     assert.equal(noSite.status, 400);
     assert.match(await noSite.text(), /is not a domain/);
     const api = await get('autonomous.feedback', '/example.org', json({ note: 'short' }));
     assert.equal(api.status, 400);
     assert.equal((await api.json()).error, 'note_bounds');
-    for (const path of ['/review', '/example.org/review', '/embed/example.org']) {
+    for (const path of ['/problem', '/example.org/problem', '/embed/example.org']) {
       const rejected = await get('autonomous.feedback', path, { method: 'POST', body: 'unparsed', headers: { accept: 'application/json', 'content-type': 'application/json' } });
       assert.equal(rejected.status, 400);
     }
@@ -143,7 +150,7 @@ test('a rejected note comes back in the form, not as JSON', async () => {
 test('a note becomes a card to save, share, or post', async () => {
   const restore = stubFetch();
   try {
-    const card = await page('/example.org', form({ kind: 'wonder', note: 'The map on the about page <b>kept</b> going.' }));
+    const card = await page('/example.org', form({ kind: 'appreciation', note: 'The map on the about page <b>kept</b> going.' }));
     assert.match(card, /<h1>Your card is ready<\/h1>/);
     assert.match(card, /class="card-kind">Appreciation</);
     assert.match(card, /class="card-site">example\.org</);
@@ -153,12 +160,15 @@ test('a note becomes a card to save, share, or post', async () => {
     assert.match(card, /data-stamp><\/p>/);
     assert.match(card, /href="https:\/\/bsky\.app\/intent\/compose\?text=[^"]*example\.org/);
     assert.match(card, /Nothing was stored/);
-    const slip = await (await get('autonomous.feedback', '/example.org/review', json({ note: 'The checkout button does nothing after pay.' }))).json();
+    const slip = await (await get('autonomous.feedback', '/example.org/problem', json({ note: 'The checkout button does nothing after pay.' }))).json();
     assert.equal(slip.stored, false);
     assert.equal(slip.title, 'Problem');
     assert.match(slip.markdown, /checkout button does nothing/);
-    const switched = await (await get('autonomous.feedback', '/example.org/review', json({ kind: 'brief', note: 'Does the print edition ship abroad?' }))).json();
-    assert.equal(switched.context, 'brief');
+    const switched = await (await get('autonomous.feedback', '/example.org/problem', json({ kind: 'question', note: 'Does the print edition ship abroad?' }))).json();
+    assert.equal(switched.context, 'question');
+    // An old slug in a request body still works.
+    const aliased = await (await get('autonomous.feedback', '/example.org', json({ kind: 'practice', note: 'A dark mode would help at night.' }))).json();
+    assert.equal(aliased.context, 'suggestion');
   } finally {
     restore();
   }
@@ -171,8 +181,8 @@ test('a client file shapes the form, the theme, and the frame', async () => {
       host: 'shop.example',
       name: 'Shop',
       intro: 'Tell us what broke.',
-      kinds: ['review', 'brief', 'nonsense'],
-      labels: { review: { title: 'Bug report', prompt: 'What broke, and on which page?' } },
+      kinds: ['problem', 'question', 'nonsense', 'brief'],
+      labels: { problem: { title: 'Bug report', prompt: 'What broke, and on which page?' } },
       from: 'required',
       button: 'Send it',
       note: { min: 20, max: 500 },
@@ -195,13 +205,13 @@ test('a client file shapes the form, the theme, and the frame', async () => {
     assert.match(write, /--accent:#0f766e/);
     assert.match(write, /--radius:\.2rem/);
 
-    const missingFrom = await get('autonomous.feedback', '/shop.example', form({ kind: 'review', note: 'The cart empties itself on refresh.' }));
+    const missingFrom = await get('autonomous.feedback', '/shop.example', form({ kind: 'problem', note: 'The cart empties itself on refresh.' }));
     assert.equal(missingFrom.status, 400);
     assert.match(await missingFrom.text(), /Add your name or handle/);
-    const wrongKind = await get('autonomous.feedback', '/shop.example', form({ kind: 'wonder', from: 'Ana', note: 'I love the new product photos.' }));
+    const wrongKind = await get('autonomous.feedback', '/shop.example', form({ kind: 'appreciation', from: 'Ana', note: 'I love the new product photos.' }));
     assert.equal(wrongKind.status, 400);
     assert.match(await wrongKind.text(), /Shop does not take appreciation notes/);
-    const card = await page('/shop.example', form({ kind: 'review', from: 'Ana', note: 'The cart empties itself on refresh.' }));
+    const card = await page('/shop.example', form({ kind: 'problem', from: 'Ana', note: 'The cart empties itself on refresh.' }));
     assert.match(card, /class="card-site">Shop</);
     assert.match(card, /class="card-kind">Bug report</);
     assert.match(card, /— Ana/);
@@ -209,6 +219,8 @@ test('a client file shapes the form, the theme, and the frame', async () => {
     const report = await (await get('autonomous.feedback', '/shop.example/config.json')).json();
     assert.equal(report.found, true);
     assert.ok(report.problems.some((p) => /nonsense/.test(p)));
+    assert.ok(report.problems.some((p) => /brief → question/.test(p)));
+    assert.deepEqual(report.kinds, ['problem', 'question']);
     assert.ok(report.problems.some((p) => /contrast/.test(p)));
     assert.ok(report.problems.some((p) => /insecure\.example/.test(p)));
     assert.deepEqual(report.frame.ancestors, ['https://blog.shop.example']);
@@ -243,7 +255,7 @@ test('the inbox stays locked and old doors stay closed', async () => {
     assert.equal((await get('autonomous.feedback', '/example.org/inbox', { headers: { authorization: 'Bearer untrusted' } })).status, 501);
     assert.equal((await get('autonomous.feedback', '/example.org?bearer=untrusted')).status, 400);
     // No site used /for/{host}; it was retired, not redirected.
-    assert.equal((await get('autonomous.feedback', '/for/example.org/review')).status, 404);
+    assert.equal((await get('autonomous.feedback', '/for/example.org/problem')).status, 404);
     assert.equal((await get('autonomous.feedback', '/for/example.org')).status, 404);
     assert.equal((await get('autonomous.feedback', '/favicon.ico')).status, 404);
     assert.equal((await get('autonomous.feedback', '/example.org/nonsense')).status, 404);

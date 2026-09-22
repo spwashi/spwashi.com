@@ -50,7 +50,7 @@ function clientMain() {
       const usable = typed && validSubject(typed);
       const domain = usable ? typed : data.example;
       const how = setup.querySelector('input[name="how"]:checked')?.value || "link";
-      const slug = setup.querySelector('input[name="kind"]:checked')?.value || "review";
+      const slug = setup.querySelector('input[name="kind"]:checked')?.value || data.kinds[0].slug;
       const kind = data.kinds.find((k) => k.slug === slug) || data.kinds[0];
       const chosen = data.snippets[how];
       const code = fill(chosen.template, domain, kind);
@@ -94,7 +94,7 @@ function clientMain() {
       const params = new URLSearchParams();
       if (usable) params.set("host", typed);
       if (how !== "link") params.set("how", how);
-      if (slug !== "review") params.set("kind", slug);
+      if (slug !== data.kinds[0].slug) params.set("kind", slug);
       const next = `/start${params.toString() ? `?${params}` : ""}`;
       if (next !== location.pathname + location.search) history.replaceState(null, "", next);
     };

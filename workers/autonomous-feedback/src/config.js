@@ -9,7 +9,7 @@
  * corners, and font for the theme. No stylesheet URLs, no HTML, no scripts —
  * the page's CSP would block them, and tokens cannot inject anything.
  */
-import { CONTEXTS, NOTE_MAX, NOTE_MIN, isPublicSite } from "./model.js";
+import { CONTEXTS, LEGACY_SLUGS, NOTE_MAX, NOTE_MIN, isPublicSite, resolveSlug } from "./model.js";
 
 export const CONFIG_PATH = "/.well-known/autonomous-feedback.json";
 export const CONFIG_SCHEMA = "autonomous-feedback.client.v0";
@@ -134,19 +134,23 @@ export function readConfig(raw, host) {
 
   if (raw.kinds != null) {
     const wanted = Array.isArray(raw.kinds) ? raw.kinds : [];
-    const known = [...new Set(wanted.filter((slug) => CONTEXTS.some((c) => c.slug === slug)))];
-    const unknown = wanted.filter((slug) => !CONTEXTS.some((c) => c.slug === slug));
+    const legacy = wanted.filter((slug) => LEGACY_SLUGS[slug]);
+    if (legacy.length) problems.push(`kinds uses old names (${legacy.map((k) => `${k} → ${LEGACY_SLUGS[k]}`).join(", ")}); they still work, but use the new names.`);
+    const known = [...new Set(wanted.map(resolveSlug).filter(Boolean))];
+    const unknown = wanted.filter((slug) => !resolveSlug(slug));
     if (unknown.length) problems.push(`kinds has unknown entries (${unknown.map((k) => cleanText(String(k), 20)).join(", ")}); known kinds are ${CONTEXTS.map((c) => c.slug).join(", ")}.`);
     if (known.length) config.kinds = known;
     else problems.push("kinds names no known kind; showing all four.");
   }
 
   if (raw.labels != null && typeof raw.labels === "object" && !Array.isArray(raw.labels)) {
-    for (const [slug, label] of Object.entries(raw.labels)) {
-      if (!CONTEXTS.some((c) => c.slug === slug)) {
-        problems.push(`labels.${cleanText(slug, 20)} is not a known kind.`);
+    for (const [key, label] of Object.entries(raw.labels)) {
+      const slug = resolveSlug(key);
+      if (!slug) {
+        problems.push(`labels.${cleanText(key, 20)} is not a known kind.`);
         continue;
       }
+      if (slug !== key) problems.push(`labels.${key} uses an old name; use labels.${slug}.`);
       if (!label || typeof label !== "object") continue;
       const entry = {
         title: cleanText(label.title, 40),
@@ -204,8 +208,8 @@ export function starterConfig(host) {
     host,
     name: "",
     intro: "Tell us what worked and what did not. We read every card we are sent.",
-    kinds: ["review", "practice", "brief", "wonder"],
-    labels: { review: { title: "Bug report", prompt: "What broke, and on which page?" } },
+    kinds: ["problem", "suggestion", "question", "appreciation"],
+    labels: { problem: { title: "Bug report", prompt: "What broke, and on which page?" } },
     from: "optional",
     button: "Make the card",
     note: { min: NOTE_MIN, max: NOTE_MAX },

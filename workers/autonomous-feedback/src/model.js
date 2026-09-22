@@ -47,50 +47,63 @@ export function orgFromHostname(hostname) {
 }
 
 /**
- * Four kinds of note. The slug is the URL and never changes; the title names
- * the intent; the prompt says what to write; the example shows one.
+ * Four kinds of note. The slug is the URL and matches the title; the prompt
+ * says what to write; the example shows one.
  */
 export const CONTEXTS = Object.freeze([
   {
-    slug: "wonder",
+    slug: "appreciation",
     title: "Appreciation",
     operator: "wonder",
     prompt: "Something on the site that worked for you, or that you kept thinking about.",
     example: "The recipe page scaled every quantity when I changed the servings. That saved me a calculator.",
-    copy_unit: "feedback.wonder.lede",
-    expression: "feedback[wonder]{gift}",
+    copy_unit: "feedback.appreciation.lede",
+    expression: "feedback[appreciation]{gift}",
   },
   {
-    slug: "review",
+    slug: "problem",
     title: "Problem",
     operator: "action",
     prompt: "Something that is broken, confusing, or hard to use, and where it happened.",
     example: "On the checkout page, the Pay button does nothing on my phone (Safari, iOS 18).",
-    copy_unit: "feedback.review.lede",
-    expression: "feedback[review]{claim}",
+    copy_unit: "feedback.problem.lede",
+    expression: "feedback[problem]{claim}",
   },
   {
-    slug: "practice",
+    slug: "suggestion",
     title: "Suggestion",
     operator: "concept-edge",
     prompt: "An idea for what the site could add, change, or stop doing.",
     example: "A dark mode would help; I read the archive at night.",
-    copy_unit: "feedback.practice.lede",
-    expression: "feedback[practice]{brief}",
+    copy_unit: "feedback.suggestion.lede",
+    expression: "feedback[suggestion]{idea}",
   },
   {
-    slug: "brief",
+    slug: "question",
     title: "Question",
     operator: "frame",
     prompt: "Something you want the person who runs the site to answer.",
     example: "Is the print edition still shipping outside the US?",
-    copy_unit: "feedback.brief.lede",
-    expression: "feedback[brief]{address}",
+    copy_unit: "feedback.question.lede",
+    expression: "feedback[question]{address}",
   },
 ]);
 
+/** Slugs used before 2026-09-22, when the URL did not match the label. */
+export const LEGACY_SLUGS = Object.freeze({ wonder: "appreciation", review: "problem", practice: "suggestion", brief: "question" });
+
+export const DEFAULT_KIND = "problem";
+
+/** The current slug for a slug or a legacy alias, or "" if it names no kind. */
+export function resolveSlug(slug) {
+  const value = String(slug || "").toLowerCase();
+  if (CONTEXTS.some((c) => c.slug === value)) return value;
+  return LEGACY_SLUGS[value] || "";
+}
+
 export function contextBySlug(slug) {
-  return CONTEXTS.find((c) => c.slug === slug) || null;
+  const resolved = resolveSlug(slug);
+  return CONTEXTS.find((c) => c.slug === resolved) || null;
 }
 
 /** Why a note cannot become a card yet, in the writer's words. */
