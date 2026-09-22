@@ -172,6 +172,9 @@ const SHELL = `
     .tabpanel .note { margin: 0 0 .6rem; }
     label.check { display: flex; align-items: center; gap: .55rem; min-height: 44px; margin: 0; color: var(--fg); font-size: .95rem; cursor: pointer; }
     label.check input { width: 1.1rem; height: 1.1rem; accent-color: var(--accent); }
+    .send-to { margin: 1.6rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .send-to h2 { margin: 0 0 .4rem; }
+    .send-to .actions .door { margin-top: .6rem; }
     details { margin: .8rem 0; }
     summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; color: var(--accent); }
     .fields { display: grid; grid-template-columns: minmax(7rem, max-content) 1fr; gap: .5rem 1rem; margin: .6rem 0 0; }

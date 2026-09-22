@@ -9,7 +9,7 @@
  * corners, and font for the theme. No stylesheet URLs, no HTML, no scripts —
  * the page's CSP would block them, and tokens cannot inject anything.
  */
-import { CONTEXTS, LEGACY_SLUGS, NOTE_MAX, NOTE_MIN, isPublicSite, resolveSlug } from "./model.js";
+import { CONTEXTS, LEGACY_SLUGS, NOTE_MAX, NOTE_MIN, isPublicSite, resolveSlug, validSubject } from "./model.js";
 
 export const CONFIG_PATH = "/.well-known/autonomous-feedback.json";
 export const CONFIG_SCHEMA = "autonomous-feedback.client.v0";
@@ -38,6 +38,7 @@ export function defaultConfig(host) {
     name: "",
     intro: "",
     title: "",
+    contact: {},
     button: "Make the card",
     kinds: CONTEXTS.map((c) => c.slug),
     labels: {},
@@ -163,6 +164,27 @@ export function readConfig(raw, host) {
     }
   }
 
+  // Where the owner takes cards by direct message. Owner-supplied only: the
+  // Worker never looks a handle up or guesses one.
+  if (raw.contact != null) {
+    if (typeof raw.contact !== "object" || Array.isArray(raw.contact)) {
+      problems.push("contact must be an object like { \"bluesky\": \"example.com\", \"x\": \"example\" }.");
+    } else {
+      for (const [network, value] of Object.entries(raw.contact)) {
+        const handle = String(value ?? "").trim().replace(/^@/, "");
+        if (network === "bluesky") {
+          if (validSubject(handle.toLowerCase())) config.contact.bluesky = handle.toLowerCase();
+          else problems.push(`contact.bluesky "${cleanText(handle, 60)}" is not a Bluesky handle like example.com or name.bsky.social.`);
+        } else if (network === "x") {
+          if (/^[A-Za-z0-9_]{1,15}$/.test(handle)) config.contact.x = handle;
+          else problems.push(`contact.x "${cleanText(handle, 60)}" is not an X handle (up to 15 letters, digits, or underscores).`);
+        } else {
+          problems.push(`contact.${cleanText(network, 20)} is not supported; use bluesky or x.`);
+        }
+      }
+    }
+  }
+
   if (raw.from != null) {
     if (["off", "optional", "required"].includes(raw.from)) config.from = raw.from;
     else problems.push(`from must be "off", "optional", or "required"; using "off".`);
@@ -226,6 +248,7 @@ export function configToFile(config) {
   const file = { schema: CONFIG_SCHEMA, host: config.host };
   if (config.name) file.name = config.name;
   if (config.title) file.title = config.title;
+  if (Object.keys(config.contact).length) file.contact = { ...config.contact };
   if (config.intro) file.intro = config.intro;
   file.kinds = [...config.kinds];
   if (Object.keys(config.labels).length) file.labels = config.labels;
