@@ -100,7 +100,7 @@ test('the write page is a labelled form with the kind as a choice', async () => 
     assert.match(write, /aria-describedby="note-hint note-count"/);
     assert.match(write, /class="hp" aria-hidden="true"/);
     assert.match(write, />Make the card</);
-    assert.match(write, /Something you want the person who runs the site to answer\./);
+    assert.match(write, /What you need the person who runs the site to answer\./);
     assert.match(await page('/problem?host=example.org'), /id="host"[^>]*value="example\.org"/);
     const moved = await get('autonomous.feedback', '/WWW.Example.org/problem');
     assert.equal(moved.status, 301);
@@ -180,6 +180,7 @@ test('a client file shapes the form, the theme, and the frame', async () => {
       schema: 'autonomous-feedback.client.v0',
       host: 'shop.example',
       name: 'Shop',
+      title: 'What was hard to use?',
       intro: 'Tell us what broke.',
       kinds: ['problem', 'question', 'nonsense', 'brief'],
       labels: { problem: { title: 'Bug report', prompt: 'What broke, and on which page?' } },
@@ -193,7 +194,8 @@ test('a client file shapes the form, the theme, and the frame', async () => {
   });
   try {
     const write = await page('/shop.example');
-    assert.match(write, /<h1>Feedback for Shop<\/h1>/);
+    assert.match(write, /<h1>What was hard to use\?<\/h1>/);
+    assert.match(write, /href="https:\/\/shop\.example\/"/);
     assert.match(write, /Tell us what broke\./);
     assert.match(write, /<strong>Bug report<\/strong>/);
     assert.doesNotMatch(write, /Appreciation/);

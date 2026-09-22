@@ -1,5 +1,5 @@
 import { escapeHtml, layout } from "../../lib/shell.js";
-import { CONTEXTS, DEFAULT_KIND, NOTE_MAX, NOTE_MIN, contextBySlug } from "./model.js";
+import { CONTEXTS, DEFAULT_KIND, NOTE_MAX, NOTE_MIN, contextBySlug, isPublicSite } from "./model.js";
 import { CLIENT_SCRIPT } from "./client.js";
 import { CONFIG_PATH, configToFile, defaultConfig, siteKinds, starterConfig, themeCss } from "./config.js";
 
@@ -78,7 +78,8 @@ function hostField({ id = "host", host = "", error = "", label = "Your site", hi
   return `<label for="${id}">${escapeHtml(label)}</label>
   <p class="hint" id="${id}-hint">${escapeHtml(hint)}</p>
   ${fieldError(`${id}-error`, error)}
-  <input id="${id}" name="host" type="text" inputmode="url" value="${escapeHtml(host)}" placeholder="${EXAMPLE_HOST}" maxlength="253" autocomplete="url" autocapitalize="none" spellcheck="false" enterkeyhint="go" data-host-field aria-describedby="${described}"${error ? ` aria-invalid="true" autofocus` : ""}>`;
+  <input id="${id}" name="host" type="text" inputmode="url" value="${escapeHtml(host)}" placeholder="${EXAMPLE_HOST}" maxlength="253" autocomplete="url" autocapitalize="none" spellcheck="false" enterkeyhint="go" data-host-field aria-describedby="${described}"${error ? ` aria-invalid="true" autofocus` : ""}>
+  <p class="visit"><a data-visit hidden>Open this site</a></p>`;
 }
 
 /** A static card used as an example; the same markup the card page renders. */
@@ -138,7 +139,7 @@ export function renderHome(host = "") {
 <h2>How it works</h2>
 <ol class="steps">
   <li><strong>Add a link, frame, or form to your site.</strong> The setup page writes the code with your domain filled in.</li>
-  <li><strong>A reader writes a note.</strong> They choose appreciation, problem, suggestion, or question.</li>
+  <li><strong>A reader writes a note.</strong> They start with a problem, then a suggestion, a question, or a note about what was clear.</li>
   <li><strong>The reader sends you the card.</strong> They save the image or copy the text and send it by direct message, or in a post that mentions your site.</li>
 </ol>
 <p class="note">Free while readers send the cards themselves. Stored inboxes for site owners come later.</p>
@@ -216,7 +217,8 @@ export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, erro
   <details>
     <summary>What each field does</summary>
     <dl class="fields">
-      <dt><code>kinds</code></dt><dd>Which kinds of note to show, in order: <code>problem</code>, <code>suggestion</code>, <code>question</code>, <code>appreciation</code>.</dd>
+      <dt><code>title</code></dt><dd>The heading of the form, up to 80 characters. Without it, the heading is “Feedback for” the site name.</dd>
+      <dt><code>kinds</code></dt><dd>Which kinds of note to show, in the order a reader meets them. Default: problem, suggestion, question, appreciation.</dd>
       <dt><code>labels</code></dt><dd>Rename a kind and change its prompt or example. Title up to 40 characters, prompt up to 160.</dd>
       <dt><code>name</code>, <code>intro</code>, <code>button</code></dt><dd>Your site's display name, a line above the form (up to 300 characters), and the submit button text.</dd>
       <dt><code>from</code></dt><dd><code>"off"</code>, <code>"optional"</code>, or <code>"required"</code>: a field for the writer's name or handle, printed on the card. Nothing is stored either way.</dd>
@@ -301,6 +303,7 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
   const kindsShown = siteKinds(site);
   context = kindsShown.find((k) => k.slug === context.slug) || kindsShown[0];
   const display = site.name || host;
+  const heading = site.title || (lockHost ? `Feedback for ${display}` : "Write feedback");
   const root = embed ? "/embed" : "";
   const action = lockHost ? `${root}/${encodeURIComponent(host)}` : `/${context.slug}`;
   const canonical = lockHost ? `${ORIGIN}${root}/${encodeURIComponent(host)}/${context.slug}` : `${ORIGIN}/${context.slug}`;
@@ -319,7 +322,7 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
   ${fieldError("from-error", errors.from)}
   <input id="from" name="from" type="text" value="${escapeHtml(values.from ?? "")}" maxlength="80" autocomplete="nickname" aria-describedby="from-hint${errors.from ? " from-error" : ""}"${site.from === "required" ? " required" : ""}${errors.from ? ` aria-invalid="true"` : ""}>`;
   return layout({
-    title: lockHost ? `Feedback for ${host} — autonomous.feedback` : "Write feedback — autonomous.feedback",
+    title: `${heading} — autonomous.feedback`,
     description: lockHost ? `Write a note about ${host} and get a card to send to its owner.` : "Write a note about any site and get a card to send to its owner.",
     canonical,
     quiet: true,
@@ -327,7 +330,8 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
     script: CLIENT_SCRIPT,
     themeCss: themeCss(site.theme),
     body: `${embed ? "" : kicker()}
-<h1>${lockHost ? `Feedback for ${escapeHtml(display)}` : "Write feedback"}</h1>
+<h1>${escapeHtml(heading)}</h1>
+${lockHost && isPublicSite(host) ? `<p class="visit"><a href="https://${escapeHtml(host)}/">Open ${escapeHtml(host)}</a></p>` : ""}
 ${site.intro ? `<p class="lede">${escapeHtml(site.intro)}</p>` : ""}
 ${embed ? "" : `<p class="${site.intro ? "note" : "lede"}">Your note becomes a card you can save and send to whoever runs ${lockHost ? escapeHtml(display) : "the site"}. Nothing is stored.</p>`}
 ${summary}
