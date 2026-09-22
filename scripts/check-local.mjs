@@ -45,9 +45,11 @@ const VALIDATORS = [
   },
   { label: 'check-agents', script: 'scripts/check-agent-contracts.mjs' },
   { label: 'check-workers', script: 'scripts/check-workers.mjs' },
+  // Skipped when the tree matches the last green run (see run-module-tests.mjs);
+  // --force re-runs it.
   {
     label: 'test:modules',
-    script: 'scripts/run-module-tests.mjs',
+    args: ['scripts/run-module-tests.mjs', ...(process.argv.includes('--force') ? [] : ['--cached'])],
   },
 ];
 
