@@ -1,8 +1,13 @@
-import { BASE_SECURITY, JSON_CORS, escapeHtml, htmlResponse, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
+import { BASE_SECURITY, JSON_CORS, htmlResponse, jsonResponse, wantsJson } from "../../lib/shell.js";
+import { CONTEXTS, VERSION, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
+import { loadConfig, siteKinds } from "./config.js";
+import { renderCard, renderHome, renderMeter, renderNotFound, renderStart, renderWrite } from "./pages.js";
 
 /**
- * autonomous.feedback — meter and a form for one site.
- * A queue can drain filings later. This script does not serve spw.quest.
+ * autonomous.feedback — a feedback form for any website. A note becomes a card
+ * the writer sends by hand; nothing is stored. A site can shape its form and
+ * theme with /.well-known/autonomous-feedback.json (config.js). This script
+ * does not serve spw.quest.
  */
 
 const PEERS = Object.freeze([
@@ -13,70 +18,19 @@ const PEERS = Object.freeze([
   { role: "guide", url: "https://spwashi.com/tools/spw-parser/" },
 ]);
 
-const VERSION = "0.2.0";
+const TEXT_HEADERS = { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "no-store" };
 
-// A reference selects a namespace, never permission or an origin to fetch.
-function validSubject(value) {
-  return value.length <= 253 && value.includes(".") && value.split(".").every(
-    (label) => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label)
-  );
+function methodNotAllowed(allow) {
+  return new Response("Method not allowed", { status: 405, headers: { ...TEXT_HEADERS, Allow: allow } });
 }
 
-function isPublicSite(value) {
-  if (!validSubject(value)) return false;
-  const labels = value.split(".");
-  if (labels.every((label) => /^\d+$/.test(label))) return false;
-  const last = labels[labels.length - 1];
-  return !["local", "localhost", "internal", "intranet"].includes(last);
+function notFound(request, message) {
+  if (wantsJson(request)) return jsonResponse({ error: "not_found" }, "no-store", 404);
+  return htmlResponse(renderNotFound(message), { status: 404, cache: "no-store" });
 }
 
-function orgFromHostname(hostname) {
-  const host = String(hostname || "").toLowerCase().replace(/\.$/, "");
-  if (host === "autonomous.feedback" || host === "www.autonomous.feedback") return null;
-  const suffix = ".autonomous.feedback";
-  if (!host.endsWith(suffix)) return null;
-  const label = host.slice(0, -suffix.length);
-  if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label)) return null;
-  return label;
-}
-
-const CONTEXTS = Object.freeze([
-  {
-    slug: "wonder",
-    title: "Wonder",
-    operator: "wonder",
-    prompt: "The thing that would not round.",
-    copy_unit: "feedback.wonder.lede",
-    expression: "feedback[wonder]{gift}",
-  },
-  {
-    slug: "review",
-    title: "Review",
-    operator: "action",
-    prompt: "What is off. What to keep. No stars.",
-    copy_unit: "feedback.review.lede",
-    expression: "feedback[review]{claim}",
-  },
-  {
-    slug: "practice",
-    title: "Practice",
-    operator: "concept-edge",
-    prompt: "A brief about the work — the lane, not a ticket.",
-    copy_unit: "feedback.practice.lede",
-    expression: "feedback[practice]{brief}",
-  },
-  {
-    slug: "brief",
-    title: "Brief",
-    operator: "frame",
-    prompt: "One claim. Address a named handle.",
-    copy_unit: "feedback.brief.lede",
-    expression: "feedback[brief]{address}",
-  },
-]);
-
-function contextBySlug(slug) {
-  return CONTEXTS.find((c) => c.slug === slug) || null;
+function headOr(request, response) {
+  return request.method === "HEAD" ? new Response(null, { status: response.status, headers: response.headers }) : response;
 }
 
 function inboxContract(host, context = null, org = null) {
@@ -126,68 +80,161 @@ function inboxContract(host, context = null, org = null) {
   };
 }
 
-async function handleFor(request, url, host, rest, org = null, embed = false) {
-  const subject = String(host || "").toLowerCase();
-  if (!validSubject(subject)) {
-    return new Response("Invalid site reference", {
-      status: 404,
-      headers: { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "no-store" },
-    });
+function embedHtml(body, subject, config, cache = "no-store", status = 200) {
+  const headers = { ...BASE_SECURITY };
+  delete headers["X-Frame-Options"];
+  const ancestors = [frameAncestors(subject), ...(config?.frame?.ancestors || []), "'self'"].join(" ");
+  headers["Content-Security-Policy"] = BASE_SECURITY["Content-Security-Policy"]
+    .replace("frame-ancestors 'none'", `frame-ancestors ${ancestors}`);
+  headers["Content-Type"] = "text/html; charset=UTF-8";
+  headers["Cache-Control"] = cache;
+  headers["Cross-Origin-Resource-Policy"] = "cross-origin";
+  headers["X-Robots-Tag"] = "noindex, nofollow";
+  return new Response(body, { status, headers });
+}
+
+function cleanFrom(value) {
+  return String(value || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 80);
+}
+
+/**
+ * Read a submission. Returns { filing } or { errors, values, status, code }.
+ * The host and kind can come from the path (fallbacks) or the body; the body wins,
+ * so one form can switch kinds without changing its action.
+ */
+async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug = "review", org = null } = {}) {
+  const length = Number(request.headers.get("content-length") || 0);
+  if (length > 16_000) return { code: "too_large", status: 413, errors: { note: "That is too long to send." }, values: {} };
+  const type = request.headers.get("content-type") || "";
+  let body = {};
+  if (type.includes("application/json")) {
+    try {
+      body = await request.json();
+    } catch {
+      return { code: "invalid_json", status: 400, errors: { note: "The request was not valid JSON." }, values: {} };
+    }
+    if (!body || typeof body !== "object") return { code: "invalid_json", status: 400, errors: { note: "The request was not valid JSON." }, values: {} };
+  } else {
+    try {
+      const form = await request.formData();
+      body = Object.fromEntries(form.entries());
+    } catch {
+      return { code: "invalid_form", status: 400, errors: { note: "The form could not be read." }, values: {} };
+    }
   }
+  const values = {
+    host: normalizeHost(body.host || fallbackHost),
+    kind: String(body.kind || body.context || fallbackSlug),
+    note: String(body.note || ""),
+    from: cleanFrom(body.from),
+  };
+  if (String(body.company || "").trim()) return { code: "rejected", status: 400, errors: { note: "The form could not be sent." }, values };
+  if (!validSubject(values.host)) {
+    return { code: "invalid_site_reference", status: 400, errors: { host: values.host ? `"${values.host}" is not a domain. Enter one like example.com.` : "Enter the site the note is about." }, values };
+  }
+  const config = await loadConfig(values.host);
+  const errors = {};
+  const allowed = siteKinds(config);
+  const context = allowed.find((c) => c.slug === values.kind);
+  if (!context) {
+    const known = contextBySlug(values.kind);
+    errors.kind = known ? `${config.name || values.host} does not take ${known.title.toLowerCase()} notes. Choose another kind.` : "Choose a kind of note.";
+  }
+  const text = values.note.trim();
+  if (text.length < config.note.min) errors.note = text.length ? `Write at least ${config.note.min} characters. This note has ${text.length}.` : "Write a note first.";
+  else if (text.length > config.note.max) errors.note = `Keep it under ${config.note.max.toLocaleString("en-US")} characters. This note has ${text.length.toLocaleString("en-US")}.`;
+  if (config.from === "required" && !values.from) errors.from = "Add your name or handle; this site asks for one.";
+  if (Object.keys(errors).length) {
+    const code = errors.kind ? "invalid_context" : errors.note ? "note_bounds" : "from_required";
+    return { code, status: errors.kind && !contextBySlug(values.kind) ? 404 : 400, errors, values, config, context: context || allowed[0] };
+  }
+  const issued = new Date().toISOString();
+  const from = config.from === "off" ? "" : values.from;
+  const markdown = [
+    `# ${context.title} for ${config.name || values.host}`,
+    `filed: ${issued}`,
+    "",
+    text,
+    "",
+    from ? `from: ${from}` : "",
+    `about: https://${values.host}/`,
+    `via: https://autonomous.feedback/${values.host}`,
+    org ? `account: ${org}` : "",
+  ].filter(Boolean).join("\n");
+  return { filing: { host: values.host, context, note: text, from, issued, markdown, org: org || null }, config };
+}
+
+/** Answer a submission as JSON, a card page, or the form again with its errors. */
+async function answerFiling(request, result, { lockHost = true, embed = false } = {}) {
+  if (!result.filing) {
+    if (wantsJson(request)) return jsonResponse({ error: result.code, errors: result.errors }, "no-store", result.status);
+    const context = result.context || contextBySlug(result.values.kind) || contextBySlug("review");
+    const html = renderWrite({
+      context,
+      host: result.values.host,
+      lockHost: lockHost && validSubject(result.values.host || ""),
+      embed,
+      values: result.values,
+      errors: result.errors,
+      config: result.config || null,
+    });
+    return embed ? embedHtml(html, result.values.host, result.config, "no-store", result.status) : htmlResponse(html, { status: result.status, cache: "no-store" });
+  }
+  const { filing, config } = result;
+  if (wantsJson(request)) {
+    return jsonResponse({
+      schema: "slip.v0",
+      stored: false,
+      queue: "unattached",
+      org: filing.org,
+      host: filing.host,
+      context: filing.context.slug,
+      title: filing.context.title,
+      from: filing.from || null,
+      expression: filing.context.expression,
+      issued: filing.issued,
+      markdown: filing.markdown,
+    }, "no-store");
+  }
+  if (embed) return embedHtml(renderCard(filing, true, config), filing.host, config);
+  return htmlResponse(renderCard(filing, false, config), { cache: "no-store" });
+}
+
+async function handleSite(request, url, host, rest, org = null, embed = false) {
+  const subject = String(host || "").toLowerCase();
+  if (!validSubject(subject)) return notFound(request, "That is not a site address.");
   if (url.searchParams.has("bearer")) {
-    return jsonResponse(
-      { error: "bearer_in_query", hint: "Use Authorization: Bearer. Query strings leak." },
-      "no-store",
-      400
-    );
+    return jsonResponse({ error: "bearer_in_query", hint: "Use Authorization: Bearer. Query strings leak." }, "no-store", 400);
   }
   if (rest === "inbox") {
     const contract = inboxContract(subject);
-    if (request.method !== "GET") {
-      return new Response("Method not allowed", {
-        status: 405,
-        headers: { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "no-store" },
-      });
-    }
+    if (request.method !== "GET") return methodNotAllowed("GET");
     const header = request.headers.get("authorization") || "";
-    if (!header.toLowerCase().startsWith("bearer ")) {
-      return jsonResponse({ error: "locked", process: contract.process }, "no-store", 401);
-    }
+    if (!header.toLowerCase().startsWith("bearer ")) return jsonResponse({ error: "locked", process: contract.process }, "no-store", 401);
     return jsonResponse({ ...contract, error: "not_draining", filings: [] }, "no-store", 501);
   }
-  const context = rest ? contextBySlug(rest) : null;
-  if (rest && !context) {
-    return new Response("Not found", {
-      status: 404,
-      headers: { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "no-store" },
-    });
+  if (rest === "config.json") {
+    if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
+    return headOr(request, jsonResponse(await loadConfig(subject), "no-store"));
   }
-  const contract = inboxContract(subject, context, org);
+  const slug = rest.replace(/\.json$/, "");
+  const context = slug ? contextBySlug(slug) : null;
+  if (slug && !context) return notFound(request, "autonomous.feedback takes four kinds of note: appreciation, problem, suggestion, and question.");
+
   if (request.method === "POST") {
     if (url.searchParams.has("rate-limit")) {
-      return jsonResponse(
-        { error: "rate_limit_on_ingest", hint: "rate-limit=tok/s is a drain budget on GET /inbox, not POST." },
-        "no-store",
-        400
-      );
+      return jsonResponse({ error: "rate_limit_on_ingest", hint: "rate-limit=tok/s is a drain budget on GET /inbox, not POST." }, "no-store", 400);
     }
-    const filing = await readFiling(request, subject, context ? context.slug : "review", org);
-    return filingResponse(request, filing);
+    const result = await readFiling(request, { host: subject, slug: context ? context.slug : "review", org });
+    return answerFiling(request, result, { lockHost: true, embed });
   }
-  if (request.method !== "GET" && request.method !== "HEAD") {
-    return new Response("Method not allowed", {
-      status: 405,
-      headers: { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "no-store" },
-    });
+  if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD, POST");
+  if (rest.endsWith(".json") || wantsJson(request)) {
+    return headOr(request, jsonResponse(inboxContract(subject, context, org), "public, max-age=120"));
   }
-  if (!context) {
-    if (wantsJson(request)) return jsonResponse(contract, "public, max-age=120");
-    const html = renderContext(null, contextBySlug("review"), subject, { lockHost: true, embed });
-    return embed ? embedHtml(html, subject) : htmlResponse(html, { cache: "no-store" });
-  }
-  if (url.pathname.endsWith(".json") || wantsJson(request)) return jsonResponse(contract, "public, max-age=120");
-  const html = renderContext(null, context, subject, { lockHost: true, embed });
-  return embed ? embedHtml(html, subject, "public, max-age=120") : htmlResponse(html, { cache: "public, max-age=120" });
+  const config = await loadConfig(subject);
+  const html = renderWrite({ context: context || siteKinds(config)[0] || contextBySlug("review"), host: subject, lockHost: true, embed, config });
+  return headOr(request, embed ? embedHtml(html, subject, config, "public, max-age=120") : htmlResponse(html, { cache: "public, max-age=120" }));
 }
 
 function bucketMs(ms) {
@@ -294,281 +341,6 @@ function frameAncestors(subject) {
   return [...origins].join(" ");
 }
 
-function embedHtml(body, subject, cache = "no-store") {
-  const headers = { ...BASE_SECURITY };
-  delete headers["X-Frame-Options"];
-  headers["Content-Security-Policy"] = BASE_SECURITY["Content-Security-Policy"]
-    .replace("frame-ancestors 'none'", `frame-ancestors ${frameAncestors(subject)}`);
-  headers["Content-Type"] = "text/html; charset=UTF-8";
-  headers["Cache-Control"] = cache;
-  headers["Cross-Origin-Resource-Policy"] = "cross-origin";
-  headers["X-Robots-Tag"] = "noindex, nofollow";
-  return new Response(body, { headers });
-}
-
-function formSnippet(host = "example.com") {
-  return `<form method="post" action="https://autonomous.feedback/${host}/review">
-  <textarea name="note" minlength="8" maxlength="2000" required></textarea>
-  <button>Send</button>
-</form>`;
-}
-
-function frameSnippet(host = "example.com") {
-  return `<iframe title="Feedback" src="https://autonomous.feedback/embed/${host}" width="100%" height="520" style="border:0"></iframe>`;
-}
-
-function renderFeedback(host = "") {
-  const named = host || "example.com";
-  return layout({
-    title: "autonomous.feedback",
-    description: "A health check and a feedback form for one site.",
-    canonical: "https://autonomous.feedback/",
-    quiet: true,
-    body: `<p class="kicker">autonomous.feedback</p>
-<h1>A form for one site.</h1>
-<p class="lede">Name a site. See whether it answers. Hang a form on it, and every note a reader leaves comes back as a card.</p>
-<form method="get" action="/meter">
-  <label for="host">Site</label>
-  <input id="host" name="host" type="text" inputmode="url" value="${escapeHtml(host)}" placeholder="example.com" required maxlength="253" autocapitalize="none" spellcheck="false" enterkeyhint="go">
-  <p class="actions">
-    <button type="submit">Check it answers</button>
-    <button type="submit" formaction="/review">Write a note</button>
-  </p>
-</form>
-<ol class="steps">
-  <li><strong>Knock.</strong> The meter asks the site once and tells you whether it answered, and how quickly.</li>
-  <li><strong>Hang a form.</strong> Paste one of the snippets below. They follow the name you type.</li>
-  <li><strong>Send the card.</strong> A note comes back as a card with the site's name on it. The writer screenshots it and sends it to whoever keeps the site, or posts it naming the site.</li>
-</ol>
-<p class="note">Free while cards travel by hand. A desk that keeps every note for a site comes later.</p>
-<h2 id="paste">On the site</h2>
-<p class="note">The frame carries all four kinds of note. The plain form sends a review and needs no script.</p>
-<figure class="codeblock">
-  <figcaption><span>iframe · four kinds of note</span><button type="button" data-copy="frame-snippet">Copy</button></figcaption>
-  <pre id="frame-snippet">${escapeHtml(frameSnippet(named))}</pre>
-</figure>
-<figure class="codeblock">
-  <figcaption><span>form · review only, no script</span><button type="button" data-copy="form-snippet">Copy</button></figcaption>
-  <pre id="form-snippet">${escapeHtml(formSnippet(named))}</pre>
-</figure>
-<h2>Four kinds of note</h2>
-${contextDoors()}`,
-  });
-}
-
-/** Each kind of note is a door labelled with its own prompt; the current one is marked, not linked away from. */
-function contextDoors(host = "", embed = false, current = "") {
-  const doors = CONTEXTS.map((c) => {
-    const href = host
-      ? `${embed ? "/embed" : ""}/${encodeURIComponent(host)}/${escapeHtml(c.slug)}`
-      : `/${escapeHtml(c.slug)}`;
-    const here = c.slug === current ? ` aria-current="page"` : "";
-    return `<li><a class="door" data-spw-operator="${escapeHtml(c.operator)}" href="${href}"${here}><strong>${escapeHtml(c.title)}</strong><span>${escapeHtml(c.prompt)}</span></a></li>`;
-  }).join("\n  ");
-  return `<ul class="doors" aria-label="Kinds of note">\n  ${doors}\n</ul>`;
-}
-
-function meterReading(probe) {
-  if (probe.class === "down") {
-    return {
-      word: "Down",
-      weather: "storm",
-      sentence: probe.status ? `answered with an error, HTTP ${probe.status}.` : "did not answer within four seconds.",
-    };
-  }
-  const redirect = probe.status >= 300 && probe.status < 400 ? ` It pointed somewhere else (HTTP ${probe.status}).` : ` HTTP ${probe.status}.`;
-  if (probe.ms_bucket === "slow") return { word: "Slow", weather: "haze", sentence: `took more than a second to answer.${redirect}` };
-  const pace = probe.ms_bucket === "fast" ? "in under a third of a second" : "in under a second";
-  return { word: "Answers", weather: "clear", sentence: `answered ${pace}.${redirect}` };
-}
-
-function renderMeter(host = "", probe = null) {
-  const reading = probe ? meterReading(probe) : null;
-  const next = reading
-    ? `<p class="actions">
-  <a class="door" href="/${encodeURIComponent(host)}/review"><strong>Write a note</strong><span>about ${escapeHtml(host)}</span></a>
-  <a class="door" href="/?host=${encodeURIComponent(host)}#paste"><strong>Hang a form</strong><span>on ${escapeHtml(host)}</span></a>
-</p>`
-    : "";
-  return layout({
-    title: host ? `${host} — meter` : "Meter — autonomous.feedback",
-    description: "Whether one site answers.",
-    canonical: "https://autonomous.feedback/meter",
-    quiet: true,
-    body: `<p class="kicker"><a href="/">autonomous.feedback</a></p>
-<h1>${host ? escapeHtml(host) : "Meter"}</h1>
-${reading
-    ? `<p class="weather" data-weather="${reading.weather}">${escapeHtml(reading.word)}</p>
-<p class="lede">${escapeHtml(host)} ${escapeHtml(reading.sentence)}</p>
-${next}`
-    : `<p class="lede">Name a public site. The meter knocks once and tells you whether it answered.</p>`}
-<form method="get" action="/meter">
-  <label for="host">${reading ? "Another site" : "Site"}</label>
-  <input id="host" name="host" value="${escapeHtml(host)}" inputmode="url" placeholder="example.com" required maxlength="253" autocapitalize="none" spellcheck="false" enterkeyhint="go">
-  <p class="actions"><button type="submit">Check it answers</button></p>
-</form>`,
-  });
-}
-
-function renderContext(climate, context, host = "", { lockHost = false, embed = false } = {}) {
-  const root = embed ? "/embed" : "";
-  const action = lockHost
-    ? `${root}/${encodeURIComponent(host)}/${encodeURIComponent(context.slug)}`
-    : `/${encodeURIComponent(context.slug)}`;
-  const about = lockHost
-    ? `<input type="hidden" name="host" value="${escapeHtml(host)}">`
-    : `<label for="host">Site</label><input id="host" name="host" value="${escapeHtml(host)}" placeholder="example.com" required maxlength="253" autocapitalize="none" spellcheck="false" inputmode="url">`;
-  const canonical = lockHost
-    ? `https://autonomous.feedback${root}/${encodeURIComponent(host)}/${encodeURIComponent(context.slug)}`
-    : `https://autonomous.feedback/${context.slug}`;
-  return layout({
-    title: `${context.title} — autonomous.feedback`,
-    description: context.prompt,
-    canonical,
-    climate,
-    quiet: true,
-    embed,
-    body: `${embed ? "" : `<p class="kicker"><a href="/">autonomous.feedback</a></p>`}
-<h1 data-spw-copy-unit="${escapeHtml(context.copy_unit)}" data-spw-semantic-expression="${escapeHtml(context.expression)}">${escapeHtml(context.title)}</h1>
-<p class="lede">${escapeHtml(context.prompt)}</p>
-${embed ? "" : `<p class="note">${lockHost ? `About ${escapeHtml(host)}. ` : ""}Your note comes back as a card to screenshot and send. Nothing is stored.</p>`}
-<article data-spw-kind="frame">
-  <form method="post" action="${escapeHtml(action)}">
-    ${about}
-    <label for="note">${lockHost ? `Your ${escapeHtml(context.title.toLowerCase())} for ${escapeHtml(host)}` : escapeHtml(context.title)}</label>
-    <textarea class="note" id="note" name="note" required minlength="8" maxlength="2000" enterkeyhint="send"></textarea>
-    <label class="hp" for="company">Company</label>
-    <input class="hp" id="company" name="company" tabindex="-1" autocomplete="off">
-    <button type="submit">Send</button>
-  </form>
-</article>
-${contextDoors(host, embed, context.slug)}`,
-  });
-}
-
-function excerpt(text, limit = 220) {
-  const flat = text.replace(/\s+/g, " ").trim();
-  return flat.length > limit ? `${flat.slice(0, limit - 1).trimEnd()}…` : flat;
-}
-
-/**
- * The slip is a card meant to be screenshotted and carried by hand: a DM to
- * whoever keeps the site, or a post that names it. The card carries the
- * address, so whoever sees the screenshot knows where to leave the next one.
- * Nothing here is stored or sent by the Worker.
- */
-function renderSlip(filing, embed = false) {
-  const root = embed ? "/embed" : "";
-  const back = `${root}/${encodeURIComponent(filing.host)}/${encodeURIComponent(filing.context.slug)}`;
-  const kind = filing.context.title.toLowerCase();
-  const address = `autonomous.feedback/${filing.host}`;
-  const day = filing.issued.slice(0, 10);
-  const post = `“${excerpt(filing.note)}” — a ${kind} for ${filing.host} · ${address}`;
-  return layout({
-    title: `${filing.context.title} for ${filing.host} — autonomous.feedback`,
-    description: `A ${kind} for ${filing.host}, ready to send.`,
-    canonical: `https://autonomous.feedback${back}`,
-    quiet: true,
-    embed,
-    body: `${embed ? "" : `<p class="kicker"><a href="/">autonomous.feedback</a></p>`}
-<h1>Your card</h1>
-<p class="lede">Screenshot it and send it to whoever keeps ${escapeHtml(filing.host)}: a DM, or a post that names the site.</p>
-<article class="card" id="card" data-spw-kind="frame" data-spw-operator="${escapeHtml(filing.context.operator)}" data-spw-semantic-expression="${escapeHtml(filing.context.expression)}">
-  <header>
-    <span class="card-kind">${escapeHtml(filing.context.title)}</span>
-    <span class="card-site">${escapeHtml(filing.host)}</span>
-  </header>
-  <p class="card-prompt">${escapeHtml(filing.context.prompt)}</p>
-  <blockquote class="card-note">${escapeHtml(filing.note)}</blockquote>
-  <footer>
-    <time datetime="${escapeHtml(filing.issued)}">${escapeHtml(day)}</time>
-    <span class="card-address">${escapeHtml(address)}</span>
-  </footer>
-  <p class="card-stamp" aria-live="polite">Sent by hand</p>
-</article>
-<div class="actions share" data-share-text="${escapeHtml(post)}" data-share-url="https://${escapeHtml(address)}">
-  <button type="button" class="door" data-share="native"><strong>Share</strong><span>from this device</span></button>
-  <a class="door" data-share="post" target="_blank" rel="noopener" href="https://bsky.app/intent/compose?text=${encodeURIComponent(post)}"><strong>Post</strong><span>on Bluesky</span></a>
-  <a class="door" data-share="post" target="_blank" rel="noopener" href="https://x.com/intent/post?text=${encodeURIComponent(post)}"><strong>Post</strong><span>on X</span></a>
-  <button type="button" class="door" data-copy="slip"><strong>Copy</strong><span>the words</span></button>
-</div>
-<p class="note">Nothing was stored. The card lives on this page and in whatever you send.</p>
-<pre id="slip" hidden>${escapeHtml(filing.markdown)}</pre>
-<p class="actions"><a class="door" href="${escapeHtml(back)}"><strong>Write another</strong><span>${escapeHtml(kind)} for ${escapeHtml(filing.host)}</span></a></p>`,
-  });
-}
-
-const NOTE_MIN = 8;
-const NOTE_MAX = 2000;
-
-async function readFiling(request, fallbackHost = "", fallbackSlug = "", org = null) {
-  const length = Number(request.headers.get("content-length") || 0);
-  if (length > 16_000) return { error: "too_large", status: 413 };
-  const type = request.headers.get("content-type") || "";
-  let host = fallbackHost;
-  let slug = fallbackSlug;
-  let note = "";
-  let company = "";
-  if (type.includes("application/json")) {
-    let body;
-    try {
-      body = await request.json();
-    } catch {
-      return { error: "invalid_json", status: 400 };
-    }
-    if (!body || typeof body !== "object") return { error: "invalid_json", status: 400 };
-    if (body.host) host = String(body.host);
-    if (body.context) slug = String(body.context);
-    note = String(body.note || "");
-    company = String(body.company || "");
-  } else {
-    const form = await request.formData();
-    host = String(form.get("host") || host);
-    note = String(form.get("note") || "");
-    company = String(form.get("company") || "");
-  }
-  if (company.trim()) return { error: "rejected", status: 400 };
-  host = host.toLowerCase().trim();
-  if (!validSubject(host)) return { error: "invalid_site_reference", status: 400 };
-  const context = contextBySlug(slug);
-  if (!context) return { error: "invalid_context", status: 404 };
-  const text = note.trim();
-  if (text.length < NOTE_MIN || text.length > NOTE_MAX) return { error: "note_bounds", status: 400 };
-  const issued = new Date().toISOString();
-  const markdown = [
-    `# ${context.title} · ${host}`,
-    `filed: ${issued}`,
-    "",
-    text,
-    "",
-    `expression: ${context.expression}`,
-    `about: https://${host}/`,
-    org ? `account: ${org}` : "",
-  ].filter(Boolean).join("\n");
-  return { host, context, note: text, issued, markdown, org: org || null, status: 200 };
-}
-
-function filingResponse(request, filing) {
-  if (filing.error) {
-    return jsonResponse({ error: filing.error }, "no-store", filing.status);
-  }
-  const payload = {
-    schema: "slip.v0",
-    stored: false,
-    queue: "unattached",
-    org: filing.org,
-    host: filing.host,
-    context: filing.context.slug,
-    expression: filing.context.expression,
-    issued: filing.issued,
-    markdown: filing.markdown,
-  };
-  if (wantsJson(request)) return jsonResponse(payload, "no-store");
-  const embed = new URL(request.url).pathname.startsWith("/embed/");
-  if (embed) return embedHtml(renderSlip(filing, true), filing.host);
-  return htmlResponse(renderSlip(filing), { cache: "no-store" });
-}
-
 export default {
   async scheduled() {
     const cache = caches.default;
@@ -578,7 +350,6 @@ export default {
 
   async fetch(request) {
     const url = new URL(request.url);
-    const host = url.hostname.replace(/^www\./, "");
     const started = Date.now();
 
     if (request.method === "OPTIONS") {
@@ -590,11 +361,26 @@ export default {
     }
 
     const org = orgFromHostname(url.hostname);
-    if (url.pathname === "/" && ["GET", "HEAD"].includes(request.method)) {
-      const named = (url.searchParams.get("host") || "").toLowerCase().trim();
-      const response = htmlResponse(renderFeedback(validSubject(named) ? named : ""), { cache: "no-store" });
-      return request.method === "HEAD" ? new Response(null, { headers: response.headers }) : response;
+    const queryHost = normalizeHost(url.searchParams.get("host") || "");
+
+    if (url.pathname === "/") {
+      if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
+      return headOr(request, htmlResponse(renderHome(validSubject(queryHost) ? queryHost : ""), { cache: "no-store" }));
     }
+
+    if (url.pathname === "/start" || url.pathname === "/start/") {
+      if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
+      const raw = url.searchParams.get("host") || "";
+      const how = url.searchParams.get("how") || "link";
+      const kind = url.searchParams.get("kind") || "review";
+      if (raw && !isPublicSite(queryHost)) {
+        return headOr(request, htmlResponse(renderStart({ host: raw.trim(), how, kind, error: `"${raw.trim()}" is not a public domain. Enter one like example.com.` }), { status: 400, cache: "no-store" }));
+      }
+      const config = queryHost ? await loadConfig(queryHost) : null;
+      return headOr(request, htmlResponse(renderStart({ host: queryHost, how, kind, config }), { cache: "no-store" }));
+    }
+
+    if (url.pathname === "/favicon.ico") return new Response(null, { status: 404, headers: TEXT_HEADERS });
 
     if (url.pathname === "/robots.txt") {
       return new Response("User-agent: *\nDisallow: /\n", {
@@ -605,18 +391,10 @@ export default {
     if (url.pathname === "/health") {
       if (request.method === "HEAD") {
         return new Response(null, {
-          headers: {
-            ...BASE_SECURITY,
-            ...JSON_CORS,
-            "Cache-Control": "no-store",
-            "Server-Timing": `health;dur=${Date.now() - started}`,
-          },
+          headers: { ...BASE_SECURITY, ...JSON_CORS, "Cache-Control": "no-store", "Server-Timing": `health;dur=${Date.now() - started}` },
         });
       }
-      return jsonResponse(
-        { version: VERSION, ok: true, worker: "autonomous-feedback", schema: "health.v1", issued: new Date().toISOString() },
-        "no-store"
-      );
+      return jsonResponse({ version: VERSION, ok: true, worker: "autonomous-feedback", schema: "health.v1", issued: new Date().toISOString() }, "no-store");
     }
 
     if (url.pathname === "/ready") {
@@ -628,56 +406,60 @@ export default {
     }
 
     if (url.pathname === "/climate.json") return cachedClimate();
+    if (url.pathname === "/alerts.json") return jsonResponse({ version: VERSION, schema: "alerts.v1", events: [] }, "public, max-age=60");
 
     if (url.pathname === "/meter" || url.pathname === "/now" || url.pathname === "/now/") {
-      if (!["GET", "HEAD"].includes(request.method)) {
-        return new Response("Method not allowed", { status: 405, headers: { ...BASE_SECURITY, Allow: "GET, HEAD" } });
+      if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
+      const raw = (url.searchParams.get("host") || "").trim();
+      if (!raw) return headOr(request, htmlResponse(renderMeter(), { cache: "no-store" }));
+      if (!isPublicSite(queryHost)) {
+        if (wantsJson(request)) return jsonResponse({ error: "invalid_site_reference" }, "no-store", 400);
+        return headOr(request, htmlResponse(renderMeter({ host: raw, error: `"${raw}" is not a public domain. Enter one like example.com.` }), { status: 400, cache: "no-store" }));
       }
-      const subject = (url.searchParams.get("host") || "").toLowerCase().trim();
-      if (!subject) {
-        const response = htmlResponse(renderMeter(), { cache: "no-store" });
-        return request.method === "HEAD" ? new Response(null, { headers: response.headers }) : response;
-      }
-      if (!isPublicSite(subject)) return jsonResponse({ error: "invalid_site_reference" }, "no-store", 400);
-      const probe = await probeSite(subject);
-      const response = htmlResponse(renderMeter(subject, probe), { cache: "no-store" });
-      return request.method === "HEAD" ? new Response(null, { headers: response.headers }) : response;
+      const probe = await probeSite(queryHost);
+      return headOr(request, htmlResponse(renderMeter({ host: queryHost, probe }), { cache: "no-store" }));
     }
 
-    const contextJson = url.pathname.match(/^\/(wonder|review|practice|brief)\.json$/);
-    if (contextJson) {
-      const context = contextBySlug(contextJson[1]);
-      const named = url.searchParams.get("host") || "";
-      return jsonResponse(inboxContract(validSubject(named) ? named : "{host}", context, org), "public, max-age=120");
+    const kindJson = url.pathname.match(/^\/(wonder|review|practice|brief)\.json$/);
+    if (kindJson) {
+      const context = contextBySlug(kindJson[1]);
+      return jsonResponse(inboxContract(validSubject(queryHost) ? queryHost : "{host}", context, org), "public, max-age=120");
     }
 
-    const contextPage = url.pathname.match(/^\/(wonder|review|practice|brief)\/?$/);
-    if (contextPage) {
-      const context = contextBySlug(contextPage[1]);
-      const host = (url.searchParams.get("host") || "").toLowerCase();
+    const kindPage = url.pathname.match(/^\/(wonder|review|practice|brief)\/?$/);
+    if (kindPage) {
+      const context = contextBySlug(kindPage[1]);
       if (request.method === "POST") {
-        const filing = await readFiling(request, host, context.slug, org);
-        return filingResponse(request, filing);
+        const result = await readFiling(request, { host: queryHost, slug: context.slug, org });
+        return answerFiling(request, result, { lockHost: false });
       }
-      if (!["GET", "HEAD"].includes(request.method)) return new Response("Method not allowed", { status: 405, headers: { ...BASE_SECURITY, Allow: "GET, HEAD, POST" } });
-      if (host && !validSubject(host)) return jsonResponse({ error: "invalid_site_reference" }, "no-store", 400);
-      return htmlResponse(renderContext({}, context, host));
+      if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD, POST");
+      const raw = (url.searchParams.get("host") || "").trim();
+      if (raw && !validSubject(queryHost)) {
+        if (wantsJson(request)) return jsonResponse({ error: "invalid_site_reference" }, "no-store", 400);
+        return headOr(request, htmlResponse(renderWrite({ context, values: { host: raw }, errors: { host: `"${raw}" is not a domain. Enter one like example.com.` } }), { status: 400, cache: "no-store" }));
+      }
+      return headOr(request, htmlResponse(renderWrite({ context, host: queryHost }), { cache: "no-store" }));
     }
 
     const embedMatch = url.pathname.match(/^\/embed\/([^/]+)(?:\/([^/]+))?\/?$/);
     if (embedMatch) {
-      return handleFor(request, url, decodeURIComponent(embedMatch[1]), embedMatch[2] || "", org, true);
+      return handleSite(request, url, decodeURIComponent(embedMatch[1]), embedMatch[2] || "", org, true);
     }
 
     const siteMatch = url.pathname.match(/^\/([^/]+)(?:\/([^/]+))?\/?$/);
-    if (siteMatch && validSubject(decodeURIComponent(siteMatch[1]).toLowerCase())) {
-      return handleFor(request, url, decodeURIComponent(siteMatch[1]), siteMatch[2] || "", org, false);
+    if (siteMatch) {
+      const typed = decodeURIComponent(siteMatch[1]);
+      const clean = normalizeHost(typed);
+      if (validSubject(clean)) {
+        // One address per site: /WWW.Example.com/review → /example.com/review.
+        if (clean !== typed && ["GET", "HEAD"].includes(request.method)) {
+          return Response.redirect(`${url.origin}/${clean}${siteMatch[2] ? `/${siteMatch[2]}` : ""}${url.search}`, 301);
+        }
+        return handleSite(request, url, clean, siteMatch[2] || "", org, false);
+      }
     }
 
-    if (url.pathname === "/alerts.json") {
-      return jsonResponse({ version: VERSION, schema: "alerts.v1", events: [] }, "public, max-age=60");
-    }
-
-    return new Response("Not found", { status: 404, headers: { ...BASE_SECURITY, "Cache-Control": "no-store" } });
+    return notFound(request);
   },
 };
