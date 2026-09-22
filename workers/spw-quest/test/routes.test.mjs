@@ -36,6 +36,11 @@ test('quest negotiation, HEAD, methods, and redirects', async () => {
   assert.match(page, /Codex/);
   assert.match(page, /Grok/);
   assert.match(page, /Git, in this order/);
+  assert.match(page, /https:\/\/autonomous\.feedback\/spw\.quest\/problem/);
+  const config = await (await get('spw.quest', '/.well-known/autonomous-feedback.json')).json();
+  assert.equal(config.host, 'spw.quest');
+  assert.equal(config.schema, 'autonomous-feedback.client.v0');
+  assert.ok(config.frame.ancestors.includes('https://spwashi.com'));
   const recipe = await (await get('spw.quest', '/init')).text();
   assert.match(recipe, /codex exec/);
   assert.match(recipe, /grok '/);
