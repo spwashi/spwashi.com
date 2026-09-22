@@ -78,7 +78,6 @@ intent: .{
 @style: ~"../../../public/css/style.css"
 @debug: ~"../../../public/css/effects/debug.css"
 @operator_site_projection: ~"../../../.spw/conventions/operator-site-projection.spw"
-@debug_css: ~"../../../public/css/effects/debug.css.map"
 @readme: ~"../../../public/css/README.md"
 @stylesheet_ecology: ~"../../../.spw/conventions/stylesheet-ecology.spw"
 @css_instruction: ~"../../../.spw/conventions/css-instruction.spw"
@@ -93,7 +92,6 @@ dispatch: .{
  style = @style
  debug = @debug
  operator_site_projection = @operator_site_projection
- debug_css = @debug_css
  readme = @readme
  stylesheet_ecology = @stylesheet_ecology
  css_instruction = @css_instruction
