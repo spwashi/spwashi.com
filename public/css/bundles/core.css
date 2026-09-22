@@ -344,7 +344,6 @@ article a,
 :is(.spw-panel, .frame-panel) a,
 .inline-note a,
 [data-spw-textual-role="lede"] a,
-[data-spw-textual-role="lede"] a,
 [data-spw-textual-role="note"] a {
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -4441,8 +4440,8 @@ main :where(
 }
 
 main :where(
-  h1 + :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"], [data-spw-textual-role="lede"], .shell-lede),
-  h2 + :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"], [data-spw-textual-role="lede"], .shell-lede)
+  h1 + :is([data-spw-textual-role="lede"], .shell-lede),
+  h2 + :is([data-spw-textual-role="lede"], .shell-lede)
 ) {
   margin-block-start: var(--space-2xs, 0.25rem);
 }
@@ -12330,7 +12329,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
 /* Tighter run-in from heading into following paragraph in prose stacks. */
 :where(.prose, article, .frame-copy) :where(
   :is(h1, h2, h3, h4) + p,
-  :is(h1, h2, h3, h4) + :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"])
+  :is(h1, h2, h3, h4) + [data-spw-textual-role="lede"]
 ) {
   margin-block-start: calc(var(--flow-space, 1rem) * 0.55);
 }
@@ -12376,7 +12375,6 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
 
 :where(
   article :is(p, li, blockquote, pre, code, kbd, samp),
-  [data-spw-textual-role="lede"],
   [data-spw-textual-role="lede"],
   :is(:is(.spw-panel, .frame-panel), .frame-details) p,
   :is(.spw-panel, .frame-panel) li,
@@ -12475,7 +12473,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
     color-mix(in oklab, var(--ink, #161c1d) 82%, var(--active-op-color, #008080) 18%);
 }
 
-:where(p, li, blockquote, dd, figcaption, .frame-copy, [data-spw-textual-role="lede"], [data-spw-textual-role="lede"], [data-spw-textual-role="note"]) a:not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button) {
+:where(p, li, blockquote, dd, figcaption, .frame-copy, [data-spw-textual-role="lede"], [data-spw-textual-role="note"]) a:not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button) {
   color: color-mix(in srgb, var(--ink-strong, #090b0c) 84%, var(--active-op-color, var(--teal, #008080)) 16%);
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
@@ -12489,7 +12487,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
     background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
-:where(p, li, blockquote, dd, figcaption, .frame-copy, [data-spw-textual-role="lede"], [data-spw-textual-role="lede"], [data-spw-textual-role="note"]) a:not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button):is(:hover, :focus-visible) {
+:where(p, li, blockquote, dd, figcaption, .frame-copy, [data-spw-textual-role="lede"], [data-spw-textual-role="note"]) a:not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button):is(:hover, :focus-visible) {
   color: var(--active-op-color, var(--teal, #008080));
   text-decoration-color: var(--active-op-color, var(--teal, #008080));
   text-decoration-thickness: 2px;
@@ -18370,7 +18368,7 @@ html[data-spw-color-mode="dark"] :where(
   align-items: stretch;
 }
 
-:where(.spw-card, .spw-panel, .frame-card, :is(.spw-panel, .frame-panel)) :where(.spw-chip, .spw-chip, .frame-sigil) {
+:where(.spw-card, .spw-panel, .frame-card, :is(.spw-panel, .frame-panel)) :where(.spw-chip, .frame-sigil) {
   white-space: nowrap;
   max-inline-size: 100%;
   overflow: hidden;
@@ -20828,8 +20826,8 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   opacity: 0.92;
 }
 
-:where(.spw-frame[data-state~="active"], .spw-frame[data-state~="active"]),
-:where(.spw-frame[data-spw-active="true"], .spw-frame[data-spw-active="true"]) {
+:where(.spw-frame[data-state~="active"]),
+:where(.spw-frame[data-spw-active="true"]) {
   border-color: var(--line-strong, color-mix(in srgb, var(--component-accent) 34%, transparent));
   background: var(--component-surface-strong);
   box-shadow:
@@ -20941,7 +20939,6 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   letter-spacing: -0.005em;
 }
 
-[data-spw-textual-role="lede"],
 [data-spw-textual-role="lede"] {
   font-size: clamp(1rem, 0.88rem + 0.7cqi, 1.2rem);
   font-weight: 500;
@@ -20952,7 +20949,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   color: color-mix(in srgb, var(--ink, #161c1d) 86%, transparent);
 }
 
-:where(:is(.spw-frame, .spw-frame) > p:not([data-spw-textual-role="note"]):not(.inline-note):not([data-spw-textual-role="lede"]):not([data-spw-textual-role="lede"]):not(.spec-kicker):not([data-spw-textual-role="kicker"])) {
+:where(.spw-frame > p:not([data-spw-textual-role="note"]):not(.inline-note):not([data-spw-textual-role="lede"]):not([data-spw-textual-role="lede"]):not(.spec-kicker):not([data-spw-textual-role="kicker"])) {
   max-inline-size: min(66ch, 100%);
   text-wrap: pretty;
   overflow-wrap: break-word;
@@ -21030,7 +21027,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 }
 
 /* Title → first body paragraph: keep the lede glued to the heading. */
-:where(.spw-frame > :is(h1, h2, h3, [data-spw-textual-role="lede"], [data-spw-textual-role="lede"]) + p) {
+:where(.spw-frame > :is(h1, h2, h3, [data-spw-textual-role="lede"]) + p) {
   margin-block-start: 0;
 }
 
@@ -21038,7 +21035,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   margin-block-start: 0;
 }
 
-:where(.spw-frame > :is(h1, h2) + :is([data-spw-textual-role="lede"], [data-spw-textual-role="lede"])) {
+:where(.spw-frame > :is(h1, h2) + [data-spw-textual-role="lede"]) {
   margin-block-start: var(--space-3xs, 0.125rem);
 }
 
@@ -21182,7 +21179,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   --surface-gap: clamp(0.95rem, 1.9cqi, 1.32rem);
 }
 
-:where(:is(.spw-frame, .spw-frame)[data-spw-role="schema"]) {
+:where(.spw-frame[data-spw-role="schema"]) {
   background: linear-gradient(
       180deg,
       color-mix(in srgb, var(--component-accent) 6%, transparent),
@@ -21192,7 +21189,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   --surface-gap: clamp(0.82rem, 1.6cqi, 1.08rem);
 }
 
-:where(:is(.spw-frame, .spw-frame)[data-spw-role="gallery"]) {
+:where(.spw-frame[data-spw-role="gallery"]) {
   background: radial-gradient(
       circle at top left,
       color-mix(in srgb, var(--component-accent) 8%, transparent),
@@ -21201,7 +21198,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   var(--component-surface);
 }
 
-:where(:is(.spw-frame, .spw-frame)[data-spw-role="broadcast"]) {
+:where(.spw-frame[data-spw-role="broadcast"]) {
   background: linear-gradient(
       90deg,
       color-mix(in srgb, var(--component-accent) 10%, transparent),
@@ -21215,7 +21212,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
    14. Hero + heading thresholds
    ========================================================================== */
 
-:where([data-spw-region-role="entry-spine"], [data-spw-region-role="entry-spine"]) {
+:where([data-spw-region-role="entry-spine"]) {
   gap: var(--spw-hero-gap, clamp(1.1rem, 2cqi, 1.5rem));
 }
 
@@ -21231,20 +21228,20 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   min-width: 0;
 }
 
-:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) {
+:where([data-spw-anatomy="hero-split"]) {
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
   align-content: start;
 }
 
-:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="body"] {
+:where([data-spw-anatomy="hero-split"]) > [data-spw-slot="body"] {
   display: grid;
   gap: var(--spw-surface-gap, var(--space-md, 1rem));
   align-content: start;
 }
 
-:where([data-spw-anatomy="hero-split"], [data-spw-anatomy="hero-split"]) > [data-spw-slot="figure"] {
+:where([data-spw-anatomy="hero-split"]) > [data-spw-slot="figure"] {
   align-self: start;
 }
 
@@ -21307,14 +21304,14 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
    Explicit author values win; the rules below are additive and safe.
    ========================================================================== */
 
-:where(:is(.spw-frame, .spw-frame)[data-spw-size-context="narrow-hero"],
-       :is(.spw-frame, .spw-frame)[data-spw-size-context="narrow-panel"]) {
+:where(.spw-frame[data-spw-size-context="narrow-hero"],
+       .spw-frame[data-spw-size-context="narrow-panel"]) {
   --surface-padding: clamp(0.7rem, 2.2cqi, 1.05rem);
   --surface-gap: clamp(0.7rem, 1.6cqi, 0.95rem);
 }
 
-:where(:is(.spw-frame, .spw-frame)[data-spw-content-tone="dense"],
-       :is(.spw-frame, .spw-frame)[data-spw-content-tone="operator-heavy"]) {
+:where(.spw-frame[data-spw-content-tone="dense"],
+       .spw-frame[data-spw-content-tone="operator-heavy"]) {
   --surface-gap: calc(var(--surface-gap, 1rem) * 0.82);
 }
 
@@ -27765,7 +27762,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
       gap: var(--component-gap);
     }
 
-    :where([data-spw-textual-role="lede"], [data-spw-textual-role="lede"]) {
+    :where([data-spw-textual-role="lede"]) {
       font-size: clamp(0.96rem, 0.9rem + 0.24vw, 1.08rem);
       line-height: 1.5;
     }
@@ -37474,7 +37471,7 @@ html[data-spw-reveal-phase="settling"] {
   margin-block: 0.42rem 0.08rem;
 }
 
-:where([data-spw-feature="wrap-jobs"] :is(.spw-chip, .spw-chip)) {
+:where([data-spw-feature="wrap-jobs"] .spw-chip) {
   --spw-control-min-height: 1.7rem;
   --spw-control-padding-block: 0.16rem;
   --spw-control-padding-inline: 0.5rem;
@@ -37496,13 +37493,13 @@ html[data-spw-reveal-phase="settling"] {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--op-mode-color, var(--op-probe-color, #4a2180)) 38%, transparent);
 }
 
-html[data-spw-color-mode="dark"] :where([data-spw-feature="wrap-jobs"] :is(.spw-chip, .spw-chip)) {
+html[data-spw-color-mode="dark"] :where([data-spw-feature="wrap-jobs"] .spw-chip) {
   background: color-mix(in srgb, var(--surface-panel-strong, var(--surface-strong)) 86%, var(--active-op-color, var(--teal)) 10%);
   color: var(--ink-strong, CanvasText);
   border-color: color-mix(in srgb, var(--line-strong) 65%, var(--active-op-color, var(--teal)) 35%);
 }
 
-html[data-spw-color-mode="dark"] [data-spw-surface="about"] :where([data-spw-feature="wrap-jobs"] :is(.spw-chip, .spw-chip)) {
+html[data-spw-color-mode="dark"] [data-spw-surface="about"] :where([data-spw-feature="wrap-jobs"] .spw-chip) {
   background: var(--about-surface-strong, hsl(24 11% 18%));
   color: var(--about-ink, var(--ink-strong));
   border-color: var(--about-line-strong, var(--line-strong));
@@ -40642,26 +40639,26 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
    When the page was loaded in a "quiet" or "defer" posture (user or editor choice),
    tone down the physical feedback (lift, shadow) for calmer feel.
    This is rule refinement using the explicit load attrs we added for discovery/customization. */
-html[data-spw-load-posture="quiet"] :is(.spw-chip, .spw-chip):hover,
-html[data-spw-load-posture="quiet"] :is(.spw-chip, .spw-chip):focus-visible,
-html[data-spw-load-timing="quiet"] :is(.spw-chip, .spw-chip):hover,
-html[data-spw-load-timing="quiet"] :is(.spw-chip, .spw-chip):focus-visible,
-html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):hover,
-html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):focus-visible {
+html[data-spw-load-posture="quiet"] .spw-chip:hover,
+html[data-spw-load-posture="quiet"] .spw-chip:focus-visible,
+html[data-spw-load-timing="quiet"] .spw-chip:hover,
+html[data-spw-load-timing="quiet"] .spw-chip:focus-visible,
+html[data-spw-load-timing="defer"] .spw-chip:hover,
+html[data-spw-load-timing="defer"] .spw-chip:focus-visible {
   transform: none;
   box-shadow: var(--operator-chip-hover-shadow, 0 1px 3px rgba(0,0,0,0.06));
 }
 
 /* Probe and pragma chips should not feel interchangeable.
    Probe stays open/reversible; pragma reads as a stronger local constraint. */
-:is(.spw-chip):is([data-spw-operator="wonder"], [data-spw-operator="probe"]) {
+.spw-chip:is([data-spw-operator="wonder"], [data-spw-operator="probe"]) {
   --operator-chip-border-style: dashed;
   --operator-chip-bg: var(--operator-chip-bg-intent, color-mix(in oklab, var(--surface-strong, #fff) 95%, var(--op-probe-color, var(--active-op-color, var(--teal))) 5%));
   --operator-chip-border: var(--operator-chip-border-intent, color-mix(in oklab, var(--op-probe-color, var(--active-op-color, var(--teal))) 28%, transparent));
   --operator-chip-hover-bg: var(--operator-chip-hover-bg-intent, color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--op-probe-color, var(--active-op-color, var(--teal))) 10%));
 }
 
-:is(.spw-chip):is([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"]) {
+.spw-chip:is([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"]) {
   --operator-chip-bg: var(--operator-chip-bg-intent, color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 12%));
   --operator-chip-border: var(--operator-chip-border-intent, color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 34%, transparent));
   --operator-chip-hover-bg: var(--operator-chip-hover-bg-intent, color-mix(in oklab, var(--surface-strong, #fff) 84%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%));
@@ -40669,7 +40666,7 @@ html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):focus-visible {
     inset 0 0 0 1px color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%, transparent);
 }
 
-:where(.spw-chip, .spw-chip, .spec-pill, .syntax-token)[data-spw-collected="true"] {
+:where(.spw-chip, .spec-pill, .syntax-token)[data-spw-collected="true"] {
   --operator-chip-border-style: solid;
   --operator-chip-hover-lift: -1px;
   box-shadow:
@@ -40678,7 +40675,7 @@ html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):focus-visible {
     0 0 calc(0.7rem + var(--spw-collection-strength, 0) * 0.4rem) color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 14%, transparent);
 }
 
-:where(.spw-chip, .spw-chip):is([aria-pressed="true"], [aria-current="true"], [data-site-setting-active="true"]) {
+:where(.spw-chip):is([aria-pressed="true"], [aria-current="true"], [data-site-setting-active="true"]) {
   background: var(--operator-chip-active-bg);
   border-color: var(--operator-chip-active-border);
   color: var(--operator-chip-active-ink);
@@ -40688,7 +40685,7 @@ html[data-spw-load-timing="defer"] :is(.spw-chip, .spw-chip):focus-visible {
   animation: var(--operator-chip-active-animation);
 }
 
-html[data-spw-color-mode="dark"] :is(.spw-chip, .spw-chip) {
+html[data-spw-color-mode="dark"] .spw-chip {
   --operator-chip-bg: var(--operator-chip-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%));
   --operator-chip-border: var(--operator-chip-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%));
   --operator-chip-ink: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
@@ -40741,7 +40738,7 @@ html[data-spw-color-mode="dark"] :is(.spw-chip, .spw-chip) {
 }
 
 @media (prefers-color-scheme: dark) {
-  html[data-spw-color-mode="auto"] :is(.spw-chip, .spw-chip) {
+  html[data-spw-color-mode="auto"] .spw-chip {
     --operator-chip-bg: var(--operator-chip-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%));
     --operator-chip-border: var(--operator-chip-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%));
     --operator-chip-ink: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);

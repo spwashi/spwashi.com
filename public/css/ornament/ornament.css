@@ -1455,15 +1455,15 @@ body[data-spw-surface="topics"] #topics-register .frame-topline .spec-pill {
    only fill in where nothing was said.
    -------------------------------------------------------------------------- */
 
-main > :where(.spw-frame, .spw-frame):first-of-type:not([data-spw-stage]) {
+main > :where(.spw-frame):first-of-type:not([data-spw-stage]) {
   --ornament-stage-opacity: var(--ornament-stage-entry-opacity);
 }
 
-main > :where(.spw-frame, .spw-frame):not(:first-of-type):not(:last-of-type):not([data-spw-stage]) {
+main > :where(.spw-frame):not(:first-of-type):not(:last-of-type):not([data-spw-stage]) {
   --ornament-stage-opacity: var(--ornament-stage-ground-opacity);
 }
 
-main > :where(.spw-frame, .spw-frame):last-of-type:not(:first-of-type):not([data-spw-stage]) {
+main > :where(.spw-frame):last-of-type:not(:first-of-type):not([data-spw-stage]) {
   --ornament-stage-opacity: var(--ornament-stage-exit-opacity);
 }
 

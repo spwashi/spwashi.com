@@ -250,7 +250,7 @@
   align-items: stretch;
 }
 
-:where(.spw-card, .spw-panel, .frame-card, :is(.spw-panel, .frame-panel)) :where(.spw-chip, .spw-chip, .frame-sigil) {
+:where(.spw-card, .spw-panel, .frame-card, :is(.spw-panel, .frame-panel)) :where(.spw-chip, .frame-sigil) {
   white-space: nowrap;
   max-inline-size: 100%;
   overflow: hidden;

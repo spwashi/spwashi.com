@@ -122,7 +122,7 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
       linear-gradient(135deg, color-mix(in oklab, var(--bg-field, #111) 78%, var(--home-accent-blue) 7%), var(--bg, #111));
 }
 
-:where(body[data-spw-surface="home"] main > :is(.spw-frame, .spw-frame)) {
+:where(body[data-spw-surface="home"] main > .spw-frame) {
   max-inline-size: var(--home-section-max);
   inline-size: min(100%, var(--home-section-max));
   margin-inline: auto;
@@ -133,7 +133,7 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
    3. Kernel hero
    ========================================================================== */
 
-:where([data-spw-feature="home-kernel-entry"]:is([data-spw-region-role="entry-spine"], [data-spw-region-role="entry-spine"], .spw-frame, .spw-frame)) {
+:where([data-spw-feature="home-kernel-entry"]:is([data-spw-region-role="entry-spine"], .spw-frame)) {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -636,7 +636,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   line-height: 1.48;
 }
 
-:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"] :is(.spw-chip, .spw-chip)) {
+:where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"] .spw-chip) {
   flex: 1 1 9rem;
   min-inline-size: 0;
 }
@@ -1696,11 +1696,11 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
 }
 
 /* Region wash/seam live in region-seats.css. Home only spends family ink. */
-:where(body[data-spw-surface="home"] :is(.spw-frame, .spw-frame)[data-spw-region="hook"]) {
+:where(body[data-spw-surface="home"] .spw-frame[data-spw-region="hook"]) {
   box-shadow: var(--home-shadow-active);
 }
 
-:where(body[data-spw-surface="home"] :is(.spw-frame, .spw-frame)) {
+:where(body[data-spw-surface="home"] .spw-frame) {
   --home-region-salience: var(--spw-salience, 1);
 }
 
@@ -1970,7 +1970,7 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
     gap: 0.38rem;
   }
 
-  :where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"] :is(.spw-chip, .spw-chip)) {
+  :where([data-spw-feature="home-kernel-entry"] .hook-call .hook-invitation[data-spw-feature="wrap-jobs"] .spw-chip) {
     inline-size: 100%;
   }
 }

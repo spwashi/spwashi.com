@@ -1224,7 +1224,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
       gap: var(--component-gap);
     }
 
-    :where([data-spw-textual-role="lede"], [data-spw-textual-role="lede"]) {
+    :where([data-spw-textual-role="lede"]) {
       font-size: clamp(0.96rem, 0.9rem + 0.24vw, 1.08rem);
       line-height: 1.5;
     }
