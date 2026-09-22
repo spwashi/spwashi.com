@@ -969,7 +969,8 @@ These are some of the public references and documentation surfaces that matter m
 
 * Tree-sitter
 * Language Server Protocol
-* CodeMirror
+* VS Code Extension API
+* IntelliJ Platform SDK
 * TypeScript Docs
 
 ## Boonhonk Register
