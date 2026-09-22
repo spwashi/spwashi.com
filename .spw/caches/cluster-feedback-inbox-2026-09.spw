@@ -28,6 +28,7 @@ source = "chat"
   contexts = #[`/wonder`, `/review`, `/practice`, `/brief`][reg=set]
   subject = `/{host}`
   ~#retired(2026-09-22): "/for/{host} and its redirect are gone; no site used them. Read /for/{host} above as /{host}. POST returns a card, not a 501 — see ./feedback-product-2026-09.spw"
+  ~#renamed(2026-09-22): "The kind slugs now match their labels: /wonder → /appreciation, /review → /problem, /practice → /suggestion, /brief → /question. The old paths 301."
 }
 
 ^"bearer"{

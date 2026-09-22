@@ -25,8 +25,9 @@ Claude, Codex, Grok, another agent, or the shell, and copy that set. Git has
 its own section. `claude -p`, `codex exec`, and `grok` each receive the same job.
 
 `autonomous.feedback` is a feedback form for any website. A reader writes a
-note at `/{host}/{kind}` (kinds: `wonder` Appreciation, `review` Problem,
-`practice` Suggestion, `brief` Question) and gets a card to save as an image,
+note at `/{host}/{kind}` (kinds: `problem`, `suggestion`, `question`,
+`appreciation`; the URL matches the label, and the pre-2026-09-22 slugs
+`review`, `practice`, `brief`, `wonder` redirect) and gets a card to save as an image,
 share, post, or copy; nothing is stored. `/start?host=&how=&kind=` is setup: it
 fills the link, frame, HTML form, `fetch`, and `curl` codeblocks with the
 domain and previews the result. `/meter?host=` checks whether a site responds.
@@ -45,6 +46,9 @@ is cached for five minutes, and falls back to defaults field by field; colours
 below WCAG contrast are replaced. No stylesheet URLs or HTML are accepted.
 `/{host}/config.json` shows what was applied and why anything was not. On
 GitHub Pages built by Jekyll, a `.nojekyll` file is needed for `.well-known`.
+spwashi.com is the first client: `.well-known/autonomous-feedback.json` in this
+repo (light theme from the site's paper, ink, and teal; serif; optional name),
+linked from the Feedback card on /contact/.
 
 `/{host}/inbox` stays locked until a queue is attached. `/for/{host}` was
 retired on 2026-09-22; no site used it. `/climate.json` remains the machine
