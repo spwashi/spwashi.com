@@ -701,19 +701,31 @@ export async function main(): Promise<void> {
 
   await writeNoJekyll(options.outDir);
 
+  // The sitemap and the catalog write outputs nothing else in this build writes
+  // (sitemap.xml, design/catalog/), and both read the repo, not the out dir, so
+  // they run beside the JS bundle and minify. They must land before the passes
+  // that rewrite every .html (boot preloads, asset fingerprints).
+  const generators: Promise<void>[] = [];
+  const startGenerator = (label: string, script: string, args: string[]) => {
+    logger.info(`[build] ${label} (in parallel)`);
+    generators.push(runNodeScript(script, args).then((output) => {
+      if (output) logger.info(output);
+    }));
+  };
+
   if (options.sitemap) {
-    logger.info('[build] generating sitemap.xml');
-    runNodeScript('scripts/generate-sitemap.mjs', ['--out', path.join(options.outDir, 'sitemap.xml')]);
+    startGenerator('generating sitemap.xml', 'scripts/generate-sitemap.mjs', ['--out', path.join(options.outDir, 'sitemap.xml')]);
   } else {
     logger.info('[build] skipping sitemap generation');
   }
 
   if (options.catalog) {
-    logger.info('[build] regenerating design catalog');
-    runNodeScript('scripts/generate-design-catalog.mjs', ['--out', path.join(options.outDir, 'design', 'catalog')]);
+    startGenerator('regenerating design catalog', 'scripts/generate-design-catalog.mjs', ['--out', path.join(options.outDir, 'design', 'catalog')]);
   } else {
     logger.info('[build] skipping design catalog generation');
   }
+  // Reject together below, not as an unhandled rejection mid-bundle.
+  const generatorsSettled = Promise.allSettled(generators);
 
   let runtimeBundle: RuntimeBundleResult = {
     boot: {
@@ -740,6 +752,9 @@ export async function main(): Promise<void> {
   } else {
     logger.info('[build] skipping public/css comment strip');
   }
+
+  const failedGenerator = (await generatorsSettled).find((result) => result.status === 'rejected');
+  if (failedGenerator) throw (failedGenerator as PromiseRejectedResult).reason;
 
   const injected = await injectBootModulePreloads(options.outDir, runtimeBundle.boot.hrefs);
   if (injected) {
