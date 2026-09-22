@@ -2,13 +2,17 @@
   "schema": "autonomous-feedback.client.v0",
   "host": "spwashi.com",
   "name": "Spwashi",
-  "intro": "Notes about the site, the tools, or the writing. Send your card to @spwashi on X, Bluesky, or Instagram.",
+  "title": "Feedback",
+  "intro": "What was hard to use, and what was clear.",
   "kinds": ["problem", "suggestion", "question", "appreciation"],
   "labels": {
     "problem": { "prompt": "Something broken, confusing, or hard to use on spwashi.com, and which page it was on." }
   },
   "from": "optional",
   "button": "Make the card",
+  "frame": {
+    "ancestors": ["https://spwashi.com", "https://www.spwashi.com", "https://spw.quest"]
+  },
   "theme": {
     "mode": "light",
     "background": "#eee9dd",
