@@ -32,7 +32,19 @@ test('quest negotiation, HEAD, methods, and redirects', async () => {
   const health = await (await get('spw.quest', '/health')).json();
   assert.equal(health.worker, 'spw-quest');
   const page = await (await get('spw.quest', '/')).text();
-  assert.match(page, /name="runner"/);
+  // Instruction sets are tabs, Shell first and selected.
+  assert.match(page, /role="tablist" aria-label="Who runs the setup"/);
+  const tabs = [...page.matchAll(/role="tab" id="tab-([a-z]+)"[^>]*aria-selected="(true|false)"/g)].map((m) => [m[1], m[2]]);
+  assert.deepEqual(tabs[0], ['shell', 'true']);
+  assert.equal(tabs.filter(([, selected]) => selected === 'true').length, 1);
+  assert.deepEqual(tabs.map(([id]) => id), ['shell', 'claude', 'codex', 'grok', 'paste']);
+  // Shell already runs the git guide, so only agent panels offer to add it.
+  const shellPanel = page.match(/<section class="tabpanel"[^>]*id="panel-shell"[\s\S]*?<\/section>/)[0];
+  assert.doesNotMatch(shellPanel, /data-include-git/);
+  assert.match(shellPanel, /git submodule add/);
+  assert.match(page, /data-include-git="set-claude"/);
+  assert.match(page, /id="git-covered" hidden/);
+  assert.doesNotMatch(page, /name="runner"|quest-sets/);
   assert.match(page, /Codex/);
   assert.match(page, /Grok/);
   assert.match(page, /Git, in this order/);

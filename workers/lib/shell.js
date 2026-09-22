@@ -159,6 +159,19 @@ const SHELL = `
     .preview iframe { display: block; }
     .problems { margin: .5rem 0 0; padding-left: 1.2rem; color: var(--warn); }
     .card-from { color: var(--muted); margin: -.4rem 0 1rem; }
+    .tabs { margin: 1.2rem 0; }
+    .tablist { display: none; }
+    .tabs-ready .tablist { display: flex; flex-wrap: wrap; gap: .25rem; border-bottom: 1px solid var(--line); }
+    .tablist [role="tab"] { margin: 0 0 -1px; min-height: 44px; padding: .5rem 1rem; border: 1px solid transparent; border-bottom: 0; border-radius: calc(var(--radius) * .7) calc(var(--radius) * .7) 0 0; background: transparent; color: var(--muted); }
+    .tablist [role="tab"]:hover { color: var(--fg); }
+    .tablist [role="tab"][aria-selected="true"] { border-color: var(--line); background: var(--bg); color: var(--fg); font-weight: 600; box-shadow: inset 0 2px 0 var(--accent); }
+    .tabpanel { padding: .9rem 0 0; }
+    .tabpanel + .tabpanel { margin-top: 1.4rem; }
+    .tabs-ready .tabpanel + .tabpanel { margin-top: 0; }
+    .tabpanel:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .tabpanel .note { margin: 0 0 .6rem; }
+    label.check { display: flex; align-items: center; gap: .55rem; min-height: 44px; margin: 0; color: var(--fg); font-size: .95rem; cursor: pointer; }
+    label.check input { width: 1.1rem; height: 1.1rem; accent-color: var(--accent); }
     details { margin: .8rem 0; }
     summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; color: var(--accent); }
     .fields { display: grid; grid-template-columns: minmax(7rem, max-content) 1fr; gap: .5rem 1rem; margin: .6rem 0 0; }
@@ -239,25 +252,6 @@ export function layout({ title, description, canonical, climate, body, quiet = f
       status.textContent = "";
       setTimeout(() => { status.textContent = message; }, 50);
     };
-    const setsNode = document.getElementById("quest-sets");
-    const instruction = document.getElementById("instruction");
-    const includeGit = document.getElementById("include-git");
-    const gitCopy = document.getElementById("git-copy");
-    if (setsNode && instruction) {
-      const sets = JSON.parse(setsNode.textContent);
-      const paint = () => {
-        const chosen = document.querySelector('input[name="runner"]:checked');
-        const set = sets.find((item) => item.id === chosen?.value) || sets[0];
-        const label = document.getElementById("instruction-label");
-        if (label) label.textContent = set.label;
-        let text = set.text;
-        if (includeGit?.checked && gitCopy) text += "\\n\\n" + gitCopy.innerText.trim();
-        instruction.textContent = text;
-      };
-      document.querySelectorAll('input[name="runner"]').forEach((input) => input.addEventListener("change", paint));
-      includeGit?.addEventListener("change", paint);
-      paint();
-    }
     document.querySelectorAll("[data-copy]").forEach((button) => {
       button.addEventListener("click", async () => {
         const node = document.getElementById(button.getAttribute("data-copy"));
