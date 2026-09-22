@@ -63,6 +63,7 @@
 @healing_process_daily_wonder_2026_09: ~"./healing-process-daily-wonder-2026-09.spw"  # civic walk: cheap return after therapy; daily wonder + dated receipts; not a clinic
 @pricing_lattice_2026_09: ~"./pricing-lattice-2026-09.spw"  # cited comps vs live ladder; no checkout from this cache
 @wonder_chrome_retune_2026_09: ~"./wonder-chrome-retune-2026-09.spw"  # the 2026-09-19 retune request as sixteen owned lines; wr-001 is the settings register squeeze, landed
+@expression_charge_sign_2026_09: ~"./expression-charge-sign-2026-09.spw"  # prime: a valence modifier rides an expression as a charge-sign
 
 operation = "align"
 fixity = "tending"
@@ -123,6 +124,7 @@ fixity = "tending"
   healing_process_daily_wonder_2026_09 = @healing_process_daily_wonder_2026_09
   pricing_lattice_2026_09 = @pricing_lattice_2026_09
   wonder_chrome_retune_2026_09 = @wonder_chrome_retune_2026_09
+  expression_charge_sign_2026_09 = @expression_charge_sign_2026_09
 }[reg=facet]
 
 ^"cache_rules"{
