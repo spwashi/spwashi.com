@@ -3,6 +3,8 @@ import test from 'node:test';
 
 import {
   bestExpressionMatch,
+  expressionLayers,
+  GESTURE_CHARGE,
   parseExpressionQuery,
   readJoinChain,
   readSpwHydration,
@@ -54,6 +56,23 @@ test('charge, scene, and a capsule after the scene survive the shape', () => {
   assert.equal(pair.subject, '');
   assert.equal(pair.mode, 'honk');
   assert.deepEqual(pair.parts, ['invite']);
+});
+
+test('tap, hold, and swipe name existing charge states', () => {
+  assert.equal(GESTURE_CHARGE.tap, 'preview');
+  assert.equal(GESTURE_CHARGE.hold, 'sustained');
+  assert.equal(GESTURE_CHARGE.swipe, 'charging');
+});
+
+test('resonance layers skip an empty slot and a one-letter scope', () => {
+  assert.deepEqual(
+    expressionLayers(shapeFromExpression('home[live]{cycle.progress}(b)<now>')),
+    ['subject', 'mode', 'part', 'projection'],
+  );
+  assert.deepEqual(
+    expressionLayers(shapeFromExpression('boon.honk home[hook]{software.art}(atlas)<person>')),
+    ['subject', 'mode', 'part', 'scope', 'charge', 'projection'],
+  );
 });
 
 test('partial wraps name slots without requiring a full expression', () => {

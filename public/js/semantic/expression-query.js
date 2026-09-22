@@ -35,6 +35,30 @@ const EXPRESSION_SLOTS = new RegExp(
   + '(?:<([^>]*)>)?',
 );
 
+/** Tap previews, a hold sustains, a trace charges. These are existing charge states. */
+export const GESTURE_CHARGE = Object.freeze({
+  tap: 'preview',
+  hold: 'sustained',
+  swipe: 'charging',
+});
+
+/** Resonance altitudes, strongest kinship first. A swipe that stays on one host walks this list. */
+export const RESONANCE_LAYERS = Object.freeze([
+  'subject', 'mode', 'part', 'scope', 'charge', 'projection',
+]);
+
+/** Layers this shape can actually show. A one-letter scope stays stored and is not a layer. */
+export function expressionLayers(shape = {}) {
+  const layers = [];
+  if (shape.subject) layers.push('subject');
+  if (shape.mode) layers.push('mode');
+  if ((shape.parts || []).some(Boolean)) layers.push('part');
+  if (shape.scope && String(shape.scope).length > 1) layers.push('scope');
+  if ((shape.charge || []).length) layers.push('charge');
+  if (shape.projection) layers.push('projection');
+  return layers;
+}
+
 /**
  * Authored slots, including the ones a flatter regex used to drop.
  * charge is a leading valence chain. scope is a scene, before the subject or after the body.
