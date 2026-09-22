@@ -23,6 +23,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { GESTURE_MEASURE } from '/public/js/runtime/interaction/gesture-measure.js';
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 
 const TOPIC_SELECTOR = '.spw-topic, [data-spw-topic]';
@@ -268,7 +269,7 @@ function showPopover(el) {
 
 function initBadgeSwipe() {
     // Pointer events instead of touch events so mouse and pen drags swipe too.
-    const SWIPE_MIN_PX = 40;
+    const SWIPE_MIN_PX = GESTURE_MEASURE.swipeMinPx;
     const SWIPE_INTENT_PX = 12;
 
     const badgeContainers = document.querySelectorAll('.spec-strip, .frame-operators');
@@ -306,7 +307,7 @@ function initBadgeSwipe() {
             const dy = e.clientY - startY;
 
             // Only horizontal swipes
-            if (Math.abs(dx) > SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy) * 2) {
+            if (Math.abs(dx) > SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy) * GESTURE_MEASURE.swipeDominance) {
                 const badges = Array.from(container.querySelectorAll(BADGE_SELECTOR));
                 const currentActive = container.querySelector('.is-badge-active');
                 let idx = badges.indexOf(currentActive);

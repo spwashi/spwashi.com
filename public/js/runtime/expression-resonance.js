@@ -38,6 +38,7 @@
 
 import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
 import { expressionLayers, GESTURE_CHARGE } from '/public/js/semantic/expression-query.js';
+import { GESTURE_MEASURE } from '/public/js/runtime/interaction/gesture-measure.js';
 
 const STORAGE_KEY = 'spw-expression-salience';
 
@@ -60,9 +61,9 @@ const ATTR = Object.freeze({
 const ENCOUNTER_MS = 700;
 /** A tap's layer stays lit this long on a coarse pointer, then settles. */
 const LAYER_SETTLE_MS = 1400;
-const SWIPE_MIN_PX = 28;
-const SWIPE_DOMINANCE = 1.2;
-const HOLD_MS = 480;
+const SWIPE_MIN_PX = GESTURE_MEASURE.swipeMinPx;
+const SWIPE_DOMINANCE = GESTURE_MEASURE.swipeDominance;
+const HOLD_MS = GESTURE_MEASURE.holdMs;
 const TRACE_CARD = '[data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame';
 /** A tap collects the layer's tokens. Rarer layers are worth more than the address. */
 const LAYER_WEIGHT = Object.freeze({

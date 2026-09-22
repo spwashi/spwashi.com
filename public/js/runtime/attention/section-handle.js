@@ -1,3 +1,4 @@
+import { GESTURE_MEASURE } from '/public/js/runtime/interaction/gesture-measure.js';
 import {
   annotateFloatingChromeElement,
   requestFloatingChromeSync,
@@ -980,7 +981,7 @@ function travelSectionHandleToIndex({
   updateActiveState(source);
 }
 
-export const SECTION_HANDLE_SWIPE_DELTA_PX = 48;
+export const SECTION_HANDLE_SWIPE_DELTA_PX = GESTURE_MEASURE.swipeMinPx;
 
 /**
  * Collapsed pocket rail: swipe cycles the visible ‹ › rooms.
@@ -1190,7 +1191,7 @@ function createSectionHandleController({
 
   let skipKinClick = false;
   let holdTimer = 0;
-  const HOLD_MS = 380;
+  const HOLD_MS = GESTURE_MEASURE.holdMs;
 
   const handleKinPointerDown = (event) => {
     const button = event.target.closest?.('[data-spw-region-relation]');

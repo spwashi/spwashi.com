@@ -13,6 +13,8 @@ import {
 
 import { PHASE_ARC } from './arc-taxonomy.js';
 
+export { GESTURE_MEASURE } from './gesture-measure.js';
+
 export const INTERACTION_PHASES = PHASE_ARC.states;
 
 export const GESTURE_TO_INTERACTION_PHASE = Object.freeze({
