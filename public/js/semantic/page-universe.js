@@ -29,6 +29,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { collapseText as cleanText } from '/public/js/kernel/text-normalization.js';
 
 const GESTURE_VOCABULARY = {
     tap:        'charge — begins accumulation on the target',
@@ -109,10 +110,6 @@ function getDiscoverabilityProfile() {
         hasPresetMeasures: typeof window.spwPresets !== 'undefined',
         requestedFeatures: [...features]
     };
-}
-
-function cleanText(value = '') {
-    return String(value).replace(/\s+/g, ' ').trim();
 }
 
 function getPublisherSignals() {
