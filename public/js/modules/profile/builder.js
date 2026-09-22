@@ -91,7 +91,7 @@ export function renderProfileCard(profile, container) {
   ` : '';
 
   const linksHTML = footer.links.filter(l => l.label && l.href).map(l => `
-    <a class="profile-footer-link operator-chip" href="${escHtml(l.href)}" target="_blank" rel="noopener">${escHtml(l.label)}</a>
+    <a class="profile-footer-link spw-chip" href="${escHtml(l.href)}" target="_blank" rel="noopener">${escHtml(l.label)}</a>
   `).join('');
 
   container.innerHTML = `

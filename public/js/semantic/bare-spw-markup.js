@@ -19,7 +19,7 @@ const SKIP_ANCESTOR_SELECTOR = [
   'svg',
   'math',
   '.syntax-token',
-  '.operator-chip',
+  '.spw-chip',
   '.frame-sigil',
   '.frame-card-sigil',
   '.frame-panel-sigil',

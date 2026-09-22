@@ -709,7 +709,7 @@ function syncControls(root) {
 function createToggleButton(config) {
   const button = document.createElement('button');
   button.type = 'button';
-  button.className = 'operator-chip spw-state-inspector__toggle';
+  button.className = 'spw-chip spw-state-inspector__toggle';
   button.dataset.spwStateToggle = config.key;
   button.dataset.spwStateDimension = config.dimension;
   button.textContent = config.label;
@@ -772,17 +772,17 @@ function createInspector() {
   TOGGLES.forEach((config) => actions.append(createToggleButton(config)));
 
   copy.type = 'button';
-  copy.className = 'operator-chip';
+  copy.className = 'spw-chip';
   copy.dataset.spwStateInspectorCopy = 'snapshot';
   copy.textContent = 'copy snapshot';
 
   copySpw.type = 'button';
-  copySpw.className = 'operator-chip';
+  copySpw.className = 'spw-chip';
   copySpw.dataset.spwStateInspectorCopy = 'page-spw';
   copySpw.textContent = 'copy page Spw';
 
   close.type = 'button';
-  close.className = 'operator-chip';
+  close.className = 'spw-chip';
   close.dataset.spwStateInspectorClose = 'true';
   close.textContent = 'close';
 
@@ -792,7 +792,7 @@ function createInspector() {
   ['bottom-left', 'bottom-right'].forEach((edge) => {
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = 'operator-chip spw-state-inspector__position';
+    button.className = 'spw-chip spw-state-inspector__position';
     button.dataset.spwStateInspectorPosition = edge;
     button.textContent = edge === 'bottom-left' ? 'lower left' : 'lower right';
     positionActions.append(button);
@@ -800,7 +800,7 @@ function createInspector() {
 
   const resetPos = document.createElement('button');
   resetPos.type = 'button';
-  resetPos.className = 'operator-chip spw-state-inspector__reset-pos';
+  resetPos.className = 'spw-chip spw-state-inspector__reset-pos';
   resetPos.dataset.spwStateInspectorResetPosition = 'true';
   resetPos.textContent = 'reset rail';
   positionActions.append(resetPos);

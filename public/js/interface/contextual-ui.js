@@ -265,11 +265,11 @@ function applyModuleSemantics(root = document) {
     writeDatasetValue(el, 'spwContextProjectionResolved', contextProjection.join(' '));
     writeDatasetValue(el, 'spwContextMatch', contextMatched ? 'active' : 'idle');
 
-    if (writeDatasetValueIfMissing(el, 'spwModuleCopy', el.matches('.spw-frame, .site-frame') ? 'scope-link' : 'fragment')) {
+    if (writeDatasetValueIfMissing(el, 'spwModuleCopy', el.matches('.spw-frame') ? 'scope-link' : 'fragment')) {
       writeDatasetValue(el, 'spwModuleCopyInferred', 'true');
     }
 
-    if (writeDatasetValueIfMissing(el, 'spwModuleHydration', el.matches('.spw-frame, .site-frame') ? 'defer' : 'ready')) {
+    if (writeDatasetValueIfMissing(el, 'spwModuleHydration', el.matches('.spw-frame') ? 'defer' : 'ready')) {
       writeDatasetValue(el, 'spwModuleHydrationInferred', 'true');
     }
 

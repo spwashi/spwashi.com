@@ -379,7 +379,7 @@ const getMenuHosts = () => (
 
       return (
         element.querySelector('.frame-heading, .frame-topline')
-        || element.closest('.site-frame')?.querySelector('.frame-heading, .frame-topline')
+        || element.closest('.spw-frame')?.querySelector('.frame-heading, .frame-topline')
         || element
       );
     })

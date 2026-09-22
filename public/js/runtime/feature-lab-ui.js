@@ -72,7 +72,7 @@ export function ensureFeatureLabToggleStrip(root = document) {
     uniqueFeatureLabTokens().forEach((token) => {
       const button = document.createElement('button');
       button.type = 'button';
-      button.className = 'operator-chip';
+      button.className = 'spw-chip';
       button.setAttribute('data-site-feature-lab-toggle', token);
       button.setAttribute('data-spw-operator', 'select');
       button.setAttribute('aria-pressed', 'false');

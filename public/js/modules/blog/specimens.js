@@ -152,17 +152,17 @@ function initOperatorCards(root, flags) {
 function initBraceCharge(root, flags) {
   if (!flags.charge) return noop;
 
-  const nodes = root.querySelectorAll('.site-frame');
+  const nodes = root.querySelectorAll('.spw-frame');
   if (!nodes.length) return noop;
 
   function onEnter(e) {
-    const frame = e.target.closest('.site-frame');
+    const frame = e.target.closest('.spw-frame');
     if (!frame) return;
     frame.classList.add('has-active-charge');
   }
 
   function onLeave(e) {
-    const frame = e.target.closest('.site-frame');
+    const frame = e.target.closest('.spw-frame');
     if (!frame) return;
     frame.classList.remove('has-active-charge');
   }

@@ -216,7 +216,7 @@ export function initRewardUI(ctx = {}) {
     if (hasState) {
       const actions = el('div', 'spw-reward-actions');
       const reset = el('button', {
-        className: 'operator-chip spw-reward-reset',
+        className: 'spw-chip spw-reward-reset',
         type: 'button',
         text: '! clear collection',
         dataset: { spwCollectionReset: 'true' },

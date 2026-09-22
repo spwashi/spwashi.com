@@ -29,7 +29,7 @@ const THEME_PACK_OPTIONS = Object.freeze([
 
 // Icon pack consideration (theming + icon packs plan started per while-working note).
 // Lightweight semantic extension for different icon/visual treatments (text operators vs symbol vs regional/project motifs).
-// Integrates with existing SVG tunability (project-motif), operator-chip, spec-pill, and design/ specimens.
+// Integrates with existing SVG tunability (project-motif), spw-chip, spec-pill, and design/ specimens.
 // Stubbed here so the settings system, dataset writes, and design catalog can recognize 'iconPack' immediately.
 // No UI or heavy logic yet; just the semantic + defaults for forward compatibility and instrumentation.
 const ICON_PACK_OPTIONS = Object.freeze([

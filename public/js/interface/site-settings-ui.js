@@ -420,7 +420,7 @@ const resolveStandaloneStatusNode = (node) => {
   const containers = [
     node.closest('[data-site-settings-panel]'),
     node.closest('.vibe-widget'),
-    node.closest('.spw-frame, .site-frame'),
+    node.closest('.spw-frame'),
     node.closest('section, article, aside')
   ].filter(Boolean);
 
@@ -1117,7 +1117,7 @@ const syncPersistenceReadouts = async (root = document) => {
 
       const reset = document.createElement('button');
       reset.type = 'button';
-      reset.className = 'operator-chip';
+      reset.className = 'spw-chip';
       reset.textContent = `! clear ${registry.id}`;
       reset.setAttribute('data-site-persistence-reset', registry.id);
       actions.appendChild(reset);
@@ -1312,7 +1312,7 @@ export const initSiteSettingsBindings = (settingsManager = manager) => {
 
   const getStatusNode = (root) => (
     root.querySelector('[data-site-settings-status]')
-    || root.closest('.spw-frame, .site-frame, section, article, aside')?.querySelector('[data-site-settings-status]')
+    || root.closest('.spw-frame, section, article, aside')?.querySelector('[data-site-settings-status]')
     || document.querySelector('[data-site-settings-status]')
     || null
   );

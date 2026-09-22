@@ -1,6 +1,7 @@
 import { emitSpwAction } from '/public/js/kernel/shared.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { requestLensMode } from '/public/js/runtime/lens-modes.js';
+import { FRAME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 
 const TARGET_SELECTOR = [
     '.spw-frame[data-spw-form="brace"], [data-spw-kind="frame"][data-spw-form="brace"]',
@@ -13,9 +14,9 @@ const TARGET_SELECTOR = [
 ].join(', ');
 
 function activateFrame(target, source = 'brace-edge') {
-    const frame = target.classList.contains('site-frame')
+    const frame = target.classList.contains('spw-frame')
         ? target
-        : target.closest('.spw-frame, [data-spw-kind="frame"]');
+        : target.closest(FRAME_SELECTOR);
     window.spwInterface?.activateFrame?.(frame || target, { source, force: true });
 }
 
@@ -75,11 +76,11 @@ function projectToPrimaryLink(target) {
 }
 
 function projectToNextFrame(target) {
-    const frame = target.classList.contains('site-frame')
+    const frame = target.classList.contains('spw-frame')
         ? target
-        : target.closest('.spw-frame, [data-spw-kind="frame"]');
+        : target.closest(FRAME_SELECTOR);
     let next = frame?.nextElementSibling || null;
-    while (next && !next.classList.contains('site-frame')) {
+    while (next && !next.classList.contains('spw-frame')) {
         next = next.nextElementSibling;
     }
     if (!next) return false;

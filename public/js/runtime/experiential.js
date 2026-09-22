@@ -108,7 +108,7 @@ function updateCognitiveCopyHooks(surface = document.body?.dataset.spwSurface ||
 
   const cognitiveState = describeCognitiveState({
     signalCount: document.querySelectorAll(
-      '.operator-chip[data-spw-grounded="true"], .frame-sigil[data-spw-grounded="true"], .spell-ingredient[data-spw-grounded="true"]'
+      '.spw-chip[data-spw-grounded="true"], .frame-sigil[data-spw-grounded="true"], .spell-ingredient[data-spw-grounded="true"]'
     ).length,
     recentPath: getActiveRecentPathMemory(),
     currentPath: window.location.pathname,

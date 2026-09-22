@@ -400,7 +400,7 @@ function inferAffordances(el, role, features) {
   if (featureSet.has('inspectable')) affordances.push('inspect');
   if (el.querySelector('[data-preset]')) affordances.push('preset-apply');
   if (el.querySelector('[data-site-settings-form], [data-site-settings-scope]')) affordances.push('settings-bind');
-  if (el.querySelector('.operator-chip, a[href^="#"]')) affordances.push('navigate');
+  if (el.querySelector('.spw-chip, a[href^="#"]')) affordances.push('navigate');
 
   return unique(affordances);
 }

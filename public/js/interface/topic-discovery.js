@@ -8,7 +8,7 @@
  * Interactions:
  *   click      — highlight all matching topics on the page, cycle between them
  *   long-press — show context popover (where else this topic appears, operator context)
- *   swipe      — on .spec-pill / .operator-chip badges, cycle through related concepts
+ *   swipe      — on .spec-pill / .spw-chip badges, cycle through related concepts
  *
  * Bus events emitted:
  *   topic:selected   { text, count, elements }
@@ -27,7 +27,7 @@ import { GESTURE_MEASURE } from '/public/js/runtime/interaction/gesture-measure.
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 
 const TOPIC_SELECTOR = '.spw-topic, [data-spw-topic]';
-const BADGE_SELECTOR = '.spec-pill, .operator-chip';
+const BADGE_SELECTOR = '.spec-pill, .spw-chip';
 const HIGHLIGHT_CLASS = 'spw-topic--highlighted';
 const ACTIVE_CLASS = 'spw-topic--active';
 const POPOVER_CLASS = 'spw-topic-popover';
@@ -82,8 +82,8 @@ function buildIndex() {
             element: el,
             operator: el.closest('[data-spw-operator]')?.dataset.spwOperator ?? '',
             brace: el.closest('[data-spw-brace]')?.dataset.spwBrace ?? '',
-            section: el.closest('.site-frame')?.id ?? '',
-            sigil: el.closest('.site-frame')?.querySelector('.frame-sigil')?.textContent.trim() ?? '',
+            section: el.closest('.spw-frame')?.id ?? '',
+            sigil: el.closest('.spw-frame')?.querySelector('.frame-sigil')?.textContent.trim() ?? '',
             semanticRoot,
             semanticFamily,
             semanticKey,

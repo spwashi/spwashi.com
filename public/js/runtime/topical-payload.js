@@ -18,7 +18,7 @@ const HANDLE_SELECTOR = [
   '.spw-scene-bed[data-spw-scene-posture]',
 ].join(', ');
 const EXPRESSION_SELECTOR = '[data-spw-semantic-expression]';
-const PROMPT_CHIP_SELECTOR = 'a.operator-chip[href*="spw_prompt"]';
+const PROMPT_CHIP_SELECTOR = 'a.spw-chip[href*="spw_prompt"]';
 
 let initialized = false;
 let lastRefreshAt = 0;
@@ -90,7 +90,7 @@ function resolveHandleKind(element) {
 }
 
 function buildHandleRecord(element) {
-  const frame = element.closest('.site-frame');
+  const frame = element.closest('.spw-frame');
   return {
     id: element.id || frame?.id || '',
     kind: resolveHandleKind(element),
@@ -163,7 +163,7 @@ function collectExpressions(root = document) {
     .map((element) => ({
       expression: element.dataset.spwSemanticExpression || '',
       path: describePath(element),
-      frameId: element.closest('.site-frame')?.id || '',
+      frameId: element.closest('.spw-frame')?.id || '',
       label: readElementLabel(element),
     }));
 }

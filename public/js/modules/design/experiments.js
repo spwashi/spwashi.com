@@ -1202,7 +1202,7 @@ export function initDesignExperiments(ctx, root) {
           });
         } else if (action === 'toast-ping') {
           const chip = document.createElement('span');
-          chip.className = 'spw-disappear-chip operator-chip';
+          chip.className = 'spw-disappear-chip spw-chip';
           chip.textContent = 'speech bubble noted';
           chip.dataset.spwToast = 'transient';
           Object.assign(chip.style, { position: 'fixed', left: '40%', top: '28%', zIndex: '2200' });

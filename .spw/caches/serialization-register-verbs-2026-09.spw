@@ -1,0 +1,40 @@
+# Serialization Register Verbs
+#
+# The frame copy button prompt-utils would draw — `$ copy_seed` — has been
+# dormant since the site-frame → spw-frame rename: its frame selector still
+# names the retired noun, so no frame matches. Reviving it by renaming the
+# selector would put the button back on forty routes with the meaning it had.
+# The creator asked for something else: the `$` there reads as a selector for a
+# register or substrate, not as a verb, and serializing is at least three acts.
+
+#>serialization_register_verbs
+#:cache #!semantics #!serialization #!operators
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@prompt_utils: ~"../../public/js/interface/prompt-utils.js"
+@operator_namespace: ~"../language/operator-namespace-alignment.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+
+^"insight"{
+  id = "serialization-register-verbs"
+  operation = "prime"
+  fixity = "experimental"
+  source = "chat 2026-09-22, during the site-frame noun finish"
+  claim = "`$` names a register or substrate — where a serialization lands — so it should not also be the glyph for the act of copying. Three verbs want distinct names: serialize a component (the component as it stands), apply a serialization to a substrate (write it into a register), and serialize the projection of an expression onto a substrate (what the expression becomes there)."
+  evidence = #[
+    `prompt-utils.js DEFAULTS.frameSelector '.site-frame[data-spw-promptability="visible"]' matches no element since the noun migration`,
+    `initFrameCopyButtons drew '<span class="log-op">$</span> copy_seed' into every promptable frame's topline`,
+    `data-spw-promptability="visible" is authored on 40 routes`
+  ][reg=set]
+  arrival = "The action appears after a reveal or an intentional summoning, not as standing chrome on every promptable frame."
+  pattern_consideration = #[
+    `operator-namespace-alignment: $ as substrate beside & subject and @ perspective`,
+    `interaction-microstates reward contract: a summoned verb still answers with feedback`,
+    `cauldron gather/compose, which already separates holding from making`
+  ][reg=set]
+  expansion_prime = "Name the three verbs and the summoning gesture in a demo before prompt-utils renames its frame selector."
+  do_not_promote_until = "The creator approves the verbs and the reveal in a browser; until then prompt-utils keeps the retired selector, and the button stays dormant on purpose."
+  validation = "rg -n 'site-frame' public/js/interface/prompt-utils.js stays non-empty until this prime lands."
+}

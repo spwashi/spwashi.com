@@ -6,6 +6,7 @@ import {
   readDocumentTypography,
   readPretextSignals,
 } from '/public/js/semantic/pretext-measurement-bus.js';
+import { FRAME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 
 let initialized = false;
 let cleanupCurrent = null;
@@ -145,7 +146,7 @@ export async function initFrameMetrics(ctx, root) {
         return cleanupCurrent || (() => {});
     }
 
-    const frames = Array.from(root.querySelectorAll('.spw-frame, [data-spw-kind="frame"]'));
+    const frames = Array.from(root.querySelectorAll(FRAME_SELECTOR));
     if (!frames.length) return () => {};
 
     initialized = true;

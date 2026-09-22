@@ -9,7 +9,7 @@ const MODES = [
 function createButton(mode, label, current) {
   const button = document.createElement('button');
   button.type = 'button';
-  button.className = 'operator-chip';
+  button.className = 'spw-chip';
   button.dataset.spwIngredientModeSet = mode;
   button.setAttribute('aria-pressed', String(mode === current));
   button.textContent = label;

@@ -266,7 +266,7 @@ export function initBudgetingBench(ctx, root = document) {
         // This is the concrete scalability improvement: the same optional field now models (and primes) higher-order,
         // multi-dimensional resources without any new chrome or rules. Cauldron receives first-class compositional material.
         const primeBtn = document.createElement('button');
-        primeBtn.className = 'budget-item__prime operator-chip';
+        primeBtn.className = 'budget-item__prime spw-chip';
         primeBtn.type = 'button';
         primeBtn.textContent = 'prime to cauldron';
         primeBtn.addEventListener('click', () => {
@@ -549,7 +549,7 @@ export function initBudgetingBench(ctx, root = document) {
 
         // Prime button for direct cauldron capture — carries higher-order when present
         const primeBtn = document.createElement('button');
-        primeBtn.className = 'budget-item__prime operator-chip';
+        primeBtn.className = 'budget-item__prime spw-chip';
         primeBtn.type = 'button';
         primeBtn.textContent = 'prime to cauldron';
         primeBtn.addEventListener('click', () => {

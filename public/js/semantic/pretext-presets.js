@@ -95,8 +95,8 @@ function sampleArchetypes() {
     const headingTexts = queryTexts([
         'main h1',
         'main h2',
-        '.site-frame h1',
-        '.site-frame h2',
+        '.spw-frame h1',
+        '.spw-frame h2',
         '.frame-title',
         '.page-title',
     ]);
@@ -111,7 +111,7 @@ function sampleArchetypes() {
     ]);
 
     const labelTexts = queryTexts([
-        '.operator-chip',
+        '.spw-chip',
         '.frame-list a',
         '.frame-card-label',
         '.mode-switch button',
@@ -223,8 +223,8 @@ function getFontProfiles() {
             lineHeightPx: getLineHeightPx('main h3, main h4, .frame-card h3', Math.round(rootFontSize * 1.3)),
         },
         label: {
-            font: getComputedFont('.operator-chip, .mode-switch button, label', '500 14px system-ui'),
-            lineHeightPx: getLineHeightPx('.operator-chip, .mode-switch button, label', Math.round(rootFontSize * 1.25)),
+            font: getComputedFont('.spw-chip, .mode-switch button, label', '500 14px system-ui'),
+            lineHeightPx: getLineHeightPx('.spw-chip, .mode-switch button, label', Math.round(rootFontSize * 1.25)),
         },
         code: {
             font: getComputedFont('code, pre, .syntax-token', '14px JetBrains Mono, monospace'),
