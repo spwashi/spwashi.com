@@ -1,3 +1,4 @@
+# Review 2026-09-22 — keep as the trail's evidence; first_patch and next_patch landed in dc6d29fa, and the brace's look still awaits a browser review before this prime grows.
 # Region variety through working ornaments
 #>region_variety
 #:operation #!prime
@@ -47,4 +48,5 @@
   validation = `Named ornament-host visual fixture, check:css, check:local and git diff --check. A green selector census alone does not establish visible response.`
   next_patch = `After the bridge is verified, add specimen fragment IDs and a small reciprocal trail across the named regions. Record host selector, feature gate, mounted module and consumed token for each enhanced stop; use native links without a new navigation module.`
   boundary = `No packing rewrite, global theme pack, new runtime dependency, invented state family, catalog-wide orphan cleanup, or workbench grammar change.`
+  ~#landed(2026-09-22, dc6d29fa): "cyclic host declarations removed; --ornament-field-live and --ornament-resonance-live; specimen fragment ids; corners and braces on the palette, material, parser, and blog stops; :target landing"
 }[reg=facet]

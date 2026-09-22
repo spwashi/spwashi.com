@@ -65,6 +65,12 @@
 @wonder_chrome_retune_2026_09: ~"./wonder-chrome-retune-2026-09.spw"  # the 2026-09-19 retune request as sixteen owned lines; wr-001 is the settings register squeeze, landed
 @expression_charge_sign_2026_09: ~"./expression-charge-sign-2026-09.spw"  # prime: a valence modifier rides an expression as a charge-sign
 @semantic_after_charge_sign_2026_09: ~"./semantic-after-charge-sign-2026-09.spw"  # prime: site shape records charge, scope, and capsule after that workbench gate
+@arc_axes_2026_08: ~"./arc-axes-2026-08.spw"  # vertical shells, grounded links, topic kin as one field; settling damps, it adds no fourth animation
+@spw_origin_modality_pivots: ~"./spw-origin-modality-pivots.spw"  # the public job predates the operator lattice: modality pivots, not an exploded grammar
+@creator_masthead_2026_09: ~"./creator-masthead-2026-09.spw"  # home h1/lede scale; the newspaper entry-spine alignment landed 2026-09-09
+@timing_bands_handoff_2026_09: ~"./timing-bands-handoff-2026-09.spw"  # bands landed (patches 4–5); patches 6–7 open: material, cards, wonder, ornament still read raw --duration-* (2026-09-22)
+@cauldron_lens_composition_2026_09: ~"./cauldron-lens-composition-2026-09.spw"  # page lens reaches the mix, landed 604d4a1d; how pocket chrome shares a corner is still open in its plan
+@serialization_register_verbs_2026_09: ~"./serialization-register-verbs-2026-09.spw"  # $ names where a serialization lands, not the copy act; the frame copy button stays dormant until the verbs pass browser review
 
 operation = "align"
 fixity = "tending"
@@ -127,6 +133,12 @@ fixity = "tending"
   wonder_chrome_retune_2026_09 = @wonder_chrome_retune_2026_09
   expression_charge_sign_2026_09 = @expression_charge_sign_2026_09
   semantic_after_charge_sign_2026_09 = @semantic_after_charge_sign_2026_09
+  arc_axes_2026_08 = @arc_axes_2026_08
+  spw_origin_modality_pivots = @spw_origin_modality_pivots
+  creator_masthead_2026_09 = @creator_masthead_2026_09
+  timing_bands_handoff_2026_09 = @timing_bands_handoff_2026_09
+  cauldron_lens_composition_2026_09 = @cauldron_lens_composition_2026_09
+  serialization_register_verbs_2026_09 = @serialization_register_verbs_2026_09
 }[reg=facet]
 
 ^"cache_rules"{
@@ -138,7 +150,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"workbench_align_2026_07"{
-  pin = `submodule at 14b4b47 (fingerprint, resolve, lint, walk isolation, query --stats, ~> project-join token, lattice colon species). Prior note f2e5b61 is the previous pin. Copy verification did not need that bump — @copy_hypermedia_key_2026_09#hk-007.`
+  pin = `submodule at 3eaab63 (a valence modifier chain rides the expression as a charge-sign; mount.spw pin_note). 14b4b47 before it landed fingerprint, resolve, lint, walk isolation, query --stats, the ~> project-join token, and the lattice colon species; f2e5b61 before that. Copy verification did not need those bumps — @copy_hypermedia_key_2026_09#hk-007.`
   bridge_files = #[
     `mount.spw engage + orientation_contract`,
     `workspace.spw boundary + LSP roots`,
