@@ -5285,45 +5285,65 @@ body > header:empty {
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, transparent);
 }
 
+/* Bottom chrome clearance: how much of the viewport's foot the console,
+   state inspector, and pocket section handle hold. Each piece names the floor
+   it needs and the clearance is the largest of them. A property cannot raise
+   itself — `--x: max(var(--x), 3rem)` is a cycle, and a cycle computes to
+   nothing — so the floors carry their own names and :root takes the max once.
+   The stack floor covers two pieces sharing the lane, which needs more than
+   either alone. layout-assumptions.js and the bottom lane write a measured
+   value inline on html; that wins over these floors once they run.
+   Registered as a length so readers get pixels, not a max() expression. */
+@property --spw-bottom-chrome-clearance {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 :root {
-  --spw-bottom-chrome-clearance: 0px;
+  --spw-bottom-chrome-clearance: max(
+    var(--spw-chrome-floor-console, 0px),
+    var(--spw-chrome-floor-inspector, 0px),
+    var(--spw-chrome-floor-handle, 0px),
+    var(--spw-chrome-floor-stack, 0px)
+  );
 }
 
 :root:has(.spw-console) {
-  --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 3.1rem);
+  --spw-chrome-floor-console: 3.1rem;
 }
 
 :root:has(.spw-console:not(.is-collapsed)) {
-  --spw-bottom-chrome-clearance: 5.5rem;
+  --spw-chrome-floor-console: 5.5rem;
 }
 
 :root:has([data-spw-state-inspector-root]) {
-  --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 3.35rem);
+  --spw-chrome-floor-inspector: 3.35rem;
 }
 
 :root:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) {
-  --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 11.5rem);
+  --spw-chrome-floor-inspector: 11.5rem;
 }
 
 :root:has(.spw-console):has([data-spw-state-inspector-root]) {
-  --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 4.85rem);
+  --spw-chrome-floor-stack: 4.85rem;
 }
 
 @media (max-width: 45rem) {
   :root:has([data-spw-state-inspector-root]) {
-    --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 4.1rem);
+    --spw-chrome-floor-inspector: 4.1rem;
   }
 
   :root:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) {
-    --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 13.5rem);
+    --spw-chrome-floor-inspector: 13.5rem;
   }
 
   :root:has(.spw-section-handle[data-spw-handle-state="visible"], [data-spw-chrome-role="section-handle"][data-spw-handle-state="visible"]) {
-    --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 3.85rem);
+    --spw-chrome-floor-handle: 3.85rem;
   }
 
   :root:has(.spw-section-handle[data-spw-handle-state="visible"], [data-spw-chrome-role="section-handle"][data-spw-handle-state="visible"]):has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) {
-    --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 14.25rem);
+    --spw-chrome-floor-stack: 14.25rem;
   }
 }
 

@@ -74,9 +74,6 @@
   "public/css/shell/chrome/adaptive.css": {
     "--cauldron-chip-border": 1
   },
-  "public/css/shell/chrome/header.css": {
-    "--spw-bottom-chrome-clearance": 8
-  },
   "public/css/systems/arrival-electrostatics.css": {
     "--spw-lifecycle-presence": 3
   },
