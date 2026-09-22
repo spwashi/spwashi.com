@@ -1355,3 +1355,32 @@ main :where(.frame-card-media, .image-study, .topic-photo-card, figure) figcapti
   color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.68)) 76%, var(--spw-visual-link-accent) 24%);
   text-transform: none;
 }
+
+/* ==========================================================================
+   Inline disclosure: the chevron the shell disclosures already turn
+   (components/shell-controls.css), so one sign means "this opens" in chrome
+   and in content alike. The reset hides the native marker on every summary.
+   ========================================================================== */
+
+:where(.spw-inline-disclosure) > summary::after {
+  content: "";
+  display: inline-block;
+  inline-size: 0.46rem;
+  block-size: 0.46rem;
+  margin-inline-start: 0.55rem;
+  border-inline-end: 1.5px solid currentColor;
+  border-block-end: 1.5px solid currentColor;
+  opacity: 0.72;
+  transform: translateY(-0.15rem) rotate(45deg);
+  transition: transform 140ms ease;
+}
+
+:where(.spw-inline-disclosure[open]) > summary::after {
+  transform: translateY(0.05rem) rotate(225deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-inline-disclosure) > summary::after {
+    transition: none;
+  }
+}
