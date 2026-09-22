@@ -29,6 +29,7 @@ function mockNode(label, parent = null) {
 test('native control selector names disclosure and buttons, not tabindex', () => {
   assert.match(NATIVE_CONTROL_SELECTOR, /summary/);
   assert.match(NATIVE_CONTROL_SELECTOR, /button/);
+  assert.match(NATIVE_CONTROL_SELECTOR, /\[role="link"\]/);
   assert.doesNotMatch(NATIVE_CONTROL_SELECTOR, /tabindex/);
 });
 

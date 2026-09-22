@@ -6,7 +6,7 @@
  */
 
 import { isOwnAffordanceTarget, observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
-import { GESTURE_MEASURE } from '/public/js/runtime/interaction/gesture-measure.js';
+import { GESTURE_MEASURE } from '/public/js/kernel/gesture-measure.js';
 import { resolveOwnerDocument } from '/public/js/kernel/browser-primitives.js';
 import { syncEffectInterpretation } from './effect-interpretation.js';
 

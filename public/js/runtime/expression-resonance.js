@@ -36,9 +36,10 @@
  * full-document sweep.
  */
 
+import { NATIVE_CONTROL_SELECTOR } from '/public/js/kernel/dom-contracts.js';
+import { GESTURE_MEASURE } from '/public/js/kernel/gesture-measure.js';
 import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
 import { expressionLayers, GESTURE_CHARGE } from '/public/js/semantic/expression-query.js';
-import { GESTURE_MEASURE } from '/public/js/runtime/interaction/gesture-measure.js';
 
 const STORAGE_KEY = 'spw-expression-salience';
 
@@ -691,7 +692,7 @@ export async function initExpressionResonance(ctx = {}) {
     clearResonance();
   };
 
-  const blocksGesture = (node) => node?.closest?.('button, input, textarea, select, summary, [role="button"]');
+  const blocksGesture = (node) => Boolean(node?.closest?.(NATIVE_CONTROL_SELECTOR));
 
   const armSettle = () => {
     clearTimeout(settleTimer);
