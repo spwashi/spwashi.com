@@ -9,6 +9,7 @@ const FEEDBACK_CONFIG = {
   title: "Feedback",
   intro: "What was hard to follow in these setup instructions.",
   kinds: ["problem", "suggestion", "question"],
+  contact: { bluesky: "spwashi.com", x: "spwashi" },
   button: "Send",
   frame: { ancestors: ["https://spw.quest", "https://spwashi.com"] },
   theme: { mode: "dark", background: "#0a1012", text: "#e8eef1", accent: "#5eead4", corners: "round", font: "system" },

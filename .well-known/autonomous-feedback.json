@@ -8,6 +8,7 @@
   "labels": {
     "problem": { "prompt": "Something broken, confusing, or hard to use on spwashi.com, and which page it was on." }
   },
+  "contact": { "bluesky": "spwashi.com", "x": "spwashi" },
   "from": "optional",
   "button": "Make the card",
   "frame": {
