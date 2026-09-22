@@ -1,0 +1,78 @@
+# Semantic enhancement after the charge-sign
+#
+# Prime for the site pass that starts once the workbench lets a valence
+# modifier ride an expression. Prepare the path. Do not implement it here.
+
+#>semantic_after_charge_sign
+#:cache #!semantic #!expression #!manifest
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+@charge_sign: ~"./expression-charge-sign-2026-09.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@expression_resonance: ~"../../public/js/runtime/expression-resonance.js"
+@shape_reader: ~"../../public/js/semantic/expression-query.js"
+@manifest_builder: ~"../../scripts/build-expression-manifest.mjs"
+@operator_atlas: ~"../../topics/software/spw/index.html"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = semantic[after]{charge.scope.capsule}<manifest>
+
+^"gate"{
+  claim = `This pass starts after the workbench enhancement in @charge_sign has landed. Until an expression that carries boon, bane, bone, bonk, or honk returns a structured expression with its modifier chain, a manifest rebuild would keep dropping those hosts, and a shape field for charge would have nothing honest to store.`
+  probe = `parseExpression("boon.honk home[hook]{orient}") returns an Expression, the modifier chain is present, and the warning list has no prose-degradation.`
+  audience = `The expression manifest, kinship, and the operator atlas. Public copy on the operator pages already holds the move and the mark. This pass lets the stored shape hold them too.`
+}[reg=facet]
+
+^"enhancement"{
+  claim = `Once the gate is open, the site shape records three things the prose already says and the manifest currently drops: the charge-sign, the scene, and a capsule that follows the scene.`
+  readers = #[
+    `readShape in @manifest_builder`,
+    `shapeFromExpression in @shape_reader`
+  ][reg=set]
+  fields = .{
+    charge = `The modifier chain, in order, separate from subject, mode, parts, and projection. boon.honk is two signs, not a subject.`
+    scope = `The grammar's scope node. cycle[b]{receipt}(progress)<live> keeps progress. A leading (look){stage}<learn> is a scope term, not the subject string "(look)".`
+    projection = `The capsule. It survives when a scope sits between the body and the capsule. live and orientation are the two hosts that lose it today.`
+  }[reg=facet]
+  attribute_rule = `Store the new fields on the manifest shape. Do not add a data-spw-* family. Projection already stamps data-spw-projection from the manifest. Charge on an expression is not the attention charge attribute.`
+  first_patch = `Teach the two readers, rebuild the manifest, and stop. Confirm the two lost capsules and the five About pair cards. Leave the plain majority plain. Do not rewrite the operator pages in that patch.`
+}[reg=facet]
+
+^"hosts"{
+  lost_capsule = #[
+    `cycle[b]{receipt}(progress)<live>`,
+    `play[hook]{table.canon}(stage)<orientation>`
+  ][reg=set]
+  prose_today = #[
+    `boon[honk]{invite}`,
+    `bane[bone]{limit}`,
+    `bone[bonk]{hit}`,
+    `boon[bane]{cost}`,
+    `honk[bonk]{signal}`
+  ][reg=set]
+  stale_manifest = `honk[signal]{resonance} is still stored from an older parse. After the gate, a rebuild should structure it, or drop it on purpose. It should not remain a remembered shape the current parser refuses.`
+}[reg=facet]
+
+^"resonance"{
+  home = @expression_resonance
+  claim = `Kinship reads projection from the manifest. Restoring the two capsules lets those hosts enter the projection channel. A charge field is available for a later kinship pass. It is not required for the first patch to light anything.`
+}[reg=facet]
+
+^"refuse"{
+  items = #[
+    `Do not start this pass before the gate probe is green.`,
+    `Do not enrich plain subject[mode]{body} hosts for completeness.`,
+    `Do not stop lexing the five words as modifiers.`,
+    `Do not treat a prose degradation as a parsed shape.`,
+    `Do not fold the interval boon..honk, inherited names, or a shader renderer into this patch.`
+  ][reg=set]
+}[reg=facet]
+
+validation: #[
+  `the gate probe in @charge_sign#enhancement`,
+  `after the reader patch: node scripts/build-expression-manifest.mjs, then confirm projection "live" on cycle[b]{receipt}(progress)<live> and a charge list on boon.honk home[hook]{orient}`
+][reg=set]
