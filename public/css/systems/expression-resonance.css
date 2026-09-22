@@ -88,9 +88,14 @@
 @media (prefers-reduced-motion: no-preference) {
   :where([data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame)[data-spw-charge="charging"] {
     box-shadow:
-      inset var(--spw-trace-shift, 0px) 0 28px color-mix(in srgb, #f4f1ea 42%, transparent),
-      inset 0 0 0 1px color-mix(in srgb, #f4f1ea 30%, transparent);
+      var(--material-highlight-inset, inset 0 1px 0 color-mix(in oklab, var(--specular, white) 52%, transparent)),
+      inset var(--spw-trace-shift, 0px) 0 calc(28px * var(--spw-expression-resonance, 1))
+        color-mix(in oklab, var(--specular, white) 42%, transparent);
   }
+}
+
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-charge="charging"]) {
+  --spw-expression-resonance: 0;
 }
 
 :where([data-spw-semantic-expression][data-spw-charge="charging"]) {
