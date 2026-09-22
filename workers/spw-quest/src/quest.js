@@ -37,12 +37,17 @@ npm --prefix .spw/_workbench run spw:doctor -- ../..
 git diff --check
 `;
 
+/**
+ * Who runs the setup. Shell is first and the default: it is the whole setup
+ * with nothing hidden, git included. The agent sets hand the same recipe to a
+ * model and can carry the git guide along; the shell set already runs it.
+ */
 export const INSTRUCTION_SETS = Object.freeze([
-  { id: "claude", label: "Claude", text: `claude -p '${JOB}'` },
-  { id: "codex", label: "Codex", text: `codex exec '${JOB}'` },
-  { id: "grok", label: "Grok", text: `grok '${JOB}'` },
-  { id: "paste", label: "Another agent", text: JOB },
-  { id: "shell", label: "Shell", text: SHELL_STEPS },
+  { id: "shell", label: "Shell", note: "Every step, git included, run by you. No model.", text: SHELL_STEPS, includesGit: true },
+  { id: "claude", label: "Claude", note: "Claude Code reads the recipe and runs it in this repository. It stops before any commit.", text: `claude -p '${JOB}'`, includesGit: false },
+  { id: "codex", label: "Codex", note: "Codex runs the same recipe without prompting. It stops before any commit.", text: `codex exec '${JOB}'`, includesGit: false },
+  { id: "grok", label: "Grok", note: "Grok runs the same recipe. It stops before any commit.", text: `grok '${JOB}'`, includesGit: false },
+  { id: "paste", label: "Another agent", note: "Paste this into Cursor, Gemini, or any agent chat.", text: JOB, includesGit: false },
 ]);
 
 export const INIT_PROMPT = `Initialize the current repository with Spw Workbench at .spw/_workbench.

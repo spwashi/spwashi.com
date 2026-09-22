@@ -20,25 +20,83 @@ const QUEST = Object.freeze({
   ownership: `${WORKBENCH.repository}/blob/${WORKBENCH.revision}/docs/runtime/md/mounted-workbench.md`,
 });
 
+/**
+ * Tabs for who runs the setup (ARIA tabs pattern). Without script every set
+ * shows stacked with its own caption; with script one panel shows, arrows move
+ * between tabs, and the hash (#claude) keeps the choice.
+ */
+function questTabs() {
+  document.documentElement.classList.add("tabs-ready");
+  const tabs = [...document.querySelectorAll('[role="tab"][data-set]')];
+  const git = document.getElementById("git-guide");
+  const gitNote = document.getElementById("git-covered");
+  if (!tabs.length) return;
+  const panelFor = (tab) => document.getElementById(tab.getAttribute("aria-controls"));
+
+  const select = (tab, { focus = false, remember = true } = {}) => {
+    for (const other of tabs) {
+      const chosen = other === tab;
+      other.setAttribute("aria-selected", String(chosen));
+      other.tabIndex = chosen ? 0 : -1;
+      panelFor(other).hidden = !chosen;
+    }
+    // The shell set already runs the git guide; step it aside instead of repeating it.
+    const covered = tab.dataset.includesGit === "true";
+    if (git) git.hidden = covered;
+    if (gitNote) gitNote.hidden = !covered;
+    if (focus) tab.focus();
+    if (remember) history.replaceState(null, "", `#${tab.dataset.set}`);
+  };
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => select(tab));
+    tab.addEventListener("keydown", (event) => {
+      const moves = { ArrowRight: index + 1, ArrowLeft: index - 1, Home: 0, End: tabs.length - 1 };
+      if (!(event.key in moves)) return;
+      event.preventDefault();
+      select(tabs[(moves[event.key] + tabs.length) % tabs.length], { focus: true });
+    });
+  });
+
+  // Include the git guide in an agent set's copy.
+  document.querySelectorAll("[data-include-git]").forEach((box) => {
+    const pre = document.getElementById(box.dataset.includeGit);
+    const base = pre.textContent;
+    const guide = document.getElementById("git-copy")?.textContent.trim() || "";
+    box.addEventListener("change", () => {
+      pre.textContent = box.checked ? `${base}\n\n${guide}` : base;
+    });
+  });
+
+  const fromHash = tabs.find((tab) => `#${tab.dataset.set}` === location.hash);
+  select(fromHash || tabs.find((tab) => tab.getAttribute("aria-selected") === "true") || tabs[0], { remember: Boolean(fromHash) });
+}
+
 function renderQuest() {
-  const choices = INSTRUCTION_SETS.map((set, index) => `<label><input type="radio" name="runner" value="${escapeHtml(set.id)}"${index === 0 ? " checked" : ""}> ${escapeHtml(set.label)}</label>`).join("");
+  const tabs = INSTRUCTION_SETS.map((set, index) => `<button type="button" role="tab" id="tab-${escapeHtml(set.id)}" aria-controls="panel-${escapeHtml(set.id)}" aria-selected="${index === 0}" tabindex="${index === 0 ? 0 : -1}" data-set="${escapeHtml(set.id)}" data-includes-git="${set.includesGit}">${escapeHtml(set.label)}</button>`).join("\n    ");
+  const panels = INSTRUCTION_SETS.map((set) => `<section class="tabpanel" role="tabpanel" id="panel-${escapeHtml(set.id)}" aria-labelledby="tab-${escapeHtml(set.id)}" tabindex="0">
+    <p class="note">${escapeHtml(set.note)}</p>
+    ${set.includesGit ? "" : `<label class="check"><input type="checkbox" data-include-git="set-${escapeHtml(set.id)}"> Add the git guide to this copy</label>`}
+    <figure class="codeblock">
+      <figcaption><span>${escapeHtml(set.label)}</span><button type="button" data-copy="set-${escapeHtml(set.id)}">Copy</button></figcaption>
+      <pre id="set-${escapeHtml(set.id)}">${escapeHtml(set.text)}</pre>
+    </figure>
+  </section>`).join("\n  ");
   return layout({
     title: "spw.quest — initialize Spw Workbench",
-    description: "Pick Claude, Codex, Grok, another agent, or the shell. Git has its own section.",
+    description: "Run the workbench setup from the shell, or hand it to Claude, Codex, Grok, or another agent.",
     canonical: "https://spw.quest/",
+    script: `(${questTabs.toString()})();`,
     body: `<p class="kicker">spw.quest</p>
 <h1>Initialize the workbench in this repository.</h1>
-<p>Choose who runs the setup. Each set asks for <code>.spw/_workbench</code>, then doctor. Your repository keeps the surrounding <code>.spw/</code>. Node <code>${escapeHtml(WORKBENCH.node)}</code>.</p>
-<fieldset>
-  <legend>Instruction set</legend>
-  ${choices}
-  <label><input type="checkbox" id="include-git"> Include the git guide in the copy</label>
-</fieldset>
-<figure class="codeblock">
-  <figcaption><span id="instruction-label">Claude</span><button type="button" data-copy="instruction">Copy</button></figcaption>
-  <pre id="instruction"></pre>
-</figure>
-<script type="application/json" id="quest-sets">${JSON.stringify(INSTRUCTION_SETS)}</script>
+<p>Choose who runs the setup. Each set mounts <code>.spw/_workbench</code>, then runs doctor. Your repository keeps the surrounding <code>.spw/</code>. Node <code>${escapeHtml(WORKBENCH.node)}</code>.</p>
+<div class="tabs">
+  <div class="tablist" role="tablist" aria-label="Who runs the setup">
+    ${tabs}
+  </div>
+  ${panels}
+</div>
+<p class="note" id="git-covered" hidden>The shell steps already run the git commands; the git guide is at <a href="/git.txt">git.txt</a> and <a href="/git.md">git.md</a>.</p>
 <section id="git-guide">
   <h2>Git, in this order</h2>
   <ol>
