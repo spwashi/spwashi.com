@@ -137,6 +137,18 @@ ornament_classes: .{
  }[reg=facet]
 }[reg=facet]
 
+^"authored_marks"{
+  operation = "align"
+  fixity = "tending"
+  map = `/design/ornaments/ — each specimen has a fragment id; landing on one is the demo.`
+  role_rule = `Corners hold reference specimens, braces hold language, rules pace reading. One key, taught once on the map; a route earns variety by role, not by a new mark per page.`
+  rule = `hr[data-spw-ornament="rule"] — reads field state (resonance, landing). Keeps the reset's hr box so idle arrival moves nothing.`
+  corner = `.spw-ornament-corner — reads attention light and landing.`
+  brace = `.spw-ornament-brace — reads authored semantic state: only inside a frame that already says data-spw-form="brace". Spw { } drawn as one stretched SVG mask with a non-scaling stroke.`
+  landing = `:target on a frame, panel, or card sets --ornament-landing (navigation state, not a new family). One inset outline lifts and resettles; marks inside run full.`
+  ink = `Marks and hosts re-read --active-op-color locally; --ornament-accent is substituted on :root and cannot carry a route's own ink.`
+}[reg=facet]
+
 ^"distinct_marks_prime"{
   operation = "prime"
   fixity = "tending"

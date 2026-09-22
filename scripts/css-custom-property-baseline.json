@@ -71,13 +71,6 @@
   "public/css/handles/operators/sigils-and-chips.css": {
     "--spw-field-intensity": 3
   },
-  "public/css/ornament/ornament.css": {
-    "--ornament-field-intensity": 1,
-    "--ornament-collection-mark": 1,
-    "--ornament-deviation-visibility": 1,
-    "--ornament-wonder-trail": 1,
-    "--ornament-resonance": 1
-  },
   "public/css/shell/chrome/adaptive.css": {
     "--cauldron-chip-border": 1
   },
