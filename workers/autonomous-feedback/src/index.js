@@ -13,7 +13,7 @@ const PEERS = Object.freeze([
   { role: "guide", url: "https://spwashi.com/tools/spw-parser/" },
 ]);
 
-const VERSION = "0.1.0";
+const VERSION = "0.2.0";
 
 // A reference selects a namespace, never permission or an origin to fetch.
 function validSubject(value) {
@@ -317,7 +317,8 @@ function frameSnippet(host = "example.com") {
   return `<iframe title="Feedback" src="https://autonomous.feedback/embed/${host}" width="100%" height="520" style="border:0"></iframe>`;
 }
 
-function renderFeedback() {
+function renderFeedback(host = "") {
+  const named = host || "example.com";
   return layout({
     title: "autonomous.feedback",
     description: "A health check and a feedback form for one site.",
@@ -325,43 +326,70 @@ function renderFeedback() {
     quiet: true,
     body: `<p class="kicker">autonomous.feedback</p>
 <h1>A form for one site.</h1>
-<p>Check whether it answers. Put a form on the site so notes come here. A queue can drain them later.</p>
+<p class="lede">Name a site. See whether it answers. Hang a form on it, and every note a reader leaves comes back as a card.</p>
 <form method="get" action="/meter">
   <label for="host">Site</label>
-  <input id="host" name="host" type="text" inputmode="url" placeholder="example.com" required maxlength="253" autocapitalize="none" spellcheck="false" enterkeyhint="go">
+  <input id="host" name="host" type="text" inputmode="url" value="${escapeHtml(host)}" placeholder="example.com" required maxlength="253" autocapitalize="none" spellcheck="false" enterkeyhint="go">
   <p class="actions">
-    <button type="submit">Check</button>
+    <button type="submit">Check it answers</button>
     <button type="submit" formaction="/review">Write a note</button>
   </p>
 </form>
+<ol class="steps">
+  <li><strong>Knock.</strong> The meter asks the site once and tells you whether it answered, and how quickly.</li>
+  <li><strong>Hang a form.</strong> Paste one of the snippets below. They follow the name you type.</li>
+  <li><strong>Send the card.</strong> A note comes back as a card with the site's name on it. The writer screenshots it and sends it to whoever keeps the site, or posts it naming the site.</li>
+</ol>
+<p class="note">Free while cards travel by hand. A desk that keeps every note for a site comes later.</p>
+<h2 id="paste">On the site</h2>
+<p class="note">The frame carries all four kinds of note. The plain form sends a review and needs no script.</p>
 <figure class="codeblock">
-  <figcaption><span>iframe</span><button type="button" data-copy="frame-snippet">Copy</button></figcaption>
-  <pre id="frame-snippet">${escapeHtml(frameSnippet())}</pre>
+  <figcaption><span>iframe · four kinds of note</span><button type="button" data-copy="frame-snippet">Copy</button></figcaption>
+  <pre id="frame-snippet">${escapeHtml(frameSnippet(named))}</pre>
 </figure>
 <figure class="codeblock">
-  <figcaption><span>form</span><button type="button" data-copy="form-snippet">Copy</button></figcaption>
-  <pre id="form-snippet">${escapeHtml(formSnippet())}</pre>
-</figure>`,
+  <figcaption><span>form · review only, no script</span><button type="button" data-copy="form-snippet">Copy</button></figcaption>
+  <pre id="form-snippet">${escapeHtml(formSnippet(named))}</pre>
+</figure>
+<h2>Four kinds of note</h2>
+${contextDoors()}`,
   });
 }
 
-function contextNav(host = "", embed = false) {
-  return CONTEXTS.map((c) => {
+/** Each kind of note is a door labelled with its own prompt; the current one is marked, not linked away from. */
+function contextDoors(host = "", embed = false, current = "") {
+  const doors = CONTEXTS.map((c) => {
     const href = host
       ? `${embed ? "/embed" : ""}/${encodeURIComponent(host)}/${escapeHtml(c.slug)}`
       : `/${escapeHtml(c.slug)}`;
-    return `<a class="chip" data-spw-operator="${escapeHtml(c.operator)}" href="${href}">${escapeHtml(c.slug)}</a>`;
-  }).join(" ");
+    const here = c.slug === current ? ` aria-current="page"` : "";
+    return `<li><a class="door" data-spw-operator="${escapeHtml(c.operator)}" href="${href}"${here}><strong>${escapeHtml(c.title)}</strong><span>${escapeHtml(c.prompt)}</span></a></li>`;
+  }).join("\n  ");
+  return `<ul class="doors" aria-label="Kinds of note">\n  ${doors}\n</ul>`;
+}
+
+function meterReading(probe) {
+  if (probe.class === "down") {
+    return {
+      word: "Down",
+      weather: "storm",
+      sentence: probe.status ? `answered with an error, HTTP ${probe.status}.` : "did not answer within four seconds.",
+    };
+  }
+  const redirect = probe.status >= 300 && probe.status < 400 ? ` It pointed somewhere else (HTTP ${probe.status}).` : ` HTTP ${probe.status}.`;
+  if (probe.ms_bucket === "slow") return { word: "Slow", weather: "haze", sentence: `took more than a second to answer.${redirect}` };
+  const pace = probe.ms_bucket === "fast" ? "in under a third of a second" : "in under a second";
+  return { word: "Answers", weather: "clear", sentence: `answered ${pace}.${redirect}` };
 }
 
 function renderMeter(host = "", probe = null) {
-  const reading = !probe
-    ? ""
-    : probe.class === "down"
-      ? "Down"
-      : probe.ms_bucket === "slow"
-        ? "Slow"
-        : "Answers";
+  const reading = probe ? meterReading(probe) : null;
+  const next = reading
+    ? `<p class="actions">
+  <a class="door" href="/${encodeURIComponent(host)}/review"><strong>Write a note</strong><span>about ${escapeHtml(host)}</span></a>
+  <a class="door" href="/?host=${encodeURIComponent(host)}#paste"><strong>Hang a form</strong><span>on ${escapeHtml(host)}</span></a>
+</p>`
+    : "";
   return layout({
     title: host ? `${host} — meter` : "Meter — autonomous.feedback",
     description: "Whether one site answers.",
@@ -369,12 +397,15 @@ function renderMeter(host = "", probe = null) {
     quiet: true,
     body: `<p class="kicker"><a href="/">autonomous.feedback</a></p>
 <h1>${host ? escapeHtml(host) : "Meter"}</h1>
-${reading ? `<p class="weather">${escapeHtml(reading)}</p><p class="note">${escapeHtml(probe.ms_bucket)} · HTTP ${escapeHtml(String(probe.status))}</p>` : "<p>Name a public site. The meter asks it once and reports whether it answers.</p>"}
+${reading
+    ? `<p class="weather" data-weather="${reading.weather}">${escapeHtml(reading.word)}</p>
+<p class="lede">${escapeHtml(host)} ${escapeHtml(reading.sentence)}</p>
+${next}`
+    : `<p class="lede">Name a public site. The meter knocks once and tells you whether it answered.</p>`}
 <form method="get" action="/meter">
-  <label for="host">Site</label>
-  <input id="host" name="host" value="${escapeHtml(host)}" placeholder="example.com" required maxlength="253" autocapitalize="none" spellcheck="false">
-  <button type="submit">Check</button>
-  <button type="submit" formaction="/review">Write a note</button>
+  <label for="host">${reading ? "Another site" : "Site"}</label>
+  <input id="host" name="host" value="${escapeHtml(host)}" inputmode="url" placeholder="example.com" required maxlength="253" autocapitalize="none" spellcheck="false" enterkeyhint="go">
+  <p class="actions"><button type="submit">Check it answers</button></p>
 </form>`,
   });
 }
@@ -385,7 +416,7 @@ function renderContext(climate, context, host = "", { lockHost = false, embed = 
     ? `${root}/${encodeURIComponent(host)}/${encodeURIComponent(context.slug)}`
     : `/${encodeURIComponent(context.slug)}`;
   const about = lockHost
-    ? `<p class="note">${escapeHtml(host)}</p><input type="hidden" name="host" value="${escapeHtml(host)}">`
+    ? `<input type="hidden" name="host" value="${escapeHtml(host)}">`
     : `<label for="host">Site</label><input id="host" name="host" value="${escapeHtml(host)}" placeholder="example.com" required maxlength="253" autocapitalize="none" spellcheck="false" inputmode="url">`;
   const canonical = lockHost
     ? `https://autonomous.feedback${root}/${encodeURIComponent(host)}/${encodeURIComponent(context.slug)}`
@@ -399,37 +430,71 @@ function renderContext(climate, context, host = "", { lockHost = false, embed = 
     embed,
     body: `${embed ? "" : `<p class="kicker"><a href="/">autonomous.feedback</a></p>`}
 <h1 data-spw-copy-unit="${escapeHtml(context.copy_unit)}" data-spw-semantic-expression="${escapeHtml(context.expression)}">${escapeHtml(context.title)}</h1>
-${embed ? "" : `<p>${escapeHtml(context.prompt)}</p>`}
+<p class="lede">${escapeHtml(context.prompt)}</p>
+${embed ? "" : `<p class="note">${lockHost ? `About ${escapeHtml(host)}. ` : ""}Your note comes back as a card to screenshot and send. Nothing is stored.</p>`}
 <article data-spw-kind="frame">
   <form method="post" action="${escapeHtml(action)}">
     ${about}
-    <label for="note">${escapeHtml(context.title)}</label>
+    <label for="note">${lockHost ? `Your ${escapeHtml(context.title.toLowerCase())} for ${escapeHtml(host)}` : escapeHtml(context.title)}</label>
     <textarea class="note" id="note" name="note" required minlength="8" maxlength="2000" enterkeyhint="send"></textarea>
     <label class="hp" for="company">Company</label>
     <input class="hp" id="company" name="company" tabindex="-1" autocomplete="off">
     <button type="submit">Send</button>
   </form>
 </article>
-<p>${contextNav(host, embed)}</p>`,
+${contextDoors(host, embed, context.slug)}`,
   });
 }
 
+function excerpt(text, limit = 220) {
+  const flat = text.replace(/\s+/g, " ").trim();
+  return flat.length > limit ? `${flat.slice(0, limit - 1).trimEnd()}…` : flat;
+}
+
+/**
+ * The slip is a card meant to be screenshotted and carried by hand: a DM to
+ * whoever keeps the site, or a post that names it. The card carries the
+ * address, so whoever sees the screenshot knows where to leave the next one.
+ * Nothing here is stored or sent by the Worker.
+ */
 function renderSlip(filing, embed = false) {
   const root = embed ? "/embed" : "";
   const back = `${root}/${encodeURIComponent(filing.host)}/${encodeURIComponent(filing.context.slug)}`;
+  const kind = filing.context.title.toLowerCase();
+  const address = `autonomous.feedback/${filing.host}`;
+  const day = filing.issued.slice(0, 10);
+  const post = `“${excerpt(filing.note)}” — a ${kind} for ${filing.host} · ${address}`;
   return layout({
-    title: `${filing.context.title} slip — autonomous.feedback`,
-    description: `A filing slip about ${filing.host}.`,
+    title: `${filing.context.title} for ${filing.host} — autonomous.feedback`,
+    description: `A ${kind} for ${filing.host}, ready to send.`,
     canonical: `https://autonomous.feedback${back}`,
     quiet: true,
     embed,
-    body: `${embed ? "" : `<p class="kicker"><a href="${escapeHtml(back)}">another note</a></p>`}
-<h1>Slip</h1>
-<p class="note">${escapeHtml(filing.host)}</p>
-<figure class="codeblock">
-  <figcaption><span>${escapeHtml(filing.issued)}</span><button type="button" data-copy="slip">Copy</button></figcaption>
-  <pre id="slip">${escapeHtml(filing.markdown)}</pre>
-</figure>`,
+    body: `${embed ? "" : `<p class="kicker"><a href="/">autonomous.feedback</a></p>`}
+<h1>Your card</h1>
+<p class="lede">Screenshot it and send it to whoever keeps ${escapeHtml(filing.host)}: a DM, or a post that names the site.</p>
+<article class="card" id="card" data-spw-kind="frame" data-spw-operator="${escapeHtml(filing.context.operator)}" data-spw-semantic-expression="${escapeHtml(filing.context.expression)}">
+  <header>
+    <span class="card-kind">${escapeHtml(filing.context.title)}</span>
+    <span class="card-site">${escapeHtml(filing.host)}</span>
+  </header>
+  <p class="card-prompt">${escapeHtml(filing.context.prompt)}</p>
+  <blockquote class="card-note">${escapeHtml(filing.note)}</blockquote>
+  <footer>
+    <time datetime="${escapeHtml(filing.issued)}">${escapeHtml(day)}</time>
+    <span class="card-address">${escapeHtml(address)}</span>
+  </footer>
+  <p class="card-stamp" aria-live="polite">Sent by hand</p>
+</article>
+<div class="actions share" data-share-text="${escapeHtml(post)}" data-share-url="https://${escapeHtml(address)}">
+  <button type="button" class="door" data-share="native"><strong>Share</strong><span>from this device</span></button>
+  <a class="door" data-share="post" target="_blank" rel="noopener" href="https://bsky.app/intent/compose?text=${encodeURIComponent(post)}"><strong>Post</strong><span>on Bluesky</span></a>
+  <a class="door" data-share="post" target="_blank" rel="noopener" href="https://x.com/intent/post?text=${encodeURIComponent(post)}"><strong>Post</strong><span>on X</span></a>
+  <button type="button" class="door" data-copy="slip"><strong>Copy</strong><span>the words</span></button>
+</div>
+<p class="note">Nothing was stored. The card lives on this page and in whatever you send.</p>
+<pre id="slip" hidden>${escapeHtml(filing.markdown)}</pre>
+<p class="actions"><a class="door" href="${escapeHtml(back)}"><strong>Write another</strong><span>${escapeHtml(kind)} for ${escapeHtml(filing.host)}</span></a></p>`,
   });
 }
 
@@ -526,7 +591,8 @@ export default {
 
     const org = orgFromHostname(url.hostname);
     if (url.pathname === "/" && ["GET", "HEAD"].includes(request.method)) {
-      const response = htmlResponse(renderFeedback(), { cache: "no-store" });
+      const named = (url.searchParams.get("host") || "").toLowerCase().trim();
+      const response = htmlResponse(renderFeedback(validSubject(named) ? named : ""), { cache: "no-store" });
       return request.method === "HEAD" ? new Response(null, { headers: response.headers }) : response;
     }
 
@@ -596,12 +662,6 @@ export default {
       if (!["GET", "HEAD"].includes(request.method)) return new Response("Method not allowed", { status: 405, headers: { ...BASE_SECURITY, Allow: "GET, HEAD, POST" } });
       if (host && !validSubject(host)) return jsonResponse({ error: "invalid_site_reference" }, "no-store", 400);
       return htmlResponse(renderContext({}, context, host));
-    }
-
-    const legacy = url.pathname.match(/^\/for\/([^/]+)(?:\/([^/]+))?\/?$/);
-    if (legacy) {
-      const dest = `/${legacy[1]}${legacy[2] ? `/${legacy[2]}` : ""}`;
-      return Response.redirect(`${url.origin}${dest}${url.search}`, 302);
     }
 
     const embedMatch = url.pathname.match(/^\/embed\/([^/]+)(?:\/([^/]+))?\/?$/);

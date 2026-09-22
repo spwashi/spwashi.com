@@ -127,6 +127,33 @@ const SHELL = `
     ol { padding-left: 1.2rem; }
     ol li { margin: .35rem 0; }
     button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .lede { font-size: 1.12rem; line-height: 1.45; margin: 0 0 1rem; }
+    .steps { list-style: none; counter-reset: step; padding: 0; margin: 1.4rem 0 .8rem; display: grid; gap: .7rem; }
+    .steps li { counter-increment: step; display: grid; grid-template-columns: 2rem 1fr; gap: .2rem .6rem; margin: 0; }
+    .steps li::before { content: counter(step); grid-row: span 2; display: grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid var(--line); border-radius: 50%; color: var(--accent); font-variant-numeric: tabular-nums; }
+    .steps strong { display: block; }
+    .doors { list-style: none; padding: 0; margin: .8rem 0 0; display: grid; gap: .5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+    .doors li { margin: 0; }
+    .door { display: flex; flex-direction: column; justify-content: center; gap: .1rem; min-height: 44px; height: 100%; padding: .6rem .9rem; border: 1px solid var(--line); border-radius: .9rem; text-decoration: none; color: var(--fg); background: #0d1416; }
+    .door strong { color: var(--accent); font-weight: 600; }
+    .door span { color: var(--muted); font-size: .9rem; }
+    .door:hover { border-color: var(--accent); }
+    .door[aria-current="page"] { border-color: var(--accent); background: rgba(94,234,212,.08); }
+    .actions .door { flex: 1 1 9rem; margin-top: .6rem; }
+    .card { position: relative; margin: 1.2rem 0; padding: 1.4rem 1.4rem 1.1rem; border: 1px solid var(--accent); border-radius: 1.2rem; background: linear-gradient(160deg, #12201f, #0d1416 60%); box-shadow: 0 0 0 6px rgba(94,234,212,.05); overflow: hidden; }
+    .card header { display: grid; gap: .45rem; padding-right: 7rem; }
+    .card footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .4rem 1rem; }
+    .card-kind { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; }
+    .card-site { font-size: clamp(1.3rem, 4.5vw, 1.8rem); font-weight: 650; letter-spacing: -.03em; overflow-wrap: anywhere; }
+    .card-prompt { color: var(--muted); font-style: italic; margin: .5rem 0 0; }
+    .card-note { margin: 1rem 0 1.1rem; padding: 0 0 0 1rem; border-left: 2px solid var(--accent); font-size: 1.12rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .card footer { padding-top: .8rem; border-top: 1px solid var(--line); color: var(--muted); font: .82rem/1.3 ui-monospace, SFMono-Regular, monospace; }
+    .card-address { color: var(--fg); }
+    .card-stamp { position: absolute; top: 1rem; right: 1rem; margin: 0; padding: .2rem .6rem; border: 2px solid var(--warn); border-radius: .4rem; color: var(--warn); font: 700 .78rem/1.3 ui-monospace, SFMono-Regular, monospace; letter-spacing: .08em; text-transform: uppercase; transform: rotate(-7deg); opacity: 0; }
+    .card[data-sent="true"] .card-stamp { opacity: 1; }
+    @media (prefers-reduced-motion: no-preference) { .card-stamp { transition: opacity .25s ease-out; } }
+    .share { align-items: stretch; }
+    button.door { flex: 1 1 9rem; align-items: flex-start; margin-top: .6rem; font: inherit; text-align: left; cursor: pointer; }
     footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); }
     @media (max-width: 40rem) {
       h1 { font-size: 1.55rem; }
@@ -189,18 +216,32 @@ export function layout({ title, description, canonical, climate, body, quiet = f
         if (frame) frame.textContent = '<iframe title="Feedback" src="https://autonomous.feedback/embed/' + name + '" width="100%" height="520" style="border:0"></iframe>';
       });
     }
+    const share = document.querySelector(".share");
+    const card = document.getElementById("card");
+    if (share && card) {
+      const markSent = () => { card.dataset.sent = "true"; };
+      const native = share.querySelector('[data-share="native"]');
+      if (native && !navigator.share) native.hidden = true;
+      native?.addEventListener("click", async () => {
+        try {
+          await navigator.share({ text: share.dataset.shareText, url: share.dataset.shareUrl });
+          markSent();
+        } catch {}
+      });
+      share.querySelectorAll('[data-share="post"], [data-copy]').forEach((node) => node.addEventListener("click", markSent));
+    }
     document.querySelectorAll("[data-copy]").forEach((button) => {
       button.addEventListener("click", async () => {
         const node = document.getElementById(button.getAttribute("data-copy"));
         const text = node ? node.innerText : "";
-        const idle = button.textContent;
+        const idle = button.innerHTML;
         try {
           await navigator.clipboard.writeText(text.trim());
           button.textContent = "Copied";
         } catch {
           button.textContent = "Select the line";
         }
-        setTimeout(() => { button.textContent = idle; }, 1600);
+        setTimeout(() => { button.innerHTML = idle; }, 1600);
       });
     });
   </script>

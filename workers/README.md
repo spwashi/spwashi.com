@@ -25,11 +25,15 @@ Claude, Codex, Grok, another agent, or the shell, and copy that set. Git has
 its own section. `claude -p`, `codex exec`, and `grok` each receive the same job.
 
 `autonomous.feedback` is a meter and a form for one site. The homepage asks for
-a hostname, checks whether that site answers, and offers a form the site can
-paste. `POST /for/{host}/review` returns a filing slip and does not store it.
-`/for/{host}/inbox` stays locked until a queue is attached. `/climate.json`
-remains the machine reading of the existing cluster. A request hostname can
-mark an account on the filing; the public page does not describe that routing.
+a hostname, checks whether that site answers, and offers an iframe or a plain
+form the site can paste (`/?host=` prefills both). `POST /{host}/{kind}` returns
+a card and stores nothing: the writer screenshots it and sends it to whoever
+keeps the site, by DM or by a post that names it, and the card carries
+`autonomous.feedback/{host}` so the next reader knows where to leave one.
+`/{host}/inbox` stays locked until a queue is attached. `/for/{host}` was
+retired on 2026-09-22; no site used it. `/climate.json` remains the machine
+reading of the existing cluster. A request hostname can mark an account on the
+filing; the public page does not describe that routing.
 
 Quest and feedback deploy as separate Workers. From an authenticated Wrangler
 installation, dry-run then deploy each config:

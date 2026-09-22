@@ -39,8 +39,9 @@ test('a note becomes a slip and the inbox stays locked', async () => {
   assert.equal((await get('autonomous.feedback', '/example.org/inbox')).status, 401);
   assert.equal((await get('autonomous.feedback', '/example.org/inbox', { headers: { authorization: 'Bearer untrusted' } })).status, 501);
   assert.equal((await get('autonomous.feedback', '/example.org?bearer=untrusted')).status, 400);
-  assert.equal((await get('autonomous.feedback', '/for/example.org/review')).headers.get('location'), 'https://autonomous.feedback/example.org/review');
-  assert.equal((await get('autonomous.feedback', '/for/bad%22.example')).status, 302);
+  // No site used /for/{host}; it was retired, not redirected.
+  assert.equal((await get('autonomous.feedback', '/for/example.org/review')).status, 404);
+  assert.equal((await get('autonomous.feedback', '/for/example.org')).status, 404);
   assert.equal((await get('autonomous.feedback', '/review?host=%3Cscript%3E')).status, 400);
   assert.equal((await get('autonomous.feedback', '/meter?host=127.0.0.1')).status, 400);
   const empty = await get('autonomous.feedback', '/meter');
@@ -65,4 +66,45 @@ test('a note becomes a slip and the inbox stays locked', async () => {
   assert.equal(slip.queue, 'unattached');
   assert.match(slip.markdown, /checkout button does nothing/);
   assert.match(slip.markdown, /example\.org/);
+
+  const card = await (await get('autonomous.feedback', '/example.org/wonder', {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ note: 'The map on the about page <b>kept</b> going.' }),
+  })).text();
+  assert.match(card, /class="card"/);
+  assert.match(card, /class="card-site">example\.org</);
+  assert.match(card, /&lt;b&gt;kept&lt;\/b&gt;/);
+  assert.doesNotMatch(card, /<b>kept<\/b>/);
+  assert.match(card, /autonomous\.feedback\/example\.org</);
+  assert.match(card, /href="https:\/\/bsky\.app\/intent\/compose\?text=[^"]*example\.org/);
+  assert.match(card, /href="https:\/\/x\.com\/intent\/post\?text=/);
+  assert.match(card, /Nothing was stored/);
+});
+
+test('the meter answers in a sentence and the home page remembers the site', async () => {
+  const home = await (await get('autonomous.feedback', '/?host=shop.example')).text();
+  assert.match(home, /value="shop\.example"/);
+  assert.match(home, /autonomous\.feedback\/embed\/shop\.example/);
+  const odd = await (await get('autonomous.feedback', '/?host=%3Cx%3E')).text();
+  assert.match(odd, /value=""/);
+  const doors = await (await get('autonomous.feedback', '/example.org/brief')).text();
+  assert.match(doors, /aria-current="page"[^>]*><strong>Brief</);
+  assert.match(doors, /The thing that would not round\./);
+
+  const realFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async () => new Response(null, { status: 200 });
+    const up = await (await get('autonomous.feedback', '/meter?host=shop.example')).text();
+    assert.match(up, /data-weather="clear">Answers</);
+    assert.match(up, /shop\.example answered in under a third of a second\./);
+    assert.match(up, /href="\/shop\.example\/review"/);
+    assert.match(up, /href="\/\?host=shop\.example#paste"/);
+    globalThis.fetch = async () => { throw new Error('offline'); };
+    const down = await (await get('autonomous.feedback', '/meter?host=shop.example')).text();
+    assert.match(down, /data-weather="storm">Down</);
+    assert.match(down, /did not answer within four seconds\./);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
 });
