@@ -11,6 +11,7 @@ import {
     createFrameHeading,
     createShortcutToken
 } from '/public/js/modules/rpg-wednesday/dom.js';
+import { createClockFace, gatherTableForce, mountTablePhysics } from '/public/js/modules/rpg-wednesday/table-play.js';
 import {
     RPG_SHORTCUT_ACTIONS,
     RPG_SHORTCUT_SECTIONS,
@@ -20,7 +21,6 @@ import {
     CLOCK_SEGMENT_OPTIONS,
     DASH_VALUE,
     RPG_ROUTE_RE,
-    buildClockText,
     buildSessionBrief,
     clearStateAssetImages,
     cloneDefaultState,
@@ -373,6 +373,7 @@ export const initRpgWednesday = () => {
 
     const storage = createStorage();
     let state = storage.read();
+    let physicsApi = null;
 
     section.className = 'spw-frame rpg-gameplay-kit rpg-workbench rpg-workbench--kit';
     section.id = 'local-gameplay-kit';
@@ -409,6 +410,7 @@ export const initRpgWednesday = () => {
         createElement('a', { className: 'spw-chip', href: '#rpg-kit-scene', text: '@ scene' }),
         createElement('a', { className: 'spw-chip', href: '#rpg-kit-initiative', text: '@ initiative' }),
         createElement('a', { className: 'spw-chip', href: '#rpg-kit-clocks', text: '@ clocks' }),
+        createElement('a', { className: 'spw-chip', href: '#rpg-kit-physics', text: '@ physics' }),
         createElement('a', { className: 'spw-chip', href: '#rpg-kit-assets', text: '@ assets' }),
         createElement('a', { className: 'spw-chip', href: '#rpg-kit-notes', text: '~ notes' }),
         createElement('a', { className: 'spw-chip', href: '#rpg-kit-brief', text: '~ brief' }),
@@ -733,36 +735,21 @@ export const initRpgWednesday = () => {
                 }));
             }
 
-            const meter = createElement('progress', {
-                max: clock.segments,
-                value: clock.progress,
-                text: buildClockText(clock)
-            });
-            const text = createElement('span', {
-                className: 'rpg-gameplay-clock-text',
-                text: buildClockText(clock)
-            });
-            const decrement = createElement('button', {
-                className: 'spw-chip',
-                type: 'button',
-                text: '-'
-            });
-            const increment = createElement('button', {
-                className: 'spw-chip',
-                type: 'button',
-                text: '+'
-            });
             const remove = createElement('button', {
                 className: 'spw-chip',
                 type: 'button',
                 text: 'remove'
             });
-
-            const syncClockDisplay = () => {
-                meter.max = clock.segments;
-                meter.value = clock.progress;
-                text.textContent = buildClockText(clock);
-            };
+            const gatherClock = createElement('button', {
+                className: 'spw-chip',
+                type: 'button',
+                text: '~ gather'
+            });
+            const face = createClockFace(clock, (next) => {
+                clock.progress = Math.max(0, Math.min(clock.segments, next));
+                save('filled gameplay clock');
+                renderClocks();
+            });
 
             name.addEventListener('input', () => {
                 clock.name = name.value;
@@ -771,18 +758,17 @@ export const initRpgWednesday = () => {
             segments.addEventListener('change', () => {
                 clock.segments = Number(segments.value);
                 clock.progress = Math.min(clock.progress, clock.segments);
-                syncClockDisplay();
                 save('updated gameplay clock segments');
+                renderClocks();
             });
-            decrement.addEventListener('click', () => {
-                clock.progress = Math.max(0, clock.progress - 1);
-                syncClockDisplay();
-                save('decremented gameplay clock');
-            });
-            increment.addEventListener('click', () => {
-                clock.progress = Math.min(clock.segments, clock.progress + 1);
-                syncClockDisplay();
-                save('incremented gameplay clock');
+            gatherClock.addEventListener('click', () => {
+                const name = clock.name.trim() || 'clock';
+                const expression = gatherTableForce({
+                    expression: `clock[table]{${name.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'clock'}.${clock.progress}.${clock.segments}}`,
+                    label: `${name} ${clock.progress}/${clock.segments}`,
+                    kind: 'clock',
+                });
+                setTransientStatus(`gathered ${expression}`);
             });
             remove.addEventListener('click', () => {
                 state.clocks = state.clocks.filter((item) => item.id !== clock.id);
@@ -790,7 +776,7 @@ export const initRpgWednesday = () => {
                 renderClocks();
             });
 
-            row.append(name, segments, meter, text, decrement, increment, remove);
+            row.append(name, segments, face, gatherClock, remove);
             clocksList.appendChild(row);
         });
     };
@@ -1053,6 +1039,7 @@ export const initRpgWednesday = () => {
         canonCandidatesInput.value = state.canonCandidates;
         seedsInput.value = state.seeds;
         nameFabricInput.value = state.nameFabric;
+        physicsApi?.setValue(state.script || '');
         save('imported local gameplay state');
         renderInitiative();
         renderClocks();
@@ -1077,6 +1064,7 @@ export const initRpgWednesday = () => {
         canonCandidatesInput.value = '';
         seedsInput.value = '';
         nameFabricInput.value = '';
+        physicsApi?.setValue('');
         renderInitiative();
         renderClocks();
         assetAtlas.resetComposer();
@@ -1084,6 +1072,29 @@ export const initRpgWednesday = () => {
         refreshDerivedSurfaces();
         setTransientStatus('local gameplay state cleared');
         emitSpwAction('!local_gameplay.clear', 'cleared local gameplay state');
+    });
+
+    physicsApi = mountTablePhysics({
+        getScript: () => state.script || '',
+        setScript: (value) => {
+            state.script = value;
+            debouncedTextSave();
+        },
+        onApplyClock: ({ name, segments, usedFallback }) => {
+            const clock = {
+                id: makeId(),
+                name,
+                segments,
+                progress: 0,
+            };
+            state.clocks.push(clock);
+            save(usedFallback ? 'clock used the 4-segment fallback' : 'clock took its size from the script');
+            renderClocks();
+            setTransientStatus(usedFallback
+                ? 'No parts in the script, so the clock has 4 segments'
+                : `${name} clock has ${segments} segments`);
+        },
+        onStatus: setTransientStatus,
     });
 
     const controls = createElement('div', { className: 'rpg-gameplay-actions rpg-gameplay-actions--footer' }, [
@@ -1103,6 +1114,7 @@ export const initRpgWednesday = () => {
             scenePanel,
             initiativePanel,
             clocksPanel,
+            physicsApi.panel,
             assetAtlas.panel,
             notesPanel,
             briefPanel
