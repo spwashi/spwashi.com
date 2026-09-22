@@ -1,0 +1,69 @@
+# autonomous.feedback as a product (2026-09)
+#
+# operation: prime
+# A card a reader carries by hand is the free product and the marketing at
+# once. A desk that keeps every note for a site is what a site owner would pay
+# for. Nothing here sets a price, and no page may promise one from this file.
+
+#>feedback_product_2026_09
+#:cache #!product #!feedback #!marketing
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@worker: ~"../../workers/autonomous-feedback/src/index.js"
+@shell: ~"../../workers/lib/shell.js"
+@inbox: ~"./cluster-feedback-inbox-2026-09.spw"
+@pricing: ~"./pricing-lattice-2026-09.spw"
+@plan: ~"../../.agents/plans/quest-workbench-feedback/PLAN.md"
+
+operation = "prime"
+fixity = "experimental"
+source = `creator, 2026-09-22: market autonomous.feedback as a product; consider freemium, with a rewarded habit of screenshotting a filled form or rendered card and sending it to the site's owner by DM or in a post that names the site`
+
+^"offer"{
+  audience = `people who build or keep a small site (indie makers, artists, shops, open-source docs) and want honest notes without running a form backend; and their readers, who want to say something without an account`
+  offer = `a form for one site in one paste, and a card for every note that the writer can send by hand`
+  proof = `the card itself: a screenshot carries the site name, the note, the date, and autonomous.feedback/{host}`
+  resonance = `a letter, not a ticket; the four kinds (wonder, review, practice, brief) ask for a gift, not stars`
+  extension = `each card seen in a feed is an address where the next reader can leave one; the owner who receives a few by hand is the one who wants a desk`
+  next_action = `homepage → Check it answers → Hang a form → a reader's card arrives by DM or post`
+}[reg=facet]
+
+^"tiers"{
+  free = .{
+    what = `meter, iframe and plain form, four kinds of note, a card per note, Share / Post / Copy`
+    stores = `nothing; the card lives on the page and in whatever the writer sends`
+    landed = `2026-09-22, card and share row in the Worker`
+  }[reg=facet]
+  desk = .{
+    what = `a queue per site that keeps every card, an owner inbox behind a verified identity, and a digest`
+    needs = #[`site verification`, `identity provider`, `storage with retention rules`, `rate limits on public intake`][reg=set]
+    status = `proposed; the inbox route answers 401/501 until a queue is attached`
+  }[reg=facet]
+  price = `unset. Compare against @pricing before naming a number; the homepage says only "Free while cards travel by hand. A desk that keeps every note for a site comes later."`
+}[reg=facet]
+
+^"reward_loop"{
+  landed = #[
+    `the card is designed to be screenshotted: large site name, the prompt, the note, the date, the address`,
+    `Share (native), Post on Bluesky, Post on X, and Copy each stamp the card "Sent by hand", so sending answers visibly`,
+    `post text is prefilled with an excerpt, the kind, the site, and the address; the writer edits it before it goes anywhere`
+  ][reg=set]
+  candidates = #[
+    `an owner reply card: the owner answers a card and the writer gets a card back (needs the desk)`,
+    `a count on the owner's desk of cards received by hand, never a public leaderboard`,
+    `card themes the owner picks for their site once verified`
+  ][reg=set]
+}[reg=facet]
+
+^"guardrails"{
+  dm_first = `the lede names a DM before a post; criticism sent in public can read as a callout, so the page never makes posting the default`
+  no_handles = `the Worker never looks up or inserts an @handle; the writer names the owner themselves`
+  no_storage_claims = `copy says "Nothing was stored" because nothing is; do not change that sentence before the desk exists`
+  no_rank = `no star rating, score, or leaderboard on any card or page`
+  infrastructure = `public spwashi.com pages do not describe who runs the cluster (workers/cluster.json note)`
+}[reg=facet]
+
+do_not_promote_until = `a site outside this cluster pastes the form and a card reaches its owner by hand, observed once`
+validation = `node --test workers/autonomous-feedback/test/routes.test.mjs; post a note to /{host}/wonder and screenshot the card at pocket and desktop`
