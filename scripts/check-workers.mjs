@@ -91,13 +91,9 @@ async function main() {
     }
   }
 
-  const inboxSource = await readFile(path.join(WORKERS, 'feedback-quest', 'src', 'index.js'), 'utf8');
-  const subjects = [...seenHosts, ...(inventory.pages_subjects || [])];
-  for (const host of subjects) {
-    if (!inboxSource.includes(`"${host}"`)) fail(`inbox allowlist missing ${host}`);
-  }
-
-  console.log(`[check:workers] ${inventory.units.length} units, ${seenHosts.size} hosts, ${subjects.length} inbox subjects`);
+  execFileSync(process.execPath, ['--test', 'workers/autonomous-feedback/test/routes.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
+  execFileSync(process.execPath, ['--test', 'workers/spw-quest/test/routes.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
+  console.log(`[check:workers] ${inventory.units.length} units, ${seenHosts.size} hosts; quest and feedback routing verified`);
 }
 
 await main();

@@ -12,12 +12,35 @@ Inventory is `cluster.json`. Each unit is `workers/<id>/` with `wrangler.jsonc` 
 |------|--------|
 | `site-hub-next` | constellation + `texture.website` grain lab |
 | `smut-today` | `smut.today` |
-| `feedback-quest` | `autonomous.feedback`, `spw.quest` |
+| `autonomous-feedback` | `autonomous.feedback` |
+| `spw-quest` | `spw.quest` |
 | `wap-mom` | `wap.mom` |
 
 `wap.mom` is Wondering About Pi: public periodical, ministry as subscribed circle. Copy does not spell the domain joke.
 
-Cluster notes: mind-culture paths on `autonomous.feedback` (`/now`, `/wonder`, `/review`, `/practice`, `/brief`, `/for/{host}`). Ingest not open yet. Bearer on the drain belongs in `Authorization`, not the query string.
+`spw.quest` serves a pinned workbench initialization recipe at `/init`, `/init.md`,
+and `/llms.txt`, with `/quest.json` and `/prompts.json` for structured consumers.
+Its requests do not probe feedback origins. The homepage lets a visitor pick
+Claude, Codex, Grok, another agent, or the shell, and copy that set. Git has
+its own section. `claude -p`, `codex exec`, and `grok` each receive the same job.
+
+`autonomous.feedback` is a meter and a form for one site. The homepage asks for
+a hostname, checks whether that site answers, and offers a form the site can
+paste. `POST /for/{host}/review` returns a filing slip and does not store it.
+`/for/{host}/inbox` stays locked until a queue is attached. `/climate.json`
+remains the machine reading of the existing cluster. A request hostname can
+mark an account on the filing; the public page does not describe that routing.
+
+Quest and feedback deploy as separate Workers. From an authenticated Wrangler
+installation, dry-run then deploy each config:
+
+`wrangler deploy --config workers/spw-quest/wrangler.jsonc`
+
+`wrangler deploy --config workers/autonomous-feedback/wrangler.jsonc`
+
+Neither config lists domain routes. After the first split, point the existing
+zone routes at the new script names and leave the old combined script unused.
+No new bindings are required. The five-minute cron stays on `autonomous-feedback`.
 
 ## Local secrets
 
