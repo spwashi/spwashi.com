@@ -1,5 +1,5 @@
 import { escapeHtml, layout } from "../../lib/shell.js";
-import { CONTEXTS, NOTE_MAX, NOTE_MIN, contextBySlug } from "./model.js";
+import { CONTEXTS, DEFAULT_KIND, NOTE_MAX, NOTE_MIN, contextBySlug } from "./model.js";
 import { CLIENT_SCRIPT } from "./client.js";
 import { CONFIG_PATH, configToFile, defaultConfig, siteKinds, starterConfig, themeCss } from "./config.js";
 
@@ -114,7 +114,7 @@ function kindLinks(host = "", embed = false, current = "") {
 }
 
 export function renderHome(host = "") {
-  const sample = contextBySlug("review");
+  const sample = contextBySlug(DEFAULT_KIND);
   return layout({
     title: "autonomous.feedback — a feedback form for any website",
     description: "Readers write a note about a site and get a card they can save and send to its owner. Nothing to install, nothing stored.",
@@ -147,9 +147,9 @@ ${kindLinks()}`,
   });
 }
 
-export function renderStart({ host = "", how = "link", kind = "review", error = "", config = null } = {}) {
+export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, error = "", config = null } = {}) {
   const offered = config?.found ? siteKinds(config) : CONTEXTS;
-  const context = offered.find((c) => c.slug === kind) || offered[0];
+  const context = offered.find((c) => c.slug === (contextBySlug(kind)?.slug)) || offered[0];
   const snippet = SNIPPETS[how] || SNIPPETS.link;
   const named = host || EXAMPLE_HOST;
   const hows = Object.entries(SNIPPETS).map(([id, s]) => `<label class="choice">
@@ -216,7 +216,7 @@ export function renderStart({ host = "", how = "link", kind = "review", error = 
   <details>
     <summary>What each field does</summary>
     <dl class="fields">
-      <dt><code>kinds</code></dt><dd>Which kinds of note to show, in order: <code>review</code> (Problem), <code>practice</code> (Suggestion), <code>brief</code> (Question), <code>wonder</code> (Appreciation).</dd>
+      <dt><code>kinds</code></dt><dd>Which kinds of note to show, in order: <code>problem</code>, <code>suggestion</code>, <code>question</code>, <code>appreciation</code>.</dd>
       <dt><code>labels</code></dt><dd>Rename a kind and change its prompt or example. Title up to 40 characters, prompt up to 160.</dd>
       <dt><code>name</code>, <code>intro</code>, <code>button</code></dt><dd>Your site's display name, a line above the form (up to 300 characters), and the submit button text.</dd>
       <dt><code>from</code></dt><dd><code>"off"</code>, <code>"optional"</code>, or <code>"required"</code>: a field for the writer's name or handle, printed on the card. Nothing is stored either way.</dd>
@@ -281,7 +281,7 @@ ${reading
 <p class="lede">${escapeHtml(host)} ${escapeHtml(reading.sentence)}</p>
 <p class="actions">
   <a class="door" href="/start?host=${encodeURIComponent(host)}"><strong>Set up the form</strong><span>for ${escapeHtml(host)}</span></a>
-  <a class="door" href="/${encodeURIComponent(host)}/review"><strong>Write a note</strong><span>about ${escapeHtml(host)}</span></a>
+  <a class="door" href="/${encodeURIComponent(host)}/${DEFAULT_KIND}"><strong>Write a note</strong><span>about ${escapeHtml(host)}</span></a>
 </p>`
     : `<p class="lede">Enter a public site. autonomous.feedback requests its homepage once and reports whether it responded.</p>`}
 <form method="get" action="/meter" class="panel">

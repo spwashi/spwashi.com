@@ -1,5 +1,5 @@
 import { BASE_SECURITY, JSON_CORS, htmlResponse, jsonResponse, wantsJson } from "../../lib/shell.js";
-import { CONTEXTS, VERSION, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
+import { CONTEXTS, DEFAULT_KIND, LEGACY_SLUGS, VERSION, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
 import { loadConfig, siteKinds } from "./config.js";
 import { renderCard, renderHome, renderMeter, renderNotFound, renderStart, renderWrite } from "./pages.js";
 
@@ -17,6 +17,11 @@ const PEERS = Object.freeze([
   { role: "grain", url: "https://texture.website/" },
   { role: "guide", url: "https://spwashi.com/tools/spw-parser/" },
 ]);
+
+// Every kind slug, current and legacy, for path matching.
+const KIND_SLUGS = [...CONTEXTS.map((c) => c.slug), ...Object.keys(LEGACY_SLUGS)].join("|");
+const KIND_JSON = new RegExp(`^/(${KIND_SLUGS})\\.json$`);
+const KIND_PAGE = new RegExp(`^/(${KIND_SLUGS})/?$`);
 
 const TEXT_HEADERS = { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "no-store" };
 
@@ -102,7 +107,7 @@ function cleanFrom(value) {
  * The host and kind can come from the path (fallbacks) or the body; the body wins,
  * so one form can switch kinds without changing its action.
  */
-async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug = "review", org = null } = {}) {
+async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug = DEFAULT_KIND, org = null } = {}) {
   const length = Number(request.headers.get("content-length") || 0);
   if (length > 16_000) return { code: "too_large", status: 413, errors: { note: "That is too long to send." }, values: {} };
   const type = request.headers.get("content-type") || "";
@@ -135,7 +140,7 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
   const config = await loadConfig(values.host);
   const errors = {};
   const allowed = siteKinds(config);
-  const context = allowed.find((c) => c.slug === values.kind);
+  const context = allowed.find((c) => c.slug === contextBySlug(values.kind)?.slug);
   if (!context) {
     const known = contextBySlug(values.kind);
     errors.kind = known ? `${config.name || values.host} does not take ${known.title.toLowerCase()} notes. Choose another kind.` : "Choose a kind of note.";
@@ -168,7 +173,7 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
 async function answerFiling(request, result, { lockHost = true, embed = false } = {}) {
   if (!result.filing) {
     if (wantsJson(request)) return jsonResponse({ error: result.code, errors: result.errors }, "no-store", result.status);
-    const context = result.context || contextBySlug(result.values.kind) || contextBySlug("review");
+    const context = result.context || contextBySlug(result.values.kind) || contextBySlug(DEFAULT_KIND);
     const html = renderWrite({
       context,
       host: result.values.host,
@@ -220,12 +225,17 @@ async function handleSite(request, url, host, rest, org = null, embed = false) {
   const slug = rest.replace(/\.json$/, "");
   const context = slug ? contextBySlug(slug) : null;
   if (slug && !context) return notFound(request, "autonomous.feedback takes four kinds of note: appreciation, problem, suggestion, and question.");
+  // The path names the kind by its label; old slugs move to the matching address.
+  if (context && context.slug !== slug && ["GET", "HEAD"].includes(request.method)) {
+    const suffix = rest.endsWith(".json") ? ".json" : "";
+    return Response.redirect(`${url.origin}${embed ? "/embed" : ""}/${subject}/${context.slug}${suffix}${url.search}`, 301);
+  }
 
   if (request.method === "POST") {
     if (url.searchParams.has("rate-limit")) {
       return jsonResponse({ error: "rate_limit_on_ingest", hint: "rate-limit=tok/s is a drain budget on GET /inbox, not POST." }, "no-store", 400);
     }
-    const result = await readFiling(request, { host: subject, slug: context ? context.slug : "review", org });
+    const result = await readFiling(request, { host: subject, slug: context ? context.slug : DEFAULT_KIND, org });
     return answerFiling(request, result, { lockHost: true, embed });
   }
   if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD, POST");
@@ -233,7 +243,7 @@ async function handleSite(request, url, host, rest, org = null, embed = false) {
     return headOr(request, jsonResponse(inboxContract(subject, context, org), "public, max-age=120"));
   }
   const config = await loadConfig(subject);
-  const html = renderWrite({ context: context || siteKinds(config)[0] || contextBySlug("review"), host: subject, lockHost: true, embed, config });
+  const html = renderWrite({ context: context || siteKinds(config)[0] || contextBySlug(DEFAULT_KIND), host: subject, lockHost: true, embed, config });
   return headOr(request, embed ? embedHtml(html, subject, config, "public, max-age=120") : htmlResponse(html, { cache: "public, max-age=120" }));
 }
 
@@ -372,7 +382,7 @@ export default {
       if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
       const raw = url.searchParams.get("host") || "";
       const how = url.searchParams.get("how") || "link";
-      const kind = url.searchParams.get("kind") || "review";
+      const kind = url.searchParams.get("kind") || DEFAULT_KIND;
       if (raw && !isPublicSite(queryHost)) {
         return headOr(request, htmlResponse(renderStart({ host: raw.trim(), how, kind, error: `"${raw.trim()}" is not a public domain. Enter one like example.com.` }), { status: 400, cache: "no-store" }));
       }
@@ -420,15 +430,18 @@ export default {
       return headOr(request, htmlResponse(renderMeter({ host: queryHost, probe }), { cache: "no-store" }));
     }
 
-    const kindJson = url.pathname.match(/^\/(wonder|review|practice|brief)\.json$/);
+    const kindJson = url.pathname.match(KIND_JSON);
     if (kindJson) {
       const context = contextBySlug(kindJson[1]);
       return jsonResponse(inboxContract(validSubject(queryHost) ? queryHost : "{host}", context, org), "public, max-age=120");
     }
 
-    const kindPage = url.pathname.match(/^\/(wonder|review|practice|brief)\/?$/);
+    const kindPage = url.pathname.match(KIND_PAGE);
     if (kindPage) {
       const context = contextBySlug(kindPage[1]);
+      if (context.slug !== kindPage[1] && ["GET", "HEAD"].includes(request.method)) {
+        return Response.redirect(`${url.origin}/${context.slug}${url.search}`, 301);
+      }
       if (request.method === "POST") {
         const result = await readFiling(request, { host: queryHost, slug: context.slug, org });
         return answerFiling(request, result, { lockHost: false });
@@ -452,7 +465,7 @@ export default {
       const typed = decodeURIComponent(siteMatch[1]);
       const clean = normalizeHost(typed);
       if (validSubject(clean)) {
-        // One address per site: /WWW.Example.com/review → /example.com/review.
+        // One address per site: /WWW.Example.com/problem → /example.com/problem.
         if (clean !== typed && ["GET", "HEAD"].includes(request.method)) {
           return Response.redirect(`${url.origin}/${clean}${siteMatch[2] ? `/${siteMatch[2]}` : ""}${url.search}`, 301);
         }
