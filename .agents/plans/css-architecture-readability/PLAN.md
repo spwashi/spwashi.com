@@ -19,6 +19,7 @@ Already landed:
 Known constraints:
 
 - `public/css/style.css` owns cascade layer order and must not be reordered.
+- A portable bundle for other hosts is `.spw/caches/portable-css-2026-09.spw`. It does not reorder those layers or ship this site's chrome.
 - `public/css/effects/debug.css` is generated from `src/styles/entries/debug.css`.
 - `check-generated` treats unstaged generated outputs as stale, so generated CSS and compiled tool output must be staged with their sources before final checks.
 - The debug layer labels are diagnostic nearest-visible ownership markers, not true CSS provenance.

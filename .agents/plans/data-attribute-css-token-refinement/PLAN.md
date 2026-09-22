@@ -4,6 +4,8 @@
 
 Establish clear bedrock anchors for shared CSS custom properties across the site, eliminate unanchored variable references, bridge authored thermodynamic and accent-strength HTML data attributes into active CSS properties, and preserve traceability across the design catalog and Spw conventions.
 
+Tokens that travel to other hosts are specified in `.spw/caches/portable-css-2026-09.spw`. That sheet reuses these attributes. It does not add a family.
+
 ## Scope
 
 1. **Token Bedrock (`public/css/tokens/core.css`, `public/css/tokens/flourish-defaults.css`, `public/css/tokens/dimensions.css`)**:

@@ -71,6 +71,7 @@
 @timing_bands_handoff_2026_09: ~"./timing-bands-handoff-2026-09.spw"  # bands landed (patches 4–5); patches 6–7 open: material, cards, wonder, ornament still read raw --duration-* (2026-09-22)
 @cauldron_lens_composition_2026_09: ~"./cauldron-lens-composition-2026-09.spw"  # page lens reaches the mix, landed 604d4a1d; how pocket chrome shares a corner is still open in its plan
 @serialization_register_verbs_2026_09: ~"./serialization-register-verbs-2026-09.spw"  # $ names where a serialization lands, not the copy act; the frame copy button stays dormant until the verbs pass browser review
+@portable_css_2026_09: ~"./portable-css-2026-09.spw"  # seed: one built sheet other origins can link; not style.css, not core, no shell chrome; unbuilt
 
 operation = "align"
 fixity = "tending"
@@ -139,6 +140,7 @@ fixity = "tending"
   timing_bands_handoff_2026_09 = @timing_bands_handoff_2026_09
   cauldron_lens_composition_2026_09 = @cauldron_lens_composition_2026_09
   serialization_register_verbs_2026_09 = @serialization_register_verbs_2026_09
+  portable_css_2026_09 = @portable_css_2026_09
 }[reg=facet]
 
 ^"cache_rules"{
