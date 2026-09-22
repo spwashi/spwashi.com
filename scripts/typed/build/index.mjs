@@ -6,6 +6,7 @@ import { promises as fs } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { build as rolldownBuild } from 'rolldown';
 import { resolvePublicSpecifier } from '../../lib/resolve-public-specifier.mjs';
+import { cssForDelivery } from '../css-delivery.mjs';
 import { assertPwaContract, collectOfflineDocumentDependencies, formatPwaContractSummary, injectBuildPrecacheAssets, } from '../pwa-contracts.mjs';
 import { assertSafeOutputDir, checkImageRedundancy, copyRepo, countFiles, createLogger, listFilesRecursive, listSourceRepoPaths, logDuplicateImages, parseArgs, printHelp, relRepo, rmrf, runNodeScript, writeNoJekyll, ROOT_DIR, } from './ops.mjs';
 import { isErrnoCode, toPosixPath } from '../shared/build-topology.mjs';
@@ -311,6 +312,26 @@ async function injectBootModulePreloads(outDir, hrefs) {
     return changed;
 }
 /**
+ * Delivery form of every dist/public/css sheet: comments and indentation out,
+ * rules untouched. Committed CSS keeps its prose; see css-delivery.mts.
+ */
+async function stripPublicCssComments(outDir, logger) {
+    const cssFiles = (await listFilesRecursive(path.join(outDir, 'public/css'))).filter((file) => file.endsWith('.css'));
+    let beforeBytes = 0;
+    let afterBytes = 0;
+    await Promise.all(cssFiles.map(async (file) => {
+        const source = await fs.readFile(file, 'utf8');
+        const output = cssForDelivery(source);
+        beforeBytes += Buffer.byteLength(source, 'utf8');
+        afterBytes += Buffer.byteLength(output, 'utf8');
+        if (output !== source)
+            await fs.writeFile(file, output, 'utf8');
+    }));
+    logger.info(`[build] stripped comments from ${cssFiles.length} css files: ${beforeBytes} → ${afterBytes} bytes `
+        + `(${beforeBytes ? ((afterBytes / beforeBytes) * 100).toFixed(1) : '0'}%)`);
+    return { files: cssFiles.length, beforeBytes, afterBytes };
+}
+/**
  * Per-file minify of leftover dist/public/js modules (catalog import()
  * targets and other non-boot files). The static site.js graph is bundled
  * separately and skipped here.
@@ -542,6 +563,12 @@ export async function main() {
     }
     else {
         logger.info('[build] skipping public/js bundle and minify');
+    }
+    if (options.minifyCss) {
+        await stripPublicCssComments(options.outDir, logger);
+    }
+    else {
+        logger.info('[build] skipping public/css comment strip');
     }
     const injected = await injectBootModulePreloads(options.outDir, runtimeBundle.boot.hrefs);
     if (injected) {
