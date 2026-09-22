@@ -1,4 +1,4 @@
-import { GESTURE_MEASURE } from '/public/js/runtime/interaction/gesture-measure.js';
+import { GESTURE_MEASURE } from '/public/js/kernel/gesture-measure.js';
 import {
   annotateFloatingChromeElement,
   requestFloatingChromeSync,

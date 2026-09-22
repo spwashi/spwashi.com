@@ -23,7 +23,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { GESTURE_MEASURE } from '/public/js/runtime/interaction/gesture-measure.js';
+import { GESTURE_MEASURE } from '/public/js/kernel/gesture-measure.js';
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 
 const TOPIC_SELECTOR = '.spw-topic, [data-spw-topic]';

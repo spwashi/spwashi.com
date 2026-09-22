@@ -523,8 +523,7 @@ function setGesture(el, meta, gesture, options = {}) {
 
   /* ARIA hygiene pass (gesture-aria-hygiene/FIX.md).
      Only on non-native interactive elements. Lower noise than aria-live for transient phases. */
-  const isNativeControl = el.matches?.('a[href], button, input, select, textarea, [role="button"], [role="link"]');
-  if (!isNativeControl) {
+  if (!isNativeControl(el)) {
     let desc = GESTURE_ARIA_DESCRIPTIONS[gesture] || '';
     if (gesture === 'armed') {
       const aff = (meta && meta.affordances) || [];

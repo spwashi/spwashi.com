@@ -673,6 +673,7 @@ export const NATIVE_CONTROL_SELECTOR = [
   'textarea',
   'summary',
   '[role="button"]',
+  '[role="link"]',
   '[role="switch"]',
   '[contenteditable="true"]',
 ].join(', ');
