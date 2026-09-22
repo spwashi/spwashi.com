@@ -17,7 +17,9 @@
  *   subject     the leading identifier — `settings` in settings[tune]{…}
  *   mode        the frame parameter — what the subject is being read as
  *   parts       the body terms — what it is composed of
- *   projection  the modifier chain — `<publish>`, `<bridge>`, where it goes
+ *   projection  the capsule — `<publish>`, `<bridge>`, where it goes
+ *   scope       the scene, before the subject or between the body and the capsule
+ *   charge      a leading valence chain — `boon.honk` — omitted when empty
  *
  * The first version of this also emitted a `rank` — a count of distinct
  * container kinds in the parse tree, meant as a hypergeometric dimension. It
@@ -54,7 +56,7 @@
 import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { kernelJoinFromTokens, readBodyJoins, readCompoundJoin, readJoinChain } from '../public/js/semantic/expression-query.js';
+import { kernelJoinFromTokens, readBodyJoins, readCompoundJoin, readExpressionSlots, readJoinChain } from '../public/js/semantic/expression-query.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'public/js/generated/spw-expressions.js');
@@ -121,12 +123,9 @@ function readShape(expression, tokens) {
   }
   const kernel = kernelJoinFromTokens(tokens);
   const chain = readJoinChain(expression);
-  const match = expression.match(/^([^[{<]+)(?:\[([^\]]*)\])?(?:\{([^}]*)\})?(?:<([^>]*)>)?/);
+  const slots = readExpressionSlots(expression);
   const join = kernel.kind !== 'none' ? kernel : chain;
-  if (!match) {
-    return { subject: expression, mode: '', parts: join.parts, projection: '', join: join.kind };
-  }
-  const body = readBodyJoins(match[3] || '');
+  const body = readBodyJoins(slots.body);
   // kernelJoinFromTokens scans every IDENTIFIER in the whole wrapped
   // `expression = subject[mode]{body}` parse, not just the body — for
   // crawl/project its returned .parts is that whole token stream (caught
@@ -142,13 +141,16 @@ function readShape(expression, tokens) {
     : join.kind === 'ident'
       ? join.parts
       : body.parts;
-  return {
-    subject: (match[1] || '').trim(),
-    mode: (match[2] || '').trim(),
+  const shape = {
+    subject: slots.subject,
+    mode: slots.mode,
     parts,
-    projection: (match[4] || '').trim(),
+    projection: slots.projection,
     join: join.kind === 'none' ? body.kind : join.kind,
   };
+  if (slots.scope) shape.scope = slots.scope;
+  if (slots.charge.length) shape.charge = slots.charge;
+  return shape;
 }
 
 async function collectSpwProjections(dir = path.join(ROOT, '.spw'), results = { handles: {}, perspectives: {} }) {

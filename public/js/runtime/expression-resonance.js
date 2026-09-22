@@ -86,8 +86,24 @@ function shapeTokens(shape) {
   for (const part of shape.parts || []) {
     if (part) tokens.push({ token: part, relation: 'part' });
   }
+  if (shape.scope) tokens.push({ token: shape.scope, relation: 'scope' });
+  for (const sign of shape.charge || []) {
+    if (sign) tokens.push({ token: sign, relation: 'charge' });
+  }
   if (shape.projection) tokens.push({ token: shape.projection, relation: 'projection' });
   return tokens;
+}
+
+function salienceTokens(shape) {
+  if (!shape) return [];
+  return [
+    shape.subject,
+    shape.mode,
+    ...(shape.parts || []),
+    shape.scope,
+    ...(shape.charge || []),
+    shape.projection,
+  ].filter(Boolean);
 }
 
 function readSalience() {
@@ -124,6 +140,8 @@ function buildKinIndex(entries) {
     add(shape.subject, expression);
     add(shape.mode, expression);
     for (const part of shape.parts || []) add(part, expression);
+    if (shape.scope && shape.scope.length > 1) add(shape.scope, expression);
+    for (const sign of shape.charge || []) add(sign, expression);
     add(shape.projection, expression);
   }
   // A token only one expression carries is a name, not kinship.
@@ -194,6 +212,8 @@ export function kinOf(expression) {
   relate(shape.subject, 'subject');
   relate(shape.mode, 'mode');
   for (const part of shape.parts || []) relate(part, 'part');
+  if (shape.scope && shape.scope.length > 1) relate(shape.scope, 'scope');
+  for (const sign of shape.charge || []) relate(sign, 'charge');
   relate(shape.projection, 'projection');
 
   return [...found.entries()].map(([other, meta]) => ({ expression: other, ...meta }));
@@ -303,8 +323,7 @@ function depositSalience(expression) {
   const shape = manifest?.[expression];
   if (!shape) return;
   const store = readSalience();
-  for (const token of [shape.subject, shape.mode, ...(shape.parts || []), shape.projection]) {
-    if (!token) continue;
+  for (const token of salienceTokens(shape)) {
     store[token] = (store[token] || 0) + 1;
   }
   try {
@@ -368,8 +387,7 @@ export function depositGathered(items = [], weight = GATHER_WEIGHT) {
     const shape = expression && manifest[expression];
     if (!shape) continue;
 
-    for (const token of [shape.subject, shape.mode, ...(shape.parts || []), shape.projection]) {
-      if (!token) continue;
+    for (const token of salienceTokens(shape)) {
       store[token] = (store[token] || 0) + weight;
     }
     banked += 1;
