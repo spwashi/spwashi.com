@@ -29,5 +29,16 @@ New reference route. Three altitudes (semantic state, field state, ornament) dra
 ## Not done
 - No new `data-spw-*` family. No JS. Whimsy backlog items (seasonal, trails) stay unbuilt. The packing and base-material propagation findings above are shared-runtime changes and need their own patch and a browser review.
 
+## Region variety prime — 2026-09-22
+- [Region variety and token bridge](region-variety.spw): new reader direction, verified fragment destinations, module gates, and five self-referential ornament token declarations. Operation `prime`, fixity `experimental`; public implementation remains pending.
+- First bounded implementation: verify and repair the shared ornament token bridge. Then connect contrasting specimens by native fragments; each destination must visibly earn the link.
+
+## Token semantics and current copy — 2026-09-22
+- Operation `align`, fixity `tending`: clarify the five registered ornament inputs in `tokens/core.css`; zero contributes no signal in that channel, and numeric registration does not enforce a 0–1 range. Local resonance and inherited ornament resonance remain distinct.
+- Chrome baseline: all five registered inputs inherited parent values and accepted explicit local zero. The cyclic declarations did not read their raw-field fallback. Opus is concurrently implementing ornament paint and route links; preserve those edits.
+- Refresh Home's live blurb, Design's entry and reference descriptions, and Now's dated opener/receipt using the existing ornament map, linked labs, and diagrams. Preserve the September 26 close and support paths. Remove stale claims that density/material references have working setting controls.
+- User direction: Now's meditation copy names development as attentive practice, tentative models of other readers, mathematical relationships/constraints/transformations, personal art, vocabulary and sentence structure. These are intentions, not claims of measured cognitive improvement. Preserve `now.cycle.meditation`; add `now.practice.direction` for the distinct study paragraph.
+- Validation: Chrome pocket probes found refreshed copy on all three routes and no horizontal overflow; ornament inputs inherited 0.1–0.5 and accepted local zero. `check:local -- --allow-dirty` passed 406 tests; copy accessor audit, manifest regeneration, generated-output check, and `git diff --check` passed. The manifest reported five unstructured expressions already outside this copy patch.
+
 ## Validation
 `npm run manifest` (148 routes), `npm run build:css`, `npm run audit:copy:accessor`, `npm run check:local -- --allow-dirty`, `git diff --check`; browser at 500px: /design/ornaments/ flourish pack ready, corner painted, rule notch at rest, resonance chip writes the root attribute, no overflow, no console errors; /design/density/ figure fits; /design/slots/ metadata chip verified below.

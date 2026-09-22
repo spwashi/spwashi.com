@@ -1,0 +1,50 @@
+# Region variety through working ornaments
+#>region_variety
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@architecture: ~"../../../.spw/conventions/wonder-architecture.spw"
+@ornament: ~"../../../public/css/ornament/ornament.css"
+@tokens: ~"../../../public/css/tokens/core.css"
+@modules: ~"../../../public/js/runtime/catalog/enhancement.js"
+
+^"intent"{
+  source = `2026-09-22: visitor enjoys following links into new designs because visual differences provoke new ideas; asks for more ornaments, region/component links, Spw semantics and module/token wiring.`
+  audience = `Curious readers; visual artists comparing composition with engineers inspecting its construction.`
+  focus = `Region-to-region discovery through visibly different components.`
+  element = `wood: branching paths; earth: material contrast.`
+  resonance = `A destination changes the visual question, not merely the heading.`
+  extension = `A reader can cite a specimen, follow its sibling, and identify what to reuse.`
+}[reg=facet]
+
+^"evidence"{
+  navigation = `/design/ornaments/#ornament-vocabulary has nine specimen articles without individual fragment IDs. The exit links already target /design/palettes/#spectral-workshop and /design/experiments/svg/#svg-specimens; materials still targets the route root.`
+  token_bridge = `ornament.css shared host declares five self-referential properties at lines 72–76. core.css registers those numeric properties with inherited values and initial-value 0. A cyclic declaration is not an inheritance fallback; measure computed values before claiming field response.`
+  distinct_states = `Field intensity, resonance, collection, deviation and trail have different meanings. Preserve their distinct writers and inherited values; do not replace all five with one charge value.`
+  modules = `enhancement.js: svg-filters and svg-tunability mount when visible and require svg-surfaces. Both ornaments and SVG experiment routes author that pack. canvas-accents mounts on [data-spw-accent]; the ornament map currently describes its values in code text, not a live accent host.`
+  census = `2026-09-22 audit:module-selectors exited 0: 132 catalog entries, 125 scanned routes, 15 reported orphans, no legacy .site-frame catalog selectors. This is static host evidence, not successful browser mounting.`
+  prior_receipt = `PLAN.md records inert density/material settings from the previous browser session. Those findings have not been remeasured here.`
+}[reg=facet]
+
+^"trail"{
+  start = `/design/ornaments/#ornament-vocabulary — compact marks and their meanings; give selected specimen articles stable descriptive IDs.`
+  material = `/design/materials/#staged-theme-sets — existing image/theme comparison; verify actual contrast before choosing it as the visual destination.`
+  palette = `/design/palettes/#spectral-workshop — color and resonance experiment.`
+  diagram = `/design/experiments/svg/#svg-specimens — diagram anatomy; #diagram-authored-seed is an existing component address.`
+  form = `Use different existing compositions: a quiet rule/corner at the reference stop, a material specimen, a palette rail, and an SVG diagram. Link text names what will change and why to look.`
+  semantics = `Keep native href fragments as addresses; data-spw-semantic-expression describes meaning, not an alternate router. Existing wonder questions comparison, projection and inquiry describe the trail; no new wonder type or attribute family.`
+}[reg=facet]
+
+^"first_patch"{
+  operation = `align`
+  fixity = `tending`
+  name = `Ornament token bridge`
+  scope = `Shared ornament host declarations only, plus generated CSS bundles if changed by build. Verify parent and local overrides on a real ornament-map rail before selecting the correction.`
+  acceptance = `Inherited collection/deviation/trail values survive; field intensity and resonance reach their intended consumers; an explicit local value of 0 remains 0; dimmed attention stays dimmed.`
+  visual_probe = `Compare computed properties and visible ink before/after on the same host at pocket width, keyboard focus, light/dark, and reduced motion. Check idle stylesheet arrival does not move structure.`
+  validation = `Named ornament-host visual fixture, check:css, check:local and git diff --check. A green selector census alone does not establish visible response.`
+  next_patch = `After the bridge is verified, add specimen fragment IDs and a small reciprocal trail across the named regions. Record host selector, feature gate, mounted module and consumed token for each enhanced stop; use native links without a new navigation module.`
+  boundary = `No packing rewrite, global theme pack, new runtime dependency, invented state family, catalog-wide orphan cleanup, or workbench grammar change.`
+}[reg=facet]
