@@ -64,6 +64,7 @@ const LAYER_SETTLE_MS = 1400;
 const SWIPE_MIN_PX = GESTURE_MEASURE.swipeMinPx;
 const SWIPE_DOMINANCE = GESTURE_MEASURE.swipeDominance;
 const HOLD_MS = GESTURE_MEASURE.holdMs;
+const TRACE_CONTRACT = 'tap:prime hold:inspect swipe:cycle';
 const TRACE_CARD = '[data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame';
 /** A tap collects the layer's tokens. Rarer layers are worth more than the address. */
 const LAYER_WEIGHT = Object.freeze({
@@ -89,6 +90,8 @@ let settleTimer = null;
 let layerCursor = 0;
 let gesture = null;
 let traceNodes = [];
+let publishedNodes = [];
+let contractTimer = null;
 let cleanup = null;
 
 const LIVING_SELECTOR = '[data-spw-living-term][data-spw-concept], .spw-living-term[data-spw-concept]';
@@ -273,10 +276,31 @@ function rememberTrace(node) {
   traceNodes.push(node);
 }
 
+function chargeWouldReflow(node, state) {
+  if (state !== 'preview' && state !== 'arming') return false;
+  if (node.matches?.('.spw-wisdom-deck')) return true;
+  return Boolean(node.querySelector?.('.spw-wisdom-deck'));
+}
+
 function markCharge(node, state) {
-  if (!node) return;
+  if (!node || chargeWouldReflow(node, state)) return;
   node.setAttribute('data-spw-charge', state);
   rememberTrace(node);
+}
+
+function publishContract(node) {
+  if (!node || node.hasAttribute('data-spw-gesture-contract')) return;
+  node.setAttribute('data-spw-gesture-contract', TRACE_CONTRACT);
+  publishedNodes.push(node);
+}
+
+function clearPublished() {
+  for (const node of publishedNodes) {
+    if (node.getAttribute('data-spw-gesture-contract') === TRACE_CONTRACT) {
+      node.removeAttribute('data-spw-gesture-contract');
+    }
+  }
+  publishedNodes = [];
 }
 
 function placeSheen(card, clientX) {
@@ -725,11 +749,12 @@ export async function initExpressionResonance(ctx = {}) {
       reduce: globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches,
     };
     noteTraceHost(host, expression);
+    publishContract(host);
     gesture.holdTimer = setTimeout(() => {
       if (!gesture || gesture.id !== event.pointerId) return;
       gesture.held = true;
-      markCharge(host, GESTURE_CHARGE.hold);
       resonate(expression, host, activeLayer(expression));
+      markCharge(host, GESTURE_CHARGE.hold);
     }, HOLD_MS);
     document.addEventListener('pointermove', onPointerMove, { passive: true });
   };
@@ -745,11 +770,18 @@ export async function initExpressionResonance(ctx = {}) {
     if (current.frame) cancelAnimationFrame(current.frame);
     document.removeEventListener('pointermove', onPointerMove);
     gesture = null;
-    if (!current.host.isConnected) return;
+    if (!current.host.isConnected) {
+      clearPublished();
+      return;
+    }
 
     const coarse = event.pointerType === 'touch' || event.pointerType === 'pen';
     const traced = current.path.length > 1;
     clearTimeout(dwellTimer);
+    const releaseContract = () => {
+      clearTimeout(contractTimer);
+      contractTimer = setTimeout(clearPublished, coarse ? LAYER_SETTLE_MS : 0);
+    };
 
     if (current.held && !traced && absX < 10 && absY < 10) {
       const layer = activeLayer(current.expression);
@@ -758,6 +790,7 @@ export async function initExpressionResonance(ctx = {}) {
       current.host?.setAttribute(ATTR.source, 'start');
       depositLayer(current.expression, layer, 2);
       if (coarse) armSettle();
+      releaseContract();
       return;
     }
 
@@ -773,6 +806,7 @@ export async function initExpressionResonance(ctx = {}) {
       for (const mid of current.path.slice(1, -1)) depositLayer(mid, 'subject');
       lightLayer(current.endExpr, current.endHost, activeLayer(current.endExpr));
       if (coarse) armSettle();
+      releaseContract();
       return;
     }
 
@@ -783,6 +817,7 @@ export async function initExpressionResonance(ctx = {}) {
       markCharge(current.host, GESTURE_CHARGE.swipe);
       current.host?.setAttribute(ATTR.source, 'start');
       if (coarse) armSettle();
+      releaseContract();
       return;
     }
 
@@ -794,6 +829,7 @@ export async function initExpressionResonance(ctx = {}) {
       depositLayer(current.expression, layer);
       if (coarse) armSettle();
     }
+    releaseContract();
   };
 
   const onPointerCancel = (event) => {
@@ -802,6 +838,7 @@ export async function initExpressionResonance(ctx = {}) {
     if (gesture.frame) cancelAnimationFrame(gesture.frame);
     document.removeEventListener('pointermove', onPointerMove);
     gesture = null;
+    clearPublished();
   };
 
   document.addEventListener('pointerover', onEnter, { passive: true });
@@ -868,7 +905,9 @@ export async function initExpressionResonance(ctx = {}) {
     offComposted?.();
     clearTimeout(dwellTimer);
     clearTimeout(settleTimer);
+    clearTimeout(contractTimer);
     gesture = null;
+    clearPublished();
     clearResonance();
     document.removeEventListener('pointerover', onEnter);
     document.removeEventListener('pointerout', onLeave);
@@ -908,7 +947,7 @@ export const EXPRESSION_RESONANCE_CONTRACT = Object.freeze({
   storageKey: STORAGE_KEY,
   encounterMs: ENCOUNTER_MS,
   salienceBands: SALIENCE_BANDS,
-  rule: 'A fine pointer hover previews every kin layer and dwell banks the whole expression. A tap collects the active layer as preview. A hold sustains that layer at double weight. A finger tracing a card charges each expression it crosses: the first is the start anchor, the last is the end anchor, and the hosts between bank only their subject. A swipe that stays on one host still walks the layers. Touch does not dwell. The move listener exists only while the pointer is down.',
+  rule: 'A fine pointer hover previews every kin layer and dwell banks the whole expression. A tap collects the active layer as preview. A hold sustains that layer at double weight. A finger tracing a card charges each expression it crosses: the first is the start anchor, the last is the end anchor, and the hosts between bank only their subject. While the pointer is down the host publishes tap:prime hold:inspect swipe:cycle, then releases it. Preview and arming stay off a wisdom deck, whose charge changes layout. A swipe that stays on one host still walks the layers. Touch does not dwell. The move listener exists only while the pointer is down.',
 });
 
 export const SPW_MODULE_EXPORT = Object.freeze({
