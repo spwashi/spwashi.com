@@ -10,6 +10,8 @@ export type BuildOptions = {
   fingerprintAssets: boolean;
   /** Per-file minify of dist/public/js via rolldown (preserves module URLs). */
   minifyJs: boolean;
+  /** Comment strip of dist/public/css (rules untouched; see css-delivery.mts). */
+  minifyCss: boolean;
   local: boolean;
   quiet: boolean;
   copyConcurrency: number;

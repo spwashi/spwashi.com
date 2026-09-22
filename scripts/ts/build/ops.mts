@@ -81,6 +81,7 @@ export function parseArgs(argv: string[]): BuildOptions {
     catalog: true,
     fingerprintAssets: true,
     minifyJs: true,
+    minifyCss: true,
     local: false,
     quiet: false,
     copyConcurrency: parsePositiveInteger(process.env.BUILD_COPY_CONCURRENCY, DEFAULT_COPY_CONCURRENCY),
@@ -139,6 +140,7 @@ export function parseArgs(argv: string[]): BuildOptions {
 
     if (arg === '--skip-minify') {
       options.minifyJs = false;
+      options.minifyCss = false;
       continue;
     }
 
@@ -188,7 +190,8 @@ Modes:
                            and asset fingerprinting.
   --skip-fingerprint       Preserve core asset filenames instead of hashing them.
   --preserve-asset-names   Alias for --skip-fingerprint.
-  --skip-minify            Skip per-file minify of dist/public/js (rolldown).
+  --skip-minify            Skip per-file minify of dist/public/js (rolldown)
+                           and the comment strip of dist/public/css.
 
 Paths:
   --out <dir>              Output directory. Default: dist
