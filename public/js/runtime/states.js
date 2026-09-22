@@ -52,7 +52,7 @@ export function initSpwStates(ctx, root) {
 
     // Phase cycle on brace activation inside a stateful frame
     const off = bus.on('brace:activated', (e) => {
-        const frame = e.target?.closest?.('.spw-frame, .site-frame');
+        const frame = e.target?.closest?.('.spw-frame');
         if (frame?.hasAttribute('data-spw-stateful')) {
             cycleFramePhase(frame);
         }

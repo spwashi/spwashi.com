@@ -63,7 +63,7 @@ export function initBookmarkRegistry() {
     root.innerHTML = parts.join('');
 
     const clearBtn = document.createElement('button');
-    clearBtn.className = 'operator-chip';
+    clearBtn.className = 'spw-chip';
     clearBtn.style.marginTop = '1rem';
     clearBtn.innerHTML = '<span class="spell-op">!</span> reset_pins';
     clearBtn.addEventListener('click', () => {

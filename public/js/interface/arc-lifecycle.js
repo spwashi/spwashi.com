@@ -6,7 +6,7 @@ import {
 } from '/public/js/runtime/interaction/loop.js';
 const ARC_TARGET_SELECTOR = [
   '[data-spw-arc]',
-  '.operator-chip',
+  '.spw-chip',
   '.frame-sigil',
   '.syntax-token',
   '.spw-route-menu-link',
@@ -25,7 +25,7 @@ const closestArcTarget = (target, root) => {
   return match && root.contains(match) ? match : null;
 };
 const arcToken = (target) => {
-  if (target.matches('.operator-chip, [data-spw-operator]')) return LOOP_TOKENS.OPERATOR;
+  if (target.matches('.spw-chip, [data-spw-operator]')) return LOOP_TOKENS.OPERATOR;
   if (target.matches('[data-spw-form], [data-spw-brace]')) return LOOP_TOKENS.BRACE;
   if (target.matches('.spw-nav-toggle, nav a[href]')) return LOOP_TOKENS.MODE;
   return LOOP_TOKENS.SURFACE;

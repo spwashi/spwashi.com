@@ -13,7 +13,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { writeDatasetValue, writeStyleValue } from '/public/js/kernel/dom-contracts.js';
+import { writeDatasetValue, writeStyleValue, FRAME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 import { isInputFocused } from '/public/js/kernel/shared.js';
 import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
 import {
@@ -99,7 +99,7 @@ function collectSceneLanes(host) {
 function buildScenePacket(host) {
   if (!(host instanceof HTMLElement)) return null;
 
-  const frame = host.closest('.spw-frame, [data-spw-kind="frame"]');
+  const frame = host.closest(FRAME_SELECTOR);
   const source = { surface: host, frame: frame || undefined };
   let spwContext = '';
   let wonderPrompt = '';
@@ -561,7 +561,7 @@ function traverseOperators(direction = 1) {
 }
 
 function collectNavigableFrames() {
-  return Array.from(document.querySelectorAll('.spw-frame, [data-spw-kind="frame"]')).filter((el) => {
+  return Array.from(document.querySelectorAll(FRAME_SELECTOR)).filter((el) => {
     if (el.closest('[hidden]')) return false;
     return el.offsetWidth > 0 && el.offsetHeight > 0;
   });
@@ -624,7 +624,7 @@ function hasLocalKeyScope(target) {
 
 function resolveFocusedFrame() {
   const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-  return active?.closest?.('.spw-frame, [data-spw-kind="frame"]')
+  return active?.closest?.(FRAME_SELECTOR)
     || document.querySelector('.spw-frame:hover, [data-spw-kind="frame"]:hover');
 }
 
@@ -722,7 +722,7 @@ function readNextFrame() {
   const frames = collectNavigableFrames();
   if (!frames.length) return null;
   const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-  const current = active?.closest?.('.spw-frame, [data-spw-kind="frame"]');
+  const current = active?.closest?.(FRAME_SELECTOR);
   const currentIndex = frames.indexOf(current);
   return frames[(currentIndex >= 0 ? currentIndex + 1 : 0) % frames.length] || null;
 }
@@ -826,7 +826,7 @@ function enhanceWrapTeachingInvitations() {
     if (!(node instanceof HTMLElement)) return;
     if (node.closest('[data-spw-feature="wrap-jobs"]')) return;
     if (!node.querySelector('kbd') || !/\[/.test(node.textContent || '')) return;
-    const frame = node.closest('.spw-frame, [data-spw-kind="frame"]');
+    const frame = node.closest(FRAME_SELECTOR);
     const switchEl = frame?.querySelector?.('.mode-switch') || document.querySelector('.mode-switch');
     if (!(switchEl instanceof HTMLElement)) return;
 
@@ -858,7 +858,7 @@ function wrapJobAnchor(wrap, action, href, subject, seat) {
   const variants = formatWrapJobVariants({ wrap, subject, seat, nextLabel: subject });
   const operator = wrap === 'wonder' ? 'wonder' : wrap;
   return [
-    `<a class="operator-chip" href="${href || '#'}" data-spw-operator="${operator}" data-spw-action="${action}">`,
+    `<a class="spw-chip" href="${href || '#'}" data-spw-operator="${operator}" data-spw-action="${action}">`,
     `<span data-spw-copy-depth="entry">${variants.entry}</span>`,
     `<span data-spw-copy-depth="normal">${variants.normal}</span>`,
     `<span data-spw-copy-depth="technical">${variants.technical}</span>`,
@@ -934,7 +934,7 @@ function closeModeSeat({ commit = true, switchEl = readOpenModeSwitch() } = {}) 
   switchEl.setAttribute('aria-expanded', 'false');
   writeInteractionContext(commit ? 'reading' : 'reading', switchEl);
 
-  const frame = switchEl.closest('.spw-frame, [data-spw-kind="frame"]');
+  const frame = switchEl.closest(FRAME_SELECTOR);
   const returnTarget = frame?.querySelector('.hook-sub a.spw-chip, .hook-invitation a, a.frame-sigil') || frame;
   if (returnTarget instanceof HTMLElement && returnTarget !== document.activeElement) {
     if (!returnTarget.hasAttribute('tabindex') && returnTarget.tagName !== 'A' && returnTarget.tagName !== 'BUTTON') {

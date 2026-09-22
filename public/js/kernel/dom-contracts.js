@@ -1910,7 +1910,7 @@ export function inferTopographyKind(el, fallback = 'component') {
   if (el.dataset?.spwComponentKind) return normalizeTopographyToken(el.dataset.spwComponentKind);
 
   if (matchesAny(el, SURFACE_COMPONENT_SELECTORS)) return 'surface';
-  if (hasClass(el, 'site-frame')) return 'frame';
+  if (hasClass(el, 'spw-frame')) return 'frame';
   if (hasClass(el, 'spw-panel') || hasClass(el, 'frame-panel') || hasClass(el, 'intent-cluster')) return 'panel';
   if (hasClass(el, 'mode-panel') || el.matches?.('[data-spw-kind="lens"], [data-spw-component-kind="lens"]')) return 'lens';
   if (el.matches?.('[data-spw-kind="hook"], [data-spw-component-kind="hook"]')) return 'hook';

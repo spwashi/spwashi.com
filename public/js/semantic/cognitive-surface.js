@@ -259,8 +259,8 @@ function renderCognitiveSurface(mount) {
 
             <footer class="cognitive-surface-footer">
                 <div class="cognitive-action-row">
-                    <button class="operator-chip" data-spw-operator="action" onclick="spwSpells?.cast()">!cast_spell</button>
-                    <button class="operator-chip" data-spw-operator="action" onclick="spwSpells?.checkpoint()">!checkpoint</button>
+                    <button class="spw-chip" data-spw-operator="action" onclick="spwSpells?.cast()">!cast_spell</button>
+                    <button class="spw-chip" data-spw-operator="action" onclick="spwSpells?.checkpoint()">!checkpoint</button>
                 </div>
             </footer>
 

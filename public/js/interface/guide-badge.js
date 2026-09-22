@@ -233,7 +233,7 @@ function emitTransientBadgeToast(anchor, message) {
      Progressive: if no container, just a transient that fades via CSS. */
   try {
     const chip = document.createElement('span');
-    chip.className = 'spw-disappear-chip operator-chip';
+    chip.className = 'spw-disappear-chip spw-chip';
     chip.setAttribute('role', 'status');
     chip.textContent = message;
     chip.dataset.spwToast = 'transient';

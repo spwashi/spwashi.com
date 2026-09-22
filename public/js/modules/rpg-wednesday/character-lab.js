@@ -215,17 +215,17 @@ export const initRpgCharacterLab = (section) => {
     ]);
 
     const saveButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '@ save character'
     });
     const resetButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '! clear draft'
     });
     const densityButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '~ full fields'
     });
@@ -437,9 +437,9 @@ export const initRpgCharacterLab = (section) => {
                         : ''
                 ]),
                 createElement('div', { className: 'rpg-character-card__controls' }, [
-                    createElement('button', { className: 'operator-chip', type: 'button', 'data-spw-operator': 'ref', text: '~ edit' }),
-                    createElement('button', { className: 'operator-chip', type: 'button', 'data-spw-operator': 'action', text: '! copy seed' }),
-                    createElement('button', { className: 'operator-chip', type: 'button', 'data-spw-operator': 'action', text: '! remove' })
+                    createElement('button', { className: 'spw-chip', type: 'button', 'data-spw-operator': 'ref', text: '~ edit' }),
+                    createElement('button', { className: 'spw-chip', type: 'button', 'data-spw-operator': 'action', text: '! copy seed' }),
+                    createElement('button', { className: 'spw-chip', type: 'button', 'data-spw-operator': 'action', text: '! remove' })
                 ])
             ]);
 
@@ -547,7 +547,7 @@ export const initRpgCharacterLab = (section) => {
 
     section.dataset.rpgHydrated = 'true';
     section.dataset.spwFeature = 'character-lab';
-    section.className = 'site-frame rpg-character-lab rpg-workbench rpg-workbench--character';
+    section.className = 'spw-frame rpg-character-lab rpg-workbench rpg-workbench--character';
     section.replaceChildren(
         createFrameHeading({
             href: '#character-development',
@@ -572,11 +572,11 @@ export const initRpgCharacterLab = (section) => {
             className: 'frame-operators rpg-character-lab__routes',
             'aria-label': 'Character development routes'
         }, [
-            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.curator, 'data-spw-operator': 'ref', text: '~ state curator' }),
-            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.language, 'data-spw-operator': 'ref', text: '~ language evolution' }),
-            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.kit, 'data-spw-operator': 'ref', text: '~ local kit' }),
-            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.cast, 'data-spw-operator': 'ref', text: '~ cast register' }),
-            createElement('a', { className: 'operator-chip', href: '/tools/character-sheet/', 'data-spw-operator': 'object', text: '^ translation sheet' })
+            createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.curator, 'data-spw-operator': 'ref', text: '~ state curator' }),
+            createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.language, 'data-spw-operator': 'ref', text: '~ language evolution' }),
+            createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.kit, 'data-spw-operator': 'ref', text: '~ local kit' }),
+            createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.cast, 'data-spw-operator': 'ref', text: '~ cast register' }),
+            createElement('a', { className: 'spw-chip', href: '/tools/character-sheet/', 'data-spw-operator': 'object', text: '^ translation sheet' })
         ]),
         status
     );

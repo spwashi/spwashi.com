@@ -706,7 +706,7 @@ export const FEATURE_DEFS = [
     when: MOUNT_WHEN.INVITED,
     features: ['metrics'],
     selector: 'main',
-    describes: 'frame[text.measure] site-frame[line-count.height.wrap] bus[pretext-measurement]',
+    describes: 'frame[text.measure] spw-frame[line-count.height.wrap] bus[pretext-measurement]',
     updates: [
       'measure:data-spw-frame-line-count',
       'measure:data-spw-frame-wrap',

@@ -53,7 +53,7 @@ export function initSpwLattice() {
 
     // Hover effect for non-brace tokens
     document.addEventListener('mouseover', (e) => {
-        const target = e.target.closest('.operator-chip, .syntax-token, .spec-pill');
+        const target = e.target.closest('.spw-chip, .syntax-token, .spec-pill');
         if (target && !target.dataset.spwForm) {
             const key = target.id || `${window.location.pathname}:${target.textContent.trim()}`;
             highlightParallels(key);

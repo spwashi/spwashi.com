@@ -191,7 +191,7 @@ const renderNoteRegister = (root, notes) => {
         }),
         createElement('div', { className: 'local-note-card__actions' }, [
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 text: '~ revisit',
                 attrs: {
                     type: 'button',
@@ -199,7 +199,7 @@ const renderNoteRegister = (root, notes) => {
                 }
             }),
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 text: '! clear',
                 attrs: {
                     type: 'button',

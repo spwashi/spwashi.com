@@ -258,7 +258,7 @@ function ensureInstrumentControls(host) {
     instruments.forEach((instrument) => {
       const button = document.createElement('button');
       button.type = 'button';
-      button.className = 'operator-chip';
+      button.className = 'spw-chip';
       button.setAttribute('data-spw-query-composer-key', instrument.key);
       button.setAttribute('data-spw-query-composer-value', instrument.value);
       button.setAttribute('aria-pressed', 'false');
@@ -277,7 +277,7 @@ function ensureInstrumentControls(host) {
     settingsRow.className = 'spw-query-composer__settings-row vibe-widget-actions';
     const settingsBtn = document.createElement('button');
     settingsBtn.type = 'button';
-    settingsBtn.className = 'operator-chip';
+    settingsBtn.className = 'spw-chip';
     settingsBtn.setAttribute('data-spw-query-composer-include-settings', '');
     settingsBtn.setAttribute('aria-pressed', 'false');
     settingsBtn.textContent = 'Include settings deviations';
@@ -303,19 +303,19 @@ function ensureChrome(host) {
 
     const copy = document.createElement('button');
     copy.type = 'button';
-    copy.className = 'operator-chip';
+    copy.className = 'spw-chip';
     copy.setAttribute('data-spw-query-composer-copy', '');
     copy.textContent = 'Copy link';
 
     const apply = document.createElement('button');
     apply.type = 'button';
-    apply.className = 'operator-chip';
+    apply.className = 'spw-chip';
     apply.setAttribute('data-spw-query-composer-apply', '');
     apply.textContent = 'Apply setup';
 
     const offer = document.createElement('button');
     offer.type = 'button';
-    offer.className = 'operator-chip';
+    offer.className = 'spw-chip';
     offer.setAttribute('data-spw-query-composer-cauldron', '');
     offer.textContent = 'Offer to cauldron';
     offer.title = 'Prime a shareable setup as a cauldron ingredient / spell capture';
@@ -327,7 +327,7 @@ function ensureChrome(host) {
   if (host.dataset.spwQueryComposerCompact === 'true' && !host.querySelector('[data-spw-query-composer-expand]')) {
     const expand = document.createElement('button');
     expand.type = 'button';
-    expand.className = 'operator-chip spw-query-composer__expand';
+    expand.className = 'spw-chip spw-query-composer__expand';
     expand.setAttribute('data-spw-query-composer-expand', '');
     expand.setAttribute('aria-expanded', host.dataset.spwQueryComposerExpanded === 'true' ? 'true' : 'false');
     expand.textContent = host.dataset.spwQueryComposerExpanded === 'true' ? 'Collapse' : 'Expand setup';

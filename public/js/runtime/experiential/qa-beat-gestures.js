@@ -1,3 +1,5 @@
+import { FRAME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
+
 /**
  * QA / Beat / Cauldron gesture affordances for debug and QA testing modes.
  */
@@ -52,7 +54,7 @@ export function initQABeatGestures() {
   let lpTimer = null;
   document.addEventListener('pointerdown', (e) => {
     if (!isQA()) return;
-    const frame = e.target.closest?.('.spw-frame, .site-frame, [data-spw-kind="frame"]');
+    const frame = e.target.closest?.(FRAME_SELECTOR);
     if (!frame) return;
 
     clearTimeout(lpTimer);

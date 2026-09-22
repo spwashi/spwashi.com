@@ -10,6 +10,7 @@
 import {
   writeDatasetValue,
   writeDatasetValues,
+  FRAME_SELECTOR,
 } from '/public/js/kernel/dom-contracts.js';
 import { readPretextSignals } from '../semantic/pretext-measurement-bus.js';
 import { PAGE_ATTENTION_EVENT } from './page-state.js';
@@ -178,7 +179,7 @@ function readDisplayFlow(style) {
    content, never a card grid). Even when CSS uses display:grid for
    stacking/gaps, packing them as composition-flow=grid activates the
    multi-column auto-fit rules meant for inner card grids. */
-const STAGE_HOST_SELECTOR = '.spw-frame, .site-frame, .spw-panel, .frame-panel, .mode-panel, .site-hero, details';
+const STAGE_HOST_SELECTOR = '.spw-frame, .spw-panel, .frame-panel, .mode-panel, .site-hero, details';
 
 /**
  * Authored flow is the author's claim about how children read, and CSS lays
@@ -247,7 +248,7 @@ function resolvePresence(box) {
 function resolveCompositionRole(el, box) {
   const explicit = el.dataset.spwBoxModel || el.dataset.spwCompositionRole || '';
   if (explicit) return normalizeToken(explicit);
-  if (el.matches('.spw-frame, .site-frame, [data-spw-kind="frame"]')) return 'stage';
+  if (el.matches(FRAME_SELECTOR)) return 'stage';
   if (el.matches('.settings-category, details')) return 'fold';
   if (el.matches('.settings-fieldset')) return 'control-group';
   if (el.matches('.vibe-widget, [data-site-settings-panel]')) return 'control-card';
@@ -306,7 +307,7 @@ function resolveContentTone(el, box) {
   if (explicit) return normalizeToken(explicit);
 
   const textLen = (el.textContent || '').trim().length;
-  const opCount = el.querySelectorAll?.('[data-spw-operator], .operator-chip, .frame-sigil').length || 0;
+  const opCount = el.querySelectorAll?.('[data-spw-operator], .spw-chip, .frame-sigil').length || 0;
   const mediaCount = el.querySelectorAll?.('img, picture, video, svg, canvas').length || 0;
   const childDensity = box.childCount / Math.max(1, (box.inlineSize || 300) / 100);
 

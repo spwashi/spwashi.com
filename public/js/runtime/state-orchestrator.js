@@ -8,6 +8,7 @@
    ========================================================================== */
 
 import { ensureRelationalStateStyles } from '/public/js/kernel/deferred-styles.js';
+import { FRAME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 
 const STATE_ATTR = 'data-state';
 const ATTENTION_ATTR = 'data-spw-attention';
@@ -67,7 +68,7 @@ export const orchestrator = Object.freeze({
 export function bindGlobalInteractions() {
   ensureRelationalStateStyles();
   document.addEventListener('click', (event) => {
-    const frame = event.target.closest('.spw-frame, [data-spw-kind="frame"]');
+    const frame = event.target.closest(FRAME_SELECTOR);
     if (frame && !frame.matches('[data-state~="active"]')) {
       focusFrame(frame);
       pulseState(frame, 'arrival', 420);

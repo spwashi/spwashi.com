@@ -187,7 +187,7 @@ export const ensureRpgCuratorWidget = () => {
     };
 
     widget = createElement('aside', {
-        className: 'site-frame rpg-curator-widget rpg-workbench rpg-workbench--curator',
+        className: 'spw-frame rpg-curator-widget rpg-workbench rpg-workbench--curator',
         id: 'rpgw-state-curator',
         'data-rpg-curator-widget': 'true',
         'data-spw-feature': 'rpg-state-curator',
@@ -219,15 +219,15 @@ export const ensureRpgCuratorWidget = () => {
         className: 'frame-operators rpg-curator-widget__routes',
         'aria-label': 'Curator routes'
     }, [
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.language, 'data-spw-operator': 'ref', text: '~ language' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.kit, 'data-spw-operator': 'ref', text: '~ local kit' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.character, 'data-spw-operator': 'ref', text: '~ character lab' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.world, 'data-spw-operator': 'object', text: '^ world slots' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.ladder, 'data-spw-operator': 'probe', text: '? promotion ladder' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.sessions, 'data-spw-operator': 'ref', text: '~ sessions' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.library, 'data-spw-operator': 'frame', text: '#> library' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.fiber, 'data-spw-operator': 'ref', text: '~ fiber × language' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.settings, 'data-spw-operator': 'probe', text: '? settings' })
+        createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.language, 'data-spw-operator': 'ref', text: '~ language' }),
+        createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.kit, 'data-spw-operator': 'ref', text: '~ local kit' }),
+        createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.character, 'data-spw-operator': 'ref', text: '~ character lab' }),
+        createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.world, 'data-spw-operator': 'object', text: '^ world slots' }),
+        createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.ladder, 'data-spw-operator': 'probe', text: '? promotion ladder' }),
+        createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.sessions, 'data-spw-operator': 'ref', text: '~ sessions' }),
+        createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.library, 'data-spw-operator': 'frame', text: '#> library' }),
+        createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.fiber, 'data-spw-operator': 'ref', text: '~ fiber × language' }),
+        createElement('a', { className: 'spw-chip', href: RPG_CURATOR_ROUTES.settings, 'data-spw-operator': 'probe', text: '? settings' })
     ]);
 
     registerHost.append(

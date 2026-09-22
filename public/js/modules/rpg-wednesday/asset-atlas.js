@@ -122,7 +122,7 @@ export const createAssetAtlasController = ({ getState, save }) => {
         assetNamespaceFilterInput
     ]);
     const assetCollectedToggle = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '~ collected only',
         title: 'Show only collected cards'
@@ -132,12 +132,12 @@ export const createAssetAtlasController = ({ getState, save }) => {
         text: 'No asset cards yet. Start with one title-only scene, dice read, swag prop, or image so the live board has something stable to return to.'
     });
     const assetSaveButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '@ add card'
     });
     const assetResetButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '! clear draft'
     });
@@ -187,7 +187,7 @@ export const createAssetAtlasController = ({ getState, save }) => {
     let composerDensity = 'lean';
     const composerHeadingTitle = createElement('h4', { text: 'Draft seed card' });
     const assetDensityToggle = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button'
     });
     const assetStarter = createElement('p', {
@@ -403,37 +403,37 @@ export const createAssetAtlasController = ({ getState, save }) => {
         ]);
         const controls = createElement('div', { className: 'rpg-asset-card__controls' }, [
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 title: 'Collapse or expand card',
                 text: asset.collapsed ? '@ expand' : '@ collapse'
             }),
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 title: 'Collect or uncollect card',
                 text: asset.collected ? '* collected' : '* collect'
             }),
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 title: 'Edit card',
                 text: '~ edit'
             }),
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 title: 'Move card earlier',
                 text: '['
             }),
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 title: 'Move card later',
                 text: ']'
             }),
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 title: 'Remove card',
                 text: 'remove'

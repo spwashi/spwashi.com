@@ -11,7 +11,7 @@ const ROOT = document.documentElement;
 const HANDLE_SELECTOR = '[data-spw-annotation-handle], [data-spw-header-annotation]';
 
 /* Cognitive container awareness: when annotating, also mark the nearest rich
-   container (.site-frame, .frame-card, etc.) so memory + annotation create
+   container (.spw-frame, .frame-card, etc.) so memory + annotation create
    observable resonance across the container topology. This turns passive
    reading surfaces into active wonder participants. */
 const COGNITIVE_CONTAINER_SELECTOR = '.spw-frame, [data-spw-kind="frame"], .spw-card, .frame-card, .spw-panel, .frame-panel, .mode-panel, [data-spw-form="brace"]';

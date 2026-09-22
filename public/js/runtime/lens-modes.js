@@ -1,6 +1,7 @@
 import {
   isCoarsePointerEnvironment,
   supportsHoverEnvironment,
+  FRAME_SELECTOR,
 } from '/public/js/kernel/dom-contracts.js';
 import { composeModeSeatExpression } from '/public/js/semantic/spw-compose.js';
 
@@ -122,7 +123,7 @@ export function findLensModeHosts(group, buttons = [], panels = []) {
   const selector = `[data-spw-inspect-mode-group="${CSS.escape(group)}"]`;
   for (const node of [...buttons, ...panels]) {
     const host = node.closest?.(selector)
-      || node.closest?.('.spw-frame, .site-frame, [data-spw-feature], [data-spw-kind]');
+      || node.closest?.('.spw-frame, [data-spw-feature], [data-spw-kind]');
     if (host instanceof HTMLElement) hosts.add(host);
   }
   return [...hosts];
@@ -262,7 +263,7 @@ export function writeLensModeState({
   }
 
   const hosts = findLensModeHosts(group, buttons, resolvedPanels);
-  const primaryHost = hosts[0] || activeButton?.closest?.('.site-frame, [data-spw-feature], [data-spw-kind]') || null;
+  const primaryHost = hosts[0] || activeButton?.closest?.('.spw-frame, [data-spw-feature], [data-spw-kind]') || null;
   const activePanel = resolvedPanels.find((panel) => panel.getAttribute('data-mode-panel') === resolvedMode) || null;
   const deepLink = buildLensModeDeepLink(group, resolvedMode, primaryHost, getLocationRef(doc));
   const lensImpact = activeButton?.dataset?.spwLensImpact
@@ -285,7 +286,7 @@ export function writeLensModeState({
     switchEl.style.setProperty('--spw-lens-index', String(activeIndex));
     const subject = resolveLensSeatSubject(
       switchEl.dataset.spwSemanticExpression,
-      switchEl.closest?.('.spw-frame, [data-spw-kind="frame"]')?.id || 'lens',
+      switchEl.closest?.(FRAME_SELECTOR)?.id || 'lens',
     );
     switchEl.dataset.spwSemanticExpression = composeModeSeatExpression({ subject, seat: resolvedMode });
     setTransientState?.(switchEl);

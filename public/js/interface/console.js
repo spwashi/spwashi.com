@@ -320,7 +320,7 @@ const renderModes = (nodes, frame, api) => {
     }
 
     buttons.forEach((sourceButton) => {
-        const button = el('button', 'operator-chip spw-console-mode-btn', { type: 'button' });
+        const button = el('button', 'spw-chip spw-console-mode-btn', { type: 'button' });
         button.textContent = sourceButton.textContent.trim();
         button.dataset.modeGroup = sourceButton.dataset.modeGroup || '';
         button.dataset.setMode = sourceButton.dataset.setMode || '';

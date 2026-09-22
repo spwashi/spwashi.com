@@ -274,7 +274,7 @@ export const initRpgLanguageEvolution = (section) => {
     });
 
     const copyBriefButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '~ copy brief'
     });
@@ -326,14 +326,14 @@ export const initRpgLanguageEvolution = (section) => {
     };
 
     const promoteFabricButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '~ to fabric'
     });
     promoteFabricButton.addEventListener('click', () => promoteToLane('nameFabric', 'name fabric'));
 
     const promoteHookButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '@ to hook'
     });
@@ -366,21 +366,21 @@ export const initRpgLanguageEvolution = (section) => {
     });
 
     const promoteBeatButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '@ to beat'
     });
     promoteBeatButton.addEventListener('click', () => promoteToLane('characterBeat', 'character beat'));
 
     const promoteCanonButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '^ to canon'
     });
     promoteCanonButton.addEventListener('click', () => promoteToLane('canonCandidates', 'canon candidates'));
 
     const promoteWorldButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '#> world slot'
     });
@@ -474,27 +474,27 @@ export const initRpgLanguageEvolution = (section) => {
                     'aria-label': 'Language evolution routes'
                 }, [
                     createElement('a', {
-                        className: 'operator-chip',
+                        className: 'spw-chip',
                         href: RPG_CURATOR_ROUTES.kit,
                         text: '@ local kit'
                     }),
                     createElement('a', {
-                        className: 'operator-chip',
+                        className: 'spw-chip',
                         href: RPG_CURATOR_ROUTES.curator,
                         text: '~ state curator'
                     }),
                     createElement('a', {
-                        className: 'operator-chip',
+                        className: 'spw-chip',
                         href: RPG_CURATOR_ROUTES.character,
                         text: '@ character lab'
                     }),
                     createElement('a', {
-                        className: 'operator-chip',
+                        className: 'spw-chip',
                         href: RPG_CURATOR_ROUTES.world,
                         text: '^ world slots'
                     }),
                     createElement('a', {
-                        className: 'operator-chip',
+                        className: 'spw-chip',
                         href: RPG_CURATOR_ROUTES.fiber,
                         text: '~ fiber × language'
                     })

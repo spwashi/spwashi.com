@@ -118,34 +118,34 @@ const ensureRpgModeWidget = () => {
         'aria-label': 'RPG mode actions'
     }, [
         createElement('a', {
-            className: 'operator-chip',
+            className: 'spw-chip',
             href: '/play/rpg-wednesday/character/',
             text: '@ character development'
         }),
         createElement('a', {
-            className: 'operator-chip',
+            className: 'spw-chip',
             href: '/play/rpg-wednesday/cast/',
             text: '~ cast register'
         }),
         createElement('a', {
-            className: 'operator-chip',
+            className: 'spw-chip',
             href: '/tools/character-sheet/',
             text: '^ translation sheet'
         }),
         createElement('a', {
-            className: 'operator-chip',
+            className: 'spw-chip',
             href: hasLocalKit ? '#local-gameplay-kit' : '/play/rpg-wednesday/sessions/',
             text: hasLocalKit ? '@ local kit' : '@ session log'
         }),
         createElement('a', {
-            className: 'operator-chip',
+            className: 'spw-chip',
             href: '/topics/',
             text: '? topics atlas'
         })
     ]);
 
     const widget = createElement('aside', {
-        className: 'site-frame rpg-mode-widget',
+        className: 'spw-frame rpg-mode-widget',
         'data-rpg-mode-widget': 'true',
         'data-spw-kind': 'frame',
         'data-spw-role': 'guidance',
@@ -374,7 +374,7 @@ export const initRpgWednesday = () => {
     const storage = createStorage();
     let state = storage.read();
 
-    section.className = 'site-frame rpg-gameplay-kit rpg-workbench rpg-workbench--kit';
+    section.className = 'spw-frame rpg-gameplay-kit rpg-workbench rpg-workbench--kit';
     section.id = 'local-gameplay-kit';
     section.dataset.rpgGameplayKit = 'true';
     section.dataset.rpgHydrated = 'true';
@@ -406,16 +406,16 @@ export const initRpgWednesday = () => {
         className: 'rpg-gameplay-jumpbar',
         'aria-label': 'Local gameplay kit sections'
     }, [
-        createElement('a', { className: 'operator-chip', href: '#rpg-kit-scene', text: '@ scene' }),
-        createElement('a', { className: 'operator-chip', href: '#rpg-kit-initiative', text: '@ initiative' }),
-        createElement('a', { className: 'operator-chip', href: '#rpg-kit-clocks', text: '@ clocks' }),
-        createElement('a', { className: 'operator-chip', href: '#rpg-kit-assets', text: '@ assets' }),
-        createElement('a', { className: 'operator-chip', href: '#rpg-kit-notes', text: '~ notes' }),
-        createElement('a', { className: 'operator-chip', href: '#rpg-kit-brief', text: '~ brief' }),
-        createElement('a', { className: 'operator-chip', href: '#rpgw-state-curator', text: '~ curator' }),
-        createElement('a', { className: 'operator-chip', href: '/play/rpg-wednesday/#language-evolution', text: '~ language' }),
-        createElement('a', { className: 'operator-chip', href: '/play/rpg-wednesday/character/#character-development', text: '@ character' }),
-        createElement('a', { className: 'operator-chip', href: '/play/rpg-wednesday/world/#world-slots', text: '^ world' })
+        createElement('a', { className: 'spw-chip', href: '#rpg-kit-scene', text: '@ scene' }),
+        createElement('a', { className: 'spw-chip', href: '#rpg-kit-initiative', text: '@ initiative' }),
+        createElement('a', { className: 'spw-chip', href: '#rpg-kit-clocks', text: '@ clocks' }),
+        createElement('a', { className: 'spw-chip', href: '#rpg-kit-assets', text: '@ assets' }),
+        createElement('a', { className: 'spw-chip', href: '#rpg-kit-notes', text: '~ notes' }),
+        createElement('a', { className: 'spw-chip', href: '#rpg-kit-brief', text: '~ brief' }),
+        createElement('a', { className: 'spw-chip', href: '#rpgw-state-curator', text: '~ curator' }),
+        createElement('a', { className: 'spw-chip', href: '/play/rpg-wednesday/#language-evolution', text: '~ language' }),
+        createElement('a', { className: 'spw-chip', href: '/play/rpg-wednesday/character/#character-development', text: '@ character' }),
+        createElement('a', { className: 'spw-chip', href: '/play/rpg-wednesday/world/#world-slots', text: '^ world' })
     ]);
 
     const shortcutGroups = createElement('div', {
@@ -657,7 +657,7 @@ export const initRpgWednesday = () => {
                 placeholder: 'HP, condition, intent'
             });
             const remove = createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 text: 'remove'
             });
@@ -743,17 +743,17 @@ export const initRpgWednesday = () => {
                 text: buildClockText(clock)
             });
             const decrement = createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 text: '-'
             });
             const increment = createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 text: '+'
             });
             const remove = createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 text: 'remove'
             });
@@ -839,14 +839,14 @@ export const initRpgWednesday = () => {
     });
 
     const addActorButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '@ add actor'
     });
     addActorButton.addEventListener('click', addActor);
 
     const nextTurnButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '@ next turn'
     });
@@ -866,7 +866,7 @@ export const initRpgWednesday = () => {
     ]);
 
     const addClockButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '@ add clock'
     });
@@ -912,25 +912,25 @@ export const initRpgWednesday = () => {
             'aria-label': 'Promote scratch notes'
         }, [
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 text: '~ to beat',
                 onclick: () => appendScratchToLane(characterBeatInput, 'character beat')
             }),
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 text: '^ to canon',
                 onclick: () => appendScratchToLane(canonCandidatesInput, 'canon candidates')
             }),
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 text: '@ to recap',
                 onclick: () => appendScratchToLane(seedsInput, 'recap seeds')
             }),
             createElement('button', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 type: 'button',
                 text: '~ to fabric',
                 onclick: () => appendScratchToLane(nameFabricInput, 'name fabric')
@@ -953,7 +953,7 @@ export const initRpgWednesday = () => {
     });
 
     const copyBriefButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '~ copy brief'
     });
@@ -990,12 +990,12 @@ export const initRpgWednesday = () => {
         createElement('div', { className: 'rpg-gameplay-actions' }, [
             copyBriefButton,
             createElement('a', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 href: '#rpgw-state-curator',
                 text: '~ open curator'
             }),
             createElement('a', {
-                className: 'operator-chip',
+                className: 'spw-chip',
                 href: '/play/rpg-wednesday/#rpgw-promotion-ladder',
                 text: '? promotion ladder'
             })
@@ -1003,7 +1003,7 @@ export const initRpgWednesday = () => {
     ]);
 
     const exportButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '~ export'
     });
@@ -1014,11 +1014,11 @@ export const initRpgWednesday = () => {
         id: 'rpg-gameplay-import'
     });
     const importLabel = createElement('label', {
-        className: 'operator-chip rpg-gameplay-import-label',
+        className: 'spw-chip rpg-gameplay-import-label',
         text: '~ import'
     }, [importInput]);
     const clearButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '! clear local'
     });

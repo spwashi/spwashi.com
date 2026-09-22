@@ -472,7 +472,7 @@ function buildInspectorDrawerMarkup(descriptor, metadata, occurrences, totalCoun
   return `
     <button class="drawer-close" aria-label="Close narrative inspector">×</button>
     <div class="drawer-header">
-      <span class="operator-chip" data-spw-operator="${descriptor.operator}">${escapeHtml(`${descriptor.sigil}${descriptor.kind}`)}</span>
+      <span class="spw-chip" data-spw-operator="${descriptor.operator}">${escapeHtml(`${descriptor.sigil}${descriptor.kind}`)}</span>
       <h3>${escapeHtml(descriptor.name)}</h3>
     </div>
     <div class="drawer-body">
@@ -489,7 +489,7 @@ function buildInspectorDrawerMarkup(descriptor, metadata, occurrences, totalCoun
       <div class="drawer-spw-seed">
         <h4>Spw Entity Seed</h4>
         <pre><code class="language-spw">${escapeHtml(seed)}</code></pre>
-        <button class="copy-seed-btn operator-chip" data-spw-operator="action">Copy Seed</button>
+        <button class="copy-seed-btn spw-chip" data-spw-operator="action">Copy Seed</button>
       </div>
     </div>
   `;

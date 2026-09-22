@@ -5,7 +5,7 @@
  * Page family comes from body[data-spw-page-family] (region-seats.css's
  * family model). Region comes from whichever section attention-architecture.js
  * has already marked current (html[data-spw-page-section-current]), falling
- * back to the nearest .site-frame[data-spw-region] ancestor of the caller's
+ * back to the nearest .spw-frame[data-spw-region] ancestor of the caller's
  * reference element. Accent is the resolved --component-accent for that
  * region, which region-seats.css already derives from family + region.
  *
@@ -103,7 +103,7 @@ export function readRoom(referenceEl = null) {
     : null;
 
   const region = currentSection
-    || (referenceEl?.closest?.('.spw-frame[data-spw-region], .spw-frame[data-spw-region-role], .site-frame[data-spw-region], .site-frame[data-spw-region-role]'))
+    || (referenceEl?.closest?.('.spw-frame[data-spw-region], .spw-frame[data-spw-region-role]'))
     || null;
 
   // Prefer the region's own expression; fall back to the reference element's

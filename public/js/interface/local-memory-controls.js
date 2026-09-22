@@ -7,7 +7,7 @@ function resolveStatusNode(control) {
   if (!(control instanceof Element)) return null;
 
   return (
-    control.closest('[data-site-settings-scope], .site-footer__settings, .site-frame, section, article, aside')
+    control.closest('[data-site-settings-scope], .site-footer__settings, .spw-frame, section, article, aside')
       ?.querySelector('[data-spw-memory-status], [data-site-settings-status]')
     || document.querySelector('[data-spw-memory-status], [data-site-settings-status]')
   );

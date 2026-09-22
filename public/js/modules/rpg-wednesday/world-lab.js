@@ -124,22 +124,22 @@ export const initRpgWorldLab = (section) => {
     const summaryMechanisms = createElement('strong', { text: '0' });
 
     const saveButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '^ save slot'
     });
     const resetButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '! clear draft'
     });
     const importCanonButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '~ from canon lane'
     });
     const promoteCanonButton = createElement('button', {
-        className: 'operator-chip',
+        className: 'spw-chip',
         type: 'button',
         text: '^ to canon lane'
     });
@@ -220,9 +220,9 @@ export const initRpgWorldLab = (section) => {
                     ? createElement('p', { className: 'rpg-world-slot-card__notes', text: previewText(slot.notes, '', 160) })
                     : '',
                 createElement('div', { className: 'rpg-world-slot-card__controls' }, [
-                    createElement('button', { className: 'operator-chip', type: 'button', text: '~ edit' }),
-                    createElement('button', { className: 'operator-chip', type: 'button', text: '@ copy seed' }),
-                    createElement('button', { className: 'operator-chip', type: 'button', text: '! remove' })
+                    createElement('button', { className: 'spw-chip', type: 'button', text: '~ edit' }),
+                    createElement('button', { className: 'spw-chip', type: 'button', text: '@ copy seed' }),
+                    createElement('button', { className: 'spw-chip', type: 'button', text: '! remove' })
                 ])
             ]);
 
@@ -371,12 +371,12 @@ export const initRpgWorldLab = (section) => {
                     importCanonButton,
                     promoteCanonButton,
                     createElement('a', {
-                        className: 'operator-chip',
+                        className: 'spw-chip',
                         href: '/play/rpg-wednesday/#local-gameplay-kit',
                         text: '@ local kit'
                     }),
                     createElement('a', {
-                        className: 'operator-chip',
+                        className: 'spw-chip',
                         href: '/play/rpg-wednesday/#language-evolution',
                         text: '~ language evolution'
                     })
