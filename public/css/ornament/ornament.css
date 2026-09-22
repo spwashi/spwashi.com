@@ -61,19 +61,24 @@
   --spw-debug-layer-owner: "ornament";
   --spw-debug-layer-color: #b58900;
 
-  /* Local tokens — prefer the new field-visualization bridge when available */
-  --ornament-local-accent: var(--ornament-accent);
+  /* Local tokens. --ornament-accent is declared on :root, so the var() inside
+     it was substituted once, at the root; re-reading --active-op-color here
+     lets a route's own operator ink reach its ornaments. */
+  --ornament-local-accent: var(--active-op-color, var(--ornament-accent));
   --ornament-local-line: var(--ornament-line);
   --ornament-local-surface: var(--ornament-surface);
   --ornament-svg-accent: var(--spw-svg-brand-accent, var(--ornament-accent));
   --ornament-svg-field: var(--spw-svg-brand-field, var(--ornament-surface));
 
-  /* Field-driven ornament intensity (new canonical tokens) */
-  --ornament-field-intensity: var(--ornament-field-intensity, var(--spw-field-intensity, 0));
-  --ornament-collection-mark: var(--ornament-collection-mark, 0);
-  --ornament-deviation-visibility: var(--ornament-deviation-visibility, 0);
-  --ornament-wonder-trail: var(--ornament-wonder-trail, 0);
-  --ornament-resonance: var(--ornament-resonance, var(--spw-resonance, 0));
+  /* Field-driven ornament intensity. The five --ornament-* measures are
+     registered in tokens/core.css (number, inherited, initial 0), so they are
+     not re-declared here. A self-referencing var() is a cycle; a cycle
+     computes as unset, so the host merely inherited and the field fallback
+     inside it was never read. The live pair takes the stronger of an
+     ornament writer (image hosts, runtime layers) and the canonical field;
+     collection, deviation, and trail keep their own writers. */
+  --ornament-field-live: max(var(--ornament-field-intensity), var(--spw-field-intensity, 0));
+  --ornament-resonance-live: max(var(--ornament-resonance), var(--spw-resonance, 0));
 
   /* Balance semantics (field equilibrium) — prefer when expressing calm vs charged ornament */
   --ornament-field-balance: var(--field-balance, 0.5);
@@ -91,9 +96,9 @@
     background-color var(--ornament-duration-fast) var(--ornament-ease);
 
   /* Field-driven ornament (new tokens in action) */
-  opacity: calc(var(--ornament-opacity-rest) + (var(--ornament-field-intensity) * 0.3));
+  opacity: calc(var(--ornament-opacity-rest) + (var(--ornament-field-live) * 0.3));
   box-shadow: var(--ornament-glow),
-    0 0 0 calc(1px * var(--ornament-resonance)) color-mix(in srgb, var(--ornament-accent) 22%, transparent);
+    0 0 0 calc(1px * var(--ornament-resonance-live)) color-mix(in srgb, var(--ornament-accent) 22%, transparent);
 
   /* Layering / containment */
   position: relative;
@@ -1551,11 +1556,18 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) .
    Map: /design/ornaments/. Gate: ornament-contract.spw (calm at rest; read
    the field, do not invent semantics). No new attribute family.
    ========================================================================== */
+hr[data-spw-ornament="rule"],
+.spw-ornament-corner,
+.spw-ornament-brace {
+  --ornament-local-accent: var(--active-op-color, var(--ornament-accent));
+}
+
 hr[data-spw-ornament="rule"] {
   --ornament-rule-light: clamp(0, var(--spw-attention-light, 0.48), 1);
+  /* The reset already boxes hr at 1px with its own margin; the idle pack
+     keeps that box and only repaints it, so the rule arrives without flow. */
   position: relative;
   block-size: 1px;
-  margin-block: var(--ornament-gap-3, 0.8rem);
   border: 0;
   background: color-mix(in srgb, var(--ornament-local-line, var(--line, rgba(14, 18, 20, 0.14))) 88%, transparent);
   opacity: calc(0.62 + (var(--ornament-rule-light) * 0.38));
@@ -1568,7 +1580,7 @@ hr[data-spw-ornament="rule"]::before {
   inset-block-start: -1px;
   inset-inline-start: 0;
   block-size: 3px;
-  inline-size: calc(1.4rem + (2.2rem * clamp(0, var(--ornament-resonance, 0), 1)));
+  inline-size: calc(1.4rem + (2.2rem * clamp(0, max(var(--ornament-resonance, 0), var(--spw-resonance, 0), var(--ornament-landing, 0)), 1)));
   border-radius: 999px;
   background: var(--ornament-local-accent, var(--ornament-accent, var(--active-op-color, #008080)));
   opacity: calc(0.72 + (var(--ornament-rule-light) * 0.28));
@@ -1626,5 +1638,120 @@ hr[data-spw-ornament="rule"]::before {
   hr[data-spw-ornament="rule"]::before,
   .spw-ornament-corner {
     transition: none;
+  }
+}
+
+/* ==========================================================================
+   19. Landing and brace
+   --------------------------------------------------------------------------
+   A link that names a region (#fragment) should be felt on arrival, not
+   only scrolled to. Landing is the fragment's reading of navigation state;
+   brace is the frame's reading of its own scope.
+
+     :target on a frame, panel, or card — --ornament-landing becomes 1 for
+       the host and every mark inside it. The rule's notch runs full, the
+       corners reach, the braces open. The host itself draws one inset
+       outline that lifts and resettles, then stays as a quiet "you came
+       here" until the fragment changes.
+     .spw-ornament-brace — an empty child; Spw's own { } drawn in the
+       host's padding, mid-edge, in the route's operator ink. It says the
+       frame is a scope. It spends attention light like the corner and opens
+       taller on focus, hover, or landing. Zero flow, pointer-transparent.
+
+   Role rule, so the variety is learnable: corners hold reference specimens,
+   braces hold language, rules pace reading. Map: /design/ornaments/.
+   ========================================================================== */
+:where(.spw-frame, .spw-panel, .frame-card):target {
+  --ornament-landing: 1;
+  outline: 1px solid color-mix(in srgb, var(--active-op-color, var(--ornament-accent, #008080)) 26%, transparent);
+  outline-offset: -3px;
+  animation: spw-ornament-landing var(--ornament-duration-deliberate, 320ms) var(--ornament-settle-ease, ease-out) 1 both;
+}
+
+@keyframes spw-ornament-landing {
+  0% {
+    outline-offset: -0.9rem;
+    outline-color: color-mix(in srgb, var(--active-op-color, var(--ornament-accent, #008080)) 64%, transparent);
+  }
+  62% {
+    outline-offset: -1px;
+  }
+  100% {
+    outline-offset: -3px;
+    outline-color: color-mix(in srgb, var(--active-op-color, var(--ornament-accent, #008080)) 26%, transparent);
+  }
+}
+
+:where(.spw-frame, .spw-panel, .frame-card):target > .spw-ornament-corner {
+  --ornament-corner-len: 1.25rem;
+  opacity: 0.94;
+}
+
+:where(.spw-frame, .spw-panel, .frame-card):has(> .spw-ornament-brace) {
+  position: relative;
+}
+
+.spw-ornament-brace {
+  --ornament-brace-light: clamp(0, var(--spw-attention-light, 0.48), 1);
+  --ornament-brace-ink: color-mix(in srgb, var(--ornament-local-accent, var(--active-op-color, var(--ornament-accent, #008080))) 78%, var(--ink, #161c1d) 22%);
+  --ornament-brace-span: calc(2.4rem + (2.2rem * clamp(0, max(var(--ornament-landing, 0), var(--spw-field-intensity, 0)), 1)));
+  --ornament-brace-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 40' preserveAspectRatio='none'%3E%3Cpath d='M8.5 1.2C4.6 1.2 5 4.4 5 8.2V15.6C5 18.6 3.6 20 1.4 20C3.6 20 5 21.4 5 24.4V31.8C5 35.6 4.6 38.8 8.5 38.8' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+  z-index: var(--material-layer-content, 1);
+}
+
+.spw-ornament-brace::before,
+.spw-ornament-brace::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inline-size: 0.5rem;
+  block-size: var(--ornament-brace-span);
+  background: var(--ornament-brace-ink);
+  -webkit-mask: var(--ornament-brace-shape) center / 100% 100% no-repeat;
+  mask: var(--ornament-brace-shape) center / 100% 100% no-repeat;
+  opacity: calc(0.24 + (var(--ornament-brace-light) * 0.56));
+  translate: 0 -50%;
+  transition:
+    block-size var(--ornament-duration-deliberate, 320ms) var(--ornament-settle-ease, ease),
+    opacity var(--ornament-duration-base, 220ms) var(--ornament-ease, ease);
+}
+
+.spw-ornament-brace::before {
+  inset-inline-start: 0.14rem;
+}
+
+.spw-ornament-brace::after {
+  inset-inline-end: 0.14rem;
+  scale: -1 1;
+}
+
+:where(.spw-frame, .spw-panel, .frame-card):is(:hover, :focus-within, :target) > .spw-ornament-brace {
+  --ornament-brace-span: 4.6rem;
+}
+
+:where([data-spw-attention="dimmed"]) > .spw-ornament-brace::before,
+:where([data-spw-attention="dimmed"]) > .spw-ornament-brace::after {
+  opacity: 0.12;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-frame, .spw-panel, .frame-card):target {
+    animation: none;
+  }
+
+  .spw-ornament-brace::before,
+  .spw-ornament-brace::after {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .spw-ornament-brace::before,
+  .spw-ornament-brace::after {
+    background: CanvasText;
   }
 }

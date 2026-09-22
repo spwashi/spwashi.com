@@ -151,7 +151,7 @@
                 </p>
 
                 <div class="frame-grid frame-grid--dense" data-spw-slot="body">
-                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen">
+                    <article class="spw-panel" id="ornament-ribbon" data-spw-kind="panel" data-spw-role="specimen">
                         <h3>Ribbon and kicker</h3>
                         <p><span class="spw-ornament-ribbon" data-spw-ornament-state="active">ornament ribbon</span></p>
                         <p><span class="spw-ornament-kicker">kicker</span> <span class="spw-ornament-kicker" data-accent="secondary">secondary</span> <span class="spw-ornament-kicker" data-accent="subtle">subtle</span></p>
@@ -159,7 +159,7 @@
                         <p class="spw-ornament-owner"><code>.spw-ornament-ribbon</code> · <code>.spw-ornament-kicker</code> → <code>ornament/ornament.css</code> §5</p>
                     </article>
 
-                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen">
+                    <article class="spw-panel" id="ornament-host-attributes" data-spw-kind="panel" data-spw-role="specimen">
                         <h3>State, density, axis</h3>
                         <p><code>data-spw-ornament-state</code> = idle · glowing · revealed · active · settled</p>
                         <p><code>data-spw-ornament-density</code> = low · medium · high</p>
@@ -168,7 +168,7 @@
                         <p class="spw-ornament-owner">→ <code>ornament/ornament.css</code> §2 · contract <code>.spw/conventions/ornament-contract.spw</code></p>
                     </article>
 
-                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen">
+                    <article class="spw-panel" id="ornament-rail" data-spw-kind="panel" data-spw-role="specimen">
                         <h3>Rail with setting chips</h3>
                         <div class="spw-ornament-rail" data-spw-ornament-state="revealed" data-spw-operator="mode" role="group" aria-label="Color mode rail specimen">
                             <span class="spw-ornament-kicker">mode</span>
@@ -180,41 +180,58 @@
                         <p class="spw-ornament-owner"><code>.spw-ornament-rail</code> + <code>data-site-setting-set</code> → <code>ornament/ornament.css</code> §17</p>
                     </article>
 
-                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen">
+                    <article class="spw-panel" id="ornament-rule" data-spw-kind="panel" data-spw-role="specimen">
                         <h3>Rule</h3>
                         <hr class="spw-ornament-rule" data-spw-ornament="rule">
                         <p>A hairline with an operator-colored notch. The notch lengthens with resonance; the line brightens with the frame's attention light. Calm at rest, it reads field state only.</p>
                         <p class="spw-ornament-owner"><code>hr[data-spw-ornament="rule"]</code> → <code>ornament/ornament.css</code> §18</p>
                     </article>
 
-                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-ornament-host="corner">
+                    <article class="spw-panel" id="ornament-corner" data-spw-kind="panel" data-spw-role="specimen" data-spw-ornament-host="corner">
                         <i class="spw-ornament-corner" aria-hidden="true"></i>
                         <h3>Corner</h3>
                         <p>Four ticks at the corners of a frame or panel. They spend the host's attention light and retreat when the host is dimmed, so a lit frame reads as held and a dimmed one as set down. Zero flow: they move nothing when they arrive.</p>
                         <p class="spw-ornament-owner"><code>.spw-ornament-corner</code> (an empty child) → <code>ornament/ornament.css</code> §18</p>
+                        <p>In the wild: the <a href="/design/palettes/#spectral-workshop">spectral workshop</a> and the <a href="/design/materials/#staged-theme-sets">staged theme sets</a>, both specimen rooms.</p>
                     </article>
 
-                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen">
+                    <article class="spw-panel" id="ornament-brace" data-spw-kind="panel" data-spw-role="specimen">
+                        <i class="spw-ornament-brace" aria-hidden="true"></i>
+                        <h3>Brace</h3>
+                        <p>Spw's own <code>{ }</code>, drawn mid-edge in the route's operator ink. It goes only in a frame that already says <code>data-spw-form="brace"</code>, so it reads authored semantic state: this region is a scope. Hover, focus, or land here and the braces open taller.</p>
+                        <p>The brace is one SVG path used as a mask. <code>preserveAspectRatio="none"</code> lets it stretch to any height; <code>vector-effect: non-scaling-stroke</code> keeps the line the same weight while it does.</p>
+                        <p class="spw-ornament-owner"><code>.spw-ornament-brace</code> (an empty child) → <code>ornament/ornament.css</code> §19</p>
+                        <p>In the wild: the <a href="/tools/spw-parser/#v04-specimen-suite">v04 specimen suite</a> in the parser and the <a href="/blog/#liminal-charge">liminal charge</a> that opens the blog, both language rooms.</p>
+                    </article>
+
+                    <article class="spw-panel" id="ornament-landing" data-spw-kind="panel" data-spw-role="specimen">
+                        <h3>Landing</h3>
+                        <p>A link that names a region is felt on arrival. The frame, panel, or card that is the <code>:target</code> draws one inset outline that lifts and resettles, and every mark inside it runs full: the rule's notch, the corner's reach, the brace's span.</p>
+                        <p>Try it here: land on the <a href="#ornament-rule">rule</a>, the <a href="#ornament-corner">corner</a>, or the <a href="#ornament-brace">brace</a>.</p>
+                        <p class="spw-ornament-owner"><code>:target</code> → <code>--ornament-landing</code> → <code>ornament/ornament.css</code> §19</p>
+                    </article>
+
+                    <article class="spw-panel" id="ornament-canvas-accents" data-spw-kind="panel" data-spw-role="specimen">
                         <h3>Canvas accents</h3>
                         <p><code>data-spw-accent</code> = wave · vortex · crystal · resonance · lattice · flow</p>
                         <p>A canvas behind a host, drawn by the accent runtime. The accent reads field intensity and salience; it never paints structure.</p>
                         <p class="spw-ornament-owner">→ <code>ornament/canvas-accents.css</code> · <code>.spw-accent-host</code></p>
                     </article>
 
-                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen">
+                    <article class="spw-panel" id="ornament-texture-slices" data-spw-kind="panel" data-spw-role="specimen">
                         <h3>Texture slices</h3>
                         <p><code>data-spw-texture-slice</code> = paper · linen · harlequin · wash · auto</p>
                         <p>A crop of texture beneath content that lifts on hover, focus, or charge. Material specular times the light the biome leaves decides how strong the return is.</p>
                         <p class="spw-ornament-owner">→ <code>effects/texture-slice.css</code> · contract <code>material-physics.spw#states.slice</code></p>
                     </article>
 
-                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen">
+                    <article class="spw-panel" id="ornament-distinct-marks" data-spw-kind="panel" data-spw-role="specimen">
                         <h3>Visited, collected, deviated</h3>
                         <p>Three marks that must stay distinct: a visited surface takes a ◈ stamp; a collected term takes a hard floor mark that does not decay; a deviated setting takes a quieter third glyph near its control. If all three only brightened teal, the field model would fail its own legibility test.</p>
                         <p class="spw-ornament-owner"><code>[data-spw-visited]</code> → <code>effects/wonder.css</code> · triad → <code>ornament-contract.spw#distinct_marks_prime</code></p>
                     </article>
 
-                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="specimen">
+                    <article class="spw-panel" id="ornament-rhythm" data-spw-kind="panel" data-spw-role="specimen">
                         <h3>Site rhythm, holidays, whimsy</h3>
                         <p><code>data-spw-ornament="site-rhythm"</code> paces ornament to the site tempo. Holiday tropes idle with the flourish pack and never enter core. Whimsy is the quiet interaction grammar of sigils and folds: alignment, focus, revealed structure, no decorative motion.</p>
                         <p class="spw-ornament-owner">→ <code>ornament/holiday-tropes.css</code> · <code>ornament/whimsy.css</code> · <code>design-whimsy.spw</code></p>
