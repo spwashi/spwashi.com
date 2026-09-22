@@ -4,8 +4,8 @@
   "note": "This tree is the source for the public host cluster. Do not attach a Worker to spwashi.com. Do not mention infrastructure ownership in public HTML.",
   "pages_subjects": ["spwashi.com", "resume.spwashi.com", "lore.land"],
   "inbox": {
-    "worker": "feedback-quest",
-    "path": "/for/{host}",
+    "worker": "autonomous-feedback",
+    "path": "/{host}",
     "schema": "inbox.v0"
   },
   "units": [
@@ -41,10 +41,17 @@
       "origin": "worker"
     },
     {
-      "id": "feedback-quest",
-      "script": "feedback-quest",
-      "dir": "workers/feedback-quest",
-      "hosts": ["autonomous.feedback", "spw.quest"],
+      "id": "autonomous-feedback",
+      "script": "autonomous-feedback",
+      "dir": "workers/autonomous-feedback",
+      "hosts": ["autonomous.feedback"],
+      "origin": "worker"
+    },
+    {
+      "id": "spw-quest",
+      "script": "spw-quest",
+      "dir": "workers/spw-quest",
+      "hosts": ["spw.quest"],
       "origin": "worker"
     },
     {
