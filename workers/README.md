@@ -24,16 +24,35 @@ Its requests do not probe feedback origins. The homepage lets a visitor pick
 Claude, Codex, Grok, another agent, or the shell, and copy that set. Git has
 its own section. `claude -p`, `codex exec`, and `grok` each receive the same job.
 
-`autonomous.feedback` is a meter and a form for one site. The homepage asks for
-a hostname, checks whether that site answers, and offers an iframe or a plain
-form the site can paste (`/?host=` prefills both). `POST /{host}/{kind}` returns
-a card and stores nothing: the writer screenshots it and sends it to whoever
-keeps the site, by DM or by a post that names it, and the card carries
-`autonomous.feedback/{host}` so the next reader knows where to leave one.
+`autonomous.feedback` is a feedback form for any website. A reader writes a
+note at `/{host}/{kind}` (kinds: `wonder` Appreciation, `review` Problem,
+`practice` Suggestion, `brief` Question) and gets a card to save as an image,
+share, post, or copy; nothing is stored. `/start?host=&how=&kind=` is setup: it
+fills the link, frame, HTML form, `fetch`, and `curl` codeblocks with the
+domain and previews the result. `/meter?host=` checks whether a site responds.
+Pasted links are normalized to a domain everywhere (`https://www.Example.com/x`
+→ `example.com`), and `/WWW.Example.com/...` redirects to one address per site.
+A rejected note comes back in the form with its errors, not as JSON, unless the
+request asks for JSON.
+
+A site configures its own form and theme by publishing
+`https://{host}/.well-known/autonomous-feedback.json`
+(`autonomous-feedback.client.v0`): kinds and their order, per-kind labels, a
+display name, an intro, the button text, an optional or required name field,
+note length bounds, extra frame ancestors, and theme tokens (mode, background,
+text, accent, corners, font). The file only configures the host that served it,
+is cached for five minutes, and falls back to defaults field by field; colours
+below WCAG contrast are replaced. No stylesheet URLs or HTML are accepted.
+`/{host}/config.json` shows what was applied and why anything was not. On
+GitHub Pages built by Jekyll, a `.nojekyll` file is needed for `.well-known`.
+
 `/{host}/inbox` stays locked until a queue is attached. `/for/{host}` was
 retired on 2026-09-22; no site used it. `/climate.json` remains the machine
 reading of the existing cluster. A request hostname can mark an account on the
-filing; the public page does not describe that routing.
+filing; the public page does not describe that routing. Source:
+`src/model.js` (kinds, validation), `src/config.js` (client file),
+`src/pages.js` (rendering), `src/client.js` (progressive enhancement),
+`src/index.js` (routes).
 
 Quest and feedback deploy as separate Workers. From an authenticated Wrangler
 installation, dry-run then deploy each config:
