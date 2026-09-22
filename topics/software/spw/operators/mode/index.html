@@ -40,11 +40,11 @@
                 </div>
                 <p class="spec-kicker">Spw Operator</p>
                 <h1 id="mode-title">[ Mode</h1>
-                <p>The mode operator selects a lens without erasing the other lenses. It is the grammar behind reading, inspecting, comparing, building, and returning to the same material with a different pressure.</p>
+                <p>The mode operator selects one lens and keeps the others available. Reading, inspecting, comparing, and building are pressures on the same material. Your place in the page stays.</p>
                 <nav class="frame-operators" aria-label="Mode operator routes">
-                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/scene/">previous: (</a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="scene" href="/topics/software/spw/operators/scene/#scene-operator">previous: ( scene</a>
                     <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/" data-spw-operator="potential" data-spw-action="explore">~operator_atlas</a>
-                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/operators/direction/">next: {</a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="direction" href="/topics/software/spw/operators/direction/#direction-operator">next: { direction</a>
                 </nav>
             </section>
 
@@ -53,18 +53,22 @@
                     <a class="frame-sigil" href="#mode-contract" data-spw-operator="integration">^"mode_contract"{</a>
                     <h2>Contract</h2>
                 </header>
-                <div class="operator-detail-grid">
+                                <div class="operator-detail-grid">
                     <div class="spw-panel">
-                        <h3>Interaction</h3>
-                        <p>A mode should feel switchable. If the page offers a lens, it should preserve where the reader is and reveal why the alternate view matters.</p>
+                        <h3>In hand</h3>
+                        <p>Switch the lens and keep your place. The page can say why another view matters, and the other lenses stay available.</p>
                     </div>
                     <div class="spw-panel">
-                        <h3>Curriculum Role</h3>
-                        <p>Mode turns one page into a practice bed. Returning learners can reread the same operator as prose, prompt, implementation, or visual model.</p>
+                        <h3>What it means</h3>
+                        <p>The mark pins one posture in a field of postures. A lens you are not using is still named beside the one you are.</p>
                     </div>
                     <div class="spw-panel">
-                        <h3>Partial Calculus</h3>
-                        <p>Mode is a parameter on composition. It changes how the transform is evaluated without necessarily changing the material being transformed.</p>
+                        <h3>Brace Physics</h3>
+                        <p>The brace is a parameter on the reading. The material stays. The pressure on it changes.</p>
+                    </div>
+                    <div class="spw-panel">
+                        <h3>Before and after</h3>
+                        <p>Prefix <code>[x</code> selects before entry. The unselected siblings remain available beside it.</p>
                     </div>
                 </div>
             </section>
@@ -78,6 +82,7 @@
 [inspect
 [build
 [return</code></pre>
+                <p class="operator-example-try" data-spw-textual-role="note"><a href="/tools/spw-parser/?spw_source=%5Breading%0A%5Binspect%0A%5Bbuild%0A%5Breturn&amp;spw_source_name=mode-example.spw#literal-parser">Take this example apart in the parser</a>: each mark becomes a token you can inspect, and the parser says whether the source rebuilds exactly.</p>
             </section>
 
             <section class="spw-frame" id="operator-ring" data-spw-role="route" data-spw-meaning="operator ring" data-spw-kind="frame" data-spw-affordance="read">
@@ -86,25 +91,25 @@
                     <h2>Operator Ring</h2>
                 </header>
                 <nav class="operator-ring-nav" aria-label="Operator ring">
-                    <a href="/topics/software/spw/operators/frame/">#&gt;</a>
-                    <a href="/topics/software/spw/operators/layer/">#:</a>
-                    <a href="/topics/software/spw/operators/vibration/">#</a>
-                    <a href="/topics/software/spw/operators/baseline/">.</a>
-                    <a href="/topics/software/spw/operators/object/">^</a>
-                    <a href="/topics/software/spw/operators/ref/">~</a>
-                    <a href="/topics/software/spw/operators/probe/">?</a>
-                    <a href="/topics/software/spw/operators/action/">@</a>
-                    <a href="/topics/software/spw/operators/stream/">*</a>
-                    <a href="/topics/software/spw/operators/merge/">&amp;</a>
-                    <a href="/topics/software/spw/operators/binding/">=</a>
-                    <a href="/topics/software/spw/operators/meta/">$</a>
-                    <a href="/topics/software/spw/operators/normalize/">%</a>
-                    <a href="/topics/software/spw/operators/pragma/">!</a>
-                    <a href="/topics/software/spw/operators/surface/">&gt;</a>
-                    <a href="/topics/software/spw/operators/concept/">&lt;</a>
-                    <a href="/topics/software/spw/operators/scene/">(</a>
-                    <a aria-current="page" href="/topics/software/spw/operators/mode/">[</a>
-                    <a href="/topics/software/spw/operators/direction/">{</a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="frame" href="/topics/software/spw/operators/frame/#frame-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">#&gt;</span> <span class="operator-ring-nav__name">frame</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="layer" href="/topics/software/spw/operators/layer/#layer-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">#:</span> <span class="operator-ring-nav__name">layer</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="vibration" href="/topics/software/spw/operators/vibration/#vibration-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">#</span> <span class="operator-ring-nav__name">vibration</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="ground" href="/topics/software/spw/operators/baseline/#baseline-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">.</span> <span class="operator-ring-nav__name">baseline</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="integration" href="/topics/software/spw/operators/object/#object-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">^</span> <span class="operator-ring-nav__name">object</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="potential" href="/topics/software/spw/operators/ref/#ref-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">~</span> <span class="operator-ring-nav__name">reference</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="wonder" href="/topics/software/spw/operators/probe/#probe-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">?</span> <span class="operator-ring-nav__name">probe</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="action" href="/topics/software/spw/operators/action/#action-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">!</span> <span class="operator-ring-nav__name">action</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="value" href="/topics/software/spw/operators/stream/#stream-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">*</span> <span class="operator-ring-nav__name">stream</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="subject" href="/topics/software/spw/operators/merge/#merge-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">&amp;</span> <span class="operator-ring-nav__name">merge</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="binding" href="/topics/software/spw/operators/binding/#binding-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">=</span> <span class="operator-ring-nav__name">binding</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="substrate" href="/topics/software/spw/operators/meta/#meta-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">$</span> <span class="operator-ring-nav__name">meta</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="normalize" href="/topics/software/spw/operators/normalize/#normalize-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">%</span> <span class="operator-ring-nav__name">normalize</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="action" href="/topics/software/spw/operators/pragma/#pragma-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">!</span> <span class="operator-ring-nav__name">pragma</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="concept-edge" href="/topics/software/spw/operators/surface/#surface-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">&gt;</span> <span class="operator-ring-nav__name">surface</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="concept" href="/topics/software/spw/operators/concept/#concept-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">&lt;</span> <span class="operator-ring-nav__name">concept</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="scene" href="/topics/software/spw/operators/scene/#scene-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">(</span> <span class="operator-ring-nav__name">scene</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="mode" href="/topics/software/spw/operators/mode/" aria-current="page"><span class="operator-ring-nav__glyph" aria-hidden="true">[</span> <span class="operator-ring-nav__name">mode</span></a>
+                    <a class="spw-chip" data-spw-handle="true" data-spw-operator="direction" href="/topics/software/spw/operators/direction/#direction-operator"><span class="operator-ring-nav__glyph" aria-hidden="true">{</span> <span class="operator-ring-nav__name">direction</span></a>
                 </nav>
             </section>
         </article>

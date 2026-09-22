@@ -1540,3 +1540,60 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
   padding: 0.5rem 0.65rem;
   background: color-mix(in srgb, var(--topics-surface-panel, #fff) 80%, transparent);
 }
+
+/* Operator pages: the ring, the four rooms, and the example's way out.
+   The ring is chips in reading order. Each chip wears its canonical
+   operator's ink (data-spw-operator), shows the glyph large and the name
+   small, and links to the destination's entry frame, so the ornament
+   landing plays on arrival. The current page's chip stays pressed. */
+.operator-ring-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.4rem);
+  margin-block: var(--space-s, 0.6rem) 0;
+}
+
+.operator-ring-nav > .spw-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35em;
+  text-decoration: none;
+}
+
+.operator-ring-nav__glyph {
+  font-family: var(--site-mono-font, var(--font-mono, ui-monospace, monospace));
+  font-weight: 700;
+  color: var(--spw-operator-color, var(--active-op-color, currentColor));
+}
+
+.operator-ring-nav__name {
+  font-size: 0.86em;
+  color: color-mix(in srgb, currentColor 78%, transparent);
+}
+
+/* The pressed chip keeps its operator's border; its shadow belongs to the
+   resonance ring the effects layer paints on every operator. */
+.operator-ring-nav > .spw-chip[aria-current="page"] {
+  border-color: var(--spw-operator-color, var(--active-op-color, currentColor));
+}
+
+.operator-ring-nav > .spw-chip[aria-current="page"] .operator-ring-nav__name {
+  color: inherit;
+  font-weight: 600;
+}
+
+/* The four rooms read side by side when there is width, stacked when not. */
+.operator-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-s, 0.6rem);
+  margin-block: var(--space-s, 0.6rem);
+}
+
+.operator-detail-grid > .spw-panel > h3 {
+  margin-block-start: 0;
+}
+
+.operator-example-try {
+  margin-block-start: var(--space-xs, 0.4rem);
+}
