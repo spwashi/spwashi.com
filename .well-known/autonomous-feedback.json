@@ -1,0 +1,20 @@
+{
+  "schema": "autonomous-feedback.client.v0",
+  "host": "spwashi.com",
+  "name": "Spwashi",
+  "intro": "Notes about the site, the tools, or the writing. Send your card to @spwashi on X, Bluesky, or Instagram.",
+  "kinds": ["problem", "suggestion", "question", "appreciation"],
+  "labels": {
+    "problem": { "prompt": "Something broken, confusing, or hard to use on spwashi.com, and which page it was on." }
+  },
+  "from": "optional",
+  "button": "Make the card",
+  "theme": {
+    "mode": "light",
+    "background": "#eee9dd",
+    "text": "#0e1214",
+    "accent": "#158484",
+    "corners": "round",
+    "font": "serif"
+  }
+}
