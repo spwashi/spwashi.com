@@ -837,6 +837,22 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
     }
   }
 }
+
+/* Engineering register numbers: paired meters share a max, the figure stays
+   text, and the weekly table scrolls in its own box. */
+:where(body[data-spw-surface="website"]) {
+  .website-measure { display: grid; gap: 1rem; margin: 0; }
+  .website-measure > div { display: grid; gap: 0.35rem; }
+  .website-measure dt { font-weight: 600; }
+  .website-measure dd { display: grid; grid-template-columns: minmax(6rem, 14rem) minmax(0, 1fr); align-items: center; gap: 0.8rem; margin: 0; }
+  :is(.website-measure, .website-measure-table) { font-variant-numeric: tabular-nums; }
+  .website-measure meter { inline-size: 100%; block-size: 0.8rem; }
+  .website-measure-scroll { overflow-x: auto; }
+  .website-measure-table { inline-size: 100%; border-collapse: collapse; }
+  .website-measure-table caption { text-align: start; padding-block-end: 0.55rem; }
+  .website-measure-table :is(th, td) { padding: 0.3rem 0.6rem 0.3rem 0; text-align: start; white-space: nowrap; border-block-end: 1px solid var(--website-line); }
+  .website-measure-table meter { inline-size: clamp(5rem, 24vw, 12rem); vertical-align: middle; }
+}
 }
 
 /* /public/css/routes/surfaces/design.css */
