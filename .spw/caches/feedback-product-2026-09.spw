@@ -44,7 +44,8 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
     next_action = `receive a card → autonomous.feedback/{host} → Hang a form → publish the client file → ask for a desk`
   }[reg=facet]
   proof = `the card itself: a screenshot carries the site name, the note, the date, and autonomous.feedback/{host}`
-  resonance = `a letter, not a ticket; the four kinds (wonder, review, practice, brief) ask for a gift, not stars. "Autonomous" is literal: the note travels without the site's backend`
+  resonance = `a letter, not a ticket; four plainly named kinds (Appreciation, Problem, Suggestion, Question) instead of stars. "Autonomous" is literal: the note travels without the site's backend`
+  copy_rule = `2026-09-22, creator: labels and prompts are direct and useful with no context. The kind's title names the intent; its prompt says what to write; its example shows one. URL slugs (wonder, review, practice, brief) stay as addresses.`
   extension = `each card seen in a feed is an address where the next reader can leave one; the owner who receives a few by hand is the one who wants a desk`
 }[reg=facet]
 
@@ -54,7 +55,7 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
   rungs = #[
     .{ rung = `reader` ; gets = `write to any site, a card, Share / Post / Copy` ; costs = `nothing` ; status = `landed 2026-09-22` }[reg=facet],
     .{ rung = `unclaimed site` ; gets = `the meter, an iframe or a plain form to paste; cards still travel by hand` ; costs = `nothing` ; status = `landed` }[reg=facet],
-    .{ rung = `claimed site` ; gets = `the client file (fb-client-route): which kinds show, theme, frame ancestors, and a "kept by the site" mark on its pages and cards` ; costs = `nothing; publishing the file is the proof of control` ; status = `proposed` }[reg=facet],
+    .{ rung = `claimed site` ; gets = `the client file (fb-client-route): which kinds show, labels, theme, frame ancestors, and a "kept by the site" mark on its pages and cards` ; costs = `nothing; publishing the file is the proof of control` ; status = `the file landed 2026-09-22; the "kept by the site" mark is still proposed` }[reg=facet],
     .{ rung = `desk` ; gets = `a queue that keeps every card, an owner inbox, a digest, and reply cards` ; costs = `the paid tier` ; status = `proposed; the inbox route answers 401/501 until a queue is attached` }[reg=facet]
   ][reg=set]
   why_claim_is_free = `Claiming costs the owner one file and costs us one cached fetch. It turns a stranger's address into a customer we can name, and it is the verification the desk needs anyway.`
@@ -66,22 +67,24 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
   claim = `A client site publishes https://{host}/.well-known/autonomous-feedback.json. autonomous.feedback fetches that URL when serving /{host} or /embed/{host}. The file configures only that host.`
   url = `/.well-known/autonomous-feedback.json`
   schema = `autonomous-feedback.client.v0`
-  fields = #[`host`, `frame`, `contexts`, `theme`, `queue.want`][reg=set]
-  unlocks = #[`frame ancestors beyond the host and www`, `which note kinds the embed shows`, `theme.href or tone and accent`, `a later queue drain the owner asked for`][reg=set]
+  fields = #[`schema`, `host`, `name`, `intro`, `kinds`, `labels`, `from`, `button`, `note.min`, `note.max`, `frame.ancestors`, `theme.mode`, `theme.background`, `theme.text`, `theme.accent`, `theme.corners`, `theme.font`][reg=set]
+  unlocks = #[`which kinds show and in what order`, `per-kind title, prompt, and example`, `a display name, an intro, and the button text`, `an optional or required name field printed on the card`, `note length bounds within 1–2,000`, `frame ancestors beyond the host and www`, `colour tokens, mode, corners, and font on the form, the frame, the card, and the saved image`][reg=set]
+  refused = `theme.href and any HTML: the CSP blocks outside stylesheets, and tokens cannot inject. queue.want waits for the desk.`
+  landed = `2026-09-22: workers/autonomous-feedback/src/config.js; /{host}/config.json reports what applied; /start shows the status and the applied or starter file`
   defaults = `Missing file, timeout, non-JSON, or a host field that does not match the URL host: keep the free behavior. Meter, iframe, four kinds, slip, queue unattached.`
   check = `Fetch the file from the host in the path only. Do not apply lore.land's file to spwashi.com. Do not read it from a query string.`
   role_in_ladder = `The file is the claim rung of fb-002: its presence is the proof of control, and queue.want is the owner asking for a desk.`
-  fetch_guards = `isPublicSite() before any fetch, as the meter does; a short timeout; a size cap; cache per host for minutes, not per request, so a card page never waits on a slow client site`
+  fetch_guards = `isPublicSite() before any fetch; 2.5 s timeout; 16 KB cap; a redirect to another host is ignored; cached per host for 5 minutes; text below 4.5:1 or accent below 3:1 contrast falls back to the defaults`
 }[reg=facet]
 
 ^"fb-003_reward_loop"{
   id = "fb-003"
   landed = #[
-    `the card is designed to be screenshotted: large site name, the prompt, the note, the date, the address`,
-    `Share (native), Post on Bluesky, Post on X, and Copy each stamp the card "Sent by hand", so sending answers visibly`,
+    `the card is designed to be screenshotted: the kind, the site's name large, the note, an optional writer name, the date, and the address`,
+    `Save image draws the card to a 1080-wide PNG on the device (the share sheet with the file where supported, a download elsewhere); Share, Post on Bluesky, Post on X, and Copy text sit beside it, and any of them stamps the card "Shared" and announces it`,
     `post text is prefilled with an excerpt, the kind, the site, and the address; the writer edits it before it goes anywhere`
   ][reg=set]
-  honest_limit = `The stamp records that the writer reached for a channel, not that anything arrived. Say "Sent by hand", never "Delivered", until a desk can prove delivery.`
+  honest_limit = `The stamp records that the writer reached for a channel, not that anything arrived. Say "Shared", never "Delivered", until a desk can prove delivery.`
   writer_rewards = #[
     `now: the craft of the card — it should look good enough that people want it in their feed`,
     `candidate: a frame view that shows the card alone, sized for a phone screenshot (square and 4:5), so screenshotting is the obvious move`,
@@ -152,13 +155,14 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
     `fix the pasteable form: its textarea has no label, so the snippet teaches owners an inaccessible form`
   ][reg=set]
   order = `the label fix first (a defect in what we hand people), then the sample card and live preview (they sell the paste), then Save image (it serves the screenshot habit), then the meter's form detection`
+  landed = `2026-09-22: labelled snippet, sample card, /start with live codeblocks and preview, Save image. The meter's form detection and the "who keeps it?" field are still open.`
 }[reg=facet]
 
 ^"price"{
   status = `unset`
   unit = `per claimed site (the host), not per seat or per note — the address is the identity everywhere else in the product`
   lane = `@pricing thesis: new offers inherit an existing lane. The desk would inherit the ecosystem lane (free–$500), not a new SaaS price family. Compare there before naming a number.`
-  copy_now = `the homepage says only "Free while cards travel by hand. A desk that keeps every note for a site comes later."`
+  copy_now = `the homepage says only "Free while readers send the cards themselves. Stored inboxes for site owners come later."`
 }[reg=facet]
 
 ^"open"{

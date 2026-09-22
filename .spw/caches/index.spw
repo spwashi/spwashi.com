@@ -48,7 +48,7 @@
 @claude_session_precipitate_2026_09: ~"./claude-session-precipitate-2026-09.spw"
 @still_alignment_ladder_2026_09: ~"./still-alignment-ladder-2026-09.spw"  # edge agreement read off the 2026-09-09/10 stills; al-001 is the measured mechanism
 @cluster_feedback_inbox_2026_09: ~"./cluster-feedback-inbox-2026-09.spw"  # /{host} inbox on autonomous.feedback (/for/ retired 2026-09-22); NFT is a later ownership adapter
-@feedback_product_2026_09: ~"./feedback-product-2026-09.spw"  # prime: reader first; ladder reader → unclaimed → claimed (client file) → paid desk; search indexes guides, never /{host}; no price set
+@feedback_product_2026_09: ~"./feedback-product-2026-09.spw"  # prime: reader first; ladder reader → unclaimed → claimed (client file, landed) → paid desk; search indexes guides, never /{host}; no price set
 @electrostatic_spend_2026_09: ~"./electrostatic-spend-2026-09.spw"  # what the charge model earns vs where it spends it; es-005 is the two-table finding
 @signs_of_life_2026_09: ~"./signs-of-life-2026-09.spw"  # ambient life is all earned, so a cold page runs one animation; sol-005 is the true-signal proposal
 @claude_sitting_harvest_2026_09_10: ~"./claude-sitting-harvest-2026-09-10.spw"  # reply to Grok's precipitate request; ch-001 is the worktree jsonl key gap
