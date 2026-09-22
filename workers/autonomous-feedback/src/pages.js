@@ -221,6 +221,7 @@ export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, erro
       <dt><code>kinds</code></dt><dd>Which kinds of note to show, in the order a reader meets them. Default: problem, suggestion, question, appreciation.</dd>
       <dt><code>labels</code></dt><dd>Rename a kind and change its prompt or example. Title up to 40 characters, prompt up to 160.</dd>
       <dt><code>name</code>, <code>intro</code>, <code>button</code></dt><dd>Your site's display name, a line above the form (up to 300 characters), and the submit button text.</dd>
+      <dt><code>contact</code></dt><dd>Where you take cards by direct message: <code>{ "bluesky": "example.com", "x": "example" }</code>. The card page shows Message buttons and puts your handle in the Post links.</dd>
       <dt><code>from</code></dt><dd><code>"off"</code>, <code>"optional"</code>, or <code>"required"</code>: a field for the writer's name or handle, printed on the card. Nothing is stored either way.</dd>
       <dt><code>note</code></dt><dd><code>min</code> and <code>max</code> characters, between 1 and ${NOTE_MAX.toLocaleString("en-US")}.</dd>
       <dt><code>frame.ancestors</code></dt><dd>Other https origins that may show the frame, such as a blog on a different domain. Up to 10.</dd>
@@ -377,6 +378,23 @@ export function renderCard(filing, embed = false, config = null) {
   const back = `${root}/${encodeURIComponent(filing.host)}/${filing.context.slug}`;
   const address = `autonomous.feedback/${filing.host}`;
   const post = `${filing.context.title} for ${filing.host}: "${excerpt(filing.note)}" (via ${address})`;
+  const contact = site.contact || {};
+  // A post that names the owner's handle reaches them as a mention.
+  const bskyPost = contact.bluesky ? `@${contact.bluesky} ${post}` : post;
+  const xPost = contact.x ? `@${contact.x} ${post}` : post;
+  const dms = [
+    contact.bluesky ? `<a class="door" data-share="dm" target="_blank" rel="noopener" href="https://bsky.app/profile/${encodeURIComponent(contact.bluesky)}"><strong>Message on Bluesky</strong><span>@${escapeHtml(contact.bluesky)}</span></a>` : "",
+    contact.x ? `<a class="door" data-share="dm" target="_blank" rel="noopener" href="https://x.com/${encodeURIComponent(contact.x)}"><strong>Message on X</strong><span>@${escapeHtml(contact.x)}</span></a>` : "",
+  ].filter(Boolean);
+  const sendTo = dms.length
+    ? `<section class="send-to" aria-labelledby="send-title">
+  <h2 id="send-title">Send it to ${escapeHtml(display)}</h2>
+  <p class="note">Save the image or copy the text first: a link can open ${escapeHtml(display)}'s profile, but it cannot fill in a direct message. Use Message on the profile, then paste or attach the card.</p>
+  <div class="actions">
+    ${dms.join("\n    ")}
+  </div>
+</section>`
+    : "";
   return layout({
     title: `${filing.context.title} for ${filing.host} — autonomous.feedback`,
     description: `A card with feedback for ${filing.host}, ready to send.`,
@@ -387,15 +405,18 @@ export function renderCard(filing, embed = false, config = null) {
     themeCss: themeCss(site.theme),
     body: `${embed ? "" : kicker()}
 <h1>Your card is ready</h1>
-<p class="lede">Save it as an image or copy the text, then send it to whoever runs ${escapeHtml(display)}: in a direct message, or in a post that mentions the site.</p>
+<p class="lede">${dms.length
+    ? `Save it as an image or copy the text, then send it to ${escapeHtml(display)} in a direct message below, or in a post that mentions them.`
+    : `Save it as an image or copy the text, then send it to whoever runs ${escapeHtml(display)}: in a direct message, or in a post that mentions the site.`}</p>
 ${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, issued: filing.issued, id: "card", name: site.name, from: filing.from })}
 <div class="actions share" data-share-text="${escapeHtml(post)}" data-share-url="https://${escapeHtml(address)}" data-file-name="feedback-${escapeHtml(filing.host)}-${escapeHtml(filing.issued.slice(0, 10))}.png">
   <button type="button" class="door" data-save-image hidden><strong>Save image</strong><span>PNG, made on this device</span></button>
   <button type="button" class="door" data-share="native" hidden><strong>Share</strong><span>from this device</span></button>
-  <a class="door" data-share="post" target="_blank" rel="noopener" href="https://bsky.app/intent/compose?text=${encodeURIComponent(post)}"><strong>Post</strong><span>on Bluesky</span></a>
-  <a class="door" data-share="post" target="_blank" rel="noopener" href="https://x.com/intent/post?text=${encodeURIComponent(post)}"><strong>Post</strong><span>on X</span></a>
+  <a class="door" data-share="post" target="_blank" rel="noopener" href="https://bsky.app/intent/compose?text=${encodeURIComponent(bskyPost)}"><strong>Post</strong><span>on Bluesky${contact.bluesky ? `, mentioning @${escapeHtml(contact.bluesky)}` : ""}</span></a>
+  <a class="door" data-share="post" target="_blank" rel="noopener" href="https://x.com/intent/post?text=${encodeURIComponent(xPost)}"><strong>Post</strong><span>on X${contact.x ? `, mentioning @${escapeHtml(contact.x)}` : ""}</span></a>
   <button type="button" class="door" data-copy="slip"><strong>Copy text</strong><span>as Markdown</span></button>
 </div>
+${sendTo}
 <p class="note">Nothing was stored. The card exists on this page and in anything you save or send.</p>
 <pre id="slip" hidden>${escapeHtml(filing.markdown)}</pre>
 <p class="actions"><a class="door" href="${escapeHtml(back)}"><strong>Write another</strong><span>for ${escapeHtml(filing.host)}</span></a></p>`,

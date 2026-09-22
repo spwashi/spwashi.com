@@ -160,6 +160,7 @@ test('a note becomes a card to save, share, or post', async () => {
     assert.match(card, /data-stamp><\/p>/);
     assert.match(card, /href="https:\/\/bsky\.app\/intent\/compose\?text=[^"]*example\.org/);
     assert.match(card, /Nothing was stored/);
+    assert.doesNotMatch(card, /Message on|send-title/);
     const slip = await (await get('autonomous.feedback', '/example.org/problem', json({ note: 'The checkout button does nothing after pay.' }))).json();
     assert.equal(slip.stored, false);
     assert.equal(slip.title, 'Problem');
@@ -185,6 +186,7 @@ test('a client file shapes the form, the theme, and the frame', async () => {
       kinds: ['problem', 'question', 'nonsense', 'brief'],
       labels: { problem: { title: 'Bug report', prompt: 'What broke, and on which page?' } },
       from: 'required',
+      contact: { bluesky: '@Shop.Example', x: 'shop_example', mastodon: '@shop@example.social' },
       button: 'Send it',
       note: { min: 20, max: 500 },
       frame: { ancestors: ['https://blog.shop.example', 'http://insecure.example', 'https://blog.shop.example/path'] },
@@ -217,6 +219,12 @@ test('a client file shapes the form, the theme, and the frame', async () => {
     assert.match(card, /class="card-site">Shop</);
     assert.match(card, /class="card-kind">Bug report</);
     assert.match(card, /— Ana/);
+    // The owner's own contacts: Message buttons, and Post links that mention them.
+    assert.match(card, /<h2 id="send-title">Send it to Shop<\/h2>/);
+    assert.match(card, /href="https:\/\/bsky\.app\/profile\/shop\.example"><strong>Message on Bluesky<\/strong><span>@shop\.example</);
+    assert.match(card, /href="https:\/\/x\.com\/shop_example"><strong>Message on X<\/strong>/);
+    assert.match(card, /intent\/compose\?text=%40shop\.example%20/);
+    assert.match(card, /intent\/post\?text=%40shop_example%20/);
 
     const report = await (await get('autonomous.feedback', '/shop.example/config.json')).json();
     assert.equal(report.found, true);
@@ -226,6 +234,8 @@ test('a client file shapes the form, the theme, and the frame', async () => {
     assert.ok(report.problems.some((p) => /contrast/.test(p)));
     assert.ok(report.problems.some((p) => /insecure\.example/.test(p)));
     assert.deepEqual(report.frame.ancestors, ['https://blog.shop.example']);
+    assert.deepEqual(report.contact, { bluesky: 'shop.example', x: 'shop_example' });
+    assert.ok(report.problems.some((p) => /contact\.mastodon is not supported/.test(p)));
     const policy = (await get('autonomous.feedback', '/embed/shop.example')).headers.get('content-security-policy');
     assert.match(policy, /https:\/\/blog\.shop\.example/);
     assert.doesNotMatch(policy, /insecure\.example/);
