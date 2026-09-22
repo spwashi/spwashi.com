@@ -1,4 +1,4 @@
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
@@ -383,15 +383,30 @@ export async function copyRepo(sourcePaths, options, logger) {
     }
     return stats;
 }
+/**
+ * Run a generator beside the rest of the build. Output is buffered and handed
+ * back whole, so its lines never interleave with the build's own log.
+ */
 export function runNodeScript(scriptRelPath, args = []) {
-    const result = spawnSync(process.execPath, [path.join(ROOT_DIR, scriptRelPath), ...args], {
-        cwd: ROOT_DIR,
-        stdio: 'inherit',
-        env: process.env,
+    return new Promise((resolve, reject) => {
+        const child = spawn(process.execPath, [path.join(ROOT_DIR, scriptRelPath), ...args], {
+            cwd: ROOT_DIR,
+            stdio: ['ignore', 'pipe', 'pipe'],
+            env: process.env,
+        });
+        let output = '';
+        child.stdout.setEncoding('utf8');
+        child.stderr.setEncoding('utf8');
+        child.stdout.on('data', (chunk) => { output += chunk; });
+        child.stderr.on('data', (chunk) => { output += chunk; });
+        child.once('error', reject);
+        child.once('close', (status) => {
+            if (status === 0)
+                resolve(output.trimEnd());
+            else
+                reject(new Error(`[build] ${scriptRelPath} exited with code ${status}\n${output.trimEnd()}`));
+        });
     });
-    if (result.status !== 0) {
-        throw new Error(`[build] ${scriptRelPath} exited with code ${result.status}`);
-    }
 }
 export async function writeNoJekyll(outDir) {
     await fs.writeFile(path.join(outDir, '.nojekyll'), '', 'utf8');
