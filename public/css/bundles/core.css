@@ -45575,6 +45575,38 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     var(--material-highlight-inset);
 }
 
+/* A traced card keeps the gesture sheen, and the material names the light. */
+@media (prefers-reduced-motion: no-preference) {
+  :where([data-spw-metamaterial="paper"]) :where([data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame)[data-spw-charge="charging"],
+  :where([data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame)[data-spw-metamaterial="paper"][data-spw-charge="charging"] {
+    box-shadow:
+      inset var(--spw-trace-shift, 0px) 0 calc(28px * var(--spw-expression-resonance, 1))
+        color-mix(in oklab, var(--paper-warm, var(--paper)) 48%, transparent);
+  }
+
+  :where([data-spw-metamaterial="glass"]) :where([data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame)[data-spw-charge="charging"],
+  :where([data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame)[data-spw-metamaterial="glass"][data-spw-charge="charging"] {
+    box-shadow:
+      var(--material-highlight-inset),
+      inset var(--spw-trace-shift, 0px) 0 calc(22px * var(--spw-expression-resonance, 1))
+        color-mix(in oklab, var(--specular, white) 55%, transparent);
+  }
+
+  :where([data-spw-metamaterial="ledger"]) :where([data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame)[data-spw-charge="charging"],
+  :where([data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame)[data-spw-metamaterial="ledger"][data-spw-charge="charging"] {
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, var(--material-prime-color) 28%, transparent),
+      inset var(--spw-trace-shift, 0px) 0 calc(12px * var(--spw-expression-resonance, 1))
+        color-mix(in oklab, var(--material-prime-color) 18%, transparent);
+  }
+
+  :where([data-spw-metamaterial="matte"]) :where([data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame)[data-spw-charge="charging"],
+  :where([data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame)[data-spw-metamaterial="matte"][data-spw-charge="charging"] {
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, var(--material-line) 40%, transparent);
+  }
+}
+
 /* Site utility and satchel (floating chrome) participate in material definition/tunability.
    When they carry data-spw-metamaterial (synced from global base or local), their surfaces use the
    current glass/matte/contrast treatment. This audits consistency: utilities/satchel now mind the
