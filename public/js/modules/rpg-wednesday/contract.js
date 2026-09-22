@@ -31,7 +31,7 @@ export const RPG_WORKBENCH_COPY = {
     promotionConveyor: 'Promotion conveyor',
     routeManifold: 'Route manifold',
     kitIntro: 'Private table state for this browser. It persists locally, is not published, and never syncs unless you export it.',
-    kitBenchRule: 'Scene and clocks stay live · notes stay scratch · beats and canon earn promotion · the brief is what you export',
+    kitBenchRule: 'Tap a clock · edit the Spw tree · gather a force into the cauldron · notes stay scratch · the brief is what you export',
     languageIntro: 'Three postures on one seed. Compose a brief, then route it through the promotion manifold—like tensioning a small workshop press.',
     languageBenchRule: 'Linguistics names signal · storytelling names pressure · communication names channel and proof',
     languageBriefNote: 'Scratch stays private. Grammar and canon need repetition. Publication needs evidence and a route that survives read-aloud or screenshot.',

@@ -80,6 +80,7 @@ export const DEFAULT_STATE = {
     canonCandidates: '',
     seeds: '',
     nameFabric: '',
+    script: '',
     updatedAt: ''
 };
 
@@ -172,6 +173,7 @@ export const normalizeState = (value) => {
         canonCandidates: typeof input.canonCandidates === 'string' ? input.canonCandidates : '',
         seeds: typeof input.seeds === 'string' ? input.seeds : '',
         nameFabric: typeof input.nameFabric === 'string' ? input.nameFabric : '',
+        script: typeof input.script === 'string' ? input.script : '',
         updatedAt: typeof input.updatedAt === 'string' ? input.updatedAt : ''
     };
 
@@ -389,7 +391,8 @@ export const buildSessionBrief = (state) => {
         `Objective: ${previewText(state.objective)}`,
         `Party: ${previewText(state.party)}`,
         `Active turn: ${activeActor ? previewText(activeActor.name, 'unnamed actor') : DASH_VALUE}`,
-        `Pressure: ${formatClockSummary(pressureClock)}`
+        `Pressure: ${formatClockSummary(pressureClock)}`,
+        `Script: ${cleanLine(state.script) || DASH_VALUE}`
     ];
 
     if (state.initiative.length) {
