@@ -41,6 +41,8 @@ const CHECK = process.argv.includes('--check');
 const NAMED_SEAMS = new Map([
   ['public/js/semantic/component-interaction-semantics.js → public/js/runtime/interaction/vocabulary.js',
     'the interaction family (runtime/interaction/) owns its gesture→phase table; semantic reads it rather than the table leaving its family'],
+  ['public/js/semantic/image-interaction.js → public/js/runtime/interaction/gesture-measure.js',
+    'the interaction family owns the one hold and swipe measure; image cards read it rather than keeping a private copy'],
 ]);
 const SKIP_DIRS = new Set(['generated', 'typed']);
 const ROOT_ENTRYPOINTS = new Set([

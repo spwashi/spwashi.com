@@ -98,7 +98,7 @@ async function walk(directoryPath: string, results: string[] = []): Promise<stri
   return results;
 }
 
-async function loadPostcssPlugins(): Promise<unknown[] | null> {
+async function loadPostcssPlugins() {
   if (!(await pathExists(POSTCSS_CONFIG_PATH))) return null;
 
   try {
