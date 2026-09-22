@@ -294,14 +294,14 @@
   article,
   nav,
   aside,
-  .site-frame,
+  .spw-frame,
   .spw-panel,
   .frame-panel,
   .frame-card,
   .media-card,
   .operator-card,
   .mode-panel,
-  .operator-chip,
+  .spw-chip,
   .frame-sigil,
   [data-cognitive-handle],
   [data-spw-feature],
@@ -339,14 +339,14 @@
   article,
   nav,
   aside,
-  .site-frame,
+  .spw-frame,
   .spw-panel,
   .frame-panel,
   .frame-card,
   .media-card,
   .operator-card,
   .mode-panel,
-  .operator-chip,
+  .spw-chip,
   .frame-sigil,
   [data-cognitive-handle],
   [data-spw-feature],
@@ -418,5 +418,3 @@
   }
 }
 }
-
-/*# sourceMappingURL=debug.css.map */

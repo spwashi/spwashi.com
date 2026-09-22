@@ -458,7 +458,7 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.42);
 }
 
-[data-design-selector-scope="region"] .design-rule-stage :where(.design-rule-specimen, .design-rule-readout, .operator-chip, .spec-pill) {
+[data-design-selector-scope="region"] .design-rule-stage :where(.design-rule-specimen, .design-rule-readout, .spw-chip, .spec-pill) {
   outline: 1px dashed color-mix(in srgb, var(--design-rule-accent) 46%, transparent);
   outline-offset: 0.18rem;
 }
@@ -760,5 +760,3 @@
     justify-content: flex-start;
   }
 }
-
-/*# sourceMappingURL=design-experiments.css.map */
