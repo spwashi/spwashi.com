@@ -188,8 +188,9 @@
 /* Sigils in copy are references: an inline semantic carrier inside prose
    points at something primeable, so it wears the reference seam by default
    (dotted; dereferencing resolves it solid elsewhere). Reading stays calm -
-   the seam is quieter than link styling and never changes layout. */
-:where(p, li, dd, figcaption, [data-spw-textual-role="note"])
+   the seam is quieter than link styling and never changes layout. Header
+   navigation is chrome, not copy: its list items keep the shell's link box. */
+:where(p, li:not(:is(.site-header, body > header) nav li), dd, figcaption, [data-spw-textual-role="note"])
   :where(a, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator]):not(.spw-chip, .frame-sigil) {
   text-decoration-line: underline;
   text-decoration-style: dotted;
