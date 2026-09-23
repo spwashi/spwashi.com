@@ -118,7 +118,13 @@
   color: var(--ink, rgba(14, 18, 20, 0.95));
 }
 
-.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-body {
+.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-body,
+.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-expression,
+.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-phase-rail {
+  display: none;
+}
+
+.site-footer__cauldron:not([data-spw-cauldron-held="true"]) .site-footer__cauldron-actions {
   display: none;
 }
 

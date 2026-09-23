@@ -146,7 +146,11 @@ const renderPreview = (notes) => {
     });
 
     document.querySelectorAll('[data-local-note-latest-time]').forEach((node) => {
-        node.textContent = latest ? formatTimestamp(latest.createdAt) : 'not saved yet';
+        node.textContent = latest ? formatTimestamp(latest.createdAt) : '';
+    });
+
+    document.querySelectorAll('.site-footer__note-preview').forEach((node) => {
+        node.hidden = !latest;
     });
 };
 
