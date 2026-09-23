@@ -134,6 +134,27 @@ export function cleanPath(value) {
   return path;
 }
 
+/**
+ * The page a reader came from, when the Referer is the site itself (or its
+ * www form). A bare "/" is ignored: browsers cut a cross-site Referer to the
+ * origin by default, so "/" cannot be told apart from "unknown". Snippets send
+ * the full URL with referrerpolicy="no-referrer-when-downgrade".
+ */
+export function refererPath(referer, host) {
+  if (!referer || !host) return "";
+  let url;
+  try {
+    url = new URL(referer);
+  } catch {
+    return "";
+  }
+  if (url.protocol !== "https:" && url.protocol !== "http:") return "";
+  const from = url.hostname.toLowerCase().replace(/^www\./, "");
+  if (from !== String(host).toLowerCase()) return "";
+  const path = cleanPath(url.pathname);
+  return path === "/" ? "" : path;
+}
+
 /** The current slug for a slug or a legacy alias, or "" if it names no kind. */
 export function resolveSlug(slug) {
   const value = String(slug || "").toLowerCase();

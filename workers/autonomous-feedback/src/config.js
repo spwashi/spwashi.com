@@ -47,6 +47,7 @@ export function defaultConfig(host) {
     note: { min: NOTE_MIN, max: NOTE_MAX },
     frame: { ancestors: [] },
     queue: { want: false },
+    inbox: { key: "" },
     routes: [],
     theme: null,
     problems: [],
@@ -229,6 +230,13 @@ export function readConfig(raw, host) {
     else if (raw.queue.want != null && raw.queue.want !== false) problems.push("queue.want must be true or false.");
   }
 
+  // The owner's inbox key, published only as its SHA-256; the key itself stays with the owner.
+  if (raw.inbox != null) {
+    const key = typeof raw.inbox === "object" && !Array.isArray(raw.inbox) ? String(raw.inbox.key ?? "").trim().toLowerCase() : "";
+    if (/^sha256:[0-9a-f]{64}$/.test(key)) config.inbox.key = key;
+    else problems.push("inbox.key must be \"sha256:\" and 64 hex characters: the hash of your key, never the key.");
+  }
+
   if (raw.frame?.ancestors != null) {
     const list = Array.isArray(raw.frame.ancestors) ? raw.frame.ancestors.slice(0, 10) : [];
     for (const entry of list) {
@@ -259,8 +267,8 @@ export function starterConfig(host) {
     name: "",
     title: "Feedback",
     intro: "Tell us what was hard to use and what was clear.",
-    kinds: ["problem", "suggestion", "question", "appreciation"],
-    labels: { problem: { title: "Bug report", prompt: "What broke, and on which page?" } },
+    kinds: ["broken", "confusing", "missing", "question", "appreciation"],
+    labels: { broken: { title: "Bug report", prompt: "What broke, and on which page?" } },
     from: "optional",
     button: "Make the card",
     note: { min: NOTE_MIN, max: NOTE_MAX },
@@ -282,6 +290,7 @@ export function configToFile(config) {
   file.button = config.button;
   file.note = { ...config.note };
   if (config.queue?.want) file.queue = { want: true };
+  if (config.inbox?.key) file.inbox = { key: config.inbox.key };
   if (config.routes?.length) file.routes = config.routes.map(({ name, path }) => ({ name, path }));
   if (config.frame.ancestors.length) file.frame = { ancestors: [...config.frame.ancestors] };
   if (config.theme) {

@@ -54,12 +54,17 @@ spwashi.com is the first client: `.well-known/autonomous-feedback.json` in this
 repo (light theme from the site's paper, ink, and teal; serif; optional name),
 linked from the Feedback card on /contact/.
 
-An inbox (the desk) keeps cards for a site in D1 only when both sides agree:
-the client file sets `queue.want: true`, and the host is listed in the
-`DESK_HOSTS` var in `wrangler.jsonc`. A file that asks without a listing is a
-request: nothing is kept, and every page says so. `/{host}/inbox` reads and
-clears an open desk with `Authorization: Bearer $INBOX_READ_TOKEN`; without
-that secret, or for a host with no open desk, it answers 501. `/for/{host}` was
+An inbox (the desk) keeps cards for a site in D1 only when the client file
+sets `queue.want: true`, the host is listed in the `DESK_HOSTS` var, and
+someone can read it: the operator's `INBOX_READ_TOKEN`, or the owner's key,
+published in the file only as `inbox.key: "sha256:…"`. Otherwise nothing is
+kept, and every page says so. New cards wait three days; the owner saves up
+to `SAVE_LIMIT` (default 10) at `/{host}/inbox`, and the cron compacts the
+rest into tallies (day, page, kind, count) with no words. `/desk` is the
+operator's view of every open desk, with Compact now. The whole flow, its
+invariants, and audit queries: `.spw/slices/feedback-desk-flow/index.spw`.
+The write page names the page a reader came from (`?at=`, else a same-site
+Referer); the link and frame snippets send the full Referer. `/for/{host}` was
 retired on 2026-09-22; no site used it. `/climate.json` remains the machine
 reading of the existing cluster. A request hostname can mark an account on the
 filing; the public page does not describe that routing. Source:

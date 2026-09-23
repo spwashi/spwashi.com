@@ -1,9 +1,9 @@
 import { BASE_SECURITY, JSON_CORS, htmlResponse, jsonResponse, wantsJson } from "../../lib/shell.js";
-import { CONTEXTS, DEFAULT_KIND, LEGACY_SLUGS, VERSION, cleanPath, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
+import { CONTEXTS, DEFAULT_KIND, LEGACY_SLUGS, VERSION, cleanPath, refererPath, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
 import { loadConfig, siteKinds } from "./config.js";
-import { clearNotes, deskHosts, deskState, keepNote, listNotes } from "./desk.js";
-import { METER_LIMIT, SLOW_NOTE, inboxAccess, intakeOpen } from "./intake.js";
-import { renderCard, renderHome, renderMeter, renderNotFound, renderStart, renderWrite } from "./pages.js";
+import { compact, deleteNotes, deskHosts, deskState, deskSummary, keepNote, listNotes, listTallies, previewCompaction, saveLimit, setSaved } from "./desk.js";
+import { METER_LIMIT, SLOW_NOTE, bearerOf, cookieOf, deskAccess, intakeOpen } from "./intake.js";
+import { renderCard, renderDesk, renderDeskLock, renderHome, renderInbox, renderInboxLock, renderMeter, renderNotFound, renderStart, renderWrite } from "./pages.js";
 
 /**
  * autonomous.feedback — a feedback form for any website. A note becomes a card
@@ -143,6 +143,7 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
     from: cleanFrom(body.from),
     path: cleanPath(body.path || body.at || ""),
   };
+  if (!values.path) values.path = refererPath(request.headers.get("referer"), values.host);
   if (String(body.company || "").trim()) return { code: "rejected", status: 400, errors: { note: "The form could not be sent." }, values };
   if (!validSubject(values.host)) {
     return { code: "invalid_site_reference", status: 400, errors: { host: values.host ? `"${values.host}" is not a domain. Enter one like example.com.` : "Enter the site the note is about." }, values };
@@ -239,28 +240,169 @@ async function answerFiling(request, result, { lockHost = true, embed = false } 
   return htmlResponse(renderCard(filing, false, config), { cache: "no-store" });
 }
 
+/** The page a note is about: ?at= when the link names it, else the Referer when it is this site. */
+function pageFrom(request, url, subject) {
+  const at = cleanPath(url.searchParams.get("at") || "");
+  if (at) return { path: at, pathFrom: "link" };
+  const referred = refererPath(request.headers.get("referer"), subject);
+  return referred ? { path: referred, pathFrom: "referer" } : { path: "" };
+}
+
+/*
+ * Desks. A browser opens one with a key typed into a form; the key rides in an
+ * HttpOnly, SameSite=Strict cookie scoped to that inbox (or, for the operator,
+ * to the whole host) and every action is a same-origin POST, because the page
+ * CSP allows no fetch. Scripts and agents use Authorization: Bearer instead.
+ */
+const INBOX_COOKIE = "af_inbox";
+const DESK_COOKIE = "af_desk";
+const KEY_SECONDS = 12 * 60 * 60;
+
+function keyCookie(name, value, path) {
+  const age = value ? KEY_SECONDS : 0;
+  return `${name}=${encodeURIComponent(value)}; Path=${path}; Max-Age=${age}; HttpOnly; Secure; SameSite=Strict`;
+}
+
+function seeOther(location, cookie = "") {
+  const headers = { ...BASE_SECURITY, Location: location, "Cache-Control": "no-store" };
+  if (cookie) headers["Set-Cookie"] = cookie;
+  return new Response(null, { status: 303, headers });
+}
+
+/** The strongest access any presented key grants: a bearer header, then the inbox and desk cookies. */
+async function strongestAccess(request, options) {
+  const presented = [bearerOf(request.headers.get("authorization")), cookieOf(request, INBOX_COOKIE), cookieOf(request, DESK_COOKIE)].filter(Boolean);
+  if (!presented.length) return deskAccess("", options);
+  let fallback = "wrong";
+  for (const key of presented) {
+    const access = await deskAccess(key, options);
+    if (access === "operator" || access === "owner") return access;
+    if (access === "unset") fallback = "unset";
+  }
+  return fallback;
+}
+
+const opened = (access) => access === "operator" || access === "owner";
+
+async function handleInbox(request, url, subject, env) {
+  const config = await loadConfig(subject);
+  const desk = deskState(env, subject, config);
+  const options = { operator: env.INBOX_READ_TOKEN || "", ownerHash: config.inbox?.key || "" };
+  const path = `/${subject}/inbox`;
+  const api = Boolean(request.headers.get("authorization")) || wantsJson(request);
+
+  if (request.method === "POST" && !api) {
+    let form;
+    try {
+      form = await request.formData();
+    } catch {
+      return htmlResponse(renderInboxLock({ host: subject, desk, error: "The form could not be read." }), { status: 400, cache: "no-store" });
+    }
+    const action = String(form.get("action") || "");
+    if (action === "open") {
+      const key = String(form.get("key") || "").trim();
+      if (opened(await deskAccess(key, options))) return seeOther(`${url.origin}${path}`, keyCookie(INBOX_COOKIE, key, path));
+      return htmlResponse(renderInboxLock({ host: subject, desk, error: "That key does not open this inbox." }), { status: 401, cache: "no-store" });
+    }
+    if (action === "close") return seeOther(`${url.origin}${path}`, keyCookie(INBOX_COOKIE, "", path));
+    if (!opened(await strongestAccess(request, options))) return htmlResponse(renderInboxLock({ host: subject, desk }), { status: 401, cache: "no-store" });
+    if (desk !== "open") return seeOther(`${url.origin}${path}`);
+    const id = String(form.get("id") || "");
+    let done = "";
+    if (action === "save" || action === "release") {
+      const result = await setSaved(env.DB, subject, id, action === "save", saveLimit(env));
+      done = result.ok ? (action === "save" ? "saved" : "released") : result.error;
+    } else if (action === "delete" && id) {
+      done = (await deleteNotes(env.DB, subject, id)) ? "deleted" : "missing";
+    }
+    return seeOther(`${url.origin}${path}${done ? `?done=${done}` : ""}`);
+  }
+
+  if (!["GET", "HEAD", "DELETE", "POST"].includes(request.method)) return methodNotAllowed("GET, POST, DELETE");
+  const access = await strongestAccess(request, options);
+
+  if (!api && request.method !== "DELETE" && request.method !== "POST") {
+    if (!opened(access)) return headOr(request, htmlResponse(renderInboxLock({ host: subject, desk }), { status: 401, cache: "no-store" }));
+    if (desk !== "open") return headOr(request, htmlResponse(renderInboxLock({ host: subject, desk }), { cache: "no-store" }));
+    const [notes, tallies] = await Promise.all([listNotes(env.DB, subject), listTallies(env.DB, subject)]);
+    const html = renderInbox({ host: subject, name: config.name, notes, tallies, limit: saveLimit(env), done: url.searchParams.get("done") || "", role: access });
+    return headOr(request, htmlResponse(html, { cache: "no-store" }));
+  }
+
+  const contract = inboxContract(subject, null, null, desk);
+  if (access === "locked" || access === "wrong") return jsonResponse({ error: "locked", process: contract.process }, "no-store", 401);
+  // No key configured means no reader: a bound queue stays shut.
+  if (access === "unset" || desk !== "open") return jsonResponse({ ...contract, error: "not_draining", filings: [] }, "no-store", 501);
+  if (request.method === "DELETE") {
+    const cleared = await deleteNotes(env.DB, subject, url.searchParams.get("id") || "");
+    return jsonResponse({ cleared, queue: "desk" }, "no-store");
+  }
+  if (request.method === "POST") {
+    let body = {};
+    try {
+      body = await request.json();
+    } catch {
+      return jsonResponse({ error: "invalid_json" }, "no-store", 400);
+    }
+    const result = await setSaved(env.DB, subject, String(body.id || ""), body.saved === true, saveLimit(env));
+    return jsonResponse(result, "no-store", result.ok ? 200 : result.error === "limit" ? 409 : 404);
+  }
+  const [filings, tallies] = await Promise.all([listNotes(env.DB, subject), listTallies(env.DB, subject)]);
+  return jsonResponse({ ...contract, saved_limit: saveLimit(env), filings, tallies }, "no-store");
+}
+
+/** The operator's view of every open desk: counts, what compaction would do next, and Compact now. */
+async function handleDesk(request, url, env) {
+  const options = { operator: env.INBOX_READ_TOKEN || "" };
+  const api = Boolean(request.headers.get("authorization")) || wantsJson(request);
+  if (request.method === "POST" && !api) {
+    let form;
+    try {
+      form = await request.formData();
+    } catch {
+      return htmlResponse(renderDeskLock({ error: "The form could not be read." }), { status: 400, cache: "no-store" });
+    }
+    const action = String(form.get("action") || "");
+    if (action === "open") {
+      const key = String(form.get("key") || "").trim();
+      if (await deskAccess(key, options) === "operator") return seeOther(`${url.origin}/desk`, keyCookie(DESK_COOKIE, key, "/"));
+      return htmlResponse(renderDeskLock({ error: "That key does not open the desk." }), { status: 401, cache: "no-store" });
+    }
+    if (action === "close") return seeOther(`${url.origin}/desk`, keyCookie(DESK_COOKIE, "", "/"));
+    if (await strongestAccess(request, options) !== "operator") return htmlResponse(renderDeskLock({}), { status: 401, cache: "no-store" });
+    if (action === "compact") {
+      const host = String(form.get("host") || "").toLowerCase();
+      if (!deskHosts(env).has(host) || !env.DB) return seeOther(`${url.origin}/desk`);
+      const { compacted } = await compact(env.DB, host);
+      return seeOther(`${url.origin}/desk?compacted=${compacted}&host=${encodeURIComponent(host)}`);
+    }
+    return seeOther(`${url.origin}/desk`);
+  }
+  if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD, POST");
+  const access = await strongestAccess(request, options);
+  if (access !== "operator") {
+    if (api) return jsonResponse({ error: access === "unset" ? "not_configured" : "locked" }, "no-store", access === "unset" ? 501 : 401);
+    return headOr(request, htmlResponse(renderDeskLock({}), { status: 401, cache: "no-store" }));
+  }
+  const sites = await Promise.all([...deskHosts(env)].sort().map(async (host) => {
+    const config = await loadConfig(host);
+    const state = deskState(env, host, config);
+    if (state !== "open") return { host, state };
+    const [summary, due] = await Promise.all([deskSummary(env.DB, host), previewCompaction(env.DB, host)]);
+    return { ...summary, state, due };
+  }));
+  if (api) return jsonResponse({ sites, saved_limit: saveLimit(env) }, "no-store");
+  const compacted = url.searchParams.has("compacted") ? { host: url.searchParams.get("host") || "", count: Number(url.searchParams.get("compacted")) || 0 } : null;
+  return headOr(request, htmlResponse(renderDesk({ sites, limit: saveLimit(env), compacted }), { cache: "no-store" }));
+}
+
 async function handleSite(request, url, host, rest, org = null, embed = false, env = {}) {
   const subject = String(host || "").toLowerCase();
   if (!validSubject(subject)) return notFound(request, "That is not a site address.");
   if (url.searchParams.has("bearer")) {
     return jsonResponse({ error: "bearer_in_query", hint: "Use Authorization: Bearer. Query strings leak." }, "no-store", 400);
   }
-  if (rest === "inbox") {
-    const contract = inboxContract(subject);
-    if (!["GET", "DELETE"].includes(request.method)) return methodNotAllowed("GET, DELETE");
-    const access = inboxAccess(request.headers.get("authorization"), env.INBOX_READ_TOKEN || "");
-    if (access === "locked" || access === "wrong") {
-      return jsonResponse({ error: "locked", process: contract.process }, "no-store", 401);
-    }
-    // No token on the worker means no reader: a bound queue stays shut.
-    if (access === "unset" || !env.DB || !deskHosts(env).has(subject)) return jsonResponse({ ...contract, error: "not_draining", filings: [] }, "no-store", 501);
-    if (request.method === "DELETE") {
-      const cleared = await clearNotes(env.DB, subject, url.searchParams.get("id") || "");
-      return jsonResponse({ cleared, queue: "desk" }, "no-store");
-    }
-    const filings = await listNotes(env.DB, subject);
-    return jsonResponse({ ...contract, queue: { ...contract.queue, attached: true }, filings }, "no-store");
-  }
+  if (rest === "inbox") return handleInbox(request, url, subject, env);
   if (rest === "config.json") {
     if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
     const config = await loadConfig(subject);
@@ -303,7 +445,7 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
     embed,
     config,
     desk: deskState(env, subject, config),
-    values: { path: url.searchParams.get("at") || "" },
+    values: pageFrom(request, url, subject),
   });
   return headOr(request, embed ? embedHtml(html, subject, config, "public, max-age=120") : htmlResponse(html, { cache: "public, max-age=120" }));
 }
@@ -413,7 +555,13 @@ function frameAncestors(subject) {
 }
 
 export default {
-  async scheduled() {
+  async scheduled(event, env = {}, ctx = null) {
+    // Unsaved cards older than three days become tallies on every tick.
+    if (env.DB) {
+      const work = compact(env.DB).catch(() => {});
+      if (ctx?.waitUntil) ctx.waitUntil(work);
+      else await work;
+    }
     const cache = caches.default;
     const key = new Request("https://autonomous.feedback/climate.json", { method: "GET" });
     await cache.put(key, jsonResponse(await snapshotClimate(), "public, max-age=60"));
@@ -438,6 +586,8 @@ export default {
       if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
       return headOr(request, htmlResponse(renderHome(validSubject(queryHost) ? queryHost : ""), { cache: "no-store" }));
     }
+
+    if (url.pathname === "/desk" || url.pathname === "/desk/") return handleDesk(request, url, env);
 
     if (url.pathname === "/start" || url.pathname === "/start/") {
       if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
