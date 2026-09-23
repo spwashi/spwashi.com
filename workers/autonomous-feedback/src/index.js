@@ -242,7 +242,8 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
     if (access === "locked" || access === "wrong") {
       return jsonResponse({ error: "locked", process: contract.process }, "no-store", 401);
     }
-    if (!env.DB) return jsonResponse({ ...contract, error: "not_draining", filings: [] }, "no-store", 501);
+    // No token on the worker means no reader: a bound queue stays shut.
+    if (access === "unset" || !env.DB) return jsonResponse({ ...contract, error: "not_draining", filings: [] }, "no-store", 501);
     if (request.method === "DELETE") {
       const cleared = await clearNotes(env.DB, subject, url.searchParams.get("id") || "");
       return jsonResponse({ cleared, queue: "desk" }, "no-store");

@@ -336,6 +336,29 @@ test('a site that asks for a queue can list and clear its notes', async () => {
   }
 });
 
+test('a bound queue stays closed while the inbox token is unset', async () => {
+  const restore = stubFetch({
+    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true } },
+  });
+  const env = { DB: memoryDb() };
+  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
+  try {
+    const filed = await (await call('/kept.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.' }))).json();
+    assert.equal(filed.stored, true);
+    const bearer = { authorization: 'Bearer anything' };
+    const read = await call('/kept.example/inbox', { headers: bearer });
+    assert.equal(read.status, 501);
+    assert.deepEqual((await read.json()).filings, []);
+    assert.equal((await call('/kept.example/inbox', { method: 'DELETE', headers: bearer })).status, 501);
+    assert.equal((await call('/kept.example/inbox')).status, 401);
+    env.INBOX_READ_TOKEN = 'desk-token';
+    const kept = await (await call('/kept.example/inbox', { headers: { authorization: 'Bearer desk-token' } })).json();
+    assert.equal(kept.filings.length, 1);
+  } finally {
+    restore();
+  }
+});
+
 test('an inbox token can be checked and still does not open a queue', async () => {
   const locked = await get('autonomous.feedback', '/example.org/inbox');
   assert.equal(locked.status, 401);

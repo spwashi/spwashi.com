@@ -1,8 +1,9 @@
 /**
- * Intake guards that do not store notes.
+ * Intake guards. They store nothing themselves.
  * A public file must not carry a secret. A burst of posts or meter checks
- * from one address is slowed. An inbox token, when one is set on the worker,
- * is compared in constant time and still does not open a queue.
+ * from one address is slowed. The inbox opens only for the token set on the
+ * worker, compared in constant time; while no token is set it stays shut,
+ * even when a queue is bound.
  */
 
 const WINDOW_SECONDS = 600;
@@ -30,12 +31,12 @@ export function tokensMatch(presented, secret) {
   return diff === 0;
 }
 
-/** @returns {"locked"|"wrong"|"unread"|"absent"} */
+/** @returns {"locked"|"unset"|"wrong"|"unread"} */
 export function inboxAccess(header, secret) {
   const value = header || "";
   const presented = value.toLowerCase().startsWith("bearer ") ? value.slice(7).trim() : "";
   if (!presented) return "locked";
-  if (!secret) return "unread";
+  if (!secret) return "unset";
   return tokensMatch(presented, secret) ? "unread" : "wrong";
 }
 
