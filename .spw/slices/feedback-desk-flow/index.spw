@@ -93,8 +93,8 @@ access: .{
 
 copy_contract: .{
  rule = `Every storage sentence follows deskState. Never tell a writer a card was kept for an owner who cannot read it.`
- write_page = `open: "kept for {site} for three days, longer if they save it"; otherwise "Nothing is stored"; host not yet known: "Nothing is stored unless the site has an inbox"`
- card_page = `stored: "Kept for {site} for three days, longer if they save it" + "If it is not saved within three days, it becomes a count by page and kind, and its words are deleted"; requested: "has asked for an inbox, but it is not open yet, so this card was not kept"; full: "The inbox … is full"`
+ write_page = `2026-09-23, creator: storage wording read as hedging; expectations travel by courtesy, and the mechanics live on one page. The form is the card (a live card whose header follows the choices and whose body is the textarea); beside Send, one line: open desk "Goes straight to {site}."; otherwise "You get the card to send {site}." Both link /privacy ("How notes are kept"), which holds the three days, the counts, the name, the readers, and what is never kept.`
+ card_page = `stored: "Sent to {site}", the same card stamped Sent; earlier wording: "Kept for {site} for three days, longer if they save it" + "If it is not saved within three days, it becomes a count by page and kind, and its words are deleted"; requested: "has asked for an inbox, but it is not open yet, so this card was not kept"; full: "The inbox … is full"`
  home = `What it costs: any site, free; your site, free; an inbox, on request — "keeps new cards for three days. You save the ones worth keeping; the rest become counts by page and kind."`
  decided_by = `pages.js renderWrite, renderCard, renderHome, configStatus, renderInbox`
 }[reg=facet]

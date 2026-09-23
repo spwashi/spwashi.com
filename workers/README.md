@@ -32,7 +32,8 @@ note at `/{host}/{kind}` (kinds: `broken`, `confusing`, `missing`, `wrong`,
 `problem`, `suggestion`, `review`, `brief`, `wonder` redirect) and gets a card to save as an image,
 share, post, or copy. Nothing is stored unless the site has an open inbox (below). `/start?host=&how=&kind=` is setup: it
 fills the link, frame, HTML form, `fetch`, and `curl` codeblocks with the
-domain and previews the result. `/meter?host=` checks whether a site responds.
+domain and previews the result. `/meter?host=` checks whether a site responds. `/privacy` is the one page
+that says how notes are kept; the forms link to it instead of explaining.
 Pasted links are normalized to a domain everywhere (`https://www.Example.com/x`
 → `example.com`), and `/WWW.Example.com/...` redirects to one address per site.
 A rejected note comes back in the form with its errors, not as JSON, unless the

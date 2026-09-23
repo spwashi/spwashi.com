@@ -3,7 +3,7 @@ import { CONTEXTS, LEGACY_SLUGS, NOTE, VERSION, cleanPath, refererPath, contextB
 import { loadConfig, siteKinds, subjectFor } from "./config.js";
 import { compact, deleteNotes, deskHosts, deskState, deskSummary, digest, keepNote, listNotes, listTallies, previewCompaction, saveLimit, setSaved } from "./desk.js";
 import { METER_LIMIT, SLOW_NOTE, bearerOf, cookieOf, deskAccess, intakeOpen } from "./intake.js";
-import { renderCard, renderDesk, renderDeskLock, renderHome, renderInbox, renderInboxLock, renderMeter, renderNotFound, renderStart, renderWrite } from "./pages.js";
+import { renderCard, renderDesk, renderDeskLock, renderHome, renderInbox, renderInboxLock, renderMeter, renderNotFound, renderPrivacy, renderStart, renderWrite } from "./pages.js";
 
 /**
  * autonomous.feedback — a feedback form for any website. A note becomes a card
@@ -636,6 +636,11 @@ export default {
 
     if (url.pathname === "/desk" || url.pathname === "/desk/") return handleDesk(request, url, env);
 
+    if (url.pathname === "/privacy" || url.pathname === "/privacy/") {
+      if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
+      return headOr(request, htmlResponse(renderPrivacy(), { cache: "public, max-age=300" }));
+    }
+
     if (url.pathname === "/start" || url.pathname === "/start/") {
       if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
       const raw = url.searchParams.get("host") || "";
@@ -704,6 +709,10 @@ export default {
       const context = contextBySlug(kindPage[1]);
       if (context.slug !== kindPage[1] && ["GET", "HEAD"].includes(request.method)) {
         return Response.redirect(`${url.origin}/${context.slug}${url.search}`, 301);
+      }
+      // "Write a note" with a site named goes to that site's own form, shaped by its file.
+      if (context.slug === NOTE.slug && queryHost && validSubject(queryHost) && ["GET", "HEAD"].includes(request.method)) {
+        return Response.redirect(`${url.origin}/${queryHost}`, 302);
       }
       if (request.method === "POST") {
         if (!(await intakeOpen(request, `post:${queryHost || "open"}`))) {

@@ -84,14 +84,14 @@ function hostField({ id = "host", host = "", error = "", label = "Your site", hi
 }
 
 /** A static card used as an example; the same markup the card page renders. */
-function cardMarkup({ context, host, note, issued, id = "", sample = false, name = "", from = "", path = "", routeName = "", subject = "", thread = "", asks = [], worded = true }) {
+function cardMarkup({ context, host, note, issued, id = "", sample = false, name = "", from = "", path = "", routeName = "", subject = "", thread = "", asks = [], worded = true, kept = false }) {
   const day = issued.slice(0, 10);
   const address = `autonomous.feedback/${host}`;
   const site = name || host;
   const data = sample
     ? ""
     : ` data-kind="${escapeHtml(context.title)}" data-site="${escapeHtml(site)}" data-note="${escapeHtml(from ? `${note}\n\n— ${from}` : note)}" data-day="${escapeHtml(day)}" data-address="${escapeHtml(address)}"`;
-  return `<article class="card${sample ? " sample" : ""}"${id ? ` id="${id}"` : ""} data-spw-kind="frame" data-spw-operator="${escapeHtml(context.operator)}" data-spw-semantic-expression="${escapeHtml(context.expression)}"${data}>
+  return `<article class="card${sample ? " sample" : ""}"${id ? ` id="${id}"` : ""} data-spw-kind="frame" data-spw-operator="${escapeHtml(context.operator)}" data-spw-semantic-expression="${escapeHtml(context.expression)}"${data}${kept ? ' data-kept="true"' : ""}>
   <header>
     <span class="card-kind">${escapeHtml(context.title)}</span>
     <span class="card-site">${escapeHtml(site)}</span>
@@ -105,7 +105,7 @@ function cardMarkup({ context, host, note, issued, id = "", sample = false, name
     <time datetime="${escapeHtml(issued)}">${escapeHtml(day)}</time>
     <span class="card-address">${escapeHtml(address)}</span>
   </footer>
-  ${sample ? "" : `<p class="card-stamp" data-stamp></p>`}
+  ${sample ? "" : `<p class="card-stamp" data-stamp>${kept ? "Sent" : ""}</p>`}
 </article>`;
 }
 
@@ -150,44 +150,83 @@ function routeField(routes, path, pathFrom = "") {
 
 
 export function renderHome(host = "") {
-  const sample = contextBySlug(DEFAULT_KIND);
+  const today = new Date().toISOString().slice(0, 10);
   return layout({
-    title: "autonomous.feedback — a feedback form for any website",
-    description: "Readers write a note about a site and get a card they can save and send to its owner. Nothing to install, and nothing kept unless the site has an inbox.",
+    title: "autonomous.feedback — tell a website what happened",
+    description: "Name a site, say what was hard or what worked, and it becomes a card for whoever runs it. Nothing to install.",
     canonical: `${ORIGIN}/`,
     quiet: true,
     script: CLIENT_SCRIPT,
     body: `<p class="kicker">autonomous.feedback</p>
-<h1>A feedback form for any website</h1>
-<p class="lede">Readers write a note about a site. Each note becomes a card they can save as an image and send to the site's owner. There is nothing to install to start, and nothing is kept unless the site has an inbox.</p>
-<section aria-labelledby="sample-title">
-  <h2 id="sample-title" class="sr-only">Example card</h2>
-  ${cardMarkup({ context: sample, host: EXAMPLE_HOST, note: sample.example, issued: "2026-09-22T12:00:00.000Z", sample: true })}
-</section>
-<form method="get" action="/start" class="panel">
-  ${hostField({ host })}
-  <p class="actions">
-    <button type="submit">Set up the form</button>
-    <button type="submit" formaction="/meter" class="secondary">Check the site responds</button>
-  </p>
+<h1>Tell a website what happened</h1>
+<p class="lede">Name a site, say what was hard or what worked, and it becomes a card for whoever runs it.</p>
+<form method="get" action="/note" class="write begin" id="begin">
+  <article class="card live" data-live-card aria-label="Your card">
+    <header>
+      <span class="card-kind">Note</span>
+      <label class="sr-only" for="site">Which site?</label>
+      <input class="card-site-input" id="site" name="host" type="text" value="${escapeHtml(host)}" placeholder="which site?" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" enterkeyhint="go" maxlength="253" data-host-field data-begin-site autofocus>
+    </header>
+    <p class="card-body-hint">What was hard, or what worked?</p>
+    <footer>
+      <time datetime="${today}">${today}</time>
+      <span class="card-address" data-fill="begin-address">autonomous.feedback/${escapeHtml(host || "…")}</span>
+    </footer>
+  </article>
+  <p class="send"><button type="submit">Write the note</button> <span class="courtesy">Any public site. Nobody needs to have set anything up.</span></p>
 </form>
-<h2>How it works</h2>
-<ol class="steps">
-  <li><strong>Add a link, frame, or form to your site.</strong> The setup page writes the code with your domain filled in.</li>
-  <li><strong>A reader picks what it is.</strong> <span>Broken, confusing, missing, wrong, a question, or thanks. That is enough to send. A detail is optional, and only those words are kept as words.</span></li>
-  <li><strong>The card reaches you.</strong> With an inbox, it waits there for you. Without one, the reader sends it by direct message, or in a post that mentions your site.</li>
-</ol>
-<h2>What it costs</h2>
-<ol class="steps">
-  <li><strong>Any site: free.</strong> <span>Readers can write about any public site. The card travels by hand, and nothing is kept.</span></li>
-  <li><strong>Your site: free.</strong> <span>Publish one file to choose the kinds of note, name your pages, match your colours, and say where you take messages. <a href="/start">The setup page</a> writes it for you.</span></li>
-  <li><strong>An inbox: on request.</strong> <span>Add <code>"queue": { "want": true }</code> to your file to ask for one. An inbox keeps new cards for three days. You save the ones worth keeping; the rest become counts by page and kind. Until yours opens, nothing is kept.</span></li>
-</ol>
-<h2>Write a note about a site</h2>
-<form method="get" action="/note" class="panel">
-  ${hostField({ id: "note-host", label: "Which site?", hint: "Any public site. Its owner does not need to have set anything up." })}
-  <p class="actions"><button type="submit">Write a note</button></p>
-</form>`,
+<p class="try">Or try one that is set up: <a href="/lore.land">lore.land</a> · <a href="/spw.quest">spw.quest</a></p>
+<section class="owners" aria-labelledby="owners-title">
+  <h2 id="owners-title">Run a site?</h2>
+  <p>Put a link, a frame, or a form on it, and notes arrive shaped by your own site: its parts, the things you hear most, your answers to them.</p>
+  <form method="get" action="/start" class="panel">
+    ${hostField({ host, label: "Your site" })}
+    <figure class="codeblock snippet-line">
+      <figcaption><span>Paste this anywhere on your site</span><button type="button" data-copy="owner-snippet">Copy</button></figcaption>
+      <pre id="owner-snippet" data-owner-snippet="${escapeHtml(SNIPPETS.link.template)}">${escapeHtml(fillTemplate(SNIPPETS.link.template, host || "yoursite.com", NOTE))}</pre>
+    </figure>
+    <p class="note">That is the whole setup. Everything else is optional.</p>
+    <p class="actions"><button type="submit">Shape the form for your site</button></p>
+  </form>
+  <details>
+    <summary>How it works, and what it costs</summary>
+    <ol class="steps">
+      <li><strong>Add a link, frame, or form.</strong> <span>The setup page writes the code with your domain filled in.</span></li>
+      <li><strong>A reader taps or writes.</strong> <span>A tap is a whole note. Words are optional.</span></li>
+      <li><strong>The card reaches you.</strong> <span>In your inbox if you have one; otherwise the reader sends it to you.</span></li>
+    </ol>
+    <ol class="steps">
+      <li><strong>Any site: free.</strong> <span>Readers can write about any public site.</span></li>
+      <li><strong>Your site: free.</strong> <span>One file sets your form's parts, common notes, and colours. <a href="/start">The setup page</a> writes it.</span></li>
+      <li><strong>An inbox: on request.</strong> <span>Add <code>"queue": { "want": true }</code> to your file to ask for one.</span></li>
+    </ol>
+    <p class="note"><a href="/privacy">How notes are kept</a> · <a href="/meter">Check a site responds</a></p>
+  </details>
+</section>`,
+  });
+}
+
+/** The one place the mechanics live, so no form has to hedge. */
+export function renderPrivacy() {
+  return layout({
+    title: "How notes are kept — autonomous.feedback",
+    description: "Where a note goes, how long its words stay, and what is never kept.",
+    canonical: `${ORIGIN}/privacy`,
+    quiet: true,
+    body: `${kicker()}
+<h1>How notes are kept</h1>
+<p class="lede">A note goes to the person who runs the site, and you keep a card of it. That is most of it. The rest is here.</p>
+<h2>Where a note goes</h2>
+<p>If the site has an inbox, the note waits there for its owner. If it doesn't, nothing is kept: the card is yours, and you send it yourself, by message or in a post.</p>
+<h2>How long its words stay</h2>
+<p>Three days, unless the owner saves the note. After that the words are deleted, and what remains is a count: which part of the site, which kind of note, which week. Owners can save a small number of notes to keep their words longer, and can delete any note.</p>
+<h2>What is on it</h2>
+<p>What you wrote, the page you were on, and your name only if you wrote it. There are no accounts. Readers get no cookies. An unsent note stays in your own browser so it is not lost if you step away.</p>
+<h2>Who can read it</h2>
+<p>The site's owner, with a key only they hold. The person who runs autonomous.feedback can open inboxes too, to keep the service working.</p>
+<h2>What is never kept</h2>
+<p>Who you are beyond what you wrote. To slow down floods, a scrambled form of your network address is held for ten minutes and then dropped. Like any website, requests are briefly logged by the host.</p>
+<p class="actions"><a class="door" href="/"><strong>Write a note</strong><span>autonomous.feedback</span></a></p>`,
   });
 }
 
@@ -387,13 +426,16 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
   const action = lockHost ? `${root}/${encodeURIComponent(host)}` : `/${context.slug}`;
   const canonical = lockHost ? `${ORIGIN}${root}/${encodeURIComponent(host)}${tail}` : `${ORIGIN}/${context.slug}`;
   const note = values.note ?? "";
+  const today = new Date().toISOString().slice(0, 10);
 
   // The creator's map. Evidence picks the subject (the page, or a chip); nothing is guessed.
   const subjects = site.subjects || [];
   const chosenSubject = subjects.find((sub) => sub.id === values.subject) || (values.subject ? null : subjectFor(site, values.path ?? ""));
   const prompt = chosenSubject?.prompt || context.prompt;
-  // An example only helps when it fits: the subject's own, else the kind's when no subject is chosen.
   const exampleText = chosenSubject ? chosenSubject.example : context.example;
+  const chosenThread = chosenSubject?.threads.find((t) => values.thread === `${chosenSubject.id}:${t.id}` || values.thread === t.id) || null;
+  const thanked = values.thread === "thanks";
+
   const subjectChips = subjects.map((sub) => `<label class="chip"><input type="radio" name="subject" value="${escapeHtml(sub.id)}"${chosenSubject?.id === sub.id ? " checked" : ""} data-prompt="${escapeHtml(sub.prompt || NOTE.prompt)}" data-example="${escapeHtml(sub.example)}" data-name="${escapeHtml(sub.name)}"> <span>${escapeHtml(sub.name)}</span></label>`).join("\n      ");
   const subjectBlock = !subjects.length ? "" : chosenSubject
     ? `<div id="subjects" class="about-line">
@@ -410,117 +452,103 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
     </details>
   </div>`
     : `<fieldset id="subjects" class="chips">
-    <legend>Which part of ${escapeHtml(display)}? <span class="hint">Optional</span></legend>
+    <legend>Which part of ${escapeHtml(display)}?</legend>
     ${fieldError("subject-error", errors.subject)}
     <div class="row">
       ${subjectChips}
     </div>
   </fieldset>`;
 
-  // The fast lane: what this creator hears often. One tap is a whole note, and it is the count they can act on.
+  // The fast lane: what this creator hears often. One tap is a whole note.
   const threadBlocks = subjects.filter((sub) => sub.threads.length).map((sub) => `<fieldset class="chips threads" data-subject="${escapeHtml(sub.id)}">
-    <legend>Often said about ${escapeHtml(sub.name)} <span class="hint">One tap counts. Add words only if you want them read.</span></legend>
+    <legend>Often said about ${escapeHtml(sub.name)}</legend>
     <div class="row">
-      ${sub.threads.map((t) => `<label class="chip"><input type="radio" name="thread" value="${escapeHtml(`${sub.id}:${t.id}`)}"${values.thread === `${sub.id}:${t.id}` || values.thread === t.id ? " checked" : ""}> <span>${escapeHtml(t.name)}</span></label>`).join("\n      ")}
+      ${sub.threads.map((t) => `<label class="chip"><input type="radio" name="thread" value="${escapeHtml(`${sub.id}:${t.id}`)}" data-kind-title="${escapeHtml(contextBySlug(t.kind)?.title || NOTE.title)}" data-about="${escapeHtml(`${sub.name} · ${t.name}`)}"${chosenThread === t && chosenSubject?.id === sub.id ? " checked" : ""}> <span>${escapeHtml(t.name)}</span></label>`).join("\n      ")}
     </div>
     ${sub.threads.filter((t) => t.stance).map((t) => `<p class="stance" data-for="${escapeHtml(`${sub.id}:${t.id}`)}"><strong>${escapeHtml(display)}:</strong> ${escapeHtml(t.stance)}${t.link ? ` <a href="https://${escapeHtml(host)}${escapeHtml(t.link)}">More</a>` : ""}</p>`).join("\n    ")}
   </fieldset>`).join("\n  ");
 
   const kinds = kindsShown.map((c) => `<label class="chip" data-kind="${c.slug}">
-      <input type="radio" name="kind" value="${c.slug}"${selected?.slug === c.slug ? " checked" : ""} data-prompt="${escapeHtml(c.prompt)}" data-example="${escapeHtml(c.example)}" data-href="${root}${lockHost ? `/${encodeURIComponent(host)}` : ""}/${c.slug}">
+      <input type="radio" name="kind" value="${c.slug}"${selected?.slug === c.slug ? " checked" : ""} data-kind-title="${escapeHtml(c.title)}" data-prompt="${escapeHtml(c.prompt)}" data-example="${escapeHtml(c.example)}" data-href="${root}${lockHost ? `/${encodeURIComponent(host)}` : ""}/${c.slug}">
       <span>${escapeHtml(c.title)}</span>
     </label>`).join("\n      ");
   const askBlocks = subjects.filter((sub) => sub.asks.length).map((sub) => `<details class="asks" data-subject="${escapeHtml(sub.id)}"${sub.asks.some((_, i) => values.asks?.[i]) ? " open" : ""}>
-    <summary>Say more <span class="hint">${sub.asks.length === 1 ? "one question" : `${sub.asks.length} questions`}, all optional</span></summary>
+    <summary>Say more</summary>
     ${sub.asks.map((q, i) => `<label for="ask-${escapeHtml(sub.id)}-${i}">${escapeHtml(q)}</label>
     <textarea id="ask-${escapeHtml(sub.id)}-${i}" name="ask-${i}" rows="2" maxlength="2000" class="note ask">${escapeHtml(values.asks?.[i] || "")}</textarea>`).join("\n    ")}
   </details>`).join("\n  ");
-  // Without script, the subject decides what shows through :has(); the script only mirrors text.
+  // Without script, the subject decides what shows through :has(); the script only mirrors text onto the card.
   const subjectCss = subjects.map((sub) => {
     const show = `.write:has(input[name="subject"][value="${sub.id}"]:checked) [data-subject="${sub.id}"] { display: block; }`;
     const hide = sub.kinds.length ? `.write:has(input[name="subject"][value="${sub.id}"]:checked) label.chip[data-kind]:not(${sub.kinds.map((k) => `[data-kind="${k}"]`).join(", ")}):not(:has(input:checked)) { display: none; }` : "";
     const stances = sub.threads.filter((t) => t.stance).map((t) => `.write:has(input[name="thread"][value="${sub.id}:${t.id}"]:checked) .stance[data-for="${sub.id}:${t.id}"] { display: block; }`).join("\n");
     return [show, hide, stances].filter(Boolean).join("\n");
   }).join("\n");
-  // The checked type reveals its own line. No script required: the choice changes what the page says will be kept.
-  const outcomeCss = [
-    ".write .outcome { display: none; }",
-    ".write .outcome[data-outcome='none'] { display: block; }",
-    ".write:has(#kinds input:checked) .outcome[data-outcome='none'] { display: none; }",
-    ...kindsShown.map((c) => `.write:has(#kinds input[value="${c.slug}"]:checked) .outcome[data-outcome="${c.slug}"] { display: block; }`),
-    ".write:has(input[name='thread']:checked) .outcome { display: none; }",
-    ".write:has(input[name='thread'][value='thanks']:checked) .outcome[data-outcome='thanks'] { display: block; }",
-    ".write:has(input[name='thread']:checked):not(:has(input[name='thread'][value='thanks']:checked)) .outcome[data-outcome='thread'] { display: block; }",
-  ].join("\n");
-  const kept = desk === "open"
-    ? `With no detail, ${escapeHtml(display)} keeps a count, not words. Add what happened if you want it read for three days.`
-    : "Nothing is stored here. The card carries this, plus any detail you add, and you send it.";
-  const outcomes = [
-    `<p class="outcome" data-outcome="none">Pick what this is. That is enough to send, and it is what gets counted. Without a type, write at least ${site.note.min} characters.</p>`,
-    ...kindsShown.map((c) => `<p class="outcome" data-outcome="${c.slug}">This sends as <strong>${escapeHtml(c.title)}</strong>. ${escapeHtml(c.prompt)} ${kept}</p>`),
-    `<p class="outcome" data-outcome="thread">This joins that common note. ${kept}</p>`,
-    `<p class="outcome" data-outcome="thanks">This sends as thanks. ${kept}</p>`,
-  ].join("\n    ");
 
-  const noteDescribed = ["note-hint", "note-count", errors.note ? "note-error" : ""].filter(Boolean).join(" ");
+  const noteDescribed = ["note-hint", errors.note ? "note-error" : ""].filter(Boolean).join(" ");
   const listed = [["note", errors.note], ["subjects", errors.subject], ["kinds", errors.kind], ["host", errors.host], ["from", errors.from]].filter(([, m]) => m);
   const summary = listed.length
-    ? `<div class="error-summary" role="alert" tabindex="-1" data-error-summary><p>Not sent yet. ${listed.length > 1 ? "A couple of things" : "One thing"} to fix:</p><ul>${listed.map(([id, m]) => `<li><a href="#${id}">${escapeHtml(m)}</a></li>`).join("")}</ul></div>`
+    ? `<div class="error-summary" role="alert" tabindex="-1" data-error-summary><p>Not sent yet:</p><ul>${listed.map(([id, m]) => `<li><a href="#${id}">${escapeHtml(m)}</a></li>`).join("")}</ul></div>`
     : "";
-  const fromField = site.from === "off" ? "" : `<label for="from">Your name or handle${site.from === "optional" ? " <span class=\"hint\">optional</span>" : ""}</label>
-  <p class="hint" id="from-hint">Printed on the card.</p>
-  ${fieldError("from-error", errors.from)}
-  <input id="from" name="from" type="text" value="${escapeHtml(values.from ?? "")}" maxlength="80" autocomplete="nickname" aria-describedby="from-hint${errors.from ? " from-error" : ""}"${site.from === "required" ? " required" : ""}${errors.from ? ` aria-invalid="true"` : ""}>`;
+  // The card as it will read: the header follows the choices, the body is what you write.
+  const cardKind = thanked ? "Appreciation" : chosenThread ? (contextBySlug(chosenThread.kind)?.title || NOTE.title) : context.title;
+  const cardAbout = chosenThread ? `${chosenSubject.name} · ${chosenThread.name}` : chosenSubject?.name || "";
+  const placeholder = thanked ? "Thanks." : chosenThread ? "Count me too." : exampleText || "";
+  const fromLine = site.from === "off" ? "" : `<p class="card-from-line"><label for="from" class="sr-only">Your name or handle</label>— <input id="from" name="from" type="text" value="${escapeHtml(values.from ?? "")}" maxlength="80" autocomplete="nickname" placeholder="${site.from === "required" ? "your name" : "your name, if you like"}"${site.from === "required" ? " required" : ""}${errors.from ? ` aria-invalid="true"` : ""}></p>`;
   const button = site.button || (desk === "open" ? `Send to ${display}` : "Make my card");
-  const keep = desk === "open"
-    ? `Words are kept only when you write them. ${escapeHtml(display)} sees this in their inbox for three days, longer if they save it.`
+  const courtesy = desk === "open"
+    ? `Goes straight to ${escapeHtml(display)}.`
     : lockHost
-      ? `Words are kept only on the card, and only if you write them. Nothing is stored. You send the card to ${escapeHtml(display)} yourself.`
-      : "Words are kept only on the card, and only if you write them. Nothing is stored unless the site has an inbox.";
+      ? `You get the card to send ${escapeHtml(display)}.`
+      : "You get the card to send.";
   return layout({
     title: `${heading} — autonomous.feedback`,
-    description: lockHost ? `Pick what happened on ${host}. That is enough to send. Add a detail if you want the words kept.` : "Pick what happened on a site. That is enough to send. Add a detail if you want the words kept.",
+    description: lockHost ? `Say what happened on ${host}, in a tap or a few words.` : "Say what happened on a site, in a tap or a few words.",
     canonical,
     quiet: true,
     embed,
     script: CLIENT_SCRIPT,
-    themeCss: `${themeCss(site.theme)}\n${subjectCss}\n${outcomeCss}`,
+    themeCss: `${themeCss(site.theme)}\n${subjectCss}`,
     body: `${embed ? "" : kicker()}
 <h1>${escapeHtml(heading)}</h1>
 ${lockHost && isPublicSite(host) ? `<p class="visit"><a href="https://${escapeHtml(host)}/">Open ${escapeHtml(host)}</a></p>` : ""}
 ${site.intro ? `<p class="lede">${escapeHtml(site.intro)}</p>` : ""}
 ${summary}
-<form method="post" action="${escapeHtml(action)}" class="panel write" id="write" data-draft-key="${escapeHtml(lockHost ? host : "")}" data-button="${escapeHtml(button)}" data-note-min="${site.note.min}">
+<form method="post" action="${escapeHtml(action)}" class="write" id="write" data-draft-key="${escapeHtml(lockHost ? host : "")}" data-button="${escapeHtml(button)}">
   ${subjectBlock}
   ${threadBlocks}
   <fieldset id="kinds" class="chips tags"${kindsShown.length === 1 ? " hidden" : ""}>
-    <legend>What is this? <span class="hint">Enough to send</span></legend>
+    <legend>${subjects.some((sub) => sub.threads.length) ? "Or pick one" : "Pick one, or just write"}</legend>
     ${fieldError("kind-error", errors.kind)}
     <div class="row">
       ${kinds}
+      ${kindsShown.some((c) => c.slug === "appreciation") ? `<label class="chip"><input type="radio" name="thread" value="thanks" data-kind-title="Appreciation"${thanked ? " checked" : ""}> <span>Just saying thanks</span></label>` : ""}
     </div>
   </fieldset>
-  <p class="thanks-row"><label class="chip"><input type="radio" name="thread" value="thanks"${values.thread === "thanks" ? " checked" : ""}> <span>Just saying thanks</span></label></p>
-  <aside class="draft-card" aria-live="polite">
-    <p class="draft-eyebrow">What you are sending</p>
-    ${outcomes}
-    <p class="draft-words" data-draft-words></p>
-  </aside>
-  <label for="note"><span class="untapped">Or write what happened</span><span class="when-typed">Add a detail <span class="hint">optional</span></span></label>
-  <p class="hint" id="note-hint"><span class="until-typed">Without a type, write at least ${site.note.min} characters. </span><span class="when-typed">Left blank, this is counted and no words are kept. </span><span data-fill="prompt">${escapeHtml(prompt)}</span> <span data-fill="example">${exampleText ? `For example: ${escapeHtml(exampleText)}` : ""}</span></p>
+  <label for="note" class="question" data-fill="prompt">${escapeHtml(prompt)}</label>
   ${fieldError("note-error", errors.note)}
-  <textarea class="note" id="note" name="note" rows="4" maxlength="${site.note.max}" aria-describedby="${noteDescribed}"${errors.note ? ` aria-invalid="true"` : ""}${embed || chosenSubject?.threads.length || selected ? "" : " autofocus"}>${escapeHtml(note)}</textarea>
-  <p class="count" id="note-count"><span data-count>${note.length}</span> of ${site.note.max.toLocaleString("en-US")}</p>
+  <article class="card live" data-live-card aria-label="Your card">
+    <header>
+      <span class="card-kind" data-live="kind">${escapeHtml(cardKind)}</span>
+      <span class="card-site">${escapeHtml(display || "your site")}</span>
+      <span class="card-subject" data-live="about"${cardAbout ? "" : " hidden"}>${escapeHtml(cardAbout)}</span>
+    </header>
+    <textarea class="card-write" id="note" name="note" rows="3" maxlength="${site.note.max}" placeholder="${escapeHtml(placeholder)}" data-placeholder="${escapeHtml(exampleText || "")}" aria-describedby="${noteDescribed}"${errors.note ? ` aria-invalid="true"` : ""}${embed || chosenSubject?.threads.length || selected ? "" : " autofocus"}>${escapeHtml(note)}</textarea>
+    ${fromLine}
+    <footer>
+      <time datetime="${today}">${today}</time>
+      <span class="card-address">autonomous.feedback/${escapeHtml(host || "…")}</span>
+    </footer>
+  </article>
+  <p class="hint" id="note-hint"><span data-count-line hidden><span data-count>${note.length}</span> of ${site.note.max.toLocaleString("en-US")}</span></p>
   ${askBlocks}
   ${routeField(site.routes || [], values.path ?? "", values.pathFrom || "")}
   ${lockHost ? `<input type="hidden" name="host" value="${escapeHtml(host)}">` : hostField({ host: values.host ?? host, error: errors.host, label: "Which site is this about?", hint: "A domain like example.com." })}
-  ${fromField}
   <div class="hp" aria-hidden="true">
     <label for="company">Leave this empty</label>
     <input id="company" name="company" tabindex="-1" autocomplete="off">
   </div>
-  <p class="hint keep">${keep}</p>
-  <p class="actions"><button type="submit" data-pending="Sending…">${escapeHtml(button)}</button></p>
+  <p class="send"><button type="submit" data-pending="Sending…">${escapeHtml(button)}</button> <span class="courtesy">${courtesy} <a href="/privacy">How notes are kept</a></span></p>
 </form>
 ${embed ? "" : `<p class="note">Run a site? <a href="/start">Put this form on it</a>.</p>`}`,
   });
@@ -581,7 +609,7 @@ ${site.thanks ? `<p class="owner-thanks"><strong>${escapeHtml(display)}:</strong
         : dms.length
           ? `Send it to ${escapeHtml(display)}: save the image or copy the text, then message them below. Or post it and mention them.`
           : `Send it to whoever runs ${escapeHtml(display)}: save the image or copy the text, then message them or post about it.`}</p>
-${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, issued: filing.issued, id: "card", name: site.name, from: filing.from, path: filing.path, routeName: filing.route, subject: filing.subject?.name || "", thread: filing.thread?.name || "", asks: filing.asks || [], worded: filing.worded !== false })}
+${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, issued: filing.issued, id: "card", name: site.name, from: filing.from, path: filing.path, routeName: filing.route, subject: filing.subject?.name || "", thread: filing.thread?.name || "", asks: filing.asks || [], worded: filing.worded !== false , kept: Boolean(filing.stored) })}
 ${filing.thread?.stance ? `<section class="stance-reply" aria-labelledby="stance-title">
   <h2 id="stance-title">${escapeHtml(display)} has said about this</h2>
   <p class="note">Written before your note, for everyone who raises it.</p>
