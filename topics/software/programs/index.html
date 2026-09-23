@@ -54,7 +54,14 @@
                 </div>
                 <p class="spec-kicker">Software / Building Blocks</p>
                 <h1 id="programs-title">How a Computer Follows Instructions</h1>
-                <p>A program is a sequence of instructions a computer follows exactly, with no sense of what you meant. <strong>Values</strong> are the numbers, text, and lists it works with; <strong>variables</strong> give them names; <strong>control flow</strong> decides which instruction runs next, through conditions and loops; <strong>functions</strong> package steps behind a name so they can be reused and tested. Every other software page on this site builds on these four ideas.</p>
+                <p>A program gives a computer instructions. It works with the values you supply and the rules you write, so a small mismatch between your intention and your rule can change the result.</p>
+                <ul class="frame-list">
+                    <li><strong>Values</strong> are the material: a cue name, a duration, or whether a prop is available.</li>
+                    <li><strong>Variables</strong> give values names so later instructions can use them.</li>
+                    <li><strong>Control flow</strong> chooses what runs next through conditions and loops.</li>
+                    <li><strong>Functions</strong> package a task behind a name. A function that checks a cue can be called for every prop and <a href="/topics/software/testing/#cue-tests">tested with several examples</a>.</li>
+                </ul>
+                <p><a href="#programs-try">Trace a cue decision</a> to see those ideas work together.</p>
                 <nav class="frame-operators" aria-label="Programs next steps">
                     <a class="spw-chip" data-spw-handle="true" href="/topics/software/data-structures/" data-spw-operator="ref" data-spw-action="explore">~data_structures</a>
                     <a class="spw-chip" data-spw-handle="true" href="/topics/math/logic/" data-spw-operator="ref" data-spw-action="explore">~logic</a>
@@ -84,6 +91,30 @@
                         <a class="ref-link" href="https://docs.python.org/3/tutorial/" target="_blank" rel="noopener noreferrer">python: tutorial</a>
                     </article>
                 </div>
+            </section>
+
+            <section class="spw-frame" id="programs-try" aria-labelledby="programs-try-title">
+                <header class="frame-heading" data-spw-slot="header">
+                    <h2 id="programs-try-title">Turn the quiet-room rule into a decision</h2>
+                </header>
+                <p>Bring the <a href="/topics/math/logic/#logic-try">rule from Logic</a>: a cue must be available and known to be silent. Here is that decision in JavaScript. You can trace it on paper; the code is also ready to run in a JavaScript console.</p>
+                <pre><code>function canPlay(cue) {
+  return cue.available === true &amp;&amp; cue.sound === false;
+}
+
+const lantern = { available: true, sound: false };
+canPlay(lantern); // true</code></pre>
+                <p><code>===</code> checks an exact value; <code>&amp;&amp;</code> requires both checks to pass. The lantern returns <code>true</code>. That result approves a cue; it does not switch on a lamp or run a show.</p>
+                <ol class="frame-list">
+                    <li>Change <code>available</code> to <code>false</code>. Predict the result before checking it.</li>
+                    <li>Restore availability and change <code>sound</code> to <code>true</code>. You have made the bell's case.</li>
+                    <li>Remove the <code>sound</code> field. Decide whether incomplete information should count as permission.</li>
+                </ol>
+                <details class="spw-inline-disclosure">
+                    <summary>Compare the three results</summary>
+                    <p>All three return <code>false</code>. The last case matters: a missing field is not exactly <code>false</code>, so the rule refuses a cue whose sound status is unknown. These examples assume the input is a cue object; accepting other input types would need a separate contract.</p>
+                </details>
+                <p><strong>Keep:</strong> the function and an input/output pair for each change. <a href="/topics/software/data-structures/#cue-records">Give the whole cue collection a shape</a>, or <a href="/topics/software/testing/#cue-tests">turn your predictions into repeatable checks</a>.</p>
             </section>
 
             <aside class="spw-route-bridge" aria-labelledby="programs-bridge-title">
