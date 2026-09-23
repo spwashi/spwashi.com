@@ -148,14 +148,6 @@ function routeField(routes, path, pathFrom = "") {
 </details>`;
 }
 
-function kindLinks(host = "", embed = false, current = "") {
-  const items = CONTEXTS.map((c) => {
-    const href = host ? `${embed ? "/embed" : ""}/${encodeURIComponent(host)}/${c.slug}` : `/${c.slug}`;
-    const here = c.slug === current ? ` aria-current="page"` : "";
-    return `<li><a class="door" href="${href}"${here}><strong>${escapeHtml(c.title)}</strong><span>${escapeHtml(c.prompt)}</span></a></li>`;
-  }).join("\n  ");
-  return `<ul class="doors">\n  ${items}\n</ul>`;
-}
 
 export function renderHome(host = "") {
   const sample = contextBySlug(DEFAULT_KIND);
@@ -183,7 +175,7 @@ export function renderHome(host = "") {
 <ol class="steps">
   <li><strong>Add a link, frame, or form to your site.</strong> The setup page writes the code with your domain filled in.</li>
   <li><strong>A reader picks what it is.</strong> <span>Broken, confusing, missing, wrong, a question, or thanks. That is enough to send. A detail is optional, and only those words are kept as words.</span></li>
-  <li><strong>The reader sends you the card.</strong> They save the image or copy the text and send it by direct message, or in a post that mentions your site.</li>
+  <li><strong>The card reaches you.</strong> With an inbox, it waits there for you. Without one, the reader sends it by direct message, or in a post that mentions your site.</li>
 </ol>
 <h2>What it costs</h2>
 <ol class="steps">
@@ -192,7 +184,10 @@ export function renderHome(host = "") {
   <li><strong>An inbox: on request.</strong> <span>Add <code>"queue": { "want": true }</code> to your file to ask for one. An inbox keeps new cards for three days. You save the ones worth keeping; the rest become counts by page and kind. Until yours opens, nothing is kept.</span></li>
 </ol>
 <h2>Write a note about a site</h2>
-${kindLinks()}`,
+<form method="get" action="/note" class="panel">
+  ${hostField({ id: "note-host", label: "Which site?", hint: "Any public site. Its owner does not need to have set anything up." })}
+  <p class="actions"><button type="submit">Write a note</button></p>
+</form>`,
   });
 }
 
@@ -270,6 +265,8 @@ export function renderStart({ host = "", how = "link", kind = NOTE.slug, error =
       <dt><code>title</code></dt><dd>The heading of the form, up to 80 characters. Without it, the heading is “Feedback for” the site name.</dd>
       <dt><code>kinds</code></dt><dd>Which kinds of note to show, in the order a reader meets them. Default: broken, confusing, missing, wrong, then question and appreciation.</dd>
       <dt><code>routes</code></dt><dd>Named pages on your site, <code>{ "name": "Checkout", "path": "/checkout" }</code>. The form offers them, and <code>?at=/checkout</code> preselects one.</dd>
+      <dt><code>subjects</code></dt><dd>The parts of your site a note can be about, up to 12. Each has an <code>id</code>, a <code>name</code>, the <code>paths</code> it covers (the reader's page picks it), a <code>prompt</code> and <code>example</code>, the <code>kinds</code> it takes, up to three <code>asks</code>, and up to six <code>threads</code>: the notes you hear most often there, each one tap for the reader, with an optional <code>kind</code>, and a <code>stance</code> and <code>link</code> shown as your answer.</dd>
+      <dt><code>thanks</code></dt><dd>Your line to every reader after they send, up to 200 characters.</dd>
       <dt><code>labels</code></dt><dd>Rename a kind and change its prompt or example. Title up to 40 characters, prompt up to 160.</dd>
       <dt><code>name</code>, <code>intro</code>, <code>button</code></dt><dd>Your site's display name, a line above the form (up to 300 characters), and the submit button text.</dd>
       <dt><code>contact</code></dt><dd>Where you take cards by direct message: <code>{ "bluesky": "example.com", "x": "example" }</code>. The card page shows Message buttons and puts your handle in the Post links.</dd>
@@ -362,7 +359,7 @@ ${reading
 <p class="lede">${escapeHtml(host)} ${escapeHtml(reading.sentence)}</p>
 <p class="actions">
   <a class="door" href="/start?host=${encodeURIComponent(host)}"><strong>Set up the form</strong><span>for ${escapeHtml(host)}</span></a>
-  <a class="door" href="/${encodeURIComponent(host)}/${DEFAULT_KIND}"><strong>Write a note</strong><span>about ${escapeHtml(host)}</span></a>
+  <a class="door" href="/${encodeURIComponent(host)}"><strong>Write a note</strong><span>about ${escapeHtml(host)}</span></a>
 </p>`
     : `<p class="lede">Enter a public site. autonomous.feedback requests its homepage once and reports whether it responded.</p>`}
 <form method="get" action="/meter" class="panel">
@@ -441,7 +438,7 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
   // Without script, the subject decides what shows through :has(); the script only mirrors text.
   const subjectCss = subjects.map((sub) => {
     const show = `.write:has(input[name="subject"][value="${sub.id}"]:checked) [data-subject="${sub.id}"] { display: block; }`;
-    const hide = sub.kinds.length ? `.write:has(input[name="subject"][value="${sub.id}"]:checked) label.chip[data-kind]:not(${sub.kinds.map((k) => `[data-kind="${k}"]`).join(", ")}) { display: none; }` : "";
+    const hide = sub.kinds.length ? `.write:has(input[name="subject"][value="${sub.id}"]:checked) label.chip[data-kind]:not(${sub.kinds.map((k) => `[data-kind="${k}"]`).join(", ")}):not(:has(input:checked)) { display: none; }` : "";
     const stances = sub.threads.filter((t) => t.stance).map((t) => `.write:has(input[name="thread"][value="${sub.id}:${t.id}"]:checked) .stance[data-for="${sub.id}:${t.id}"] { display: block; }`).join("\n");
     return [show, hide, stances].filter(Boolean).join("\n");
   }).join("\n");
