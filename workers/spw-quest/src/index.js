@@ -84,38 +84,47 @@ function questTabs() {
 function renderQuest() {
   const tabs = INSTRUCTION_SETS.map((set, index) => `<button type="button" role="tab" id="tab-${escapeHtml(set.id)}" aria-controls="panel-${escapeHtml(set.id)}" aria-selected="${index === 0}" tabindex="${index === 0 ? 0 : -1}" data-set="${escapeHtml(set.id)}" data-includes-git="${set.includesGit}">${escapeHtml(set.label)}</button>`).join("\n    ");
   const panels = INSTRUCTION_SETS.map((set) => `<section class="tabpanel" role="tabpanel" id="panel-${escapeHtml(set.id)}" aria-labelledby="tab-${escapeHtml(set.id)}" tabindex="0">
-    <p class="note">${escapeHtml(set.note)}</p>
-    ${set.includesGit ? "" : `<label class="check"><input type="checkbox" data-include-git="set-${escapeHtml(set.id)}"> Add the git guide to this copy</label>`}
+    <aside class="draft-card">
+      <p class="draft-eyebrow">What this does</p>
+      <p><strong>${escapeHtml(set.does)}</strong> ${escapeHtml(set.keeps)}</p>
+      <p class="note">${escapeHtml(set.next)}</p>
+    </aside>
+    ${set.includesGit ? "" : `<label class="check"><input type="checkbox" data-include-git="set-${escapeHtml(set.id)}"> Include the git commands in this copy</label>
+    <p class="git-added">This copy now ends with the five git commands. They do not commit.</p>`}
     <figure class="codeblock">
-      <figcaption><span>${escapeHtml(set.label)}</span><button type="button" data-copy="set-${escapeHtml(set.id)}">Copy</button></figcaption>
+      <figcaption><span>${escapeHtml(set.label)}</span><button type="button" data-copy="set-${escapeHtml(set.id)}">${escapeHtml(set.copy)}</button></figcaption>
       <pre id="set-${escapeHtml(set.id)}">${escapeHtml(set.text)}</pre>
     </figure>
   </section>`).join("\n  ");
   const firstPatch = QUEST_PROMPTS.find((prompt) => prompt.id === "first-patch");
   return layout({
     title: "spw.quest — initialize Spw Workbench",
-    description: "Run the workbench setup from the shell, or hand it to Claude, Codex, Grok, or another agent.",
+    description: "Choose who runs the setup, copy one block, and run it from the repository root. It stops before any commit.",
     canonical: "https://spw.quest/",
     script: `(${questTabs.toString()})();`,
+    themeCss: `html:not(.js) label.check, html:not(.js) .git-added { display: none; }
+    html.js .tabpanel .git-added { display: none; margin: .2rem 0 .7rem; }
+    html.js .tabpanel:has([data-include-git]:checked) .git-added { display: block; }`,
     body: `<p class="kicker">spw.quest</p>
 <h1>Initialize the workbench in this repository.</h1>
-<p class="lede">Spw Workbench adds the Spw language, parser, CLI, and editor tooling to a repository you already have. It mounts at <code>.spw/_workbench</code>; your repository keeps its own <code>.spw/</code> and everything else.</p>
-<p>Run it from the root of your repository. It needs Git and Node ${escapeHtml(readableNode(WORKBENCH.node))}. Choose who runs the setup; every set ends by running doctor.</p>
+<p class="lede">Choose who runs the setup. Copy one block. Run it from the repository root. It stops before any commit.</p>
+<p>Spw Workbench adds the Spw language, parser, CLI, and editor tooling. It mounts at <code>.spw/_workbench</code>; your repository keeps its own <code>.spw/</code>. It needs Git and Node ${escapeHtml(readableNode(WORKBENCH.node))}.</p>
 <div class="tabs">
   <div class="tablist" role="tablist" aria-label="Who runs the setup">
     ${tabs}
   </div>
   ${panels}
 </div>
-<p class="note" id="git-covered" hidden>The shell steps already run the git commands; the git guide is at <a href="/git.txt">git.txt</a> and <a href="/git.md">git.md</a>.</p>
+<p class="note" id="git-covered" hidden>Git is already in the commands above. The same five commands are at <a href="/git.txt">git.txt</a> and <a href="/git.md">git.md</a>.</p>
 <section id="git-guide">
   <h2>Git, in this order</h2>
+  <p>Use this when the block you copied does not already run git. Run only the command that matches the folder you have.</p>
   <ol>
-    <li>no <code>.git</code> → <code>git init</code></li>
-    <li>no <code>.spw/_workbench</code> in <code>.gitmodules</code> → <code>git submodule add</code></li>
-    <li>link just added → <code>checkout</code></li>
-    <li>link recorded, folder empty → <code>submodule update --init</code></li>
-    <li><code>git diff --check</code> looks only</li>
+    <li>No <code>.git</code> yet → <code>git init</code>. Creates the repository.</li>
+    <li>No <code>.spw/_workbench</code> in <code>.gitmodules</code> → <code>git submodule add</code>. Records where the workbench comes from.</li>
+    <li>Link just added → <code>checkout</code>. Pins the reviewed revision.</li>
+    <li>Link recorded, folder empty → <code>submodule update --init</code>. Downloads that revision.</li>
+    <li><code>git diff --check</code> only looks. It does not edit or commit.</li>
   </ol>
   <figure class="codeblock">
     <figcaption><span><a href="/git.txt">git.txt</a> · <a href="/git.md">git.md</a></span><button type="button" data-copy="git-copy">Copy</button></figcaption>
@@ -124,19 +133,20 @@ function renderQuest() {
 </section>
 <section id="after" aria-labelledby="after-title">
   <h2 id="after-title">When it worked</h2>
+  <p>Same result for every choice above.</p>
   <ul>
-    <li><code>spw:doctor</code> finishes without errors.</li>
+    <li><code>spw:doctor</code> finishes with no errors.</li>
     <li>These files exist: ${EXPECTED_FILES.map((file) => `<code>${escapeHtml(file)}</code>`).join(", ")}. The initializer may add a few more.</li>
-    <li>Nothing is committed. Read the diff, then commit it yourself.</li>
+    <li>Nothing was committed. Read the diff, then commit it yourself.</li>
   </ul>
-  <h2 id="next-title">Then</h2>
-  <p>Give your agent one bounded question about this repository:</p>
+  <h2 id="next-title">Then, if you want</h2>
+  <p>After doctor, give the same agent one question about this repository. Skip this if you only wanted the mount.</p>
   <figure class="codeblock">
     <figcaption><span>${escapeHtml(firstPatch.title)}</span><button type="button" data-copy="first-patch">Copy</button></figcaption>
     <pre id="first-patch">${escapeHtml(firstPatch.body)}</pre>
   </figure>
 </section>
-<p><a href="/init">Full recipe</a> · <a href="/prompts.json">Prompts</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.source}">Upstream quick start</a> · <a href="https://autonomous.feedback/spw.quest/broken?at=/">Feedback</a></p>`,
+<p><a href="/init">Full recipe</a> · <a href="/prompts.json">Prompts</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.source}">Upstream quick start</a> · <a href="https://autonomous.feedback/spw.quest?at=/">What was hard to follow</a></p>`,
   });
 }
 

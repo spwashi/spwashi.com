@@ -26,11 +26,13 @@ git diff --check
 
 export const GIT_MARKDOWN = `# Git, in this order
 
-- no \`.git\` → \`git init\`
-- no \`.spw/_workbench\` in \`.gitmodules\` → \`git submodule add\`
-- link just added → \`checkout\` the reviewed revision
-- link recorded, folder empty → \`git submodule update --init\`
-- \`git diff --check\` looks only
+Run only the command that matches the folder you have. The last command only looks.
+
+- No \`.git\` yet → \`git init\`. Creates the repository.
+- No \`.spw/_workbench\` in \`.gitmodules\` → \`git submodule add\`. Records where the workbench comes from.
+- Link just added → \`checkout\`. Pins the reviewed revision.
+- Link recorded, folder empty → \`git submodule update --init\`. Downloads that revision.
+- \`git diff --check\` only looks. It does not edit or commit.
 
 \`\`\`bash
 ${GIT_GUIDE.trim()}
@@ -52,11 +54,56 @@ git diff --check
  * model and can carry the git guide along; the shell set already runs it.
  */
 export const INSTRUCTION_SETS = Object.freeze([
-  { id: "shell", label: "Shell", note: "Every step, git included, run by you. No model.", text: SHELL_STEPS, includesGit: true },
-  { id: "claude", label: "Claude", note: "Claude Code reads the recipe and runs it in this repository. It stops before any commit.", text: `claude -p '${JOB}'`, includesGit: false },
-  { id: "codex", label: "Codex", note: "Codex runs the same recipe without prompting. It stops before any commit.", text: `codex exec '${JOB}'`, includesGit: false },
-  { id: "grok", label: "Grok", note: "Grok runs the same recipe. It stops before any commit.", text: `grok '${JOB}'`, includesGit: false },
-  { id: "paste", label: "Another agent", note: "Paste this into Cursor, Gemini, or any agent chat.", text: JOB, includesGit: false },
+  {
+    id: "shell",
+    label: "Shell",
+    does: "You run every step yourself.",
+    keeps: "Git is in this block. Nothing is committed.",
+    next: "Copy it, paste it into a terminal at the repository root, and run it.",
+    copy: "Copy commands",
+    text: SHELL_STEPS,
+    includesGit: true,
+  },
+  {
+    id: "claude",
+    label: "Claude",
+    does: "One command. Claude reads the recipe and runs it in this repository.",
+    keeps: "It stops before any commit. Git is not in the command unless you include it.",
+    next: "Copy the command and run it at the repository root.",
+    copy: "Copy command",
+    text: `claude -p '${JOB}'`,
+    includesGit: false,
+  },
+  {
+    id: "codex",
+    label: "Codex",
+    does: "One command. Codex runs the recipe without prompting.",
+    keeps: "It stops before any commit. Git is not in the command unless you include it.",
+    next: "Copy the command and run it at the repository root.",
+    copy: "Copy command",
+    text: `codex exec '${JOB}'`,
+    includesGit: false,
+  },
+  {
+    id: "grok",
+    label: "Grok",
+    does: "One command. Grok runs the recipe in this repository.",
+    keeps: "It stops before any commit. Git is not in the command unless you include it.",
+    next: "Copy the command and run it at the repository root.",
+    copy: "Copy command",
+    text: `grok '${JOB}'`,
+    includesGit: false,
+  },
+  {
+    id: "paste",
+    label: "Another agent",
+    does: "Paste this into Cursor, Gemini, or any other agent chat.",
+    keeps: "The agent fetches the recipe and stops before any commit. Git is not in the paste unless you include it.",
+    next: "Copy it, then paste it into the agent in this repository.",
+    copy: "Copy text",
+    text: JOB,
+    includesGit: false,
+  },
 ]);
 
 export const INIT_PROMPT = `Initialize the current repository with Spw Workbench at .spw/_workbench.
@@ -132,6 +179,7 @@ ${JOB}
 ${SHELL_STEPS}
 ## Git, in this order
 
+Run only the command that matches the folder you have. The last command only looks.
 https://spw.quest/git.txt
 https://spw.quest/git.md
 
