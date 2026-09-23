@@ -20,6 +20,13 @@ function clientMain() {
   const say = (message) => (typeof announce === "function" ? announce(message) : undefined);
 
   // A pasted link becomes a domain as soon as the field is left.
+  document.querySelectorAll('input[name="route"]').forEach((input) => {
+    input.addEventListener("change", () => {
+      const path = document.getElementById("path");
+      if (path && input.value) path.value = input.value;
+    });
+  });
+
   document.querySelectorAll("[data-host-field]").forEach((field) => {
     const visit = field.parentElement?.querySelector("[data-visit]") || document.querySelector("[data-visit]");
     const paintVisit = () => {

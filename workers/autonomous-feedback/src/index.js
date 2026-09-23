@@ -1,6 +1,8 @@
 import { BASE_SECURITY, JSON_CORS, htmlResponse, jsonResponse, wantsJson } from "../../lib/shell.js";
-import { CONTEXTS, DEFAULT_KIND, LEGACY_SLUGS, VERSION, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
+import { CONTEXTS, DEFAULT_KIND, LEGACY_SLUGS, VERSION, cleanPath, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
 import { loadConfig, siteKinds } from "./config.js";
+import { clearNotes, keepNote, listNotes } from "./desk.js";
+import { METER_LIMIT, SLOW_NOTE, inboxAccess, intakeOpen } from "./intake.js";
 import { renderCard, renderHome, renderMeter, renderNotFound, renderStart, renderWrite } from "./pages.js";
 
 /**
@@ -132,6 +134,7 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
     kind: String(body.kind || body.context || fallbackSlug),
     note: String(body.note || ""),
     from: cleanFrom(body.from),
+    path: cleanPath(body.path || body.at || ""),
   };
   if (String(body.company || "").trim()) return { code: "rejected", status: 400, errors: { note: "The form could not be sent." }, values };
   if (!validSubject(values.host)) {
@@ -155,18 +158,36 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
   }
   const issued = new Date().toISOString();
   const from = config.from === "off" ? "" : values.from;
+  const named = (config.routes || []).find((route) => route.path === values.path);
+  const route = named?.name || "";
   const markdown = [
     `# ${context.title} for ${config.name || values.host}`,
     `filed: ${issued}`,
     "",
     text,
     "",
+    values.path ? `page: ${route ? `${route} ` : ""}${values.path}` : "",
     from ? `from: ${from}` : "",
     `about: https://${values.host}/`,
     `via: https://autonomous.feedback/${values.host}`,
     org ? `account: ${org}` : "",
   ].filter(Boolean).join("\n");
-  return { filing: { host: values.host, context, note: text, from, issued, markdown, org: org || null }, config };
+  return { filing: { host: values.host, context, note: text, from, path: values.path, route, issued, markdown, org: org || null }, config };
+}
+
+async function maybeKeep(env, result) {
+  if (!result.filing) return result;
+  const want = Boolean(result.config?.found && result.config.queue?.want);
+  if (!want || !env?.DB) {
+    result.filing.stored = false;
+    result.filing.queue = "unattached";
+    return result;
+  }
+  const kept = await keepNote(env.DB, result.filing);
+  result.filing.stored = kept.stored;
+  result.filing.queue = kept.queue;
+  result.filing.id = kept.id || null;
+  return result;
 }
 
 /** Answer a submission as JSON, a card page, or the form again with its errors. */
@@ -189,13 +210,16 @@ async function answerFiling(request, result, { lockHost = true, embed = false } 
   if (wantsJson(request)) {
     return jsonResponse({
       schema: "slip.v0",
-      stored: false,
-      queue: "unattached",
+      stored: Boolean(filing.stored),
+      queue: filing.queue || "unattached",
+      id: filing.id || null,
       org: filing.org,
       host: filing.host,
       context: filing.context.slug,
       title: filing.context.title,
       from: filing.from || null,
+      route: filing.route || null,
+      path: filing.path || null,
       expression: filing.context.expression,
       issued: filing.issued,
       markdown: filing.markdown,
@@ -205,7 +229,7 @@ async function answerFiling(request, result, { lockHost = true, embed = false } 
   return htmlResponse(renderCard(filing, false, config), { cache: "no-store" });
 }
 
-async function handleSite(request, url, host, rest, org = null, embed = false) {
+async function handleSite(request, url, host, rest, org = null, embed = false, env = {}) {
   const subject = String(host || "").toLowerCase();
   if (!validSubject(subject)) return notFound(request, "That is not a site address.");
   if (url.searchParams.has("bearer")) {
@@ -213,10 +237,18 @@ async function handleSite(request, url, host, rest, org = null, embed = false) {
   }
   if (rest === "inbox") {
     const contract = inboxContract(subject);
-    if (request.method !== "GET") return methodNotAllowed("GET");
-    const header = request.headers.get("authorization") || "";
-    if (!header.toLowerCase().startsWith("bearer ")) return jsonResponse({ error: "locked", process: contract.process }, "no-store", 401);
-    return jsonResponse({ ...contract, error: "not_draining", filings: [] }, "no-store", 501);
+    if (!["GET", "DELETE"].includes(request.method)) return methodNotAllowed("GET, DELETE");
+    const access = inboxAccess(request.headers.get("authorization"), env.INBOX_READ_TOKEN || "");
+    if (access === "locked" || access === "wrong") {
+      return jsonResponse({ error: "locked", process: contract.process }, "no-store", 401);
+    }
+    if (!env.DB) return jsonResponse({ ...contract, error: "not_draining", filings: [] }, "no-store", 501);
+    if (request.method === "DELETE") {
+      const cleared = await clearNotes(env.DB, subject, url.searchParams.get("id") || "");
+      return jsonResponse({ cleared, queue: "desk" }, "no-store");
+    }
+    const filings = await listNotes(env.DB, subject);
+    return jsonResponse({ ...contract, queue: { ...contract.queue, attached: true }, filings }, "no-store");
   }
   if (rest === "config.json") {
     if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
@@ -224,7 +256,7 @@ async function handleSite(request, url, host, rest, org = null, embed = false) {
   }
   const slug = rest.replace(/\.json$/, "");
   const context = slug ? contextBySlug(slug) : null;
-  if (slug && !context) return notFound(request, "autonomous.feedback takes four kinds of note: appreciation, problem, suggestion, and question.");
+  if (slug && !context) return notFound(request, "Choose broken, confusing, missing, wrong, question, or appreciation.");
   // The path names the kind by its label; old slugs move to the matching address.
   if (context && context.slug !== slug && ["GET", "HEAD"].includes(request.method)) {
     const suffix = rest.endsWith(".json") ? ".json" : "";
@@ -235,7 +267,15 @@ async function handleSite(request, url, host, rest, org = null, embed = false) {
     if (url.searchParams.has("rate-limit")) {
       return jsonResponse({ error: "rate_limit_on_ingest", hint: "rate-limit=tok/s is a drain budget on GET /inbox, not POST." }, "no-store", 400);
     }
-    const result = await readFiling(request, { host: subject, slug: context ? context.slug : DEFAULT_KIND, org });
+    if (!(await intakeOpen(request, `post:${subject}`))) {
+      return answerFiling(request, {
+        code: "slow_down",
+        status: 429,
+        errors: { note: SLOW_NOTE },
+        values: { host: subject, kind: context ? context.slug : DEFAULT_KIND, note: "", from: "" },
+      }, { lockHost: true, embed });
+    }
+    const result = await maybeKeep(env, await readFiling(request, { host: subject, slug: context ? context.slug : DEFAULT_KIND, org }));
     return answerFiling(request, result, { lockHost: true, embed });
   }
   if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD, POST");
@@ -243,7 +283,14 @@ async function handleSite(request, url, host, rest, org = null, embed = false) {
     return headOr(request, jsonResponse(inboxContract(subject, context, org), "public, max-age=120"));
   }
   const config = await loadConfig(subject);
-  const html = renderWrite({ context: context || siteKinds(config)[0] || contextBySlug(DEFAULT_KIND), host: subject, lockHost: true, embed, config });
+  const html = renderWrite({
+    context: context || siteKinds(config)[0] || contextBySlug(DEFAULT_KIND),
+    host: subject,
+    lockHost: true,
+    embed,
+    config,
+    values: { path: url.searchParams.get("at") || "" },
+  });
   return headOr(request, embed ? embedHtml(html, subject, config, "public, max-age=120") : htmlResponse(html, { cache: "public, max-age=120" }));
 }
 
@@ -358,7 +405,7 @@ export default {
     await cache.put(key, jsonResponse(await snapshotClimate(), "public, max-age=60"));
   },
 
-  async fetch(request) {
+  async fetch(request, env = {}) {
     const url = new URL(request.url);
     const started = Date.now();
 
@@ -426,6 +473,10 @@ export default {
         if (wantsJson(request)) return jsonResponse({ error: "invalid_site_reference" }, "no-store", 400);
         return headOr(request, htmlResponse(renderMeter({ host: raw, error: `"${raw}" is not a public domain. Enter one like example.com.` }), { status: 400, cache: "no-store" }));
       }
+      if (!(await intakeOpen(request, "meter", METER_LIMIT))) {
+        if (wantsJson(request)) return jsonResponse({ error: "slow_down" }, "no-store", 429);
+        return headOr(request, htmlResponse(renderMeter({ host: queryHost, error: "Too many checks from this network. Wait a few minutes." }), { status: 429, cache: "no-store" }));
+      }
       const probe = await probeSite(queryHost);
       return headOr(request, htmlResponse(renderMeter({ host: queryHost, probe }), { cache: "no-store" }));
     }
@@ -443,7 +494,15 @@ export default {
         return Response.redirect(`${url.origin}/${context.slug}${url.search}`, 301);
       }
       if (request.method === "POST") {
-        const result = await readFiling(request, { host: queryHost, slug: context.slug, org });
+        if (!(await intakeOpen(request, `post:${queryHost || "open"}`))) {
+          return answerFiling(request, {
+            code: "slow_down",
+            status: 429,
+            errors: { note: SLOW_NOTE },
+            values: { host: queryHost, kind: context.slug, note: "", from: "" },
+          }, { lockHost: false });
+        }
+        const result = await maybeKeep(env, await readFiling(request, { host: queryHost, slug: context.slug, org }));
         return answerFiling(request, result, { lockHost: false });
       }
       if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD, POST");
@@ -457,7 +516,7 @@ export default {
 
     const embedMatch = url.pathname.match(/^\/embed\/([^/]+)(?:\/([^/]+))?\/?$/);
     if (embedMatch) {
-      return handleSite(request, url, decodeURIComponent(embedMatch[1]), embedMatch[2] || "", org, true);
+      return handleSite(request, url, decodeURIComponent(embedMatch[1]), embedMatch[2] || "", org, true, env);
     }
 
     const siteMatch = url.pathname.match(/^\/([^/]+)(?:\/([^/]+))?\/?$/);
@@ -469,7 +528,7 @@ export default {
         if (clean !== typed && ["GET", "HEAD"].includes(request.method)) {
           return Response.redirect(`${url.origin}/${clean}${siteMatch[2] ? `/${siteMatch[2]}` : ""}${url.search}`, 301);
         }
-        return handleSite(request, url, clean, siteMatch[2] || "", org, false);
+        return handleSite(request, url, clean, siteMatch[2] || "", org, false, env);
       }
     }
 

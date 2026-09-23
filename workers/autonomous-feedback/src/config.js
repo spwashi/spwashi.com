@@ -9,7 +9,8 @@
  * corners, and font for the theme. No stylesheet URLs, no HTML, no scripts —
  * the page's CSP would block them, and tokens cannot inject anything.
  */
-import { CONTEXTS, LEGACY_SLUGS, NOTE_MAX, NOTE_MIN, isPublicSite, resolveSlug, validSubject } from "./model.js";
+import { rejectPublicSecrets } from "./intake.js";
+import { CONTEXTS, LEGACY_SLUGS, NOTE_MAX, NOTE_MIN, cleanPath, isPublicSite, resolveSlug, validSubject } from "./model.js";
 
 export const CONFIG_PATH = "/.well-known/autonomous-feedback.json";
 export const CONFIG_SCHEMA = "autonomous-feedback.client.v0";
@@ -45,6 +46,8 @@ export function defaultConfig(host) {
     from: "off",
     note: { min: NOTE_MIN, max: NOTE_MAX },
     frame: { ancestors: [] },
+    queue: { want: false },
+    routes: [],
     theme: null,
     problems: [],
   };
@@ -130,6 +133,7 @@ export function readConfig(raw, host) {
     return config;
   }
 
+  rejectPublicSecrets(raw, problems);
   config.name = cleanText(raw.name, 60);
   config.title = cleanText(raw.title, 80);
   config.intro = cleanText(raw.intro, 300);
@@ -203,6 +207,28 @@ export function readConfig(raw, host) {
     }
   }
 
+  if (raw.routes != null) {
+    if (!Array.isArray(raw.routes)) problems.push("routes must be a list of { \"name\": \"Checkout\", \"path\": \"/checkout\" }.");
+    else {
+      for (const entry of raw.routes.slice(0, 20)) {
+        if (!entry || typeof entry !== "object") continue;
+        const name = cleanText(entry.name, 40);
+        const path = cleanPath(entry.path);
+        if (!name || !path) {
+          problems.push("Each route needs a name and a path that starts with /.");
+          continue;
+        }
+        config.routes.push({ name, path });
+      }
+    }
+  }
+
+  if (raw.queue != null) {
+    if (typeof raw.queue !== "object" || Array.isArray(raw.queue)) problems.push("queue must be an object like { \"want\": true }.");
+    else if (raw.queue.want === true) config.queue.want = true;
+    else if (raw.queue.want != null && raw.queue.want !== false) problems.push("queue.want must be true or false.");
+  }
+
   if (raw.frame?.ancestors != null) {
     const list = Array.isArray(raw.frame.ancestors) ? raw.frame.ancestors.slice(0, 10) : [];
     for (const entry of list) {
@@ -255,6 +281,8 @@ export function configToFile(config) {
   file.from = config.from;
   file.button = config.button;
   file.note = { ...config.note };
+  if (config.queue?.want) file.queue = { want: true };
+  if (config.routes?.length) file.routes = config.routes.map(({ name, path }) => ({ name, path }));
   if (config.frame.ancestors.length) file.frame = { ancestors: [...config.frame.ancestors] };
   if (config.theme) {
     const { mode, background, text, accent, corners, font } = config.theme;

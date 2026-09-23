@@ -49,7 +49,7 @@ test('quest negotiation, HEAD, methods, and redirects', async () => {
   assert.match(page, /Codex/);
   assert.match(page, /Grok/);
   assert.match(page, /Git, in this order/);
-  assert.match(page, /https:\/\/autonomous\.feedback\/spw\.quest\/problem/);
+  assert.match(page, /https:\/\/autonomous\.feedback\/spw\.quest\/broken/);
   const config = await (await get('spw.quest', '/.well-known/autonomous-feedback.json')).json();
   assert.equal(config.host, 'spw.quest');
   assert.equal(config.schema, 'autonomous-feedback.client.v0');

@@ -8,9 +8,11 @@ const FEEDBACK_CONFIG = {
   name: "spw.quest",
   title: "Feedback",
   intro: "What was hard to follow in these setup instructions.",
-  kinds: ["problem", "suggestion", "question"],
+  kinds: ["broken", "confusing", "missing", "wrong", "question"],
+  routes: [{ name: "Setup", path: "/" }, { name: "Recipe", path: "/init" }],
   contact: { bluesky: "spwashi.com", x: "spwashi" },
   button: "Send",
+  queue: { want: true },
   frame: { ancestors: ["https://spw.quest", "https://spwashi.com"] },
   theme: { mode: "dark", background: "#0a1012", text: "#e8eef1", accent: "#5eead4", corners: "round", font: "system" },
 };
@@ -113,7 +115,7 @@ function renderQuest() {
     <pre id="git-copy">${escapeHtml(GIT_GUIDE)}</pre>
   </figure>
 </section>
-<p><a href="/init">Full recipe</a> · <a href="/prompts.json">Prompts</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.source}">Upstream quick start</a> · <a href="https://autonomous.feedback/spw.quest/problem">Feedback</a></p>`,
+<p><a href="/init">Full recipe</a> · <a href="/prompts.json">Prompts</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.source}">Upstream quick start</a> · <a href="https://autonomous.feedback/spw.quest/broken">Feedback</a></p>`,
   });
 }
 

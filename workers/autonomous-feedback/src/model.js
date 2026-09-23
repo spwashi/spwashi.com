@@ -47,27 +47,45 @@ export function orgFromHostname(hostname) {
 }
 
 /**
- * Four kinds of note. The slug is the URL and matches the title; the prompt
- * says what to write; the example shows one.
+ * Kinds of note. The slug is the URL and matches the title. The first four
+ * sort a QA report; question and appreciation stay available.
  */
 export const CONTEXTS = Object.freeze([
   {
-    slug: "problem",
-    title: "Problem",
+    slug: "broken",
+    title: "Broken",
     operator: "action",
-    prompt: "What was hard to understand or use, and which page you were on.",
-    example: "The search box looks like a button. I typed in the heading instead.",
-    copy_unit: "feedback.problem.lede",
-    expression: "feedback[problem]{claim}",
+    prompt: "What failed, and what you did just before it failed.",
+    example: "I chose Pay. The button spun, then the page went blank.",
+    copy_unit: "feedback.broken.lede",
+    expression: "feedback[broken]{claim}",
   },
   {
-    slug: "suggestion",
-    title: "Suggestion",
+    slug: "confusing",
+    title: "Confusing",
     operator: "concept-edge",
-    prompt: "What would make the page clearer or easier to use.",
-    example: "Show the price before the form asks for an email address.",
-    copy_unit: "feedback.suggestion.lede",
-    expression: "feedback[suggestion]{idea}",
+    prompt: "What you could not tell how to do, and where you were.",
+    example: "The search box looks like a button. I typed in the heading instead.",
+    copy_unit: "feedback.confusing.lede",
+    expression: "feedback[confusing]{claim}",
+  },
+  {
+    slug: "missing",
+    title: "Missing",
+    operator: "frame",
+    prompt: "What you expected to find on the page, and did not.",
+    example: "There is no way back to the cart after the address step.",
+    copy_unit: "feedback.missing.lede",
+    expression: "feedback[missing]{claim}",
+  },
+  {
+    slug: "wrong",
+    title: "Wrong",
+    operator: "action",
+    prompt: "What the page says or does that does not match the thing it is about.",
+    example: "The price on the list is 12. The price on the form is 15.",
+    copy_unit: "feedback.wrong.lede",
+    expression: "feedback[wrong]{claim}",
   },
   {
     slug: "question",
@@ -89,10 +107,32 @@ export const CONTEXTS = Object.freeze([
   },
 ]);
 
-/** Slugs used before 2026-09-22, when the URL did not match the label. */
-export const LEGACY_SLUGS = Object.freeze({ wonder: "appreciation", review: "problem", practice: "suggestion", brief: "question" });
+/** Older slugs still resolve. The address redirects to the current one. */
+export const LEGACY_SLUGS = Object.freeze({
+  problem: "broken",
+  review: "broken",
+  suggestion: "confusing",
+  practice: "confusing",
+  wonder: "appreciation",
+  brief: "question",
+});
 
-export const DEFAULT_KIND = "problem";
+export const DEFAULT_KIND = "broken";
+
+/** A site path, or "" when the value is not a path. */
+export function cleanPath(value) {
+  let path = String(value || "").trim();
+  if (!path) return "";
+  try {
+    if (/^https?:\/\//i.test(path)) path = new URL(path).pathname;
+  } catch {
+    return "";
+  }
+  path = path.split(/[?#]/)[0];
+  if (!path.startsWith("/")) path = `/${path}`;
+  if (path.length > 200 || path.includes("..") || /[\u0000-\u001f]/.test(path)) return "";
+  return path;
+}
 
 /** The current slug for a slug or a legacy alias, or "" if it names no kind. */
 export function resolveSlug(slug) {
