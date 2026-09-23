@@ -198,11 +198,84 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
   owner_communication = `the inbox opens with the week: grouped counts, how many came in their own words, thanks apart, what is counted within a day, and map hints where notes keep missing a common note. Compaction is a summary the owner can act on, not a deletion log.`
 }[reg=facet]
 
+^"fb-009_serial_fiction"{
+  id = "fb-009"
+  source = `creator, 2026-09-23: "what could make this site more useful for authors, or more useful for readers of lore.land", pointing at the lore.land repo (~/Development/active/lore.land).`
+  claim = `Fiction feedback is not QA. Readers of a serial want to say a line stayed with them, that they have a theory, or that they have a question about the world; an author needs where a chapter lost someone and what readers expect next. The broken/confusing/missing/wrong kinds cannot hold that; subjects and common notes can.`
+  lore_land_today = `13 chapters built from book/content/chapters/*.json; sections have titles but no ids, and the prose is rendered by script into #chapter-content, so no passage has a stable anchor. Topics, lore items (the field-notes collector), a Scriptorium with patron seals, releases on the 13th and 26th. No .well-known/autonomous-feedback.json and no feedback link yet (checked 2026-09-23).`
+  readers = #[
+    `passage notes: select a line in the chapter runtime → autonomous.feedback/lore.land?at=/book/chapter/NN/#quote=… ; the quote rides in the fragment, so no server or log sees it until the reader sends; the card shows the quoted line with the note under it`,
+    `sealed theories: a "Theory" common note makes a card sealed until the next release; the card carries an HMAC of note, date, and host, so autonomous.feedback/verify/… can later confirm it was filed before the chapter, with nothing stored; shared sealed cards spoil nothing`,
+    `questions that become canon: "A question about the world" carries a stance for the frequent ones; an answer promoted to a lore item credits the reader who asked`,
+    `feedback at the chapter's end, never mid-prose: a frame after the related routes ("What stayed with you?") with the chapter taken from the referer`
+  ][reg=set]
+  authors = #[
+    `split: "page" on a subject keeps counts per page inside one subject, so 13 chapters (over the 12-subject limit, and sharing one set of common notes) read as "Ch. 7: 4 stayed with me, 2 lost me, 3 theories"`,
+    `cadence: [13, 26] in the file makes the digest and compaction follow release windows ("Since the Sep 26 release…") instead of weeks`,
+    `preset: "serial" brings the fiction common notes (a line stayed with me; lost the thread here; a theory; a question about the world; a typo or continuity slip), sealed theories, and cadence in one line; it is file-expressible, so free under file_free_desk_paid, and it is the feedback half of selling the reading room to other authors (@pricing series-home)`,
+    `spoiler-aware sharing: theory and late-chapter cards share blurred, chapter shown and note hidden until tapped; appreciation-wall entries (when that lands) carry chapter tags`
+  ][reg=set]
+  refuse = #[`pay-to-be-heard: patron seals may shape credit in the Scriptorium, never inbox priority`, `reading analytics: where a reader put a chapter down is asked ("Lost the thread here"), not tracked`][reg=set]
+  order = `1 lore.land's .well-known file (Chapters, World, Characters, Scriptorium; fiction common notes; a thanks line in the creator's voice), usable with what is built → 2 split: "page" and cadence-aware digests here → 3 in lore.land: section ids in build-chapters.mjs, the chapter-end frame, select-to-quote in the chapter runtime → 4 sealed, signed theory cards (needs a signing secret; demo for approval first)`
+  boundary = `lore.land is its own repository with its own CLAUDE.md: read it before editing there, and keep its commits apart from this one.`
+  status = `2026-09-23: prime. Nothing built.`
+}[reg=facet]
+
+^"fb-010_outputs_and_loops"{
+  id = "fb-010"
+  source = `creator, 2026-09-23: "mind feeds, reports, digests, cards, prompts; consider loops."`
+  claim = `What the product sends back out decides whether writing a note was worth it. Every artifact names its reader, what it may carry (words or only counts), whether it is public, and what it costs to keep; every loop ends in something the writer can see.`
+  artifacts = .{
+    cards = #[
+      `note card (landed): the writer's own artifact; carries their words; public only when they share it; stores nothing`,
+      `stance on the card page (landed): the owner's answer to a common note, shown after sending; lives in the file`,
+      `sealed theory card (fb-009): signed, sealed until the next release, verifiable later without storage`,
+      `reply card (desk): the owner answers one card; the writer sees it by revisiting their card's address; needs a stored answer, so paid`,
+      `canon credit card (fiction): a question answered as a lore item, crediting the asker; public, and only with the asker's yes`,
+      `release card (owner): counts only ("Ch. 7 in your words: 12 notes, 5 theories"), made by the owner to share; never words, never a ranking`
+    ][reg=set]
+    digests = `owner-private (landed in the inbox): the week, or the release window with cadence; grouped counts, own-words counts, thanks apart, due warning, map hints. Pushed later by webhook or email as a desk feature.`
+    reports = #[
+      `per-release report (owner-private, from tallies): resonance and lost-the-thread by chapter or subject across windows`,
+      `export (owner-owned): tallies as CSV or JSON; the owner's counts are theirs to take`,
+      `audit report (operator): the desk-flow queries in .spw/slices/feedback-desk-flow run against the remote D1`
+    ][reg=set]
+    feeds = #[
+      `public feed (file-expressible, free): the owner's stances and canon answers as Atom or JSON Feed, so "what the author has said" can be followed; changes when the file changes`,
+      `private feed of new cards: open question; feed readers cannot send a bearer, and a key in a URL is what fb-collect-guard refuses; prefer the webhook`
+    ][reg=set]
+    prompts = #[
+      `reader prompts (landed): the question-as-label, the asks, and the common notes are prompts; the chapter-end frame asks "What stayed with you?"`,
+      `owner prompts (landed): map hints ask the owner to add a common note where notes keep missing one`,
+      `agent prompts: the digest as a prompt for the owner's own agent ("readers said this about Ch. 7 in counts; draft lore items for the top three questions"); counts only unless the owner adds saved cards; the same shape as spw.quest's prompts.json`
+    ][reg=set]
+  }[reg=facet]
+  loops = #[
+    .{ name = `answer` ; path = `question → stance or reply → the writer sees it on the card page or at their card's address → fewer repeat questions` ; closes_for = `the writer` }[reg=facet],
+    .{ name = `map` ; path = `notes without a common note → digest hint → owner adds one → the next reader taps it → a count the owner can act on` ; closes_for = `the owner and the next writer` }[reg=facet],
+    .{ name = `canon` ; path = `a world question → an answer promoted to a lore item with credit → public feed and credit card → shared → new readers arrive at the chapter` ; closes_for = `the asker, publicly` }[reg=facet],
+    .{ name = `theory` ; path = `a sealed prediction before a release → the release → reveal and verify → "I called it" shared → the next chapter's theories` ; closes_for = `the writer, provably` }[reg=facet],
+    .{ name = `release` ; path = `cadence digest and report → the author writes the next chapter knowing where readers were lost → release card → readers return` ; closes_for = `the author and returning readers` }[reg=facet],
+    .{ name = `thanks` ; path = `one-tap thanks → the owner's thanks line → thanks counted apart in the digest` ; closes_for = `both sides, cheaply` }[reg=facet],
+    .{ name = `agent` ; path = `agents file findings under a writer label → digest → owner fixes → the agent checks again` ; closes_for = `the owner` }[reg=facet]
+  ][reg=set]
+  hygiene = #[
+    `every loop ends in something the writer can see; a loop that only feeds the owner is a funnel, not a loop`,
+    `words leave the inbox only by the writer's own share or the owner's explicit choice; digests, reports, feeds, and release cards carry counts`,
+    `public outputs are opt-in and spoiler-aware; credit names a reader only with their yes`,
+    `no loop rewards volume: no leaderboards, no "top readers", no streaks`
+  ][reg=set]
+  order = `already landed: note card, stance, inbox digest, map hints, reader prompts → next free: public stance feed, release card, agent prompt from the digest → then desk: webhook digest, reply cards, export → fiction: sealed theories, canon credit (fb-009)`
+  status = `2026-09-23: prime.`
+}[reg=facet]
+
 ^"open"{
   questions = #[
     `Does the "kept by the site" mark need the desk, or should a claimed site earn it for free?`,
     `Should an owner be able to answer a card before the desk exists, as a card they post themselves?`,
-    `Which comes first after claiming: the frame view for writers, or the fragment link?`
+    `Which comes first after claiming: the frame view for writers, or the fragment link?`,
+    `fb-009: does a sealed theory reveal itself on the release date, or only when its writer shows it?`,
+    `fb-009: should a credited canon answer name the reader by the handle on their card, or ask first?`
   ][reg=set]
 }[reg=facet]
 
