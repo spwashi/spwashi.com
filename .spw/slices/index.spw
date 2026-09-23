@@ -10,6 +10,7 @@
 @page_region_discoverability: ~"./page-region-discoverability/index.spw"
 @dimensional_expression_navigation: ~"./dimensional-expression-navigation/index.spw"
 @production_season_rhythm: ~"./production-season-rhythm/index.spw"
+@feedback_desk_flow: ~"./feedback-desk-flow/index.spw"
 @modular_experience_slices_plan: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
 @page_model: ~"../surfaces/page-model.spw"
 @semantic_capacity: ~"../conventions/semantic-capacity.spw"
@@ -27,6 +28,7 @@ dispatch: .{
  page_region_discoverability = @page_region_discoverability
  dimensional_expression_navigation = @dimensional_expression_navigation
  production_season_rhythm = @production_season_rhythm
+ feedback_desk_flow = @feedback_desk_flow
  modular_experience_slices_plan = @modular_experience_slices_plan
  page_model = @page_model
  semantic_capacity = @semantic_capacity

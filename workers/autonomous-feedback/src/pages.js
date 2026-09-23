@@ -17,21 +17,21 @@ export const SNIPPETS = Object.freeze({
   link: {
     label: "Link",
     choice: "A text link that opens the form on autonomous.feedback. Works anywhere you can add a link.",
-    where: "Paste it where readers should find it, such as your footer or an About page.",
+    where: "Paste it where readers should find it, such as your footer or an About page. The form learns which page the reader came from.",
     language: "html",
-    template: `<a href="${ORIGIN}/{{host}}/{{kind}}">Send feedback</a>`,
+    template: `<a href="${ORIGIN}/{{host}}/{{kind}}" referrerpolicy="no-referrer-when-downgrade">Send feedback</a>`,
   },
   frame: {
     label: "Frame",
     choice: "The form inside your page. Readers can switch between the kinds of note you offer.",
     where: "Paste it where the form should appear. It is 560 pixels tall; change height to fit.",
     language: "html",
-    template: `<iframe title="Feedback for {{host}}" src="${ORIGIN}/embed/{{host}}/{{kind}}" width="100%" height="560" style="border:0" loading="lazy"></iframe>`,
+    template: `<iframe title="Feedback for {{host}}" src="${ORIGIN}/embed/{{host}}/{{kind}}" width="100%" height="560" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`,
   },
   form: {
     label: "HTML form",
     choice: "A plain form that sends one kind of note. No script, styled by your own CSS.",
-    where: "Paste it where the form should appear. Readers land on their card after sending.",
+    where: "Paste it where the form should appear. Readers land on their card after sending. To name the page, add a hidden input: name=\"path\" value=\"/this/page\".",
     language: "html",
     template: `<form method="post" action="${ORIGIN}/{{host}}">
   <input type="hidden" name="kind" value="{{kind}}">
@@ -106,7 +106,7 @@ function cardMarkup({ context, host, note, issued, id = "", sample = false, name
 </article>`;
 }
 
-function routeField(routes, path) {
+function routeField(routes, path, pathFrom = "") {
   const clean = cleanPath(path);
   const named = routes.some((route) => route.path === clean);
   const options = routes.map((route) => `<label class="choice"><input type="radio" name="route" value="${escapeHtml(route.path)}"${route.path === clean ? " checked" : ""}> <span><strong>${escapeHtml(route.name)}</strong><span>${escapeHtml(route.path)}</span></span></label>`).join("\n      ");
@@ -117,12 +117,25 @@ function routeField(routes, path) {
       <label class="choice"><input type="radio" name="route" value=""${!named ? " checked" : ""}> <span><strong>Another page</strong><span>Type its path below</span></span></label>
     </div>`
     : "";
-  return `<fieldset id="page">
-  <legend>Page</legend>
-  ${choices}
+  const picker = `${choices}
   <label for="path">Path</label>
   <p class="hint" id="path-hint">Where on the site this happened, like /checkout. Optional.</p>
-  <input id="path" name="path" type="text" value="${escapeHtml(clean)}" placeholder="/checkout" maxlength="200" spellcheck="false" autocapitalize="none" aria-describedby="path-hint">
+  <input id="path" name="path" type="text" value="${escapeHtml(clean)}" placeholder="/checkout" maxlength="200" spellcheck="false" autocapitalize="none" aria-describedby="path-hint">`;
+  // A page the link named or the reader came from is shown, not asked; the picker stays one click away.
+  if (clean && pathFrom) {
+    const route = routes.find((r) => r.path === clean);
+    return `<fieldset id="page">
+  <legend>Page</legend>
+  <p class="page-known">About <strong>${escapeHtml(route ? `${route.name} · ${clean}` : clean)}</strong></p>
+  <details>
+    <summary>Change or clear the page</summary>
+  ${picker}
+  </details>
+</fieldset>`;
+  }
+  return `<fieldset id="page">
+  <legend>Page</legend>
+  ${picker}
 </fieldset>`;
 }
 
@@ -167,7 +180,7 @@ export function renderHome(host = "") {
 <ol class="steps">
   <li><strong>Any site: free.</strong> <span>Readers can write about any public site. The card travels by hand, and nothing is kept.</span></li>
   <li><strong>Your site: free.</strong> <span>Publish one file to choose the kinds of note, name your pages, match your colours, and say where you take messages. <a href="/start">The setup page</a> writes it for you.</span></li>
-  <li><strong>An inbox: on request.</strong> <span>Add <code>"queue": { "want": true }</code> to your file to ask for one. An inbox keeps every card for your site in one place. Until yours opens, nothing is kept.</span></li>
+  <li><strong>An inbox: on request.</strong> <span>Add <code>"queue": { "want": true }</code> to your file to ask for one. An inbox keeps new cards for three days. You save the ones worth keeping; the rest become counts by page and kind. Until yours opens, nothing is kept.</span></li>
 </ol>
 <h2>Write a note about a site</h2>
 ${kindLinks()}`,
@@ -252,9 +265,30 @@ export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, erro
       <dt><code>from</code></dt><dd><code>"off"</code>, <code>"optional"</code>, or <code>"required"</code>: a field for the writer's name or handle, printed on the card. Nothing is stored either way. Do not put a token or password in this file.</dd>
       <dt><code>note</code></dt><dd><code>min</code> and <code>max</code> characters, between 1 and ${NOTE_MAX.toLocaleString("en-US")}.</dd>
       <dt><code>queue.want</code></dt><dd><code>true</code> asks for an inbox that keeps each card for your site. Until the inbox opens, nothing is kept and readers send cards by hand. The status above says which.</dd>
+      <dt><code>inbox.key</code></dt><dd><code>"sha256:"</code> and the hash of a key only you keep. The key opens <code>/yoursite/inbox</code>; the file holds only its hash. See “Make an inbox key” below.</dd>
       <dt><code>frame.ancestors</code></dt><dd>Other https origins that may show the frame, such as a blog on a different domain. Up to 10.</dd>
       <dt><code>theme</code></dt><dd><code>mode</code> (<code>"light"</code> or <code>"dark"</code>), <code>background</code>, <code>text</code>, and <code>accent</code> as hex colours, <code>corners</code> (<code>"sharp"</code>, <code>"round"</code>, <code>"soft"</code>), and <code>font</code> (<code>"system"</code>, <code>"serif"</code>, <code>"mono"</code>, <code>"rounded"</code>). Colours that are hard to read are replaced with the defaults.</dd>
     </dl>
+  </details>
+  <details id="inbox-key">
+    <summary>Make an inbox key</summary>
+    <p>Make the key on your own machine, keep it, and put only its hash in the file:</p>
+    <figure class="codeblock">
+      <figcaption><span>shell</span><button type="button" data-copy="keygen-snippet">Copy</button></figcaption>
+      <pre id="keygen-snippet">KEY=$(openssl rand -hex 32); echo "key:  $KEY"
+printf %s "$KEY" | shasum -a 256 | sed 's/ .*//; s/^/hash: sha256:/'</pre>
+    </figure>
+    <div data-keygen hidden>
+      <p><button type="button" data-make-key>Make one in this browser</button> <span class="hint">Nothing is sent anywhere.</span></p>
+      <figure class="codeblock" data-key-result hidden>
+        <figcaption><span>Your key: keep it, never publish it</span><button type="button" data-copy="inbox-key-value">Copy</button></figcaption>
+        <pre id="inbox-key-value"></pre>
+      </figure>
+      <figure class="codeblock" data-key-result hidden>
+        <figcaption><span>Add to your file</span><button type="button" data-copy="inbox-key-hash">Copy</button></figcaption>
+        <pre id="inbox-key-hash"></pre>
+      </figure>
+    </div>
   </details>
   <p class="note">On GitHub Pages without a custom build, add an empty <code>.nojekyll</code> file at the root of your site; otherwise Jekyll skips the <code>.well-known</code> folder.</p>
 </section>
@@ -272,7 +306,7 @@ function configStatus(host, config, desk = "none") {
     ? `<p><strong>Found a configuration file for ${escapeHtml(host)}.</strong> Showing ${siteKinds(config).map((k) => escapeHtml(k.title)).join(", ")}${config.theme ? `, ${escapeHtml(config.theme.mode)} theme` : ""}.${config.problems.length ? " Some of it was not applied:" : " Everything in it was applied."}</p>`
     : `<p><strong>No configuration applied for ${escapeHtml(host)}.</strong> The defaults are in use.</p>`;
   const inbox = desk === "open"
-    ? `<p><strong>Inbox: open.</strong> Cards for ${escapeHtml(host)} are kept.</p>`
+    ? `<p><strong>Inbox: open.</strong> Cards for ${escapeHtml(host)} are kept for three days, longer if saved. ${config.inbox?.key ? `<a href="/${escapeHtml(host)}/inbox">Open the inbox</a>.` : "Add <code>inbox.key</code> to your file to read it."}</p>`
     : desk === "requested"
       ? `<p><strong>Inbox: requested.</strong> Your file asks for one. It is not open yet, so readers still send cards by hand and nothing is kept.</p>`
       : "";
@@ -368,7 +402,7 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
 ${lockHost && isPublicSite(host) ? `<p class="visit"><a href="https://${escapeHtml(host)}/">Open ${escapeHtml(host)}</a></p>` : ""}
 ${site.intro ? `<p class="lede">${escapeHtml(site.intro)}</p>` : ""}
 ${embed ? "" : `<p class="${site.intro ? "note" : "lede"}">${desk === "open"
-    ? `Your note is kept for ${escapeHtml(display)}, and becomes a card you can also save and send.`
+    ? `Your note is kept for ${escapeHtml(display)} for three days, longer if they save it, and becomes a card you can also save and send.`
     : lockHost
       ? `Your note becomes a card you can save and send to whoever runs ${escapeHtml(display)}. Nothing is stored.`
       : "Your note becomes a card you can save and send to whoever runs the site. Nothing is stored unless the site has an inbox."}</p>`}
@@ -382,7 +416,7 @@ ${summary}
     </div>
   </fieldset>
   ${kindsShown.length === 1 ? `<input type="hidden" name="kind" value="${context.slug}">` : ""}
-  ${routeField(site.routes || [], values.path ?? "")}
+  ${routeField(site.routes || [], values.path ?? "", values.pathFrom || "")}
   ${lockHost ? `<input type="hidden" name="host" value="${escapeHtml(host)}">` : hostField({ host: values.host ?? host, error: errors.host, label: "Site the note is about", hint: "A domain like example.com." })}
   ${fromField}
   <label for="note">${kindsShown.length === 1 ? escapeHtml(context.title) : "Your note"}</label>
@@ -444,7 +478,7 @@ export function renderCard(filing, embed = false, config = null) {
     body: `${embed ? "" : kicker()}
 <h1>Your card is ready</h1>
 <p class="lede">${filing.stored
-    ? `Kept for ${escapeHtml(display)}. You can still save or share the card.`
+    ? `Kept for ${escapeHtml(display)} for three days, longer if they save it. You can still save or share the card.`
     : filing.queue === "full"
       ? `The inbox for ${escapeHtml(display)} is full, so this card was not kept. Send it by hand, or ask them to clear the inbox.`
       : filing.queue === "requested"
@@ -462,7 +496,7 @@ ${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, is
 </div>
 ${sendTo}
 <p class="note">${filing.stored
-    ? "Kept in the inbox for this site. The card is also on this page."
+    ? "Kept in the inbox for this site. If it is not saved within three days, it becomes a count by page and kind, and its words are deleted."
     : "Nothing was stored. The card exists on this page and in anything you save or send."}</p>
 <pre id="slip" hidden>${escapeHtml(filing.markdown)}</pre>
 <p class="actions"><a class="door" href="${escapeHtml(back)}"><strong>Write another</strong><span>for ${escapeHtml(filing.host)}</span></a></p>`,
@@ -479,5 +513,163 @@ export function renderNotFound(message = "There is nothing at this address.") {
 <h1>Not found</h1>
 <p class="lede">${escapeHtml(message)}</p>
 <p class="actions"><a class="door" href="/"><strong>Start over</strong><span>autonomous.feedback</span></a></p>`,
+  });
+}
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+function compactsOn(issued) {
+  return new Date(Date.parse(issued) + 3 * DAY_MS).toISOString().slice(0, 10);
+}
+
+function keyForm({ action, label, hint, error = "", button }) {
+  return `<form method="post" action="${escapeHtml(action)}" class="panel">
+  <input type="hidden" name="action" value="open">
+  <label for="key">${escapeHtml(label)}</label>
+  <p class="hint" id="key-hint">${escapeHtml(hint)}</p>
+  ${fieldError("key-error", error)}
+  <input id="key" name="key" type="password" autocomplete="current-password" spellcheck="false" autocapitalize="none" required aria-describedby="key-hint${error ? " key-error" : ""}"${error ? ` aria-invalid="true" autofocus` : ""}>
+  <p class="actions"><button type="submit">${escapeHtml(button)}</button></p>
+</form>`;
+}
+
+/** The inbox before a key opens it, or while no desk is open for the site. */
+export function renderInboxLock({ host, desk = "none", error = "" }) {
+  const lede = desk === "open"
+    ? `Enter the inbox key for ${escapeHtml(host)}.`
+    : desk === "requested"
+      ? `${escapeHtml(host)} has asked for an inbox. It is not open yet, so readers still send cards by hand and nothing is kept.`
+      : `${escapeHtml(host)} has no inbox. Readers send cards by hand.`;
+  return layout({
+    title: `Inbox for ${host} — autonomous.feedback`,
+    description: `The inbox for ${host}.`,
+    canonical: `${ORIGIN}/${encodeURIComponent(host)}/inbox`,
+    quiet: true,
+    body: `${kicker()}
+<h1>Inbox for ${escapeHtml(host)}</h1>
+<p class="lede">${lede}</p>
+${desk === "open" ? keyForm({ action: `/${encodeURIComponent(host)}/inbox`, label: "Inbox key", hint: "The key you kept when you added its hash to your file. It stays in this browser for 12 hours.", error, button: "Open the inbox" }) : `<p class="note"><a href="/start?host=${encodeURIComponent(host)}#config-title">How an inbox opens</a></p>`}`,
+  });
+}
+
+const INBOX_NOTICES = Object.freeze({
+  saved: "Saved. It keeps its words until you release it.",
+  released: "Released. If it is older than three days, it becomes a count at the next compaction.",
+  deleted: "Deleted.",
+  missing: "That card is no longer here.",
+});
+
+function inboxCard(host, name, note, actions, hint = "") {
+  const context = contextBySlug(note.context) || { title: note.title, operator: "frame", expression: "" };
+  return `<li>
+    ${cardMarkup({ context, host, note: note.note, issued: note.issued, name, from: note.from || "", path: note.path || "", routeName: note.route || "", sample: true })}
+    ${hint ? `<p class="hint">${hint}</p>` : ""}
+    <form method="post" action="/${encodeURIComponent(host)}/inbox" class="actions">
+      <input type="hidden" name="id" value="${escapeHtml(note.id)}">
+      ${actions}
+      <button type="submit" name="action" value="delete" class="secondary">Delete</button>
+    </form>
+  </li>`;
+}
+
+function tallyTable(tallies) {
+  if (!tallies.length) return `<p class="note">Nothing has been counted yet.</p>`;
+  const rows = tallies.map((t) => `<tr><td>${escapeHtml(t.day)}</td><td>${t.page ? escapeHtml(t.page) : "(no page)"}</td><td>${escapeHtml(contextBySlug(t.kind)?.title || t.kind)}</td><td class="num">${t.count}</td></tr>`).join("\n      ");
+  return `<div class="table-scroll"><table class="tally">
+    <thead><tr><th scope="col">Day</th><th scope="col">Page</th><th scope="col">Kind</th><th scope="col" class="num">Cards</th></tr></thead>
+    <tbody>
+      ${rows}
+    </tbody>
+  </table></div>`;
+}
+
+/** An open inbox: saved cards, new cards with the day they compact, and what has been counted. */
+export function renderInbox({ host, name = "", notes = [], tallies = [], limit = 10, done = "", role = "owner" }) {
+  const saved = notes.filter((n) => n.saved);
+  const fresh = notes.filter((n) => !n.saved);
+  const full = saved.length >= limit;
+  const notice = done === "limit"
+    ? `You have saved ${limit} cards. Release one to save another.`
+    : INBOX_NOTICES[done] || "";
+  const savedList = saved.length
+    ? `<ul class="inbox">${saved.map((n) => inboxCard(host, name, n, `<button type="submit" name="action" value="release">Release</button>`)).join("\n")}</ul>`
+    : `<p class="note">No saved cards. Save a card to keep its words past three days.</p>`;
+  const freshList = fresh.length
+    ? `<ul class="inbox">${fresh.map((n) => inboxCard(host, name, n, `<button type="submit" name="action" value="save"${full ? " disabled" : ""}>Save</button>`, `Counted on ${escapeHtml(compactsOn(n.issued))} unless saved.`)).join("\n")}</ul>`
+    : `<p class="note">No new cards.</p>`;
+  return layout({
+    title: `Inbox for ${host} — autonomous.feedback`,
+    description: `The inbox for ${host}.`,
+    canonical: `${ORIGIN}/${encodeURIComponent(host)}/inbox`,
+    quiet: true,
+    body: `${kicker()}
+<h1>Inbox for ${escapeHtml(name || host)}</h1>
+<p class="lede">New cards wait here for three days. Save the ones worth keeping; the rest become counts by page and kind, and their words are deleted.</p>
+${notice ? `<p class="panel" role="status">${escapeHtml(notice)}</p>` : ""}
+<h2>Saved <span class="hint">${saved.length} of ${limit}</span></h2>
+${savedList}
+<h2>New <span class="hint">${fresh.length}</span></h2>
+${freshList}
+<h2>Counted</h2>
+${tallyTable(tallies)}
+<form method="post" action="/${encodeURIComponent(host)}/inbox" class="actions">
+  <input type="hidden" name="action" value="close">
+  <button type="submit" class="secondary">Close the inbox on this browser</button>
+  ${role === "operator" ? `<a class="door" href="/desk"><strong>Desk</strong><span>every open inbox</span></a>` : ""}
+</form>`,
+  });
+}
+
+export function renderDeskLock({ error = "" }) {
+  return layout({
+    title: "Desk — autonomous.feedback",
+    description: "Every open inbox.",
+    canonical: `${ORIGIN}/desk`,
+    quiet: true,
+    body: `${kicker()}
+<h1>Desk</h1>
+<p class="lede">Every open inbox, for the operator.</p>
+${keyForm({ action: "/desk", label: "Operator token", hint: "INBOX_READ_TOKEN. It stays in this browser for 12 hours.", error, button: "Open the desk" })}`,
+  });
+}
+
+/** The operator's desk: each open inbox with its counts and what the next compaction would count. */
+export function renderDesk({ sites = [], limit = 10, compacted = null }) {
+  const rows = sites.map((site) => {
+    const inbox = `/${encodeURIComponent(site.host)}/inbox`;
+    if (site.state !== "open") {
+      return `<section class="panel" aria-labelledby="desk-${escapeHtml(site.host)}">
+  <h2 id="desk-${escapeHtml(site.host)}">${escapeHtml(site.host)}</h2>
+  <p class="note">Listed in DESK_HOSTS, but the site's file does not ask for an inbox (queue.want), so nothing is kept.</p>
+</section>`;
+    }
+    const due = site.due.reduce((sum, t) => sum + t.count, 0);
+    return `<section class="panel" aria-labelledby="desk-${escapeHtml(site.host)}">
+  <h2 id="desk-${escapeHtml(site.host)}"><a href="${inbox}">${escapeHtml(site.host)}</a></h2>
+  <p>${site.unsaved} new · ${site.saved} of ${limit} saved${site.oldest ? ` · oldest new card ${escapeHtml(site.oldest.slice(0, 10))}` : ""}</p>
+  ${due
+    ? `<p>Next compaction counts ${due} card${due === 1 ? "" : "s"}:</p>${tallyTable(site.due)}
+  <form method="post" action="/desk" class="actions">
+    <input type="hidden" name="action" value="compact">
+    <input type="hidden" name="host" value="${escapeHtml(site.host)}">
+    <button type="submit">Compact now</button>
+  </form>`
+    : `<p class="note">Nothing is due. New cards compact three days after they arrive.</p>`}
+</section>`;
+  }).join("\n");
+  return layout({
+    title: "Desk — autonomous.feedback",
+    description: "Every open inbox.",
+    canonical: `${ORIGIN}/desk`,
+    quiet: true,
+    body: `${kicker()}
+<h1>Desk</h1>
+<p class="lede">Every open inbox. Unsaved cards older than three days are compacted on a schedule; Compact now runs it for one site.</p>
+${compacted ? `<p class="panel" role="status">Compacted ${compacted.count} card${compacted.count === 1 ? "" : "s"} for ${escapeHtml(compacted.host)}.</p>` : ""}
+${rows || `<p class="note">No site is listed in DESK_HOSTS.</p>`}
+<form method="post" action="/desk" class="actions">
+  <input type="hidden" name="action" value="close">
+  <button type="submit" class="secondary">Close the desk on this browser</button>
+</form>`,
   });
 }

@@ -4,6 +4,7 @@ import worker from '../src/index.js';
 import { CLIENT_SCRIPT } from '../src/client.js';
 import { contrast, readConfig } from '../src/config.js';
 import { normalizeHost } from '../src/model.js';
+import { memoryDb } from './memory-db.mjs';
 
 const get = (host, path, options) => worker.fetch(new Request(`https://${host}${path}`, options));
 const page = async (path, options) => (await get('autonomous.feedback', path, options)).text();
@@ -276,44 +277,6 @@ test('a public file cannot carry an inbox token', () => {
   assert.equal(JSON.stringify(report).includes('super-secret-value'), false);
 });
 
-function memoryDb() {
-  const rows = [];
-  const run = (sql, args) => {
-    const drop = (pred) => {
-      const before = rows.length;
-      for (let i = rows.length - 1; i >= 0; i -= 1) if (pred(rows[i])) rows.splice(i, 1);
-      return { meta: { changes: before - rows.length } };
-    };
-    if (sql.startsWith('DELETE FROM notes WHERE issued')) return drop((row) => row.issued < args[0]);
-    if (sql.includes('host = ? AND issued')) return drop((row) => row.host === args[0] && row.issued < args[1]);
-    if (sql.includes('host = ? AND id')) return drop((row) => row.host === args[0] && row.id === args[1]);
-    if (sql.startsWith('DELETE FROM notes WHERE host')) return drop((row) => row.host === args[0]);
-    if (sql.startsWith('INSERT')) {
-      const [id, host, kind, title, note, writer, issued, route_name, route_path] = args;
-      rows.push({ id, host, kind, title, note, writer, issued, route_name, route_path });
-      return { meta: { changes: 1 } };
-    }
-    throw new Error(sql);
-  };
-  const query = (sql, args) => {
-    if (sql.startsWith('SELECT COUNT')) return { n: rows.filter((row) => row.host === args[0]).length };
-    if (sql.startsWith('SELECT')) return rows.filter((row) => row.host === args[0]).sort((a, b) => b.issued.localeCompare(a.issued));
-    throw new Error(sql);
-  };
-  return {
-    prepare(sql) {
-      return {
-        bind(...args) {
-          return {
-            run: async () => run(sql, args),
-            first: async () => query(sql, args),
-            all: async () => ({ results: query(sql, args) }),
-          };
-        },
-      };
-    },
-  };
-}
 
 test('a site that asks for a queue can list and clear its notes', async () => {
   const restore = stubFetch({
@@ -373,15 +336,18 @@ test('a bound queue stays closed while the inbox token is unset', async () => {
   const env = { DB: memoryDb(), DESK_HOSTS: 'kept.example' };
   const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
   try {
-    const filed = await (await call('/kept.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.' }))).json();
-    assert.equal(filed.stored, true);
+    // No reader: nothing is kept, and any bearer is answered 501.
+    const unread = await (await call('/kept.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.' }))).json();
+    assert.equal(unread.stored, false);
     const bearer = { authorization: 'Bearer anything' };
     const read = await call('/kept.example/inbox', { headers: bearer });
     assert.equal(read.status, 501);
     assert.deepEqual((await read.json()).filings, []);
     assert.equal((await call('/kept.example/inbox', { method: 'DELETE', headers: bearer })).status, 501);
     assert.equal((await call('/kept.example/inbox')).status, 401);
+    // With a reader, the desk opens and keeps what follows.
     env.INBOX_READ_TOKEN = 'desk-token';
+    assert.equal((await (await call('/kept.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.' }))).json()).stored, true);
     const kept = await (await call('/kept.example/inbox', { headers: { authorization: 'Bearer desk-token' } })).json();
     assert.equal(kept.filings.length, 1);
   } finally {
@@ -446,4 +412,155 @@ test('the meter answers in a sentence and says what to do next', async () => {
 test('the page script compiles', () => {
   assert.doesNotThrow(() => new Function(`var __defProp=(t,p,d)=>Object.defineProperty(t,p,d);var __name=(t,v)=>__defProp(t,"name",{value:v,configurable:true});${CLIENT_SCRIPT}`));
   assert.doesNotMatch(CLIENT_SCRIPT, /<\/script/i);
+});
+
+const sha = async (text) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)))].map((b) => b.toString(16).padStart(2, '0')).join('');
+const cookieFrom = (response) => (response.headers.get('set-cookie') || '').split(';')[0];
+const NOTE = 'The label and the field are too far apart to tell they belong together.';
+
+test('an owner opens their inbox with a key whose hash is in their file, and saves within a limit', async () => {
+  const key = 'owner-key-for-kept-example';
+  const restore = stubFetch({
+    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true }, inbox: { key: `sha256:${await sha(key)}` } },
+  });
+  const env = { DB: memoryDb(), DESK_HOSTS: 'kept.example', SAVE_LIMIT: '1' };
+  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
+  try {
+    await call('/kept.example/broken', json({ note: NOTE }));
+    await call('/kept.example/confusing', json({ note: `${NOTE} Again.` }));
+    const locked = await call('/kept.example/inbox');
+    assert.equal(locked.status, 401);
+    assert.match(await locked.text(), /name="key"/);
+    const wrong = await call('/kept.example/inbox', form({ action: 'open', key: 'nope' }));
+    assert.equal(wrong.status, 401);
+    const opened = await call('/kept.example/inbox', form({ action: 'open', key }));
+    assert.equal(opened.status, 303);
+    assert.match(opened.headers.get('set-cookie'), /HttpOnly; Secure; SameSite=Strict/);
+    assert.match(opened.headers.get('set-cookie'), /Path=\/kept\.example\/inbox/);
+    const cookie = { cookie: cookieFrom(opened) };
+    const page = await (await call('/kept.example/inbox', { headers: cookie })).text();
+    assert.match(page, /too far apart/);
+    assert.match(page, /Counted on \d{4}-\d{2}-\d{2} unless saved\./);
+    const [first, second] = env.DB._notes.map((n) => n.id);
+    const saved = await call('/kept.example/inbox', { ...form({ action: 'save', id: first }), headers: { ...form({}).headers, ...cookie } });
+    assert.equal(saved.headers.get('location'), 'https://autonomous.feedback/kept.example/inbox?done=saved');
+    const over = await call('/kept.example/inbox', { ...form({ action: 'save', id: second }), headers: { ...form({}).headers, ...cookie } });
+    assert.equal(over.headers.get('location'), 'https://autonomous.feedback/kept.example/inbox?done=limit');
+    assert.match(await (await call('/kept.example/inbox?done=limit', { headers: cookie })).text(), /You have saved 1 cards\. Release one/);
+    // The owner key reads the JSON API too; it does not open another site's desk.
+    const api = await (await call('/kept.example/inbox', { headers: { authorization: `Bearer ${key}` } })).json();
+    assert.equal(api.filings.filter((f) => f.saved).length, 1);
+    assert.equal((await call('/other.example/inbox', { headers: { authorization: `Bearer ${key}` } })).status, 501);
+  } finally {
+    restore();
+  }
+});
+
+test('unsaved cards older than three days become tallies; saved cards keep their words', async () => {
+  const restore = stubFetch({
+    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true }, routes: [{ name: 'Checkout', path: '/checkout' }] },
+  });
+  const env = { DB: memoryDb(), DESK_HOSTS: 'kept.example', INBOX_READ_TOKEN: 'desk-token' };
+  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
+  try {
+    for (const kind of ['broken', 'broken', 'missing']) await call(`/kept.example/${kind}`, json({ note: NOTE, path: '/checkout' }));
+    await call('/kept.example/appreciation', json({ note: 'Kept because the owner saved it on purpose.' }));
+    const old = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString();
+    for (const n of env.DB._notes) n.issued = old;
+    env.DB._notes.find((n) => n.kind === 'appreciation').saved = 1;
+    // The cron also snapshots the climate into the Workers cache; give it one.
+    const hadCaches = 'caches' in globalThis;
+    globalThis.caches = { default: { put: async () => {}, match: async () => undefined } };
+    try {
+      await worker.scheduled({}, env, null);
+    } finally {
+      if (!hadCaches) delete globalThis.caches;
+    }
+    assert.equal(env.DB._notes.length, 1);
+    assert.equal(env.DB._notes[0].kind, 'appreciation');
+    const tallies = [...env.DB._tallies.values()].map(({ page, kind, count }) => `${page} ${kind} ${count}`).sort();
+    assert.deepEqual(tallies, ['Checkout broken 2', 'Checkout missing 1']);
+    const api = await (await call('/kept.example/inbox', { headers: { authorization: 'Bearer desk-token' } })).json();
+    assert.equal(api.filings.length, 1);
+    assert.equal(api.tallies.reduce((sum, t) => sum + t.count, 0), 3);
+    assert.doesNotMatch(JSON.stringify(api.tallies), /too far apart/);
+  } finally {
+    restore();
+  }
+});
+
+test('the operator desk lists every open inbox, previews compaction, and compacts one site', async () => {
+  const restore = stubFetch({
+    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true } },
+  });
+  const env = { DB: memoryDb(), DESK_HOSTS: 'kept.example idle.example', INBOX_READ_TOKEN: 'desk-token' };
+  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
+  try {
+    await call('/kept.example/broken', json({ note: NOTE }));
+    env.DB._notes[0].issued = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString();
+    assert.equal((await call('/desk')).status, 401);
+    assert.equal((await call('/desk', form({ action: 'open', key: 'owner-guess' }))).status, 401);
+    const opened = await call('/desk', form({ action: 'open', key: 'desk-token' }));
+    assert.equal(opened.status, 303);
+    assert.match(opened.headers.get('set-cookie'), /Path=\//);
+    const cookie = { cookie: cookieFrom(opened) };
+    const desk = await (await call('/desk', { headers: cookie })).text();
+    assert.match(desk, /Next compaction counts 1 card:/);
+    assert.match(desk, /idle\.example[\s\S]*does not ask for an inbox/);
+    const compacted = await call('/desk', { ...form({ action: 'compact', host: 'kept.example' }), headers: { ...form({}).headers, ...cookie } });
+    assert.equal(compacted.headers.get('location'), 'https://autonomous.feedback/desk?compacted=1&host=kept.example');
+    assert.equal(env.DB._notes.length, 0);
+    // The operator cookie also opens a site's inbox page.
+    assert.match(await (await call('/kept.example/inbox', { headers: cookie })).text(), /<h2>Counted<\/h2>/);
+  } finally {
+    restore();
+  }
+});
+
+test('the write page names the page the reader came from, when the Referer is the site', async () => {
+  const restore = stubFetch({
+    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', routes: [{ name: 'Checkout', path: '/checkout' }] },
+  });
+  const call = (path, headers = {}) => worker.fetch(new Request(`https://autonomous.feedback${path}`, { headers }));
+  try {
+    const named = await (await call('/kept.example/broken', { referer: 'https://www.kept.example/checkout?order=8812#pay' })).text();
+    assert.match(named, /About <strong>Checkout · \/checkout<\/strong>/);
+    assert.match(named, /<summary>Change or clear the page<\/summary>/);
+    assert.doesNotMatch(named, /8812/);
+    const unnamed = await (await call('/kept.example/broken', { referer: 'https://kept.example/blog/post' })).text();
+    assert.match(unnamed, /About <strong>\/blog\/post<\/strong>/);
+    assert.doesNotMatch(await (await call('/kept.example/broken', { referer: 'https://elsewhere.example/checkout' })).text(), /page-known/);
+    // An origin-only Referer cannot be told from "unknown".
+    assert.doesNotMatch(await (await call('/kept.example/broken', { referer: 'https://kept.example/' })).text(), /page-known/);
+    assert.match(await (await call('/kept.example/broken?at=/about', { referer: 'https://kept.example/checkout' })).text(), /About <strong>\/about<\/strong>/);
+    const slip = await (await worker.fetch(new Request('https://autonomous.feedback/kept.example/broken', { ...json({ note: NOTE }), headers: { ...json({}).headers, referer: 'https://kept.example/checkout' } }))).json();
+    assert.equal(slip.path, '/checkout');
+    assert.equal(slip.route, 'Checkout');
+  } finally {
+    restore();
+  }
+});
+
+test('a client file carries only the hash of an inbox key', () => {
+  const good = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'a.example', inbox: { key: `sha256:${'a'.repeat(64)}` } }, 'a.example');
+  assert.equal(good.inbox.key, `sha256:${'a'.repeat(64)}`);
+  const raw = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'a.example', inbox: { key: 'my-secret-key' } }, 'a.example');
+  assert.equal(raw.inbox.key, '');
+  assert.ok(raw.problems.some((p) => /hash of your key, never the key/.test(p)));
+  assert.doesNotMatch(JSON.stringify(raw), /my-secret-key/);
+});
+
+test('a listed desk with no reader keeps nothing', async () => {
+  const restore = stubFetch({
+    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true } },
+  });
+  const env = { DB: memoryDb(), DESK_HOSTS: 'kept.example' };
+  try {
+    const slip = await (await worker.fetch(new Request('https://autonomous.feedback/kept.example/broken', json({ note: NOTE })), env)).json();
+    assert.equal(slip.stored, false);
+    assert.equal(slip.queue, 'requested');
+    assert.equal(env.DB._notes.length, 0);
+  } finally {
+    restore();
+  }
 });

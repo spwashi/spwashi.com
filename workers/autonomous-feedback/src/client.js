@@ -200,6 +200,24 @@ function clientMain() {
     if (summary) summary.focus();
   }
 
+  // Setup: make an inbox key on this device. Only its hash goes in the public file.
+  const keygen = document.querySelector("[data-keygen]");
+  if (keygen && crypto?.subtle) {
+    keygen.hidden = false;
+    const keyOut = document.getElementById("inbox-key-value");
+    const hashOut = document.getElementById("inbox-key-hash");
+    keygen.querySelector("[data-make-key]")?.addEventListener("click", async () => {
+      const bytes = crypto.getRandomValues(new Uint8Array(32));
+      const hex = (buffer) => [...new Uint8Array(buffer)].map((b) => b.toString(16).padStart(2, "0")).join("");
+      const key = hex(bytes);
+      const hash = hex(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(key)));
+      if (keyOut) keyOut.textContent = key;
+      if (hashOut) hashOut.textContent = `"inbox": { "key": "sha256:${hash}" }`;
+      keygen.querySelectorAll("[data-key-result]").forEach((node) => { node.hidden = false; });
+      say("Made a key. Copy it somewhere safe before leaving this page.");
+    });
+  }
+
   // Card: save it as an image, share it, or post it; any of these stamps it.
   const share = document.querySelector(".share");
   const card = document.getElementById("card");

@@ -208,6 +208,16 @@ const SHELL = `
     .card footer { padding-top: .8rem; border-top: 1px solid var(--line); color: var(--muted); font: .82rem/1.3 ui-monospace, SFMono-Regular, monospace; }
     .card-address { color: var(--fg); }
     .card-stamp:empty { display: none; }
+    .inbox { list-style: none; margin: 0; padding: 0; }
+    .inbox > li { margin: 0 0 1.4rem; }
+    .inbox .card { margin-bottom: .5rem; }
+    .inbox .card.sample { transform: none; }
+    .inbox .hint { margin: 0 0 .3rem; }
+    .table-scroll { overflow-x: auto; margin: .6rem 0 1.2rem; }
+    .tally { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .tally th, .tally td { padding: .45rem .6rem; border-bottom: 1px solid var(--line); text-align: left; }
+    .tally th { color: var(--muted); font-weight: 600; }
+    .tally .num { text-align: right; font-variant-numeric: tabular-nums; }
     .card-stamp { position: absolute; top: 1rem; right: 1rem; margin: 0; padding: .2rem .6rem; border: 2px solid var(--warn); border-radius: .4rem; color: var(--warn); font: 700 .78rem/1.3 ui-monospace, SFMono-Regular, monospace; letter-spacing: .08em; text-transform: uppercase; transform: rotate(-7deg); opacity: 0; }
     .card[data-sent="true"] .card-stamp { opacity: 1; }
     .door strong { overflow-wrap: anywhere; }

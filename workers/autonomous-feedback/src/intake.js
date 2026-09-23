@@ -1,9 +1,9 @@
 /**
  * Intake guards. They store nothing themselves.
  * A public file must not carry a secret. A burst of posts or meter checks
- * from one address is slowed. The inbox opens only for the token set on the
- * worker, compared in constant time; while no token is set it stays shut,
- * even when a queue is bound.
+ * from one address is slowed. A desk opens only for the operator token set on
+ * the worker or for the owner key whose hash the site publishes, each
+ * compared in constant time; with neither set it stays shut.
  */
 
 const WINDOW_SECONDS = 600;
@@ -31,13 +31,39 @@ export function tokensMatch(presented, secret) {
   return diff === 0;
 }
 
-/** @returns {"locked"|"unset"|"wrong"|"unread"} */
-export function inboxAccess(header, secret) {
+export async function sha256Hex(value) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+/** The token from "Authorization: Bearer …", or "". */
+export function bearerOf(header) {
   const value = header || "";
-  const presented = value.toLowerCase().startsWith("bearer ") ? value.slice(7).trim() : "";
+  return value.toLowerCase().startsWith("bearer ") ? value.slice(7).trim() : "";
+}
+
+/** One cookie's value, or "". */
+export function cookieOf(request, name) {
+  for (const part of (request.headers.get("cookie") || "").split(";")) {
+    const [key, ...rest] = part.trim().split("=");
+    if (key === name) return decodeURIComponent(rest.join("="));
+  }
+  return "";
+}
+
+/**
+ * Who is opening a desk. The operator token (INBOX_READ_TOKEN) opens every
+ * desk. An owner key opens its own site's desk: the client file publishes only
+ * its SHA-256 as inbox.key, so the public file never holds the secret.
+ * With neither configured, nothing opens.
+ * @returns {Promise<"operator"|"owner"|"locked"|"wrong"|"unset">}
+ */
+export async function deskAccess(presented, { operator = "", ownerHash = "" } = {}) {
   if (!presented) return "locked";
-  if (!secret) return "unset";
-  return tokensMatch(presented, secret) ? "unread" : "wrong";
+  if (!operator && !ownerHash) return "unset";
+  if (operator && tokensMatch(presented, operator)) return "operator";
+  if (ownerHash && tokensMatch(`sha256:${await sha256Hex(presented)}`, ownerHash)) return "owner";
+  return "wrong";
 }
 
 async function addressKey(request) {

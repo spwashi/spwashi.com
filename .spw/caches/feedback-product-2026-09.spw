@@ -19,6 +19,7 @@
 @inbox: ~"./cluster-feedback-inbox-2026-09.spw"
 @pricing: ~"./pricing-lattice-2026-09.spw"
 @plan: ~"../../.agents/plans/quest-workbench-feedback/PLAN.md"
+@desk_flow: ~"../slices/feedback-desk-flow/index.spw"
 
 operation = "prime"
 fixity = "experimental"
@@ -57,7 +58,7 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
     .{ rung = `reader` ; gets = `write to any site, a card, Share / Post / Copy` ; costs = `nothing` ; status = `landed 2026-09-22` }[reg=facet],
     .{ rung = `unclaimed site` ; gets = `the meter, an iframe or a plain form to paste; cards still travel by hand` ; costs = `nothing` ; status = `landed` }[reg=facet],
     .{ rung = `claimed site` ; gets = `the client file (fb-client-route): which kinds show, labels, theme, frame ancestors, and a "kept by the site" mark on its pages and cards` ; costs = `nothing; publishing the file is the proof of control` ; status = `the file landed 2026-09-22; the "kept by the site" mark is still proposed` }[reg=facet],
-    .{ rung = `desk` ; gets = `a queue that keeps every card, an owner inbox, a digest, and reply cards` ; costs = `the paid tier` ; status = `2026-09-23: storage landed behind a two-key gate (queue.want in the file asks; DESK_HOSTS on the worker opens). Reading is operator-only (one INBOX_READ_TOKEN), so desks open only for sites the operator reads for. Owner identity, digest, and reply cards are still proposed.` }[reg=facet]
+    .{ rung = `desk` ; gets = `a queue that keeps every card, an owner inbox, a digest, and reply cards` ; costs = `the paid tier` ; status = `2026-09-23: landed as the desk flow (@desk_flow, the auditable contract). The file asks (queue.want), the operator opens (DESK_HOSTS), and an owner key published as a hash (inbox.key) or the operator token reads. New cards wait three days; owners save up to SAVE_LIMIT; the rest compact to tallies with no words. Digest, webhook, reply cards, and the appreciation wall are still proposed.` }[reg=facet]
   ][reg=set]
   why_claim_is_free = `Claiming costs the owner one file and costs us one cached fetch. It turns a stranger's address into a customer we can name, and it is the verification the desk needs anyway.`
   desk_needs = #[`a claimed site (fb-client-route as http-01-style proof)`, `an identity provider for the owner`, `storage with retention rules`, `rate limits on public intake`, `moderation for stored notes`][reg=set]
@@ -71,7 +72,7 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
   fields = #[`schema`, `host`, `name`, `intro`, `kinds`, `labels`, `from`, `button`, `note.min`, `note.max`, `frame.ancestors`, `theme.mode`, `theme.background`, `theme.text`, `theme.accent`, `theme.corners`, `theme.font`][reg=set]
   unlocks = #[`which kinds show and in what order`, `per-kind title, prompt, and example`, `a display name, an intro, and the button text`, `an optional or required name field printed on the card`, `note length bounds within 1–2,000`, `frame ancestors beyond the host and www`, `colour tokens, mode, corners, and font on the form, the frame, the card, and the saved image`][reg=set]
   refused = `theme.href and any HTML: the CSP blocks outside stylesheets, and tokens cannot inject.`
-  queue_want = `2026-09-23: queue.want is a request, counted as fb-004 demand. It keeps nothing until the host is also in DESK_HOSTS, because no owner could read what was kept. /start shows "Inbox: requested" or "Inbox: open"; /{host}/config.json carries desk; the card page says a requested inbox is not open yet.`
+  queue_want = `2026-09-23: queue.want is a request, counted as fb-004 demand. It keeps nothing until the host is also in DESK_HOSTS and a reader exists. States and copy: @desk_flow desk_states, copy_contract.`
   landed = `2026-09-22: workers/autonomous-feedback/src/config.js; /{host}/config.json reports what applied; /start shows the status and the applied or starter file`
   defaults = `Missing file, timeout, non-JSON, or a host field that does not match the URL host: keep the free behavior. Meter, iframe, four kinds, slip, queue unattached.`
   check = `Fetch the file from the host in the path only. Do not apply lore.land's file to spwashi.com. Do not read it from a query string.`
@@ -172,7 +173,8 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
   status = `unset`
   unit = `per claimed site (the host), not per seat or per note — the address is the identity everywhere else in the product`
   lane = `@pricing thesis: new offers inherit an existing lane. The desk would inherit the ecosystem lane (free–$500), not a new SaaS price family. Compare there before naming a number.`
-  copy_now = `2026-09-23: the homepage "What it costs" names three rungs without a number: any site, free; your site (the file), free; an inbox, on request.`
+  copy_now = `2026-09-23: the homepage "What it costs" names three rungs without a number: any site, free; your site (the file), free; an inbox, on request, which keeps new cards three days and lets the owner save some.`
+  file_free_desk_paid = `2026-09-23, creator agreed: anything expressible in the public client file is free (it costs one cached fetch and spreads the form); anything that makes us hold state or push outward is the desk. SAVE_LIMIT and retention past three days are the natural paid dimensions.`
 }[reg=facet]
 
 ^"open"{
