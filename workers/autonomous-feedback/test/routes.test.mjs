@@ -627,7 +627,7 @@ test('the write page picks the subject from the page, and follows it with thread
     assert.match(page, /<summary>Say more <span class="hint">2 questions, all optional<\/span><\/summary>/);
     assert.match(page, /name="ask-0"/);
     // The subject's kinds hide the rest, and the rules ride in the page's own style.
-    assert.match(page, /label\.chip\[data-kind\]:not\(\[data-kind="broken"\], \[data-kind="appreciation"\]\) \{ display: none; \}/);
+    assert.match(page, /label\.chip\[data-kind\]:not\(\[data-kind="broken"\], \[data-kind="appreciation"\]\):not\(:has\(input:checked\)\) \{ display: none; \}/);
     const bare = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken'))).text();
     assert.doesNotMatch(bare, /name="subject" value="[a-z]+" checked/);
   } finally {
