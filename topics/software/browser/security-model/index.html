@@ -1,0 +1,187 @@
+<spw-page
+    title="Spwashi • Browser Security Model"
+    description="Same origin, CORS, CSP, and cookies: what a page is allowed to read and load."
+    canonical="https://spwashi.com/topics/software/browser/security-model/"
+    og_title="Spwashi • Browser Security Model"
+    og_description="Same origin, CORS, CSP, and cookies: what a page is allowed to read and load."
+    og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
+    og_image_alt="Browser Security Model on Spwashi."
+    keywords="browser security model, browser, typescript"
+    breadcrumb_label="Browser Security Model"
+    header_current="Browser Security Model"
+    header_current_href="/topics/software/browser/security-model/"
+    header_indicator="software"
+    surface="software"
+    page_family="field-guide"
+    page_role="topic-register"
+    page_modes="reading inspect compare"
+    wonder="comparison constraint locality"
+    route_family="editorial systems curriculum"
+    context="analysis"
+    features="operators navigator console"
+    related_routes="/topics/software/browser/|/topics/software/browser/event-loop/|/topics/software/browser/render-pipeline/|/topics/software/browser/platform-apis/|/topics/software/browser/typescript/|/topics/software/"
+    stylesheet_mode="scoped"
+></spw-page>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+    <link rel="stylesheet" href="/public/css/routes/software-browser.css">
+</head>
+<body data-spw-surface="software"
+    data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial systems curriculum" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare" data-spw-page-seed="page_topics_topics_software_browser_security_model" data-spw-page-role="topic-register" data-spw-related-routes="/topics/software/browser/|/topics/software/browser/event-loop/|/topics/software/browser/render-pipeline/|/topics/software/browser/platform-apis/|/topics/software/browser/typescript/|/topics/software/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+    <spw-site-header
+        current="Browser Security Model"
+        current_href="/topics/software/browser/security-model/"
+        indicator="software"
+        seed="page_topics_topics_software_browser_security_model__site_header"
+        related_routes="/topics/software/browser/|/topics/software/browser/event-loop/|/topics/software/browser/render-pipeline/|/topics/software/browser/platform-apis/|/topics/software/browser/typescript/|/topics/software/"
+        context_relevance="same origin · CORS · CSP · cookies"
+        nav_items="Home:/|Software:/topics/software/|Browser:/topics/software/browser/|Browser Security Model:/topics/software/browser/security-model/"
+    ></spw-site-header>
+    <main id="main-content" tabindex="-1" aria-labelledby="security-model-title" data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis">
+        <article>
+            <section class="spw-frame" id="security-model-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-liminality="entry">
+                <p class="spec-kicker">Software / Browser</p>
+                <h1 id="security-model-title">The security model</h1>
+                <p data-spw-textual-role="lede">The origin is the boundary. Policy says which exceptions are real.</p>
+                <nav class="frame-operators" aria-label="Browser map">
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/browser/" data-spw-operator="frame">#&gt;browser_map</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/" data-spw-operator="frame">← software</a>
+                </nav>
+            </section>
+            <section class="spw-frame" id="browser-security"
+                     data-spw-role="reference" data-spw-meaning="browser security model" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__browser_security" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#browser-security" data-spw-operator="action">![browser_security]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">SOP</span>
+                        <span class="spec-pill">CORS</span>
+                        <span class="spec-pill">CSP</span>
+                        <span class="spec-pill">SameSite</span>
+                        <span class="spec-pill">SRI</span>
+                    </div>
+                </div>
+                <h2>Browser Security Model</h2>
+
+                <!-- Concentric security layers diagram -->
+                <svg class="diagram" data-spw-svg-persona="learner security-reviewer implementer rendering-model" viewBox="0 0 540 170"
+                     role="img" aria-labelledby="sec-title" aria-describedby="sec-desc"
+                     xmlns="http://www.w3.org/2000/svg" style="max-height:190px">
+                    <title id="sec-title">Browser Security Model — concentric layers</title>
+                    <desc id="sec-desc">
+                        Security layers from innermost to outermost:
+                        Execution context at center.
+                        Same-Origin Policy (origin = scheme + host + port).
+                        CORS headers for cross-origin resource access.
+                        Content-Security-Policy allowlisting resource origins.
+                        HTTPS/TLS at the outermost transport layer.
+                    </desc>
+
+                    <!-- HTTPS outermost -->
+                    <ellipse cx="270" cy="85" rx="250" ry="75"
+                             fill="rgba(24,123,135,0.03)" stroke="rgba(24,123,135,0.15)"
+                             stroke-width="1" stroke-dasharray="5,3"/>
+                    <text x="32" y="30" font-family="'JetBrains Mono',monospace"
+                          font-size="7.5" fill="rgba(24,123,135,0.65)">HTTPS / TLS</text>
+
+                    <!-- CSP -->
+                    <ellipse cx="270" cy="85" rx="205" ry="60"
+                             fill="rgba(24,123,135,0.03)" stroke="rgba(24,123,135,0.2)"
+                             stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="75" y="38" font-family="'JetBrains Mono',monospace"
+                          font-size="7.5" fill="rgba(24,123,135,0.72)">Content-Security-Policy</text>
+
+                    <!-- CORS -->
+                    <ellipse cx="270" cy="85" rx="158" ry="46"
+                             fill="rgba(160,42,77,0.04)" stroke="rgba(160,42,77,0.22)"
+                             stroke-width="1" stroke-dasharray="3,3"/>
+                    <text x="120" y="52" font-family="'JetBrains Mono',monospace"
+                          font-size="7.5" fill="rgba(160,42,77,0.75)">CORS headers</text>
+
+                    <!-- SOP -->
+                    <ellipse cx="270" cy="85" rx="110" ry="32"
+                             fill="rgba(160,42,77,0.05)" stroke="rgba(160,42,77,0.30)"
+                             stroke-width="1.2"/>
+                    <text x="170" y="65" font-family="'JetBrains Mono',monospace"
+                          font-size="7.5" fill="rgba(160,42,77,0.85)">Same-Origin Policy</text>
+
+                    <!-- Execution context center -->
+                    <ellipse cx="270" cy="85" rx="62" ry="20"
+                             fill="rgba(160,42,77,0.09)" stroke="rgba(160,42,77,0.42)"
+                             stroke-width="1.5"/>
+                    <text x="270" y="82" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="7.5"
+                          fill="rgba(160,42,77,0.9)" font-weight="600">execution</text>
+                    <text x="270" y="93" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="7"
+                          fill="rgba(160,42,77,0.7)">context</text>
+
+                    <text x="270" y="158" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="6.5"
+                          fill="rgba(14,18,20,0.35)">origin = scheme + host + port · SameSite controls cookie dispatch · SRI validates subresource integrity</text>
+                </svg>
+
+                <div class="ref-grid" style="margin-top:1rem">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">=[origin]</span>
+                        <h3>Same-Origin Policy</h3>
+                        <p>Origin = scheme + host + port. Scripts from origin A cannot read responses or DOM of origin B. Applies to fetch, XHR, <code>window.opener</code>, iframe content access, Web Storage, and cookies. The invariant all other mechanisms build on.</p>
+                        <ul class="ref-terms"><li>origin</li><li>site</li><li>schemelessly same-site</li><li>opaque origin</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy" data-pfx="mdn:" target="_blank" rel="noopener">Same-origin policy</a>
+                            <a href="https://html.spec.whatwg.org/multipage/origin.html#origin" data-pfx="spec:" target="_blank" rel="noopener">WHATWG Origin</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">@[cors]</span>
+                        <h3>CORS</h3>
+                        <p>Credentialed or non-simple requests trigger a preflight (<code>OPTIONS</code>). Key headers: <code>Access-Control-Allow-Origin</code>, <code>ACAO-Credentials</code>. Credentials require non-wildcard ACAO. <code>COEP</code>/<code>COOP</code>/<code>CORP</code> enable <code>SharedArrayBuffer</code> and cross-origin isolation.</p>
+                        <ul class="ref-terms"><li>preflight</li><li>ACAO</li><li>credentials</li><li>COEP</li><li>COOP</li><li>CORP</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" data-pfx="mdn:" target="_blank" rel="noopener">CORS</a>
+                            <a href="https://fetch.spec.whatwg.org/#cors-protocol" data-pfx="spec:" target="_blank" rel="noopener">Fetch § CORS</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">![csp]</span>
+                        <h3>Content Security Policy</h3>
+                        <p>Allowlist for script, style, connect, img, media, and other resource sources. <code>script-src 'nonce-{x}'</code> is best practice for inline scripts. <code>strict-dynamic</code> propagates trust to dynamically-created scripts. Report-only mode enables incremental rollout via <code>Reporting API</code>.</p>
+                        <ul class="ref-terms"><li>nonce</li><li>strict-dynamic</li><li>report-to</li><li>Trusted Types</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" data-pfx="mdn:" target="_blank" rel="noopener">CSP</a>
+                            <a href="https://www.w3.org/TR/CSP3/" data-pfx="w3c:" target="_blank" rel="noopener">CSP Level 3</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">$[cookies]</span>
+                        <h3>Cookies + SameSite</h3>
+                        <p><code>SameSite=Strict</code>: no cross-site dispatch. <code>Lax</code>: top-level navigations only (default since Chrome 80). <code>None</code> requires <code>Secure</code>. <code>HttpOnly</code> prevents JS access. The <code>__Host-</code> prefix requires Secure, no Domain attribute, and path=<code>/</code>. CHIPS partitions third-party cookies by top-level site.</p>
+                        <ul class="ref-terms"><li>SameSite</li><li>HttpOnly</li><li>__Host-</li><li>CHIPS</li><li>partitioned</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies" data-pfx="mdn:" target="_blank" rel="noopener">HTTP Cookies</a>
+                            <a href="https://httpwg.org/specs/rfc6265bis.html" data-pfx="spec:" target="_blank" rel="noopener">RFC 6265bis</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── TypeScript Type System ── -->
+            <aside class="spw-route-bridge" aria-labelledby="security-model-bridge">
+                <header>
+                    <h3 id="security-model-bridge">The rest of the map</h3>
+                    <p>same origin · CORS · CSP · cookies</p>
+                </header>
+                <ul class="spw-route-bridge__links">
+                    <li><a href="/topics/software/browser/event-loop/"><strong>Event loop</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/render-pipeline/"><strong>Render pipeline</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/platform-apis/"><strong>Platform APIs</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/typescript/"><strong>TypeScript</strong><span>Another room on the browser map.</span></a></li>
+                </ul>
+            </aside>
+        </article>
+    </main>
+<spw-site-footer></spw-site-footer>
+</body>
+</html>

@@ -19,7 +19,7 @@
     route_family="topics software editorial systems"
     context="analysis"
     features="operators metrics navigator"
-    related_routes="/|/topics/|/topics/software/|/topics/software/text-editing/|/topics/knowledge-bases/markdown/|/topics/math/#consequence-arcs|/research/|/cards/|/blog/|/about/website/"
+    related_routes="/|/topics/|/topics/hypermedia/|/topics/software/|/topics/software/text-editing/|/topics/knowledge-bases/markdown/|/topics/math/#consequence-arcs|/research/|/cards/|/blog/|/about/website/"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -65,6 +65,7 @@
                 <a class="spw-chip" data-spw-handle="true" href="#spw-as-knowledge-base" data-spw-operator="frame" data-spw-action="address">#&gt;spw_as_kb</a>
                 <a class="spw-chip" data-spw-handle="true" href="#authorable-tracks" data-spw-operator="potential" data-spw-action="explore">~authorable_tracks</a>
                 <a class="spw-chip" data-spw-handle="true" href="#versioned-holdings" data-spw-operator="substrate">$versioned_holdings</a>
+                <a class="spw-chip" data-spw-handle="true" href="/topics/hypermedia/" data-spw-operator="concept-edge">&gt;hypermedia</a>
                 <a class="spw-chip" data-spw-handle="true" href="/topics/knowledge-bases/markdown/" data-spw-operator="potential" data-spw-action="explore">~markdown_knowledge_bases</a>
                 <a class="spw-chip" data-spw-handle="true" href="/topics/software/text-editing/" data-spw-operator="potential" data-spw-action="explore">~text_editing</a>
                 <a class="spw-chip" data-spw-handle="true" href="/topics/software/#curricular-codebase" data-spw-operator="potential" data-spw-action="explore">~curricular_codebase</a>
@@ -211,6 +212,15 @@
                 <a class="spw-chip" data-spw-handle="true" href="/services/ecosystem/#regions" data-spw-operator="frame">#&gt;regions</a>
                 <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_sample=holdings#literal-parser" data-spw-operator="wonder">? parse[holdings]</a>
             </nav>
+        </section>
+
+        <section class="spw-frame" id="open-medium" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="medium[open]{surface.capability.receipt}&lt;host&gt;">
+            <div class="frame-topline" data-spw-slot="header">
+                <a class="frame-sigil" href="/topics/hypermedia/" data-spw-operator="concept-edge">&gt;hypermedia</a>
+                <span class="frame-kind">projection</span>
+            </div>
+            <h2>An open medium</h2>
+            <p>Notes become a medium when a reader can re-read the <span class="spw-living-term" data-spw-living-term data-spw-concept="surface" tabindex="0">surface</span>, follow a <span class="spw-living-term" data-spw-living-term data-spw-concept="capability" tabindex="0">capability</span> this page offered, and check a <span class="spw-living-term" data-spw-living-term data-spw-concept="receipt" tabindex="0">receipt</span>. The fuller account, including how Spw marks those moves, is the <a href="/topics/hypermedia/">hypermedia topic</a>.</p>
         </section>
 
         <section class="spw-frame" id="scene-receipts" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="scene[condition]{effect;exit}&lt;receipt&gt;">

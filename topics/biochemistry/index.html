@@ -18,7 +18,7 @@
     wonder="orientation comparison projection"
     route_family="editorial field-guide chemistry"
     features="operators navigator console"
-    related_routes="/topics/|/topics/nutrition/|/topics/materials/|/topics/math/differential-equations/|/topics/software/data-structures/|/recipes/"
+    related_routes="/topics/|/topics/nutrition/|/topics/materials/|/topics/math/#consequence-arcs|/topics/math/differential-equations/|/topics/software/data-structures/|/recipes/#soil-companions|/recipes/#payload-boundaries|/research/"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
     <spw-site-head></spw-site-head>
 </head>
 <body data-spw-surface="topics"
-    data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial field-guide chemistry" data-spw-context="analysis" data-spw-wonder="orientation comparison projection" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare" data-spw-page-seed="page_topics_topics_biochemistry" data-spw-page-role="topic-register" data-spw-related-routes="/topics/|/topics/nutrition/|/topics/materials/|/topics/math/differential-equations/|/topics/software/data-structures/|/recipes/">
+    data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial field-guide chemistry" data-spw-context="analysis" data-spw-wonder="orientation comparison projection" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare" data-spw-page-seed="page_topics_topics_biochemistry" data-spw-page-role="topic-register" data-spw-related-routes="/topics/|/topics/nutrition/|/topics/materials/|/topics/math/#consequence-arcs|/topics/math/differential-equations/|/topics/software/data-structures/|/recipes/#soil-companions|/recipes/#payload-boundaries|/research/">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
     <spw-site-header
@@ -35,7 +35,7 @@
         current_href="/topics/biochemistry/"
         indicator="topics"
         seed="page_topics_topics_biochemistry__site_header"
-        related_routes="/topics/|/topics/nutrition/|/topics/materials/|/topics/math/differential-equations/|/recipes/"
+        related_routes="/topics/|/topics/nutrition/|/topics/materials/|/topics/math/#consequence-arcs|/topics/math/differential-equations/|/recipes/#soil-companions|/research/"
         context_relevance="biochemistry metabolism redox electrons enzymes networks light harvesting"
         nav_items="Home:/|About:/about|Topics:/topics/|Biochemistry:/topics/biochemistry/|Nutrition:/topics/nutrition/|Materials:/topics/materials/"
     ></spw-site-header>
@@ -52,10 +52,11 @@
                 </div>
                 <p class="spec-kicker">Topics / Biochemistry</p>
                 <h1 id="biochemistry-title">Energy, Electrons, and Networks</h1>
-                <p data-spw-textual-role="lede">Biochemistry, read abstractly, is the study of how living things capture energy, move electrons, and route matter through networks of reactions. This route stays at that level: the patterns that repeat from a kitchen culture to a bacterium to a leaf, before the names of individual molecules.</p>
+                <p data-spw-textual-role="lede">Biochemistry, read abstractly, is the study of how living things capture energy, move electrons, and route matter through networks of reactions. This route stays at that level: the patterns that repeat from a kitchen culture to a bacterium to a leaf, in a shape a math page, a garden note, or a software graph can use.</p>
                 <nav class="frame-operators" aria-label="Biochemistry next steps">
-                    <a class="spw-chip" data-spw-handle="true" href="/topics/nutrition/" data-spw-operator="ref">~nutrition</a>
-                    <a class="spw-chip" data-spw-handle="true" href="/recipes/#grower-start" data-spw-operator="ref">~living_cultures</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#biochemistry-transfer" data-spw-operator="frame">#&gt;what_travels</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/math/#consequence-arcs" data-spw-operator="concept-edge">&gt;consequence_arcs</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/recipes/#payload-boundaries" data-spw-operator="ground">.payload_boundaries</a>
                     <a class="spw-chip" data-spw-handle="true" href="/topics/">← topics</a>
                 </nav>
             </section>
@@ -90,6 +91,43 @@
                         <h3>Harvesting light</h3>
                         <p>Photosynthetic organisms catch light with pigments and use it to drive electrons uphill. Not all of them split water or release oxygen; some bacteria photosynthesize using other electron donors entirely.</p>
                         <a class="ref-link" href="https://en.wikipedia.org/wiki/Photosynthesis" target="_blank" rel="noopener noreferrer">wiki: photosynthesis</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="spw-frame" id="biochemistry-transfer" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="relation threshold projection" data-spw-affordance="compare" data-spw-liminality="threshold" data-spw-consequence="transfer" data-spw-semantic-expression="pattern[transfer]{state;constraint;response}&lt;receipt&gt;" data-spw-seed="page_topics_topics_biochemistry__transfer">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#biochemistry-transfer" data-spw-operator="frame">#&gt;what_travels</a>
+                    <h2>What Travels</h2>
+                </header>
+                <p data-spw-textual-role="lede">Keep four parts when a pattern leaves the cell: the state you started from, the constraint, the response you actually saw, and a receipt another page can check. That shape is a <a href="/topics/math/#consequence-arcs">consequence arc</a>.</p>
+                <div class="frame-grid ref-grid" data-spw-density="dense">
+                    <article class="spw-panel ref-card" data-spw-semantic-expression="transfer[currency]{intermediate;handoff}&lt;receipt&gt;">
+                        <h3>A shared currency</h3>
+                        <p>ATP lets one reaction pay for another. A token, a common unit, or a compact receipt does the same job. The handoff has to agree on both sides.</p>
+                        <a class="ref-link" href="/topics/math/category-theory/#commuting-square">Commuting squares</a>
+                    </article>
+                    <article class="spw-panel ref-card" data-spw-semantic-expression="transfer[gradient]{donor;steps;remainder}&lt;field&gt;">
+                        <h3>A fall taken in steps</h3>
+                        <p>An electron transport chain spends a drop in small steps and keeps a gradient. A slope field, a scheduler, and a reduction in a pan refuse the same move: dumping the whole difference at once.</p>
+                        <a class="ref-link" href="/topics/math/differential-equations/#slope-field-lab">Slope fields</a>
+                    </article>
+                    <article class="spw-panel ref-card" data-spw-semantic-expression="transfer[dose]{threshold;saturation;stress}&lt;curve&gt;">
+                        <h3>A catalyst with a range</h3>
+                        <p>An enzyme speeds one reaction, then saturates. Below a dose, nothing moves. Past the useful range, more input can stress the system. Vitamins, signaling molecules, mobilized minerals, and cell fragments are different payload classes. Finding one of them does not prove the final change.</p>
+                        <a class="ref-link" href="/topics/math/calculus/#growth-language">Growth language</a>
+                        <a class="ref-link" href="/recipes/#payload-boundaries">Payload boundaries</a>
+                    </article>
+                    <article class="spw-panel ref-card" data-spw-semantic-expression="transfer[network]{nodes;edges;direction}&lt;graph&gt;">
+                        <h3>A network that can reverse</h3>
+                        <p>The same metabolic graph can run another way when the conditions change. What stays the relation is the nodes and edges, not the direction the arrows point this hour.</p>
+                        <a class="ref-link" href="/topics/software/data-structures/">Graphs</a>
+                        <a class="ref-link" href="/topics/math/symmetry/">Symmetry</a>
+                    </article>
+                    <article class="spw-panel ref-card" data-spw-semantic-expression="transfer[light]{source;donor;oxygen}&lt;culture&gt;">
+                        <h3>Light with a named donor</h3>
+                        <p>Some bacteria harvest light without splitting water or releasing oxygen. They use another electron donor. Name the energy source and the donor before calling the process photosynthesis. Pond and soil notes for that case sit with <a href="/recipes/#soil-companions">light-fed cultures</a>.</p>
+                        <a class="ref-link" href="/research/#research-categories">Research categories</a>
                     </article>
                 </div>
             </section>
@@ -130,6 +168,8 @@
                 <ul class="spw-route-bridge__links">
                     <li><a href="/topics/nutrition/"><strong>Nutrition</strong><span>Energy and matter, from the eater's side.</span></a></li>
                     <li><a href="/recipes/#grower-start"><strong>Living cultures</strong><span>Ferments and starters: metabolism you can taste.</span></a></li>
+                    <li><a href="/topics/math/#consequence-arcs"><strong>Consequence arcs</strong><span>State, constraint, dose, and receipt — the same four parts outside a cell.</span></a></li>
+                    <li><a href="/recipes/#soil-companions"><strong>Light-fed cultures</strong><span>Name the donor, the dose, and the measured change.</span></a></li>
                     <li><a href="/topics/math/differential-equations/"><strong>Differential equations</strong><span>How reaction rates change concentrations over time.</span></a></li>
                     <li><a href="/topics/software/data-structures/"><strong>Data structures</strong><span>Graphs, for modeling pathways as networks.</span></a></li>
                     <li><a href="/topics/materials/"><strong>Materials</strong><span>What living chemistry builds and breaks down.</span></a></li>

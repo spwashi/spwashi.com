@@ -1,0 +1,360 @@
+<spw-page
+    title="Spwashi • TypeScript Types"
+    description="The TypeScript type lattice, narrowing, and the patterns that build on it: conditional, mapped, and template literal types."
+    canonical="https://spwashi.com/topics/software/browser/typescript/"
+    og_title="Spwashi • TypeScript Types"
+    og_description="The TypeScript type lattice, narrowing, and the patterns that build on it: conditional, mapped, and template literal types."
+    og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
+    og_image_alt="TypeScript Types on Spwashi."
+    keywords="typescript types, browser, typescript"
+    breadcrumb_label="TypeScript Types"
+    header_current="TypeScript Types"
+    header_current_href="/topics/software/browser/typescript/"
+    header_indicator="software"
+    surface="software"
+    page_family="field-guide"
+    page_role="topic-register"
+    page_modes="reading inspect compare"
+    wonder="comparison constraint locality"
+    route_family="editorial systems curriculum"
+    context="analysis"
+    features="operators navigator console"
+    related_routes="/topics/software/browser/|/topics/software/browser/event-loop/|/topics/software/browser/render-pipeline/|/topics/software/browser/platform-apis/|/topics/software/browser/security-model/|/topics/software/"
+    stylesheet_mode="scoped"
+></spw-page>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+    <link rel="stylesheet" href="/public/css/routes/software-browser.css">
+</head>
+<body data-spw-surface="software"
+    data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial systems curriculum" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare" data-spw-page-seed="page_topics_topics_software_browser_typescript" data-spw-page-role="topic-register" data-spw-related-routes="/topics/software/browser/|/topics/software/browser/event-loop/|/topics/software/browser/render-pipeline/|/topics/software/browser/platform-apis/|/topics/software/browser/security-model/|/topics/software/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+    <spw-site-header
+        current="TypeScript Types"
+        current_href="/topics/software/browser/typescript/"
+        indicator="software"
+        seed="page_topics_topics_software_browser_typescript__site_header"
+        related_routes="/topics/software/browser/|/topics/software/browser/event-loop/|/topics/software/browser/render-pipeline/|/topics/software/browser/platform-apis/|/topics/software/browser/security-model/|/topics/software/"
+        context_relevance="lattice · narrowing · conditional · mapped"
+        nav_items="Home:/|Software:/topics/software/|Browser:/topics/software/browser/|TypeScript Types:/topics/software/browser/typescript/"
+    ></spw-site-header>
+    <main id="main-content" tabindex="-1" aria-labelledby="typescript-title" data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis">
+        <article>
+            <section class="spw-frame" id="typescript-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-liminality="entry">
+                <p class="spec-kicker">Software / Browser</p>
+                <h1 id="typescript-title">The type system</h1>
+                <p data-spw-textual-role="lede">Types are a lattice. unknown, never, and any sit in different places, and the advanced patterns are how you move around that lattice.</p>
+                <nav class="frame-operators" aria-label="Browser map">
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/browser/" data-spw-operator="frame">#&gt;browser_map</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/" data-spw-operator="frame">← software</a>
+                </nav>
+            </section>
+            <section class="spw-frame" id="typescript-types"
+                     data-spw-role="reference" data-spw-meaning="typescript type system" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__typescript_types" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#typescript-types" data-spw-operator="substrate">$[ts_type_system]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">structural typing</span>
+                        <span class="spec-pill">type lattice</span>
+                        <span class="spec-pill">inference</span>
+                        <span class="spec-pill">narrowing</span>
+                    </div>
+                </div>
+                <h2>TypeScript Type System</h2>
+                <p data-spw-textual-role="note">TypeScript uses <em>structural</em> (duck) typing — compatibility is determined by shape, not identity. The type system forms a lattice: <code>unknown</code> is the top type (all values are assignable to it); <code>never</code> is the bottom type (no value inhabits it). <code>any</code> escapes the lattice entirely.</p>
+
+                <!-- Type Lattice SVG -->
+                <svg class="diagram" data-spw-svg-persona="learner library-author reviewer rendering-model" viewBox="0 0 560 200"
+                     role="img" aria-labelledby="tl-title" aria-describedby="tl-desc"
+                     xmlns="http://www.w3.org/2000/svg" style="max-height:220px">
+                    <title id="tl-title">TypeScript Type Lattice</title>
+                    <desc id="tl-desc">
+                        Type hierarchy: unknown at top (all types assignable to it).
+                        Below: primitive types (string, number, boolean, symbol, bigint, object).
+                        Below primitives: literal types (string literals, numeric literals, true/false).
+                        never at bottom (assignable to everything, inhabited by nothing).
+                        any shown separately as a bypass that escapes the lattice bidirectionally.
+                        Arrows point from supertype to subtype (assignment direction).
+                    </desc>
+
+                    <defs>
+                        <marker id="tl-a" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(24,123,135,0.35)"/>
+                        </marker>
+                        <marker id="tl-b" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(160,42,77,0.35)"/>
+                        </marker>
+                    </defs>
+
+                    <!-- unknown (top type) -->
+                    <g aria-label="unknown: top type — all values assignable to it, must narrow before use">
+                        <rect x="200" y="8" width="120" height="28" rx="4"
+                              fill="rgba(24,123,135,0.12)" stroke="rgba(24,123,135,0.55)" stroke-width="1.8"/>
+                        <text x="260" y="26" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="10"
+                              fill="rgba(24,123,135,0.95)" font-weight="700">unknown</text>
+                    </g>
+                    <text x="260" y="6" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="6"
+                          fill="rgba(24,123,135,0.45)">top type — require narrowing before use</text>
+
+                    <!-- Arrows: unknown → primitives -->
+                    <path d="M 235 36 L 55 68" stroke="rgba(24,123,135,0.25)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 245 36 L 145 68" stroke="rgba(24,123,135,0.25)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 255 36 L 225 68" stroke="rgba(24,123,135,0.25)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 268 36 L 315 68" stroke="rgba(24,123,135,0.22)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 278 36 L 390 68" stroke="rgba(24,123,135,0.2)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 285 36 L 458 68" stroke="rgba(24,123,135,0.18)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+
+                    <!-- Primitive types row -->
+                    <g aria-label="string primitive">
+                        <rect x="8" y="68" width="60" height="22" rx="3"
+                              fill="rgba(24,123,135,0.07)" stroke="rgba(24,123,135,0.28)" stroke-width="1"/>
+                        <text x="38" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.88)">string</text>
+                    </g>
+                    <g aria-label="number primitive">
+                        <rect x="78" y="68" width="60" height="22" rx="3"
+                              fill="rgba(24,123,135,0.07)" stroke="rgba(24,123,135,0.28)" stroke-width="1"/>
+                        <text x="108" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.88)">number</text>
+                    </g>
+                    <g aria-label="boolean primitive">
+                        <rect x="148" y="68" width="66" height="22" rx="3"
+                              fill="rgba(24,123,135,0.07)" stroke="rgba(24,123,135,0.25)" stroke-width="1"/>
+                        <text x="181" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.85)">boolean</text>
+                    </g>
+                    <g aria-label="bigint primitive">
+                        <rect x="224" y="68" width="56" height="22" rx="3"
+                              fill="rgba(24,123,135,0.06)" stroke="rgba(24,123,135,0.22)" stroke-width="1"/>
+                        <text x="252" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.78)">bigint</text>
+                    </g>
+                    <g aria-label="object type">
+                        <rect x="290" y="68" width="56" height="22" rx="3"
+                              fill="rgba(24,123,135,0.05)" stroke="rgba(24,123,135,0.2)" stroke-width="1"/>
+                        <text x="318" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.75)">object</text>
+                    </g>
+                    <g aria-label="symbol type">
+                        <rect x="356" y="68" width="56" height="22" rx="3"
+                              fill="rgba(24,123,135,0.05)" stroke="rgba(24,123,135,0.18)" stroke-width="1"/>
+                        <text x="384" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.72)">symbol</text>
+                    </g>
+                    <g aria-label="undefined and null types">
+                        <rect x="422" y="68" width="80" height="22" rx="3"
+                              fill="rgba(24,123,135,0.04)" stroke="rgba(24,123,135,0.15)" stroke-width="1"/>
+                        <text x="462" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(24,123,135,0.65)">undef | null</text>
+                    </g>
+
+                    <!-- Arrows: primitives → literals -->
+                    <path d="M 38 90 L 38 114" stroke="rgba(24,123,135,0.2)" stroke-width="0.7" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 108 90 L 108 114" stroke="rgba(24,123,135,0.2)" stroke-width="0.7" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 181 90 L 181 114" stroke="rgba(24,123,135,0.2)" stroke-width="0.7" fill="none" marker-end="url(#tl-a)"/>
+
+                    <!-- Literal types row -->
+                    <g aria-label="string literal types">
+                        <rect x="8" y="114" width="60" height="22" rx="3"
+                              fill="rgba(24,123,135,0.04)" stroke="rgba(24,123,135,0.14)"
+                              stroke-width="0.8" stroke-dasharray="3,2"/>
+                        <text x="38" y="128" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.7)">"hello"…</text>
+                    </g>
+                    <g aria-label="numeric literal types">
+                        <rect x="78" y="114" width="60" height="22" rx="3"
+                              fill="rgba(24,123,135,0.04)" stroke="rgba(24,123,135,0.12)"
+                              stroke-width="0.8" stroke-dasharray="3,2"/>
+                        <text x="108" y="128" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.65)">0|1|42…</text>
+                    </g>
+                    <g aria-label="boolean literal types: true, false">
+                        <rect x="148" y="114" width="66" height="22" rx="3"
+                              fill="rgba(24,123,135,0.04)" stroke="rgba(24,123,135,0.12)"
+                              stroke-width="0.8" stroke-dasharray="3,2"/>
+                        <text x="181" y="128" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.62)">true|false</text>
+                    </g>
+                    <text x="230" y="128" font-family="'JetBrains Mono',monospace" font-size="7" fill="rgba(14,18,20,0.3)">← literal types are subtypes of their primitive</text>
+
+                    <!-- Arrows to never -->
+                    <path d="M 38 136 L 230 162" stroke="rgba(160,42,77,0.18)" stroke-width="0.7" fill="none" marker-end="url(#tl-b)"/>
+                    <path d="M 108 136 L 242 162" stroke="rgba(160,42,77,0.16)" stroke-width="0.7" fill="none" marker-end="url(#tl-b)"/>
+                    <path d="M 181 136 L 254 162" stroke="rgba(160,42,77,0.15)" stroke-width="0.7" fill="none" marker-end="url(#tl-b)"/>
+                    <path d="M 252 90 L 260 162" stroke="rgba(160,42,77,0.14)" stroke-width="0.7" fill="none" marker-end="url(#tl-b)"/>
+                    <path d="M 318 90 L 268 162" stroke="rgba(160,42,77,0.12)" stroke-width="0.7" fill="none" marker-end="url(#tl-b)"/>
+
+                    <!-- never (bottom type) -->
+                    <g aria-label="never: bottom type — no values inhabit it; assignable to every type">
+                        <rect x="210" y="162" width="110" height="28" rx="4"
+                              fill="rgba(160,42,77,0.10)" stroke="rgba(160,42,77,0.48)" stroke-width="1.8"/>
+                        <text x="265" y="180" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="10"
+                              fill="rgba(160,42,77,0.92)" font-weight="700">never</text>
+                    </g>
+                    <text x="265" y="198" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="6"
+                          fill="rgba(160,42,77,0.45)">bottom type — assignable to everything, inhabited by nothing</text>
+
+                    <!-- any (lattice bypass) -->
+                    <g aria-label="any: escapes the type lattice bidirectionally, bypasses type checking">
+                        <rect x="475" y="88" width="72" height="28" rx="4"
+                              fill="rgba(120,80,0,0.10)" stroke="rgba(120,80,0,0.38)"
+                              stroke-width="1.4" stroke-dasharray="5,2.5"/>
+                        <text x="511" y="106" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="10"
+                              fill="rgba(120,80,0,0.85)" font-weight="600">any</text>
+                        <text x="511" y="128" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="6.5"
+                              fill="rgba(120,80,0,0.6)">⚠ lattice bypass</text>
+                        <!-- Bypass arrows: any ↔ unknown, any ↔ never -->
+                        <path d="M 490 88 Q 460 55 330 36" stroke="rgba(120,80,0,0.28)" stroke-width="0.8" fill="none" stroke-dasharray="3,2" marker-end="url(#tl-a)"/>
+                        <path d="M 490 116 Q 470 155 325 170" stroke="rgba(120,80,0,0.28)" stroke-width="0.8" fill="none" stroke-dasharray="3,2" marker-end="url(#tl-b)"/>
+                    </g>
+                </svg>
+
+                <div class="ref-grid" style="margin-top:1rem">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">unknown vs any</span>
+                        <h3>unknown — safe top type</h3>
+                        <p><code>unknown</code> requires narrowing before use (type-safe). <code>any</code> escapes the type system entirely — bidirectional assignability. Prefer <code>unknown</code> for external data (JSON, API responses, user input). <code>noImplicitAny</code> bans accidental widening to <code>any</code>.</p>
+                        <ul class="ref-terms"><li>unknown</li><li>any</li><li>noImplicitAny</li><li>type assertion</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/types-from-types.html" data-pfx="ts:" target="_blank" rel="noopener">Types from types</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">never</span>
+                        <h3>never — bottom type</h3>
+                        <p>Inhabited by nothing. Appears at exhaustive checks (all union members handled), in return types of functions that always throw, and as the intersection of contradictory types (<code>string &amp; number</code>). <code>never</code> is assignable to every type — use it to detect missing branches.</p>
+                        <ul class="ref-terms"><li>exhaustive check</li><li>assertion function</li><li>unreachable code</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking" data-pfx="ts:" target="_blank" rel="noopener">Exhaustiveness checking</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">structural</span>
+                        <h3>Structural Typing</h3>
+                        <p>Compatibility is shape-based: <code>T</code> is assignable to <code>U</code> if <code>T</code> has at least all required properties of <code>U</code> with compatible types. Excess property checking applies only at <em>fresh object literal</em> assignment, not at variable assignment — a common source of confusion.</p>
+                        <ul class="ref-terms"><li>excess property check</li><li>freshness</li><li>index signatures</li><li>covariance</li><li>contravariance</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/type-compatibility.html" data-pfx="ts:" target="_blank" rel="noopener">Type Compatibility</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">is / asserts</span>
+                        <h3>Type Narrowing</h3>
+                        <p>Built-in: <code>typeof</code>, <code>instanceof</code>, <code>in</code>, truthiness, equality. User-defined: <code>x is T</code> type predicate returns a boolean; <code>asserts x is T</code> asserts or throws. Discriminated unions: a shared literal property identifies each variant — TS narrows based on the literal.</p>
+                        <ul class="ref-terms"><li>type predicate</li><li>discriminated union</li><li>control flow analysis</li><li>asserts</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html" data-pfx="ts:" target="_blank" rel="noopener">Narrowing handbook</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">Utility&lt;T&gt;</span>
+                        <h3>Utility Types</h3>
+                        <p>Standard type transforms: <code>Partial</code>, <code>Required</code>, <code>Readonly</code>, <code>Pick&lt;T,K&gt;</code>, <code>Omit&lt;T,K&gt;</code>, <code>Record&lt;K,V&gt;</code>, <code>Exclude</code>, <code>Extract</code>, <code>NonNullable</code>, <code>ReturnType&lt;F&gt;</code>, <code>InstanceType&lt;C&gt;</code>, <code>Awaited&lt;T&gt;</code>, <code>NoInfer&lt;T&gt;</code>.</p>
+                        <ul class="ref-terms"><li>Partial</li><li>Omit</li><li>ReturnType</li><li>Awaited</li><li>NoInfer</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" data-pfx="ts:" target="_blank" rel="noopener">Utility Types reference</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">satisfies</span>
+                        <h3>satisfies + as const</h3>
+                        <p><code>satisfies T</code> checks a value against a type without widening the inferred type. <code>as const</code> produces readonly literal types. Combined: <code>const p = {...} as const satisfies Record&lt;...&gt;</code> — constraint checking with precise inference preserved. Available since TypeScript 4.9.</p>
+                        <ul class="ref-terms"><li>satisfies</li><li>as const</li><li>const type parameters</li><li>const assertions</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator" data-pfx="ts:" target="_blank" rel="noopener">satisfies operator</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── TypeScript Advanced Patterns ── -->
+            <section class="spw-frame" id="typescript-advanced"
+                     data-spw-role="reference" data-spw-meaning="typescript advanced type patterns" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__typescript_advanced" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#typescript-advanced" data-spw-operator="integration">^[ts_advanced]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">generics</span>
+                        <span class="spec-pill">conditional types</span>
+                        <span class="spec-pill">mapped types</span>
+                        <span class="spec-pill">template literals</span>
+                        <span class="spec-pill">declaration merging</span>
+                    </div>
+                </div>
+                <h2>TypeScript Advanced Patterns</h2>
+                <div class="ref-grid">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">T extends U</span>
+                        <h3>Generics + Inference</h3>
+                        <p>Constraints: <code>T extends K</code> restricts <code>T</code> to subtypes of <code>K</code>. Inference sites: TS infers from call sites, conditional clauses, <code>infer</code>. <code>NoInfer&lt;T&gt;</code> blocks inference at a site without removing the constraint. Variance: function params are contravariant; return types covariant.</p>
+                        <ul class="ref-terms"><li>constraints</li><li>infer</li><li>NoInfer</li><li>variance</li><li>covariance</li><li>const type param</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/generics.html" data-pfx="ts:" target="_blank" rel="noopener">Generics handbook</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">T extends U ? X : Y</span>
+                        <h3>Conditional Types</h3>
+                        <p><code>infer R</code> captures a type within a conditional branch. Distributivity: over a naked union type parameter, the conditional distributes member-by-member. To prevent distribution, wrap in a tuple: <code>[T] extends [U]</code>. Basis for <code>ReturnType</code>, <code>Awaited</code>, <code>Parameters</code>.</p>
+                        <ul class="ref-terms"><li>infer</li><li>distributive</li><li>[T] extends [U]</li><li>deferred</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/conditional-types.html" data-pfx="ts:" target="_blank" rel="noopener">Conditional Types</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">&#123; [K in T]: … &#125;</span>
+                        <h3>Mapped Types</h3>
+                        <p>Iterate over a union of keys. Modifiers: <code>+readonly</code>, <code>-readonly</code>, <code>+?</code>, <code>-?</code>. Key remapping with <code>as</code>: <code>[K in keyof T as Capitalize&lt;string &amp; K&gt;]</code>. Filter keys by returning <code>never</code> from the <code>as</code> clause. Homomorphic mapped types preserve optionality and readonly.</p>
+                        <ul class="ref-terms"><li>keyof</li><li>in keyof</li><li>as clause</li><li>modifiers</li><li>homomorphic</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/mapped-types.html" data-pfx="ts:" target="_blank" rel="noopener">Mapped Types</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">`${A}${B}`</span>
+                        <h3>Template Literal Types</h3>
+                        <p>Construct string types from literal unions. Combine with mapped types to derive event names, accessor keys, CSS property strings. Built-in string intrinsics: <code>Uppercase</code>, <code>Lowercase</code>, <code>Capitalize</code>, <code>Uncapitalize</code>. <code>infer</code> inside template literals matches string patterns.</p>
+                        <ul class="ref-terms"><li>Capitalize</li><li>template literal infer</li><li>string union</li><li>intrinsic string types</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html" data-pfx="ts:" target="_blank" rel="noopener">Template Literal Types</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">declare module</span>
+                        <h3>Declaration Merging</h3>
+                        <p>Interfaces merge across declarations; type aliases do not. Module augmentation: <code>declare module 'x' { ... }</code> extends an existing module's types. Global augmentation: <code>declare global { ... }</code>. Commonly used for Express <code>Request</code>, Jest matchers, Vite <code>ImportMeta</code>, and environment variables.</p>
+                        <ul class="ref-terms"><li>interface merging</li><li>module augmentation</li><li>ambient declaration</li><li>declare global</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/declaration-merging.html" data-pfx="ts:" target="_blank" rel="noopener">Declaration Merging</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">tsconfig</span>
+                        <h3>tsconfig + Project References</h3>
+                        <p>Key flags: <code>strict</code> enables noImplicitAny + strictNullChecks + more. <code>moduleResolution: "bundler"</code> for Vite/esbuild. <code>verbatimModuleSyntax</code> enforces explicit type-only imports. Project references (<code>composite: true</code> + <code>references</code>) enable incremental builds and type-check boundaries across monorepo packages.</p>
+                        <ul class="ref-terms"><li>strict</li><li>composite</li><li>references</li><li>verbatimModuleSyntax</li><li>isolatedModules</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/tsconfig" data-pfx="ts:" target="_blank" rel="noopener">tsconfig reference</a>
+                            <a href="https://www.typescriptlang.org/docs/handbook/project-references.html" data-pfx="ts:" target="_blank" rel="noopener">Project References</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Route footer ── -->
+            <aside class="spw-route-bridge" aria-labelledby="typescript-bridge">
+                <header>
+                    <h3 id="typescript-bridge">The rest of the map</h3>
+                    <p>lattice · narrowing · conditional · mapped</p>
+                </header>
+                <ul class="spw-route-bridge__links">
+                    <li><a href="/topics/software/browser/event-loop/"><strong>Event loop</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/render-pipeline/"><strong>Render pipeline</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/platform-apis/"><strong>Platform APIs</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/security-model/"><strong>Security model</strong><span>Another room on the browser map.</span></a></li>
+                </ul>
+            </aside>
+        </article>
+    </main>
+<spw-site-footer></spw-site-footer>
+</body>
+</html>

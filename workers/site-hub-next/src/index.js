@@ -316,7 +316,9 @@ function renderConstellation(requestUrl) {
 function renderTexture(requestUrl, nonce) {
   const sliceCards = SLICES.map(
     (slice) => `<article class="specimen">
-  <div class="swatch" data-spw-texture-slice="${escapeHtml(slice.id)}" data-spw-seed="texture-${escapeHtml(slice.id)}" role="img" aria-label="${escapeHtml(slice.name)} swatch"></div>
+  <div class="swatch" data-spw-texture-slice="${escapeHtml(slice.id)}" data-spw-seed="texture-${escapeHtml(slice.id)}">
+    <img src="${escapeHtml(slice.image)}" alt="${escapeHtml(slice.name)}" width="640" height="360">
+  </div>
   <h3>${escapeHtml(slice.name)}</h3>
   <p>${escapeHtml(slice.meaning)}</p>
   <p><code>${escapeHtml(slice.token)}</code></p>
@@ -413,6 +415,18 @@ function renderTexture(requestUrl, nonce) {
       border: 1px solid rgba(255,255,255,.08);
       background: #2a2218;
       overflow: clip;
+    }
+    .swatch img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* The slice stylesheet paints a faint striped grain for reading pages.
+       These tiles are the pictures themselves. */
+    .swatch[data-spw-texture-slice] > .spw-texture-slice,
+    .swatch[data-spw-texture-slice]::after {
+      display: none;
     }
     .swatch-stripes {
       background: repeating-linear-gradient(135deg, #154a52 0 10px, #1e6a74 10px 20px);

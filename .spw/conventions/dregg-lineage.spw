@@ -66,8 +66,18 @@ expression = lineage[dregg]{determinism.verification.hypermedia}<topics>
   ~#source: ~"https://github.com/emberian"
 
   hypermedia: .{
-    why = `dregg is described as a hypermedia ecosystem, and this site is aggressively hypermedia-first — no framework, attributes as state, HTML as the substrate rather than a render target`
-    ~#reading: `the shared position is that the document is the program's surface, not its output`
+    why = `Spw's public hypermedia is medium[open]{surface.capability.receipt}<host>. The topic is the place that theory is developed. A knowledge-base page may point at it and may omit the point.`
+    expression = `medium[open]{surface.capability.receipt}<host>`
+    kin = #[`medium[surface]`, `medium[capability]`, `medium[receipt]`][reg=set]
+    public = `/topics/hypermedia/`
+    projection = `/topics/knowledge-bases/#open-medium`
+    refuse = `the public topic does not take its subject from a neighboring project, and it does not treat detachability as a story about that project. Name a project in public only in an explicit endorsement.`
+  }[reg=facet]
+
+  hypermedia_sighting: .{
+    ~#note: `Editorial only. A sighting does not enter the public topic.`
+    checked = `2026-09-23`
+    source = `@DreggNet`
   }[reg=facet]
 
   formal_verification: .{
