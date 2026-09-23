@@ -827,6 +827,27 @@ function inferPagePrimaryAction(pathname, surface) {
   return 'Pick a route';
 }
 
+function differentRoute(href, pathname) {
+  const path = String(href || '').split('#')[0] || '/';
+  const norm = path.endsWith('/') ? path : `${path}/`;
+  const current = pathname.endsWith('/') ? pathname : `${pathname}/`;
+  return norm !== current;
+}
+
+/** Where "Next" goes. A same-page action uses the first route the page itself offers. */
+function inferPagePrimaryHref(pathname, relatedRoutes = []) {
+  const mapped = [
+    [(value) => value === '/', '/topics/'],
+    [(value) => value.startsWith('/now'), '/services/#support'],
+    [(value) => value.startsWith('/services'), '/services/#pricing'],
+    [(value) => value.startsWith('/contact'), '/services/'],
+    [(value) => value.startsWith('/settings'), '/settings/#stored-data'],
+    [(value) => value.startsWith('/about'), '/about/website/'],
+  ].find(([test]) => test(pathname))?.[1] || '';
+  if (mapped && differentRoute(mapped, pathname)) return mapped;
+  return (relatedRoutes || []).find((href) => differentRoute(href, pathname)) || mapped || '/topics/';
+}
+
 function isLikelyAssetPath(pathname = '') {
   return ASSET_PATH_RE.test(pathname);
 }
@@ -947,6 +968,7 @@ function resolvePageMetadata({ body = document.body, main = document.querySelect
     pageStatus: inferPageStatus(pathname, surface),
     pageResponsibility: inferPageResponsibility(pathname, surface),
     pagePrimaryAction: inferPagePrimaryAction(pathname, surface),
+    pagePrimaryHref: inferPagePrimaryHref(pathname, relatedRoutes),
   };
 
   const matched = PAGE_METADATA_RULES.find((rule) => rule.test(pathname, surface, segments))?.meta || {};
@@ -1314,6 +1336,16 @@ function formatPageLabel(value = '') {
     .join(' ');
 }
 
+function footerPathname(href) {
+  try {
+    const url = new URL(href, window.location.origin);
+    if (url.origin !== window.location.origin) return '';
+    return url.pathname.length > 1 && !url.pathname.endsWith('/') ? `${url.pathname}/` : url.pathname;
+  } catch {
+    return '';
+  }
+}
+
 function syncPageArchitectureFooter(pageMeta, body = document.body) {
   if (!body) return;
 
@@ -1329,6 +1361,41 @@ function syncPageArchitectureFooter(pageMeta, body = document.body) {
     if (!node || !value) return;
     node.textContent = value;
   });
+
+  const next = body.querySelector('[data-spw-page-primary-action]');
+  if (next) {
+    if (pageMeta.pagePrimaryAction) next.textContent = pageMeta.pagePrimaryAction;
+    if (pageMeta.pagePrimaryHref) next.setAttribute('href', pageMeta.pagePrimaryHref);
+  }
+
+  const path = window.location.pathname || '/';
+  body.querySelectorAll('[data-spw-page-feedback]').forEach((link) => {
+    const kind = link.getAttribute('data-spw-feedback-kind') || '';
+    const stem = kind ? `/${kind}` : '';
+    link.href = `https://autonomous.feedback/spwashi.com${stem}?at=${encodeURIComponent(path)}`;
+  });
+
+  const note = body.querySelector('[data-spw-footer-route-note]');
+  const current = footerPathname(window.location.pathname || '/');
+  let best = null;
+  let bestLength = -1;
+  body.querySelectorAll('.site-footer__nav a[href]').forEach((link) => {
+    const path = footerPathname(link.getAttribute('href'));
+    if (!path || path === '/') return;
+    if (current === path || current.startsWith(path)) {
+      if (path.length > bestLength) {
+        best = link;
+        bestLength = path.length;
+      }
+    }
+  });
+  if (!best) return;
+  best.setAttribute('aria-current', 'page');
+  const text = best.getAttribute('data-spw-route-note');
+  if (note && text) {
+    note.hidden = false;
+    note.textContent = text;
+  }
 }
 
 export function enrichRegionMetadata(pageMeta, { body = document.body } = {}) {

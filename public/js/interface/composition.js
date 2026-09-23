@@ -928,6 +928,19 @@ function syncCauldronState() {
   document.querySelectorAll('[data-cauldron-count]').forEach((node) => {
     node.textContent = String(count);
   });
+  document.querySelectorAll('[data-spw-cauldron]').forEach((host) => {
+    host.dataset.spwCauldronHeld = count > 0 ? 'true' : 'false';
+  });
+  document.querySelectorAll('details.site-footer__more').forEach((details) => {
+    if (details.dataset.spwFooterMoreBound !== 'true') {
+      details.dataset.spwFooterMoreBound = 'true';
+      details.addEventListener('toggle', () => {
+        if (!details.open) details.dataset.spwFooterMoreUser = 'closed';
+        else delete details.dataset.spwFooterMoreUser;
+      });
+    }
+    if (count > 0 && details.dataset.spwFooterMoreUser !== 'closed') details.open = true;
+  });
   /* Display mirrors only. The root and vessel hosts carry this attribute as
      state data; writing textContent into them erases the page or the vessel
      (it did — browser check, 2026-07-03). */
