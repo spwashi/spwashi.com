@@ -79,9 +79,10 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
 
 ^"collect_guard"{
   id = "fb-collect-guard"
-  claim = `Public intake is capped and does not keep notes. Eight posts and twenty meter checks per address per ten minutes. A token, bearer, or password in the client file is refused and not echoed. INBOX_READ_TOKEN, when set on the worker, is compared in constant time; a match still returns not_draining until a queue exists. No token is accepted from the query string.`
+  claim = `Public intake is capped. Eight posts and twenty meter checks per address per ten minutes. A token, bearer, or password in the client file is refused and not echoed. INBOX_READ_TOKEN, when set on the worker, is compared in constant time; a match reads the queue when one is bound, and returns not_draining when none is. No token is accepted from the query string.`
   landed = `2026-09-22: workers/autonomous-feedback/src/intake.js`
-  unset_token = `Missing Authorization stays 401. Any bearer while the secret is unset stays 501. A wrong bearer once the secret is set is 401.`
+  unset_token = `Missing Authorization stays 401. Any bearer while the secret is unset stays 501, even with a queue bound: no secret means no reader. A wrong bearer once the secret is set is 401.`
+  unset_token_fixed = `2026-09-23: the D1 desk had made an unset secret read and clear the queue for any bearer; inboxAccess now returns "unset" and the route answers 501.`
 }[reg=facet]
 }[reg=facet]
 
