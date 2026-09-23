@@ -4,6 +4,7 @@
 
 export const VERSION = "0.3.0";
 
+/** Floor for a written note that has no type. A chosen kind, common note, or thanks is a complete submission. */
 export const NOTE_MIN = 8;
 export const NOTE_MAX = 2000;
 
@@ -183,9 +184,10 @@ export function contextBySlug(slug) {
   return CONTEXTS.find((c) => c.slug === resolved) || null;
 }
 
-/** Why a note cannot become a card yet, in the writer's words. */
+/** Why untyped prose cannot become a card yet. A chosen type does not come through here. */
 export function noteProblem(text) {
-  if (text.length < NOTE_MIN) return `Write at least ${NOTE_MIN} characters.`;
+  if (!text.length) return "Pick what this is. That is enough to send. Or write what happened.";
+  if (text.length < NOTE_MIN) return `Pick what this is, or write at least ${NOTE_MIN} characters. This note has ${text.length}.`;
   if (text.length > NOTE_MAX) return `Keep it under ${NOTE_MAX.toLocaleString("en-US")} characters. This one has ${text.length.toLocaleString("en-US")}.`;
   return "";
 }
