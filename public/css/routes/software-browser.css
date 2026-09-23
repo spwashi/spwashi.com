@@ -1,4 +1,4 @@
-        /* ── Browser reference surface ── */
+/* software-browser.css — reference cards and reading layout for the browser topic route. */
         *, *::before, *::after { box-sizing: border-box; }
 
         .ref-grid {
