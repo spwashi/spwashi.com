@@ -12496,7 +12496,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
     color-mix(in oklab, var(--ink, #161c1d) 82%, var(--active-op-color, #008080) 18%);
 }
 
-:where(p, li, blockquote, dd, figcaption, .frame-copy, [data-spw-textual-role="lede"], [data-spw-textual-role="note"]) a:not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button) {
+:where(p, li:not(:is(.site-header, body > header) nav li), blockquote, dd, figcaption, .frame-copy, [data-spw-textual-role="lede"], [data-spw-textual-role="note"]) a:not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button) {
   color: color-mix(in srgb, var(--ink-strong, #090b0c) 84%, var(--active-op-color, var(--teal, #008080)) 16%);
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
@@ -12510,7 +12510,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
     background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
-:where(p, li, blockquote, dd, figcaption, .frame-copy, [data-spw-textual-role="lede"], [data-spw-textual-role="note"]) a:not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button):is(:hover, :focus-visible) {
+:where(p, li:not(:is(.site-header, body > header) nav li), blockquote, dd, figcaption, .frame-copy, [data-spw-textual-role="lede"], [data-spw-textual-role="note"]) a:not(.spw-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button):is(:hover, :focus-visible) {
   color: var(--active-op-color, var(--teal, #008080));
   text-decoration-color: var(--active-op-color, var(--teal, #008080));
   text-decoration-thickness: 2px;
@@ -39938,6 +39938,9 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
    ========================================================================== */
 
 /* Handle gateway: add only things visitors can grasp or scan. */
+/* Header nav links gain data-spw-operator on idle. They stay shell chrome,
+   not handles, so their box, ink, and trace do not change after first paint
+   (display-layers.css reader contract). */
 :where(
   .spw-chip,
   .syntax-token,
@@ -39953,7 +39956,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   .spw-guide-chip,
   .persona-chip,
   [data-spw-handle="true"],
-  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator]):not(:is(.site-header, body > header) nav a)
 ) {
   --handle-arrival-lift: 0px;
   --handle-arrival-opacity: 1;
@@ -40075,7 +40078,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
 :where(
   .syntax-token,
   .spw-delimiter,
-  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator]):not(:is(.site-header, body > header) nav a)
 ):not(.spw-chip):not(.frame-sigil):not(.spec-pill):not(.spw-component-tag):not(.spw-guide-chip) {
   min-height: auto;
   padding-inline: var(--handle-pad-inline-inline);
@@ -40483,8 +40486,9 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 /* Sigils in copy are references: an inline semantic carrier inside prose
    points at something primeable, so it wears the reference seam by default
    (dotted; dereferencing resolves it solid elsewhere). Reading stays calm -
-   the seam is quieter than link styling and never changes layout. */
-:where(p, li, dd, figcaption, [data-spw-textual-role="note"])
+   the seam is quieter than link styling and never changes layout. Header
+   navigation is chrome, not copy: its list items keep the shell's link box. */
+:where(p, li:not(:is(.site-header, body > header) nav li), dd, figcaption, [data-spw-textual-role="note"])
   :where(a, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator]):not(.spw-chip, .frame-sigil) {
   text-decoration-line: underline;
   text-decoration-style: dotted;

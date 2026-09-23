@@ -17,6 +17,9 @@
    ========================================================================== */
 
 /* Handle gateway: add only things visitors can grasp or scan. */
+/* Header nav links gain data-spw-operator on idle. They stay shell chrome,
+   not handles, so their box, ink, and trace do not change after first paint
+   (display-layers.css reader contract). */
 :where(
   .spw-chip,
   .syntax-token,
@@ -32,7 +35,7 @@
   .spw-guide-chip,
   .persona-chip,
   [data-spw-handle="true"],
-  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator]):not(:is(.site-header, body > header) nav a)
 ) {
   --handle-arrival-lift: 0px;
   --handle-arrival-opacity: 1;
@@ -154,7 +157,7 @@
 :where(
   .syntax-token,
   .spw-delimiter,
-  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator]):not(:is(.site-header, body > header) nav a)
 ):not(.spw-chip):not(.frame-sigil):not(.spec-pill):not(.spw-component-tag):not(.spw-guide-chip) {
   min-height: auto;
   padding-inline: var(--handle-pad-inline-inline);
