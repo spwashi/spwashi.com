@@ -208,7 +208,57 @@ const SHELL = `
     .card footer { padding-top: .8rem; border-top: 1px solid var(--line); color: var(--muted); font: .82rem/1.3 ui-monospace, SFMono-Regular, monospace; }
     .card-address { color: var(--fg); }
     .card-stamp:empty { display: none; }
+    /* The write form: the note first, the kind as a row of chips beneath it. */
+    fieldset.chips { border: 0; margin: 1rem 0 0; padding: 0; }
+    fieldset.chips legend { padding: 0; margin: 0 0 .4rem; font-size: .88rem; }
+    .chips .row { display: flex; flex-wrap: wrap; gap: .45rem; }
+    label.chip { position: relative; display: inline-flex; align-items: center; min-height: 44px; margin: 0; padding: .4rem 1rem; border: 1px solid var(--line); border-radius: 999px; background: var(--field); color: var(--fg); font-size: .95rem; cursor: pointer; }
+    label.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+    label.chip:has(input:checked) { border-color: var(--accent); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+    label.chip:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .page { margin: 1rem 0 0; }
+    .page summary, .page-known { color: var(--muted); font-size: .9rem; }
+    .page-known { margin: 0; }
+    .page-known strong { color: var(--fg); font-weight: 600; }
+    .page details { margin: 0; }
+    .page fieldset { margin-top: .6rem; }
+    .write .keep { margin: 1.1rem 0 0; }
+    .write .threads, .write .asks, .write .stance { display: none; }
+    .write .threads { margin: 0 0 1.1rem; }
+    .write fieldset.chips legend .hint, .write label .hint, .write summary .hint { margin: 0 0 0 .4rem; font-size: .82rem; }
+    .write label[for="note"] { color: var(--fg); font-size: 1.02rem; font-weight: 600; margin: .2rem 0 .3rem; }
+    .write .when-tapped { display: none; color: var(--fg); }
+    .write:has(input[name="thread"]:checked) .when-tapped { display: inline; }
+    .write:has(input[name="thread"]:checked) .untapped { display: none; }
+    .write:has(input[name="thread"]:checked) #kinds { display: none; }
+    .write .thanks-row { margin: .7rem 0 0; }
+    .write .thanks-row label.chip { font-size: .9rem; }
+    .about-line { margin: 0 0 1rem; }
+    .about-line p { margin: 0; color: var(--muted); }
+    .about-line p strong { color: var(--fg); font-weight: 600; }
+    .about-line details { margin: 0; }
+    .about-line summary { min-height: 36px; font-size: .9rem; }
+    .write .stance { margin: .6rem 0 0; padding: .7rem .9rem; border-left: 2px solid var(--accent); background: var(--field); border-radius: 0 calc(var(--radius) * .6) calc(var(--radius) * .6) 0; font-size: .95rem; }
+    .write .stance .hint { margin: .3rem 0 0; }
+    .write details.asks { margin: 1rem 0 0; }
+    .write details.asks summary { color: var(--accent); }
+    .write details.asks label { margin-top: .7rem; }
+    .write textarea.ask { min-height: 4.5rem; }
+    .card-subject { color: var(--muted); font-size: .92rem; }
+    .card-asks { margin: -.4rem 0 1rem; padding-left: 1rem; border-left: 2px solid var(--line); }
+    .card-asks dt { color: var(--muted); font-size: .88rem; margin-top: .6rem; }
+    .card-asks dd { margin: .15rem 0 0; white-space: pre-wrap; }
+    .owner-thanks { margin: .2rem 0 .8rem; padding: .7rem .9rem; border-left: 2px solid var(--accent); background: var(--surface); border-radius: 0 calc(var(--radius) * .6) calc(var(--radius) * .6) 0; }
+    .stance-reply { margin: 1.2rem 0; padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .stance-reply blockquote { margin: .6rem 0; padding-left: 1rem; border-left: 2px solid var(--accent); }
     .inbox { list-style: none; margin: 0; padding: 0; }
+    .inbox .fresh-mark { margin: 0 0 -.6rem; color: var(--accent); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+    .digest { list-style: none; margin: .4rem 0 .8rem; padding: 0; }
+    .digest li { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .5rem; padding: .45rem 0; border-bottom: 1px solid var(--line); }
+    .digest .n { margin-left: auto; font-variant-numeric: tabular-nums; font-weight: 600; }
+    .digest .hint { flex-basis: 100%; margin: 0; }
+    .map-hint { margin: .3rem 0; }
+    .panel.due { border-color: var(--warn); }
     .inbox > li { margin: 0 0 1.4rem; }
     .inbox .card { margin-bottom: .5rem; }
     .inbox .card.sample { transform: none; }

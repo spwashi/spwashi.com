@@ -7,8 +7,9 @@
  *
  * A new card is unsaved. The owner can save up to SAVE_LIMIT cards, which keep
  * their words until released. Unsaved cards older than three days are
- * compacted: each becomes one count in a tally by day, page, and kind, and its
- * words are deleted. The tally is all that survives.
+ * compacted: each becomes one count in a tally by week, subject (or page),
+ * common note, and kind, noting whether it came in the writer's own words,
+ * and its words are deleted. The tally is all that survives.
  */
 
 export const COMPACT_AFTER_DAYS = 3;
@@ -43,6 +44,17 @@ function compactBefore(now) {
   return new Date(now - COMPACT_AFTER_DAYS * 24 * 60 * 60 * 1000).toISOString();
 }
 
+/** Monday of the week a timestamp falls in, as YYYY-MM-DD (UTC). */
+export function weekOf(issued) {
+  const day = new Date(`${String(issued).slice(0, 10)}T00:00:00Z`);
+  const back = (day.getUTCDay() + 6) % 7;
+  return new Date(day.getTime() - back * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+}
+
+// SQL for the same Monday, so compaction and the digest agree.
+const WEEK_SQL = "date(substr(issued, 1, 10), '-6 days', 'weekday 1')";
+const ABOUT_SQL = "COALESCE(NULLIF(subject, ''), route_name, route_path, '')";
+
 function toFiling(row) {
   return {
     id: row.id,
@@ -55,6 +67,9 @@ function toFiling(row) {
     path: row.route_path || null,
     issued: row.issued,
     saved: Boolean(row.saved),
+    subject: row.subject || null,
+    thread: row.thread || null,
+    worded: row.worded == null ? true : Boolean(row.worded),
   };
 }
 
@@ -64,24 +79,29 @@ export async function keepNote(db, filing) {
   if (Number(count?.n || 0) >= UNSAVED_CAP) return { stored: false, queue: "full" };
   const id = crypto.randomUUID();
   await db.prepare(
-    "INSERT INTO notes (id, host, kind, title, note, writer, issued, route_name, route_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-  ).bind(id, filing.host, filing.context.slug, filing.context.title, filing.note, filing.from || null, filing.issued, filing.route || null, filing.path || null).run();
+    "INSERT INTO notes (id, host, kind, title, note, writer, issued, route_name, route_path, subject, thread, worded) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+  ).bind(
+    id, filing.host, filing.context.slug, filing.context.title, filing.record || filing.note, filing.from || null, filing.issued,
+    filing.route || null, filing.path || null, filing.subject?.id || null, filing.thread?.id || (filing.thanked ? "thanks" : null), filing.worded === false ? 0 : 1,
+  ).run();
   return { stored: true, queue: "desk", id };
 }
 
 /** Saved cards first, then unsaved, newest first. */
 export async function listNotes(db, host) {
   const { results } = await db.prepare(
-    "SELECT id, host, kind, title, note, writer, issued, route_name, route_path, saved FROM notes WHERE host = ? ORDER BY saved DESC, issued DESC LIMIT ?",
+    "SELECT id, host, kind, title, note, writer, issued, route_name, route_path, saved, subject, thread, worded FROM notes WHERE host = ? ORDER BY saved DESC, issued DESC LIMIT ?",
   ).bind(host, UNSAVED_CAP + 1000).all();
   return (results || []).map(toFiling);
 }
 
+const toTally = ({ week, about, thread, kind, cards, worded }) => ({ week, about, thread, kind, cards: Number(cards), worded: Number(worded) });
+
 export async function listTallies(db, host) {
   const { results } = await db.prepare(
-    "SELECT day, page, kind, count FROM tallies WHERE host = ? ORDER BY day DESC, page, kind",
+    "SELECT week, about, thread, kind, cards, worded FROM tallies WHERE host = ? ORDER BY week DESC, about, thread, kind",
   ).bind(host).all();
-  return (results || []).map(({ day, page, kind, count }) => ({ day, page, kind, count: Number(count) }));
+  return (results || []).map(toTally);
 }
 
 /** @returns {Promise<{ ok: boolean, error: null|"limit"|"missing" }>} */
@@ -114,9 +134,9 @@ const DUE = "saved = 0 AND issued < ?";
 /** The tallies the next compaction would add, without changing anything. */
 export async function previewCompaction(db, host, now = Date.now()) {
   const { results } = await db.prepare(
-    `SELECT substr(issued, 1, 10) AS day, COALESCE(route_name, route_path, '') AS page, kind, COUNT(*) AS count FROM notes WHERE ${DUE} AND host = ? GROUP BY day, page, kind ORDER BY day DESC, page, kind`,
+    `SELECT ${WEEK_SQL} AS week, ${ABOUT_SQL} AS about, COALESCE(thread, '') AS thread, kind, COUNT(*) AS cards, SUM(worded) AS worded FROM notes WHERE ${DUE} AND host = ? GROUP BY week, about, thread, kind ORDER BY week DESC, about, thread, kind`,
   ).bind(compactBefore(now), host).all();
-  return (results || []).map(({ day, page, kind, count }) => ({ day, page, kind, count: Number(count) }));
+  return (results || []).map(toTally);
 }
 
 /**
@@ -131,9 +151,49 @@ export async function compact(db, host = "", now = Date.now()) {
   const args = host ? [before, host] : [before];
   const [, deleted] = await db.batch([
     db.prepare(
-      `INSERT INTO tallies (host, day, page, kind, count) SELECT host, substr(issued, 1, 10), COALESCE(route_name, route_path, ''), kind, COUNT(*) FROM notes WHERE ${DUE}${scope} GROUP BY host, substr(issued, 1, 10), COALESCE(route_name, route_path, ''), kind ON CONFLICT (host, day, page, kind) DO UPDATE SET count = tallies.count + excluded.count`,
+      `INSERT INTO tallies (host, week, about, thread, kind, cards, worded) SELECT host, ${WEEK_SQL}, ${ABOUT_SQL}, COALESCE(thread, ''), kind, COUNT(*), SUM(worded) FROM notes WHERE ${DUE}${scope} GROUP BY 1, 2, 3, 4, 5 ON CONFLICT (host, week, about, thread, kind) DO UPDATE SET cards = tallies.cards + excluded.cards, worded = tallies.worded + excluded.worded`,
     ).bind(...args),
     db.prepare(`DELETE FROM notes WHERE ${DUE}${scope}`).bind(...args),
   ]);
   return { compacted: deleted?.meta?.changes ?? 0 };
+}
+
+/**
+ * What the owner reads first: each week's notes, stored counts and live cards
+ * together, grouped by what they were about and which common note they joined.
+ * Pure, so the inbox, the desk, and the JSON API say the same thing.
+ */
+export function digest(tallies = [], notes = [], now = Date.now()) {
+  const rows = [...tallies];
+  for (const n of notes) {
+    rows.push({ week: weekOf(n.issued), about: n.subject || n.route || n.path || "", thread: n.thread || "", kind: n.context, cards: 1, worded: n.worded ? 1 : 0 });
+  }
+  const weeks = new Map();
+  for (const r of rows) {
+    const week = weeks.get(r.week) || { week: r.week, cards: 0, thanks: 0, groups: new Map(), loose: new Map() };
+    week.cards += r.cards;
+    if (r.thread === "thanks") week.thanks += r.cards;
+    else {
+      const key = `${r.about}\u0000${r.thread}`;
+      const group = week.groups.get(key) || { about: r.about, thread: r.thread, cards: 0, worded: 0, kinds: {} };
+      group.cards += r.cards;
+      group.worded += r.worded;
+      group.kinds[r.kind] = (group.kinds[r.kind] || 0) + r.cards;
+      week.groups.set(key, group);
+      if (!r.thread) week.loose.set(r.about, (week.loose.get(r.about) || 0) + r.cards);
+    }
+    weeks.set(r.week, week);
+  }
+  const due = notes.filter((n) => !n.saved && Date.parse(n.issued) < now - (COMPACT_AFTER_DAYS - 1) * 24 * 60 * 60 * 1000).length;
+  return {
+    due,
+    weeks: [...weeks.values()].sort((a, b) => b.week.localeCompare(a.week)).map((w) => ({
+      week: w.week,
+      cards: w.cards,
+      thanks: w.thanks,
+      groups: [...w.groups.values()].sort((a, b) => b.cards - a.cards || String(a.about).localeCompare(String(b.about))),
+      // A subject whose notes keep arriving without a common note may need one: the owner's map can grow.
+      hints: [...w.loose].filter(([about, n]) => about && n >= 3).map(([about, cards]) => ({ about, cards })),
+    })),
+  };
 }

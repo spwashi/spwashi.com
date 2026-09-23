@@ -62,15 +62,18 @@ card_lifecycle: .{
  saved = `owner or operator → setSaved(true) (desk.js). Refused as "limit" once SAVE_LIMIT cards are saved. A saved card keeps its words until released or deleted. It is never compacted.`
  released = `setSaved(false). The card is unsaved again; if it is older than three days it is compacted at the next tick.`
  deleted = `deleteNotes (desk.js), one card or all; the words are gone and nothing is counted.`
- compacted = `compact (desk.js): every unsaved card with issued older than COMPACT_AFTER_DAYS (3) becomes +1 on tallies(host, day = issued[0..10], page = route name or path or "", kind), and its notes row is deleted. Both statements run in one D1 batch (one transaction), so a count never exists without its deletion or the reverse. Runs on every cron tick for all hosts, and from /desk Compact now for one host.`
- tally = `what survives compaction: host, day, page, kind, count. No note text, no writer, no path beyond the page the site named or the path the reader kept.`
+ compacted = `compact (desk.js): every unsaved card with issued older than COMPACT_AFTER_DAYS (3) becomes +1 card on tallies(host, week = Monday of issued, about = subject id or page name or path or "", thread = common-note id or "thanks" or "", kind), adding 1 to worded when it came in the writer's own words, and its notes row is deleted. Both statements run in one D1 batch (one transaction), so a count never exists without its deletion or the reverse. Runs on every cron tick for all hosts, and from /desk Compact now for one host.`
+ tally = `what survives compaction: host, week, about, thread, kind, cards, worded. No note text, no writer, no path beyond the page the site named or the path the reader kept (migration 0004).`
+ kind = `from evidence only (index.js readFiling): the tag the writer chose, else the common note's kind, else appreciation for "Just saying thanks", else NOTE ("note", unsorted). Nothing is preselected unless the link names a kind, so untouched notes never inflate a category.`
+ digest = `desk.js digest(tallies, notes): each week grouped by about and thread, stored counts and live cards together; thanks counted apart; due = unsaved cards within a day of compaction; hints = subjects with 3 or more notes that joined no common note, so the owner's map can grow. The inbox page opens with it; the JSON API carries it.`
+ seen = `cookie af_seen (Path=/{host}/inbox, HttpOnly, 90 days) marks cards newer than the owner's last visit. The server keeps no visit history.`
 }[reg=facet]
 
 page_detection: .{
  decided_by = `index.js pageFrom (GET) and readFiling (POST); model.js refererPath`
  order = `?at= on the link, else the Referer when its host is the site or www.site, else the picker. A body path on POST wins over the Referer.`
  origin_only = `A Referer of "/" is ignored: browsers cut cross-site Referers to the origin by default, so "/" cannot be told from unknown. The link and frame snippets carry referrerpolicy="no-referrer-when-downgrade" so the full path arrives; the HTML-form snippet names its page with a hidden path input.`
- privacy = `cleanPath drops query and fragment. A detected page is shown to the writer ("About Checkout · /checkout") with the picker under "Change or clear the page", so the writer sees and can clear it before sending.`
+ privacy = `cleanPath drops query and fragment. A detected page is shown to the writer ("On Checkout · /checkout") with the picker under "Change or clear the page", so the writer sees and can clear it before sending.`
 }[reg=facet]
 
 access: .{
@@ -78,9 +81,9 @@ access: .{
  presented = `Authorization: Bearer (scripts), else cookie af_inbox (Path=/{host}/inbox), else cookie af_desk (Path=/). Cookies are HttpOnly, Secure, SameSite=Strict, Max-Age 12 hours, set only after a key typed into a POST form checks out. Every browser action is a same-origin POST; the page CSP allows no fetch.`
  results = `operator token → "operator" on any host. SHA-256 of the key equal to the host's inbox.key → "owner" on that host only. No key → 401. Wrong key → 401. Neither token nor owner key configured → 501 for JSON. Desk not open → 501 for JSON, an explanatory page for browsers.`
  routes = #[
-  `GET /{host}/inbox (browser): key form (401) | inbox page: Saved n of limit, New with "Counted on {issued + 3 days} unless saved", Counted tally table`,
+  `GET /{host}/inbox (browser): key form (401) | inbox page: due warning, this week's digest with map hints, earlier weeks, New ("Counted on {issued + 3 days} unless you save it", marked new since the last visit), Saved n of limit`,
   `POST /{host}/inbox (form): action open | close | save | release | delete → 303 back with ?done=`,
-  `GET /{host}/inbox (Bearer or Accept: json): { filings, tallies, saved_limit, … }`,
+  `GET /{host}/inbox (Bearer or Accept: json): { filings, tallies, digest, saved_limit, … }`,
   `POST /{host}/inbox (Bearer, JSON { id, saved }): 200 | 409 limit | 404 missing`,
   `DELETE /{host}/inbox[?id=] (Bearer): { cleared }`,
   `GET /desk: key form (401) | every DESK_HOSTS entry with new, saved, oldest new card, and the next compaction as a tally preview`,
@@ -97,8 +100,8 @@ copy_contract: .{
 }[reg=facet]
 
 storage: .{
- notes = `migrations 0001 + 0002 + 0003: id, host, kind, title, note, writer, issued, route_name, route_path, saved`
- tallies = `migration 0003: PRIMARY KEY (host, day, page, kind), count`
+ notes = `migrations 0001–0004: id, host, kind, title, note, writer, issued, route_name, route_path, saved, subject, thread, worded`
+ tallies = `migration 0004 (replaces 0003's table): PRIMARY KEY (host, week, about, thread, kind), cards, worded`
  apply = `wrangler d1 migrations apply autonomous-feedback --remote`
 }[reg=facet]
 
@@ -106,7 +109,9 @@ invariants: #[
  .{ id = `fd-01` ; claim = `No card is kept for a host whose desk is not open.` ; code = `index.js maybeKeep → deskState` ; test = `asking for a queue does not keep notes until the desk opens for the host; a listed desk with no reader keeps nothing` }[reg=facet],
  .{ id = `fd-02` ; claim = `No card is kept that no one can read: open requires INBOX_READ_TOKEN or the host's inbox.key.` ; code = `desk.js deskState readable` ; test = `a listed desk with no reader keeps nothing; a bound queue stays closed while the inbox token is unset` }[reg=facet],
  .{ id = `fd-03` ; claim = `An unsaved card's words last at most three days plus one cron interval.` ; code = `desk.js compact; index.js scheduled` ; test = `unsaved cards older than three days become tallies; saved cards keep their words` }[reg=facet],
- .{ id = `fd-04` ; claim = `Tallies hold no reader words.` ; code = `migration 0003 columns; compact INSERT … SELECT` ; test = `unsaved cards older than three days become tallies (doesNotMatch note text)` }[reg=facet],
+ .{ id = `fd-04` ; claim = `Tallies hold no reader words.` ; code = `migration 0004 columns; compact INSERT … SELECT` ; test = `unsaved cards older than three days become tallies (doesNotMatch note text)` }[reg=facet],
+ .{ id = `fd-11` ; claim = `An untouched note is filed as an unsorted note, never under a preselected kind.` ; code = `index.js readFiling kind; pages.js renderWrite selected` ; test = `a kind comes from evidence …; the write page is a labelled form (bare page has nothing checked)` }[reg=facet],
+ .{ id = `fd-12` ; claim = `The digest counts every card once: compacted counts and live cards never overlap.` ; code = `desk.js digest; compact deletes what it counts` ; test = `the digest groups a week by subject and common note …; compaction test (digest total 4)` }[reg=facet],
  .{ id = `fd-05` ; claim = `A count and the deletion of its card commit together.` ; code = `desk.js compact db.batch` ; test = `review: D1 batch is a transaction; the memory DB runs the pair in order` }[reg=facet],
  .{ id = `fd-06` ; claim = `A site never has more than SAVE_LIMIT saved cards.` ; code = `desk.js setSaved` ; test = `an owner opens their inbox … and saves within a limit` }[reg=facet],
  .{ id = `fd-07` ; claim = `An owner key opens only its own host; the file holds only its hash.` ; code = `intake.js deskAccess; config.js inbox.key` ; test = `an owner opens their inbox …; a client file carries only the hash of an inbox key` }[reg=facet],
@@ -122,7 +127,7 @@ audit: .{
   .{ checks = `fd-03` ; expect = `no rows` ; sql = `SELECT host, COUNT(*) AS overdue FROM notes WHERE saved = 0 AND issued < strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-3 days', '-10 minutes') GROUP BY host` }[reg=facet],
   .{ checks = `fd-06` ; expect = `no rows (with SAVE_LIMIT 10)` ; sql = `SELECT host, COUNT(*) AS saved FROM notes WHERE saved = 1 GROUP BY host HAVING COUNT(*) > 10` }[reg=facet],
   .{ checks = `fd-01` ; expect = `every host is in DESK_HOSTS` ; sql = `SELECT DISTINCT host FROM notes UNION SELECT DISTINCT host FROM tallies` }[reg=facet],
-  .{ checks = `fd-04` ; expect = `host, day, page, kind, count and nothing else` ; sql = `PRAGMA table_info(tallies)` }[reg=facet],
+  .{ checks = `fd-04` ; expect = `host, week, about, thread, kind, cards, worded and nothing else` ; sql = `PRAGMA table_info(tallies)` }[reg=facet],
   .{ checks = `kept cap` ; expect = `no rows` ; sql = `SELECT host, COUNT(*) FROM notes WHERE saved = 0 GROUP BY host HAVING COUNT(*) > 200` }[reg=facet]
  ][reg=set]
  probes = #[
