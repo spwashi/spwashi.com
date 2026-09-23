@@ -1,0 +1,243 @@
+<spw-page
+    title="Spwashi • Render Pipeline"
+    description="DOM, CSSOM, layout, paint, and composite: what a style change actually costs in the browser."
+    canonical="https://spwashi.com/topics/software/browser/render-pipeline/"
+    og_title="Spwashi • Render Pipeline"
+    og_description="DOM, CSSOM, layout, paint, and composite: what a style change actually costs in the browser."
+    og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
+    og_image_alt="Render Pipeline on Spwashi."
+    keywords="render pipeline, browser, typescript"
+    breadcrumb_label="Render Pipeline"
+    header_current="Render Pipeline"
+    header_current_href="/topics/software/browser/render-pipeline/"
+    header_indicator="software"
+    surface="software"
+    page_family="field-guide"
+    page_role="topic-register"
+    page_modes="reading inspect compare"
+    wonder="comparison constraint locality"
+    route_family="editorial systems curriculum"
+    context="analysis"
+    features="operators navigator console"
+    related_routes="/topics/software/browser/|/topics/software/browser/event-loop/|/topics/software/browser/platform-apis/|/topics/software/browser/security-model/|/topics/software/browser/typescript/|/topics/software/"
+    stylesheet_mode="scoped"
+></spw-page>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+    <link rel="stylesheet" href="/public/css/routes/software-browser.css">
+</head>
+<body data-spw-surface="software"
+    data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial systems curriculum" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare" data-spw-page-seed="page_topics_topics_software_browser_render_pipeline" data-spw-page-role="topic-register" data-spw-related-routes="/topics/software/browser/|/topics/software/browser/event-loop/|/topics/software/browser/platform-apis/|/topics/software/browser/security-model/|/topics/software/browser/typescript/|/topics/software/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+    <spw-site-header
+        current="Render Pipeline"
+        current_href="/topics/software/browser/render-pipeline/"
+        indicator="software"
+        seed="page_topics_topics_software_browser_render_pipeline__site_header"
+        related_routes="/topics/software/browser/|/topics/software/browser/event-loop/|/topics/software/browser/platform-apis/|/topics/software/browser/security-model/|/topics/software/browser/typescript/|/topics/software/"
+        context_relevance="DOM · CSSOM · layout · composite"
+        nav_items="Home:/|Software:/topics/software/|Browser:/topics/software/browser/|Render Pipeline:/topics/software/browser/render-pipeline/"
+    ></spw-site-header>
+    <main id="main-content" tabindex="-1" aria-labelledby="render-pipeline-title" data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis">
+        <article>
+            <section class="spw-frame" id="render-pipeline-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-liminality="entry">
+                <p class="spec-kicker">Software / Browser</p>
+                <h1 id="render-pipeline-title">The render pipeline</h1>
+                <p data-spw-textual-role="lede">A change becomes pixels in stages. Some stages can be skipped. Knowing which one you touched is the performance question.</p>
+                <nav class="frame-operators" aria-label="Browser map">
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/browser/" data-spw-operator="frame">#&gt;browser_map</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/" data-spw-operator="frame">← software</a>
+                </nav>
+            </section>
+            <section class="spw-frame" id="render-pipeline"
+                     data-spw-role="reference" data-spw-meaning="browser render pipeline" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__render_pipeline" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#render-pipeline" data-spw-operator="value">*[render_pipeline]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">layout</span>
+                        <span class="spec-pill">paint</span>
+                        <span class="spec-pill">composite</span>
+                        <span class="spec-pill">CRP</span>
+                    </div>
+                </div>
+                <h2>Browser Render Pipeline</h2>
+                <p data-spw-textual-role="note">Which pipeline stages a CSS property triggers determines its cost. Properties like <code>transform</code> and <code>opacity</code> on composited layers skip layout and paint entirely — the GPU reassembles pre-rasterized layers. Properties like <code>width</code> invalidate all stages.</p>
+
+                <svg class="diagram" data-spw-svg-persona="learner frontend-engineer performance-reviewer rendering-model" viewBox="0 0 640 140"
+                     role="img" aria-labelledby="rp-title" aria-describedby="rp-desc"
+                     xmlns="http://www.w3.org/2000/svg" style="max-height:160px">
+                    <title id="rp-title">Browser Render Pipeline</title>
+                    <desc id="rp-desc">
+                        Stages: HTML + CSS are parsed into DOM and CSSOM; merged into the Render Tree;
+                        Layout computes geometry (reflow); Paint rasterizes pixels per layer;
+                        Composite assembles layers on the GPU and outputs to screen.
+                        transform/opacity trigger composite only (cheap fast path).
+                        width/height/top trigger layout + paint + composite (expensive).
+                    </desc>
+
+                    <defs>
+                        <marker id="rp-a" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(24,123,135,0.45)"/>
+                        </marker>
+                        <marker id="rp-b" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(120,80,0,0.5)"/>
+                        </marker>
+                    </defs>
+
+                    <!-- HTML+CSS input -->
+                    <g aria-label="HTML and CSS source">
+                        <rect x="8" y="22" width="58" height="40" rx="3"
+                              fill="rgba(24,123,135,0.08)" stroke="rgba(24,123,135,0.3)" stroke-width="1"/>
+                        <text x="37" y="38" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(24,123,135,0.85)">HTML</text>
+                        <text x="37" y="52" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(24,123,135,0.8)">+ CSS</text>
+                    </g>
+
+                    <!-- Fork arrows to DOM and CSSOM -->
+                    <path d="M 66 35 Q 80 22 94 25" stroke="rgba(24,123,135,0.35)" stroke-width="1" fill="none" marker-end="url(#rp-a)"/>
+                    <path d="M 66 49 Q 80 60 94 57" stroke="rgba(24,123,135,0.3)" stroke-width="1" fill="none" marker-end="url(#rp-a)"/>
+
+                    <!-- DOM -->
+                    <g aria-label="DOM: Document Object Model tree">
+                        <rect x="94" y="14" width="56" height="24" rx="3"
+                              fill="rgba(24,123,135,0.08)" stroke="rgba(24,123,135,0.3)" stroke-width="1"/>
+                        <text x="122" y="29" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.9)">DOM</text>
+                    </g>
+
+                    <!-- CSSOM -->
+                    <g aria-label="CSSOM: CSS Object Model">
+                        <rect x="94" y="46" width="56" height="24" rx="3"
+                              fill="rgba(24,123,135,0.06)" stroke="rgba(24,123,135,0.22)" stroke-width="1"/>
+                        <text x="122" y="61" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.78)">CSSOM</text>
+                    </g>
+
+                    <!-- Merge arrows to render tree -->
+                    <path d="M 150 26 Q 164 26 170 38" stroke="rgba(24,123,135,0.32)" stroke-width="1" fill="none" marker-end="url(#rp-a)"/>
+                    <path d="M 150 58 Q 164 58 170 50" stroke="rgba(24,123,135,0.28)" stroke-width="1" fill="none" marker-end="url(#rp-a)"/>
+
+                    <!-- Render Tree -->
+                    <g aria-label="Render Tree: merged DOM and resolved styles, excludes display:none">
+                        <rect x="170" y="22" width="76" height="40" rx="3"
+                              fill="rgba(24,123,135,0.09)" stroke="rgba(24,123,135,0.32)" stroke-width="1.2"/>
+                        <text x="208" y="37" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.9)">Render</text>
+                        <text x="208" y="52" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.9)">Tree</text>
+                        <text x="208" y="8" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="6.5" fill="rgba(24,123,135,0.45)">excludes display:none</text>
+                    </g>
+                    <path d="M 246 42 L 264 42" stroke="rgba(24,123,135,0.4)" stroke-width="1.2" fill="none" marker-end="url(#rp-a)"/>
+
+                    <!-- Layout (reflow) -->
+                    <g aria-label="Layout (reflow): compute geometry, position, size of each box">
+                        <rect x="264" y="22" width="72" height="40" rx="3"
+                              fill="rgba(160,42,77,0.07)" stroke="rgba(160,42,77,0.28)" stroke-width="1.2"/>
+                        <text x="300" y="37" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(160,42,77,0.9)">Layout</text>
+                        <text x="300" y="52" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(160,42,77,0.6)">(reflow)</text>
+                    </g>
+                    <path d="M 336 42 L 354 42" stroke="rgba(160,42,77,0.38)" stroke-width="1.2" fill="none" marker-end="url(#rp-a)"/>
+
+                    <!-- Paint -->
+                    <g aria-label="Paint (rasterize): draw pixels per layer into bitmaps">
+                        <rect x="354" y="22" width="66" height="40" rx="3"
+                              fill="rgba(160,42,77,0.06)" stroke="rgba(160,42,77,0.22)" stroke-width="1.2"/>
+                        <text x="387" y="37" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(160,42,77,0.85)">Paint</text>
+                        <text x="387" y="52" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(160,42,77,0.55)">(rasterize)</text>
+                    </g>
+                    <path d="M 420 42 L 438 42" stroke="rgba(160,42,77,0.32)" stroke-width="1.2" fill="none" marker-end="url(#rp-a)"/>
+
+                    <!-- Composite -->
+                    <g aria-label="Composite: GPU assembles layers, handles transform and opacity cheaply">
+                        <rect x="438" y="22" width="78" height="40" rx="3"
+                              fill="rgba(120,80,0,0.07)" stroke="rgba(120,80,0,0.25)" stroke-width="1.2"/>
+                        <text x="477" y="37" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(120,80,0,0.85)">Composite</text>
+                        <text x="477" y="52" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(120,80,0,0.55)">(GPU layers)</text>
+                    </g>
+                    <path d="M 516 42 L 534 42" stroke="rgba(120,80,0,0.38)" stroke-width="1.2" fill="none" marker-end="url(#rp-b)"/>
+
+                    <!-- Screen -->
+                    <g aria-label="Screen: final rendered output">
+                        <rect x="534" y="22" width="62" height="40" rx="3"
+                              fill="rgba(24,123,135,0.05)" stroke="rgba(24,123,135,0.2)" stroke-width="1"/>
+                        <text x="565" y="44" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.7)">Screen</text>
+                    </g>
+
+                    <!-- Cheap composite-only path annotation -->
+                    <path d="M 462 62 Q 462 90 477 90 Q 492 90 516 90 Q 565 90 565 62"
+                          stroke="rgba(120,80,0,0.28)" stroke-width="0.9" fill="none"
+                          stroke-dasharray="4,2.5" marker-end="url(#rp-b)"/>
+                    <text x="477" y="105" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="7"
+                          fill="rgba(120,80,0,0.6)">transform / opacity → composite only (fast path)</text>
+
+                    <!-- Expensive path annotation -->
+                    <text x="300" y="105" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="7"
+                          fill="rgba(160,42,77,0.5)">width / top / font-size → layout + paint + composite (expensive)</text>
+
+                    <text x="8" y="128" font-family="'JetBrains Mono',monospace" font-size="6.5"
+                          fill="rgba(14,18,20,0.3)">Forced sync layout: reading offsetWidth after a write flushes the pipeline. Batch reads before writes in rAF.</text>
+                </svg>
+
+                <div class="ref-grid" style="margin-top:1rem">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">DOM</span>
+                        <h3>Document Object Model</h3>
+                        <p>Live tree of nodes. Script mutations trigger style recalc. <code>documentFragment</code> batches insertions off-tree. <code>TreeWalker</code> traverses efficiently. <code>Range</code> works across arbitrary node boundaries. <code>MutationObserver</code> callbacks fire as microtasks.</p>
+                        <ul class="ref-terms"><li>Node</li><li>Element</li><li>DocumentFragment</li><li>TreeWalker</li><li>Range</li><li>MutationObserver</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model" data-pfx="mdn:" target="_blank" rel="noopener">DOM reference</a>
+                            <a href="https://dom.spec.whatwg.org/" data-pfx="spec:" target="_blank" rel="noopener">WHATWG DOM Living Standard</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">CSSOM</span>
+                        <h3>CSSOM + Cascade</h3>
+                        <p>Style resolution order: origin → cascade layers → specificity → source order. <code>getComputedStyle</code> returns resolved values (forces style flush). <code>@layer</code> adds an explicit origin tier — which rule wins, not which file is requested. Delivery is a separate schedule. <code>@property</code> enables typed custom properties with registered syntax.</p>
+                        <ul class="ref-terms"><li>@layer</li><li>specificity</li><li>@property</li><li>:is() :where()</li><li>custom properties</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model" data-pfx="mdn:" target="_blank" rel="noopener">CSSOM</a>
+                            <a href="https://www.w3.org/TR/css-cascade-5/" data-pfx="w3c:" target="_blank" rel="noopener">Cascade Level 5</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">layout</span>
+                        <h3>Layout (Reflow)</h3>
+                        <p>Computes box geometry. Reading layout properties (<code>offsetWidth</code>, <code>getBoundingClientRect</code>) after mutations forces a synchronous reflow. <code>contain: layout</code> limits reflow scope. <code>ResizeObserver</code> fires before paint after each reflow.</p>
+                        <ul class="ref-terms"><li>contain: layout</li><li>will-change</li><li>ResizeObserver</li><li>intrinsic sizing</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Glossary/Reflow" data-pfx="mdn:" target="_blank" rel="noopener">Reflow</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment" data-pfx="mdn:" target="_blank" rel="noopener">CSS Containment</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">composite</span>
+                        <h3>Compositing Layers</h3>
+                        <p><code>transform</code>, <code>opacity</code>, and <code>filter</code> on a promoted layer skip layout and paint — the GPU reassembles pre-rasterized bitmaps. <code>will-change: transform</code> promotes eagerly (memory cost). <code>content-visibility: auto</code> skips layout/paint for off-screen content.</p>
+                        <ul class="ref-terms"><li>will-change</li><li>GPU layer</li><li>content-visibility</li><li>isolation: isolate</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/Performance/CSS_JavaScript_animation_performance" data-pfx="mdn:" target="_blank" rel="noopener">Animation performance</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/content-visibility" data-pfx="mdn:" target="_blank" rel="noopener">content-visibility</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Web Platform APIs ── -->
+            <aside class="spw-route-bridge" aria-labelledby="render-pipeline-bridge">
+                <header>
+                    <h3 id="render-pipeline-bridge">The rest of the map</h3>
+                    <p>DOM · CSSOM · layout · composite</p>
+                </header>
+                <ul class="spw-route-bridge__links">
+                    <li><a href="/topics/software/browser/event-loop/"><strong>Event loop</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/platform-apis/"><strong>Platform APIs</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/security-model/"><strong>Security model</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/typescript/"><strong>TypeScript</strong><span>Another room on the browser map.</span></a></li>
+                </ul>
+            </aside>
+        </article>
+    </main>
+<spw-site-footer></spw-site-footer>
+</body>
+</html>

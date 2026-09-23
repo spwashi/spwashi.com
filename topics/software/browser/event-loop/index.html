@@ -1,0 +1,272 @@
+<spw-page
+    title="Spwashi • Event Loop"
+    description="Call stack, microtasks, tasks, and animation frames: the order a browser actually runs your JavaScript."
+    canonical="https://spwashi.com/topics/software/browser/event-loop/"
+    og_title="Spwashi • Event Loop"
+    og_description="Call stack, microtasks, tasks, and animation frames: the order a browser actually runs your JavaScript."
+    og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
+    og_image_alt="Event Loop on Spwashi."
+    keywords="event loop, browser, typescript"
+    breadcrumb_label="Event Loop"
+    header_current="Event Loop"
+    header_current_href="/topics/software/browser/event-loop/"
+    header_indicator="software"
+    surface="software"
+    page_family="field-guide"
+    page_role="topic-register"
+    page_modes="reading inspect compare"
+    wonder="comparison constraint locality"
+    route_family="editorial systems curriculum"
+    context="analysis"
+    features="operators navigator console"
+    related_routes="/topics/software/browser/|/topics/software/browser/render-pipeline/|/topics/software/browser/platform-apis/|/topics/software/browser/security-model/|/topics/software/browser/typescript/|/topics/software/"
+    stylesheet_mode="scoped"
+></spw-page>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+    <link rel="stylesheet" href="/public/css/routes/software-browser.css">
+</head>
+<body data-spw-surface="software"
+    data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial systems curriculum" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare" data-spw-page-seed="page_topics_topics_software_browser_event_loop" data-spw-page-role="topic-register" data-spw-related-routes="/topics/software/browser/|/topics/software/browser/render-pipeline/|/topics/software/browser/platform-apis/|/topics/software/browser/security-model/|/topics/software/browser/typescript/|/topics/software/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+    <spw-site-header
+        current="Event Loop"
+        current_href="/topics/software/browser/event-loop/"
+        indicator="software"
+        seed="page_topics_topics_software_browser_event_loop__site_header"
+        related_routes="/topics/software/browser/|/topics/software/browser/render-pipeline/|/topics/software/browser/platform-apis/|/topics/software/browser/security-model/|/topics/software/browser/typescript/|/topics/software/"
+        context_relevance="stack · microtasks · tasks · animation frames"
+        nav_items="Home:/|Software:/topics/software/|Browser:/topics/software/browser/|Event Loop:/topics/software/browser/event-loop/"
+    ></spw-site-header>
+    <main id="main-content" tabindex="-1" aria-labelledby="event-loop-title" data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis">
+        <article>
+            <section class="spw-frame" id="event-loop-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-liminality="entry">
+                <p class="spec-kicker">Software / Browser</p>
+                <h1 id="event-loop-title">The event loop</h1>
+                <p data-spw-textual-role="lede">One thread. The stack runs to empty, then microtasks, then one task, then the browser may paint.</p>
+                <nav class="frame-operators" aria-label="Browser map">
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/browser/" data-spw-operator="frame">#&gt;browser_map</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/" data-spw-operator="frame">← software</a>
+                </nav>
+            </section>
+            <section class="spw-frame" id="event-loop"
+                     data-spw-role="reference" data-spw-meaning="js event loop" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_browser__event_loop" data-spw-context-relevance="browser fundamentals typescript staff level reference internals event" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#event-loop" data-spw-operator="potential">~[event_loop]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">single-threaded</span>
+                        <span class="spec-pill">cooperative concurrency</span>
+                        <span class="spec-pill">non-blocking I/O</span>
+                    </div>
+                </div>
+                <h2>JavaScript Event Loop</h2>
+                <p data-spw-textual-role="note">JS is single-threaded with a host-managed concurrency model. I/O and timers are offloaded to Web APIs; callbacks are enqueued when ready. The loop's priority ordering is what makes async code predictable.</p>
+
+                <!--
+                    Execution order:
+                    ① Synchronous code runs on call stack
+                    ② Drain ALL microtasks (no I/O, no paint until empty)
+                    ③ Take ONE macrotask from the task queue
+                    ④ Drain ALL microtasks again
+                    ⑤ requestAnimationFrame callbacks (if paint frame)
+                    ⑥ Browser paints
+                    ↺ repeat
+                -->
+                <svg class="diagram" data-spw-svg-persona="learner frontend-engineer performance-reviewer rendering-model" viewBox="0 0 640 196"
+                     role="img" aria-labelledby="el-title" aria-describedby="el-desc"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <title id="el-title">JavaScript Event Loop — execution priority diagram</title>
+                    <desc id="el-desc">
+                        Execution order: ① synchronous code on call stack;
+                        ② drain all microtasks (Promise.then, queueMicrotask, MutationObserver);
+                        ③ dequeue one macrotask (setTimeout, I/O, MessageChannel);
+                        ④ drain all microtasks again;
+                        ⑤ requestAnimationFrame callbacks before paint;
+                        ⑥ browser paints. Then repeat.
+                    </desc>
+
+                    <defs>
+                        <marker id="el-a" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(24,123,135,0.55)"/>
+                        </marker>
+                        <marker id="el-b" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(160,42,77,0.45)"/>
+                        </marker>
+                        <marker id="el-c" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(120,80,0,0.45)"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Step pipeline row -->
+                    <!-- ① Sync -->
+                    <g aria-label="Step 1: synchronous code">
+                        <rect x="8" y="14" width="80" height="36" rx="4"
+                              fill="rgba(24,123,135,0.10)" stroke="rgba(24,123,135,0.40)" stroke-width="1.2"/>
+                        <text x="48" y="28" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(24,123,135,0.6)">① sync</text>
+                        <text x="48" y="42" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(24,123,135,0.9)" font-weight="600">call stack</text>
+                    </g>
+                    <path d="M 88 32 L 104 32" stroke="rgba(24,123,135,0.45)" stroke-width="1.2" fill="none" marker-end="url(#el-a)"/>
+
+                    <!-- ② Microtask drain -->
+                    <g aria-label="Step 2: drain all microtasks">
+                        <rect x="104" y="14" width="112" height="36" rx="4"
+                              fill="rgba(24,123,135,0.08)" stroke="rgba(24,123,135,0.38)" stroke-width="1.2"/>
+                        <text x="160" y="28" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(24,123,135,0.55)">② microtasks</text>
+                        <text x="160" y="42" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8"
+                              fill="rgba(24,123,135,0.75)">drain ALL</text>
+                    </g>
+                    <path d="M 216 32 L 232 32" stroke="rgba(160,42,77,0.4)" stroke-width="1.2" fill="none" marker-end="url(#el-b)"/>
+
+                    <!-- ③ One task -->
+                    <g aria-label="Step 3: dequeue one macrotask">
+                        <rect x="232" y="14" width="100" height="36" rx="4"
+                              fill="rgba(160,42,77,0.07)" stroke="rgba(160,42,77,0.32)" stroke-width="1.2"/>
+                        <text x="282" y="28" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(160,42,77,0.55)">③ one task</text>
+                        <text x="282" y="42" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8"
+                              fill="rgba(160,42,77,0.8)">task queue</text>
+                    </g>
+                    <path d="M 332 32 L 348 32" stroke="rgba(24,123,135,0.4)" stroke-width="1.2" fill="none" marker-end="url(#el-a)"/>
+
+                    <!-- ④ Microtask drain again -->
+                    <g aria-label="Step 4: drain all microtasks again">
+                        <rect x="348" y="14" width="100" height="36" rx="4"
+                              fill="rgba(24,123,135,0.06)" stroke="rgba(24,123,135,0.3)" stroke-width="1"/>
+                        <text x="398" y="28" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(24,123,135,0.5)">④ microtasks</text>
+                        <text x="398" y="42" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8"
+                              fill="rgba(24,123,135,0.7)">drain ALL</text>
+                    </g>
+                    <path d="M 448 32 L 464 32" stroke="rgba(120,80,0,0.4)" stroke-width="1.2" fill="none" marker-end="url(#el-c)"/>
+
+                    <!-- ⑤ rAF + paint -->
+                    <g aria-label="Step 5: requestAnimationFrame, then browser paint">
+                        <rect x="464" y="14" width="90" height="36" rx="4"
+                              fill="rgba(120,80,0,0.07)" stroke="rgba(120,80,0,0.28)" stroke-width="1"/>
+                        <text x="509" y="28" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(120,80,0,0.55)">⑤ rAF</text>
+                        <text x="509" y="42" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8"
+                              fill="rgba(120,80,0,0.8)">→ paint</text>
+                    </g>
+
+                    <!-- ↺ repeat arrow -->
+                    <path d="M 554 32 Q 610 32 610 80 Q 610 150 48 150 Q 8 150 8 50"
+                          stroke="rgba(24,123,135,0.2)" stroke-width="1" fill="none"
+                          stroke-dasharray="4,3" marker-end="url(#el-a)"/>
+                    <text x="580" y="95" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="7"
+                          fill="rgba(24,123,135,0.35)">↺</text>
+
+                    <!-- Queue detail boxes -->
+                    <!-- Microtask queue contents -->
+                    <g aria-label="Microtask queue contents: Promise.then, queueMicrotask, MutationObserver">
+                        <rect x="104" y="72" width="112" height="56" rx="3"
+                              fill="rgba(24,123,135,0.04)" stroke="rgba(24,123,135,0.18)" stroke-width="0.8"/>
+                        <text x="112" y="87" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.75)">Promise .then/.catch</text>
+                        <text x="112" y="100" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.7)">queueMicrotask()</text>
+                        <text x="112" y="113" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.65)">MutationObserver cbs</text>
+                        <text x="112" y="124" font-family="'JetBrains Mono',monospace" font-size="6.5" fill="rgba(24,123,135,0.4)">async/await desugars to .then</text>
+                    </g>
+
+                    <!-- Task queue contents -->
+                    <g aria-label="Task queue (macrotask) contents: setTimeout, I/O events, MessageChannel">
+                        <rect x="232" y="72" width="100" height="56" rx="3"
+                              fill="rgba(160,42,77,0.04)" stroke="rgba(160,42,77,0.15)" stroke-width="0.8"/>
+                        <text x="240" y="87" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(160,42,77,0.75)">setTimeout / setInterval</text>
+                        <text x="240" y="100" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(160,42,77,0.7)">MessageChannel</text>
+                        <text x="240" y="113" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(160,42,77,0.65)">I/O · UI events</text>
+                        <text x="240" y="124" font-family="'JetBrains Mono',monospace" font-size="6.5" fill="rgba(160,42,77,0.4)">one task per loop tick</text>
+                    </g>
+
+                    <!-- rAF contents -->
+                    <g aria-label="requestAnimationFrame contents">
+                        <rect x="464" y="72" width="90" height="56" rx="3"
+                              fill="rgba(120,80,0,0.04)" stroke="rgba(120,80,0,0.15)" stroke-width="0.8"/>
+                        <text x="472" y="87" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(120,80,0,0.75)">requestAnimationFrame</text>
+                        <text x="472" y="100" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(120,80,0,0.65)">ResizeObserver cbs</text>
+                        <text x="472" y="113" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(120,80,0,0.6)">IntersectionObserver cbs</text>
+                        <text x="472" y="124" font-family="'JetBrains Mono',monospace" font-size="6.5" fill="rgba(120,80,0,0.4)">if browser decides to paint</text>
+                    </g>
+
+                    <!-- Key insight annotation -->
+                    <text x="10" y="186" font-family="'JetBrains Mono',monospace" font-size="7" fill="rgba(14,18,20,0.35)">Key: microtasks starve the loop if infinite — no paint until the µ-queue empties. MessageChannel beats setTimeout(0) for high-priority tasks.</text>
+                </svg>
+
+                <div class="ref-grid" style="margin-top:1rem">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">µ queue</span>
+                        <h3>Microtask Queue</h3>
+                        <p>Drained <em>completely</em> after every task and after the initial script. No rAF or paint occurs until the microtask queue is empty. Starvation risk: a microtask that enqueues itself loops forever, blocking all I/O and rendering.</p>
+                        <ul class="ref-terms"><li>Promise.then</li><li>queueMicrotask</li><li>MutationObserver</li><li>async/await</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide" data-pfx="mdn:" target="_blank" rel="noopener">Microtask guide</a>
+                            <a href="https://html.spec.whatwg.org/multipage/webappapis.html#microtask-queue" data-pfx="spec:" target="_blank" rel="noopener">WHATWG §microtask-queue</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">task queue</span>
+                        <h3>Task Queue (Macrotasks)</h3>
+                        <p>One task dequeued per loop iteration. Multiple distinct task sources exist (timer, I/O, UI events); the UA may interleave them. <code>MessageChannel</code> yields a macrotask without the 4 ms minimum clamp of <code>setTimeout</code>.</p>
+                        <ul class="ref-terms"><li>setTimeout</li><li>setInterval</li><li>MessageChannel</li><li>I/O callbacks</li></ul>
+                        <div class="ref-links">
+                            <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model" data-pfx="spec:" target="_blank" rel="noopener">WHATWG event loop model</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">rAF</span>
+                        <h3>requestAnimationFrame</h3>
+                        <p>Fires immediately before the browser paints — ideal for all visual mutations. Batched per frame (~16 ms at 60 fps). Pauses when the tab is hidden. Use to batch DOM reads before writes and avoid layout thrashing.</p>
+                        <ul class="ref-terms"><li>requestAnimationFrame</li><li>requestIdleCallback</li><li>frame budget</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame" data-pfx="mdn:" target="_blank" rel="noopener">requestAnimationFrame</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">scheduler</span>
+                        <h3>Scheduler API</h3>
+                        <p><code>scheduler.postTask()</code> gives explicit priority control: <code>user-blocking</code>, <code>user-visible</code>, <code>background</code>. <code>scheduler.yield()</code> cooperatively yields a long task back to the event loop without relinquishing priority.</p>
+                        <ul class="ref-terms"><li>scheduler.postTask</li><li>scheduler.yield</li><li>TaskController</li><li>Long Tasks API</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Scheduler/postTask" data-pfx="mdn:" target="_blank" rel="noopener">scheduler.postTask</a>
+                            <a href="https://www.w3.org/TR/longtasks/" data-pfx="w3c:" target="_blank" rel="noopener">Long Tasks spec</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Render Pipeline ── -->
+            <aside class="spw-route-bridge" aria-labelledby="event-loop-bridge">
+                <header>
+                    <h3 id="event-loop-bridge">The rest of the map</h3>
+                    <p>stack · microtasks · tasks · animation frames</p>
+                </header>
+                <ul class="spw-route-bridge__links">
+                    <li><a href="/topics/software/browser/render-pipeline/"><strong>Render pipeline</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/platform-apis/"><strong>Platform APIs</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/security-model/"><strong>Security model</strong><span>Another room on the browser map.</span></a></li>
+                    <li><a href="/topics/software/browser/typescript/"><strong>TypeScript</strong><span>Another room on the browser map.</span></a></li>
+                </ul>
+            </aside>
+        </article>
+    </main>
+<spw-site-footer></spw-site-footer>
+</body>
+</html>
