@@ -16977,7 +16977,11 @@ html[data-spw-cauldron-candidate-visibility="prominent"] .spw-living-term[aria-p
     outline-color var(--spw-control-transition-fast, 120ms ease);
 }
 
-:is(.spw-living-term, [data-spw-living-term], [data-spw-gesture-contract*="prime"])[data-spw-cauldron-candidate="true"]:not([data-spw-prime-state]):not(.cauldron-ingredient):not([data-spw-groundable="false"]) {
+/* Terms only. A gesture contract that mentions prime also lands on main,
+   sections, and paragraphs ("hold:prime-to-cauldron"), and an underline on a
+   block propagates to every line inside it — ruling the whole page and hiding
+   which words are links. */
+:is(.spw-living-term, [data-spw-living-term])[data-spw-cauldron-candidate="true"]:not([data-spw-prime-state]):not(.cauldron-ingredient):not([data-spw-groundable="false"]) {
   text-decoration-line: underline;
   text-decoration-style: dotted;
   text-decoration-thickness: 0.06em;
