@@ -1,7 +1,24 @@
-/** Stored notes for a site that asked for a queue. Retention is 90 days, 200 unread per site. */
+/**
+ * Stored notes for a site with an open desk. Retention is 90 days, 200 unread per site.
+ *
+ * A client file's queue.want is the owner asking for a desk; it does not open
+ * one. A desk opens when the operator also lists the host in DESK_HOSTS. Until
+ * then nothing is kept, because no owner could read what was.
+ */
 
 export const RETENTION_DAYS = 90;
 export const UNREAD_CAP = 200;
+
+/** Hosts with an open desk: the DESK_HOSTS var, separated by spaces or commas. */
+export function deskHosts(env) {
+  return new Set(String(env?.DESK_HOSTS || "").toLowerCase().split(/[\s,]+/).filter(Boolean));
+}
+
+/** @returns {"open"|"requested"|"none"} */
+export function deskState(env, host, config) {
+  if (!config?.found || !config.queue?.want) return "none";
+  return env?.DB && deskHosts(env).has(String(host).toLowerCase()) ? "open" : "requested";
+}
 
 function cutoff(now = Date.now()) {
   return new Date(now - RETENTION_DAYS * 24 * 60 * 60 * 1000).toISOString();

@@ -43,7 +43,7 @@ export const SNIPPETS = Object.freeze({
   fetch: {
     label: "Your own form",
     choice: "Send notes from your own code. You get the card back as JSON.",
-    where: "Call it from your form's submit handler. Nothing is stored; show or send the card yourself.",
+    where: "Call it from your form's submit handler. Unless your site has an open inbox, nothing is kept; show or send the card yourself.",
     language: "js",
     template: `const response = await fetch("${ORIGIN}/{{host}}", {
   method: "POST",
@@ -109,11 +109,17 @@ function cardMarkup({ context, host, note, issued, id = "", sample = false, name
 function routeField(routes, path) {
   const clean = cleanPath(path);
   const named = routes.some((route) => route.path === clean);
-  const options = routes.map((route) => `<label class="choice compact"><input type="radio" name="route" value="${escapeHtml(route.path)}"${route.path === clean ? " checked" : ""}> ${escapeHtml(route.name)} <span class="hint">${escapeHtml(route.path)}</span></label>`).join("");
+  const options = routes.map((route) => `<label class="choice"><input type="radio" name="route" value="${escapeHtml(route.path)}"${route.path === clean ? " checked" : ""}> <span><strong>${escapeHtml(route.name)}</strong><span>${escapeHtml(route.path)}</span></span></label>`).join("\n      ");
+  // The choices get their own grid so the path field below keeps the full width.
+  const choices = routes.length
+    ? `<div class="choices">
+      ${options}
+      <label class="choice"><input type="radio" name="route" value=""${!named ? " checked" : ""}> <span><strong>Another page</strong><span>Type its path below</span></span></label>
+    </div>`
+    : "";
   return `<fieldset id="page">
   <legend>Page</legend>
-  ${options}
-  ${routes.length ? `<label class="choice compact"><input type="radio" name="route" value=""${!named ? " checked" : ""}> Another page</label>` : ""}
+  ${choices}
   <label for="path">Path</label>
   <p class="hint" id="path-hint">Where on the site this happened, like /checkout. Optional.</p>
   <input id="path" name="path" type="text" value="${escapeHtml(clean)}" placeholder="/checkout" maxlength="200" spellcheck="false" autocapitalize="none" aria-describedby="path-hint">
@@ -133,13 +139,13 @@ export function renderHome(host = "") {
   const sample = contextBySlug(DEFAULT_KIND);
   return layout({
     title: "autonomous.feedback — a feedback form for any website",
-    description: "Readers write a note about a site and get a card they can save and send to its owner. Nothing to install, nothing stored.",
+    description: "Readers write a note about a site and get a card they can save and send to its owner. Nothing to install, and nothing kept unless the site has an inbox.",
     canonical: `${ORIGIN}/`,
     quiet: true,
     script: CLIENT_SCRIPT,
     body: `<p class="kicker">autonomous.feedback</p>
 <h1>A feedback form for any website</h1>
-<p class="lede">Readers write a note about a site. Each note becomes a card they can save as an image and send to the site's owner. There is nothing to install to start, and nothing is stored.</p>
+<p class="lede">Readers write a note about a site. Each note becomes a card they can save as an image and send to the site's owner. There is nothing to install to start, and nothing is kept unless the site has an inbox.</p>
 <section aria-labelledby="sample-title">
   <h2 id="sample-title" class="sr-only">Example card</h2>
   ${cardMarkup({ context: sample, host: EXAMPLE_HOST, note: sample.example, issued: "2026-09-22T12:00:00.000Z", sample: true })}
@@ -157,13 +163,18 @@ export function renderHome(host = "") {
   <li><strong>A reader writes a note.</strong> They say what broke, what was confusing, what was missing, or what was wrong, and which page.</li>
   <li><strong>The reader sends you the card.</strong> They save the image or copy the text and send it by direct message, or in a post that mentions your site.</li>
 </ol>
-<p class="note">Free while readers send the cards themselves. Stored inboxes for site owners come later.</p>
+<h2>What it costs</h2>
+<ol class="steps">
+  <li><strong>Any site: free.</strong> <span>Readers can write about any public site. The card travels by hand, and nothing is kept.</span></li>
+  <li><strong>Your site: free.</strong> <span>Publish one file to choose the kinds of note, name your pages, match your colours, and say where you take messages. <a href="/start">The setup page</a> writes it for you.</span></li>
+  <li><strong>An inbox: on request.</strong> <span>Add <code>"queue": { "want": true }</code> to your file to ask for one. An inbox keeps every card for your site in one place. Until yours opens, nothing is kept.</span></li>
+</ol>
 <h2>Write a note about a site</h2>
 ${kindLinks()}`,
   });
 }
 
-export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, error = "", config = null } = {}) {
+export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, error = "", config = null, desk = "none" } = {}) {
   const offered = config?.found ? siteKinds(config) : CONTEXTS;
   const context = offered.find((c) => c.slug === (contextBySlug(kind)?.slug)) || offered[0];
   const snippet = SNIPPETS[how] || SNIPPETS.link;
@@ -224,7 +235,7 @@ export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, erro
 <section aria-labelledby="config-title">
   <h2 id="config-title">Customize (optional)</h2>
   <p>Publish a JSON file at <code data-fill="config-url">https://${escapeHtml(named)}${CONFIG_PATH}</code> to choose which kinds of note appear and in what order, rename them, add an intro, ask for the writer's name, set the note length, allow the frame on other sites you own, and match your colours. The file only affects your own domain.</p>
-  ${configStatus(host, config)}
+  ${configStatus(host, config, desk)}
   <figure class="codeblock">
     <figcaption><span>${ownFile ? "Your file, as applied" : "Starter file"} · autonomous-feedback.json</span><button type="button" data-copy="config-snippet">Copy</button></figcaption>
     <pre id="config-snippet">${escapeHtml(fillTemplate(configTemplate, named, context))}</pre>
@@ -240,7 +251,7 @@ export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, erro
       <dt><code>contact</code></dt><dd>Where you take cards by direct message: <code>{ "bluesky": "example.com", "x": "example" }</code>. The card page shows Message buttons and puts your handle in the Post links.</dd>
       <dt><code>from</code></dt><dd><code>"off"</code>, <code>"optional"</code>, or <code>"required"</code>: a field for the writer's name or handle, printed on the card. Nothing is stored either way. Do not put a token or password in this file.</dd>
       <dt><code>note</code></dt><dd><code>min</code> and <code>max</code> characters, between 1 and ${NOTE_MAX.toLocaleString("en-US")}.</dd>
-      <dt><code>queue.want</code></dt><dd><code>true</code> asks this host to keep each card for the site. The owner reads and clears them from the inbox. Without it, the writer sends the card by hand.</dd>
+      <dt><code>queue.want</code></dt><dd><code>true</code> asks for an inbox that keeps each card for your site. Until the inbox opens, nothing is kept and readers send cards by hand. The status above says which.</dd>
       <dt><code>frame.ancestors</code></dt><dd>Other https origins that may show the frame, such as a blog on a different domain. Up to 10.</dd>
       <dt><code>theme</code></dt><dd><code>mode</code> (<code>"light"</code> or <code>"dark"</code>), <code>background</code>, <code>text</code>, and <code>accent</code> as hex colours, <code>corners</code> (<code>"sharp"</code>, <code>"round"</code>, <code>"soft"</code>), and <code>font</code> (<code>"system"</code>, <code>"serif"</code>, <code>"mono"</code>, <code>"rounded"</code>). Colours that are hard to read are replaced with the defaults.</dd>
     </dl>
@@ -251,7 +262,7 @@ export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, erro
   });
 }
 
-function configStatus(host, config) {
+function configStatus(host, config, desk = "none") {
   if (!host || !config) return "";
   const url = `https://${escapeHtml(host)}${CONFIG_PATH}`;
   const problems = config.problems.length
@@ -260,7 +271,12 @@ function configStatus(host, config) {
   const lead = config.found
     ? `<p><strong>Found a configuration file for ${escapeHtml(host)}.</strong> Showing ${siteKinds(config).map((k) => escapeHtml(k.title)).join(", ")}${config.theme ? `, ${escapeHtml(config.theme.mode)} theme` : ""}.${config.problems.length ? " Some of it was not applied:" : " Everything in it was applied."}</p>`
     : `<p><strong>No configuration applied for ${escapeHtml(host)}.</strong> The defaults are in use.</p>`;
-  return `<div class="panel" aria-live="polite">${lead}${problems}<p class="note">Checked <a href="${url}">${url}</a>. Changes can take up to 5 minutes to show. <a href="/${escapeHtml(host)}/config.json">See the result as JSON</a>.</p></div>`;
+  const inbox = desk === "open"
+    ? `<p><strong>Inbox: open.</strong> Cards for ${escapeHtml(host)} are kept.</p>`
+    : desk === "requested"
+      ? `<p><strong>Inbox: requested.</strong> Your file asks for one. It is not open yet, so readers still send cards by hand and nothing is kept.</p>`
+      : "";
+  return `<div class="panel" aria-live="polite">${lead}${problems}${inbox}<p class="note">Checked <a href="${url}">${url}</a>. Changes can take up to 5 minutes to show. <a href="/${escapeHtml(host)}/config.json">See the result as JSON</a>.</p></div>`;
 }
 
 export function previewMarkup(how, host, context) {
@@ -316,7 +332,7 @@ ${reading
  * the note; the URL only preselects it. `values` carries a failed submission
  * back into the fields.
  */
-export function renderWrite({ context, host = "", lockHost = false, embed = false, values = {}, errors = {}, config = null }) {
+export function renderWrite({ context, host = "", lockHost = false, embed = false, values = {}, errors = {}, config = null, desk = "none" }) {
   const site = config || defaultConfig(host);
   const kindsShown = siteKinds(site);
   context = kindsShown.find((k) => k.slug === context.slug) || kindsShown[0];
@@ -351,7 +367,11 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
 <h1>${escapeHtml(heading)}</h1>
 ${lockHost && isPublicSite(host) ? `<p class="visit"><a href="https://${escapeHtml(host)}/">Open ${escapeHtml(host)}</a></p>` : ""}
 ${site.intro ? `<p class="lede">${escapeHtml(site.intro)}</p>` : ""}
-${embed ? "" : `<p class="${site.intro ? "note" : "lede"}">Your note becomes a card you can save and send to whoever runs ${lockHost ? escapeHtml(display) : "the site"}. Nothing is stored.</p>`}
+${embed ? "" : `<p class="${site.intro ? "note" : "lede"}">${desk === "open"
+    ? `Your note is kept for ${escapeHtml(display)}, and becomes a card you can also save and send.`
+    : lockHost
+      ? `Your note becomes a card you can save and send to whoever runs ${escapeHtml(display)}. Nothing is stored.`
+      : "Your note becomes a card you can save and send to whoever runs the site. Nothing is stored unless the site has an inbox."}</p>`}
 ${summary}
 <form method="post" action="${escapeHtml(action)}" class="panel" id="write" data-draft-key="${escapeHtml(lockHost ? host : "")}">
   <fieldset id="kinds"${kindsShown.length === 1 ? " hidden" : ""}>
@@ -427,6 +447,8 @@ export function renderCard(filing, embed = false, config = null) {
     ? `Kept for ${escapeHtml(display)}. You can still save or share the card.`
     : filing.queue === "full"
       ? `The inbox for ${escapeHtml(display)} is full, so this card was not kept. Send it by hand, or ask them to clear the inbox.`
+      : filing.queue === "requested"
+        ? `${escapeHtml(display)} has asked for an inbox, but it is not open yet, so this card was not kept. Save it as an image or copy the text, and send it by hand.`
       : dms.length
         ? `Save it as an image or copy the text, then send it to ${escapeHtml(display)} in a direct message below, or in a post that mentions them.`
         : `Save it as an image or copy the text, then send it to whoever runs ${escapeHtml(display)}: in a direct message, or in a post that mentions the site.`}</p>

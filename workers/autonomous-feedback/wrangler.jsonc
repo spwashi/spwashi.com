@@ -11,6 +11,10 @@
   "triggers": {
     "crons": ["*/5 * * * *"]
   },
+  // Hosts whose desk is open. A client file's queue.want asks; this list opens.
+  "vars": {
+    "DESK_HOSTS": "spwashi.com spw.quest"
+  },
   "d1_databases": [
     {
       "binding": "DB",

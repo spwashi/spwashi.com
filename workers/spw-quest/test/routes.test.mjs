@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../src/index.js';
-import { INIT_PROMPT, WORKBENCH } from '../src/quest.js';
+import { EXPECTED_FILES, INIT_PROMPT, WORKBENCH } from '../src/quest.js';
 
 const get = (host, path, options) => worker.fetch(new Request(`https://${host}${path}`, options));
 
@@ -49,7 +49,11 @@ test('quest negotiation, HEAD, methods, and redirects', async () => {
   assert.match(page, /Codex/);
   assert.match(page, /Grok/);
   assert.match(page, /Git, in this order/);
-  assert.match(page, /https:\/\/autonomous\.feedback\/spw\.quest\/broken/);
+  assert.match(page, /https:\/\/autonomous\.feedback\/spw\.quest\/broken\?at=\/"/);
+  // The page says what the workbench is, where to run it, and what success looks like.
+  assert.match(page, /Run it from the root of your repository\. It needs Git and Node 20\.19\+ or 22\.12\+\./);
+  assert.match(page, /<h2 id="after-title">When it worked<\/h2>/);
+  assert.match(page, /id="first-patch"/);
   const config = await (await get('spw.quest', '/.well-known/autonomous-feedback.json')).json();
   assert.equal(config.host, 'spw.quest');
   assert.equal(config.schema, 'autonomous-feedback.client.v0');
@@ -65,4 +69,8 @@ test('quest negotiation, HEAD, methods, and redirects', async () => {
   assert.doesNotMatch(gitText, /^#/m);
   const gitMd = await get('spw.quest', '/git.md');
   assert.match(gitMd.headers.get('content-type'), /text\/markdown/);
+});
+
+test('the page and the recipe name the same expected files', () => {
+  for (const file of EXPECTED_FILES) assert.ok(INIT_PROMPT.includes(file), `${file} is missing from the recipe`);
 });
