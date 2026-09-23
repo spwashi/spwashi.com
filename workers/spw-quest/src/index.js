@@ -1,4 +1,4 @@
-import { GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPTS, QUEST_TEXT, WORKBENCH } from "./quest.js";
+import { EXPECTED_FILES, GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPTS, QUEST_TEXT, WORKBENCH } from "./quest.js";
 import { BASE_SECURITY, escapeHtml, htmlResponse, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 
 const VERSION = "0.1.0";
@@ -23,6 +23,11 @@ const QUEST = Object.freeze({
   source: `${WORKBENCH.repository}/blob/${WORKBENCH.revision}/docs/runtime/md/quick-start.md`,
   ownership: `${WORKBENCH.repository}/blob/${WORKBENCH.revision}/docs/runtime/md/mounted-workbench.md`,
 });
+
+/** "^20.19.0 || >=22.12.0" reads as "20.19+ or 22.12+". Agents keep the exact range in /init. */
+function readableNode(range) {
+  return range.split("||").map((part) => part.trim().replace(/^(\^|>=)(\d+\.\d+)\.0$/, "$2+")).join(" or ");
+}
 
 /**
  * Tabs for who runs the setup (ARIA tabs pattern). Without script every set
@@ -86,6 +91,7 @@ function renderQuest() {
       <pre id="set-${escapeHtml(set.id)}">${escapeHtml(set.text)}</pre>
     </figure>
   </section>`).join("\n  ");
+  const firstPatch = QUEST_PROMPTS.find((prompt) => prompt.id === "first-patch");
   return layout({
     title: "spw.quest — initialize Spw Workbench",
     description: "Run the workbench setup from the shell, or hand it to Claude, Codex, Grok, or another agent.",
@@ -93,7 +99,8 @@ function renderQuest() {
     script: `(${questTabs.toString()})();`,
     body: `<p class="kicker">spw.quest</p>
 <h1>Initialize the workbench in this repository.</h1>
-<p>Choose who runs the setup. Each set mounts <code>.spw/_workbench</code>, then runs doctor. Your repository keeps the surrounding <code>.spw/</code>. Node <code>${escapeHtml(WORKBENCH.node)}</code>.</p>
+<p class="lede">Spw Workbench adds the Spw language, parser, CLI, and editor tooling to a repository you already have. It mounts at <code>.spw/_workbench</code>; your repository keeps its own <code>.spw/</code> and everything else.</p>
+<p>Run it from the root of your repository. It needs Git and Node ${escapeHtml(readableNode(WORKBENCH.node))}. Choose who runs the setup; every set ends by running doctor.</p>
 <div class="tabs">
   <div class="tablist" role="tablist" aria-label="Who runs the setup">
     ${tabs}
@@ -115,7 +122,21 @@ function renderQuest() {
     <pre id="git-copy">${escapeHtml(GIT_GUIDE)}</pre>
   </figure>
 </section>
-<p><a href="/init">Full recipe</a> · <a href="/prompts.json">Prompts</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.source}">Upstream quick start</a> · <a href="https://autonomous.feedback/spw.quest/broken">Feedback</a></p>`,
+<section id="after" aria-labelledby="after-title">
+  <h2 id="after-title">When it worked</h2>
+  <ul>
+    <li><code>spw:doctor</code> finishes without errors.</li>
+    <li>These files exist: ${EXPECTED_FILES.map((file) => `<code>${escapeHtml(file)}</code>`).join(", ")}. The initializer may add a few more.</li>
+    <li>Nothing is committed. Read the diff, then commit it yourself.</li>
+  </ul>
+  <h2 id="next-title">Then</h2>
+  <p>Give your agent one bounded question about this repository:</p>
+  <figure class="codeblock">
+    <figcaption><span>${escapeHtml(firstPatch.title)}</span><button type="button" data-copy="first-patch">Copy</button></figcaption>
+    <pre id="first-patch">${escapeHtml(firstPatch.body)}</pre>
+  </figure>
+</section>
+<p><a href="/init">Full recipe</a> · <a href="/prompts.json">Prompts</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.source}">Upstream quick start</a> · <a href="https://autonomous.feedback/spw.quest/broken?at=/">Feedback</a></p>`,
   });
 }
 

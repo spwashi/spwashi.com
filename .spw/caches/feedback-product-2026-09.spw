@@ -44,7 +44,7 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
     next_action = `receive a card → autonomous.feedback/{host} → Hang a form → publish the client file → ask for a desk`
   }[reg=facet]
   proof = `the card itself: a screenshot carries the site name, the note, the date, and autonomous.feedback/{host}`
-  resonance = `a letter, not a ticket; four plainly named kinds (Appreciation, Problem, Suggestion, Question) instead of stars. "Autonomous" is literal: the note travels without the site's backend`
+  resonance = `a letter, not a ticket; plainly named kinds (Broken, Confusing, Missing, Wrong, then Question and Appreciation) instead of stars. "Autonomous" is literal: the note travels without the site's backend`
   copy_rule = `2026-09-22, creator: labels and prompts are direct and useful with no context, and the URL matches the label. The kind's title names the intent and is its slug (problem, suggestion, question, appreciation); its prompt says what to write; its example shows one. The earlier slugs (review, practice, brief, wonder) redirect and still work in request bodies and client files.`
   first_client = `spwashi.com: .well-known/autonomous-feedback.json in this repo, the Feedback card on /contact/ → autonomous.feedback/spwashi.com/problem`
   extension = `each card seen in a feed is an address where the next reader can leave one; the owner who receives a few by hand is the one who wants a desk`
@@ -57,7 +57,7 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
     .{ rung = `reader` ; gets = `write to any site, a card, Share / Post / Copy` ; costs = `nothing` ; status = `landed 2026-09-22` }[reg=facet],
     .{ rung = `unclaimed site` ; gets = `the meter, an iframe or a plain form to paste; cards still travel by hand` ; costs = `nothing` ; status = `landed` }[reg=facet],
     .{ rung = `claimed site` ; gets = `the client file (fb-client-route): which kinds show, labels, theme, frame ancestors, and a "kept by the site" mark on its pages and cards` ; costs = `nothing; publishing the file is the proof of control` ; status = `the file landed 2026-09-22; the "kept by the site" mark is still proposed` }[reg=facet],
-    .{ rung = `desk` ; gets = `a queue that keeps every card, an owner inbox, a digest, and reply cards` ; costs = `the paid tier` ; status = `proposed; the inbox route answers 401/501 until a queue is attached` }[reg=facet]
+    .{ rung = `desk` ; gets = `a queue that keeps every card, an owner inbox, a digest, and reply cards` ; costs = `the paid tier` ; status = `2026-09-23: storage landed behind a two-key gate (queue.want in the file asks; DESK_HOSTS on the worker opens). Reading is operator-only (one INBOX_READ_TOKEN), so desks open only for sites the operator reads for. Owner identity, digest, and reply cards are still proposed.` }[reg=facet]
   ][reg=set]
   why_claim_is_free = `Claiming costs the owner one file and costs us one cached fetch. It turns a stranger's address into a customer we can name, and it is the verification the desk needs anyway.`
   desk_needs = #[`a claimed site (fb-client-route as http-01-style proof)`, `an identity provider for the owner`, `storage with retention rules`, `rate limits on public intake`, `moderation for stored notes`][reg=set]
@@ -70,7 +70,8 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
   schema = `autonomous-feedback.client.v0`
   fields = #[`schema`, `host`, `name`, `intro`, `kinds`, `labels`, `from`, `button`, `note.min`, `note.max`, `frame.ancestors`, `theme.mode`, `theme.background`, `theme.text`, `theme.accent`, `theme.corners`, `theme.font`][reg=set]
   unlocks = #[`which kinds show and in what order`, `per-kind title, prompt, and example`, `a display name, an intro, and the button text`, `an optional or required name field printed on the card`, `note length bounds within 1–2,000`, `frame ancestors beyond the host and www`, `colour tokens, mode, corners, and font on the form, the frame, the card, and the saved image`][reg=set]
-  refused = `theme.href and any HTML: the CSP blocks outside stylesheets, and tokens cannot inject. queue.want waits for the desk.`
+  refused = `theme.href and any HTML: the CSP blocks outside stylesheets, and tokens cannot inject.`
+  queue_want = `2026-09-23: queue.want is a request, counted as fb-004 demand. It keeps nothing until the host is also in DESK_HOSTS, because no owner could read what was kept. /start shows "Inbox: requested" or "Inbox: open"; /{host}/config.json carries desk; the card page says a requested inbox is not open yet.`
   landed = `2026-09-22: workers/autonomous-feedback/src/config.js; /{host}/config.json reports what applied; /start shows the status and the applied or starter file`
   defaults = `Missing file, timeout, non-JSON, or a host field that does not match the URL host: keep the free behavior. Meter, iframe, four kinds, slip, queue unattached.`
   check = `Fetch the file from the host in the path only. Do not apply lore.land's file to spwashi.com. Do not read it from a query string.`
@@ -127,7 +128,7 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
   signed_by_sending = `The Worker keeps no author, but a card only travels through the writer's own account. Accountability sits in the channel the writer chose. Keep it that way: no anonymous relay that sends cards for someone.`
   no_handles = `the Worker never looks up or guesses an @handle. An owner may list their own under contact (bluesky, x) in the client file; the card page then offers Message buttons that open the profile, since no link can fill in a DM, and adds the handle to the Post links as a mention. 2026-09-22, creator: "there should still be a way to DM me on BlueSky or X".`
   unclaimed_wording = `On an unclaimed site the page says the owner will only see a card if someone sends it. Do not imply the site asked for notes.`
-  no_storage_claims = `copy says "Nothing was stored" because nothing is; do not change that sentence before the desk exists`
+  no_storage_claims = `every storage sentence follows deskState: "Nothing is stored" wherever no desk is open, "kept for {site}" only where one is, and "unless the site has an inbox" where the host is not known yet. Never tell a writer a card was kept for an owner who cannot read it.`
   no_rank = `no star rating, score, or leaderboard on any card or page`
   opt_out = `a claimed site can hide kinds or all public cards through its client file; honor it before rendering`
   infrastructure = `public spwashi.com pages do not describe who runs the cluster (workers/cluster.json note)`
@@ -171,7 +172,7 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
   status = `unset`
   unit = `per claimed site (the host), not per seat or per note — the address is the identity everywhere else in the product`
   lane = `@pricing thesis: new offers inherit an existing lane. The desk would inherit the ecosystem lane (free–$500), not a new SaaS price family. Compare there before naming a number.`
-  copy_now = `the homepage says only "Free while readers send the cards themselves. Stored inboxes for site owners come later."`
+  copy_now = `2026-09-23: the homepage "What it costs" names three rungs without a number: any site, free; your site (the file), free; an inbox, on request.`
 }[reg=facet]
 
 ^"open"{

@@ -22,13 +22,15 @@ Inventory is `cluster.json`. Each unit is `workers/<id>/` with `wrangler.jsonc` 
 and `/llms.txt`, with `/quest.json` and `/prompts.json` for structured consumers.
 Its requests do not probe feedback origins. The homepage lets a visitor pick
 Claude, Codex, Grok, another agent, or the shell, and copy that set. Git has
-its own section. `claude -p`, `codex exec`, and `grok` each receive the same job.
+its own section. After the sets, "When it worked" lists doctor, the expected
+files (`EXPECTED_FILES`, shared with the recipe), and no commit, and "Then"
+offers the first-patch prompt. `claude -p`, `codex exec`, and `grok` each receive the same job.
 
 `autonomous.feedback` is a feedback form for any website. A reader writes a
-note at `/{host}/{kind}` (kinds: `problem`, `suggestion`, `question`,
-`appreciation`; the URL matches the label, and the pre-2026-09-22 slugs
-`review`, `practice`, `brief`, `wonder` redirect) and gets a card to save as an image,
-share, post, or copy; nothing is stored. `/start?host=&how=&kind=` is setup: it
+note at `/{host}/{kind}` (kinds: `broken`, `confusing`, `missing`, `wrong`,
+`question`, `appreciation`; the URL matches the label, and older slugs such as
+`problem`, `suggestion`, `review`, `brief`, `wonder` redirect) and gets a card to save as an image,
+share, post, or copy. Nothing is stored unless the site has an open inbox (below). `/start?host=&how=&kind=` is setup: it
 fills the link, frame, HTML form, `fetch`, and `curl` codeblocks with the
 domain and previews the result. `/meter?host=` checks whether a site responds.
 Pasted links are normalized to a domain everywhere (`https://www.Example.com/x`
@@ -52,7 +54,12 @@ spwashi.com is the first client: `.well-known/autonomous-feedback.json` in this
 repo (light theme from the site's paper, ink, and teal; serif; optional name),
 linked from the Feedback card on /contact/.
 
-`/{host}/inbox` stays locked until a queue is attached. `/for/{host}` was
+An inbox (the desk) keeps cards for a site in D1 only when both sides agree:
+the client file sets `queue.want: true`, and the host is listed in the
+`DESK_HOSTS` var in `wrangler.jsonc`. A file that asks without a listing is a
+request: nothing is kept, and every page says so. `/{host}/inbox` reads and
+clears an open desk with `Authorization: Bearer $INBOX_READ_TOKEN`; without
+that secret, or for a host with no open desk, it answers 501. `/for/{host}` was
 retired on 2026-09-22; no site used it. `/climate.json` remains the machine
 reading of the existing cluster. A request hostname can mark an account on the
 filing; the public page does not describe that routing. Source:
@@ -69,7 +76,10 @@ installation, dry-run then deploy each config:
 
 Neither config lists domain routes. After the first split, point the existing
 zone routes at the new script names and leave the old combined script unused.
-No new bindings are required. The five-minute cron stays on `autonomous-feedback`.
+The feedback Worker binds D1 as `DB` (apply `migrations/` with
+`wrangler d1 migrations apply autonomous-feedback`), reads `DESK_HOSTS` from
+its vars, and needs `wrangler secret put INBOX_READ_TOKEN` before any inbox
+can be read. The five-minute cron stays on `autonomous-feedback`.
 
 ## Local secrets
 

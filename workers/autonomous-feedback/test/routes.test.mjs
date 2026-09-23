@@ -53,6 +53,9 @@ test('the homepage explains the product and starts setup', async () => {
     assert.match(home, /aria-describedby="host-hint"/);
     assert.doesNotMatch(home, /<select|spwashi|subdomain/i);
     assert.match(home, /viewport-fit=cover/);
+    assert.match(home, /<h2>What it costs<\/h2>/);
+    assert.match(home, /An inbox: on request\./);
+    assert.doesNotMatch(home, /come later/);
     assert.match(await page('/?host=https%3A%2F%2Fwww.Shop.example%2Fabout'), /value="shop\.example"/);
     assert.match(await page('/?host=%3Cx%3E'), /value=""/);
     const desk = await (await get('acme.autonomous.feedback', '/new-project.example', { headers: { accept: 'application/json' } })).json();
@@ -316,7 +319,7 @@ test('a site that asks for a queue can list and clear its notes', async () => {
   const restore = stubFetch({
     'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true } },
   });
-  const env = { DB: memoryDb(), INBOX_READ_TOKEN: 'desk-token' };
+  const env = { DB: memoryDb(), INBOX_READ_TOKEN: 'desk-token', DESK_HOSTS: 'kept.example' };
   const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
   try {
     const filed = await call('/kept.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.', path: '/checkout' }));
@@ -336,11 +339,38 @@ test('a site that asks for a queue can list and clear its notes', async () => {
   }
 });
 
+test('asking for a queue does not keep notes until the desk opens for the host', async () => {
+  const restore = stubFetch({
+    'asks.example': { schema: 'autonomous-feedback.client.v0', host: 'asks.example', queue: { want: true } },
+  });
+  const env = { DB: memoryDb(), INBOX_READ_TOKEN: 'desk-token', DESK_HOSTS: 'kept.example' };
+  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
+  try {
+    const slip = await (await call('/asks.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.' }))).json();
+    assert.equal(slip.stored, false);
+    assert.equal(slip.queue, 'requested');
+    const card = await (await call('/asks.example/broken', form({ note: 'The label and the field are too far apart to tell they belong together.' }))).text();
+    assert.match(card, /has asked for an inbox, but it is not open yet/);
+    assert.match(card, /Nothing was stored/);
+    const inbox = await call('/asks.example/inbox', { headers: { authorization: 'Bearer desk-token' } });
+    assert.equal(inbox.status, 501);
+    const config = await (await call('/asks.example/config.json')).json();
+    assert.equal(config.desk, 'requested');
+    const contract = await (await call('/asks.example/broken.json')).json();
+    assert.equal(contract.ingest.stores, false);
+    assert.equal(contract.queue.requested, true);
+    assert.match(await (await call('/start?host=asks.example')).text(), /Inbox: requested/);
+    assert.match(await (await call('/asks.example/broken')).text(), /Nothing is stored\./);
+  } finally {
+    restore();
+  }
+});
+
 test('a bound queue stays closed while the inbox token is unset', async () => {
   const restore = stubFetch({
     'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true } },
   });
-  const env = { DB: memoryDb() };
+  const env = { DB: memoryDb(), DESK_HOSTS: 'kept.example' };
   const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
   try {
     const filed = await (await call('/kept.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.' }))).json();

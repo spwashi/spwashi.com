@@ -6,6 +6,15 @@ export const WORKBENCH = Object.freeze({
   node: "^20.19.0 || >=22.12.0",
 });
 
+/** Files the pinned initializer is expected to create; the page and the recipe name the same set. */
+export const EXPECTED_FILES = Object.freeze([
+  ".spw/README.md",
+  ".spw/index.spw",
+  ".spw/mount.spw",
+  ".spw/workspace.spw",
+  ".agents/workflows/commit-review.md",
+]);
+
 export const JOB = `Read https://spw.quest/init and initialize .spw/_workbench in this repository. Verify with doctor. Stop before any commit.`;
 
 export const GIT_GUIDE = `test -d .git || git init

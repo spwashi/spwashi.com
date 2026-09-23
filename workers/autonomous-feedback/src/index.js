@@ -1,7 +1,7 @@
 import { BASE_SECURITY, JSON_CORS, htmlResponse, jsonResponse, wantsJson } from "../../lib/shell.js";
 import { CONTEXTS, DEFAULT_KIND, LEGACY_SLUGS, VERSION, cleanPath, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
 import { loadConfig, siteKinds } from "./config.js";
-import { clearNotes, keepNote, listNotes } from "./desk.js";
+import { clearNotes, deskHosts, deskState, keepNote, listNotes } from "./desk.js";
 import { METER_LIMIT, SLOW_NOTE, inboxAccess, intakeOpen } from "./intake.js";
 import { renderCard, renderHome, renderMeter, renderNotFound, renderStart, renderWrite } from "./pages.js";
 
@@ -40,7 +40,7 @@ function headOr(request, response) {
   return request.method === "HEAD" ? new Response(null, { status: response.status, headers: response.headers }) : response;
 }
 
-function inboxContract(host, context = null, org = null) {
+function inboxContract(host, context = null, org = null, desk = "none") {
   const ctx = context ? context.slug : null;
   const path = ctx ? `/${host}/${ctx}` : `/${host}`;
   return {
@@ -57,13 +57,20 @@ function inboxContract(host, context = null, org = null) {
       path,
       auth: "none",
       accepting: true,
-      stores: false,
-      note: "POST returns a filing slip. The note is not stored. A queue can drain later filings for this site.",
+      stores: desk === "open",
+      note: desk === "open"
+        ? "POST returns a filing slip and keeps the note in this site's desk."
+        : "POST returns a filing slip. The note is not stored.",
     },
     queue: {
-      attached: false,
+      attached: desk === "open",
+      requested: desk !== "none",
       path: `/${host}/inbox`,
-      note: "No drain is attached. Routing names the site and does not grant a read.",
+      note: desk === "open"
+        ? "A desk is open for this site. Reading it takes the desk token."
+        : desk === "requested"
+          ? "The site's client file asks for a desk. None is open yet, so nothing is kept."
+          : "No desk is open. Routing names the site and does not grant a read.",
     },
     process: {
       method: "GET",
@@ -176,11 +183,13 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
 }
 
 async function maybeKeep(env, result) {
+  // A rejected note is shown the form again, which says whether notes are kept.
+  const host = result.filing?.host || result.values?.host || "";
+  result.desk = result.config ? deskState(env, host, result.config) : "none";
   if (!result.filing) return result;
-  const want = Boolean(result.config?.found && result.config.queue?.want);
-  if (!want || !env?.DB) {
+  if (result.desk !== "open") {
     result.filing.stored = false;
-    result.filing.queue = "unattached";
+    result.filing.queue = result.desk === "requested" ? "requested" : "unattached";
     return result;
   }
   const kept = await keepNote(env.DB, result.filing);
@@ -203,6 +212,7 @@ async function answerFiling(request, result, { lockHost = true, embed = false } 
       values: result.values,
       errors: result.errors,
       config: result.config || null,
+      desk: result.desk || "none",
     });
     return embed ? embedHtml(html, result.values.host, result.config, "no-store", result.status) : htmlResponse(html, { status: result.status, cache: "no-store" });
   }
@@ -243,7 +253,7 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
       return jsonResponse({ error: "locked", process: contract.process }, "no-store", 401);
     }
     // No token on the worker means no reader: a bound queue stays shut.
-    if (access === "unset" || !env.DB) return jsonResponse({ ...contract, error: "not_draining", filings: [] }, "no-store", 501);
+    if (access === "unset" || !env.DB || !deskHosts(env).has(subject)) return jsonResponse({ ...contract, error: "not_draining", filings: [] }, "no-store", 501);
     if (request.method === "DELETE") {
       const cleared = await clearNotes(env.DB, subject, url.searchParams.get("id") || "");
       return jsonResponse({ cleared, queue: "desk" }, "no-store");
@@ -253,7 +263,8 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
   }
   if (rest === "config.json") {
     if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
-    return headOr(request, jsonResponse(await loadConfig(subject), "no-store"));
+    const config = await loadConfig(subject);
+    return headOr(request, jsonResponse({ ...config, desk: deskState(env, subject, config) }, "no-store"));
   }
   const slug = rest.replace(/\.json$/, "");
   const context = slug ? contextBySlug(slug) : null;
@@ -281,7 +292,8 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
   }
   if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD, POST");
   if (rest.endsWith(".json") || wantsJson(request)) {
-    return headOr(request, jsonResponse(inboxContract(subject, context, org), "public, max-age=120"));
+    const config = await loadConfig(subject);
+    return headOr(request, jsonResponse(inboxContract(subject, context, org, deskState(env, subject, config)), "public, max-age=120"));
   }
   const config = await loadConfig(subject);
   const html = renderWrite({
@@ -290,6 +302,7 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
     lockHost: true,
     embed,
     config,
+    desk: deskState(env, subject, config),
     values: { path: url.searchParams.get("at") || "" },
   });
   return headOr(request, embed ? embedHtml(html, subject, config, "public, max-age=120") : htmlResponse(html, { cache: "public, max-age=120" }));
@@ -435,7 +448,8 @@ export default {
         return headOr(request, htmlResponse(renderStart({ host: raw.trim(), how, kind, error: `"${raw.trim()}" is not a public domain. Enter one like example.com.` }), { status: 400, cache: "no-store" }));
       }
       const config = queryHost ? await loadConfig(queryHost) : null;
-      return headOr(request, htmlResponse(renderStart({ host: queryHost, how, kind, config }), { cache: "no-store" }));
+      const desk = config ? deskState(env, queryHost, config) : "none";
+      return headOr(request, htmlResponse(renderStart({ host: queryHost, how, kind, config, desk }), { cache: "no-store" }));
     }
 
     if (url.pathname === "/favicon.ico") return new Response(null, { status: 404, headers: TEXT_HEADERS });
