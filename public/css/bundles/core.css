@@ -12508,6 +12508,42 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   margin-block-end: var(--space-2xs, 0.25rem);
 }
 
+/* Give adjacent prose paragraphs a little more air than other flow children. */
+:where(.prose > p + p, article > p + p, .frame-copy > p + p) {
+  margin-block-start: calc(var(--flow-space, 1rem) * 1.15);
+}
+
+/* Keep a list item's supporting paragraph with its point. */
+:where(.prose, article, .frame-copy) :where(li > p + p) {
+  margin-block-start: calc(var(--flow-space, 1rem) * 0.55);
+}
+
+:where(.prose, article, .frame-copy) :where(li:has(> p + p) + li) {
+  margin-block-start: var(--flow-space, 1rem);
+}
+
+/* Pair terms with explanations, including lists with div wrappers. */
+:where(.prose, article, .frame-copy) :where(dl) {
+  max-inline-size: min(100%, var(--measure-reading, 68ch));
+}
+
+:where(.prose, article, .frame-copy) :where(dl > div + div, dl > dd + dt) {
+  margin-block-start: var(--flow-space, 1rem);
+}
+
+:where(.prose, article, .frame-copy) :where(dt) {
+  font-weight: 650;
+  color: var(--ink-strong, #090b0c);
+}
+
+:where(.prose, article, .frame-copy) :where(dt + dd) {
+  margin-block-start: var(--space-2xs, 0.25rem);
+}
+
+:where(.prose, article, .frame-copy) :where(dd) {
+  margin-inline-start: 0;
+}
+
 :where(li::marker) {
   color: var(--active-op-color, #008080);
 }
