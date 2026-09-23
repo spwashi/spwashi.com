@@ -13,7 +13,7 @@
   },
   // Hosts whose desk is open. A client file's queue.want asks; this list opens.
   "vars": {
-    "DESK_HOSTS": "spwashi.com spw.quest"
+    "DESK_HOSTS": "spwashi.com spw.quest lore.land"
   },
   "d1_databases": [
     {

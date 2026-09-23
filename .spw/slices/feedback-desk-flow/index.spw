@@ -42,7 +42,7 @@ actors: .{
 
 keys: .{
  queue_want = `client file "queue": { "want": true } — the owner asks for a desk. Free. Opens nothing by itself.`
- desk_hosts = `wrangler var DESK_HOSTS, space- or comma-separated — the operator lists a host. The paid switch; settled by reply, no checkout.`
+ desk_hosts = `wrangler var DESK_HOSTS, space- or comma-separated — the operator lists a host. The paid switch; settled by reply, no checkout. Open: spwashi.com, spw.quest, lore.land (2026-09-23; all the operator's own).`
  operator_token = `worker secret INBOX_READ_TOKEN — opens every desk. Never in a file, never in a query string.`
  owner_key = `a secret only the owner keeps; the file publishes inbox.key = "sha256:" + 64 hex of it. config.js rejects anything else and never echoes it. Opens that host's desk only.`
  save_limit = `wrangler var SAVE_LIMIT, default 10 (desk.js DEFAULT_SAVE_LIMIT). The candidate paid dimension.`
