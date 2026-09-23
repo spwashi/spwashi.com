@@ -765,7 +765,11 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 @media (min-width: 72rem) {
   :where([data-spw-feature="home-kernel-entry"] .home-hero-grid) {
     grid-template-columns: minmax(0, 1.08fr) minmax(14rem, 17rem);
-    grid-template-rows: auto auto;
+    /* The hero copy spans both rows. With two auto rows its height was split
+       between them, which left a quarter-screen hole under the brand plate.
+       A flexible second row keeps the spanning copy out of row one, so the
+       rail stacks: plate, then photo. */
+    grid-template-rows: auto 1fr;
     column-gap: clamp(0.95rem, 1.9vw, 1.6rem);
     align-items: start;
   }
