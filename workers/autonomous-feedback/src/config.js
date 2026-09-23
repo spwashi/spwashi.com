@@ -40,7 +40,8 @@ export function defaultConfig(host) {
     intro: "",
     title: "",
     contact: {},
-    button: "Make the card",
+    button: "",
+    thanks: "",
     kinds: CONTEXTS.map((c) => c.slug),
     labels: {},
     from: "off",
@@ -49,6 +50,7 @@ export function defaultConfig(host) {
     queue: { want: false },
     inbox: { key: "" },
     routes: [],
+    subjects: [],
     theme: null,
     problems: [],
   };
@@ -118,6 +120,78 @@ function readTheme(raw, problems) {
   };
 }
 
+const SUBJECT_LIMITS = Object.freeze({ subjects: 12, paths: 8, kinds: 8, asks: 3, threads: 6 });
+const SLUG = /^[a-z0-9][a-z0-9-]{0,39}$/;
+
+/**
+ * The creator's map of their work: subjects a note can be about, each with its
+ * own prompt, the kinds that apply, up to three tailored asks, and the threads
+ * the creator hears often, each with their current stance.
+ */
+function readSubjects(raw, problems) {
+  if (raw == null) return [];
+  if (!Array.isArray(raw)) {
+    problems.push("subjects must be a list of { \"id\", \"name\", \"paths\", \"prompt\", \"kinds\", \"asks\", \"threads\" }.");
+    return [];
+  }
+  const subjects = [];
+  const seen = new Set();
+  for (const entry of raw.slice(0, SUBJECT_LIMITS.subjects)) {
+    if (!entry || typeof entry !== "object") continue;
+    const id = String(entry.id ?? "").trim().toLowerCase();
+    const name = cleanText(entry.name, 40);
+    if (!SLUG.test(id) || !name) {
+      problems.push("Each subject needs an id (letters, digits, dashes) and a name up to 40 characters.");
+      continue;
+    }
+    if (seen.has(id)) {
+      problems.push(`subjects: "${id}" appears twice; keeping the first.`);
+      continue;
+    }
+    seen.add(id);
+    const paths = (Array.isArray(entry.paths) ? entry.paths : []).slice(0, SUBJECT_LIMITS.paths).map(cleanPath).filter(Boolean);
+    const kinds = (Array.isArray(entry.kinds) ? entry.kinds : []).slice(0, SUBJECT_LIMITS.kinds).map(resolveSlug).filter(Boolean);
+    if (Array.isArray(entry.kinds) && kinds.length !== entry.kinds.length) problems.push(`subjects.${id}.kinds names a kind that does not exist; skipping it.`);
+    const asks = (Array.isArray(entry.asks) ? entry.asks : []).slice(0, SUBJECT_LIMITS.asks).map((ask) => cleanText(ask, 160)).filter(Boolean);
+    const threads = [];
+    const threadIds = new Set();
+    for (const thread of (Array.isArray(entry.threads) ? entry.threads : []).slice(0, SUBJECT_LIMITS.threads)) {
+      if (!thread || typeof thread !== "object") continue;
+      const tid = String(thread.id ?? "").trim().toLowerCase();
+      const tname = cleanText(thread.name, 80);
+      if (!SLUG.test(tid) || !tname || threadIds.has(tid)) {
+        problems.push(`subjects.${id}.threads: each thread needs a unique id and a name up to 80 characters.`);
+        continue;
+      }
+      threadIds.add(tid);
+      let link = "";
+      if (thread.link != null) {
+        link = cleanPath(thread.link);
+        if (!link) problems.push(`subjects.${id}.threads.${tid}.link must be a path on your site, like /design/folios.`);
+      }
+      const kind = thread.kind == null ? "" : resolveSlug(thread.kind);
+      if (thread.kind != null && !kind) problems.push(`subjects.${id}.threads.${tid}.kind names a kind that does not exist; leaving it unsorted.`);
+      threads.push({ id: tid, name: tname, stance: cleanText(thread.stance, 300), link, kind });
+    }
+    subjects.push({ id, name, paths, prompt: cleanText(entry.prompt, 160), example: cleanText(entry.example, 160), kinds, asks, threads });
+  }
+  return subjects;
+}
+
+/** The subject whose path prefix best matches a page, or null. */
+export function subjectFor(config, path) {
+  const clean = cleanPath(path);
+  if (!clean) return null;
+  let best = null;
+  for (const subject of config?.subjects || []) {
+    for (const prefix of subject.paths) {
+      const hit = prefix === "/" ? clean === "/" : clean === prefix || clean.startsWith(prefix.endsWith("/") ? prefix : `${prefix}/`);
+      if (hit && (!best || prefix.length > best.prefix.length)) best = { subject, prefix };
+    }
+  }
+  return best?.subject || null;
+}
+
 /** Validate a parsed file for `host`. Pure, so tests and the setup page can call it directly. */
 export function readConfig(raw, host) {
   const config = defaultConfig(host);
@@ -139,6 +213,8 @@ export function readConfig(raw, host) {
   config.title = cleanText(raw.title, 80);
   config.intro = cleanText(raw.intro, 300);
   if (raw.button != null) config.button = cleanText(raw.button, 40) || config.button;
+  // The owner's own line, shown to every writer after sending.
+  if (raw.thanks != null) config.thanks = cleanText(raw.thanks, 200);
 
   if (raw.kinds != null) {
     const wanted = Array.isArray(raw.kinds) ? raw.kinds : [];
@@ -224,6 +300,8 @@ export function readConfig(raw, host) {
     }
   }
 
+  config.subjects = readSubjects(raw.subjects, problems);
+
   if (raw.queue != null) {
     if (typeof raw.queue !== "object" || Array.isArray(raw.queue)) problems.push("queue must be an object like { \"want\": true }.");
     else if (raw.queue.want === true) config.queue.want = true;
@@ -261,18 +339,24 @@ export function readConfig(raw, host) {
 
 /** A starter file for `host`, shown on the setup page with the domain filled in. */
 export function starterConfig(host) {
+  // A small, complete example: one subject with a common note and an ask. Every other field has a sensible default.
   return {
     schema: CONFIG_SCHEMA,
     host,
     name: "",
-    title: "Feedback",
-    intro: "Tell us what was hard to use and what was clear.",
-    kinds: ["broken", "confusing", "missing", "question", "appreciation"],
-    labels: { broken: { title: "Bug report", prompt: "What broke, and on which page?" } },
+    intro: "What was hard to use, and what worked.",
+    thanks: "Thank you. I read every one of these.",
+    subjects: [
+      {
+        id: "start",
+        name: "Getting started",
+        paths: ["/"],
+        prompt: "What were you looking for?",
+        asks: ["What brought you here?"],
+        threads: [{ id: "where-to-start", name: "Not sure where to start", kind: "confusing" }],
+      },
+    ],
     from: "optional",
-    button: "Make the card",
-    note: { min: NOTE_MIN, max: NOTE_MAX },
-    frame: { ancestors: [] },
     theme: { mode: "light", accent: "#0f766e", corners: "round", font: "system" },
   };
 }
@@ -287,11 +371,32 @@ export function configToFile(config) {
   file.kinds = [...config.kinds];
   if (Object.keys(config.labels).length) file.labels = config.labels;
   file.from = config.from;
-  file.button = config.button;
+  if (config.button) file.button = config.button;
+  if (config.thanks) file.thanks = config.thanks;
   file.note = { ...config.note };
   if (config.queue?.want) file.queue = { want: true };
   if (config.inbox?.key) file.inbox = { key: config.inbox.key };
   if (config.routes?.length) file.routes = config.routes.map(({ name, path }) => ({ name, path }));
+  if (config.subjects?.length) {
+    file.subjects = config.subjects.map((subject) => {
+      const out = { id: subject.id, name: subject.name };
+      if (subject.paths.length) out.paths = [...subject.paths];
+      if (subject.prompt) out.prompt = subject.prompt;
+      if (subject.example) out.example = subject.example;
+      if (subject.kinds.length) out.kinds = [...subject.kinds];
+      if (subject.asks.length) out.asks = [...subject.asks];
+      if (subject.threads.length) {
+        out.threads = subject.threads.map((thread) => {
+          const t = { id: thread.id, name: thread.name };
+          if (thread.stance) t.stance = thread.stance;
+          if (thread.link) t.link = thread.link;
+          if (thread.kind) t.kind = thread.kind;
+          return t;
+        });
+      }
+      return out;
+    });
+  }
   if (config.frame.ancestors.length) file.frame = { ancestors: [...config.frame.ancestors] };
   if (config.theme) {
     const { mode, background, text, accent, corners, font } = config.theme;

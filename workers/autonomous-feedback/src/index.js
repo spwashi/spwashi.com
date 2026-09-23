@@ -1,7 +1,7 @@
 import { BASE_SECURITY, JSON_CORS, htmlResponse, jsonResponse, wantsJson } from "../../lib/shell.js";
-import { CONTEXTS, DEFAULT_KIND, LEGACY_SLUGS, VERSION, cleanPath, refererPath, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
-import { loadConfig, siteKinds } from "./config.js";
-import { compact, deleteNotes, deskHosts, deskState, deskSummary, keepNote, listNotes, listTallies, previewCompaction, saveLimit, setSaved } from "./desk.js";
+import { CONTEXTS, LEGACY_SLUGS, NOTE, VERSION, cleanPath, refererPath, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
+import { loadConfig, siteKinds, subjectFor } from "./config.js";
+import { compact, deleteNotes, deskHosts, deskState, deskSummary, digest, keepNote, listNotes, listTallies, previewCompaction, saveLimit, setSaved } from "./desk.js";
 import { METER_LIMIT, SLOW_NOTE, bearerOf, cookieOf, deskAccess, intakeOpen } from "./intake.js";
 import { renderCard, renderDesk, renderDeskLock, renderHome, renderInbox, renderInboxLock, renderMeter, renderNotFound, renderStart, renderWrite } from "./pages.js";
 
@@ -21,7 +21,7 @@ const PEERS = Object.freeze([
 ]);
 
 // Every kind slug, current and legacy, for path matching.
-const KIND_SLUGS = [...CONTEXTS.map((c) => c.slug), ...Object.keys(LEGACY_SLUGS)].join("|");
+const KIND_SLUGS = [NOTE.slug, ...CONTEXTS.map((c) => c.slug), ...Object.keys(LEGACY_SLUGS)].join("|");
 const KIND_JSON = new RegExp(`^/(${KIND_SLUGS})\\.json$`);
 const KIND_PAGE = new RegExp(`^/(${KIND_SLUGS})/?$`);
 
@@ -116,7 +116,7 @@ function cleanFrom(value) {
  * The host and kind can come from the path (fallbacks) or the body; the body wins,
  * so one form can switch kinds without changing its action.
  */
-async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug = DEFAULT_KIND, org = null } = {}) {
+async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug = NOTE.slug, org = null } = {}) {
   const length = Number(request.headers.get("content-length") || 0);
   if (length > 16_000) return { code: "too_large", status: 413, errors: { note: "That is too long to send." }, values: {} };
   const type = request.headers.get("content-type") || "";
@@ -142,6 +142,9 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
     note: String(body.note || ""),
     from: cleanFrom(body.from),
     path: cleanPath(body.path || body.at || ""),
+    subject: String(body.subject || "").trim().toLowerCase(),
+    thread: String(body.thread || "").trim().toLowerCase(),
+    asks: [0, 1, 2].map((i) => String(body[`ask-${i}`] || "").trim().slice(0, 2000)),
   };
   if (!values.path) values.path = refererPath(request.headers.get("referer"), values.host);
   if (String(body.company || "").trim()) return { code: "rejected", status: 400, errors: { note: "The form could not be sent." }, values };
@@ -150,37 +153,67 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
   }
   const config = await loadConfig(values.host);
   const errors = {};
+  // The subject is the creator's map; the thread is one thing they hear often. Both are optional and must exist in the file.
+  const subject = (config.subjects || []).find((s) => s.id === values.subject) || (values.subject ? null : subjectFor(config, values.path));
+  if (values.subject && !subject) errors.subject = "Choose one of the parts of the site listed, or leave it blank.";
+  const thanked = values.thread === "thanks";
+  const thread = !thanked && subject && values.thread ? subject.threads.find((t) => `${subject.id}:${t.id}` === values.thread || t.id === values.thread) || null : null;
+  if (values.thread && !thanked && !thread) errors.subject = "That common note is not one this site lists.";
+  // Kind: a chip the writer chose wins; else the thread's kind; a thanks is appreciation; else the note stays unsorted.
   const allowed = siteKinds(config);
-  const context = allowed.find((c) => c.slug === contextBySlug(values.kind)?.slug);
+  const chosen = contextBySlug(values.kind);
+  const context = chosen && chosen.slug !== NOTE.slug
+    ? allowed.find((c) => c.slug === chosen.slug)
+    : (thanked ? contextBySlug("appreciation") : thread?.kind ? contextBySlug(thread.kind) : null) || NOTE;
   if (!context) {
-    const known = contextBySlug(values.kind);
-    errors.kind = known ? `${config.name || values.host} does not take ${known.title.toLowerCase()} notes. Choose another kind.` : "Choose a kind of note.";
+    errors.kind = chosen ? `${config.name || values.host} does not take ${chosen.title.toLowerCase()} notes. Choose another, or none.` : "That is not a kind of note.";
   }
-  const text = values.note.trim();
-  if (text.length < config.note.min) errors.note = text.length ? `Write at least ${config.note.min} characters. This note has ${text.length}.` : "Write a note first.";
+  const asks = subject ? subject.asks.map((question, i) => ({ question, answer: values.asks[i] || "" })).filter((a) => a.answer) : [];
+  let text = values.note.trim();
+  // Words are optional once a common note or a thanks says enough; the count is the note.
+  const worded = Boolean(text || asks.length);
+  if (!text && thanked) text = "Thanks.";
+  if (!text && thread && !asks.length) text = "Count me too.";
+  if (!text && asks.length) text = asks[0].answer;
+  const tapped = !worded && (thanked || thread);
+  if (!tapped && text.length < config.note.min) errors.note = text.length ? `A few more words, please: at least ${config.note.min} characters. This note has ${text.length}.` : "Write a few words, or tap one of the common notes.";
   else if (text.length > config.note.max) errors.note = `Keep it under ${config.note.max.toLocaleString("en-US")} characters. This note has ${text.length.toLocaleString("en-US")}.`;
   if (config.from === "required" && !values.from) errors.from = "Add your name or handle; this site asks for one.";
   if (Object.keys(errors).length) {
-    const code = errors.kind ? "invalid_context" : errors.note ? "note_bounds" : "from_required";
-    return { code, status: errors.kind && !contextBySlug(values.kind) ? 404 : 400, errors, values, config, context: context || allowed[0] };
+    const code = errors.kind ? "invalid_context" : errors.subject ? "invalid_subject" : errors.note ? "note_bounds" : "from_required";
+    return { code, status: errors.kind && !contextBySlug(values.kind) ? 404 : 400, errors, values, config, context: context || NOTE };
   }
   const issued = new Date().toISOString();
   const from = config.from === "off" ? "" : values.from;
   const named = (config.routes || []).find((route) => route.path === values.path);
   const route = named?.name || "";
+  const detail = asks.map((a) => `## ${a.question}\n${a.answer}`).join("\n\n");
   const markdown = [
     `# ${context.title} for ${config.name || values.host}`,
     `filed: ${issued}`,
     "",
     text,
+    detail ? `\n${detail}` : "",
     "",
+    subject ? `subject: ${subject.name}` : "",
+    thread ? `thread: ${thread.name}` : "",
     values.path ? `page: ${route ? `${route} ` : ""}${values.path}` : "",
     from ? `from: ${from}` : "",
     `about: https://${values.host}/`,
     `via: https://autonomous.feedback/${values.host}`,
     org ? `account: ${org}` : "",
   ].filter(Boolean).join("\n");
-  return { filing: { host: values.host, context, note: text, from, path: values.path, route, issued, markdown, org: org || null }, config };
+  const filing = {
+    host: values.host, context, note: text, from, path: values.path, route, issued, markdown, org: org || null,
+    subject: subject ? { id: subject.id, name: subject.name } : null,
+    thread: thread ? { id: thread.id, name: thread.name, stance: thread.stance, link: thread.link } : null,
+    thanked,
+    worded,
+    asks,
+    // What the desk keeps: the note and the answered asks as one text.
+    record: detail ? `${text}\n\n${detail}` : text,
+  };
+  return { filing, config };
 }
 
 async function maybeKeep(env, result) {
@@ -204,7 +237,7 @@ async function maybeKeep(env, result) {
 async function answerFiling(request, result, { lockHost = true, embed = false } = {}) {
   if (!result.filing) {
     if (wantsJson(request)) return jsonResponse({ error: result.code, errors: result.errors }, "no-store", result.status);
-    const context = result.context || contextBySlug(result.values.kind) || contextBySlug(DEFAULT_KIND);
+    const context = result.context || contextBySlug(result.values.kind) || NOTE;
     const html = renderWrite({
       context,
       host: result.values.host,
@@ -231,6 +264,10 @@ async function answerFiling(request, result, { lockHost = true, embed = false } 
       from: filing.from || null,
       route: filing.route || null,
       path: filing.path || null,
+      subject: filing.subject?.id || null,
+      thread: filing.thread?.id || (filing.thanked ? "thanks" : null),
+      worded: filing.worded,
+      asks: filing.asks,
       expression: filing.context.expression,
       issued: filing.issued,
       markdown: filing.markdown,
@@ -256,6 +293,7 @@ function pageFrom(request, url, subject) {
  */
 const INBOX_COOKIE = "af_inbox";
 const DESK_COOKIE = "af_desk";
+const SEEN_COOKIE = "af_seen";
 const KEY_SECONDS = 12 * 60 * 60;
 
 function keyCookie(name, value, path) {
@@ -325,8 +363,12 @@ async function handleInbox(request, url, subject, env) {
     if (!opened(access)) return headOr(request, htmlResponse(renderInboxLock({ host: subject, desk }), { status: 401, cache: "no-store" }));
     if (desk !== "open") return headOr(request, htmlResponse(renderInboxLock({ host: subject, desk }), { cache: "no-store" }));
     const [notes, tallies] = await Promise.all([listNotes(env.DB, subject), listTallies(env.DB, subject)]);
-    const html = renderInbox({ host: subject, name: config.name, notes, tallies, limit: saveLimit(env), done: url.searchParams.get("done") || "", role: access });
-    return headOr(request, htmlResponse(html, { cache: "no-store" }));
+    // "New since your last visit" lives in the owner's browser, not on the server.
+    const seen = cookieOf(request, SEEN_COOKIE);
+    const html = renderInbox({ host: subject, config, notes, summary: digest(tallies, notes), seen, limit: saveLimit(env), done: url.searchParams.get("done") || "", role: access });
+    const response = htmlResponse(html, { cache: "no-store" });
+    response.headers.append("Set-Cookie", `${SEEN_COOKIE}=${encodeURIComponent(new Date().toISOString())}; Path=${path}; Max-Age=${60 * 60 * 24 * 90}; HttpOnly; Secure; SameSite=Strict`);
+    return headOr(request, response);
   }
 
   const contract = inboxContract(subject, null, null, desk);
@@ -348,7 +390,7 @@ async function handleInbox(request, url, subject, env) {
     return jsonResponse(result, "no-store", result.ok ? 200 : result.error === "limit" ? 409 : 404);
   }
   const [filings, tallies] = await Promise.all([listNotes(env.DB, subject), listTallies(env.DB, subject)]);
-  return jsonResponse({ ...contract, saved_limit: saveLimit(env), filings, tallies }, "no-store");
+  return jsonResponse({ ...contract, saved_limit: saveLimit(env), filings, tallies, digest: digest(tallies, filings) }, "no-store");
 }
 
 /** The operator's view of every open desk: counts, what compaction would do next, and Compact now. */
@@ -389,7 +431,7 @@ async function handleDesk(request, url, env) {
     const state = deskState(env, host, config);
     if (state !== "open") return { host, state };
     const [summary, due] = await Promise.all([deskSummary(env.DB, host), previewCompaction(env.DB, host)]);
-    return { ...summary, state, due };
+    return { ...summary, state, due, config };
   }));
   if (api) return jsonResponse({ sites, saved_limit: saveLimit(env) }, "no-store");
   const compacted = url.searchParams.has("compacted") ? { host: url.searchParams.get("host") || "", count: Number(url.searchParams.get("compacted")) || 0 } : null;
@@ -426,10 +468,10 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
         code: "slow_down",
         status: 429,
         errors: { note: SLOW_NOTE },
-        values: { host: subject, kind: context ? context.slug : DEFAULT_KIND, note: "", from: "" },
+        values: { host: subject, kind: context ? context.slug : NOTE.slug, note: "", from: "" },
       }, { lockHost: true, embed });
     }
-    const result = await maybeKeep(env, await readFiling(request, { host: subject, slug: context ? context.slug : DEFAULT_KIND, org }));
+    const result = await maybeKeep(env, await readFiling(request, { host: subject, slug: context ? context.slug : NOTE.slug, org }));
     return answerFiling(request, result, { lockHost: true, embed });
   }
   if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD, POST");
@@ -439,7 +481,7 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
   }
   const config = await loadConfig(subject);
   const html = renderWrite({
-    context: context || siteKinds(config)[0] || contextBySlug(DEFAULT_KIND),
+    context: context || NOTE,
     host: subject,
     lockHost: true,
     embed,
@@ -593,7 +635,7 @@ export default {
       if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
       const raw = url.searchParams.get("host") || "";
       const how = url.searchParams.get("how") || "link";
-      const kind = url.searchParams.get("kind") || DEFAULT_KIND;
+      const kind = url.searchParams.get("kind") || NOTE.slug;
       if (raw && !isPublicSite(queryHost)) {
         return headOr(request, htmlResponse(renderStart({ host: raw.trim(), how, kind, error: `"${raw.trim()}" is not a public domain. Enter one like example.com.` }), { status: 400, cache: "no-store" }));
       }

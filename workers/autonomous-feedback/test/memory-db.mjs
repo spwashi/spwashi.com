@@ -5,7 +5,11 @@
 export function memoryDb() {
   const notes = [];
   const tallies = new Map();
-  const page = (row) => row.route_name || row.route_path || '';
+  const about = (row) => row.subject || row.route_name || row.route_path || '';
+  const week = (issued) => {
+    const day = new Date(`${issued.slice(0, 10)}T00:00:00Z`);
+    return new Date(day.getTime() - ((day.getUTCDay() + 6) % 7) * 86400000).toISOString().slice(0, 10);
+  };
   const due = (args, sql) => {
     const [before, host] = args;
     return notes.filter((row) => !row.saved && row.issued < before && (!sql.includes('AND host = ?') || row.host === host));
@@ -13,12 +17,15 @@ export function memoryDb() {
   const group = (rows) => {
     const counts = new Map();
     for (const row of rows) {
-      const key = [row.host, row.issued.slice(0, 10), page(row), row.kind].join('\u0000');
-      counts.set(key, (counts.get(key) || 0) + 1);
+      const key = [row.host, week(row.issued), about(row), row.thread || '', row.kind].join('\u0000');
+      const t = counts.get(key) || { cards: 0, worded: 0 };
+      t.cards += 1;
+      t.worded += row.worded;
+      counts.set(key, t);
     }
-    return [...counts].map(([key, count]) => {
-      const [host, day, pg, kind] = key.split('\u0000');
-      return { host, day, page: pg, kind, count };
+    return [...counts].map(([key, t]) => {
+      const [host, wk, ab, thread, kind] = key.split('\u0000');
+      return { host, week: wk, about: ab, thread, kind, ...t };
     });
   };
   const drop = (pred) => {
@@ -29,8 +36,8 @@ export function memoryDb() {
 
   const run = (sql, args) => {
     if (sql.startsWith('INSERT INTO notes')) {
-      const [id, host, kind, title, note, writer, issued, route_name, route_path] = args;
-      notes.push({ id, host, kind, title, note, writer, issued, route_name, route_path, saved: 0 });
+      const [id, host, kind, title, note, writer, issued, route_name, route_path, subject, thread, worded] = args;
+      notes.push({ id, host, kind, title, note, writer, issued, route_name, route_path, subject, thread, worded, saved: 0 });
       return { meta: { changes: 1 } };
     }
     if (sql.startsWith('UPDATE notes SET saved')) {
@@ -41,8 +48,9 @@ export function memoryDb() {
     }
     if (sql.startsWith('INSERT INTO tallies')) {
       for (const t of group(due(args, sql))) {
-        const key = [t.host, t.day, t.page, t.kind].join('\u0000');
-        tallies.set(key, { ...t, count: (tallies.get(key)?.count || 0) + t.count });
+        const key = [t.host, t.week, t.about, t.thread, t.kind].join('\u0000');
+        const had = tallies.get(key);
+        tallies.set(key, { ...t, cards: (had?.cards || 0) + t.cards, worded: (had?.worded || 0) + t.worded });
       }
       return { meta: { changes: 1 } };
     }
@@ -71,12 +79,12 @@ export function memoryDb() {
       return notes.filter((r) => r.host === args[0])
         .sort((a, b) => (b.saved - a.saved) || b.issued.localeCompare(a.issued));
     }
-    if (sql.startsWith('SELECT day, page, kind, count FROM tallies')) {
+    if (sql.startsWith('SELECT week, about, thread, kind, cards, worded FROM tallies')) {
       return [...tallies.values()].filter((t) => t.host === args[0])
-        .sort((a, b) => b.day.localeCompare(a.day) || a.page.localeCompare(b.page) || a.kind.localeCompare(b.kind));
+        .sort((a, b) => b.week.localeCompare(a.week) || a.about.localeCompare(b.about) || a.thread.localeCompare(b.thread));
     }
-    if (sql.startsWith('SELECT substr(issued, 1, 10) AS day')) {
-      return group(due(args, sql)).sort((a, b) => b.day.localeCompare(a.day) || a.page.localeCompare(b.page));
+    if (sql.startsWith('SELECT date(substr(issued, 1, 10)')) {
+      return group(due(args, sql)).sort((a, b) => b.week.localeCompare(a.week) || a.about.localeCompare(b.about));
     }
     throw new Error(`memoryDb all: ${sql}`);
   };

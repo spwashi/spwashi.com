@@ -2,22 +2,313 @@
   "schema": "autonomous-feedback.client.v0",
   "host": "spwashi.com",
   "name": "Spwashi",
-  "title": "Feedback",
-  "intro": "What was hard to use, and what was clear.",
-  "kinds": ["broken", "confusing", "missing", "wrong", "question", "appreciation"],
+  "intro": "What was hard to use, and what worked.",
+  "thanks": "Thank you. I read these, and they shape what I make next.",
   "routes": [
-    { "name": "Home", "path": "/" },
-    { "name": "Contact", "path": "/contact/" }
+    {
+      "name": "Home",
+      "path": "/"
+    },
+    {
+      "name": "Contact",
+      "path": "/contact/"
+    }
+  ],
+  "subjects": [
+    {
+      "id": "start",
+      "name": "Getting started",
+      "paths": [
+        "/",
+        "/about",
+        "/now",
+        "/contact"
+      ],
+      "prompt": "What were you hoping to find?",
+      "example": "I came from a video and could not tell where the recipes were.",
+      "kinds": [
+        "confusing",
+        "missing",
+        "question",
+        "appreciation"
+      ],
+      "asks": [
+        "How did you get here?"
+      ],
+      "threads": [
+        {
+          "id": "where-to-start",
+          "name": "Not sure where to start",
+          "kind": "confusing"
+        },
+        {
+          "id": "looking-for",
+          "name": "Looking for something specific",
+          "kind": "missing"
+        }
+      ]
+    },
+    {
+      "id": "topics",
+      "name": "Topics and guides",
+      "paths": [
+        "/topics"
+      ],
+      "prompt": "Where did it stop making sense, or what would you add?",
+      "example": "The unit circle diagram lost me: which way is positive?",
+      "kinds": [
+        "confusing",
+        "wrong",
+        "missing",
+        "appreciation"
+      ],
+      "asks": [
+        "What did you already know coming in?",
+        "Which part were you reading?"
+      ],
+      "threads": [
+        {
+          "id": "lost-me",
+          "name": "Lost me partway through",
+          "kind": "confusing"
+        },
+        {
+          "id": "wrong",
+          "name": "Something here is wrong",
+          "kind": "wrong"
+        },
+        {
+          "id": "more",
+          "name": "I want more on this",
+          "kind": "missing"
+        },
+        {
+          "id": "helped",
+          "name": "This helped me",
+          "kind": "appreciation"
+        }
+      ]
+    },
+    {
+      "id": "components",
+      "name": "Components and design",
+      "paths": [
+        "/design"
+      ],
+      "prompt": "Which component, and what happened?",
+      "example": "The card grid overlaps on an iPhone SE in landscape.",
+      "kinds": [
+        "broken",
+        "confusing",
+        "question",
+        "appreciation"
+      ],
+      "asks": [
+        "Which browser and device?",
+        "What were you building?"
+      ],
+      "threads": [
+        {
+          "id": "broken-here",
+          "name": "Looks broken on my device",
+          "kind": "broken"
+        },
+        {
+          "id": "reuse",
+          "name": "Can I use this in my project?",
+          "kind": "question"
+        }
+      ]
+    },
+    {
+      "id": "spw",
+      "name": "Spw",
+      "paths": [
+        "/topics/software/spw",
+        "/tools/spw-parser"
+      ],
+      "prompt": "What were you trying to read or write?",
+      "example": "I read ^ as a pointer, but the page treats it as a lift.",
+      "kinds": [
+        "confusing",
+        "broken",
+        "question",
+        "appreciation"
+      ],
+      "asks": [
+        "What did you take it to mean?"
+      ],
+      "threads": [
+        {
+          "id": "operator",
+          "name": "What does this operator mean?",
+          "kind": "question"
+        },
+        {
+          "id": "parser",
+          "name": "The parser did something I did not expect",
+          "kind": "broken"
+        }
+      ]
+    },
+    {
+      "id": "recipes",
+      "name": "Recipes",
+      "paths": [
+        "/recipes"
+      ],
+      "prompt": "Which recipe, and how did it go?",
+      "example": "Made the pumpkin one for six. Doubled the spice; still mild.",
+      "kinds": [
+        "wrong",
+        "missing",
+        "question",
+        "appreciation"
+      ],
+      "asks": [
+        "What did you make, and for whom?",
+        "What would you change next time?"
+      ],
+      "threads": [
+        {
+          "id": "made-it",
+          "name": "I made it",
+          "kind": "appreciation"
+        },
+        {
+          "id": "amounts",
+          "name": "Amounts or timing were off",
+          "kind": "wrong"
+        },
+        {
+          "id": "substitution",
+          "name": "I needed a substitution",
+          "kind": "missing"
+        }
+      ]
+    },
+    {
+      "id": "play",
+      "name": "RPG Wednesday",
+      "paths": [
+        "/play",
+        "/rpg"
+      ],
+      "prompt": "What got in the way of play?",
+      "example": "I could not tell which Wednesday the next session was.",
+      "kinds": [
+        "question",
+        "broken",
+        "missing",
+        "appreciation"
+      ],
+      "asks": [
+        "What were you trying to do at the table?"
+      ],
+      "threads": [
+        {
+          "id": "join",
+          "name": "How do I join a session?",
+          "kind": "question"
+        },
+        {
+          "id": "tool",
+          "name": "A tool did not work at the table",
+          "kind": "broken"
+        }
+      ]
+    },
+    {
+      "id": "folios",
+      "name": "Folios",
+      "paths": [
+        "/design/folios"
+      ],
+      "prompt": "Which folio, and what happened when you tried to order?",
+      "example": "I sent the card and did not know when to expect a reply.",
+      "kinds": [
+        "question",
+        "broken",
+        "confusing",
+        "appreciation"
+      ],
+      "asks": [
+        "Which folio were you looking at?",
+        "What did you expect to happen after the card?"
+      ],
+      "threads": [
+        {
+          "id": "order-by-card",
+          "name": "Ordering is by card, not checkout",
+          "kind": "question",
+          "stance": "On purpose for now: each order starts as a conversation from the card you send. Payment is settled in the reply.",
+          "link": "/design/folios/#folio-request"
+        },
+        {
+          "id": "which-folio",
+          "name": "Which folio suits me?",
+          "kind": "question"
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "name": "Services",
+      "paths": [
+        "/services"
+      ],
+      "prompt": "What were you looking for, and what did the page not answer?",
+      "example": "I could not tell whether a small site fits the creator lane.",
+      "kinds": [
+        "question",
+        "confusing",
+        "missing"
+      ],
+      "asks": [
+        "What are you hoping to make?",
+        "What would help you decide?"
+      ],
+      "threads": [
+        {
+          "id": "pricing",
+          "name": "Pricing was not clear",
+          "kind": "confusing"
+        },
+        {
+          "id": "work-together",
+          "name": "I would like to work together",
+          "kind": "question"
+        }
+      ]
+    }
+  ],
+  "kinds": [
+    "broken",
+    "confusing",
+    "missing",
+    "wrong",
+    "question",
+    "appreciation"
   ],
   "labels": {
-    "broken": { "prompt": "What failed, and which page you were on." }
+    "broken": {
+      "prompt": "What failed, and which page you were on."
+    }
   },
-  "contact": { "bluesky": "spwashi.com", "x": "spwashi" },
+  "contact": {
+    "bluesky": "spwashi.com",
+    "x": "spwashi"
+  },
   "from": "optional",
-  "button": "Make the card",
-  "queue": { "want": true },
+  "queue": {
+    "want": true
+  },
   "frame": {
-    "ancestors": ["https://spwashi.com", "https://www.spwashi.com", "https://spw.quest"]
+    "ancestors": [
+      "https://spwashi.com",
+      "https://www.spwashi.com",
+      "https://spw.quest"
+    ]
   },
   "theme": {
     "mode": "light",

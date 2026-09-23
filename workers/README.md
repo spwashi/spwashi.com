@@ -60,7 +60,9 @@ someone can read it: the operator's `INBOX_READ_TOKEN`, or the owner's key,
 published in the file only as `inbox.key: "sha256:…"`. Otherwise nothing is
 kept, and every page says so. New cards wait three days; the owner saves up
 to `SAVE_LIMIT` (default 10) at `/{host}/inbox`, and the cron compacts the
-rest into tallies (day, page, kind, count) with no words. `/desk` is the
+rest into weekly tallies (subject or page, common note, kind, cards, and how
+many were in the writer's own words) with no words. The inbox opens with a
+digest of the week built from those counts and the live cards. `/desk` is the
 operator's view of every open desk, with Compact now. The whole flow, its
 invariants, and audit queries: `.spw/slices/feedback-desk-flow/index.spw`.
 The write page names the page a reader came from (`?at=`, else a same-site

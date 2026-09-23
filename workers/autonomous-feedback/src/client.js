@@ -70,6 +70,7 @@ function clientMain() {
 
     const fill = (template, domain, kind) => template
       .split("{{host}}").join(domain)
+      .split("{{kindpath}}").join(kind.slug === "note" ? "" : `/${kind.slug}`)
       .split("{{kind}}").join(kind.slug)
       .split("{{title}}").join(kind.title);
 
@@ -90,14 +91,15 @@ function clientMain() {
       fills("where").forEach((node) => { node.textContent = chosen.where; });
       fills("config-url").forEach((node) => { node.textContent = `https://${domain}/.well-known/autonomous-feedback.json`; });
       fills("test-link").forEach((node) => {
-        node.href = `/${domain}/${kind.slug}`;
-        node.textContent = `autonomous.feedback/${domain}/${kind.slug}`;
+        const tail = kind.slug === "note" ? "" : `/${kind.slug}`;
+        node.href = `/${domain}${tail}`;
+        node.textContent = `autonomous.feedback/${domain}${tail}`;
       });
       document.querySelectorAll("[data-when-empty]").forEach((node) => { node.hidden = usable; });
 
       // The preview renders the generated code, which only ever holds a validated domain.
       if (how === "frame") {
-        const src = `/embed/${domain}/${kind.slug}`;
+        const src = `/embed/${domain}${kind.slug === "note" ? "" : `/${kind.slug}`}`;
         let frame = preview.querySelector("iframe");
         if (!frame || preview.dataset.how !== "frame") {
           preview.innerHTML = "";
@@ -153,15 +155,18 @@ function clientMain() {
       count.textContent = String(note.value.length);
       countLine.dataset.state = length === 0 ? "" : length < min ? "short" : length > max ? "long" : "ok";
     };
+    const example = write.querySelector('[data-fill="example"]');
+    const subjectName = write.querySelector('[data-fill="subject-name"]');
+    const chosenSubject = () => write.querySelector('input[name="subject"]:checked');
     const paintKind = () => {
       const chosen = write.querySelector('input[name="kind"]:checked');
       if (!chosen) return;
-      if (hint) hint.textContent = chosen.dataset.prompt;
-      note.placeholder = `For example: ${chosen.dataset.example}`;
+      // The subject's question leads; a kind only speaks when no subject is chosen.
+      if (hint && !chosenSubject()) hint.textContent = chosen.dataset.prompt;
+      if (example && !chosenSubject()) example.textContent = `For example: ${chosen.dataset.example}`;
       const href = chosen.dataset.href;
       if (href && href !== location.pathname) history.replaceState(null, "", href);
     };
-
     if (storage && !note.value) {
       const saved = storage.getItem(draftKey);
       if (saved) {
@@ -178,6 +183,35 @@ function clientMain() {
       }
     });
     write.querySelectorAll('input[name="kind"]').forEach((input) => input.addEventListener("change", paintKind));
+
+    // Subject: its question leads; a kind the subject hides gives way; a thread from another subject is cleared.
+    const paintSubject = () => {
+      const subject = chosenSubject();
+      if (hint && subject?.dataset.prompt) hint.textContent = subject.dataset.prompt;
+      if (subjectName && subject?.dataset.name) subjectName.textContent = subject.dataset.name;
+      if (example && subject) example.textContent = subject.dataset.example ? `For example: ${subject.dataset.example}` : "";
+      const kind = write.querySelector('input[name="kind"]:checked');
+      if (kind && kind.closest("label")?.offsetParent === null) kind.checked = false;
+      write.querySelectorAll('input[name="thread"]:checked').forEach((input) => {
+        const owner = input.closest("[data-subject]");
+        if (owner && owner.dataset.subject !== subject?.value) input.checked = false;
+      });
+      paintThread();
+    };
+    // A tap is a whole note; the button says what it will do.
+    const paintThread = () => {
+      if (!submit) return;
+      const thread = write.querySelector('input[name="thread"]:checked');
+      const words = note.value.trim();
+      submit.textContent = !thread || words ? write.dataset.button || submit.textContent
+        : thread.value === "thanks" ? "Send thanks" : "Count me in";
+    };
+    write.querySelectorAll('input[name="subject"]').forEach((input) => input.addEventListener("change", paintSubject));
+    write.querySelectorAll('input[name="thread"]').forEach((input) => input.addEventListener("change", () => {
+      paintThread();
+      say(input.value === "thanks" ? "Thanks chosen. Send as is, or add words." : "Common note chosen. Send as is, or add your words.");
+    }));
+    note.addEventListener("input", paintThread);
 
     write.addEventListener("submit", (event) => {
       if (submit.getAttribute("aria-busy") === "true") {

@@ -107,6 +107,21 @@ export const CONTEXTS = Object.freeze([
   },
 ]);
 
+/**
+ * The kind a note has when nobody chose one. Not a chip and not an address:
+ * a preselected kind would file every untouched note under it and bend the
+ * counts, so an unsorted note stays a plain note.
+ */
+export const NOTE = Object.freeze({
+  slug: "note",
+  title: "Note",
+  operator: "frame",
+  prompt: "What happened, and where were you?",
+  example: "I looked for the price and found it only after the form.",
+  copy_unit: "feedback.note.lede",
+  expression: "feedback[note]{claim}",
+});
+
 /** Older slugs still resolve. The address redirects to the current one. */
 export const LEGACY_SLUGS = Object.freeze({
   problem: "broken",
@@ -163,6 +178,7 @@ export function resolveSlug(slug) {
 }
 
 export function contextBySlug(slug) {
+  if (String(slug || "").toLowerCase() === NOTE.slug) return NOTE;
   const resolved = resolveSlug(slug);
   return CONTEXTS.find((c) => c.slug === resolved) || null;
 }

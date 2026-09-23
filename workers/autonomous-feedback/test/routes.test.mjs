@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../src/index.js';
 import { CLIENT_SCRIPT } from '../src/client.js';
-import { contrast, readConfig } from '../src/config.js';
+import { contrast, readConfig, subjectFor } from '../src/config.js';
 import { normalizeHost } from '../src/model.js';
 import { memoryDb } from './memory-db.mjs';
+import { digest, weekOf } from '../src/desk.js';
 
 const get = (host, path, options) => worker.fetch(new Request(`https://${host}${path}`, options));
 const page = async (path, options) => (await get('autonomous.feedback', path, options)).text();
@@ -71,7 +72,9 @@ test('setup fills every codeblock with the domain, kind, and method', async () =
   try {
     const empty = await page('/start');
     assert.match(empty, /Showing example\.com until you enter your domain/);
-    assert.match(empty, /href=&quot;https:\/\/autonomous\.feedback\/example\.com\/broken&quot;/);
+    // No kind is preselected by default: the link opens the form as is.
+    assert.match(empty, /href=&quot;https:\/\/autonomous\.feedback\/example\.com&quot;/);
+    assert.match(empty, /None \(recommended\)/);
     const setup = await page('/start?host=https%3A%2F%2Fshop.example%2F&how=form&kind=question');
     assert.match(setup, /action=&quot;https:\/\/autonomous\.feedback\/shop\.example&quot;/);
     assert.match(setup, /name=&quot;kind&quot; value=&quot;question&quot;/);
@@ -96,15 +99,20 @@ test('the write page is a labelled form with the kind as a choice', async () => 
   const restore = stubFetch();
   try {
     const write = await page('/example.org/question');
-    assert.match(write, /<h1>Feedback for example\.org<\/h1>/);
+    assert.match(write, /<h1>A note for example\.org<\/h1>/);
     assert.match(write, /name="kind" value="question" checked/);
     assert.match(write, /data-href="\/example\.org\/question"/);
-    assert.match(write, /<legend>Kind of note<\/legend>/);
-    assert.match(write, /<label for="note">Your note<\/label>/);
+    assert.match(write, /<legend>Tag it <span class="hint">Optional<\/span><\/legend>/);
+    // The label is the question itself.
+    assert.match(write, /<label for="note"><span class="untapped" data-fill="prompt">What you need the person who runs the site to answer\.<\/span><span class="when-tapped">Anything to add\?<\/span><\/label>/);
     assert.match(write, /aria-describedby="note-hint note-count"/);
     assert.match(write, /class="hp" aria-hidden="true"/);
-    assert.match(write, />Make the card</);
-    assert.match(write, /What you need the person who runs the site to answer\./);
+    assert.match(write, />Make my card</);
+    assert.match(write, /name="thread" value="thanks"/);
+    // Without a kind in the link, nothing is chosen for the writer.
+    const bare = await page('/example.org');
+    assert.doesNotMatch(bare, /name="kind" value="[a-z]+" checked/);
+    assert.match(bare, /What happened, and where were you\?/);
     assert.match(await page('/broken?host=example.org'), /id="host"[^>]*value="example\.org"/);
     const moved = await get('autonomous.feedback', '/WWW.Example.org/broken');
     assert.equal(moved.status, 301);
@@ -134,7 +142,7 @@ test('a rejected note comes back in the form, not as JSON', async () => {
     assert.equal(short.status, 400);
     const html = await short.text();
     assert.match(html, /class="error-summary" role="alert"/);
-    assert.match(html, /Write at least 8 characters\. This note has 5\./);
+    assert.match(html, /A few more words, please: at least 8 characters\. This note has 5\./);
     assert.match(html, /aria-invalid="true"/);
     assert.match(html, />&lt;b&gt;no<\/textarea>/);
     const noSite = await get('autonomous.feedback', '/broken', form({ host: 'not a site', note: 'Something is broken here.' }));
@@ -205,7 +213,7 @@ test('a client file shapes the form, the theme, and the frame', async () => {
     assert.match(write, /<h1>What was hard to use\?<\/h1>/);
     assert.match(write, /href="https:\/\/shop\.example\/"/);
     assert.match(write, /Tell us what broke\./);
-    assert.match(write, /<strong>Bug report<\/strong>/);
+    assert.match(write, /<span>Bug report<\/span>/);
     assert.doesNotMatch(write, /Appreciation/);
     assert.match(write, /<label for="from">Your name or handle<\/label>/);
     assert.match(write, /id="from"[^>]*required/);
@@ -440,13 +448,13 @@ test('an owner opens their inbox with a key whose hash is in their file, and sav
     const cookie = { cookie: cookieFrom(opened) };
     const page = await (await call('/kept.example/inbox', { headers: cookie })).text();
     assert.match(page, /too far apart/);
-    assert.match(page, /Counted on \d{4}-\d{2}-\d{2} unless saved\./);
+    assert.match(page, /Counted on \d{4}-\d{2}-\d{2} unless you save it\./);
     const [first, second] = env.DB._notes.map((n) => n.id);
     const saved = await call('/kept.example/inbox', { ...form({ action: 'save', id: first }), headers: { ...form({}).headers, ...cookie } });
     assert.equal(saved.headers.get('location'), 'https://autonomous.feedback/kept.example/inbox?done=saved');
     const over = await call('/kept.example/inbox', { ...form({ action: 'save', id: second }), headers: { ...form({}).headers, ...cookie } });
     assert.equal(over.headers.get('location'), 'https://autonomous.feedback/kept.example/inbox?done=limit');
-    assert.match(await (await call('/kept.example/inbox?done=limit', { headers: cookie })).text(), /You have saved 1 cards\. Release one/);
+    assert.match(await (await call('/kept.example/inbox?done=limit', { headers: cookie })).text(), /You have saved 1 card, the most this inbox keeps\. Release one/);
     // The owner key reads the JSON API too; it does not open another site's desk.
     const api = await (await call('/kept.example/inbox', { headers: { authorization: `Bearer ${key}` } })).json();
     assert.equal(api.filings.filter((f) => f.saved).length, 1);
@@ -478,11 +486,13 @@ test('unsaved cards older than three days become tallies; saved cards keep their
     }
     assert.equal(env.DB._notes.length, 1);
     assert.equal(env.DB._notes[0].kind, 'appreciation');
-    const tallies = [...env.DB._tallies.values()].map(({ page, kind, count }) => `${page} ${kind} ${count}`).sort();
-    assert.deepEqual(tallies, ['Checkout broken 2', 'Checkout missing 1']);
+    const tallies = [...env.DB._tallies.values()].map(({ about, kind, cards, worded }) => `${about} ${kind} ${cards} ${worded}`).sort();
+    assert.deepEqual(tallies, ['Checkout broken 2 2', 'Checkout missing 1 1']);
     const api = await (await call('/kept.example/inbox', { headers: { authorization: 'Bearer desk-token' } })).json();
     assert.equal(api.filings.length, 1);
-    assert.equal(api.tallies.reduce((sum, t) => sum + t.count, 0), 3);
+    assert.equal(api.tallies.reduce((sum, t) => sum + t.cards, 0), 3);
+    // The digest folds stored counts and live cards into the same week.
+    assert.equal(api.digest.weeks.reduce((sum, w) => sum + w.cards, 0), 4);
     assert.doesNotMatch(JSON.stringify(api.tallies), /too far apart/);
   } finally {
     restore();
@@ -511,7 +521,7 @@ test('the operator desk lists every open inbox, previews compaction, and compact
     assert.equal(compacted.headers.get('location'), 'https://autonomous.feedback/desk?compacted=1&host=kept.example');
     assert.equal(env.DB._notes.length, 0);
     // The operator cookie also opens a site's inbox page.
-    assert.match(await (await call('/kept.example/inbox', { headers: cookie })).text(), /<h2>Counted<\/h2>/);
+    assert.match(await (await call('/kept.example/inbox', { headers: cookie })).text(), /<h2 id="week-title">This week/);
   } finally {
     restore();
   }
@@ -524,15 +534,15 @@ test('the write page names the page the reader came from, when the Referer is th
   const call = (path, headers = {}) => worker.fetch(new Request(`https://autonomous.feedback${path}`, { headers }));
   try {
     const named = await (await call('/kept.example/broken', { referer: 'https://www.kept.example/checkout?order=8812#pay' })).text();
-    assert.match(named, /About <strong>Checkout · \/checkout<\/strong>/);
+    assert.match(named, /On <strong>Checkout · \/checkout<\/strong>/);
     assert.match(named, /<summary>Change or clear the page<\/summary>/);
     assert.doesNotMatch(named, /8812/);
     const unnamed = await (await call('/kept.example/broken', { referer: 'https://kept.example/blog/post' })).text();
-    assert.match(unnamed, /About <strong>\/blog\/post<\/strong>/);
-    assert.doesNotMatch(await (await call('/kept.example/broken', { referer: 'https://elsewhere.example/checkout' })).text(), /page-known/);
+    assert.match(unnamed, /On <strong>\/blog\/post<\/strong>/);
+    assert.doesNotMatch(await (await call('/kept.example/broken', { referer: 'https://elsewhere.example/checkout' })).text(), /class="page-known"/);
     // An origin-only Referer cannot be told from "unknown".
-    assert.doesNotMatch(await (await call('/kept.example/broken', { referer: 'https://kept.example/' })).text(), /page-known/);
-    assert.match(await (await call('/kept.example/broken?at=/about', { referer: 'https://kept.example/checkout' })).text(), /About <strong>\/about<\/strong>/);
+    assert.doesNotMatch(await (await call('/kept.example/broken', { referer: 'https://kept.example/' })).text(), /class="page-known"/);
+    assert.match(await (await call('/kept.example/broken?at=/about', { referer: 'https://kept.example/checkout' })).text(), /On <strong>\/about<\/strong>/);
     const slip = await (await worker.fetch(new Request('https://autonomous.feedback/kept.example/broken', { ...json({ note: NOTE }), headers: { ...json({}).headers, referer: 'https://kept.example/checkout' } }))).json();
     assert.equal(slip.path, '/checkout');
     assert.equal(slip.route, 'Checkout');
@@ -563,4 +573,109 @@ test('a listed desk with no reader keeps nothing', async () => {
   } finally {
     restore();
   }
+});
+
+const MAPPED = {
+  schema: 'autonomous-feedback.client.v0',
+  host: 'maker.example',
+  name: 'Maker',
+  subjects: [
+    {
+      id: 'folios', name: 'Folios', paths: ['/design/folios'], prompt: 'Which folio, and what happened?',
+      kinds: ['broken', 'appreciation'],
+      asks: ['Which folio were you looking at?', 'What did you expect next?'],
+      threads: [{ id: 'order-by-card', name: 'Ordering is by card', stance: 'On purpose for now.', link: '/design/folios/#request' }],
+    },
+    { id: 'recipes', name: 'Recipes', paths: ['/recipes'], prompt: 'Which recipe?' },
+    { id: 'BAD ID', name: 'Nope' },
+  ],
+};
+
+test('a client file maps the creator\'s subjects, threads, and asks, within limits', () => {
+  const config = readConfig(MAPPED, 'maker.example');
+  assert.deepEqual(config.subjects.map((s) => s.id), ['folios', 'recipes']);
+  assert.ok(config.problems.some((p) => /Each subject needs an id/.test(p)));
+  assert.equal(config.subjects[0].threads[0].stance, 'On purpose for now.');
+  assert.equal(subjectFor(config, '/design/folios/wonder-about-pie')?.id, 'folios');
+  assert.equal(subjectFor(config, '/design/foliosaurus'), null);
+  assert.equal(subjectFor(config, '/recipes'), config.subjects[1]);
+  assert.equal(subjectFor(config, '/'), null);
+});
+
+test('the write page picks the subject from the page, and follows it with threads and asks', async () => {
+  const restore = stubFetch({ 'maker.example': MAPPED });
+  try {
+    const page = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', { headers: { referer: 'https://maker.example/design/folios/' } }))).text();
+    assert.match(page, /name="subject" value="folios" checked/);
+    assert.match(page, /Which folio, and what happened\?/);
+    assert.match(page, /<legend>Often said about Folios <span class="hint">Tap one to add yours<\/span><\/legend>/);
+    // The page picked the subject, so it is stated, with a way to change it.
+    assert.match(page, /About <strong data-fill="subject-name">Folios<\/strong>/);
+    assert.match(page, /name="thread" value="folios:order-by-card"/);
+    assert.match(page, /<strong>Maker:<\/strong> On purpose for now\./);
+    assert.match(page, /<summary>Say more <span class="hint">2 questions, all optional<\/span><\/summary>/);
+    assert.match(page, /name="ask-0"/);
+    // The subject's kinds hide the rest, and the rules ride in the page's own style.
+    assert.match(page, /label\.chip\[data-kind\]:not\(\[data-kind="broken"\], \[data-kind="appreciation"\]\) \{ display: none; \}/);
+    const bare = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken'))).text();
+    assert.doesNotMatch(bare, /name="subject" value="[a-z]+" checked/);
+  } finally {
+    restore();
+  }
+});
+
+test('a thread can be joined without words, and asks land on the card and in the slip', async () => {
+  const restore = stubFetch({ 'maker.example': MAPPED });
+  try {
+    const counted = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', json({ subject: 'folios', thread: 'folios:order-by-card' })))).json();
+    assert.equal(counted.thread, 'order-by-card');
+    assert.match(counted.markdown, /Count me too\./);
+    assert.match(counted.markdown, /thread: Ordering is by card/);
+    const asked = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', form({ subject: 'folios', note: 'The order card did not tell me what happens next.', 'ask-0': 'The pie one.', 'ask-1': 'A reply within a week.', thread: 'folios:order-by-card' })))).text();
+    assert.match(asked, /<span class="card-subject">Folios · Ordering is by card<\/span>/);
+    assert.match(asked, /<dt>Which folio were you looking at\?<\/dt><dd>The pie one\.<\/dd>/);
+    assert.match(asked, /Maker has said about this<\/h2>/);
+    assert.match(asked, /## Which folio were you looking at\?\nThe pie one\./);
+    const wrong = await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', json({ subject: 'nope', note: 'Something long enough to send here.' })));
+    assert.equal(wrong.status, 400);
+    assert.equal((await wrong.json()).error, 'invalid_subject');
+  } finally {
+    restore();
+  }
+});
+
+test('a kind comes from evidence: the writer, the common note, or a thanks; otherwise the note stays unsorted', async () => {
+  const file = JSON.parse(JSON.stringify(MAPPED));
+  file.subjects[0].threads[0].kind = 'question';
+  const restore = stubFetch({ 'maker.example': file });
+  const send = async (body) => (await worker.fetch(new Request('https://autonomous.feedback/maker.example', json(body)))).json();
+  try {
+    assert.equal((await send({ note: 'Nothing chosen, just a few words.' })).context, 'note');
+    assert.equal((await send({ subject: 'folios', thread: 'folios:order-by-card' })).context, 'question');
+    const thanked = await send({ thread: 'thanks' });
+    assert.equal(thanked.context, 'appreciation');
+    assert.equal(thanked.thread, 'thanks');
+    assert.equal(thanked.worded, false);
+    assert.equal((await send({ kind: 'broken', subject: 'folios', thread: 'folios:order-by-card', note: 'Chosen by me, with words.' })).context, 'broken');
+    const empty = await worker.fetch(new Request('https://autonomous.feedback/maker.example', json({})));
+    assert.equal((await empty.json()).errors.note, 'Write a few words, or tap one of the common notes.');
+  } finally {
+    restore();
+  }
+});
+
+test('the digest groups a week by subject and common note, flags due cards, and suggests threads', () => {
+  const now = Date.parse('2026-09-24T12:00:00Z');
+  assert.equal(weekOf('2026-09-24T12:00:00Z'), '2026-09-21');
+  assert.equal(weekOf('2026-09-21T00:00:00Z'), '2026-09-21');
+  const tallies = [{ week: '2026-09-21', about: 'folios', thread: 'order-by-card', kind: 'question', cards: 5, worded: 1 }];
+  const note = (over) => ({ issued: '2026-09-23T10:00:00Z', context: 'confusing', subject: 'recipes', thread: null, worded: true, saved: false, ...over });
+  const notes = [note({}), note({}), note({ issued: '2026-09-22T09:00:00Z' }), note({ subject: 'folios', thread: 'order-by-card', context: 'question', worded: false }), note({ thread: 'thanks', context: 'appreciation', worded: false })];
+  const { due, weeks } = digest(tallies, notes, now);
+  assert.equal(due, 1);
+  assert.equal(weeks[0].cards, 10);
+  assert.equal(weeks[0].thanks, 1);
+  const folios = weeks[0].groups.find((g) => g.about === 'folios');
+  assert.deepEqual([folios.cards, folios.worded], [6, 1]);
+  assert.deepEqual(weeks[0].hints, [{ about: 'recipes', cards: 3 }]);
 });

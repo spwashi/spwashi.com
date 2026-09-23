@@ -1,7 +1,7 @@
 import { escapeHtml, layout } from "../../lib/shell.js";
-import { CONTEXTS, DEFAULT_KIND, NOTE_MAX, NOTE_MIN, cleanPath, contextBySlug, isPublicSite } from "./model.js";
+import { CONTEXTS, DEFAULT_KIND, NOTE, NOTE_MAX, NOTE_MIN, cleanPath, contextBySlug, isPublicSite } from "./model.js";
 import { CLIENT_SCRIPT } from "./client.js";
-import { CONFIG_PATH, configToFile, defaultConfig, siteKinds, starterConfig, themeCss } from "./config.js";
+import { CONFIG_PATH, configToFile, defaultConfig, siteKinds, starterConfig, subjectFor, themeCss } from "./config.js";
 
 /**
  * Every page autonomous.feedback renders. Copy is plain on purpose: a reader
@@ -19,14 +19,14 @@ export const SNIPPETS = Object.freeze({
     choice: "A text link that opens the form on autonomous.feedback. Works anywhere you can add a link.",
     where: "Paste it where readers should find it, such as your footer or an About page. The form learns which page the reader came from.",
     language: "html",
-    template: `<a href="${ORIGIN}/{{host}}/{{kind}}" referrerpolicy="no-referrer-when-downgrade">Send feedback</a>`,
+    template: `<a href="${ORIGIN}/{{host}}{{kindpath}}" referrerpolicy="no-referrer-when-downgrade">Send feedback</a>`,
   },
   frame: {
     label: "Frame",
     choice: "The form inside your page. Readers can switch between the kinds of note you offer.",
     where: "Paste it where the form should appear. It is 560 pixels tall; change height to fit.",
     language: "html",
-    template: `<iframe title="Feedback for {{host}}" src="${ORIGIN}/embed/{{host}}/{{kind}}" width="100%" height="560" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`,
+    template: `<iframe title="Feedback for {{host}}" src="${ORIGIN}/embed/{{host}}{{kindpath}}" width="100%" height="560" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`,
   },
   form: {
     label: "HTML form",
@@ -61,6 +61,7 @@ export const TEST_TEMPLATE = `curl -X POST ${ORIGIN}/{{host}} \\
 export function fillTemplate(template, host, context) {
   return template
     .replaceAll("{{host}}", host)
+    .replaceAll("{{kindpath}}", context.slug === NOTE.slug ? "" : `/${context.slug}`)
     .replaceAll("{{kind}}", context.slug)
     .replaceAll("{{title}}", context.title);
 }
@@ -83,7 +84,7 @@ function hostField({ id = "host", host = "", error = "", label = "Your site", hi
 }
 
 /** A static card used as an example; the same markup the card page renders. */
-function cardMarkup({ context, host, note, issued, id = "", sample = false, name = "", from = "", path = "", routeName = "" }) {
+function cardMarkup({ context, host, note, issued, id = "", sample = false, name = "", from = "", path = "", routeName = "", subject = "", thread = "", asks = [] }) {
   const day = issued.slice(0, 10);
   const address = `autonomous.feedback/${host}`;
   const site = name || host;
@@ -94,9 +95,11 @@ function cardMarkup({ context, host, note, issued, id = "", sample = false, name
   <header>
     <span class="card-kind">${escapeHtml(context.title)}</span>
     <span class="card-site">${escapeHtml(site)}</span>
+    ${subject ? `<span class="card-subject">${escapeHtml(thread ? `${subject} · ${thread}` : subject)}</span>` : ""}
     ${path ? `<span class="card-route">${escapeHtml(routeName ? `${routeName} · ${path}` : path)}</span>` : ""}
   </header>
   <blockquote class="card-note">${escapeHtml(note)}</blockquote>
+  ${asks.length ? `<dl class="card-asks">${asks.map((a) => `<dt>${escapeHtml(a.question)}</dt><dd>${escapeHtml(a.answer)}</dd>`).join("")}</dl>` : ""}
   ${from ? `<p class="card-from">— ${escapeHtml(from)}</p>` : ""}
   <footer>
     <time datetime="${escapeHtml(issued)}">${escapeHtml(day)}</time>
@@ -124,19 +127,25 @@ function routeField(routes, path, pathFrom = "") {
   // A page the link named or the reader came from is shown, not asked; the picker stays one click away.
   if (clean && pathFrom) {
     const route = routes.find((r) => r.path === clean);
-    return `<fieldset id="page">
-  <legend>Page</legend>
-  <p class="page-known">About <strong>${escapeHtml(route ? `${route.name} · ${clean}` : clean)}</strong></p>
+    return `<div id="page" class="page">
+  <p class="page-known">On <strong>${escapeHtml(route ? `${route.name} · ${clean}` : clean)}</strong></p>
   <details>
     <summary>Change or clear the page</summary>
+    <fieldset>
+      <legend class="sr-only">Page</legend>
   ${picker}
+    </fieldset>
   </details>
-</fieldset>`;
+</div>`;
   }
-  return `<fieldset id="page">
-  <legend>Page</legend>
+  // Unknown page: never a question the reader must answer; the picker waits behind one line.
+  return `<details id="page" class="page">
+  <summary>Which page? Optional.</summary>
+  <fieldset>
+    <legend class="sr-only">Page</legend>
   ${picker}
-</fieldset>`;
+  </fieldset>
+</details>`;
 }
 
 function kindLinks(host = "", embed = false, current = "") {
@@ -187,9 +196,11 @@ ${kindLinks()}`,
   });
 }
 
-export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, error = "", config = null, desk = "none" } = {}) {
-  const offered = config?.found ? siteKinds(config) : CONTEXTS;
-  const context = offered.find((c) => c.slug === (contextBySlug(kind)?.slug)) || offered[0];
+export function renderStart({ host = "", how = "link", kind = NOTE.slug, error = "", config = null, desk = "none" } = {}) {
+  // "None" comes first: a preselected kind files every untouched note under it.
+  const none = { ...NOTE, title: "None (recommended)", prompt: "Readers tap a common note or write their own; nothing is chosen for them." };
+  const offered = [none, ...(config?.found ? siteKinds(config) : CONTEXTS)];
+  const context = offered.find((c) => c.slug === (contextBySlug(kind)?.slug)) || none;
   const snippet = SNIPPETS[how] || SNIPPETS.link;
   const named = host || EXAMPLE_HOST;
   const hows = Object.entries(SNIPPETS).map(([id, s]) => `<label class="choice">
@@ -219,7 +230,7 @@ export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, erro
     ${hows}
   </fieldset>
   <fieldset>
-    <legend>Kind of note it starts on</legend>
+    <legend>Preselect a kind of note?</legend>
     ${kinds}
   </fieldset>
   <p class="actions no-js-only"><button type="submit">Update the code</button></p>
@@ -239,7 +250,7 @@ export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, erro
 </section>
 <section aria-labelledby="test-title">
   <h2 id="test-title">Test it</h2>
-  <p>Write a note yourself at <a data-fill="test-link" href="/${encodeURIComponent(named)}/${context.slug}">autonomous.feedback/${escapeHtml(named)}/${context.slug}</a>, or send one from a terminal:</p>
+  <p>Write a note yourself at <a data-fill="test-link" href="/${encodeURIComponent(named)}${context.slug === NOTE.slug ? "" : `/${context.slug}`}">autonomous.feedback/${escapeHtml(named)}${context.slug === NOTE.slug ? "" : `/${context.slug}`}</a>, or send one from a terminal:</p>
   <figure class="codeblock">
     <figcaption><span>curl</span><button type="button" data-copy="test-snippet">Copy</button></figcaption>
     <pre id="test-snippet">${escapeHtml(fillTemplate(TEST_TEMPLATE, named, context))}</pre>
@@ -369,26 +380,87 @@ ${reading
 export function renderWrite({ context, host = "", lockHost = false, embed = false, values = {}, errors = {}, config = null, desk = "none" }) {
   const site = config || defaultConfig(host);
   const kindsShown = siteKinds(site);
-  context = kindsShown.find((k) => k.slug === context.slug) || kindsShown[0];
+  // A kind is selected only when the link named it or the writer chose it; otherwise the note stays unsorted.
+  const selected = kindsShown.find((k) => k.slug === contextBySlug(values.kind || context?.slug)?.slug) || null;
+  context = selected || NOTE;
   const display = site.name || host;
-  const heading = site.title || (lockHost ? `Feedback for ${display}` : "Write feedback");
+  const heading = site.title || (lockHost ? `A note for ${display}` : "A note for a site");
   const root = embed ? "/embed" : "";
+  const tail = selected ? `/${selected.slug}` : "";
   const action = lockHost ? `${root}/${encodeURIComponent(host)}` : `/${context.slug}`;
-  const canonical = lockHost ? `${ORIGIN}${root}/${encodeURIComponent(host)}/${context.slug}` : `${ORIGIN}/${context.slug}`;
+  const canonical = lockHost ? `${ORIGIN}${root}/${encodeURIComponent(host)}${tail}` : `${ORIGIN}/${context.slug}`;
   const note = values.note ?? "";
-  const kinds = kindsShown.map((c) => `<label class="choice compact">
-      <input type="radio" name="kind" value="${c.slug}"${c.slug === context.slug ? " checked" : ""} data-prompt="${escapeHtml(c.prompt)}" data-example="${escapeHtml(c.example)}" data-href="${root}${lockHost ? `/${encodeURIComponent(host)}` : ""}/${c.slug}">
-      <span><strong>${escapeHtml(c.title)}</strong><span>${escapeHtml(c.prompt)}</span></span>
+
+  // The creator's map. Evidence picks the subject (the page, or a chip); nothing is guessed.
+  const subjects = site.subjects || [];
+  const chosenSubject = subjects.find((sub) => sub.id === values.subject) || (values.subject ? null : subjectFor(site, values.path ?? ""));
+  const prompt = chosenSubject?.prompt || context.prompt;
+  // An example only helps when it fits: the subject's own, else the kind's when no subject is chosen.
+  const exampleText = chosenSubject ? chosenSubject.example : context.example;
+  const subjectChips = subjects.map((sub) => `<label class="chip"><input type="radio" name="subject" value="${escapeHtml(sub.id)}"${chosenSubject?.id === sub.id ? " checked" : ""} data-prompt="${escapeHtml(sub.prompt || NOTE.prompt)}" data-example="${escapeHtml(sub.example)}" data-name="${escapeHtml(sub.name)}"> <span>${escapeHtml(sub.name)}</span></label>`).join("\n      ");
+  const subjectBlock = !subjects.length ? "" : chosenSubject
+    ? `<div id="subjects" class="about-line">
+    <p>About <strong data-fill="subject-name">${escapeHtml(chosenSubject.name)}</strong></p>
+    <details>
+      <summary>Not this?</summary>
+      <fieldset class="chips">
+        <legend class="sr-only">Which part of ${escapeHtml(display)}</legend>
+        ${fieldError("subject-error", errors.subject)}
+        <div class="row">
+      ${subjectChips}
+        </div>
+      </fieldset>
+    </details>
+  </div>`
+    : `<fieldset id="subjects" class="chips">
+    <legend>Which part of ${escapeHtml(display)}? <span class="hint">Optional</span></legend>
+    ${fieldError("subject-error", errors.subject)}
+    <div class="row">
+      ${subjectChips}
+    </div>
+  </fieldset>`;
+
+  // The fast lane: what this creator hears often. One tap is a whole note, and it is the count they can act on.
+  const threadBlocks = subjects.filter((sub) => sub.threads.length).map((sub) => `<fieldset class="chips threads" data-subject="${escapeHtml(sub.id)}">
+    <legend>Often said about ${escapeHtml(sub.name)} <span class="hint">Tap one to add yours</span></legend>
+    <div class="row">
+      ${sub.threads.map((t) => `<label class="chip"><input type="radio" name="thread" value="${escapeHtml(`${sub.id}:${t.id}`)}"${values.thread === `${sub.id}:${t.id}` || values.thread === t.id ? " checked" : ""}> <span>${escapeHtml(t.name)}</span></label>`).join("\n      ")}
+    </div>
+    ${sub.threads.filter((t) => t.stance).map((t) => `<p class="stance" data-for="${escapeHtml(`${sub.id}:${t.id}`)}"><strong>${escapeHtml(display)}:</strong> ${escapeHtml(t.stance)}${t.link ? ` <a href="https://${escapeHtml(host)}${escapeHtml(t.link)}">More</a>` : ""}</p>`).join("\n    ")}
+  </fieldset>`).join("\n  ");
+
+  const kinds = kindsShown.map((c) => `<label class="chip" data-kind="${c.slug}">
+      <input type="radio" name="kind" value="${c.slug}"${selected?.slug === c.slug ? " checked" : ""} data-prompt="${escapeHtml(c.prompt)}" data-example="${escapeHtml(c.example)}" data-href="${root}${lockHost ? `/${encodeURIComponent(host)}` : ""}/${c.slug}">
+      <span>${escapeHtml(c.title)}</span>
     </label>`).join("\n      ");
+  const askBlocks = subjects.filter((sub) => sub.asks.length).map((sub) => `<details class="asks" data-subject="${escapeHtml(sub.id)}"${sub.asks.some((_, i) => values.asks?.[i]) ? " open" : ""}>
+    <summary>Say more <span class="hint">${sub.asks.length === 1 ? "one question" : `${sub.asks.length} questions`}, all optional</span></summary>
+    ${sub.asks.map((q, i) => `<label for="ask-${escapeHtml(sub.id)}-${i}">${escapeHtml(q)}</label>
+    <textarea id="ask-${escapeHtml(sub.id)}-${i}" name="ask-${i}" rows="2" maxlength="2000" class="note ask">${escapeHtml(values.asks?.[i] || "")}</textarea>`).join("\n    ")}
+  </details>`).join("\n  ");
+  // Without script, the subject decides what shows through :has(); the script only mirrors text.
+  const subjectCss = subjects.map((sub) => {
+    const show = `.write:has(input[name="subject"][value="${sub.id}"]:checked) [data-subject="${sub.id}"] { display: block; }`;
+    const hide = sub.kinds.length ? `.write:has(input[name="subject"][value="${sub.id}"]:checked) label.chip[data-kind]:not(${sub.kinds.map((k) => `[data-kind="${k}"]`).join(", ")}) { display: none; }` : "";
+    const stances = sub.threads.filter((t) => t.stance).map((t) => `.write:has(input[name="thread"][value="${sub.id}:${t.id}"]:checked) .stance[data-for="${sub.id}:${t.id}"] { display: block; }`).join("\n");
+    return [show, hide, stances].filter(Boolean).join("\n");
+  }).join("\n");
+
   const noteDescribed = ["note-hint", "note-count", errors.note ? "note-error" : ""].filter(Boolean).join(" ");
-  const listed = [["host", errors.host], ["from", errors.from], ["note", errors.note], ["kind", errors.kind]].filter(([, m]) => m);
+  const listed = [["note", errors.note], ["subjects", errors.subject], ["kinds", errors.kind], ["host", errors.host], ["from", errors.from]].filter(([, m]) => m);
   const summary = listed.length
-    ? `<div class="error-summary" role="alert" tabindex="-1" data-error-summary><p>The card was not made. Fix ${listed.length > 1 ? "these" : "this"} and send again:</p><ul>${listed.map(([id, m]) => `<li><a href="#${id === "kind" ? "kinds" : id}">${escapeHtml(m)}</a></li>`).join("")}</ul></div>`
+    ? `<div class="error-summary" role="alert" tabindex="-1" data-error-summary><p>Not sent yet. ${listed.length > 1 ? "A couple of things" : "One thing"} to fix:</p><ul>${listed.map(([id, m]) => `<li><a href="#${id}">${escapeHtml(m)}</a></li>`).join("")}</ul></div>`
     : "";
-  const fromField = site.from === "off" ? "" : `<label for="from">Your name or handle${site.from === "optional" ? " (optional)" : ""}</label>
-  <p class="hint" id="from-hint">Printed on the card so the owner knows who wrote it. Not stored.</p>
+  const fromField = site.from === "off" ? "" : `<label for="from">Your name or handle${site.from === "optional" ? " <span class=\"hint\">optional</span>" : ""}</label>
+  <p class="hint" id="from-hint">Printed on the card.</p>
   ${fieldError("from-error", errors.from)}
   <input id="from" name="from" type="text" value="${escapeHtml(values.from ?? "")}" maxlength="80" autocomplete="nickname" aria-describedby="from-hint${errors.from ? " from-error" : ""}"${site.from === "required" ? " required" : ""}${errors.from ? ` aria-invalid="true"` : ""}>`;
+  const button = site.button || (desk === "open" ? `Send to ${display}` : "Make my card");
+  const keep = desk === "open"
+    ? `${escapeHtml(display)} sees this in their inbox. It stays three days, longer if they save it. You get a card too.`
+    : lockHost
+      ? `Nothing is stored. You get a card to send ${escapeHtml(display)} yourself, by message or in a post.`
+      : "Nothing is stored unless the site has an inbox. You get a card to send yourself.";
   return layout({
     title: `${heading} — autonomous.feedback`,
     description: lockHost ? `Write a note about ${host} and get a card to send to its owner.` : "Write a note about any site and get a card to send to its owner.",
@@ -396,41 +468,40 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
     quiet: true,
     embed,
     script: CLIENT_SCRIPT,
-    themeCss: themeCss(site.theme),
+    themeCss: `${themeCss(site.theme)}\n${subjectCss}`,
     body: `${embed ? "" : kicker()}
 <h1>${escapeHtml(heading)}</h1>
 ${lockHost && isPublicSite(host) ? `<p class="visit"><a href="https://${escapeHtml(host)}/">Open ${escapeHtml(host)}</a></p>` : ""}
 ${site.intro ? `<p class="lede">${escapeHtml(site.intro)}</p>` : ""}
-${embed ? "" : `<p class="${site.intro ? "note" : "lede"}">${desk === "open"
-    ? `Your note is kept for ${escapeHtml(display)} for three days, longer if they save it, and becomes a card you can also save and send.`
-    : lockHost
-      ? `Your note becomes a card you can save and send to whoever runs ${escapeHtml(display)}. Nothing is stored.`
-      : "Your note becomes a card you can save and send to whoever runs the site. Nothing is stored unless the site has an inbox."}</p>`}
 ${summary}
-<form method="post" action="${escapeHtml(action)}" class="panel" id="write" data-draft-key="${escapeHtml(lockHost ? host : "")}">
-  <fieldset id="kinds"${kindsShown.length === 1 ? " hidden" : ""}>
-    <legend>Kind of note</legend>
+<form method="post" action="${escapeHtml(action)}" class="panel write" id="write" data-draft-key="${escapeHtml(lockHost ? host : "")}" data-button="${escapeHtml(button)}">
+  ${subjectBlock}
+  ${threadBlocks}
+  <label for="note"><span class="untapped" data-fill="prompt">${escapeHtml(prompt)}</span><span class="when-tapped">Anything to add?</span></label>
+  <p class="hint" id="note-hint"><span class="when-tapped">Optional: your tap already says it. </span><span data-fill="example">${exampleText ? `For example: ${escapeHtml(exampleText)}` : ""}</span></p>
+  ${fieldError("note-error", errors.note)}
+  <textarea class="note" id="note" name="note" rows="4" minlength="${site.note.min}" maxlength="${site.note.max}" aria-describedby="${noteDescribed}"${errors.note ? ` aria-invalid="true"` : ""}${embed || chosenSubject?.threads.length ? "" : " autofocus"}>${escapeHtml(note)}</textarea>
+  <p class="count" id="note-count"><span data-count>${note.length}</span> of ${site.note.max.toLocaleString("en-US")}</p>
+  <p class="thanks-row"><label class="chip"><input type="radio" name="thread" value="thanks"${values.thread === "thanks" ? " checked" : ""}> <span>Nothing to add. Just saying thanks.</span></label></p>
+  <fieldset id="kinds" class="chips tags"${kindsShown.length === 1 ? " hidden" : ""}>
+    <legend>Tag it <span class="hint">Optional</span></legend>
     ${fieldError("kind-error", errors.kind)}
-    <div class="choices">
+    <div class="row">
       ${kinds}
     </div>
   </fieldset>
-  ${kindsShown.length === 1 ? `<input type="hidden" name="kind" value="${context.slug}">` : ""}
+  ${askBlocks}
   ${routeField(site.routes || [], values.path ?? "", values.pathFrom || "")}
-  ${lockHost ? `<input type="hidden" name="host" value="${escapeHtml(host)}">` : hostField({ host: values.host ?? host, error: errors.host, label: "Site the note is about", hint: "A domain like example.com." })}
+  ${lockHost ? `<input type="hidden" name="host" value="${escapeHtml(host)}">` : hostField({ host: values.host ?? host, error: errors.host, label: "Which site is this about?", hint: "A domain like example.com." })}
   ${fromField}
-  <label for="note">${kindsShown.length === 1 ? escapeHtml(context.title) : "Your note"}</label>
-  <p class="hint" id="note-hint" data-fill="prompt">${escapeHtml(context.prompt)}</p>
-  ${fieldError("note-error", errors.note)}
-  <textarea class="note" id="note" name="note" rows="6" required minlength="${site.note.min}" maxlength="${site.note.max}" placeholder="For example: ${escapeHtml(context.example)}" aria-describedby="${noteDescribed}"${errors.note ? ` aria-invalid="true"` : ""} enterkeyhint="send">${escapeHtml(note)}</textarea>
-  <p class="count" id="note-count"><span data-count>${note.length}</span> of ${site.note.max.toLocaleString("en-US")} characters, at least ${site.note.min}</p>
   <div class="hp" aria-hidden="true">
     <label for="company">Leave this empty</label>
     <input id="company" name="company" tabindex="-1" autocomplete="off">
   </div>
-  <p class="actions"><button type="submit" data-pending="Making the card…">${escapeHtml(site.button)}</button></p>
+  <p class="hint keep">${keep}</p>
+  <p class="actions"><button type="submit" data-pending="Sending…">${escapeHtml(button)}</button></p>
 </form>
-${embed ? "" : `<p class="note">Run a site? <a href="/start">Set up a form for it</a>.</p>`}`,
+${embed ? "" : `<p class="note">Run a site? <a href="/start">Put this form on it</a>.</p>`}`,
   });
 }
 
@@ -447,9 +518,10 @@ export function renderCard(filing, embed = false, config = null) {
   const site = config || defaultConfig(filing.host);
   const display = site.name || filing.host;
   const root = embed ? "/embed" : "";
-  const back = `${root}/${encodeURIComponent(filing.host)}/${filing.context.slug}`;
+  const back = `${root}/${encodeURIComponent(filing.host)}${filing.context.slug === NOTE.slug ? "" : `/${filing.context.slug}`}`;
   const address = `autonomous.feedback/${filing.host}`;
-  const post = `${filing.context.title} for ${filing.host}: "${excerpt(filing.note)}" (via ${address})`;
+  const about = filing.subject ? ` about ${filing.subject.name}` : "";
+  const post = `${filing.context.title}${about} for ${filing.host}: "${excerpt(filing.note)}" (via ${address})`;
   const contact = site.contact || {};
   // A post that names the owner's handle reaches them as a mention.
   const bskyPost = contact.bluesky ? `@${contact.bluesky} ${post}` : post;
@@ -458,7 +530,8 @@ export function renderCard(filing, embed = false, config = null) {
     contact.bluesky ? `<a class="door" data-share="dm" target="_blank" rel="noopener" href="https://bsky.app/profile/${encodeURIComponent(contact.bluesky)}"><strong>Message on Bluesky</strong><span>@${escapeHtml(contact.bluesky)}</span></a>` : "",
     contact.x ? `<a class="door" data-share="dm" target="_blank" rel="noopener" href="https://x.com/${encodeURIComponent(contact.x)}"><strong>Message on X</strong><span>@${escapeHtml(contact.x)}</span></a>` : "",
   ].filter(Boolean);
-  const sendTo = dms.length
+  // Delivery instructions only when the writer is the one who delivers it.
+  const sendTo = dms.length && !filing.stored
     ? `<section class="send-to" aria-labelledby="send-title">
   <h2 id="send-title">Send it to ${escapeHtml(display)}</h2>
   <p class="note">Save the image or copy the text first: a link can open ${escapeHtml(display)}'s profile, but it cannot fill in a direct message. Use Message on the profile, then paste or attach the card.</p>
@@ -476,17 +549,24 @@ export function renderCard(filing, embed = false, config = null) {
     script: CLIENT_SCRIPT,
     themeCss: themeCss(site.theme),
     body: `${embed ? "" : kicker()}
-<h1>Your card is ready</h1>
+<h1>${filing.stored ? `Sent to ${escapeHtml(display)}` : "Your card is ready"}</h1>
+${site.thanks ? `<p class="owner-thanks"><strong>${escapeHtml(display)}:</strong> ${escapeHtml(site.thanks)}</p>` : ""}
 <p class="lede">${filing.stored
-    ? `Kept for ${escapeHtml(display)} for three days, longer if they save it. You can still save or share the card.`
+    ? "It is in their inbox now. Keep a copy or pass it on if you like."
     : filing.queue === "full"
-      ? `The inbox for ${escapeHtml(display)} is full, so this card was not kept. Send it by hand, or ask them to clear the inbox.`
+      ? `${escapeHtml(display)}'s inbox is full, so this one was not kept. Send the card yourself:`
       : filing.queue === "requested"
-        ? `${escapeHtml(display)} has asked for an inbox, but it is not open yet, so this card was not kept. Save it as an image or copy the text, and send it by hand.`
-      : dms.length
-        ? `Save it as an image or copy the text, then send it to ${escapeHtml(display)} in a direct message below, or in a post that mentions them.`
-        : `Save it as an image or copy the text, then send it to whoever runs ${escapeHtml(display)}: in a direct message, or in a post that mentions the site.`}</p>
-${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, issued: filing.issued, id: "card", name: site.name, from: filing.from, path: filing.path, routeName: filing.route })}
+        ? `${escapeHtml(display)} has asked for an inbox, but it is not open yet, so this was not kept. Send the card yourself:`
+        : dms.length
+          ? `Send it to ${escapeHtml(display)}: save the image or copy the text, then message them below. Or post it and mention them.`
+          : `Send it to whoever runs ${escapeHtml(display)}: save the image or copy the text, then message them or post about it.`}</p>
+${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, issued: filing.issued, id: "card", name: site.name, from: filing.from, path: filing.path, routeName: filing.route, subject: filing.subject?.name || "", thread: filing.thread?.name || "", asks: filing.asks || [] })}
+${filing.thread?.stance ? `<section class="stance-reply" aria-labelledby="stance-title">
+  <h2 id="stance-title">${escapeHtml(display)} has said about this</h2>
+  <p class="note">Written before your note, for everyone who raises it.</p>
+  <blockquote>${escapeHtml(filing.thread.stance)}</blockquote>
+  ${filing.thread.link ? `<p><a href="https://${escapeHtml(filing.host)}${escapeHtml(filing.thread.link)}">Read more on ${escapeHtml(filing.host)}</a></p>` : ""}
+</section>` : ""}
 <div class="actions share" data-share-text="${escapeHtml(post)}" data-share-url="https://${escapeHtml(address)}" data-file-name="feedback-${escapeHtml(filing.host)}-${escapeHtml(filing.issued.slice(0, 10))}.png">
   <button type="button" class="door" data-save-image hidden><strong>Save image</strong><span>PNG, made on this device</span></button>
   <button type="button" class="door" data-share="native" hidden><strong>Share</strong><span>from this device</span></button>
@@ -496,8 +576,8 @@ ${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, is
 </div>
 ${sendTo}
 <p class="note">${filing.stored
-    ? "Kept in the inbox for this site. If it is not saved within three days, it becomes a count by page and kind, and its words are deleted."
-    : "Nothing was stored. The card exists on this page and in anything you save or send."}</p>
+    ? "Kept for three days, longer if they save it. After that it becomes a count, and the words are deleted."
+    : "Nothing was stored. The card lives on this page and in whatever you save or send."}</p>
 <pre id="slip" hidden>${escapeHtml(filing.markdown)}</pre>
 <p class="actions"><a class="door" href="${escapeHtml(back)}"><strong>Write another</strong><span>for ${escapeHtml(filing.host)}</span></a></p>`,
   });
@@ -554,15 +634,30 @@ ${desk === "open" ? keyForm({ action: `/${encodeURIComponent(host)}/inbox`, labe
 
 const INBOX_NOTICES = Object.freeze({
   saved: "Saved. It keeps its words until you release it.",
-  released: "Released. If it is older than three days, it becomes a count at the next compaction.",
+  released: "Released. It will be counted once it is three days old.",
   deleted: "Deleted.",
   missing: "That card is no longer here.",
 });
 
-function inboxCard(host, name, note, actions, hint = "") {
+/** Names for what the counts are about: the creator's subject and common-note names, else the page as filed. */
+function labels(config) {
+  const subjects = new Map((config?.subjects || []).map((sub) => [sub.id, sub]));
+  return {
+    about: (about) => subjects.get(about)?.name || about || "Unsorted",
+    thread: (about, thread) => thread === "thanks" ? "Thanks" : subjects.get(about)?.threads.find((t) => t.id === thread)?.name || thread,
+  };
+}
+
+const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+
+function inboxCard(host, config, note, actions, { hint = "", fresh = false } = {}) {
+  const name = labels(config);
   const context = contextBySlug(note.context) || { title: note.title, operator: "frame", expression: "" };
-  return `<li>
-    ${cardMarkup({ context, host, note: note.note, issued: note.issued, name, from: note.from || "", path: note.path || "", routeName: note.route || "", sample: true })}
+  const subject = note.subject ? name.about(note.subject) : "";
+  const thread = note.thread && note.thread !== "thanks" ? name.thread(note.subject, note.thread) : "";
+  return `<li${fresh ? ' class="fresh"' : ""}>
+    ${fresh ? `<p class="fresh-mark">New since your last visit</p>` : ""}
+    ${cardMarkup({ context, host, note: note.note, issued: note.issued, name: config?.name || "", from: note.from || "", path: note.path || "", routeName: note.route || "", subject, thread, sample: true })}
     ${hint ? `<p class="hint">${hint}</p>` : ""}
     <form method="post" action="/${encodeURIComponent(host)}/inbox" class="actions">
       <input type="hidden" name="id" value="${escapeHtml(note.id)}">
@@ -572,46 +667,66 @@ function inboxCard(host, name, note, actions, hint = "") {
   </li>`;
 }
 
-function tallyTable(tallies) {
+/** Counts as a table: used for the desk's compaction preview. */
+function tallyTable(tallies, config = null) {
   if (!tallies.length) return `<p class="note">Nothing has been counted yet.</p>`;
-  const rows = tallies.map((t) => `<tr><td>${escapeHtml(t.day)}</td><td>${t.page ? escapeHtml(t.page) : "(no page)"}</td><td>${escapeHtml(contextBySlug(t.kind)?.title || t.kind)}</td><td class="num">${t.count}</td></tr>`).join("\n      ");
+  const name = labels(config);
+  const rows = tallies.map((t) => `<tr><td>${escapeHtml(t.week)}</td><td>${escapeHtml(name.about(t.about))}</td><td>${t.thread ? escapeHtml(name.thread(t.about, t.thread)) : "—"}</td><td>${escapeHtml(contextBySlug(t.kind)?.title || t.kind)}</td><td class="num">${t.cards}</td><td class="num">${t.worded}</td></tr>`).join("\n      ");
   return `<div class="table-scroll"><table class="tally">
-    <thead><tr><th scope="col">Day</th><th scope="col">Page</th><th scope="col">Kind</th><th scope="col" class="num">Cards</th></tr></thead>
+    <thead><tr><th scope="col">Week of</th><th scope="col">About</th><th scope="col">Common note</th><th scope="col">Kind</th><th scope="col" class="num">Cards</th><th scope="col" class="num">In own words</th></tr></thead>
     <tbody>
       ${rows}
     </tbody>
   </table></div>`;
 }
 
-/** An open inbox: saved cards, new cards with the day they compact, and what has been counted. */
-export function renderInbox({ host, name = "", notes = [], tallies = [], limit = 10, done = "", role = "owner" }) {
+/** One week in the owner's words: what came in, grouped by what it was about. */
+function weekDigest(week, config) {
+  const name = labels(config);
+  const kindsOf = (kinds) => Object.entries(kinds).map(([k, n]) => `${n} ${k === NOTE.slug ? "untagged" : (contextBySlug(k)?.title || k).toLowerCase()}`).join(", ");
+  const items = week.groups.map((g) => `<li><strong>${escapeHtml(name.about(g.about))}</strong>${g.thread ? ` · ${escapeHtml(name.thread(g.about, g.thread))}` : ""} <span class="n">${g.cards}</span> <span class="hint">${g.thread ? (g.worded ? `${g.worded} in their own words` : "all one-tap") : escapeHtml(kindsOf(g.kinds))}</span></li>`);
+  if (week.thanks) items.push(`<li><strong>Thanks</strong> <span class="n">${week.thanks}</span></li>`);
+  const hints = week.hints.map((h) => `<p class="hint map-hint"><strong>${escapeHtml(name.about(h.about))}:</strong> ${plural(h.cards, "note")} joined no common note. If they share a theme, add one to your file so the next reader can tap it.</p>`).join("");
+  return `<ul class="digest">${items.join("")}</ul>${hints}`;
+}
+
+/** An open inbox: the week at a glance, what is due, then the cards themselves. */
+export function renderInbox({ host, config = null, notes = [], summary = { due: 0, weeks: [] }, seen = "", limit = 10, done = "", role = "owner" }) {
+  const display = config?.name || host;
   const saved = notes.filter((n) => n.saved);
   const fresh = notes.filter((n) => !n.saved);
   const full = saved.length >= limit;
+  const isNew = (n) => Boolean(seen) && n.issued > seen;
   const notice = done === "limit"
-    ? `You have saved ${limit} cards. Release one to save another.`
+    ? `You have saved ${plural(limit, "card")}, the most this inbox keeps. Release one to save another.`
     : INBOX_NOTICES[done] || "";
+  const [thisWeek, ...earlier] = summary.weeks;
   const savedList = saved.length
-    ? `<ul class="inbox">${saved.map((n) => inboxCard(host, name, n, `<button type="submit" name="action" value="release">Release</button>`)).join("\n")}</ul>`
-    : `<p class="note">No saved cards. Save a card to keep its words past three days.</p>`;
+    ? `<ul class="inbox">${saved.map((n) => inboxCard(host, config, n, `<button type="submit" name="action" value="release">Release</button>`)).join("\n")}</ul>`
+    : `<p class="note">Nothing saved yet. Saving keeps a card's words past three days.</p>`;
   const freshList = fresh.length
-    ? `<ul class="inbox">${fresh.map((n) => inboxCard(host, name, n, `<button type="submit" name="action" value="save"${full ? " disabled" : ""}>Save</button>`, `Counted on ${escapeHtml(compactsOn(n.issued))} unless saved.`)).join("\n")}</ul>`
+    ? `<ul class="inbox">${fresh.map((n) => inboxCard(host, config, n, `<button type="submit" name="action" value="save"${full ? " disabled" : ""}>Save</button>`, { hint: `Counted on ${escapeHtml(compactsOn(n.issued))} unless you save it.`, fresh: isNew(n) })).join("\n")}</ul>`
     : `<p class="note">No new cards.</p>`;
+  const newCount = fresh.filter(isNew).length;
   return layout({
     title: `Inbox for ${host} — autonomous.feedback`,
     description: `The inbox for ${host}.`,
     canonical: `${ORIGIN}/${encodeURIComponent(host)}/inbox`,
     quiet: true,
     body: `${kicker()}
-<h1>Inbox for ${escapeHtml(name || host)}</h1>
-<p class="lede">New cards wait here for three days. Save the ones worth keeping; the rest become counts by page and kind, and their words are deleted.</p>
+<h1>${escapeHtml(display)}'s inbox</h1>
+<p class="lede">${newCount ? `${plural(newCount, "new card")} since your last visit. ` : ""}Cards wait here three days. Save the ones worth keeping; the rest become counts, and their words are deleted.</p>
 ${notice ? `<p class="panel" role="status">${escapeHtml(notice)}</p>` : ""}
+${summary.due ? `<p class="panel due" role="status"><strong>${plural(summary.due, "card")} ${summary.due === 1 ? "is" : "are"} counted within a day.</strong> <a href="#new">Save the ones worth keeping</a>.</p>` : ""}
+<section aria-labelledby="week-title">
+  <h2 id="week-title">This week${thisWeek ? ` <span class="hint">since ${escapeHtml(thisWeek.week)} · ${plural(thisWeek.cards, "note")}</span>` : ""}</h2>
+  ${thisWeek ? weekDigest(thisWeek, config) : `<p class="note">Nothing yet this week.</p>`}
+  ${earlier.length ? `<details><summary>Earlier weeks</summary>${earlier.map((w) => `<h3>Week of ${escapeHtml(w.week)} <span class="hint">${plural(w.cards, "note")}</span></h3>${weekDigest(w, config)}`).join("")}</details>` : ""}
+</section>
+<h2 id="new">New <span class="hint">${fresh.length}</span></h2>
+${freshList}
 <h2>Saved <span class="hint">${saved.length} of ${limit}</span></h2>
 ${savedList}
-<h2>New <span class="hint">${fresh.length}</span></h2>
-${freshList}
-<h2>Counted</h2>
-${tallyTable(tallies)}
 <form method="post" action="/${encodeURIComponent(host)}/inbox" class="actions">
   <input type="hidden" name="action" value="close">
   <button type="submit" class="secondary">Close the inbox on this browser</button>
@@ -643,12 +758,12 @@ export function renderDesk({ sites = [], limit = 10, compacted = null }) {
   <p class="note">Listed in DESK_HOSTS, but the site's file does not ask for an inbox (queue.want), so nothing is kept.</p>
 </section>`;
     }
-    const due = site.due.reduce((sum, t) => sum + t.count, 0);
+    const due = site.due.reduce((sum, t) => sum + t.cards, 0);
     return `<section class="panel" aria-labelledby="desk-${escapeHtml(site.host)}">
   <h2 id="desk-${escapeHtml(site.host)}"><a href="${inbox}">${escapeHtml(site.host)}</a></h2>
   <p>${site.unsaved} new · ${site.saved} of ${limit} saved${site.oldest ? ` · oldest new card ${escapeHtml(site.oldest.slice(0, 10))}` : ""}</p>
   ${due
-    ? `<p>Next compaction counts ${due} card${due === 1 ? "" : "s"}:</p>${tallyTable(site.due)}
+    ? `<p>Next compaction counts ${due} card${due === 1 ? "" : "s"}:</p>${tallyTable(site.due, site.config)}
   <form method="post" action="/desk" class="actions">
     <input type="hidden" name="action" value="compact">
     <input type="hidden" name="host" value="${escapeHtml(site.host)}">
