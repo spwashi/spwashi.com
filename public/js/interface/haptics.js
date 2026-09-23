@@ -87,6 +87,11 @@ const CAULDRON_CANDIDATE_SELECTORS = [
   '[data-spw-semantic-expression]'
 ].join(', ');
 
+/* The gesture hint is a tooltip, so it belongs on the word, chip, or image a
+   reader aims a hold at. Written onto paragraphs, articles, and sections it
+   followed the pointer across whole regions and became their description. */
+const GESTURE_HINT_HOST_SELECTOR = 'a, abbr, button, code, dfn, em, img, kbd, mark, small, span, strong, time';
+
 const CHARGE_SELECTORS = [
   GROUND_SELECTORS,
   '.spw-frame',
@@ -740,7 +745,9 @@ function annotateCauldronCandidates(root = document) {
        every subtree observer, so only missing values are written. */
     if (!node.dataset.spwCauldronCandidate) node.dataset.spwCauldronCandidate = 'true';
     if (!node.dataset.spwGestureContract) node.dataset.spwGestureContract = 'tap:inspect hold:prime-to-cauldron';
-    if (!node.title) node.title = 'tap to inspect; hold to gather as a cauldron ingredient';
+    if (!node.title && node.matches(GESTURE_HINT_HOST_SELECTOR)) {
+      node.title = 'tap to inspect; hold to gather as a cauldron ingredient';
+    }
     annotateLivingTermRole(node);
   });
 }
