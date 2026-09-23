@@ -102,9 +102,9 @@ test('the write page is a labelled form with the kind as a choice', async () => 
     assert.match(write, /<h1>A note for example\.org<\/h1>/);
     assert.match(write, /name="kind" value="question" checked/);
     assert.match(write, /data-href="\/example\.org\/question"/);
-    assert.match(write, /<legend>Tag it <span class="hint">Optional<\/span><\/legend>/);
-    // The label is the question itself.
-    assert.match(write, /<label for="note"><span class="untapped" data-fill="prompt">What you need the person who runs the site to answer\.<\/span><span class="when-tapped">Anything to add\?<\/span><\/label>/);
+    assert.match(write, /<legend>What is this\? <span class="hint">Enough to send<\/span><\/legend>/);
+    assert.match(write, /This sends as <strong>Question<\/strong>\. What you need the person who runs the site to answer\./);
+    assert.match(write, /<span class="when-typed">Add a detail/);
     assert.match(write, /aria-describedby="note-hint note-count"/);
     assert.match(write, /class="hp" aria-hidden="true"/);
     assert.match(write, />Make my card</);
@@ -138,13 +138,20 @@ test('the write page is a labelled form with the kind as a choice', async () => 
 test('a rejected note comes back in the form, not as JSON', async () => {
   const restore = stubFetch();
   try {
-    const short = await get('autonomous.feedback', '/example.org', form({ kind: 'broken', note: '<b>no' }));
+    const short = await get('autonomous.feedback', '/example.org', form({ note: '<b>no' }));
     assert.equal(short.status, 400);
     const html = await short.text();
     assert.match(html, /class="error-summary" role="alert"/);
-    assert.match(html, /A few more words, please: at least 8 characters\. This note has 5\./);
+    assert.match(html, /Pick what this is, or write at least 8 characters\. This note has 5\./);
     assert.match(html, /aria-invalid="true"/);
     assert.match(html, />&lt;b&gt;no<\/textarea>/);
+    const typed = await get('autonomous.feedback', '/example.org', form({ kind: 'broken', note: '<b>no' }));
+    assert.equal(typed.status, 200);
+    assert.match(await typed.text(), />&lt;b&gt;no</);
+    const onlyType = await (await get('autonomous.feedback', '/example.org/broken', json({}))).json();
+    assert.equal(onlyType.context, 'broken');
+    assert.equal(onlyType.worded, false);
+    assert.match(onlyType.markdown, /Counted as Broken\. No written detail\./);
     const noSite = await get('autonomous.feedback', '/broken', form({ host: 'not a site', note: 'Something is broken here.' }));
     assert.equal(noSite.status, 400);
     assert.match(await noSite.text(), /is not a domain/);
@@ -217,7 +224,9 @@ test('a client file shapes the form, the theme, and the frame', async () => {
     assert.doesNotMatch(write, /Appreciation/);
     assert.match(write, /<label for="from">Your name or handle<\/label>/);
     assert.match(write, /id="from"[^>]*required/);
-    assert.match(write, /minlength="20" maxlength="500"/);
+    assert.match(write, /Without a type, write at least 20 characters/);
+    assert.match(write, /maxlength="500"/);
+    assert.doesNotMatch(write, /minlength=/);
     assert.match(write, />Send it</);
     assert.match(write, /--bg:#ffffff/);
     assert.match(write, /--accent:#0f766e/);
@@ -226,6 +235,8 @@ test('a client file shapes the form, the theme, and the frame', async () => {
     const missingFrom = await get('autonomous.feedback', '/shop.example', form({ kind: 'broken', note: 'The cart empties itself on refresh.' }));
     assert.equal(missingFrom.status, 400);
     assert.match(await missingFrom.text(), /Add your name or handle/);
+    const brief = await get('autonomous.feedback', '/shop.example', form({ kind: 'broken', from: 'Ana', note: 'Cart broke' }));
+    assert.equal(brief.status, 200);
     const wrongKind = await get('autonomous.feedback', '/shop.example', form({ kind: 'appreciation', from: 'Ana', note: 'I love the new product photos.' }));
     assert.equal(wrongKind.status, 400);
     assert.match(await wrongKind.text(), /Shop does not take appreciation notes/);
@@ -608,7 +619,7 @@ test('the write page picks the subject from the page, and follows it with thread
     const page = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', { headers: { referer: 'https://maker.example/design/folios/' } }))).text();
     assert.match(page, /name="subject" value="folios" checked/);
     assert.match(page, /Which folio, and what happened\?/);
-    assert.match(page, /<legend>Often said about Folios <span class="hint">Tap one to add yours<\/span><\/legend>/);
+    assert.match(page, /<legend>Often said about Folios <span class="hint">One tap counts\. Add words only if you want them read\.<\/span><\/legend>/);
     // The page picked the subject, so it is stated, with a way to change it.
     assert.match(page, /About <strong data-fill="subject-name">Folios<\/strong>/);
     assert.match(page, /name="thread" value="folios:order-by-card"/);
@@ -629,7 +640,8 @@ test('a thread can be joined without words, and asks land on the card and in the
   try {
     const counted = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', json({ subject: 'folios', thread: 'folios:order-by-card' })))).json();
     assert.equal(counted.thread, 'order-by-card');
-    assert.match(counted.markdown, /Count me too\./);
+    assert.equal(counted.worded, false);
+    assert.match(counted.markdown, /Counted with “Ordering is by card”\. No written detail\./);
     assert.match(counted.markdown, /thread: Ordering is by card/);
     const asked = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', form({ subject: 'folios', note: 'The order card did not tell me what happens next.', 'ask-0': 'The pie one.', 'ask-1': 'A reply within a week.', thread: 'folios:order-by-card' })))).text();
     assert.match(asked, /<span class="card-subject">Folios · Ordering is by card<\/span>/);
@@ -658,7 +670,7 @@ test('a kind comes from evidence: the writer, the common note, or a thanks; othe
     assert.equal(thanked.worded, false);
     assert.equal((await send({ kind: 'broken', subject: 'folios', thread: 'folios:order-by-card', note: 'Chosen by me, with words.' })).context, 'broken');
     const empty = await worker.fetch(new Request('https://autonomous.feedback/maker.example', json({})));
-    assert.equal((await empty.json()).errors.note, 'Write a few words, or tap one of the common notes.');
+    assert.equal((await empty.json()).errors.note, 'Pick what this is. That is enough to send. Or write what happened.');
   } finally {
     restore();
   }

@@ -196,19 +196,27 @@ const SHELL = `
     .door:hover { border-color: var(--accent); }
     .door[aria-current="page"] { border-color: var(--accent); background: rgba(94,234,212,.08); }
     .actions .door { flex: 1 1 9rem; margin-top: .6rem; }
-    .card { position: relative; margin: 1.2rem 0; padding: 1.4rem 1.4rem 1.1rem; border: 1px solid var(--accent); border-radius: calc(var(--radius) * 1.2); background: linear-gradient(160deg, var(--surface), var(--field) 60%); overflow: hidden; }
+    .card { position: relative; margin: 1.2rem 0; padding: 1.6rem 1.5rem 1.3rem; border: 1px solid var(--accent); border-radius: calc(var(--radius) * 1.2); background: radial-gradient(circle at 90% 5%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 48%), linear-gradient(160deg, var(--surface), var(--field) 60%); box-shadow: 0 16px 45px color-mix(in srgb, var(--accent) 12%, transparent); overflow: hidden; }
     .card.sample { transform: rotate(-1deg); }
     @media (prefers-reduced-motion: reduce) { .card.sample { transform: none; } }
     .card header { display: grid; gap: .45rem; padding-right: 7rem; }
     .card footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .4rem 1rem; }
     .card-kind { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; }
     .card-site { font-size: clamp(1.3rem, 4.5vw, 1.8rem); font-weight: 650; letter-spacing: -.03em; overflow-wrap: anywhere; }
+    .card-moment { max-width: 38rem; color: var(--accent); font-size: .9rem; letter-spacing: .02em; }
+    .draft-card { margin: 1.25rem 0; padding: 1rem 1.2rem; border-left: 3px solid var(--accent); border-radius: .4rem var(--radius) var(--radius) .4rem; background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 12%, var(--surface)), var(--field)); }
+    .draft-eyebrow { margin: 0 0 .5rem; color: var(--accent); font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .draft-story { margin: 0; font-size: 1.05rem; line-height: 1.55; overflow-wrap: anywhere; }
+    .draft-example { margin: .65rem 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+    .draft-words:empty { display: none; }
+    .draft-words { margin: .65rem 0 0; }
+    .card-count { margin: 1rem 0 1.1rem; color: var(--fg); line-height: 1.45; }
     .card-prompt { color: var(--muted); font-style: italic; margin: .5rem 0 0; }
     .card-note { margin: 1rem 0 1.1rem; padding: 0 0 0 1rem; border-left: 2px solid var(--accent); font-size: 1.12rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
     .card footer { padding-top: .8rem; border-top: 1px solid var(--line); color: var(--muted); font: .82rem/1.3 ui-monospace, SFMono-Regular, monospace; }
     .card-address { color: var(--fg); }
     .card-stamp:empty { display: none; }
-    /* The write form: the note first, the kind as a row of chips beneath it. */
+    /* The write form: the type first. Choosing it reveals what will be kept. */
     fieldset.chips { border: 0; margin: 1rem 0 0; padding: 0; }
     fieldset.chips legend { padding: 0; margin: 0 0 .4rem; font-size: .88rem; }
     .chips .row { display: flex; flex-wrap: wrap; gap: .45rem; }
@@ -227,8 +235,12 @@ const SHELL = `
     .write .threads { margin: 0 0 1.1rem; }
     .write fieldset.chips legend .hint, .write label .hint, .write summary .hint { margin: 0 0 0 .4rem; font-size: .82rem; }
     .write label[for="note"] { color: var(--fg); font-size: 1.02rem; font-weight: 600; margin: .2rem 0 .3rem; }
-    .write .when-tapped { display: none; color: var(--fg); }
-    .write:has(input[name="thread"]:checked) .when-tapped { display: inline; }
+    .write .when-tapped, .write .when-typed { display: none; color: var(--fg); }
+    .write:has(input[name="kind"]:checked) .when-typed,
+    .write:has(input[name="thread"]:checked) .when-typed { display: inline; }
+    .write:has(input[name="kind"]:checked) .until-typed,
+    .write:has(input[name="thread"]:checked) .until-typed { display: none; }
+    .write:has(input[name="kind"]:checked) .untapped,
     .write:has(input[name="thread"]:checked) .untapped { display: none; }
     .write:has(input[name="thread"]:checked) #kinds { display: none; }
     .write .thanks-row { margin: .7rem 0 0; }

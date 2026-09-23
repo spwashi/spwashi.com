@@ -159,25 +159,30 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
   const thanked = values.thread === "thanks";
   const thread = !thanked && subject && values.thread ? subject.threads.find((t) => `${subject.id}:${t.id}` === values.thread || t.id === values.thread) || null : null;
   if (values.thread && !thanked && !thread) errors.subject = "That common note is not one this site lists.";
-  // Kind: a chip the writer chose wins; else the thread's kind; a thanks is appreciation; else the note stays unsorted.
+  // Thanks is its own type. A kind the writer names wins over a common note's kind. A kind the site does not take is an error, not a silent note.
   const allowed = siteKinds(config);
   const chosen = contextBySlug(values.kind);
-  const context = chosen && chosen.slug !== NOTE.slug
-    ? allowed.find((c) => c.slug === chosen.slug)
-    : (thanked ? contextBySlug("appreciation") : thread?.kind ? contextBySlug(thread.kind) : null) || NOTE;
+  const picked = chosen && chosen.slug !== NOTE.slug ? allowed.find((c) => c.slug === chosen.slug) : null;
+  const context = thanked
+    ? contextBySlug("appreciation")
+    : chosen && chosen.slug !== NOTE.slug
+      ? picked || null
+      : (thread?.kind ? contextBySlug(thread.kind) : null) || NOTE;
   if (!context) {
     errors.kind = chosen ? `${config.name || values.host} does not take ${chosen.title.toLowerCase()} notes. Choose another, or none.` : "That is not a kind of note.";
   }
   const asks = subject ? subject.asks.map((question, i) => ({ question, answer: values.asks[i] || "" })).filter((a) => a.answer) : [];
   let text = values.note.trim();
-  // Words are optional once a common note or a thanks says enough; the count is the note.
+  // A type is the submission. Words are a separate record, kept only when the writer actually wrote them.
   const worded = Boolean(text || asks.length);
-  if (!text && thanked) text = "Thanks.";
-  if (!text && thread && !asks.length) text = "Count me too.";
-  if (!text && asks.length) text = asks[0].answer;
-  const tapped = !worded && (thanked || thread);
-  if (!tapped && text.length < config.note.min) errors.note = text.length ? `A few more words, please: at least ${config.note.min} characters. This note has ${text.length}.` : "Write a few words, or tap one of the common notes.";
-  else if (text.length > config.note.max) errors.note = `Keep it under ${config.note.max.toLocaleString("en-US")} characters. This note has ${text.length.toLocaleString("en-US")}.`;
+  const typed = Boolean(context && context.slug !== NOTE.slug);
+  if (!text && thanked) text = "Counted as thanks. No written detail.";
+  else if (!text && thread && !asks.length) text = `Counted with “${thread.name}”. No written detail.`;
+  else if (!text && asks.length) text = asks[0].answer;
+  else if (!text && typed) text = `Counted as ${context.title}. No written detail.`;
+  const hasType = typed || thanked || Boolean(thread) || asks.length;
+  if (text.length > config.note.max) errors.note = `Keep it under ${config.note.max.toLocaleString("en-US")} characters. This note has ${text.length.toLocaleString("en-US")}.`;
+  else if (!hasType && text.length < config.note.min) errors.note = text.length ? `Pick what this is, or write at least ${config.note.min} characters. This note has ${text.length}.` : "Pick what this is. That is enough to send. Or write what happened.";
   if (config.from === "required" && !values.from) errors.from = "Add your name or handle; this site asks for one.";
   if (Object.keys(errors).length) {
     const code = errors.kind ? "invalid_context" : errors.subject ? "invalid_subject" : errors.note ? "note_bounds" : "from_required";

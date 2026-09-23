@@ -147,25 +147,45 @@ function clientMain() {
     const hint = write.querySelector('[data-fill="prompt"]');
     const submit = write.querySelector("button[type=submit]");
     const draftKey = `af:draft:${write.dataset.draftKey || "any"}`;
-    const min = Number(note.getAttribute("minlength")) || 0;
+    const min = Number(write.dataset.noteMin) || 0;
     const max = Number(note.getAttribute("maxlength")) || Infinity;
+    const typedNow = () => Boolean(write.querySelector('input[name="kind"]:checked, input[name="thread"]:checked'));
 
     const paintCount = () => {
       const length = note.value.trim().length;
       count.textContent = String(note.value.length);
-      countLine.dataset.state = length === 0 ? "" : length < min ? "short" : length > max ? "long" : "ok";
+      countLine.dataset.state = length > max ? "long" : length === 0 || typedNow() ? "" : length < min ? "short" : "ok";
     };
     const example = write.querySelector('[data-fill="example"]');
     const subjectName = write.querySelector('[data-fill="subject-name"]');
+    const words = write.querySelector("[data-draft-words]");
     const chosenSubject = () => write.querySelector('input[name="subject"]:checked');
+    const chipLabel = (input) => input?.closest("label")?.querySelector("span")?.textContent?.trim() || "";
+    const paintWords = () => {
+      const value = note.value.trim();
+      if (words) words.textContent = value ? `Detail: “${value.slice(0, 160)}${value.length > 160 ? "…" : ""}”` : "";
+    };
+    const paintButton = () => {
+      if (!submit) return;
+      const thread = write.querySelector('input[name="thread"]:checked');
+      const kind = write.querySelector('input[name="kind"]:checked');
+      const value = note.value.trim();
+      if (value || (!thread && !kind)) submit.textContent = write.dataset.button || submit.textContent;
+      else if (thread?.value === "thanks") submit.textContent = "Send thanks";
+      else if (thread) submit.textContent = "Send this";
+      else submit.textContent = `Send as ${chipLabel(kind) || kind.value}`;
+    };
     const paintKind = () => {
       const chosen = write.querySelector('input[name="kind"]:checked');
-      if (!chosen) return;
-      // The subject's question leads; a kind only speaks when no subject is chosen.
-      if (hint && !chosenSubject()) hint.textContent = chosen.dataset.prompt;
-      if (example && !chosenSubject()) example.textContent = `For example: ${chosen.dataset.example}`;
-      const href = chosen.dataset.href;
-      if (href && href !== location.pathname) history.replaceState(null, "", href);
+      if (chosen) {
+        if (hint && !chosenSubject()) hint.textContent = chosen.dataset.prompt;
+        if (example && !chosenSubject()) example.textContent = chosen.dataset.example ? `For example: ${chosen.dataset.example}` : "";
+        const href = chosen.dataset.href;
+        if (href && href !== location.pathname) history.replaceState(null, "", href);
+        say(`Sending as ${chipLabel(chosen) || chosen.value}. A detail is optional.`);
+      }
+      paintButton();
+      paintCount();
     };
     if (storage && !note.value) {
       const saved = storage.getItem(draftKey);
@@ -175,14 +195,21 @@ function clientMain() {
       }
     }
     paintCount();
+    paintButton();
+    paintWords();
     note.addEventListener("input", () => {
       paintCount();
+      paintWords();
+      paintButton();
       if (storage) {
         if (note.value) storage.setItem(draftKey, note.value);
         else storage.removeItem(draftKey);
       }
     });
-    write.querySelectorAll('input[name="kind"]').forEach((input) => input.addEventListener("change", paintKind));
+    write.querySelectorAll('input[name="kind"]').forEach((input) => input.addEventListener("change", () => {
+      if (input.checked) write.querySelectorAll('input[name="thread"][value="thanks"]').forEach((thanks) => { thanks.checked = false; });
+      paintKind();
+    }));
 
     // Subject: its question leads; a kind the subject hides gives way; a thread from another subject is cleared.
     const paintSubject = () => {
@@ -196,22 +223,17 @@ function clientMain() {
         const owner = input.closest("[data-subject]");
         if (owner && owner.dataset.subject !== subject?.value) input.checked = false;
       });
-      paintThread();
-    };
-    // A tap is a whole note; the button says what it will do.
-    const paintThread = () => {
-      if (!submit) return;
-      const thread = write.querySelector('input[name="thread"]:checked');
-      const words = note.value.trim();
-      submit.textContent = !thread || words ? write.dataset.button || submit.textContent
-        : thread.value === "thanks" ? "Send thanks" : "Count me in";
+      paintButton();
+      paintWords();
     };
     write.querySelectorAll('input[name="subject"]').forEach((input) => input.addEventListener("change", paintSubject));
     write.querySelectorAll('input[name="thread"]').forEach((input) => input.addEventListener("change", () => {
-      paintThread();
-      say(input.value === "thanks" ? "Thanks chosen. Send as is, or add words." : "Common note chosen. Send as is, or add your words.");
+      // The common note or thanks is the type on screen, so a kind left checked underneath is not sent.
+      if (input.checked) write.querySelectorAll('input[name="kind"]:checked').forEach((kind) => { kind.checked = false; });
+      paintButton();
+      paintWords();
+      say(input.value === "thanks" ? "Sending as thanks. A detail is optional." : "Joined that note. It is counted. Add a detail if you want the words read.");
     }));
-    note.addEventListener("input", paintThread);
 
     write.addEventListener("submit", (event) => {
       if (submit.getAttribute("aria-busy") === "true") {
