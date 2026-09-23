@@ -55,6 +55,7 @@
                 <p class="spec-kicker">Software / Practice</p>
                 <h1 id="testing-title">Claims You Can Rerun</h1>
                 <p>A test is a claim about behavior that a machine can check again tomorrow. <strong>Unit</strong> tests pin small pieces; <strong>contract</strong> tests check the promise between parts; <strong>regression</strong> tests keep a fixed mistake from returning. This site runs its own: when a check fails it names the rule it protects, which makes the test suite one of the better places to learn the codebase. Analysis deserves the same habit: a result you cannot rerun is a result you cannot defend.</p>
+                <p><a href="#cue-tests">Try to break a quiet-show rule</a> with four concrete cases, then keep the results as a small test record.</p>
                 <nav class="frame-operators" aria-label="Testing next steps">
                     <a class="spw-chip" data-spw-handle="true" href="/topics/software/version-control/" data-spw-operator="ref" data-spw-action="explore">~version_control</a>
                     <a class="spw-chip" data-spw-handle="true" href="/about/website/#engineering-register" data-spw-operator="ref" data-spw-action="explore">~checks_that_teach</a>
@@ -84,6 +85,38 @@
                         <a class="ref-link" href="https://en.wikipedia.org/wiki/Software_testing" target="_blank" rel="noopener noreferrer">wiki: software testing</a>
                     </article>
                 </div>
+            </section>
+
+            <section class="spw-frame" id="cue-tests" aria-labelledby="cue-tests-title" data-spw-kind="frame">
+                <header class="frame-heading" data-spw-slot="header">
+                    <h2 id="cue-tests-title">Try to break the quiet-show rule</h2>
+                </header>
+                <p>Bring the <a href="/topics/software/programs/#programs-try">cue-checking function</a> and write expected results before running it. A useful test can disagree with the implementation.</p>
+                <table>
+                    <caption>Cases for “available and known to be silent”</caption>
+                    <thead><tr><th scope="col">Cue</th><th scope="col">Available</th><th scope="col">Sound</th><th scope="col">May play</th></tr></thead>
+                    <tbody>
+                        <tr><th scope="row">Lantern</th><td>true</td><td>false</td><td>true</td></tr>
+                        <tr><th scope="row">Bell</th><td>true</td><td>true</td><td>false</td></tr>
+                        <tr><th scope="row">Missing ribbon</th><td>false</td><td>false</td><td>false</td></tr>
+                        <tr><th scope="row">Unlabelled prop</th><td>true</td><td>unknown</td><td>false</td></tr>
+                    </tbody>
+                </table>
+                <p>On paper, evaluate each row. In JavaScript, paste these after the function; a failed assertion reports a disagreement in the console.</p>
+                <pre><code>console.assert(canPlay({ available: true, sound: false }) === true,
+  "A ready, silent lantern should pass");
+console.assert(canPlay({ available: true, sound: true }) === false,
+  "A ready bell should fail");
+console.assert(canPlay({ available: false, sound: false }) === false,
+  "A missing ribbon should fail");
+console.assert(canPlay({ available: true }) === false,
+  "Unknown sound status should fail");</code></pre>
+                <p><strong>Break it deliberately:</strong> change <code>&amp;&amp;</code> to <code>||</code> in the function. The bell and missing ribbon tests should fail. Restore the rule and keep those cases so the same mistake is easier to catch later.</p>
+                <details class="spw-inline-disclosure">
+                    <summary>What these checks do not establish</summary>
+                    <p>They do not check whether every name in the running order has a cue record, whether a performer has the prop in hand, or whether the audience can follow the scene. Those need a lookup check, a rehearsal, and an observation. Passing four examples is evidence about those examples, not proof of every possible behavior.</p>
+                </details>
+                <p><strong>Keep:</strong> input, expected result, observed result, and the version of the rule you used. <a href="/play/#tiny-show-rehearsal">Rehearse the approved order</a>, then <a href="/topics/knowledge-bases/#keep-a-learning-record">file the results with enough context to repeat them</a>.</p>
             </section>
 
             <aside class="spw-route-bridge" aria-labelledby="testing-bridge-title">

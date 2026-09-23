@@ -54,6 +54,7 @@
                 <p class="spec-kicker">Math / Pure Structure</p>
                 <h1 id="combinatorics-title">Combinatorics turns possibility into a visible arrangement.</h1>
                 <p data-spw-copy-unit="math.combinatorics.hero.lede">Finite structure you can count, compare, and reorganize. A small example is often the whole pattern. The lab below is a porch: paths, then a five-voice dummy. The dummy is not the house.</p>
+                <p><a href="#cue-orders">Count six tiny shows made from three cue cards</a>, or <a href="#combinatorics-lab">change a count in the lab</a> and record what caused it.</p>
                 <nav class="frame-operators" aria-label="Combinatorics routes">
                     <a class="spw-chip" data-spw-handle="true" href="#combinatorics-intuition" data-spw-operator="frame" data-spw-action="address">#&gt;intuition_first</a>
                     <a class="spw-chip" data-spw-handle="true" href="#combinatorics-map" data-spw-operator="frame" data-spw-action="address">#&gt;counting_map</a>
@@ -160,22 +161,38 @@
                 </figure>
             </section>
 
+            <section class="spw-frame" id="cue-orders" aria-labelledby="cue-orders-title" data-spw-kind="frame">
+                <header class="frame-heading" data-spw-slot="header">
+                    <h2 id="cue-orders-title">How many shows fit on two cards?</h2>
+                </header>
+                <p>Take the <a href="/curriculum/#tiny-show">bell, lantern, and ribbon cards</a>. For this count, suppose all three props are available. Choose two different cues and put them in order. There are three choices for the first position and two left for the second: <strong>3 × 2 = 6 orders</strong>.</p>
+                <ul class="frame-list">
+                    <li>Bell → lantern; bell → ribbon.</li>
+                    <li>Lantern → bell; lantern → ribbon.</li>
+                    <li>Ribbon → bell; ribbon → lantern.</li>
+                </ul>
+                <p>Now change the question. If you only need to pack two props and order does not matter, each reversed pair becomes the same choice: <strong>3 pairs</strong>. If you allow the same cue twice and order matters, each position has three choices: <strong>3 × 3 = 9 orders</strong>.</p>
+                <p><strong>Apply a constraint:</strong> restore the <a href="/topics/math/logic/#logic-try">quiet-room rule</a>. The bell drops out. With the lantern and ribbon available and no repeats, only lantern → ribbon and ribbon → lantern remain.</p>
+                <p><strong>Keep:</strong> a count with its assumptions about availability, order, and repetition. <a href="/play/#tiny-show-rehearsal">Rehearse the two quiet orders</a> to compare their effect. The count makes the choices visible; it does not choose the better scene.</p>
+            </section>
+
             <section class="spw-frame" id="combinatorics-lab" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-affordance="practice" data-spw-liminality="threshold" data-spw-category-family="workshop" data-spw-locality="high" data-spw-consequence="entry" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_topics_topics_math_combinatorics__lab" data-spw-feature="combinatorics-count-lab" data-spw-semantic-expression="count[dummy]{paths.mix}<next>">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#combinatorics-lab" data-spw-operator="integration">^"count_lab"{</a>
-                    <h2>Count Lab: Paths, Then A Mix</h2>
+                    <h2>Predict, change one choice, keep the result</h2>
                 </header>
-                <p data-spw-textual-role="note" data-spw-copy-unit="math.combinatorics.lab.lede" data-spw-semantic-expression="count[lab]{paths.beats}&lt;learn&gt;">Two pictures, one skill. Paths count walks; <span class="spw-living-term" data-spw-living-term data-spw-concept="boonhonk" tabindex="0">boonhonk</span> counts beats — boon, bane, bone, bonk, honk, <a href="/about/#boonhonk-register">registered on About</a>. A unary is one close. A pair is two named pieces. A season is a book of holds. The status line below is a channel: it names the next region when the count changes.</p>
+                <p id="combinatorics-lab-note" data-spw-textual-role="note" data-spw-copy-unit="math.combinatorics.lab.lede" data-spw-semantic-expression="count[lab]{paths.beats}&lt;learn&gt;">These controls make two different counting problems visible. The grid arranges east and north steps. The <span class="spw-living-term" data-spw-living-term data-spw-concept="boonhonk" tabindex="0">boonhonk</span> mixer chooses from five named voices: invite, limit, hold, hit, and signal. Before changing a control, predict what will change. Keep the input, count, and one sentence about why.</p>
+                <p><strong>Grid challenge:</strong> set east to 2 and north to 1. The three routes are east–east–north, east–north–east, and north–east–east. Add one east step and predict the new count. This arranges repeated kinds of steps; the <a href="#cue-orders">cue-card exercise</a> arranges distinct props.</p>
 
                 <div class="math-interactive-lab" data-math-visual="lattice-paths" data-spw-feature="lattice-path-lab">
                     <div class="math-diagram-controls">
                         <label class="math-control">
                             <span>east <output data-output="rightSteps">3</output></span>
-                            <input data-control="rightSteps" type="range" min="1" max="6" value="3">
+                            <input data-control="rightSteps" type="range" min="1" max="6" value="3" aria-label="East steps">
                         </label>
                         <label class="math-control">
                             <span>north <output data-output="upSteps">3</output> / paths <output data-output="pathCount">20</output></span>
-                            <input data-control="upSteps" type="range" min="1" max="6" value="3">
+                            <input data-control="upSteps" type="range" min="1" max="6" value="3" aria-label="North steps">
                         </label>
                     </div>
                     <figure class="spw-svg-figure" data-spw-svg-persona="learner teacher engineer">
@@ -185,15 +202,16 @@
                         </svg>
                         <figcaption data-spw-textual-role="note">If the controls are unavailable, read a 3-by-3 grid: twenty monotone paths, two drawn. Orange runs east then north. Violet interleaves.</figcaption>
                     </figure>
-                    <p class="math-diagram-status" data-role="status">Move east and north to watch the count and the next door change.</p>
-                    <p class="math-diagram-next" data-spw-semantic-expression="count[state]{next}<channel>"><span data-role="next-reason">Balanced grids sit at the binomial peak.</span> <a data-role="next" href="/about/#boonhonk-register">boonhonk pair count</a></p>
+                    <p class="math-diagram-status" data-role="status" aria-live="polite">Three east and three north steps have 20 orders. With two east and one north there are 3; adding one east step gives 4.</p>
+                    <p class="math-diagram-next" data-spw-semantic-expression="count[state]{next}<channel>"><span data-role="next-reason">Use an explicit list to check a small count before generalizing.</span> <a data-role="next" href="#cue-orders">Count the cue-card orders</a></p>
                 </div>
 
+                <p><strong>Voice challenge:</strong> choose boon → honk (invite, then signal), then reverse it. The number of possible pairs stays the same, while your selected order changes. Write a two-beat scene for each. Choosing one voice twice is shown as a single held voice here—a convention of this mixer, not a rule of counting.</p>
                 <div class="math-interactive-lab" data-math-visual="boonhonk-count" data-spw-feature="boonhonk-count-lab">
                     <div class="math-diagram-controls">
                         <label class="math-control">
                             <span>first voice <output data-output="firstVoice">boon</output></span>
-                            <select data-control="firstVoice">
+                            <select data-control="firstVoice" aria-label="First voice">
                                 <option value="boon" selected>boon — invite</option>
                                 <option value="bane">bane — limit</option>
                                 <option value="bone">bone — hold</option>
@@ -203,7 +221,7 @@
                         </label>
                         <label class="math-control">
                             <span>second voice <output data-output="secondVoice">honk</output> / <output data-output="sceneKind">ordered pair (20)</output></span>
-                            <select data-control="secondVoice">
+                            <select data-control="secondVoice" aria-label="Second voice">
                                 <option value="boon">boon — invite</option>
                                 <option value="bane">bane — limit</option>
                                 <option value="bone">bone — hold</option>
@@ -217,12 +235,13 @@
                             <title id="boonhonk-count-title">Boonhonk unary and pair count</title>
                             <desc id="boonhonk-count-desc">Five voices on a field. Selecting the same voice twice is a unary. Two different voices are an ordered pair. Five plus twenty is twenty-five scenes.</desc>
                         </svg>
-                        <figcaption data-spw-textual-role="note">This is a dummy on purpose: the same five names already live in the mixer. Use them to count, then to pick a small first offering — not to invent twenty-five products.</figcaption>
+                        <figcaption data-spw-textual-role="note">Five choices in each position give 25 selections: 5 matching selections and 20 with different voices. Without the controls, compare “invite → signal” with “signal → invite,” then write what a performer would do in each order.</figcaption>
                     </figure>
-                    <p class="math-diagram-status" data-role="status">Pick two voices. Same voice: one close. Different voices: a pair of named pieces.</p>
-                    <p class="math-diagram-next" data-spw-semantic-expression="beat[pair]{pieces}<channel>"><span data-role="next-reason">A pair is two holdings, not a second ticker.</span> <a data-role="next" href="/services/creator/#first-beat">first beat</a></p>
+                    <p class="math-diagram-status" data-role="status" aria-live="polite">Selected: invite → signal, one of 20 selections with different voices. Reversing it gives another selection with the same total count.</p>
+                    <p class="math-diagram-next" data-spw-semantic-expression="beat[pair]{pieces}<channel>"><span data-role="next-reason">Give the selected order a timing instruction and see whether another person can perform it.</span> <a data-role="next" href="/play/#tiny-show-rehearsal">Rehearse an order</a></p>
                     <p><a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_sample=boonhonk#literal-parser" data-spw-operator="wonder">? parse[boonhonk]</a> <a class="spw-chip" data-spw-handle="true" href="/about/#boonhonk-register" data-spw-operator="value">*mixer</a> <a class="spw-chip" data-spw-handle="true" href="/design/palettes/" data-spw-operator="concept-edge">&gt;color_field</a></p>
                 </div>
+                <p><strong>Keep:</strong> “I selected ___ then ___. I predicted ___. The count was ___. Changing ___ affected ___.” Add it to your <a href="/public/learning/tiny-show-cue-sheet.md" download="tiny-show-cue-sheet.md">cue sheet</a>. A saved observation is useful when its inputs and assumptions travel with it.</p>
             </section>
 
             <section class="spw-frame" id="combinatorics-handles" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_combinatorics__combinatorics_handles" data-spw-context-relevance="combinatorics counting partitions graphs recursion finite structure" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/|/about/|/play/rpg-wednesday/">
@@ -286,13 +305,13 @@
                     </article>
                     <article class="topic-reference-card">
                         <h3>Boonhonk mixes</h3>
-                        <p>Five transforms and a pair rule: 5 unary plus 20 ordered pairs is 25 scenes. Use that as a dummy to pick one close, not twenty-five products.</p>
-                        <a href="#combinatorics-lab">anchor: count lab</a>
+                        <p>Compare 5 matching selections and 20 with different voices. Choose one, reverse it, and describe the change in a scene.</p>
+                        <a href="#combinatorics-lab">Try the voice comparison</a>
                     </article>
                     <article class="topic-reference-card">
-                        <h3>First beat</h3>
-                        <p>A unary is $250–$750. A pair is two named pieces. A season is a portfolio.</p>
-                        <a href="/services/creator/#first-beat">route: first beat</a>
+                        <h3>Commission a finished piece</h3>
+                        <p>If you want to develop a scene into a commissioned piece, the first-beat offer explains scope and pricing.</p>
+                        <a href="/services/creator/#first-beat">Read the first-beat offer</a>
                     </article>
                     <article class="topic-reference-card">
                         <h3>Dimensional path</h3>

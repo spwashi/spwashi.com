@@ -54,7 +54,8 @@
                 </div>
                 <p class="spec-kicker">Software / Building Blocks</p>
                 <h1 id="data-structures-title">Shapes for Information</h1>
-                <p>A data structure is a shape chosen for the questions you will ask. <strong>Arrays</strong> keep order and let you jump straight to a position; <strong>maps</strong> (dictionaries, hash tables) find a value by its key; <strong>trees</strong> keep things sorted or nested; <strong>graphs</strong> hold relationships; <strong>queues</strong> hold what is waiting its turn. Choosing well is most of the difference between a program that answers instantly and one that crawls.</p>
+                <p>A data structure organizes information around the questions you need to answer. An array can preserve a running order; a map can look up a cue by name; a tree can group props by department; a graph can record which cue depends on another. Those are different views of the same show.</p>
+                <p>Start with the operation: finding, ordering, grouping, or connecting. <a href="#cue-records">Try two views of three cue cards</a>, then ask how the choice affects the cost of an operation.</p>
                 <nav class="frame-operators" aria-label="Data Structures next steps">
                     <a class="spw-chip" data-spw-handle="true" href="/topics/software/algorithms/" data-spw-operator="ref" data-spw-action="explore">~algorithms</a>
                     <a class="spw-chip" data-spw-handle="true" href="/topics/math/complexity/" data-spw-operator="ref" data-spw-action="explore">~complexity</a>
@@ -84,6 +85,28 @@
                         <a class="ref-link" href="https://en.wikipedia.org/wiki/List_of_data_structures" target="_blank" rel="noopener noreferrer">wiki: data structures</a>
                     </article>
                 </div>
+            </section>
+
+            <section class="spw-frame" id="cue-records" aria-labelledby="cue-records-title" data-spw-kind="frame">
+                <header class="frame-heading" data-spw-slot="header">
+                    <h2 id="cue-records-title">The prop box and the running order</h2>
+                </header>
+                <p>For the <a href="/curriculum/#tiny-show">tiny show</a>, each prop has a stable name and two facts used by the <a href="/topics/software/programs/#programs-try">quiet-room check</a>. Keep those records separate from the order in which you want to use them.</p>
+                <pre><code>{
+  "cues": {
+    "bell":    { "available": true,  "sound": true },
+    "lantern": { "available": true,  "sound": false },
+    "ribbon":  { "available": false, "sound": false }
+  },
+  "proposedOrder": ["lantern", "ribbon"]
+}</code></pre>
+                <p>The keyed records answer “what do we know about the ribbon?” The ordered list answers “what comes after the lantern?” This is a proposed order: including the ribbon does not make the missing prop available.</p>
+                <ol class="frame-list">
+                    <li>Reverse the two names in <code>proposedOrder</code>. The performance changes; the facts about the props do not.</li>
+                    <li>Find the ribbon and update its availability once in <code>cues</code>. Both positions can refer to the same record.</li>
+                    <li>Add “curtain” to the order without creating a record. Decide how a reader or program should report that missing reference.</li>
+                </ol>
+                <p><strong>Keep:</strong> a cue collection and a proposed order. Use <a href="/topics/math/combinatorics/#cue-orders">Combinatorics to count the orders</a> and <a href="/topics/software/testing/#cue-tests">Testing to check that every chosen cue is known and eligible</a>. For larger collections, <a href="/topics/software/databases/">databases</a> adds questions about storage and coordinated updates.</p>
             </section>
 
             <aside class="spw-route-bridge" aria-labelledby="data-structures-bridge-title">

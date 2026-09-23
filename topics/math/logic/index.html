@@ -53,7 +53,16 @@
                 </div>
                 <p class="spec-kicker">Math / Building Blocks</p>
                 <h1 id="logic-title">The Grammar of Proof</h1>
-                <p>Logic is the grammar underneath every other page here. A <strong>proposition</strong> is a statement that is true or false; connectives (and, or, not, implies) build larger ones; quantifiers say "for every" and "there exists." <strong>Sets</strong> collect things, and a <strong>function</strong> pairs each input with exactly one output. Proof is how a claim earns its place: by showing it follows from what was already accepted.</p>
+                <p>Logic helps you say exactly what a rule permits and what would contradict it. Proof shows how a claim follows from stated assumptions.</p>
+                <dl>
+                    <dt>Proposition</dt>
+                    <dd>A statement that is true or false: “the bell is available.” Connectives such as <em>and</em>, <em>or</em>, and <em>not</em> combine statements.</dd>
+                    <dt>Quantifier</dt>
+                    <dd>A word that sets the reach of a claim: “every cue is silent” differs from “there is a silent cue.” One noisy cue defeats the first claim.</dd>
+                    <dt>Set and function</dt>
+                    <dd>A set collects things. A function assigns exactly one output to each input in its domain. These become useful when you <a href="/topics/software/data-structures/#cue-records">represent the cues</a> and <a href="/topics/software/programs/#programs-try">decide which can play</a>.</dd>
+                </dl>
+                <p><a href="#logic-try">Try the rule on three props</a>, or continue to the reference books below.</p>
                 <nav class="frame-operators" aria-label="Logic and Sets next steps">
                     <a class="spw-chip" data-spw-handle="true" href="/topics/math/combinatorics/" data-spw-operator="ref" data-spw-action="explore">~combinatorics</a>
                     <a class="spw-chip" data-spw-handle="true" href="/topics/software/programs/" data-spw-operator="ref" data-spw-action="explore">~programs</a>
@@ -83,6 +92,24 @@
                         <a class="ref-link" href="https://en.wikipedia.org/wiki/Set_(mathematics)" target="_blank" rel="noopener noreferrer">wiki: sets</a>
                     </article>
                 </div>
+            </section>
+
+            <section class="spw-frame" id="logic-try" aria-labelledby="logic-try-title">
+                <header class="frame-heading" data-spw-slot="header">
+                    <h2 id="logic-try-title">Can the bell join a quiet show?</h2>
+                </header>
+                <p>You are planning a <a href="/curriculum/#tiny-show">tiny show</a> in a room that needs quiet. There are three cue cards: a bell that is ready but makes sound, a lantern that is ready and silent, and a silent ribbon that is still missing.</p>
+                <p><strong>Rule:</strong> a cue may play only when it is available <em>and</em> known to be silent. The lantern passes; the bell fails the sound condition; the ribbon fails the availability condition.</p>
+                <ol class="frame-list">
+                    <li>Write the two conditions on your cue sheet. Check each prop against both.</li>
+                    <li>Replace <em>and</em> with <em>or</em>. Find a prop the new rule would admit by mistake.</li>
+                    <li>Bring the ribbon back. Predict which decision changes, and which should stay the same.</li>
+                </ol>
+                <details class="spw-inline-disclosure">
+                    <summary>Compare your counterexample</summary>
+                    <p>With <em>or</em>, the ready bell passes even though it makes sound. The missing ribbon also passes because it is silent. Restoring <em>and</em> requires both conditions. Finding the ribbon changes its availability, so it can now join the lantern; it does not make the bell silent.</p>
+                </details>
+                <p><strong>Keep:</strong> the rule, one allowed example, and one counterexample. <a href="/topics/software/programs/#programs-try">Turn them into a program decision</a>, then <a href="/topics/software/testing/#cue-tests">check the awkward cases</a>. This rule decides eligibility; it cannot tell you whether the show is good.</p>
             </section>
 
             <section class="spw-frame" id="logic-wider" data-spw-role="reference" data-spw-form="square" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison projection" data-spw-affordance="read" data-spw-liminality="deep" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_logic__wider">

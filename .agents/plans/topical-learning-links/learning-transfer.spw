@@ -1,0 +1,33 @@
+#>learning_transfer
+#:operation #!align
+#:fixity #!tending
+
+^"observed_gap"{
+  source = `Logic and Programs had unrelated answer reveals. Topic bridges named subjects; the Combinatorics lab changed counts and destinations without asking for a reusable observation.`
+  consequence = `A click could finish without changing a decision or leaving anything to use on the next page.`
+}
+
+^"views"{
+  shelf = `Topic categories help discovery; category membership does not establish a learning order.`
+  path = `The cue-sheet project orders decisions when one uses another's result, while allowing entry at any named question.`
+  relations = `Links name application, comparison, prerequisite, or revision in their visible prose. Similarity alone is not a dependency.`
+  evidence = `A saved sheet includes rules, examples, observations, limits, source anchors, and a next revision. It is not a completion badge.`
+}
+
+^"route_roles"{
+  curriculum = `brief and portable worksheet`
+  logic = `rule and counterexample`
+  programs = `executable decision and trace`
+  data_structures = `identity, record, and ordered sequence`
+  testing = `expected results and failure cases`
+  combinatorics = `possibility count under explicit order/repetition assumptions`
+  play = `rehearsal and handoff observation`
+  andragogy = `self-chosen variation and transfer check`
+  knowledge_bases = `retrieval, provenance, and revision`
+}
+
+^"limits"{
+  example = `A quiet-room rule is a deliberately small fictional contract, not a complete event plan. Boolean eligibility does not measure artistic quality. A count of possibilities does not establish audience preference.`
+  transfer = `Keep a procedure only after restating its assumptions in the new setting. Record what changed and what failed.`
+  verification = `Code checks establish markup, links, and runtime behavior. Rehearsal with another reader is the proposed human test of learnability, not a completed result.`
+}

@@ -1768,14 +1768,14 @@ function initLatticePaths(root) {
 
     const phrase = `paths[grid]{east.${right}.north.${up}}`;
     if (right === up) {
-      status.textContent = `${phrase} — ${count} monotone paths on a square. The two axes are in harmony, like a balanced mix: neither voice is a single currency.`;
-      setNextRoute(root, '/about/#boonhonk-register', 'boonhonk pair count', 'Square grids are the binomial peak. The five-voice dummy counts the same way: 5 unary, 20 ordered pairs.');
+      status.textContent = `${phrase} — ${count} possible orders of the steps. Only two paths are drawn. Predict the count after adding one east step, then try it.`;
+      setNextRoute(root, '#cue-orders', 'Count the cue-card orders', 'Compare repeated step types with distinct cue cards: state what can repeat before you count.');
     } else if (count > 70) {
-      status.textContent = `${phrase} — ${count} paths. Too many to list by hand; this is why recurrence and budgets exist.`;
-      setNextRoute(root, '/topics/math/complexity/#parser-budgets', 'complexity budgets', 'When a count outgrows the page, name the budget before naming a product.');
+      status.textContent = `${phrase} — ${count} paths. The total is larger than the two examples drawn. Record the inputs and compare with a smaller grid you can list.`;
+      setNextRoute(root, '/topics/math/complexity/', 'The cost of listing every option', 'Counting possibilities and generating every possibility require different amounts of work.');
     } else {
-      status.textContent = `${phrase} — ${count} paths. One axis leads, a discrete gradient: more walks hug the heavier side.`;
-      setNextRoute(root, '/topics/math/calculus/#multivariable-shape', 'partial derivatives', 'An imbalanced grid is a slice-specific rate you can still count.');
+      status.textContent = `${phrase} — ${count} possible orders of the steps. Swap the east and north values: predict whether the total changes.`;
+      setNextRoute(root, '#cue-orders', 'List a small set of orders', 'A small complete list helps reveal which arrangements your rule treats as different.');
     }
   }
 
@@ -1869,15 +1869,15 @@ function initBoonhonkCount(root) {
     const total = createSvgNode('text', {
       x: 36, y: 66, 'font-family': 'JetBrains Mono, monospace', 'font-size': 13, fill: 'var(--ink-soft, rgba(0,0,0,0.72))',
     });
-    total.textContent = '5 + 20 = 25 scenes. You do not buy all twenty-five.';
+    total.textContent = '5 matching + 20 different = 25 selections.';
     svg.append(total);
 
     if (unary) {
-      status.textContent = `One voice loud: ${first.label} as ${first.gloss}. A unary is one close — an affordable first beat, not a whole season.`;
-      setNextRoute(root, '/services/creator/#first-beat', 'first beat', 'Stay small: one transform, one close. The first-beat surface explains the possible shapes without treating this dummy as a catalog.');
+      status.textContent = `Selected: ${first.label} → ${second.label} (${first.gloss}). One of 5 matching selections, shown here as a single held voice. Choose a different second voice to make an ordered pair.`;
+      setNextRoute(root, '/play/#tiny-show-rehearsal', 'Give the held voice a duration', 'Write when the action begins and ends so another person can perform your choice.');
     } else {
-      status.textContent = `A pair, not a single currency: ${first.label} + ${second.label}. Still 20 of these, not 25 products. The count helps name a composition; it does not prescribe one.`;
-      setNextRoute(root, '/services/creator/#first-beat', 'first beat', 'A pair is two named pieces. The first-beat surface keeps the possible next shapes in one calm, contextual place.');
+      status.textContent = `Selected: ${first.label} → ${second.label} (${first.gloss} → ${second.gloss}), one of 20 selections with different voices. Reverse the order: the selected scene changes, but the total remains 20.`;
+      setNextRoute(root, '/play/#tiny-show-rehearsal', 'Rehearse both orders', 'Keep the actions fixed and change only their order. Record what the change suggests to a performer.');
     }
   }
 
