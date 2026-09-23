@@ -49,9 +49,15 @@ test('quest negotiation, HEAD, methods, and redirects', async () => {
   assert.match(page, /Codex/);
   assert.match(page, /Grok/);
   assert.match(page, /Git, in this order/);
-  assert.match(page, /https:\/\/autonomous\.feedback\/spw\.quest\/broken\?at=\/"/);
-  // The page says what the workbench is, where to run it, and what success looks like.
-  assert.match(page, /Run it from the root of your repository\. It needs Git and Node 20\.19\+ or 22\.12\+\./);
+  assert.match(page, /https:\/\/autonomous\.feedback\/spw\.quest\?at=\/"/);
+  // The page says what the choice does, where to run it, and what success looks like.
+  assert.match(page, /Choose who runs the setup\. Copy one block\. Run it from the repository root\. It stops before any commit\./);
+  assert.match(page, /It needs Git and Node 20\.19\+ or 22\.12\+\./);
+  assert.match(page, /What this does/);
+  assert.match(page, /You run every step yourself\./);
+  assert.match(page, /Nothing is committed\./);
+  assert.match(page, /Include the git commands in this copy/);
+  assert.match(page, /This copy now ends with the five git commands/);
   assert.match(page, /<h2 id="after-title">When it worked<\/h2>/);
   assert.match(page, /id="first-patch"/);
   const config = await (await get('spw.quest', '/.well-known/autonomous-feedback.json')).json();
