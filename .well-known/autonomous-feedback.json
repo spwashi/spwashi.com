@@ -4,13 +4,18 @@
   "name": "Spwashi",
   "title": "Feedback",
   "intro": "What was hard to use, and what was clear.",
-  "kinds": ["problem", "suggestion", "question", "appreciation"],
+  "kinds": ["broken", "confusing", "missing", "wrong", "question", "appreciation"],
+  "routes": [
+    { "name": "Home", "path": "/" },
+    { "name": "Contact", "path": "/contact/" }
+  ],
   "labels": {
-    "problem": { "prompt": "Something broken, confusing, or hard to use on spwashi.com, and which page it was on." }
+    "broken": { "prompt": "What failed, and which page you were on." }
   },
   "contact": { "bluesky": "spwashi.com", "x": "spwashi" },
   "from": "optional",
   "button": "Make the card",
+  "queue": { "want": true },
   "frame": {
     "ancestors": ["https://spwashi.com", "https://www.spwashi.com", "https://spw.quest"]
   },

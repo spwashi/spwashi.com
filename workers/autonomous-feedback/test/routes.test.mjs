@@ -67,7 +67,7 @@ test('setup fills every codeblock with the domain, kind, and method', async () =
   try {
     const empty = await page('/start');
     assert.match(empty, /Showing example\.com until you enter your domain/);
-    assert.match(empty, /href=&quot;https:\/\/autonomous\.feedback\/example\.com\/problem&quot;/);
+    assert.match(empty, /href=&quot;https:\/\/autonomous\.feedback\/example\.com\/broken&quot;/);
     const setup = await page('/start?host=https%3A%2F%2Fshop.example%2F&how=form&kind=question');
     assert.match(setup, /action=&quot;https:\/\/autonomous\.feedback\/shop\.example&quot;/);
     assert.match(setup, /name=&quot;kind&quot; value=&quot;question&quot;/);
@@ -101,22 +101,23 @@ test('the write page is a labelled form with the kind as a choice', async () => 
     assert.match(write, /class="hp" aria-hidden="true"/);
     assert.match(write, />Make the card</);
     assert.match(write, /What you need the person who runs the site to answer\./);
-    assert.match(await page('/problem?host=example.org'), /id="host"[^>]*value="example\.org"/);
-    const moved = await get('autonomous.feedback', '/WWW.Example.org/problem');
+    assert.match(await page('/broken?host=example.org'), /id="host"[^>]*value="example\.org"/);
+    const moved = await get('autonomous.feedback', '/WWW.Example.org/broken');
     assert.equal(moved.status, 301);
-    assert.equal(moved.headers.get('location'), 'https://autonomous.feedback/example.org/problem');
+    assert.equal(moved.headers.get('location'), 'https://autonomous.feedback/example.org/broken');
     // The URL names the kind by its label; old slugs move to the matching address.
     const legacy = await get('autonomous.feedback', '/example.org/brief');
     assert.equal(legacy.status, 301);
     assert.equal(legacy.headers.get('location'), 'https://autonomous.feedback/example.org/question');
     assert.equal((await get('autonomous.feedback', '/wonder?host=example.org')).headers.get('location'), 'https://autonomous.feedback/appreciation?host=example.org');
-    assert.equal((await get('autonomous.feedback', '/embed/example.org/review')).headers.get('location'), 'https://autonomous.feedback/embed/example.org/problem');
+    assert.equal((await get('autonomous.feedback', '/embed/example.org/review')).headers.get('location'), 'https://autonomous.feedback/embed/example.org/broken');
+    assert.equal((await get('autonomous.feedback', '/example.org/problem')).headers.get('location'), 'https://autonomous.feedback/example.org/broken');
     const framed = await get('autonomous.feedback', '/embed/new-project.example');
     assert.equal(framed.headers.get('x-frame-options'), null);
     const policy = framed.headers.get('content-security-policy');
     assert.match(policy, /frame-ancestors https:\/\/new-project\.example/);
     assert.match(policy, /'self'/);
-    assert.equal((await get('autonomous.feedback', '/example.org/problem')).headers.get('x-frame-options'), 'DENY');
+    assert.equal((await get('autonomous.feedback', '/example.org/broken')).headers.get('x-frame-options'), 'DENY');
   } finally {
     restore();
   }
@@ -125,20 +126,20 @@ test('the write page is a labelled form with the kind as a choice', async () => 
 test('a rejected note comes back in the form, not as JSON', async () => {
   const restore = stubFetch();
   try {
-    const short = await get('autonomous.feedback', '/example.org', form({ kind: 'problem', note: '<b>no' }));
+    const short = await get('autonomous.feedback', '/example.org', form({ kind: 'broken', note: '<b>no' }));
     assert.equal(short.status, 400);
     const html = await short.text();
     assert.match(html, /class="error-summary" role="alert"/);
     assert.match(html, /Write at least 8 characters\. This note has 5\./);
     assert.match(html, /aria-invalid="true"/);
     assert.match(html, />&lt;b&gt;no<\/textarea>/);
-    const noSite = await get('autonomous.feedback', '/problem', form({ host: 'not a site', note: 'Something is broken here.' }));
+    const noSite = await get('autonomous.feedback', '/broken', form({ host: 'not a site', note: 'Something is broken here.' }));
     assert.equal(noSite.status, 400);
     assert.match(await noSite.text(), /is not a domain/);
     const api = await get('autonomous.feedback', '/example.org', json({ note: 'short' }));
     assert.equal(api.status, 400);
     assert.equal((await api.json()).error, 'note_bounds');
-    for (const path of ['/problem', '/example.org/problem', '/embed/example.org']) {
+    for (const path of ['/broken', '/example.org/broken', '/embed/example.org']) {
       const rejected = await get('autonomous.feedback', path, { method: 'POST', body: 'unparsed', headers: { accept: 'application/json', 'content-type': 'application/json' } });
       assert.equal(rejected.status, 400);
     }
@@ -161,15 +162,15 @@ test('a note becomes a card to save, share, or post', async () => {
     assert.match(card, /href="https:\/\/bsky\.app\/intent\/compose\?text=[^"]*example\.org/);
     assert.match(card, /Nothing was stored/);
     assert.doesNotMatch(card, /Message on|send-title/);
-    const slip = await (await get('autonomous.feedback', '/example.org/problem', json({ note: 'The checkout button does nothing after pay.' }))).json();
+    const slip = await (await get('autonomous.feedback', '/example.org/broken', json({ note: 'The checkout button does nothing after pay.' }))).json();
     assert.equal(slip.stored, false);
-    assert.equal(slip.title, 'Problem');
+    assert.equal(slip.title, 'Broken');
     assert.match(slip.markdown, /checkout button does nothing/);
-    const switched = await (await get('autonomous.feedback', '/example.org/problem', json({ kind: 'question', note: 'Does the print edition ship abroad?' }))).json();
+    const switched = await (await get('autonomous.feedback', '/example.org/broken', json({ kind: 'question', note: 'Can I finish this step without creating an account?' }))).json();
     assert.equal(switched.context, 'question');
     // An old slug in a request body still works.
     const aliased = await (await get('autonomous.feedback', '/example.org', json({ kind: 'practice', note: 'A dark mode would help at night.' }))).json();
-    assert.equal(aliased.context, 'suggestion');
+    assert.equal(aliased.context, 'confusing');
   } finally {
     restore();
   }
@@ -183,8 +184,9 @@ test('a client file shapes the form, the theme, and the frame', async () => {
       name: 'Shop',
       title: 'What was hard to use?',
       intro: 'Tell us what broke.',
-      kinds: ['problem', 'question', 'nonsense', 'brief'],
-      labels: { problem: { title: 'Bug report', prompt: 'What broke, and on which page?' } },
+      kinds: ['broken', 'question', 'nonsense', 'brief'],
+      labels: { broken: { title: 'Bug report', prompt: 'What broke, and on which page?' } },
+      routes: [{ name: 'Cart', path: '/cart' }],
       from: 'required',
       contact: { bluesky: '@Shop.Example', x: 'shop_example', mastodon: '@shop@example.social' },
       button: 'Send it',
@@ -209,16 +211,17 @@ test('a client file shapes the form, the theme, and the frame', async () => {
     assert.match(write, /--accent:#0f766e/);
     assert.match(write, /--radius:\.2rem/);
 
-    const missingFrom = await get('autonomous.feedback', '/shop.example', form({ kind: 'problem', note: 'The cart empties itself on refresh.' }));
+    const missingFrom = await get('autonomous.feedback', '/shop.example', form({ kind: 'broken', note: 'The cart empties itself on refresh.' }));
     assert.equal(missingFrom.status, 400);
     assert.match(await missingFrom.text(), /Add your name or handle/);
     const wrongKind = await get('autonomous.feedback', '/shop.example', form({ kind: 'appreciation', from: 'Ana', note: 'I love the new product photos.' }));
     assert.equal(wrongKind.status, 400);
     assert.match(await wrongKind.text(), /Shop does not take appreciation notes/);
-    const card = await page('/shop.example', form({ kind: 'problem', from: 'Ana', note: 'The cart empties itself on refresh.' }));
+    const card = await page('/shop.example', form({ kind: 'broken', from: 'Ana', path: '/cart', note: 'The cart empties itself on refresh.' }));
     assert.match(card, /class="card-site">Shop</);
     assert.match(card, /class="card-kind">Bug report</);
     assert.match(card, /— Ana/);
+    assert.match(card, /Cart · \/cart/);
     // The owner's own contacts: Message buttons, and Post links that mention them.
     assert.match(card, /<h2 id="send-title">Send it to Shop<\/h2>/);
     assert.match(card, /href="https:\/\/bsky\.app\/profile\/shop\.example"><strong>Message on Bluesky<\/strong><span>@shop\.example</);
@@ -230,7 +233,7 @@ test('a client file shapes the form, the theme, and the frame', async () => {
     assert.equal(report.found, true);
     assert.ok(report.problems.some((p) => /nonsense/.test(p)));
     assert.ok(report.problems.some((p) => /brief → question/.test(p)));
-    assert.deepEqual(report.kinds, ['problem', 'question']);
+    assert.deepEqual(report.kinds, ['broken', 'question']);
     assert.ok(report.problems.some((p) => /contrast/.test(p)));
     assert.ok(report.problems.some((p) => /insecure\.example/.test(p)));
     assert.deepEqual(report.frame.ancestors, ['https://blog.shop.example']);
@@ -258,6 +261,92 @@ test('theme colours that are hard to read fall back', () => {
   assert.ok(config.problems.some((p) => /below 4\.5:1/.test(p)));
   const clean = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'a.example', theme: { mode: 'light' } }, 'a.example');
   assert.deepEqual(clean.problems, []);
+});
+
+test('a public file cannot carry an inbox token', () => {
+  const report = readConfig({
+    schema: 'autonomous-feedback.client.v0',
+    host: 'a.example',
+    token: 'super-secret-value',
+  }, 'a.example');
+  assert.ok(report.problems.some((line) => /token does not belong/.test(line)));
+  assert.equal(JSON.stringify(report).includes('super-secret-value'), false);
+});
+
+function memoryDb() {
+  const rows = [];
+  const run = (sql, args) => {
+    const drop = (pred) => {
+      const before = rows.length;
+      for (let i = rows.length - 1; i >= 0; i -= 1) if (pred(rows[i])) rows.splice(i, 1);
+      return { meta: { changes: before - rows.length } };
+    };
+    if (sql.startsWith('DELETE FROM notes WHERE issued')) return drop((row) => row.issued < args[0]);
+    if (sql.includes('host = ? AND issued')) return drop((row) => row.host === args[0] && row.issued < args[1]);
+    if (sql.includes('host = ? AND id')) return drop((row) => row.host === args[0] && row.id === args[1]);
+    if (sql.startsWith('DELETE FROM notes WHERE host')) return drop((row) => row.host === args[0]);
+    if (sql.startsWith('INSERT')) {
+      const [id, host, kind, title, note, writer, issued, route_name, route_path] = args;
+      rows.push({ id, host, kind, title, note, writer, issued, route_name, route_path });
+      return { meta: { changes: 1 } };
+    }
+    throw new Error(sql);
+  };
+  const query = (sql, args) => {
+    if (sql.startsWith('SELECT COUNT')) return { n: rows.filter((row) => row.host === args[0]).length };
+    if (sql.startsWith('SELECT')) return rows.filter((row) => row.host === args[0]).sort((a, b) => b.issued.localeCompare(a.issued));
+    throw new Error(sql);
+  };
+  return {
+    prepare(sql) {
+      return {
+        bind(...args) {
+          return {
+            run: async () => run(sql, args),
+            first: async () => query(sql, args),
+            all: async () => ({ results: query(sql, args) }),
+          };
+        },
+      };
+    },
+  };
+}
+
+test('a site that asks for a queue can list and clear its notes', async () => {
+  const restore = stubFetch({
+    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', queue: { want: true } },
+  });
+  const env = { DB: memoryDb(), INBOX_READ_TOKEN: 'desk-token' };
+  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
+  try {
+    const filed = await call('/kept.example/broken', json({ note: 'The label and the field are too far apart to tell they belong together.', path: '/checkout' }));
+    const slip = await filed.json();
+    assert.equal(filed.status, 200);
+    assert.equal(slip.stored, true);
+    assert.equal(slip.queue, 'desk');
+    const inbox = await (await call('/kept.example/inbox', { headers: { authorization: 'Bearer desk-token' } })).json();
+    assert.equal(inbox.filings.length, 1);
+    assert.match(inbox.filings[0].note, /too far apart/);
+    const cleared = await (await call('/kept.example/inbox', { method: 'DELETE', headers: { authorization: 'Bearer desk-token' } })).json();
+    assert.equal(cleared.cleared, 1);
+    const empty = await (await call('/kept.example/inbox', { headers: { authorization: 'Bearer desk-token' } })).json();
+    assert.deepEqual(empty.filings, []);
+  } finally {
+    restore();
+  }
+});
+
+test('an inbox token can be checked and still does not open a queue', async () => {
+  const locked = await get('autonomous.feedback', '/example.org/inbox');
+  assert.equal(locked.status, 401);
+  const unread = await worker.fetch(new Request('https://autonomous.feedback/example.org/inbox', {
+    headers: { authorization: 'Bearer desk-token' },
+  }), { INBOX_READ_TOKEN: 'desk-token' });
+  assert.equal(unread.status, 501);
+  const wrong = await worker.fetch(new Request('https://autonomous.feedback/example.org/inbox', {
+    headers: { authorization: 'Bearer other-token' },
+  }), { INBOX_READ_TOKEN: 'desk-token' });
+  assert.equal(wrong.status, 401);
 });
 
 test('the inbox stays locked and old doors stay closed', async () => {

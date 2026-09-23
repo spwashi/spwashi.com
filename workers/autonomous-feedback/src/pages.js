@@ -1,5 +1,5 @@
 import { escapeHtml, layout } from "../../lib/shell.js";
-import { CONTEXTS, DEFAULT_KIND, NOTE_MAX, NOTE_MIN, contextBySlug, isPublicSite } from "./model.js";
+import { CONTEXTS, DEFAULT_KIND, NOTE_MAX, NOTE_MIN, cleanPath, contextBySlug, isPublicSite } from "./model.js";
 import { CLIENT_SCRIPT } from "./client.js";
 import { CONFIG_PATH, configToFile, defaultConfig, siteKinds, starterConfig, themeCss } from "./config.js";
 
@@ -83,7 +83,7 @@ function hostField({ id = "host", host = "", error = "", label = "Your site", hi
 }
 
 /** A static card used as an example; the same markup the card page renders. */
-function cardMarkup({ context, host, note, issued, id = "", sample = false, name = "", from = "" }) {
+function cardMarkup({ context, host, note, issued, id = "", sample = false, name = "", from = "", path = "", routeName = "" }) {
   const day = issued.slice(0, 10);
   const address = `autonomous.feedback/${host}`;
   const site = name || host;
@@ -94,6 +94,7 @@ function cardMarkup({ context, host, note, issued, id = "", sample = false, name
   <header>
     <span class="card-kind">${escapeHtml(context.title)}</span>
     <span class="card-site">${escapeHtml(site)}</span>
+    ${path ? `<span class="card-route">${escapeHtml(routeName ? `${routeName} · ${path}` : path)}</span>` : ""}
   </header>
   <blockquote class="card-note">${escapeHtml(note)}</blockquote>
   ${from ? `<p class="card-from">— ${escapeHtml(from)}</p>` : ""}
@@ -103,6 +104,20 @@ function cardMarkup({ context, host, note, issued, id = "", sample = false, name
   </footer>
   ${sample ? "" : `<p class="card-stamp" data-stamp></p>`}
 </article>`;
+}
+
+function routeField(routes, path) {
+  const clean = cleanPath(path);
+  const named = routes.some((route) => route.path === clean);
+  const options = routes.map((route) => `<label class="choice compact"><input type="radio" name="route" value="${escapeHtml(route.path)}"${route.path === clean ? " checked" : ""}> ${escapeHtml(route.name)} <span class="hint">${escapeHtml(route.path)}</span></label>`).join("");
+  return `<fieldset id="page">
+  <legend>Page</legend>
+  ${options}
+  ${routes.length ? `<label class="choice compact"><input type="radio" name="route" value=""${!named ? " checked" : ""}> Another page</label>` : ""}
+  <label for="path">Path</label>
+  <p class="hint" id="path-hint">Where on the site this happened, like /checkout. Optional.</p>
+  <input id="path" name="path" type="text" value="${escapeHtml(clean)}" placeholder="/checkout" maxlength="200" spellcheck="false" autocapitalize="none" aria-describedby="path-hint">
+</fieldset>`;
 }
 
 function kindLinks(host = "", embed = false, current = "") {
@@ -139,7 +154,7 @@ export function renderHome(host = "") {
 <h2>How it works</h2>
 <ol class="steps">
   <li><strong>Add a link, frame, or form to your site.</strong> The setup page writes the code with your domain filled in.</li>
-  <li><strong>A reader writes a note.</strong> They start with a problem, then a suggestion, a question, or a note about what was clear.</li>
+  <li><strong>A reader writes a note.</strong> They say what broke, what was confusing, what was missing, or what was wrong, and which page.</li>
   <li><strong>The reader sends you the card.</strong> They save the image or copy the text and send it by direct message, or in a post that mentions your site.</li>
 </ol>
 <p class="note">Free while readers send the cards themselves. Stored inboxes for site owners come later.</p>
@@ -218,12 +233,14 @@ export function renderStart({ host = "", how = "link", kind = DEFAULT_KIND, erro
     <summary>What each field does</summary>
     <dl class="fields">
       <dt><code>title</code></dt><dd>The heading of the form, up to 80 characters. Without it, the heading is “Feedback for” the site name.</dd>
-      <dt><code>kinds</code></dt><dd>Which kinds of note to show, in the order a reader meets them. Default: problem, suggestion, question, appreciation.</dd>
+      <dt><code>kinds</code></dt><dd>Which kinds of note to show, in the order a reader meets them. Default: broken, confusing, missing, wrong, then question and appreciation.</dd>
+      <dt><code>routes</code></dt><dd>Named pages on your site, <code>{ "name": "Checkout", "path": "/checkout" }</code>. The form offers them, and <code>?at=/checkout</code> preselects one.</dd>
       <dt><code>labels</code></dt><dd>Rename a kind and change its prompt or example. Title up to 40 characters, prompt up to 160.</dd>
       <dt><code>name</code>, <code>intro</code>, <code>button</code></dt><dd>Your site's display name, a line above the form (up to 300 characters), and the submit button text.</dd>
       <dt><code>contact</code></dt><dd>Where you take cards by direct message: <code>{ "bluesky": "example.com", "x": "example" }</code>. The card page shows Message buttons and puts your handle in the Post links.</dd>
-      <dt><code>from</code></dt><dd><code>"off"</code>, <code>"optional"</code>, or <code>"required"</code>: a field for the writer's name or handle, printed on the card. Nothing is stored either way.</dd>
+      <dt><code>from</code></dt><dd><code>"off"</code>, <code>"optional"</code>, or <code>"required"</code>: a field for the writer's name or handle, printed on the card. Nothing is stored either way. Do not put a token or password in this file.</dd>
       <dt><code>note</code></dt><dd><code>min</code> and <code>max</code> characters, between 1 and ${NOTE_MAX.toLocaleString("en-US")}.</dd>
+      <dt><code>queue.want</code></dt><dd><code>true</code> asks this host to keep each card for the site. The owner reads and clears them from the inbox. Without it, the writer sends the card by hand.</dd>
       <dt><code>frame.ancestors</code></dt><dd>Other https origins that may show the frame, such as a blog on a different domain. Up to 10.</dd>
       <dt><code>theme</code></dt><dd><code>mode</code> (<code>"light"</code> or <code>"dark"</code>), <code>background</code>, <code>text</code>, and <code>accent</code> as hex colours, <code>corners</code> (<code>"sharp"</code>, <code>"round"</code>, <code>"soft"</code>), and <code>font</code> (<code>"system"</code>, <code>"serif"</code>, <code>"mono"</code>, <code>"rounded"</code>). Colours that are hard to read are replaced with the defaults.</dd>
     </dl>
@@ -345,6 +362,7 @@ ${summary}
     </div>
   </fieldset>
   ${kindsShown.length === 1 ? `<input type="hidden" name="kind" value="${context.slug}">` : ""}
+  ${routeField(site.routes || [], values.path ?? "")}
   ${lockHost ? `<input type="hidden" name="host" value="${escapeHtml(host)}">` : hostField({ host: values.host ?? host, error: errors.host, label: "Site the note is about", hint: "A domain like example.com." })}
   ${fromField}
   <label for="note">${kindsShown.length === 1 ? escapeHtml(context.title) : "Your note"}</label>
@@ -405,10 +423,14 @@ export function renderCard(filing, embed = false, config = null) {
     themeCss: themeCss(site.theme),
     body: `${embed ? "" : kicker()}
 <h1>Your card is ready</h1>
-<p class="lede">${dms.length
-    ? `Save it as an image or copy the text, then send it to ${escapeHtml(display)} in a direct message below, or in a post that mentions them.`
-    : `Save it as an image or copy the text, then send it to whoever runs ${escapeHtml(display)}: in a direct message, or in a post that mentions the site.`}</p>
-${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, issued: filing.issued, id: "card", name: site.name, from: filing.from })}
+<p class="lede">${filing.stored
+    ? `Kept for ${escapeHtml(display)}. You can still save or share the card.`
+    : filing.queue === "full"
+      ? `The inbox for ${escapeHtml(display)} is full, so this card was not kept. Send it by hand, or ask them to clear the inbox.`
+      : dms.length
+        ? `Save it as an image or copy the text, then send it to ${escapeHtml(display)} in a direct message below, or in a post that mentions them.`
+        : `Save it as an image or copy the text, then send it to whoever runs ${escapeHtml(display)}: in a direct message, or in a post that mentions the site.`}</p>
+${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, issued: filing.issued, id: "card", name: site.name, from: filing.from, path: filing.path, routeName: filing.route })}
 <div class="actions share" data-share-text="${escapeHtml(post)}" data-share-url="https://${escapeHtml(address)}" data-file-name="feedback-${escapeHtml(filing.host)}-${escapeHtml(filing.issued.slice(0, 10))}.png">
   <button type="button" class="door" data-save-image hidden><strong>Save image</strong><span>PNG, made on this device</span></button>
   <button type="button" class="door" data-share="native" hidden><strong>Share</strong><span>from this device</span></button>
@@ -417,7 +439,9 @@ ${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, is
   <button type="button" class="door" data-copy="slip"><strong>Copy text</strong><span>as Markdown</span></button>
 </div>
 ${sendTo}
-<p class="note">Nothing was stored. The card exists on this page and in anything you save or send.</p>
+<p class="note">${filing.stored
+    ? "Kept in the inbox for this site. The card is also on this page."
+    : "Nothing was stored. The card exists on this page and in anything you save or send."}</p>
 <pre id="slip" hidden>${escapeHtml(filing.markdown)}</pre>
 <p class="actions"><a class="door" href="${escapeHtml(back)}"><strong>Write another</strong><span>for ${escapeHtml(filing.host)}</span></a></p>`,
   });

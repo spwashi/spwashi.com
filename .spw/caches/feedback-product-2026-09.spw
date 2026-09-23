@@ -76,6 +76,13 @@ source = `creator, 2026-09-22: market autonomous.feedback as a product; consider
   check = `Fetch the file from the host in the path only. Do not apply lore.land's file to spwashi.com. Do not read it from a query string.`
   role_in_ladder = `The file is the claim rung of fb-002: its presence is the proof of control, and queue.want is the owner asking for a desk.`
   fetch_guards = `isPublicSite() before any fetch; 2.5 s timeout; 16 KB cap; a redirect to another host is ignored; cached per host for 5 minutes; text below 4.5:1 or accent below 3:1 contrast falls back to the defaults`
+
+^"collect_guard"{
+  id = "fb-collect-guard"
+  claim = `Public intake is capped and does not keep notes. Eight posts and twenty meter checks per address per ten minutes. A token, bearer, or password in the client file is refused and not echoed. INBOX_READ_TOKEN, when set on the worker, is compared in constant time; a match still returns not_draining until a queue exists. No token is accepted from the query string.`
+  landed = `2026-09-22: workers/autonomous-feedback/src/intake.js`
+  unset_token = `Missing Authorization stays 401. Any bearer while the secret is unset stays 501. A wrong bearer once the secret is set is 401.`
+}[reg=facet]
 }[reg=facet]
 
 ^"fb-003_reward_loop"{
