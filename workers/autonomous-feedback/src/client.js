@@ -28,7 +28,8 @@ function clientMain() {
   });
 
   document.querySelectorAll("[data-host-field]").forEach((field) => {
-    const visit = field.parentElement?.querySelector("[data-visit]") || document.querySelector("[data-visit]");
+    // Each field has its own "Open this site" link; a field without one leaves the others alone.
+    const visit = field.parentElement?.querySelector("[data-visit]");
     const paintVisit = () => {
       const clean = normalizeHost(field.value);
       if (!visit) return;
@@ -47,9 +48,10 @@ function clientMain() {
       if (clean && clean !== field.value) field.value = clean;
       paintVisit();
       const form = field.closest("form");
-      if (!form || form.querySelector('input[type="hidden"][name="host"]') || !validSubject(clean)) return;
-      const kind = form.querySelector('input[name="kind"]:checked')?.value || "problem";
-      const next = `/${clean}/${kind}${location.search}`;
+      // Only the open write page names its site in the address; other forms leave the address alone.
+      if (!form || form.id !== "write" || form.querySelector('input[type="hidden"][name="host"]') || !validSubject(clean)) return;
+      const kind = form.querySelector('input[name="kind"]:checked')?.value;
+      const next = `/${clean}${kind ? `/${kind}` : ""}${location.search}`;
       if (next !== location.pathname + location.search) history.pushState(null, "", next);
     });
     paintVisit();
@@ -138,55 +140,103 @@ function clientMain() {
     });
   }
 
-  // Write: the kind is a choice inside the form, so switching keeps the note.
+  // Home: the first card's address follows the site as it is typed.
+  const beginSite = document.querySelector("[data-begin-site]");
+  if (beginSite) {
+    const address = document.querySelector('[data-fill="begin-address"]');
+    const beginCard = beginSite.closest("[data-live-card]");
+    const paintBegin = () => {
+      const typed = normalizeHost(beginSite.value);
+      if (address) address.textContent = `autonomous.feedback/${typed || "…"}`;
+      if (beginCard) beginCard.dataset.filled = String(Boolean(typed && validSubject(typed)));
+    };
+    beginSite.addEventListener("input", paintBegin);
+    paintBegin();
+  }
+
+  // Home, for owners: the one-line snippet follows the domain as it is typed.
+  const ownerSnippet = document.querySelector("[data-owner-snippet]");
+  const ownerSite = ownerSnippet?.closest("form")?.querySelector("[data-host-field]");
+  if (ownerSnippet && ownerSite) {
+    const paintSnippet = () => {
+      const typed = normalizeHost(ownerSite.value);
+      const domain = typed && validSubject(typed) ? typed : "yoursite.com";
+      ownerSnippet.textContent = ownerSnippet.dataset.ownerSnippet.split("{{host}}").join(domain).split("{{kindpath}}").join("");
+    };
+    ownerSite.addEventListener("input", paintSnippet);
+    paintSnippet();
+  }
+
+  // A live card leans toward the pointer and catches a little light. Never while typing, never for coarse pointers or reduced motion.
+  if (window.matchMedia?.("(pointer: fine) and (prefers-reduced-motion: no-preference)")?.matches) {
+    document.querySelectorAll(".quiet .card.live").forEach((live) => {
+      let frame = 0;
+      live.addEventListener("pointermove", (event) => {
+        if (live.matches(":focus-within")) return;
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          const box = live.getBoundingClientRect();
+          const x = (event.clientX - box.left) / box.width;
+          const y = (event.clientY - box.top) / box.height;
+          live.dataset.tilt = "";
+          live.style.setProperty("--ry", `${((x - 0.5) * 5).toFixed(2)}deg`);
+          live.style.setProperty("--rx", `${((0.5 - y) * 4).toFixed(2)}deg`);
+          live.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
+          live.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
+        });
+      });
+      const rest = () => {
+        delete live.dataset.tilt;
+        ["--rx", "--ry", "--mx", "--my"].forEach((name) => live.style.removeProperty(name));
+      };
+      live.addEventListener("pointerleave", rest);
+      live.addEventListener("focusin", rest);
+    });
+  }
+
+  // Write: the form is the card. Choices write the card's header; the note is written on the card itself.
   const write = document.getElementById("write");
   if (write) {
     const note = write.querySelector("#note");
+    const card = write.querySelector("[data-live-card]");
+    const kindLabel = write.querySelector('[data-live="kind"]');
+    const aboutLine = write.querySelector('[data-live="about"]');
+    const question = write.querySelector('[data-fill="prompt"]');
+    const subjectName = write.querySelector('[data-fill="subject-name"]');
     const count = write.querySelector("[data-count]");
-    const countLine = write.querySelector("#note-count");
-    const hint = write.querySelector('[data-fill="prompt"]');
+    const countLine = write.querySelector("[data-count-line]");
     const submit = write.querySelector("button[type=submit]");
     const draftKey = `af:draft:${write.dataset.draftKey || "any"}`;
-    const min = Number(write.dataset.noteMin) || 0;
     const max = Number(note.getAttribute("maxlength")) || Infinity;
-    const typedNow = () => Boolean(write.querySelector('input[name="kind"]:checked, input[name="thread"]:checked'));
+    const checked = (name) => write.querySelector(`input[name="${name}"]:checked`);
 
-    const paintCount = () => {
-      const length = note.value.trim().length;
-      count.textContent = String(note.value.length);
-      countLine.dataset.state = length > max ? "long" : length === 0 || typedNow() ? "" : length < min ? "short" : "ok";
+    // Change a line on the card, and let it settle so the change is felt.
+    const setLine = (node, text) => {
+      if (!node || node.textContent === text) return;
+      node.textContent = text;
+      node.hidden = !text;
+      node.removeAttribute("data-settle");
+      void node.offsetWidth;
+      node.setAttribute("data-settle", "");
     };
-    const example = write.querySelector('[data-fill="example"]');
-    const subjectName = write.querySelector('[data-fill="subject-name"]');
-    const words = write.querySelector("[data-draft-words]");
-    const chosenSubject = () => write.querySelector('input[name="subject"]:checked');
-    const chipLabel = (input) => input?.closest("label")?.querySelector("span")?.textContent?.trim() || "";
-    const paintWords = () => {
-      const value = note.value.trim();
-      if (words) words.textContent = value ? `Detail: “${value.slice(0, 160)}${value.length > 160 ? "…" : ""}”` : "";
-    };
-    const paintButton = () => {
-      if (!submit) return;
-      const thread = write.querySelector('input[name="thread"]:checked');
-      const kind = write.querySelector('input[name="kind"]:checked');
-      const value = note.value.trim();
-      if (value || (!thread && !kind)) submit.textContent = write.dataset.button || submit.textContent;
-      else if (thread?.value === "thanks") submit.textContent = "Send thanks";
-      else if (thread) submit.textContent = "Send this";
-      else submit.textContent = `Send as ${chipLabel(kind) || kind.value}`;
-    };
-    const paintKind = () => {
-      const chosen = write.querySelector('input[name="kind"]:checked');
-      if (chosen) {
-        if (hint && !chosenSubject()) hint.textContent = chosen.dataset.prompt;
-        if (example && !chosenSubject()) example.textContent = chosen.dataset.example ? `For example: ${chosen.dataset.example}` : "";
-        const href = chosen.dataset.href;
-        if (href && href !== location.pathname) history.replaceState(null, "", href);
-        say(`Sending as ${chipLabel(chosen) || chosen.value}. A detail is optional.`);
+    const paintCard = () => {
+      const thread = checked("thread");
+      const kind = checked("kind");
+      const subject = checked("subject");
+      const thanks = thread?.value === "thanks";
+      setLine(kindLabel, thread?.dataset.kindTitle || kind?.dataset.kindTitle || "Note");
+      setLine(aboutLine, thread && !thanks ? thread.dataset.about : subject?.dataset.name || "");
+      note.placeholder = thanks ? "Thanks." : thread ? "Count me too." : subject?.dataset.example || kind?.dataset.example || note.dataset.placeholder || "";
+      const words = note.value.trim();
+      if (card) card.dataset.filled = String(Boolean(words || thread || kind));
+      if (submit) {
+        submit.textContent = words || !thread ? write.dataset.button || submit.textContent : thanks ? "Send thanks" : "Count me in";
       }
-      paintButton();
-      paintCount();
+      // The count only speaks near the limit.
+      if (count) count.textContent = String(note.value.length);
+      if (countLine) countLine.hidden = note.value.length < max * 0.8;
     };
+
     if (storage && !note.value) {
       const saved = storage.getItem(draftKey);
       if (saved) {
@@ -194,45 +244,36 @@ function clientMain() {
         say("Your unsent note was restored.");
       }
     }
-    paintCount();
-    paintButton();
-    paintWords();
+    paintCard();
     note.addEventListener("input", () => {
-      paintCount();
-      paintWords();
-      paintButton();
+      paintCard();
       if (storage) {
         if (note.value) storage.setItem(draftKey, note.value);
         else storage.removeItem(draftKey);
       }
     });
     write.querySelectorAll('input[name="kind"]').forEach((input) => input.addEventListener("change", () => {
-      if (input.checked) write.querySelectorAll('input[name="thread"][value="thanks"]').forEach((thanks) => { thanks.checked = false; });
-      paintKind();
+      // A kind and thanks are one choice on screen; the kind replaces thanks.
+      write.querySelectorAll('input[name="thread"]:checked').forEach((thread) => { thread.checked = false; });
+      if (question && !checked("subject")) question.textContent = input.dataset.prompt;
+      const href = input.dataset.href;
+      if (href && href !== location.pathname) history.replaceState(null, "", href);
+      paintCard();
     }));
-
-    // Subject: its question leads; a kind the subject hides gives way; a thread from another subject is cleared.
-    const paintSubject = () => {
-      const subject = chosenSubject();
-      if (hint && subject?.dataset.prompt) hint.textContent = subject.dataset.prompt;
-      if (subjectName && subject?.dataset.name) subjectName.textContent = subject.dataset.name;
-      if (example && subject) example.textContent = subject.dataset.example ? `For example: ${subject.dataset.example}` : "";
-      const kind = write.querySelector('input[name="kind"]:checked');
-      if (kind && kind.closest("label")?.offsetParent === null) kind.checked = false;
-      write.querySelectorAll('input[name="thread"]:checked').forEach((input) => {
-        const owner = input.closest("[data-subject]");
-        if (owner && owner.dataset.subject !== subject?.value) input.checked = false;
+    write.querySelectorAll('input[name="subject"]').forEach((input) => input.addEventListener("change", () => {
+      if (question && input.dataset.prompt) question.textContent = input.dataset.prompt;
+      if (subjectName && input.dataset.name) subjectName.textContent = input.dataset.name;
+      write.querySelectorAll('input[name="thread"]:checked').forEach((thread) => {
+        const owner = thread.closest("[data-subject]");
+        if (owner && owner.dataset.subject !== input.value) thread.checked = false;
       });
-      paintButton();
-      paintWords();
-    };
-    write.querySelectorAll('input[name="subject"]').forEach((input) => input.addEventListener("change", paintSubject));
+      paintCard();
+    }));
     write.querySelectorAll('input[name="thread"]').forEach((input) => input.addEventListener("change", () => {
-      // The common note or thanks is the type on screen, so a kind left checked underneath is not sent.
-      if (input.checked) write.querySelectorAll('input[name="kind"]:checked').forEach((kind) => { kind.checked = false; });
-      paintButton();
-      paintWords();
-      say(input.value === "thanks" ? "Sending as thanks. A detail is optional." : "Joined that note. It is counted. Add a detail if you want the words read.");
+      // The common note or thanks is the choice on screen, so a kind left checked underneath is not sent.
+      write.querySelectorAll('input[name="kind"]:checked').forEach((kind) => { kind.checked = false; });
+      paintCard();
+      say(input.value === "thanks" ? "Thanks is on the card. Add words if you like." : "That note is on the card. Add words if you like.");
     }));
 
     write.addEventListener("submit", (event) => {

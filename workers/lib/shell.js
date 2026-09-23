@@ -127,6 +127,7 @@ const SHELL = `
     ol { padding-left: 1.2rem; }
     ol li { margin: .35rem 0; }
     button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex="-1"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    [hidden] { display: none !important; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
     .skip { position: absolute; left: .75rem; top: -4rem; z-index: 2; padding: .6rem 1rem; border-radius: var(--pill); background: var(--bg); border: 1px solid var(--accent); }
     .skip:focus { top: calc(.75rem + env(safe-area-inset-top)); }
@@ -203,13 +204,6 @@ const SHELL = `
     .card footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .4rem 1rem; }
     .card-kind { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; }
     .card-site { font-size: clamp(1.3rem, 4.5vw, 1.8rem); font-weight: 650; letter-spacing: -.03em; overflow-wrap: anywhere; }
-    .card-moment { max-width: 38rem; color: var(--accent); font-size: .9rem; letter-spacing: .02em; }
-    .draft-card { margin: 1.25rem 0; padding: 1rem 1.2rem; border-left: 3px solid var(--accent); border-radius: .4rem var(--radius) var(--radius) .4rem; background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 12%, var(--surface)), var(--field)); }
-    .draft-eyebrow { margin: 0 0 .5rem; color: var(--accent); font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-    .draft-story { margin: 0; font-size: 1.05rem; line-height: 1.55; overflow-wrap: anywhere; }
-    .draft-example { margin: .65rem 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
-    .draft-words:empty { display: none; }
-    .draft-words { margin: .65rem 0 0; }
     .card-count { margin: 1rem 0 1.1rem; color: var(--fg); line-height: 1.45; }
     .card-prompt { color: var(--muted); font-style: italic; margin: .5rem 0 0; }
     .card-note { margin: 1rem 0 1.1rem; padding: 0 0 0 1rem; border-left: 2px solid var(--accent); font-size: 1.12rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -230,21 +224,92 @@ const SHELL = `
     .page-known strong { color: var(--fg); font-weight: 600; }
     .page details { margin: 0; }
     .page fieldset { margin-top: .6rem; }
-    .write .keep { margin: 1.1rem 0 0; }
     .write .threads, .write .asks, .write .stance { display: none; }
     .write .threads { margin: 0 0 1.1rem; }
     .write fieldset.chips legend .hint, .write label .hint, .write summary .hint { margin: 0 0 0 .4rem; font-size: .82rem; }
-    .write label[for="note"] { color: var(--fg); font-size: 1.02rem; font-weight: 600; margin: .2rem 0 .3rem; }
-    .write .when-tapped, .write .when-typed { display: none; color: var(--fg); }
-    .write:has(input[name="kind"]:checked) .when-typed,
-    .write:has(input[name="thread"]:checked) .when-typed { display: inline; }
-    .write:has(input[name="kind"]:checked) .until-typed,
-    .write:has(input[name="thread"]:checked) .until-typed { display: none; }
-    .write:has(input[name="kind"]:checked) .untapped,
-    .write:has(input[name="thread"]:checked) .untapped { display: none; }
+    /* The form is the card: the question above it, the note written on it, the header following the choices. */
+    .write .question { display: block; margin: 1.3rem 0 .4rem; color: var(--fg); font-size: 1.05rem; font-weight: 600; }
+    .card.live { margin: 0 0 .4rem; border-style: dashed; box-shadow: none; transition: border-color 180ms ease, box-shadow 220ms ease, transform 220ms ease; }
+    .card.live[data-filled="true"],
+    .write:has(input[name="thread"]:checked) .card.live,
+    .write:has(input[name="kind"]:checked) .card.live,
+    .card.live:has(.card-write:not(:placeholder-shown)) { border-style: solid; box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 14%, transparent); }
+    .card.live:focus-within { box-shadow: 0 0 0 2px var(--accent), 0 14px 34px color-mix(in srgb, var(--accent) 14%, transparent); }
+    .card.live header { padding-right: 0; }
+    .card.live [data-live][data-settle] { animation: af-settle 240ms ease-out; }
+    @keyframes af-settle { from { opacity: .35; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+    .write .card.live textarea.card-write { display: block; width: 100%; min-height: 5.5rem; margin: 1rem 0 .9rem; padding: .1rem 0 .1rem 1rem; border: 0; border-left: 2px solid var(--accent); border-radius: 0; background: transparent; color: var(--fg); font: 1.12rem/1.5 var(--font); resize: vertical; }
+    .write .card.live textarea.card-write:focus { outline: none; }
+    .write .card.live textarea.card-write::placeholder { color: color-mix(in srgb, var(--muted) 80%, transparent); font-style: italic; }
+    .write .card-from-line { margin: -.3rem 0 .9rem; color: var(--muted); }
+    .write .card-from-line input#from { width: min(100%, 16rem); min-height: 40px; padding: .2rem .15rem; border: 0; border-bottom: 1px dashed var(--line); border-radius: 0; background: transparent; color: var(--fg); font: inherit; }
+    .write .card-from-line input#from:focus { outline: none; border-bottom: 1px solid var(--accent); }
+    .write .send { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 1.3rem 0 0; }
+    .write .send button { margin: 0; min-width: 12rem; background: var(--accent); color: var(--bg); font-weight: 650; }
+    .write .courtesy { color: var(--muted); font-size: .88rem; }
+
+    /* ─── autonomous.feedback finish: a quiet room with one lit object in it ─── */
+    body.quiet { background:
+      radial-gradient(52rem 34rem at 88% -12%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 62%),
+      radial-gradient(44rem 30rem at -12% 108%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 62%),
+      var(--bg); background-attachment: fixed; }
+    body.quiet::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .045;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    /* Inside someone's page the frame stays transparent: their room, not ours. */
+    body.quiet.embed { background: transparent; }
+    body.quiet.embed::before { display: none; }
+    body.quiet h1 { letter-spacing: -.045em; }
+    /* The card as an object: paper with depth, a kind worn as a small seal, a sheet stack once it has something to say. */
+    body.quiet .card { background:
+      radial-gradient(28rem 18rem at var(--mx, 85%) var(--my, 0%), color-mix(in srgb, #fff 7%, transparent), transparent 60%),
+      linear-gradient(165deg, color-mix(in srgb, var(--surface) 92%, #fff 8%), var(--field) 70%);
+      box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 10%, transparent), 0 24px 48px -28px color-mix(in srgb, var(--accent) 45%, transparent); }
+    body.quiet .card-kind { justify-self: start; padding: .18rem .6rem; border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--accent) 9%, transparent); font-size: .72rem; }
+    /* Tilt only while the pointer is on it, so text at rest stays crisp (a standing 3D layer softens it). */
+    body.quiet .card.live { transition: border-color 180ms ease, box-shadow 220ms ease, transform 260ms cubic-bezier(.2, .8, .3, 1); }
+    body.quiet .card.live[data-tilt] { transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+    body.quiet .card.live[data-filled="true"],
+    body.quiet .write:has(input[name="thread"]:checked) .card.live,
+    body.quiet .write:has(input[name="kind"]:checked) .card.live,
+    body.quiet .card.live:has(.card-write:not(:placeholder-shown)) {
+      box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 10%, transparent),
+        7px 7px 0 -1px var(--bg), 7px 7px 0 0 color-mix(in srgb, var(--accent) 30%, transparent),
+        14px 14px 0 -1px var(--bg), 14px 14px 0 0 color-mix(in srgb, var(--accent) 16%, transparent),
+        0 30px 60px -30px color-mix(in srgb, var(--accent) 55%, transparent); }
+    body.quiet .card.live:focus-within { box-shadow: 0 0 0 2px var(--accent), 0 30px 60px -30px color-mix(in srgb, var(--accent) 55%, transparent); }
+    /* Chips press like keys. */
+    body.quiet label.chip { transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease, transform 120ms ease; }
+    body.quiet label.chip:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); transform: translateY(-1px); }
+    body.quiet label.chip:active { transform: translateY(0) scale(.97); }
+    body.quiet label.chip:has(input:checked) { background: color-mix(in srgb, var(--accent) 14%, var(--field)); }
+    body.quiet label.chip:has(input:checked) span::before { content: "✓ "; }
+    /* One lit action. */
+    body.quiet .write .send button { position: relative; overflow: hidden; padding-inline: 1.4rem; border: 0;
+      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 70%, var(--fg))); box-shadow: 0 10px 24px -12px var(--accent);
+      transition: transform 140ms ease, box-shadow 200ms ease; }
+    body.quiet .write .send button::after { content: " →"; }
+    body.quiet .write .send button:hover { transform: translateY(-1px); box-shadow: 0 14px 30px -12px var(--accent); }
+    body.quiet .write .send button:active { transform: translateY(0) scale(.98); }
+    /* A stance reads as a reply. */
+    body.quiet .write .stance { position: relative; margin-top: .9rem; border-left: 0; border-radius: calc(var(--radius) * .7); background: color-mix(in srgb, var(--accent) 8%, var(--field)); }
+    body.quiet .write .stance::before { content: ""; position: absolute; top: -7px; left: 1.4rem; width: 14px; height: 14px; background: inherit; transform: rotate(45deg); }
+    /* For owners: the whole setup is one line. */
+    .snippet-line { margin: .8rem 0; }
+    .snippet-line pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+    @media (prefers-reduced-motion: reduce) {
+      body.quiet .card.live { transform: none; }
+      body.quiet label.chip, body.quiet .write .send button { transition: none; }
+    }
+    /* The homepage's first card: type the site right where its name goes. */
+    .begin .card.live header { gap: .3rem; }
+    .write .card-site-input { width: 100%; min-height: 48px; margin: 0; padding: 0; border: 0; border-bottom: 1px dashed var(--line); border-radius: 0; background: transparent; color: var(--fg); font-size: clamp(1.3rem, 4.5vw, 1.8rem); font-weight: 650; letter-spacing: -.03em; }
+    .write input.card-site-input:not(.hp) { padding: 0; border: 0; border-bottom: 1px dashed var(--line); border-radius: 0; background: transparent; font-size: clamp(1.3rem, 4.5vw, 1.8rem); }
+    .write input.card-site-input:focus { outline: none; border-bottom-color: var(--accent); }
+    .card-body-hint { margin: 1rem 0 1.1rem; padding-left: 1rem; border-left: 2px solid var(--accent); color: var(--muted); font-size: 1.12rem; font-style: italic; }
+    .try { margin: .8rem 0 2.2rem; color: var(--muted); }
+    .owners { margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
+    @media (prefers-reduced-motion: reduce) { .card.live, .card.live [data-live][data-settle] { transition: none; animation: none; } }
     .write:has(input[name="thread"]:checked) #kinds { display: none; }
-    .write .thanks-row { margin: .7rem 0 0; }
-    .write .thanks-row label.chip { font-size: .9rem; }
     .about-line { margin: 0 0 1rem; }
     .about-line p { margin: 0; color: var(--muted); }
     .about-line p strong { color: var(--fg); font-weight: 600; }
@@ -282,6 +347,12 @@ const SHELL = `
     .tally .num { text-align: right; font-variant-numeric: tabular-nums; }
     .card-stamp { position: absolute; top: 1rem; right: 1rem; margin: 0; padding: .2rem .6rem; border: 2px solid var(--warn); border-radius: .4rem; color: var(--warn); font: 700 .78rem/1.3 ui-monospace, SFMono-Regular, monospace; letter-spacing: .08em; text-transform: uppercase; transform: rotate(-7deg); opacity: 0; }
     .card[data-sent="true"] .card-stamp { opacity: 1; }
+    /* A note that reached its inbox lands stamped. */
+    .card[data-kept="true"] .card-stamp { opacity: 1; border-color: var(--accent); color: var(--accent); }
+    @media (prefers-reduced-motion: no-preference) {
+      .card[data-kept="true"] .card-stamp { animation: af-stamp 420ms cubic-bezier(.2, .9, .3, 1.25) 260ms both; }
+      @keyframes af-stamp { from { opacity: 0; transform: rotate(-7deg) scale(1.9); } to { opacity: 1; transform: rotate(-7deg) scale(1); } }
+    }
     .door strong { overflow-wrap: anywhere; }
     @media (prefers-reduced-motion: no-preference) { .card-stamp { transition: opacity .25s ease-out; } }
     .share { align-items: stretch; }
@@ -313,7 +384,7 @@ export function layout({ title, description, canonical, climate, body, quiet = f
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <style>${SHELL}</style>${themeCss ? `\n  <style>${themeCss}</style>` : ""}
 </head>
-<body class="${embed ? "embed" : ""}" data-spw-climate="${escapeHtml(spwClimate)}" data-weather="${escapeHtml(weather)}">
+<body class="${[embed ? "embed" : "", quiet ? "quiet" : ""].filter(Boolean).join(" ")}" data-spw-climate="${escapeHtml(spwClimate)}" data-weather="${escapeHtml(weather)}">
   ${embed ? "" : `<a class="skip" href="#main">Skip to content</a>`}
   <main id="main" tabindex="-1">${body}
     <footer>

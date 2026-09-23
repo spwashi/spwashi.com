@@ -48,14 +48,24 @@ test('the homepage explains the product and starts setup', async () => {
   const restore = stubFetch();
   try {
     const home = await page('/');
-    assert.match(home, /<h1>A feedback form for any website<\/h1>/);
-    assert.match(home, /class="card sample"/);
+    assert.match(home, /<h1>Tell a website what happened<\/h1>/);
+    // The first thing on the page is a card whose site you type in place.
+    assert.match(home, /<form method="get" action="\/note" class="write begin"/);
+    assert.match(home, /class="card-site-input" id="site" name="host"[^>]*data-begin-site/);
+    assert.match(home, /Or try one that is set up: <a href="\/lore\.land">/);
+    assert.doesNotMatch(home, /example\.com<\/span>/);
     assert.match(home, /action="\/start"/);
     assert.match(home, /class="skip" href="#main"/);
     assert.match(home, /aria-describedby="host-hint"/);
     assert.doesNotMatch(home, /<select|spwashi|subdomain/i);
     assert.match(home, /viewport-fit=cover/);
-    assert.match(home, /<h2>What it costs<\/h2>/);
+    assert.match(home, /<summary>How it works, and what it costs<\/summary>/);
+    const go = await get('autonomous.feedback', '/note?host=https%3A%2F%2Fwww.Shop.example%2F');
+    assert.equal(go.status, 302);
+    assert.equal(go.headers.get('location'), 'https://autonomous.feedback/shop.example');
+    const privacy = await page('/privacy');
+    assert.match(privacy, /<h1>How notes are kept<\/h1>/);
+    assert.match(privacy, /Three days, unless the owner saves the note\./);
     assert.match(home, /An inbox: on request\./);
     assert.doesNotMatch(home, /come later/);
     assert.match(await page('/?host=https%3A%2F%2Fwww.Shop.example%2Fabout'), /value="shop\.example"/);
@@ -102,10 +112,12 @@ test('the write page is a labelled form with the kind as a choice', async () => 
     assert.match(write, /<h1>A note for example\.org<\/h1>/);
     assert.match(write, /name="kind" value="question" checked/);
     assert.match(write, /data-href="\/example\.org\/question"/);
-    assert.match(write, /<legend>What is this\? <span class="hint">Enough to send<\/span><\/legend>/);
-    assert.match(write, /This sends as <strong>Question<\/strong>\. What you need the person who runs the site to answer\./);
-    assert.match(write, /<span class="when-typed">Add a detail/);
-    assert.match(write, /aria-describedby="note-hint note-count"/);
+    assert.match(write, /<legend>Pick one, or just write<\/legend>/);
+    // The question is the label; the note is written on the card itself.
+    assert.match(write, /<label for="note" class="question" data-fill="prompt">What you need the person who runs the site to answer\.<\/label>/);
+    assert.match(write, /<article class="card live" data-live-card[\s\S]*<span class="card-kind" data-live="kind">Question<\/span>[\s\S]*<textarea class="card-write" id="note" name="note"/);
+    assert.match(write, /aria-describedby="note-hint"/);
+    assert.match(write, /You get the card to send example\.org\. <a href="\/privacy">How notes are kept<\/a>/);
     assert.match(write, /class="hp" aria-hidden="true"/);
     assert.match(write, />Make my card</);
     assert.match(write, /name="thread" value="thanks"/);
@@ -222,9 +234,12 @@ test('a client file shapes the form, the theme, and the frame', async () => {
     assert.match(write, /Tell us what broke\./);
     assert.match(write, /<span>Bug report<\/span>/);
     assert.doesNotMatch(write, /Appreciation/);
-    assert.match(write, /<label for="from">Your name or handle<\/label>/);
+    assert.match(write, /<label for="from" class="sr-only">Your name or handle<\/label>/);
     assert.match(write, /id="from"[^>]*required/);
-    assert.match(write, /Without a type, write at least 20 characters/);
+    // The minimum is enforced, and named only when a note falls short of it.
+    assert.doesNotMatch(write, /at least 20 characters/);
+    const short = await (await get('autonomous.feedback', '/shop.example', form({ note: 'Too short', from: 'A reader' }))).text();
+    assert.match(short, /at least 20 characters/);
     assert.match(write, /maxlength="500"/);
     assert.doesNotMatch(write, /minlength=/);
     assert.match(write, />Send it</);
@@ -342,7 +357,7 @@ test('asking for a queue does not keep notes until the desk opens for the host',
     assert.equal(contract.ingest.stores, false);
     assert.equal(contract.queue.requested, true);
     assert.match(await (await call('/start?host=asks.example')).text(), /Inbox: requested/);
-    assert.match(await (await call('/asks.example/broken')).text(), /Nothing is stored\./);
+    assert.match(await (await call('/asks.example/broken')).text(), /You get the card to send asks\.example\./);
   } finally {
     restore();
   }
@@ -619,12 +634,13 @@ test('the write page picks the subject from the page, and follows it with thread
     const page = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', { headers: { referer: 'https://maker.example/design/folios/' } }))).text();
     assert.match(page, /name="subject" value="folios" checked/);
     assert.match(page, /Which folio, and what happened\?/);
-    assert.match(page, /<legend>Often said about Folios <span class="hint">One tap counts\. Add words only if you want them read\.<\/span><\/legend>/);
+    assert.match(page, /<legend>Often said about Folios<\/legend>/);
+    assert.match(page, /name="thread" value="folios:order-by-card" data-kind-title="Note" data-about="Folios · Ordering is by card"/);
     // The page picked the subject, so it is stated, with a way to change it.
     assert.match(page, /About <strong data-fill="subject-name">Folios<\/strong>/);
     assert.match(page, /name="thread" value="folios:order-by-card"/);
     assert.match(page, /<strong>Maker:<\/strong> On purpose for now\./);
-    assert.match(page, /<summary>Say more <span class="hint">2 questions, all optional<\/span><\/summary>/);
+    assert.match(page, /<summary>Say more<\/summary>/);
     assert.match(page, /name="ask-0"/);
     // The subject's kinds hide the rest, and the rules ride in the page's own style.
     assert.match(page, /label\.chip\[data-kind\]:not\(\[data-kind="broken"\], \[data-kind="appreciation"\]\):not\(:has\(input:checked\)\) \{ display: none; \}/);
