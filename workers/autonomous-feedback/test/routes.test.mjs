@@ -638,6 +638,33 @@ test('a client file maps the creator\'s subjects, threads, and asks, within limi
   assert.equal(subjectFor(config, '/'), null);
 });
 
+test('about decides whether the note is about the site or the subject', async () => {
+  const siteFile = { ...MAPPED, about: 'site', title: 'What happened on the site?' };
+  const workFile = { ...MAPPED, host: 'tale.example', about: 'subject', title: 'A note about the lore' };
+  assert.equal(readConfig(siteFile, 'maker.example').about, 'site');
+  assert.equal(readConfig(workFile, 'tale.example').about, 'subject');
+  const rejected = readConfig({ schema: 'autonomous-feedback.client.v0', host: 'a.example', about: 'lore' }, 'a.example');
+  assert.equal(rejected.about, '');
+  assert.ok(rejected.problems.some((problem) => /about must be/.test(problem)));
+  const restore = stubFetch({ 'maker.example': siteFile, 'tale.example': workFile });
+  try {
+    const sitePage = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', { headers: { referer: 'https://maker.example/design/folios/' } }))).text();
+    assert.match(sitePage, /<h1 class="write-title">What happened on the site\?<\/h1>/);
+    assert.match(sitePage, /On <strong data-fill="subject-name">Folios<\/strong>/);
+    assert.match(sitePage, /Where on the site\?/);
+    assert.match(sitePage, /Often said about this part/);
+    assert.ok(sitePage.indexOf('id="what-kinds"') < sitePage.indexOf('id="what-folios"'));
+    const workPage = await (await worker.fetch(new Request('https://autonomous.feedback/tale.example', { headers: { referer: 'https://tale.example/design/folios/' } }))).text();
+    assert.match(workPage, /<h1 class="write-title">A note about the lore<\/h1>/);
+    assert.match(workPage, /About <strong data-fill="subject-name">Folios<\/strong>/);
+    assert.match(workPage, /What is this about\?/);
+    assert.match(workPage, /Often said about Folios/);
+    assert.ok(workPage.indexOf('id="what-folios"') < workPage.indexOf('id="what-kinds"'));
+  } finally {
+    restore();
+  }
+});
+
 test('the write page picks the subject from the page, and follows it with threads and asks', async () => {
   const restore = stubFetch({ 'maker.example': MAPPED });
   try {

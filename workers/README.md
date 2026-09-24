@@ -42,7 +42,9 @@ request asks for JSON.
 A site configures its own form and theme by publishing
 `https://{host}/.well-known/autonomous-feedback.json`
 (`autonomous-feedback.client.v0`): kinds and their order, per-kind labels, a
-display name, a form heading (`title`), an intro, the button text, DM contacts
+display name, a form heading (`title`), an intro, `about` (`site` asks about
+using the site and leads with the kinds; `subject` asks about the work and
+leads with the common notes), the button text, DM contacts
 (`contact.bluesky`, `contact.x`: Message buttons on the card page and a mention
 in the Post links), an optional or required name field,
 note length bounds, extra frame ancestors, and theme tokens (mode, background,
