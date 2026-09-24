@@ -432,7 +432,8 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
   const subjects = site.subjects || [];
   const chosenSubject = subjects.find((sub) => sub.id === values.subject) || (values.subject ? null : subjectFor(site, values.path ?? ""));
   const prompt = chosenSubject?.prompt || context.prompt;
-  const exampleText = chosenSubject ? chosenSubject.example : context.example;
+  // An unchosen card stays blank. The shop-shaped default would read as the note.
+  const exampleText = chosenSubject?.example || (selected && context.slug !== NOTE.slug ? context.example : "");
   const chosenThread = chosenSubject?.threads.find((t) => values.thread === `${chosenSubject.id}:${t.id}` || values.thread === t.id) || null;
   const thanked = values.thread === "thanks";
 
@@ -459,17 +460,17 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
     </div>
   </fieldset>`;
 
-  // The fast lane: what this creator hears often. One tap is a whole note.
-  const threadBlocks = subjects.filter((sub) => sub.threads.length).map((sub) => `<fieldset class="chips threads" data-subject="${escapeHtml(sub.id)}">
-    <legend>Often said about ${escapeHtml(sub.name)}</legend>
-    <div class="row">
-      ${sub.threads.map((t) => `<label class="chip"><input type="radio" name="thread" value="${escapeHtml(`${sub.id}:${t.id}`)}" data-kind-title="${escapeHtml(contextBySlug(t.kind)?.title || NOTE.title)}" data-about="${escapeHtml(`${sub.name} · ${t.name}`)}"${chosenThread === t && chosenSubject?.id === sub.id ? " checked" : ""}> <span>${escapeHtml(t.name)}</span></label>`).join("\n      ")}
-    </div>
-    ${sub.threads.filter((t) => t.stance).map((t) => `<p class="stance" data-for="${escapeHtml(`${sub.id}:${t.id}`)}"><strong>${escapeHtml(display)}:</strong> ${escapeHtml(t.stance)}${t.link ? ` <a href="https://${escapeHtml(host)}${escapeHtml(t.link)}">More</a>` : ""}</p>`).join("\n    ")}
-  </fieldset>`).join("\n  ");
+  // "What is it" is one choice: a common note (the fast lane), a kind, or thanks. One radio group, so only one is ever sent.
+  const threadRows = subjects.filter((sub) => sub.threads.length).map((sub) => `<div class="what-row threads" data-subject="${escapeHtml(sub.id)}" role="group" aria-labelledby="what-${escapeHtml(sub.id)}">
+      <p class="row-caption" id="what-${escapeHtml(sub.id)}">Often said about ${escapeHtml(sub.name)}</p>
+      <div class="row">
+      ${sub.threads.map((t) => `<label class="chip"><input type="radio" name="what" value="${escapeHtml(`thread:${sub.id}:${t.id}`)}" data-kind-title="${escapeHtml(contextBySlug(t.kind)?.title || NOTE.title)}" data-about="${escapeHtml(`${sub.name} · ${t.name}`)}" data-body="Count me too."${chosenThread === t && chosenSubject?.id === sub.id ? " checked" : ""}> <span>${escapeHtml(t.name)}</span></label>`).join("\n      ")}
+      </div>
+      ${sub.threads.filter((t) => t.stance).map((t) => `<p class="stance" data-for="${escapeHtml(`thread:${sub.id}:${t.id}`)}"><strong>${escapeHtml(display)}:</strong> ${escapeHtml(t.stance)}${t.link ? ` <a href="https://${escapeHtml(host)}${escapeHtml(t.link)}">More</a>` : ""}</p>`).join("\n      ")}
+    </div>`).join("\n    ");
 
   const kinds = kindsShown.map((c) => `<label class="chip" data-kind="${c.slug}">
-      <input type="radio" name="kind" value="${c.slug}"${selected?.slug === c.slug ? " checked" : ""} data-kind-title="${escapeHtml(c.title)}" data-prompt="${escapeHtml(c.prompt)}" data-example="${escapeHtml(c.example)}" data-href="${root}${lockHost ? `/${encodeURIComponent(host)}` : ""}/${c.slug}">
+      <input type="radio" name="what" value="kind:${c.slug}"${selected?.slug === c.slug && !chosenThread && !thanked ? " checked" : ""} data-kind-title="${escapeHtml(c.title)}" data-prompt="${escapeHtml(c.prompt)}" data-body="${escapeHtml(c.tap)}">
       <span>${escapeHtml(c.title)}</span>
     </label>`).join("\n      ");
   const askBlocks = subjects.filter((sub) => sub.asks.length).map((sub) => `<details class="asks" data-subject="${escapeHtml(sub.id)}"${sub.asks.some((_, i) => values.asks?.[i]) ? " open" : ""}>
@@ -481,7 +482,7 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
   const subjectCss = subjects.map((sub) => {
     const show = `.write:has(input[name="subject"][value="${sub.id}"]:checked) [data-subject="${sub.id}"] { display: block; }`;
     const hide = sub.kinds.length ? `.write:has(input[name="subject"][value="${sub.id}"]:checked) label.chip[data-kind]:not(${sub.kinds.map((k) => `[data-kind="${k}"]`).join(", ")}):not(:has(input:checked)) { display: none; }` : "";
-    const stances = sub.threads.filter((t) => t.stance).map((t) => `.write:has(input[name="thread"][value="${sub.id}:${t.id}"]:checked) .stance[data-for="${sub.id}:${t.id}"] { display: block; }`).join("\n");
+    const stances = sub.threads.filter((t) => t.stance).map((t) => `.write:has(input[name="what"][value="thread:${sub.id}:${t.id}"]:checked) .stance[data-for="thread:${sub.id}:${t.id}"] { display: block; }`).join("\n");
     return [show, hide, stances].filter(Boolean).join("\n");
   }).join("\n");
 
@@ -493,7 +494,7 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
   // The card as it will read: the header follows the choices, the body is what you write.
   const cardKind = thanked ? "Appreciation" : chosenThread ? (contextBySlug(chosenThread.kind)?.title || NOTE.title) : context.title;
   const cardAbout = chosenThread ? `${chosenSubject.name} · ${chosenThread.name}` : chosenSubject?.name || "";
-  const placeholder = thanked ? "Thanks." : chosenThread ? "Count me too." : exampleText || "";
+  const placeholder = thanked ? "Thanks." : chosenThread ? "Count me too." : selected?.tap || exampleText || "";
   const fromLine = site.from === "off" ? "" : `<p class="card-from-line"><label for="from" class="sr-only">Your name or handle</label>— <input id="from" name="from" type="text" value="${escapeHtml(values.from ?? "")}" maxlength="80" autocomplete="nickname" placeholder="${site.from === "required" ? "your name" : "your name, if you like"}"${site.from === "required" ? " required" : ""}${errors.from ? ` aria-invalid="true"` : ""}></p>`;
   const button = site.button || (desk === "open" ? `Send to ${display}` : "Make my card");
   const courtesy = desk === "open"
@@ -516,15 +517,20 @@ ${site.intro ? `<p class="lede">${escapeHtml(site.intro)}</p>` : ""}
 ${summary}
 <form method="post" action="${escapeHtml(action)}" class="write" id="write" data-draft-key="${escapeHtml(lockHost ? host : "")}" data-button="${escapeHtml(button)}">
   ${subjectBlock}
-  ${threadBlocks}
-  <fieldset id="kinds" class="chips tags"${kindsShown.length === 1 ? " hidden" : ""}>
-    <legend>${subjects.some((sub) => sub.threads.length) ? "Or pick one" : "Pick one, or just write"}</legend>
+  <fieldset id="what" class="chips what">
+    <legend class="sr-only">What is it?</legend>
     ${fieldError("kind-error", errors.kind)}
-    <div class="row">
+    ${threadRows}
+    <div class="what-row" role="group" aria-labelledby="what-kinds"${kindsShown.length === 1 ? " hidden" : ""}>
+      <p class="row-caption" id="what-kinds">${subjects.some((sub) => sub.threads.length) ? "Or pick one" : "Pick one, or just write"}</p>
+      <div class="row">
       ${kinds}
-      ${kindsShown.some((c) => c.slug === "appreciation") ? `<label class="chip"><input type="radio" name="thread" value="thanks" data-kind-title="Appreciation"${thanked ? " checked" : ""}> <span>Just saying thanks</span></label>` : ""}
+      ${kindsShown.some((c) => c.slug === "appreciation") ? `<label class="chip"><input type="radio" name="what" value="thanks" data-kind-title="Appreciation" data-body="Thanks."${thanked ? " checked" : ""}> <span>Just saying thanks</span></label>` : ""}
+      </div>
     </div>
+    <p class="clear-row"><button type="button" class="clear-what" data-clear-what hidden>Clear the choice</button></p>
   </fieldset>
+  ${kindsShown.length === 1 ? `<input type="hidden" name="kind" value="${kindsShown[0].slug}">` : ""}
   <label for="note" class="question" data-fill="prompt">${escapeHtml(prompt)}</label>
   ${fieldError("note-error", errors.note)}
   <article class="card live" data-live-card aria-label="Your card">
@@ -533,14 +539,15 @@ ${summary}
       <span class="card-site">${escapeHtml(display || "your site")}</span>
       <span class="card-subject" data-live="about"${cardAbout ? "" : " hidden"}>${escapeHtml(cardAbout)}</span>
     </header>
-    <textarea class="card-write" id="note" name="note" rows="3" maxlength="${site.note.max}" placeholder="${escapeHtml(placeholder)}" data-placeholder="${escapeHtml(exampleText || "")}" aria-describedby="${noteDescribed}"${errors.note ? ` aria-invalid="true"` : ""}${embed || chosenSubject?.threads.length || selected ? "" : " autofocus"}>${escapeHtml(note)}</textarea>
+    <textarea class="card-write" id="note" name="note" rows="3" maxlength="${site.note.max}" placeholder="${escapeHtml(placeholder)}" data-placeholder="${escapeHtml(exampleText || "")}" aria-describedby="${noteDescribed}" aria-keyshortcuts="Control+Enter Meta+Enter"${errors.note ? ` aria-invalid="true"` : ""}${embed || chosenSubject?.threads.length || selected ? "" : " autofocus"}>${escapeHtml(note)}</textarea>
     ${fromLine}
     <footer>
       <time datetime="${today}">${today}</time>
       <span class="card-address">autonomous.feedback/${escapeHtml(host || "…")}</span>
     </footer>
   </article>
-  <p class="hint" id="note-hint"><span data-count-line hidden><span data-count>${note.length}</span> of ${site.note.max.toLocaleString("en-US")}</span></p>
+  <p class="sr-only" id="note-hint">${exampleText ? `For example: ${escapeHtml(exampleText)}. ` : ""}Optional once you pick something above. Control or Command and Enter sends.</p>
+  <p class="hint" data-count-line hidden><span data-count>${note.length}</span> of ${site.note.max.toLocaleString("en-US")}</p>
   ${askBlocks}
   ${routeField(site.routes || [], values.path ?? "", values.pathFrom || "")}
   ${lockHost ? `<input type="hidden" name="host" value="${escapeHtml(host)}">` : hostField({ host: values.host ?? host, error: errors.host, label: "Which site is this about?", hint: "A domain like example.com." })}

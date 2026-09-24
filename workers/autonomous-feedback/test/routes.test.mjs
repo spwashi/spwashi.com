@@ -110,9 +110,13 @@ test('the write page is a labelled form with the kind as a choice', async () => 
   try {
     const write = await page('/example.org/question');
     assert.match(write, /<h1>A note for example\.org<\/h1>/);
-    assert.match(write, /name="kind" value="question" checked/);
-    assert.match(write, /data-href="\/example\.org\/question"/);
-    assert.match(write, /<legend>Pick one, or just write<\/legend>/);
+    // One choice, one group: the link's kind is checked in it, and choosing never rewrites the address.
+    assert.match(write, /name="what" value="kind:question" checked/);
+    assert.doesNotMatch(write, /data-href=/);
+    assert.match(write, /<fieldset id="what" class="chips what">/);
+    assert.match(write, /data-clear-what hidden>Clear the choice</);
+    assert.match(write, /<p class="sr-only" id="note-hint">[^<]*Optional once you pick something above\./);
+    assert.match(write, /<p class="row-caption" id="what-kinds">Pick one, or just write<\/p>/);
     // The question is the label; the note is written on the card itself.
     assert.match(write, /<label for="note" class="question" data-fill="prompt">What you need the person who runs the site to answer\.<\/label>/);
     assert.match(write, /<article class="card live" data-live-card[\s\S]*<span class="card-kind" data-live="kind">Question<\/span>[\s\S]*<textarea class="card-write" id="note" name="note"/);
@@ -120,7 +124,9 @@ test('the write page is a labelled form with the kind as a choice', async () => 
     assert.match(write, /You get the card to send example\.org\. <a href="\/privacy">How notes are kept<\/a>/);
     assert.match(write, /class="hp" aria-hidden="true"/);
     assert.match(write, />Make my card</);
-    assert.match(write, /name="thread" value="thanks"/);
+    assert.match(write, /name="what" value="thanks" data-kind-title="Appreciation" data-body="Thanks\."/);
+    // The card shows what a tap on this kind sends.
+    assert.match(write, /placeholder="I have a question about this\."/);
     // Without a kind in the link, nothing is chosen for the writer.
     const bare = await page('/example.org');
     assert.doesNotMatch(bare, /name="kind" value="[a-z]+" checked/);
@@ -154,7 +160,7 @@ test('a rejected note comes back in the form, not as JSON', async () => {
     assert.equal(short.status, 400);
     const html = await short.text();
     assert.match(html, /class="error-summary" role="alert"/);
-    assert.match(html, /Pick what this is, or write at least 8 characters\. This note has 5\./);
+    assert.match(html, /Tap one of the choices above, or write a few more words \(at least 8 characters\)\./);
     assert.match(html, /aria-invalid="true"/);
     assert.match(html, />&lt;b&gt;no<\/textarea>/);
     const typed = await get('autonomous.feedback', '/example.org', form({ kind: 'broken', note: '<b>no' }));
@@ -163,7 +169,7 @@ test('a rejected note comes back in the form, not as JSON', async () => {
     const onlyType = await (await get('autonomous.feedback', '/example.org/broken', json({}))).json();
     assert.equal(onlyType.context, 'broken');
     assert.equal(onlyType.worded, false);
-    assert.match(onlyType.markdown, /Counted as Broken\. No written detail\./);
+    assert.match(onlyType.markdown, /Something here is broken\./);
     const noSite = await get('autonomous.feedback', '/broken', form({ host: 'not a site', note: 'Something is broken here.' }));
     assert.equal(noSite.status, 400);
     assert.match(await noSite.text(), /is not a domain/);
@@ -634,11 +640,11 @@ test('the write page picks the subject from the page, and follows it with thread
     const page = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', { headers: { referer: 'https://maker.example/design/folios/' } }))).text();
     assert.match(page, /name="subject" value="folios" checked/);
     assert.match(page, /Which folio, and what happened\?/);
-    assert.match(page, /<legend>Often said about Folios<\/legend>/);
-    assert.match(page, /name="thread" value="folios:order-by-card" data-kind-title="Note" data-about="Folios · Ordering is by card"/);
+    assert.match(page, /<p class="row-caption" id="what-folios">Often said about Folios<\/p>/);
+    assert.match(page, /name="what" value="thread:folios:order-by-card" data-kind-title="Note" data-about="Folios · Ordering is by card" data-body="Count me too\."/);
     // The page picked the subject, so it is stated, with a way to change it.
     assert.match(page, /About <strong data-fill="subject-name">Folios<\/strong>/);
-    assert.match(page, /name="thread" value="folios:order-by-card"/);
+    assert.match(page, /name="what" value="thread:folios:order-by-card"/);
     assert.match(page, /<strong>Maker:<\/strong> On purpose for now\./);
     assert.match(page, /<summary>Say more<\/summary>/);
     assert.match(page, /name="ask-0"/);
@@ -657,7 +663,7 @@ test('a thread can be joined without words, and asks land on the card and in the
     const counted = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', json({ subject: 'folios', thread: 'folios:order-by-card' })))).json();
     assert.equal(counted.thread, 'order-by-card');
     assert.equal(counted.worded, false);
-    assert.match(counted.markdown, /Counted with “Ordering is by card”\. No written detail\./);
+    assert.match(counted.markdown, /Count me too\./);
     assert.match(counted.markdown, /thread: Ordering is by card/);
     const asked = await (await worker.fetch(new Request('https://autonomous.feedback/maker.example/broken', form({ subject: 'folios', note: 'The order card did not tell me what happens next.', 'ask-0': 'The pie one.', 'ask-1': 'A reply within a week.', thread: 'folios:order-by-card' })))).text();
     assert.match(asked, /<span class="card-subject">Folios · Ordering is by card<\/span>/);
@@ -686,7 +692,7 @@ test('a kind comes from evidence: the writer, the common note, or a thanks; othe
     assert.equal(thanked.worded, false);
     assert.equal((await send({ kind: 'broken', subject: 'folios', thread: 'folios:order-by-card', note: 'Chosen by me, with words.' })).context, 'broken');
     const empty = await worker.fetch(new Request('https://autonomous.feedback/maker.example', json({})));
-    assert.equal((await empty.json()).errors.note, 'Pick what this is. That is enough to send. Or write what happened.');
+    assert.equal((await empty.json()).errors.note, 'Tap one of the choices above, or write what happened.');
   } finally {
     restore();
   }
@@ -706,4 +712,27 @@ test('the digest groups a week by subject and common note, flags due cards, and 
   const folios = weeks[0].groups.find((g) => g.about === 'folios');
   assert.deepEqual([folios.cards, folios.worded], [6, 1]);
   assert.deepEqual(weeks[0].hints, [{ about: 'recipes', cards: 3 }]);
+});
+
+test('the form sends one choice, and a common note left over from another subject is dropped, not an error', async () => {
+  const restore = stubFetch({ 'maker.example': MAPPED });
+  const send = (fields) => worker.fetch(new Request('https://autonomous.feedback/maker.example', { ...form(fields), headers: { ...form({}).headers, accept: 'application/json' } }));
+  try {
+    const thread = await (await send({ subject: 'folios', what: 'thread:folios:order-by-card' })).json();
+    assert.equal(thread.thread, 'order-by-card');
+    assert.equal(thread.worded, false);
+    assert.equal((await (await send({ what: 'kind:broken' })).json()).context, 'broken');
+    assert.equal((await (await send({ what: 'thanks' })).json()).context, 'appreciation');
+    // Without script, switching the subject leaves the old common note checked but hidden; it is ignored.
+    const stale = await send({ subject: 'recipes', what: 'thread:folios:order-by-card', note: 'Words about recipes instead.' });
+    assert.equal(stale.status, 200);
+    const staleSlip = await stale.json();
+    assert.equal(staleSlip.thread, null);
+    assert.equal(staleSlip.subject, 'recipes');
+    const staleOnly = await send({ subject: 'recipes', what: 'thread:folios:order-by-card' });
+    assert.equal(staleOnly.status, 400);
+    assert.deepEqual(Object.keys((await staleOnly.json()).errors), ['note']);
+  } finally {
+    restore();
+  }
 });

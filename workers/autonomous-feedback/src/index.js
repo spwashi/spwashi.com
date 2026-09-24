@@ -136,14 +136,16 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
       return { code: "invalid_form", status: 400, errors: { note: "The form could not be read." }, values: {} };
     }
   }
+  // The form sends one choice as "what": kind:{slug}, thread:{subject}:{id}, or thanks. API callers may still send kind and thread.
+  const what = String(body.what || "").trim().toLowerCase();
   const values = {
     host: normalizeHost(body.host || fallbackHost),
-    kind: String(body.kind || body.context || fallbackSlug),
+    kind: what.startsWith("kind:") ? what.slice(5) : String(body.kind || body.context || fallbackSlug),
     note: String(body.note || ""),
     from: cleanFrom(body.from),
     path: cleanPath(body.path || body.at || ""),
     subject: String(body.subject || "").trim().toLowerCase(),
-    thread: String(body.thread || "").trim().toLowerCase(),
+    thread: what.startsWith("thread:") ? what.slice(7) : what === "thanks" ? "thanks" : String(body.thread || "").trim().toLowerCase(),
     asks: [0, 1, 2].map((i) => String(body[`ask-${i}`] || "").trim().slice(0, 2000)),
   };
   if (!values.path) values.path = refererPath(request.headers.get("referer"), values.host);
@@ -158,7 +160,10 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
   if (values.subject && !subject) errors.subject = "Choose one of the parts of the site listed, or leave it blank.";
   const thanked = values.thread === "thanks";
   const thread = !thanked && subject && values.thread ? subject.threads.find((t) => `${subject.id}:${t.id}` === values.thread || t.id === values.thread) || null : null;
-  if (values.thread && !thanked && !thread) errors.subject = "That common note is not one this site lists.";
+  // A common note that belongs to another part of the site was hidden when the writer changed the subject; it is dropped, not an error.
+  const namespaced = values.thread.includes(":") ? values.thread.split(":")[0] : "";
+  if (values.thread && !thanked && !thread && !(namespaced && subject && namespaced !== subject.id)) errors.subject = "That common note is not one this site lists.";
+  if (!thread && !thanked) values.thread = "";
   // Thanks is its own type. A kind the writer names wins over a common note's kind. A kind the site does not take is an error, not a silent note.
   const allowed = siteKinds(config);
   const chosen = contextBySlug(values.kind);
@@ -176,13 +181,14 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
   // A type is the submission. Words are a separate record, kept only when the writer actually wrote them.
   const worded = Boolean(text || asks.length);
   const typed = Boolean(context && context.slug !== NOTE.slug);
-  if (!text && thanked) text = "Counted as thanks. No written detail.";
-  else if (!text && thread && !asks.length) text = `Counted with “${thread.name}”. No written detail.`;
+  // A tap sends the line the card showed: what you saw is what was sent. worded stays false, so it counts as one-tap.
+  if (!text && thanked) text = "Thanks.";
+  else if (!text && thread && !asks.length) text = "Count me too.";
   else if (!text && asks.length) text = asks[0].answer;
-  else if (!text && typed) text = `Counted as ${context.title}. No written detail.`;
+  else if (!text && typed) text = context.tap || context.title;
   const hasType = typed || thanked || Boolean(thread) || asks.length;
   if (text.length > config.note.max) errors.note = `Keep it under ${config.note.max.toLocaleString("en-US")} characters. This note has ${text.length.toLocaleString("en-US")}.`;
-  else if (!hasType && text.length < config.note.min) errors.note = text.length ? `Pick what this is, or write at least ${config.note.min} characters. This note has ${text.length}.` : "Pick what this is. That is enough to send. Or write what happened.";
+  else if (!hasType && text.length < config.note.min) errors.note = text.length ? `Tap one of the choices above, or write a few more words (at least ${config.note.min} characters).` : "Tap one of the choices above, or write what happened.";
   if (config.from === "required" && !values.from) errors.from = "Add your name or handle; this site asks for one.";
   if (Object.keys(errors).length) {
     const code = errors.kind ? "invalid_context" : errors.subject ? "invalid_subject" : errors.note ? "note_bounds" : "from_required";
