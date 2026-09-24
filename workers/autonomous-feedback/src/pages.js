@@ -160,7 +160,7 @@ export function renderHome(host = "") {
     body: `<p class="kicker">autonomous.feedback</p>
 <h1>Tell a website what happened</h1>
 <p class="lede">Name a site, say what was hard or what worked, and it becomes a card for whoever runs it.</p>
-<form method="get" action="/note" class="write begin" id="begin">
+<form method="post" action="/note" class="write begin" id="begin">
   <article class="card live" data-live-card aria-label="Your card">
     <header>
       <span class="card-kind">Note</span>
@@ -169,12 +169,17 @@ export function renderHome(host = "") {
     </header>
     <label class="sr-only" for="begin-note">What happened?</label>
     <textarea class="card-write" id="begin-note" name="note" rows="3" maxlength="${NOTE_MAX}" placeholder="What was hard, or what worked?"></textarea>
+    <p class="card-from-line"><label for="begin-from" class="sr-only">Your name or handle</label>— <input id="begin-from" name="from" type="text" maxlength="80" autocomplete="nickname" placeholder="your name, if you like"></p>
     <footer>
       <time datetime="${today}">${today}</time>
       <span class="card-address" data-fill="begin-address">autonomous.feedback/${escapeHtml(host || "…")}</span>
     </footer>
   </article>
-  <p class="send"><button type="submit">Write the note</button> <span class="courtesy">Any public site. Nobody needs to have set anything up.</span></p>
+  <p class="send">
+    <button type="submit" name="step" value="send">Send</button>
+    <button type="submit" name="step" value="details" class="secondary">Add details first</button>
+    <span class="courtesy">To its owner if they keep an inbox; either way you keep the card.</span>
+  </p>
 </form>
 <p class="try">Or try one that is set up: <a href="/lore.land">lore.land</a> · <a href="/spw.quest">spw.quest</a></p>
 <section class="owners" aria-labelledby="owners-title">
@@ -445,7 +450,7 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
     ? `<div id="subjects" class="about-line">
     <p>About <strong data-fill="subject-name">${escapeHtml(chosenSubject.name)}</strong></p>
     <details>
-      <summary>Not this?</summary>
+      <summary>change</summary>
       <fieldset class="chips">
         <legend class="sr-only">Which part of ${escapeHtml(display)}</legend>
         ${fieldError("subject-error", errors.subject)}
@@ -513,9 +518,8 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
     embed,
     script: CLIENT_SCRIPT,
     themeCss: `${themeCss(site.theme)}\n${subjectCss}`,
-    body: `${embed ? "" : kicker()}
-<h1>${escapeHtml(heading)}</h1>
-${lockHost && isPublicSite(host) ? `<p class="visit"><a href="https://${escapeHtml(host)}/">Open ${escapeHtml(host)}</a></p>` : ""}
+    body: `${embed ? "" : `<p class="kicker"><a href="/">autonomous.feedback</a>${lockHost && isPublicSite(host) ? ` · <a href="https://${escapeHtml(host)}/">Open ${escapeHtml(host)}</a>` : ""}</p>`}
+<h1 class="write-title">${escapeHtml(heading)}</h1>
 ${site.intro ? `<p class="lede">${escapeHtml(site.intro)}</p>` : ""}
 ${summary}
 <form method="post" action="${escapeHtml(action)}" class="write" id="write" data-draft-key="${escapeHtml(lockHost ? host : "")}" data-button="${escapeHtml(button)}">

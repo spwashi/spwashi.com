@@ -726,6 +726,20 @@ export default {
         return Response.redirect(next.toString(), 302);
       }
       if (request.method === "POST") {
+        // The homepage card can open the site's own form with its words and name already on it.
+        // It posts, so the words never enter an address, a log line, or a shared link.
+        if (context.slug === NOTE.slug && (request.headers.get("content-type") || "").includes("form")) {
+          const probe = await request.clone().formData().catch(() => null);
+          if (probe?.get("step") === "details") {
+            const host = normalizeHost(String(probe.get("host") || ""));
+            const values = { note: String(probe.get("note") || "").slice(0, NOTE_MAX), from: cleanFrom(probe.get("from")), host };
+            if (!validSubject(host)) {
+              return htmlResponse(renderWrite({ context, values, errors: { host: host ? `"${host}" is not a domain. Enter one like example.com.` : "Enter the site the note is about." } }), { status: 400, cache: "no-store" });
+            }
+            const config = await loadConfig(host);
+            return htmlResponse(renderWrite({ context: NOTE, host, lockHost: true, config, desk: deskState(env, host, config), values }), { cache: "no-store" });
+          }
+        }
         if (!(await intakeOpen(request, `post:${queryHost || "open"}`))) {
           return answerFiling(request, {
             code: "slow_down",
