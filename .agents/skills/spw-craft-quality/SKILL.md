@@ -42,7 +42,7 @@ description: Improve visual hierarchy, accessibility (a11y), device parity, or c
 
 | Target Dimension | Implementation Contract | CSS Layer / Selector |
 | :--- | :--- | :--- |
-| **Touch Targets** | `--touch-target-min` (44px) on chips/sigils and native buttons **outside** `[data-spw-floating-chrome]`. Compact chrome keeps `--touch-target-compact`. Do not set `min-inline-size` on every `button` from the components layer — that layer beats shell packing. | `components/foundation.css` via `:where(...)` with floating-chrome exclusion |
+| **Touch Targets** | `--touch-target-min` (44px) is the design target for standalone chips/sigils and native buttons **outside** `[data-spw-floating-chrome]`. Compact chrome keeps `--touch-target-compact`. The AA floor is 24px or equivalent spacing, and targets inline in prose are exempt — do not grow the line box to reach 44px (see `touch-control-class-2026-09.spw#tc-006`). Do not set `min-inline-size` on every `button` from the components layer — that layer beats shell packing. | `components/foundation.css` via `:where(...)` with floating-chrome exclusion |
 | **Contrast & Ink** | Use `--ink-on-matte*` and `--material-ink-*` tokens on matte surfaces | `tokens/core.css` tokens |
 | **Focus Rings** | Clear `:focus-visible` outline using `--focus-ring` token | `shell/chrome/*.css` & component styles |
 | **Fluid Responsiveness**| Container queries (`@container`) and CSS `clamp()` over scattered `@media` | `components/*.css`, `shell/layout.css` |

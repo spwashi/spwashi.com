@@ -134,6 +134,23 @@ expression = touch[class]{control.chrome.content}<floor>
   do_not_promote_until = `A named descendant is shown to steal, then that descendant is the patch.`
 }[reg=facet]
 
+^"tc-006_44_is_a_target_not_the_aa_floor"{
+  id = "tc-006"
+  operation = "cache"
+  fixity = "tending"
+  source = "chat 2026-09-24, skill review: the human is not convinced the 44px rule is sound"
+  claim = `2.75rem is a design target for ground controls, not an accessibility floor. WCAG 2.2 AA (2.5.8) asks 24×24 CSS px or equivalent spacing; 44×44 is AAA (2.5.5) and Apple's HIG. Both exempt targets inline in a sentence. The coarse floor has no inline exemption: chips and sigils in prose take 2.75rem block and inline size and inflate the line box.`
+  evidence = #[
+    `foundation.css coarse :where(... .spw-chip, .frame-sigil) — min-block-size and min-inline-size 2.75rem`,
+    `~90 .spw-chip inside <p> across route index.html (rough regex count)`,
+    `--touch-target-compact is 2.15rem (~34px) and pocket chrome already lives there without complaint`
+  ][reg=set]
+  pattern_consideration = `content_shaped already names prose as floorless. A chip in running text is content-shaped by position even when it is a control by class.`
+  expansion_prime = `Exempt chips/sigils inside running text from the coarse floor; extend their hit area with padding or a pseudo-element rather than the line box. Keep 2.75rem for standalone controls.`
+  validation = `Pocket still of a prose route with inline chips before and after: line rhythm, tap accuracy by hand.`
+  do_not_promote_until = `A human approves the rhythm in the browser. Layout moves on every coarse page.`
+}[reg=facet]
+
 #>wonder_touch_control_class_1
 ?["Does equalizing every tap target to 44px make the surface less cognitive?"]{
   #:depth #!experiential ~#lens(attention)
