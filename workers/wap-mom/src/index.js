@@ -72,7 +72,7 @@ const STYLE = `
 
   /* Masthead: ears, title, the expansion so far. */
   .masthead { text-align: center; border-bottom: 3px double var(--rule); padding-bottom: .7rem; margin-bottom: 1.6rem; }
-  .ears { display: flex; justify-content: space-between; gap: 1rem; margin: 0 0 .3rem; color: var(--muted); font-size: .95rem; }
+  .ears { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; margin: 0 0 .3rem; color: var(--muted); font-size: .95rem; }
   .title { margin: 0; font-size: clamp(2.1rem, 9vw, 3.4rem); line-height: 1.05; letter-spacing: -.02em; font-weight: 400; }
   .title a { text-decoration: none; }
   .masthead.compact .title { font-size: clamp(1.5rem, 6vw, 2rem); }
@@ -107,8 +107,8 @@ const STYLE = `
   section > .caps.head { margin: 0 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid var(--rule); color: var(--muted); }
   .lead h2 { font-size: clamp(1.8rem, 6vw, 2.3rem); }
   .back { list-style: none; padding: 0; margin: 0; }
-  .back li { display: grid; grid-template-columns: 5.6rem 1fr; gap: .8rem; padding: .55rem 0; border-bottom: 1px solid var(--faint); }
-  .back .no { font-variant-numeric: lining-nums tabular-nums; color: var(--muted); padding-top: .15rem; }
+  .back li { padding: .55rem 0; border-bottom: 1px solid var(--faint); }
+  .back .no { display: block; color: var(--muted); font-size: .92rem; font-variant-caps: all-small-caps; letter-spacing: .07em; }
 
   /* An open slot is an unwritten column: ruled, not greeked. */
   .slot { padding: .7rem 0 .2rem; border-bottom: 1px solid var(--faint); }
@@ -137,7 +137,8 @@ const STYLE = `
     width: min(28rem, calc(100% - 3rem)); margin: 2rem auto; padding: 1.5rem 1.4rem 1.2rem;
     background: var(--card); outline: 1px dashed var(--muted); outline-offset: .7rem;
   }
-  .clip .source { margin: 0 0 1rem; padding-bottom: .45rem; border-bottom: 3px double var(--rule); color: var(--muted); font-size: .92rem; display: flex; justify-content: space-between; gap: .6rem; }
+  .clip .source { margin: 0 0 1rem; padding-bottom: .45rem; border-bottom: 3px double var(--rule); color: var(--muted); font-size: .92rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 .6rem; }
+  .clip .source span, .ears span { white-space: nowrap; }
   .clip blockquote { margin: 0; font-size: clamp(1.45rem, 6vw, 1.85rem); line-height: 1.3; font-style: italic; }
   .clip .from { margin: 1rem 0 0; color: var(--muted); font-size: .95rem; }
 
@@ -179,16 +180,16 @@ ${colophon()}
   });
 }
 
-/* The expansion printed so far, with this issue's place marked and the
-   forthcoming places shown faintly. */
+/* The expansion so far. Each decimal place belongs to one issue: this
+   issue's place is marked, and places whose issue is still open are faint. */
 function expansion(current) {
   const last = numbered[numbered.length - 1].no;
-  const printedTo = printed.length ? printed[printed.length - 1].no.length : 2;
-  let out = "";
-  for (let i = 0; i < last.length; i += 1) {
+  let out = escapeHtml(last.slice(0, 2));
+  for (let i = 2; i < last.length; i += 1) {
     const digit = escapeHtml(last[i]);
-    if (current && i === current.no.length - 1) out += `<span class="here">${digit}</span>`;
-    else if (i >= printedTo) out += `<span class="ahead">${digit}</span>`;
+    const owner = numbered[i - 2];
+    if (current && owner === current) out += `<span class="here">${digit}</span>`;
+    else if (owner.status === "open") out += `<span class="ahead">${digit}</span>`;
     else out += digit;
   }
   const label = current
