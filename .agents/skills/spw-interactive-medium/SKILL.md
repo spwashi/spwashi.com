@@ -12,27 +12,27 @@ Read first:
 
 ---
 
-## ⚡ 60-Second Quick Strike (Grok)
+## ⚡ Quick Strike
 
-* **Context Gate:** This skill is ONLY for play, practice, lab, or scene routes (e.g. `/play/rpg-wednesday/`, math practice beds).
-* **Zero-JS Principle:** Reading and editorial routes must remain pristine, readable, and lightweight without interactive runtime overhead.
-* **Stop Condition:** Do not add scene orchestration JS or potentiation loops to standard blog, about, or curriculum reading pages.
+* **Context Gate:** This skill is for play, practice, lab, or scene routes (e.g. `/play/rpg-wednesday/`, math practice beds), where hosts carry `.spw-scene-bed`.
+* **Reading Stays Reading:** Editorial routes keep only the progressive runtime every page shares. Scene orchestration there spends a reader's attention on mechanics they did not come for.
+* **Stop Condition:** Do not add scene orchestration JS or potentiation loops to blog, about, or curriculum reading pages.
 
 ---
 
-## 🛡️ Constitutional Guardrails (Claude)
+## 🛡️ Constitutional Guardrails
 
 * 🚫 **No Hover-Locked Mechanics:** Every keyboard/pointer scene must degrade gracefully to touch taps on mobile/coarse pointers.
-* 🚫 **Respect Reduced Motion:** If `prefers-reduced-motion: reduce` is active, disable physics-driven transitions, spring oscillations, and continuous canvas loops.
-* 🚫 **No Re-inventing Viewport Detection:** Never write bespoke `window.innerWidth` listeners; consume `shell-disclosure` and `interactive-medium` CSS custom properties.
+* 🚫 **Respect Reduced Motion:** Under `prefers-reduced-motion: reduce`, replace springs, parallax, and continuous canvas loops with instant or opacity changes. Keep the feedback itself: reduced motion is not reduced reward (`interaction-microstates.spw#reward_contract`).
+* 🚫 **No Re-inventing Viewport Detection:** Do not write bespoke `window.innerWidth` listeners; read `data-spw-scene-posture` and the `--spw-medium-*` properties that `interactive-medium.js` and `systems/interactive-medium.css` already set.
 
 ---
 
-## 📐 Posture & Runtime Token Matrix (Codex)
+## 📐 Posture & Runtime Token Matrix
 
 | Posture State | Viewport / Pointer Condition | CSS Behavior / Modulator |
 | :--- | :--- | :--- |
-| **`touch-field`** | Compact/narrow viewport + coarse pointer | Suppress hover lifts; expand tap targets (`min-height: 48px;`) |
+| **`touch-field`** | Compact/narrow viewport + coarse pointer | Suppress hover lifts; tap targets at `--spw-medium-touch-min` |
 | **`touch-tablet`** | Mid/regular viewport + coarse pointer | Multi-column touch layout with touch-friendly spacing |
 | **`pointer-balanced`** | Regular viewport + fine pointer | Standard desktop hover lifts and subtle key potentiation |
 | **`pointer-rich`** | Wide/atlas viewport + fine pointer | Full scene lane mechanics, expanded tooltips, deep resonance |
@@ -44,7 +44,7 @@ Read first:
 
 ---
 
-## 🌌 Tooling & Validation Ladder (Antigravity)
+## 🌌 Tooling & Validation Ladder
 
 1. **Verify Module Syntax:**
    ```bash

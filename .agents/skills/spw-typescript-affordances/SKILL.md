@@ -9,23 +9,23 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ---
 
-## ⚡ 60-Second Quick Strike (Grok)
+## ⚡ Quick Strike
 
-* **Where TS Lives:** Strictly in build tooling (`scripts/ts/`), contract checkers, and portable kernel edges (`public/ts/`).
-* **Where TS Does NOT Live:** Public routes, DOM narratives, and standard progressive modules. Public runtime remains clean, vanilla ES modules.
-* **Stop Condition:** If you find yourself trying to convert route `index.html` scripts into TypeScript, STOP.
+* **Where TS Lives:** Build tooling (`scripts/ts/`), contract checkers, shared type contracts (`types/`), and portable kernel edges (`public/ts/`).
+* **Where TS Does Not Live:** Public routes, DOM narratives, and ordinary progressive modules. They stay vanilla ES modules so the browser runs what the repo shows, with no build between a reader and the source.
+* **Stop Condition:** Converting route `index.html` scripts or a progressive module to TypeScript is out of scope. Add JSDoc against `types/` instead.
 
 ---
 
-## 🛡️ Constitutional Guardrails (Claude)
+## 🛡️ Constitutional Guardrails
 
 * 🚫 **No Client-Side Transpilation Bundlers:** The public site serves standard `.js` ES modules directly to the browser.
-* 🚫 **No Runtime npm Types:** Never import `@types/*` into client-facing scripts.
-* 🚫 **Preserve Pure Vanilla JS Ergonomics:** In plain JS runtime files, use `Object.freeze()`, structured constants, and standard JSDoc comments for type hints.
+* 🚫 **No Runtime npm Types:** Do not import `@types/*` into client-facing scripts.
+* 🚫 **Preserve Vanilla JS Ergonomics:** In plain JS runtime files, use `Object.freeze()`, structured constants, and JSDoc (`@typedef {import('<relative>/types/module-catalog').SpwModuleDef}`) for type hints.
 
 ---
 
-## 📐 TypeScript Architecture & Compilation Matrix (Codex)
+## 📐 TypeScript Architecture & Compilation Matrix
 
 | Target Surface | Source Path | Compiled Output | Build Script | Purpose |
 | :--- | :--- | :--- | :--- | :--- |
@@ -36,23 +36,17 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ---
 
-## 🌌 Tooling & Validation Ladder (Antigravity)
+## 🌌 Tooling & Validation Ladder
 
 When modifying TypeScript files:
 
 ```bash
-# 1. Typecheck entire codebase:
+# Fast loop while editing:
 npm run typecheck
 
-# 2. Build tooling scripts:
-npm run build:tools
-
-# 3. Build runtime modules:
-npm run build:runtime
-
-# 4. Check runtime catalog hygiene:
-npm run check:runtime
-
-# 5. Full local validation gate:
+# Gate (compiles tools, runtime, and public sources with tsc):
 npm run check:local
+
+# Only when catalog defs or import boundaries moved:
+npm run check:runtime
 ```
