@@ -9,36 +9,36 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ---
 
-## ⚡ 60-Second Quick Strike (Grok)
+## ⚡ Quick Strike
 
 * **Grammar, Not Confetti:** Operators are functional linguistic handles—NOT decorative chips to sprinkle on every paragraph.
-* **Stop Condition:** If you are adding operator chips without an active route link, focus handle, or conceptual resonance connection, STOP.
+* **Stop Condition:** A chip with no route link, focus handle, or resonance connection behind it is decoration. Leave it out.
 
 ---
 
-## 🛡️ Constitutional Guardrails (Claude)
+## 🛡️ Constitutional Guardrails
 
-* 🚫 **No Arbitrary Sigil Invention:** Only use the canonical Spw operator set defined in `public/js/kernel/shared.js` (`OPERATOR_DEFINITIONS`).
-* 🚫 **Respect Color & Contrast Tokens:** Operator chips must use their designated CSS token variables (`--op-frame-color`, `--op-probe-color`, etc.) and maintain readable contrast in both light and dark themes.
-* 🚫 **A11y Labeling:** When displaying symbolic operators like `?>` or `#>label`, ensure screen reader users have appropriate text labels or accessible text representation.
-
----
-
-## 📐 Canonical Operator & Sigil Registry (Codex)
-
-| Sigil | Type | Purpose / Action | CSS Token |
-| :--- | :--- | :--- | :--- |
-| `#>name` | **Frame** | Named anchor / addressable surface container | `--op-frame-color` |
-| `?[topic]` | **Wonder / Probe**| Open a question, exploration, or inquiry | `--op-probe-color` |
-| `^concept` | **Integration** | Lift an inspectable register or synthesize ideas | `--op-object-color` |
-| `~path` | **Potential / Ref**| Hold an uncollapsed path or reference pointer | `--op-ref-color` |
-| `@posture` | **Perspective** | Situate a viewpoint, role, or working posture | `--op-action-color` |
-| `%measure` | **Measurement** | Subjective or objective quantitative gauge | `--op-measure-color` |
-| `!action` | **Pragma / Action**| Commit a move, execute a transition | `--op-action-color` |
+* 🚫 **No Arbitrary Sigil Invention:** Use the operator character table in `public/js/kernel/operator-detection.js` (`OPERATOR_DEFINITIONS`, re-exported by `shared.js`). Atlas slugs are aliases; `.spw/language/operator-namespace-alignment.spw` maps them.
+* 🚫 **Color Through Intent:** Color chips by setting `--operator-chip-*-intent` on the surface, never by painting the chip directly — the routes layer wins the cascade and a direct paint gets overridden or overrides the wrong thing. Keep readable contrast in both themes.
+* 🚫 **A11y Labeling:** A bare sigil like `#>label` reads as punctuation to a screen reader. Give it a text label or accessible name.
 
 ---
 
-## 🌌 Tooling & Validation Ladder (Antigravity)
+## 📐 Canonical Operator & Sigil Registry
+
+The registry is `operator-detection.js`: 19 prefixes, each with its type, mnemonic, and charge geometry. Read it there rather than from a copy here — a copied table drifts (this one once listed 7 operators and a `--op-measure-color` token that never existed). A few worth knowing by heart:
+
+| Sigil | Reading |
+| :--- | :--- |
+| `#>name` | Frame address — a named, addressable surface |
+| `?[topic]` | Wonder — an open question |
+| `@posture` | Perspective — where a view is taken from |
+| `$` / `&` | Substrate / subject |
+| `!action` | Action — commit a move |
+
+---
+
+## 🌌 Tooling & Validation Ladder
 
 Use the mounted `spw` CLI to audit lattice connectivity and hit density:
 
@@ -47,7 +47,7 @@ Use the mounted `spw` CLI to audit lattice connectivity and hit density:
 npm run spw:lattice
 
 # 2. Audit operator hit densities across .spw:
-npm --prefix .spw/_workbench run spw -- analyze .spw --selectors ops:frame,ops:body,boon,bone
+npm run spw -- analyze .spw --selectors ops:frame,ops:body,boon,bone
 
 # 3. View operator graph hubs:
 npm run spw:graph
