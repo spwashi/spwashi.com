@@ -1,5 +1,5 @@
 import { BASE_SECURITY, JSON_CORS, htmlResponse, jsonResponse, wantsJson } from "../../lib/shell.js";
-import { CONTEXTS, LEGACY_SLUGS, NOTE, VERSION, cleanPath, refererPath, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
+import { CONTEXTS, LEGACY_SLUGS, NOTE, NOTE_MAX, VERSION, cleanPath, refererPath, contextBySlug, isPublicSite, normalizeHost, orgFromHostname, validSubject } from "./model.js";
 import { loadConfig, siteKinds, subjectFor } from "./config.js";
 import { compact, deleteNotes, deskHosts, deskState, deskSummary, digest, keepNote, listNotes, listTallies, previewCompaction, saveLimit, setSaved } from "./desk.js";
 import { METER_LIMIT, SLOW_NOTE, bearerOf, cookieOf, deskAccess, intakeOpen } from "./intake.js";
@@ -491,6 +491,7 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
     return headOr(request, jsonResponse(inboxContract(subject, context, org, deskState(env, subject, config)), "public, max-age=120"));
   }
   const config = await loadConfig(subject);
+  const carried = url.searchParams.get("note")?.trim().slice(0, NOTE_MAX) || "";
   const html = renderWrite({
     context: context || NOTE,
     host: subject,
@@ -498,9 +499,10 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
     embed,
     config,
     desk: deskState(env, subject, config),
-    values: pageFrom(request, url, subject),
+    values: { ...pageFrom(request, url, subject), note: carried },
   });
-  return headOr(request, embed ? embedHtml(html, subject, config, "public, max-age=120") : htmlResponse(html, { cache: "public, max-age=120" }));
+  const cache = carried ? "no-store" : "public, max-age=120";
+  return headOr(request, embed ? embedHtml(html, subject, config, cache) : htmlResponse(html, { cache }));
 }
 
 function bucketMs(ms) {
@@ -718,7 +720,10 @@ export default {
       }
       // "Write a note" with a site named goes to that site's own form, shaped by its file.
       if (context.slug === NOTE.slug && queryHost && validSubject(queryHost) && ["GET", "HEAD"].includes(request.method)) {
-        return Response.redirect(`${url.origin}/${queryHost}`, 302);
+        const next = new URL(`${url.origin}/${queryHost}`);
+        const carried = url.searchParams.get("note")?.trim().slice(0, NOTE_MAX);
+        if (carried) next.searchParams.set("note", carried);
+        return Response.redirect(next.toString(), 302);
       }
       if (request.method === "POST") {
         if (!(await intakeOpen(request, `post:${queryHost || "open"}`))) {

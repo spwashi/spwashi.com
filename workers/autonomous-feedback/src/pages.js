@@ -165,9 +165,10 @@ export function renderHome(host = "") {
     <header>
       <span class="card-kind">Note</span>
       <label class="sr-only" for="site">Which site?</label>
-      <input class="card-site-input" id="site" name="host" type="text" value="${escapeHtml(host)}" placeholder="which site?" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" enterkeyhint="go" maxlength="253" data-host-field data-begin-site autofocus>
+      <input class="card-site-input" id="site" name="host" type="text" value="${escapeHtml(host)}" placeholder="which site?" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" enterkeyhint="next" maxlength="253" data-host-field data-begin-site autofocus>
     </header>
-    <p class="card-body-hint">What was hard, or what worked?</p>
+    <label class="sr-only" for="begin-note">What happened?</label>
+    <textarea class="card-write" id="begin-note" name="note" rows="3" maxlength="${NOTE_MAX}" placeholder="What was hard, or what worked?"></textarea>
     <footer>
       <time datetime="${today}">${today}</time>
       <span class="card-address" data-fill="begin-address">autonomous.feedback/${escapeHtml(host || "…")}</span>
@@ -431,11 +432,13 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
   // The creator's map. Evidence picks the subject (the page, or a chip); nothing is guessed.
   const subjects = site.subjects || [];
   const chosenSubject = subjects.find((sub) => sub.id === values.subject) || (values.subject ? null : subjectFor(site, values.path ?? ""));
-  const prompt = chosenSubject?.prompt || context.prompt;
   // An unchosen card stays blank. The shop-shaped default would read as the note.
   const exampleText = chosenSubject?.example || (selected && context.slug !== NOTE.slug ? context.example : "");
   const chosenThread = chosenSubject?.threads.find((t) => values.thread === `${chosenSubject.id}:${t.id}` || values.thread === t.id) || null;
   const thanked = values.thread === "thanks";
+  const prompt = chosenThread || thanked
+    ? "Add a detail if you want. The choice is enough."
+    : (chosenSubject?.prompt || context.prompt);
 
   const subjectChips = subjects.map((sub) => `<label class="chip"><input type="radio" name="subject" value="${escapeHtml(sub.id)}"${chosenSubject?.id === sub.id ? " checked" : ""} data-prompt="${escapeHtml(sub.prompt || NOTE.prompt)}" data-example="${escapeHtml(sub.example)}" data-name="${escapeHtml(sub.name)}"> <span>${escapeHtml(sub.name)}</span></label>`).join("\n      ");
   const subjectBlock = !subjects.length ? "" : chosenSubject
@@ -531,7 +534,7 @@ ${summary}
     <p class="clear-row"><button type="button" class="clear-what" data-clear-what hidden>Clear the choice</button></p>
   </fieldset>
   ${kindsShown.length === 1 ? `<input type="hidden" name="kind" value="${kindsShown[0].slug}">` : ""}
-  <label for="note" class="question" data-fill="prompt">${escapeHtml(prompt)}</label>
+  <label for="note" class="question" data-fill="prompt" data-idle="${escapeHtml(NOTE.prompt)}">${escapeHtml(prompt)}</label>
   ${fieldError("note-error", errors.note)}
   <article class="card live" data-live-card aria-label="Your card">
     <header>

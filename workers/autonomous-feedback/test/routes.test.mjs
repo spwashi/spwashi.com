@@ -52,6 +52,7 @@ test('the homepage explains the product and starts setup', async () => {
     // The first thing on the page is a card whose site you type in place.
     assert.match(home, /<form method="get" action="\/note" class="write begin"/);
     assert.match(home, /class="card-site-input" id="site" name="host"[^>]*data-begin-site/);
+    assert.match(home, /<textarea class="card-write" id="begin-note" name="note"/);
     assert.match(home, /Or try one that is set up: <a href="\/lore\.land">/);
     assert.doesNotMatch(home, /example\.com<\/span>/);
     assert.match(home, /action="\/start"/);
@@ -63,6 +64,9 @@ test('the homepage explains the product and starts setup', async () => {
     const go = await get('autonomous.feedback', '/note?host=https%3A%2F%2Fwww.Shop.example%2F');
     assert.equal(go.status, 302);
     assert.equal(go.headers.get('location'), 'https://autonomous.feedback/shop.example');
+    const carried = await get('autonomous.feedback', '/note?host=shop.example&note=The%20price%20was%20hard%20to%20find.');
+    assert.equal(carried.status, 302);
+    assert.equal(carried.headers.get('location'), 'https://autonomous.feedback/shop.example?note=The+price+was+hard+to+find.');
     const privacy = await page('/privacy');
     assert.match(privacy, /<h1>How notes are kept<\/h1>/);
     assert.match(privacy, /Three days, unless the owner saves the note\./);
@@ -118,7 +122,7 @@ test('the write page is a labelled form with the kind as a choice', async () => 
     assert.match(write, /<p class="sr-only" id="note-hint">[^<]*Optional once you pick something above\./);
     assert.match(write, /<p class="row-caption" id="what-kinds">Pick one, or just write<\/p>/);
     // The question is the label; the note is written on the card itself.
-    assert.match(write, /<label for="note" class="question" data-fill="prompt">What you need the person who runs the site to answer\.<\/label>/);
+    assert.match(write, /<label for="note" class="question" data-fill="prompt"[^>]*>What you need the person who runs the site to answer\.<\/label>/);
     assert.match(write, /<article class="card live" data-live-card[\s\S]*<span class="card-kind" data-live="kind">Question<\/span>[\s\S]*<textarea class="card-write" id="note" name="note"/);
     assert.match(write, /aria-describedby="note-hint"/);
     assert.match(write, /You get the card to send example\.org\. <a href="\/privacy">How notes are kept<\/a>/);

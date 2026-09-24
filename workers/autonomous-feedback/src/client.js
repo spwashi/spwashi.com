@@ -227,6 +227,12 @@ function clientMain() {
       const words = note.value.trim();
       setLine(kindLabel, what?.dataset.kindTitle || "Note");
       setLine(aboutLine, what?.dataset.about || about?.dataset.name || "");
+      if (question) {
+        const threadOrThanks = what && (what.value.startsWith("thread:") || what.value === "thanks");
+        question.textContent = threadOrThanks
+          ? "Add a detail if you want. The choice is enough."
+          : what?.dataset.prompt || about?.dataset.prompt || question.dataset.idle || question.textContent;
+      }
       // What the card shows when nothing is written is exactly what a tap sends.
       note.placeholder = what?.dataset.body || about?.dataset.example || note.dataset.placeholder || "";
       if (card) card.dataset.filled = String(Boolean(words || what));
@@ -284,7 +290,6 @@ function clientMain() {
     write.addEventListener("input", () => { paintCard(); saveDraft(); });
 
     write.querySelectorAll('input[name="subject"]').forEach((input) => input.addEventListener("change", () => {
-      if (question && input.dataset.prompt) question.textContent = input.dataset.prompt;
       if (subjectName && input.dataset.name) subjectName.textContent = input.dataset.name;
       // A common note from another part of the site is hidden now, so it stops being the choice.
       const what = chosen();
@@ -293,7 +298,6 @@ function clientMain() {
       saveDraft();
     }));
     write.querySelectorAll('input[name="what"]').forEach((input) => input.addEventListener("change", () => {
-      if (question && !subject() && input.dataset.prompt) question.textContent = input.dataset.prompt;
       paintCard();
       saveDraft();
       // Speak the owner's reply when a common note has one; it is the reward for the tap.
