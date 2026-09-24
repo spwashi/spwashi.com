@@ -69,6 +69,8 @@ smut.today is a daily erotic zine for adults; its wonder is pacing and variety, 
 ## Boundaries
 
 - No new packages, no framework, no build step beyond wrangler.
+- (2026-09-24: no repo link reached `/moms/*`, `/file`, or `/ministry`; wap.mom removed them. The wap.mom half of this plan's "Wonder" section is superseded by the
+  straight-man periodical in `workers/README.md`.)
 - Do not change routes that are already linked from outside (`/`, `/<slug>/`, `/moms/*`,
   `/file`, `/cabinet*`, `/today.json`).
 - Do not touch either worker while it is dirty in another session's tree.

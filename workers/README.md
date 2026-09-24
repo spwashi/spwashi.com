@@ -16,7 +16,17 @@ Inventory is `cluster.json`. Each unit is `workers/<id>/` with `wrangler.jsonc` 
 | `spw-quest` | `spw.quest` |
 | `wap-mom` | `wap.mom` |
 
-`wap.mom` is Wondering About Pi: public periodical, ministry as subscribed circle. Copy does not spell the domain joke.
+`wap.mom` is Wondering About Pi: a periodical of record about π and pie, and the
+straight man of the WAP clown lore. It plays everything earnest; only the domain
+winks. Issue n is numbered by π to n decimal places (3.1, 3.14, 3.141…). Every
+word lives in `src/room.js`, the writers' room, edited in conversation and on
+stream: house style, open questions, and issues that move from `open` to
+`draft` (printed as a galley proof) to `set`. Each printed issue has an
+offprint (`/{slug}/offprint/`) and, when it names a `clip`, a clipping card
+(`/{slug}/clip/`) sized for a screenshot. `/room` shows the room's state. There
+is no membership yet. The old ministry, kinds of mom, and wish form are gone;
+the cabinet stays behind `CABINET_KEY` only to read and discard filings
+received before the form closed.
 
 `spw.quest` serves a pinned workbench initialization recipe at `/init`, `/init.md`,
 and `/llms.txt`, with `/quest.json` and `/prompts.json` for structured consumers.
