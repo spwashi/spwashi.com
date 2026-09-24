@@ -50,7 +50,7 @@ test('the homepage explains the product and starts setup', async () => {
     const home = await page('/');
     assert.match(home, /<h1>Tell a website what happened<\/h1>/);
     // The first thing on the page is a card whose site you type in place.
-    assert.match(home, /<form method="get" action="\/note" class="write begin"/);
+    assert.match(home, /<form method="post" action="\/note" class="write begin"/);
     assert.match(home, /class="card-site-input" id="site" name="host"[^>]*data-begin-site/);
     assert.match(home, /<textarea class="card-write" id="begin-note" name="note"/);
     assert.match(home, /Or try one that is set up: <a href="\/lore\.land">/);
@@ -113,7 +113,7 @@ test('the write page is a labelled form with the kind as a choice', async () => 
   const restore = stubFetch();
   try {
     const write = await page('/example.org/question');
-    assert.match(write, /<h1>A note for example\.org<\/h1>/);
+    assert.match(write, /<h1 class="write-title">A note for example\.org<\/h1>/);
     // One choice, one group: the link's kind is checked in it, and choosing never rewrites the address.
     assert.match(write, /name="what" value="kind:question" checked/);
     assert.doesNotMatch(write, /data-href=/);
@@ -239,7 +239,7 @@ test('a client file shapes the form, the theme, and the frame', async () => {
   });
   try {
     const write = await page('/shop.example');
-    assert.match(write, /<h1>What was hard to use\?<\/h1>/);
+    assert.match(write, /<h1 class="write-title">What was hard to use\?<\/h1>/);
     assert.match(write, /href="https:\/\/shop\.example\/"/);
     assert.match(write, /Tell us what broke\./);
     assert.match(write, /<span>Bug report<\/span>/);
@@ -736,6 +736,31 @@ test('the form sends one choice, and a common note left over from another subjec
     const staleOnly = await send({ subject: 'recipes', what: 'thread:folios:order-by-card' });
     assert.equal(staleOnly.status, 400);
     assert.deepEqual(Object.keys((await staleOnly.json()).errors), ['note']);
+  } finally {
+    restore();
+  }
+});
+
+test('the homepage card can send at once, or open the site form with its words, never in an address', async () => {
+  // This site takes names; a site whose file turns them off drops the byline on its own form.
+  const restore = stubFetch({ 'maker.example': { ...MAPPED, from: 'optional' }, 'quiet.example': { schema: 'autonomous-feedback.client.v0', host: 'quiet.example' } });
+  try {
+    const home = await page('/');
+    assert.match(home, /<button type="submit" name="step" value="send">Send<\/button>/);
+    assert.match(home, /name="step" value="details" class="secondary">Add details first</);
+    assert.match(home, /id="begin-from" name="from"/);
+    const details = await get('autonomous.feedback', '/note', form({ step: 'details', host: 'https://www.maker.example/', note: 'The folio page loads slowly on my phone.', from: 'Maya' }));
+    assert.equal(details.status, 200);
+    assert.equal(details.headers.get('location'), null);
+    const html = await details.text();
+    assert.match(html, /<form method="post" action="\/maker\.example" class="write"/);
+    assert.match(html, />The folio page loads slowly on my phone\.<\/textarea>/);
+    assert.match(html, /id="from"[^>]*value="Maya"/);
+    const quiet = await (await get('autonomous.feedback', '/note', form({ step: 'details', host: 'quiet.example', note: 'Something long enough.', from: 'Maya' }))).text();
+    assert.doesNotMatch(quiet, /id="from"/);
+    const sent = await get('autonomous.feedback', '/note', form({ step: 'send', host: 'maker.example', note: 'The folio page loads slowly on my phone.' }));
+    assert.equal(sent.status, 200);
+    assert.match(await sent.text(), /class="card" id="card"/);
   } finally {
     restore();
   }

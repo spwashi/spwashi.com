@@ -247,11 +247,19 @@ const SHELL = `
     .write .card.live textarea.card-write:focus { outline: none; }
     .write .card.live textarea.card-write::placeholder { color: color-mix(in srgb, var(--muted) 80%, transparent); font-style: italic; }
     .write .card-from-line { margin: -.3rem 0 .9rem; color: var(--muted); }
-    .write .card-from-line input#from { width: min(100%, 16rem); min-height: 40px; padding: .2rem .15rem; border: 0; border-bottom: 1px dashed var(--line); border-radius: 0; background: transparent; color: var(--fg); font: inherit; }
-    .write .card-from-line input#from:focus { outline: none; border-bottom: 1px solid var(--accent); }
+    .write .card-from-line input[type="text"] { width: min(100%, 16rem); min-height: 40px; padding: .2rem .15rem; border: 0; border-bottom: 1px dashed var(--line); border-radius: 0; background: transparent; color: var(--fg); font: inherit; }
+    .write .card-from-line input[type="text"]:focus { outline: none; border-bottom: 1px solid var(--accent); }
     .write .send { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 1.3rem 0 0; }
     .write .send button { margin: 0; min-width: 12rem; background: var(--accent); color: var(--bg); font-weight: 650; }
     .write .courtesy { color: var(--muted); font-size: .88rem; }
+    .write .send button.secondary { margin: 0; }
+    /* Send is always within reach: the row rides the bottom of the screen while the form scrolls. */
+    body.quiet .write .send { position: sticky; bottom: 0; z-index: 3; margin: 1.3rem -.75rem 0; padding: .7rem .75rem calc(.7rem + env(safe-area-inset-bottom)); border-top: 1px solid color-mix(in srgb, var(--line) 70%, transparent); background: color-mix(in srgb, var(--bg) 84%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+    /* The write page's top gets out of the way: a smaller title, the site link on the kicker line, the subject on one line. */
+    body.quiet .write-title { font-size: clamp(1.45rem, 4.2vw, 2rem); margin-bottom: .4rem; }
+    .write .about-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .5rem; }
+    .write .about-line details[open] { flex-basis: 100%; }
+    .write .about-line summary { display: inline-flex; min-height: 36px; }
 
     /* ─── autonomous.feedback finish: a quiet room with one lit object in it ─── */
     body.quiet { background:
@@ -292,6 +300,9 @@ const SHELL = `
       background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 70%, var(--fg))); box-shadow: 0 10px 24px -12px var(--accent);
       transition: transform 140ms ease, box-shadow 200ms ease; }
     body.quiet .write .send button::after { content: " →"; }
+    body.quiet .write .send button.secondary { border: 1px solid var(--line); background: transparent; color: var(--fg); font-weight: 500; box-shadow: none; }
+    body.quiet .write .send button.secondary::after { content: none; }
+    .write #subjects { margin-bottom: .9rem; }
     body.quiet .write .send button:hover { transform: translateY(-1px); box-shadow: 0 14px 30px -12px var(--accent); }
     body.quiet .write .send button:active { transform: translateY(0) scale(.98); }
     /* A stance reads as a reply. */
