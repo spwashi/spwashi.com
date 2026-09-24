@@ -47,7 +47,9 @@ Subject: `symbol[category] imperative subject`, under ~72 chars, then prose, the
 1. **Review Working Tree Changes:**
    ```bash
    git status --short
+   node .agents/skills/patch-consolidator/scripts/analyze-changes.mjs   # candidate [category] groups from each file's history
    ```
+   The grouper predicts categories only; pick each symbol from what the change does, and read every diff before staging.
 2. **Whitespace & Diff Sanity:**
    ```bash
    git diff --check
