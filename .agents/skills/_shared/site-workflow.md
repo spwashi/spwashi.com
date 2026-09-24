@@ -58,7 +58,7 @@ The site's runtime is fully tunable across multiple semantic registers via `publ
 ```text
 reset
   ↓ tokens (core.css, dimensions.css)
-  ↓ shell (layout.css, chrome.css)
+  ↓ shell (layout.css, chrome/*.css)
   ↓ typography (type.css)
   ↓ grammar (syntax.css)
   ↓ components (cards.css, controls.css, frames.css)
