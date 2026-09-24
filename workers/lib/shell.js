@@ -225,14 +225,19 @@ const SHELL = `
     .page details { margin: 0; }
     .page fieldset { margin-top: .6rem; }
     .write .threads, .write .asks, .write .stance { display: none; }
-    .write .threads { margin: 0 0 1.1rem; }
+    /* "What is it": one group, captioned rows. */
+    fieldset.what { margin: 0; }
+    .write .what-row { margin: 0 0 .9rem; }
+    .write .row-caption { margin: 0 0 .4rem; color: var(--muted); font-size: .88rem; }
+    .write .clear-row { margin: -.3rem 0 0; }
+    .write .clear-what { min-height: 36px; margin: 0; padding: .2rem .7rem; border-color: transparent; color: var(--muted); font-size: .86rem; }
+    .write .clear-what:hover { color: var(--fg); border-color: var(--line); }
     .write fieldset.chips legend .hint, .write label .hint, .write summary .hint { margin: 0 0 0 .4rem; font-size: .82rem; }
     /* The form is the card: the question above it, the note written on it, the header following the choices. */
     .write .question { display: block; margin: 1.3rem 0 .4rem; color: var(--fg); font-size: 1.05rem; font-weight: 600; }
     .card.live { margin: 0 0 .4rem; border-style: dashed; box-shadow: none; transition: border-color 180ms ease, box-shadow 220ms ease, transform 220ms ease; }
     .card.live[data-filled="true"],
-    .write:has(input[name="thread"]:checked) .card.live,
-    .write:has(input[name="kind"]:checked) .card.live,
+    .write:has(input[name="what"]:checked) .card.live,
     .card.live:has(.card-write:not(:placeholder-shown)) { border-style: solid; box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 14%, transparent); }
     .card.live:focus-within { box-shadow: 0 0 0 2px var(--accent), 0 14px 34px color-mix(in srgb, var(--accent) 14%, transparent); }
     .card.live header { padding-right: 0; }
@@ -269,8 +274,7 @@ const SHELL = `
     body.quiet .card.live { transition: border-color 180ms ease, box-shadow 220ms ease, transform 260ms cubic-bezier(.2, .8, .3, 1); }
     body.quiet .card.live[data-tilt] { transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
     body.quiet .card.live[data-filled="true"],
-    body.quiet .write:has(input[name="thread"]:checked) .card.live,
-    body.quiet .write:has(input[name="kind"]:checked) .card.live,
+    body.quiet .write:has(input[name="what"]:checked) .card.live,
     body.quiet .card.live:has(.card-write:not(:placeholder-shown)) {
       box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 10%, transparent),
         7px 7px 0 -1px var(--bg), 7px 7px 0 0 color-mix(in srgb, var(--accent) 30%, transparent),
@@ -282,7 +286,7 @@ const SHELL = `
     body.quiet label.chip:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); transform: translateY(-1px); }
     body.quiet label.chip:active { transform: translateY(0) scale(.97); }
     body.quiet label.chip:has(input:checked) { background: color-mix(in srgb, var(--accent) 14%, var(--field)); }
-    body.quiet label.chip:has(input:checked) span::before { content: "✓ "; }
+    body.quiet label.chip:has(input:checked) span::before { content: "✓ " / ""; }
     /* One lit action. */
     body.quiet .write .send button { position: relative; overflow: hidden; padding-inline: 1.4rem; border: 0;
       background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 70%, var(--fg))); box-shadow: 0 10px 24px -12px var(--accent);
@@ -309,7 +313,6 @@ const SHELL = `
     .try { margin: .8rem 0 2.2rem; color: var(--muted); }
     .owners { margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
     @media (prefers-reduced-motion: reduce) { .card.live, .card.live [data-live][data-settle] { transition: none; animation: none; } }
-    .write:has(input[name="thread"]:checked) #kinds { display: none; }
     .about-line { margin: 0 0 1rem; }
     .about-line p { margin: 0; color: var(--muted); }
     .about-line p strong { color: var(--fg); font-weight: 600; }

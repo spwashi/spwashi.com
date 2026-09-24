@@ -194,7 +194,7 @@ function clientMain() {
     });
   }
 
-  // Write: the form is the card. Choices write the card's header; the note is written on the card itself.
+  // Write: the form is the card. One choice fills its header; the note is written on the card itself.
   const write = document.getElementById("write");
   if (write) {
     const note = write.querySelector("#note");
@@ -205,10 +205,12 @@ function clientMain() {
     const subjectName = write.querySelector('[data-fill="subject-name"]');
     const count = write.querySelector("[data-count]");
     const countLine = write.querySelector("[data-count-line]");
+    const clear = write.querySelector("[data-clear-what]");
     const submit = write.querySelector("button[type=submit]");
     const draftKey = `af:draft:${write.dataset.draftKey || "any"}`;
     const max = Number(note.getAttribute("maxlength")) || Infinity;
-    const checked = (name) => write.querySelector(`input[name="${name}"]:checked`);
+    const chosen = () => write.querySelector('input[name="what"]:checked');
+    const subject = () => write.querySelector('input[name="subject"]:checked');
 
     // Change a line on the card, and let it settle so the change is felt.
     const setLine = (node, text) => {
@@ -220,61 +222,108 @@ function clientMain() {
       node.setAttribute("data-settle", "");
     };
     const paintCard = () => {
-      const thread = checked("thread");
-      const kind = checked("kind");
-      const subject = checked("subject");
-      const thanks = thread?.value === "thanks";
-      setLine(kindLabel, thread?.dataset.kindTitle || kind?.dataset.kindTitle || "Note");
-      setLine(aboutLine, thread && !thanks ? thread.dataset.about : subject?.dataset.name || "");
-      note.placeholder = thanks ? "Thanks." : thread ? "Count me too." : subject?.dataset.example || kind?.dataset.example || note.dataset.placeholder || "";
+      const what = chosen();
+      const about = subject();
       const words = note.value.trim();
-      if (card) card.dataset.filled = String(Boolean(words || thread || kind));
+      setLine(kindLabel, what?.dataset.kindTitle || "Note");
+      setLine(aboutLine, what?.dataset.about || about?.dataset.name || "");
+      // What the card shows when nothing is written is exactly what a tap sends.
+      note.placeholder = what?.dataset.body || about?.dataset.example || note.dataset.placeholder || "";
+      if (card) card.dataset.filled = String(Boolean(words || what));
+      if (clear) clear.hidden = !what;
       if (submit) {
-        submit.textContent = words || !thread ? write.dataset.button || submit.textContent : thanks ? "Send thanks" : "Count me in";
+        const bare = what && !words;
+        submit.textContent = !bare ? write.dataset.button || submit.textContent
+          : what.value === "thanks" ? "Send thanks" : what.value.startsWith("thread:") ? "Count me in" : write.dataset.button || submit.textContent;
       }
       // The count only speaks near the limit.
       if (count) count.textContent = String(note.value.length);
       if (countLine) countLine.hidden = note.value.length < max * 0.8;
     };
 
-    if (storage && !note.value) {
-      const saved = storage.getItem(draftKey);
-      if (saved) {
-        note.value = saved;
-        say("Your unsent note was restored.");
+    // A draft is the whole card: where it is about, what it is, the words, the name, and any answers.
+    const saveDraft = () => {
+      if (!storage) return;
+      const draft = {
+        subject: subject()?.value || "",
+        what: chosen()?.value || "",
+        note: note.value,
+        from: write.querySelector("#from")?.value || "",
+        asks: [...write.querySelectorAll('textarea[name^="ask-"]')].map((ask) => [ask.id, ask.value]).filter(([, value]) => value),
+      };
+      if (draft.what || draft.note || draft.from || draft.asks.length) storage.setItem(draftKey, JSON.stringify(draft));
+      else storage.removeItem(draftKey);
+    };
+    const restoreDraft = () => {
+      // A page the server filled (an error, a link that named something) is already the truth.
+      if (!storage || note.value || chosen() || write.querySelector("#from")?.value) return;
+      let draft;
+      try {
+        draft = JSON.parse(storage.getItem(draftKey) || "null");
+      } catch {
+        draft = null;
       }
-    }
+      if (!draft) return;
+      const pick = (name, value) => {
+        const input = value && [...write.querySelectorAll(`input[name="${name}"]`)].find((i) => i.value === value);
+        if (input) input.checked = true;
+      };
+      pick("subject", draft.subject);
+      pick("what", draft.what);
+      note.value = draft.note || "";
+      const from = write.querySelector("#from");
+      if (from) from.value = draft.from || "";
+      (draft.asks || []).forEach(([id, value]) => { const ask = document.getElementById(id); if (ask) ask.value = value; });
+      if (subjectName && subject()?.dataset.name) subjectName.textContent = subject().dataset.name;
+      if (question && subject()?.dataset.prompt) question.textContent = subject().dataset.prompt;
+      say("Your unsent card was restored.");
+    };
+
+    restoreDraft();
     paintCard();
-    note.addEventListener("input", () => {
-      paintCard();
-      if (storage) {
-        if (note.value) storage.setItem(draftKey, note.value);
-        else storage.removeItem(draftKey);
-      }
-    });
-    write.querySelectorAll('input[name="kind"]').forEach((input) => input.addEventListener("change", () => {
-      // A kind and thanks are one choice on screen; the kind replaces thanks.
-      write.querySelectorAll('input[name="thread"]:checked').forEach((thread) => { thread.checked = false; });
-      if (question && !checked("subject")) question.textContent = input.dataset.prompt;
-      const href = input.dataset.href;
-      if (href && href !== location.pathname) history.replaceState(null, "", href);
-      paintCard();
-    }));
+    write.addEventListener("input", () => { paintCard(); saveDraft(); });
+
     write.querySelectorAll('input[name="subject"]').forEach((input) => input.addEventListener("change", () => {
       if (question && input.dataset.prompt) question.textContent = input.dataset.prompt;
       if (subjectName && input.dataset.name) subjectName.textContent = input.dataset.name;
-      write.querySelectorAll('input[name="thread"]:checked').forEach((thread) => {
-        const owner = thread.closest("[data-subject]");
-        if (owner && owner.dataset.subject !== input.value) thread.checked = false;
-      });
+      // A common note from another part of the site is hidden now, so it stops being the choice.
+      const what = chosen();
+      if (what?.value.startsWith("thread:") && !what.value.startsWith(`thread:${input.value}:`)) what.checked = false;
       paintCard();
+      saveDraft();
     }));
-    write.querySelectorAll('input[name="thread"]').forEach((input) => input.addEventListener("change", () => {
-      // The common note or thanks is the choice on screen, so a kind left checked underneath is not sent.
-      write.querySelectorAll('input[name="kind"]:checked').forEach((kind) => { kind.checked = false; });
+    write.querySelectorAll('input[name="what"]').forEach((input) => input.addEventListener("change", () => {
+      if (question && !subject() && input.dataset.prompt) question.textContent = input.dataset.prompt;
       paintCard();
-      say(input.value === "thanks" ? "Thanks is on the card. Add words if you like." : "That note is on the card. Add words if you like.");
+      saveDraft();
+      // Speak the owner's reply when a common note has one; it is the reward for the tap.
+      const stance = write.querySelector(`.stance[data-for="${CSS.escape(input.value)}"]`);
+      say(stance ? stance.textContent.trim() : `${input.closest("label")?.textContent.trim() || "That"} is on the card. Add words if you like.`);
     }));
+
+    const clearChoice = () => {
+      const what = chosen();
+      if (!what) return;
+      what.checked = false;
+      paintCard();
+      saveDraft();
+      say("Choice cleared. The card is a plain note.");
+      write.querySelector('#what input[name="what"]')?.focus();
+    };
+    clear?.addEventListener("click", clearChoice);
+    write.querySelector("#what")?.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && chosen()) {
+        event.preventDefault();
+        clearChoice();
+      }
+    });
+    // Control or Command and Enter sends from anywhere in the form.
+    write.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        write.requestSubmit();
+      }
+    });
 
     write.addEventListener("submit", (event) => {
       if (submit.getAttribute("aria-busy") === "true") {

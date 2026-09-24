@@ -54,6 +54,7 @@ export function orgFromHostname(hostname) {
 export const CONTEXTS = Object.freeze([
   {
     slug: "broken",
+    tap: "Something here is broken.",
     title: "Broken",
     operator: "action",
     prompt: "What failed, and what you did just before it failed.",
@@ -63,6 +64,7 @@ export const CONTEXTS = Object.freeze([
   },
   {
     slug: "confusing",
+    tap: "This was confusing.",
     title: "Confusing",
     operator: "concept-edge",
     prompt: "What you could not tell how to do, and where you were.",
@@ -72,6 +74,7 @@ export const CONTEXTS = Object.freeze([
   },
   {
     slug: "missing",
+    tap: "Something I expected is missing.",
     title: "Missing",
     operator: "frame",
     prompt: "What you expected to find on the page, and did not.",
@@ -81,6 +84,7 @@ export const CONTEXTS = Object.freeze([
   },
   {
     slug: "wrong",
+    tap: "Something here is wrong.",
     title: "Wrong",
     operator: "action",
     prompt: "What the page says or does that does not match the thing it is about.",
@@ -90,6 +94,7 @@ export const CONTEXTS = Object.freeze([
   },
   {
     slug: "question",
+    tap: "I have a question about this.",
     title: "Question",
     operator: "frame",
     prompt: "What you need the person who runs the site to answer.",
@@ -99,6 +104,7 @@ export const CONTEXTS = Object.freeze([
   },
   {
     slug: "appreciation",
+    tap: "This was good.",
     title: "Appreciation",
     operator: "wonder",
     prompt: "What was clear or easy, and where you noticed it.",
@@ -115,6 +121,7 @@ export const CONTEXTS = Object.freeze([
  */
 export const NOTE = Object.freeze({
   slug: "note",
+  tap: "",
   title: "Note",
   operator: "frame",
   prompt: "What happened, and where were you?",
