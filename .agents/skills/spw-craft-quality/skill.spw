@@ -49,7 +49,7 @@ expression = craft[align]{clarity.hierarchy.weight}<one-slice>
 #:skill #!agents
 #:layer #!pragmatics
 
-~#describes: "Improve visual hierarchy, accessibility (a11y), device parity, and code clarity on a small public slice. Prefer removing weight over adding inspectability."
+~#describes: "Improve visual hierarchy, accessibility (a11y), device parity, or code clarity on one small public slice — a route, a shared layer, or a module. Use for craft or polish passes; prefer removing weight over adding inspectability."
 
 @prose: ~"./SKILL.md"
 @measures: ~"../../../.spw/skills/craft-quality.spw"

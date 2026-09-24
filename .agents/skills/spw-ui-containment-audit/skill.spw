@@ -48,7 +48,7 @@ expression = containment[audit]{overflow.measure.target.packing}<narrow-and-wide
 #:skill #!agents
 #:layer #!pragmatics
 
-~#describes: "Find and fix overflow, measure, and packing issues. Structural CSS first—not new dimensions."
+~#describes: "Find and fix overflow, measure, tap-target, and packing issues when a layout breaks at widths nobody authored it at. Structural CSS first—not new dimensions."
 
 @prose: ~"./SKILL.md"
 @measures: ~"../../../.spw/skills/ui-containment.spw"
