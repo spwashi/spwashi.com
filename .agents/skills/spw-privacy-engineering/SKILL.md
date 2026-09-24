@@ -13,7 +13,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 * **Core Posture:** Browser-resident by default, privacy-first, no dark patterns. Anything that leaves the browser does so because the visitor sent it.
 * **Storage Rule:** Client state is clearable by the visitor and never sent to an endpoint they did not choose.
-* **Server Rule:** Workers that store submissions (`wap-mom` FILINGS in KV, including emails; `autonomous-feedback` D1) keep only what the submission needs, say so where the visitor submits, and have a deletion path.
+* **Server Rule:** Workers that store submissions (`autonomous-feedback` D1; `wap-mom` FILINGS in KV is closed to new filings and holds emails until the cabinet discards them) keep only what the submission needs, say so where the visitor submits, and have a deletion path.
 * **Stop Condition:** Do not build telemetry collection apparatus "just to see what users do".
 
 ---
