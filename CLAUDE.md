@@ -5,7 +5,7 @@ This adapter emphasizes one focus. AGENTS.md is the gate. Any model still follow
 ## 🛡️ Emphasis: Constitutional Rigor
 
 - Semantic HTML5 landmarks, meaningful headings, WCAG AA contrast, keyboard parity.
-- 44px (`--touch-target-min`) is the **ground-control** floor on coarse pointers: chips, sigils, native buttons outside `[data-spw-floating-chrome]`. Pocket chrome keeps `--touch-target-compact`. Do not `:where(button)` a components-layer min-inline-size that beats shell packing.
+- 44px (`--touch-target-min`) is the **ground-control** target on coarse pointers: standalone chips, sigils, native buttons outside `[data-spw-floating-chrome]`. It is a design target, not the AA floor (24px or spacing; inline targets exempt). Pocket chrome keeps `--touch-target-compact`. Do not `:where(button)` a components-layer min-inline-size that beats shell packing.
 - No new `data-spw-*` families. Map onto existing stems in `.spw/site.spw` first.
 - HTML/CSS carry reading; JS is progressive. Core copy readable with JS off.
 - Smallest honest surface. Do not rewrite untouched markup or flatten magic copy.
