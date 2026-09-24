@@ -6,35 +6,35 @@ description: Clean up naming and meaning across copy, data-spw attributes, CSS t
 # Spw Semantics Rigor for spwashi.com
 
 * Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
-* Adjacent measurement surface: [`.spw/skills/semantics-rigor.spw`](file:///Users/spwashi/air/spwashi.com/.spw/skills/semantics-rigor.spw)
+* Adjacent measurement surface: [`.spw/skills/semantics-rigor.spw`](../../../.spw/skills/semantics-rigor.spw)
 
 ---
 
 ## 1. Spw Invocation Contract
 
 * **Default Operation:** `align` (or `audit` when measuring cross-layer drift).
-* **Sense (Pre-flight):** `npm run spw:integrity && npm run spw:lattice` (verifies all 2500+ citations and operator cells before renaming).
+* **Sense (Pre-flight):** `npm run spw:integrity && npm run spw:lattice` (every citation and operator cell, before renaming; integrity takes about 80s, so run it once before and once after, not per edit).
 * **Probe (Falsification):** `npm run spw:integrity && npm run reasons && npm run spw:lattice`
 * **Precipitate:** Crystallize expression rules in `.spw/conventions/semantic-expression-consequence.spw`; attribute stems in `.spw/conventions/data-spw-attribute-governance.spw`; measurements in `.spw/skills/semantics-rigor.spw`.
 
 ---
 
-## 2. ⚡ 60-Second Quick Strike & Stop Conditions
+## 2. ⚡ Quick Strike & Stop Conditions
 
-* **Purpose:** This skill is for **cleanup, pruning, and alignment**—NOT for inventing new attribute families.
-* **Reuse First:** Always map onto existing `data-spw-*` families before proposing a new stem.
+* **Purpose:** This skill is for **cleanup, pruning, and alignment**, not for inventing new attribute families.
+* **Reuse First:** Map onto existing `data-spw-*` families (`.spw/site.spw`) before proposing a new stem.
 * **Expression Manifest Flow:** When authoring `data-spw-semantic-expression`, remember the pipeline:
   `data-spw-semantic-expression` → `npm run manifest:expressions` → `buildKinIndex` → 700ms dwell salience.
   *If you rename an expression subject without re-running `npm run manifest:expressions`, kin ties vanish silently.*
-* **Stop Condition:** If your semantic pass produces 5 new `.spw` files without resolving an active naming collision or dead code, STOP.
+* **Stop Condition:** A pass that adds `.spw` files without resolving a naming collision or removing dead code is growing the ontology, not cleaning it. Stop and name the collision you meant to fix.
 
 ---
 
 ## 3. 🛡️ Constitutional Guardrails
 
-* 🚫 **No Attribute Proliferation:** Never add a `data-spw-*` attribute to HTML unless there is an active CSS rule, JS consumer, or inspectable `.spw` contract depending on it.
-* 🚫 **No Ad-Hoc Stems:** Do not invent synonyms for existing operators (use canonical `#>`, `?`, `^`, `~`, `@`, `!`, `%`).
-* 🚫 **Preserve Creator Truth:** Never rephrase author copy into mechanical machine-speak. Spwashi is a creator first.
+* 🚫 **No Attribute Proliferation:** Add a `data-spw-*` attribute to HTML only when a CSS rule, JS consumer (check `el.dataset.spwFoo` writes too, not just the literal string), or inspectable `.spw` contract depends on it.
+* 🚫 **No Ad-Hoc Stems:** Do not invent synonyms for existing operators. The character table in `public/js/kernel/operator-detection.js` is canon; atlas slugs are aliases.
+* 🚫 **Preserve Creator Truth:** Do not rephrase author copy into mechanical machine-speak. Spwashi is a creator first.
 * 🚫 **Public nouns:** `.spw-frame` / `.spw-chip`. Do not author `site-frame` or `operator-chip` on public routes. Catalog `selector` strings must name the same nouns (`npm run audit:module-selectors`).
 * 🚫 **Migration tools:** `scripts/rewrite-semantic-nouns.mjs` can empty `class=""` via a 500-char lookahead. Diff for dropped `data-spw-textual-role` before committing a bulk rename.
 
@@ -67,7 +67,7 @@ When concept names collide across layers, use explicit coordinates rather than i
    ```
 3. **Plan-Only Edit Probe (preview rewrites before mutating):**
    ```bash
-   npm --prefix .spw/_workbench run spw -- pulse <file.spw>
+   npm run spw -- pulse <file.spw>
    ```
 4. **Local Verification Pass:**
    ```bash
