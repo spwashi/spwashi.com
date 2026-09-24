@@ -2,7 +2,9 @@
   "schema": "autonomous-feedback.client.v0",
   "host": "spwashi.com",
   "name": "Spwashi",
-  "intro": "What was hard to use, and what worked.",
+  "title": "What happened on the site?",
+  "about": "site",
+  "intro": "A note about using this site. What was hard to find, what broke, and what worked.",
   "thanks": "Thank you. I read these, and they shape what I make next.",
   "routes": [
     {
@@ -24,7 +26,7 @@
         "/now",
         "/contact"
       ],
-      "prompt": "What were you hoping to find?",
+      "prompt": "What were you hoping to find on the site?",
       "example": "I came from a video and could not tell where the recipes were.",
       "kinds": [
         "confusing",
@@ -54,8 +56,8 @@
       "paths": [
         "/topics"
       ],
-      "prompt": "Where did it stop making sense, or what would you add?",
-      "example": "The unit circle diagram lost me: which way is positive?",
+      "prompt": "What got in the way of using this page?",
+      "example": "I could not tell which section I was in, or how to get back.",
       "kinds": [
         "confusing",
         "wrong",
@@ -63,28 +65,28 @@
         "appreciation"
       ],
       "asks": [
-        "What did you already know coming in?",
-        "Which part were you reading?"
+        "Which page were you on?",
+        "What were you trying to do?"
       ],
       "threads": [
         {
           "id": "lost-me",
-          "name": "Lost me partway through",
+          "name": "This page lost me",
           "kind": "confusing"
         },
         {
           "id": "wrong",
-          "name": "Something here is wrong",
+          "name": "Something on this page is wrong",
           "kind": "wrong"
         },
         {
           "id": "more",
-          "name": "I want more on this",
+          "name": "I could not find the next part",
           "kind": "missing"
         },
         {
           "id": "helped",
-          "name": "This helped me",
+          "name": "This page was easy to use",
           "kind": "appreciation"
         }
       ]
@@ -95,7 +97,7 @@
       "paths": [
         "/design"
       ],
-      "prompt": "Which component, and what happened?",
+      "prompt": "Which part of the page, and what happened?",
       "example": "The card grid overlaps on an iPhone SE in landscape.",
       "kinds": [
         "broken",
@@ -127,8 +129,8 @@
         "/topics/software/spw",
         "/tools/spw-parser"
       ],
-      "prompt": "What were you trying to read or write?",
-      "example": "I read ^ as a pointer, but the page treats it as a lift.",
+      "prompt": "What were you trying to do on this page?",
+      "example": "I could not tell which example the page was showing.",
       "kinds": [
         "confusing",
         "broken",
@@ -136,17 +138,17 @@
         "appreciation"
       ],
       "asks": [
-        "What did you take it to mean?"
+        "What were you trying to do?"
       ],
       "threads": [
         {
           "id": "operator",
-          "name": "What does this operator mean?",
-          "kind": "question"
+          "name": "I could not tell what this page was saying",
+          "kind": "confusing"
         },
         {
           "id": "parser",
-          "name": "The parser did something I did not expect",
+          "name": "The tool on this page did something unexpected",
           "kind": "broken"
         }
       ]
@@ -157,8 +159,8 @@
       "paths": [
         "/recipes"
       ],
-      "prompt": "Which recipe, and how did it go?",
-      "example": "Made the pumpkin one for six. Doubled the spice; still mild.",
+      "prompt": "What got in the way of using this page?",
+      "example": "I could not tell which amount went with which step.",
       "kinds": [
         "wrong",
         "missing",
@@ -166,23 +168,18 @@
         "appreciation"
       ],
       "asks": [
-        "What did you make, and for whom?",
-        "What would you change next time?"
+        "Which page were you on?",
+        "What were you trying to do?"
       ],
       "threads": [
         {
-          "id": "made-it",
-          "name": "I made it",
-          "kind": "appreciation"
-        },
-        {
           "id": "amounts",
-          "name": "Amounts or timing were off",
+          "name": "An amount or a step on the page looked wrong",
           "kind": "wrong"
         },
         {
           "id": "substitution",
-          "name": "I needed a substitution",
+          "name": "I could not find what I needed on the page",
           "kind": "missing"
         }
       ]
@@ -194,7 +191,7 @@
         "/play",
         "/rpg"
       ],
-      "prompt": "What got in the way of play?",
+      "prompt": "What got in the way of using this page?",
       "example": "I could not tell which Wednesday the next session was.",
       "kinds": [
         "question",
@@ -203,7 +200,7 @@
         "appreciation"
       ],
       "asks": [
-        "What were you trying to do at the table?"
+        "What were you trying to do?"
       ],
       "threads": [
         {
@@ -224,8 +221,8 @@
       "paths": [
         "/design/folios"
       ],
-      "prompt": "Which folio, and what happened when you tried to order?",
-      "example": "I sent the card and did not know when to expect a reply.",
+      "prompt": "What happened when you tried to use this page?",
+      "example": "I sent the card and could not tell what would happen next.",
       "kinds": [
         "question",
         "broken",
@@ -233,8 +230,8 @@
         "appreciation"
       ],
       "asks": [
-        "Which folio were you looking at?",
-        "What did you expect to happen after the card?"
+        "Which page were you on?",
+        "What did you expect the page to do next?"
       ],
       "threads": [
         {
@@ -246,8 +243,8 @@
         },
         {
           "id": "which-folio",
-          "name": "Which folio suits me?",
-          "kind": "question"
+          "name": "I could not tell which folio this page was",
+          "kind": "confusing"
         }
       ]
     },

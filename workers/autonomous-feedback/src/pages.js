@@ -307,10 +307,11 @@ export function renderStart({ host = "", how = "link", kind = NOTE.slug, error =
   <details>
     <summary>What each field does</summary>
     <dl class="fields">
-      <dt><code>title</code></dt><dd>The heading of the form, up to 80 characters. Without it, the heading is “Feedback for” the site name.</dd>
+      <dt><code>title</code></dt><dd>The heading of the form, up to 80 characters. Without it, the heading is “A note for” the name, or “A note about the site” when <code>about</code> is <code>site</code>.</dd>
+      <dt><code>about</code></dt><dd><code>"site"</code> asks for a note about using the site: the kinds come first, and a subject only says where. <code>"subject"</code> asks for a note about that part of the work: the common notes come first. Leave it out to keep the usual form.</dd>
       <dt><code>kinds</code></dt><dd>Which kinds of note to show, in the order a reader meets them. Default: broken, confusing, missing, wrong, then question and appreciation.</dd>
       <dt><code>routes</code></dt><dd>Named pages on your site, <code>{ "name": "Checkout", "path": "/checkout" }</code>. The form offers them, and <code>?at=/checkout</code> preselects one.</dd>
-      <dt><code>subjects</code></dt><dd>The parts of your site a note can be about, up to 12. Each has an <code>id</code>, a <code>name</code>, the <code>paths</code> it covers (the reader's page picks it), a <code>prompt</code> and <code>example</code>, the <code>kinds</code> it takes, up to three <code>asks</code>, and up to six <code>threads</code>: the notes you hear most often there, each one tap for the reader, with an optional <code>kind</code>, and a <code>stance</code> and <code>link</code> shown as your answer.</dd>
+      <dt><code>subjects</code></dt><dd>Up to 12 parts of the work, or places on the site when <code>about</code> is <code>site</code>. Each has an <code>id</code>, a <code>name</code>, the <code>paths</code> it covers (the reader's page picks it), a <code>prompt</code> and <code>example</code>, the <code>kinds</code> it takes, up to three <code>asks</code>, and up to six <code>threads</code>: the notes you hear most often there, each one tap for the reader, with an optional <code>kind</code>, and a <code>stance</code> and <code>link</code> shown as your answer.</dd>
       <dt><code>thanks</code></dt><dd>Your line to every reader after they send, up to 200 characters.</dd>
       <dt><code>labels</code></dt><dd>Rename a kind and change its prompt or example. Title up to 40 characters, prompt up to 160.</dd>
       <dt><code>name</code>, <code>intro</code>, <code>button</code></dt><dd>Your site's display name, a line above the form (up to 300 characters), and the submit button text.</dd>
@@ -426,7 +427,8 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
   const selected = kindsShown.find((k) => k.slug === contextBySlug(values.kind || context?.slug)?.slug) || null;
   context = selected || NOTE;
   const display = site.name || host;
-  const heading = site.title || (lockHost ? `A note for ${display}` : "A note for a site");
+  const aboutSite = site.about === "site";
+  const heading = site.title || (lockHost ? (aboutSite ? "A note about the site" : `A note for ${display}`) : "A note for a site");
   const root = embed ? "/embed" : "";
   const tail = selected ? `/${selected.slug}` : "";
   const action = lockHost ? `${root}/${encodeURIComponent(host)}` : `/${context.slug}`;
@@ -445,14 +447,16 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
     ? "Add a detail if you want. The choice is enough."
     : (chosenSubject?.prompt || context.prompt);
 
+  const subjectLead = aboutSite ? "On" : "About";
+  const subjectLegend = aboutSite ? "Where on the site?" : (site.about === "subject" ? "What is this about?" : `Which part of ${escapeHtml(display)}?`);
   const subjectChips = subjects.map((sub) => `<label class="chip"><input type="radio" name="subject" value="${escapeHtml(sub.id)}"${chosenSubject?.id === sub.id ? " checked" : ""} data-prompt="${escapeHtml(sub.prompt || NOTE.prompt)}" data-example="${escapeHtml(sub.example)}" data-name="${escapeHtml(sub.name)}"> <span>${escapeHtml(sub.name)}</span></label>`).join("\n      ");
   const subjectBlock = !subjects.length ? "" : chosenSubject
     ? `<div id="subjects" class="about-line">
-    <p>About <strong data-fill="subject-name">${escapeHtml(chosenSubject.name)}</strong></p>
+    <p>${subjectLead} <strong data-fill="subject-name">${escapeHtml(chosenSubject.name)}</strong></p>
     <details>
       <summary>change</summary>
       <fieldset class="chips">
-        <legend class="sr-only">Which part of ${escapeHtml(display)}</legend>
+        <legend class="sr-only">${subjectLegend}</legend>
         ${fieldError("subject-error", errors.subject)}
         <div class="row">
       ${subjectChips}
@@ -461,7 +465,7 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
     </details>
   </div>`
     : `<fieldset id="subjects" class="chips">
-    <legend>Which part of ${escapeHtml(display)}?</legend>
+    <legend>${subjectLegend}</legend>
     ${fieldError("subject-error", errors.subject)}
     <div class="row">
       ${subjectChips}
@@ -470,13 +474,14 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
 
   // "What is it" is one choice: a common note (the fast lane), a kind, or thanks. One radio group, so only one is ever sent.
   const threadRows = subjects.filter((sub) => sub.threads.length).map((sub) => `<div class="what-row threads" data-subject="${escapeHtml(sub.id)}" role="group" aria-labelledby="what-${escapeHtml(sub.id)}">
-      <p class="row-caption" id="what-${escapeHtml(sub.id)}">Often said about ${escapeHtml(sub.name)}</p>
+      <p class="row-caption" id="what-${escapeHtml(sub.id)}">${aboutSite ? "Often said about this part" : `Often said about ${escapeHtml(sub.name)}`}</p>
       <div class="row">
-      ${sub.threads.map((t) => `<label class="chip"><input type="radio" name="what" value="${escapeHtml(`thread:${sub.id}:${t.id}`)}" data-kind-title="${escapeHtml(contextBySlug(t.kind)?.title || NOTE.title)}" data-about="${escapeHtml(`${sub.name} · ${t.name}`)}" data-body="Count me too."${chosenThread === t && chosenSubject?.id === sub.id ? " checked" : ""}> <span>${escapeHtml(t.name)}</span></label>`).join("\n      ")}
+      ${sub.threads.map((t) => `<label class="chip"><input type="radio" name="what" value="${escapeHtml(`thread:${sub.id}:${t.id}`)}" data-kind-title="${escapeHtml(kindsShown.find((c) => c.slug === t.kind)?.title || NOTE.title)}" data-about="${escapeHtml(`${sub.name} · ${t.name}`)}" data-body="Count me too."${chosenThread === t && chosenSubject?.id === sub.id ? " checked" : ""}> <span>${escapeHtml(t.name)}</span></label>`).join("\n      ")}
       </div>
       ${sub.threads.filter((t) => t.stance).map((t) => `<p class="stance" data-for="${escapeHtml(`thread:${sub.id}:${t.id}`)}"><strong>${escapeHtml(display)}:</strong> ${escapeHtml(t.stance)}${t.link ? ` <a href="https://${escapeHtml(host)}${escapeHtml(t.link)}">More</a>` : ""}</p>`).join("\n      ")}
     </div>`).join("\n    ");
 
+  const kindCaption = aboutSite ? "What happened on the site" : (subjects.some((sub) => sub.threads.length) ? "Or pick one" : "Pick one, or just write");
   const kinds = kindsShown.map((c) => `<label class="chip" data-kind="${c.slug}">
       <input type="radio" name="what" value="kind:${c.slug}"${selected?.slug === c.slug && !chosenThread && !thanked ? " checked" : ""} data-kind-title="${escapeHtml(c.title)}" data-prompt="${escapeHtml(c.prompt)}" data-body="${escapeHtml(c.tap)}">
       <span>${escapeHtml(c.title)}</span>
@@ -500,7 +505,8 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
     ? `<div class="error-summary" role="alert" tabindex="-1" data-error-summary><p>Not sent yet:</p><ul>${listed.map(([id, m]) => `<li><a href="#${id}">${escapeHtml(m)}</a></li>`).join("")}</ul></div>`
     : "";
   // The card as it will read: the header follows the choices, the body is what you write.
-  const cardKind = thanked ? "Appreciation" : chosenThread ? (contextBySlug(chosenThread.kind)?.title || NOTE.title) : context.title;
+  const titled = (slug) => kindsShown.find((c) => c.slug === slug)?.title || "";
+  const cardKind = thanked ? (titled("appreciation") || "Appreciation") : chosenThread ? (titled(chosenThread.kind) || NOTE.title) : context.title;
   const cardAbout = chosenThread ? `${chosenSubject.name} · ${chosenThread.name}` : chosenSubject?.name || "";
   const placeholder = thanked ? "Thanks." : chosenThread ? "Count me too." : selected?.tap || exampleText || "";
   const fromLine = site.from === "off" ? "" : `<p class="card-from-line"><label for="from" class="sr-only">Your name or handle</label>— <input id="from" name="from" type="text" value="${escapeHtml(values.from ?? "")}" maxlength="80" autocomplete="nickname" placeholder="${site.from === "required" ? "your name" : "your name, if you like"}"${site.from === "required" ? " required" : ""}${errors.from ? ` aria-invalid="true"` : ""}></p>`;
@@ -527,14 +533,15 @@ ${summary}
   <fieldset id="what" class="chips what">
     <legend class="sr-only">What is it?</legend>
     ${fieldError("kind-error", errors.kind)}
-    ${threadRows}
+    ${aboutSite ? "" : threadRows}
     <div class="what-row" role="group" aria-labelledby="what-kinds"${kindsShown.length === 1 ? " hidden" : ""}>
-      <p class="row-caption" id="what-kinds">${subjects.some((sub) => sub.threads.length) ? "Or pick one" : "Pick one, or just write"}</p>
+      <p class="row-caption" id="what-kinds">${kindCaption}</p>
       <div class="row">
       ${kinds}
-      ${kindsShown.some((c) => c.slug === "appreciation") ? `<label class="chip"><input type="radio" name="what" value="thanks" data-kind-title="Appreciation" data-body="Thanks."${thanked ? " checked" : ""}> <span>Just saying thanks</span></label>` : ""}
+      ${kindsShown.some((c) => c.slug === "appreciation") ? `<label class="chip"><input type="radio" name="what" value="thanks" data-kind-title="${escapeHtml(kindsShown.find((c) => c.slug === "appreciation")?.title || "Appreciation")}" data-body="Thanks."${thanked ? " checked" : ""}> <span>Just saying thanks</span></label>` : ""}
       </div>
     </div>
+    ${aboutSite ? threadRows : ""}
     <p class="clear-row"><button type="button" class="clear-what" data-clear-what hidden>Clear the choice</button></p>
   </fieldset>
   ${kindsShown.length === 1 ? `<input type="hidden" name="kind" value="${kindsShown[0].slug}">` : ""}

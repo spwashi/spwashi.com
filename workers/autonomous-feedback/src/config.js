@@ -51,6 +51,8 @@ export function defaultConfig(host) {
     inbox: { key: "" },
     routes: [],
     subjects: [],
+    // "" keeps today's form. "site" asks about using the site. "subject" asks about the work.
+    about: "",
     theme: null,
     problems: [],
   };
@@ -271,6 +273,11 @@ export function readConfig(raw, host) {
     else problems.push(`from must be "off", "optional", or "required"; using "off".`);
   }
 
+  if (raw.about != null && raw.about !== "") {
+    if (raw.about === "site" || raw.about === "subject") config.about = raw.about;
+    else problems.push('about must be "site" or "subject".');
+  }
+
   if (raw.note != null && typeof raw.note === "object") {
     const min = Number.isInteger(raw.note.min) ? raw.note.min : NOTE_MIN;
     const max = Number.isInteger(raw.note.max) ? raw.note.max : NOTE_MAX;
@@ -368,6 +375,7 @@ export function configToFile(config) {
   if (config.title) file.title = config.title;
   if (Object.keys(config.contact).length) file.contact = { ...config.contact };
   if (config.intro) file.intro = config.intro;
+  if (config.about) file.about = config.about;
   file.kinds = [...config.kinds];
   if (Object.keys(config.labels).length) file.labels = config.labels;
   file.from = config.from;
