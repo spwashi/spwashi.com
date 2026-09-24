@@ -15,7 +15,7 @@
 
 ^"contents"{
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
-  "scripts/": .{ role = `executable helpers the skill invokes`, holds = #[`analyze-changes.sh`][reg=set] }[reg=facet]
+  "scripts/": .{ role = `executable helpers the skill invokes`, holds = #[`analyze-changes.mjs`][reg=set] }[reg=facet]
 }[reg=facet]
 # >>> end generated
 
