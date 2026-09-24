@@ -9,33 +9,33 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ---
 
-## ⚡ 60-Second Quick Strike (Grok)
+## ⚡ Quick Strike
 
-* **Pedagogy First:** Math and algorithmic concepts must lead with clear geometric or intuitive visual metaphors before code.
+* **Pedagogy First:** Lead with an intuition — usually geometric or visual — before code or notation, so a reader has something to hold when the symbols arrive.
 * **Stop Condition:** Do not build a heavy canvas simulator for a simple algebraic concept that can be clearly illustrated with a crisp static SVG diagram.
 
 ---
 
-## 🛡️ Constitutional Guardrails (Claude)
+## 🛡️ Constitutional Guardrails
 
-* 🚫 **Zero-JS Degradation:** The core mathematical explanation and static diagram must be 100% understandable even if JavaScript is disabled.
-* 🚫 **Accessible Math Markup:** Use semantic HTML, clean SVGs with `aria-label`, and text equivalents for mathematical formulas.
-* 🚫 **No Performance Traps:** Interactive math canvases must use `requestAnimationFrame` with idle throttling and avoid high-frequency garbage collection.
+* 🚫 **Zero-JS Degradation:** The explanation and static diagram read completely with JavaScript off.
+* 🚫 **Accessible Math Markup:** Semantic HTML, SVGs with `role="img"` and a title or `aria-label`, and a text equivalent for each formula.
+* 🚫 **No Performance Traps:** Interactive canvases draw on `requestAnimationFrame`, stop when offscreen or idle, and avoid per-frame allocation. Under reduced motion, step instead of animate.
 
 ---
 
-## 📐 Pedagogical Progression & Lab Ladder (Codex)
+## 📐 Pedagogical Progression & Lab Ladder
 
 ```text
 Step 1: Intuition → Plain English narrative explaining "why this math matters".
 Step 2: Static SVG→ Clear, accessible vector geometry with labeled axes/nodes.
-Step 3: Interactive→ Optional interactive lab mounted on `interaction` or `visible`.
-Step 4: Formula   → Concise mathematical formalization and Spw operator tie-ins.
+Step 3: Interactive→ Optional playable instrument, mounted at MOUNT_WHEN.INTERACTION or VISIBLE.
+Step 4: Formula   → Concise formalization. Spw operator tie-ins only where they teach something the formula does not.
 ```
 
 ---
 
-## 🌌 Tooling & Validation Ladder (Antigravity)
+## 🌌 Tooling & Validation Ladder
 
 1. **Verify Lab Module Syntax:**
    ```bash

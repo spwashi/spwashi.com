@@ -8,7 +8,7 @@
 #:skill #!agents
 #:layer #!pragmatics
 
-~#describes: "Audit browser-resident privacy risks—storage, service worker, embeds, analytics, asset metadata. Use when data handling changes, not as a default every patch."
+~#describes: "Audit privacy risks in the browser (storage, service worker, embeds, asset metadata) and in the workers that persist visitor submissions. Use when data handling changes, not as a default every patch."
 
 @prose: ~"./SKILL.md"
 

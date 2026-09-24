@@ -9,22 +9,22 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ---
 
-## ⚡ 60-Second Quick Strike (Grok)
+## ⚡ Quick Strike
 
 * **Objective:** Cut through "vibes-only" debates with clear, falsifiable empirical observations.
-* **Stop Condition:** Research notes must end in either an actionable implementation plan OR an explicit "DO NOT BUILD" decision. Never leave open-ended academic essays.
+* **Stop Condition:** A note ends in one of three places: a plan, an explicit "do not build", or a named wonder (`#>wonder_*` with a `!probe`) that says what observation would answer it. An open question is fine; an open question with no probe is an essay.
 
 ---
 
-## 🛡️ Constitutional Guardrails (Claude)
+## 🛡️ Constitutional Guardrails
 
 * 🚫 **No Permanent System Sprawl:** A research finding does not automatically earn a new sitewide convention or `.spw` root.
-* 🚫 **Observable Reality Over Pure Theory:** Ground every conclusion in actual browser performance (FID, LCP, CLS), CSS layout metrics, or user interaction evidence.
+* 🚫 **Observable Reality Over Pure Theory:** Ground conclusions in something observed: browser performance (INP, LCP, CLS), layout metrics, a pocket still, or how a person actually used the page.
 * 🚫 **Archive Answered Notes:** Once a question is answered and implemented, archive the research note to prevent cognitive clutter.
 
 ---
 
-## 📐 Structured Research Note Protocol (Codex)
+## 📐 Structured Research Note Protocol
 
 ```markdown
 # Research: <Clear Question in One Sentence>
@@ -33,7 +33,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 What do we expect will happen? (e.g. "Switching to container queries reduces reflow overhead by 30%").
 
 ## 2. Test Method & Dataset
-- Viewport ranges: 360px, 768px, 1440px
+- Viewports: pocket (390px), fold (768px), broadsheet (1440px)
 - Tooling: Chrome DevTools Performance / Headless Runner
 
 ## 3. Findings & Evidence
@@ -42,11 +42,12 @@ What do we expect will happen? (e.g. "Switching to container queries reduces ref
 ## 4. Decision Gate
 - [ ] Build & ship via `<plan-slug>`
 - [ ] Reject / Do not build (rationale documented)
+- [ ] Hold as a wonder, with the probe that would answer it
 ```
 
 ---
 
-## 🌌 Tooling & Validation Ladder (Antigravity)
+## 🌌 Tooling & Validation Ladder
 
 1. **Performance Matrix Probe:**
    ```bash

@@ -9,22 +9,22 @@ Read first: `../_shared/site-workflow.md`.
 
 ---
 
-## ⚡ 60-Second Quick Strike (Grok)
+## ⚡ Quick Strike
 
 * **Name for Meaning:** Name assets for their semantic feeling and structure (e.g. `spwashi-studio-desk-morning.webp`), not raw hash noise (`image_129482.png`).
 * **Stop Condition:** Do not create elaborate metadata sidecars for simple illustrative decorations.
 
 ---
 
-## 🛡️ Constitutional Guardrails (Claude)
+## 🛡️ Constitutional Guardrails
 
-* 🚫 **No Low-Quality Alt Text:** Alt text must never say "image of...", "graphic showing...", or repeat the filename. Describe the meaningful visual content and emotion for screen reader users.
-* 🚫 **Decorative Images:** Purely decorative background ornaments should use `alt=""` or `aria-hidden="true"`.
-* 🚫 **Root-Relative Paths:** Always use root-relative paths in HTML: `/public/images/<category>/<filename>.<ext>`.
+* 🚫 **No Low-Quality Alt Text:** Alt text does not say "image of...", "graphic showing...", or repeat the filename. Say what the image contributes to the sentence around it; a screen reader user hears it in that flow.
+* 🚫 **Decorative Images:** Purely decorative ornaments use `alt=""` (or `aria-hidden="true"` on non-`img` decoration).
+* 🚫 **Root-Relative Paths:** Use root-relative paths in HTML: `/public/images/<category>/<filename>.<ext>`.
 
 ---
 
-## 📐 Semantic Naming Grammar (Codex)
+## 📐 Semantic Naming Grammar
 
 ```text
 Format:  [domain]-[subject]-[posture]-[variant].[ext]
@@ -41,13 +41,13 @@ Example: software-terminal-monochrome-dense.webp
 
 ---
 
-## 🌌 Tooling & Validation Ladder (Antigravity)
+## 🌌 Tooling & Validation Ladder
 
 1. **Check Image Manifest:**
    ```bash
    npm run images:manifest
    ```
-2. **Verify HTML References:** Ensure all image tags have valid `src`, `alt`, `width`, `height`, and `loading="lazy"`.
+2. **Verify HTML References:** Every image has a valid `src`, `alt`, `width`, and `height`. Below-the-fold images take `loading="lazy"`; the first image a reader sees does not (lazy-loading it delays the page's largest paint).
 3. **Local Verification Gate:**
    ```bash
    npm run check:local
