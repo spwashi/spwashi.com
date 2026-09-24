@@ -10,7 +10,7 @@
  * and discarded.
  */
 
-import { HOUSE_STYLE, ISSUES, OPEN_QUESTIONS, ROOM } from "./room.js";
+import { HOUSE_STYLE, ISSUES, OPEN_QUESTIONS, ROOM, USES } from "./room.js";
 
 const VERSION = "0.1.0";
 const NAME = "Wondering About Pi";
@@ -97,6 +97,12 @@ const STYLE = `
   .pull { margin: 1.6rem 0; padding: .9rem 0; border-block: 1px solid var(--rule); text-align: center; }
   .pull blockquote { margin: 0; font-size: 1.35rem; line-height: 1.35; font-style: italic; }
 
+  /* Uses: one line per dimension, the same four in every issue. */
+  .uses { margin: 1.6rem 0 0; padding: .9rem 1rem .4rem; background: var(--card); border: 1px solid var(--faint); border-top: 3px double var(--rule); }
+  .uses .head { margin: 0 0 .5rem; color: var(--muted); }
+  .uses dl { margin: 0; }
+  .uses dt { color: var(--crust); font-size: .92rem; font-variant-caps: all-small-caps; letter-spacing: .07em; }
+  .uses dd { margin: 0 0 .7rem; }
   .cite { font-size: .95rem; color: var(--muted); border-top: 1px solid var(--faint); padding-top: .8rem; margin: 1.4rem 0 .4rem; }
   .links { display: flex; flex-wrap: wrap; gap: 0 1.2rem; margin: 0; padding: 0; list-style: none; }
   .links a { display: inline-flex; align-items: center; min-block-size: 44px; }
@@ -230,6 +236,19 @@ function citation(issue) {
   return `“${escapeHtml(issue.title)}.” <i>${NAME}</i>, no. ${escapeHtml(issue.no)}. wap.mom/${escapeHtml(issue.slug)}/`;
 }
 
+function usesPanel(issue) {
+  const rows = USES.filter(([key]) => issue.uses?.[key])
+    .map(([key, label]) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(issue.uses[key])}</dd>`)
+    .join("\n    ");
+  if (!rows) return "";
+  return `<aside class="uses" aria-labelledby="uses-${escapeHtml(issue.slug)}">
+  <p class="caps head" id="uses-${escapeHtml(issue.slug)}">Uses</p>
+  <dl>
+    ${rows}
+  </dl>
+</aside>`;
+}
+
 function issueBody(issue) {
   return issue.body.map((p) => `<p>${escapeHtml(p)}</p>`).join("\n    ");
 }
@@ -304,6 +323,7 @@ function renderIssue(issue) {
   <div class="body rest">
     ${issue.body.slice(1).map((p) => `<p>${escapeHtml(p)}</p>`).join("\n    ")}
   </div>
+  ${usesPanel(issue)}
   <p class="cite"><span class="caps">Cite</span> ${citation(issue)}</p>
   <ul class="links" aria-label="Pass it on">
     <li><a href="/${escapeHtml(issue.slug)}/offprint/">Offprint</a></li>
@@ -332,6 +352,7 @@ function renderOffprint(issue) {
   <div class="body">
     ${issueBody(issue)}
   </div>
+  ${usesPanel(issue)}
   <p class="cite">${citation(issue)}</p>
 </article>
 </main>`,
@@ -613,11 +634,11 @@ function nowJson() {
     version: VERSION,
     name: NAME,
     numbering: "Issue n is π to n decimal places.",
-    issues: printed.map(({ no, slug, title, dek, status, clip }) => ({
-      no, slug, title, dek, status, clip: clip || null, url: `https://wap.mom/${slug}/`,
+    issues: printed.map(({ no, slug, title, dek, status, clip, uses }) => ({
+      no, slug, title, dek, status, clip: clip || null, uses: uses || null, url: `https://wap.mom/${slug}/`,
     })),
     forthcoming: forthcoming.map(({ no, slug, title, question }) => ({ no, slug, title, question })),
-    room: { houseStyle: HOUSE_STYLE, openQuestions: OPEN_QUESTIONS },
+    room: { houseStyle: HOUSE_STYLE, openQuestions: OPEN_QUESTIONS, uses: Object.fromEntries(USES) },
   };
 }
 
