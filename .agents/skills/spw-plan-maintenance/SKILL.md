@@ -9,7 +9,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ---
 
-## ⚡ 60-Second Quick Strike (Grok)
+## ⚡ Quick Strike
 
 * **The Golden Rule:** Maintenance that does not **archive** landed or abandoned plans is just compounding bloat.
 * **Success Metric:** The next census has *fewer* active plans, *zero* empty `index.spw` files, and clean link paths.
@@ -18,15 +18,15 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ---
 
-## 🛡️ Constitutional Guardrails (Claude)
+## 🛡️ Constitutional Guardrails
 
-* 🚫 **No Zombie Indexes:** Never generate empty `index.spw` files in folders without active `PLAN.md` files.
-* 🚫 **No Unbounded Growth:** Enforce a 1-to-1 archive quota: when landing a new canonical plan, move superseded or finished active plans into `.agents/plans/archive/`.
+* 🚫 **No Zombie Indexes:** Do not generate empty `index.spw` files in folders without an active `PLAN.md`.
+* 🚫 **No Unbounded Growth:** When a new canonical plan lands, look for the plan it supersedes or the finished one beside it and move it to `.agents/plans/archive/`. The active count should not climb with each landing.
 * 🚫 **Preserve Link Integrity:** When moving or archiving plans, verify all markdown links in `/about/plans/` and related `.spw` files.
 
 ---
 
-## 📐 Plan Lifecycle & Triage Matrix (Codex)
+## 📐 Plan Lifecycle & Triage Matrix
 
 | Status Category | Criteria | Location | Action |
 | :--- | :--- | :--- | :--- |
@@ -37,16 +37,17 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ---
 
-## 🌌 Tooling & Validation Ladder (Antigravity)
+## 🌌 Tooling & Validation Ladder
 
-Use the mounted `spw` CLI to check plan drift and verify link hygiene:
+Use the mounted `spw` CLI (root aliases; no need to enter the workbench) to check plan drift and verify link hygiene:
 
 ```bash
 # 1. Check plan status and drift:
-npm --prefix .spw/_workbench run spw:plan:check --
+npm run spw:plan:check --
 
-# 2. View plan tree census:
-npm --prefix .spw/_workbench run spw -- tree .agents/plans --depth 2
+# 2. Census: active plans and empty indexes (compare before and after; `spw tree` resolves inside the workbench and does not see these)
+find .agents/plans -name PLAN.md -not -path '*/archive/*' | wc -l
+find .agents/plans -name index.spw -not -path '*/archive/*' -empty | wc -l
 
 # 3. Verify markdown & diff hygiene:
 git diff --check

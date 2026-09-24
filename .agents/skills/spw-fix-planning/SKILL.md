@@ -9,24 +9,24 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ---
 
-## ⚡ 60-Second Quick Strike (Grok)
+## ⚡ Quick Strike
 
 * **Triage Rule:** If the bug is in a single file with an obvious cause, **do not write a FIX.md**. Just fix the file, run `git diff --check`, and verify.
 * **When to Write `FIX.md`:** Only when the regression spans multiple layers (e.g. CSS token + JS state + HTML attribute) or root cause is ambiguous.
-* **Stop Condition:** A `FIX.md` should take under 3 minutes to draft. If it's turning into a research paper, you are avoiding the actual fix.
+* **Stop Condition:** A `FIX.md` is a short triage note. If it is turning into a research paper, you are avoiding the actual fix.
 
 ---
 
-## 🛡️ Constitutional Guardrails (Claude)
+## 🛡️ Constitutional Guardrails
 
 * 🚫 **No Symptom Band-Aids:** Do not slap `!important`, inline CSS styles, or random `z-index: 9999` onto elements to mask underlying cascade or positioning errors.
 * 🚫 **No Over-Generalizing Fixes:** Scope the fix strictly to the broken surface. Do not rewrite surrounding stable components during a bugfix.
 * 🚫 **No Silent Contract Breaks:** Verify that fixing one route does not break shared component contracts across other routes.
-* 🚫 **Stills can fail now:** If the bug is ink, resonance, or a pin, reproduce with `npm run visual:checks` and read the `attention-miss` receipt before guessing CSS.
+* 🚫 **Reproduce visual bugs in stills:** If the bug is ink, resonance, or a pin, reproduce with `npm run visual:checks` and read the `attention-miss` receipt before guessing CSS.
 
 ---
 
-## 📐 The 4-Step Triage Protocol (Codex)
+## 📐 The 4-Step Triage Protocol
 
 ```text
 Step 1: Reproduce   → Record exact route, viewport width, or user interaction that triggers the bug.
@@ -55,7 +55,7 @@ Step 4: Regress Guard→ Run targeted test command and check:local.
 
 ---
 
-## 🌌 Tooling & Validation Ladder (Antigravity)
+## 🌌 Tooling & Validation Ladder
 
 1. **Targeted Syntax Check:**
    ```bash

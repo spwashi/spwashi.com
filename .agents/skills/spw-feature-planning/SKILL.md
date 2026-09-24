@@ -9,24 +9,24 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ---
 
-## ⚡ 60-Second Quick Strike (Grok)
+## ⚡ Quick Strike
 
-* **When to Plan:** ONLY when work touches multiple routes, introduces a shared CSS/JS layer, or establishes a durable sitewide contract.
+* **When to Plan:** When work touches multiple routes, introduces a shared CSS/JS layer, or establishes a durable sitewide contract.
 * **When to Skip:** Single-route copy, isolated bug fixes, or routine styling tweaks. Just make the edit and validate.
-* **Anti-Bloat Tripwire:** If a plan document exceeds 80 lines before writing a single line of code, prune it. A plan is an execution map, not an essay.
+* **Anti-Bloat Tripwire:** A plan past ~80 lines before any code exists has become an essay; prune it back to an execution map. Plans over ~200 lines are not read unless Open first names them.
 * **Computer-use models:** Verify first (`npm run audit:module-selectors`, `npm run visual:checks`, one pocket route). One named patch. Stop. Do not “implement from plans.”
 
 ---
 
-## 🛡️ Constitutional Guardrails (Claude)
+## 🛡️ Constitutional Guardrails
 
 * 🚫 **No Premature Taxonomy:** Do not invent new `data-spw-*` attribute families without checking existing families in `.spw/site.spw` and the design catalog.
-* 🚫 **No Immediate Mount Inflation:** Do not classify new behavior modules as `immediate` in `module-catalog.js` unless boot criticality is explicitly proven. Default to `visible`, `idle`, or `interaction`.
-* 🚫 **No Runtime Dependencies:** Do not add npm packages. Build upon vanilla web platform standards (HTML5 semantic tags, vanilla CSS custom properties, native ES modules).
+* 🚫 **No Immediate Mount Inflation:** Do not give a new module `MOUNT_WHEN.IMMEDIATE` in `public/js/runtime/catalog/` unless boot criticality is proven; every immediate module is paid on every page before first paint. Default to `VISIBLE`, `IDLE`, `SETTLED`, or `INTERACTION`.
+* 🚫 **No Runtime Dependencies:** No new npm packages without human review. Build on the platform: semantic HTML, CSS custom properties, native ES modules.
 
 ---
 
-## 📐 The 4-Phase Execution Ladder (Codex)
+## 📐 The 4-Phase Execution Ladder
 
 ```text
 Phase 1: Public Intent    → Name the exact outcome in one sentence (who benefits and how).
@@ -58,11 +58,11 @@ One concise sentence describing the user/reader outcome.
 
 ---
 
-## 🌌 Tooling & Validation Ladder (Antigravity)
+## 🌌 Tooling & Validation Ladder
 
 1. **Pre-flight Plan Status Probe:**
    ```bash
-   npm --prefix .spw/_workbench run spw:plan:status --
+   npm run spw:plan:status --
    ```
 2. **Local Contract Verification:**
    ```bash
