@@ -16,16 +16,22 @@ Inventory is `cluster.json`. Each unit is `workers/<id>/` with `wrangler.jsonc` 
 | `spw-quest` | `spw.quest` |
 | `wap-mom` | `wap.mom` |
 
-`wap.mom` is Wondering About Pi: a periodical of record about π and pie, and the
-straight man of the WAP clown lore. It plays everything earnest; only the domain
-winks. Issue n is numbered by π to n decimal places (3.1, 3.14, 3.141…). Every
-word lives in `src/room.js`, the writers' room, edited in conversation and on
-stream: house style, open questions, and issues that move from `open` to
-`draft` (printed as a galley proof) to `set`. Each printed issue has an
-offprint (`/{slug}/offprint/`) and, when it names a `clip`, a clipping card
-(`/{slug}/clip/`) sized for a screenshot. `/room` shows the room's state. There
-is no membership yet. The old ministry, kinds of mom, and wish form are gone;
-the cabinet stays behind `CABINET_KEY` only to read and discard filings
+`wap.mom` is Wondering About Pi: a periodical of record about π and pie, with
+The e Supplement bound in, and the straight man of the WAP clown lore. It plays
+everything earnest; only the domain winks. Issue n of a series is its constant
+to n decimal places (π: 3.1, 3.14, …; e: 2.7, 2.71, …). Every word lives in
+`src/room.js`, the writers' room, edited in conversation and on stream: house
+style, open questions, the four Uses dimensions, series, departments,
+corrections, and issues that move from `open` to `draft` (printed as a galley
+proof) to `set`. An issue may carry a figure: an instrument drawn by one kit in
+`src/figures.js` that the server prints with a GET form (so it works with no
+script) and `/figures.js` sends to the browser under `script-src 'self'` (so it
+follows the hand). Other modules: `catalog.js` (numbering), `layout.js` (type,
+mastheads, the e^iπ + 1 = 0 printer's mark), `pages.js`, `feeds.js` (`/feed.xml`,
+`/sitemap.xml`, `/now.json`), `cabinet.js`. Magazine surfaces: `/contents/` by
+department, `/colophon/`, `/corrections/`, `/room`, and per issue an offprint
+(`/{slug}/offprint/`) and a clipping (`/{slug}/clip/`). There is no membership
+yet. The cabinet stays behind `CABINET_KEY` only to read and discard filings
 received before the form closed.
 
 `spw.quest` serves a pinned workbench initialization recipe at `/init`, `/init.md`,
