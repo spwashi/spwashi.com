@@ -1,0 +1,144 @@
+# Review 2026-09-25 — keep as the one owner of cascade layer order; other plans cite it instead of forbidding the change.
+# Plan Index — css-cascade-stratification
+#
+# Make the cascade layer list a care signal: each layer promises reach, cure, and hand.
+
+#>plan_css_cascade_stratification_index
+#:index #!plan
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "experimental"
+
+intent: .{
+ goal = `A rule's layer should tell a reader how far it reaches, how long it lives, and whose hand owns it, so the care spent on a change matches its effect radius. Phase 1 is one cascade (the bundle emits the order statement, browser-reviewed); Phase 2 stratifies eleven layers into six pours.`
+ owner = `css-cascade-stratification`
+ kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Cascade order can carry meaning without re-deriving composition: a layer name is a promise about reach, cure, and hand, rhyming with the shape / altitude / register triple every data-spw-* attribute declares.`
+ concepts = #[
+  `care-signal`,
+  `two-cascades`,
+  `pours`,
+  `reach-cure-hand`,
+  `governors`,
+  `substrate`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/caches/css-cascade-stratification-2026-09.spw`,
+  `public/css/style-core.css`,
+  `public/css/reset/base.css`,
+  `scripts/ts/css-bundle.mts`,
+  `scripts/ts/css-contracts.mts`,
+ ][reg=set]
+ fixity_tier = `experimental`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Resin painter: pour, let it set, pour again. Name what each layer lets through.`
+ accuracy = `Primed 2026-09-25. Nothing in public/css has moved. The bundle still strips the order statement.`
+ direction = `Phase 0 re-homes misfiled base.css rules inside existing layers; Phase 1 is the browser-reviewed order statement; Phase 2 lands one pour at a time, reader first.`
+ inspiration = `A reader should feel the weight of a layer before reading the rule.`
+ alignment = `css-architecture-readability rail; core-css-spend-cut owns delivery; css-state-legibility owns the intent contract that makes the flip safe.`
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@cache: ~"../../../.spw/caches/css-cascade-stratification-2026-09.spw"
+@css_instruction: ~"../../../.spw/conventions/css-instruction.spw"
+@stylesheet_ecology: ~"../../../.spw/conventions/stylesheet-ecology.spw"
+@semantic_hierarchy: ~"../../../.spw/conventions/semantic-hierarchy.spw"
+@operator_controls: ~"../../../.spw/audits/operator-controls-2026-09.spw"
+@recalc_cost: ~"../../../.spw/audits/runtime-recalc-cost-2026-09.spw"
+@bundler: ~"../../../scripts/ts/css-bundle.mts"
+@contracts: ~"../../../scripts/ts/css-contracts.mts"
+@base: ~"../../../public/css/reset/base.css"
+
+dispatch: .{
+ plan = @plan
+ cache = @cache
+ css_instruction = @css_instruction
+ stylesheet_ecology = @stylesheet_ecology
+ semantic_hierarchy = @semantic_hierarchy
+ operator_controls = @operator_controls
+ recalc_cost = @recalc_cost
+ bundler = @bundler
+ contracts = @contracts
+ base = @base
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `operator_controls` ; path = `.spw/audits/operator-controls-2026-09.spw#findings` }[reg=facet],
+  .{ label = `recalc_cost` ; path = `.spw/audits/runtime-recalc-cost-2026-09.spw#ablation` }[reg=facet],
+  .{ label = `alignment_review` ; path = `.spw/reviews/css-architecture-alignment.spw` }[reg=facet],
+  .{ label = `attribute_rhythm` ; path = `.spw/conventions/data-spw-attribute-governance.spw#rhythm` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits and conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `css-architecture-readability`
+ related_plans = #[
+  `core-css-spend-cut`,
+  `css-state-legibility`,
+  `compositional-css-electrostatics`,
+  `runtime-bootstrap-performance`,
+  `data-attribute-css-token-refinement`,
+  `microinteraction-motion-lifecycle`,
+  `vertical-rhythm-container-audit`,
+ ][reg=set]
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-css_cascade_stratification-001"
+ layer = "pragmatic"
+ hypothesis = `When the bundle carries the declared order and each layer names its reach, cure, and hand, a reader can tell from the layer alone how much care a rule deserves, and route palettes still render because intents, not paint, are the route contract.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/ts/css-bundle.mts"
+ probe_ref = `grep -c "^@layer [a-z, ]*;" public/css/bundles/core.css`
+ falsification = `A route still needs to paint a handle directly after Phase 1, or a fresh-served layer ablation shows a pour raised the recalc pass on the page it left behind.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `The @layer order statement in bundles; the layer list and its directories; the reset/base.css care ledger; the restating deferred sheets and prose that spell the order.`,
+  `Out: delivery schedule, public nouns, data-spw-* families, recalc-speed demotions.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `grep -c "^@layer [a-z, ]*;" public/css/bundles/core.css`,
+ `npm run check:css && npm run build:css`,
+ `npm run visual:checks -- --ids=<route stills>`,
+ `npm run plans:index:check && npm run spw:integrity && git diff --check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `Which decision gates every pour, and where is it recorded?`, see = @operator_controls }[reg=facet],
+ .{ ask = `What may move today without touching the layer order?`, see = @plan }[reg=facet],
+ .{ ask = `What does each proposed layer promise?`, see = @cache }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Only this plan changes the @layer order; sibling plans cite it rather than forbid it.`,
+ `No new layer name before the Phase 1 browser review lands.`,
+ `Promote durable layer promises to css-instruction.spw when a pour lands.`,
+][reg=set]

@@ -28,7 +28,7 @@ Tokens that travel to other hosts are specified in `.spw/caches/portable-css-202
 
 ## Runtime and Cascade Rules
 
-- **Bedrock first**: All shared tokens belong in `tokens/` layer (`core.css`, `dimensions.css`, `flourish-defaults.css`) before component or route usage.
+- **Bedrock first**: All shared tokens belong in `tokens/` layer (`core.css`, `dimensions.css`, `flourish-defaults.css`) before component or route usage. If `css-cascade-stratification` splits `tokens/` into `registry` (`@property`), `scales`, and `aliases`, bedrock is the lowest of the three and this rule stands.
 - **Attr bridge**: `[data-spw-tangibility]` sets `--spw-tangibility` from the authored number when the browser can type `attr()`.
 - **Backward compatibility**: All existing classes, structures, and cascade priorities remain intact.
 

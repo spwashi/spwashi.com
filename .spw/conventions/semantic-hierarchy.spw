@@ -121,6 +121,8 @@
   definition: "CSS projection priority — lowest wins structure, highest wins final state."
   ladder: "reset → tokens → shell → typography → grammar → components → systems → routes → handles → effects → ornament"
   rule: "Semantic hierarchy in HTML/JS should not be re-derived from cascade order. Cascade resolves presentation conflicts; composition and fixity resolve meaning ownership."
+  shipped: "The declared ladder is style-core.css; bundles/core.css strips the order statement and ships first-appearance order with routes last (audits/operator-controls-2026-09.spw#findings.layer_order)."
+  care_signal: "A layer may still carry meaning of its own kind: reach, cure, and hand — how far a rule reaches, how long it lives, whose hand owns it — rhyming with data-spw-attribute-governance#rhythm. That is not composition re-derived; it is the care a change deserves. Model and migration: caches/css-cascade-stratification-2026-09.spw, .agents/plans/css-cascade-stratification/PLAN.md."
   @css_instruction: ~"./css-instruction.spw"
 }
 

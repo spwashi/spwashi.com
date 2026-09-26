@@ -18,7 +18,7 @@ Already landed:
 
 Known constraints:
 
-- `public/css/style.css` owns cascade layer order and must not be reordered.
+- `public/css/style.css` owns cascade layer order and must not be reordered here. `css-cascade-stratification` is the standalone migration; note the built bundle strips the order statement (`css-bundle.mts:45`), so shipped order is first-appearance order.
 - A portable bundle for other hosts is `.spw/caches/portable-css-2026-09.spw`. It does not reorder those layers or ship this site's chrome.
 - `public/css/effects/debug.css` is generated from `src/styles/entries/debug.css`.
 - `check-generated` treats unstaged generated outputs as stale, so generated CSS and compiled tool output must be staged with their sources before final checks.
@@ -64,7 +64,7 @@ If that trace cannot be followed in a minute, the change is not yet discoverable
 
 File tree changes are useful only when they improve ownership, search, review boundaries, or seasonal handoff.
 
-- Keep the current cascade layer order unless a separate evidence-gated patch proves a semantic-flow problem cannot be solved otherwise.
+- Keep the current cascade layer order unless a separate evidence-gated patch proves a semantic-flow problem cannot be solved otherwise. That patch is `css-cascade-stratification/PLAN.md`; its Phase 0 re-homes misfiled `reset/base.css` rules on this rail without touching the order.
 - Prefer slice manifests or `.spw/slices/<slice>/` contracts before moving many CSS files.
 - Split CSS when it creates a clearer reading path from component role to state projection.
 - Split JS when it clarifies kernel/runtime/interface/semantic/modules ownership or removes cross-layer coupling.
@@ -115,7 +115,7 @@ Intern-sized examples:
 
 ## Out Of Scope
 
-- Do not change the cascade layer order in `public/css/style.css`. Do not move a file to a later layer to “make it load later.”
+- Do not change the cascade layer order in `public/css/style.css` from this plan (`css-cascade-stratification` owns that). Do not move a file to a later layer to “make it load later.”
 - Do not convert `data-spw-composition-flow` into global layout behavior yet.
 - Do not rename or move CSS files without updating `style.css` imports in the same patch.
 - Do not introduce a framework, runtime dependency, or client-side CSS-in-JS system.

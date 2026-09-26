@@ -12,6 +12,7 @@ partial reading of gathered conceptual payloads.
 - Merging expression-card modules
 - Factorial harmony × region selectors
 - Reordering the stored cauldron; clustering is a display reading
+- Naming cascade layers for phase or pulse spend; `css-cascade-stratification` owns the Time pour (states / arcs / pulses / residue)
 
 ## Surfaces
 

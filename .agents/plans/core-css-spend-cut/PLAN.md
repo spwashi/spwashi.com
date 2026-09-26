@@ -50,7 +50,7 @@ The literature is the selectors: `>` a child, `+` the next sibling, `:has()` a p
 The 1638 KiB core line is a **soft** budget (`--strict-budget` to fail); current core is under that line after climate/enrichment left. Named first-paint PE — `@property` interpolation, reading-groove tokens, no-JS section-handle focus / scroll-timeline, CSS `:has()` operator kinship — may sit over that line. An audience that already understands how assets load can live with the warning. Do not strip those names to go green. Still fail a late restyle that hides, moves, or resizes what they already read.
 
 ## Non-Goals & Boundaries
-- Do not reorder `@layer`.
+- Do not reorder `@layer` here. The one plan that may is `css-cascade-stratification`; its Phase 1 (bundle emits the order statement) changes cascade, not delivery.
 - Do not move tokens/syntax/shell/frames/cards.
 - Inspect *suppressors* stay in core so public routes stay quiet.
 - Do not hang a show metaphor on the load schedule.

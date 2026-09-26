@@ -13,7 +13,7 @@ Make CSS read as a compositional projection of authored meaning, available space
 
 ## Boundaries
 
-- Preserve cascade layer order; delivery and cascade remain separate systems.
+- Preserve cascade layer order; delivery and cascade remain separate systems. Layer-order change belongs to `css-cascade-stratification`, whose Time pour would take the finite-pulse work below as `pulses` (decoration-only, never load-bearing).
 - Do not rename `shell-disclosure`, add operator meanings, or author new `data-spw-*` families without owner-plan review.
 - Do not hide essential content behind AST hydration, gesture timing, images, or late CSS.
 - No visitor-side telemetry, CSS-in-JS, framework, or npm dependency.

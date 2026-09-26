@@ -68,6 +68,7 @@
   1 = `the materials bench is a demo: approve the six readings in a browser, then move the intent blocks from routes/surfaces/design.css to effects/material.css`
   2 = `route-local pressed states (care-chip, profile-export-btn, specimen-lens-btn) still own their own idle/hover/pressed; css-state-legibility wants the shared handle layer to own state and the route to pass palette through intents — the idle chip intents landed here are the seam to use`
   3 = `--strict on the controls audit once the composite category has a browser-approved treatment (the atlas tabs keep sigil spans on purpose)`
+  4 = `the layer_order browser review is owned by .agents/plans/css-cascade-stratification/PLAN.md Phase 1; this audit stays the record of the finding`
   4 = `audit:operator-css into check:local after a few sessions at zero holes`
   5 = `the 529 prose-labeled operator controls could carry data-spw-semantic-expression so serialization reads an expression, not a label; author only where the label is not already the Spw`
 }
