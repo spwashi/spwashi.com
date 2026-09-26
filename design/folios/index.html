@@ -107,14 +107,21 @@
                 <div class="folio-probe folio-threads" role="group" aria-label="Follow a thread through the release set">
                     <fieldset>
                         <legend>Follow a thread</legend>
-                        <label><input type="radio" name="folio-thread" value="all" checked> All thirty-one</label>
-                        <label><input type="radio" name="folio-thread" value="wap"> WAP</label>
-                        <label><input type="radio" name="folio-thread" value="operators"> Operators</label>
-                        <label><input type="radio" name="folio-thread" value="valence"> Boon &amp; bane</label>
-                        <label><input type="radio" name="folio-thread" value="rooms"> Other rooms</label>
-                        <label><input type="radio" name="folio-thread" value="practice"> Practice</label>
-                        <label><input type="radio" name="folio-thread" value="washes"> Washes</label>
+                        <label><input type="radio" name="folio-thread" id="folio-thread-all" value="all" checked> All thirty-one</label>
+                        <label><input type="radio" name="folio-thread" id="folio-thread-wap" value="wap"> WAP</label>
+                        <label><input type="radio" name="folio-thread" id="folio-thread-operators" value="operators"> Operators</label>
+                        <label><input type="radio" name="folio-thread" id="folio-thread-valence" value="valence"> Boon &amp; bane</label>
+                        <label><input type="radio" name="folio-thread" id="folio-thread-rooms" value="rooms"> Other rooms</label>
+                        <label><input type="radio" name="folio-thread" id="folio-thread-practice" value="practice"> Practice</label>
+                        <label><input type="radio" name="folio-thread" id="folio-thread-washes" value="washes"> Washes</label>
                     </fieldset>
+                    <p class="folio-thread-note" data-folio-thread-note="all">In scan order: the stack as it came off the scanner. Open one and flip through.</p>
+                    <p class="folio-thread-note" data-folio-thread-note="wap">WAP Boy, Mimes Against WAP, and the question of counting to pie: the clown side of Wondering About Pi.</p>
+                    <p class="folio-thread-note" data-folio-thread-note="operators">The operator list, lettered in blue, laddered in pencil, wired into a mixing board, and checked off.</p>
+                    <p class="folio-thread-note" data-folio-thread-note="valence">Boon, bane, and bone as a mnemonic, a launch, and a recipe for honk, with Boof at the Boonberry Pool.</p>
+                    <p class="folio-thread-note" data-folio-thread-note="rooms">Plans for the other rooms: Lore Land, tealstripesvibes, factshift.</p>
+                    <p class="folio-thread-note" data-folio-thread-note="practice">Seasons, courses, weekdays, a calendar page, and a zine declaration: the working week on paper.</p>
+                    <p class="folio-thread-note" data-folio-thread-note="washes">Later paint nearly covering an earlier page. Look for what shows through.</p>
                 </div>
                 <ol class="folio-shelf" aria-label="September 26 release set">
                     <li class="folio-tile" id="folio-00" data-folio-thread="operators">
@@ -126,11 +133,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 00</span> Operator curriculum, teal</span>
                         </button>
                         <div class="folio-view" id="folio-00-view" popover role="dialog" aria-label="Folio 00, Operator curriculum, teal">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-operator-curriculum-teal-display.avif 400w, /public/images/assets/folios/folio-operator-curriculum-teal-hero.avif 800w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-operator-curriculum-teal-display.webp" srcset="/public/images/assets/folios/folio-operator-curriculum-teal-display.webp 400w, /public/images/assets/folios/folio-operator-curriculum-teal-hero.webp 800w" sizes="min(92vw, 56rem)" width="800" height="1024" alt="Thirteen operator words hand-lettered in blue down a teal-washed page, potential through integration, each followed by a line about how it is practiced" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-operator-curriculum-teal-display.webp" srcset="/public/images/assets/folios/folio-operator-curriculum-teal-display.webp 400w, /public/images/assets/folios/folio-operator-curriculum-teal-hero.webp 800w" sizes="min(92vw, 56rem)" width="800" height="1024" alt="Folio 00, Operator curriculum, teal, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 00</span> Operator curriculum, teal</p>
+                            <p class="folio-view__desc">Thirteen operator words hand-lettered in blue down a teal-washed page, potential through integration, each followed by a line about how it is practiced</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-operators">Operators</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-30-view" aria-label="Previous: folio 30, Mimes Against WAP, blue wash">← No. 30</button>
+                                <button type="button" popovertarget="folio-01-view" aria-label="Next: folio 01, WAP Boy invented pie">No. 01 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-00 · Operator curriculum, teal" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-operator-curriculum-teal-full.webp" data-folio-highres>View high-res</a>
@@ -148,11 +163,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 01</span> WAP Boy invented pie</span>
                         </button>
                         <div class="folio-view" id="folio-01-view" popover role="dialog" aria-label="Folio 01, WAP Boy invented pie">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-wap-boy-invented-pie-display.avif 397w, /public/images/assets/folios/folio-wap-boy-invented-pie-hero.avif 794w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-wap-boy-invented-pie-display.webp" srcset="/public/images/assets/folios/folio-wap-boy-invented-pie-display.webp 397w, /public/images/assets/folios/folio-wap-boy-invented-pie-hero.webp 794w" sizes="min(92vw, 56rem)" width="794" height="1024" alt="A torn pencil page on a teal field where WAP Boy claims he invented pie, a neighbor asks why not, and a pie labeled WABO sits at the bottom" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-wap-boy-invented-pie-display.webp" srcset="/public/images/assets/folios/folio-wap-boy-invented-pie-display.webp 397w, /public/images/assets/folios/folio-wap-boy-invented-pie-hero.webp 794w" sizes="min(92vw, 56rem)" width="794" height="1024" alt="Folio 01, WAP Boy invented pie, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 01</span> WAP Boy invented pie</p>
+                            <p class="folio-view__desc">A torn pencil page on a teal field where WAP Boy claims he invented pie, a neighbor asks why not, and a pie labeled WABO sits at the bottom</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-wap">WAP</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-00-view" aria-label="Previous: folio 00, Operator curriculum, teal">← No. 00</button>
+                                <button type="button" popovertarget="folio-02-view" aria-label="Next: folio 02, Honk mixing board">No. 02 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-01 · WAP Boy invented pie" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-wap-boy-invented-pie-hero.webp">Open the large scan</a>
@@ -169,11 +192,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 02</span> Honk mixing board</span>
                         </button>
                         <div class="folio-view" id="folio-02-view" popover role="dialog" aria-label="Folio 02, Honk mixing board">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-honk-mixing-board-display.avif 512w, /public/images/assets/folios/folio-honk-mixing-board-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-honk-mixing-board-display.webp" srcset="/public/images/assets/folios/folio-honk-mixing-board-display.webp 512w, /public/images/assets/folios/folio-honk-mixing-board-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="803" alt="A marker-drawn mixing board of sliders marked with operator sigils, arrows feeding a tower, and a HONK label in the corner" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-honk-mixing-board-display.webp" srcset="/public/images/assets/folios/folio-honk-mixing-board-display.webp 512w, /public/images/assets/folios/folio-honk-mixing-board-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="803" alt="Folio 02, Honk mixing board, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 02</span> Honk mixing board</p>
+                            <p class="folio-view__desc">A marker-drawn mixing board of sliders marked with operator sigils, arrows feeding a tower, and a HONK label in the corner</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-operators">Operators</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-01-view" aria-label="Previous: folio 01, WAP Boy invented pie">← No. 01</button>
+                                <button type="button" popovertarget="folio-03-view" aria-label="Next: folio 03, Boof and the Boonberry Pool">No. 03 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-02 · Honk mixing board" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-honk-mixing-board-hero.webp">Open the large scan</a>
@@ -190,12 +221,21 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 03</span> Boof and the Boonberry Pool</span>
                         </button>
                         <div class="folio-view" id="folio-03-view" popover role="dialog" aria-label="Folio 03, Boof and the Boonberry Pool">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-boof-boonberry-pool-display.avif 512w, /public/images/assets/folios/folio-boof-boonberry-pool-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-boof-boonberry-pool-display.webp" srcset="/public/images/assets/folios/folio-boof-boonberry-pool-display.webp 512w, /public/images/assets/folios/folio-boof-boonberry-pool-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="798" alt="A lilac collage titled Boof and the Boonberry Pool, with a blue pool, a flowing hair-like plume, and a curling word card" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-boof-boonberry-pool-display.webp" srcset="/public/images/assets/folios/folio-boof-boonberry-pool-display.webp 512w, /public/images/assets/folios/folio-boof-boonberry-pool-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="798" alt="Folio 03, Boof and the Boonberry Pool, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 03</span> Boof and the Boonberry Pool</p>
                             <p class="folio-view__note">Shown as scanned: some lettering reads upside down.</p>
+                            <fieldset class="folio-view__turn"><legend>Turn it</legend> <label><input type="radio" name="folio-03-turn" value="0" checked> 0°</label> <label><input type="radio" name="folio-03-turn" value="90"> 90°</label> <label><input type="radio" name="folio-03-turn" value="180"> 180°</label> <label><input type="radio" name="folio-03-turn" value="270"> 270°</label></fieldset>
+                            <p class="folio-view__desc">A lilac collage titled Boof and the Boonberry Pool, with a blue pool, a flowing hair-like plume, and a curling word card</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-valence">Boon &amp; bane</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-02-view" aria-label="Previous: folio 02, Honk mixing board">← No. 02</button>
+                                <button type="button" popovertarget="folio-04-view" aria-label="Next: folio 04, Pink hash stack">No. 04 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-03 · Boof and the Boonberry Pool" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-boof-boonberry-pool-hero.webp">Open the large scan</a>
@@ -212,11 +252,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 04</span> Pink hash stack</span>
                         </button>
                         <div class="folio-view" id="folio-04-view" popover role="dialog" aria-label="Folio 04, Pink hash stack">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-pink-hash-stack-display.avif 402w, /public/images/assets/folios/folio-pink-hash-stack-hero.avif 804w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-pink-hash-stack-display.webp" srcset="/public/images/assets/folios/folio-pink-hash-stack-display.webp 402w, /public/images/assets/folios/folio-pink-hash-stack-hero.webp 804w" sizes="min(92vw, 56rem)" width="804" height="1024" alt="A pink-spattered page framing a vertical stack of four ink boxes, each tagged with a hash mark" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-pink-hash-stack-display.webp" srcset="/public/images/assets/folios/folio-pink-hash-stack-display.webp 402w, /public/images/assets/folios/folio-pink-hash-stack-hero.webp 804w" sizes="min(92vw, 56rem)" width="804" height="1024" alt="Folio 04, Pink hash stack, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 04</span> Pink hash stack</p>
+                            <p class="folio-view__desc">A pink-spattered page framing a vertical stack of four ink boxes, each tagged with a hash mark</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-practice">Practice</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-03-view" aria-label="Previous: folio 03, Boof and the Boonberry Pool">← No. 03</button>
+                                <button type="button" popovertarget="folio-05-view" aria-label="Next: folio 05, Boon, bane, bone mnemonic">No. 05 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-04 · Pink hash stack" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-pink-hash-stack-hero.webp">Open the large scan</a>
@@ -233,11 +281,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 05</span> Boon, bane, bone mnemonic</span>
                         </button>
                         <div class="folio-view" id="folio-05-view" popover role="dialog" aria-label="Folio 05, Boon, bane, bone mnemonic">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-boon-bane-bone-mnemonic-display.avif 397w, /public/images/assets/folios/folio-boon-bane-bone-mnemonic-hero.avif 795w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-boon-bane-bone-mnemonic-display.webp" srcset="/public/images/assets/folios/folio-boon-bane-bone-mnemonic-display.webp 397w, /public/images/assets/folios/folio-boon-bane-bone-mnemonic-hero.webp 795w" sizes="min(92vw, 56rem)" width="795" height="1024" alt="A plum page of cut paper cards mapping boon, bane, and bone to plot, texture, and characters, beside a mnemonic character introduction" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-boon-bane-bone-mnemonic-display.webp" srcset="/public/images/assets/folios/folio-boon-bane-bone-mnemonic-display.webp 397w, /public/images/assets/folios/folio-boon-bane-bone-mnemonic-hero.webp 795w" sizes="min(92vw, 56rem)" width="795" height="1024" alt="Folio 05, Boon, bane, bone mnemonic, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 05</span> Boon, bane, bone mnemonic</p>
+                            <p class="folio-view__desc">A plum page of cut paper cards mapping boon, bane, and bone to plot, texture, and characters, beside a mnemonic character introduction</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-valence">Boon &amp; bane</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-04-view" aria-label="Previous: folio 04, Pink hash stack">← No. 04</button>
+                                <button type="button" popovertarget="folio-06-view" aria-label="Next: folio 06, Pi Day, Mimes Against WAP">No. 06 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-05 · Boon, bane, bone mnemonic" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-boon-bane-bone-mnemonic-hero.webp">Open the large scan</a>
@@ -254,11 +310,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 06</span> Pi Day, Mimes Against WAP</span>
                         </button>
                         <div class="folio-view" id="folio-06-view" popover role="dialog" aria-label="Folio 06, Pi Day, Mimes Against WAP">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-pi-day-mimes-against-wap-display.avif 401w, /public/images/assets/folios/folio-pi-day-mimes-against-wap-hero.avif 803w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-pi-day-mimes-against-wap-display.webp" srcset="/public/images/assets/folios/folio-pi-day-mimes-against-wap-display.webp 401w, /public/images/assets/folios/folio-pi-day-mimes-against-wap-hero.webp 803w" sizes="min(92vw, 56rem)" width="803" height="1024" alt="A boxed-word journal page for Pi Day announcing the first episode of Lore Land and an initial concept sketch for Mimes Against WAP, over a violet band" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-pi-day-mimes-against-wap-display.webp" srcset="/public/images/assets/folios/folio-pi-day-mimes-against-wap-display.webp 401w, /public/images/assets/folios/folio-pi-day-mimes-against-wap-hero.webp 803w" sizes="min(92vw, 56rem)" width="803" height="1024" alt="Folio 06, Pi Day, Mimes Against WAP, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 06</span> Pi Day, Mimes Against WAP</p>
+                            <p class="folio-view__desc">A boxed-word journal page for Pi Day announcing the first episode of Lore Land and an initial concept sketch for Mimes Against WAP, over a violet band</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-wap">WAP</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-05-view" aria-label="Previous: folio 05, Boon, bane, bone mnemonic">← No. 05</button>
+                                <button type="button" popovertarget="folio-07-view" aria-label="Next: folio 07, Bone box launch">No. 07 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-06 · Pi Day, Mimes Against WAP" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-pi-day-mimes-against-wap-hero.webp">Open the large scan</a>
@@ -275,11 +339,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 07</span> Bone box launch</span>
                         </button>
                         <div class="folio-view" id="folio-07-view" popover role="dialog" aria-label="Folio 07, Bone box launch">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-bone-box-launch-display.avif 399w, /public/images/assets/folios/folio-bone-box-launch-hero.avif 797w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-bone-box-launch-display.webp" srcset="/public/images/assets/folios/folio-bone-box-launch-display.webp 399w, /public/images/assets/folios/folio-bone-box-launch-hero.webp 797w" sizes="min(92vw, 56rem)" width="797" height="1024" alt="A bone pierces a drawn box that lifts off on three leaf-shaped exhausts inside a ruled frame" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-bone-box-launch-display.webp" srcset="/public/images/assets/folios/folio-bone-box-launch-display.webp 399w, /public/images/assets/folios/folio-bone-box-launch-hero.webp 797w" sizes="min(92vw, 56rem)" width="797" height="1024" alt="Folio 07, Bone box launch, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 07</span> Bone box launch</p>
+                            <p class="folio-view__desc">A bone pierces a drawn box that lifts off on three leaf-shaped exhausts inside a ruled frame</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-valence">Boon &amp; bane</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-06-view" aria-label="Previous: folio 06, Pi Day, Mimes Against WAP">← No. 06</button>
+                                <button type="button" popovertarget="folio-08-view" aria-label="Next: folio 08, Lore Land drift shapes">No. 08 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-07 · Bone box launch" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-bone-box-launch-hero.webp">Open the large scan</a>
@@ -296,11 +368,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 08</span> Lore Land drift shapes</span>
                         </button>
                         <div class="folio-view" id="folio-08-view" popover role="dialog" aria-label="Folio 08, Lore Land drift shapes">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-lore-land-drift-shapes-display.avif 512w, /public/images/assets/folios/folio-lore-land-drift-shapes-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-lore-land-drift-shapes-display.webp" srcset="/public/images/assets/folios/folio-lore-land-drift-shapes-display.webp 512w, /public/images/assets/folios/folio-lore-land-drift-shapes-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="799" alt="Spirals, wedges, and a long bone-like form drift across a white clearing ringed with green and plum paint, LORE LAND lettered along the edge" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-lore-land-drift-shapes-display.webp" srcset="/public/images/assets/folios/folio-lore-land-drift-shapes-display.webp 512w, /public/images/assets/folios/folio-lore-land-drift-shapes-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="799" alt="Folio 08, Lore Land drift shapes, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 08</span> Lore Land drift shapes</p>
+                            <p class="folio-view__desc">Spirals, wedges, and a long bone-like form drift across a white clearing ringed with green and plum paint, LORE LAND lettered along the edge</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-rooms">Other rooms</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-07-view" aria-label="Previous: folio 07, Bone box launch">← No. 07</button>
+                                <button type="button" popovertarget="folio-09-view" aria-label="Next: folio 09, Octvember, Novel Under Test">No. 09 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-08 · Lore Land drift shapes" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-lore-land-drift-shapes-hero.webp">Open the large scan</a>
@@ -317,11 +397,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 09</span> Octvember, Novel Under Test</span>
                         </button>
                         <div class="folio-view" id="folio-09-view" popover role="dialog" aria-label="Folio 09, Octvember, Novel Under Test">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-octvember-novel-under-test-display.avif 512w, /public/images/assets/folios/folio-octvember-novel-under-test-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-octvember-novel-under-test-display.webp" srcset="/public/images/assets/folios/folio-octvember-novel-under-test-display.webp 512w, /public/images/assets/folios/folio-octvember-novel-under-test-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="810" alt="White cut-paper cards on black lay out a Halloween season: Octvember, promo, launch, teasers, and a Novel Under Test flowing into an ePub" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-octvember-novel-under-test-display.webp" srcset="/public/images/assets/folios/folio-octvember-novel-under-test-display.webp 512w, /public/images/assets/folios/folio-octvember-novel-under-test-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="810" alt="Folio 09, Octvember, Novel Under Test, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 09</span> Octvember, Novel Under Test</p>
+                            <p class="folio-view__desc">White cut-paper cards on black lay out a Halloween season: Octvember, promo, launch, teasers, and a Novel Under Test flowing into an ePub</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-practice">Practice</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-08-view" aria-label="Previous: folio 08, Lore Land drift shapes">← No. 08</button>
+                                <button type="button" popovertarget="folio-10-view" aria-label="Next: folio 10, Business, courses, weekdays">No. 10 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-09 · Octvember, Novel Under Test" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-octvember-novel-under-test-full.webp" data-folio-highres>View high-res</a>
@@ -339,11 +427,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 10</span> Business, courses, weekdays</span>
                         </button>
                         <div class="folio-view" id="folio-10-view" popover role="dialog" aria-label="Folio 10, Business, courses, weekdays">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-business-courses-weekdays-display.avif 512w, /public/images/assets/folios/folio-business-courses-weekdays-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-business-courses-weekdays-display.webp" srcset="/public/images/assets/folios/folio-business-courses-weekdays-display.webp 512w, /public/images/assets/folios/folio-business-courses-weekdays-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="793" alt="White cards on black list business kinds, courses in HTML, CSS, JS, and PHP, and the days of the week beside a keyhole-shaped plan" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-business-courses-weekdays-display.webp" srcset="/public/images/assets/folios/folio-business-courses-weekdays-display.webp 512w, /public/images/assets/folios/folio-business-courses-weekdays-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="793" alt="Folio 10, Business, courses, weekdays, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 10</span> Business, courses, weekdays</p>
+                            <p class="folio-view__desc">White cards on black list business kinds, courses in HTML, CSS, JS, and PHP, and the days of the week beside a keyhole-shaped plan</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-practice">Practice</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-09-view" aria-label="Previous: folio 09, Octvember, Novel Under Test">← No. 09</button>
+                                <button type="button" popovertarget="folio-11-view" aria-label="Next: folio 11, Operator rhythm, training video">No. 11 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-10 · Business, courses, weekdays" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-business-courses-weekdays-hero.webp">Open the large scan</a>
@@ -360,11 +456,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 11</span> Operator rhythm, training video</span>
                         </button>
                         <div class="folio-view" id="folio-11-view" popover role="dialog" aria-label="Folio 11, Operator rhythm, training video">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-operator-rhythm-training-video-display.avif 400w, /public/images/assets/folios/folio-operator-rhythm-training-video-hero.avif 799w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-operator-rhythm-training-video-display.webp" srcset="/public/images/assets/folios/folio-operator-rhythm-training-video-display.webp 400w, /public/images/assets/folios/folio-operator-rhythm-training-video-hero.webp 799w" sizes="min(92vw, 56rem)" width="799" height="1024" alt="A row of operator tabs over practice lists for production, counseling, and engineering, with a taped note reading Oh, that was in the training video and RHYTHM in blue" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-operator-rhythm-training-video-display.webp" srcset="/public/images/assets/folios/folio-operator-rhythm-training-video-display.webp 400w, /public/images/assets/folios/folio-operator-rhythm-training-video-hero.webp 799w" sizes="min(92vw, 56rem)" width="799" height="1024" alt="Folio 11, Operator rhythm, training video, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 11</span> Operator rhythm, training video</p>
+                            <p class="folio-view__desc">A row of operator tabs over practice lists for production, counseling, and engineering, with a taped note reading Oh, that was in the training video and RHYTHM in blue</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-operators">Operators</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-10-view" aria-label="Previous: folio 10, Business, courses, weekdays">← No. 10</button>
+                                <button type="button" popovertarget="folio-12-view" aria-label="Next: folio 12, Poem, count the boring ones">No. 12 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-11 · Operator rhythm, training video" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-operator-rhythm-training-video-hero.webp">Open the large scan</a>
@@ -381,11 +485,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 12</span> Poem, count the boring ones</span>
                         </button>
                         <div class="folio-view" id="folio-12-view" popover role="dialog" aria-label="Folio 12, Poem, count the boring ones">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-poem-count-the-boring-ones-display.avif 512w, /public/images/assets/folios/folio-poem-count-the-boring-ones-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-poem-count-the-boring-ones-display.webp" srcset="/public/images/assets/folios/folio-poem-count-the-boring-ones-display.webp 512w, /public/images/assets/folios/folio-poem-count-the-boring-ones-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="803" alt="A lilac board with a partly blacked-out poem ending if you count the boring ones or the internet, an ink wash, a stacked flow card, and a kraft-paper WAP card" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-poem-count-the-boring-ones-display.webp" srcset="/public/images/assets/folios/folio-poem-count-the-boring-ones-display.webp 512w, /public/images/assets/folios/folio-poem-count-the-boring-ones-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="803" alt="Folio 12, Poem, count the boring ones, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 12</span> Poem, count the boring ones</p>
+                            <p class="folio-view__desc">A lilac board with a partly blacked-out poem ending if you count the boring ones or the internet, an ink wash, a stacked flow card, and a kraft-paper WAP card</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-wap">WAP</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-11-view" aria-label="Previous: folio 11, Operator rhythm, training video">← No. 11</button>
+                                <button type="button" popovertarget="folio-13-view" aria-label="Next: folio 13, Mimes Against WAP, lightning">No. 13 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-12 · Poem, count the boring ones" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-poem-count-the-boring-ones-hero.webp">Open the large scan</a>
@@ -402,12 +514,21 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 13</span> Mimes Against WAP, lightning</span>
                         </button>
                         <div class="folio-view" id="folio-13-view" popover role="dialog" aria-label="Folio 13, Mimes Against WAP, lightning">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-mimes-against-wap-lightning-display.avif 512w, /public/images/assets/folios/folio-mimes-against-wap-lightning-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-mimes-against-wap-lightning-display.webp" srcset="/public/images/assets/folios/folio-mimes-against-wap-lightning-display.webp 512w, /public/images/assets/folios/folio-mimes-against-wap-lightning-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="795" alt="A sea-green page of flow diagrams under Mimes Against WAP, with a yellow card reading Now I am WAP boy and a ladder of boxes toward boon, bane, and bone" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-mimes-against-wap-lightning-display.webp" srcset="/public/images/assets/folios/folio-mimes-against-wap-lightning-display.webp 512w, /public/images/assets/folios/folio-mimes-against-wap-lightning-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="795" alt="Folio 13, Mimes Against WAP, lightning, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 13</span> Mimes Against WAP, lightning</p>
                             <p class="folio-view__note">Shown as scanned: lettering runs sideways.</p>
+                            <fieldset class="folio-view__turn"><legend>Turn it</legend> <label><input type="radio" name="folio-13-turn" value="0" checked> 0°</label> <label><input type="radio" name="folio-13-turn" value="90"> 90°</label> <label><input type="radio" name="folio-13-turn" value="180"> 180°</label> <label><input type="radio" name="folio-13-turn" value="270"> 270°</label></fieldset>
+                            <p class="folio-view__desc">A sea-green page of flow diagrams under Mimes Against WAP, with a yellow card reading Now I am WAP boy and a ladder of boxes toward boon, bane, and bone</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-wap">WAP</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-12-view" aria-label="Previous: folio 12, Poem, count the boring ones">← No. 12</button>
+                                <button type="button" popovertarget="folio-14-view" aria-label="Next: folio 14, Red eyes, calendar test">No. 14 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-13 · Mimes Against WAP, lightning" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-mimes-against-wap-lightning-hero.webp">Open the large scan</a>
@@ -424,12 +545,21 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 14</span> Red eyes, calendar test</span>
                         </button>
                         <div class="folio-view" id="folio-14-view" popover role="dialog" aria-label="Folio 14, Red eyes, calendar test">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-red-eyes-calendar-test-display.avif 512w, /public/images/assets/folios/folio-red-eyes-calendar-test-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-red-eyes-calendar-test-display.webp" srcset="/public/images/assets/folios/folio-red-eyes-calendar-test-display.webp 512w, /public/images/assets/folios/folio-red-eyes-calendar-test-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="791" alt="Two red eyes and a dark spike over a page of calendar numbers, with a column of labeled practices from logistics to production" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-red-eyes-calendar-test-display.webp" srcset="/public/images/assets/folios/folio-red-eyes-calendar-test-display.webp 512w, /public/images/assets/folios/folio-red-eyes-calendar-test-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="791" alt="Folio 14, Red eyes, calendar test, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 14</span> Red eyes, calendar test</p>
                             <p class="folio-view__note">Shown as scanned: lettering runs sideways.</p>
+                            <fieldset class="folio-view__turn"><legend>Turn it</legend> <label><input type="radio" name="folio-14-turn" value="0" checked> 0°</label> <label><input type="radio" name="folio-14-turn" value="90"> 90°</label> <label><input type="radio" name="folio-14-turn" value="180"> 180°</label> <label><input type="radio" name="folio-14-turn" value="270"> 270°</label></fieldset>
+                            <p class="folio-view__desc">Two red eyes and a dark spike over a page of calendar numbers, with a column of labeled practices from logistics to production</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-practice">Practice</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-13-view" aria-label="Previous: folio 13, Mimes Against WAP, lightning">← No. 13</button>
+                                <button type="button" popovertarget="folio-15-view" aria-label="Next: folio 15, Copy-paste component library">No. 15 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-14 · Red eyes, calendar test" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-red-eyes-calendar-test-full.webp" data-folio-highres>View high-res</a>
@@ -447,11 +577,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 15</span> Copy-paste component library</span>
                         </button>
                         <div class="folio-view" id="folio-15-view" popover role="dialog" aria-label="Folio 15, Copy-paste component library">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-copy-paste-component-library-display.avif 398w, /public/images/assets/folios/folio-copy-paste-component-library-hero.avif 795w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-copy-paste-component-library-display.webp" srcset="/public/images/assets/folios/folio-copy-paste-component-library-display.webp 398w, /public/images/assets/folios/folio-copy-paste-component-library-hero.webp 795w" sizes="min(92vw, 56rem)" width="795" height="1024" alt="A dense ink map of a website practice: build a website, code projects, copy-paste, downloads, and features, queries, models, and components branching into archive and chat" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-copy-paste-component-library-display.webp" srcset="/public/images/assets/folios/folio-copy-paste-component-library-display.webp 398w, /public/images/assets/folios/folio-copy-paste-component-library-hero.webp 795w" sizes="min(92vw, 56rem)" width="795" height="1024" alt="Folio 15, Copy-paste component library, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 15</span> Copy-paste component library</p>
+                            <p class="folio-view__desc">A dense ink map of a website practice: build a website, code projects, copy-paste, downloads, and features, queries, models, and components branching into archive and chat</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-practice">Practice</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-14-view" aria-label="Previous: folio 14, Red eyes, calendar test">← No. 14</button>
+                                <button type="button" popovertarget="folio-16-view" aria-label="Next: folio 16, Teal Stripes Vibes wash">No. 16 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-15 · Copy-paste component library" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-copy-paste-component-library-hero.webp">Open the large scan</a>
@@ -468,12 +606,21 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 16</span> Teal Stripes Vibes wash</span>
                         </button>
                         <div class="folio-view" id="folio-16-view" popover role="dialog" aria-label="Folio 16, Teal Stripes Vibes wash">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-teal-stripes-vibes-wash-display.avif 401w, /public/images/assets/folios/folio-teal-stripes-vibes-wash-hero.avif 803w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-teal-stripes-vibes-wash-display.webp" srcset="/public/images/assets/folios/folio-teal-stripes-vibes-wash-display.webp 401w, /public/images/assets/folios/folio-teal-stripes-vibes-wash-hero.webp 803w" sizes="min(92vw, 56rem)" width="803" height="1024" alt="Violet and teal wash over a small pink panel and a Teal Stripes Vibes label" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-teal-stripes-vibes-wash-display.webp" srcset="/public/images/assets/folios/folio-teal-stripes-vibes-wash-display.webp 401w, /public/images/assets/folios/folio-teal-stripes-vibes-wash-hero.webp 803w" sizes="min(92vw, 56rem)" width="803" height="1024" alt="Folio 16, Teal Stripes Vibes wash, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 16</span> Teal Stripes Vibes wash</p>
                             <p class="folio-view__note">Shown as scanned: lettering reads upside down.</p>
+                            <fieldset class="folio-view__turn"><legend>Turn it</legend> <label><input type="radio" name="folio-16-turn" value="0" checked> 0°</label> <label><input type="radio" name="folio-16-turn" value="90"> 90°</label> <label><input type="radio" name="folio-16-turn" value="180"> 180°</label> <label><input type="radio" name="folio-16-turn" value="270"> 270°</label></fieldset>
+                            <p class="folio-view__desc">Violet and teal wash over a small pink panel and a Teal Stripes Vibes label</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-rooms">Other rooms</label> <label class="folio-view__thread" for="folio-thread-washes">Washes</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-15-view" aria-label="Previous: folio 15, Copy-paste component library">← No. 15</button>
+                                <button type="button" popovertarget="folio-17-view" aria-label="Next: folio 17, factshift cabinet">No. 17 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-16 · Teal Stripes Vibes wash" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-teal-stripes-vibes-wash-hero.webp">Open the large scan</a>
@@ -490,12 +637,21 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 17</span> factshift cabinet</span>
                         </button>
                         <div class="folio-view" id="folio-17-view" popover role="dialog" aria-label="Folio 17, factshift cabinet">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-factshift-cabinet-display.avif 398w, /public/images/assets/folios/folio-factshift-cabinet-hero.avif 795w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-factshift-cabinet-display.webp" srcset="/public/images/assets/folios/folio-factshift-cabinet-display.webp 398w, /public/images/assets/folios/folio-factshift-cabinet-hero.webp 795w" sizes="min(92vw, 56rem)" width="795" height="1024" alt="A cabinet of ink drawers and slots washed in pink and sea green, with factshift.com lettered small" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-factshift-cabinet-display.webp" srcset="/public/images/assets/folios/folio-factshift-cabinet-display.webp 398w, /public/images/assets/folios/folio-factshift-cabinet-hero.webp 795w" sizes="min(92vw, 56rem)" width="795" height="1024" alt="Folio 17, factshift cabinet, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 17</span> factshift cabinet</p>
                             <p class="folio-view__note">Shown as scanned: lettering reads upside down.</p>
+                            <fieldset class="folio-view__turn"><legend>Turn it</legend> <label><input type="radio" name="folio-17-turn" value="0" checked> 0°</label> <label><input type="radio" name="folio-17-turn" value="90"> 90°</label> <label><input type="radio" name="folio-17-turn" value="180"> 180°</label> <label><input type="radio" name="folio-17-turn" value="270"> 270°</label></fieldset>
+                            <p class="folio-view__desc">A cabinet of ink drawers and slots washed in pink and sea green, with factshift.com lettered small</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-rooms">Other rooms</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-16-view" aria-label="Previous: folio 16, Teal Stripes Vibes wash">← No. 16</button>
+                                <button type="button" popovertarget="folio-18-view" aria-label="Next: folio 18, Glyph arrows, pale">No. 18 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-17 · factshift cabinet" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-factshift-cabinet-hero.webp">Open the large scan</a>
@@ -512,11 +668,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 18</span> Glyph arrows, pale</span>
                         </button>
                         <div class="folio-view" id="folio-18-view" popover role="dialog" aria-label="Folio 18, Glyph arrows, pale">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-glyph-arrows-pale-display.avif 512w, /public/images/assets/folios/folio-glyph-arrows-pale-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-glyph-arrows-pale-display.webp" srcset="/public/images/assets/folios/folio-glyph-arrows-pale-display.webp 512w, /public/images/assets/folios/folio-glyph-arrows-pale-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="797" alt="Loose ink glyphs on a pale page: a ladder, triangles, a hash knot, spirals, and a fat striped arrow pointing at a small house" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-glyph-arrows-pale-display.webp" srcset="/public/images/assets/folios/folio-glyph-arrows-pale-display.webp 512w, /public/images/assets/folios/folio-glyph-arrows-pale-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="797" alt="Folio 18, Glyph arrows, pale, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 18</span> Glyph arrows, pale</p>
+                            <p class="folio-view__desc">Loose ink glyphs on a pale page: a ladder, triangles, a hash knot, spirals, and a fat striped arrow pointing at a small house</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-operators">Operators</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-17-view" aria-label="Previous: folio 17, factshift cabinet">← No. 17</button>
+                                <button type="button" popovertarget="folio-19-view" aria-label="Next: folio 19, Lore cloud, wonder forms">No. 19 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-18 · Glyph arrows, pale" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-glyph-arrows-pale-hero.webp">Open the large scan</a>
@@ -533,12 +697,21 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 19</span> Lore cloud, wonder forms</span>
                         </button>
                         <div class="folio-view" id="folio-19-view" popover role="dialog" aria-label="Folio 19, Lore cloud, wonder forms">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-lore-cloud-wonder-forms-display.avif 512w, /public/images/assets/folios/folio-lore-cloud-wonder-forms-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-lore-cloud-wonder-forms-display.webp" srcset="/public/images/assets/folios/folio-lore-cloud-wonder-forms-display.webp 512w, /public/images/assets/folios/folio-lore-cloud-wonder-forms-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="807" alt="Blue and violet wash over faint pencil: a lore cloud, question marks, and wonder forms showing through" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-lore-cloud-wonder-forms-display.webp" srcset="/public/images/assets/folios/folio-lore-cloud-wonder-forms-display.webp 512w, /public/images/assets/folios/folio-lore-cloud-wonder-forms-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="807" alt="Folio 19, Lore cloud, wonder forms, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 19</span> Lore cloud, wonder forms</p>
                             <p class="folio-view__note">Shown as scanned: lettering runs sideways.</p>
+                            <fieldset class="folio-view__turn"><legend>Turn it</legend> <label><input type="radio" name="folio-19-turn" value="0" checked> 0°</label> <label><input type="radio" name="folio-19-turn" value="90"> 90°</label> <label><input type="radio" name="folio-19-turn" value="180"> 180°</label> <label><input type="radio" name="folio-19-turn" value="270"> 270°</label></fieldset>
+                            <p class="folio-view__desc">Blue and violet wash over faint pencil: a lore cloud, question marks, and wonder forms showing through</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-washes">Washes</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-18-view" aria-label="Previous: folio 18, Glyph arrows, pale">← No. 18</button>
+                                <button type="button" popovertarget="folio-20-view" aria-label="Next: folio 20, What kind of guy counts to pie">No. 20 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-19 · Lore cloud, wonder forms" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-lore-cloud-wonder-forms-hero.webp">Open the large scan</a>
@@ -555,11 +728,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 20</span> What kind of guy counts to pie</span>
                         </button>
                         <div class="folio-view" id="folio-20-view" popover role="dialog" aria-label="Folio 20, What kind of guy counts to pie">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.avif 512w, /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.webp" srcset="/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.webp 512w, /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="800" alt="Character cards for baker, mathematician, and WAP boy under the question what kind of guy needs to count to pie, above notes on how deep a WAP should be" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.webp" srcset="/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.webp 512w, /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="800" alt="Folio 20, What kind of guy counts to pie, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 20</span> What kind of guy counts to pie</p>
+                            <p class="folio-view__desc">Character cards for baker, mathematician, and WAP boy under the question what kind of guy needs to count to pie, above notes on how deep a WAP should be</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-wap">WAP</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-19-view" aria-label="Previous: folio 19, Lore cloud, wonder forms">← No. 19</button>
+                                <button type="button" popovertarget="folio-21-view" aria-label="Next: folio 21, Ampersand, hair, cube">No. 21 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-20 · What kind of guy counts to pie" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-full.webp" data-folio-highres>View high-res</a>
@@ -577,11 +758,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 21</span> Ampersand, hair, cube</span>
                         </button>
                         <div class="folio-view" id="folio-21-view" popover role="dialog" aria-label="Folio 21, Ampersand, hair, cube">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-ampersand-hair-cube-display.avif 400w, /public/images/assets/folios/folio-ampersand-hair-cube-hero.avif 801w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-ampersand-hair-cube-display.webp" srcset="/public/images/assets/folios/folio-ampersand-hair-cube-display.webp 400w, /public/images/assets/folios/folio-ampersand-hair-cube-hero.webp 801w" sizes="min(92vw, 56rem)" width="801" height="1024" alt="A mauve page where a flowing plume of hair passes over a hatched cube, ampersand and at-sign cards, and a strip of operator glyphs" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-ampersand-hair-cube-display.webp" srcset="/public/images/assets/folios/folio-ampersand-hair-cube-display.webp 400w, /public/images/assets/folios/folio-ampersand-hair-cube-hero.webp 801w" sizes="min(92vw, 56rem)" width="801" height="1024" alt="Folio 21, Ampersand, hair, cube, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 21</span> Ampersand, hair, cube</p>
+                            <p class="folio-view__desc">A mauve page where a flowing plume of hair passes over a hatched cube, ampersand and at-sign cards, and a strip of operator glyphs</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-operators">Operators</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-20-view" aria-label="Previous: folio 20, What kind of guy counts to pie">← No. 20</button>
+                                <button type="button" popovertarget="folio-22-view" aria-label="Next: folio 22, Operator ladder, pencil">No. 22 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-21 · Ampersand, hair, cube" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-ampersand-hair-cube-hero.webp">Open the large scan</a>
@@ -598,11 +787,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 22</span> Operator ladder, pencil</span>
                         </button>
                         <div class="folio-view" id="folio-22-view" popover role="dialog" aria-label="Folio 22, Operator ladder, pencil">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-operator-ladder-pencil-display.avif 401w, /public/images/assets/folios/folio-operator-ladder-pencil-hero.avif 801w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-operator-ladder-pencil-display.webp" srcset="/public/images/assets/folios/folio-operator-ladder-pencil-display.webp 401w, /public/images/assets/folios/folio-operator-ladder-pencil-hero.webp 801w" sizes="min(92vw, 56rem)" width="801" height="1024" alt="A pale pencil ladder of operator glyphs with their names, potential through integration, beside a framed balloon over three bones" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-operator-ladder-pencil-display.webp" srcset="/public/images/assets/folios/folio-operator-ladder-pencil-display.webp 401w, /public/images/assets/folios/folio-operator-ladder-pencil-hero.webp 801w" sizes="min(92vw, 56rem)" width="801" height="1024" alt="Folio 22, Operator ladder, pencil, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 22</span> Operator ladder, pencil</p>
+                            <p class="folio-view__desc">A pale pencil ladder of operator glyphs with their names, potential through integration, beside a framed balloon over three bones</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-operators">Operators</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-21-view" aria-label="Previous: folio 21, Ampersand, hair, cube">← No. 21</button>
+                                <button type="button" popovertarget="folio-23-view" aria-label="Next: folio 23, Zine design declaration">No. 23 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-22 · Operator ladder, pencil" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-operator-ladder-pencil-hero.webp">Open the large scan</a>
@@ -619,11 +816,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 23</span> Zine design declaration</span>
                         </button>
                         <div class="folio-view" id="folio-23-view" popover role="dialog" aria-label="Folio 23, Zine design declaration">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-zine-design-declaration-display.avif 512w, /public/images/assets/folios/folio-zine-design-declaration-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-zine-design-declaration-display.webp" srcset="/public/images/assets/folios/folio-zine-design-declaration-display.webp 512w, /public/images/assets/folios/folio-zine-design-declaration-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="796" alt="A dark green page headed Declaration, with a yellow card reading zine, design, development and a lime panel labeled scope" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-zine-design-declaration-display.webp" srcset="/public/images/assets/folios/folio-zine-design-declaration-display.webp 512w, /public/images/assets/folios/folio-zine-design-declaration-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="796" alt="Folio 23, Zine design declaration, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 23</span> Zine design declaration</p>
+                            <p class="folio-view__desc">A dark green page headed Declaration, with a yellow card reading zine, design, development and a lime panel labeled scope</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-practice">Practice</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-22-view" aria-label="Previous: folio 22, Operator ladder, pencil">← No. 22</button>
+                                <button type="button" popovertarget="folio-24-view" aria-label="Next: folio 24, How to make honk">No. 24 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-23 · Zine design declaration" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-zine-design-declaration-hero.webp">Open the large scan</a>
@@ -640,12 +845,21 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 24</span> How to make honk</span>
                         </button>
                         <div class="folio-view" id="folio-24-view" popover role="dialog" aria-label="Folio 24, How to make honk">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-how-to-make-honk-display.avif 512w, /public/images/assets/folios/folio-how-to-make-honk-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-how-to-make-honk-display.webp" srcset="/public/images/assets/folios/folio-how-to-make-honk-display.webp 512w, /public/images/assets/folios/folio-how-to-make-honk-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="802" alt="A lavender page titled How to make honk, wiring five labeled boxes down to a list of operator words, with a plume and a small cloud card" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-how-to-make-honk-display.webp" srcset="/public/images/assets/folios/folio-how-to-make-honk-display.webp 512w, /public/images/assets/folios/folio-how-to-make-honk-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="802" alt="Folio 24, How to make honk, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 24</span> How to make honk</p>
                             <p class="folio-view__note">Shown as scanned: lettering runs sideways.</p>
+                            <fieldset class="folio-view__turn"><legend>Turn it</legend> <label><input type="radio" name="folio-24-turn" value="0" checked> 0°</label> <label><input type="radio" name="folio-24-turn" value="90"> 90°</label> <label><input type="radio" name="folio-24-turn" value="180"> 180°</label> <label><input type="radio" name="folio-24-turn" value="270"> 270°</label></fieldset>
+                            <p class="folio-view__desc">A lavender page titled How to make honk, wiring five labeled boxes down to a list of operator words, with a plume and a small cloud card</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-operators">Operators</label> <label class="folio-view__thread" for="folio-thread-valence">Boon &amp; bane</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-23-view" aria-label="Previous: folio 23, Zine design declaration">← No. 23</button>
+                                <button type="button" popovertarget="folio-25-view" aria-label="Next: folio 25, Lined stage facade">No. 25 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-24 · How to make honk" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-how-to-make-honk-hero.webp">Open the large scan</a>
@@ -662,11 +876,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 25</span> Lined stage facade</span>
                         </button>
                         <div class="folio-view" id="folio-25-view" popover role="dialog" aria-label="Folio 25, Lined stage facade">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-lined-stage-facade-display.avif 512w, /public/images/assets/folios/folio-lined-stage-facade-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-lined-stage-facade-display.webp" srcset="/public/images/assets/folios/folio-lined-stage-facade-display.webp 512w, /public/images/assets/folios/folio-lined-stage-facade-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="808" alt="Pale yellow and violet wash over lined paper, a row of faint pencil cards above a wide stage-like facade" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-lined-stage-facade-display.webp" srcset="/public/images/assets/folios/folio-lined-stage-facade-display.webp 512w, /public/images/assets/folios/folio-lined-stage-facade-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="808" alt="Folio 25, Lined stage facade, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 25</span> Lined stage facade</p>
+                            <p class="folio-view__desc">Pale yellow and violet wash over lined paper, a row of faint pencil cards above a wide stage-like facade</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-washes">Washes</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-24-view" aria-label="Previous: folio 24, How to make honk">← No. 24</button>
+                                <button type="button" popovertarget="folio-26-view" aria-label="Next: folio 26, Lore Land webcomic zine">No. 26 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-25 · Lined stage facade" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-lined-stage-facade-hero.webp">Open the large scan</a>
@@ -683,11 +905,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 26</span> Lore Land webcomic zine</span>
                         </button>
                         <div class="folio-view" id="folio-26-view" popover role="dialog" aria-label="Folio 26, Lore Land webcomic zine">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-lore-land-webcomic-zine-display.avif 404w, /public/images/assets/folios/folio-lore-land-webcomic-zine-hero.avif 808w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-lore-land-webcomic-zine-display.webp" srcset="/public/images/assets/folios/folio-lore-land-webcomic-zine-display.webp 404w, /public/images/assets/folios/folio-lore-land-webcomic-zine-hero.webp 808w" sizes="min(92vw, 56rem)" width="808" height="1024" alt="A pink wash over a pencil plan for Lore Land as an interactive webcomic and an augmented-reality zine, with Teal Stripes Vibes dot com and boon, bone, and honk boxes" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-lore-land-webcomic-zine-display.webp" srcset="/public/images/assets/folios/folio-lore-land-webcomic-zine-display.webp 404w, /public/images/assets/folios/folio-lore-land-webcomic-zine-hero.webp 808w" sizes="min(92vw, 56rem)" width="808" height="1024" alt="Folio 26, Lore Land webcomic zine, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 26</span> Lore Land webcomic zine</p>
+                            <p class="folio-view__desc">A pink wash over a pencil plan for Lore Land as an interactive webcomic and an augmented-reality zine, with Teal Stripes Vibes dot com and boon, bone, and honk boxes</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-rooms">Other rooms</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-25-view" aria-label="Previous: folio 25, Lined stage facade">← No. 25</button>
+                                <button type="button" popovertarget="folio-27-view" aria-label="Next: folio 27, Spiral chip, ochre">No. 27 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-26 · Lore Land webcomic zine" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-lore-land-webcomic-zine-full.webp" data-folio-highres>View high-res</a>
@@ -705,11 +935,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 27</span> Spiral chip, ochre</span>
                         </button>
                         <div class="folio-view" id="folio-27-view" popover role="dialog" aria-label="Folio 27, Spiral chip, ochre">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-spiral-chip-ochre-display.avif 512w, /public/images/assets/folios/folio-spiral-chip-ochre-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-spiral-chip-ochre-display.webp" srcset="/public/images/assets/folios/folio-spiral-chip-ochre-display.webp 512w, /public/images/assets/folios/folio-spiral-chip-ochre-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="793" alt="A violet-outlined chip with a spiral at its center, set in a clearing of ochre, olive, and brown paint" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-spiral-chip-ochre-display.webp" srcset="/public/images/assets/folios/folio-spiral-chip-ochre-display.webp 512w, /public/images/assets/folios/folio-spiral-chip-ochre-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="793" alt="Folio 27, Spiral chip, ochre, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 27</span> Spiral chip, ochre</p>
+                            <p class="folio-view__desc">A violet-outlined chip with a spiral at its center, set in a clearing of ochre, olive, and brown paint</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-operators">Operators</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-26-view" aria-label="Previous: folio 26, Lore Land webcomic zine">← No. 26</button>
+                                <button type="button" popovertarget="folio-28-view" aria-label="Next: folio 28, Deliberate poor performance">No. 28 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-27 · Spiral chip, ochre" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-spiral-chip-ochre-hero.webp">Open the large scan</a>
@@ -726,12 +964,21 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 28</span> Deliberate poor performance</span>
                         </button>
                         <div class="folio-view" id="folio-28-view" popover role="dialog" aria-label="Folio 28, Deliberate poor performance">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-deliberate-poor-performance-display.avif 399w, /public/images/assets/folios/folio-deliberate-poor-performance-hero.avif 798w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-deliberate-poor-performance-display.webp" srcset="/public/images/assets/folios/folio-deliberate-poor-performance-display.webp 399w, /public/images/assets/folios/folio-deliberate-poor-performance-hero.webp 798w" sizes="min(92vw, 56rem)" width="798" height="1024" alt="A grey page with a yellow card reading deliberate poor work performance, a dense ink drawing of a figure under a sweeping wave, and a ladder of courses from n to log n" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-deliberate-poor-performance-display.webp" srcset="/public/images/assets/folios/folio-deliberate-poor-performance-display.webp 399w, /public/images/assets/folios/folio-deliberate-poor-performance-hero.webp 798w" sizes="min(92vw, 56rem)" width="798" height="1024" alt="Folio 28, Deliberate poor performance, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 28</span> Deliberate poor performance</p>
                             <p class="folio-view__note">Shown as scanned: lettering reads upside down.</p>
+                            <fieldset class="folio-view__turn"><legend>Turn it</legend> <label><input type="radio" name="folio-28-turn" value="0" checked> 0°</label> <label><input type="radio" name="folio-28-turn" value="90"> 90°</label> <label><input type="radio" name="folio-28-turn" value="180"> 180°</label> <label><input type="radio" name="folio-28-turn" value="270"> 270°</label></fieldset>
+                            <p class="folio-view__desc">A grey page with a yellow card reading deliberate poor work performance, a dense ink drawing of a figure under a sweeping wave, and a ladder of courses from n to log n</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-practice">Practice</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-27-view" aria-label="Previous: folio 27, Spiral chip, ochre">← No. 27</button>
+                                <button type="button" popovertarget="folio-29-view" aria-label="Next: folio 29, Acceptance ritual checklist">No. 29 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-28 · Deliberate poor performance" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-deliberate-poor-performance-hero.webp">Open the large scan</a>
@@ -748,11 +995,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 29</span> Acceptance ritual checklist</span>
                         </button>
                         <div class="folio-view" id="folio-29-view" popover role="dialog" aria-label="Folio 29, Acceptance ritual checklist">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-acceptance-ritual-checklist-display.avif 402w, /public/images/assets/folios/folio-acceptance-ritual-checklist-hero.avif 804w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-acceptance-ritual-checklist-display.webp" srcset="/public/images/assets/folios/folio-acceptance-ritual-checklist-display.webp 402w, /public/images/assets/folios/folio-acceptance-ritual-checklist-hero.webp 804w" sizes="min(92vw, 56rem)" width="804" height="1024" alt="Cut cards on red and violet listing accept art, acceptance ritual, integration ritual, operation cycle, and regulation, beside a torn checklist of operator words with ticks" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-acceptance-ritual-checklist-display.webp" srcset="/public/images/assets/folios/folio-acceptance-ritual-checklist-display.webp 402w, /public/images/assets/folios/folio-acceptance-ritual-checklist-hero.webp 804w" sizes="min(92vw, 56rem)" width="804" height="1024" alt="Folio 29, Acceptance ritual checklist, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 29</span> Acceptance ritual checklist</p>
+                            <p class="folio-view__desc">Cut cards on red and violet listing accept art, acceptance ritual, integration ritual, operation cycle, and regulation, beside a torn checklist of operator words with ticks</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-operators">Operators</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-28-view" aria-label="Previous: folio 28, Deliberate poor performance">← No. 28</button>
+                                <button type="button" popovertarget="folio-30-view" aria-label="Next: folio 30, Mimes Against WAP, blue wash">No. 30 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-29 · Acceptance ritual checklist" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-acceptance-ritual-checklist-hero.webp">Open the large scan</a>
@@ -769,11 +1024,19 @@
                             <span class="folio-tile__label"><span class="folio-tile__no">No. 30</span> Mimes Against WAP, blue wash</span>
                         </button>
                         <div class="folio-view" id="folio-30-view" popover role="dialog" aria-label="Folio 30, Mimes Against WAP, blue wash">
+                            <div class="folio-view__plate">
                             <picture>
                                 <source type="image/avif" srcset="/public/images/assets/folios/folio-mimes-against-wap-blue-wash-display.avif 512w, /public/images/assets/folios/folio-mimes-against-wap-blue-wash-hero.avif 1024w" sizes="min(92vw, 56rem)">
-                                <img src="/public/images/assets/folios/folio-mimes-against-wap-blue-wash-display.webp" srcset="/public/images/assets/folios/folio-mimes-against-wap-blue-wash-display.webp 512w, /public/images/assets/folios/folio-mimes-against-wap-blue-wash-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="797" alt="A blue-grey wash nearly covering an earlier page, Mimes Against WAP and a spiral still visible beneath" loading="lazy" decoding="async">
+                                <img src="/public/images/assets/folios/folio-mimes-against-wap-blue-wash-display.webp" srcset="/public/images/assets/folios/folio-mimes-against-wap-blue-wash-display.webp 512w, /public/images/assets/folios/folio-mimes-against-wap-blue-wash-hero.webp 1024w" sizes="min(92vw, 56rem)" width="1024" height="797" alt="Folio 30, Mimes Against WAP, blue wash, shown whole" loading="lazy" decoding="async">
                             </picture>
+                            </div>
                             <p class="folio-view__title"><span class="folio-tile__no">No. 30</span> Mimes Against WAP, blue wash</p>
+                            <p class="folio-view__desc">A blue-grey wash nearly covering an earlier page, Mimes Against WAP and a spiral still visible beneath</p>
+                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-wap">WAP</label> <label class="folio-view__thread" for="folio-thread-washes">Washes</label></p>
+                            <p class="folio-view__flip">
+                                <button type="button" popovertarget="folio-29-view" aria-label="Previous: folio 29, Acceptance ritual checklist">← No. 29</button>
+                                <button type="button" popovertarget="folio-00-view" aria-label="Next: folio 00, Operator curriculum, teal">No. 00 →</button>
+                            </p>
                             <p class="folio-view__actions">
                                 <a class="spw-chip" data-spw-handle="true" href="#folio-request" data-seed-piece="folio-2026-09-26-30 · Mimes Against WAP, blue wash" data-spw-operator="value">*ask_for_this_one</a>
                                 <a href="/public/images/assets/folios/folio-mimes-against-wap-blue-wash-hero.webp">Open the large scan</a>
