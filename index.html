@@ -118,13 +118,16 @@
 
         <div class="home-hero-grid" data-spw-slot="body" data-spw-composition-flow="split" data-spw-activates="hero-content">
             <div class="home-hero-copy">
-                <p data-spw-textual-role="kicker" data-spw-semantic-expression="kernel[entry]{orient}">home page entry</p>
-                <h1 id="home-title">
-                    I'm Spwashi.
-                </h1>
-                <p class="home-tagline" data-spw-textual-role="tagline">
-                    I build software and make art.
-                </p>
+                <div class="home-masthead">
+                <hgroup>
+                    <p data-spw-textual-role="kicker" data-spw-semantic-expression="kernel[entry]{orient}">home page entry</p>
+                    <h1 id="home-title">
+                        I'm Spwashi.
+                    </h1>
+                    <p class="home-tagline" data-spw-textual-role="tagline">
+                        I build software and make art.
+                    </p>
+                </hgroup>
 
                 <p id="home-frame-note" data-spw-textual-role="lede" data-spw-copy-unit="home.hook.lede" data-spw-semantic-expression="home[hook]{software.art}(atlas)<person>">
                     This is a working atlas of my software, art, and the practices between them. Meet <a href="/about/">the person</a>, browse <a href="/topics/">the topics</a>, explore <a href="/play/">the games and stories</a>, see <a href="/design/folios/">the art</a>, or bring a project to <a href="/services/">the studio</a>.
@@ -135,6 +138,7 @@
                 <p class="home-live-note home-production-note" id="home-live-note" data-spw-textual-role="note" data-spw-copy-unit="home.hook.live" data-spw-semantic-expression="home[live]{cycle.progress}(b)<now>">
                     <span class="spw-living-term" data-spw-living-term data-spw-concept="release-cycle" data-spw-gesture-contract="tap:prime hold:cauldron-capture" tabindex="0" title="A-cycle closed on September 13; the next B-cycle close is September 26."><time datetime="2026-09-13">September 13</time> A-cycle</span> closed. This B-cycle, I’m making the work easier to wander and answer: an <a href="/design/ornaments/#ornament-vocabulary">ornament map</a>, <a href="/topics/software/spw/operators/frame/#operator-ring">operator pages</a> that open in the parser, topics as <a href="/topics/software/#building-blocks">building blocks</a> with a <a href="/curriculum/#tiny-show">tiny show</a> to make, and <a href="https://autonomous.feedback/spwashi.com" referrerpolicy="no-referrer-when-downgrade">feedback</a> that knows the room. Folio orders remain open by card. Public close September 26. <a href="/now/#since-the-close">See what changed</a>.
                 </p>
+                </div>
 
                 <div
                     id="home-hook"
@@ -325,6 +329,7 @@
                 </nav>
             </div>
 
+            <aside class="home-hero-rail" aria-label="Logo concepts and a landing image">
             <figure class="home-brand-plate" data-spw-slot="figure">
                 <img
                     src="/public/images/logo/spw-brand-plate.svg"
@@ -363,6 +368,7 @@
                     <span>A landing image for the holiday feeling without naming the holiday: a page can invite return, preparation, and shared practice before the next occasion arrives.</span>
                 </figcaption>
             </figure>
+            </aside>
         </div>
         <footer class="frame-actions" data-spw-slot="actions">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
