@@ -106,11 +106,11 @@ expression = recalc[cost]{selector.element.state}<phone>
   mount_reads = `the six single-read mount sites above are lane candidates one at a time, each measured by its own row in the forced-pass table`
   probes = #[
     `node <scratch>/selector-stats.mjs <route> phone 30000 <out.json>`,
-    `node <scratch>/layer-ablation.mjs <route> phone 9`,
+    `npm run perf:layer-ablation -- <route> --viewport=phone --runs=9 [--only] (scripts/layer-ablation.mjs, rewritten 2026-09-25; the splitter is tested in scripts/tests/css-layer-ablation.test.mjs)`,
     `node <scratch>/dom-census.mjs <route> phone 25000`,
     `node <scratch>/ab.mjs <repo> <route> phone 26000 <label>`
   ][reg=set]
-  ~#caution: "the probes live in the session scratchpad; promote selector-stats and layer-ablation to scripts/ when a second pass needs them, beside build-performance.mjs"
+  ~#caution: "layer-ablation is in scripts/ (2026-09-25). selector-stats, dom-census, and ab were scratch and are gone; rewrite them from the method above when a pass needs them"
 }
 
 ^"validation"{
