@@ -41,6 +41,15 @@ claim: `A layer's position should tell a reader how much care a rule there deser
     .{ lines = `552–596` ; rule = `motion throttling and reduced motion with !important` ; claims = `reset` ; deserves = `governors — wins only because !important inverts layer order, which no reader can see` }[reg=facet],
   ][reg=set]
   pre_patch = `Rows 1, 4, 5 move into their existing owner layers today under css-instruction#import_manifest.layer_rule ("add imports inside the existing owner layer"). Rows 2, 3, 6 wait for the layer names.`
+  phase_0_2026_09_25 = .{
+    rule = `Moving a rule out of reset raises it over every layer in between. A move is equivalent only when nothing between the two layers sets the same property on the same elements.`
+    row_1 = `Done. Fourteen :root tokens moved to tokens/core.css §3; nothing else defines them and only base.css reads them. --site-line-height: 1.68 was dead (tokens set 1.64 one layer up) and --site-root-font-size repeated tokens' 100%; both deleted.`
+    row_4 = `Retracted. The infix border-width: 0 is a floor: it must lose to every layer's authored width. At the bottom is where a floor belongs; in handles it would erase component and route widths.`
+    row_5_links = `Not equivalent. typography/base.css:387 styles links in paragraphs (1.5px, 0.24em, 35%) and beats reset today; moved to components, base.css's 1px / 3px / 45% would take over. Only font-weight and transition in the base link block are live inside prose.`
+    row_5_pre = `Not equivalent. shell/layout.css:1234 and typography/base.css:243 cap pre at min(100%, 84ch) above reset; the software pre block in routes would beat the cap and widen code on 51 software pages.`
+    row_5_roster = `Half done. The landmark elements in the min-width roster duplicated §2 at lower specificity; removed. The component classes stay until a browser A/B shows no shell/typography rule sets their min-width.`
+    bundle = `core.css diff: moved token lines, two deleted dead values, six deleted duplicate selectors, comments. No rule changed value.`
+  }[reg=facet]
 }
 
 ^"pours"{

@@ -51,4 +51,5 @@ That review is Phase 1 here. No new layer name exists before it lands.
 
 ## Status
 
+- 2026-09-25, Phase 0 first patch: fourteen reset tokens moved to `tokens/core.css`; two dead reset values and the roster's duplicate landmark selectors deleted; core bundle diff is moves and deletions only. The link block, the software `pre` block, and the roster's classes are not equivalent moves (each would start beating a named rule in shell or typography); the infix floor stays in reset by design. Record: cache `#reset_care_ledger.phase_0_2026_09_25`. Remaining Phase 0: `play.css` intents, probe promotion.
 - 2026-09-25: primed. Cache written. Six boundary plans and four conventions now cite this plan as the door instead of a wall. Nothing in `public/css` changed.

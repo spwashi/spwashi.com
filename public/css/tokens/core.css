@@ -750,6 +750,24 @@
   --line-height-ui: 1.1;
   --line-height-mono: 1.42;
 
+  /* Reading flow: the gaps reset/base.css stacks article, section, and aside with. */
+  --flow-gap-2xs: 0.35rem;
+  --flow-gap-xs: 0.55rem;
+  --flow-gap-sm: 0.8rem;
+  --flow-gap-md: 1rem;
+  --flow-gap-lg: 1.4rem;
+  --flow-gap-xl: 2rem;
+  --flow-gap-2xl: 3rem;
+  --flow-section-gap: clamp(1.4rem, 3vw, 2.6rem);
+  --flow-stack-gap: clamp(0.9rem, 1.8vw, 1.25rem);
+  --flow-reading-gap: clamp(0.8rem, 1.6vw, 1.1rem);
+
+  /* Focus and selection, spent by the reset on :focus-visible and ::selection. */
+  --focus-ring-color: var(--teal, #008080);
+  --focus-ring-offset: 3px;
+  --selection-bg: var(--active-op-bg-soft, rgba(0, 128, 128, 0.18));
+  --selection-ink: var(--ink, #161c1d);
+
   --site-mono-font: var(--font-family-mono);
   --site-sans-font: var(--font-family-sans);
   --site-display-font: var(--font-family-display);
