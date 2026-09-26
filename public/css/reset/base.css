@@ -5,32 +5,9 @@
    - Global baseline, interaction resets, flow defaults, and default typography.
    - Own shared reading rhythm, anchor behavior, overflow safety, and semantic
      document flow before route/shell layers specialize the page.
-   Dependency: None (includes hardcoded fallbacks if tokens are missing).
+   Dependency: tokens/core.css owns the flow gaps, focus ring, and selection
+   colors this sheet spends; colors and fonts keep hardcoded fallbacks.
    ========================================================================== */
-
-/* ── 0. Shared Baseline Flow Variables ─────────────────────────────────── */
-
-:root {
-  --site-root-font-size: 100%;
-  --site-line-height: 1.68;
-
-  --flow-gap-2xs: 0.35rem;
-  --flow-gap-xs: 0.55rem;
-  --flow-gap-sm: 0.8rem;
-  --flow-gap-md: 1rem;
-  --flow-gap-lg: 1.4rem;
-  --flow-gap-xl: 2rem;
-  --flow-gap-2xl: 3rem;
-
-  --flow-section-gap: clamp(1.4rem, 3vw, 2.6rem);
-  --flow-stack-gap: clamp(0.9rem, 1.8vw, 1.25rem);
-  --flow-reading-gap: clamp(0.8rem, 1.6vw, 1.1rem);
-
-  --focus-ring-color: var(--teal, #008080);
-  --focus-ring-offset: 3px;
-  --selection-bg: var(--active-op-bg-soft, rgba(0, 128, 128, 0.18));
-  --selection-ink: var(--ink, #161c1d);
-}
 
 /* ── 1. Core Box Model & Interaction Limits ────────────────────────────── */
 
@@ -481,14 +458,9 @@ code {
 
 /* ── 10. Website Flow Safety Defaults ──────────────────────────────────── */
 
-/* Prevent flex/grid children from blowing out widths */
+/* Prevent flex/grid children from blowing out widths. The landmark elements
+   already get min-width: 0 in §2; this roster names the component classes. */
 :where(
-  main,
-  article,
-  section,
-  aside,
-  nav,
-  figure,
   .spw-frame,
   .frame-grid,
   :is(.spw-panel, .frame-panel),
