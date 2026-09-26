@@ -81,6 +81,7 @@
 ^"highres"{
   rule = `Five folios open in high-res each ISO week: 2400px WebP, no AVIF, at most 1 MiB each, committed beside the other derivatives as folio-<slug>-full.webp.`
   record = `public/data/folio-highres.json — one entry per week; the folio page links only the latest five, and their shelf tiles wear a mark derived from that link.`
+  rotate = `npm run folio:highres:rotate -- --ids=NN,NN,NN,NN,NN [--week=YYYY-Www] [--opened=YYYY-MM-DD] [--dry-run] — makes any missing full file from the master, records the tier in the sidecar, appends the week, moves the page links, runs the audit. A repeat week needs no master.`
   check = `scripts/audit-folio-highres.mjs in check:local: over five, over the cap, a missing file, or page links unlike the latest week fail; a week behind the calendar, or a week that repeats the one before, warns.`
   growth = `Bounded by the archive, not the calendar: rotating through these thirty-one adds at most thirty-one files, about 15 MB. A repeat costs nothing.`
   perk = `A subscriber perk later. The repository is public, so committed files stay free to see; a perk needs its files served from outside git (a worker with storage) and gated there.`
