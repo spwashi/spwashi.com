@@ -144,3 +144,10 @@
   border-radius: 999px;
   cursor: pointer;
 }
+
+/* The week's high-res five: the mark follows the popover's link, so the shelf cannot disagree with it. */
+.folio-tile:has([data-folio-highres]) .folio-tile__label::after {
+  content: " · high-res";
+  color: var(--active-op-color, var(--teal, #008080));
+  font-weight: 700;
+}

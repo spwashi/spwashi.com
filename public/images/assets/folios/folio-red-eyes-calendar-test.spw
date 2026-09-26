@@ -21,11 +21,13 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-red-eyes-calendar-test-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   alt_text: "Two red eyes and a dark spike over a page of calendar numbers, with a column of labeled practices from logistics to production"
   tiers: {
     thumb: { width: 256, height: 198, avif_kib: 4, webp_kib: 4 }
     display: { width: 512, height: 396, avif_kib: 24, webp_kib: 22 }
     hero: { width: 1024, height: 791, avif_kib: 110, webp_kib: 85 }
+    full: { width: 2400, height: 1853, webp_kib: 423, opened: "2026-W39" }
   }
 }
 

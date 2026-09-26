@@ -20,11 +20,13 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-octvember-novel-under-test-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   alt_text: "White cut-paper cards on black lay out a Halloween season: Octvember, promo, launch, teasers, and a Novel Under Test flowing into an ePub"
   tiers: {
     thumb: { width: 256, height: 203, avif_kib: 6, webp_kib: 7 }
     display: { width: 512, height: 405, avif_kib: 29, webp_kib: 29 }
     hero: { width: 1024, height: 810, avif_kib: 120, webp_kib: 92 }
+    full: { width: 2400, height: 1899, webp_kib: 453, opened: "2026-W39" }
   }
 }
 

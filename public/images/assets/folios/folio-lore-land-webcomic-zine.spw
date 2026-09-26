@@ -20,11 +20,13 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-lore-land-webcomic-zine-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   alt_text: "A pink wash over a pencil plan for Lore Land as an interactive webcomic and an augmented-reality zine, with Teal Stripes Vibes dot com and boon, bone, and honk boxes"
   tiers: {
     thumb: { width: 202, height: 256, avif_kib: 3, webp_kib: 4 }
     display: { width: 404, height: 512, avif_kib: 22, webp_kib: 19 }
     hero: { width: 808, height: 1024, avif_kib: 103, webp_kib: 76 }
+    full: { width: 1892, height: 2400, webp_kib: 398, opened: "2026-W39" }
   }
 }
 
