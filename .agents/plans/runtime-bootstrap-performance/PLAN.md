@@ -22,7 +22,7 @@ Cache strata to keep distinct:
 
 Optimization rule: a patch should say which cache stratum it improves, what should remain volatile, and how a visitor or editor can inspect the result. Do not persist a state only because it is convenient. Do persist or precompute when it improves return-visit continuity, route comprehension, or editor auditability.
 
-CSS delivery is a sibling schedule, not a JS mount gate. Flourish sheets idle-load after interactive (`core-css-spend-cut`). Public first-paint HTML work lives in `public-entrance-runtime-payload`. Do not reorder CSS `@layer` to win a JS demotion.
+CSS delivery is a sibling schedule, not a JS mount gate. Flourish sheets idle-load after interactive (`core-css-spend-cut`). Public first-paint HTML work lives in `public-entrance-runtime-payload`. Do not reorder CSS `@layer` to win a JS demotion; layer order is owned by `css-cascade-stratification`, and the Phase 3 recalc data here is its measurement baseline.
 
 Metacognitive utility: the runtime should help a reader notice how the page became meaningful. A fast page that explains its hydration, route posture, and local memory is stronger proof than a fast page that hides all structure.
 
@@ -75,7 +75,7 @@ No new framework or heavy client dependencies are involved. The site remains han
 **Out of scope for the initial plan:**
 - Large rewrites of individual heavy modules (those are separate craft-quality or per-route passes).
 - New visual chrome or data attributes unless they fall out of existing token writers.
-- Changes to CSS layer ordering or the `ornament` contract.
+- Changes to CSS layer ordering (`css-cascade-stratification`) or the `ornament` contract.
 - Anything that would require new npm dependencies.
 
 When a reusable concept emerges (e.g., "load budget", "module cost class", "observer federation"), it will be modeled in `.spw` (likely an extension to `site-semantics.spw`, `narrative-instrumentation.spw`, or a lightweight new convention) and wired via the usual dispatch.

@@ -166,6 +166,7 @@
   layer_rule: "Do not change the @layer declaration order casually; add imports inside the existing owner layer."
   import_rule: "The import order should read like instruction: reset -> tokens -> shell -> typography -> grammar -> components -> systems -> routes -> handles -> effects -> ornament."
   executable_contract: "scripts/ts/css-contracts.mts checks that a public/css/<layer>/ file is imported with the matching cascade layer and that root-level CSS remains limited to style.css and compose.css."
+  bundle_rule: "scripts/ts/css-bundle.mts strips the @layer order statement, so bundles/core.css opens layers in first-appearance order and never opens routes; on routed pages the shipped order is routes > handles > effects > ornament (audits/operator-controls-2026-09.spw#findings.layer_order). Emitting the statement, and any change to the declaration order, belongs to one plan: .agents/plans/css-cascade-stratification/PLAN.md (model: caches/css-cascade-stratification-2026-09.spw), browser-reviewed before it lands. Sibling plans cite it; they do not forbid it."
 }
 
 ^"source_direction"{

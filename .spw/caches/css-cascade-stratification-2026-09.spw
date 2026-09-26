@@ -1,0 +1,97 @@
+# Cache 2026-09-25 — cascade order as a care signal: what each layer promises about reach, cure, and hand.
+# Read from the top of the CSS with the resin painter's method: pour, let it set, pour again.
+# The model waits on one decision already on record (operator-controls-2026-09#findings.layer_order).
+
+#>css_cascade_stratification_2026_09
+#:cache #!css #!cascade #!layers
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/css-cascade-stratification/PLAN.md"
+@css_instruction: ~"../conventions/css-instruction.spw#import_manifest"
+@stylesheet_ecology: ~"../conventions/stylesheet-ecology.spw#cascade_vs_delivery"
+@semantic_hierarchy: ~"../conventions/semantic-hierarchy.spw#cascade_ladder"
+@attribute_rhythm: ~"../conventions/data-spw-attribute-governance.spw#rhythm"
+@operator_controls: ~"../audits/operator-controls-2026-09.spw#findings"
+@recalc_cost: ~"../audits/runtime-recalc-cost-2026-09.spw#ablation"
+@alignment_review: ~"../reviews/css-architecture-alignment.spw"
+@base: ~"../../public/css/reset/base.css"
+@tokens: ~"../../public/css/tokens/core.css"
+@bundler: ~"../../scripts/ts/css-bundle.mts"
+@contracts: ~"../../scripts/ts/css-contracts.mts"
+
+claim: `A layer's position should tell a reader how much care a rule there deserves. Eleven layers cannot: reset holds six care levels under one name, and the shipped bundle does not even carry the declared order. The fix is not "more specificity"; it is a layer list whose names promise reach, cure, and hand, the same triple every data-spw-* attribute already declares as shape, altitude, and register.`
+
+^"two_cascades"{
+  declared = `style-core.css line 1: reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament.`
+  shipped = `scripts/ts/css-bundle.mts:45 strips the order statement. bundles/core.css opens layers in first-appearance order and never opens routes; a route bundle that declares routes afterwards puts routes above effects and ornament.`
+  adaptation = `css-state-legibility built --operator-chip-*-intent and --mode-switch-*-intent so route palettes render under either order. The intents are the contract; the flip is the fix, not the risk.`
+  decision = `Emitting the statement is a site-wide cascade change awaiting a browser review of the routes that lean on routes > handles (@operator_controls). No new layer is named before that review lands.`
+}
+
+^"reset_care_ledger"{
+  claim = `reset/base.css as read 2026-09-24. Each row is a rule that claims one care level and deserves another.`
+  rows = #[
+    .{ lines = `13–33` ; rule = `:root flow, focus, selection tokens` ; claims = `reset` ; deserves = `tokens` }[reg=facet],
+    .{ lines = `37–95, 464–480` ; rule = `font stack, smoothing, scrollbar, text-size-adjust, box-sizing` ; claims = `reset` ; deserves = `substrate — the browser community's pour` }[reg=facet],
+    .{ lines = `99–189` ; rule = `article/section/aside flex stacking and reading gaps` ; claims = `reset` ; deserves = `flow — semantic-HTML grammar that is ours, not the browser's` }[reg=facet],
+    .{ lines = `191–197` ; rule = `[data-spw-sigil-position="infix"] border-width: 0` ; claims = `reset` ; deserves = `handles — a patch for a handles omission` }[reg=facet],
+    .{ lines = `340–360, 485–507, 534–548` ; rule = `.spw-panel a, class roster min-width, body[data-spw-surface="software"] pre` ; claims = `reset` ; deserves = `components / routes` }[reg=facet],
+    .{ lines = `552–596` ; rule = `motion throttling and reduced motion with !important` ; claims = `reset` ; deserves = `governors — wins only because !important inverts layer order, which no reader can see` }[reg=facet],
+  ][reg=set]
+  pre_patch = `Rows 1, 4, 5 move into their existing owner layers today under css-instruction#import_manifest.layer_rule ("add imports inside the existing owner layer"). Rows 2, 3, 6 wait for the layer names.`
+}
+
+^"pours"{
+  claim = `Six pours. Each layer carries reach (spatial radius), cure (temporal shape from @attribute_rhythm), and hand (who owns it). Read bottom to top; later pours must respect what has set below.`
+  substrate: .{
+    care = `Name the browser community you are serving.`
+    substrate = `what a Chrome/Safari dev-tools reader already brings and we keep or tune: font stack, smoothing, scrollbar, text-size-adjust, box-sizing, focus ring. reach: everything. cure: fixed. hand: browser and us.`
+    registry = `@property only. Physics constants. Changing inherits here changes the field everywhere. reach: field. cure: fixed. hand: physics.`
+    scales = `primitive numbers: flow gaps, radii, type ramp. Meaningless alone. cure: fixed.`
+  }[reg=facet]
+  meaning: .{
+    care = `Others build on this; reason step by step.`
+    aliases = `--ink, --bg, --active-op-color -> teal. cure: stable. hand: author.`
+    flow = `semantic-HTML stacking: the article/section/aside block now in base.css. cure: stable.`
+    shell = `as today` ; typography = `as today` ; grammar = `as today`
+  }[reg=facet]
+  composition: .{
+    care = `Declare the owning rung of the composition ladder.`
+    components = `as today` ; systems = `as today`
+    regions = `harmony / tempo / density profiles, if they prove to be one family` ; routes = `as today`
+  }[reg=facet]
+  time: .{
+    care = `Care scales with cure.`
+    states = `load-bearing, monotone: hydration, page-state, runtime-stage. Cured resin. components/runtime-states.css already is this sheet.`
+    arcs = `bounded performances: arrival and its steps. A pour that is setting.`
+    handles = `affordances, as today`
+    pulses = `timer-bound emphasis. Bubbles. A rule here may never load-bear; anything here is safe to delete.`
+    residue = `traces visible through the layers above`
+  }[reg=facet]
+  finish: .{
+    care = `Grab, test, move on.`
+    effects = `as today` ; ornament = `as today`
+  }[reg=facet]
+  reader: .{
+    care = `Wins over everything, without !important.`
+    governors = `reduced motion, throttling, contrast, capture mode. Today base.css §12 and modes/capture.css in layer(shell).`
+    instruments = `debug overlays, today effects/debug.css. Observe, never intrude.`
+  }[reg=facet]
+  compressions = `If twenty-one is too many to hold: scales+aliases -> tokens; arcs+pulses+residue -> tempo. The pours still read.`
+}
+
+^"mechanics"{
+  bundle = `@bundler:45 must emit the order statement before any new name exists; otherwise new layers take concatenation order.`
+  directory_rule = `@contracts:456 binds public/css/<dir>/ to layer(<dir>). New layers are new directories or a mapping table in the checker; EXPECTED_LAYER_ORDER at contracts:33 and css-manifest.mjs:9 change in the same patch.`
+  restating_sheets = `15 deferred sheets restate the eleven (flourish-pack, debug, themes/packs, spatial-gravity, theme-resonance, interaction-progression, relational-state, layout-assumptions, enrichment, narrative, electromagnetic-container, developmental-climate, runtime-inspect, plus src/styles/entries/debug.css) and four design/experiments/load-symphony/css sheets.`
+  prose = `AGENTS.md:198, GPT.md:9, README.md:87, semantic-hierarchy#cascade_ladder, css-instruction#import_rule, five audits, three reviews, css-combinatorics, module-effect-arc-options, and public copy at topics/software/spw/index.html:925 spell the eleven.`
+  provenance = `--spw-debug-layer-owner already exists per file; new owners show in the inspector for free.`
+  measurement = `@recalc_cost: layers are non-additive and components carries the containment; promote the scratch layer-ablation and selector-stats probes to scripts/ so a fresh-served before/after exists.`
+}
+
+^"open_taste_call"{
+  question = `base.css 99–189: main, article { display: block } is substrate — a Safari reader's <section> already means that. section > section { display: flex; gap } is ours. Same block, two pours. Where does the browser community's <section> end and ours begin?`
+  second = `Should a route ever paint a handle directly, or is intent-through-tokens the permanent contract? If the latter, handles > routes is correct and the bundle is what is wrong.`
+}

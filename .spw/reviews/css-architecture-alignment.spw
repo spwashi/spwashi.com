@@ -21,7 +21,7 @@
 thesis: .{
   claim = `The CSS architecture has strong layering and good data-attribute hygiene, but the semantic model expressed in CSS is not yet fully aligned with the runtime's Spw ontology (operators as forces, frames/braces as structural grammar, regions as harmony/tempo/density, attention-field as resonance, cauldron as emergence).`
   opportunity = `Redistributing ownership and evolving the file tree can make CSS a clearer, more direct projection of the same semantics that the JS runtime and .spw surfaces already model.`
-  constraint = `The current strict layer order (reset → tokens → shell → typography → grammar → components → systems → routes → handles → effects → ornament) remains the default contract. Later fundamentals-practice-rhythms work opens the door to layer-order review, but only as a standalone migration with evidence, updated AGENTS.md/css-instruction.spw/style.css imports, and rollback notes.`
+  constraint = `The current strict layer order (reset → tokens → shell → typography → grammar → components → systems → routes → handles → effects → ornament) remains the default contract. Later fundamentals-practice-rhythms work opens the door to layer-order review, but only as a standalone migration with evidence, updated AGENTS.md/css-instruction.spw/style.css imports, and rollback notes. That migration is .agents/plans/css-cascade-stratification/PLAN.md (2026-09-25).`
 }
 
 # Current State of Semantic Alignment
