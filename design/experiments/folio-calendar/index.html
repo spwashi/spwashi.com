@@ -1,0 +1,415 @@
+<spw-page
+    title="Spwashi • October, one folio a day"
+    description="A demo month for the folio calendar: thirty-one scanned folios on October 2026's thirty-one days, in scan order, the grid drawn from the date."
+    canonical="https://spwashi.com/design/experiments/folio-calendar/"
+    og_title="Spwashi • October, one folio a day"
+    og_description="Thirty-one folios, thirty-one days. A demo month, not yet a route."
+    breadcrumb_label="Folio calendar demo"
+    header_current="Folio calendar demo"
+    header_current_href="/design/experiments/folio-calendar/"
+    header_indicator="website"
+    surface="website"
+    page_family="experiment-lab"
+    page_role="calendar-demo"
+    page_modes="read compare print"
+    wonder="memory resonance projection"
+    route_family="design experiments folios"
+    layout="wide"
+    features="operators"
+    related_routes="/design/folios/|/design/experiments/|/design/"
+    stylesheet_mode="scoped"
+></spw-page>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+    <style>
+        /* Demo-only. If the month is approved, these rules earn a home in a stylesheet. */
+        .cal-month { display: grid; gap: 0.6rem; }
+        .cal-weekdays, .cal-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.45rem; margin: 0; padding: 0; list-style: none; }
+        .cal-weekdays li { font-family: var(--site-mono-font, monospace); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+        .cal-cell { min-width: 0; }
+        .cal-cell > a { display: grid; gap: 0.3rem; padding: 0.4rem; border: 1px solid color-mix(in srgb, var(--line) 80%, transparent); border-radius: 0.4rem; background: color-mix(in srgb, var(--surface-strong, #fff) 88%, transparent); color: var(--ink); text-decoration: none; }
+        .cal-cell > a:is(:hover, :focus-visible) { border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 60%, var(--line)); }
+        .cal-cell--weekend > a { background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 6%, var(--surface-strong, #fff)); }
+        .cal-cell--blank { border: 1px dashed color-mix(in srgb, var(--line) 50%, transparent); border-radius: 0.4rem; min-block-size: 3rem; }
+        .cal-cell time { font-family: var(--site-mono-font, monospace); font-weight: 700; font-variant-numeric: tabular-nums; }
+        .cal-cell picture { display: grid; place-items: center; aspect-ratio: 1; background: color-mix(in srgb, var(--ink) 5%, var(--surface-strong, #fff)); }
+        .cal-cell img { inline-size: auto; block-size: auto; max-inline-size: 100%; max-block-size: 100%; }
+        .cal-cell__title { font-size: 0.72rem; line-height: 1.3; }
+        .cal-cell__no { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+        @media (max-width: 40rem) { .cal-cell__title { display: none; } .cal-cell > a { padding: 0.25rem; } }
+        @media print {
+            @page { size: landscape; margin: 1cm; }
+            body > header, body > footer, .frame-topline, .cal-notes { display: none; }
+            .cal-cell > a { border-color: #999; background: none; color: #000; }
+            .cal-cell picture { background: none; }
+            .cal-cell__title { display: block; font-size: 7pt; }
+        }
+    </style>
+</head>
+<body
+    data-spw-surface="website"
+    data-spw-stylesheet-mode="scoped"
+    data-spw-features="operators"
+    data-spw-route-family="design experiments folios"
+    data-spw-context="reading"
+    data-spw-wonder="memory resonance projection"
+    data-spw-page-family="experiment-lab"
+    data-spw-page-modes="read compare print"
+    data-spw-page-role="calendar-demo"
+    data-spw-layout="wide"
+    data-spw-related-routes="/design/folios/|/design/experiments/|/design/">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+        <nav aria-label="Design experiments">
+            <a class="header-sigil" href="/design/">#&gt;design</a>
+            <a href="/design/folios/#release-set">Folios</a>
+            <a href="/design/experiments/folio-calendar/" aria-current="page">Calendar demo</a>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="spw-frame frame-card" id="folio-calendar-demo" data-spw-kind="frame" data-spw-role="demo" aria-labelledby="folio-calendar-title">
+            <header class="frame-topline" data-spw-slot="header">
+                <a class="frame-sigil" href="#folio-calendar-demo" data-spw-operator="potential">~folio_calendar</a>
+                <h1 id="folio-calendar-title">October, one folio a day</h1>
+                <p>Thirty-one scanned folios on October 2026's thirty-one days, in scan order. The grid comes from the date: the month starts on a Thursday, so three cells stay empty. Each day opens its folio on the <a href="/design/folios/#release-set">shelf</a>. Print it for a month on the wall.</p>
+            </header>
+            <div class="cal-month">
+                <ol class="cal-weekdays" aria-hidden="true">
+                    <li>Mon</li><li>Tue</li><li>Wed</li><li>Thu</li><li>Fri</li><li>Sat</li><li>Sun</li>
+                </ol>
+                <ol class="cal-days" aria-label="October 2026, one folio a day">
+                <li class="cal-cell cal-cell--blank" aria-hidden="true"></li>
+                <li class="cal-cell cal-cell--blank" aria-hidden="true"></li>
+                <li class="cal-cell cal-cell--blank" aria-hidden="true"></li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-00">
+                        <time datetime="2026-10-01">1</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-operator-curriculum-teal-thumb.avif 200w, /public/images/assets/folios/folio-operator-curriculum-teal-display.avif 400w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-operator-curriculum-teal-thumb.webp" srcset="/public/images/assets/folios/folio-operator-curriculum-teal-thumb.webp 200w, /public/images/assets/folios/folio-operator-curriculum-teal-display.webp 400w" sizes="(max-width: 40rem) 30vw, 9rem" width="200" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 00</span> Operator curriculum, teal</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-01">
+                        <time datetime="2026-10-02">2</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-wap-boy-invented-pie-thumb.avif 198w, /public/images/assets/folios/folio-wap-boy-invented-pie-display.avif 397w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-wap-boy-invented-pie-thumb.webp" srcset="/public/images/assets/folios/folio-wap-boy-invented-pie-thumb.webp 198w, /public/images/assets/folios/folio-wap-boy-invented-pie-display.webp 397w" sizes="(max-width: 40rem) 30vw, 9rem" width="198" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 01</span> WAP Boy invented pie</span>
+                    </a>
+                </li>
+                <li class="cal-cell cal-cell--weekend">
+                    <a href="/design/folios/#folio-02">
+                        <time datetime="2026-10-03">3</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-honk-mixing-board-thumb.avif 256w, /public/images/assets/folios/folio-honk-mixing-board-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-honk-mixing-board-thumb.webp" srcset="/public/images/assets/folios/folio-honk-mixing-board-thumb.webp 256w, /public/images/assets/folios/folio-honk-mixing-board-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="201" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 02</span> Honk mixing board</span>
+                    </a>
+                </li>
+                <li class="cal-cell cal-cell--weekend">
+                    <a href="/design/folios/#folio-03">
+                        <time datetime="2026-10-04">4</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-boof-boonberry-pool-thumb.avif 256w, /public/images/assets/folios/folio-boof-boonberry-pool-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-boof-boonberry-pool-thumb.webp" srcset="/public/images/assets/folios/folio-boof-boonberry-pool-thumb.webp 256w, /public/images/assets/folios/folio-boof-boonberry-pool-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="200" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 03</span> Boof and the Boonberry Pool</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-04">
+                        <time datetime="2026-10-05">5</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-pink-hash-stack-thumb.avif 201w, /public/images/assets/folios/folio-pink-hash-stack-display.avif 402w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-pink-hash-stack-thumb.webp" srcset="/public/images/assets/folios/folio-pink-hash-stack-thumb.webp 201w, /public/images/assets/folios/folio-pink-hash-stack-display.webp 402w" sizes="(max-width: 40rem) 30vw, 9rem" width="201" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 04</span> Pink hash stack</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-05">
+                        <time datetime="2026-10-06">6</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-boon-bane-bone-mnemonic-thumb.avif 199w, /public/images/assets/folios/folio-boon-bane-bone-mnemonic-display.avif 397w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-boon-bane-bone-mnemonic-thumb.webp" srcset="/public/images/assets/folios/folio-boon-bane-bone-mnemonic-thumb.webp 199w, /public/images/assets/folios/folio-boon-bane-bone-mnemonic-display.webp 397w" sizes="(max-width: 40rem) 30vw, 9rem" width="199" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 05</span> Boon, bane, bone mnemonic</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-06">
+                        <time datetime="2026-10-07">7</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-pi-day-mimes-against-wap-thumb.avif 201w, /public/images/assets/folios/folio-pi-day-mimes-against-wap-display.avif 401w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-pi-day-mimes-against-wap-thumb.webp" srcset="/public/images/assets/folios/folio-pi-day-mimes-against-wap-thumb.webp 201w, /public/images/assets/folios/folio-pi-day-mimes-against-wap-display.webp 401w" sizes="(max-width: 40rem) 30vw, 9rem" width="201" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 06</span> Pi Day, Mimes Against WAP</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-07">
+                        <time datetime="2026-10-08">8</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-bone-box-launch-thumb.avif 199w, /public/images/assets/folios/folio-bone-box-launch-display.avif 399w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-bone-box-launch-thumb.webp" srcset="/public/images/assets/folios/folio-bone-box-launch-thumb.webp 199w, /public/images/assets/folios/folio-bone-box-launch-display.webp 399w" sizes="(max-width: 40rem) 30vw, 9rem" width="199" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 07</span> Bone box launch</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-08">
+                        <time datetime="2026-10-09">9</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-lore-land-drift-shapes-thumb.avif 256w, /public/images/assets/folios/folio-lore-land-drift-shapes-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-lore-land-drift-shapes-thumb.webp" srcset="/public/images/assets/folios/folio-lore-land-drift-shapes-thumb.webp 256w, /public/images/assets/folios/folio-lore-land-drift-shapes-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="200" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 08</span> Lore Land drift shapes</span>
+                    </a>
+                </li>
+                <li class="cal-cell cal-cell--weekend">
+                    <a href="/design/folios/#folio-09">
+                        <time datetime="2026-10-10">10</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-octvember-novel-under-test-thumb.avif 256w, /public/images/assets/folios/folio-octvember-novel-under-test-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-octvember-novel-under-test-thumb.webp" srcset="/public/images/assets/folios/folio-octvember-novel-under-test-thumb.webp 256w, /public/images/assets/folios/folio-octvember-novel-under-test-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="203" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 09</span> Octvember, Novel Under Test</span>
+                    </a>
+                </li>
+                <li class="cal-cell cal-cell--weekend">
+                    <a href="/design/folios/#folio-10">
+                        <time datetime="2026-10-11">11</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-business-courses-weekdays-thumb.avif 256w, /public/images/assets/folios/folio-business-courses-weekdays-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-business-courses-weekdays-thumb.webp" srcset="/public/images/assets/folios/folio-business-courses-weekdays-thumb.webp 256w, /public/images/assets/folios/folio-business-courses-weekdays-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="198" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 10</span> Business, courses, weekdays</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-11">
+                        <time datetime="2026-10-12">12</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-operator-rhythm-training-video-thumb.avif 200w, /public/images/assets/folios/folio-operator-rhythm-training-video-display.avif 400w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-operator-rhythm-training-video-thumb.webp" srcset="/public/images/assets/folios/folio-operator-rhythm-training-video-thumb.webp 200w, /public/images/assets/folios/folio-operator-rhythm-training-video-display.webp 400w" sizes="(max-width: 40rem) 30vw, 9rem" width="200" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 11</span> Operator rhythm, training video</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-12">
+                        <time datetime="2026-10-13">13</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-poem-count-the-boring-ones-thumb.avif 256w, /public/images/assets/folios/folio-poem-count-the-boring-ones-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-poem-count-the-boring-ones-thumb.webp" srcset="/public/images/assets/folios/folio-poem-count-the-boring-ones-thumb.webp 256w, /public/images/assets/folios/folio-poem-count-the-boring-ones-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="201" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 12</span> Poem, count the boring ones</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-13">
+                        <time datetime="2026-10-14">14</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-mimes-against-wap-lightning-thumb.avif 256w, /public/images/assets/folios/folio-mimes-against-wap-lightning-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-mimes-against-wap-lightning-thumb.webp" srcset="/public/images/assets/folios/folio-mimes-against-wap-lightning-thumb.webp 256w, /public/images/assets/folios/folio-mimes-against-wap-lightning-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="199" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 13</span> Mimes Against WAP, lightning</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-14">
+                        <time datetime="2026-10-15">15</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-red-eyes-calendar-test-thumb.avif 256w, /public/images/assets/folios/folio-red-eyes-calendar-test-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-red-eyes-calendar-test-thumb.webp" srcset="/public/images/assets/folios/folio-red-eyes-calendar-test-thumb.webp 256w, /public/images/assets/folios/folio-red-eyes-calendar-test-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="198" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 14</span> Red eyes, calendar test</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-15">
+                        <time datetime="2026-10-16">16</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-copy-paste-component-library-thumb.avif 199w, /public/images/assets/folios/folio-copy-paste-component-library-display.avif 398w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-copy-paste-component-library-thumb.webp" srcset="/public/images/assets/folios/folio-copy-paste-component-library-thumb.webp 199w, /public/images/assets/folios/folio-copy-paste-component-library-display.webp 398w" sizes="(max-width: 40rem) 30vw, 9rem" width="199" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 15</span> Copy-paste component library</span>
+                    </a>
+                </li>
+                <li class="cal-cell cal-cell--weekend">
+                    <a href="/design/folios/#folio-16">
+                        <time datetime="2026-10-17">17</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-teal-stripes-vibes-wash-thumb.avif 201w, /public/images/assets/folios/folio-teal-stripes-vibes-wash-display.avif 401w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-teal-stripes-vibes-wash-thumb.webp" srcset="/public/images/assets/folios/folio-teal-stripes-vibes-wash-thumb.webp 201w, /public/images/assets/folios/folio-teal-stripes-vibes-wash-display.webp 401w" sizes="(max-width: 40rem) 30vw, 9rem" width="201" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 16</span> Teal Stripes Vibes wash</span>
+                    </a>
+                </li>
+                <li class="cal-cell cal-cell--weekend">
+                    <a href="/design/folios/#folio-17">
+                        <time datetime="2026-10-18">18</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-factshift-cabinet-thumb.avif 199w, /public/images/assets/folios/folio-factshift-cabinet-display.avif 398w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-factshift-cabinet-thumb.webp" srcset="/public/images/assets/folios/folio-factshift-cabinet-thumb.webp 199w, /public/images/assets/folios/folio-factshift-cabinet-display.webp 398w" sizes="(max-width: 40rem) 30vw, 9rem" width="199" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 17</span> factshift cabinet</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-18">
+                        <time datetime="2026-10-19">19</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-glyph-arrows-pale-thumb.avif 256w, /public/images/assets/folios/folio-glyph-arrows-pale-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-glyph-arrows-pale-thumb.webp" srcset="/public/images/assets/folios/folio-glyph-arrows-pale-thumb.webp 256w, /public/images/assets/folios/folio-glyph-arrows-pale-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="199" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 18</span> Glyph arrows, pale</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-19">
+                        <time datetime="2026-10-20">20</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-lore-cloud-wonder-forms-thumb.avif 256w, /public/images/assets/folios/folio-lore-cloud-wonder-forms-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-lore-cloud-wonder-forms-thumb.webp" srcset="/public/images/assets/folios/folio-lore-cloud-wonder-forms-thumb.webp 256w, /public/images/assets/folios/folio-lore-cloud-wonder-forms-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="202" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 19</span> Lore cloud, wonder forms</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-20">
+                        <time datetime="2026-10-21">21</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-thumb.avif 256w, /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-thumb.webp" srcset="/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-thumb.webp 256w, /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="200" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 20</span> What kind of guy counts to pie</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-21">
+                        <time datetime="2026-10-22">22</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-ampersand-hair-cube-thumb.avif 200w, /public/images/assets/folios/folio-ampersand-hair-cube-display.avif 400w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-ampersand-hair-cube-thumb.webp" srcset="/public/images/assets/folios/folio-ampersand-hair-cube-thumb.webp 200w, /public/images/assets/folios/folio-ampersand-hair-cube-display.webp 400w" sizes="(max-width: 40rem) 30vw, 9rem" width="200" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 21</span> Ampersand, hair, cube</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-22">
+                        <time datetime="2026-10-23">23</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-operator-ladder-pencil-thumb.avif 200w, /public/images/assets/folios/folio-operator-ladder-pencil-display.avif 401w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-operator-ladder-pencil-thumb.webp" srcset="/public/images/assets/folios/folio-operator-ladder-pencil-thumb.webp 200w, /public/images/assets/folios/folio-operator-ladder-pencil-display.webp 401w" sizes="(max-width: 40rem) 30vw, 9rem" width="200" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 22</span> Operator ladder, pencil</span>
+                    </a>
+                </li>
+                <li class="cal-cell cal-cell--weekend">
+                    <a href="/design/folios/#folio-23">
+                        <time datetime="2026-10-24">24</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-zine-design-declaration-thumb.avif 256w, /public/images/assets/folios/folio-zine-design-declaration-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-zine-design-declaration-thumb.webp" srcset="/public/images/assets/folios/folio-zine-design-declaration-thumb.webp 256w, /public/images/assets/folios/folio-zine-design-declaration-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="199" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 23</span> Zine design declaration</span>
+                    </a>
+                </li>
+                <li class="cal-cell cal-cell--weekend">
+                    <a href="/design/folios/#folio-24">
+                        <time datetime="2026-10-25">25</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-how-to-make-honk-thumb.avif 256w, /public/images/assets/folios/folio-how-to-make-honk-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-how-to-make-honk-thumb.webp" srcset="/public/images/assets/folios/folio-how-to-make-honk-thumb.webp 256w, /public/images/assets/folios/folio-how-to-make-honk-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="200" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 24</span> How to make honk</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-25">
+                        <time datetime="2026-10-26">26</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-lined-stage-facade-thumb.avif 256w, /public/images/assets/folios/folio-lined-stage-facade-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-lined-stage-facade-thumb.webp" srcset="/public/images/assets/folios/folio-lined-stage-facade-thumb.webp 256w, /public/images/assets/folios/folio-lined-stage-facade-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="202" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 25</span> Lined stage facade</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-26">
+                        <time datetime="2026-10-27">27</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-lore-land-webcomic-zine-thumb.avif 202w, /public/images/assets/folios/folio-lore-land-webcomic-zine-display.avif 404w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-lore-land-webcomic-zine-thumb.webp" srcset="/public/images/assets/folios/folio-lore-land-webcomic-zine-thumb.webp 202w, /public/images/assets/folios/folio-lore-land-webcomic-zine-display.webp 404w" sizes="(max-width: 40rem) 30vw, 9rem" width="202" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 26</span> Lore Land webcomic zine</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-27">
+                        <time datetime="2026-10-28">28</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-spiral-chip-ochre-thumb.avif 256w, /public/images/assets/folios/folio-spiral-chip-ochre-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-spiral-chip-ochre-thumb.webp" srcset="/public/images/assets/folios/folio-spiral-chip-ochre-thumb.webp 256w, /public/images/assets/folios/folio-spiral-chip-ochre-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="198" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 27</span> Spiral chip, ochre</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-28">
+                        <time datetime="2026-10-29">29</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-deliberate-poor-performance-thumb.avif 200w, /public/images/assets/folios/folio-deliberate-poor-performance-display.avif 399w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-deliberate-poor-performance-thumb.webp" srcset="/public/images/assets/folios/folio-deliberate-poor-performance-thumb.webp 200w, /public/images/assets/folios/folio-deliberate-poor-performance-display.webp 399w" sizes="(max-width: 40rem) 30vw, 9rem" width="200" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 28</span> Deliberate poor performance</span>
+                    </a>
+                </li>
+                <li class="cal-cell">
+                    <a href="/design/folios/#folio-29">
+                        <time datetime="2026-10-30">30</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-acceptance-ritual-checklist-thumb.avif 201w, /public/images/assets/folios/folio-acceptance-ritual-checklist-display.avif 402w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-acceptance-ritual-checklist-thumb.webp" srcset="/public/images/assets/folios/folio-acceptance-ritual-checklist-thumb.webp 201w, /public/images/assets/folios/folio-acceptance-ritual-checklist-display.webp 402w" sizes="(max-width: 40rem) 30vw, 9rem" width="201" height="256" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 29</span> Acceptance ritual checklist</span>
+                    </a>
+                </li>
+                <li class="cal-cell cal-cell--weekend">
+                    <a href="/design/folios/#folio-30">
+                        <time datetime="2026-10-31">31</time>
+                        <picture>
+                            <source type="image/avif" srcset="/public/images/assets/folios/folio-mimes-against-wap-blue-wash-thumb.avif 256w, /public/images/assets/folios/folio-mimes-against-wap-blue-wash-display.avif 512w" sizes="(max-width: 40rem) 30vw, 9rem">
+                            <img src="/public/images/assets/folios/folio-mimes-against-wap-blue-wash-thumb.webp" srcset="/public/images/assets/folios/folio-mimes-against-wap-blue-wash-thumb.webp 256w, /public/images/assets/folios/folio-mimes-against-wap-blue-wash-display.webp 512w" sizes="(max-width: 40rem) 30vw, 9rem" width="256" height="199" alt="" loading="lazy" decoding="async">
+                        </picture>
+                        <span class="cal-cell__title"><span class="cal-cell__no">No. 30</span> Mimes Against WAP, blue wash</span>
+                    </a>
+                </li>
+                <li class="cal-cell cal-cell--blank" aria-hidden="true"></li>
+                </ol>
+            </div>
+            <div class="cal-notes frame-card">
+                <h2>What this demo decides, and what it does not</h2>
+                <p>It decides that a month can be drawn from the date and the release set with no script. It does not decide the order: in scan order, Octvember (No. 09) lands on the 10th and the blue wash (No. 30) on Halloween. Chosen days would be a second demo. Approve one in a browser before this becomes a route.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/design/experiments/">Experiments</a>
+            <a href="/privacy/">Privacy</a>
+        </nav>
+    </footer>
+</body>
+</html>
