@@ -194,6 +194,21 @@
     /* rails are guidance, never load-bearing */
   }
 
+  // Review rail: ?spw-layer-order=declared puts style-core.css's @layer order
+  // first in the document, so this page cascades as declared instead of as the
+  // bundles ship (routes last). css-cascade-stratification Phase 1 A/B; a test
+  // pins this string to EXPECTED_LAYER_ORDER.
+  try {
+    if (new URLSearchParams(window.location.search).get('spw-layer-order') === 'declared') {
+      const order = document.createElement('style');
+      order.id = 'spw-layer-order-review';
+      order.textContent = '@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;';
+      document.head.prepend(order);
+    }
+  } catch {
+    /* rails are guidance, never load-bearing */
+  }
+
   html.style.colorScheme = colorMode === 'auto' ? 'light dark' : colorMode;
   html.style.setProperty('--spw-spacing-scale', SPACING_TUNER_SCALE[spacingTuner] || SPACING_TUNER_SCALE.balanced);
   html.style.setProperty('--font-size-scale', `${fontSizeScale}%`);
