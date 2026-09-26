@@ -233,6 +233,29 @@ body[data-spw-surface="play"] #play-surface > .frame-topline > .mode-switch {
    6. Frame grammar
    ========================================================================== */
 
+/* The same paint as the rules below, handed to the handles layer as intents.
+   Shipped bundles put routes above handles, so the rules below still win today;
+   under the declared order handles wins and paints these. Idle, hover, and
+   pressed match either way. Focus does not: handles uses the hover intents for
+   :focus-visible and has no outline hook. See css-cascade-stratification. */
+:where(body[data-spw-surface="play"]) {
+  --operator-chip-border-intent: color-mix(in srgb, var(--play-accent) 18%, var(--line));
+  --operator-chip-hover-bg-intent: var(--play-accent-soft);
+  --mode-switch-idle-border-intent: color-mix(in srgb, var(--play-accent) 18%, var(--line));
+  --mode-switch-hover-border-intent: color-mix(in srgb, var(--play-accent) 44%, var(--line));
+  --mode-switch-hover-bg-intent: color-mix(in srgb, var(--surface-strong) 88%, var(--play-accent-soft));
+  --mode-switch-hover-shadow-intent: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
+  --mode-switch-active-border-intent: color-mix(in srgb, var(--play-accent) calc(60% + var(--play-rhythm-accent-mix)), var(--line));
+  --mode-switch-active-bg-intent: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--play-accent-soft) 72%, transparent) 0%,
+    color-mix(in srgb, var(--surface-strong) 95%, transparent) 100%
+  );
+  --mode-switch-active-shadow-intent:
+    var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18)),
+    0 0.3rem 0.8rem rgba(0, 0, 0, var(--play-rhythm-shadow-strength));
+}
+
 :where(body[data-spw-surface="play"] .frame-operators) {
   display: flex;
   flex-wrap: wrap;
