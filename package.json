@@ -70,6 +70,7 @@
     "audit:operator-css": "node --import ./scripts/lib/register-public-imports.mjs scripts/audit-operator-css.mjs",
     "audit:layer-flip": "node scripts/audit-layer-flip.mjs",
     "perf:layer-ablation": "node scripts/layer-ablation.mjs",
+    "folio:highres:rotate": "node scripts/folio-highres-rotate.mjs",
     "audit:folio-highres": "node scripts/audit-folio-highres.mjs",
     "audit:operator-controls": "node --import ./scripts/lib/register-public-imports.mjs scripts/audit-operator-controls.mjs",
     "audit:js-tree": "node scripts/js-tree-value.mjs",

@@ -22,6 +22,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
+import { isoWeek, parseWeek, weekStart } from './lib/iso-week.mjs';
+
 const ROOT = process.cwd();
 const RECORD = 'public/data/folio-highres.json';
 const PAGE = 'design/folios/index.html';
@@ -30,27 +32,6 @@ const ASSETS = 'public/images/assets/folios';
 const check = process.argv.includes('--check');
 const todayArg = process.argv.find((arg) => arg.startsWith('--today='));
 const today = todayArg ? new Date(`${todayArg.slice(8)}T12:00:00Z`) : new Date();
-
-function isoWeek(date) {
-  const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
-  const day = d.getUTCDay() || 7;
-  d.setUTCDate(d.getUTCDate() + 4 - day);
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  return { year: d.getUTCFullYear(), week: Math.ceil(((d - yearStart) / 86400000 + 1) / 7) };
-}
-
-function parseWeek(label) {
-  const match = /^(\d{4})-W(\d{2})$/.exec(label || '');
-  return match ? { year: Number(match[1]), week: Number(match[2]) } : null;
-}
-
-/** Monday of an ISO week, so two weeks can be subtracted across a year boundary. */
-function weekStart({ year, week }) {
-  const jan4 = new Date(Date.UTC(year, 0, 4));
-  const monday = new Date(jan4);
-  monday.setUTCDate(jan4.getUTCDate() - ((jan4.getUTCDay() || 7) - 1) + (week - 1) * 7);
-  return monday;
-}
 
 const errors = [];
 const warnings = [];
