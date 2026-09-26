@@ -69,11 +69,12 @@
 }
 
 ^"series_threads"{
+  claim = `The same groups are the thread filter on /design/folios/#release-set (data-folio-thread). Change one, change both.`
   wap = `01, 06, 12, 13, 20, 30 — WAP Boy, Mimes Against WAP, counting to pie. The clown-lore side of Wondering About Pi; wap.mom plays it straight.`
-  operators = `00, 02, 11, 21, 22, 24, 29 — the operator list lettered, laddered, wired, and checked off.`
-  valence = `05, 07, 24 — boon, bane, bone, honk.`
-  domains = `08, 16, 17, 26 — Lore Land, tealstripesvibes, factshift.`
-  practice = `09, 10, 14, 15, 28 — seasons, courses, weekdays, a working calendar, a website's practice.`
+  operators = `00, 02, 11, 18, 21, 22, 24, 27, 29 — the operator list lettered, laddered, wired, glyphed, chipped, and checked off.`
+  valence = `03, 05, 07, 24 — boon, bane, bone, honk; Boof at the Boonberry Pool.`
+  rooms = `08, 16, 17, 26 — Lore Land, tealstripesvibes, factshift.`
+  practice = `04, 09, 10, 14, 15, 23, 28 — layouts, seasons, courses, weekdays, a working calendar, a zine declaration.`
   washes = `16, 19, 25, 30 — later paint nearly covering an earlier page; the soil the archive describes.`
 }
 

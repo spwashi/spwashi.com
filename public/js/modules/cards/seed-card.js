@@ -512,12 +512,35 @@ export class SeedCard {
     clearTimeout(this._saveTimer);
     this._saveTimer = setTimeout(() => this._save(), SAVE_DEBOUNCE);
   }
+
+  /** Write a field as if typed, so charge, output, and autosave follow the usual input path. */
+  fill(key, text) {
+    const valueEl = this.el.querySelector(`[data-field-key="${key}"]`);
+    if (!valueEl) return false;
+    valueEl.textContent = text;
+    valueEl.dispatchEvent(new Event('input', { bubbles: true }));
+    return true;
+  }
+}
+
+/* A link like <a href="#folio-request" data-seed-piece="…"> fills the piece field of the
+   card under its target, closes the popover it sits in, and still navigates. JS off, it only navigates. */
+function onSeedPieceClick(event) {
+  const link = event.target.closest?.('a[data-seed-piece]');
+  if (!link) return;
+  const targetId = (link.getAttribute('href') || '').split('#')[1];
+  const host = targetId && document.getElementById(targetId);
+  const cardEl = host?.matches?.('.seed-card[data-seed-card]') ? host : host?.querySelector?.('.seed-card[data-seed-card]');
+  cardEl?._seedCardInstance?.fill('piece', link.dataset.seedPiece);
+  const popover = link.closest('[popover]');
+  if (popover?.matches?.(':popover-open')) popover.hidePopover();
 }
 
 const activeInstances = new Set();
 
 /** Initialize all .seed-card elements on the page */
 export function initSeedCards() {
+  document.addEventListener('click', onSeedPieceClick);
   document.querySelectorAll('.seed-card[data-seed-card]').forEach(el => {
     if (el._seedCardInstance) return;
     const card = new SeedCard(el);
@@ -527,6 +550,7 @@ export function initSeedCards() {
 }
 
 export function unmountSeedCards() {
+  document.removeEventListener('click', onSeedPieceClick);
   document.querySelectorAll('.seed-card[data-seed-card]').forEach(el => {
     if (el._seedCardInstance) {
       try { el._seedCardInstance.destroy?.(); } catch (_) {}
