@@ -151,3 +151,138 @@
   color: var(--active-op-color, var(--teal, #008080));
   font-weight: 700;
 }
+
+/* Thread notes: only the checked thread's line shows, so choosing a thread says what ties it. */
+.folio-thread-note {
+  display: none;
+  margin: 0.2rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+}
+
+.folio-release:has(#folio-thread-all:checked) [data-folio-thread-note="all"],
+.folio-release:has(#folio-thread-wap:checked) [data-folio-thread-note="wap"],
+.folio-release:has(#folio-thread-operators:checked) [data-folio-thread-note="operators"],
+.folio-release:has(#folio-thread-valence:checked) [data-folio-thread-note="valence"],
+.folio-release:has(#folio-thread-rooms:checked) [data-folio-thread-note="rooms"],
+.folio-release:has(#folio-thread-practice:checked) [data-folio-thread-note="practice"],
+.folio-release:has(#folio-thread-washes:checked) [data-folio-thread-note="washes"] {
+  display: block;
+}
+
+/* The plate is square, so a turned page always fits the same room. */
+.folio-view__plate {
+  display: grid;
+  place-items: center;
+  inline-size: min(100%, 70vh);
+  aspect-ratio: 1;
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.folio-view__plate img {
+  inline-size: auto;
+  block-size: auto;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+  margin: 0;
+  transition: rotate var(--duration-base, 220ms) var(--ease-smooth, ease);
+}
+
+.folio-view:has([value="90"]:checked) .folio-view__plate img { rotate: 90deg; }
+.folio-view:has([value="180"]:checked) .folio-view__plate img { rotate: 180deg; }
+.folio-view:has([value="270"]:checked) .folio-view__plate img { rotate: 270deg; }
+
+.folio-view__desc {
+  margin: 0.4rem 0 0;
+  line-height: 1.45;
+}
+
+.folio-view__turn {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.folio-view__turn legend {
+  float: inline-start;
+  margin-inline-end: 0.3rem;
+  padding: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.folio-view__turn label,
+.folio-view__thread,
+.folio-view__flip button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-block-size: 44px;
+  padding-inline: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, transparent);
+  color: var(--ink);
+  font-size: 0.84rem;
+  cursor: pointer;
+}
+
+.folio-view__turn input {
+  inline-size: 1rem;
+  block-size: 1rem;
+  margin: 0;
+  accent-color: var(--active-op-color, var(--teal, #008080));
+}
+
+.folio-view__turn label:has(:checked),
+.folio-release:has(#folio-thread-wap:checked) .folio-view__thread[for="folio-thread-wap"],
+.folio-release:has(#folio-thread-operators:checked) .folio-view__thread[for="folio-thread-operators"],
+.folio-release:has(#folio-thread-valence:checked) .folio-view__thread[for="folio-thread-valence"],
+.folio-release:has(#folio-thread-rooms:checked) .folio-view__thread[for="folio-thread-rooms"],
+.folio-release:has(#folio-thread-practice:checked) .folio-view__thread[for="folio-thread-practice"],
+.folio-release:has(#folio-thread-washes:checked) .folio-view__thread[for="folio-thread-washes"] {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 55%, var(--line));
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, var(--surface-strong, #fff));
+}
+
+.folio-view__threads {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0;
+  font-size: 0.84rem;
+}
+
+.folio-view__flip {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin: 0.7rem 0 0;
+}
+
+.folio-view__flip button {
+  font-variant-numeric: tabular-nums;
+}
+
+.folio-view__flip button:focus-visible,
+.folio-view__thread:hover,
+.folio-view__flip button:hover {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 60%, var(--line));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folio-view__plate img {
+    transition: none;
+  }
+}
+
+.folio-view__turn label:has(:focus-visible) {
+  outline: 2px solid var(--active-op-color, var(--teal, #008080));
+  outline-offset: 2px;
+}
