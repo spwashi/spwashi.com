@@ -125,12 +125,6 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
       linear-gradient(135deg, color-mix(in oklab, var(--bg-field, #111) 78%, var(--home-accent-blue) 7%), var(--bg, #111));
 }
 
-:where(body[data-spw-surface="home"] main > .spw-frame) {
-  max-inline-size: var(--home-section-max);
-  inline-size: min(100%, var(--home-section-max));
-  margin-inline: auto;
-}
-
 
 /* ==========================================================================
    3. Kernel hero
@@ -264,10 +258,6 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
 :where([data-spw-feature="home-kernel-entry"] .frame-topline > .spw-component-meta) {
   margin-left: auto;
-}
-
-:where([data-spw-feature="home-kernel-entry"] .frame-topline > .home-copy-inspector) {
-  flex-basis: 100%;
 }
 
 @media (max-width: 32rem) {
@@ -1023,23 +1013,9 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 
 @media (min-width: 48rem) {
   :where([data-spw-feature="home-kernel-entry"] .frame-topline) {
-    grid-template-areas:
-        "brace identity meta"
-        "compose compose compose"
-        "inspect inspect inspect";
     justify-content: flex-start;
     gap: 0.32rem 0;
     padding-block-end: 0.38rem;
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .home-copy-inspector) {
-    grid-area: inspect;
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .home-copy-inspector[open]) {
-    border-color: color-mix(in srgb, var(--home-accent-primary) 10%, transparent);
-    background: color-mix(in srgb, var(--home-surface-bg-strong) 70%, transparent);
-    padding: 0.24rem 0.4rem;
   }
 }
 
@@ -1502,10 +1478,6 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   margin-block-start: 0;
   padding-block-start: clamp(0.9rem, 1.8vw, 1.3rem);
   border-block-start: 1px solid color-mix(in srgb, var(--home-accent-line) 72%, transparent);
-}
-
-:where(body[data-spw-surface="home"] main > .spw-frame) {
-  scroll-margin-top: calc(var(--header-height, 4rem) + 0.85rem);
 }
 
 :where(body[data-spw-surface="home"] .spw-frame > .frame-body) {
@@ -1982,11 +1954,6 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
   :where(body[data-spw-surface="home"]) {
     --spw-main-width: min(100%, 98rem);
     --spw-main-padding-inline: clamp(0.85rem, 2vw, 1.2rem);
-  }
-
-  :where(body[data-spw-surface="home"] main > .spw-frame) {
-    max-inline-size: min(100%, 96rem);
-    inline-size: min(100%, 96rem);
   }
 }
 
@@ -2770,23 +2737,9 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
 
 @media (max-width: 48rem) {
   /* Every top-level section on the home route packs to the same inline pad
-     below the fold. This is a hand-typed roster, so a section is in it by
-     being remembered — #choose-your-entrance was not, kept the 0.68rem clamp,
-     and its text started 3.5px left of every sibling above and below it. The
-     others all carry data-spw-region-role; the entrance sorter is addressed by
-     feature because it has no role of its own. */
-  :where([data-spw-feature="home-kernel-entry"][data-spw-region-role="entry-spine"]),
-  :where([data-spw-feature="home-entrance-sorter"]),
-  :where(#operator-field),
-  :where(#climate-tuning),
-  :where(#entry-loops),
-  :where(#promo-wonder-cycle),
-  :where(#returner-drift),
-  :where(#integration-atlas),
-  :where(#town-library-gateway),
-  :where(#local-record-thesis),
-  :where(#wonder-rewards),
-  :where([data-spw-region-role="reading-layers"]) {
+     below the fold. The route's structure names them: each is a frame inside
+     one of main's clusters. A roster of ids once did this and missed four. */
+  :where(main.home-atlas-flow > [data-spw-cluster] > .spw-frame) {
     padding: 0.9rem;
     border-radius: var(--home-radius-sm);
   }
@@ -2799,22 +2752,6 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
   :where(body[data-spw-surface="home"] .frame-topline),
   :where(body[data-spw-surface="home"] .frame-heading) {
     align-items: flex-start;
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .frame-topline) {
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-areas:
-        "brace identity"
-        "meta meta"
-        "compose compose"
-        "inspect inspect";
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .frame-topline > .spw-compose-field),
-  :where([data-spw-feature="home-kernel-entry"] .frame-topline > .spw-component-meta),
-  :where([data-spw-feature="home-kernel-entry"] .frame-topline > .home-copy-inspector) {
-    justify-self: stretch;
-    justify-content: flex-start;
   }
 
   :where([data-spw-feature="home-kernel-entry"] .spw-component-meta) {

@@ -122,12 +122,6 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
       linear-gradient(135deg, color-mix(in oklab, var(--bg-field, #111) 78%, var(--home-accent-blue) 7%), var(--bg, #111));
 }
 
-:where(body[data-spw-surface="home"] main > .spw-frame) {
-  max-inline-size: var(--home-section-max);
-  inline-size: min(100%, var(--home-section-max));
-  margin-inline: auto;
-}
-
 
 /* ==========================================================================
    3. Kernel hero
@@ -261,10 +255,6 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
 :where([data-spw-feature="home-kernel-entry"] .frame-topline > .spw-component-meta) {
   margin-left: auto;
-}
-
-:where([data-spw-feature="home-kernel-entry"] .frame-topline > .home-copy-inspector) {
-  flex-basis: 100%;
 }
 
 @media (max-width: 32rem) {
@@ -1020,23 +1010,9 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 
 @media (min-width: 48rem) {
   :where([data-spw-feature="home-kernel-entry"] .frame-topline) {
-    grid-template-areas:
-        "brace identity meta"
-        "compose compose compose"
-        "inspect inspect inspect";
     justify-content: flex-start;
     gap: 0.32rem 0;
     padding-block-end: 0.38rem;
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .home-copy-inspector) {
-    grid-area: inspect;
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .home-copy-inspector[open]) {
-    border-color: color-mix(in srgb, var(--home-accent-primary) 10%, transparent);
-    background: color-mix(in srgb, var(--home-surface-bg-strong) 70%, transparent);
-    padding: 0.24rem 0.4rem;
   }
 }
 
@@ -1499,10 +1475,6 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   margin-block-start: 0;
   padding-block-start: clamp(0.9rem, 1.8vw, 1.3rem);
   border-block-start: 1px solid color-mix(in srgb, var(--home-accent-line) 72%, transparent);
-}
-
-:where(body[data-spw-surface="home"] main > .spw-frame) {
-  scroll-margin-top: calc(var(--header-height, 4rem) + 0.85rem);
 }
 
 :where(body[data-spw-surface="home"] .spw-frame > .frame-body) {
@@ -1979,11 +1951,6 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
   :where(body[data-spw-surface="home"]) {
     --spw-main-width: min(100%, 98rem);
     --spw-main-padding-inline: clamp(0.85rem, 2vw, 1.2rem);
-  }
-
-  :where(body[data-spw-surface="home"] main > .spw-frame) {
-    max-inline-size: min(100%, 96rem);
-    inline-size: min(100%, 96rem);
   }
 }
 
