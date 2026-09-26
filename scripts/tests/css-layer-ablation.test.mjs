@@ -38,6 +38,12 @@ describe('css layer blocks', () => {
     assert.ok(!out.includes('.a {'));
   });
 
+  it('the ?spw-layer-order=declared rail states the manifest order', async () => {
+    const { EXPECTED_LAYER_ORDER } = await import('../typed/css-manifest.mjs');
+    const prepaint = await readFile(new URL('../../public/js/runtime/prepaint-state.js', import.meta.url), 'utf8');
+    assert.ok(prepaint.includes(`'@layer ${EXPECTED_LAYER_ORDER};'`));
+  });
+
   it('round-trips the committed core bundle unchanged', async () => {
     const css = await readFile(new URL('../../public/css/bundles/core.css', import.meta.url), 'utf8');
     assert.equal(ablateLayers(css), css);
@@ -46,5 +52,18 @@ describe('css layer blocks', () => {
     for (const layer of layers) {
       assert.ok(ablateLayers(css, { drop: [layer] }).length < css.length, `dropping ${layer} removes text`);
     }
+  });
+});
+
+describe('style rule walk', () => {
+  it('visits rules with their layer, through media, with property names', async () => {
+    const { walkStyleRules } = await import('../lib/css-layer-blocks.mjs');
+    const seen = [];
+    walkStyleRules('@layer handles { .chip { color: red; --x: "}"; } @media (min-width: 1px) { .chip:hover { background: blue } } } .loose { margin: 0 }', (rule) => seen.push(rule));
+    assert.deepEqual(seen.map((r) => [r.layer, r.selector, r.props.join(',')]), [
+      ['handles', '.chip', 'color,--x'],
+      ['handles', '.chip:hover', 'background'],
+      [null, '.loose', 'margin'],
+    ]);
   });
 });

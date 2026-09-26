@@ -22,6 +22,13 @@ That review is Phase 1 here. No new layer name exists before it lands.
 - Promote the scratch `layer-ablation` and `selector-stats` probes named in `.spw/audits/runtime-recalc-cost-2026-09.spw` to `scripts/`, beside `build-performance.mjs`, so Phase 1 and 2 have a fresh-served before/after.
 - Finish the `css-state-legibility` follow-up: `routes/surfaces/play.css` §6/§9 re-describe hover/focus/pressed route-locally and are dead under the declared order. The more route paint moves to `--*-intent`, the less Phase 1 can break.
 
+**Phase 1 review kit (landed 2026-09-25).** Nothing to rebuild for an A/B:
+1. `npm run audit:layer-flip` lists, per route bundle, the route rules whose subject shares a class with a handles/effects/ornament rule that sets the same property — the rules that win today and would lose. 365 across 19 bundles at landing; home 71, about 43, rpg-wednesday 42, website 37, play 25. `--bundle=<slug> --limit=N` for detail. A shared class is a reason to look, not proof.
+2. Open a listed page twice: as is, and with `?spw-layer-order=declared`. `prepaint-state.js` then puts the declared order first in the document and the page cascades as `style-core.css` says. A test pins the string to `EXPECTED_LAYER_ORDER`.
+3. On /play/, the intents carry paint but not geometry: sigil `min-height`, `padding`, and flex seating are on the list and will move.
+4. `npm run perf:layer-ablation -- <route>` before and after, for the pass.
+Record each page as same / better / worse here; worse rows become intent or ownership patches before the bundler emits the statement.
+
 **Phase 1 — one cascade, browser-reviewed.** Emit the order statement from the bundler. Serve the routes the operator-controls audit names (and every route with a route bundle) fresh through CDP, phone and desktop, and approve in the browser before landing. Rollback is the one-line strip. This phase changes zero layer names and is a complete patch on its own.
 
 **Phase 2 — the pours.** Only after Phase 1. New names mean new directories (`css-contracts.mts:456` binds `public/css/<dir>/` to `layer(<dir>)`), `EXPECTED_LAYER_ORDER` in `css-contracts.mts:33` and `css-manifest.mjs:9`, the fifteen restating deferred sheets, the four load-symphony experiment sheets, and the prose sites listed in the cache — all in one patch, with the ablation re-run on the page each move leaves behind. Land one pour at a time: `reader` first (governors lose their `!important`), then `substrate`, then `time`.
