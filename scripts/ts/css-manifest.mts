@@ -35,6 +35,9 @@ export const BEHAVIOR_SCOPES: Readonly<Record<string, readonly string[]>> = Obje
   'feature-discovery': [
     '/public/css/systems/feature-discovery.css',
   ],
+  'folio-shelf': [
+    '/public/css/components/folio-shelf.css',
+  ],
   'media-publishing': [
     '/public/css/components/promo-wonder-cycle.css',
   ],

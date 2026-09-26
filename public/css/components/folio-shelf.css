@@ -1,0 +1,146 @@
+/* ==========================================================================
+   folio-shelf.css
+   --------------------------------------------------------------------------
+   Purpose
+   - A shelf of scanned folios: tiles that open a native popover, a thread
+     filter, and a count of what is showing. Loads where body
+     [data-spw-features] names folio-shelf (/design/folios/#release-set).
+
+   Reading
+   - The thread radios reuse the folio probe pill (routes/surfaces/design.css),
+     so the page teaches one control once.
+   - :has() filters with JS off. The shelf's counter skips hidden tiles, so the
+     readout after the list says how many are left.
+   - Tiles hold every scan in a square so portrait and landscape pieces sit
+     together without cropping. Popovers are native; Esc and the Close button
+     both dismiss.
+   ========================================================================== */
+
+.folio-shelf {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(10rem, 44%), 1fr));
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: folio-shown;
+}
+
+.folio-tile {
+  min-inline-size: 0;
+  counter-increment: folio-shown;
+}
+
+.folio-tile__open {
+  display: grid;
+  gap: 0.4rem;
+  inline-size: 100%;
+  padding: 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 0.4rem;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, transparent);
+  color: var(--ink);
+  text-align: start;
+  cursor: zoom-in;
+}
+
+.folio-tile__open picture {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  background: color-mix(in srgb, var(--ink) 5%, var(--surface-strong, #fff));
+}
+
+.folio-tile__open img {
+  inline-size: auto;
+  block-size: auto;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+
+.folio-tile__open:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 60%, var(--line));
+}
+
+.folio-tile:target .folio-tile__open {
+  outline: 2px solid var(--active-op-color, var(--teal, #008080));
+  outline-offset: 3px;
+}
+
+.folio-tile__label {
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.folio-tile__no {
+  margin-inline-end: 0.2rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.folio-release:has(.folio-threads [value="wap"]:checked) .folio-tile:not([data-folio-thread~="wap"]),
+.folio-release:has(.folio-threads [value="operators"]:checked) .folio-tile:not([data-folio-thread~="operators"]),
+.folio-release:has(.folio-threads [value="valence"]:checked) .folio-tile:not([data-folio-thread~="valence"]),
+.folio-release:has(.folio-threads [value="rooms"]:checked) .folio-tile:not([data-folio-thread~="rooms"]),
+.folio-release:has(.folio-threads [value="practice"]:checked) .folio-tile:not([data-folio-thread~="practice"]),
+.folio-release:has(.folio-threads [value="washes"]:checked) .folio-tile:not([data-folio-thread~="washes"]) {
+  display: none;
+}
+
+.folio-shelf__count {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+}
+
+.folio-shelf__count::after {
+  content: counter(folio-shown) " of 31 showing";
+}
+
+.folio-view {
+  inline-size: min(92vw, 56rem);
+  max-block-size: 92vh;
+  padding: 0.9rem;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--surface-strong, var(--bg, #fff));
+  color: var(--ink);
+}
+
+.folio-view::backdrop {
+  background: color-mix(in srgb, #000 55%, transparent);
+}
+
+.folio-view img {
+  inline-size: auto;
+  max-block-size: 72vh;
+  margin-inline: auto;
+}
+
+.folio-view__title {
+  margin-block: 0.6rem 0.2rem;
+  font-weight: 700;
+}
+
+.folio-view__note {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+.folio-view__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-block: 0.6rem 0;
+}
+
+.folio-view__close {
+  min-block-size: 44px;
+  padding-inline: 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}

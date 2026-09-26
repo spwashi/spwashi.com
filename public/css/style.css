@@ -6,6 +6,7 @@
 @import url('/public/css/components/pretext.css') layer(components);
 @import url('/public/css/components/cauldron.css') layer(components);
 @import url('/public/css/components/promo-wonder-cycle.css') layer(components);
+@import url('/public/css/components/folio-shelf.css') layer(components);
 @import url('/public/css/components/cards/seed-card.css') layer(components);
 @import url('/public/css/components/spw-hero-kinetic-stage.css') layer(components);
 
