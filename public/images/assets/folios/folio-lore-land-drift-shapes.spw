@@ -1,0 +1,41 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-lore-land-drift-shapes"
+  title: "Lore Land drift shapes"
+  description: "Laminated folio, scanned for the September 26, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-26-08"
+  master: "public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-08-scan.png"
+  master_tracked: false
+  scan: { width: 3460, height: 2699, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.0 in at 300 dpi; the laminate edge, not a measured paper size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-26.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Spirals, wedges, and a long bone-like form drift across a white clearing ringed with green and plum paint, LORE LAND lettered along the edge"
+  tiers: {
+    thumb: { width: 256, height: 200, avif_kib: 6, webp_kib: 8 }
+    display: { width: 512, height: 400, avif_kib: 33, webp_kib: 32 }
+    hero: { width: 1024, height: 799, avif_kib: 97, webp_kib: 116 }
+  }
+}
+
+^"optimization"{
+  tool: ".agents/skills/image-optimize/scripts/generate-variants.sh (illustrations tiers), from a -strip 2048px intermediate"
+  png: "dropped — the hero PNG ran 1.2 MiB, over the skill's 1 MB guardrail; AVIF and WebP only, as lore-seed-pod-nebula ships"
+  hero_budget: "120 KiB; quality stepped down from 75 only where a hero ran over, floor 45"
+  metadata: "none embedded (EXIF, XMP, GPS, scanner name checked)"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-26", "lore-land", "shapes", "green", "plum"]
+  part_of: "folio-release-2026-09-26"
+}

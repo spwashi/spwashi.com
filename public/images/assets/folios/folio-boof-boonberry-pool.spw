@@ -1,0 +1,42 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-boof-boonberry-pool"
+  title: "Boof and the Boonberry Pool"
+  description: "Laminated folio, scanned for the September 26, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-26-03"
+  master: "public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-03-scan.png"
+  master_tracked: false
+  scan: { width: 3440, height: 2681, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 8.9 in at 300 dpi; the laminate edge, not a measured paper size"
+  orientation_note: "some lettering reads upside down as scanned"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-26.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "A lilac collage titled Boof and the Boonberry Pool, with a blue pool, a flowing hair-like plume, and a curling word card"
+  tiers: {
+    thumb: { width: 256, height: 200, avif_kib: 5, webp_kib: 7 }
+    display: { width: 512, height: 399, avif_kib: 32, webp_kib: 31 }
+    hero: { width: 1024, height: 798, avif_kib: 95, webp_kib: 118 }
+  }
+}
+
+^"optimization"{
+  tool: ".agents/skills/image-optimize/scripts/generate-variants.sh (illustrations tiers), from a -strip 2048px intermediate"
+  png: "dropped — the hero PNG ran 1.2 MiB, over the skill's 1 MB guardrail; AVIF and WebP only, as lore-seed-pod-nebula ships"
+  hero_budget: "120 KiB; quality stepped down from 75 only where a hero ran over, floor 45"
+  metadata: "none embedded (EXIF, XMP, GPS, scanner name checked)"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-26", "boof", "boon", "lilac", "collage", "title-card"]
+  part_of: "folio-release-2026-09-26"
+}

@@ -43,6 +43,7 @@ Candidate first asks: $35 / $75 / $150. A 3-for-$95 bundle would apply only to s
 Prints and collages need independent cost/format decisions; physical uniqueness and narrative tier are separate axes.
 Do not adopt unverified claims about inventory count, TikTok demand, market comparables or cheap shipping. Determine packed weight, dimensions and destinations before setting shipping.
 Candidate release size: small named selection, not all inventory. Confirm counts after the first scan census.
+First scan census, 2026-09-25: thirty-one folios, the September 26 release set. Masters untracked under `public/images/renders/_raw/folio-scans-2026-09-26/`; AVIF/WebP derivatives and sidecars in `public/images/assets/folios/`; record `.spw/surfaces/folio-archive/release-2026-09-26.spw`, which also primes an October calendar (thirty-one days, thirty-one folios). Form, price, and availability stay unset until the creator sets them.
 
 Material intake is recorded in [minting.spw](minting.spw): standard printer paper, often 3M lamination sheets. Public copy omits supplier brand. Measure exact dimensions per piece rather than assume Letter versus A4; record sidedness and actual laminate during intake.
 Custom work: creator welcomes custom collages and makes new art from developing lore.land RPG stories. A fresh artwork becomes a new source, rather than being mislabeled as a derivative of an older scan. Quote custom scope individually; no custom price or turnaround is established.

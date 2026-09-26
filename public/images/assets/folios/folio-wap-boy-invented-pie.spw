@@ -1,0 +1,41 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-wap-boy-invented-pie"
+  title: "WAP Boy invented pie"
+  description: "Laminated folio, scanned for the September 26, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-26-01"
+  master: "public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-01-scan.png"
+  master_tracked: false
+  scan: { width: 2676, height: 3454, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.9 x 11.5 in at 300 dpi; the laminate edge, not a measured paper size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-26.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "A torn pencil page on a teal field where WAP Boy claims he invented pie, a neighbor asks why not, and a pie labeled WABO sits at the bottom"
+  tiers: {
+    thumb: { width: 198, height: 256, avif_kib: 3, webp_kib: 4 }
+    display: { width: 397, height: 512, avif_kib: 23, webp_kib: 20 }
+    hero: { width: 794, height: 1024, avif_kib: 109, webp_kib: 82 }
+  }
+}
+
+^"optimization"{
+  tool: ".agents/skills/image-optimize/scripts/generate-variants.sh (illustrations tiers), from a -strip 2048px intermediate"
+  png: "dropped — the hero PNG ran 1.2 MiB, over the skill's 1 MB guardrail; AVIF and WebP only, as lore-seed-pod-nebula ships"
+  hero_budget: "120 KiB; quality stepped down from 75 only where a hero ran over, floor 45"
+  metadata: "none embedded (EXIF, XMP, GPS, scanner name checked)"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-26", "wap", "wap-boy", "pie", "teal", "dialogue"]
+  part_of: "folio-release-2026-09-26"
+}
