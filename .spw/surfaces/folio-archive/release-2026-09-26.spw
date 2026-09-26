@@ -78,6 +78,15 @@
   washes = `16, 19, 25, 30 — later paint nearly covering an earlier page; the soil the archive describes.`
 }
 
+^"highres"{
+  rule = `Five folios open in high-res each ISO week: 2400px WebP, no AVIF, at most 1 MiB each, committed beside the other derivatives as folio-<slug>-full.webp.`
+  record = `public/data/folio-highres.json — one entry per week; the folio page links only the latest five, and their shelf tiles wear a mark derived from that link.`
+  check = `scripts/audit-folio-highres.mjs in check:local: over five, over the cap, a missing file, or page links unlike the latest week fail; a week behind the calendar, or a week that repeats the one before, warns.`
+  growth = `Bounded by the archive, not the calendar: rotating through these thirty-one adds at most thirty-one files, about 15 MB. A repeat costs nothing.`
+  perk = `A subscriber perk later. The repository is public, so committed files stay free to see; a perk needs its files served from outside git (a worker with storage) and gated there.`
+  first = `2026-W39, opened 2026-09-26: 00, 09, 14, 20, 26 — operators, the Octvember season, the calendar page, counting to pie, the Lore Land zine.`
+}
+
 ^"calendar_seed"{
   operation = "prime"
   fixity = "experimental"

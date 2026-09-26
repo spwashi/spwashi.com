@@ -68,6 +68,7 @@
     "audit:module-selectors": "node --import ./scripts/lib/register-public-imports.mjs scripts/module-selector-depth-audit.mjs",
     "audit:stills": "node --import ./scripts/lib/register-public-imports.mjs scripts/audit-still-coverage.mjs",
     "audit:operator-css": "node --import ./scripts/lib/register-public-imports.mjs scripts/audit-operator-css.mjs",
+    "audit:folio-highres": "node scripts/audit-folio-highres.mjs",
     "audit:operator-controls": "node --import ./scripts/lib/register-public-imports.mjs scripts/audit-operator-controls.mjs",
     "audit:js-tree": "node scripts/js-tree-value.mjs",
     "audit:js-tree:json": "node scripts/js-tree-value.mjs --json",

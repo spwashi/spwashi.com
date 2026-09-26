@@ -20,11 +20,13 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-what-kind-of-guy-counts-to-pie-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   alt_text: "Character cards for baker, mathematician, and WAP boy under the question what kind of guy needs to count to pie, above notes on how deep a WAP should be"
   tiers: {
     thumb: { width: 256, height: 200, avif_kib: 5, webp_kib: 7 }
     display: { width: 512, height: 400, avif_kib: 33, webp_kib: 32 }
     hero: { width: 1024, height: 800, avif_kib: 102, webp_kib: 116 }
+    full: { width: 2400, height: 1875, webp_kib: 607, opened: "2026-W39" }
   }
 }
 

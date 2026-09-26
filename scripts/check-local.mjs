@@ -43,6 +43,9 @@ const VALIDATORS = [
     label: 'audit-operator-controls',
     args: ['--import', './scripts/lib/register-public-imports.mjs', 'scripts/audit-operator-controls.mjs', '--check'],
   },
+  // Folio high-res: five a week under a size cap, page links equal to the
+  // latest week's set. A stale week prints a warning and does not fail.
+  { label: 'audit-folio-highres', args: ['scripts/audit-folio-highres.mjs', '--check'] },
   { label: 'check-agents', script: 'scripts/check-agent-contracts.mjs' },
   { label: 'check-workers', script: 'scripts/check-workers.mjs' },
   // Skipped when the tree matches the last green run (see run-module-tests.mjs);

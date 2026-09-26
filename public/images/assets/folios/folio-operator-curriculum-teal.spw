@@ -20,11 +20,13 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-operator-curriculum-teal-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   alt_text: "Thirteen operator words hand-lettered in blue down a teal-washed page, potential through integration, each followed by a line about how it is practiced"
   tiers: {
     thumb: { width: 200, height: 256, avif_kib: 4, webp_kib: 5 }
     display: { width: 400, height: 512, avif_kib: 27, webp_kib: 25 }
     hero: { width: 800, height: 1024, avif_kib: 119, webp_kib: 95 }
+    full: { width: 1874, height: 2400, webp_kib: 473, opened: "2026-W39" }
   }
 }
 

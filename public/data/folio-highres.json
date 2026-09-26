@@ -1,0 +1,20 @@
+{
+  "about": "High-res folio scans open five at a time, one set per ISO week. The folio page links only the latest week's five; scripts/audit-folio-highres.mjs checks the cap and warns when the set goes stale.",
+  "record": ".spw/surfaces/folio-archive/release-2026-09-26.spw",
+  "perWeek": 5,
+  "capBytes": 1048576,
+  "longEdge": 2400,
+  "weeks": [
+    {
+      "week": "2026-W39",
+      "opened": "2026-09-26",
+      "folios": [
+        { "id": "folio-2026-09-26-00", "slug": "operator-curriculum-teal" },
+        { "id": "folio-2026-09-26-09", "slug": "octvember-novel-under-test" },
+        { "id": "folio-2026-09-26-14", "slug": "red-eyes-calendar-test" },
+        { "id": "folio-2026-09-26-20", "slug": "what-kind-of-guy-counts-to-pie" },
+        { "id": "folio-2026-09-26-26", "slug": "lore-land-webcomic-zine" }
+      ]
+    }
+  ]
+}

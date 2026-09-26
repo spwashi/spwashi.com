@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-26T03:00:42.129Z",
+  "generatedAt": "2026-09-26T03:17:39.699Z",
   "sourceRoot": "/public/images/",
-  "count": 1039,
+  "count": 1044,
   "concepts": [
     "about",
     "algorithm",
@@ -1126,6 +1126,20 @@
       "swapHint": "Use /public/images/assets/folios/folio-lore-land-webcomic-zine-display.webp when a library / worldbuilding visual needs a stable tracked asset."
     },
     {
+      "id": "folio-lore-land-webcomic-zine-full",
+      "title": "Folio Lore Land Webcomic Zine Full",
+      "path": "/public/images/assets/folios/folio-lore-land-webcomic-zine-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 408414,
+      "role": "image",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-webcomic-zine-full.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
       "id": "folio-lore-land-webcomic-zine",
       "title": "Folio Lore Land Webcomic Zine",
       "path": "/public/images/assets/folios/folio-lore-land-webcomic-zine-hero.avif",
@@ -1354,6 +1368,17 @@
       "swapHint": "Use /public/images/assets/folios/folio-octvember-novel-under-test-display.webp when a display visual needs a stable tracked asset."
     },
     {
+      "id": "folio-octvember-novel-under-test-full",
+      "title": "Folio Octvember Novel Under Test Full",
+      "path": "/public/images/assets/folios/folio-octvember-novel-under-test-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 464764,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-octvember-novel-under-test-full.webp when a image visual needs a stable tracked asset."
+    },
+    {
       "id": "folio-octvember-novel-under-test",
       "title": "Folio Octvember Novel Under Test",
       "path": "/public/images/assets/folios/folio-octvember-novel-under-test-hero.avif",
@@ -1418,6 +1443,17 @@
       "role": "display",
       "concepts": [],
       "swapHint": "Use /public/images/assets/folios/folio-operator-curriculum-teal-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-curriculum-teal-full",
+      "title": "Folio Operator Curriculum Teal Full",
+      "path": "/public/images/assets/folios/folio-operator-curriculum-teal-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 484864,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-curriculum-teal-full.webp when a image visual needs a stable tracked asset."
     },
     {
       "id": "folio-operator-curriculum-teal",
@@ -1816,6 +1852,17 @@
       "swapHint": "Use /public/images/assets/folios/folio-red-eyes-calendar-test-display.webp when a display visual needs a stable tracked asset."
     },
     {
+      "id": "folio-red-eyes-calendar-test-full",
+      "title": "Folio Red Eyes Calendar Test Full",
+      "path": "/public/images/assets/folios/folio-red-eyes-calendar-test-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 434060,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-red-eyes-calendar-test-full.webp when a image visual needs a stable tracked asset."
+    },
+    {
       "id": "folio-red-eyes-calendar-test",
       "title": "Folio Red Eyes Calendar Test",
       "path": "/public/images/assets/folios/folio-red-eyes-calendar-test-hero.avif",
@@ -2096,6 +2143,17 @@
       "role": "display",
       "concepts": [],
       "swapHint": "Use /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-what-kind-of-guy-counts-to-pie-full",
+      "title": "Folio What Kind Of Guy Counts To Pie Full",
+      "path": "/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 622226,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-full.webp when a image visual needs a stable tracked asset."
     },
     {
       "id": "folio-what-kind-of-guy-counts-to-pie",
