@@ -85,6 +85,7 @@ Landed the shared mode-switch state contract and repaired dead route intent:
 Follow-up:
 
 - 2026-09-25: `.spw/audits/operator-controls-2026-09.spw#findings.layer_order` shows the built bundle strips the `@layer` statement, so shipped order is `routes > handles` while source says `handles > routes`. The intent variables landed here are what make either order render. `css-cascade-stratification` Phase 1 decides the order in a browser review; the `play.css` migration below is its Phase 0 pre-patch.
+- 2026-09-25: play.css now sets `--operator-chip-*` and `--mode-switch-*` intents alongside its rules (css-cascade-stratification Phase 0). Its direct rules are live under the shipped order, not dead; they stay until the order is decided in a browser.
 - `routes/surfaces/play.css` sections 6/9 re-describe hover/focus/pressed for sigils, chips, and generic buttons route-locally; most of it is dead under the layer order. It needs its own migration pass (bigger surface, includes non-mode-switch controls).
 - `.mode-switch .frame-sigil[data-set-mode="surface"|"syntax"|"artifacts"|"website"]` self-declare `--active-op-color` in the handles layer, which blocks ancestor palette override for those four modes; consider intent indirection if a route ever needs to re-tint them.
 
