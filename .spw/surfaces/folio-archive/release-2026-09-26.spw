@@ -1,0 +1,91 @@
+# Release 2026-09-26 — the first scanned folio set: thirty-one laminated folios, scanned the evening before the B-cycle close.
+# Operation: cache over a contract. Scans and derivatives are real; form, price, and availability are the creator's to set.
+
+#>folio_release_2026_09_26
+#:record #!release #!folios
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@archive: ~"../folio-archive.spw"
+@minting: ~"../../../.agents/plans/folio-worktable/minting.spw"
+@route: ~"../../../design/folios/index.html"
+@image_optimize: ~"../../../.agents/skills/image-optimize/SKILL.md"
+@image_naming: ~"../../../.agents/skills/image-naming-magic/SKILL.md"
+@asset_registry: ~"../../assets.spw"
+
+^"release"{
+  id = `folio-release-2026-09-26`
+  date = `2026-09-26, the B-cycle public close`
+  sources = `thirty-one, folio-2026-09-26-00 through -30, listed below in scan order`
+  form = `unset — original, print, or collage is decided per piece`
+  price = `unset — the working ranges on /design/folios/#folio-prices apply once a piece is offered`
+  availability = `unset`
+  rule = `A source id names one physical folio. It does not change when a piece is sold, reprinted, or collaged.`
+}
+
+^"intake"{
+  scanned = `2026-09-25, SimpleScanStation, 300 dpi sRGB PNG; station files _0 through _30 map to source ids 00 through 30`
+  masters = `public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-NN-scan.png — gitignored, excluded from the dev server and build; 419 MB`
+  derivatives = `public/images/assets/folios/folio-<slug>-{thumb,display,hero}.{avif,webp} with one .spw sidecar per folio; 9 MB`
+  extent = `Portrait scans run about 9.0 x 11.5 in, landscape the reverse: the laminate pouch edge. Paper size is still to be measured per piece; do not assume Letter or A4.`
+  orientation = `Kept as scanned. Lettering runs sideways on 13, 14, 19, 24 and reads upside down on 03, 16, 17, 28. Rotating a piece is the creator's call.`
+  unknown = `painting dates, later passes, sidedness, and laminate per piece — unknown stays unknown`
+}
+
+^"sources"{
+  00 = `operator-curriculum-teal — Operator curriculum, teal`
+  01 = `wap-boy-invented-pie — WAP Boy invented pie`
+  02 = `honk-mixing-board — Honk mixing board`
+  03 = `boof-boonberry-pool — Boof and the Boonberry Pool`
+  04 = `pink-hash-stack — Pink hash stack`
+  05 = `boon-bane-bone-mnemonic — Boon, bane, bone mnemonic`
+  06 = `pi-day-mimes-against-wap — Pi Day, Mimes Against WAP`
+  07 = `bone-box-launch — Bone box launch`
+  08 = `lore-land-drift-shapes — Lore Land drift shapes`
+  09 = `octvember-novel-under-test — Octvember, Novel Under Test`
+  10 = `business-courses-weekdays — Business, courses, weekdays`
+  11 = `operator-rhythm-training-video — Operator rhythm, training video`
+  12 = `poem-count-the-boring-ones — Poem, count the boring ones`
+  13 = `mimes-against-wap-lightning — Mimes Against WAP, lightning`
+  14 = `red-eyes-calendar-test — Red eyes, calendar test`
+  15 = `copy-paste-component-library — Copy-paste component library`
+  16 = `teal-stripes-vibes-wash — Teal Stripes Vibes wash`
+  17 = `factshift-cabinet — factshift cabinet`
+  18 = `glyph-arrows-pale — Glyph arrows, pale`
+  19 = `lore-cloud-wonder-forms — Lore cloud, wonder forms`
+  20 = `what-kind-of-guy-counts-to-pie — What kind of guy counts to pie`
+  21 = `ampersand-hair-cube — Ampersand, hair, cube`
+  22 = `operator-ladder-pencil — Operator ladder, pencil`
+  23 = `zine-design-declaration — Zine design declaration`
+  24 = `how-to-make-honk — How to make honk`
+  25 = `lined-stage-facade — Lined stage facade`
+  26 = `lore-land-webcomic-zine — Lore Land webcomic zine`
+  27 = `spiral-chip-ochre — Spiral chip, ochre`
+  28 = `deliberate-poor-performance — Deliberate poor performance`
+  29 = `acceptance-ritual-checklist — Acceptance ritual checklist`
+  30 = `mimes-against-wap-blue-wash — Mimes Against WAP, blue wash`
+  titles = `Working titles named from what is lettered or drawn on each piece. The creator's titles replace them; slugs follow.`
+}
+
+^"series_threads"{
+  wap = `01, 06, 12, 13, 20, 30 — WAP Boy, Mimes Against WAP, counting to pie. The clown-lore side of Wondering About Pi; wap.mom plays it straight.`
+  operators = `00, 02, 11, 21, 22, 24, 29 — the operator list lettered, laddered, wired, and checked off.`
+  valence = `05, 07, 24 — boon, bane, bone, honk.`
+  domains = `08, 16, 17, 26 — Lore Land, tealstripesvibes, factshift.`
+  practice = `09, 10, 14, 15, 28 — seasons, courses, weekdays, a working calendar, a website's practice.`
+  washes = `16, 19, 25, 30 — later paint nearly covering an earlier page; the soil the archive describes.`
+}
+
+^"calendar_seed"{
+  operation = "prime"
+  fixity = "experimental"
+  claim = `Thirty-one folios, and October has thirty-one days. The set can seed a calendar: one folio per day, the day's cell cropped from the piece.`
+  evidence = `09 already names Octvember and a Halloween season; 10 lists the weekdays; 14 carries calendar numbers 19 through 26.`
+  open = #[
+    `Order: scan order, or chosen days (Halloween on 09, a first-of-month opener)?`,
+    `Form: a printable month, a daily page on the site, or both?`,
+    `Year: October 2026 starts on a Thursday; the grid should come from the date, not from a template.`,
+  ][reg=set]
+  gate = `Sensation review: a proposal and one demo month approved in a browser before any route or runtime changes.`
+}

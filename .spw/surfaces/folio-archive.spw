@@ -12,10 +12,11 @@
 @minting: ~"../../.agents/plans/folio-worktable/minting.spw"
 @soil_cache: ~"../caches/folio-soil-ecosystem-2026-09.spw"
 @asset_registry: ~"../assets.spw"
+@release_2026_09_26: ~"./folio-archive/release-2026-09-26.spw"
 
 ^"archive"{
   what = `Laminated folios — printer-paper-sized originals: collage and laminate what is current, paint a season across the stack, paint the same surfaces again the next year.`
-  span = `An archive of wonder over the past few years, still being painted and not yet scanned.`
+  span = `An archive of wonder over the past few years, still being painted. Scanning began 2026-09-25: thirty-one folios, the September 26 release set (./folio-archive/release-2026-09-26.spw).`
   canon = `Original and continuous. The continuing canon overlaps no one else's work; lore.land is a second source for new pieces, never the origin of the archive.`
   owner = `Spwashi. Community art and lore.land contributions are not folio inventory.`
 }

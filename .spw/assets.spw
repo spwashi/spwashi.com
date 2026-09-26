@@ -34,6 +34,16 @@
       ]
     }
 
+    folios: {
+      path: ~"../public/images/assets/folios/"
+      purpose: "Scanned laminated folios, the creator's original canon; one .spw sidecar per folio carries its source id, alt text, and tiers"
+      status: "active"
+      masters: "public/images/renders/_raw/folio-scans-2026-09-26/ (untracked)"
+      formats: "avif + webp, thumb 256 / display 512 / hero 1024; no PNG derivatives"
+      record: ~"./surfaces/folio-archive/release-2026-09-26.spw"
+      images: "31 — folio-2026-09-26-00 through -30; the release record lists them"
+    }
+
     pretext_lab: {
       path: ~"../public/images/assets/pretext-lab/"
       purpose: "Physics visualization, typography, layout studies"

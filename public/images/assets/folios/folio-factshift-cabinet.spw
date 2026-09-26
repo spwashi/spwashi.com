@@ -1,0 +1,42 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-factshift-cabinet"
+  title: "factshift cabinet"
+  description: "Laminated folio, scanned for the September 26, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-26-17"
+  master: "public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-17-scan.png"
+  master_tracked: false
+  scan: { width: 2684, height: 3458, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.9 x 11.5 in at 300 dpi; the laminate edge, not a measured paper size"
+  orientation_note: "lettering reads upside down as scanned"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-26.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "A cabinet of ink drawers and slots washed in pink and sea green, with factshift.com lettered small"
+  tiers: {
+    thumb: { width: 199, height: 256, avif_kib: 6, webp_kib: 7 }
+    display: { width: 398, height: 512, avif_kib: 34, webp_kib: 33 }
+    hero: { width: 795, height: 1024, avif_kib: 110, webp_kib: 118 }
+  }
+}
+
+^"optimization"{
+  tool: ".agents/skills/image-optimize/scripts/generate-variants.sh (illustrations tiers), from a -strip 2048px intermediate"
+  png: "dropped — the hero PNG ran 1.2 MiB, over the skill's 1 MB guardrail; AVIF and WebP only, as lore-seed-pod-nebula ships"
+  hero_budget: "120 KiB; quality stepped down from 75 only where a hero ran over, floor 45"
+  metadata: "none embedded (EXIF, XMP, GPS, scanner name checked)"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-26", "factshift", "cabinet", "layout", "pink"]
+  part_of: "folio-release-2026-09-26"
+}

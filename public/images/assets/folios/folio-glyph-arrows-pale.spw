@@ -1,0 +1,41 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-glyph-arrows-pale"
+  title: "Glyph arrows, pale"
+  description: "Laminated folio, scanned for the September 26, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-26-18"
+  master: "public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-18-scan.png"
+  master_tracked: false
+  scan: { width: 3458, height: 2692, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.0 in at 300 dpi; the laminate edge, not a measured paper size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-26.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Loose ink glyphs on a pale page: a ladder, triangles, a hash knot, spirals, and a fat striped arrow pointing at a small house"
+  tiers: {
+    thumb: { width: 256, height: 199, avif_kib: 5, webp_kib: 6 }
+    display: { width: 512, height: 399, avif_kib: 28, webp_kib: 26 }
+    hero: { width: 1024, height: 797, avif_kib: 105, webp_kib: 102 }
+  }
+}
+
+^"optimization"{
+  tool: ".agents/skills/image-optimize/scripts/generate-variants.sh (illustrations tiers), from a -strip 2048px intermediate"
+  png: "dropped — the hero PNG ran 1.2 MiB, over the skill's 1 MB guardrail; AVIF and WebP only, as lore-seed-pod-nebula ships"
+  hero_budget: "120 KiB; quality stepped down from 75 only where a hero ran over, floor 45"
+  metadata: "none embedded (EXIF, XMP, GPS, scanner name checked)"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-26", "glyphs", "arrows", "pale"]
+  part_of: "folio-release-2026-09-26"
+}

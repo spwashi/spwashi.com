@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-18T01:13:21.928Z",
+  "generatedAt": "2026-09-26T03:00:42.129Z",
   "sourceRoot": "/public/images/",
-  "count": 822,
+  "count": 1039,
   "concepts": [
     "about",
     "algorithm",
@@ -52,6 +52,2172 @@
       "role": "image",
       "concepts": [],
       "swapHint": "Use /public/images/assets/compression-crystals.png when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-acceptance-ritual-checklist",
+      "title": "Folio Acceptance Ritual Checklist",
+      "path": "/public/images/assets/folios/folio-acceptance-ritual-checklist-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 25245,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-acceptance-ritual-checklist-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-acceptance-ritual-checklist",
+      "title": "Folio Acceptance Ritual Checklist",
+      "path": "/public/images/assets/folios/folio-acceptance-ritual-checklist-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 23702,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-acceptance-ritual-checklist-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-acceptance-ritual-checklist",
+      "title": "Folio Acceptance Ritual Checklist",
+      "path": "/public/images/assets/folios/folio-acceptance-ritual-checklist-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 110125,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-acceptance-ritual-checklist-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-acceptance-ritual-checklist",
+      "title": "Folio Acceptance Ritual Checklist",
+      "path": "/public/images/assets/folios/folio-acceptance-ritual-checklist-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 98310,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-acceptance-ritual-checklist-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-acceptance-ritual-checklist",
+      "title": "Folio Acceptance Ritual Checklist",
+      "path": "/public/images/assets/folios/folio-acceptance-ritual-checklist-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 4079,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-acceptance-ritual-checklist-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-acceptance-ritual-checklist",
+      "title": "Folio Acceptance Ritual Checklist",
+      "path": "/public/images/assets/folios/folio-acceptance-ritual-checklist-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 4978,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-acceptance-ritual-checklist-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-ampersand-hair-cube",
+      "title": "Folio Ampersand Hair Cube",
+      "path": "/public/images/assets/folios/folio-ampersand-hair-cube-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 35773,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-ampersand-hair-cube-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-ampersand-hair-cube",
+      "title": "Folio Ampersand Hair Cube",
+      "path": "/public/images/assets/folios/folio-ampersand-hair-cube-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 35424,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-ampersand-hair-cube-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-ampersand-hair-cube",
+      "title": "Folio Ampersand Hair Cube",
+      "path": "/public/images/assets/folios/folio-ampersand-hair-cube-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 98546,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-ampersand-hair-cube-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-ampersand-hair-cube",
+      "title": "Folio Ampersand Hair Cube",
+      "path": "/public/images/assets/folios/folio-ampersand-hair-cube-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 119016,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-ampersand-hair-cube-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-ampersand-hair-cube",
+      "title": "Folio Ampersand Hair Cube",
+      "path": "/public/images/assets/folios/folio-ampersand-hair-cube-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 6361,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-ampersand-hair-cube-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-ampersand-hair-cube",
+      "title": "Folio Ampersand Hair Cube",
+      "path": "/public/images/assets/folios/folio-ampersand-hair-cube-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 8126,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-ampersand-hair-cube-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-bone-box-launch",
+      "title": "Folio Bone Box Launch",
+      "path": "/public/images/assets/folios/folio-bone-box-launch-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 30166,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-bone-box-launch-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-bone-box-launch",
+      "title": "Folio Bone Box Launch",
+      "path": "/public/images/assets/folios/folio-bone-box-launch-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 28494,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-bone-box-launch-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-bone-box-launch",
+      "title": "Folio Bone Box Launch",
+      "path": "/public/images/assets/folios/folio-bone-box-launch-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 112284,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-bone-box-launch-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-bone-box-launch",
+      "title": "Folio Bone Box Launch",
+      "path": "/public/images/assets/folios/folio-bone-box-launch-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 106826,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-bone-box-launch-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-bone-box-launch",
+      "title": "Folio Bone Box Launch",
+      "path": "/public/images/assets/folios/folio-bone-box-launch-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 5510,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-bone-box-launch-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-bone-box-launch",
+      "title": "Folio Bone Box Launch",
+      "path": "/public/images/assets/folios/folio-bone-box-launch-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 6938,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-bone-box-launch-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boof-boonberry-pool",
+      "title": "Folio Boof Boonberry Pool",
+      "path": "/public/images/assets/folios/folio-boof-boonberry-pool-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 33283,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boof-boonberry-pool-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boof-boonberry-pool",
+      "title": "Folio Boof Boonberry Pool",
+      "path": "/public/images/assets/folios/folio-boof-boonberry-pool-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 32366,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boof-boonberry-pool-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boof-boonberry-pool",
+      "title": "Folio Boof Boonberry Pool",
+      "path": "/public/images/assets/folios/folio-boof-boonberry-pool-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 97618,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boof-boonberry-pool-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boof-boonberry-pool",
+      "title": "Folio Boof Boonberry Pool",
+      "path": "/public/images/assets/folios/folio-boof-boonberry-pool-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 121434,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boof-boonberry-pool-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boof-boonberry-pool",
+      "title": "Folio Boof Boonberry Pool",
+      "path": "/public/images/assets/folios/folio-boof-boonberry-pool-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 5839,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boof-boonberry-pool-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boof-boonberry-pool",
+      "title": "Folio Boof Boonberry Pool",
+      "path": "/public/images/assets/folios/folio-boof-boonberry-pool-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 7368,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boof-boonberry-pool-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boon-bane-bone-mnemonic",
+      "title": "Folio Boon Bane Bone Mnemonic",
+      "path": "/public/images/assets/folios/folio-boon-bane-bone-mnemonic-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 30761,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boon-bane-bone-mnemonic-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boon-bane-bone-mnemonic",
+      "title": "Folio Boon Bane Bone Mnemonic",
+      "path": "/public/images/assets/folios/folio-boon-bane-bone-mnemonic-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 29306,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boon-bane-bone-mnemonic-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boon-bane-bone-mnemonic",
+      "title": "Folio Boon Bane Bone Mnemonic",
+      "path": "/public/images/assets/folios/folio-boon-bane-bone-mnemonic-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 107480,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boon-bane-bone-mnemonic-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boon-bane-bone-mnemonic",
+      "title": "Folio Boon Bane Bone Mnemonic",
+      "path": "/public/images/assets/folios/folio-boon-bane-bone-mnemonic-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 107240,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boon-bane-bone-mnemonic-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boon-bane-bone-mnemonic",
+      "title": "Folio Boon Bane Bone Mnemonic",
+      "path": "/public/images/assets/folios/folio-boon-bane-bone-mnemonic-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 5670,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boon-bane-bone-mnemonic-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-boon-bane-bone-mnemonic",
+      "title": "Folio Boon Bane Bone Mnemonic",
+      "path": "/public/images/assets/folios/folio-boon-bane-bone-mnemonic-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 7076,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-boon-bane-bone-mnemonic-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-business-courses-weekdays",
+      "title": "Folio Business Courses Weekdays",
+      "path": "/public/images/assets/folios/folio-business-courses-weekdays-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 31898,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-business-courses-weekdays-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-business-courses-weekdays",
+      "title": "Folio Business Courses Weekdays",
+      "path": "/public/images/assets/folios/folio-business-courses-weekdays-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 31466,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-business-courses-weekdays-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-business-courses-weekdays",
+      "title": "Folio Business Courses Weekdays",
+      "path": "/public/images/assets/folios/folio-business-courses-weekdays-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 108123,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-business-courses-weekdays-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-business-courses-weekdays",
+      "title": "Folio Business Courses Weekdays",
+      "path": "/public/images/assets/folios/folio-business-courses-weekdays-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 100224,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-business-courses-weekdays-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-business-courses-weekdays",
+      "title": "Folio Business Courses Weekdays",
+      "path": "/public/images/assets/folios/folio-business-courses-weekdays-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 5987,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-business-courses-weekdays-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-business-courses-weekdays",
+      "title": "Folio Business Courses Weekdays",
+      "path": "/public/images/assets/folios/folio-business-courses-weekdays-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 7526,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-business-courses-weekdays-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-copy-paste-component-library",
+      "title": "Folio Copy Paste Component Library",
+      "path": "/public/images/assets/folios/folio-copy-paste-component-library-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 39891,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-copy-paste-component-library-display.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-copy-paste-component-library",
+      "title": "Folio Copy Paste Component Library",
+      "path": "/public/images/assets/folios/folio-copy-paste-component-library-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 39752,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-copy-paste-component-library-display.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-copy-paste-component-library",
+      "title": "Folio Copy Paste Component Library",
+      "path": "/public/images/assets/folios/folio-copy-paste-component-library-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 103658,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-copy-paste-component-library-hero.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-copy-paste-component-library",
+      "title": "Folio Copy Paste Component Library",
+      "path": "/public/images/assets/folios/folio-copy-paste-component-library-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 118116,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-copy-paste-component-library-hero.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-copy-paste-component-library",
+      "title": "Folio Copy Paste Component Library",
+      "path": "/public/images/assets/folios/folio-copy-paste-component-library-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 7523,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-copy-paste-component-library-thumb.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-copy-paste-component-library",
+      "title": "Folio Copy Paste Component Library",
+      "path": "/public/images/assets/folios/folio-copy-paste-component-library-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 9660,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-copy-paste-component-library-thumb.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-deliberate-poor-performance",
+      "title": "Folio Deliberate Poor Performance",
+      "path": "/public/images/assets/folios/folio-deliberate-poor-performance-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 31061,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-deliberate-poor-performance-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-deliberate-poor-performance",
+      "title": "Folio Deliberate Poor Performance",
+      "path": "/public/images/assets/folios/folio-deliberate-poor-performance-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 30784,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-deliberate-poor-performance-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-deliberate-poor-performance",
+      "title": "Folio Deliberate Poor Performance",
+      "path": "/public/images/assets/folios/folio-deliberate-poor-performance-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 110459,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-deliberate-poor-performance-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-deliberate-poor-performance",
+      "title": "Folio Deliberate Poor Performance",
+      "path": "/public/images/assets/folios/folio-deliberate-poor-performance-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 121636,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-deliberate-poor-performance-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-deliberate-poor-performance",
+      "title": "Folio Deliberate Poor Performance",
+      "path": "/public/images/assets/folios/folio-deliberate-poor-performance-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 5438,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-deliberate-poor-performance-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-deliberate-poor-performance",
+      "title": "Folio Deliberate Poor Performance",
+      "path": "/public/images/assets/folios/folio-deliberate-poor-performance-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 6948,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-deliberate-poor-performance-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-factshift-cabinet",
+      "title": "Folio Factshift Cabinet",
+      "path": "/public/images/assets/folios/folio-factshift-cabinet-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 35429,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-factshift-cabinet-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-factshift-cabinet",
+      "title": "Folio Factshift Cabinet",
+      "path": "/public/images/assets/folios/folio-factshift-cabinet-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 33856,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-factshift-cabinet-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-factshift-cabinet",
+      "title": "Folio Factshift Cabinet",
+      "path": "/public/images/assets/folios/folio-factshift-cabinet-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 113654,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-factshift-cabinet-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-factshift-cabinet",
+      "title": "Folio Factshift Cabinet",
+      "path": "/public/images/assets/folios/folio-factshift-cabinet-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 121216,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-factshift-cabinet-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-factshift-cabinet",
+      "title": "Folio Factshift Cabinet",
+      "path": "/public/images/assets/folios/folio-factshift-cabinet-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 6326,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-factshift-cabinet-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-factshift-cabinet",
+      "title": "Folio Factshift Cabinet",
+      "path": "/public/images/assets/folios/folio-factshift-cabinet-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 7812,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-factshift-cabinet-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-glyph-arrows-pale",
+      "title": "Folio Glyph Arrows Pale",
+      "path": "/public/images/assets/folios/folio-glyph-arrows-pale-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 29415,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-glyph-arrows-pale-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-glyph-arrows-pale",
+      "title": "Folio Glyph Arrows Pale",
+      "path": "/public/images/assets/folios/folio-glyph-arrows-pale-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 27128,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-glyph-arrows-pale-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-glyph-arrows-pale",
+      "title": "Folio Glyph Arrows Pale",
+      "path": "/public/images/assets/folios/folio-glyph-arrows-pale-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 107992,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-glyph-arrows-pale-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-glyph-arrows-pale",
+      "title": "Folio Glyph Arrows Pale",
+      "path": "/public/images/assets/folios/folio-glyph-arrows-pale-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 105270,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-glyph-arrows-pale-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-glyph-arrows-pale",
+      "title": "Folio Glyph Arrows Pale",
+      "path": "/public/images/assets/folios/folio-glyph-arrows-pale-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 5868,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-glyph-arrows-pale-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-glyph-arrows-pale",
+      "title": "Folio Glyph Arrows Pale",
+      "path": "/public/images/assets/folios/folio-glyph-arrows-pale-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 7120,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-glyph-arrows-pale-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-mixing-board",
+      "title": "Folio Honk Mixing Board",
+      "path": "/public/images/assets/folios/folio-honk-mixing-board-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 31723,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-mixing-board-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-mixing-board",
+      "title": "Folio Honk Mixing Board",
+      "path": "/public/images/assets/folios/folio-honk-mixing-board-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 30668,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-mixing-board-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-mixing-board",
+      "title": "Folio Honk Mixing Board",
+      "path": "/public/images/assets/folios/folio-honk-mixing-board-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 102875,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-mixing-board-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-mixing-board",
+      "title": "Folio Honk Mixing Board",
+      "path": "/public/images/assets/folios/folio-honk-mixing-board-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 106910,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-mixing-board-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-mixing-board",
+      "title": "Folio Honk Mixing Board",
+      "path": "/public/images/assets/folios/folio-honk-mixing-board-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 6106,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-mixing-board-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-mixing-board",
+      "title": "Folio Honk Mixing Board",
+      "path": "/public/images/assets/folios/folio-honk-mixing-board-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 7534,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-mixing-board-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-how-to-make-honk",
+      "title": "Folio How To Make Honk",
+      "path": "/public/images/assets/folios/folio-how-to-make-honk-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 21705,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-how-to-make-honk-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-how-to-make-honk",
+      "title": "Folio How To Make Honk",
+      "path": "/public/images/assets/folios/folio-how-to-make-honk-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 18894,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-how-to-make-honk-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-how-to-make-honk",
+      "title": "Folio How To Make Honk",
+      "path": "/public/images/assets/folios/folio-how-to-make-honk-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 95823,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-how-to-make-honk-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-how-to-make-honk",
+      "title": "Folio How To Make Honk",
+      "path": "/public/images/assets/folios/folio-how-to-make-honk-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 70500,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-how-to-make-honk-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-how-to-make-honk",
+      "title": "Folio How To Make Honk",
+      "path": "/public/images/assets/folios/folio-how-to-make-honk-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 3799,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-how-to-make-honk-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-how-to-make-honk",
+      "title": "Folio How To Make Honk",
+      "path": "/public/images/assets/folios/folio-how-to-make-honk-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 4498,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-how-to-make-honk-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lined-stage-facade",
+      "title": "Folio Lined Stage Facade",
+      "path": "/public/images/assets/folios/folio-lined-stage-facade-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 20579,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-lined-stage-facade-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lined-stage-facade",
+      "title": "Folio Lined Stage Facade",
+      "path": "/public/images/assets/folios/folio-lined-stage-facade-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 17902,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-lined-stage-facade-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lined-stage-facade",
+      "title": "Folio Lined Stage Facade",
+      "path": "/public/images/assets/folios/folio-lined-stage-facade-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 106133,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-lined-stage-facade-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lined-stage-facade",
+      "title": "Folio Lined Stage Facade",
+      "path": "/public/images/assets/folios/folio-lined-stage-facade-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 80578,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-lined-stage-facade-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lined-stage-facade",
+      "title": "Folio Lined Stage Facade",
+      "path": "/public/images/assets/folios/folio-lined-stage-facade-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 3137,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-lined-stage-facade-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lined-stage-facade",
+      "title": "Folio Lined Stage Facade",
+      "path": "/public/images/assets/folios/folio-lined-stage-facade-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 3716,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-lined-stage-facade-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-cloud-wonder-forms",
+      "title": "Folio Lore Cloud Wonder Forms",
+      "path": "/public/images/assets/folios/folio-lore-cloud-wonder-forms-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 15922,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-cloud-wonder-forms-display.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-cloud-wonder-forms",
+      "title": "Folio Lore Cloud Wonder Forms",
+      "path": "/public/images/assets/folios/folio-lore-cloud-wonder-forms-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 13626,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-cloud-wonder-forms-display.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-cloud-wonder-forms",
+      "title": "Folio Lore Cloud Wonder Forms",
+      "path": "/public/images/assets/folios/folio-lore-cloud-wonder-forms-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 72281,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-cloud-wonder-forms-hero.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-cloud-wonder-forms",
+      "title": "Folio Lore Cloud Wonder Forms",
+      "path": "/public/images/assets/folios/folio-lore-cloud-wonder-forms-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 51058,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-cloud-wonder-forms-hero.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-cloud-wonder-forms",
+      "title": "Folio Lore Cloud Wonder Forms",
+      "path": "/public/images/assets/folios/folio-lore-cloud-wonder-forms-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 2507,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-cloud-wonder-forms-thumb.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-cloud-wonder-forms",
+      "title": "Folio Lore Cloud Wonder Forms",
+      "path": "/public/images/assets/folios/folio-lore-cloud-wonder-forms-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 3170,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-cloud-wonder-forms-thumb.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-drift-shapes",
+      "title": "Folio Lore Land Drift Shapes",
+      "path": "/public/images/assets/folios/folio-lore-land-drift-shapes-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 33896,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-drift-shapes-display.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-drift-shapes",
+      "title": "Folio Lore Land Drift Shapes",
+      "path": "/public/images/assets/folios/folio-lore-land-drift-shapes-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 32956,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-drift-shapes-display.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-drift-shapes",
+      "title": "Folio Lore Land Drift Shapes",
+      "path": "/public/images/assets/folios/folio-lore-land-drift-shapes-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 99459,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-drift-shapes-hero.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-drift-shapes",
+      "title": "Folio Lore Land Drift Shapes",
+      "path": "/public/images/assets/folios/folio-lore-land-drift-shapes-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 119680,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-drift-shapes-hero.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-drift-shapes",
+      "title": "Folio Lore Land Drift Shapes",
+      "path": "/public/images/assets/folios/folio-lore-land-drift-shapes-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 6663,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-drift-shapes-thumb.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-drift-shapes",
+      "title": "Folio Lore Land Drift Shapes",
+      "path": "/public/images/assets/folios/folio-lore-land-drift-shapes-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 8284,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-drift-shapes-thumb.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-webcomic-zine",
+      "title": "Folio Lore Land Webcomic Zine",
+      "path": "/public/images/assets/folios/folio-lore-land-webcomic-zine-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 22952,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-webcomic-zine-display.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-webcomic-zine",
+      "title": "Folio Lore Land Webcomic Zine",
+      "path": "/public/images/assets/folios/folio-lore-land-webcomic-zine-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 20466,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-webcomic-zine-display.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-webcomic-zine",
+      "title": "Folio Lore Land Webcomic Zine",
+      "path": "/public/images/assets/folios/folio-lore-land-webcomic-zine-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 106077,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-webcomic-zine-hero.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-webcomic-zine",
+      "title": "Folio Lore Land Webcomic Zine",
+      "path": "/public/images/assets/folios/folio-lore-land-webcomic-zine-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 77906,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-webcomic-zine-hero.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-webcomic-zine",
+      "title": "Folio Lore Land Webcomic Zine",
+      "path": "/public/images/assets/folios/folio-lore-land-webcomic-zine-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 3772,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-webcomic-zine-thumb.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-lore-land-webcomic-zine",
+      "title": "Folio Lore Land Webcomic Zine",
+      "path": "/public/images/assets/folios/folio-lore-land-webcomic-zine-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 4518,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-lore-land-webcomic-zine-thumb.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-blue-wash",
+      "title": "Folio Mimes Against Wap Blue Wash",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-blue-wash-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 12691,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-blue-wash-display.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-blue-wash",
+      "title": "Folio Mimes Against Wap Blue Wash",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-blue-wash-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 9812,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-blue-wash-display.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-blue-wash",
+      "title": "Folio Mimes Against Wap Blue Wash",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-blue-wash-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 68672,
+      "role": "hero",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-blue-wash-hero.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-blue-wash",
+      "title": "Folio Mimes Against Wap Blue Wash",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-blue-wash-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 45016,
+      "role": "hero",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-blue-wash-hero.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-blue-wash",
+      "title": "Folio Mimes Against Wap Blue Wash",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-blue-wash-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 1577,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-blue-wash-thumb.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-blue-wash",
+      "title": "Folio Mimes Against Wap Blue Wash",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-blue-wash-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 2150,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-blue-wash-thumb.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-lightning",
+      "title": "Folio Mimes Against Wap Lightning",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-lightning-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 27604,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-lightning-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-lightning",
+      "title": "Folio Mimes Against Wap Lightning",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-lightning-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 25480,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-lightning-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-lightning",
+      "title": "Folio Mimes Against Wap Lightning",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-lightning-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 118830,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-lightning-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-lightning",
+      "title": "Folio Mimes Against Wap Lightning",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-lightning-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 92040,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-lightning-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-lightning",
+      "title": "Folio Mimes Against Wap Lightning",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-lightning-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 5104,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-lightning-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-mimes-against-wap-lightning",
+      "title": "Folio Mimes Against Wap Lightning",
+      "path": "/public/images/assets/folios/folio-mimes-against-wap-lightning-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 6180,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-mimes-against-wap-lightning-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-octvember-novel-under-test",
+      "title": "Folio Octvember Novel Under Test",
+      "path": "/public/images/assets/folios/folio-octvember-novel-under-test-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 30706,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-octvember-novel-under-test-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-octvember-novel-under-test",
+      "title": "Folio Octvember Novel Under Test",
+      "path": "/public/images/assets/folios/folio-octvember-novel-under-test-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 29854,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-octvember-novel-under-test-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-octvember-novel-under-test",
+      "title": "Folio Octvember Novel Under Test",
+      "path": "/public/images/assets/folios/folio-octvember-novel-under-test-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 122880,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-octvember-novel-under-test-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-octvember-novel-under-test",
+      "title": "Folio Octvember Novel Under Test",
+      "path": "/public/images/assets/folios/folio-octvember-novel-under-test-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 94446,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-octvember-novel-under-test-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-octvember-novel-under-test",
+      "title": "Folio Octvember Novel Under Test",
+      "path": "/public/images/assets/folios/folio-octvember-novel-under-test-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 6146,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-octvember-novel-under-test-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-octvember-novel-under-test",
+      "title": "Folio Octvember Novel Under Test",
+      "path": "/public/images/assets/folios/folio-octvember-novel-under-test-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 7510,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-octvember-novel-under-test-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-curriculum-teal",
+      "title": "Folio Operator Curriculum Teal",
+      "path": "/public/images/assets/folios/folio-operator-curriculum-teal-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 27957,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-curriculum-teal-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-curriculum-teal",
+      "title": "Folio Operator Curriculum Teal",
+      "path": "/public/images/assets/folios/folio-operator-curriculum-teal-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 25846,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-curriculum-teal-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-curriculum-teal",
+      "title": "Folio Operator Curriculum Teal",
+      "path": "/public/images/assets/folios/folio-operator-curriculum-teal-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 122741,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-curriculum-teal-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-curriculum-teal",
+      "title": "Folio Operator Curriculum Teal",
+      "path": "/public/images/assets/folios/folio-operator-curriculum-teal-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 98298,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-curriculum-teal-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-curriculum-teal",
+      "title": "Folio Operator Curriculum Teal",
+      "path": "/public/images/assets/folios/folio-operator-curriculum-teal-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 4748,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-curriculum-teal-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-curriculum-teal",
+      "title": "Folio Operator Curriculum Teal",
+      "path": "/public/images/assets/folios/folio-operator-curriculum-teal-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 5556,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-curriculum-teal-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-ladder-pencil",
+      "title": "Folio Operator Ladder Pencil",
+      "path": "/public/images/assets/folios/folio-operator-ladder-pencil-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 13370,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-ladder-pencil-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-ladder-pencil",
+      "title": "Folio Operator Ladder Pencil",
+      "path": "/public/images/assets/folios/folio-operator-ladder-pencil-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 11018,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-ladder-pencil-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-ladder-pencil",
+      "title": "Folio Operator Ladder Pencil",
+      "path": "/public/images/assets/folios/folio-operator-ladder-pencil-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 65408,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-ladder-pencil-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-ladder-pencil",
+      "title": "Folio Operator Ladder Pencil",
+      "path": "/public/images/assets/folios/folio-operator-ladder-pencil-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 43714,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-ladder-pencil-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-ladder-pencil",
+      "title": "Folio Operator Ladder Pencil",
+      "path": "/public/images/assets/folios/folio-operator-ladder-pencil-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 2117,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-ladder-pencil-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-ladder-pencil",
+      "title": "Folio Operator Ladder Pencil",
+      "path": "/public/images/assets/folios/folio-operator-ladder-pencil-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 2398,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-ladder-pencil-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-rhythm-training-video",
+      "title": "Folio Operator Rhythm Training Video",
+      "path": "/public/images/assets/folios/folio-operator-rhythm-training-video-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 38556,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-rhythm-training-video-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-rhythm-training-video",
+      "title": "Folio Operator Rhythm Training Video",
+      "path": "/public/images/assets/folios/folio-operator-rhythm-training-video-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 38602,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-rhythm-training-video-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-rhythm-training-video",
+      "title": "Folio Operator Rhythm Training Video",
+      "path": "/public/images/assets/folios/folio-operator-rhythm-training-video-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 99898,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-rhythm-training-video-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-rhythm-training-video",
+      "title": "Folio Operator Rhythm Training Video",
+      "path": "/public/images/assets/folios/folio-operator-rhythm-training-video-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 121976,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-rhythm-training-video-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-rhythm-training-video",
+      "title": "Folio Operator Rhythm Training Video",
+      "path": "/public/images/assets/folios/folio-operator-rhythm-training-video-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 6846,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-rhythm-training-video-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-operator-rhythm-training-video",
+      "title": "Folio Operator Rhythm Training Video",
+      "path": "/public/images/assets/folios/folio-operator-rhythm-training-video-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 8860,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-operator-rhythm-training-video-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pi-day-mimes-against-wap",
+      "title": "Folio Pi Day Mimes Against Wap",
+      "path": "/public/images/assets/folios/folio-pi-day-mimes-against-wap-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 32247,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pi-day-mimes-against-wap-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pi-day-mimes-against-wap",
+      "title": "Folio Pi Day Mimes Against Wap",
+      "path": "/public/images/assets/folios/folio-pi-day-mimes-against-wap-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 30914,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pi-day-mimes-against-wap-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pi-day-mimes-against-wap",
+      "title": "Folio Pi Day Mimes Against Wap",
+      "path": "/public/images/assets/folios/folio-pi-day-mimes-against-wap-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 93924,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pi-day-mimes-against-wap-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pi-day-mimes-against-wap",
+      "title": "Folio Pi Day Mimes Against Wap",
+      "path": "/public/images/assets/folios/folio-pi-day-mimes-against-wap-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 118176,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pi-day-mimes-against-wap-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pi-day-mimes-against-wap",
+      "title": "Folio Pi Day Mimes Against Wap",
+      "path": "/public/images/assets/folios/folio-pi-day-mimes-against-wap-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 5684,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pi-day-mimes-against-wap-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pi-day-mimes-against-wap",
+      "title": "Folio Pi Day Mimes Against Wap",
+      "path": "/public/images/assets/folios/folio-pi-day-mimes-against-wap-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 6830,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pi-day-mimes-against-wap-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pink-hash-stack",
+      "title": "Folio Pink Hash Stack",
+      "path": "/public/images/assets/folios/folio-pink-hash-stack-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 19320,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pink-hash-stack-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pink-hash-stack",
+      "title": "Folio Pink Hash Stack",
+      "path": "/public/images/assets/folios/folio-pink-hash-stack-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 16534,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pink-hash-stack-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pink-hash-stack",
+      "title": "Folio Pink Hash Stack",
+      "path": "/public/images/assets/folios/folio-pink-hash-stack-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 91185,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pink-hash-stack-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pink-hash-stack",
+      "title": "Folio Pink Hash Stack",
+      "path": "/public/images/assets/folios/folio-pink-hash-stack-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 64710,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pink-hash-stack-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pink-hash-stack",
+      "title": "Folio Pink Hash Stack",
+      "path": "/public/images/assets/folios/folio-pink-hash-stack-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 3639,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pink-hash-stack-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-pink-hash-stack",
+      "title": "Folio Pink Hash Stack",
+      "path": "/public/images/assets/folios/folio-pink-hash-stack-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 4158,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-pink-hash-stack-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-poem-count-the-boring-ones",
+      "title": "Folio Poem Count The Boring Ones",
+      "path": "/public/images/assets/folios/folio-poem-count-the-boring-ones-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 27415,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-poem-count-the-boring-ones-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-poem-count-the-boring-ones",
+      "title": "Folio Poem Count The Boring Ones",
+      "path": "/public/images/assets/folios/folio-poem-count-the-boring-ones-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 25746,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-poem-count-the-boring-ones-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-poem-count-the-boring-ones",
+      "title": "Folio Poem Count The Boring Ones",
+      "path": "/public/images/assets/folios/folio-poem-count-the-boring-ones-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 104343,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-poem-count-the-boring-ones-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-poem-count-the-boring-ones",
+      "title": "Folio Poem Count The Boring Ones",
+      "path": "/public/images/assets/folios/folio-poem-count-the-boring-ones-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 108764,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-poem-count-the-boring-ones-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-poem-count-the-boring-ones",
+      "title": "Folio Poem Count The Boring Ones",
+      "path": "/public/images/assets/folios/folio-poem-count-the-boring-ones-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 4944,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-poem-count-the-boring-ones-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-poem-count-the-boring-ones",
+      "title": "Folio Poem Count The Boring Ones",
+      "path": "/public/images/assets/folios/folio-poem-count-the-boring-ones-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 6124,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-poem-count-the-boring-ones-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-red-eyes-calendar-test",
+      "title": "Folio Red Eyes Calendar Test",
+      "path": "/public/images/assets/folios/folio-red-eyes-calendar-test-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 24808,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-red-eyes-calendar-test-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-red-eyes-calendar-test",
+      "title": "Folio Red Eyes Calendar Test",
+      "path": "/public/images/assets/folios/folio-red-eyes-calendar-test-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 22696,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-red-eyes-calendar-test-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-red-eyes-calendar-test",
+      "title": "Folio Red Eyes Calendar Test",
+      "path": "/public/images/assets/folios/folio-red-eyes-calendar-test-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 113543,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-red-eyes-calendar-test-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-red-eyes-calendar-test",
+      "title": "Folio Red Eyes Calendar Test",
+      "path": "/public/images/assets/folios/folio-red-eyes-calendar-test-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 87924,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-red-eyes-calendar-test-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-red-eyes-calendar-test",
+      "title": "Folio Red Eyes Calendar Test",
+      "path": "/public/images/assets/folios/folio-red-eyes-calendar-test-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 4321,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-red-eyes-calendar-test-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-red-eyes-calendar-test",
+      "title": "Folio Red Eyes Calendar Test",
+      "path": "/public/images/assets/folios/folio-red-eyes-calendar-test-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 5092,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-red-eyes-calendar-test-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-spiral-chip-ochre",
+      "title": "Folio Spiral Chip Ochre",
+      "path": "/public/images/assets/folios/folio-spiral-chip-ochre-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 27358,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-spiral-chip-ochre-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-spiral-chip-ochre",
+      "title": "Folio Spiral Chip Ochre",
+      "path": "/public/images/assets/folios/folio-spiral-chip-ochre-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 25038,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-spiral-chip-ochre-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-spiral-chip-ochre",
+      "title": "Folio Spiral Chip Ochre",
+      "path": "/public/images/assets/folios/folio-spiral-chip-ochre-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 110097,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-spiral-chip-ochre-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-spiral-chip-ochre",
+      "title": "Folio Spiral Chip Ochre",
+      "path": "/public/images/assets/folios/folio-spiral-chip-ochre-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 98046,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-spiral-chip-ochre-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-spiral-chip-ochre",
+      "title": "Folio Spiral Chip Ochre",
+      "path": "/public/images/assets/folios/folio-spiral-chip-ochre-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 5022,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-spiral-chip-ochre-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-spiral-chip-ochre",
+      "title": "Folio Spiral Chip Ochre",
+      "path": "/public/images/assets/folios/folio-spiral-chip-ochre-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 5982,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-spiral-chip-ochre-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-teal-stripes-vibes-wash",
+      "title": "Folio Teal Stripes Vibes Wash",
+      "path": "/public/images/assets/folios/folio-teal-stripes-vibes-wash-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 27697,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-teal-stripes-vibes-wash-display.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-teal-stripes-vibes-wash",
+      "title": "Folio Teal Stripes Vibes Wash",
+      "path": "/public/images/assets/folios/folio-teal-stripes-vibes-wash-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 25776,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-teal-stripes-vibes-wash-display.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-teal-stripes-vibes-wash",
+      "title": "Folio Teal Stripes Vibes Wash",
+      "path": "/public/images/assets/folios/folio-teal-stripes-vibes-wash-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 121508,
+      "role": "hero",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-teal-stripes-vibes-wash-hero.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-teal-stripes-vibes-wash",
+      "title": "Folio Teal Stripes Vibes Wash",
+      "path": "/public/images/assets/folios/folio-teal-stripes-vibes-wash-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 110908,
+      "role": "hero",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-teal-stripes-vibes-wash-hero.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-teal-stripes-vibes-wash",
+      "title": "Folio Teal Stripes Vibes Wash",
+      "path": "/public/images/assets/folios/folio-teal-stripes-vibes-wash-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 4711,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-teal-stripes-vibes-wash-thumb.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-teal-stripes-vibes-wash",
+      "title": "Folio Teal Stripes Vibes Wash",
+      "path": "/public/images/assets/folios/folio-teal-stripes-vibes-wash-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 5464,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-teal-stripes-vibes-wash-thumb.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-wap-boy-invented-pie",
+      "title": "Folio Wap Boy Invented Pie",
+      "path": "/public/images/assets/folios/folio-wap-boy-invented-pie-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 23606,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-wap-boy-invented-pie-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-wap-boy-invented-pie",
+      "title": "Folio Wap Boy Invented Pie",
+      "path": "/public/images/assets/folios/folio-wap-boy-invented-pie-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 21080,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-wap-boy-invented-pie-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-wap-boy-invented-pie",
+      "title": "Folio Wap Boy Invented Pie",
+      "path": "/public/images/assets/folios/folio-wap-boy-invented-pie-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 112566,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-wap-boy-invented-pie-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-wap-boy-invented-pie",
+      "title": "Folio Wap Boy Invented Pie",
+      "path": "/public/images/assets/folios/folio-wap-boy-invented-pie-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 84580,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-wap-boy-invented-pie-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-wap-boy-invented-pie",
+      "title": "Folio Wap Boy Invented Pie",
+      "path": "/public/images/assets/folios/folio-wap-boy-invented-pie-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 3682,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-wap-boy-invented-pie-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-wap-boy-invented-pie",
+      "title": "Folio Wap Boy Invented Pie",
+      "path": "/public/images/assets/folios/folio-wap-boy-invented-pie-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 4462,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-wap-boy-invented-pie-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-what-kind-of-guy-counts-to-pie",
+      "title": "Folio What Kind Of Guy Counts To Pie",
+      "path": "/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 34347,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-what-kind-of-guy-counts-to-pie",
+      "title": "Folio What Kind Of Guy Counts To Pie",
+      "path": "/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 33192,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-what-kind-of-guy-counts-to-pie",
+      "title": "Folio What Kind Of Guy Counts To Pie",
+      "path": "/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 104482,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-what-kind-of-guy-counts-to-pie",
+      "title": "Folio What Kind Of Guy Counts To Pie",
+      "path": "/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 119034,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-what-kind-of-guy-counts-to-pie",
+      "title": "Folio What Kind Of Guy Counts To Pie",
+      "path": "/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 6028,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-what-kind-of-guy-counts-to-pie",
+      "title": "Folio What Kind Of Guy Counts To Pie",
+      "path": "/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 7422,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-zine-design-declaration",
+      "title": "Folio Zine Design Declaration",
+      "path": "/public/images/assets/folios/folio-zine-design-declaration-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 30231,
+      "role": "display",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-zine-design-declaration-display.avif when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-zine-design-declaration",
+      "title": "Folio Zine Design Declaration",
+      "path": "/public/images/assets/folios/folio-zine-design-declaration-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 28500,
+      "role": "display",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-zine-design-declaration-display.webp when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-zine-design-declaration",
+      "title": "Folio Zine Design Declaration",
+      "path": "/public/images/assets/folios/folio-zine-design-declaration-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 116103,
+      "role": "hero",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-zine-design-declaration-hero.avif when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-zine-design-declaration",
+      "title": "Folio Zine Design Declaration",
+      "path": "/public/images/assets/folios/folio-zine-design-declaration-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 108072,
+      "role": "hero",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-zine-design-declaration-hero.webp when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-zine-design-declaration",
+      "title": "Folio Zine Design Declaration",
+      "path": "/public/images/assets/folios/folio-zine-design-declaration-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 5512,
+      "role": "thumbnail",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-zine-design-declaration-thumb.avif when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-zine-design-declaration",
+      "title": "Folio Zine Design Declaration",
+      "path": "/public/images/assets/folios/folio-zine-design-declaration-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 6742,
+      "role": "thumbnail",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-zine-design-declaration-thumb.webp when a design visual needs a stable tracked asset."
     },
     {
       "id": "bane",
@@ -6246,6 +8412,347 @@
       "role": "render",
       "concepts": [],
       "swapHint": "Use /public/images/renders/_raw/chatgpt-renders/Whimsical creatures and magical text garden.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-00-scan",
+      "title": "Folio 2026 09 26 00 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-00-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 13716749,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-00-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-01-scan",
+      "title": "Folio 2026 09 26 01 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-01-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 13423718,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-01-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-02-scan",
+      "title": "Folio 2026 09 26 02 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-02-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 14035692,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-02-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-03-scan",
+      "title": "Folio 2026 09 26 03 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-03-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 15030341,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-03-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-04-scan",
+      "title": "Folio 2026 09 26 04 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-04-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 13322885,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-04-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-05-scan",
+      "title": "Folio 2026 09 26 05 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-05-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 14054037,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-05-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-06-scan",
+      "title": "Folio 2026 09 26 06 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-06-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 14184906,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-06-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-07-scan",
+      "title": "Folio 2026 09 26 07 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-07-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 15829369,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-07-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-08-scan",
+      "title": "Folio 2026 09 26 08 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-08-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 14667773,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-08-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-09-scan",
+      "title": "Folio 2026 09 26 09 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-09-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 14508443,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-09-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-10-scan",
+      "title": "Folio 2026 09 26 10 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-10-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 13096996,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-10-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-11-scan",
+      "title": "Folio 2026 09 26 11 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-11-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 16426773,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-11-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-12-scan",
+      "title": "Folio 2026 09 26 12 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-12-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 16106457,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-12-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-13-scan",
+      "title": "Folio 2026 09 26 13 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-13-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 13199798,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-13-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-14-scan",
+      "title": "Folio 2026 09 26 14 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-14-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 13657609,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-14-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-15-scan",
+      "title": "Folio 2026 09 26 15 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-15-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 14434357,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-15-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-16-scan",
+      "title": "Folio 2026 09 26 16 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-16-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 13860260,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-16-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-17-scan",
+      "title": "Folio 2026 09 26 17 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-17-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 14640615,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-17-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-18-scan",
+      "title": "Folio 2026 09 26 18 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-18-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 16019901,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-18-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-19-scan",
+      "title": "Folio 2026 09 26 19 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-19-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 12224107,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-19-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-20-scan",
+      "title": "Folio 2026 09 26 20 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-20-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 14531472,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-20-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-21-scan",
+      "title": "Folio 2026 09 26 21 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-21-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 15530353,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-21-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-22-scan",
+      "title": "Folio 2026 09 26 22 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-22-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 12471850,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-22-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-23-scan",
+      "title": "Folio 2026 09 26 23 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-23-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 13846228,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-23-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-24-scan",
+      "title": "Folio 2026 09 26 24 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-24-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 12995072,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-24-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-25-scan",
+      "title": "Folio 2026 09 26 25 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-25-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 14337439,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-25-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-26-scan",
+      "title": "Folio 2026 09 26 26 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-26-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 13185054,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-26-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-27-scan",
+      "title": "Folio 2026 09 26 27 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-27-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 13863263,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-27-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-28-scan",
+      "title": "Folio 2026 09 26 28 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-28-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 16473215,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-28-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-29-scan",
+      "title": "Folio 2026 09 26 29 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-29-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 13777013,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-29-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-2026-09-26-30-scan",
+      "title": "Folio 2026 09 26 30 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-30-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-26",
+      "format": "png",
+      "bytes": 12250540,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-30-scan.png when a render visual needs a stable tracked asset."
     },
     {
       "id": "spwashi_a_seagull_who_is_a_car_salesman_--profile_3q5khel_--sty_b685877d-3450-4dc4-9627-411c4157a125",

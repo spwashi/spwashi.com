@@ -1,0 +1,41 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-lore-land-webcomic-zine"
+  title: "Lore Land webcomic zine"
+  description: "Laminated folio, scanned for the September 26, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-26-26"
+  master: "public/images/renders/_raw/folio-scans-2026-09-26/folio-2026-09-26-26-scan.png"
+  master_tracked: false
+  scan: { width: 2701, height: 3426, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.4 in at 300 dpi; the laminate edge, not a measured paper size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-26.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "A pink wash over a pencil plan for Lore Land as an interactive webcomic and an augmented-reality zine, with Teal Stripes Vibes dot com and boon, bone, and honk boxes"
+  tiers: {
+    thumb: { width: 202, height: 256, avif_kib: 3, webp_kib: 4 }
+    display: { width: 404, height: 512, avif_kib: 22, webp_kib: 19 }
+    hero: { width: 808, height: 1024, avif_kib: 103, webp_kib: 76 }
+  }
+}
+
+^"optimization"{
+  tool: ".agents/skills/image-optimize/scripts/generate-variants.sh (illustrations tiers), from a -strip 2048px intermediate"
+  png: "dropped — the hero PNG ran 1.2 MiB, over the skill's 1 MB guardrail; AVIF and WebP only, as lore-seed-pod-nebula ships"
+  hero_budget: "120 KiB; quality stepped down from 75 only where a hero ran over, floor 45"
+  metadata: "none embedded (EXIF, XMP, GPS, scanner name checked)"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-26", "lore-land", "zine", "webcomic", "pink"]
+  part_of: "folio-release-2026-09-26"
+}
