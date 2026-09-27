@@ -19,6 +19,8 @@
  * capture mode, or no view-transition types, the same moves happen in place.
  */
 
+import { ensureViewTransitionTap } from '/public/js/kernel/view-transition-tap.js';
+
 const ROOT_SELECTOR = '.folio-release';
 const VIEW_SELECTOR = '.folio-view';
 const THREAD_SELECTOR = 'input[type="radio"][name="folio-thread"]';
@@ -291,6 +293,7 @@ export function initFolioShelf() {
   const root = document.querySelector(ROOT_SELECTOR);
   if (!root || mounted) return;
   mounted = { root, showing: null, thread: root.querySelector(`${THREAD_SELECTOR}:checked`) };
+  ensureViewTransitionTap(document);
   root.addEventListener('click', onClick);
   root.addEventListener('change', onChange);
   root.addEventListener('pointerover', onIntent);

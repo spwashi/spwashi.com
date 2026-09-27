@@ -4,6 +4,7 @@ import {
   FRAME_SELECTOR,
 } from '/public/js/kernel/dom-contracts.js';
 import { composeModeSeatExpression } from '/public/js/semantic/spw-compose.js';
+import { ensureViewTransitionTap } from '/public/js/kernel/view-transition-tap.js';
 
 const LENS_MODE_QUERY_KEYS = Object.freeze(['spw-lens', 'lens', 'mode']);
 const DOCUMENT_NODE = 9;
@@ -240,6 +241,7 @@ export function writeLensModeState({
     hoverNone,
   })) {
     try {
+      ensureViewTransitionTap(doc);
       const transition = doc.startViewTransition(applyDomUpdates);
       // Browsers reject one or more lifecycle promises when another transition
       // supersedes this one. The DOM update is still authoritative; cancellation
