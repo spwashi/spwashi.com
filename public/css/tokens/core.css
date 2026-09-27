@@ -1290,6 +1290,18 @@
   --spw-ease-reveal: var(--ease-paper);
   --spw-ease-ambient: var(--ease-orbit);
 
+  /* Springs. A sprung part overshoots a little and settles; one Bézier cannot.
+     contact is the pop of a released press, travel a piece moving between
+     places, settle text arriving with no overshoot. These Béziers are the
+     fallback; the @supports block after this rule swaps in linear() samples of
+     damped springs (damping ratio 0.62 / 0.74 / 1). Travel time rides the
+     duration primitives, so reduced motion collapses it with them.
+     Contract: .spw/conventions/interaction-microstates.spw#discharge_motion. */
+  --spw-spring-contact: var(--ease-release);
+  --spw-spring-travel: var(--ease-orbit);
+  --spw-spring-settle: var(--ease-settle);
+  --spw-time-travel: calc(var(--duration-slow) + var(--duration-snap)); /* a piece moving between places */
+
   /* Page/region timing aliases. Keep JS-readable values concrete. */
   --spw-page-arrival-step-1-delay: 0ms;
   --spw-page-arrival-step-2-delay: 64ms;
@@ -1357,6 +1369,16 @@
   --taste-drift-ease: var(--ease-joint);
   --projection-orbit-duration: var(--duration-ceremonial);
   --projection-orbit-ease: var(--ease-orbit);
+}
+
+/* Spring samples: scratch derivation x(t) = 1 - e^(-ζωt)(cos ω_d t + ζω/ω_d sin ω_d t),
+   ω chosen so the envelope reaches 0.2% at t = 1; overshoot 8.4% / 3.2% / none. */
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --spw-spring-contact: linear(0, .006 1.113%, .036 2.836%, .098 4.903%, .191 7.23%, .58 15.389%, .712 18.429%, .829 21.605%, .925 24.908%, .997 28.328%, 1.046 31.859%, 1.074 35.494%, 1.083 39.229%, 1.08 43.059%, 1.009 63.493%, .993 81.212%, 1);
+    --spw-spring-travel: linear(0, .004 1.113%, .025 2.836%, .069 4.903%, .136 7.23%, .537 18.429%, .641 21.605%, .734 24.908%, .816 28.328%, .883 31.859%, .936 35.494%, .976 39.229%, 1.003 43.059%, 1.02 46.978%, 1.032 55.075%, 1);
+    --spw-spring-settle: linear(0, .014 2.836%, .038 4.903%, .124 9.771%, .458 24.908%, .589 31.859%, .7 39.229%, .789 46.978%, .856 55.075%, .904 63.493%, .951 76.678%, .981 95.209%, 1);
+  }
 }
 
 
