@@ -107,11 +107,93 @@ html[data-spw-image-provenance="off"] .spw-provenance-mark {
   }
 }
 
-/* A scan is shown whole. A frame may crop a render to fill it; an original
-   lies in its frame on a ground of its own, the way a laminated folio sits on
-   a table, so no edge of the work is lost. !important because route layers
-   crop their frames, and this has to hold under every one of them. */
+/* Laminate: an original under plastic. A folio scan is paper sealed in a
+   clear pouch, so it is shown whole and lies in its frame the way a card lies
+   on a table: renders fill their frames, originals rest in theirs. The pouch
+   returns specular light twice, as a thin rim at its edge and as a band of
+   glare across its face, and the card casts a short shadow on its ground.
+   Daylight gives a cool rim and a bright band; lamplight a warm rim and a
+   dim one. Two states, as material-physics asks: at rest the card lies a
+   little askew; lifted (hover, focus, a primed or inspected image) it
+   straightens and its shadow lengthens. object-fit and filter are !important
+   because route layers crop and filter their frames, and the laminate has to
+   hold under every one of them; the lift still moves through the tokens. A frame
+   that caps its own height keeps the whole card inside it: the scan fills a
+   frame of definite height (min-block-size 0 lets a grid frame's row settle
+   at the frame instead of at the scan), inherits a capped frame's max-block-size, and lies
+   on a mat (--laminate-mat) with room for its tilt, rim, and shadow. */
+:root {
+  --laminate-rim: color-mix(in oklch, white 78%, transparent);
+  --laminate-edge: color-mix(in oklch, #1d1b18 24%, transparent);
+  --laminate-shadow: color-mix(in oklch, #2a2118 30%, transparent);
+  --laminate-glare: calc(var(--material-specular, 0.28) * 0.7);
+  --laminate-glare-angle: 112deg;
+  --laminate-tilt: -0.35deg;
+  --laminate-lift: 0;
+}
+
+html[data-spw-color-mode="dark"],
+html[data-spw-theme-pack="banked-ember"]:not([data-spw-color-mode="light"]) {
+  --laminate-rim: color-mix(in oklch, #f2c27c 36%, transparent);
+  --laminate-edge: color-mix(in oklch, black 58%, transparent);
+  --laminate-shadow: color-mix(in oklch, black 52%, transparent);
+  --laminate-glare: calc(var(--material-specular, 0.28) * 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] {
+    --laminate-rim: color-mix(in oklch, #f2c27c 36%, transparent);
+    --laminate-edge: color-mix(in oklch, black 58%, transparent);
+    --laminate-shadow: color-mix(in oklch, black 52%, transparent);
+    --laminate-glare: calc(var(--material-specular, 0.28) * 0.18);
+  }
+}
+
 :is(figure, [data-spw-slot="figure"]) img[src*="/public/images/assets/folios/"] {
+  box-sizing: border-box;
+  block-size: 100%;
+  min-block-size: 0;
+  max-block-size: inherit;
+  padding: var(--laminate-mat, clamp(0.3rem, 3%, 1rem));
   object-fit: contain !important;
-  background: color-mix(in srgb, var(--ink, #1d1b18) 6%, var(--surface-strong, #fbf8f1));
+  background: none;
+  rotate: var(--laminate-tilt);
+  filter:
+    drop-shadow(0 0 0.6px var(--laminate-edge))
+    drop-shadow(0 0 1.4px var(--laminate-rim))
+    drop-shadow(0 calc(3px + 6px * var(--laminate-lift)) calc(6px + 10px * var(--laminate-lift)) var(--laminate-shadow)) !important;
+  -webkit-mask-image: linear-gradient(var(--laminate-glare-angle), #000 34%, rgb(0 0 0 / calc(1 - var(--laminate-glare))) 44%, rgb(0 0 0 / calc(1 - var(--laminate-glare) * 0.4)) 51%, #000 60%);
+  mask-image: linear-gradient(var(--laminate-glare-angle), #000 34%, rgb(0 0 0 / calc(1 - var(--laminate-glare))) 44%, rgb(0 0 0 / calc(1 - var(--laminate-glare) * 0.4)) 51%, #000 60%);
+  transition:
+    filter var(--material-duration-deliberate, 360ms) var(--material-settle-ease, ease),
+    rotate var(--material-duration-deliberate, 360ms) var(--material-settle-ease, ease),
+    transform var(--material-duration-base, 220ms) var(--material-settle-ease, ease);
+}
+
+:is(li, article, .spw-panel):nth-child(even) img[src*="/public/images/assets/folios/"] {
+  --laminate-tilt: 0.3deg;
+}
+
+:is(
+  [data-spw-image-interaction-state="primed"],
+  [data-spw-image-interaction-state="inspecting"],
+  [data-spw-image-interaction-state="lensed"],
+  :is(a, figure, [data-spw-image-surface]):focus-visible,
+  :is(a, figure, [data-spw-image-surface]):focus-within
+) img[src*="/public/images/assets/folios/"] {
+  --laminate-lift: 1;
+  --laminate-tilt: 0deg;
+}
+
+@media (hover: hover) {
+  :is(a, figure, [data-spw-image-surface]):hover img[src*="/public/images/assets/folios/"] {
+    --laminate-lift: 1;
+    --laminate-tilt: 0deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(figure, [data-spw-slot="figure"]) img[src*="/public/images/assets/folios/"] {
+    transition: none;
+  }
 }

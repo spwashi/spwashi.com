@@ -93,15 +93,41 @@ expression = material[optics]{transmission.specular.shadow}<surface>
   probe: `grep -n -- "--layer-" public/css/tokens/core.css`
 }
 
+^"laminate"{
+  ~#note: "An original under plastic. Folio scans are paper sealed in a clear pouch, so they read as objects lying in a frame rather than pictures filling it."
+  expression = material[laminate]{rim.glare.shadow}<scan>
+  owner = `public/css/systems/image-utilization.css`
+  selects = `:is(figure, [data-spw-slot="figure"]) img[src*="/public/images/assets/folios/"]`
+  optics = .{
+    rim = `--laminate-rim: a 1.4px drop-shadow halo, the pouch edge catching light`
+    edge = `--laminate-edge: a 0.6px line where plastic meets ground`
+    glare = `--laminate-glare: a mask band across the face; calc(var(--material-specular) * 0.7) in daylight, * 0.18 in lamplight`
+    shadow = `--laminate-shadow: a short cast on the frame's own ground`
+  }[reg=facet]
+  states = .{
+    rest = `--laminate-lift: 0 and --laminate-tilt -0.35deg (0.3deg on even children): a card set down by hand`
+    lift = `--laminate-lift: 1 and --laminate-tilt 0 on hover, focus, or a primed / inspecting / lensed image: picked up and straightened`
+    ~#refuse: "a third laminate state; lift is the interaction, rest is everything else (@states)"
+  }[reg=facet]
+  light = `daylight and lamplight follow html[data-spw-color-mode], OS dark under auto, and the banked-ember pack`
+  fit = .{
+    contain = `object-fit contain: a scan is never cropped`
+    frame = `block-size 100% with min-block-size 0 fills a frame of definite height; max-block-size inherit takes a capped frame's cap; an uncapped frame passes none`
+    mat = `padding: var(--laminate-mat, clamp(0.3rem, 3%, 1rem)) leaves room for tilt, rim, and shadow; #entry-loops sets its own mat below the card chrome`
+    important = `object-fit and filter are !important because route layers crop and filter frames; the lift still moves through the tokens`
+  }[reg=facet]
+  measured = `2026-09-27: every folio scan in a figure on 35 routes at 1280 px lies inside its clipping ancestors (clip audit); the one remaining report is lore.land, whose signal-studies column measures 25 px wide at HEAD as well`
+}
+
 ^"integrity"{
   rule: "A material token earns its place by being consumed. A defined-and-unused token is a claim about the model that nothing tests."
   measured: .{
     material_blur_uses = 11
     card_shadow_hover_uses = 5
     material_shadow_rest_uses = 4
-    material_specular_uses = 1
+    material_specular_uses = 3
   }[reg=facet]
-  ~#finding: "specular is declared at 0.28 and now has one paired consumer: texture-slice return attenuated by the inherited biome canopy"
+  ~#finding: "specular is declared at 0.28 and has three consumers: material.css's own returned-light term, texture-slice return attenuated by the inherited biome canopy, and the laminate's glare band (2026-09-27; the earlier count of one missed material.css)"
   probe: `for t in material-specular material-transmission material-blur; do echo "$t $(grep -rn "var(--$t" public/css | grep -v bundles | wc -l)"; done`
 }
 
