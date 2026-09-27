@@ -662,13 +662,16 @@ export function supportsHoverEnvironment(view = globalThis) {
 }
 
 /* Native activation that gesture machines must not steal. summary is the
-   details disclosure; contenteditable is an editor. tabindex is omitted —
-   chips and living terms use it and ARE the affordance. See
-   .spw/audits/touch-gesture-contracts-2026-09.spw. */
+   details disclosure; contenteditable is an editor. label is its control's
+   hit area: a frame that captured a press on a pill's text took the release
+   too, and the radio inside never heard the click (folio thread pills,
+   2026-09-26). tabindex is omitted — chips and living terms use it and ARE
+   the affordance. See .spw/audits/touch-gesture-contracts-2026-09.spw. */
 export const NATIVE_CONTROL_SELECTOR = [
   'a[href]',
   'button',
   'input',
+  'label',
   'select',
   'textarea',
   'summary',

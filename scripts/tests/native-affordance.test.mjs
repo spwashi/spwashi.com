@@ -43,16 +43,21 @@ test('isLensModeControl names mode-switch seats, not ordinary sigils', () => {
   assert.equal(isLensModeControl(sigil), false);
 });
 
-test('isOwnAffordanceTarget leaves nested buttons and summaries to themselves', () => {
+test('isOwnAffordanceTarget leaves nested buttons, summaries, and labels to themselves', () => {
   const hook = mockNode('[data-spw-kind="hook"]');
   const button = mockNode('button', hook);
   const summary = mockNode('summary', hook);
   const prose = mockNode('p', hook);
+  // A press on a pill's text lands on the label, not the radio it wraps.
+  const pill = mockNode('label', hook);
+  const pillText = mockNode('span', pill);
 
   assert.equal(isOwnAffordanceTarget(hook, hook), true);
   assert.equal(isOwnAffordanceTarget(hook, prose), true);
   assert.equal(isOwnAffordanceTarget(hook, button), false);
   assert.equal(isOwnAffordanceTarget(hook, summary), false);
+  assert.equal(isOwnAffordanceTarget(hook, pill), false);
+  assert.equal(isOwnAffordanceTarget(hook, pillText), false);
   assert.equal(isOwnAffordanceTarget(button, button), true);
   assert.equal(isNativeControl(button), true);
   assert.equal(isNativeControl(prose), false);
