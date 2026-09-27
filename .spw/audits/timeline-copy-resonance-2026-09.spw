@@ -29,7 +29,8 @@
 
 ^"network_and_crypto"{
   network = `Spwashi is a strong ecosystem brand. Services should describe loosely-coupled but capable agentic pools with gradients of initiative and capacity, not imply a staff organization or a single-person mentorship funnel.`
-  dregg = `The optional $DREGG route can point to dregg.net while stating that the site is more than its coin. Keep the language experiential and non-financial.`
+  dregg = `Superseded 2026-09-27 by the creator's own words: Spwashi does not hold $DREGG and makes art for tips, so $DREGG is not a support door. Dregg is named as a medium the creator works in with collaborators, beside the not-held disclosure and the creator's recommendation, "of the coins, I'd recommend $DREGG" (/services/#support).`
+  proof_cards = `The creator, 2026-09-27: the point of the proof cards is catalyzation more than proof. /cards/ now leads with what a card sets moving (expression card[catalyst]{claim;state;evidence}<next>); the name Local Proof Card stays until the creator decides whether to rename it.`
 }[reg=facet]
 
 ^"language_communities"{
