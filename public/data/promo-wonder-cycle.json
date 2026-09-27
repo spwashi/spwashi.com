@@ -51,6 +51,10 @@
     "promo": {
       "label": "What changed",
       "operator": "@",
+      "intents": [
+        "~",
+        "@"
+      ],
       "title": "Thirty-one folios, scanned for September 26",
       "summary": "Follow a thread through the stack, open a folio, flip to its neighbors, or turn a sideways piece. Ask for the one that stays with you by card.",
       "href": "/design/folios/#release-set",
@@ -80,6 +84,10 @@
     "wonder": {
       "label": "Cycle question",
       "operator": "?",
+      "intents": [
+        "?",
+        "^"
+      ],
       "title": "Who should set the site's tempo: you, the page, or the stylesheet?",
       "summary": "Rhythm authority is new this cycle. Choose an author, and the rail beside it plays the tempo that wins.",
       "href": "/settings/#rhythm-authority-settings",
@@ -93,6 +101,10 @@
       "promo": {
         "label": "Release record",
         "operator": "@",
+        "intents": [
+          "#>",
+          "."
+        ],
         "title": "Revisit the September 26 record",
         "summary": "The B-cycle close and its receipts stay on Now while the next cycle builds on them.",
         "href": "/now/#release-receipts",
@@ -102,6 +114,10 @@
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "#>"
+        ],
         "title": "Which receipt still matters a cycle later?",
         "summary": "Pick one line from the close and follow it into its route. If it still helps there, it belongs in this cycle.",
         "href": "/now/#release-receipts",
@@ -112,6 +128,9 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
+        "intents": [
+          "^"
+        ],
         "title": "Keep a configuration that fits how you read",
         "summary": "Presets, workflow, and climate stay in this browser. One change is enough to feel the page answer.",
         "href": "/settings/#presets",
@@ -140,6 +159,10 @@
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "^"
+        ],
         "title": "What if this page had a different climate?",
         "summary": "Climate is the attention posture. Try one, then leave \u2014 the site keeps it.",
         "href": "/settings/#climate-settings",
@@ -150,6 +173,9 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
+        "intents": [
+          "@"
+        ],
         "title": "Make collaboration easy to imagine",
         "summary": "Keep the call to action low friction: a card, a button, a short route, or a clear email path to follow.",
         "href": "/contact/",
@@ -177,6 +203,10 @@
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "#>"
+        ],
         "title": "Who would be surprised by the breadth of this site?",
         "summary": "Developers, illustrators, authors, and executives all need different cues. A rotating surface can bridge those expectations.",
         "href": "/about/",
@@ -187,6 +217,9 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
+        "intents": [
+          "^"
+        ],
         "title": "Point to the tool that reduces effort",
         "summary": "The right entry point is often a small utility, a clear route, or a sample that lowers the cost of starting.",
         "href": "/tools/",
@@ -195,6 +228,10 @@
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "^"
+        ],
         "title": "What if the site behaved like a well-run studio?",
         "summary": "The interface can express rhythm, attention, and stewardship without pretending everything is static.",
         "href": "/design/",
@@ -205,6 +242,10 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
+        "intents": [
+          "~",
+          "@"
+        ],
         "title": "See the laminated folio stack",
         "summary": "Collage, lamination, and seasonal paint return to the same surfaces. Thirty-one scans now show the stack; open a piece, follow a thread, or ask for one by card.",
         "href": "/design/folios/#release-set",
@@ -233,6 +274,10 @@
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "~"
+        ],
         "title": "What if a homebrew pantry also had a physical object?",
         "summary": "A character, place, or motif from lore.land can become a laminated original, a print, or a collage.",
         "href": "/about/domains/lore.land/",
@@ -243,6 +288,10 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
+        "intents": [
+          "^",
+          "#>"
+        ],
         "title": "See the layers the pages are built from",
         "summary": "Design is the public map of the same surfaces Settings tunes: slots, palettes, and reading weather.",
         "href": "/design/",
@@ -271,6 +320,10 @@
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "^"
+        ],
         "title": "Which layer would you keep if you had to choose one?",
         "summary": "Workflow, climate, and attention posture are separate levers. The point is to pick one and feel it.",
         "href": "/settings/#author-workflow-settings",
@@ -281,6 +334,10 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
+        "intents": [
+          ".",
+          "^"
+        ],
         "title": "Give people a place to begin and a reason to stay",
         "summary": "A homepage can do both: point to useful work and create enough atmosphere to invite a second look.",
         "href": "/topics/software/spw/",
@@ -289,6 +346,10 @@
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "~"
+        ],
         "title": "What kind of collaborator would this site attract?",
         "summary": "The answer should be broader than one discipline. The structure can help people imagine themselves inside it.",
         "href": "/play/rpg-wednesday/",
@@ -299,6 +360,9 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
+        "intents": [
+          "~"
+        ],
         "title": "The group streak pet has outfits now",
         "summary": "314 days. Share one small, otherwise inconsequential wonder \u2014 a leaf, a joke, a hat on the pet, a soup. Autumn is a season of small returns.",
         "href": "/topics/mental-health/#streak-math",
@@ -327,6 +391,10 @@
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "."
+        ],
         "title": "What tiny thing is still worth sharing this autumn?",
         "summary": "Not a thesis. A leaf, a soup, a hat on the streak pet. The site is for that kind of return.",
         "href": "/recipes/#chicagoland-season",
@@ -339,6 +407,9 @@
       "promo": {
         "label": "Weekly promo",
         "operator": "@",
+        "intents": [
+          "^"
+        ],
         "title": "Configure the site you are already on",
         "summary": "Appearance, density, and chrome are the same layers the pages use. Settings is where you keep a configuration.",
         "href": "/settings/",
@@ -367,6 +438,10 @@
       "wonder": {
         "label": "Weekly wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "^"
+        ],
         "title": "What would you turn down first?",
         "summary": "Attention posture is the quiet lever: how much the page asks of you at once.",
         "href": "/settings/#attention-posture-settings",
@@ -377,6 +452,10 @@
       "promo": {
         "label": "Weekly promo",
         "operator": "@",
+        "intents": [
+          ".",
+          "@"
+        ],
         "title": "Make the work legible to a new teammate quickly",
         "summary": "Good surfaces reduce onboarding time for developers, illustrators, and authors alike.",
         "href": "/topics/software/",
@@ -404,6 +483,10 @@
       "wonder": {
         "label": "Weekly wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "#>"
+        ],
         "title": "Which gap in career breadth is the site ready to bridge?",
         "summary": "The site can welcome a person with senior relationships and missing context without shaming the gap.",
         "href": "/about/",
@@ -414,6 +497,10 @@
       "promo": {
         "label": "Weekly promo",
         "operator": "@",
+        "intents": [
+          "^",
+          "@"
+        ],
         "title": "Show the starter kit for the decentralized team",
         "summary": "Offer routes and tools that help someone imagine joining the work without a heavy ceremony.",
         "href": "/tools/",
@@ -422,6 +509,10 @@
       "wonder": {
         "label": "Weekly wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "^"
+        ],
         "title": "What would a calm, premium, living homepage look like by Friday?",
         "summary": "The answer can change with the week while the shell stays stable.",
         "href": "/design/",
@@ -432,6 +523,9 @@
       "promo": {
         "label": "Weekly promo",
         "operator": "@",
+        "intents": [
+          "@"
+        ],
         "title": "Turn curiosity into a clear conversation",
         "summary": "A good weekly card can invite work, not merely attention.",
         "href": "/services/",
@@ -440,6 +534,10 @@
       "wonder": {
         "label": "Weekly wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "."
+        ],
         "title": "What part of the site should feel newly alive this week?",
         "summary": "This is the place for a slightly stranger question than the daily slot.",
         "href": "/blog/",
@@ -450,6 +548,9 @@
       "promo": {
         "label": "Weekly promo",
         "operator": "@",
+        "intents": [
+          "~"
+        ],
         "title": "RPG Wednesday makes art around the lore.land canon",
         "summary": "The group streak is 314 days and the pet has outfits. Wednesday is still art and story from the lore.land pantry. Bring one small, otherwise inconsequential wonder.",
         "href": "/play/rpg-wednesday/",
@@ -478,6 +579,10 @@
       "wonder": {
         "label": "Weekly wonder",
         "operator": "?",
+        "intents": [
+          "?",
+          "~"
+        ],
         "title": "What tiny, otherwise inconsequential thing is still worth sharing?",
         "summary": "A hat on the streak pet. A leaf. A soup. Autumn is a season of small returns, not a thesis.",
         "href": "/topics/mental-health/#streak-math",

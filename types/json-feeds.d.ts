@@ -61,6 +61,8 @@ export type PromoWonderCard = {
   label?: string;
   locale?: LocaleCode;
   operator?: string;
+  /** Operator sigils this entry serves; the promo speaks only along one of them. */
+  intents?: string[];
   title?: string;
   summary?: string;
   href?: string;

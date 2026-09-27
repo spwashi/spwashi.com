@@ -12,6 +12,8 @@ import {
   getRuntimeRewardPolicy,
   normalizeNotice,
   resolveNoticePresentation,
+  restingSeatDecision,
+  selectIntentNotice,
   shouldSuppressScheduledNotices,
   selectScheduleItems,
   slugify,
@@ -716,6 +718,45 @@ test('discovery notices keep dismiss keys and suppression rules stable', () => {
   assert.equal(shouldSuppressNotice(normalized, '2026-04-13', {}, '/services/'), true);
   assert.equal(shouldSuppressNotice(normalized, '2026-04-13', { [normalized.dismissKey]: '2026-04-13' }, '/other/'), true);
   assert.equal(shouldSuppressNotice(normalized, '2026-04-14', {}, '/other/'), false);
+});
+
+test('an intent picks the promo that serves it, and no intent says nothing', () => {
+  const feed = {
+    daily: [
+      { promo: { operator: '@', intents: ['@'], title: 'Ask for a folio', summary: 'Request by card.', href: '/design/folios/#folio-request' },
+        wonder: { operator: '?', intents: ['?', '~'], title: 'What would you trade for one?', summary: 'A question.', href: '/play/' } },
+    ],
+    weekly: [
+      { promo: { operator: '@', intents: ['^'], title: 'Tune the site', summary: 'Presets.', href: '/settings/' } },
+    ],
+  };
+  const play = { operator: 'potential', sigil: '~', verb: 'play' };
+  const build = { operator: 'integration', sigil: '^', verb: 'build' };
+
+  const forPlay = selectIntentNotice(feed, date, play);
+  assert.equal(forPlay.length, 1);
+  assert.equal(forPlay[0].source.href, '/play/');
+  assert.equal(forPlay[0].presentation, 'toast');
+  assert.equal(forPlay[0].label, 'Along your ~ play');
+  assert.equal(selectIntentNotice(feed, date, build)[0].source.href, '/settings/');
+  assert.deepEqual(selectIntentNotice(feed, date, { sigil: '#>', verb: 'reference' }), []);
+  assert.deepEqual(selectIntentNotice(feed, date, null), []);
+
+  const silent = buildVisibleNotices(feed, date, {}, '/other/', { intent: null });
+  assert.equal(silent.visible.length, 0);
+  const met = buildVisibleNotices(feed, date, {}, '/other/', { intent: play });
+  assert.equal(met.visible.length, 1);
+  assert.equal(met.visible[0].presentation, 'toast');
+  assert.equal(met.visible[0].label, 'Along your ~ play');
+});
+
+test('a promo waits for a resting seat', () => {
+  const rest = { atEnd: true, sinceScrollMs: 2000, dwellMs: 20000, blocked: false };
+  assert.equal(restingSeatDecision(rest), 'speak');
+  assert.equal(restingSeatDecision({ ...rest, atEnd: false }), 'wait');
+  assert.equal(restingSeatDecision({ ...rest, blocked: true }), 'hold');
+  assert.equal(restingSeatDecision({ ...rest, sinceScrollMs: 300 }), 'hold');
+  assert.equal(restingSeatDecision({ ...rest, dwellMs: 3000 }), 'hold');
 });
 
 test('discovery notices suppress duplicate visible routes', () => {

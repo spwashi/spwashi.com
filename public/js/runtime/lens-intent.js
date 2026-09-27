@@ -19,13 +19,18 @@
  * seat carries too.
  *
  * Session-scoped: an intent belongs to a visit, and nothing learns who is
- * visiting. Contract: .spw/caches/intent-across-pages-2026-09.spw s2.
+ * visiting. The record and its storage belong to kernel/visit-intent.js; this
+ * module is its one writer. Contract: .spw/caches/intent-across-pages-2026-09.spw s2.
  */
 
 import { getOperatorDefinition } from '/public/js/kernel/operator-detection.js';
+import {
+  intentFromOperator,
+  readCarriedIntent as readIntent,
+  writeCarriedIntent as writeIntent,
+} from '/public/js/kernel/visit-intent.js';
 
 const SEAT_SELECTOR = '.mode-switch .frame-sigil[data-set-mode][data-spw-operator]';
-const STORAGE_KEY = 'spw:intent:v1';
 const HOLD_MS = 450;
 const MOVE_TOLERANCE = 10;
 
@@ -34,24 +39,6 @@ let mounted = null;
 // remount this module mid-hold, and the carry must still land.
 let hold = null;
 let justCarried = null;
-
-function readIntent() {
-  try {
-    const intent = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
-    return intent?.operator ? intent : null;
-  } catch {
-    return null;
-  }
-}
-
-function writeIntent(intent) {
-  try {
-    if (intent) sessionStorage.setItem(STORAGE_KEY, JSON.stringify(intent));
-    else sessionStorage.removeItem(STORAGE_KEY);
-  } catch {
-    /* storage blocked: the carry lasts for this page only */
-  }
-}
 
 function operatorOf(seat) {
   return getOperatorDefinition(seat.dataset.spwOperator || '') || null;
@@ -88,15 +75,11 @@ function carry(seat) {
   const current = readIntent();
   const next = current?.operator === operator.type
     ? null
-    : {
-      operator: operator.type,
-      sigil: operator.prefix || '',
-      verb: operator.intent || '',
+    : intentFromOperator(seat.dataset.spwOperator || '', {
       word: seatWord(seat, operator.prefix || ''),
       mode: seat.dataset.setMode,
       from: location.pathname,
-      at: Date.now(),
-    };
+    });
   writeIntent(next);
   mark(next);
   navigator.vibrate?.(next ? [4, 20, 8] : 6);

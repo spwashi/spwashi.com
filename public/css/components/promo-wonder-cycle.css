@@ -199,6 +199,43 @@
   justify-self: start;
 }
 
+/* The week's pair folds shut. First paint and hydration show the same one
+   line, so the section never grows under the reader; the pair opens when the
+   reader asks for it. */
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__weekly > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  cursor: pointer;
+  list-style: none;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__weekly > summary::-webkit-details-marker {
+  display: none;
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__weekly > summary::before {
+  content: "\25B8";
+  transition: rotate var(--duration-fast, 140ms) var(--ease-settle, ease);
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__weekly[open] > summary::before {
+  rotate: 90deg;
+}
+
+@media (pointer: coarse) {
+  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__weekly > summary {
+    min-block-size: var(--touch-target-min, 44px);
+  }
+}
+
+/* The card that serves the visit's intent (kernel/visit-intent.js) wears a
+   ring in the active ink. An outline, so nothing moves. */
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card.is-intent-match {
+  outline: 2px solid color-mix(in oklch, var(--active-op-color, var(--teal, #008080)) 62%, transparent);
+  outline-offset: 3px;
+}
+
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card {
   --spw-card-accent: var(--home-accent-primary, var(--semantic-accent, #008080));
   --spw-arc-color: var(--spw-card-accent);

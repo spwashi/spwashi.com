@@ -17,8 +17,12 @@ import type {
   PromotionKind,
 } from './json-feeds.js';
 import { validatePromoWonderFeed } from './json-feeds.js';
+import { describeIntent, readVisitIntent } from './kernel-visit-intent.js';
 
 type PromoWonderKind = 'promo' | 'wonder';
+
+/** The intent this render meets the reader along (kernel/visit-intent.js); set per render. */
+let visitIntent: { sigil?: string; verb?: string; operator?: string } | null = null;
 type TemporalCadence = 'daily' | 'weekly' | 'cycle';
 type ReleaseCycle = 'A-cycle' | 'B-cycle' | '';
 type ReleaseForecast = Readonly<{
@@ -28,6 +32,8 @@ type ReleaseForecast = Readonly<{
 }>;
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
+/* Same words as the static fallback's closed disclosure, so hydration swaps nothing the reader can see. */
+const WEEKLY_SUMMARY = "This week's quieter pair";
 const SOURCE_LOCALE = 'en';
 
 const DEFAULT_FEED = Object.freeze({
@@ -86,6 +92,7 @@ const DEFAULT_FEED = Object.freeze({
     promo: {
       label: 'What changed',
       operator: '@',
+      intents: ['~', '@'],
       title: 'Thirty-one folios, scanned for September 26',
       summary: 'Follow a thread through the stack, open a folio, flip to its neighbors, or turn a sideways piece. Ask for the one that stays with you by card.',
       href: '/design/folios/#release-set',
@@ -110,6 +117,7 @@ const DEFAULT_FEED = Object.freeze({
     wonder: {
       label: 'Cycle question',
       operator: '?',
+      intents: ['?', '^'],
       title: "Who should set the site's tempo: you, the page, or the stylesheet?",
       summary: 'Rhythm authority is new this cycle. Choose an author, and the rail beside it plays the tempo that wins.',
       href: '/settings/#rhythm-authority-settings',
@@ -322,6 +330,10 @@ function renderCard(
   if (promotionTheme) article.dataset.spwPromotionTheme = promotionTheme;
   if (item.promotion?.ctaStyle) article.dataset.spwPromotionCtaStyle = cleanText(item.promotion.ctaStyle);
   if (promotionHandles.length) article.dataset.spwPromotionHandles = promotionHandles.join(' ');
+  if (visitIntent?.sigil && Array.isArray(item.intents) && item.intents.includes(visitIntent.sigil)) {
+    article.classList.add('is-intent-match');
+    article.setAttribute('aria-description', `Along your ${describeIntent(visitIntent)}`);
+  }
 
   const label = el('p', 'spec-kicker promo-wonder-cycle__label');
   label.textContent = compact
@@ -461,9 +473,11 @@ function renderForecast(date: Date, locale: LocaleCode): HTMLElement {
 /* Reading order is the attention order: what changed this cycle and a question
    to carry (the pinned cycle pair, identical to the static HTML so hydration
    does not swap the cards under the reader), then the days left to carry it,
-   then the week's quieter pair. The weekday pair stays in the feed for
+   then the week's quieter pair, folded shut so hydration fills it without
+   growing the section under the reader. The weekday pair stays in the feed for
    discovery notices rather than competing here. */
 export function renderFeed(host: Element, feed: PromoWonderFeed, date = new Date()): void {
+  visitIntent = readVisitIntent(document);
   const cycle = feed.cycle?.promo || feed.cycle?.wonder ? feed.cycle : DEFAULT_FEED.cycle;
   const weekly = pickWeekly(feed, date);
   const locale = feedLocale(feed);
@@ -501,10 +515,9 @@ export function renderFeed(host: Element, feed: PromoWonderFeed, date = new Date
 
   /* The kicker sits above its own pair grid rather than spanning the pair's
      tracks, so the two compact cards share the row the way the cycle pair does. */
-  const weeklyGroup = el('div', 'promo-wonder-cycle__weekly');
-  weeklyGroup.setAttribute('aria-label', 'This week');
-  const weeklyKicker = el('p', 'spec-kicker promo-wonder-cycle__weekly-kicker');
-  weeklyKicker.textContent = 'This week';
+  const weeklyGroup = el('details', 'promo-wonder-cycle__weekly');
+  const weeklyKicker = el('summary', 'spec-kicker promo-wonder-cycle__weekly-kicker');
+  weeklyKicker.textContent = WEEKLY_SUMMARY;
   const weeklyGrid = el('div', 'promo-wonder-cycle__grid');
   weeklyGrid.append(
     renderCard(weekly.promo, 'promo', 'weekly', locale, true),
