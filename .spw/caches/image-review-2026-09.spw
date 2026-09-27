@@ -1,0 +1,71 @@
+# Image Review on a Contact Sheet (2026-09)
+#
+# operation: contract
+# The creator marked every generated picture the site shows (54 pictures on
+# 160 placements) keep, replace, or cut on a contact sheet. This records the
+# criterion their notes name, what was done, and what is held and why.
+
+#>image_review_2026_09
+#:cache #!images #!provenance #!folios #!taste #!review
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@provenance_runtime: ~"../../public/js/runtime/image-provenance.js"
+@provenance_index: ~"../../public/js/generated/image-provenance.js"
+@scan_rule: ~"../../public/css/systems/image-utilization.css"
+@folio_scans: ~"../../public/images/assets/folios/"
+@midjourney_plan: ~"../../.agents/plans/midjourney-design-concepts/PLAN.md"
+
+operation = "contract"
+fixity = "tending"
+source = "creator, 2026-09-27, marking the contact sheet"
+board = "https://claude.ai/artifact/Y6yHmj7aqZCz9LiaZRbJgJ (private; marks live in its db collection `marks`)"
+
+expression = picture[review]{keep.replace.cut}<wonder>
+
+^"criterion"{
+  heard = #[
+    `stylistically uninteresting, not a mental wonder I want to explore or daydream about`,
+    `feels generic`,
+    `image feels unrelated`,
+    `image feels generic, stylistically insignificant`,
+    `need to work on the character design of l'n'd'r`
+  ][reg=set]
+  reading = `A picture earns its place by being a wonder the reader would want to explore or daydream about, and by belonging to the page it sits on. A generic, unrelated, or stylistically insignificant picture is replaced even when it is pretty.`
+  kept = `the papergami set (kinetic, architecture, botanical, collage), the boon and boonhonk studies, the material and math illustrations, the RPG Wednesday scenes other than Lndr's, the sunflower, and algorithm-lattice-0`
+  let_go = `11 of the 12 unsorted-curation renders on pages, the rhythms kitchen renders other than the sunflower, papergami-cubes, and the service illustrations with no provenance on file`
+}
+
+^"tally"{
+  pictures = 54
+  placements = 160
+  keep = 27
+  replace = 21
+  cut = 6
+}
+
+^"done"{
+  swaps = `49 placements on 34 pages: 44 now show one of 28 laminated folio scans where a scan belongs to the page; 5 show a kept or on-file picture where no scan does (the sunflower for nutrition, the dough for the recipe card, papergami-layout for the folio seed study, and the boonhonk apparatus, with its recorded prompt, in the Midjourney specimen lane).`
+  cuts = `13 figures on 11 pages: Home's site-architecture and algorithm-field cards, the design promptability studio, about/website atlas weather, the tools/midjourney concept shelf, the mise-en-place knife lattice, film editing, the recipes brassica, the services creator panel, the ecosystem Pretext.js and lore.land panels, the parsers hero, and the pretext orientation panel.`
+  scene_beds = `Three cut pictures sat inside film scene-composition beds, whose lanes and swipes act on the picture. A bed with nothing to frame is a broken drill, so those beds got scans instead (acceptance ritual checklist, poem count the boring ones, teal stripes wash). Remove the phases instead if a drill should go.`
+  share_cards = `og_image follows the verdict on 11 routes; pretext falls back to the home card.`
+  scan_rule = `A scan is shown whole: object-fit contain on a ground, !important over route crops. Renders fill their frames; originals lie in them, as a laminated folio lies on a table.`
+  copy = `Captions keep their principle. Titles and image clauses that described the old picture were rewritten, and data-spw-visual-cues, discovery titles, and accent colors follow the new picture.`
+}
+
+^"held"{
+  lndr = `rpg-character-lndr-rockgnome-study (5 placements) and rpg-scene-library-provisional-drawer (3), where Lndr stands at the counter: replace, waiting on the creator's redesign of Lndr. Brief: the character as the creator draws him (silhouette, hat, tools), then the drawer scene rendered or drawn around that design.`
+  fermentation = `fermentation-bubble-choir on /recipes/fermentation/: replace, waiting on a picture that shows fermentation, since the caption and discovery reward are written around the bubbles. Brief: a vessel mid-ferment in the papergami or boonhonk register (Midjourney --profile 3q5khel), bubbles legible as rhythm, no glow.`
+  bench = `staged primitive families algorithm-lattice, boonhonk-abstract, library-cozy, and text-tile on /design/materials: replace, waiting on re-staging (each family's record already said replace_later). Proposal: stage new families from kept pictures or folio scans with slice-render-primitives.mjs; neutral-hex and papergami-cubes stay.`
+}
+
+^"provenance"{
+  unrecorded = `pretext-physics, compression, schedulers, semantic-phases, lore-land-signal-poster, and spwashi-alchemy-token got no provenance answer on the sheet. All six are now off the pages or replaced, and the runtime leaves them unmarked.`
+}
+
+do_not = #[
+  `bring an unsorted-curation render back onto a page without a new review`,
+  `crop a folio scan to fill a frame`,
+  `write a prompt onto a specimen card that the picture's record does not hold`
+][reg=set]

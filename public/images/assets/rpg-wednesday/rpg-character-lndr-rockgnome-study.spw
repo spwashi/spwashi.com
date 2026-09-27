@@ -41,3 +41,10 @@
   status: "extracted"
   related_images: ["boonhonk-machine-prop", "library-craft-register"]
 }
+
+^"review"{
+  on: "2026-09-27"
+  verdict: "replace"
+  held: "until the creator redesigns 'l'n'd'r; the portrait stays in its five places until that design exists"
+  record: ~"../../../../.spw/caches/image-review-2026-09.spw"
+}

@@ -853,6 +853,9 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   .website-measure-table :is(th, td) { padding: 0.3rem 0.6rem 0.3rem 0; text-align: start; white-space: nowrap; border-block-end: 1px solid var(--website-line); }
   .website-measure-table meter { inline-size: clamp(5rem, 24vw, 12rem); vertical-align: middle; }
 }
+:where(.website-visual-register > :only-child) {
+  max-inline-size: 34rem;
+}
 }
 
 /* /public/css/routes/surfaces/design.css */
