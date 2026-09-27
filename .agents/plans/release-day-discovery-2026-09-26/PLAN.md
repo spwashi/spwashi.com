@@ -59,8 +59,8 @@ Codex ran out of credits after the edits and before verification.
   voice and the September 13 close's pattern (kicker, h1, lede, receipts, gate,
   status). The promo keeps the release set; the cycle and daily questions return
   to the authored ones.
-- GPT-6's authored diff is `gpt-6-pass.patch` in this folder, untracked, for lines
-  worth lifting by hand.
+- GPT-6's authored diff sat untracked here for review, then was deleted at the
+  creator's call the same evening; the verdict above is the record.
 - Found on the way, landed as their own patches: the folio shelf's flip nested
   views and hid its controls below the view's fold; thread pills ignored a mouse
   (brace capture on labels); the dev server exhausted file watchers on
