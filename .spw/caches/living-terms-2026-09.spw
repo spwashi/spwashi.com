@@ -20,8 +20,8 @@ claim: `Highlighted words are the site's central mechanic, and the markup must b
   living = `43 concepts are living by this rule: 33 carry a definition in title ("retrieving something strengthens memory more than rereading it"), 12 have a home anchor on the site that a term could link to (living-concepts, memory-garden, cauldron, media-cauldron, surface, capability, receipt, your-sound, catalog, svg-storytelling, cadence, join).`
   decorated = `96 concepts have neither: the word is highlighted, focusable, and inert without scripts — brace-physics ×6, spell-navigation ×4, lattice ×4, cauldron-collection ×4, attention-shape ×3, release-cycle ×3, dose-trace ×3 lead the list.`
   lie = `25 terms on six routes authored title="tap: inspect • hold to prime" (and two longer variants, one promising a double-click that only brace targets honour). Removed 2026-09-27; @haptics annotateCauldronCandidates writes "tap to inspect; hold to gather as a cauldron ingredient" at mount when no title is authored, so scripts on lose nothing and scripts off stop lying.`
-  runtime = `The tap handler calls preventDefault before opening the note, so a term authored as <a href> would still inspect in place with scripts on and follow its href without. The keyboard path is the exception: it returns early for anything inside a[href], so Enter on a living-term link would navigate. Parity is one condition in @haptics.`
-  inspect_note = `The note shows the word, its expression rows, and a gather button. It does not show what the word means. The 33 definition titles are the only meaning a term carries today, and the note does not read them.`
+  runtime = `Corrected 2026-09-27: isInspectableLivingTerm refused every a[href], so a term authored as a link was not inspectable at all — a tap navigated. @haptics now admits a link that carries data-spw-concept: tap and Enter open the note (preventDefault), the note carries a "go to its home" chip, and scripts off follow the href. Link terms keep role=link; spans still borrow role=button.`
+  inspect_note = `The note now opens with a "means" row when the term carries an authored definition in title (the runtime's own affordance title is not a definition), then the expression rows, then gather and the home. Scripts on and off show the same meaning.`
 }
 
 ^"rule"{
@@ -32,9 +32,9 @@ claim: `Highlighted words are the site's central mechanic, and the markup must b
 
 ^"next"{
   1 = `Landed: the sensor (npm run audit:living-terms, --check fails on affordance titles) and the 25 titles removed.`
-  2 = `Link the twelve homed concepts' terms as <a class="spw-living-term" href="…"> (twenty-two terms; skip the four nested inside links or chips). Needs one rule in typography/base.css so the term keeps its dashed underline instead of the article link underline, and the @haptics keyboard condition for parity. Wait for the other session's dirty core CSS to land before the core rebuild.`
+  2 = `Landed 2026-09-27 for twelve terms on seven routes (media-cauldron, cauldron, memory-garden, svg-storytelling, surface, capability, receipt): <a class="spw-living-term" href> with typography/base.css keeping the dashed underline. Skipped: two on develop-your-sound that already sit inside their home, cadence on film/editing and join on the Spw atlas whose slugs collide with unrelated homes, the nested five, and Home's own terms while another session holds index.html.`
   3 = `Definition titles for the most-used decorated concepts, in the creator's words: brace-physics, spell-navigation, lattice, cauldron-collection, attention-shape, release-cycle, dose-trace. A sentence each.`
-  4 = `Let the inspect note read the definition title, so scripts on and off show the same meaning.`
+  4 = `Landed 2026-09-27: the note's first row is the definition when one is authored.`
   5 = `Drop authored tabindex="0" from span terms once 2 and 3 have made each term either a link or a defined word; the runtime adds focus at mount.`
 }
 
