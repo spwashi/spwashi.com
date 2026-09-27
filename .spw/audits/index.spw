@@ -55,6 +55,7 @@
 @touch_gesture_contracts: ~"./touch-gesture-contracts-2026-09.spw"
 @post_commit_route_coverage: ~"./post-commit-route-coverage-2026-09.spw"
 @root_property_invalidation: ~"./root-property-invalidation-2026-09.spw"
+@route_link_integrity: ~"./route-link-integrity-2026-09.spw"
 
 operation = "align"
 fixity = "tending"
