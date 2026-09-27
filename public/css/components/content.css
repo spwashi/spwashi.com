@@ -438,6 +438,12 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
     block-size: 8rem;
     object-fit: cover;
   }
+
+  /* The card's chrome covers the strip's top edge; a laminated scan lies
+     below it, whole, on a mat instead of being cut by it. */
+  :where(#entry-loops .frame-card--illustrated .frame-card-media img[src*="/public/images/assets/folios/"]) {
+    --laminate-mat: 1.3rem 0.6rem 0.45rem;
+  }
 }
 
 :where(.frame-grid > li, .contact-grid > li, .compare-sets > li, .spec-grid > li, .directory-grid > li, .ref-grid > li) {
