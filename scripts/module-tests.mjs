@@ -38,6 +38,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/module-cost-contract.test.mjs',
   'scripts/tests/pinch-scale.test.mjs',
   'scripts/tests/native-affordance.test.mjs',
+  'scripts/tests/image-provenance.test.mjs',
   'scripts/tests/plan-ia-tooling.test.mjs',
   'scripts/tests/module-describes-contract.test.mjs',
   'scripts/tests/lens-modes.test.mjs',

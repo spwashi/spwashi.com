@@ -23,6 +23,12 @@
   surface: "motifs"
   role: "css-slice-tile"
   families: #[`paper`, `linen`, `harlequin`, `wash`][reg=set]
+  files: #[
+    "texture-paper-fiber",
+    "texture-linen-weave",
+    "texture-harlequin-diamonds",
+    "texture-cream-ochre-wash"
+  ][reg=set]
   formats_available: ["avif", "webp"]
   consume: `public/css/effects/texture-slice.css + public/js/media/texture-slice.js`
 }
