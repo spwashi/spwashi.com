@@ -53,3 +53,56 @@
   gap: var(--spw-image-distribution-gap);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 15rem)), 1fr));
 }
+/* Image provenance (runtime/image-provenance.js). Every picture whose source
+   says where it came from wears one mark at its corner: * for original work,
+   ~ for a generated render, in that operator's ink. Settings → Image
+   provenance picks the tone: mark (the sigil), named (sigil and word), or
+   off (no visual mark; assistive tech still hears it). The mark is anchored
+   to its picture and sits out of flow, so nothing around it moves. */
+.spw-provenance-mark {
+  --spw-provenance-ink: var(--ink-soft, currentColor);
+  position: absolute;
+  inset-block-start: calc(anchor(top) + 0.35rem);
+  inset-inline-start: calc(anchor(left) + 0.35rem);
+  z-index: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  padding: 0.08rem 0.42rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 84%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-provenance-ink) 42%, transparent);
+  color: var(--spw-provenance-ink);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.25;
+  pointer-events: none;
+}
+
+.spw-provenance-mark--original {
+  --spw-provenance-ink: var(--op-value-color, var(--op-stream-color, #208259));
+}
+
+.spw-provenance-mark--generated {
+  --spw-provenance-ink: var(--op-potential-color, var(--op-ref-color, #1d57a3));
+}
+
+.spw-provenance-mark__word {
+  display: none;
+  font-weight: 600;
+}
+
+html[data-spw-image-provenance="named"] .spw-provenance-mark__word {
+  display: inline;
+}
+
+html[data-spw-image-provenance="off"] .spw-provenance-mark {
+  display: none;
+}
+
+@supports not (anchor-name: --spw-provenance) {
+  .spw-provenance-mark {
+    display: none;
+  }
+}

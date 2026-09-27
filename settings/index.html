@@ -636,7 +636,7 @@
             data-spw-form="brace"
             data-spw-form-options="brace,block"
             data-spw-inspect="runtime_preferences"
-            data-spw-inspect-fields="authorMode,currentDevelopmentalClimate,colorMode,themePack,paletteResonance,baseMetamaterial,baseAffordance,componentDensity,operatorSaturation,grainIntensity,animationIntensity,wonderMemory,narrativeMode,rewardDisplay,busDiagnostics"
+            data-spw-inspect-fields="authorMode,currentDevelopmentalClimate,colorMode,themePack,paletteResonance,baseMetamaterial,baseAffordance,componentDensity,operatorSaturation,grainIntensity,animationIntensity,wonderMemory,narrativeMode,rewardDisplay,imageProvenance,busDiagnostics"
             data-spw-kind="frame"
             data-spw-liminality="threshold"
             data-spw-region="preferences"
@@ -1963,6 +1963,31 @@
                                 <span class="settings-option-copy">
                     <strong>Hidden</strong>
                     <span>Keep collection state quiet.</span>
+                  </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Image provenance</legend>
+                            <label class="settings-option">
+                                <input checked name="imageProvenance" type="radio" value="mark" />
+                                <span class="settings-option-copy">
+                    <strong>Mark</strong>
+                    <span>A small sigil on each picture: * original, ~ generated.</span>
+                  </span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="imageProvenance" type="radio" value="named" />
+                                <span class="settings-option-copy">
+                    <strong>Named</strong>
+                    <span>The sigil and the word, original or generated.</span>
+                  </span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="imageProvenance" type="radio" value="off" />
+                                <span class="settings-option-copy">
+                    <strong>Off</strong>
+                    <span>No mark on the picture; screen readers still hear it.</span>
                   </span>
                             </label>
                         </fieldset>

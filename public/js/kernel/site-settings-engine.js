@@ -909,6 +909,7 @@ const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
     spwSpellPath: normalized.spellPathDisplay,
     spwConsole: normalized.consoleDisplay,
     spwRewardDisplay: normalized.rewardDisplay,
+    spwImageProvenance: normalized.imageProvenance,
     spwViewportActivation: normalized.viewportActivation,
     spwReduceMotion: normalized.reduceMotion,
     spwHighContrast: normalized.highContrast,
