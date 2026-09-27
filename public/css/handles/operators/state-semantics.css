@@ -396,7 +396,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 /* Cluster E — tablet / narrow shells: flex equal-share, not 2×2 masonry.
    A rigid 2×2 grid clipped 3-button lenses (read|inspect|reuse). */
 @media (max-width: 56rem) {
-  .mode-switch[aria-label]:not([data-spw-lens-track="row"]) {
+  .mode-switch[aria-label]:not([data-spw-lens-track]) {
     display: flex;
     flex-flow: row wrap;
     align-items: stretch;
@@ -422,7 +422,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     text-wrap: balance;
   }
 
-  .mode-switch:not([data-spw-lens-track="row"]) .frame-sigil {
+  .mode-switch:not([data-spw-lens-track]) .frame-sigil {
     flex: 1 1 0;
     inline-size: auto;
     width: auto;
@@ -480,7 +480,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   }
 
   /* 3+ lens options: 2×2 when the track is narrow and not a forced row. */
-  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(3)):not([data-spw-lens-track="row"]) {
+  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(3)):not([data-spw-lens-track]) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.32rem;
@@ -494,15 +494,15 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     display: none;
   }
 
-  .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil {
+  .mode-switch:not([data-spw-lens-track]) > .frame-sigil {
     width: 100%;
     min-width: 0;
     justify-content: center;
     text-align: center;
   }
 
-  .mode-switch[aria-label]:not([data-spw-lens-track="row"])::before,
-  .mode-switch[aria-label]:not([data-spw-lens-track="row"])[data-spw-lens-feedback]::after {
+  .mode-switch[aria-label]:not([data-spw-lens-track])::before,
+  .mode-switch[aria-label]:not([data-spw-lens-track])[data-spw-lens-feedback]::after {
     grid-column: 1 / -1;
   }
 }
@@ -510,7 +510,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 /* Progressive: honor container width when the parent establishes a container. */
 @supports (container-type: inline-size) {
   @container (max-width: 38rem) {
-    .mode-switch[aria-label]:not([data-spw-lens-track="row"]) {
+    .mode-switch[aria-label]:not([data-spw-lens-track]) {
       display: flex;
       flex-flow: row wrap;
       width: 100%;
@@ -526,13 +526,113 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
       text-wrap: balance;
     }
 
-    .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil {
+    .mode-switch:not([data-spw-lens-track]) > .frame-sigil {
       flex: 1 1 0;
       min-inline-size: min(100%, 4.25rem);
       white-space: nowrap;
       justify-content: center;
     }
   }
+}
+
+/* Cluster G — grid track: a deck of seats that counts itself.
+   data-spw-lens-track="grid" lays seats out by their number and the track's
+   own inline size, never the viewport's: four seats go 4 | 2 | 1, three go
+   3 | 1, two stay side by side until the track is too narrow for both. A
+   narrow rail on a wide screen still gets the compact posture, and no set
+   strands its last seat. The thresholds are tokens a host may set; the grid
+   resolves them against its own width (the layout-squeeze technique).
+   row stays "never 2×2". Contract: component-fit-lens-journey flj-009. */
+.mode-switch[data-spw-lens-track="grid"] {
+  --spw-lens-gap: var(--spw-lens-gap-intent, 0.22rem);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-lens-seat-min, 4.75rem)), 1fr));
+  gap: var(--spw-lens-gap);
+  inline-size: 100%;
+  min-inline-size: 0;
+  padding: var(--spw-lens-gap);
+  box-sizing: border-box;
+}
+
+.mode-switch[data-spw-lens-track="grid"]:has(> .frame-sigil:nth-child(4):last-child) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max((100% - 3 * var(--spw-lens-gap)) / 4, min((100% - var(--spw-lens-gap)) / 2, (var(--spw-lens-four-up, 24rem) - 100%) * 999), (var(--spw-lens-one-up, 7rem) - 100%) * 999)), 1fr));
+}
+
+.mode-switch[data-spw-lens-track="grid"]:has(> .frame-sigil:nth-child(3):last-child) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max((100% - 2 * var(--spw-lens-gap)) / 3, (var(--spw-lens-three-up, 15rem) - 100%) * 999)), 1fr));
+}
+
+.mode-switch[data-spw-lens-track="grid"]:has(> .frame-sigil:nth-child(2):last-child) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max((100% - var(--spw-lens-gap)) / 2, (var(--spw-lens-one-up, 7rem) - 100%) * 999)), 1fr));
+}
+
+.mode-switch[data-spw-lens-track="grid"]::before,
+.mode-switch[data-spw-lens-track="grid"][data-spw-lens-feedback]::after {
+  grid-column: 1 / -1;
+}
+
+/* A seat stacks its name over its token: the word a reader chooses, then the
+   Spw term it sits. The token is code, so it keeps its own case. */
+.mode-switch[data-spw-lens-track="grid"] > .frame-sigil {
+  flex-direction: column;
+  gap: 0.1rem;
+  inline-size: auto;
+  min-inline-size: 0;
+  min-block-size: var(--spw-lens-seat-min-block, var(--touch-target-min, 2.75rem));
+  padding: 0.3rem 0.4rem;
+  line-height: 1.1;
+}
+
+.mode-switch[data-spw-lens-track="grid"] > .frame-sigil > span + span {
+  color: var(--spw-lens-token-ink, color-mix(in srgb, currentColor 72%, transparent));
+  font-family: var(--site-mono-font, monospace);
+  font-size: max(0.66rem, 0.76em);
+  font-variant-caps: normal;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.mode-switch[data-spw-lens-track="grid"] > .frame-sigil[aria-pressed]::after {
+  content: none;
+}
+
+/* Operator chrome: each seat wears its own operator's ink. The seat's
+   data-spw-operator already resolves --spw-operator-color through the one
+   table of operator colors (effects/cinematic.css); this chrome spends it as
+   the seat's --active-op-color, so the pressed fill, the hover wash, the
+   token, and the focus ring all speak the operator the seat names. */
+.mode-switch[data-spw-lens-chrome~="operator"] > .frame-sigil[data-spw-operator] {
+  --active-op-color: var(--spw-operator-color, var(--teal));
+  --mode-switch-idle-bg-intent: transparent;
+  --mode-switch-idle-border-intent: transparent;
+  --mode-switch-idle-shadow-intent: none;
+  --mode-switch-idle-ink-intent: color-mix(in srgb, var(--ink, currentColor) 84%, var(--active-op-color) 16%);
+  --mode-switch-hover-bg-intent: color-mix(in srgb, var(--active-op-color) 10%, transparent);
+  --mode-switch-hover-border-intent: color-mix(in srgb, var(--active-op-color) 34%, transparent);
+  --mode-switch-hover-shadow-intent: none;
+  --mode-switch-active-bg-intent: color-mix(in srgb, var(--active-op-color) 18%, var(--surface-strong, transparent));
+  --mode-switch-active-border-intent: color-mix(in srgb, var(--active-op-color) 48%, transparent);
+  --mode-switch-active-ink-intent: var(--ink-strong, var(--ink, currentColor));
+  --mode-switch-active-shadow-intent: none;
+  --mode-switch-focus-shadow-intent: 0 0 0 2px color-mix(in srgb, var(--active-op-color) 60%, transparent);
+  --mode-switch-pressed-animation-intent: none;
+  --spw-lens-token-ink: color-mix(in srgb, var(--active-op-color) 78%, var(--ink, currentColor) 22%);
+}
+
+/* The glide bar is the track's, so it learns the pressed seat's operator
+   through :has(). Alias lists match effects/cinematic.css. */
+@supports (anchor-name: --spw-lens-seat) and (anchor-scope: --spw-lens-seat) {
+  .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="ground"], [data-spw-operator="baseline"], [data-spw-operator="intrinsic"])) { --spw-lens-seat-color: var(--op-ground-color, var(--op-baseline-color, #594d3f)); }
+  .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="integration"], [data-spw-operator="object"], [data-spw-operator="integrate"])) { --spw-lens-seat-color: var(--op-integration-color, var(--op-object-color, #a67c00)); }
+  .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="potential"], [data-spw-operator="ref"])) { --spw-lens-seat-color: var(--op-potential-color, var(--op-ref-color, #1d57a3)); }
+  .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="perspective"], [data-spw-operator="situate"])) { --spw-lens-seat-color: var(--op-perspective-color, var(--op-action-color, #005959)); }
+  .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="wonder"], [data-spw-operator="probe"])) { --spw-lens-seat-color: var(--op-wonder-color, var(--op-probe-color, #4a2180)); }
+  .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="action"], [data-spw-operator="act"], [data-spw-operator="pragma"])) { --spw-lens-seat-color: var(--op-action-color, #005959); }
+  .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="mode"], [data-spw-operator="select"])) { --spw-lens-seat-color: var(--op-mode-color, var(--op-probe-color, #4a2180)); }
+  .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="concept-edge"], [data-spw-operator="route"], [data-spw-operator="surface"])) { --spw-lens-seat-color: var(--op-concept-edge-color, var(--op-surface-color, #178282)); }
+  .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="frame"], [data-spw-operator="address"])) { --spw-lens-seat-color: var(--op-frame-color, #008080); }
+  .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="value"], [data-spw-operator="stream"])) { --spw-lens-seat-color: var(--op-value-color, var(--op-stream-color, #208259)); }
 }
 
 /* Shared mode-switch state lives here; routes supply palette/intent through
