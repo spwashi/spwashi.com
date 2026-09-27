@@ -29,3 +29,10 @@
   formats: ["avif", "webp"]
   alt_text: "'l'n'd'r, a blue-grey clay-bodied figure with a pointed hat, slides a blank record card toward an open wooden drawer while a human librarian waits with a brass stamp among shelves and symbol-marked cabinets."
 }
+
+^"review"{
+  on: "2026-09-27"
+  verdict: "replace"
+  held: "'l'n'd'r stands at this counter; the scene waits on the creator's redesign of the character"
+  record: ~"../../../../.spw/caches/image-review-2026-09.spw"
+}

@@ -106,3 +106,12 @@ html[data-spw-image-provenance="off"] .spw-provenance-mark {
     display: none;
   }
 }
+
+/* A scan is shown whole. A frame may crop a render to fill it; an original
+   lies in its frame on a ground of its own, the way a laminated folio sits on
+   a table, so no edge of the work is lost. !important because route layers
+   crop their frames, and this has to hold under every one of them. */
+:is(figure, [data-spw-slot="figure"]) img[src*="/public/images/assets/folios/"] {
+  object-fit: contain !important;
+  background: color-mix(in srgb, var(--ink, #1d1b18) 6%, var(--surface-strong, #fbf8f1));
+}

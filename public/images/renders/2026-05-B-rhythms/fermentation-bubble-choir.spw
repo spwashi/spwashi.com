@@ -46,3 +46,10 @@
   related_assets: ["dough-tide-fold", "brassica-twilight-transformation"]
   audiences: ["chefs", "gardeners", "parents", "rpg-players"]
 }
+
+^"review"{
+  on: "2026-09-27"
+  verdict: "replace"
+  held: "on /recipes/fermentation/ until a picture shows fermentation; the scene bed on /topics/film/scene-composition/fermentation-hold/ already moved to a scan"
+  record: ~"../../../../.spw/caches/image-review-2026-09.spw"
+}
