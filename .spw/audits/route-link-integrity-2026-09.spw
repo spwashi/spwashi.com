@@ -1,0 +1,52 @@
+# Route Link Integrity (2026-09)
+#
+# operation: audit
+# Old copy keeps pointing where a page used to be. A link whose route is gone,
+# or whose anchor moved, sends a reader to the top of the wrong room.
+
+#>route_link_integrity_2026_09
+#:audit #!links #!anchors #!referential-integrity #!copy
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@sensor: ~"../../scripts/audit-route-links.mjs"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+
+operation = "audit"
+fixity = "tending"
+source = "creator, 2026-09-27: some of the older copy needs to be updated to point to more recent pages"
+
+expression = link[integrity]{route;anchor;include}<landing>
+
+^"sensor"{
+  run = `npm run audit:route-links`
+  reads = `every route's internal hrefs; a missing route, or an anchor absent from the page it names`
+  counts = `ids in <spw-include> partials (_partials/*.html) belong to the page that includes them; commented-out examples are not links`
+  runtime = `anchors a module creates on mount are named in RUNTIME_ANCHORS with their module (rpgw-state-curator, rpg-wednesday/curate.js)`
+  gate = `reports only; not part of check:local`
+}
+
+^"found_2026_09_27"{
+  before = `4 missing routes and 12 missing anchors across 194 routes (after discounting includes, runtime anchors, and a commented example)`
+  after = `0 and 0`
+  moved = #[
+    `/topics/software/algorithms/#important_families → #algorithm-families (differential equations, numerical methods)`,
+    `/settings/#interface-physics → #interface-physics-settings; #semantic-density → #settings-surface; #dimensional-resonance → #live-interaction-playground`,
+    `/topics/math/topology/#topology-diagrams → #topology-map (math, twice)`,
+    `/play/rpg-wednesday/library/#daily-weekly-rhythm → #town-library (Home)`,
+    `/recipes/#prompt-kitchen → /play/#media-cauldron, the kitchen where a seed is cooked (Design)`,
+    `/design/catalog/#tokens → /design/catalog/tokens/; #attr-data-spw-affordance → /design/catalog/systems/#attr-data-spw-affordance`,
+    `/design/palettes/#palette-resonance → #spectral-resonance-mapping`
+  ][reg=set]
+  gone = #[
+    `/topics/math/geometry/ → /topics/math/topology/ (shape, containment, map rooms)`,
+    `/topics/synaesthesia/ → the recipes page's own #synesthesia-register`,
+    `/design/experiments/ → /design/#design-labs-title, the list of labs; also removed from the folio calendar's related routes, which cleared check:local's "Unknown related route" warning`
+  ][reg=set]
+}
+
+^"do_not"{
+  invent = `Do not create a page only to satisfy a stale link; point the link at the room that now holds the thing.`
+  rename = `When an anchor is renamed, grep for it; the sensor will name the stragglers.`
+}
