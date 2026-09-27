@@ -81,6 +81,7 @@ expression = visit[intent]{lens.carry.meet}<hype>
     change = `hold a lens seat to carry its operator; Home, Software, and Design lenses read it; settings on hold`
     verify = `browser review of the feel; a hold that does not also arm its frame; reduced motion and keyboard parity (a long-press equivalent on Enter-hold or a menu item)`
     sensation = `review first`
+    landed = `2026-09-26, as a demo: runtime/lens-intent.js (catalog: enhancement, immediate, residue). Hold a seat 450 ms by pointer, touch, or Enter/Space and its operator becomes the visit's intent (sessionStorage); every seat sharing that operator wears a ring in its own ink, solid where sat and dashed where offered, never switched; hold again to set it down; one polite announcement. Holds are measured by the release event's timestamp, not a timer: a timer dropped real holds behind a lens view transition and carried a 120 ms tap during boot. The hold never reaches its frame. Settings on hold are not built yet.`
   }[reg=facet]
   s3 = .{
     name = `intent-matched promo`

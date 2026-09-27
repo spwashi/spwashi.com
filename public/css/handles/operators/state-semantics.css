@@ -635,6 +635,65 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="value"], [data-spw-operator="stream"])) { --spw-lens-seat-color: var(--op-value-color, var(--op-stream-color, #208259)); }
 }
 
+/* Carried intent (runtime/lens-intent.js). Holding a seat carries its
+   operator across pages; every seat that shares it wears a ring in its own
+   ink. The ring fills while the hold charges, lands with a small spring, and
+   reads dashed where the intent is carried but not sat on this page: an
+   offer, never a switch. Outline keeps its own channel apart from the pressed
+   fill and the focus shadow; the charge is an animation because ornament
+   owns a button's transition list. Contract: intent-across-pages s2. */
+.mode-switch .frame-sigil[data-set-mode] {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+.mode-switch .frame-sigil.is-holding {
+  outline: 2px solid transparent;
+  outline-offset: -3px;
+  animation: spw-lens-carry-charge var(--spw-lens-carry-hold, 450ms) linear forwards;
+}
+
+.mode-switch .frame-sigil.is-carried {
+  outline: 2px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 74%, transparent);
+  outline-offset: -3px;
+}
+
+.mode-switch .frame-sigil.is-carried:not([aria-pressed="true"]) {
+  outline-style: dashed;
+}
+
+.mode-switch .frame-sigil.is-carry-landed {
+  animation: spw-lens-carry-land var(--spw-time-reveal, 360ms) var(--spw-spring-contact, ease-out);
+}
+
+.mode-switch-intent-status {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@keyframes spw-lens-carry-charge {
+  from { outline-color: transparent; outline-offset: 2px; }
+  to { outline-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 74%, transparent); outline-offset: -3px; }
+}
+
+@keyframes spw-lens-carry-land {
+  from { outline-offset: -8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mode-switch .frame-sigil:is(.is-holding, .is-carry-landed) {
+    animation: none;
+  }
+
+  .mode-switch .frame-sigil.is-holding {
+    outline-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 40%, transparent);
+  }
+}
+
 /* Shared mode-switch state lives here; routes supply palette/intent through
    --mode-switch-*-intent variables (set on the switch, a sigil, or any ancestor)
    instead of re-describing pressed/hover logic. The -intent indirection exists
