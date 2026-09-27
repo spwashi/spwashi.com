@@ -1,0 +1,44 @@
+# Cache 2026-09-27 — a living term is living when the markup alone honours it; the runtime deepens, it does not animate a corpse.
+# Creator's direction: more of the Spw copy should feel living, and the runtime should be integrated as progressive enhancement, thoughtfully.
+
+#>living_terms_2026_09
+#:cache #!copy #!living-terms #!progressive-enhancement
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@sensor: ~"../../scripts/audit-living-terms.mjs"
+@haptics: ~"../../public/js/interface/haptics.js"
+@copy_decay: ~"./copy-decay-2026-09.spw"
+@reward: ~"../conventions/interaction-microstates.spw"
+@governance: ~"../conventions/data-spw-attribute-governance.spw"
+
+claim: `Highlighted words are the site's central mechanic, and the markup must be able to keep the promise the highlight makes. With scripts off, a living term is living if its title says what the word means, or if it is a link to the concept's home. With scripts on, @haptics adds the inspect note, gather, and carried intent, and writes its own affordance title where none is authored. Nothing the HTML advertises may depend on the runtime to be true.`
+
+^"census_2026_09_27"{
+  terms = `178 living terms across the routes, 139 concepts, by npm run audit:living-terms on 2026-09-27; 149 are <span>, the rest <article>, none <a>.`
+  living = `43 concepts are living by this rule: 33 carry a definition in title ("retrieving something strengthens memory more than rereading it"), 12 have a home anchor on the site that a term could link to (living-concepts, memory-garden, cauldron, media-cauldron, surface, capability, receipt, your-sound, catalog, svg-storytelling, cadence, join).`
+  decorated = `96 concepts have neither: the word is highlighted, focusable, and inert without scripts — brace-physics ×6, spell-navigation ×4, lattice ×4, cauldron-collection ×4, attention-shape ×3, release-cycle ×3, dose-trace ×3 lead the list.`
+  lie = `25 terms on six routes authored title="tap: inspect • hold to prime" (and two longer variants, one promising a double-click that only brace targets honour). Removed 2026-09-27; @haptics annotateCauldronCandidates writes "tap to inspect; hold to gather as a cauldron ingredient" at mount when no title is authored, so scripts on lose nothing and scripts off stop lying.`
+  runtime = `The tap handler calls preventDefault before opening the note, so a term authored as <a href> would still inspect in place with scripts on and follow its href without. The keyboard path is the exception: it returns early for anything inside a[href], so Enter on a living-term link would navigate. Parity is one condition in @haptics.`
+  inspect_note = `The note shows the word, its expression rows, and a gather button. It does not show what the word means. The 33 definition titles are the only meaning a term carries today, and the note does not read them.`
+}
+
+^"rule"{
+  living = `A term is living when scripts-off readers get its meaning or its home. Definition in title, or href to the home, or both. Prefer both where a home exists.`
+  runtime = `The runtime may add tabindex, role, gesture contract, and the affordance title at mount, and may open the note on tap and Enter. It may not be the reason a highlighted word exists.`
+  refuse = `No title that names a gesture. No new attribute family. No script-only glossary: a definition the runtime shows must be one the HTML also carries.`
+}
+
+^"next"{
+  1 = `Landed: the sensor (npm run audit:living-terms, --check fails on affordance titles) and the 25 titles removed.`
+  2 = `Link the twelve homed concepts' terms as <a class="spw-living-term" href="…"> (twenty-two terms; skip the four nested inside links or chips). Needs one rule in typography/base.css so the term keeps its dashed underline instead of the article link underline, and the @haptics keyboard condition for parity. Wait for the other session's dirty core CSS to land before the core rebuild.`
+  3 = `Definition titles for the most-used decorated concepts, in the creator's words: brace-physics, spell-navigation, lattice, cauldron-collection, attention-shape, release-cycle, dose-trace. A sentence each.`
+  4 = `Let the inspect note read the definition title, so scripts on and off show the same meaning.`
+  5 = `Drop authored tabindex="0" from span terms once 2 and 3 have made each term either a link or a defined word; the runtime adds focus at mount.`
+}
+
+^"questions"{
+  home = `Where does a concept with no anchor live? A glossary route would give all 138 a home and make every term a link; the search page cannot, with scripts off. Is a glossary a page you want, or should homes stay where the concept is practised?`
+  title = `A title is hover-only and silent on touch. Is the definition better as a title, as a <dfn> at the concept's first use on the page, or as both?`
+}
