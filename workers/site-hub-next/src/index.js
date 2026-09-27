@@ -140,6 +140,32 @@ const SLICES = [
   },
 ];
 
+/* Reuse. Each slice is a picture of a material; these give it words and
+   files to leave this page with. REUSE_TERMS is a first draft for the creator
+   to confirm before deploy. SLICE_GROUND is the color a page shows while the
+   tile loads, or where it does not load. */
+const REUSE_TERMS = "Free for personal and study use with credit to texture.website. Commercial use by commission.";
+const SLICE_GROUND = { paper: "#c4a574", linen: "#b8ad98", harlequin: "#5b4a6b", wash: "#d8b886" };
+
+const sliceFiles = (slice) => {
+  const base = slice.image.replace(/\.webp$/, "");
+  return { webp: `${base}.webp`, avif: `${base}.avif` };
+};
+
+const sliceCss = (slice) => {
+  const file = sliceFiles(slice).webp.split("/").pop();
+  return [
+    `.texture-${slice.id} {`,
+    `  background-color: ${SLICE_GROUND[slice.id]};`,
+    `  background-image: url("${file}");`,
+    `  background-size: cover;`,
+    `  background-position: center;`,
+    `}`,
+  ].join("\n");
+};
+
+const sliceHtml = (slice) => `<div class="texture-${slice.id}">…</div>`;
+
 const SIGNALS = [
   {
     id: "stripes",
@@ -211,7 +237,14 @@ const textureJson = {
   concept: "grain",
   worker: "site-hub-next",
   attribute: "data-spw-texture-slice",
-  slices: SLICES.map(({ id, name, token, meaning }) => ({ id, name, token, meaning })),
+  terms: REUSE_TERMS,
+  slices: SLICES.map((slice) => ({
+    id: slice.id,
+    name: slice.name,
+    token: slice.token,
+    meaning: slice.meaning,
+    use: { css: sliceCss(slice), html: sliceHtml(slice), files: sliceFiles(slice) },
+  })),
   signals: SIGNALS,
   metamaterials: MATERIALS,
   proving_ground: "https://spwashi.com/design/materials/",
@@ -334,6 +367,20 @@ function renderTexture(requestUrl, nonce) {
 </article>`
   ).join("");
 
+  const useCards = SLICES.map((slice) => {
+    const files = sliceFiles(slice);
+    return `<article class="specimen use">
+  <h3>${escapeHtml(slice.name)}</h3>
+  <pre><code id="css-${escapeHtml(slice.id)}">${escapeHtml(sliceCss(slice))}</code></pre>
+  <p class="use-actions"><button type="button" class="copy" data-copy="css-${escapeHtml(slice.id)}" hidden>Copy CSS</button> <a href="${escapeHtml(files.webp)}">WebP tile</a> · <a href="${escapeHtml(files.avif)}">AVIF tile</a></p>
+  <p class="kicker">Then <code class="inline">${escapeHtml(sliceHtml(slice))}</code></p>
+</article>`;
+  }).join("");
+
+  const labOptions = (name, options) => options.map(([value, label], index) =>
+    `<label><input type="radio" name="${name}" value="${value}"${index === 0 ? " checked" : ""}> ${escapeHtml(label)}</label>`
+  ).join("");
+
   const materialCards = MATERIALS.map(
     (material) => `<article class="material material-${escapeHtml(material.id)}">
   <h3>${escapeHtml(material.name)}</h3>
@@ -358,6 +405,24 @@ function renderTexture(requestUrl, nonce) {
   <script type="module" nonce="${escapeHtml(nonce)}">
     import { initTextureSlice } from 'https://spwashi.com/public/js/media/texture-slice.js';
     initTextureSlice();
+    // Copy buttons appear only where they work; the rule stays selectable text.
+    for (const button of document.querySelectorAll('button.copy[data-copy]')) {
+      button.hidden = false;
+      button.addEventListener('click', async () => {
+        const code = document.getElementById(button.dataset.copy);
+        try {
+          await navigator.clipboard.writeText(code.textContent);
+          button.textContent = 'Copied';
+        } catch {
+          const range = document.createRange();
+          range.selectNodeContents(code);
+          getSelection().removeAllRanges();
+          getSelection().addRange(range);
+          button.textContent = 'Selected';
+        }
+        setTimeout(() => { button.textContent = 'Copy CSS'; }, 1600);
+      });
+    }
   </script>
   <style>
     :root {
@@ -471,6 +536,31 @@ function renderTexture(requestUrl, nonce) {
     .material-matte { background: #2a2a2a; }
     .material-field { background: #10261f; box-shadow: inset 0 0 0 2px #c8ff00; }
     footer { margin-top: 2.4rem; color: var(--muted); font-size: .92rem; }
+    pre { margin: .6rem 0; padding: .7rem .8rem; border-radius: .7rem; background: rgba(0,0,0,.28); overflow-x: auto; }
+    pre code { display: block; white-space: pre; }
+    code.inline { display: inline; }
+    .use-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .4rem 0; }
+    button.copy { min-height: 2.5rem; padding: 0 .9rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(200,255,0,.08); color: var(--fg); font: inherit; cursor: pointer; }
+    button.copy:hover, button.copy:focus-visible { border-color: var(--accent); }
+    .lab-controls { display: flex; flex-wrap: wrap; gap: .7rem 1rem; }
+    .lab fieldset { margin: 0; padding: .45rem .75rem .55rem; border: 1px solid var(--line); border-radius: .8rem; }
+    .lab legend { padding: 0 .3rem; color: var(--muted); font-size: .85rem; }
+    .lab label { display: inline-flex; align-items: center; gap: .35rem; min-height: 2.5rem; margin-inline-end: .75rem; cursor: pointer; }
+    .lab input { accent-color: var(--accent); }
+    .lab-surface { position: relative; isolation: isolate; min-height: 12rem; margin-top: 1rem; padding: 1.4rem 1.6rem; border: 1px solid var(--line); border-radius: 1rem; background: #1d1812; color: var(--fg); font: 1.35rem/1.45 Georgia, "Iowan Old Style", serif; outline: none; }
+    .lab-surface:focus-visible { box-shadow: 0 0 0 2px var(--aqua); }
+    .lab-surface p { margin: 0; color: inherit; }
+    .lab-surface::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background-image: var(--lab-texture); background-position: center; background-repeat: no-repeat; background-size: var(--lab-scale); opacity: var(--lab-strength); }
+    /* The tiles are photographs of materials, not seamless repeats: scale zooms the one picture instead of tiling it. */
+    .lab { --lab-texture: var(--spw-texture-paper); --lab-strength: .5; --lab-scale: cover; }
+    .lab:has([value="linen"]:checked) { --lab-texture: var(--spw-texture-linen); }
+    .lab:has([value="harlequin"]:checked) { --lab-texture: var(--spw-texture-harlequin); }
+    .lab:has([value="wash"]:checked) { --lab-texture: var(--spw-texture-wash); }
+    .lab:has([value="whisper"]:checked) { --lab-strength: .22; }
+    .lab:has([value="bold"]:checked) { --lab-strength: .85; }
+    .lab:has([value="close"]:checked) { --lab-scale: 180%; }
+    .lab:has([value="closer"]:checked) { --lab-scale: 320%; }
+    .lab:has([value="light"]:checked) .lab-surface { background: #efe6d8; color: #1b1510; }
   </style>
 </head>
 <body>
@@ -479,11 +569,32 @@ function renderTexture(requestUrl, nonce) {
       <p class="kicker">texture.website</p>
       <h1>Texture is grain you can reuse.</h1>
       <p class="lede">Materials and patterns as page feeling. The proving ground is <a href="https://spwashi.com/">spwashi.com</a>; this host is the grain lab.</p>
+      <p class="kicker"><a href="#try-title">Try one</a> · <a href="#use-title">take one with you</a> · <a href="#commission-title">commission your own</a></p>
     </header>
     <section aria-labelledby="slices-title">
       <h2 id="slices-title">Slices already on the site</h2>
       <p>These four tiles are the live <code>data-spw-texture-slice</code> families. The token is on each card.</p>
       <div class="grid">${sliceCards}</div>
+    </section>
+    <section class="lab" aria-labelledby="try-title">
+      <h2 id="try-title">Try one under your words</h2>
+      <div class="lab-controls">
+        <fieldset><legend>Texture</legend>${labOptions("lab-texture", SLICES.map((slice) => [slice.id, slice.name]))}</fieldset>
+        <fieldset><legend>Strength</legend>${labOptions("lab-strength", [["present", "Present"], ["whisper", "Whisper"], ["bold", "Bold"]])}</fieldset>
+        <fieldset><legend>Scale</legend>${labOptions("lab-scale", [["whole", "Whole"], ["close", "Close"], ["closer", "Closer"]])}</fieldset>
+        <fieldset><legend>Ink</legend>${labOptions("lab-ink", [["dark", "Dark"], ["light", "Light"]])}</fieldset>
+      </div>
+      <div class="lab-surface" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Your words over the texture" spellcheck="false"><p>Write a sentence here. The grain should carry it, not sit on top of it.</p></div>
+    </section>
+    <section aria-labelledby="use-title">
+      <h2 id="use-title">Take one with you</h2>
+      <p>Save the tile beside your stylesheet and paste the rule. ${escapeHtml(REUSE_TERMS)}</p>
+      <div class="grid">${useCards}</div>
+    </section>
+    <section aria-labelledby="commission-title">
+      <h2 id="commission-title">Commission a grain</h2>
+      <p>Bring a material you want a page to feel like: a notebook page, a cloth, a wall, a tabletop. It comes back as a texture family you can reuse: the tile, the rule, and a named entry in <a href="/textures.json">textures.json</a>.</p>
+      <p><a href="https://spwashi.com/services/">Rates on the services ladder</a> · <a href="https://spwashi.com/contact/">Start with a note</a></p>
     </section>
     <section aria-labelledby="signals-title">
       <h2 id="signals-title">How a texture behaves</h2>
