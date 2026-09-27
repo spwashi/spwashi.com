@@ -1,0 +1,58 @@
+# Holiday Infrastructure (2026-09)
+#
+# operation: prime
+# Celebration is how a group says out loud what mattered; a holiday season is
+# a good time to wonder what we are making and how we are growing. The site
+# gets a route for that idea, and this cache holds the model it grows from.
+
+#>holiday_infrastructure_2026_09
+#:cache #!holidays #!season #!celebration #!wonder #!production
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@route: ~"../../holidays/index.html"
+@newyear: ~"../../newyear/index.html"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@dregg_lineage: ~"../conventions/dregg-lineage.spw"
+@promo_feed: ~"../../public/data/promo-wonder-cycle.json"
+@holiday_tropes: ~"../../public/css/ornament/holiday-tropes.css"
+
+operation = "prime"
+fixity = "experimental"
+source = "creator, 2026-09-27: start fleshing out my holiday infrastructure and describe how celebration can be a vehicle for shared meaning and holiday seasons can be excellent opportunities to wonder about what we're making or how we're growing"
+
+expression = holiday[threshold]{table;toast;name}<meaning>
+
+^"thesis"{
+  claim = `A holiday is a day a group agrees to notice. The agreement is the meaning; food, gifts, and toasts carry it.`
+  boundary = `A holiday is a season boundary for attention: name what was made, say what changed and who changed it, decide what the next season is for. The release cycle keeps the same habit on a smaller clock. The idea arrives through @dregg_lineage#season_boundary; public copy embodies it without naming the source.`
+  address = `Readers may come for the ideas, bring a team, or pass through; the questions work at each distance (copy-accessor audience_states).`
+}[reg=facet]
+
+^"season"{
+  sequence = season[holiday]{mask;table;gift;threshold}<growth>
+  mask = `Octvember: a costume is permission to try on a self. Ask what we would make if nobody knew it was ours.`
+  table = `the long table: a shared meal is a receipt for a year of help. Ask who made the year possible, and whether we told them.`
+  gift = `the gift season: a gift is a guess about what someone values. Ask what we made that someone would want to keep.`
+  threshold = `the new year: time feels writable again (@newyear). Ask what to carry forward and what to set down.`
+  inclusive = `name the turns by what they do (mask, table, gift, threshold) rather than asserting one tradition; a reader's own holidays fit the same four questions`
+}[reg=facet]
+
+^"landed_2026_09_27"{
+  route = `/holidays/: the threshold, the season in four turns, the season boundary, questions to carry, and where the season lands here (folio requests, RPG Wednesday, recipes, the annual seed card). /newyear/ links back as "the season before".`
+  claims = `the page claims only what the site does today; every link lands (audit:route-links)`
+}[reg=facet]
+
+^"next"{
+  promo = `seasonal wonders in the promo feed need a date window (the feed rotates by weekday and week today); an entry with a window and intents could speak along the reader's intent during its turn`
+  ornament = `seasonal dress stays in @holiday_tropes under flourish-pack, never core (@wonder_architecture refuse)`
+  tables = `a holiday session format for RPG Wednesday and a long-table recipe cluster`
+  edition = `a folio holiday edition, requested by card`
+}[reg=facet]
+
+do_not = #[
+  `put seasonal tropes in core CSS`,
+  `promise a feature on the public page before it exists`,
+  `assume one tradition or one kind of reader`
+][reg=set]
