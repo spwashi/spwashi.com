@@ -140,6 +140,31 @@ expression = component[fit]{lens.charge.journey}<ordinal>
   rule = `Pre-init CSS names the settled seat. JS may refine the seat; it does not move chrome between rows.`
 }[reg=facet]
 
+^"lens_deck"{
+  id = "flj-009"
+  operation = "align"
+  dated = `2026-09-26`
+  fixity = "tending"
+  claim = `A lens is where a visit sets its intent, so its seats should read as that intent's grammar and its fit should answer to its own width. Creator, 2026-09-26: the working view was too large on a phone, its words could sit beside the four seats, the lenses should be more configurable, and the wiring should go through Spw semantics and tokens.`
+  evidence = #[
+    `home working view at 390 px: 282 px tall; the intro alone 160 px, because a viewport query flipped the host to a column and the intro's flex: 1 1 10rem became a 10rem height`,
+    `lens-track=row is "never 2×2" (css-specificity-pe audit) yet home authored row and forced 2×2 from the routes layer`,
+    `all four seats painted the page accent; their authored operators (ground, integration, potential, perspective) were never spent, though effects/cinematic.css resolves --spw-operator-color for every operator and alias`,
+    `dark mode lifted nine operator colors but not baseline (ground) or stream (value): the Study seat inked hsl(42 18% 30%) on a dark surface`
+  ][reg=set]
+  landed = #[
+    `data-spw-lens-track="grid" (handles/operators/state-semantics.css Cluster G): seats counted by :has(); four go 4 | 2 | 1, three 3 | 1, two stay paired, resolved against the track's own width; the untracked fallbacks now read :not([data-spw-lens-track])`,
+    `data-spw-lens-chrome~="operator": each seat spends its --spw-operator-color as --active-op-color (fill, hover, token, focus ring); the glide bar learns the pressed seat's operator through :has() with cinematic.css alias lists`,
+    `tokens a host may set: --spw-lens-gap-intent, --spw-lens-seat-min, --spw-lens-four-up, --spw-lens-three-up, --spw-lens-one-up, --spw-lens-seat-min-block, --spw-lens-token-ink`,
+    `home: --home-lens-stack 17rem puts the words beside the deck from the view's own width; the viewport column flip and the pack-container 2×2 are gone; the page accent stays on the frame`,
+    `--op-baseline-color and --op-stream-color gain dark variants in both dark blocks`
+  ][reg=set]
+  measured = `390 px: 282 → 135 px; 430 px: 119 px with words and deck both 101 px; 768 px: 119 → 71 px as one row of four; 320 px stacks cleanly at 195 px`
+  electrode = `No seat drops and no seat shrinks below the touch floor; the token is code and keeps its case.`
+  refuse = `No data-spw-lens-* family, no device variant. Other placements keep their tracks until one is walked in a still.`
+  next = `The lens sets intent for one page and forgets it. Carrying it across pages, so the promo, the rail, and page state can meet a visit along its intent, is primed separately.`
+}[reg=facet]
+
 # Harvestable. `npm run wonder -- --surface component-fit`
 
 #>wonder_component_fit_conflict

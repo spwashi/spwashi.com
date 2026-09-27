@@ -490,19 +490,21 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   margin-block-start: 0.15rem;
 }
 
+/* The working view is where a visit sets its intent. Its words stand beside
+   the deck whenever the view itself is wider than --home-lens-stack, and the
+   deck counts its own seats (handles/operators/state-semantics.css Cluster G),
+   so neither answers to the viewport. The seats wear their operators' ink;
+   the page accent stays on the frame around them. */
 :where([data-spw-feature="home-kernel-entry"] .home-working-view) {
-  --spw-control-min-height: 2.97rem;
+  --home-lens-stack: 17rem;
+  --spw-lens-four-up: 21rem;
   --active-op-color: var(--home-accent-primary);
-  --mode-switch-active-bg-intent: color-mix(in srgb, var(--home-accent-primary) 16%, transparent);
-  --mode-switch-active-ink-intent: var(--home-accent-ink, var(--ink-strong, currentColor));
-  --mode-switch-active-shadow-intent: inset 0 -0.2rem 0 color-mix(in srgb, var(--home-accent-primary) 82%, transparent);
-  --mode-switch-idle-ink-intent: color-mix(in srgb, var(--ink, currentColor) 78%, var(--home-accent-primary) 22%);
   display: flex;
   flex-wrap: wrap;
-  align-items: stretch;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 0.5rem 0.7rem;
   min-width: 0;
-  padding: 0.58rem;
+  padding: 0.5rem 0.58rem;
   border-inline-start: 0.2rem solid color-mix(in srgb, var(--home-accent-primary) 52%, transparent);
   border-radius: 0 var(--home-radius-sm) var(--home-radius-sm) 0;
   background: color-mix(in srgb, var(--home-surface-bg-strong) 92%, var(--home-accent-primary) 8%);
@@ -510,8 +512,10 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
 :where([data-spw-feature="home-kernel-entry"] .home-working-view__intro) {
   display: grid;
-  flex: 1 1 10rem;
-  gap: 0.16rem;
+  flex: 1 1 calc((var(--home-lens-stack) - 100%) * 999);
+  align-content: center;
+  max-inline-size: 18rem;
+  gap: 0.2rem;
   min-width: 0;
 }
 
@@ -523,43 +527,21 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
 :where([data-spw-feature="home-kernel-entry"] .home-working-view__intro > span) {
   color: var(--ink-soft, rgba(27, 31, 35, 0.68));
-  font-size: 0.76rem;
-  line-height: 1.4;
+  font-size: 0.74rem;
+  line-height: 1.36;
+  text-wrap: pretty;
 }
 
 :where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch) {
-  display: flex;
-  align-items: stretch;
-  flex: 1 1 16rem;
+  flex: 1.15 1 calc((var(--home-lens-stack) - 100%) * 999);
   inline-size: auto;
   min-inline-size: 0;
-  gap: 0.32rem;
 }
 
 :where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch > .frame-sigil) {
-  flex: 1 1 0;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.12rem;
-  min-inline-size: 0;
-  min-block-size: var(--touch-target-min, 2.75rem);
-  min-height: var(--touch-target-min, 2.75rem);
-  padding: 0.38rem 0.24rem;
   border-radius: calc(var(--home-radius-sm) - 2px);
   font-family: var(--site-ui-font, system-ui, sans-serif);
-  font-size: 0.78rem;
-  line-height: 1.05;
-  text-align: center;
-  white-space: normal;
-}
-
-:where([data-spw-feature="home-kernel-entry"] .home-working-view__token) {
-  color: color-mix(in srgb, currentColor 76%, transparent);
-  font-family: var(--site-mono-font, monospace);
-  font-size: 0.58rem;
-  font-weight: 650;
-  letter-spacing: 0.035em;
+  font-size: 0.8rem;
 }
 
 :where([data-spw-feature="home-kernel-entry"] .hook-call .mode-panel) {
@@ -1030,7 +1012,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   }
 }
 
-:where(body[data-spw-surface="home"] .mode-switch .frame-sigil) {
+:where(body[data-spw-surface="home"] .mode-switch:not([data-spw-lens-chrome~="operator"]) .frame-sigil) {
   --mode-switch-active-border-intent: color-mix(in srgb, var(--home-accent-primary) 40%, transparent);
   --mode-switch-active-bg-intent: color-mix(in srgb, var(--home-accent-primary) 12%, var(--home-surface-bg-strong));
   --mode-switch-active-ink-intent: var(--home-accent-primary);
@@ -1040,8 +1022,8 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 }
 
 @media (prefers-color-scheme: dark) {
-  :where(html[data-spw-color-mode="auto"] body[data-spw-surface="home"] .mode-switch .frame-sigil,
-         html[data-spw-color-mode="dark"] body[data-spw-surface="home"] .mode-switch .frame-sigil) {
+  :where(html[data-spw-color-mode="auto"] body[data-spw-surface="home"] .mode-switch:not([data-spw-lens-chrome~="operator"]) .frame-sigil,
+         html[data-spw-color-mode="dark"] body[data-spw-surface="home"] .mode-switch:not([data-spw-lens-chrome~="operator"]) .frame-sigil) {
     --mode-switch-active-border-intent: color-mix(in srgb, var(--home-accent-primary) 52%, transparent);
     --mode-switch-active-bg-intent: color-mix(in srgb, var(--home-accent-primary) 18%, var(--home-surface-bg-strong));
     --mode-switch-active-ink-intent: color-mix(in srgb, var(--home-accent-primary) 88%, var(--ink-strong) 12%);
@@ -1807,23 +1789,6 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
    8. Mobile rhythm compaction + region spacing ecology
    ========================================================================== */
 
-/* The lens picker belongs to the hook pack, not to the viewport. A wide
-   viewport can still give this component a narrow rail; let its own seat pick
-   the compact two-by-two posture. */
-@container spw-pack (max-width: 44rem) {
-  :where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch) {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.38rem;
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch > .frame-sigil) {
-    inline-size: 100%;
-    min-inline-size: var(--touch-target-min, 2.75rem);
-    min-block-size: var(--touch-target-min, 2.75rem);
-  }
-}
-
 /* Four destination chips read as a small shelf at pocket measure. Keeping
    them as two calm rows preserves full labels and touch targets instead of
    squeezing four unrelated actions into one line. */
@@ -1839,27 +1804,7 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
   }
 }
 
-/* Pocket stills crop the working-view when the pack container is not yet
-   established, or when the intro + four lens buttons stay on one flex row. */
 @media (max-width: 45rem) {
-  :where([data-spw-feature="home-kernel-entry"] .home-working-view) {
-    flex-direction: column;
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch) {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    flex: 1 1 auto;
-    inline-size: 100%;
-    gap: 0.38rem;
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .home-working-view > .mode-switch > .frame-sigil) {
-    inline-size: 100%;
-    min-inline-size: var(--touch-target-min, 2.75rem);
-    min-block-size: var(--touch-target-min, 2.75rem);
-  }
-
   :where([data-spw-feature="home-kernel-entry"] .home-production-note) {
     font-size: 0.78rem;
     line-height: 1.38;
