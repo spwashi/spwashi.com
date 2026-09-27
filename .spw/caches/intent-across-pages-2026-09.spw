@@ -1,0 +1,125 @@
+# Intent Across Pages (2026-09)
+#
+# operation: prime
+# A visit sets an intent; the page architecture should carry it and meet the
+# reader along it. Ornament and page state exist so semantic intent can
+# preserve wonder. Not a sixth primitive, not a fifth ladder, not a new family.
+
+#>intent_across_pages_2026_09
+#:cache #!prime #!intent #!lens #!promo #!rail #!living-concepts #!gesture
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@lens_journey: ~"./component-fit-lens-journey-2026-09.spw"
+@microstates: ~"../conventions/interaction-microstates.spw"
+@electrostatics: ~"../conventions/electrostatic-affordances.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@lens_modes: ~"../../public/js/runtime/lens-modes.js"
+@section_handle: ~"../../public/js/runtime/attention/section-handle.js"
+@promo_feed: ~"../../public/data/promo-wonder-cycle.json"
+@promo_runtime: ~"../../public/ts/promo-wonder-cycle.ts"
+@cinematic: ~"../../public/css/effects/cinematic.css"
+
+operation = "prime"
+fixity = "experimental"
+source = "creator, 2026-09-26, while walking the Home lens, the rail, the footer, and the wonder promo"
+
+expression = visit[intent]{lens.carry.meet}<hype>
+
+^"thesis"{
+  claim = `The page architecture should work as a cognitive aid, something like a spiritual hype man: it remembers what the reader came to do and meets them with what helps that, on their course, at a moment they can take it. The reason ornaments and page state exist is to let semantic intent preserve wonder.`
+  heard = #[
+    `promotions are necessary, but they feel so generic I never read the notification`,
+    `I'm usually trying to focus on a different experience when they come up, so it never feels surprisingly beneficial along the course of intent I set before`,
+    `intent across pages is currently underdesigned`,
+    `the UX on the rail is a bit clunky; should be more Spw native`,
+    `scrolling to the bottom to interact with the footer is frustrating; what could be cached or configured`,
+    `components that become more configurable with a tap and hold, with a reasonable eye for bubbling`,
+    `the distribution and flow of living concepts`,
+    `lenses as an audience self-selection mechanism for skimming or reweighting stories`,
+    `branching semantics through Spw expressions, masks, and filters`,
+    `how learnable skate parks can be`
+  ][reg=set]
+  park = `A skate park teaches without telling: every feature keeps one honest affordance (a rail is always approach, pop, lock, grind, exit), the skater composes a line through features, and the crowd cheers the landing, not an ad. Here the lens sets the line, components are features with one affordance each, and page state is the crowd.`
+}[reg=facet]
+
+^"evidence"{
+  dated = `2026-09-26, headless Chrome and route census`
+  lens = `72 lens seats on 18 of 198 routes author 62 distinct mode names; nothing persists a lens across pages (lens-modes reads ?spw-lens|lens|mode, never storage). Every seat carries data-spw-operator, but the operator drifts: systems is integration once and the filler "mode" three times; making and learning are both "mode".`
+  living = `149 living terms on 36 of 198 routes (about 4 per route that has them). Hold primes a term into the footer cauldron, so the footer is where held intent is meant to land.`
+  footer = `Scrolling Home to the bottom at 390 px mounts 122 modules (25 distinct), about 60 in the last four seconds of the scroll. About 10.8 s after arrival, section#promo-wonder-cycle hydrates from its static fallback and grows 484 px (1,149 → 1,633), so the site footer drops 483 px under the reader's thumb; section#home-frame grows 58 px a second earlier.`
+  promo = `The daily promo toast speaks about homepages to any visitor on any page ("Give people a place to begin and a reason to stay" → Learn Spw). Every feed entry already carries an operator ("@", "?"), so intent-matched selection is data-ready.`
+  rail = `The section rail's toggle is the literal word "rail" beside ↑ ‹ › arrows; only its current token (#>) speaks Spw.`
+  expressions = `3,531 semantic expressions carry a [mode], but the modes are descriptive (garden, brand, actions, footer, hook), not lens modes; a mask needs a per-route map from intent to modes.`
+}[reg=facet]
+
+^"model"{
+  intent = `An intent is an operator, not a mode name. Seats already author one on every route, and cinematic.css already resolves its color: . study (ground), ^ build (integration), ~ play (potential), @ commission (perspective), ? inquire (wonder), #> reference (frame). A route's own lens vocabulary stays; its seats map onto the shared operator.`
+  gesture = `Tap sits a lens for this page. Hold carries it: the seat's operator becomes the visit's intent, and the hold opens that component's settings (pin, forget, which seats show). Hold is an existing verb on the ladder (living terms: tap inspect, hold prime), so this is the same key taught once.`
+  bubbling = `The nearest owner answers a tap or hold; enclosing owners echo at nest attenuation (1 → 0.62 → 0.38, @electrostatics) or stay quiet. One reward per gesture: a hold on a seat must not also arm its frame or fire a toast. The label fix (a frame no longer steals a pill's press) was the first case.`
+  responders = #[
+    `promo: choose among entries whose operator matches the intent; with no match, say nothing. Speak from a resting seat (the rail, a paused scroll), never over focused reading or an open view.`,
+    `rail: show the intent's sigil and the current frame's address instead of "rail" and bare arrows; hold the rail to see the line so far (rooms visited under this intent, held concepts) and to open the cauldron without scrolling to the footer.`,
+    `lens on another route: when a seat's operator matches the carried intent and the reader has not chosen here, offer it pressed-ready rather than silently switching.`,
+    `mask: an intent may dim sections whose expressions map to another intent, with one tap to show all — skimming as self-selection, reweighting without hiding the electrode.`,
+    `living concepts: held terms are carried intent too; the cauldron is the vessel, and its count lives in the rail.`
+  ][reg=set]
+}[reg=facet]
+
+^"slices"{
+  s1 = .{
+    name = `still footer`
+    change = `promo-wonder-cycle paints at its hydrated size on first render (static fallback rendered from the same feed at build, or the last hydrated card cached for the day), and hydration moves off the scroll path`
+    verify = `footer-settle probe: site footer top unchanged for 10 s after arrival at 390 px; promo section height identical before and after hydration`
+    sensation = `none; a fix`
+  }[reg=facet]
+  s2 = .{
+    name = `carried intent`
+    change = `hold a lens seat to carry its operator; Home, Software, and Design lenses read it; settings on hold`
+    verify = `browser review of the feel; a hold that does not also arm its frame; reduced motion and keyboard parity (a long-press equivalent on Enter-hold or a menu item)`
+    sensation = `review first`
+  }[reg=facet]
+  s3 = .{
+    name = `intent-matched promo`
+    change = `promo picks by operator and speaks from the rail's resting seat; no toast while reading`
+    verify = `a day's promo differs by intent; zero toasts during an open folio view or reading dwell`
+    sensation = `review first`
+  }[reg=facet]
+  s4 = .{
+    name = `Spw-native rail`
+    change = `intent sigil + frame address; hold for the line so far and the cauldron`
+    verify = `pocket stills; the rail's touch targets keep --touch-target-compact`
+    sensation = `review first`
+  }[reg=facet]
+  s5 = .{
+    name = `seat alignment`
+    change = `replace filler "mode" operators on seats with the intent each seat actually offers`
+    verify = `census: every seat operator is one of the intent operators; audit:operator-controls`
+    sensation = `small`
+  }[reg=facet]
+  s6 = .{
+    name = `skim masks`
+    change = `per-route intent → expression-mode maps; dim, never drop, with one tap to show all`
+    verify = `a reader can always reach every section; stills per intent`
+    sensation = `review first`
+  }[reg=facet]
+  order = `s1 now (a fix with a receipt), then s2 as the demo the others hang on; s5 can ride with s2.`
+}[reg=facet]
+
+^"do_not"{
+  family = `No new data-spw-* family. The carried intent is an operator; where the root needs to expose it, use an existing stem (candidates to decide: data-spw-lens-mode placed on html, or page modes).`
+  ladder = `No fifth ladder; hold is already a rung.`
+  toast = `No promotion that ignores intent, and no toast over focused reading or an open view.`
+  hide = `A mask dims; it never removes the electrode of a shell.`
+  implement = `Do not implement from this prime; each slice is its own patch with its own receipt.`
+}[reg=facet]
+
+#>wonder_intent_across_pages
+?["What would a page say to a reader it had watched choose ^ build three rooms ago?"]{
+  #:depth #!experiential ~#lens(intent)
+  ~#hypothesis: "the right answer is one line in the rail, in the reader's operator, naming the next room that builds on the last — and silence everywhere else"
+  !probe{ "carry ^ from Home to /topics/software/; count what speaks unprompted on arrival and whether each thing names the intent or ignores it" }
+  $%[intent.operator, speaker.count, speaker.aligned, reader.focus]
+}
