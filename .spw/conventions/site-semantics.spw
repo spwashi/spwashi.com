@@ -1263,6 +1263,21 @@ frame #media_tropes_legacy_ai_wonder
   usage = "Copy clusters for book-like readability + professional rels + visual variety (narrational flow, topical salience); AI wonder notes in recipes/venue/rpg; design-eng path (explore copy with wonder); pragmatic engineering (interviews, tech rels, exp design pace, personality frames, abstractions discovery/teaching respecting perspective frames)."
   note "Paves hire design engineer; leans frontend/design eng; unique to spwashi wonder (Spw + material + rpg/venue as synthesis surface)."
 
+frame #image_provenance
+  role extension
+  operation contract
+  fixity tending
+  surface public/js/runtime/image-provenance.js + public/css/systems/image-utilization.css + site-settings (imageProvenance) + settings/index.html
+  concept every picture says where it came from; the tone of acknowledgement is the reader's to set
+  root_attributes = #[
+    `data-spw-image-provenance`
+  ][reg=set]
+  marks = "* original (value: a made thing, the sigil the site gives its art and folios); ~ generated (potential: a projection of a prompt, the sigil of the depiction bench)"
+  source_rule = "Provenance is read from where a picture is kept: /public/images/renders/ is generated, /public/images/assets/folios/ is an original scan, anything else stays unmarked rather than mislabeled. A new kind of original (photographs, paintings) earns its own path and rule before it earns a mark."
+  display_rule = "imageProvenance is the canonical setting: mark (the sigil, default), named (sigil and word), off (no visual mark). Assistive tech hears the provenance in every tone through aria-description on the picture."
+  placement_rule = "The mark is anchored to its picture with CSS anchor positioning and sits out of flow; no image or wrapper changes its layout. Without anchor positioning the visual mark stays hidden and the description remains."
+  note "Creator, 2026-09-26: there should be a visual notation to distinguish original from generated art, and it should be another configurable surface, a tone of acknowledgement."
+
 frame #utility_menu_layout
   role extension
   surface public/css/shell/chrome.css + public/js/runtime/shell-disclosure.js + header HTML

@@ -431,6 +431,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   spellPathDisplay: 'auto',
   consoleDisplay: 'hidden',
   rewardDisplay: 'docked',
+  imageProvenance: 'mark',
   viewportActivation: 'off',
 
   reduceMotion: 'off',
@@ -536,6 +537,7 @@ const SETTING_OPTIONS = Object.freeze({
   spellPathDisplay: new Set(['collapsed', 'auto', 'expanded']),
   consoleDisplay: new Set(['collapsed', 'expanded', 'hidden']),
   rewardDisplay: new Set(['docked', 'toasts', 'hidden']),
+  imageProvenance: new Set(['mark', 'named', 'off']),
   viewportActivation: new Set(['off', 'on']),
 
   reduceMotion: new Set(['off', 'on']),
@@ -816,6 +818,7 @@ const SETTING_VALUE_LABELS = Object.freeze({
   spellPathDisplay: Object.freeze({collapsed: 'Collapsed', auto: 'Auto', expanded: 'Expanded'}),
   consoleDisplay: Object.freeze({collapsed: 'Collapsed', expanded: 'Expanded', hidden: 'Hidden'}),
   rewardDisplay: Object.freeze({docked: 'Docked', toasts: 'Toasts only', hidden: 'Hidden'}),
+  imageProvenance: Object.freeze({mark: 'Mark', named: 'Named', off: 'Off'}),
   viewportActivation: Object.freeze({off: 'Off', on: 'On'}),
   reduceMotion: Object.freeze({off: 'Motion allowed', on: 'Reduced motion'}),
   highContrast: Object.freeze({off: 'Standard contrast', on: 'High contrast'}),
