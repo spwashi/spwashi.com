@@ -100,7 +100,10 @@ for (const file of listPages(ROOT)) {
     const text = outer.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
     const dates = [...outer.matchAll(/<time[^>]*\bdatetime="(\d{4}-\d{2}-\d{2})/g)].map((d) => new Date(`${d[1]}T12:00:00Z`));
     const relative = RELATIVE.exec(text)?.[0];
-    const cue = relative || CONTRACT.exec(text)?.[0];
+    const contract = CONTRACT.exec(text)?.[0];
+    // "close on the 13th and 26th" is a standing schedule, not a claim about one day.
+    const schedule = contract && /\b(closes?|opens?) on the \d{1,2}(?:st|nd|rd|th)\b/i.test(text);
+    const cue = relative || (schedule ? '' : contract);
     if (!cue) continue;
     const line = html.slice(0, m.index).split('\n').length;
     const renewed = blameDate(rel, line);
