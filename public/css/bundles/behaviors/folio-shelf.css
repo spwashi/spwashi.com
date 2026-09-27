@@ -465,12 +465,6 @@
    says which move it is; each move keeps one direction the eye can follow.
    -------------------------------------------------------------------------- */
 
-/* A tap during a move reaches the live page beneath the pictures, so a quick
-   flip lands on its button instead of light-dismissing the view. */
-:root:active-view-transition-type(folio-open, folio-flip, folio-close, folio-thread)::view-transition {
-  pointer-events: none;
-}
-
 ::view-transition-group(folio-scan) {
   z-index: 2;
   animation-duration: var(--spw-time-travel, 570ms);

@@ -240,7 +240,7 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
   rules: #[
     `Every stage control climbs the chips' ladder with the chips' tokens: proximity inks, contact seats, held fills.`,
     `Motion only where it names a discharge. No travel on hover.`,
-    `A tap during a move reaches the live page (::view-transition pointer-events none), so a quick flip never light-dismisses the view.`,
+    `A tap during a move is never eaten: during a transition the browser hits <html> whatever ::view-transition's pointer-events say (Chrome 152), so kernel/view-transition-tap.js finishes the move on that pointerdown and hands the click to the control under the pointer. A quick flip never light-dismisses its view; a quick second lens is never dropped.`,
     `A scan warms on intent and a move waits one beat for it to decode, so the piece never lands on an empty plate.`,
     `Reduced motion, capture mode, and engines without view-transition types get the same moves in place.`,
     `A part carries a view-transition name only while its move runs.`
