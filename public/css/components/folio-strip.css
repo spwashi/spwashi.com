@@ -1,0 +1,80 @@
+/* ==========================================================================
+   folio-strip.css
+   --------------------------------------------------------------------------
+   The week's high-res five, shown away from the shelf (Home, Now). Items are
+   drawn by scripts/lib/folio-strip.mjs from the folio page's own tiles, so a
+   strip never disagrees with the shelf; this file only lays them out.
+
+   Reading
+   - Squares hold every scan whole, portrait or landscape, as the shelf does.
+   - A narrow strip scrolls sideways with snap; wide enough, all five stand in
+     a row without scrolling. The row answers to its own width.
+   - Each picture wears its * original mark (runtime/image-provenance.js).
+   ========================================================================== */
+
+.folio-strip {
+  display: grid;
+  gap: 0.5rem;
+  margin-block: 0.75rem;
+}
+
+.folio-strip > h3 {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.folio-strip__lede {
+  margin: 0 0 0.6rem;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.folio-strip__list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(7rem, 1fr);
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0 0 0.35rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  list-style: none;
+}
+
+.folio-strip__list > li {
+  min-inline-size: 0;
+  scroll-snap-align: start;
+}
+
+.folio-strip__list a {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.folio-strip__list img {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 0.4rem;
+  background: color-mix(in srgb, var(--ink) 5%, var(--surface-strong, #fff));
+}
+
+.folio-strip__list a > span {
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
+.folio-strip__no {
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.folio-strip__list a:is(:hover, :focus-visible) img {
+  border-color: color-mix(in srgb, var(--op-value-color, var(--teal, #008080)) 60%, var(--line));
+}

@@ -1992,6 +1992,14 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
     transition: none;
   }
 }
+
+/* The folio stack frame (#home-folios): ornament gives every footer a 4rem
+   top margin (ornament/whimsy's footer rule), which opened an empty band
+   between the strip and its chip. The routes layer outranks ornament in the
+   built bundles, so the frame sets its own rhythm here. */
+:where(body[data-spw-surface="home"] #home-folios) > .frame-actions {
+  margin-block-start: 0.4rem;
+}
 }
 
 /* /public/css/routes/surfaces/home-panels.css */
