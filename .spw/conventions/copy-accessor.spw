@@ -61,6 +61,13 @@ fixity = "stable"
   refuse = `Do not add data-spw-voice or data-spw-tone. Do not split a lede into i18n fragments to "fix" density.`
 }[reg=facet]
 
+^"audience_states"{
+  heard = `Creator, 2026-09-27: "I want the site to remain readable towards academic wonder with business marketing as a clearly addressed audience with an assumption that readers may be either or neither at different times and may wonder through pages and configurations as a reflection of an updating sense of self."`
+  rule = `Address the state a reader is in, not an identity they hold: "when the ask has a shape", "the kind of attention you have", "for wandering and for work". Business asks stay explicit and findable; the academic register is not flattened to sell them.`
+  configuration = `Lens, theme, and carried intent are the reader saying who they are today. Copy that changes with them is answering, not segmenting.`
+  first_pass = `2026-09-27: the Home hook names both kinds of visit; the Design hook stops repeating its heading and speaks to a studio and to the curious from the same drawer; Play drops a past date for its standing day; two scan captions tie their principle to the picture above them.`
+}[reg=facet]
+
 ^"clustered_update"{
   claim = `Page copy and topic should be revised as a working set, not as isolated strings. The dotted prefix is one grouping. The stronger grouping for development is the topic cluster already authored as data-spw-related-routes / data-spw-page-family.`
   why = `An issue that retunes curriculum numericity also retunes math hook, software grammar neighbor links, and recipes dose/culture counts. A localization table keyed only by route hides that. The audit lists the working set so an editor can open every collectible in the cluster.`
