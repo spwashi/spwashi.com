@@ -85,6 +85,23 @@ export const ENHANCEMENT_DEFS = [
     load: () => import('../frame-size-memory.js'),
   },
   {
+    id: 'lens-intent',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.RESIDUE,
+    selector: '.mode-switch [data-set-mode][data-spw-operator]',
+    rootMode: 'single',
+    describes: 'lens[intent]{hold.carry.offer} a held seat carries its operator across pages',
+    updates: [
+      'flourish:is-carried',
+      'flourish:aria-description',
+    ],
+    evaluates: 'intent carried-lens operator session-residue hold-gesture',
+    timingArc: 'immediate-lens',
+    effectScope: 'local-dom storage',
+    load: () => import('../lens-intent.js'),
+  },
+  {
     id: 'tuning-discovery',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
