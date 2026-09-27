@@ -74,6 +74,7 @@ expression = visit[intent]{lens.carry.meet}<hype>
     change = `promo-wonder-cycle paints at its hydrated size on first render (static fallback rendered from the same feed at build, or the last hydrated card cached for the day), and hydration moves off the scroll path`
     verify = `footer-settle probe: site footer top unchanged for 10 s after arrival at 390 px; promo section height identical before and after hydration`
     sensation = `none; a fix`
+    landed = `2026-09-26: the runaway footer was content-visibility placeholders, not the promo; frame-size-memory (flj-010) took CLS across a full scroll from 0.762 to 0.076 and the footer now arrives and stays. The promo's 448 px weekly append stays open for s3.`
   }[reg=facet]
   s2 = .{
     name = `carried intent`

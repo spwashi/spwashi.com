@@ -232,8 +232,10 @@ export function scanTuningSurfaces(root = document) {
     .filter(isOutermostTunableSurface)
     .map((node) => {
       const dimensions = inferSurfaceDimensions(node);
-      node.dataset.spwTuningSurface = 'true';
-      node.dataset.spwTuningDimensions = dimensions.join(' ');
+      // Idempotent: the scan reruns on every DOM sync, and a rewrite of an
+      // unchanged value is still a mutation that invalidates style and can
+      // wake the sync again (the footer settings churned every half second).
+      writeDatasetValues(node, { spwTuningSurface: 'true', spwTuningDimensions: dimensions.join(' ') });
       ensureMarginalia(node, dimensions, mode);
 
       return {

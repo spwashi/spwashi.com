@@ -165,6 +165,25 @@ expression = component[fit]{lens.charge.journey}<ordinal>
   next = `The lens sets intent for one page and forgets it. Carrying it across pages, so the promo, the rail, and page state can meet a visit along its intent, is primed separately.`
 }[reg=facet]
 
+^"frame_size_memory"{
+  id = "flj-010"
+  operation = "align"
+  dated = `2026-09-26`
+  fixity = "tending"
+  claim = `A placeholder is a promise about size. content-visibility: auto with a 12–16rem guess let Home promise 15,600 px and deliver 27,800: the page grew ahead of the reader, the footer ran away, and the last frames rendered on arrival and threw the footer 1,714 px off the screen (CLS 0.69 in one shift). The auto keyword remembers a real height only for the life of the page.`
+  evidence = #[
+    `390 px, true scroll to the bottom: #climate-tuning 192 → 1,699 px and #wonder-kin 192 → 399 px 1.7 s after arrival; the site footer at y=360 thrown to y=1,997`,
+    `the footer's settings rewrote data-spw-tuning-surface and -dimensions to the same values about every half second (tuning-discovery's DOM sync task)`
+  ][reg=set]
+  landed = #[
+    `runtime/frame-size-memory.js (catalog: enhancement, immediate, residue): frames take this route's last measured heights at this width as their placeholder on boot; once the page settles, never-seen frames render once, one per idle slice, nearest first; heights save per route and 40 px width bucket for seven days`,
+    `runtime/tuning-discovery.js writes through writeDatasetValues, so an unchanged surface is not rewritten`
+  ][reg=set]
+  measured = `CLS across a full scroll 0.762 → 0.076; the page knows its 27,836 px height before the reader descends; the footer arrives and stays at y=141 on a first visit (idle warm-up) and a return visit (memory)`
+  open = `The promo appends a 448 px weekly grid inside its static fallback on hydration; anchoring keeps the footer still, but a reader looking at the promo sees it grow. That belongs to the promo's redesign (intent-across-pages s3), not to a static copy of a weekly block.`
+  refuse = `No new placeholder token per frame kind and no data-spw attribute: heights are measured, not guessed.`
+}[reg=facet]
+
 # Harvestable. `npm run wonder -- --surface component-fit`
 
 #>wonder_component_fit_conflict
