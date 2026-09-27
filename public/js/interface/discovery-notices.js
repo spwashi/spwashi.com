@@ -18,6 +18,7 @@ import {
   writeJson,
 } from '/public/js/kernel/storage-utils.js';
 import { isInspectLabSurface, isReadingQuietChrome } from '/public/js/runtime/orchestration/policy.js';
+import { describeIntent, readVisitIntent } from '/public/js/kernel/visit-intent.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const STORAGE_KEY = STORAGE_KEYS.DISCOVERY_DISMISSALS;
@@ -261,6 +262,100 @@ export function selectScheduleItems(feed, date = new Date()) {
   }
 
   return selected;
+}
+
+/**
+ * The promo that meets the reader along their intent, or nothing.
+ *
+ * Every feed entry names the intents it serves (promo-wonder-cycle.json
+ * `intents`, operator sigils). The pool is the whole feed, promo and wonder
+ * halves alike, so a day's promo differs by intent; the day picks among the
+ * matches so a visit that keeps an intent still sees the pool turn. No intent,
+ * or no entry that serves it, says nothing: a promotion that ignores intent is
+ * the one people learn to skip (.spw/caches/intent-across-pages-2026-09.spw s3).
+ */
+export function selectIntentNotice(feed, date = new Date(), intent = null) {
+  const sigil = cleanText(intent?.sigil || '');
+  if (!sigil) return [];
+  const pool = [];
+  for (const cadence of ['daily', 'weekly']) {
+    const rows = Array.isArray(feed?.[cadence]) ? feed[cadence] : [];
+    rows.forEach((row, index) => {
+      for (const half of ['promo', 'wonder']) {
+        const source = row?.[half];
+        if (Array.isArray(source?.intents) && source.intents.includes(sigil)) pool.push({ cadence, index, source });
+      }
+    });
+  }
+  if (!pool.length) return [];
+  const { isoDay } = getDateKeys(date);
+  const dayOrdinal = Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000);
+  const pick = pool[clampIndex(dayOrdinal % pool.length, pool.length)];
+  return [{
+    cadence: pick.cadence,
+    scheduleKey: `${isoDay}:${sigil}`,
+    label: `Along your ${describeIntent(intent)}`,
+    source: pick.source,
+    index: pick.index,
+    presentation: 'toast',
+    intent,
+  }];
+}
+
+/**
+ * Whether a resting seat has arrived. Promotions speak after the read, never
+ * over it: the reader has reached the end of the page's reading, stopped
+ * scrolling for a breath, spent a little while here, and has no view open.
+ */
+export function restingSeatDecision({ atEnd = false, sinceScrollMs = 0, dwellMs = 0, blocked = false, pauseMs = 1400, minDwellMs = 12000 } = {}) {
+  if (!atEnd) return 'wait';
+  if (blocked) return 'hold';
+  if (sinceScrollMs < pauseMs || dwellMs < minDwellMs) return 'hold';
+  return 'speak';
+}
+
+function waitForRestingSeat(signal, { pauseMs = 1400, minDwellMs = 12000 } = {}) {
+  return new Promise((resolve) => {
+    const end = document.querySelector('spw-site-footer, body > footer, #site-footer') || document.querySelector('main > :last-child');
+    if (!end || signal.aborted || typeof IntersectionObserver !== 'function') {
+      resolve(false);
+      return;
+    }
+    const arrived = performance.now();
+    let lastScroll = arrived;
+    let atEnd = false;
+    let timer = 0;
+    const blocked = () => Boolean(
+      document.querySelector('dialog[open]')
+      || document.fullscreenElement
+      || document.visibilityState !== 'visible'
+      || String(globalThis.getSelection?.() || '').trim(),
+    );
+    const finish = (ok) => {
+      observer.disconnect();
+      removeEventListener('scroll', onScroll);
+      clearTimeout(timer);
+      resolve(ok);
+    };
+    const check = () => {
+      clearTimeout(timer);
+      const now = performance.now();
+      const decision = restingSeatDecision({ atEnd, sinceScrollMs: now - lastScroll, dwellMs: now - arrived, blocked: blocked(), pauseMs, minDwellMs });
+      if (decision === 'speak') finish(true);
+      else if (decision === 'hold') timer = setTimeout(check, Math.max(250, pauseMs - (now - lastScroll), minDwellMs - (now - arrived)));
+    };
+    const onScroll = () => {
+      lastScroll = performance.now();
+      if (atEnd) check();
+    };
+    const observer = new IntersectionObserver((entries) => {
+      atEnd = entries.some((entry) => entry.isIntersecting);
+      check();
+    }, { rootMargin: '0px 0px 20% 0px' });
+    observer.observe(end);
+    addEventListener('scroll', onScroll, { passive: true });
+    signal.addEventListener('abort', () => finish(false), { once: true });
+  });
 }
 
 export function isCurrentRoute(href, currentPath = window.location.pathname) {
@@ -626,13 +721,13 @@ export function normalizeNotice(raw, cadence, scheduleKey, index, locale) {
     cadence,
     scheduleKey,
     locale,
-    label: cleanText(source.label || `${cadence === 'daily' ? 'Today' : 'This week'} promo`),
+    label: cleanText((raw?.intent && raw.label) || source.label || `${cadence === 'daily' ? 'Today' : 'This week'} promo`),
     title,
     summary,
     href,
     cta: cleanText(source.cta || ''),
     why: cleanText(source.why || promotion.proof || ''),
-    presentation: resolveNoticePresentation(promotion.presentation),
+    presentation: raw?.intent ? 'toast' : resolveNoticePresentation(promotion.presentation),
     kind: promotion.kind,
     audience: promotion.audience,
     offer: promotion.offer,
@@ -652,13 +747,15 @@ export function normalizeNotice(raw, cadence, scheduleKey, index, locale) {
   };
 }
 
-export function buildVisibleNotices(feed, date = new Date(), dismissals = readDismissals(), currentPath = window.location.pathname) {
+export function buildVisibleNotices(feed, date = new Date(), dismissals = readDismissals(), currentPath = window.location.pathname, options = {}) {
   if (shouldSuppressScheduledNotices()) {
     return { dismissals, visible: [] };
   }
 
   const locale = cleanText(feed?.sourceLocale || 'en') || 'en';
-  const selected = selectScheduleItems(feed, date);
+  const selected = 'intent' in options
+    ? selectIntentNotice(feed, date, options.intent)
+    : selectScheduleItems(feed, date);
   const visible = [];
 
   for (const item of selected) {
@@ -1017,20 +1114,27 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
   }
 
   const feed = await loadFeed();
-  const { dismissals, visible } = buildVisibleNotices(feed);
+  const { dismissals, visible } = buildVisibleNotices(feed, new Date(), readDismissals(), window.location.pathname, {
+    intent: readVisitIntent(document),
+  });
   if (!visible.length) {
     return cleanupEventApi;
   }
 
-  const stack = ensureStackRoot();
-  const cleanupItems = mountNotices(visible, stack, dismissals);
-
-  const schedule = window.setTimeout(() => {
-    if (!stack.childElementCount) stack.remove();
-  }, 1200);
+  /* Speak from a resting seat: after the read, not over it. The loader gets
+     its cleanup now; the notice mounts later, or never if the reader leaves. */
+  const resting = new AbortController();
+  let stack = null;
+  let cleanupItems = [];
+  waitForRestingSeat(resting.signal).then((ok) => {
+    if (!ok || resting.signal.aborted) return;
+    stack = ensureStackRoot();
+    cleanupItems = mountNotices(visible, stack, dismissals);
+    syncDiscoveryChromeState('notice-resting-seat');
+  });
 
   const cleanup = () => {
-    window.clearTimeout(schedule);
+    resting.abort();
     for (const fn of cleanupItems) {
       try {
         fn();
@@ -1041,7 +1145,7 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
     removeEscapeListener();
     removeEscapeListener = () => {};
     cleanupEventApi();
-    stack.remove();
+    stack?.remove();
     document.querySelector(`[${MODAL_ATTR}]`)?.remove();
     syncDiscoveryChromeState('module-cleanup');
   };

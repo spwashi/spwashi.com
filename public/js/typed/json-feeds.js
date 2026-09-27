@@ -38,6 +38,9 @@ function validatePromoWonderCard(value, path, issues, role) {
         pushIssue(issues, `${path}.summary`, `${role} summary is required`);
     if (!href)
         pushIssue(issues, `${path}.href`, `${role} href is required`);
+    if (value.intents != null && (!Array.isArray(value.intents) || value.intents.some((intent) => typeof intent !== 'string'))) {
+        pushIssue(issues, `${path}.intents`, 'intents must be an array of operator sigils');
+    }
     if (value.promotion != null) {
         if (!isRecord(value.promotion)) {
             pushIssue(issues, `${path}.promotion`, 'promotion must be an object');
