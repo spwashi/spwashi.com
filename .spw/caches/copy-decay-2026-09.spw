@@ -1,0 +1,112 @@
+# Cache 2026-09-27 — copy that names a time is an isotope: it decays from one operational form toward another on a half-life the form sets, and a receipt renews it.
+# Creator's ask: improve weekly copy fluctuation; an isotopic decay mechanism between operational forms along a gradient of pragmatic implication; Spw expressions and runtime; lens value; emphasis, strong words, living concepts, links.
+# Operation: prime. Nothing here is a route change; the sensor is the first patch and the rest are handed back.
+
+#>copy_decay_2026_09
+#:cache #!copy #!time #!lens
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@sensor: ~"../../scripts/audit-copy-clock.mjs"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@operations: ~"../conventions/semantic-capacity.spw#operations"
+@fixity: ~"../conventions/model-guided-refinement.spw#semantic_fixity"
+@rhythm: ~"../conventions/data-spw-attribute-governance.spw#rhythm"
+@microstates: ~"../conventions/interaction-microstates.spw"
+@braces: ~"../conventions/semantic-braces.spw"
+@intent: ~"./intent-across-pages-2026-09.spw"
+@promo_runtime: ~"../../public/js/typed/promo-wonder-cycle.js"
+@home: ~"../../index.html"
+
+claim: `A sentence that names a time speaks in a tense, and the tense goes wrong on a schedule nobody set. Treat such copy as an isotope. It is written in one operational form — cache, audit, align, prime, contract, archive — and each form implies something a reader may act on. The implication has a half-life. When it runs out the copy has decayed into another form, whether or not anyone rewrote it. A receipt renews it. The mechanism is not a rewrite engine; it is a clock, a set of half-lives, a vocabulary of receipts, and the HTML that already exists for marking change.`
+
+^"specimens"{
+  live_note = `Home's live note was renewed 2026-09-27 (another session): the expression's scene moved from (b) in progress to home[live]{cycle.close}(b)<now>, the tense moved with it, and the date sits in <time datetime="2026-09-26">. The scene did the work: closing the cycle changed the scene and the sentence together. That is the renewal path working by hand.`
+  promo_forecast = `Home's schedule forecast is renewed at runtime — @promo_runtime forecastTiming() says "closes today" only when daysAway is 0 — but the static fallback authored on 2026-09-26 still says "B-cycle closes today" and "Next close: B-cycle · Saturday, September 26". A reader with scripts off gets the decayed isotope. A fallback must be written in the stable form (a dated fact) or not at all.`
+  census = `Across the routes: <strong> 2266, <em> 58, <mark> 7, <time> 67, <ins> 0, <del> 0. Importance is everywhere and used as a label; stress is almost nowhere; change is never marked; receipts are sparse.`
+}
+
+^"isotopes"{
+  claim = `The gradient of pragmatic implication is what a reader may do on the strength of the sentence. Forms sit on it in this order, and each has a half-life and a decay product. The product is a voice change of the same sentence, never a deletion.`
+  prime = .{
+    implies = `expect it: "I'm making", "coming soon", "this cycle"`
+    half_life = `one cycle (about two weeks); a prime not renewed by its close is a promise the page keeps making`
+    decays_to = `archive — the same sentence in the past ("this cycle made") — or renews to contract ("open by card")`
+  }[reg=facet]
+  audit = .{
+    implies = `trust the figure: "399 tests", "191 KiB", "314 days"`
+    half_life = `its measurement cadence; a weekly number is stale after a week`
+    decays_to = `cache — the figure dated: "as of <time>"; never the bare figure`
+  }[reg=facet]
+  align = .{
+    implies = `use this word: a name, a noun, a route`
+    half_life = `until superseded; long`
+    decays_to = `archive with an alias, when the rename lands`
+  }[reg=facet]
+  contract = .{
+    implies = `act on it: "orders are open", "five open each week", "settled in the reply"`
+    half_life = `until its counter-receipt: sold, closed, retired`
+    decays_to = `archive — "were open" — and the counter-receipt is the record`
+  }[reg=facet]
+  cache = .{
+    implies = `consider it; already hedged`
+    half_life = `none; a cache is dated by nature`
+    decays_to = `nothing; it renews upward into a contract or stays a cache`
+  }[reg=facet]
+  archive = .{
+    implies = `it happened`
+    half_life = `stable isotope`
+    decays_to = `nothing`
+  }[reg=facet]
+  ~#rule: "Decay runs down the gradient (prime → archive, audit → cache, contract → archive). Renewal runs up it and always leaves a receipt. A sentence that moved without a receipt is the bug the sensor finds."
+}
+
+^"receipts"{
+  claim = `A receipt is anything that fixes when a sentence was last true. Four exist already; the sensor reads the first two.`
+  time = `<time datetime> inside the copy unit — the reader's receipt and the machine's`
+  renewal = `the git date of the unit's opening line — the author's receipt (git blame, 40 ms a unit)`
+  record = `a dated entry on /now naming the unit's subject — the site's receipt`
+  scene = `a scene change in the unit's expression, (a) → (b) → (b.close) — the language's receipt; @braces: parens stage midprocess observability, which is exactly what a cycle is`
+  sensor = `npm run audit:copy:clock — decayed: a past <time> beside a present-tense cue; undated: a cue with no <time>; aging: a cue renewed more than N weeks ago. --check fails on decayed only. First run 2026-09-27: 1 decayed (Home's live note points at the next close with only the past close's receipt: the October 13 date wants its own <time>), 5 undated ("this week" on plans, curriculum, recipes; "Today closes" on /now; "close on" on plans), 0 aging. Run against 2027-01-15 it fails, as it should.`
+}
+
+^"expressions"{
+  claim = `No grammar change. The scene slot already carries the isotope's label. A cycle-bound unit names its cycle there and the closing of the cycle is a scene change, as the live note showed.`
+  runtime = `The schedule exists (promo-wonder-cycle.json cycle.forecast). A small reader could compare a unit's scene to the schedule and project the inferred state — @rhythm says an inferred value is a -resolved key, never the authored one. Which family carries it is a taste call below.`
+  refuse = `No data-spw-decay, no data-spw-half-life, no new family. No rewrite of copy by script: the runtime may say a sentence has decayed; only the author changes its tense.`
+}
+
+^"lens_value"{
+  today = `A sat lens dims the four [data-spw-lens-pass] carriers that do not match to 0.42 opacity. A held lens now carries its operator as the visit's intent (23631b05, @intent s2). The lens still reads whole cards; it does not read sentences.`
+  stress = `Let the lens read inside prose. <mark> is the element the spec gives to relevance in another context; <em> is stress within the sentence. A phrase marked for a lens — <mark data-spw-lens-pass="play"> — reads as plain text until Play is sat, then carries the mark's relevance, while the sentence's own <em> keeps its stress under every lens. Nothing dims; the same paragraph reads differently per lens. This reuses the lens-pass family on a new element, which is not a new family.`
+  links = `Under a lens, a link whose route belongs to the lens's rooms is the first move; the hook already says "First move:" per panel. The lens could say it in prose too, by the same mark.`
+  living = `A living concept held while a lens is carried primes the concept with the lens's operator, so the cauldron's ingredient records the intent it was gathered under. The hold already exists on both; the join is one attribute read.`
+  gate = `Sensation review: one Home paragraph as a demo, approved in a browser, before any prose is re-marked.`
+}
+
+^"html_semantics"{
+  strong = `<strong> is importance. Two thousand of the site's uses are card labels ("Why this home page exists", "Holds:"): a heading in disguise or a term in a definition. A label is a <b> or a kicker element or an <h3>; it is not the most important thing in the card. Which of those it is decides whether the reason strip's articles get headings.`
+  em = `<em> is stress: the word a reader would lean on aloud. Fifty-eight uses on the site. Under the lens proposal it stays the sentence's own stress and the lens never moves it.`
+  mark = `<mark> is relevance in the current context — the lens element.`
+  time = `<time datetime> is the receipt. Every dated claim carries one; the sensor's undated list is the backlog.`
+  ins_del = `<ins datetime> and <del datetime> are the elements HTML has for copy that changed and when. A renewed sentence may keep its old form struck through for one cycle where the change is the point (a price, a close date), then drop it. Zero uses today.`
+  s = `<s> is no longer accurate — a decayed sentence kept for the record without a replacement. Rare; prefer the rewrite with a <time>.`
+  links = `A link is a claim that a room exists. rel="nofollow" is not a decay marker. A retired room is a decayed link; the route census should feed the sensor.`
+}
+
+^"first_patches"{
+  1 = `This file and the sensor. Landed.`
+  2 = `Receipts: put <time datetime> on every undated cue the sensor lists, one route at a time, no voice change.`
+  3 = `The promo fallback: author the no-script forecast as a dated fact ("Next close: <time>Oct 13</time>") so it cannot say "today".`
+  4 = `One Home paragraph marked for the lens as a demo — the sensation gate.`
+  5 = `The runtime reader of scene vs schedule, after 4 shows the mark is worth reading.`
+}
+
+^"questions"{
+  family = `Which existing family carries a decayed claim's inferred state? Liminality (entry → middle → return → settled) reads as the arc of a claim over a cycle. Fixity (stable → tending → experimental → volatile) reads as how much it may change. A decayed prime feels like liminality=return. Your call; it decides the CSS voice.`
+  strong = `Are card labels headings, terms, or keywords? h3, dt, or b. The reason strip is the place to decide it.`
+  strike = `Should a renewed close date keep the old one struck through for a cycle, or vanish? A wall calendar keeps it; a press release does not.`
+  lens = `Dim the rest, or stress the match? Today the lens dims. The mark proposal stresses. They can coexist for one demo and not after.`
+  half_lives = `The half-lives above are guesses in the site's own units. Which are wrong?`
+}
