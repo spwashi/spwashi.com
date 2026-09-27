@@ -69,6 +69,22 @@ export const ENHANCEMENT_DEFS = [
     load: () => import('../layout-shift-audit.js'),
   },
   {
+    id: 'frame-size-memory',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.RESIDUE,
+    selector: '.spw-frame:not([data-spw-region-role="entry-spine"])',
+    rootMode: 'single',
+    describes: 'frame[size]{remember.warm} content-visibility placeholders from measured heights',
+    updates: [
+      'flourish:contain-intrinsic-size',
+    ],
+    evaluates: 'layout-stability footer-arrival content-visibility residue',
+    timingArc: 'immediate-layout',
+    effectScope: 'local-dom storage',
+    load: () => import('../frame-size-memory.js'),
+  },
+  {
     id: 'tuning-discovery',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
