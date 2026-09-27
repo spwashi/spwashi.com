@@ -20,6 +20,7 @@ const IGNORED_SEGMENTS = new Set([
   '.git',
   '.github',
   '.idea',
+  '.references',
   '00.unsorted',
   'dist',
   'node_modules',
