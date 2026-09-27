@@ -12616,6 +12616,13 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   outline: none;
 }
 
+/* A living term with a home is an <a>. It keeps the term's dashed underline,
+   not the editorial link underline, so the word reads the same whether or not
+   it links; the dashed line already says "this word opens". */
+:where(a.spw-living-term, a[data-spw-living-term]) {
+  text-decoration: none;
+}
+
 :where([data-spw-vocab]) {
   font-weight: 550;
   color: color-mix(in srgb, var(--ink-strong, #090b0c) 92%, var(--active-op-color, var(--teal, #008080)) 8%);

@@ -406,7 +406,7 @@ function onPrimeKeydown(event) {
 
   const target = getInteractiveTarget(event.target, CAULDRON_CANDIDATE_SELECTORS);
   if (!target || shouldIgnorePrimeCandidate(target, event)) return;
-  if (target.closest('a[href], button, input, textarea, select')) return;
+  if (target.closest('a[href], button, input, textarea, select') && !isInspectableLivingTerm(target)) return;
 
   event.preventDefault();
 
@@ -780,8 +780,21 @@ let conceptPopoverTerm = null;
 function isInspectableLivingTerm(el) {
   if (!(el instanceof HTMLElement)) return false;
   if (!el.matches(LIVING_TERM_SELECTOR)) return false;
-  if (el.matches('.spw-chip, .frame-sigil, a[href], button, summary')) return false;
+  if (el.matches('.spw-chip, .frame-sigil, button, summary')) return false;
+  // A term written as <a href> is a living term with a home. With scripts off
+  // the link is the whole affordance; with scripts on it inspects like a span
+  // and the note carries the home. Other links keep their own behaviour.
+  if (el.matches('a[href]') && !el.hasAttribute('data-spw-concept')) return false;
   return !el.closest('[data-spw-groundable="false"]');
+}
+
+/** The affordance title the runtime writes at mount; anything else in title is a definition the author wrote. */
+const RUNTIME_AFFORDANCE_TITLE = 'tap to inspect; hold to gather as a cauldron ingredient';
+
+function authoredDefinition(term) {
+  const title = (term.getAttribute('title') || '').trim();
+  if (!title || title === RUNTIME_AFFORDANCE_TITLE || /^tap[: ]/i.test(title)) return '';
+  return title;
 }
 
 /** Say out loud what the term already behaves like.
@@ -793,8 +806,9 @@ function isInspectableLivingTerm(el) {
  *  readable; the title set above carries the gesture pair as the description. */
 function annotateLivingTermRole(node) {
   if (!isInspectableLivingTerm(node)) return;
-  if (!node.hasAttribute('role')) node.setAttribute('role', 'button');
-  if (!node.hasAttribute('tabindex')) node.tabIndex = 0;
+  const isLink = node.matches('a[href]');
+  if (!isLink && !node.hasAttribute('role')) node.setAttribute('role', 'button');
+  if (!isLink && !node.hasAttribute('tabindex')) node.tabIndex = 0;
   node.setAttribute('aria-haspopup', 'dialog');
   if (!node.hasAttribute('aria-expanded')) node.setAttribute('aria-expanded', 'false');
 }
@@ -806,8 +820,9 @@ function formatWonderPhrase(wonder) {
   return tokens.join(' · ');
 }
 
-function conceptRowsFor(detail) {
+function conceptRowsFor(detail, term) {
   return [
+    ['means', term ? authoredDefinition(term) : ''],
     ['expression', detail.expression],
     ['reads as', detail.substrate],
     ['climate', detail.context],
@@ -863,7 +878,7 @@ function buildConceptPopover(term) {
   dismiss.textContent = '×';
 
   grid.className = 'spw-concept-popover__grid';
-  conceptRowsFor(detail).forEach(([label, value]) => {
+  conceptRowsFor(detail, term).forEach(([label, value]) => {
     const row = document.createElement('div');
     const key = document.createElement('span');
     const val = document.createElement('span');
@@ -884,6 +899,17 @@ function buildConceptPopover(term) {
   // paths would part company at exactly the interesting moment.
   gather.textContent = isGrounded(term) ? 'gathered' : 'gather to cauldron';
   actions.append(gather);
+
+  // A term with a home keeps it reachable from the note: the tap that opened
+  // this note swallowed the link's own navigation.
+  const href = term.matches('a[href]') ? term.getAttribute('href') : '';
+  if (href) {
+    const home = document.createElement('a');
+    home.className = 'spw-chip spw-concept-popover__home';
+    home.href = href;
+    home.textContent = href.startsWith('#') ? 'go to it on this page' : 'go to its home';
+    actions.append(home);
+  }
 
   hint.className = 'spw-concept-popover__hint';
   hint.textContent = 'Esc to close · hold the word to gather without opening this';
