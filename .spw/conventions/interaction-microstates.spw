@@ -32,6 +32,9 @@
 @discovery_notices: ~"../../public/js/interface/discovery-notices.js"
 @pointer_device_detection: ~"../audits/pointer-device-detection-2026-09.spw"
 @touch_gesture_contracts: ~"../audits/touch-gesture-contracts-2026-09.spw"
+@electrostatic_affordances: ~"./electrostatic-affordances.spw"
+@folio_shelf_js: ~"../../public/js/modules/design/folio-shelf.js"
+@folio_shelf_css: ~"../../public/css/components/folio-shelf.css"
 
 operation = "contract"
 fixity = "stable"
@@ -213,6 +216,36 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
   boundary_rule: "Event-driven and self-clearing. A host grounded at first paint advertises deadness before anyone touched it — see electrostatic-affordances.spw#do_not_author. Nothing persists and nothing accumulates."
   ~#open: `Grounding is written on the two silent paths found this pass. The 24 unaudited gesture-contract verbs (gather-search-term, toggle-lens, expand-trail, cycle-nearby, surface-current, open-companion, cycle-variant) still advertise arcs with no engine; grounding gives them somewhere honest to land, but the per-verb census has not been run.`
   ~#probed(2026-09-16, per-verb census): `Ran the enumerate-touch-record method statically against every authored host. Resolving: gather-search-term (7, topics/search living-term panels: haptics tap inspects, hold gathers), cauldron-capture (3 living terms: same haptics pair; the authored tap:prime is really tap:inspect), toggle-lens on the 6 image-study figures (image-interaction swipe → spw:image-swipe → progression discover phase), tap:discover (coordination figure carries data-spw-image-discovery), cycle-nearby (runtime-written by section-handle, which handles it). Silent: the three Settings legend chips (spans; the verbs lived on sub-links inside the cards, never on the chips), the rpg-wednesday scene-bed section (scene-interaction handles lane click only; the figure inside owns the study contract at runtime), double-click:expand-trail on two garden details plus eight living-term titles saying "follow related trail" (no engine; a double tap gathers), and drag:cycle on the math lens card (brace-gestures projects on drag; nothing cycles). Fixed the same pass: chips are button.spw-effect-chip with data-companion-action and the playground script resolves the primary card for them; the other three hosts stop advertising the verb. Open: the audit was static plus one browser pass on Settings; the seven resolving figures were not re-touched on a phone.`
+}
+
+^"discharge_motion"{
+  ~#note: "The ladder says how a terminal arms. Discharge says where the charge goes. Travel is the discharge made visible."
+  claim: `A move that relocates something travels from the thing touched and comes back to it. The motion names the discharge kind (@electrostatic_affordances), so it teaches instead of decorating.`
+  kinds: .{
+    project: `open — the piece leaves its slot and becomes the plate; the card rises beneath it (folio-open)`
+    transfer: `flip — the plate slides toward the neighbor it becomes; ← and → flip too (folio-flip-next | folio-flip-prev)`
+    ground: `close — the card lets go, the piece settles back into its slot, focus returns to that tile (folio-close)`
+    induct: `thread — inductance, kin share momentum: a thread's tiles glide into place and the rest fall away (folio-thread)`
+  }[reg=facet]
+  springs: #[
+    `--spw-spring-contact — damping 0.62, the pop of a released press`,
+    `--spw-spring-travel — damping 0.74, a piece between places`,
+    `--spw-spring-settle — damping 1, text arriving without overshoot`
+  ][reg=set]
+  timing: `--spw-time-travel rides the duration primitives; reduced motion collapses it with them. Béziers stand in where linear() is missing.`
+  host: `design/folios #release-set: @folio_shelf_js names folio-scan and folio-view for each move and releases them when it ends; @folio_shelf_css carries the signatures under :active-view-transition-type()`
+  ~#fixed(2026-09-26, flip nested views): `a flip button sits inside the view it leaves, so a native popovertarget flip nested the neighbor on top: three flips left three views and three 55% backdrops open, and focus fell to body. A flip now replaces the view and focuses the same control in the next one; quick presses chain from the view a pending move is heading to.`
+  ~#fixed(2026-09-26, controls below the fold): `stacked, the view hid Next and Close below its own fold on every laptop and desktop size measured (1280×800 through 1920×1080). From 48rem the piece sits left and its words and controls stand beside it in reading order; the plate grew at every size but the largest.`
+  ~#fixed(2026-09-26, label press): `brace-gestures captured the pointer on #release-set when a press began on a pill's label, so the release and click landed on the frame and the thread radios never checked with a mouse. label joins NATIVE_CONTROL_SELECTOR (kernel/dom-contracts.js): a label is its control's hit area.`
+  rules: #[
+    `Every stage control climbs the chips' ladder with the chips' tokens: proximity inks, contact seats, held fills.`,
+    `Motion only where it names a discharge. No travel on hover.`,
+    `A tap during a move reaches the live page (::view-transition pointer-events none), so a quick flip never light-dismisses the view.`,
+    `A scan warms on intent and a move waits one beat for it to decode, so the piece never lands on an empty plate.`,
+    `Reduced motion, capture mode, and engines without view-transition types get the same moves in place.`,
+    `A part carries a view-transition name only while its move runs.`
+  ][reg=set]
+  fixity: `experimental — the folio shelf is the demo. Widen to other popovers, lenses, and route hops only after a browser review of the feel.`
 }
 
 ^"input_families"{

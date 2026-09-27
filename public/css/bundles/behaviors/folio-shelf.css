@@ -17,6 +17,16 @@
    - Tiles hold every scan in a square so portrait and landscape pieces sit
      together without cropping. Popovers are native; Esc and the Close button
      both dismiss.
+   - Every control on the stage climbs the chips' ladder: proximity inks the
+     edge (a tile also lifts), contact seats it, held fills it. The travel and
+     press tokens are the chips' own, so a tile answers a finger the way a
+     chip does. Contract: interaction-microstates.spw#charge_ladder_ordering.
+   - Moves travel as discharge (interaction-microstates.spw#discharge_motion):
+     open projects a scan out of its slot, a flip transfers it to the neighbor,
+     close grounds it back in the slot, a thread gathers its kin.
+     modules/design/folio-shelf.js names the moving parts for a view
+     transition; the rules at the foot give each move its signature. Without
+     that module a view still rises and falls on @starting-style.
    ========================================================================== */
 
 .folio-shelf {
@@ -45,6 +55,14 @@
   color: var(--ink);
   text-align: start;
   cursor: zoom-in;
+  /* ornament/whimsy.css §4 replaces every button's transition list today, so
+     this lift and seat snap until the cascade review lets owners keep motion
+     (.agents/plans/css-cascade-stratification/). Labels are not overruled. */
+  transition:
+    translate var(--spw-time-surface, 220ms) var(--spw-spring-contact, ease-out),
+    scale var(--spw-time-surface, 220ms) var(--spw-spring-contact, ease-out),
+    border-color var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease-out),
+    box-shadow var(--spw-time-surface, 220ms) var(--spw-ease-surface, ease-out);
 }
 
 .folio-tile__open picture {
@@ -59,15 +77,44 @@
   block-size: auto;
   max-inline-size: 100%;
   max-block-size: 100%;
+  transition: opacity var(--spw-time-surface, 220ms) var(--spw-ease-surface, ease-out);
 }
 
+/* Proximity: the edge inks. A tile is a larger electrode than a chip, so where
+   hover exists it lifts twice the chip's travel and casts a shadow to show it. */
 .folio-tile__open:is(:hover, :focus-visible) {
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 60%, var(--line));
+}
+
+@media (hover: hover) {
+  .folio-tile__open:hover {
+    translate: 0 calc(var(--spw-control-hover-lift, -1px) * 2);
+    box-shadow: 0 0.55rem 1.1rem -0.8rem color-mix(in srgb, var(--shadow-color, #111) 60%, transparent);
+  }
+}
+
+/* Contact outranks proximity: the press seats the tile below rest. The
+   house contact rule already scales a pressed button (and the interaction
+   tuner attenuates it), so the tile adds only the seat. */
+.folio-tile__open:active {
+  translate: 0 var(--spw-control-press-depth, 1.5px);
+  box-shadow: none;
+  transition-duration: var(--duration-instant, 50ms);
 }
 
 .folio-tile:target .folio-tile__open {
   outline: 2px solid var(--active-op-color, var(--teal, #008080));
   outline-offset: 3px;
+}
+
+/* Held: while a folio is open its edge stays inked and its slot stands nearly
+   empty, so the shelf shows where the piece will come back to. */
+.folio-tile:has(> .folio-view:popover-open) .folio-tile__open {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 60%, var(--line));
+}
+
+.folio-tile:has(> .folio-view:popover-open) .folio-tile__open img {
+  opacity: 0.16;
 }
 
 .folio-tile__label {
@@ -189,7 +236,7 @@
   max-inline-size: 100%;
   max-block-size: 100%;
   margin: 0;
-  transition: rotate var(--duration-base, 220ms) var(--ease-smooth, ease);
+  transition: rotate var(--spw-time-reveal, 360ms) var(--spw-spring-travel, ease);
 }
 
 .folio-view:has([value="90"]:checked) .folio-view__plate img { rotate: 90deg; }
@@ -235,6 +282,21 @@
   cursor: pointer;
 }
 
+/* Stage controls take the tile's rungs at pill size: no lift, the same seat.
+   The probe pill's paint belongs to routes/surfaces/design.css; it passes its
+   edge through --folio-probe-edge so proximity can ink it from here. */
+.folio-probe label,
+.folio-view__turn label,
+.folio-view__thread,
+.folio-view__flip button,
+.folio-view__close {
+  transition:
+    translate var(--spw-time-surface, 220ms) var(--spw-spring-contact, ease-out),
+    scale var(--spw-time-surface, 220ms) var(--spw-spring-contact, ease-out),
+    border-color var(--spw-time-ack, 90ms) var(--spw-ease-ack, ease-out),
+    background-color var(--spw-time-control, 140ms) var(--spw-ease-control, ease-out);
+}
+
 .folio-view__turn input {
   inline-size: 1rem;
   block-size: 1rem;
@@ -274,19 +336,237 @@
 }
 
 .folio-view__flip button:focus-visible,
-.folio-view__thread:hover,
-.folio-view__flip button:hover {
+.folio-view__close:focus-visible {
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 60%, var(--line));
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .folio-view__plate img {
-    transition: none;
+@media (hover: hover) {
+  .folio-view__turn label:hover,
+  .folio-view__thread:hover,
+  .folio-view__flip button:hover,
+  .folio-view__close:hover {
+    border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 60%, var(--line));
   }
+
+  .folio-probe label:hover {
+    --folio-probe-edge: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 60%, var(--line));
+  }
+}
+
+/* Buttons already take the house press scale; labels borrow its formula so
+   the tuner attenuates both alike. Every stage control takes the same seat. */
+.folio-probe label:active,
+.folio-view__turn label:active,
+.folio-view__thread:active,
+.folio-view__flip button:active,
+.folio-view__close:active {
+  translate: 0 var(--spw-control-press-depth, 1.5px);
+  transition-duration: var(--duration-instant, 50ms);
+}
+
+.folio-probe label:active,
+.folio-view__turn label:active,
+.folio-view__thread:active {
+  scale: calc(1 - ((1 - var(--spw-micro-press-scale, 0.985)) * var(--spw-interaction-scale, 1)));
 }
 
 .folio-view__turn label:has(:focus-visible) {
   outline: 2px solid var(--active-op-color, var(--teal, #008080));
   outline-offset: 2px;
+}
+
+/* Wide enough for two columns, the piece sits left and its words and controls
+   stand beside it in reading order, so flip and Close are in reach without
+   scrolling the view. Stacked, a laptop-height screen hid both below the
+   view's fold (1280×800 through 1920×1080). The last row takes the plate's
+   extra height, so the text rows stay packed at the top. */
+@media (width >= 48rem) {
+  .folio-view:popover-open {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(15rem, 2fr);
+    grid-template-rows: repeat(7, auto) 1fr;
+    column-gap: 1.2rem;
+    align-items: start;
+    inline-size: min(94vw, 88rem);
+  }
+
+  .folio-view__plate {
+    grid-row: 1 / -1;
+    grid-column: 1;
+    inline-size: min(100%, 84vh);
+  }
+
+  .folio-view:popover-open > :not(.folio-view__plate) {
+    grid-column: 2;
+  }
+
+  .folio-view:popover-open .folio-view__title {
+    margin-block-start: 0;
+  }
+}
+
+/* Without the travel module, or without view transitions, a view still rises
+   into place and its backdrop still dims in: @starting-style is the entry,
+   :not(:popover-open) the exit. A running view transition owns the motion,
+   so these step aside while one is active. */
+@media (prefers-reduced-motion: no-preference) {
+  .folio-view {
+    transition:
+      opacity var(--spw-time-surface, 220ms) var(--spw-ease-surface, ease-out),
+      translate var(--spw-time-reveal, 360ms) var(--spw-spring-settle, ease-out),
+      overlay var(--spw-time-surface, 220ms) allow-discrete,
+      display var(--spw-time-surface, 220ms) allow-discrete;
+  }
+
+  .folio-view:not(:popover-open) {
+    opacity: 0;
+    translate: 0 0.75rem;
+  }
+
+  .folio-view::backdrop {
+    transition:
+      background-color var(--spw-time-surface, 220ms) var(--spw-ease-surface, ease-out),
+      overlay var(--spw-time-surface, 220ms) allow-discrete,
+      display var(--spw-time-surface, 220ms) allow-discrete;
+  }
+
+  .folio-view:not(:popover-open)::backdrop {
+    background-color: transparent;
+  }
+
+  @starting-style {
+    .folio-view:popover-open {
+      opacity: 0;
+      translate: 0 0.75rem;
+    }
+
+    .folio-view:popover-open::backdrop {
+      background-color: transparent;
+    }
+  }
+
+  :root:active-view-transition .folio-view,
+  :root:active-view-transition .folio-view::backdrop {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folio-tile__open,
+  .folio-tile__open img,
+  .folio-view__plate img {
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Discharge signatures. While a move runs, the module names two parts:
+   folio-scan (the piece) and folio-view (its card). The transition's type
+   says which move it is; each move keeps one direction the eye can follow.
+   -------------------------------------------------------------------------- */
+
+/* A tap during a move reaches the live page beneath the pictures, so a quick
+   flip lands on its button instead of light-dismissing the view. */
+:root:active-view-transition-type(folio-open, folio-flip, folio-close, folio-thread)::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(folio-scan) {
+  z-index: 2;
+  animation-duration: var(--spw-time-travel, 570ms);
+  animation-timing-function: var(--spw-spring-travel, ease);
+}
+
+::view-transition-old(folio-scan),
+::view-transition-new(folio-scan) {
+  animation-duration: var(--spw-time-reveal, 360ms);
+}
+
+::view-transition-group(folio-view) {
+  animation-duration: var(--spw-time-reveal, 360ms);
+  animation-timing-function: var(--spw-spring-settle, ease);
+}
+
+/* project: the card rises beneath a piece already on its way */
+:root:active-view-transition-type(folio-open)::view-transition-new(folio-view) {
+  animation: folio-card-rise var(--spw-time-reveal, 360ms) var(--spw-spring-settle, ease) both;
+}
+
+/* ground: the card lets go first, then the piece settles into its slot */
+:root:active-view-transition-type(folio-close)::view-transition-old(folio-view) {
+  animation: folio-card-let-go var(--spw-time-control, 140ms) var(--spw-ease-ack, ease) both;
+}
+
+/* transfer: the piece slides toward the neighbor it becomes */
+:root:active-view-transition-type(folio-flip)::view-transition-old(folio-scan),
+:root:active-view-transition-type(folio-flip)::view-transition-new(folio-scan) {
+  mix-blend-mode: normal;
+}
+
+:root:active-view-transition-type(folio-flip-next)::view-transition-old(folio-scan) {
+  animation: folio-leave-toward-start var(--spw-time-surface, 220ms) var(--spw-ease-ack, ease) both;
+}
+
+:root:active-view-transition-type(folio-flip-next)::view-transition-new(folio-scan) {
+  animation: folio-arrive-from-end var(--spw-time-travel, 570ms) var(--spw-spring-travel, ease) both;
+}
+
+:root:active-view-transition-type(folio-flip-prev)::view-transition-old(folio-scan) {
+  animation: folio-leave-toward-end var(--spw-time-surface, 220ms) var(--spw-ease-ack, ease) both;
+}
+
+:root:active-view-transition-type(folio-flip-prev)::view-transition-new(folio-scan) {
+  animation: folio-arrive-from-start var(--spw-time-travel, 570ms) var(--spw-spring-travel, ease) both;
+}
+
+/* kin gather: a thread's tiles glide into their new places; the rest fall away */
+:root:active-view-transition-type(folio-thread) .folio-tile {
+  view-transition-name: match-element;
+  view-transition-class: folio-tile;
+}
+
+::view-transition-group(*.folio-tile) {
+  animation-duration: var(--spw-time-travel, 570ms);
+  animation-timing-function: var(--spw-spring-travel, ease);
+}
+
+::view-transition-old(*.folio-tile):only-child {
+  animation: folio-tile-fall var(--spw-time-surface, 220ms) var(--spw-ease-ack, ease) both;
+}
+
+::view-transition-new(*.folio-tile):only-child {
+  animation: folio-tile-rise var(--spw-time-reveal, 360ms) var(--spw-spring-settle, ease) both;
+}
+
+@keyframes folio-card-rise {
+  from { opacity: 0; translate: 0 1rem; scale: 0.985; }
+}
+
+@keyframes folio-card-let-go {
+  to { opacity: 0; translate: 0 0.5rem; }
+}
+
+@keyframes folio-leave-toward-start {
+  to { opacity: 0; translate: -14% 0; }
+}
+
+@keyframes folio-leave-toward-end {
+  to { opacity: 0; translate: 14% 0; }
+}
+
+@keyframes folio-arrive-from-end {
+  from { opacity: 0; translate: 14% 0; }
+}
+
+@keyframes folio-arrive-from-start {
+  from { opacity: 0; translate: -14% 0; }
+}
+
+@keyframes folio-tile-fall {
+  to { opacity: 0; scale: 0.92; }
+}
+
+@keyframes folio-tile-rise {
+  from { opacity: 0; scale: 0.92; }
 }
 }

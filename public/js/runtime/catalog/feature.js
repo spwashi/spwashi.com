@@ -104,6 +104,21 @@ export const FEATURE_DEFS = [
     load: () => import('../../modules/cards/seed-card.js'),
   },
   {
+    id: 'folio-shelf',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    route: 'folios',
+    selector: '.folio-shelf',
+    describes: 'folio-shelf[open|flip|close|thread] discharge travel',
+    updates: [
+      'flourish:view-transition-name',
+    ],
+    evaluates: 'folio popover travel view transitions focus return',
+    timingArc: 'visible-feature',
+    effectScope: 'local-dom',
+    load: () => import('../../modules/design/folio-shelf.js'),
+  },
+  {
     id: 'payment-cards',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,
