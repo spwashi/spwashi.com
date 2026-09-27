@@ -32,6 +32,7 @@ import path from 'node:path';
 import process from 'node:process';
 
 import { formatWeek, isoWeek, parseWeek } from './lib/iso-week.mjs';
+import { rewriteFolioStrips } from './lib/folio-strip.mjs';
 
 const ROOT = process.cwd();
 const RECORD = 'public/data/folio-highres.json';
@@ -53,6 +54,14 @@ const week = flag('week', formatWeek(isoWeek(new Date(`${opened}T12:00:00Z`))));
 
 const record = JSON.parse(readFileSync(path.join(ROOT, RECORD), 'utf8'));
 const fail = (message) => { console.error(`[folio-highres-rotate] ${message}`); process.exit(1); };
+
+// Redraw Home's and Now's strips from the latest recorded week, and stop.
+if (args.includes('--strips-only')) {
+  const latest = record.weeks.at(-1);
+  if (!latest) fail(`${RECORD} has no week yet`);
+  rewriteFolioStrips({ root: ROOT, five: latest.folios, dryRun, say: (line) => console.log(`${dryRun ? '[dry] ' : ''}${line}`) });
+  process.exit(0);
+}
 
 if (ids.length !== record.perWeek) fail(`--ids needs exactly ${record.perWeek} source numbers, got ${ids.length}`);
 if (!/^\d{4}-\d{2}-\d{2}$/.test(opened)) fail(`--opened must be YYYY-MM-DD, got ${opened}`);
@@ -138,10 +147,11 @@ function rewritePage() {
 say(`opening ${week} (${opened}): ${five.map((f) => `${f.id} ${f.slug}`).join(', ')}`);
 for (const folio of five) recordTier(folio, await ensureFull(folio));
 rewritePage();
+rewriteFolioStrips({ root: ROOT, five, dryRun, say });
 record.weeks.push({ week, opened, folios: five.map(({ id, slug }) => ({ id: `folio-${RELEASE}-${id}`, slug })) });
 say(`${RECORD}: week ${record.weeks.length} appended`);
 if (!dryRun) {
   writeFileSync(path.join(ROOT, RECORD), `${JSON.stringify(record, null, 2)}\n`);
   execFileSync(process.execPath, ['scripts/audit-folio-highres.mjs', '--check', `--today=${opened}`], { stdio: 'inherit' });
-  console.log('[folio-highres-rotate] done. Rebuild manifests (npm run manifest) and commit the five files, the sidecars, the record, and the page.');
+  console.log('[folio-highres-rotate] done. Rebuild manifests (npm run manifest) and commit the five files, the sidecars, the record, the page, and the Home and Now strips.');
 }
