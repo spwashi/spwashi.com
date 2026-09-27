@@ -1,0 +1,74 @@
+# Cache 2026-09-27 — one expression grammar as the handle for search, the cauldron, the satchel, and texture.website; a worked example the creator typed; what exists, what drops, what is gated.
+# Creator, in six lines across the pass: improve cauldron and state-satchel UX especially on mobile; satchel value relative to ornaments and for exploring textures; texture.website as an iframe that can tune spwashi.com; use Spw semantics to manipulate the cauldron and search the site; collectibility of Spw expressions is valuable; `<theme> ~@[cream] ?#`.
+
+#>spw_as_handle_2026_09
+#:cache #!spw #!search #!cauldron #!satchel #!texture
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@query: ~"../../public/js/semantic/expression-query.js"
+@search: ~"../../public/js/runtime/site-search.js"
+@haptics: ~"../../public/js/interface/haptics.js"
+@cauldron_storage: ~"../../public/js/semantic/cauldron/storage.js"
+@composition: ~"../../public/js/interface/composition.js"
+@satchel: ~"../../public/js/interface/state-inspector.js"
+@settings: ~"../../public/js/kernel/site-settings-engine.js"
+@lanes: ~"../../public/css/components/floating-chrome.css"
+@toast: ~"../../public/js/runtime/pwa-update-handler.js"
+@texture_worker: ~"../../workers/site-hub-next/src/index.js"
+@operators: ~"../conventions/operator-semantics.spw#positional_grammar"
+@braces: ~"../conventions/semantic-braces.spw"
+@living_terms: ~"./living-terms-2026-09.spw"
+@cauldron_search_memory: ~"./copy-decay-2026-09.spw"
+
+claim: `The site already carries the pieces: 972 authored expressions in the search index, a query parser that reads brace slots, a cauldron whose candidates include every expression carrier, a satchel that asks the settings engine, and a texture lab that runs on radios. What is missing is one reading of one grammar across them. An expression the creator types should be a query, an ingredient, a tuning, and a message, and the same parser should read it in all four places.`
+
+^"worked_example"{
+  typed = "<theme> ~@[cream] ?#"
+  read = `Open the concept theme; hold a path (~) situated at a viewpoint (@) on the cream variant; probe (?) the frame (#). In the positional grammar: <theme> is the projection, [cream] the mode, ~@ a prefix force on that mode, ?# a trailing force aimed at frames.`
+  search_today = `@query parseExpressionQuery reads projection=theme and mode=cream and nothing else: a wrapped query has no free tokens, and only boon|bane|bone|bonk|honk count as charge, so ~@ and ?# are dropped. @search extractSigilHints reads single sigils it knows and boosts geometry, so ? and # may still lift frames. Against the index the whole query matches nothing, and so do <theme> and [cream] alone. Both words exist, in the wrong slot for the query: theme once, in a body, on Home (sticker[motif]{theme.pressure}); cream once, in a body, on Recipes (weather[wash]{cream.ochre}<mise>). A reader who types [cream] as a mode cannot reach a page that wrote cream as a body. Either the slot matcher learns that a word in any slot is a weak hit, or the example is a query with no home yet. That is the finding, not a failure of the reader.`
+  cauldron_today = `Every element with data-spw-semantic-expression is a cauldron candidate (@haptics CAULDRON_CANDIDATE_SELECTORS), so expressions are collectible by hold already. Two things hide it: the gesture hint only sits on inline hosts (a, span, code, em, mark …), so a section or paragraph that carries an expression never says it can be gathered; and nothing in the cauldron takes a typed expression, so "<theme> ~@[cream]" cannot be said to it, only held.`
+  satchel_today = `The satchel toggles four things (seams, mounts, tags, learning toasts) and asks @settings through saveSiteSettings for the two that are settings. It exposes no theme, grain, or material control, though grainIntensity, themePack, and the base metamaterial are already settings the engine owns.`
+  texture_today = `texture.website (served by @texture_worker) runs its lab on radios — texture paper|linen|harlequin|wash, strength whisper|present|bold, scale whole|close|closer, ink light|dark — with no script. Its HTML answers carry frame-ancestors 'none', so no page may frame it today, and nothing posts a message.`
+}
+
+^"one_reading"{
+  claim = `Read an expression the same way everywhere: slots are what (subject, [mode], {body}, <projection>), sigils are force (@operators: prefix primes, infix scopes, postfix leaves residue). The query parser keeps slots and drops force; the cauldron keeps force (an ingredient is operator-led) and rebuilds slots from payload (@cauldron_storage toSpwExpression). One parser should return both, and each instrument spends the half it needs.`
+  query = `Extend parseExpressionQuery with force: leading sigils before the first slot, trailing sigils after the last. For the example: force = { prefix: "~@", postfix: "?#" }. Search spends postfix ?# as the frames facet plus probe boost, prefix ~@ as a places/lens boost, and mode and projection as it does now. No new grammar, no workbench fork: this is reading what the canon already says a sigil does.`
+  cauldron = `A typed field at the cauldron's mouth. Its value is parsed once. Slots filter and cluster what is gathered (@cauldron_storage clusterIndexByExpression and scoreExpressionShape exist); force sets the intent the cauldron already names — ~ connect, ^ compare, ! apply — instead of three buttons; Enter gathers the expression itself as an ingredient when nothing matches, so a phrase with no home becomes a seed. Scripts off: the field is a plain search form to /topics/search/.`
+  collectible = `Let block carriers say they can be gathered. Either the gesture hint host selector admits [data-spw-semantic-expression] blocks, or the expression gets a small visible sigil at the carrier's corner that is the hold target — the ornament rail already draws corners. A gathered expression keeps its three slots and its force; the note for it reads like the living-term note.`
+  satchel = `A fifth toggle family, texture: grain (none|subtle|moderate|rich), pack, material. Each is a setting already; the satchel asks the engine as it does for seams. The satchel then accepts a spell: paste or hold an expression and it maps [mode] to a pack or grain by a small table the creator writes (cream → ? — handed back below), so "<theme> [cream]" tunes the page. Ornaments and textures respond to the same settings, so the satchel becomes the instrument for exploring them, which is the value the creator asked for.`
+  texture_iframe = `Two directions, one contract. Either page frames the other; the framed page posts, the framing page receives. Message: { type: "spw:expression", expression: "<texture> [linen] ~@[whisper]" } — an Spw string, nothing else. Receiver: accept only event.origin === the one allowed origin, parse with the shared parser, map [mode] tokens through an allowlist to settings keys (whisper|present|bold → grainIntensity; paper|linen|harlequin|wash → a texture setting the engine does not have yet), and ask the settings engine; ignore everything else. Sender: texture.website's lab posts on each radio change, behind ?embed=spwashi so the plain page stays silent. Worker: the lab route's frame-ancestors becomes https://spwashi.com and nothing else changes. Scripts off on either side: the iframe is a page.`
+}
+
+^"mobile_findings"{
+  ~#note: "Read from CSS and JS, not felt. Each wants a look at 390 px before it is touched."
+  toast = `@toast positions itself with its own fixed bottom/right and registers as floating chrome tier "toast" without joining a bottom lane, so it sits on the satchel and the reload button; the desktop screenshot of 2026-09-26 shows exactly that. Fix is one inset-block-end from the lane tokens in @lanes, once the lane manager (discovery-notices, mid-change in another session) settles.`
+  cauldron_targets = `At pocket (adaptive.css ≤45rem) a cauldron ingredient is 2.4rem tall and its remove control 1.6rem; the ground-control target is 44px for standalone controls. Whether the remove is inline (exempt) or standalone is a judgment for the browser.`
+  satchel_lane = `The satchel lane is min(11.5rem, 50vw − 0.8rem) and the section handle takes the left lane; a fifth toggle family must fit that width or fold.`
+}
+
+^"architecture_notes"{
+  index = `The search index has three lists — routes (188, 916 expressions), frames (912, 56), components (26, none) — and a top-level "expressions" facet that only routes and frames can pass. A frame's expressions come from its own element; a route's from every carrier on the page. That asymmetry is why "<theme>" finds nothing: the carriers that mention theme are components and sections whose expressions the frame list does not hold.`
+  parser = `parseExpressionQuery's wrappedness switch throws away every free token once a slot appears; the sigil-hint path is separate and unaware of slots. One parser, two halves, is the fix named above.`
+  hints = `GESTURE_HINT_HOST_SELECTOR is inline-only by design (a hint on a section would sit at its corner); the corner sigil above respects that design while making blocks collectible.`
+  settings = `The engine has no texture family; grain, pack, and material are the nearest. A texture setting is a contract change: a key in site-settings-profiles, a root attribute the engine owns, CSS that spends it. Plan-sized, not patch-sized.`
+}
+
+^"first_patches"{
+  1 = `This file. Landed.`
+  2 = `Force in the parser: prefix and postfix sigils on parseExpressionQuery, a test with the worked example, and search spending ?# as frames. Offline-verifiable.`
+  3 = `Make block expression carriers collectible and say so: the corner sigil as hold target. Sensation-gated.`
+  4 = `The cauldron field. Sensation-gated; one demo on Home's footer cauldron.`
+  5 = `Satchel texture family on existing settings, then the spell reader. Plan: settings contract first.`
+  6 = `texture.website: frame-ancestors for the lab route and the sender behind ?embed=spwashi; spwashi.com receiver with the allowlist. Deployed only after the worker's tests cover the origin check.`
+  7 = `Toast lane, after the lane manager lands.`
+}
+
+^"questions"{
+  cream = `What is [cream]? A pack (none is named cream), an ink (the texture lab's "light" is #efe6d8), or a new palette? The mapping table needs the first row from you.`
+  direction = `texture.website inside spwashi.com as a tuner, or spwashi.com inside texture.website as a preview? The contract is symmetric; the product is not.`
+  hint = `Should a section that carries an expression show a corner sigil at rest, or only when a lens is held?`
+  force = `Does a trailing ?# mean "probe frames" (facet) or "probe this frame" (the one the reader is in)? Position grammar says postfix is residue; residue of what?`
+}
