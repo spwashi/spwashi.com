@@ -8,7 +8,7 @@ import {
   runGitDiffCheck,
   runSyntaxChecks,
 } from './site-contracts/index.mjs';
-import { inspectManifestStamp, ROUTE_MANIFEST_CACHE } from './manifest-stamp.mjs';
+import { explainManifestDrift, inspectManifestStamp, ROUTE_MANIFEST_CACHE } from './manifest-stamp.mjs';
 import { collectCssContractReport } from './css-contracts.mjs';
 import { collectJsonContractReport } from './json-contracts.mjs';
 import { collectRuntimeContractReport } from './runtime-contracts.mjs';
@@ -80,8 +80,15 @@ export async function main(): Promise<void> {
   const failures: string[] = [];
 
   if (stamp.indexStatus !== 'fresh') {
-    failures.push(`[manifest-stamp] search index is ${stamp.indexStatus}; run npm run manifest and commit public/data/site-search-index.json and public/js/generated/spw-expressions.js if they moved`);
-    console.log(`  manifest-stamp: committed=${stamp.committedStamp ? stamp.committedStamp.slice(0, 12) : 'none'} live=${stamp.liveStamp.slice(0, 12)}`);
+    // Several sessions share this tree: drift that lives only in unstaged pages
+    // is somebody's work in progress, and their commit is checked on its own.
+    const drift = await explainManifestDrift();
+    if (drift.stagedConsistent && drift.unstaged.length) {
+      console.log(`  manifest-stamp: the staged index matches the staged routes; unstaged edits move the stamp: ${drift.unstaged.slice(0, 6).join(', ')}${drift.unstaged.length > 6 ? ` (+${drift.unstaged.length - 6})` : ''} — whoever commits them runs npm run manifest:staged`);
+    } else {
+      failures.push(`[manifest-stamp] search index is ${stamp.indexStatus}; run npm run manifest:staged (or npm run manifest when no other session has pages open) and commit public/data/site-search-index.json and public/js/generated/spw-expressions.js if they moved`);
+      console.log(`  manifest-stamp: committed=${stamp.committedStamp ? stamp.committedStamp.slice(0, 12) : 'none'} live=${stamp.liveStamp.slice(0, 12)}`);
+    }
   }
 
   if (manifestIssues.errors.length) {

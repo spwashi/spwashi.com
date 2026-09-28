@@ -160,6 +160,26 @@ export function evaluateStagedManifest({ touchesInputs, touchesIndex, stagedStam
         reason: 'the search index this commit records was not built from the routes it records; run npm run manifest:staged, which builds from what is staged and leaves other sessions\' unstaged pages out',
     };
 }
+/**
+ * When the working tree disagrees with the committed index, say whose drift it
+ * is. If the index in the git index still matches the routes in the git index,
+ * the disagreement is only unstaged work (often another session's), and the
+ * names are the pages it is in; their commit will be checked on its own.
+ */
+export async function explainManifestDrift() {
+    const indexPaths = listIndexPaths();
+    const tracked = new Set(indexPaths);
+    const stagedText = gitShow(`:${SEARCH_INDEX_RELATIVE}`);
+    const indexStamp = sourceStampFromIndexText(stagedText ? stagedText.toString('utf8') : '');
+    const stagedConsistent = Boolean(indexStamp) && indexStamp === computeStagedManifestSourceStamp();
+    const inputs = await listManifestStampInputs();
+    const changed = spawnSync('git', ['diff', '--name-only', '-z', '--', ...inputs], { cwd: ROOT, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+    const unstaged = new Set(changed.status === 0 ? changed.stdout.split('\0').filter(Boolean) : []);
+    for (const relativePath of inputs)
+        if (!tracked.has(relativePath))
+            unstaged.add(relativePath);
+    return { stagedConsistent, unstaged: [...unstaged].sort() };
+}
 async function readWorktree(relativePath) {
     return fs.readFile(path.join(ROOT, relativePath));
 }
