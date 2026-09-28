@@ -1,0 +1,116 @@
+# Cache 2026-09-27 — three lines from the creator read as one direction: CLI documentation a reader can navigate; the design reasoning readable through the same structures; and a pitch for Spw as a language that makes ideas more readable because models precipitate files with strong tooling. Prime only; no route, markup, or pin change here.
+# Creator, in three lines across the pass: make the Spw Workbench CLI documentation more interactively navigable; make some of the underlying design implications interactively readable through those structures; do better marketing for Spw as a language that tends to make ideas more readable because of the ways language models precipitate readable files that have strong tooling.
+#>spw_readable_by_tooling_2026_09
+#:cache #!spw #!cli #!docs #!marketing
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@cli_convention: ~"../_workbench/.spw/conventions/cli.spw"
+@cli_registry: ~"../_workbench/packages/spw-cli/src/commands.ts"
+@atlas_workbench_panel: ~"../../topics/software/spw/index.html#workbench-improvements"
+@atlas_tool_panel: ~"../../topics/software/spw/index.html#spw-workbench-tool"
+@atlas_operator_ring: ~"../../topics/software/spw/index.html#operator-ring"
+@literal_parser: ~"../../tools/spw-parser/index.html"
+@workbench_report: ~"../workbench-report.spw"
+@consumer_readme: ~"../README.md"
+@expression_manifest_builder: ~"../../scripts/build-expression-manifest.mjs"
+@parser_bundle_builder: ~"../../scripts/build-spw-literal-parser.mjs"
+@dual_path: ~"../language/feature-utilization.spw#dual_path"
+@marketing_engine: ~"../conventions/model-guided-refinement.spw#creative_marketing_engine"
+@product_lines: ~"../surfaces/product-lines.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@living_terms: ~"./living-terms-2026-09.spw"
+@spw_as_handle: ~"./spw-as-handle-2026-09.spw"
+@expression_navigation_plan: ~"../../.agents/plans/dimensional-expression-navigation/PLAN.md"
+@v04_plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
+
+operation = "prime"
+fixity = "experimental"
+source = "2026-09-27 conversation, after the CSS-token and Spw-interpreter plan pass and the workbench timing sweep"
+
+claim: `The CLI's help text is already structured the way a navigable document needs to be: four root groups, one outcome line per command, then Output, Flags, Examples, and a Reuse line. Precipitated once at the pin into HTML, that structure can be read, filtered, and deep-linked without a script, and the same structure can carry the design rule it obeys. The marketing follows from the same fact: a file that names its citations, probes, and claims is one a tool can check, and a checked file is what makes a model's output readable rather than merely plentiful.`
+
+^"what_exists"{
+  cli = .{
+    groups = `Workspace, Collate, Select, Shape; 39 public commands; aliases such as inv -> census, q -> query, geom -> form`
+    per_command_help = `Usage, Output, Flags, Examples; census also prints a Reuse line naming process memory plus .spw/gen/session/corpus-memo`
+    voice_rule = `@cli_convention#public_voice: outcome first, cost or disclosure second, compatibility third; refuses an option before the outcome`
+    claim_law = `@cli_convention#claim_status: implemented names need a code or output trace; proposed names must not appear as shipped`
+    machine_form = `none; spw --help --json prints the text help. The round_trip facet of @workbench_report already asked for re-ingestible products.`
+  }[reg=facet]
+  site = .{
+    atlas = `@atlas_tool_panel presents the mounted tool; @atlas_workbench_panel carries the 2026-09-04 reflection, the five improvements, and as of today the measured cost and the sensors to carry upstream`
+    parser_tool = `@literal_parser runs the pinned parser in the browser and deep-links a source through ?spw_source=; its Workbench Bridge article still points at the feature/spw-language-v04 branch that the pinned checkout does not carry (see @v04_plan Status)`
+    ring_precedent = `@atlas_operator_ring: one card per operator with token, intent, and a route into the deeper page; the sequence is the comparison view`
+    precipitate_precedent = `@expression_manifest_builder parses every authored expression at build time so the browser receives structure and the page works with no parser loaded; @parser_bundle_builder bundles the pinned parser to plain JS with its provenance in the first line`
+    hud_precedent = `@expression_navigation_plan: 0D handle to 4D path, authored versus contextual dimensions declared, useful as plain links without JavaScript`
+  }[reg=facet]
+  measured_today = `doctor 7.6 s, format check 5.9 s, lattice 2.1 s; census 339 s, graph 436 s, measure 374 s for zero subjects; memos keyed on hubTop so census and graph never share a scan (@workbench_report#memo_key). A cost class per command is a fact the docs can show, not a judgment.`
+}[reg=facet]
+
+^"navigable_cli_docs"{
+  shape = `One precipitate, one page. At the pin, run spw --help and spw <command> --help for every public command, parse the sections, and emit a JSON precipitate with the provenance line the parser bundle already uses. Render it as HTML cards grouped by the four root groups. Each card: the outcome sentence, the cost class, the output vocabulary (spw card, table, json), the examples as copyable commands, aliases folded under the canonical name, and a fragment id so a command is a place (#census). Regenerate on pin bump, as build:spw-parser does; never hand-edit.`
+  progressive = `HTML carries every card, example, and link. JavaScript adds: filter by group, cost class, and output kind; a "compare" that lays two cards side by side the way the operator ring compares operators; and, for commands that accept --stdin (form, fingerprint), a hop into @literal_parser with the example prefilled. With scripts off, the page is a complete manual.`
+  cost_class = `cheap (under 10 s here), scan (a full corpus parse; minutes under load), and shared or unshared memo. Show measured seconds only with the load average beside them; the class is what a reader should carry.`
+  path_rule = `Consuming the pinned CLI's help is the workbench-consumer path of @dual_path; the card structure and its page are the web-experiment path. One patch per path; no pin bump inside the docs patch. The upstream twin is spw help --json, so the site stops parsing text once it exists.`
+  host_candidates = #[
+    `/tools/spw-cli/ beside the literal parser: a tool page for a tool; matches the lab-pages-as-instruments rule`,
+    `/topics/software/spw/workbench/ beside operators/: the atlas already owns the workbench story and the ring precedent`,
+    `a section on the atlas itself: cheapest, but the page is long and the panel already carries two dated readings`
+  ][reg=set]
+}[reg=facet]
+
+^"design_readable_through_structure"{
+  claim: `A reader learns a design rule fastest by noticing that every card obeys it. The card is the lesson; the convention anchor is the footnote.`
+  rows_are_rules = #[
+    `row order outcome, cost, compatibility is @cli_convention#public_voice made visible; the card never puts a flag above its outcome`,
+    `a badge implemented | proposed | interpretive is @cli_convention#claim_status; a proposed command renders as a question, never as a shipped card`,
+    `the "reads as" line is @cli_convention#output_vocabulary; spw card means readable and parseable, table means readable only, json means for scripts`,
+    `the Reuse line becomes a memo badge; two scan commands whose badges say corpus-memo and whose fingerprints differ show the memo_key finding without a paragraph`,
+    `each card carries its own Spw expression, census[population]{lines.refs.frames.roles} for census, so the page is also a corpus the parser can read`
+  ][reg=set]
+  learnable = `Teach one key once: the same five rows on every card, the same three badges, the group as the only variation. Whimsy is the structure played straight, not a joke in the copy.`
+  refuse = `no new data-spw-* family for this; hosts reuse frame-card, spw-chip, data-spw-operator, data-spw-semantic-expression, and copy units under one cluster (spw.cli.*)`
+}[reg=facet]
+
+^"marketing_thesis"{
+  creator_line = `Spw tends to make ideas more readable because of the ways language models precipitate readable files that have strong tooling.`
+  honest_form = `Models now write more than a person can read. A notation whose files name their citations, probes, and claims lets a tool check what was written, and a checked file is one a person can trust enough to read. Readability here is the product of the check, not of the prose.`
+  card_contract = .{
+    audience = `intent-states, not identities (@copy_accessor audience rule): someone deciding how a team writes down decisions that models will extend; an engineer whose generated docs rot; a supporter who wants to see one claim checked before caring`
+    offer = `read a claim, follow its citation, run its probe, in the browser, on this site's own corpus`
+    proof = `397 .spw files; 5166 of 5166 citations resolve (spw:integrity); 912 authored expressions parse; 194 probe snippets harvested; 180 owner claims with 150 probe references; every commit closes with an episode that names its scene, change, and verification; the 2026-09-27 plan pass as a worked example: seven folders archived with the receipt on each first line`
+    resonance = `depth as evidence against nihilism: a corpus that can be checked is a corpus that can be wondered about; the tooling is what makes the wonder sustainable`
+    extension = `mount the workbench in your own repository; the crawl prompt on spw.quest; the literal parser as the first instrument; commission a systems sprint`
+    next_action = `one link, chosen when the host is chosen`
+  }[reg=facet]
+  copy_rules = #[
+    `no degree framing; adult-education and sixteen years of engineering are the register`,
+    `sensory copy over schema words: name what the reader does (follow, run, check), not the data model`,
+    `confirm the model claim's wording with the creator before it is public; the honest_form above is a proposal`,
+    `proof numbers live in a receipt facet, not in prose; prose says "every citation resolves", the receipt says 5166`
+  ][reg=set]
+}[reg=facet]
+
+^"gates"{
+  sense_first = `npm run spw -- --help; npm run spw -- census --help; npm run spw -- form --help; read @cli_convention before shaping a card`
+  browser_gate = `card treatment, filter feel, and the compare view are sensation decisions: proposal plus demo on one group of commands, approved in a browser before the other three groups render`
+  do_not = #[
+    `bump the workbench pin inside a docs or marketing patch`,
+    `hand-author command help the CLI could have printed`,
+    `render a proposed command as shipped`,
+    `add a data-spw-* family`,
+    `publish the model claim in the creator's exact draft wording without a confirmation`
+  ][reg=set]
+}[reg=facet]
+
+^"open"{
+  ~[1]: "Which host: /tools/spw-cli/, /topics/software/spw/workbench/, or a section on the atlas? The choice decides whether the docs are an instrument or a chapter."
+  ~[2]: "Upstream spw help --json first, or site-side parse of the help text first? The site can start; the upstream form makes the precipitate honest."
+  ~[3]: "Is the pitch 'readable files' or 'checkable files'? The creator's line says readable; the evidence says checked-therefore-readable."
+  ~[4]: "Cost badges: measured seconds with load, or the three classes only?"
+  ~[5]: "Is the CLI docs page also the marketing page, or does the marketing land on the atlas and point at the docs as proof?"
+}
+
+validation = #[`npm run spw -- --help | head -40`, `npm run spw:integrity`, `npm run audit:copy:accessor after any copy lands`, `npm run spw -- format --check .spw/caches/spw-readable-by-tooling-2026-09.spw`][reg=set]
