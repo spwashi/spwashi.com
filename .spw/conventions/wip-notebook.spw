@@ -11,6 +11,7 @@
 @insight_cache_template: ~"../../.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
 @plan_index: ~"./plan-index.spw"
 @plans_root: ~"../../.agents/plans/index.spw"
+@history_reflow: ~"../../.agents/plans/history-reflow/PLAN.md"
 
 operation = "contract"
 fixity = "stable"
@@ -57,12 +58,34 @@ fixity = "stable"
   insight_cache = "Single insights use model-guided-refinement/templates/semantic-insight-cache.spw instead of a new plan folder."
 }
 
+^"proposed_commits"{
+  definition = `A line in a wip commits block is a commit this history would accept, paired with an expression the corpus can hold.`
+  realistic = `symbol[scope] claim, sampled from a full recent body in @history_reflow. A proposal names the subject. It does not invent #[episode]{} before the diff exists.`
+  abstract = `subject[mode]{parts}<scene>, the noun form the expression manifest parses.`
+  pair = `subject :: expression. The subject is what a person commits. The expression is what a tool files.`
+  leave = `Drop the line when the tree contains the change. A landed commit stays in the stream, out of the open list.`
+  ~#taste: "A proposed commit stays listed only while its subject could land this week and its expression names a part the diff would touch."
+}[reg=facet]
+
+#>wonder_plan_proposed_commit
+?["When is a proposed commit realistic enough to keep, and when is the expression the clearer record?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @history_reflow
+  ~#taste: "Keep the subject when a person could commit it this week. Keep the expression when the subject is still a wish about files."
+  ~#hypothesis: "The week's subjects are symbol[scope] claims with an episode. The older wip lists are dashed wishes. An expression names the part that would have to move, which is the part a later session can check."
+  ~#tension: "A realistic subject about work that already landed sends the next session to redo it. An expression with no subject cannot be committed."
+  !probe{ "npm run wonder -- --surface wonder_plan_proposed_commit" }
+  $%[commit.subject, commit.expression, commit.landed]
+  ~<"../../.agents/plans/typescript-integration/index.spw">
+}
+
 ^"dispatch"{
   planning_ecology = @planning_ecology
   semantic_capacity = @semantic_capacity
   insight_cache_template = @insight_cache_template
   plan_index = @plan_index
   plans_root = @plans_root
+  history_reflow = @history_reflow
 }
 
 invariants: #[

@@ -46,7 +46,7 @@ intent: .{
 ^"plan_refinement"{
  tone = `Grammar documentation — precise, version-aware.`
  accuracy = `v04 worktree merged; pillar coverage and validator strictness still tending.`
- direction = `Close one pillar gap with ecology:language green before new operators.`
+ direction = `Close one pillar gap with ecology:language green before new operators. The CLI manual's machine form is help --json; wonder_plan_help_json keeps that upstream of this plan.`
  inspiration = `Language disputes resolve through codex, not ad hoc renames.`
  alignment = `language-reclustering, spw-metaphysical-language, language-census audit`
 }[reg=facet]
@@ -63,6 +63,11 @@ intent: .{
 @pillars: ~"../../../.spw/language/v04/pillars/"
 @spw_language_v04_index_spw: ~"../../../.spw/language/v04/index.spw"
 @workbench: ~"../../../.spw/_workbench"
+@package_json: ~"../../../package.json"
+@readable_by_tooling: ~"../../../.spw/caches/spw-readable-by-tooling-2026-09.spw"
+@workbench_report: ~"../../../.spw/workbench-report.spw"
+@plan_spw_architecture_ecology: ~"../spw-architecture-ecology/index.spw"
+@upstream_recommendations: ~"../../../.spw/reviews/upstream-workbench-recommendations.spw"
 
 dispatch: .{
  plan = @plan
@@ -87,6 +92,12 @@ dispatch: .{
 
 ^"connection_points"{
  owner_rail = `self`
+ related_plans = #[
+  `spw-architecture-ecology`,
+  `agent-optimization`,
+  `agentic-dev-contracts`,
+  `language-ladder-runtime-instrumentation`,
+ ][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
@@ -131,3 +142,15 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_plan_help_json
+?["Which package.json command tells a reader the language, and which workbench command would let a tool read the CLI's own manual?"]{
+  #:depth #!computational ~#lens(projection)
+  ~#with: @package_json @readable_by_tooling @workbench @upstream_recommendations
+  ~#taste: "A tool's knowledge of itself stays honest only when the machine form and the page are the same document."
+  ~#hypothesis: "ecology:language is the site door for the pillars. The CLI's help is already four groups and one outcome line per command. spw --help --json still prints that text, so the knowledge base cannot ingest its own tool list. The abstract of the missing commit is help[json]{group.outcome.cost}<cli>."
+  ~#tension: "Parsing help text on the site invents a second grammar for a document the CLI already structured. The upstream command is the realistic commit: +[cli] Let help --json emit the same sections the manual already prints."
+  !probe{ "npm run spw -- --help --json" }
+  $%[cli.helpJson, cli.costClass, language.ecology]
+  ~<"../../../.spw/caches/spw-readable-by-tooling-2026-09.spw"> ~<"../spw-architecture-ecology/index.spw">
+}

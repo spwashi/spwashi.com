@@ -35,11 +35,14 @@
  * convention.
  *
  * Usage:
- *   node scripts/wonder.mjs                 # all site wonders, grouped by surface
+ *   node scripts/wonder.mjs                 # site wonders plus live plan questions
  *   node scripts/wonder.mjs --probes        # probe lines only, for running
- *   node scripts/wonder.mjs --surface arrival
+ *   node scripts/wonder.mjs --surface wonder_plan
  *   node scripts/wonder.mjs --json
  *   node scripts/wonder.mjs --canon         # include the workbench's 176
+ *
+ * Live plan .spw under .agents/plans is part of the harvest. archive/ is not.
+ * The rest of .agents stays out: diaries and state are not questions.
  */
 
 import { readFile, readdir } from 'node:fs/promises';
@@ -48,6 +51,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SPW_ROOT = path.join(ROOT, '.spw');
+const PLANS_ROOT = path.join(ROOT, '.agents', 'plans');
 const CANON = path.join(SPW_ROOT, '_workbench');
 
 /**
@@ -71,7 +75,7 @@ const ANSI = {
 const useColor = process.stdout.isTTY && !process.env.NO_COLOR;
 const paint = (hue, text) => (useColor ? `${ANSI[hue]}${text}${ANSI.reset}` : text);
 
-async function collectSpw(dir, out = [], { includeCanon = false } = {}) {
+async function collectSpw(dir, out = [], { includeCanon = false, skipArchive = false } = {}) {
   let entries;
   try {
     entries = await readdir(dir, { withFileTypes: true });
@@ -83,7 +87,8 @@ async function collectSpw(dir, out = [], { includeCanon = false } = {}) {
     if (entry.isDirectory()) {
       if (!includeCanon && full === CANON) continue;
       if (entry.name === 'node_modules') continue;
-      await collectSpw(full, out, { includeCanon });
+      if (skipArchive && entry.name === 'archive') continue;
+      await collectSpw(full, out, { includeCanon, skipArchive });
     } else if (entry.name.endsWith('.spw')) {
       out.push(full);
     }
@@ -165,6 +170,7 @@ function parseWonders(source, file) {
       hypothesis: field('hypothesis'),
       tension: field('tension'),
       goal: field('goal'),
+      taste: field('taste'),
       probes,
       measures,
       refs,
@@ -229,6 +235,9 @@ function renderWonder(wonder, neighbours) {
 
   lines.push(bar + paint('question', `?["${wonder.question}"]`));
 
+  if (wonder.taste) {
+    lines.push(bar + label('~#taste', 'induct') + wrap(wonder.taste, WIDTH, indent));
+  }
   if (wonder.hypothesis) {
     lines.push(bar + label('~#hypothesis', 'induct') + wrap(wonder.hypothesis, WIDTH, indent));
   }
@@ -396,6 +405,7 @@ async function main() {
   const surfaceFilter = args.includes('--surface') ? args[args.indexOf('--surface') + 1] : null;
 
   const files = await collectSpw(SPW_ROOT, [], { includeCanon });
+  await collectSpw(PLANS_ROOT, files, { skipArchive: true });
   let wonders = [];
   for (const file of files) {
     const source = await readFile(file, 'utf8');
