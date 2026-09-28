@@ -1,12 +1,12 @@
 <spw-page
     title="Spwashi • About | spw.quest"
-    description="spw.quest is the paced guide into Spw. While the remote is quiet, this page holds the public contract: constructs, sensors, and what agents should not fork."
+    description="spw.quest puts the Spw Workbench into a repository: choose who runs the setup, copy one block, and doctor confirms it. This page is the guide beside it: constructs, sensors, and a crawl prompt for agents."
     canonical="https://spwashi.com/about/domains/spw.quest/"
     og_title="Spwashi • About | spw.quest"
-    og_description="Paced path into Spw. Constructs, sensors, and a crawl prompt for agents — live specimens stay on this site until the remote moves."
+    og_description="Mount the Spw Workbench in a repository three ways, then read the constructs, sensors, and crawl prompt that make the language useful to an agent."
     og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
     og_image_alt="Spwashi metadata card for the spw.quest language guide."
-    keywords="spw quest, spw language, operator atlas, agentic constructs, crawl prompt, texture website"
+    keywords="spw quest, spw workbench, mount workbench, spw doctor, spw language, operator atlas, agentic constructs, crawl prompt"
     breadcrumb_label="About | spw.quest"
     header_current="About | spw.quest"
     header_current_href="/about/domains/spw.quest/"
@@ -40,24 +40,89 @@
         nav_items="Home:/|About:/about/|Spw:/topics/software/spw/|Parser:/tools/spw-parser/|Settings:/settings/"
     ></spw-site-header>
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="reading" data-spw-seed="page_about_about_domains_spwquest__main_surface" data-spw-wonder="comparison resonance projection" id="main-content" tabindex="-1" aria-labelledby="spw-quest-title">
-        <section class="spw-frame" id="domain-frame" data-spw-kind="frame" data-spw-role="orientation" data-spw-form="brace" data-spw-context="reading" data-spw-wonder="comparison resonance projection" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="specimen" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="visible" data-spw-collectability="some" data-spw-seed="page_about_about_domains_spwquest__domain_frame" data-spw-semantic-expression="quest[spw]{pace.guide.soon}" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+        <section class="spw-frame" id="domain-frame" data-spw-kind="frame" data-spw-role="orientation" data-spw-form="brace" data-spw-context="reading" data-spw-wonder="comparison resonance projection" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="specimen" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="visible" data-spw-collectability="some" data-spw-seed="page_about_about_domains_spwquest__domain_frame" data-spw-semantic-expression="quest[spw]{mount.doctor.guide}" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
             <div class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#domain-frame" data-spw-operator="frame">#&gt;spw_quest</a>
-                <span class="domain-kicker">coming soon</span>
+                <span class="domain-kicker">mount surface</span>
             </div>
             <h1 id="spw-quest-title">spw.quest</h1>
-            <p id="quest-lede" data-spw-textual-role="lede" data-spw-copy-unit="quest.hook.lede" data-spw-semantic-expression="quest[spw]{construct.sensor.grammar}(quiet)<guide>">
-                <a href="https://spw.quest">spw.quest</a> is the paced guide into Spw. The remote is quiet. This page is the public contract until it moves: constructs you can reuse, sensors you should run, and grammar you should not fork.
+            <p id="quest-lede" data-spw-textual-role="lede" data-spw-copy-unit="quest.hook.lede" data-spw-semantic-expression="quest[spw]{mount.doctor.stop}<guide>">
+                <a href="https://spw.quest">spw.quest</a> puts the Spw Workbench into a repository. You choose who runs the setup, copy one block, run it from the repository root, and <code>doctor</code> tells you it worked. It stops before any commit. This page is the guide beside it: constructs you can reuse, sensors you should run, and grammar you should not fork.
             </p>
             <p data-spw-textual-role="note">
-                Neighbor: <a href="https://texture.website">texture.website</a> — material cues, language texture, the tactile side of publishing. Quest is the path; texture is the grain. Live specimens stay on this site.
+                Neighbor: <a href="https://texture.website">texture.website</a> keeps material cues and language texture next door. Quest is the path; texture is the grain.
             </p>
+        </section>
+
+        <section class="spw-frame" id="start" aria-labelledby="start-title" data-spw-kind="frame" data-spw-role="call" data-spw-form="brace" data-spw-context="reading" data-spw-semantic-expression="quest[start]{shell.claude.codex}<mount>">
+            <header class="frame-heading" data-spw-slot="header">
+                <a class="frame-sigil" href="#start" data-spw-operator="action">!start</a>
+                <h2 id="start-title">Start: who runs the setup</h2>
+            </header>
+            <p id="quest-start-lede" data-spw-textual-role="lede" data-spw-copy-unit="quest.start.lede" data-spw-semantic-expression="quest[start]{choose.copy.run}(root)<doctor>">
+                Three blocks, one result. Each mounts the pinned workbench at <code>.spw/_workbench</code>, leaves your repository its own <code>.spw/</code>, and ends with <code>doctor</code>. Git and Node are the only things you bring.
+            </p>
+            <div class="spw-reason-strip" aria-label="Three ways to run the setup">
+                <div data-spw-emphasis="primary">
+                    <strong>Shell</strong>
+                    <p>You run every step yourself, git included. Nothing is committed. <a href="https://spw.quest/#shell">Copy the commands</a>.</p>
+                </div>
+                <div data-spw-emphasis="secondary">
+                    <strong>Claude</strong>
+                    <p>One command. Claude reads the recipe and runs it in this repository, then stops before any commit. <a href="https://spw.quest/#claude">Copy the command</a>.</p>
+                </div>
+                <div data-spw-emphasis="tertiary">
+                    <strong>Codex</strong>
+                    <p>One command. Codex runs the recipe without prompting. <a href="https://spw.quest/#codex">Copy the command</a>.</p>
+                </div>
+            </div>
+            <p data-spw-textual-role="note">
+                For an agent reading this without a browser: <a href="https://spw.quest/init">spw.quest/init</a> is the whole recipe as text, <a href="https://spw.quest/git.md">git.md</a> is the five git commands in the order to run them, and <a href="https://spw.quest/quest.json">quest.json</a> is the same recipe as data. When it worked, <code>spw:doctor</code> finishes with no errors and nothing was committed; read the diff, then commit it yourself.
+            </p>
+        </section>
+
+        <section class="spw-frame" id="crawl-prompt" aria-labelledby="crawl-title" data-spw-kind="frame" data-spw-role="example" data-spw-form="brace" data-spw-context="inspect">
+            <header class="frame-heading" data-spw-slot="header">
+                <a class="frame-sigil" href="#crawl-prompt" data-spw-operator="wonder">?crawl_spwashi</a>
+                <h2 id="crawl-title">Prompt for agents who crawl this site</h2>
+            </header>
+            <p data-spw-textual-role="note">
+                Paste this block into the agent you just gave the repository. Walk one path: consume the pinned workbench, or experiment through web semantics, not both in one patch. It is valid Spw, so you can check it before you trust it.
+            </p>
+            <nav class="frame-operators" aria-label="Check the crawl prompt">
+                <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_source=%23%3Ecrawl_spwashi%0A%3F%5Bwhat%20is%20this%20site%20doing%20that%20I%20could%20reuse%5D%7B%0A%20%20open_first%20%3D%20%23%5B%60AGENTS.md%60%2C%20%60.spw%2Fconventions%2Fcopy-accessor.spw%60%2C%20%60%2Fabout%2Fdomains%2Fspw.quest%2F%60%2C%20%60%2Ftopics%2Fsoftware%2Fspw%2F%60%5D%0A%20%20operation%20%3D%20%60declare%20cache%7Caudit%7Calign%7Cprime%7Ccontract%7Carchive%20before%20editing%60%0A%20%20sense%20%3D%20%60npm%20run%20sense%20--%20copy%7Cnouns%7Cink%20%20%20ink%20needs%20a%20fixture%20id%60%0A%20%20person%20%3D%20%60I%27m%20Spwashi.%20I%20build%20software%20and%20make%20art.%60%0A%20%20dual_path%20%3D%20%60consume%20pinned%20workbench%20XOR%20experiment%20through%20web%20semantics%60%0A%20%20write_deny%20%3D%20%60Explore%2Fplan%20do%20not%20write.%20Patch%20is%20one%20named%20slice.%60%0A%20%20braces%20%3D%20%60%5Bmode%5D%20keeps%20alternatives%3B%20%28scene%29%20stages%20midprocess%20%E2%80%94%20not%20decoration%60%0A%20%20wonder%20%3D%20%60page%20types%20on%20body%3B%20harvest%20with%20npm%20run%20wonder%20%E2%80%94%20two%20inventories%2C%20not%20a%20backlog%60%0A%20%20report%20%3D%20%60.spw%2Fworkbench-report.spw%20and%20%2Ftopics%2Fsoftware%2Fspw%2F%23workbench-improvements%60%0A%20%20walk%20%3D%20%60Do%20not%20build%20a%20lens%20on%20an%20unpruned%20--from%20.spw%20walk%60%0A%20%20refuse%20%3D%20%23%5B%0A%20%20%20%20%60fork%20Spw%20grammar%60%2C%0A%20%20%20%20%60kitchen-sink%20implement%20from%20plans%60%2C%0A%20%20%20%20%60fourth%20copy-accessor%20family%60%2C%0A%20%20%20%20%60data-spw-wonder-type%60%2C%0A%20%20%20%20%60git%20stash%20on%20a%20shared%20main%60%2C%0A%20%20%20%20%60advertise%20physics%20the%20runtime%20does%20not%20spend%60%0A%20%20%5D%0A%20%20analog%20%3D%20%60Spotify%20Portal%3A%20always-on%20markdown%20is%20I%2FO%3B%20a%20failing%20check%20is%20the%20block%60%0A%20%20synthesis%20%3D%20%60If%20you%20can%20read%20X%2C%20cite%20a%20construct%20here.%20Mood%20is%20not%20a%20receipt.%60%0A%7D&spw_source_name=crawl_spwashi#literal-parser" data-spw-operator="probe">?parse[crawl_spwashi]</a>
+                <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/#workbench-improvements" data-spw-operator="wonder">?workbench_improvements</a>
+            </nav>
+            <pre><code>#&gt;crawl_spwashi
+?[what is this site doing that I could reuse]{
+  open_first = #[`AGENTS.md`, `.spw/conventions/copy-accessor.spw`, `/about/domains/spw.quest/`, `/topics/software/spw/`]
+  operation = `declare cache|audit|align|prime|contract|archive before editing`
+  sense = `npm run sense -- copy|nouns|ink   ink needs a fixture id`
+  person = `I'm Spwashi. I build software and make art.`
+  dual_path = `consume pinned workbench XOR experiment through web semantics`
+  write_deny = `Explore/plan do not write. Patch is one named slice.`
+  braces = `[mode] keeps alternatives; (scene) stages midprocess — not decoration`
+  wonder = `page types on body; harvest with npm run wonder — two inventories, not a backlog`
+  report = `.spw/workbench-report.spw and /topics/software/spw/#workbench-improvements`
+  walk = `Do not build a lens on an unpruned --from .spw walk`
+  refuse = #[
+    `fork Spw grammar`,
+    `kitchen-sink implement from plans`,
+    `fourth copy-accessor family`,
+    `data-spw-wonder-type`,
+    `git stash on a shared main`,
+    `advertise physics the runtime does not spend`
+  ]
+  analog = `Spotify Portal: always-on markdown is I/O; a failing check is the block`
+  synthesis = `If you can read X, cite a construct here. Mood is not a receipt.`
+}</code></pre>
+            <p data-spw-textual-role="note">Source of record: <code>.spw/caches/copy-agentic-direction-2026-09.spw#crawl_prompt</code>. When the prompt changes there, it changes here.</p>
         </section>
 
         <section class="spw-frame" id="direction" aria-labelledby="direction-title" data-spw-kind="frame" data-spw-role="reference" data-spw-form="brace" data-spw-context="reading">
             <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#direction" data-spw-operator="potential">~direction</a>
-                <h2 id="direction-title">Direction, while the quest is quiet</h2>
+                <h2 id="direction-title">What the parser you just mounted keeps whole</h2>
             </header>
             <p data-spw-textual-role="note">
                 This site is useful when a reading can be tried, checked, and refused. Opening <code>{</code> leans objective. Closing <code>}</code> leans subjective. The crawl is <code>{mill}.{laminate}.{cure}</code> — complete workshop practices. Tight <code>{mill.laminate.cure}</code> is one identifier the parser keeps whole, not a lifestyle list, and not cure-about-laminate-about-mill.
@@ -85,12 +150,12 @@
                 </article>
             </div>
             <p>
-                Check a reading with the runtime parser on this site, or the <a href="/tools/spw-parser/">literal parser</a>. Neighboring systems can keep <code>.spw</code> as sidecar curriculum—teaching beside their code without replacing the executable grammar. Semicolon (ordinal) and an <em>or</em> are still open. Live specimens stay here until quest moves.
+                Check a reading with the <a href="/tools/spw-parser/">literal parser</a>, which runs the same pinned parser in the browser. Neighboring systems can keep <code>.spw</code> as sidecar curriculum, teaching beside their code without replacing the executable grammar. Since the 2026-09-03 pin, <code>;</code> and <code>||</code> are real sequence marks; an <em>or</em> is still open.
             </p>
-            <div class="spw-reason-strip" aria-label="Where to read while quest is coming">
+            <div class="spw-reason-strip" aria-label="Where to read next">
                 <div data-spw-emphasis="primary">
-                    <strong>Live specimens</strong>
-                    <p>The <a href="/topics/software/spw/">operator atlas</a> and <a href="/tools/spw-parser/">literal parser</a> on this site.</p>
+                    <strong>Specimens</strong>
+                    <p>The <a href="/topics/software/spw/">operator atlas</a> teaches each operator; the <a href="/tools/spw-parser/">literal parser</a> shows the tree a line becomes.</p>
                 </div>
                 <div data-spw-emphasis="secondary">
                     <strong>Kernel</strong>
@@ -98,7 +163,7 @@
                 </div>
                 <div data-spw-emphasis="tertiary">
                     <strong>Grain</strong>
-                    <p><a href="https://texture.website">texture.website</a> for material language that quest does not have to carry.</p>
+                    <p><a href="https://texture.website">texture.website</a> holds the material language, so quest can stay a path.</p>
                 </div>
             </div>
         </section>
@@ -106,10 +171,10 @@
         <section class="spw-frame" id="agentic-value" aria-labelledby="agentic-title" data-spw-kind="frame" data-spw-role="reference" data-spw-form="brace" data-spw-context="reading" data-spw-semantic-expression="quest[agent]{construct.tool}">
             <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#agentic-value" data-spw-operator="integration">^agentic_value</a>
-                <h2 id="agentic-title">Agentic value, as the constructs develop</h2>
+                <h2 id="agentic-title">What an agent gets from the mount</h2>
             </header>
             <p id="quest-agentic-lede" data-spw-textual-role="lede" data-spw-copy-unit="quest.agentic.lede" data-spw-semantic-expression="quest[agent]{try.check.refuse}(sensor)<map>">
-                Spw is useful to an agent when a claim can be tried, checked, and refused. The language is the map. The sensors are the block. Spotify's engineering writing on harnesses (Portal) is the analogue: always-on context is I/O; a guide without a sensor is a suggestion.
+                Spw is useful to an agent when a claim can be tried, checked, and refused. The language is the map. The sensors are the block. A guide without a sensor is a suggestion.
             </p>
             <div class="spw-reason-strip" aria-label="Constructs, tooling, synthesis">
                 <div data-spw-emphasis="primary">
@@ -127,52 +192,19 @@
             </div>
         </section>
 
-        <section class="spw-frame" id="crawl-prompt" aria-labelledby="crawl-title" data-spw-kind="frame" data-spw-role="example" data-spw-form="brace" data-spw-context="inspect">
-            <header class="frame-heading" data-spw-slot="header">
-                <a class="frame-sigil" href="#crawl-prompt" data-spw-operator="wonder">?crawl_spwashi</a>
-                <h2 id="crawl-title">Prompt for agents who crawl this site</h2>
-            </header>
-            <p data-spw-textual-role="note">
-                Paste this block. Walk one path. Consume the pinned workbench, or experiment through web semantics — not both in one patch. Source: <code>.spw/caches/copy-agentic-direction-2026-09.spw#crawl_prompt</code>.
-            </p>
-            <pre><code>#&gt;crawl_spwashi
-?[what is this site doing that I could reuse]{
-  open_first = #[`AGENTS.md`, `.spw/conventions/copy-accessor.spw`, `/about/domains/spw.quest/`, `/topics/software/spw/`]
-  operation = `declare cache|audit|align|prime|contract|archive before editing`
-  sense = `npm run sense -- copy|nouns|ink   ink needs a fixture id`
-  person = `I'm Spwashi. I build software and make art.`
-  dual_path = `consume pinned workbench XOR experiment through web semantics`
-  write_deny = `Explore/plan do not write. Patch is one named slice.`
-  braces = `[mode] keeps alternatives; (scene) stages midprocess — not decoration`
-  wonder = `page types on body; harvest with npm run wonder — two inventories, not a backlog`
-  report = `.spw/workbench-report.spw and /topics/software/spw/#workbench-improvements`
-  walk = `Do not build a lens on an unpruned --from .spw walk`
-  refuse = #[
-    `fork Spw grammar`,
-    `kitchen-sink implement from plans`,
-    `fourth copy-accessor family`,
-    `data-spw-wonder-type`,
-    `git stash on a shared main`,
-    `advertise physics the runtime does not spend`
-  ]
-  analog = `Spotify Portal: always-on markdown is I/O; a failing check is the block`
-  synthesis = `If you can read X, cite a construct here. Mood is not a receipt.`
-}</code></pre>
-        </section>
-
         <section class="spw-frame" id="domain-register" data-spw-kind="frame" data-spw-role="reference">
             <div class="domain-grid">
                 <div class="spw-panel">
                     <h3>Role</h3>
-                    <p>Paced learning path into Spw. Coming soon as a dedicated surface. Until then, the public contract for agentic value: constructs, sensors, crawl discipline.</p>
+                    <p>The mount. spw.quest puts the pinned workbench into a repository and proves it with <code>doctor</code>; the paced guide into the language grows from that first verified step.</p>
                 </div>
                 <div class="spw-panel">
                     <h3>Relation</h3>
-                    <p>This site's operator atlas is the proving ground. texture.website keeps material cues next door. lore.land is long-form story. The workbench is the kernel.</p>
+                    <p>This site's operator atlas is the proving ground and the workbench is the kernel. texture.website keeps material cues next door; lore.land is long-form story.</p>
                 </div>
                 <div class="spw-panel">
                     <h3>Visit</h3>
-                    <p><a href="https://spw.quest">Open spw.quest</a> — expect a quiet remote until the coming-soon lands there. Specimens: <a href="/topics/software/spw/">operator atlas</a>. Prompt: <a href="#crawl-prompt">crawl_spwashi</a>.</p>
+                    <p><a href="https://spw.quest">Open spw.quest</a> and pick who runs the setup. Then: the <a href="#crawl-prompt">crawl prompt</a> for the agent, and the <a href="/topics/software/spw/">operator atlas</a> for you.</p>
                 </div>
             </div>
         </section>
