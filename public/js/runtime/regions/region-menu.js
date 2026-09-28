@@ -1,3 +1,4 @@
+import { parserHref } from '../../kernel/parser-link.js';
 import {
   annotateFloatingChromeElement,
   isLensModeControl,
@@ -587,6 +588,10 @@ function buildMenuContent(target, semantic, frame) {
     fragment.appendChild(list);
   }
 
+  const parseHref = parserHref(
+    target.dataset.spwSemanticExpression || buildSeed(target, semantic, frame),
+    `${normalizeToken(location.pathname || 'site') || 'site'}.spw`,
+  );
   const actionGroups = [
     [
       'inspect',
@@ -603,6 +608,8 @@ function buildMenuContent(target, semantic, frame) {
       [
         ['capture', 'Save move', () => captureSpell(target, semantic)],
         ['copy', 'Copy source', () => copySeed(target, semantic, frame)],
+        // Opens the literal parser with this region's Spw in its address, so the reading can be shared.
+        ['parse', 'Read in the parser', parseHref ? () => window.location.assign(parseHref) : null],
       ],
     ],
     [
@@ -631,6 +638,7 @@ function buildMenuContent(target, semantic, frame) {
     group.appendChild(groupLabel);
 
     actions.forEach(([action, label, handler]) => {
+      if (typeof handler !== 'function') return;
       const button = document.createElement('button');
       button.type = 'button';
       button.setAttribute('role', 'menuitem');

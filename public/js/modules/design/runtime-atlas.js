@@ -12,6 +12,8 @@
  * ?spw-atlas=<module-id> or #atlas-<module-id> opens a module on arrival.
  */
 
+import { parserHref } from '../../kernel/parser-link.js';
+
 const HOST_SELECTOR = '[data-runtime-atlas]';
 const SOURCE = '/public/data/runtime-atlas.json';
 const REPO = 'https://github.com/spwashi/spwashi.com/blob/main/';
@@ -97,7 +99,10 @@ function renderCard(atlas, module, state) {
         module.bus.emits.length && module.bus.hears.length ? ' · ' : null,
         module.bus.hears.length ? ['hears ', h('code', {}, module.bus.hears.join(' '))] : null)
       : null,
-    h('p', {}, h('a', { href: `?spw-atlas=${module.id}#runtime-atlas` }, 'Link to this module')));
+    h('p', {},
+      h('a', { href: `?spw-atlas=${module.id}#runtime-atlas` }, 'Link to this module'),
+      ' · ',
+      h('a', { href: parserHref(module.spw.join('\n'), `${module.id}.contract.spw`) }, 'Read this contract in the parser')));
 }
 
 function renderReader(atlas, file, state) {
