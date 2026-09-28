@@ -62,7 +62,7 @@ audit_run: .{
     mode_switch = #[`components/frame-controls.css`, `components/controls.css`][reg=set]
     spw_svg_figure = #[`systems/svg-surfaces.css`, `systems/svg-personas.css`][reg=set]
     image_study = #[`systems/image-interaction.css`, `systems/image-utilization.css`][reg=set]
-    pack_local = #[`systems/component-packing.css`, `public/js/runtime/composition-box-model.js`][reg=set]
+    pack_local = #[`systems/component-packing.css`, `public/js/runtime/regions/composition-box-model.js`][reg=set]
     gutter_rail = #[`shell/layout.css`, `handles/page-region-rail.css`][reg=set]
   }[reg=facet]
   rule: `If a spacing bug appears on one route only, check route sheet magic rem first. If it appears on every card instance, fix components/ or systems/ and let routes inherit.`

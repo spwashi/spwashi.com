@@ -14,7 +14,7 @@
 @catalog: ~"../../public/js/runtime/catalog/index.js"
 @build_graph: ~"../../scripts/ts/build/index.mts"
 @loader: ~"../../public/js/runtime/orchestration/loader.js"
-@load_trace: ~"../../public/js/runtime/load-trace.js"
+@load_trace: ~"../../public/js/runtime/arrival/load-trace.js"
 
 ^"substrate"{
   guild = `rhizosphere`

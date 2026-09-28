@@ -61,7 +61,7 @@ Review posture before landing:
 
 **Pilot B — attention-resonance-field**
 
-This remains the best second pilot because it crosses CSS, JS, runtime state, and editor inspectability. Candidate surfaces include `public/js/runtime/attention-architecture.js`, `public/css/effects/wonder.css`, `public/css/ornament/ornament.css`, `.spw/conventions/attention-field.spw`, and the design/runtime surfaces. The first useful patch should not restructure the whole field. It should create a slice contract that maps the existing authored HTML, data attributes, runtime events, and CSS selectors so a returning developer can understand where attention state is read, written, and projected.
+This remains the best second pilot because it crosses CSS, JS, runtime state, and editor inspectability. Candidate surfaces include `public/js/runtime/attention/attention-architecture.js`, `public/css/effects/wonder.css`, `public/css/ornament/ornament.css`, `.spw/conventions/attention-field.spw`, and the design/runtime surfaces. The first useful patch should not restructure the whole field. It should create a slice contract that maps the existing authored HTML, data attributes, runtime events, and CSS selectors so a returning developer can understand where attention state is read, written, and projected.
 
 The first ownership seam is now explicit: attention emits coarse settled-section state but stores no regional history; `feature-discovery` may consume that state for an explicitly authored `attention-settle` feature, using session memory by default. This supports regional surprises without turning hover, resonance, or passive scroll into a permanent trail. Rich reveals remain scoped to play/scene/practice surfaces and essential reading content remains present before enhancement.
 

@@ -47,7 +47,7 @@ export const CORE_DEFS = [
     timingArc: 'boot-shell',
     effectScope: 'root-state chrome listeners viewport',
     visual: 'layout',
-    load: () => import('../shell-disclosure.js'),
+    load: () => import('../shell/shell-disclosure.js'),
   },
   {
     id: 'interactive-medium',
@@ -64,7 +64,7 @@ export const CORE_DEFS = [
     evaluates: 'viewport-tier pointer-mode hover-mode scene/play register display-variant module-style-modulator',
     timingArc: 'boot-medium',
     effectScope: 'root-state css-vars entertainment-routes',
-    load: () => import('../interactive-medium.js'),
+    load: () => import('../shell/interactive-medium.js'),
   },
   {
     id: 'site-core-minimal',
@@ -82,6 +82,6 @@ export const CORE_DEFS = [
     evaluates: 'frame lifecycle mode-switch keyboard-roving lens-request hash-target calm-defaults',
     timingArc: 'boot-frame',
     effectScope: 'frame-state hash listeners bus',
-    load: () => import('../site-core-minimal.js'),
+    load: () => import('../page/site-core-minimal.js'),
   },
 ];

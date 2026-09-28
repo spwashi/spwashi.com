@@ -21,7 +21,7 @@ Primary audience for this evolution: **other software engineers with years of ex
 - **Magic manuscript for authors**: Settings (author workflow modes + developmental climate + meaning/physics presets + recipes), brace forms (objective/subjective), operators + % measures (subjective/objective), .spw inspection surfaces, design catalog, and content pages (curriculum as deep ontology + boundary tests + proof artifacts, blog, about) should let authors express *layers* of intent (for different readers, different times, different stances) without fighting the medium. The document should feel versionable, provenance-rich, and multi-audience by default.
 
 ## Alignment with Existing Architecture (strengths to build on)
-- Mature `public/js/runtime/layout-shift-audit.js`: PerformanceObserver + rich `data-spwLayoutShift*` dataset + `spw:layout-shift` bus events + "intentional" outcome category + 5s debug mutation/module-mount observers + snapshot API. Already distinguishes input-caused shifts.
+- Mature `public/js/runtime/diagnostics/layout-shift-audit.js`: PerformanceObserver + rich `data-spwLayoutShift*` dataset + `spw:layout-shift` bus events + "intentional" outcome category + 5s debug mutation/module-mount observers + snapshot API. Already distinguishes input-caused shifts.
 - Powerful instrumentation contract in `public/js/kernel/instrumentation.js`: `SPW_REFLOW_REASONS` (LAYOUT, INTERACTION, MEASURE, THEME, DENSITY...), `markReflowReason`, query presets (including layout debug), `createSpwLogger` with REFLOW/GESTURE/MEASURE relationships, physics/meaning presets, composition console (`window.spwCompose`), snapshotting.
 - Authoring control surface in `settings/index.html`: Separate "Author workflow" (draft/revise/polish/publish/archive) + "developmental climate" + reader/builder/inspector/lab views + writing recipes + live tuning playground. Already thinks in layers (task vs. attention posture).
 - Semantic layering already present: brace anatomy, objective/subjective walls and forms, operator projections + measurement-contract in `.spw`, `data-spw-*` families everywhere, design catalog, attention architecture, ornament/wonder effects, page transition phases, spirit-phase, etc.
@@ -233,7 +233,7 @@ This tranche directly responds to the directive to mind containers, inline setti
   - Added query disposition parsing for `meaning-depth` and `design-interpretation` (URL-driven inline customization, e.g. `?meaning-depth=rich&design-interpretation=manuscript-layer`).
   - These become first-class, screenshot-optimizable, catalog-discoverable signals.
 
-- **public/js/runtime/annotation-layer.js**:
+- **public/js/runtime/regions/annotation-layer.js**:
   - Cognitive container propagation: When a region is annotated, the nearest `.site-frame` / `.frame-card` / brace container also receives `spwAnnotation*` state. Creates observable resonance across container topology.
   - Added `COGNITIVE_CONTAINER_SELECTOR` for future expansion.
 
@@ -294,8 +294,8 @@ Braces (`data-spw-form="brace"`, objective/subjective walls, `data-spw-brace-*`)
    - Recommended: when pattern stabilizes, add a small `brace_topology_contract` facet to site-semantics.spw or operational-semantics.spw describing the new data attrs, trope wiring, and gestalt expectations.
 
 ### Executed Changes (this pass)
-- [public/js/runtime/brace-pivots.js](/Users/spwashi/air/spwashi.com/public/js/runtime/brace-pivots.js): Import + call to `markLayoutTrope` on every pivot (with rich scope/tuning). Brace axis changes are now first-class expressive phases.
-- [public/js/runtime/brace-gestures.js](/Users/spwashi/air/spwashi.com/public/js/runtime/brace-gestures.js): During target classification, write `data-spw-brace-nesting` and `data-spw-brace-contains-operator` for explicit topology.
+- [public/js/runtime/interaction/brace-pivots.js](/Users/spwashi/air/spwashi.com/public/js/runtime/interaction/brace-pivots.js): Import + call to `markLayoutTrope` on every pivot (with rich scope/tuning). Brace axis changes are now first-class expressive phases.
+- [public/js/runtime/interaction/brace-gestures.js](/Users/spwashi/air/spwashi.com/public/js/runtime/interaction/brace-gestures.js): During target classification, write `data-spw-brace-nesting` and `data-spw-brace-contains-operator` for explicit topology.
 - [public/css/handles/operators.css](/Users/spwashi/air/spwashi.com/public/css/handles/operators.css): Scoped gestalt rules for brace + measure combinations under gesture states (tint inheritance, animation participation, wrapping safety). No broad selectors.
 
 All changes are minimal, respect existing contracts, and directly advance the vision of braces/operators as tunable structural instruments for both playful interaction and deep semantic authoring.
@@ -447,7 +447,7 @@ This continues the evolution of the site as a cognitive instrument whose modelin
 
 ### Surgical Changes Executed
 - `public/css/shell/chrome.css`: Added focused touch/keyboard UX rules for `.spw-section-handle-shell` buttons and current link (min targets, focus rings, active transform). No !important, respects layer order.
-- `public/js/runtime/attention-architecture.js`: Added bus emission on shell compact toggle for runtime instrumentability/debuggability.
+- `public/js/runtime/attention/attention-architecture.js`: Added bus emission on shell compact toggle for runtime instrumentability/debuggability.
 
 The interaction layer is in good health: memory-safe in practice, with clear ownership via returned cleanups, efficient unified pointer handling in the gesture core, and the floating chrome is now more pleasant and discoverable on touch and keyboard while staying semantically tied to the rest of the Spw surface (vocabulary, wonder, operators).
 

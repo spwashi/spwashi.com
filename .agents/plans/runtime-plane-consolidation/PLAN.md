@@ -72,19 +72,19 @@ This plan does not replace the existing runtime owners. It is the cross-plane ad
 
 **Parsing**
 - `semantic/spw-expression-geometry.js` (244 lines, landed 2026-07-26) is the canonical reader. **Adopted by 2 files** (`bare-spw-markup.js`, `attention/section-handle.js`).
-- Four legacy parsers still stand: `kernel/shared.js:1380` `splitOperatorExpression`, `semantic/link-copy.js:33` `parseSpwExpression`, `site.js:714` inline projection regex, `runtime/spells.js:151` inline operator-prefix regex.
+- Four legacy parsers still stand: `kernel/shared.js:1380` `splitOperatorExpression`, `semantic/link-copy.js:33` `parseSpwExpression`, `site.js:714` inline projection regex, `runtime/memory/spells.js:151` inline operator-prefix regex.
 - `modules/tools/spw-literal-parser.js` (316 lines, the pinned portable artifact) has **zero importers in `public/js`** and is not in the catalog.
 - **26 files reference `data-spw-semantic-expression`. 2,107 operator chips exist across the HTML.** The authored graph is large and consistent; no single reader owns it.
 
 **Spatial model**
-- `runtime/region-profiler.js` derives its vocabulary by lookup over authored labels, reading **no geometry**:
+- `runtime/regions/region-profiler.js` derives its vocabulary by lookup over authored labels, reading **no geometry**:
   - `inferRegionHarmony` — synonym table over `role`
   - `inferRegionTempo` — synonym table over `harmony`
   - `inferRegionDensity` — synonym table over `kind`
   - `inferRegionAttentionalWeight` — magic-number table over `kind`/`role`/`classList`
 - The chain is `authored attribute → synonym → synonym → CSS token`. It is tautological: it cannot report anything about the layout that the author did not already type.
 - `runtime/module-loader.js:506` `inferModuleDimensions` has the same shape — regexes over `def.id + def.selector + def.layer`.
-- Meanwhile `runtime/spatial-gravity.js` **does** measure geometry (`spwEdgeGravity`, `spwEdgeX/Y`, `spwExtent`, `spwMeasureBand`, `spwSalienceRank`) and `composition-box-model.js` measures boxes. **Two disconnected spatial systems, no bridge.**
+- Meanwhile `runtime/physics/spatial-gravity.js` **does** measure geometry (`spwEdgeGravity`, `spwEdgeX/Y`, `spwExtent`, `spwMeasureBand`, `spwSalienceRank`) and `composition-box-model.js` measures boxes. **Two disconnected spatial systems, no bridge.**
 
 **Duplication**
 - `interface/state-inspector.js` (1,189) and `runtime/state-inspector.js` (929) are two separate inspectors, 2,118 lines, different entry points (`initStateInspector` / `initSpwStateInspector`).
@@ -170,7 +170,7 @@ Gate: this changes interaction latency and settle timing. Demo before landing.
 ### Phase 4 — One expression reader ✅
 
 - [x] Make `semantic/spw-expression-geometry.js` the single canonical reader for the authored expression graph (`scanSpwExpression`, `describeSpwExpression`, `parseSpwExpression`).
-- [x] Retire legacy ad-hoc parsing in `semantic/link-copy.js` (re-exports and delegates to `parseSpwExpression`), `site.js` `snapshotProjectionEquations`, and `runtime/spells.js` (`inferPrefix`, `inferNucleus`, `inferDestination`).
+- [x] Retire legacy ad-hoc parsing in `semantic/link-copy.js` (re-exports and delegates to `parseSpwExpression`), `site.js` `snapshotProjectionEquations`, and `runtime/memory/spells.js` (`inferPrefix`, `inferNucleus`, `inferDestination`).
 - [x] Adopt guarded dataset writes in `semantic/link-copy.js` (`writeDatasetValue`, `writeDatasetValueIfMissing`, `writeDatasetValues`).
 - [x] Add unit tests in `scripts/tests/spw-expression-geometry.test.mjs` verifying backward-compatible parser shape across chips and handles.
 - [ ] Align pinned `modules/tools/spw-literal-parser.js` artifact generation with the single reader.
@@ -188,7 +188,7 @@ Two modules hold fifteen concerns between them. Full anatomy in `modules.spw`.
 
 **Progress (2026-08-11):** internal file extracts landed without catalog splits. Parents still own the single mount; extracted siblings are import-time modules, not independent defs.
 
-**`runtime/shell-disclosure.js`** — was 2,315 / now ~1,461 lines, **one export**, mounted `IMMEDIATE` on every page.
+**`runtime/shell/shell-disclosure.js`** — was 2,315 / now ~1,461 lines, **one export**, mounted `IMMEDIATE` on every page.
 
 - [x] Extract `scroll-lock` → `runtime/shell/scroll-lock.js`.
 - [x] Extract `attention-posture-panel` → `runtime/shell/attention-posture-panel.js`.
@@ -199,7 +199,7 @@ Two modules hold fifteen concerns between them. Full anatomy in `modules.spw`.
 - [ ] Own catalog defs / idle gates for panels that are not first-paint shell.
 - Target remainder: nav-fit + menu state machine, plausibly under 600 lines, still `IMMEDIATE`.
 
-**`runtime/experiential.js`** — was 2,168 / now ~1,758 lines, **one export**.
+**`runtime/experiential/experiential.js`** — was 2,168 / now ~1,758 lines, **one export**.
 
 - [x] Extract bookmark registry, contextual memos, operator-info, operator learning, QA beat gestures under `runtime/experiential/`.
 - [ ] Extract spell breadcrumbs and sample dock (still the bulk of the parent).
@@ -243,7 +243,7 @@ The read side of write/observe consolidation landed as two kernel contracts, and
 
 - `kernel/measured-frame.js`: one pass per frame, after the frame's style pass, read phase then write phase; fixed-viewport correction, shell menu offset, and interactive medium are split lanes, floating chrome and the shell's measured sync run whole. `kernel/viewport.js`: the viewport box read once and invalidated on resize, orientation, and visual-viewport moves.
 - Trace (devtools.timeline with stacks, about route, pocket, four interleaved runs per side): script-forced style/layout passes median 18.5 → 10.5, cost 7141 → 3657ms. Each forced pass costs ~300ms against the current core bundle, which is Phase 7's number.
-- Making the contract the default, per this plan's falsification rule: 20 readers of `window.innerWidth` remain outside `viewport.js` — popup placement in `interface/` (guide-badge, pronunciation, haptics, semantic-chrome, topic-discovery, state-inspector), `runtime/layout-qa.js`, `observation-beats.js`, `spatial-gravity.js`, `positioning-orchestration.js`, `interactive-expression-lab.js`. Popup placement runs at interaction time and may stay direct; the four runtime readers should take the cached box. Direct `syncFloatingChromeState` callers (site-search, region-menu, section-handle, navigation-locomotion, frame-navigator, attention-posture-panel, state-inspector, discovery-notices, layout-assumptions) still read synchronously; each is a candidate for `requestFloatingChromeSync` unless it consumes the returned snapshot.
+- Making the contract the default, per this plan's falsification rule: 20 readers of `window.innerWidth` remain outside `viewport.js` — popup placement in `interface/` (guide-badge, pronunciation, haptics, semantic-chrome, topic-discovery, state-inspector), `runtime/diagnostics/layout-qa.js`, `observation-beats.js`, `spatial-gravity.js`, `positioning-orchestration.js`, `interactive-expression-lab.js`. Popup placement runs at interaction time and may stay direct; the four runtime readers should take the cached box. Direct `syncFloatingChromeState` callers (site-search, region-menu, section-handle, navigation-locomotion, frame-navigator, attention-posture-panel, state-inspector, discovery-notices, layout-assumptions) still read synchronously; each is a candidate for `requestFloatingChromeSync` unless it consumes the returned snapshot.
 
 ## Phase 3 receipt, second slice — 2026-09-19
 

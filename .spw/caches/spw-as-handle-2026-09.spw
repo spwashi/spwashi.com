@@ -8,14 +8,14 @@
 #:layer #!pragmatics
 
 @query: ~"../../public/js/semantic/expression-query.js"
-@search: ~"../../public/js/runtime/site-search.js"
+@search: ~"../../public/js/runtime/navigation/site-search.js"
 @haptics: ~"../../public/js/interface/haptics.js"
 @cauldron_storage: ~"../../public/js/semantic/cauldron/storage.js"
 @composition: ~"../../public/js/interface/composition.js"
 @satchel: ~"../../public/js/interface/state-inspector.js"
 @settings: ~"../../public/js/kernel/site-settings-engine.js"
 @lanes: ~"../../public/css/components/floating-chrome.css"
-@toast: ~"../../public/js/runtime/pwa-update-handler.js"
+@toast: ~"../../public/js/runtime/shell/pwa-update-handler.js"
 @texture_worker: ~"../../workers/site-hub-next/src/index.js"
 @operators: ~"../conventions/operator-semantics.spw#positional_grammar"
 @braces: ~"../conventions/semantic-braces.spw"

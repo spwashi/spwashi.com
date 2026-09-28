@@ -1,7 +1,7 @@
 /**
  * visit-intent.js — the intent a visit carries: one owner, many readers.
  *
- * A held lens seat writes it (runtime/lens-intent.js). Everything that wants
+ * A held lens seat writes it (runtime/page/lens-intent.js). Everything that wants
  * to meet the reader along it reads it here: the promo picks by it
  * (interface/discovery-notices.js, typed/promo-wonder-cycle.js) and lens
  * seats on other routes offer the matching seat. It is an operator, not a

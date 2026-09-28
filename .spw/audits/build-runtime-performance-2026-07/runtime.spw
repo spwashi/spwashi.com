@@ -256,7 +256,7 @@
     `semantic/concept-salience.js — full-doc annotateAll per mutation`,
     `semantic/image-utilization.js — full-doc image scan per mutation`,
     `semantic/image-interaction.js — full-doc figure bind per mutation`,
-    `runtime/variant-selection.js — full-doc bindModeSwitches per mutation, plus a real listener leak: no per-button bound guard, so every pass stacked duplicate click handlers`
+    `runtime/regions/variant-selection.js — full-doc bindModeSwitches per mutation, plus a real listener leak: no per-button bound guard, so every pass stacked duplicate click handlers`
   ][reg=set]
   also = #[
     `module-loader mountVisibleFeatures — intersection waves mounted all matches through one Promise.all microtask chain (one long task); now a 10ms frame-budgeted drain queue (spw:visible-layer:drain measure)`,

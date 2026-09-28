@@ -144,7 +144,7 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
   - which CSS layers a route needs
   - which JS chunks a route may preload
   - which assets the service worker may precache or defer
-- Keep generated browser bridge modules, such as `public/js/runtime/behavior-scopes.js`, downstream of the typed CSS manifest rather than hand-maintained.
+- Keep generated browser bridge modules, such as `public/js/runtime/orchestration/behavior-scopes.js`, downstream of the typed CSS manifest rather than hand-maintained.
 - If whitelabeling arrives later, variants should select and override chunks by declared layer policy rather than ad hoc file forks.
 
 ### 2.75. Cache Identity And Delivery Preparation
@@ -261,5 +261,5 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
 ## Implementation Increment - 2026-07-03 Types As Documentation
 
 - `types/spw.d.ts` gained the G1 bundle dataset keys (`spwCauldronState`, `spwOp`, `spwEffects`) with template-literal grammar hints, plus exported mirror shapes `SpwIngredient`, `SpwEffectEntry`, `SpwOperatorSplit` - typechecked via the existing `types/**/*.d.ts` include.
-- Runtime JS stays un-typechecked by policy (`checkJs: false`), so the JS side documents through plain JSDoc referencing the mirror shapes by name: `cauldron/contract.js` (CauldronStateParts typedef + helper signatures), `cauldron/storage.js` (normalizeIngredient), `kernel/shared.js` (splitOperatorExpression, composeOpBundle), `runtime/effect-ledger.js` (record). IDE hover carries the contract on camera; the d.ts carries it through tsc.
+- Runtime JS stays un-typechecked by policy (`checkJs: false`), so the JS side documents through plain JSDoc referencing the mirror shapes by name: `cauldron/contract.js` (CauldronStateParts typedef + helper signatures), `cauldron/storage.js` (normalizeIngredient), `kernel/shared.js` (splitOperatorExpression, composeOpBundle), `runtime/memory/effect-ledger.js` (record). IDE hover carries the contract on camera; the d.ts carries it through tsc.
 - Pattern for future passes: shapes live once in `types/spw.d.ts`; JS declares "Mirror shape: X in types/spw.d.ts" rather than duplicating structure.

@@ -9,7 +9,7 @@ import {
   nextKinRelation,
   prevKinRelation,
   KIN_MOVES,
-} from '../../public/js/runtime/region-kin.js';
+} from '../../public/js/runtime/regions/region-kin.js';
 
 test('wonder overlap counts shared tokens', () => {
   assert.equal(wonderOverlap('comparison constraint locality', 'comparison locality'), 2);

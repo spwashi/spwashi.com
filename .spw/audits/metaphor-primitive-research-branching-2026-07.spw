@@ -268,7 +268,7 @@ audit_run: .{
     hypothesis = `loading-ecology rhythm dimension + load-symphony movements are enough to prime musician register — no new runtime`
     surfaces = #[`design/experiments/load-symphony/`, `play/`, `hypermedia-2d film_scene_composition`][reg=set]
     disciplines = #[`acoustics_rhythm`][reg=set]
-    validation = `rg 'rhythm|twinkle|load-symphony' public/js/runtime/loading-ecology.js design/experiments`
+    validation = `rg 'rhythm|twinkle|load-symphony' public/js/runtime/arrival/loading-ecology.js design/experiments`
     stop_rule = `Prime .spw cache only — no new npm deps or audio engine`
   }[reg=facet]
 

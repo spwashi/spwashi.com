@@ -16,19 +16,19 @@ Make guide-badge collections easier to undo and easier to clear in bulk without 
 ## Affected Files
 
 - `public/js/interface/guide-badge.js`
-- `public/js/runtime/spells.js`
+- `public/js/runtime/memory/spells.js`
 - `public/css/spw-handles.css`
 - `public/css/ornament/ornament.css`
 - `settings/index.html`
 - `.spw/conventions/ornament-contract.spw`
-- `public/js/runtime/component-collection.js`
-- `public/js/runtime/reward-ui.js`
+- `public/js/runtime/memory/component-collection.js`
+- `public/js/runtime/memory/reward-ui.js`
 - `public/js/kernel/site-settings-*.js`
 - `public/css/components/floating-chrome.css`
 
 ## Active Extension - 2026-06-30 Component Collection Rewards
 
-Component collection now persists distinct region component kinds under `spw-component-collection` and treats achievements as a browser-local memory register. The collection owner is `public/js/runtime/component-collection.js`; reward presentation is `public/js/runtime/reward-ui.js`; reset and visibility belong to the shared settings system.
+Component collection now persists distinct region component kinds under `spw-component-collection` and treats achievements as a browser-local memory register. The collection owner is `public/js/runtime/memory/component-collection.js`; reward presentation is `public/js/runtime/memory/reward-ui.js`; reset and visibility belong to the shared settings system.
 
 - `rewardDisplay` is a canonical setting with `docked`, `toasts`, and `hidden` modes.
 - Settings persistence includes a `component-collection` registry row that clears the collection through the collection API when mounted, or falls back to removing `spw-component-collection` and emitting `collection-updated`.
@@ -40,8 +40,8 @@ Component collection now persists distinct region component kinds under `spw-com
 - `git diff --check`
 - `node --check public/js/spw-guide-badge.js`
 - `node --check public/js/spw-spells.js`
-- `node --check public/js/runtime/component-collection.js`
-- `node --check public/js/runtime/reward-ui.js`
+- `node --check public/js/runtime/memory/component-collection.js`
+- `node --check public/js/runtime/memory/reward-ui.js`
 - `node --check public/js/kernel/site-settings-engine.js`
 - `node --check public/js/kernel/site-settings-profiles.js`
 - `node --check public/js/interface/site-settings-ui.js`
@@ -57,4 +57,4 @@ Proposal (ends at a demo, since it changes what is felt):
 - The reward toast for a lens use reads the seat expression the switch now carries (`about[kernel]{open.sit}`) rather than a label, so the reward is the notation.
 - The cauldron already accepts fragments with an operator and a route; a sat seat is a fragment (`@lens`, the expression, the route). Offer it to the cauldron on the second use, not the first, so the first is a reward and the second is an ingredient.
 
-Seams: `public/js/runtime/component-collection.js` (`ingest`, `ACHIEVEMENTS`), `public/js/runtime/reward-ui.js` (`onUnlock`, `popToast`), `public/js/semantic/cauldron/registers.js`, `interaction-microstates.spw#awareness` (never silent absorption). Gate: approve the toast and the cauldron offer in a browser first.
+Seams: `public/js/runtime/memory/component-collection.js` (`ingest`, `ACHIEVEMENTS`), `public/js/runtime/memory/reward-ui.js` (`onUnlock`, `popToast`), `public/js/semantic/cauldron/registers.js`, `interaction-microstates.spw#awareness` (never silent absorption). Gate: approve the toast and the cauldron offer in a browser first.

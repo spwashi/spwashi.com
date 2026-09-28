@@ -2,7 +2,7 @@
    site-search.css — route probe dialog + page host
    --------------------------------------------------------------------------
    Sitewide search over public/data/site-search-index.json.
-   Pairs with public/js/runtime/site-search.js.
+   Pairs with public/js/runtime/navigation/site-search.js.
    ========================================================================== */
 
 :root {

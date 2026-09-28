@@ -18,7 +18,7 @@
 @interaction_microstates: ~"../conventions/interaction-microstates.spw"
 @discovery_powerups: ~"../conventions/discovery-powerups.spw"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
-@reward_ui: ~"../../public/js/runtime/reward-ui.js"
+@reward_ui: ~"../../public/js/runtime/memory/reward-ui.js"
 @field_physics: ~"../../public/css/systems/field-physics.css"
 @theme_resonance: ~"../../public/css/systems/theme-resonance.css"
 @holiday_tropes: ~"../../public/css/ornament/holiday-tropes.css"
@@ -149,7 +149,7 @@ source = "review 2026-09-10: ambient motion inventory across public/css; cold-vi
 
 ^"next_session"{
   claim = `Open this file. The cold-visit census is reproducible in one probe and is the number that makes the case.`
-  open = #[`this file`, `public/css/systems/field-physics.css`, `public/js/runtime/reward-ui.js`][reg=set]
+  open = #[`this file`, `public/css/systems/field-physics.css`, `public/js/runtime/memory/reward-ui.js`][reg=set]
   reproduce = `Fresh Chrome profile, navigate to /, settle 6s, document.getAnimations().filter(a => a.playState === 'running') and count the ones whose effect timing has iterations Infinity. Expect 1.`
   validation = `npm run check:local ; npm run spw:integrity`
   concurrent = `Multiple sessions commit to main in this tree. Never git stash here.`

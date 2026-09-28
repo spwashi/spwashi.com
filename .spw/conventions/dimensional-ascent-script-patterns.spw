@@ -16,10 +16,10 @@
 @operator_semantics: ~"./operator-semantics.spw"
 @attention_field: ~"./attention-field.spw"
 @expression_geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
-@spatial_gravity: ~"../../public/js/runtime/spatial-gravity.js"
-@region_profiler: ~"../../public/js/runtime/region-profiler.js"
-@navigation_spells: ~"../../public/js/runtime/navigation-spells.js"
-@navigation_locomotion: ~"../../public/js/runtime/navigation-locomotion.js"
+@spatial_gravity: ~"../../public/js/runtime/physics/spatial-gravity.js"
+@region_profiler: ~"../../public/js/runtime/regions/region-profiler.js"
+@navigation_spells: ~"../../public/js/runtime/navigation/navigation-spells.js"
+@navigation_locomotion: ~"../../public/js/runtime/navigation/navigation-locomotion.js"
 
 operation = "align"
 fixity = "stable"
@@ -88,7 +88,7 @@ expression = script[patterns]{point.vector.container.field.locomotion}<ascent>
   d3 = `resonate when wonder overlaps, operators match, or expression subjects match (workbench-parsed stems from manifest:expressions).`
   d4 = `tap travels, hold previews, swipe cycles ~ → & → #. The jump is locomotion.`
   writes = `html[data-spw-active-region-similar|contrast|resonate]; [data-spw-region-relation]; hold writes [data-spw-region-preview].`
-  runtime = ~"../../public/js/runtime/region-kin.js"
+  runtime = ~"../../public/js/runtime/regions/region-kin.js"
   parser = `npm run manifest:expressions — workbench parser at build time. region-kin reads stems; it does not ship the parser.`
 }[reg=facet]
 

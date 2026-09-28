@@ -117,7 +117,7 @@ validation: #[
   `node --check public/js/runtime/module-catalog.js`
   `node --check public/js/runtime/catalog/normalize.js`
   `node --check public/js/runtime/module-updates-contract.js`
-  `node --check public/js/runtime/effect-ledger.js`
+  `node --check public/js/runtime/memory/effect-ledger.js`
   `node --check public/js/runtime/module-loader.js`
   `npm run test:headless`
 ][reg=set]

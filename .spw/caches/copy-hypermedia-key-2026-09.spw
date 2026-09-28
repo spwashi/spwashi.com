@@ -105,12 +105,12 @@ source = "chat 2026-09-05 after folio invitation commits"
   evidence = #[
     `@feature_utilization thesis`,
     `@stylesheet_ecology cascade_vs_delivery`,
-    `public/js/runtime/behavior-scopes.js BEHAVIOR_SCOPE_KEYS`,
+    `public/js/runtime/orchestration/behavior-scopes.js BEHAVIOR_SCOPE_KEYS`,
     `@core_css_spend`
   ][reg=set]
   pattern_consideration = `Spw may claim which pack a collectible needs the way module catalog features already do. Spw is not a bundler.`
   expansion_prime = `Partial HTML generation (locale routes, ?precipitate=print) can walk copy-units; pack graphs stay on feature tokens.`
-  validation = `rg 'BEHAVIOR_SCOPE_KEYS' public/js/runtime/behavior-scopes.js`
+  validation = `rg 'BEHAVIOR_SCOPE_KEYS' public/js/runtime/orchestration/behavior-scopes.js`
   do_not_promote_until = `A locale or still pipeline actually reads copy-units as an inclusion set.`
 }
 

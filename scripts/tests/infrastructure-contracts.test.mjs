@@ -406,8 +406,8 @@ test('PWA offline dependencies include only local load-bearing assets', () => {
 
 test('runtime resource probes resolve from the module catalog directory', () => {
   assert.equal(
-    resolveModuleCatalogSpecifier('../spells.js', 'https://spwashi.test'),
-    'https://spwashi.test/public/js/runtime/spells.js',
+    resolveModuleCatalogSpecifier('../memory/spells.js', 'https://spwashi.test'),
+    'https://spwashi.test/public/js/runtime/memory/spells.js',
   );
   assert.equal(
     resolveModuleCatalogSpecifier('../../interface/guide.js', 'https://spwashi.test'),
@@ -490,7 +490,7 @@ test('js ecology seats are tokens, not prose', () => {
   );
   assert.equal(
     recommendJsModuleEcology({
-      file: 'runtime/charge-field.js',
+      file: 'runtime/physics/charge-field.js',
       moduleExport: true,
       inspectContract: true,
       initExport: true,
@@ -641,7 +641,7 @@ test('deploy packs preserve catalog timing language and module addresses', () =>
       when: 'immediate',
       describes: 'shell surface',
       updates: ['structural:data-spw-shell'],
-      load: () => import('../../public/js/runtime/shell-disclosure.js'),
+      load: () => import('../../public/js/runtime/shell/shell-disclosure.js'),
     },
     {
       id: 'console',
@@ -652,7 +652,7 @@ test('deploy packs preserve catalog timing language and module addresses', () =>
     {
       id: 'page-anatomy',
       when: 'visible',
-      load: () => import('../../public/js/runtime/page-anatomy.js'),
+      load: () => import('../../public/js/runtime/page/page-anatomy.js'),
     },
   ];
 

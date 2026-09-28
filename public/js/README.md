@@ -35,8 +35,8 @@ If you are trying to learn the runtime, read in this order:
 5. `public/js/semantic/role-inference.js` for canonical region collection and role inference.
 6. `public/js/kernel/shared.js` for the canonical operator registry and shared semantics.
 7. `public/js/kernel/site-settings.js` (profiles + engine re-export). CORE mounts `site-settings-engine.js` to apply root datasets. `interface/site-settings-ui.js` (the form and readout bindings) loads only when a settings form/scope exists or the settings route mounts; the kernel engine reaches it by a lazy import, which is the one sanctioned direction for kernel to see interface.
-8. `public/js/runtime/page-state.js` for the page lifecycle and attention contract.
-9. `public/js/runtime/page-hooks.js` for page-unique hooks and generalizable handles.
+8. `public/js/runtime/page/page-state.js` for the page lifecycle and attention contract.
+9. `public/js/runtime/page/page-hooks.js` for page-unique hooks and generalizable handles.
 10. `public/js/runtime/` for mounted processes, lifecycles, and page-state producers.
 11. `public/js/interface/` for visible affordances and user-facing controls.
 12. `public/js/semantic/` for projection, inference, and semantic helpers.
@@ -64,13 +64,28 @@ wave.
 
 - `kernel/`: durable primitives, settings (profiles/engine/ui split), shared contracts, and runtime bridges. `kernel/grounded-registry.js` is the reader's grounded memory (registry, couplings, sigils, checkpoints) as storage; `interface/haptics.js` is the hand that writes it, and every other reader imports the kernel file.
 - `semantic/`: operator grammar, projection machinery, region role inference, narrative token lenses, and pretext helpers.
-- `runtime/`: module catalog/loader, active processes, route grounding, page-state, frame-state, spells, inspectors, gates, and lifecycle loops.
-- `runtime/catalog/`: staged family definitions (`core`, `feature`, `region`, `enhancement`), constants, normalization, and export/update/description contracts. `runtime/catalog/index.js` remains the full-catalog entrypoint; `site.js` imports individual families to preserve lazy loading. Catalog load paths resolve relative to `catalog/`; source audits and the deploy builder use the same base.
-- `runtime/orchestration/`: `loader.js` owns instances and inspection; `scheduler.js` owns mount strategies; `lifecycle.js` owns invocation and disposal; `features.js` and `policy.js` own eligibility inputs.
+- `runtime/`: module catalog/loader and every mounted process, grouped into families. The runtime root holds folders only; `check:runtime` fails on a loose file or an unnamed family (`ALLOWED_RUNTIME_FAMILIES` in `scripts/ts/runtime-contracts/imports.mts`). Basenames match catalog ids where one exists, so a search by id still lands.
 - `kernel/browser-primitives.js`: DOM queries, root resolution, idle callbacks, shared intersection lanes, and document readiness. It does not depend on catalog or orchestration.
 - `kernel/module-registry.js`: facade for the DOM-independent typed registry in `public/ts/module-registry.ts`; cleanup waves preserve replacement instances and join pending disposal.
-- `runtime/interaction/`: visitor-gesture vocabulary (`loop`, `hops`, `vocabulary`, `progression`, `story`). The catalog id `interaction-progression` is unchanged; its load path resolves from `catalog/` into this folder.
-- `runtime/page-hooks.js`: page-unique hooks, named handles, and console-facing page play helpers.
+
+| Runtime family | Owns |
+|---|---|
+| `catalog/` | staged definitions (`core`, `feature`, `region`, `enhancement`), vocabularies, normalization, export/update/description contracts. `index.js` is the full-catalog entrypoint; `site.js` imports families one by one to stay lazy. Load paths resolve relative to `catalog/`. |
+| `orchestration/` | the loader (`loader.js` instances + inspection, `scheduler.js` mount strategies, `lifecycle.js` invocation + disposal, `features.js` + `policy.js` eligibility), the generated `behavior-scopes.js` gate table, and `dom-sync-hub.js`, the shared DOM projection queue. |
+| `arrival/` | how a page arrives: `prepaint-state.js` (inlined into `<head>`), arrival shells, frame size memory, hydration passes, loading ecology, module effect pulses, and the `load-trace.js` instrument. |
+| `shell/` | chrome settled at first paint: `shell-disclosure.js` and its measurement/scroll-lock/utility children, the medium register, tuning events, PWA update prompts. |
+| `page/` | page and frame lifecycle: `site-core-minimal.js`, page state, hooks, anatomy, category (the loader's page-gate reader), frame state and phases, lens modes and lens intent, frame metrics. |
+| `regions/` | region profiling and composition: profiler, enhancer, kin, menu, rail, box model, variants, positioning, layout assumptions, annotation layer. |
+| `interaction/` | visitor-gesture vocabulary (`loop`, `hops`, `vocabulary`, `progression`, `story`) and the processes that speak it: brace gestures/actions/pivots, key events, gesture contract and anatomy, scene interaction. |
+| `attention/` | the attention field: `attention-architecture.js` facade plus section handle, resonance probe, reading groove, pinch scale, scroll cadence, capture pins. |
+| `navigation/` | moving through the site: navigation spells and locomotion, frame navigator, site search, query link composer. |
+| `memory/` | what a visit keeps: spells, wonder memory, effect ledger, pins, visitation, collection + reward UI, learnability, cognitive state/core, cauldron fluency, and the familiarity gate the loader consults. |
+| `physics/` | the field a reader feels: `physical-model.js` over gravity, charge, beat, and climate, plus settings momentum and palette treats. |
+| `expression/` | authored Spw doing work: expression resonance, DOM probes, sigil anatomy, topical payloads, precipitation requests, reactive spine, semantics gate, image provenance marks. |
+| `experiential/` | `experiential.js` and its breadcrumb, memo, sample-dock, and operator-learning children. |
+| `discovery/` | field guides and presence overrides: feature discovery, tuning discovery, feature lab and its settings UI. |
+| `diagnostics/` | debug- and QA-gated instruments: layout-shift audit, layout QA, observation beats, fit report, and the `?debug`/`?qa` posture they share. |
+| `labs/` | route-local instruments: ingredient lab, expression lab, hero kinetic stage, toolmaker submissions. |
 - `interface/`: visible affordances, guide behavior, haptics, local controls, and chrome response. `interface/seed-exits.js` is how a card leaves the page (copy, `.spw.txt` download, screenshot posture); `interface/intake.js` is the chips → note → charge → card process that care intake is the first consumer of.
 - `modules/`: page or feature bundles clustered by owner. Keep the first level folder-only; see `public/js/modules/README.md`.
 - `media/`: image storage, image metaphysics, and SVG/media helpers.
@@ -108,7 +123,7 @@ These are the best candidates when you want to reuse a file on another site:
 - `media/texture-slice.js` plus `/public/css/effects/texture-slice.css` when another origin only needs `[data-spw-texture-slice]`. Motif URLs are stylesheet-relative so they keep resolving from this host. Do not load `site.js` there.
 - `runtime/catalog/index.js` + `runtime/orchestration/loader.js` for staged mount
   contracts without inlining bootstrap policy in a host page.
-- `runtime/gesture-contract.js` + `runtime/region-profiler.js` for gesture and
+- `runtime/interaction/gesture-contract.js` + `runtime/regions/region-profiler.js` for gesture and
   region harmony vocabulary shared with `site.js`.
 - `semantic/role-inference.js` for `collectRegions()`, `collectAnnotationRegions()`,
   and shared role/kind/context inference.
@@ -120,12 +135,12 @@ These are the best candidates when you want to reuse a file on another site:
 - `SPW_MODULE_LOADER_CONTRACT` + `MODULE_TIMING_STAGES` for mount lifecycle stages.
 - `kernel/dom-contracts.js` for selector, dataset, and style helpers.
 - `runtime/interaction/loop.js` for small interaction-state records and refresh events.
-- `runtime/page-state.js` for page state, attention timing, and visibility hooks.
-- `runtime/page-hooks.js` for page-unique hook discovery, focus, and pulse helpers.
-- `runtime/composition-box-model.js` for component box-model snapshots, composition roles, and presence/overflow clues.
+- `runtime/page/page-state.js` for page state, attention timing, and visibility hooks.
+- `runtime/page/page-hooks.js` for page-unique hook discovery, focus, and pulse helpers.
+- `runtime/regions/composition-box-model.js` for component box-model snapshots, composition roles, and presence/overflow clues.
 - `semantic/interaction-expression.js` for dependency-light Spw narration on an existing durable interaction event; parsing remains in `spw-expression-geometry.js`.
-- `runtime/attention-architecture.js` as the direct-import compatibility facade; catalog scheduling loads its `runtime/attention/*` children independently.
-- `runtime/state-orchestrator.js` for frame-state toggles and relational focus helpers.
+- `runtime/attention/attention-architecture.js` as the direct-import compatibility facade; catalog scheduling loads its `runtime/attention/*` children independently.
+- `runtime/page/state-orchestrator.js` for frame-state toggles and relational focus helpers.
 - `media/svg-tunability.js` for declarative SVG palette, pointer, stroke, spacing, and screenshot tuning.
 - `media/image-store.js` for IndexedDB-backed image persistence.
 - `semantic/pretext-utils.js` for CDN loading and pretext data fetch helpers.

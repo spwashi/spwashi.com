@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { initPulseBeatTuner } from '/public/js/runtime/pulse-beat-tuner.js';
+import { initPulseBeatTuner } from '/public/js/runtime/physics/pulse-beat-tuner.js';
 
 const flushMicrotasks = () => new Promise((resolve) => setImmediate(resolve));
 

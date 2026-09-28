@@ -11,7 +11,7 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
-@provenance_runtime: ~"../../public/js/runtime/image-provenance.js"
+@provenance_runtime: ~"../../public/js/runtime/expression/image-provenance.js"
 @provenance_index: ~"../../public/js/generated/image-provenance.js"
 @scan_rule: ~"../../public/css/systems/image-utilization.css"
 @folio_scans: ~"../../public/images/assets/folios/"

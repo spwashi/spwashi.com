@@ -70,7 +70,7 @@ intent: .{
 @operator_site_projection: ~"../../../.spw/conventions/operator-site-projection.spw"
 @operational_semantics: ~"../../../.spw/conventions/operational-semantics.spw"
 @measurement_contract: ~"../../../.spw/conventions/measurement-contract.spw"
-@experiential: ~"../../../public/js/runtime/experiential.js"
+@experiential: ~"../../../public/js/runtime/experiential/experiential.js"
 @shared: ~"../../../public/js/kernel/shared.js"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
 @copy_hypermedia_key: ~"../../../.spw/caches/copy-hypermedia-key-2026-09.spw"

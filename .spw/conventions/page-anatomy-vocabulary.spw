@@ -54,7 +54,7 @@ fixity = "stable"
 }
 
 ^"runtime_contract"{
-  module = "public/js/runtime/page-anatomy.js"
+  module = "public/js/runtime/page/page-anatomy.js"
   root_states = #[`data-spw-anatomy-ready`, `data-spw-anatomy-focus`, `data-spw-anatomy-vocabulary`, `data-spw-anatomy-pinned`, `data-spw-page-serialization`, `data-spw-parallel-active`, `data-spw-popup-posture`, `data-spw-theme-biome`, `data-spw-palette-species`, `data-spw-palette-trace-recent`, `data-spw-floating-chrome-field`, `data-spw-chrome-posture`][reg=set]
   events = #[`spw:page-anatomy-focus`, `spw:page-anatomy-parallel`, `spw:chrome-field-layout`, `spw:chrome-field-posture`][reg=set]
   api = "window.__SPW_PAGE_ANATOMY__.snapshot(), serialize(), parallels(), goParallel(direction, group)"
@@ -103,7 +103,7 @@ fixity = "stable"
 
 ^"topical_payload"{
   definition = "Portable page slice for LM handoff: topics, lore roles, scene/prompt handles, image-gen chips, semantic expressions, and active scene context."
-  module = "public/js/runtime/topical-payload.js"
+  module = "public/js/runtime/expression/topical-payload.js"
   api = "window.__SPW_TOPICAL_PAYLOAD__.snapshot(), serialize(), refresh()"
   bus = #[`topical:refreshed`][reg=set]
   attrs = #[`data-spw-scene-interpret`, `data-spw-lore-role`, `data-spw-prompt-host`, `data-spw-semantic-expression`][reg=set]
@@ -114,7 +114,7 @@ fixity = "stable"
 
 ^"spw_key_events"{
   definition = "Keyboard events serialized as Spw threads: potentiation holds ~potential without collapse; actualization commits into LM-interpretable scene contexts."
-  module = "public/js/runtime/spw-key-events.js"
+  module = "public/js/runtime/interaction/spw-key-events.js"
   api = "window.__SPW_KEY_EVENTS__.snapshot(), serialize(), enterScene(host), exitScene()"
   bus = #[`key:potentiated`, `key:actualized`, `key:released`, `scene:enter`, `scene:exit`][reg=set]
   attrs = #[`data-spw-key-selection`, `data-spw-selection-state`, `data-spw-scene-context`, `data-spw-scene-depth`, `data-spw-scene-state`][reg=set]

@@ -5,7 +5,7 @@
  * sidecar records it (scripts/lib/image-provenance-records.mjs). A stem covers
  * <stem>.<ext> and <stem>-<tier>.<ext>; the longest matching stem wins, and a
  * null kind means the sidecar records nothing, so the picture stays unmarked.
- * Read by public/js/runtime/image-provenance.js.
+ * Read by public/js/runtime/expression/image-provenance.js.
  */
 
 export const IMAGE_PROVENANCE_RECORDS = Object.freeze([

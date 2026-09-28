@@ -1,6 +1,6 @@
 # Brief: Fold the Seven Geometry Attributes into data-spw-op
 
-Sized for one careful session. `runtime/spells.js` renderSpellAtom explodes operator geometry into seven attributes (`data-spw-operator-left-role`, `-right-role`, `-flow`, `-brace-bias`, `-geometry`, `-overload`, `-charge-role`). The G1 fold: extend the `data-spw-op` bundle with `flow:`, `geometry:`, `bias:` axes and migrate the ~20 CSS readers (enumerate with `rg -n 'data-spw-operator-(left-role|right-role|flow|brace-bias|geometry|overload|charge-role)' public/css`) in the same patch.
+Sized for one careful session. `runtime/memory/spells.js` renderSpellAtom explodes operator geometry into seven attributes (`data-spw-operator-left-role`, `-right-role`, `-flow`, `-brace-bias`, `-geometry`, `-overload`, `-charge-role`). The G1 fold: extend the `data-spw-op` bundle with `flow:`, `geometry:`, `bias:` axes and migrate the ~20 CSS readers (enumerate with `rg -n 'data-spw-operator-(left-role|right-role|flow|brace-bias|geometry|overload|charge-role)' public/css`) in the same patch.
 
 **One question:** which of the seven axes do CSS rules actually discriminate on? (Census first; axes nothing reads may not deserve bundle tokens.)
 

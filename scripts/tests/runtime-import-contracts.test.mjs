@@ -43,7 +43,7 @@ test('parses executable imports and re-exports, excluding comments, prose, and J
 
 test('checks missing static, side-effect, re-export, and lazy import files', async (t) => {
   const report = await inspectFixture(t, {
-    'public/js/runtime/missing.js': [
+    'public/js/runtime/page/missing.js': [
       "import { missing } from './named.js';",
       "import './side-effect.js';",
       "export * from './re-export.js';",
@@ -58,7 +58,7 @@ test('checks missing static, side-effect, re-export, and lazy import files', asy
 
 test('browser imports require explicit .js and stay inside the public runtime', async (t) => {
   const report = await inspectFixture(t, {
-    'public/js/runtime/paths.js': [
+    'public/js/runtime/page/paths.js': [
       "import './module';",
       "import './module.ts';",
       "import '/public/js-other/module.js';",
@@ -75,9 +75,9 @@ test('browser imports require explicit .js and stay inside the public runtime', 
 
 test('normalizes browser absolute URLs and query suffixes; external CDN URLs remain valid', async (t) => {
   const report = await inspectFixture(t, {
-    'public/js/runtime/paths.js': [
+    'public/js/runtime/page/paths.js': [
       "import '/public/js/kernel/value.js?v=1#contract';",
-      "import('../kernel/%76alue.js');",
+      "import('../../kernel/%76alue.js');",
       "import('https://esm.sh/package?bundle');",
       "import('//cdn.example/package');",
     ].join('\n'),
@@ -94,7 +94,7 @@ test('typed implementation edges remain behind kernel facades or lazy scheduling
     'public/js/site.js': "import('./typed/example.js');",
     'public/js/runtime/catalog/feature.js': "import('../../typed/example.js');",
     'public/js/runtime/catalog/normalize.js': "import('../../typed/example.js');",
-    'public/js/runtime/eager.js': "import '../typed/example.js';",
+    'public/js/runtime/page/eager.js': "import '../../typed/example.js';",
     'public/js/interface/lazy.js': "import('../kernel/../typed/example.js');",
     'public/js/modules/example/feature.js': "export * from '/public/js/typed/example.js';",
   });
@@ -153,11 +153,11 @@ test('computed imports require both the declared loader owner and its expression
   const report = await inspectFixture(t, {
     'public/js/kernel/shared.js': 'import(specifier); import(other);',
     'public/js/semantic/pretext-utils.js': 'import(CDN_URL);',
-    'public/js/runtime/feature.js': 'import(specifier);',
+    'public/js/runtime/page/feature.js': 'import(specifier);',
   });
   assert.equal(report.errors.length, 2);
   assert.ok(report.errors.some((error) => error.includes('import(other)')));
-  assert.ok(report.errors.some((error) => error.includes('runtime/feature.js')));
+  assert.ok(report.errors.some((error) => error.includes('runtime/page/feature.js')));
 });
 
 test('entrypoints and module families keep their existing folder boundaries', async (t) => {
@@ -173,6 +173,18 @@ test('entrypoints and module families keep their existing folder boundaries', as
   assert.equal(report.errors.length, 3);
   assert.deepEqual(report.rootEntrypoints, ['compose.js', 'extra.js', 'site.js']);
   assert.deepEqual(report.topLevelModuleFiles, ['public/js/modules/loose.js']);
+});
+
+test('runtime files live in a named family; the runtime root holds folders only', async (t) => {
+  const report = await inspectFixture(t, {
+    'public/js/runtime/loose.js': '',
+    'public/js/runtime/page/page-state.js': '',
+    'public/js/runtime/catalog/core.js': '',
+    'public/js/runtime/misc/helper.js': '',
+  });
+  assert.equal(report.errors.length, 2);
+  assert.ok(report.errors.some((error) => error.includes('runtime/loose.js is loose')));
+  assert.ok(report.errors.some((error) => error.includes('runtime/misc/ is not a recognized runtime family')));
 });
 
 test('lower runtime layers cannot import the orchestration that consumes them', async (t) => {

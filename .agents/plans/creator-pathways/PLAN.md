@@ -21,7 +21,7 @@ Let a writer move from a manuscript or notes to a credible public series home, w
 ## Seams & Minimal Touch Files
 
 - Routes: `/services/creator/`, `/services/ecosystem/`, `/services/`, `/topics/math/combinatorics/`, `/about/domains/lore.land/`, and the home entry card.
-- Shared runtime: `public/js/modules/math/diagrams.js`, `public/js/runtime/expression-resonance.js`.
+- Shared runtime: `public/js/modules/math/diagrams.js`, `public/js/runtime/expression/expression-resonance.js`.
 - Shared CSS: `public/css/systems/expression-resonance.css`.
 - Durable surface: `.spw/surfaces/product-lines.spw` and `.spw/conventions/semantic-expression-consequence.spw`.
 

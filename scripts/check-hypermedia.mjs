@@ -33,7 +33,7 @@ try {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
     const result = await evaluate(`(async () => {
-      const nav = await import('/public/js/runtime/frame-navigator.js');
+      const nav = await import('/public/js/runtime/navigation/frame-navigator.js');
       const resonance = await import('/public/js/runtime/attention/resonance-probe.js');
       const tick = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       document.getElementById('probe').focus();

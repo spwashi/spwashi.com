@@ -26,7 +26,7 @@ Taste note: Extend the existing attribute-driven, CSS-first, highly inspectable 
 ## Files (Initial)
 - [NEW] `.agents/plans/context-sensitive-variants-and-agent-qa/PLAN.md`
 - [NEW] `.agents/plans/context-sensitive-variants-and-agent-qa/context-variants-qa.spw` (initial contract note)
-- [MOD] `public/js/runtime/composition-box-model.js` (or small new resolver alongside it)
+- [MOD] `public/js/runtime/regions/composition-box-model.js` (or small new resolver alongside it)
 - [MOD] `public/css/components/frames.css`, `public/css/components/cards.css`, `public/css/systems/surfaces/*.css` (targeted rules)
 - [MOD] `public/js/kernel/instrumentation.js` (spwCompose extensions)
 - [NEW or MOD] `public/js/runtime/agent-observation.js` (gated, modeled on layout-shift-audit)
@@ -97,7 +97,7 @@ This section captures additional user direction after initial Phase 1 delivery.
   - `addMeasurement()` / `addSnapshot()` during the window.
   - Clean flush producing a coherent artifact payload.
 - Cyclical rule application: During an active beat, registered "passes" (re-resolve context, snapshot attention field, refresh semantic expressions) can run at a controlled rhythm instead of raw observer firehose.
-- Implementation: New small module `public/js/runtime/observation-beats.js` (modeled on layout-shift-audit + interaction-loop). Gated behind `isDebugQAEnabled()`.
+- Implementation: New small module `public/js/runtime/diagnostics/observation-beats.js` (modeled on layout-shift-audit + interaction-loop). Gated behind `isDebugQAEnabled()`.
 
 **2. Screenshot QA Mode**
 - A first-class, poweruser-optimized debug mode.
@@ -163,11 +163,11 @@ This section captures additional user direction after initial Phase 1 delivery.
 - All shortcuts are opt-in / only active when QA/debug flags are present.
 
 ### Files (Phase 3 Additions)
-- [NEW] `public/js/runtime/observation-beats.js` (core Beat primitive + QA helpers)
+- [NEW] `public/js/runtime/diagnostics/observation-beats.js` (core Beat primitive + QA helpers)
 - [MOD] `public/js/kernel/instrumentation.js` (new `screenshot-qa` preset + `spwCompose.beats` / `spwCompose.qa` surface)
 - [MOD] `public/js/site.js` (register observation-beats as gated enhancement, following layout-shift-audit pattern)
 - [MOD] `public/js/interface/composition.js` (optional: one new cauldron action for "capture current beat")
-- [MOD] `public/js/runtime/experiential.js` (light gesture/keyboard extensions for QA mode)
+- [MOD] `public/js/runtime/experiential/experiential.js` (light gesture/keyboard extensions for QA mode)
 - [MOD] `.agents/plans/context-sensitive-variants-and-agent-qa/PLAN.md` + `context-variants-qa.spw`
 - [MOD] `design/catalog/` expectations (new attributes and surfaces)
 

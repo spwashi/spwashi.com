@@ -6,7 +6,7 @@ import {
 import { bus } from '/public/js/kernel/bus.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 import { annotateFloatingChromeElement, requestFloatingChromeSync } from '/public/js/kernel/dom-contracts.js';
-import { requestLensMode } from '/public/js/runtime/lens-modes.js';
+import { requestLensMode } from '/public/js/runtime/page/lens-modes.js';
 
 let initialized = false;
 let activeConsoleCleanup = null;

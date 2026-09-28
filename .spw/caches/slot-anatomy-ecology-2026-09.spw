@@ -16,7 +16,7 @@
 @still_alignment_ladder: ~"./still-alignment-ladder-2026-09.spw"
 @semantic_convenience_arcs: ~"./semantic-convenience-arcs-2026-09.spw"
 @dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
-@region_profiler: ~"../../public/js/runtime/region-profiler.js"
+@region_profiler: ~"../../public/js/runtime/regions/region-profiler.js"
 @material_css: ~"../../public/css/effects/material.css"
 
 operation = "cache"

@@ -24,7 +24,7 @@ Make the site introduce itself as a literal website and reference document befor
 - Fixity tier: stable vocabulary contract, tending route copy, experimental microinteraction timing.
 - Primary element: metal, because the feature is a reference-document schema.
 - Secondary element: wood, because restaurant/garden ownership is framed as maintenance and seasonal tending.
-- Owner surfaces: route HTML, `public/css/components/page-anatomy.css`, `public/js/runtime/page-anatomy.js`, `public/js/runtime/region-menu.js`, `.spw/conventions/page-anatomy-vocabulary.spw`.
+- Owner surfaces: route HTML, `public/css/components/page-anatomy.css`, `public/js/runtime/page/page-anatomy.js`, `public/js/runtime/regions/region-menu.js`, `.spw/conventions/page-anatomy-vocabulary.spw`.
 
 ## Risks
 

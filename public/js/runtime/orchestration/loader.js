@@ -36,8 +36,8 @@ import {
   summarizeModuleUpdates,
 } from '../catalog/updates-contract.js';
 import { describeModuleExport } from '../catalog/export-contract.js';
-import { REGION_STATES, setRegionState } from '../region-profiler.js';
-import { applyFamiliarityGate } from '../familiarity-gate.js';
+import { REGION_STATES, setRegionState } from '../regions/region-profiler.js';
+import { applyFamiliarityGate } from '../memory/familiarity-gate.js';
 import { matchesFeatures, normalizeFeatureRequirements } from './features.js';
 import { normalizeRuntimeToken, SPW_RUNTIME_HELPERS_CONTRACT } from './policy.js';
 import { safeQuery, safeQueryAll } from '/public/js/kernel/browser-primitives.js';
@@ -47,7 +47,7 @@ import {
   isOrientationOnlyPage,
   matchesPageCategory,
   readPageCategory,
-} from '../page-category.js';
+} from '../page/page-category.js';
 
 const DEFAULT_RESOURCE_PROBE_CONCURRENCY = 4;
 

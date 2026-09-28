@@ -40,7 +40,7 @@ intent: .{
   `css/components/embedded-workshop.css`,
   `css/components/frame-controls.css`,
   `css/handles/page-region-rail.css`,
-  `js/runtime/page-region-rail.js`,
+  `js/runtime/regions/page-region-rail.js`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -53,10 +53,10 @@ intent: .{
 @embedded_workshop: ~"../../../public/css/components/embedded-workshop.css"
 @frame_controls: ~"../../../public/css/components/frame-controls.css"
 @public_css_handles_page_region_rail_css: ~"../../../public/css/handles/page-region-rail.css"
-@public_js_runtime_page_region_rail_js: ~"../../../public/js/runtime/page-region-rail.js"
+@public_js_runtime_page_region_rail_js: ~"../../../public/js/runtime/regions/page-region-rail.js"
 @site_settings_profiles: ~"../../../public/js/kernel/site-settings-profiles.js"
 @site_settings_engine: ~"../../../public/js/kernel/site-settings-engine.js"
-@shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"
+@shell_disclosure: ~"../../../public/js/runtime/shell/shell-disclosure.js"
 @module_catalog: ~"../../../public/js/runtime/catalog/index.js"
 
 dispatch: .{

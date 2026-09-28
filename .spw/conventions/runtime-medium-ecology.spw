@@ -11,7 +11,7 @@
 @module_export_contract: ~"./module-export-contract.spw"
 @module_medium_surface: ~"../surfaces/runtime-module-medium.spw"
 @module_updates_contract: ~"../../public/js/runtime/catalog/updates-contract.js"
-@behavior_scopes: ~"../../public/js/runtime/behavior-scopes.js"
+@behavior_scopes: ~"../../public/js/runtime/orchestration/behavior-scopes.js"
 @module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @compose_entry: ~"../../public/js/compose.js"
 @decomposition_plan: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"

@@ -55,7 +55,7 @@ Text geometry may prove 0D–2D. The interface must present 3D and 4D as host/ru
 ## Validation
 
 - `node --check public/js/semantic/spw-expression-geometry.js`
-- `node --check public/js/runtime/interactive-expression-lab.js`
+- `node --check public/js/runtime/labs/interactive-expression-lab.js`
 - `node --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/spw-expression-geometry.test.mjs`
 - `npm run ecology:language`
 - `npm run check:local`

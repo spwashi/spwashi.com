@@ -6,9 +6,9 @@
 #:layer #!pragmatics
 
 @settings: ~"../../../public/js/kernel/site-settings.js"
-@brace_pivots: ~"../../../public/js/runtime/brace-pivots.js"
+@brace_pivots: ~"../../../public/js/runtime/interaction/brace-pivots.js"
 @bus: ~"../../../public/js/kernel/bus.js"
-@wonder_memory: ~"../../../public/js/runtime/wonder-memory.js"
+@wonder_memory: ~"../../../public/js/runtime/memory/wonder-memory.js"
 @accent_palette: ~"../../../public/js/semantic/accent-palette.js"
 @runtime: ~"../../../public/js/site.js"
 

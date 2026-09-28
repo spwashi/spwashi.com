@@ -37,8 +37,8 @@ intent: .{
   `spell-cognition-familiarity`,
  ][reg=set]
  surfaces = #[
-  `js/runtime/spells.js`,
-  `js/runtime/experiential.js`,
+  `js/runtime/memory/spells.js`,
+  `js/runtime/experiential/experiential.js`,
   `js/interface/wonder-memory.js`,
   `.spw/philosophy/cognitive-surface.spw`,
  ][reg=set]
@@ -51,9 +51,9 @@ intent: .{
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @plan_spellcraft_authoring: ~"../spellcraft-authoring/index.spw"
-@spells: ~"../../../public/js/runtime/spells.js"
-@experiential: ~"../../../public/js/runtime/experiential.js"
-@wonder_memory: ~"../../../public/js/runtime/wonder-memory.js"
+@spells: ~"../../../public/js/runtime/memory/spells.js"
+@experiential: ~"../../../public/js/runtime/experiential/experiential.js"
+@wonder_memory: ~"../../../public/js/runtime/memory/wonder-memory.js"
 @cognitive_surface: ~"../../../.spw/philosophy/cognitive-surface.spw"
 
 dispatch: .{
@@ -77,15 +77,15 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `The site already has several adjacent ideas that point at the same thing: spells as replayable outcomes, breadcrumbs as cognitive path, wonder memory as recent-path resonance, and liminality as page depth. This pass should align those ideas so they read as one integrated model instead of separate metaphors. The user-facing result should be intuitive: the spell dock should tell you whether a path feels fresh, familiar, or deeply grounded; the breadcrumb trail should explain how a page is being held in memory; and the page state should expose liminal gradients as a readable part of the worldbuilding rather than a hidden implementation detail.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../public/js/runtime/spells.js"
+ impl_ref = ~"../../../public/js/runtime/memory/spells.js"
  probe_ref = `node --check for edited JS modules`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/spells.js unchanged or untested.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/memory/spells.js unchanged or untested.`
  status = "active"
 }[reg=facet]
 
 scope: .{
  in = #[
-  `In scope: shared runtime copy/state in public/js/runtime/spells.js, public/js/runtime/experiential.js, and public/js/runtime/wonder-memory.js.`,
+  `In scope: shared runtime copy/state in public/js/runtime/memory/spells.js, public/js/runtime/experiential/experiential.js, and public/js/runtime/memory/wonder-memory.js.`,
   `In scope: small state projection updates in shared CSS only if a new readable register needs visual support.`,
   `In scope: public data attributes or helper outputs that let the console, settings, and spell surfaces describe familiarity and liminality clearly.`,
   `-`,

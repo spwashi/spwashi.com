@@ -35,6 +35,6 @@ What is proposed, ending at a demo:
 - **Snapshot and copy stay.** `copy page Spw` is the satchel's best feature; it stays as the bay's output jack.
 - **Kill the drag.** Corner snapping and drag state are most of `state-inspector.js` (1,251 lines); a bay that lives in the bottom lane with the section handle needs neither.
 
-Seams: `public/js/interface/state-inspector.js` (rename to `state-satchel.js` per `runtime-module-decomposition` Phase 1.4 when it is rebuilt), `public/js/kernel/site-settings-engine.js` (`listDeviations`, `saveSiteSettings`, `data-site-setting-set` binding), `public/js/runtime/frame-navigator.js` (rooms), `settings/index.html#token-navigator` (token families), `floating-chrome-coherence.spw`. No new `data-spw-*` family: the bay is `[data-spw-chrome-role="state-inspector"]` with settings controls inside it.
+Seams: `public/js/interface/state-inspector.js` (rename to `state-satchel.js` per `runtime-module-decomposition` Phase 1.4 when it is rebuilt), `public/js/kernel/site-settings-engine.js` (`listDeviations`, `saveSiteSettings`, `data-site-setting-set` binding), `public/js/runtime/navigation/frame-navigator.js` (rooms), `settings/index.html#token-navigator` (token families), `floating-chrome-coherence.spw`. No new `data-spw-*` family: the bay is `[data-spw-chrome-role="state-inspector"]` with settings controls inside it.
 
 Gate: sensation. Build the bay on `/settings/` first as an authored specimen (no floating chrome), approve it there, then mount it as the satchel.

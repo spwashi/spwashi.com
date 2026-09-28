@@ -1,6 +1,6 @@
 /** Scheduling strategies. The loader owns eligibility, instances, and mount batching. */
 import { writeDatasetValue } from '../../kernel/dom-contracts.js';
-import { setRegionState } from '../region-profiler.js';
+import { setRegionState } from '../regions/region-profiler.js';
 import { annotateModuleDescribesTarget } from '../catalog/describes-contract.js';
 import { normalizeRuntimeToken } from './policy.js';
 import { onIdle, once } from '/public/js/kernel/browser-primitives.js';

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { initSpwSpells } from '../../public/js/runtime/spells.js';
+import { initSpwSpells } from '../../public/js/runtime/memory/spells.js';
 
 function eventTarget() {
   const listeners = new Map();

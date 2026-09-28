@@ -14,7 +14,7 @@
 @paint_cost: ~"../caches/interaction-paint-cost-2026-09.spw"
 @module_export_contract: ~"../conventions/module-export-contract.spw"
 @css_instruction: ~"../conventions/css-instruction.spw"
-@page_state: ~"../../public/js/runtime/page-state.js"
+@page_state: ~"../../public/js/runtime/page/page-state.js"
 @module_loader: ~"../../public/js/runtime/orchestration/loader.js"
 @dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
 @core_bundle: ~"../../public/css/bundles/core.css"
@@ -104,8 +104,8 @@ fixity = "tending"
       applyPaletteResonanceSwatches`
     `runtime/module-loader.js` = `11 from updateRuntimeStateTokens, reached by
       endMountBatch and by wireRuntimeTokens at boot`
-    `runtime/interactive-medium.js` = `2 from applyInteractiveMedium`
-    `runtime/shell-disclosure.js` = `2 from syncShellOffset`
+    `runtime/shell/interactive-medium.js` = `2 from applyInteractiveMedium`
+    `runtime/shell/shell-disclosure.js` = `2 from syncShellOffset`
   }
   caution = `113 is small next to the 35054 to 50710 attribute writes ipc-014
     measured, and the count is not the measure. The settings engine writes 85 of
@@ -126,13 +126,13 @@ fixity = "tending"
     signature is identical run to run: eleven writes, a read, ninety-two writes,
     then five single writes each followed by a read.`
   pairs = #{
-    `readRootTimeToken @ runtime/page-state.js` = `after updateRuntimeStateTokens
+    `readRootTimeToken @ runtime/page/page-state.js` = `after updateRuntimeStateTokens
       @ runtime/module-loader.js — x2, 953ms and 1360ms`
     `readSafeAreaInsetPx @ kernel/dom-contracts.js` = `after syncShellOffset @
-      runtime/shell-disclosure.js — x2, 425ms and 659ms`
-    `getScrollY @ runtime/shell-disclosure.js` = `after applyInteractiveMedium @
-      runtime/interactive-medium.js — x1, 516ms and 510ms`
-    `read @ runtime/interactive-medium.js` = `after the settings engine batch —
+      runtime/shell/shell-disclosure.js — x2, 425ms and 659ms`
+    `getScrollY @ runtime/shell/shell-disclosure.js` = `after applyInteractiveMedium @
+      runtime/shell/interactive-medium.js — x1, 516ms and 510ms`
+    `read @ runtime/shell/interactive-medium.js` = `after the settings engine batch —
       x1, 2ms, because that batch runs before first paint`
   }
   reading = `Nothing here is a hot loop. Each of these is one write and one read

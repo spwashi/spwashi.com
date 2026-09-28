@@ -12,7 +12,7 @@
 
 @anatomy_packing: ~"../component-anatomy-device-packing-2026-07.spw"
 @composition_page: ~"../../../design/composition/index.html"
-@composition_box_model: ~"../../../public/js/runtime/composition-box-model.js"
+@composition_box_model: ~"../../../public/js/runtime/regions/composition-box-model.js"
 @content_css: ~"../../../public/css/components/content.css"
 @mode_switch: ~"../../../public/css/handles/operators/state-semantics.css"
 @adaptive: ~"../../../public/css/handles/operators/adaptive.css"
@@ -123,7 +123,7 @@ fixity = "tending"
   claim #cds-001 {
     layer = "pragmatic"
     hypothesis = `Stage elements must never inherit multi-column composition-flow packing meant for inner card grids.`
-    probe_ref = `rg 'site-frame' public/css/components/content.css; rg 'resolveCompositionFlow' public/js/runtime/composition-box-model.js`
+    probe_ref = `rg 'site-frame' public/css/components/content.css; rg 'resolveCompositionFlow' public/js/runtime/regions/composition-box-model.js`
     status = "confirmed"
   }
 
@@ -144,7 +144,7 @@ fixity = "tending"
 
 validation: #[
   `Hard-reload /design/composition/ at 360, 768, 1100px — lens shows read|inspect|reuse fully`
-  `rg 'resolveCompositionFlow|site-frame' public/js/runtime/composition-box-model.js public/css/components/content.css`
+  `rg 'resolveCompositionFlow|site-frame' public/js/runtime/regions/composition-box-model.js public/css/components/content.css`
   `rg 'frame-topline > .mode-switch' public/css/handles/operators/state-semantics.css`
   `Spot-check / topics/software/ and /play/ mode-switch at 768px`
 ][reg=set]

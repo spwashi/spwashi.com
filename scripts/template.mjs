@@ -582,7 +582,7 @@ function renderAnalyticsScript(vars) {
   return `    <script ${attrs.join(' ')}></script>`;
 }
 
-const PREPAINT_SOURCE_PATH = path.join(REPO_ROOT, 'public/js/runtime/prepaint-state.js');
+const PREPAINT_SOURCE_PATH = path.join(REPO_ROOT, 'public/js/runtime/arrival/prepaint-state.js');
 
 // Read the zero-dep preflight IIFE once and inline it into the head. Inlining
 // (rather than <script src>) removes a render-blocking network round-trip for a
@@ -605,7 +605,7 @@ function renderSettingsPreflightScript() {
 }
 
 function injectSettingsPreflight(source) {
-  if (source.includes('data-spw-settings-preflight') || source.includes('/public/js/runtime/prepaint-state.js')) return source;
+  if (source.includes('data-spw-settings-preflight') || source.includes('/public/js/runtime/arrival/prepaint-state.js')) return source;
   const script = renderSettingsPreflightScript();
   const styleLinkPattern = /(\s*<link\b[^>]*\bhref=["']\/public\/css\/style\.css[^>]*>)/i;
   if (styleLinkPattern.test(source)) {

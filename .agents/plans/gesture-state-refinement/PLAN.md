@@ -14,8 +14,8 @@ Make shared gesture behavior calmer on mobile, remove accidental menu / brace ac
 ## Files
 
 - [NEW] `.agents/plans/gesture-state-refinement/PLAN.md`
-- [MOD] `public/js/runtime/brace-gestures.js` - reduce eager coarse-pointer gesture commitment.
-- [MOD] `public/js/runtime/region-menu.js` - make region-menu opening more intentional and improve preview / close state cleanup.
+- [MOD] `public/js/runtime/interaction/brace-gestures.js` - reduce eager coarse-pointer gesture commitment.
+- [MOD] `public/js/runtime/regions/region-menu.js` - make region-menu opening more intentional and improve preview / close state cleanup.
 - [MOD] `public/js/site.js` - expose stable gesture discovery helpers in the public runtime console surface.
 - [MOD] `settings/index.html` - document gesture semantics, console helpers, and spell-oriented seeds in a route users can revisit.
 
@@ -33,8 +33,8 @@ Make shared gesture behavior calmer on mobile, remove accidental menu / brace ac
 
 ## Validation
 
-- `node --check public/js/runtime/brace-gestures.js`
-- `node --check public/js/runtime/region-menu.js`
+- `node --check public/js/runtime/interaction/brace-gestures.js`
+- `node --check public/js/runtime/regions/region-menu.js`
 - `node --check public/js/site.js`
 - `git diff --check`
 - `npm run check`

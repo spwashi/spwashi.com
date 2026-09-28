@@ -197,7 +197,7 @@ declare global {
        Bundles carry space-separated `axis:value` tokens so CSS can match
        combinatorially with [data-*~="axis:value"] and a reader can learn an
        element's whole story from one attribute. Contracts own the axes:
-       semantic/cauldron/contract.js, kernel/shared.js, runtime/effect-ledger.js. */
+       semantic/cauldron/contract.js, kernel/shared.js, runtime/memory/effect-ledger.js. */
 
     /** Cauldron vessel state bundle, e.g. "phase:mixing count:4".
         Axes: phase | count | garden | resonance | collected | discoverability. */
@@ -218,7 +218,7 @@ declare global {
         checkpoints reference, restore/decompose dereference. */
     spwOpDisposition?: 'charge' | 'discharge' | 'reference' | 'dereference';
 
-    /** Sigil/operand anatomy state written by runtime/sigil-anatomy.js:
+    /** Sigil/operand anatomy state written by runtime/expression/sigil-anatomy.js:
         raw HTML ships fused text; "hydrated" means the module wrapped
         .spw-sigil/.spw-operand spans; "authored" means markup already had
         its own anatomy; "bare" means no sigil to split. */
@@ -292,7 +292,7 @@ export interface SpwIngredient {
   unit?: string;
 }
 
-/** One precipitated effect recorded by runtime/effect-ledger.js. */
+/** One precipitated effect recorded by runtime/memory/effect-ledger.js. */
 export interface SpwEffectEntry {
   kind: string;
   label: string;

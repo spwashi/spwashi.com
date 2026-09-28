@@ -46,8 +46,8 @@
 }
 
 ^"palette_treat_discovery"{
-  module: ~"../../public/js/runtime/palette-treat-discovery.js"
-  field_guide: ~"../../public/js/runtime/feature-discovery.js"
+  module: ~"../../public/js/runtime/physics/palette-treat-discovery.js"
+  field_guide: ~"../../public/js/runtime/discovery/feature-discovery.js"
   css: ~"../../public/css/systems/palette-treat.css"
   attrs: #[
     `data-spw-palette-treat-active`

@@ -27,7 +27,7 @@ partial reading of gathered conceptual payloads.
 | `public/js/runtime/interaction/vocabulary.js` | `tap:travel` / `swipe:cycle`; landmarks and cauldron chips in the gesture target set |
 | `public/js/runtime/attention/section-handle.js` | Documents the live story on the handle form; writes `data-spw-approach` on the current room; pins resonance probe from the room's operator on a hop |
 | `public/css/systems/electrostatic-affordances.css` | Interaction-phase arms the room electrode; current section and handle raise `--spw-e-edge`; induced field spends into `--spw-resonance` |
-| `public/js/runtime/charge-field.js` | Hop/gather/inspect phases bump the existing charge-field intensity |
+| `public/js/runtime/physics/charge-field.js` | Hop/gather/inspect phases bump the existing charge-field intensity |
 | CSS | Compact footer clusters; landmark `aria-current`; discover/inspect pulse spend; liminality ornament accents |
 | Conventions | `interaction-microstates`, `cauldron-dynamics`, `ornament-contract`, `component-region-personality` |
 

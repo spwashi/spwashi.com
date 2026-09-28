@@ -11,7 +11,7 @@
 
 @charge_sign: ~"./expression-charge-sign-2026-09.spw"
 @semantic_braces: ~"../conventions/semantic-braces.spw"
-@expression_resonance: ~"../../public/js/runtime/expression-resonance.js"
+@expression_resonance: ~"../../public/js/runtime/expression/expression-resonance.js"
 @shape_reader: ~"../../public/js/semantic/expression-query.js"
 @manifest_builder: ~"../../scripts/build-expression-manifest.mjs"
 @operator_atlas: ~"../../topics/software/spw/index.html"

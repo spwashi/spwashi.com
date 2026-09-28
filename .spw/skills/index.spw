@@ -72,7 +72,7 @@ fixity = "tending"
 #>wonder_skills_1
 ?["Is a skill's workflow a probe, or a spell?"]{
   #:depth #!stylistic ~#lens(sequence)
-  ~#tension: "sense and probe are both read-only questions — you run them to find out. But a skill's workflow is an ordered sequence that changes something and can be replayed, which is what a spell already is here: runtime/spells.js casts grounded operators, the cauldron mixes ingredients into a castable form, and the seed exports OPERATIONAL_SEQUENCES and runOperationalSequence. Calling that a probe borrows a diagnostic word for an effectful thing."
+  ~#tension: "sense and probe are both read-only questions — you run them to find out. But a skill's workflow is an ordered sequence that changes something and can be replayed, which is what a spell already is here: runtime/memory/spells.js casts grounded operators, the cauldron mixes ingredients into a castable form, and the seed exports OPERATIONAL_SEQUENCES and runOperationalSequence. Calling that a probe borrows a diagnostic word for an effectful thing."
   ~#hypothesis: "the shape wants three constructs, not two: a probe asks and returns a finding; a spell casts an ordered sequence and leaves residue; a precipitate is what the spell leaves behind. Skills currently collapse all three into 'validation'."
   ~#note: "spitballed, not designed. The substrate exists on the runtime side and has never been pointed at authoring."
   !probe{ "take one skill's workflow and write it as an ordered Spw expression sequence rather than a bash list. if the sequence reads as something you would cast rather than something you would ask, the construct is spell and the word probe is wrong for it." }

@@ -24,8 +24,8 @@ Designers should be able to open the public site, touch specimens, cite tokens b
 
 - `public/js/semantic/pretext-measurement-bus.js` — shared measure/read/publish API
 - `public/js/modules/design/typography-measurement-preview.js` — settings live preview
-- `public/js/runtime/frame-metrics.js` — bus-aware frame seams
-- `public/js/runtime/composition-box-model.js` — reads pretext signals into box snapshots
+- `public/js/runtime/page/frame-metrics.js` — bus-aware frame seams
+- `public/js/runtime/regions/composition-box-model.js` — reads pretext signals into box snapshots
 - `settings/index.html` — typography preview + designer conversation category
 - `design/index.html` — conversation canvas frame
 - `.spw/conventions/designer-conversation-canvas.spw` — inspectable contract

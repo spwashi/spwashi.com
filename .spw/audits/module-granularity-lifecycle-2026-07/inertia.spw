@@ -48,7 +48,7 @@
 
   high_inertia_risk: #[
     .{
-      path = `public/js/runtime/shell-disclosure.js`
+      path = `public/js/runtime/shell/shell-disclosure.js`
       touches = 29
       loc = `~2284`
       pattern = `Mobile menu, nav measure hysteresis, header actions (Cauldron/Attention/Tune), weather/posture, floating chrome competition`
@@ -58,7 +58,7 @@
       plan = `P2.2 after P2.1`
     }
     .{
-      path = `public/js/runtime/experiential.js`
+      path = `public/js/runtime/experiential/experiential.js`
       touches = 19
       loc = `~2169`
       pattern = `Spell path, sample dock, reading-quiet, gesture momentum, inspect overlays — commit subjects span chrome+spell+gesture`

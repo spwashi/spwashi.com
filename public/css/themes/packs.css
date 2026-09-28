@@ -288,7 +288,7 @@ html[data-spw-theme-pack="banked-ember"] :where([data-spw-harmony="editorial"]) 
 
 /* "Faint luminous cracks that pulse when the life inside stirs."
    The seam only lights where the runtime says charge is actually present —
-   --spw-charge-field is written by runtime/charge-field.js, so this reads
+   --spw-charge-field is written by runtime/physics/charge-field.js, so this reads
    real interaction state rather than decorating on hover. At rest the shell
    drinks light (seam stays at --line); as the field rises the crack warms
    toward gold, and the hidden blue only surfaces at full charge — the

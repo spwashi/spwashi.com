@@ -19,7 +19,7 @@
 @folding_organelle: ~"./folding-chrome-organelle.spw"
 @attribute_governance: ~"./data-spw-attribute-governance.spw"
 @arrival_cache: ~"../caches/arrival-perceptibility-2026-08.spw"
-@runtime: ~"../../public/js/runtime/arrival-shells.js"
+@runtime: ~"../../public/js/runtime/arrival/arrival-shells.js"
 @css: ~"../../public/css/systems/arrival-electrostatics.css"
 @measure: ~"../../scripts/page-reasons.mjs"
 @file_physics: ~"../_workbench/.spw/conventions/file-physics.spw"

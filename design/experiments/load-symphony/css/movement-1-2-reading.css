@@ -1389,7 +1389,7 @@ html[data-spw-reduce-motion="on"] *::after {
 /* ==========================================================================
    Preflight + runtime load timing contract (page load architecture)
    --------------------------------------------------------------------------
-   public/js/runtime/prepaint-state.js (inlined via template into <head> before
+   public/js/runtime/arrival/prepaint-state.js (inlined via template into <head> before
    the stylesheet <link>) writes critical data-* and style props synchronously
    on script parse. This guarantees first paint sees stable:
      colorMode, themePack, componentDensity, semanticDensity, enhancementLevel,
@@ -2888,7 +2888,7 @@ html[data-spw-reduce-motion="on"] {
    See also
    - .spw/conventions/dimension-vocabulary.spw
    - public/css/components/typography-packing.css
-   - public/js/runtime/loading-ecology.js (DIMENSION_VOCABULARY)
+   - public/js/runtime/arrival/loading-ecology.js (DIMENSION_VOCABULARY)
    ========================================================================== */
 
 :root {

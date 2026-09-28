@@ -280,9 +280,9 @@ function renderWonder(wonder, neighbours) {
  */
 const PRODUCERS = [
   ['scripts/page-reasons.mjs', 'measure'],
-  ['public/js/runtime/arrival-shells.js', 'runtime'],
-  ['public/js/runtime/load-trace.js', 'runtime'],
-  ['public/js/runtime/familiarity-gate.js', 'runtime'],
+  ['public/js/runtime/arrival/arrival-shells.js', 'runtime'],
+  ['public/js/runtime/arrival/load-trace.js', 'runtime'],
+  ['public/js/runtime/memory/familiarity-gate.js', 'runtime'],
   ['public/js/site.js', 'api'],
 ];
 

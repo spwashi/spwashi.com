@@ -39,7 +39,7 @@ The desired end state is a site whose light and dark themes feel deliberately co
 
 - Rebase target: `main@761b833`
 - Rebase cadence: before commit 2 and before merge
-- Hygiene split: the worktree already carries uncommitted settings/resonance follow-up edits plus unrelated drift in `public/css/services-surface.css`, `public/css/spw-chrome.css`, and `public/js/runtime/spells.js`; this pass will avoid those files and only touch the scoped CSS layers listed above.
+- Hygiene split: the worktree already carries uncommitted settings/resonance follow-up edits plus unrelated drift in `public/css/services-surface.css`, `public/css/spw-chrome.css`, and `public/js/runtime/memory/spells.js`; this pass will avoid those files and only touch the scoped CSS layers listed above.
 
 ## Dependencies
 

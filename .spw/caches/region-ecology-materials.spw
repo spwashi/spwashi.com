@@ -11,7 +11,7 @@
 
 @semantic_capacity: ~"../conventions/semantic-capacity.spw"
 @region_ecology: ~"../conventions/region-component-ecology.spw"
-@profiler: ~"../../public/js/runtime/region-profiler.js"
+@profiler: ~"../../public/js/runtime/regions/region-profiler.js"
 @packs_css: ~"../../public/css/themes/packs.css"
 @syntax: ~"../../public/css/grammar/syntax.css"
 @seats: ~"../../public/css/systems/region-seats.css"

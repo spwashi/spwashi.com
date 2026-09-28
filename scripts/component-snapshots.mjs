@@ -530,7 +530,7 @@ async function measureSelector(session, selector, timeoutMs = CAPTURE_MEASURE.ev
       let measurementError = null;
 
       try {
-        const compositionUrl = new URL('/public/js/runtime/composition-box-model.js', document.baseURI).href;
+        const compositionUrl = new URL('/public/js/runtime/regions/composition-box-model.js', document.baseURI).href;
         const pretextUrl = new URL('/public/js/semantic/pretext-measurement-bus.js', document.baseURI).href;
         const [boxModule, pretextModule] = await race(Promise.all([
           import(compositionUrl),
@@ -992,7 +992,7 @@ async function applyCapturePrepare(session, job) {
       }
       if (wantsSearch && typeof window.spwSearch?.open !== 'function') {
         try {
-          const mod = await import('/public/js/runtime/site-search.js');
+          const mod = await import('/public/js/runtime/navigation/site-search.js');
           mod.initSiteSearch?.(null, document);
         } catch { /* catalog may still win */ }
       }
@@ -1010,7 +1010,7 @@ async function applyCapturePrepare(session, job) {
       }
       if (wantsRegionMenu) {
         try {
-          const mod = await import('/public/js/runtime/region-menu.js');
+          const mod = await import('/public/js/runtime/regions/region-menu.js');
           mod.initSpwRegionMenu?.(null, document);
         } catch { /* catalog may still win */ }
       }
@@ -1022,7 +1022,7 @@ async function applyCapturePrepare(session, job) {
       }
       if (wantsLens && !document.querySelector('.mode-switch [data-set-mode][data-spw-variant-bound="true"]')) {
         try {
-          const mod = await import('/public/js/runtime/variant-selection.js');
+          const mod = await import('/public/js/runtime/regions/variant-selection.js');
           mod.initVariantSelection?.(document);
         } catch { /* catalog may still win */ }
       }
@@ -1058,7 +1058,7 @@ async function applyCapturePrepare(session, job) {
       if (!el) continue;
       activate(el);
       try {
-        const mod = await import('/public/js/runtime/region-menu.js');
+        const mod = await import('/public/js/runtime/regions/region-menu.js');
         mod.openRegionMenuForElement?.(el, { source: 'capture', graceMs: 8000 });
       } catch { /* fall through to pointer gestures */ }
       if (!document.querySelector('.spw-region-menu[data-spw-state="open"]')) {

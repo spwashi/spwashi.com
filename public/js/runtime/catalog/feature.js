@@ -238,7 +238,7 @@ export const FEATURE_DEFS = [
     evaluates: 'operator phase ladder charge sigil-position',
     timingArc: 'visible-feature',
     effectScope: 'local-dom bus',
-    load: () => import('../states.js'),
+    load: () => import('../page/states.js'),
   },
   {
     id: 'recipe-semantics',
@@ -474,7 +474,7 @@ export const FEATURE_DEFS = [
     evaluates: 'settings defaults brace interaction',
     timingArc: 'visible-settings',
     effectScope: 'local-dom root-state',
-    load: () => import('../brace-pivots.js'),
+    load: () => import('../interaction/brace-pivots.js'),
   },
   {
     id: 'narrative-instrumentation',
@@ -512,7 +512,7 @@ export const FEATURE_DEFS = [
     evaluates: 'gesture semantics brace inspectability spell capture',
     timingArc: 'visible-gesture',
     effectScope: 'element-state listeners bus',
-    load: () => import('../brace-gestures.js'),
+    load: () => import('../interaction/brace-gestures.js'),
   },
   {
     id: 'region-menu',
@@ -535,7 +535,7 @@ export const FEATURE_DEFS = [
     timingArc: 'enhance-inspect',
     effectScope: 'popover listeners',
     visual: 'layout',
-    load: () => import('../region-menu.js'),
+    load: () => import('../regions/region-menu.js'),
   },
   {
     id: 'pronunciation-hints',
@@ -572,7 +572,7 @@ export const FEATURE_DEFS = [
     evaluates: 'operator-grammar anatomy hydration capture-legibility',
     timingArc: 'immediate-anatomy',
     effectScope: 'element-state',
-    load: () => import('../sigil-anatomy.js'),
+    load: () => import('../expression/sigil-anatomy.js'),
   },
   {
     id: 'effect-ledger',
@@ -597,7 +597,7 @@ export const FEATURE_DEFS = [
     timingArc: 'enhance-ledger',
     timingChunk: 'idle-residue',
     effectScope: 'root-state storage bus flourish',
-    load: () => import('../effect-ledger.js'),
+    load: () => import('../memory/effect-ledger.js'),
   },
   {
     id: 'cauldron',
@@ -731,6 +731,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-metrics',
     evaluates: 'frame text measure line-count wrap height pretext bus',
     effectScope: 'element-state measure bus',
-    load: () => import('../frame-metrics.js'),
+    load: () => import('../page/frame-metrics.js'),
   },
 ];

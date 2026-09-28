@@ -18,8 +18,8 @@
 @bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
 @lab: ~"../../public/js/semantic/pretext-lab.js"
 @physics: ~"../../public/js/semantic/pretext-physics.js"
-@ecology: ~"../../public/js/runtime/loading-ecology.js"
-@page_state: ~"../../public/js/runtime/page-state.js"
+@ecology: ~"../../public/js/runtime/arrival/loading-ecology.js"
+@page_state: ~"../../public/js/runtime/page/page-state.js"
 
 operation = "contract"
 fixity = "tending"
@@ -55,6 +55,6 @@ fixity = "tending"
 
 validation: #[
   `rg 'copy_flow|prepareWithSegments' .spw/conventions/copy-flow.spw public/js/semantic/pretext-measurement-bus.js`
-  `node --check public/js/semantic/pretext-measurement-bus.js public/js/semantic/pretext-lab.js public/js/runtime/frame-metrics.js`
+  `node --check public/js/semantic/pretext-measurement-bus.js public/js/semantic/pretext-lab.js public/js/runtime/page/frame-metrics.js`
   `Open /topics/software/pretext/ and confirm telemetry names wrap from phone vs poster lines`
 ][reg=set]

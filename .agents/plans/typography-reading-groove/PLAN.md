@@ -10,7 +10,7 @@ If the currently leading block of text and its immediate neighbors receive a sub
 
 ## Scope
 
-- `public/js/runtime/attention/reading-groove.js` (behavior; mounted via `public/js/runtime/attention-architecture.js`, which is a compose-all facade — the catalog entry `attention-reading-groove` in `module-catalog-enhancement.js` mounts it directly)
+- `public/js/runtime/attention/reading-groove.js` (behavior; mounted via `public/js/runtime/attention/attention-architecture.js`, which is a compose-all facade — the catalog entry `attention-reading-groove` in `module-catalog-enhancement.js` mounts it directly)
 - `public/js/runtime/attention/shared.js` (shared attrs/selectors: `READING_GROOVE_SELECTOR`, `READING_GROOVE_ATTR`, `getRootPreference`)
 - `public/css/typography/typesetting.css`, `public/css/systems/legibility-lens.css`, `public/css/systems/surfaces/reading-layout.css`
 - `public/js/runtime/attention/pinch-scale.js` — retained touch-safety requirement absorbed from `attention-cue-gestures` (see Relationship below)

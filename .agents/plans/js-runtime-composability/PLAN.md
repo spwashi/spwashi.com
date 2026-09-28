@@ -10,7 +10,7 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 - Add runtime architecture checks that make module definitions, generated typed outputs, and root-level entrypoint boundaries fail visibly when they drift.
 
 ## Likely File Set
-- `public/js/runtime/page-state.js`
+- `public/js/runtime/page/page-state.js`
 - `public/js/site.js`
 - `public/js/README.md`
 - `scripts/ts/runtime-contracts.mts`
@@ -25,7 +25,7 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 
 ## Validation
 - `node --check public/js/site.js`
-- `node --check public/js/runtime/page-state.js`
+- `node --check public/js/runtime/page/page-state.js`
 - `npm run check:runtime`
 - `git diff --check`
 - `npm run check`
@@ -42,7 +42,7 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 - Follow-up guard worth adding: runtime contracts should fail when a module writes `textContent` to a selector that can match `html`, `head`, or `body`.
 
 ## 2026-06 Module Loader And Compose Surface Pass
-- Extracted `runtime/module-catalog.js`, `runtime/module-loader.js`, `runtime/gesture-contract.js`, `runtime/region-profiler.js`, and `semantic/role-inference.js` from the `site.js` shell.
+- Extracted `runtime/module-catalog.js`, `runtime/module-loader.js`, `runtime/interaction/gesture-contract.js`, `runtime/regions/region-profiler.js`, and `semantic/role-inference.js` from the `site.js` shell.
 - Split `kernel/site-settings` into profiles, engine, and lazy UI bindings while keeping `kernel/site-settings.js` as the stable import path.
 - Wired portable exports through `compose.js` for catalog layers, loader contract, gesture/region profiler, and role inference.
 - Consolidated annotation-layer region collection onto `collectAnnotationRegions()` with `ANNOTATION_LAYER_REGION_SELECTOR` in `dom-contracts.js`.
@@ -61,7 +61,7 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 - Kept this pass behavior-neutral: no selectors, route gates, feature gates, settings defaults, mount timing constants, or visual effects changed.
 
 ## 2026-08 Physical snapshot pass
-- Landed `public/js/runtime/physical-model.js` as a **read-only** inspect surface: `snapshotPhysicalModel()` / `describePhysicalModelSummary()`.
+- Landed `public/js/runtime/physics/physical-model.js` as a **read-only** inspect surface: `snapshotPhysicalModel()` / `describePhysicalModelSummary()`.
 - Organs already named (spatial-gravity, charge-field, pulse-beat, wonder-memory, developmental-climate) keep writing. The snapshot does not.
 - Portable through `compose.js`; console through `window.spwCompose.controls.physics`.
 - Do not add `data-spw-region-personality`, `data-spw-region-voice`, or `data-spw-region-gravity-axis`. Copy personality stays in `component-region-personality`.

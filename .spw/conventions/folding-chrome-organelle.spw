@@ -102,7 +102,7 @@ fixity = "experimental"
   probe: "Not yet implementable. This convention is a design prime; nothing below the room-signal expression hook has been built."
   built_so_far: #[
     `semantic/room-signal.js - environment term (family, region, accent) plus the region's parsed expression`,
-    `runtime/charge-field.js - energy term, phase machine, discharge kinds`,
+    `runtime/physics/charge-field.js - energy term, phase machine, discharge kinds`,
     `systems/projection-attenuation.css - channel material per seat and slot`
   ][reg=set]
   next_smallest: "Give one handle a declared rotation space and render its illegal branches as visibly unavailable. Everything else in this doc waits on that reading well in a browser."

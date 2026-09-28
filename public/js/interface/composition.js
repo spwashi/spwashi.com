@@ -27,7 +27,7 @@
  * Public API kept as stable as possible for existing callers. New actions and phase attrs are additive.
  */
 
-import { requestLensMode } from '/public/js/runtime/lens-modes.js';
+import { requestLensMode } from '/public/js/runtime/page/lens-modes.js';
 import { composeLensPrompt } from '/public/js/semantic/cauldron/lens.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { ensureThemeResonanceStyles } from '/public/js/kernel/deferred-styles.js';
@@ -1561,7 +1561,7 @@ export {
  */
 export async function captureBeatAsIngredient() {
   try {
-    const mod = await import('/public/js/runtime/observation-beats.js');
+    const mod = await import('/public/js/runtime/diagnostics/observation-beats.js');
     const artifact = mod.captureCurrentBeatArtifact({ source: 'cauldron-capture' });
     if (artifact) {
       const ingredients = getCauldron();

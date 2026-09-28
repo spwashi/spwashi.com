@@ -37,7 +37,7 @@ intent: .{
   `already`,
  ][reg=set]
  surfaces = #[
-  `js/runtime/brace-gestures.js`,
+  `js/runtime/interaction/brace-gestures.js`,
   `js/interface/composition.js`,
   `.spw/conventions/semantic-braces.spw`,
   `topics/software/spw/index.html`,
@@ -52,7 +52,7 @@ intent: .{
 @plan: ~"./PLAN.md"
 @alignment_note: ~"./alignment-note.spw"
 @plan_spellcraft_authoring: ~"../../spellcraft-authoring/index.spw"
-@brace_gestures: ~"../../../../public/js/runtime/brace-gestures.js"
+@brace_gestures: ~"../../../../public/js/runtime/interaction/brace-gestures.js"
 @composition: ~"../../../../public/js/interface/composition.js"
 @semantic_braces: ~"../../../../.spw/conventions/semantic-braces.spw"
 @index: ~"../../../../topics/software/spw/index.html"
@@ -89,9 +89,9 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `Braces (already rich with data-spw-gesture, data-spw-charge, semantic expressions) become live priming vessels. - Charging/holding a brace containment now feeds the cauldron with a "primed" ingredient carrying the expression + origin context. - Cauldron footer/mirrors react subtly; copy in grammar lens and Spw docs teaches "braces hold local value attached to a stable root." - Everything stays additive, progressive, inspectable via bus + data attrs, reversible via existing prune.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../../public/js/runtime/brace-gestures.js"
+ impl_ref = ~"../../../../public/js/runtime/interaction/brace-gestures.js"
  probe_ref = `rg 'brace-cauldron-primed-collection' .agents/plans/archive/brace-cauldron-primed-collection`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/brace-gestures.js unchanged or untested.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/interaction/brace-gestures.js unchanged or untested.`
  status = "superseded"
 }[reg=facet]
 

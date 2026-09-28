@@ -17,12 +17,12 @@
 @module_export_contract: ~"../conventions/module-export-contract.spw"
 @dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
 @pinch_scale: ~"../../public/js/runtime/attention/pinch-scale.js"
-@shell_disclosure: ~"../../public/js/runtime/shell-disclosure.js"
+@shell_disclosure: ~"../../public/js/runtime/shell/shell-disclosure.js"
 @contextual_ui: ~"../../public/js/interface/contextual-ui.js"
 @svg_tunability: ~"../../public/js/media/svg-tunability.js"
-@experiential: ~"../../public/js/runtime/experiential.js"
-@layout_assumptions: ~"../../public/js/runtime/layout-assumptions.js"
-@region_menu: ~"../../public/js/runtime/region-menu.js"
+@experiential: ~"../../public/js/runtime/experiential/experiential.js"
+@layout_assumptions: ~"../../public/js/runtime/regions/layout-assumptions.js"
+@region_menu: ~"../../public/js/runtime/regions/region-menu.js"
 
 operation = "audit"
 fixity = "tending"
@@ -106,7 +106,7 @@ audit_run: .{
   annotation_layer_header_click_hijack {
     severity = "high"
     resolved = "2026-09-05"
-    file = `public/js/runtime/annotation-layer.js`
+    file = `public/js/runtime/regions/annotation-layer.js`
     claim = `initSpwAnnotationLayer() attaches click/pointerdown/keydown listeners directly on every element matching '[data-spw-annotation-handle], [data-spw-header-annotation]' — and the whole site-header carries data-spw-header-annotation, not just its dedicated button.header-annotation. click/pointerdown/keydown bubble; onClick() called event.preventDefault() unconditionally, with no check on the real event.target. Any click bubbling up through the header — every top-nav link, the mobile menu toggle, the logo — reached the header's own onClick and had its default action (navigation) cancelled, even though the click had nothing to do with the header's own annotation affordance. onKeydown() had the matching bug for Enter/Space on a focused link.`
     evidence = `Reproduced live: instrumented Event.prototype.preventDefault, clicked the top-nav "About" link (a real a[href="/about/"], confirmed via elementFromPoint) — captured a real call at annotation-layer.js:309, HTMLElement.onClick, target A (event.target), currentTarget the site-header. Navigation did not occur. After the fix, the same click produces zero preventDefault calls and navigates to /about/.`
     fix = `Added isOwnAffordanceTarget(handle, target): true only when target is the handle itself, or no real interactive element (a[href], button, input, select, textarea, [role="button"], [contenteditable]) sits between target and the handle. Guarded onPointerDown (the 420ms hold-to-pin timer), onClick, and onKeydown's Enter/Space branch with it. button.header-annotation itself is unaffected (target === handle there); every other interactive descendant of an annotated landmark now passes its click/keydown through untouched.`

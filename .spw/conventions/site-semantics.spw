@@ -279,7 +279,7 @@
   definition = "A lens mode is a reversible reading/filter state that changes visible consequence, host semantics, QA state, and optional shareable URL state without changing route identity."
   html_contract = "Use .mode-switch with data-mode-group + data-set-mode controls and matching data-mode-panel surfaces. Put data-spw-inspect-mode-group on the nearest honest host when the state should be inspectable as one feature."
   runtime_contract = .{
-    writer = "public/js/runtime/site-core-minimal.js owns normal page clicks; public/js/interface/console.js mirrors the same state for console, brace, and QA callers."
+    writer = "public/js/runtime/page/site-core-minimal.js owns normal page clicks; public/js/interface/console.js mirrors the same state for console, brace, and QA callers."
     host_state = #[`data-spw-lens-group`, `data-spw-lens-mode`, `data-spw-lens-state`, `data-spw-lens-deep-link`, `data-spw-deep-link-state`][reg=set]
     switch_state = #[`data-spw-lens-group`, `data-spw-lens-mode`, `data-spw-lens-state`, `data-spw-lens-deep-link`, `--spw-lens-count`, `--spw-lens-index`][reg=set]
     panel_state = #[`data-spw-lens-panel-state`, `data-spw-lens-group`, `data-spw-lens-mode`][reg=set]
@@ -781,7 +781,7 @@ frame #component-collection-reward-contract
   role runtime_contract
   fixity stable_tending
   operation contract
-  surface public/js/runtime/region-profiler.js + public/js/runtime/component-collection.js + public/js/runtime/reward-ui.js + public/js/kernel/site-settings-*.js + settings/index.html + public/css/components/floating-chrome.css
+  surface public/js/runtime/regions/region-profiler.js + public/js/runtime/memory/component-collection.js + public/js/runtime/memory/reward-ui.js + public/js/kernel/site-settings-*.js + settings/index.html + public/css/components/floating-chrome.css
   concept region_diversity component_collection reward_display persistence reset inspectable_root_state
   storage_key = "spw-component-collection"
   events = #[
@@ -1204,7 +1204,7 @@ frame #inline_settings_toggles_state_traversability
 
 frame #spell_cauldron_wonder_vocabulary
   role extension
-  surface public/js/runtime/spells.js + navigation-spells + guide-badge + experiential + settings + .spw/wonder-vocabulary
+  surface public/js/runtime/memory/spells.js + navigation-spells + guide-badge + experiential + settings + .spw/wonder-vocabulary
   concept spell + cauldron as enhanced discovery mechanism + satisfying tangential control
   data-spw-spell, data-spw-cauldron*, data-spw-wonder*, settings (physics-reason for ease, semantic-density for vocab richness)
   usage = "Spells serialize grounded tokens with prefix/postfix + enriched vocab on rich semantic density; cauldron collects for later mix/plant. Wired to settings for modulation (fluid vs deliberate cast feel). Encourages bumbling interactive links, scroll through varied page structures, semantic density in markup for magic (while perf minded via enhancement-level). Tangential control over experience; culture of wonder + iterative AI synthesis across systems."
@@ -1214,7 +1214,7 @@ frame #hypermedia_extension_coherence
   role contract
   operation align
   fixity tending
-  surface public/js/kernel/shared.js + public/js/runtime/spells.js + public/js/runtime/experiential.js + public/js/runtime/tuning-discovery.js + public/js/runtime/shell-disclosure.js + public/js/interface/composition.js + public/js/interface/cauldron/chrome.js + _partials/site-footer.html + public/css/shell/chrome.css + public/css/handles/operators.css + public/css/systems/surfaces/tuning-discoverability.css
+  surface public/js/kernel/shared.js + public/js/runtime/memory/spells.js + public/js/runtime/experiential/experiential.js + public/js/runtime/discovery/tuning-discovery.js + public/js/runtime/shell/shell-disclosure.js + public/js/interface/composition.js + public/js/interface/cauldron/chrome.js + _partials/site-footer.html + public/css/shell/chrome.css + public/css/handles/operators.css + public/css/systems/surfaces/tuning-discoverability.css
   concept spells cauldron breadcrumbs embedded_settings as hypermedia capabilities
   data-spw-hypermedia-extension = "trail | routes | regions | deep-link | state | output | resume | presentation | layout | gesture | state-fragment"
   data-spw-operator-* = "left-role right-role flow brace-bias geometry overload charge-role"
@@ -1228,7 +1228,7 @@ frame #operator_geometry_mantlepiece_contract
   role contract
   operation align
   fixity tending
-  surface .spw/conventions/operator-semantics.spw + public/js/kernel/shared.js + public/js/runtime/spells.js + public/js/runtime/experiential.js + public/js/interface/composition.js + public/css/handles/operators.css + public/css/shell/chrome.css
+  surface .spw/conventions/operator-semantics.spw + public/js/kernel/shared.js + public/js/runtime/memory/spells.js + public/js/runtime/experiential/experiential.js + public/js/interface/composition.js + public/css/handles/operators.css + public/css/shell/chrome.css
   concept operator left-right argument geometry + brace objective/subjective flow + semantic charge + ordinality
   usage = "OPERATOR_GEOMETRY names leftRole/rightRole/flow/braceBias/geometry/overload/chargeRole. Spell chips project these as data-spw-operator-*; breadcrumbs and cauldron fragments carry data-spw-deep-link so a charged object can be returned to by route/hash."
   rule = "Components may feel ornamental only when the ornament is a readable mantlepiece for semantics: a stable ledge for charge, order, argument direction, or a return path. If a chip claims ordinal or semantic charge, it must expose a data attribute or .spw note that names the charge."
@@ -1267,7 +1267,7 @@ frame #image_provenance
   role extension
   operation contract
   fixity tending
-  surface public/js/runtime/image-provenance.js + public/js/generated/image-provenance.js + public/css/systems/image-utilization.css + site-settings (imageProvenance) + settings/index.html
+  surface public/js/runtime/expression/image-provenance.js + public/js/generated/image-provenance.js + public/css/systems/image-utilization.css + site-settings (imageProvenance) + settings/index.html
   concept every picture says where it came from; the tone of acknowledgement is the reader's to set
   root_attributes = #[
     `data-spw-image-provenance`
@@ -1280,7 +1280,7 @@ frame #image_provenance
 
 frame #utility_menu_layout
   role extension
-  surface public/css/shell/chrome.css + public/js/runtime/shell-disclosure.js + header HTML
+  surface public/css/shell/chrome.css + public/js/runtime/shell/shell-disclosure.js + header HTML
   concept improve utility menu layout for ergonomics, learnability, cluster grouping (sigil/arg as cognitive lines)
   data-spw-utility-cluster, data-spw-shell-action, data-spw-locality/component-locality on clusters
   usage = "Flex/grid tweaks for baseline align, gaps for targeting, compact mode, resonance with cognitive planes (2/3 clusters). Configurable via physics-reason / enhancement for feedback density in controls."
@@ -1380,7 +1380,7 @@ frame #cauldron_spell_token_cascade_card_region_enhance
 
 frame #subvocal_attentional_resonance_refinements
   role extension
-  surface public/js/runtime/attention/section-handle.js (SUBVOCAL_REHEARSAL_ATTR, CAULDRON_RESONANCE_ATTR, hasCauldronResonance check in updateSectionHandleState + handle-local bus nudge on cauldron:ingredient-inspected), public/js/runtime/attention-architecture.js (direct-import compatibility facade), public/js/interface/composition.js (set data-spw-attention=rehearsal on jump targets + cleanup), spells/composition ties
+  surface public/js/runtime/attention/section-handle.js (SUBVOCAL_REHEARSAL_ATTR, CAULDRON_RESONANCE_ATTR, hasCauldronResonance check in updateSectionHandleState + handle-local bus nudge on cauldron:ingredient-inspected), public/js/runtime/attention/attention-architecture.js (direct-import compatibility facade), public/js/interface/composition.js (set data-spw-attention=rehearsal on jump targets + cleanup), spells/composition ties
   concept subvocalization (inner-speech rehearsal, speech-bubble metaphysics as anticipatory linguistic act) + attentional architecture refinements (section handle locomotion, resonance probe operator echo) now explicitly resonate with spells and cauldron (priming, jump+highlight hook, gesture/discharge on lists/sections, visibility modes, bidirectional discovery)
   data-spw-subvocal-rehearsal, data-spw-cauldron-resonance, data-spw-attention=rehearsal on targets, integration with enhancement-level for cue richness, data-spw-cauldron-candidate-visibility
   usage = "When cauldron hook jumps or visibility makes candidates prominent, the section handle and active regions mark rehearsal state so locomotion and focus feel like 'speaking back' the collected operators. RPG l'n'd'r driver + spw topic copy surface this as learnable metaphysics. Supports venue service (speech-bubble orders as readable acts)."
@@ -1409,7 +1409,7 @@ frame #ephemeral_credits_floating_chrome
 
 frame #learnability_reward_credits_spell_cauldron_state
   role extension
-  surface public/js/interface/composition.js (rewardSpellCauldronAction helper + calls on hook-jump, mix, plant, nourish, prune, re-gather; dispatches 'spw:discovery-reward' with presentation:credits), public/js/runtime/spells.js (dispatch on cast), public/js/interface/discovery-notices.js (support presentation=credits in show/root/create, handle reward, expose showApplicationCredit, window attach), public/css/shell/chrome.css (phase/primed state reflection on footer cauldron + ingredients; compact .cauldron-instruction-link in footer status), _partials/site-footer.html (compact link to palettes hooks instructions in status for discoverability)
+  surface public/js/interface/composition.js (rewardSpellCauldronAction helper + calls on hook-jump, mix, plant, nourish, prune, re-gather; dispatches 'spw:discovery-reward' with presentation:credits), public/js/runtime/memory/spells.js (dispatch on cast), public/js/interface/discovery-notices.js (support presentation=credits in show/root/create, handle reward, expose showApplicationCredit, window attach), public/css/shell/chrome.css (phase/primed state reflection on footer cauldron + ingredients; compact .cauldron-instruction-link in footer status), _partials/site-footer.html (compact link to palettes hooks instructions in status for discoverability)
   concept learnability/reward improvements with similar architecture (the credits/ephemeral floating chrome + timed "film credits" roll for application feedback): on spell/cauldron actions, surface transient credits that teach the concepts (hook as bidirectional state traversal, mix as emergence, plant as persistence, nourish/prune as tending) while reflecting live state (count, phase, primed, gesture). Enhances spell/cauldron state UX by making changes (jump, collect, cast) produce visible, narratable, rewarding ephemeral chrome instead of silent footer update. Footer itself improved for discoverability (compact instruction link) and state reflection (phase visuals, primed glow on chips). Links to instructions (palettes hooks section with contract/demo) are compact and relevant.
   usage = "Hold living term → cauldron collect + reward credit appears (teaches prime + state). Inspect ingredient in footer → jump + credit 'hook: follow the trail' with state summary. Mix/plant → credits reward the emergence/gardening. Footer cauldron shows phase glow + compact 'hooks & learnability' link that survives live status updates. All use the credits layer for consistent ephemeral architecture."
   note "Addresses 'learnability/reward improvements with similar architecture, enhance spell/cauldron state UX' + the follow-up 'link to instructions where relevant, compact; improve footer discoverability, state reflection'. Builds directly on the credits added for module/settings application. Surgical, reuses reward event + floating contract."
@@ -1424,14 +1424,14 @@ frame #perspective_posture_salience_feedback
 
 frame #shell_instrument_navigation_rail
   role contract
-  surface public/js/runtime/shell-disclosure.js (click-only canonical menu activation, pointer contact as state, utility row data-spw-role=state-rail + rail[utility]{read.tune.inspect}, row state datasets), public/css/shell/chrome.css (compact tune rail, snap-aligned clusters, active group feedback, toggle nav scroll containment, tighter route cards, footer route index columns), index/home route CSS (lens row alignment)
+  surface public/js/runtime/shell/shell-disclosure.js (click-only canonical menu activation, pointer contact as state, utility row data-spw-role=state-rail + rail[utility]{read.tune.inspect}, row state datasets), public/css/shell/chrome.css (compact tune rail, snap-aligned clusters, active group feedback, toggle nav scroll containment, tighter route cards, footer route index columns), index/home route CSS (lens row alignment)
   concept shell chrome should feel like a navigable machine or instrument: stable rails, selected-state marks, compact grouped controls, clear route projection, smooth contact feedback, and footer as an archival route index rather than a second noisy header.
   usage = "Click toggles menu; pointer events describe contact only. Utility rail shows a quiet tune label, grouped controls, active state underline, and scroll snap. Toggle nav has its own scroll lane and compact route cards. Footer links scan as columns."
   note "Responds to utility row attractiveness, smoother interactions as navigability, clear feedback, and the preference for a machine/instrument feel."
 
 frame #header_action_disclosure_contract
   role contract
-  surface scripts/template.mjs + public/js/runtime/shell-disclosure.js + public/css/shell/chrome.css + .agents/plans/navigation-header-disclosure/PLAN.md
+  surface scripts/template.mjs + public/js/runtime/shell/shell-disclosure.js + public/css/shell/chrome.css + .agents/plans/navigation-header-disclosure/PLAN.md
   concept reduce header overload by separating primary routing, primary creative action, posture state, and secondary tuning controls.
   data-spw-feature = "shell-primary-actions | shell-tune-disclosure"
   data-spw-shell-action = "open-media-cauldron | tune-attention-posture | secondary display actions"

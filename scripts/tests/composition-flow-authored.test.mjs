@@ -14,7 +14,7 @@ import assert from 'node:assert/strict';
 import {
   annotateCompositionBox,
   snapshotCompositionBox,
-} from '../../public/js/runtime/composition-box-model.js';
+} from '../../public/js/runtime/regions/composition-box-model.js';
 
 const camel = (name) => name
   .replace(/^data-/, '')

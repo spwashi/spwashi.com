@@ -19,12 +19,12 @@ import {
   normalizeRouteHref,
   parseRouteList,
 } from '/public/js/kernel/route-utils.js';
-import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
+import { describeCognitiveState } from '/public/js/runtime/memory/cognitive-state.js';
 import {
   closeRegionMenu,
   isRegionMenuOpen,
   openRegionMenuForElement,
-} from '/public/js/runtime/region-menu.js';
+} from '/public/js/runtime/regions/region-menu.js';
 import { isReadingQuietChrome } from '/public/js/runtime/orchestration/policy.js';
 import { collapseText as stripWhitespace } from '/public/js/kernel/text-normalization.js';
 

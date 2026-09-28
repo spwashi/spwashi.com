@@ -6,7 +6,7 @@ Keep interaction state visually responsive without letting runtime discovery cas
 
 ## Scope
 
-- `public/js/runtime/brace-gestures.js`
+- `public/js/runtime/interaction/brace-gestures.js`
   - Treat gesture/charge/pin attributes as transient visual state.
   - Treat `data-spw-resolved-*` attributes as optional inspection hints.
   - Avoid rewriting `data-spw-context`, `data-spw-wonder`, or `data-spw-operator` except for explicit user actions or future explicit opt-in.

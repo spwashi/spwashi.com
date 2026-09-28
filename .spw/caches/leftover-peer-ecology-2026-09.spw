@@ -14,11 +14,11 @@
 @biome: ~"../conventions/component-biome.spw"
 @packing: ~"../conventions/component-packing.spw"
 @gravity: ~"../conventions/spatial-gravity.spw"
-@fit: ~"../../public/js/runtime/fit-report.js"
+@fit: ~"../../public/js/runtime/diagnostics/fit-report.js"
 @observe: ~"../../public/js/kernel/dom-contracts.js"
 @salience: ~"../../public/js/interface/contextual-ui.js"
 @lifecycle: ~"../../public/js/site.js"
-@profiler: ~"../../public/js/runtime/region-profiler.js"
+@profiler: ~"../../public/js/runtime/regions/region-profiler.js"
 
 operation = "prime"
 fixity = "experimental"

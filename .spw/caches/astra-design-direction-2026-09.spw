@@ -26,7 +26,7 @@
 @home_css: ~"../../public/css/routes/surfaces/home.css"
 @about_css: ~"../../public/css/routes/surfaces/about.css"
 @contextual_ui: ~"../../public/js/interface/contextual-ui.js"
-@shell_disclosure: ~"../../public/js/runtime/shell-disclosure.js"
+@shell_disclosure: ~"../../public/js/runtime/shell/shell-disclosure.js"
 @site_settings_engine: ~"../../public/js/kernel/site-settings-engine.js"
 
 operation = "prime"

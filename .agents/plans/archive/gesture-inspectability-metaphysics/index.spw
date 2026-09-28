@@ -37,10 +37,10 @@ intent: .{
   `turn`,
  ][reg=set]
  surfaces = #[
-  `js/runtime/brace-gestures.js`,
-  `js/runtime/attention-architecture.js`,
-  `js/runtime/spells.js`,
-  `js/runtime/experiential.js`,
+  `js/runtime/interaction/brace-gestures.js`,
+  `js/runtime/attention/attention-architecture.js`,
+  `js/runtime/memory/spells.js`,
+  `js/runtime/experiential/experiential.js`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -51,10 +51,10 @@ intent: .{
 @wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
-@brace_gestures: ~"../../../../public/js/runtime/brace-gestures.js"
-@attention_architecture: ~"../../../../public/js/runtime/attention-architecture.js"
-@spells: ~"../../../../public/js/runtime/spells.js"
-@experiential: ~"../../../../public/js/runtime/experiential.js"
+@brace_gestures: ~"../../../../public/js/runtime/interaction/brace-gestures.js"
+@attention_architecture: ~"../../../../public/js/runtime/attention/attention-architecture.js"
+@spells: ~"../../../../public/js/runtime/memory/spells.js"
+@experiential: ~"../../../../public/js/runtime/experiential/experiential.js"
 @image_metaphysics: ~"../../../../public/js/media/image-metaphysics.js"
 @discovery_notices: ~"../../../../public/js/interface/discovery-notices.js"
 @site_semantics: ~"../../../../.spw/conventions/site-semantics.spw"
@@ -93,9 +93,9 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `Turn the site’s current interaction grammar into a coherent, browser-tested system instead of a set of adjacent local passes. The public result should be: - brace gestures that feel deliberate on touch, pointer, and keyboard - inspect surfaces that explain what the runtime believes is happening - metaphysics layers that stay legible as interaction grammar, not decorative lore - a validation loop that exercises real routes and real state transitions in the browser before further semantic expansion Taste note: inspectable wonder with operational discipline.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../../public/js/runtime/brace-gestures.js"
+ impl_ref = ~"../../../../public/js/runtime/interaction/brace-gestures.js"
  probe_ref = `git diff --check`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/brace-gestures.js unchanged or untested.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/interaction/brace-gestures.js unchanged or untested.`
  status = "superseded"
 }[reg=facet]
 

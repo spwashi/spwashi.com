@@ -5,7 +5,7 @@ Operation: align. Fixity: stable. Focus: component layout. Element: air.
 Readers should see the selected panel and authored card layout consistently.
 Keep existing attributes, routes, dependencies, and CSS layers.
 
-- `public/js/runtime/variant-selection.js`: reject unavailable modes before
+- `public/js/runtime/regions/variant-selection.js`: reject unavailable modes before
   mutations; mark the actual activated panel even when semantic names repeat.
 - `public/css/components/cards.css`: authored variants outrank inferred text,
   climate, and tone; compact/rich spacing consumes shared component tokens;

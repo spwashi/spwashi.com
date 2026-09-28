@@ -15,14 +15,14 @@
 @interaction_microstates: ~"../conventions/interaction-microstates.spw"
 @region_ecology: ~"../conventions/region-component-ecology.spw"
 @folding_organelle: ~"../conventions/folding-chrome-organelle.spw"
-@load_trace: ~"../../public/js/runtime/load-trace.js"
-@familiarity_gate: ~"../../public/js/runtime/familiarity-gate.js"
+@load_trace: ~"../../public/js/runtime/arrival/load-trace.js"
+@familiarity_gate: ~"../../public/js/runtime/memory/familiarity-gate.js"
 @module_loader: ~"../../public/js/runtime/orchestration/loader.js"
 @arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
 @page_reasons: ~"../../scripts/page-reasons.mjs"
 @wonder_script: ~"../../scripts/wonder.mjs"
-@arrival_shells: ~"../../public/js/runtime/arrival-shells.js"
+@arrival_shells: ~"../../public/js/runtime/arrival/arrival-shells.js"
 
 operation = "cache"
 fixity = "tending"
@@ -46,9 +46,9 @@ fixity = "tending"
 }
 
 ^"landed_this_pass"{
-  familiarity_axis = "runtime/familiarity-gate.js. The ladder (fresh|familiar|practiced|fluent|habitual) already existed in cognitive-state.js and visited surfaces were already persisted; neither was ever spent on scheduling. Now consulted inside getEffectiveMountWhen."
+  familiarity_axis = "runtime/memory/familiarity-gate.js. The ladder (fresh|familiar|practiced|fluent|habitual) already existed in cognitive-state.js and visited surfaces were already persisted; neither was ever spent on scheduling. Now consulted inside getEffectiveMountWhen."
   familiarity_rule = "Defer-only. May push an expert surface off a newcomer's first paint; may never pull work forward into it. IDLE is the floor, so nothing is withheld and no content sits behind a loyalty wall."
-  load_trace = "runtime/load-trace.js. Joins spw:module-mounted with layout-shift attribution; stepTo() winds back via the loader's existing mountModule/unmountModule. Recording is ambient and trivial; highlight/step are opt-in."
+  load_trace = "runtime/arrival/load-trace.js. Joins spw:module-mounted with layout-shift attribution; stepTo() winds back via the loader's existing mountModule/unmountModule. Recording is ambient and trivial; highlight/step are opt-in."
   shell_chrome_fix = "REGION_ENHANCER_SELECTOR excludes shell chrome. region-enhancer::shell-0 was restyling the site header at ~8.4s — the measured cause of 'the navigation changes as the page loads'. @region_ecology already forbade it (chrome_field is not pack-local)."
 }
 
@@ -78,7 +78,7 @@ fixity = "tending"
   model: "Arrival perceptibility as electrostatics — shells (liminality bands), walls (braces / region purposes), dielectric (image-bearing seats), potential across a wall, discharge grounded into encounter memory. Promoted to @arrival_electrostatics."
   landed: #[
     `scripts/page-reasons.mjs + npm run reasons — per-route charge, shells, walls, dielectric; splits phantom claims into unbacked vocabulary vs unhosted anatomy`,
-    `public/js/runtime/arrival-shells.js — the perceptibility axis; refuses to discharge where no wall exists, so 124 flat routes stay silent by physics rather than by veto`,
+    `public/js/runtime/arrival/arrival-shells.js — the perceptibility axis; refuses to discharge where no wall exists, so 124 flat routes stay silent by physics rather than by veto`,
     `public/css/systems/arrival-electrostatics.css — the discharge drawn on the wall, not the content; layout-inert, suppressed under reduced-motion and capture mode`,
     `.spw/conventions/arrival-electrostatics.spw — the model, reviewed against @wonder_doctrine's own five tests`
   ][reg=set]

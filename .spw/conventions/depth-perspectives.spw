@@ -17,7 +17,7 @@
 @copy_localization: ~"./copy-localization.spw"
 @attribute_governance: ~"./data-spw-attribute-governance.spw"
 @copy_lens_css: ~"../../public/css/systems/semantic-copy-lens.css"
-@familiarity_gate: ~"../../public/js/runtime/familiarity-gate.js"
+@familiarity_gate: ~"../../public/js/runtime/memory/familiarity-gate.js"
 @precipitates: ~"../_workbench/.spw/runtime/precipitates.spw"
 
 operation = "prime"

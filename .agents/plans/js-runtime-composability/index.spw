@@ -38,7 +38,7 @@ intent: .{
  ][reg=set]
  surfaces = #[
   `js/site.js`,
-  `js/runtime/page-state.js`,
+  `js/runtime/page/page-state.js`,
   `js/README.md`,
   `scripts/ts/runtime-contracts.mts`,
  ][reg=set]
@@ -51,7 +51,7 @@ intent: .{
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @site: ~"../../../public/js/site.js"
-@page_state: ~"../../../public/js/runtime/page-state.js"
+@page_state: ~"../../../public/js/runtime/page/page-state.js"
 @readme: ~"../../../public/js/README.md"
 @runtime_contracts: ~"../../../scripts/ts/runtime-contracts.mts"
 @check_site: ~"../../../scripts/ts/check-site.mts"
@@ -95,7 +95,7 @@ scope: .{
 
 validation: #[
  `node --check public/js/site.js`,
- `node --check public/js/runtime/page-state.js`,
+ `node --check public/js/runtime/page/page-state.js`,
  `npm run check:runtime`,
  `git diff --check`,
  `npm run check`,

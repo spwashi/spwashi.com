@@ -209,7 +209,7 @@ function shouldIgnoreWatchPath(absolutePath: string): boolean {
   if (shouldIgnoreValidationPath(relativePath)) return true;
   // Never rebuild from watching generated outputs (feedback loop).
   if (relativePath.startsWith('public/css/bundles/')) return true;
-  if (relativePath === 'public/js/runtime/behavior-scopes.js') return true;
+  if (relativePath === 'public/js/runtime/orchestration/behavior-scopes.js') return true;
   if (relativePath.endsWith('.css.map')) return true;
   return false;
 }

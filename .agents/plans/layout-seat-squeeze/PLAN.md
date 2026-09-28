@@ -24,7 +24,7 @@ Flagship pages sit in named seats (hook, hub, cluster, path, read, wide). Cards 
 
 ## Region kin (0–4D)
 
-`public/js/runtime/region-kin.js` classifies similar / contrast / resonate from seat, operator, wonder, and expression subject. Moves are `~` potential, `&` subject, `#` vibration — not `?`. Tap travels, hold previews, swipe cycles. Labels expand by width. `npm run manifest:expressions` remains the workbench parse step.
+`public/js/runtime/regions/region-kin.js` classifies similar / contrast / resonate from seat, operator, wonder, and expression subject. Moves are `~` potential, `&` subject, `#` vibration — not `?`. Tap travels, hold previews, swipe cycles. Labels expand by width. `npm run manifest:expressions` remains the workbench parse step.
 
 ## Validation
 

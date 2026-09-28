@@ -55,12 +55,12 @@ Examples:
 
 | Module | Main write surface | Canonical writes | Derived durable writes | Transient writes | Persistence |
 |---|---|---|---|---|---|
-| `public/js/runtime/page-state.js` | `<html>` | `spwPageState`, `spwPagePresence`, `spwPageArrival`, `spwPageArrivalStep`, `spwPageTransition`, `spwPageTransitionPhase`, `spwAttentionContext` | none | arrival-step sequencing during settle | none |
-| `public/js/runtime/attention-architecture.js` | handle shell, sections, `<html>`, reading beats | `data-spw-page-section-*`, `data-spw-section-state`, `data-spw-reading-groove*`, `data-spw-reading-beat*`, `data-spw-scroll-cadence` | handle labels, availability, section index metadata | `data-spw-handle-state`, `data-spw-handle-phase`, `data-spw-pinch-scaling`, `data-spw-pinch-text-scale`, `data-spw-resonance-probe` | none |
-| `public/js/runtime/shell-disclosure.js` | header, nav, toggle, utility row, `<html>` | `spwMenuMode`, `spwMenuPhase`, `spwMenuPressure`, `spwMenuTopology`, `spwMenuIntent`, `spwMenuClarity`, `spwMenuViewport`, `spwMenuPointer`, `spwMenuReversible`, `spwMenuReturnPaths` | `spwMenuChanged`, `spwMenuNavFit`, `spwMenuRouteCount`, `spwMenuOverflowCount`, utility affordance datasets like `spwFontScale`, `spwColorMode`, `spwPathAvailable`, `spwUtilityMode` | settle / approach / contact phase transitions | none |
-| `public/js/runtime/brace-gestures.js` | local hosts, semantic targets, field root | resolved semantic writes such as `spwResolvedOperator`, `spwResolvedWonder`, `spwResolvedContext`, `spwResolvedAffordance`; optional semantic expansion state like `spwSemanticExpanded`; pinning state `spwPinned`, `spwLatched` | `spwHandleKind`, `spwSemanticFocusRoot`, `spwSemanticFocusKey`, `spwSemanticMatch`, `spwSemanticFocused` | `spwGesture`, `spwCharge`, `spwArmed`, `spwLastGesture`, `spwFieldGesture`, field CSS vars | `localStorage('spw-pins')` |
-| `public/js/runtime/experiential.js` | header trace, breadcrumb dock, sample dock, `<html>` | `spwExperientialSurface`, sample state fields, breadcrumb state fields | contextual memo state, route/operator summaries | sample hover / hold / swipe gesture state, temporary memos | `localStorage('spw-pins')` reuse |
-| `public/js/runtime/spells.js` | spell dock / board | none clearly canonical; mostly summaries of other systems | `spwSpellFamiliarity`, `spwSpellLiminality`, `spwSpellCognitive`, `spwSpellMeaningMode`, `spwViewport` | dock viewport compactness and replay affordance state | `localStorage('spw-checkpoint:*')` via checkpoints |
+| `public/js/runtime/page/page-state.js` | `<html>` | `spwPageState`, `spwPagePresence`, `spwPageArrival`, `spwPageArrivalStep`, `spwPageTransition`, `spwPageTransitionPhase`, `spwAttentionContext` | none | arrival-step sequencing during settle | none |
+| `public/js/runtime/attention/attention-architecture.js` | handle shell, sections, `<html>`, reading beats | `data-spw-page-section-*`, `data-spw-section-state`, `data-spw-reading-groove*`, `data-spw-reading-beat*`, `data-spw-scroll-cadence` | handle labels, availability, section index metadata | `data-spw-handle-state`, `data-spw-handle-phase`, `data-spw-pinch-scaling`, `data-spw-pinch-text-scale`, `data-spw-resonance-probe` | none |
+| `public/js/runtime/shell/shell-disclosure.js` | header, nav, toggle, utility row, `<html>` | `spwMenuMode`, `spwMenuPhase`, `spwMenuPressure`, `spwMenuTopology`, `spwMenuIntent`, `spwMenuClarity`, `spwMenuViewport`, `spwMenuPointer`, `spwMenuReversible`, `spwMenuReturnPaths` | `spwMenuChanged`, `spwMenuNavFit`, `spwMenuRouteCount`, `spwMenuOverflowCount`, utility affordance datasets like `spwFontScale`, `spwColorMode`, `spwPathAvailable`, `spwUtilityMode` | settle / approach / contact phase transitions | none |
+| `public/js/runtime/interaction/brace-gestures.js` | local hosts, semantic targets, field root | resolved semantic writes such as `spwResolvedOperator`, `spwResolvedWonder`, `spwResolvedContext`, `spwResolvedAffordance`; optional semantic expansion state like `spwSemanticExpanded`; pinning state `spwPinned`, `spwLatched` | `spwHandleKind`, `spwSemanticFocusRoot`, `spwSemanticFocusKey`, `spwSemanticMatch`, `spwSemanticFocused` | `spwGesture`, `spwCharge`, `spwArmed`, `spwLastGesture`, `spwFieldGesture`, field CSS vars | `localStorage('spw-pins')` |
+| `public/js/runtime/experiential/experiential.js` | header trace, breadcrumb dock, sample dock, `<html>` | `spwExperientialSurface`, sample state fields, breadcrumb state fields | contextual memo state, route/operator summaries | sample hover / hold / swipe gesture state, temporary memos | `localStorage('spw-pins')` reuse |
+| `public/js/runtime/memory/spells.js` | spell dock / board | none clearly canonical; mostly summaries of other systems | `spwSpellFamiliarity`, `spwSpellLiminality`, `spwSpellCognitive`, `spwSpellMeaningMode`, `spwViewport` | dock viewport compactness and replay affordance state | `localStorage('spw-checkpoint:*')` via checkpoints |
 | `public/js/media/image-metaphysics.js` | image hosts and helper controls | host semantic identity like `spwImageSurface`, `spwImageKey`, `spwMedium`, `spwRealization`, `spwSubstrate`, `spwPhrase`, `spwImageProminence`, `spwImageResonance`, `spwImageEffect`, `spwAccentPalette`, `spwVisited` | `spwImageState`, `spwContrastState`, `spwImageLayout`, `spwImageMemoryState` mirrored onto helper strip/button/memory | `spwImageInput`, `spwImagePreview`, `spwControlsOpen`, `spwHoldState`, `spwImageGesture`, `spwImagePrimed`, `spwVisitBurst` | `localStorage('spw-visited-image-surfaces')` |
 | `public/js/interface/composition.js` | `<html>` plus cauldron surface | `spwCauldronCount` | none | none | `localStorage('spw-cauldron')` |
 | `public/js/interface/discovery-notices.js` | notice elements, stack root, modal root | element-local notice semantics: cadence, presentation, copy unit, locale, promo theme/kind/cta-style/handles | none | modal / toast presence and dismissal timing | `localStorage('spw-discovery-notice-dismissals')` |
@@ -153,24 +153,24 @@ Recommendation:
 
 Only these modules should write page-level or section-level truth by default:
 
-- `public/js/runtime/page-state.js`
-- `public/js/runtime/attention-architecture.js`
-- `public/js/runtime/shell-disclosure.js`
+- `public/js/runtime/page/page-state.js`
+- `public/js/runtime/attention/attention-architecture.js`
+- `public/js/runtime/shell/shell-disclosure.js`
 - selected semantic identity writes in `public/js/media/image-metaphysics.js`
 
 ### Tier 2: semantic adapters
 
 These may write resolved meaning onto local hosts, but should not redefine page truth:
 
-- `public/js/runtime/brace-gestures.js`
+- `public/js/runtime/interaction/brace-gestures.js`
 - `public/js/media/image-metaphysics.js`
 
 ### Tier 3: reflective inspect/narration systems
 
 These should mostly read and narrate:
 
-- `public/js/runtime/experiential.js`
-- `public/js/runtime/spells.js`
+- `public/js/runtime/experiential/experiential.js`
+- `public/js/runtime/memory/spells.js`
 - inspect surfaces under settings / console / badges
 
 ### Tier 4: ephemeral gesture systems

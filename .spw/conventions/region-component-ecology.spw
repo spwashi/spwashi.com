@@ -10,8 +10,8 @@
 #:layer #!pragmatics
 
 @css: ~"../../public/css/systems/region-seats.css"
-@profiler: ~"../../public/js/runtime/region-profiler.js"
-@rail: ~"../../public/js/runtime/page-region-rail.js"
+@profiler: ~"../../public/js/runtime/regions/region-profiler.js"
+@rail: ~"../../public/js/runtime/regions/page-region-rail.js"
 @selectors: ~"../../public/js/kernel/dom-contracts.js"
 @spatial_gravity: ~"./spatial-gravity.spw"
 @component_packing: ~"./component-packing.spw"
@@ -125,7 +125,7 @@ validation: #[
   `rg 'data-spw-region="(hook|hub|cluster|path|read|wide)"' --glob '*.html'`,
   `rg 'data-spw-region=' public/css/systems/region-seats.css`,
   `rg 'spw-region-resonance|page_layout_theory' public/css/systems/region-seats.css .spw/conventions/region-component-ecology.spw`,
-  `node --check public/js/runtime/region-profiler.js public/js/runtime/page-region-rail.js public/js/semantic/spw-block-association.js`,
+  `node --check public/js/runtime/regions/region-profiler.js public/js/runtime/regions/page-region-rail.js public/js/semantic/spw-block-association.js`,
   `rg 'REGION_ENHANCER_SELECTOR|shell-0' public/js .spw/caches/arrival-perceptibility-2026-08.spw`,
   `npm run audit:region-seats  # catches #region_vs_region_role drift: data-spw-region authored without .spw-frame`
 ][reg=set]

@@ -48,7 +48,7 @@ intent: .{
  ][reg=set]
  surfaces = #[
   `public/js/interface/cauldron/`,
-  `public/js/runtime/spells.js`,
+  `public/js/runtime/memory/spells.js`,
   `play/ spell routes`,
  ][reg=set]
  fixity_tier = `tending`
@@ -67,12 +67,12 @@ intent: .{
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @plan_literacy_precipitation_press: ~"../literacy-precipitation-press/index.spw"
-@spells: ~"../../../public/js/runtime/spells.js"
+@spells: ~"../../../public/js/runtime/memory/spells.js"
 @cauldron: ~"../../../public/js/interface/cauldron/"
 @contract: ~"../../../public/js/semantic/cauldron/contract.js"
-@observation_beats: ~"../../../public/js/runtime/observation-beats.js"
+@observation_beats: ~"../../../public/js/runtime/diagnostics/observation-beats.js"
 @shared: ~"../../../public/js/kernel/shared.js"
-@sigil_anatomy: ~"../../../public/js/runtime/sigil-anatomy.js"
+@sigil_anatomy: ~"../../../public/js/runtime/expression/sigil-anatomy.js"
 
 dispatch: .{
  plan = @plan
@@ -113,9 +113,9 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `A visitor (or Spwashi on camera) can *write* a spell, not merely accumulate one: select things on the page, drop them in the cauldron, compose them into a named spell, cast it to see the page change, reopen it later to edit. Spells graduate from navigation traces to small legible programs whose two primary verb families are select (element, concept, artifact) and style (bias, swap, remember, screenshot). The taste note is workshop, not ledger: the cauldron is a bench where things are made and remade, and the spellbook is a shelf you take things down from.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../public/js/runtime/spells.js"
+ impl_ref = ~"../../../public/js/runtime/memory/spells.js"
  probe_ref = `Attribute census before/after (26+9+4 -> ~8) with no orphaned CSS readers (rg per family).`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/spells.js unchanged or untested.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/memory/spells.js unchanged or untested.`
  status = "active"
 }[reg=facet]
 

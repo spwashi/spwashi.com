@@ -635,7 +635,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="value"], [data-spw-operator="stream"])) { --spw-lens-seat-color: var(--op-value-color, var(--op-stream-color, #208259)); }
 }
 
-/* Carried intent (runtime/lens-intent.js). Holding a seat carries its
+/* Carried intent (runtime/page/lens-intent.js). Holding a seat carries its
    operator across pages; every seat that shares it wears a ring in its own
    ink. The ring fills while the hold charges, lands with a small spring, and
    reads dashed where the intent is carried but not sat on this page: an

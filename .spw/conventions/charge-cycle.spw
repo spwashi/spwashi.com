@@ -12,7 +12,7 @@
 @attention_field: ~"./attention-field.spw"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
 @haptics_runtime: ~"../../public/js/interface/haptics.js"
-@charge_field_runtime: ~"../../public/js/runtime/charge-field.js"
+@charge_field_runtime: ~"../../public/js/runtime/physics/charge-field.js"
 
 ^"thesis"{
   claim: "Spw interaction has logical consequence when charge can be stored, inspected, transferred, or discharged with a named outcome."

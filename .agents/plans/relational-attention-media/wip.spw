@@ -9,8 +9,8 @@
  owner = `relational-attention-media`
  operation = "contract"
  bucket = "semantic_rails"
- validation = #[ `Run git diff --check.`, `Run node --check public/js/kernel/site-settings.js public/js/runtime/prepaint-state.js public/js/site.js public/js/modules/media/cauldron.js.`, `Use targeted rg checks for attentionSelfRelation, media-cauldron, worldBuildingMode, copy-proof-card, living-concepts, and contemplative-hearth.`, ][reg=set]
- hot_files = #[ `settings/index.html`, `public/js/kernel/site-settings.js`, `public/js/runtime/prepaint-state.js`, `public/js/modules/media/cauldron.js`, `play/index.html`, `public/css/routes/surfaces/home.css`, ][reg=set]
+ validation = #[ `Run git diff --check.`, `Run node --check public/js/kernel/site-settings.js public/js/runtime/arrival/prepaint-state.js public/js/site.js public/js/modules/media/cauldron.js.`, `Use targeted rg checks for attentionSelfRelation, media-cauldron, worldBuildingMode, copy-proof-card, living-concepts, and contemplative-hearth.`, ][reg=set]
+ hot_files = #[ `settings/index.html`, `public/js/kernel/site-settings.js`, `public/js/runtime/arrival/prepaint-state.js`, `public/js/modules/media/cauldron.js`, `play/index.html`, `public/css/routes/surfaces/home.css`, ][reg=set]
 }[reg=facet]
 # Relational Attention Media Cache
 

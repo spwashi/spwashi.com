@@ -17,7 +17,7 @@
 @decomposition: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
 @measured_frame: ~"../../public/js/kernel/measured-frame.js"
 @chrome_lane: ~"../../public/js/kernel/dom-contracts.js"
-@lens_writer: ~"../../public/js/runtime/lens-modes.js"
+@lens_writer: ~"../../public/js/runtime/page/lens-modes.js"
 @harness: ~"../../scripts/lib/chrome-headless-harness.mjs"
 
 operation = "measure"

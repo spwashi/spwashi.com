@@ -29,7 +29,7 @@ No changes to core tokens, build pipeline, or unrelated routes. No new dependenc
 ## Files Likely to Change (smallest honest surfaces first)
 **High confidence (core behavior):**
 - `public/js/interface/composition.js` — add capturedAt usage for pruning, phase computation on sync/render, new gardening action handlers, emit richer lifecycle detail on bus.
-- `public/js/runtime/spells.js` — parallel lifecycle metadata on entries/checkpoints, gardening helpers (prune by age or strength), expose for mirrors.
+- `public/js/runtime/memory/spells.js` — parallel lifecycle metadata on entries/checkpoints, gardening helpers (prune by age or strength), expose for mirrors.
 - `public/css/shell/chrome.css` + `public/css/handles/operators.css` + `public/css/ornament/ornament.css` — new or refined `[data-spw-cauldron-phase="..."]`, `[data-spw-spell-phase]`, strengthened :has() for cauldron/spell "active garden" states; clean up any duplicated grounded/collected rules.
 - `design/runtime/index.html` — add or expand a "Memory Garden Mirror" panel + inline cauldron/spell tuner (re-uses existing puppetry/console patterns).
 

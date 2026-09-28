@@ -11,7 +11,7 @@
 #:layer #!pragmatics
 
 @css: ~"../../public/css/systems/component-packing.css"
-@runtime: ~"../../public/js/runtime/composition-box-model.js"
+@runtime: ~"../../public/js/runtime/regions/composition-box-model.js"
 @spatial_gravity: ~"./spatial-gravity.spw"
 @region_ecology: ~"./region-component-ecology.spw"
 @composition_box_model: ~"./composition-box-model.spw"
@@ -163,7 +163,7 @@ validation: #[
   `rg -n 'max-inline-size' public/css/components/cards.css — every cap is on a carrier, not a bare descendant`,
   `rg -n 'var\(--spw-squeeze' public/css/systems/layout-squeeze.css — no declaration of --spw-squeeze may read --spw-squeeze`,
   `rg -n 'MEASURE_BANDS|EXTENT_RATIOS' public/js/runtime/ — no runtime module defines its own copy`,
-  `rg 'PACK_LAYOUT_BANDS|min-width: 26rem|min-width: 44rem|min-width: 52rem' public/js/runtime/composition-box-model.js public/css/systems/component-packing.css`,
-  `node --check public/js/runtime/composition-box-model.js`,
+  `rg 'PACK_LAYOUT_BANDS|min-width: 26rem|min-width: 44rem|min-width: 52rem' public/js/runtime/regions/composition-box-model.js public/css/systems/component-packing.css`,
+  `node --check public/js/runtime/regions/composition-box-model.js`,
   `Open /design/composition/ and drag the pack-card — layout must walk stack|split|feature without a viewport resize`
 ][reg=set]

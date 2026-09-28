@@ -33,17 +33,17 @@ import {
   SPW_MODULE_EXPORT,
   initSpwExperiential,
   syncExperientialSurface,
-} from '../../public/js/runtime/experiential.js';
+} from '../../public/js/runtime/experiential/experiential.js';
 
 import {
   SPW_REGION_MENU_CONTRACT,
   SPW_MODULE_EXPORT as REGION_MENU_EXPORT,
-} from '../../public/js/runtime/region-menu.js';
+} from '../../public/js/runtime/regions/region-menu.js';
 
 import {
   SPW_SCENE_INTERACTION_CONTRACT,
   SPW_MODULE_EXPORT as SCENE_INTERACTION_EXPORT,
-} from '../../public/js/runtime/scene-interaction.js';
+} from '../../public/js/runtime/interaction/scene-interaction.js';
 
 import {
   SPW_CONTEXTUAL_UI_CONTRACT,
@@ -61,7 +61,7 @@ import {
   SPW_MODULE_EXPORT as ATTENTION_ARCHITECTURE_EXPORT,
   describeAttentionArchitecture,
   initSpwAttentionArchitecture,
-} from '../../public/js/runtime/attention-architecture.js';
+} from '../../public/js/runtime/attention/attention-architecture.js';
 
 test('sample dock organ contract exposes frozen definition and public API', () => {
   assert.equal(SPW_SAMPLE_DOCK_CONTRACT.id, 'sample-dock');

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
-import { classifyImageSource } from '../../public/js/runtime/image-provenance.js';
+import { classifyImageSource } from '../../public/js/runtime/expression/image-provenance.js';
 import {
   PROVENANCE_MODULE,
   collectProvenanceRecords,

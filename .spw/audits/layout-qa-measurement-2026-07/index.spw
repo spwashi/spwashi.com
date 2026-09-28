@@ -9,10 +9,10 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
-@layout_qa: ~"../../../public/js/runtime/layout-qa.js"
-@composition: ~"../../../public/js/runtime/composition-box-model.js"
-@layout_shift: ~"../../../public/js/runtime/layout-shift-audit.js"
-@layout_assumptions: ~"../../../public/js/runtime/layout-assumptions.js"
+@layout_qa: ~"../../../public/js/runtime/diagnostics/layout-qa.js"
+@composition: ~"../../../public/js/runtime/regions/composition-box-model.js"
+@layout_shift: ~"../../../public/js/runtime/diagnostics/layout-shift-audit.js"
+@layout_assumptions: ~"../../../public/js/runtime/regions/layout-assumptions.js"
 @packing_css: ~"../../../public/css/systems/component-packing.css"
 @layout_css: ~"../../../public/css/shell/layout.css"
 @measurement_contract: ~"../../conventions/measurement-contract.spw"
@@ -31,7 +31,7 @@ audit_run: .{
 
 ^"thesis"{
   claim = `Measurement, packing, reflow, and page sizing already exist as separate modules/CSS. Agents and devs needed one callable report + recipes so layout tests do not require rediscovering four APIs and debug flags.`
-  landed = `public/js/runtime/layout-qa.js · __SPW_SITE__.layoutQa.* · spwCompose.qa.layout* · composition snapshots include packLayout/packFill · help topic "layout"`
+  landed = `public/js/runtime/diagnostics/layout-qa.js · __SPW_SITE__.layoutQa.* · spwCompose.qa.layout* · composition snapshots include packLayout/packFill · help topic "layout"`
 }[reg=facet]
 
 ^"surfaces"{
@@ -87,7 +87,7 @@ audit_run: .{
   composition = `snapshotCompositionBox now returns packLocal, packLayout, packFill for inspect/QA`
   layout_qa_module = `zero-cost until import; no catalog IMMEDIATE`
   console_help = `spwCompose.help("layout"); announce mentions layoutQa.summary`
-  debug_qa_posture = `public/js/runtime/debug-qa-posture.js — single parse of ?debug/?qa/?log; site.js gates + root datasets; observation-beats + layout-shift share it`
+  debug_qa_posture = `public/js/runtime/diagnostics/debug-qa-posture.js — single parse of ?debug/?qa/?log; site.js gates + root datasets; observation-beats + layout-shift share it`
   root_datasets = `html[data-spw-debug-qa-posture|debug-layout|debug-agent|qa|layout-qa-grade]`
   site_api = `__SPW_SITE__.debugQa.{posture,read,apply,presets,isLayout,isAgent}`
   compose_qa = `spwCompose.qa.{layout,layoutSummary,posture,applyPosture,enterLayoutMode,enterAgentMode,enterScreenshotMode}`
@@ -95,7 +95,7 @@ audit_run: .{
 }[reg=facet]
 
 ^"debug_qa_wiring"{
-  module = ~"../../../public/js/runtime/debug-qa-posture.js"
+  module = ~"../../../public/js/runtime/diagnostics/debug-qa-posture.js"
   consumers = #[
     `site.js shouldActivateLayoutDebugInstrumentation / hasDebugOrQAMode`,
     `module-loader debugOnly via hasDebugOrQAMode`,
@@ -121,8 +121,8 @@ audit_run: .{
 
 ^"validation"{
   commands = #[
-    `node --check public/js/runtime/layout-qa.js`,
-    `node --check public/js/runtime/composition-box-model.js`,
+    `node --check public/js/runtime/diagnostics/layout-qa.js`,
+    `node --check public/js/runtime/regions/composition-box-model.js`,
     `node --check public/js/site.js`,
     `node --check public/js/compose.js`,
     `node --check public/js/kernel/instrumentation.js`,

@@ -7,8 +7,8 @@
 #:layer #!pragmatics
 
 @module: ~"../../public/js/kernel/route-utils.js"
-@gesture_contract: ~"../../public/js/runtime/gesture-contract.js"
-@navigation_locomotion: ~"../../public/js/runtime/navigation-locomotion.js"
+@gesture_contract: ~"../../public/js/runtime/interaction/gesture-contract.js"
+@navigation_locomotion: ~"../../public/js/runtime/navigation/navigation-locomotion.js"
 @cognitive_navigation: ~"./cognitive-navigation.spw"
 @page_model: ~"../surfaces/page-model.spw"
 

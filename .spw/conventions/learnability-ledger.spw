@@ -8,8 +8,8 @@ operation: align
 claim: `Spw philosophy is not only copy — it is inspectable posture. The visitor's metacognitive stance (witness|composer|explorer|integrator|overflow) and process attention (breath|scan|trace|compose) should modulate which features resonate without hiding authored content.`
 
 contract: .{
-  module: "public/js/runtime/learnability-ledger.js",
-  hub: "public/js/runtime/dom-sync-hub.js",
+  module: "public/js/runtime/memory/learnability-ledger.js",
+  hub: "public/js/runtime/orchestration/dom-sync-hub.js",
   css: "public/css/systems/surfaces/learnability-ledger.css",
   companions: "gesture-anatomy, tuning-discovery, dom-sync-hub, enrichment.css perspective salience, attention-architecture",
   root_attrs: "data-spw-learnability-posture, data-spw-learnability-process, data-spw-learnability-cue, data-spw-learnability-ledger, data-spw-layout-contract, data-spw-learnability-tier",

@@ -38,7 +38,7 @@ slices: .{
 
   attention_resonance_field = .{
     description = `The diffusive attention model, wonder states, charge, collection, resonance probes, section handles, and field influence. The "hormonal" or acoustic space of the site.`
-    current_locations = `public/js/runtime/attention-architecture.js, public/js/runtime/wonder-memory.js, public/css/effects/wonder.css, public/css/handles/operators.css (much of the :has() field logic), .spw/conventions/attention-field.spw`
+    current_locations = `public/js/runtime/attention/attention-architecture.js, public/js/runtime/memory/wonder-memory.js, public/css/effects/wonder.css, public/css/handles/operators.css (much of the :has() field logic), .spw/conventions/attention-field.spw`
     natural_team = `Attention/perception researchers, field modelers, accessibility + wonder specialists`
   }
 
@@ -62,7 +62,7 @@ slices: .{
 
   brace_physics_gestures = .{
     description = `The embodied, physical interaction with structure: brace gestures, pivots, actions, experiential tap/hold/swipe, spells as replayable motifs.`
-    current_locations = `public/js/runtime/brace-*.js, public/js/runtime/experiential.js, public/js/runtime/spells.js, public/js/interface/haptics.js`
+    current_locations = `public/js/runtime/brace-*.js, public/js/runtime/experiential/experiential.js, public/js/runtime/memory/spells.js, public/js/interface/haptics.js`
     natural_team = `Gesture researchers, haptics people, performance artists`
   }
 

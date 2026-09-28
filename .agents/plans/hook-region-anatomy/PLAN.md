@@ -132,7 +132,7 @@ Copy constraint: first-fold sentences must pass a no-context clicker test (ident
 
 - `attention-cue-gestures/`, `chrome-navigation-wonder/`, `gesture-inspectability-metaphysics/`, `gesture-state-refinement/`, `reader-builder-entrances/`, `promo-wonder-cycle/`, `wonder-memory/`
 - `.spw/surfaces/page-model.spw`, `.spw/conventions/site-semantics.spw`, `.spw/conventions/attention-field.spw`, `.spw/conventions/living-medium-copy.spw`
-- `public/js/runtime/attention-architecture.js`, `page-hooks.js`, `page-metadata.js`
+- `public/js/runtime/attention/attention-architecture.js`, `page-hooks.js`, `page-metadata.js`
 - Existing homepage kernel-entry hero and spw-playable-hook patterns
 
 This plan honors the "patch the smallest honest surface" rule while giving the requested hook a durable, inspectable home in the page anatomy and the Spw semantic field.
