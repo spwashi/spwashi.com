@@ -14009,19 +14009,19 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
     background 160ms var(--shell-ease, ease);
 }
 
-.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="inspect"] button:is(:hover, :focus-visible)) {
+.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="inspect"] :is(button, a[role="menuitem"]):is(:hover, :focus-visible)) {
   --spw-region-menu-accent: var(--op-probe-color, var(--teal, #008080));
 }
 
-.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="collect"] button:is(:hover, :focus-visible)) {
+.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="collect"] :is(button, a[role="menuitem"]):is(:hover, :focus-visible)) {
   --spw-region-menu-accent: var(--op-action-color, var(--teal, #008080));
 }
 
-.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="mark"] button:is(:hover, :focus-visible)) {
+.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="mark"] :is(button, a[role="menuitem"]):is(:hover, :focus-visible)) {
   --spw-region-menu-accent: var(--op-object-color, var(--teal, #008080));
 }
 
-.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="reset"] button:is(:hover, :focus-visible)) {
+.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="reset"] :is(button, a[role="menuitem"]):is(:hover, :focus-visible)) {
   --spw-region-menu-accent: var(--ink-muted, #66706b);
 }
 
@@ -14138,7 +14138,8 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   overflow-wrap: anywhere;
 }
 
-.spw-region-menu button {
+/* A menu item is a button, or a link when the item is an address (Read in the parser). */
+.spw-region-menu :is(button, a[role="menuitem"]) {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14153,17 +14154,18 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   font: 700 0.75rem/1.2 var(--grammar-mono-font);
   letter-spacing: 0;
   text-align: start;
+  text-decoration: none;
   overflow-wrap: anywhere;
 }
 
-.spw-region-menu button:is(:hover, :focus-visible) {
+.spw-region-menu :is(button, a[role="menuitem"]):is(:hover, :focus-visible) {
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 44%, var(--card-border, var(--line, rgba(14, 18, 20, 0.14))));
   background: color-mix(in srgb, var(--surface-strong, #fff) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
   outline: none;
   transform: translateY(-0.03rem);
 }
 
-.spw-region-menu button:active {
+.spw-region-menu :is(button, a[role="menuitem"]):active {
   background: color-mix(in srgb, var(--surface-strong, #fff) 68%, var(--active-op-color, var(--teal, #008080)) 32%);
   transform: translateY(0);
 }

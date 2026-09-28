@@ -441,6 +441,9 @@ function openMenu(target) {
   menu.replaceChildren(buildMenuContent(target, semantic, frame));
   positionMenu(menu, target);
   writeDatasetValue(menu, 'spwState', 'open');
+  // Popover-tier floating chrome stays hidden until .is-visible (floating-chrome.css);
+  // without it the open menu cannot be seen or take focus.
+  menu.classList.add('is-visible');
   writeDatasetValue(target, 'spwRegionMenuTarget', 'true');
   writeProjectionTier(document.documentElement, PROJECTION_TIERS.TRANSIENT, { spwRegionMenu: 'open' });
 
@@ -608,8 +611,8 @@ function buildMenuContent(target, semantic, frame) {
       [
         ['capture', 'Save move', () => captureSpell(target, semantic)],
         ['copy', 'Copy source', () => copySeed(target, semantic, frame)],
-        // Opens the literal parser with this region's Spw in its address, so the reading can be shared.
-        ['parse', 'Read in the parser', parseHref ? () => window.location.assign(parseHref) : null],
+        // A link, not a handler: it opens the parser with this region's Spw, and can be copied or opened elsewhere.
+        ['parse', 'Read in the parser', parseHref],
       ],
     ],
     [
@@ -638,15 +641,20 @@ function buildMenuContent(target, semantic, frame) {
     group.appendChild(groupLabel);
 
     actions.forEach(([action, label, handler]) => {
-      if (typeof handler !== 'function') return;
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.setAttribute('role', 'menuitem');
-      button.dataset.spwRegionAction = action;
-      button.dataset.spwInteractionLane = lane;
-      button.textContent = label;
-      button.addEventListener('click', handler);
-      group.appendChild(button);
+      if (handler == null) return;
+      // A string is an address: the item is a link a reader can also open elsewhere.
+      const item = document.createElement(typeof handler === 'string' ? 'a' : 'button');
+      if (typeof handler === 'string') {
+        item.href = handler;
+      } else {
+        item.type = 'button';
+        item.addEventListener('click', handler);
+      }
+      item.setAttribute('role', 'menuitem');
+      item.dataset.spwRegionAction = action;
+      item.dataset.spwInteractionLane = lane;
+      item.textContent = label;
+      group.appendChild(item);
     });
 
     fragment.appendChild(group);
@@ -1048,6 +1056,7 @@ function closeMenu(options = {}) {
   const menu = document.getElementById(MENU_ID);
   if (menu) {
     writeDatasetValue(menu, 'spwState', 'closed');
+    menu.classList.remove('is-visible');
   }
   if (activeTarget) {
     writeDatasetValue(activeTarget, 'spwRegionMenuTarget', null);
@@ -1075,7 +1084,8 @@ function closeMenu(options = {}) {
 }
 
 function moveMenuFocus(menu, direction) {
-  const items = [...menu.querySelectorAll('button')];
+  // Links are menu items too (Read in the parser), so arrows reach them.
+  const items = [...menu.querySelectorAll('button, a[role="menuitem"]')];
   if (!items.length) return;
   const index = Math.max(0, items.indexOf(document.activeElement));
   const next = (index + direction + items.length) % items.length;
