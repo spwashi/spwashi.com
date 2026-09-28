@@ -9,6 +9,8 @@ const DEFAULT_SELECTOR = [
   '[data-spw-semantic-expression]',
   '[data-spw-topic]',
   '.spw-topic',
+  '[data-spw-living-term]',
+  '.spw-living-term',
 ].join(', ');
 
 const SOURCE_ATTRIBUTE = 'spwCrossrefSource';
@@ -171,25 +173,55 @@ function findPreferredToken(el, registry) {
 function installEventHandlers(registry) {
   const cleanups = [];
   let clearTimer = 0;
+  // Hover previews kin; an open note holds them. A finger has no hover: its
+  // pointerover lands on every touch, a scroll's too, and its pointerout
+  // follows at once, so touch lights kin only through a living term's note,
+  // which stays open while the reader scrolls to find them and lets go when
+  // it closes. While a note holds, hover does not move the light.
+  let held = false;
 
-  const handleEnter = (event) => {
-    const target = event.target?.closest?.(DEFAULT_SELECTOR);
-    if (!target || !registry.metadata.has(target)) return;
+  const resolveTarget = (el) => {
+    const target = el?.closest?.(DEFAULT_SELECTOR);
+    return target && registry.metadata.has(target) ? target : null;
+  };
+
+  const focusTarget = (target) => {
     window.clearTimeout(clearTimer);
     const token = findPreferredToken(target, registry);
     focusToken(registry, token, target);
   };
 
-  const scheduleClear = () => {
+  const handleEnter = (event) => {
+    if (held || event.pointerType === 'touch') return;
+    const target = resolveTarget(event.target);
+    if (target) focusTarget(target);
+  };
+
+  const scheduleClear = (event) => {
     window.clearTimeout(clearTimer);
-    if (!focused.token) return;
+    if (held || event?.pointerType === 'touch' || !focused.token) return;
     clearTimer = window.setTimeout(() => clearState(), 80);
+  };
+
+  const holdInspected = (event) => {
+    const target = resolveTarget(event.target);
+    if (!target) return;
+    held = true;
+    focusTarget(target);
+  };
+
+  const releaseInspected = () => {
+    if (!held) return;
+    held = false;
+    clearState();
   };
 
   document.addEventListener('pointerover', handleEnter);
   document.addEventListener('focusin', handleEnter);
   document.addEventListener('pointerout', scheduleClear);
   document.addEventListener('focusout', scheduleClear);
+  const offInspected = bus.on('concept:inspected', holdInspected);
+  const offReleased = bus.on('concept:released', releaseInspected);
 
   cleanups.push(() => {
     window.clearTimeout(clearTimer);
@@ -197,6 +229,8 @@ function installEventHandlers(registry) {
     document.removeEventListener('focusin', handleEnter);
     document.removeEventListener('pointerout', scheduleClear);
     document.removeEventListener('focusout', scheduleClear);
+    offInspected();
+    offReleased();
     clearState();
   });
 

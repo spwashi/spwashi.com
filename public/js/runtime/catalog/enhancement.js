@@ -669,7 +669,7 @@ export const ENHANCEMENT_DEFS = [
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
     costClass: COST_CLASS.WORKING_MEMORY_PRESSURE,
-    selector: '[data-spw-semantic-cluster], [data-spw-vocab], [data-spw-semantic-expression], [data-spw-topic], .spw-topic',
+    selector: '[data-spw-semantic-cluster], [data-spw-vocab], [data-spw-semantic-expression], [data-spw-topic], .spw-topic, [data-spw-living-term], .spw-living-term',
     rootMode: 'single',
     describes: 'crossref[semantics] resonance[peer|source]',
     updates: [
