@@ -13,6 +13,7 @@ import assert from 'node:assert/strict';
 
 import {
   annotateCompositionBox,
+  annotateCompositionBoxes,
   snapshotCompositionBox,
 } from '../../public/js/runtime/regions/composition-box-model.js';
 
@@ -157,4 +158,28 @@ test('stages refuse an authored grid flow and stay stacks', () => {
     });
     assert.equal(snapshotCompositionBox(frame).flow, 'stack');
   });
+});
+
+// A write between two layout reads makes the second read pay a full style and
+// layout pass. On /topics/software/ at phone width that was 44 passes (~7s) in
+// one refresh, so a refresh reads every box before it writes any.
+test('a refresh reads every box before it writes any', () => {
+  const log = [];
+  const watched = (index) => {
+    const el = new FakeElement({ attrs: { 'data-spw-box-model': '' }, display: 'block', childCount: 2 });
+    el.dataset = new Proxy(el.dataset, {
+      set(target, key, value) { log.push(`write ${index}`); target[key] = value; return true; },
+      deleteProperty(target, key) { log.push(`write ${index}`); delete target[key]; return true; },
+    });
+    const rect = el.getBoundingClientRect.bind(el);
+    el.getBoundingClientRect = () => { log.push(`read ${index}`); return rect(); };
+    return el;
+  };
+  const boxes = [watched(0), watched(1), watched(2)];
+  const root = { querySelectorAll: () => boxes };
+  withComputedStyle(() => annotateCompositionBoxes(root, { story: false }));
+  const lastRead = log.findLastIndex((entry) => entry.startsWith('read'));
+  const firstWrite = log.findIndex((entry) => entry.startsWith('write'));
+  assert.ok(firstWrite > 0, 'the refresh writes');
+  assert.ok(lastRead < firstWrite, `reads interleaved with writes: ${log.join(', ')}`);
 });
