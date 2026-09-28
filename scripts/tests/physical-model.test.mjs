@@ -5,39 +5,39 @@ import {
   snapshotPhysicalModel,
   describePhysicalModelSummary,
   SPW_PHYSICAL_MODEL_CONTRACT,
-} from "../../public/js/runtime/physical-model.js";
+} from "../../public/js/runtime/physics/physical-model.js";
 
 import {
   buildRegionProfile,
   describeRegionProfile,
   SPW_REGION_PROFILER_CONTRACT,
-} from "../../public/js/runtime/region-profiler.js";
+} from "../../public/js/runtime/regions/region-profiler.js";
 
 import {
   describeRegionKin,
   SPW_REGION_KIN_CONTRACT,
   pickRegionKin,
-} from "../../public/js/runtime/region-kin.js";
+} from "../../public/js/runtime/regions/region-kin.js";
 
 import {
   describeChargeFieldState,
   SPW_CHARGE_FIELD_CONTRACT,
-} from "../../public/js/runtime/charge-field.js";
+} from "../../public/js/runtime/physics/charge-field.js";
 
 import {
   describePulseBeatTunerState,
   SPW_PULSE_BEAT_TUNER_CONTRACT,
-} from "../../public/js/runtime/pulse-beat-tuner.js";
+} from "../../public/js/runtime/physics/pulse-beat-tuner.js";
 
 import {
   describeDevelopmentalClimate,
   SPW_DEVELOPMENTAL_CLIMATE_CONTRACT,
-} from "../../public/js/runtime/developmental-climate.js";
+} from "../../public/js/runtime/physics/developmental-climate.js";
 
 import {
   describeWonderMemorySnapshot,
   SPW_WONDER_MEMORY_CONTRACT,
-} from "../../public/js/runtime/wonder-memory.js";
+} from "../../public/js/runtime/memory/wonder-memory.js";
 
 import {
   describeCanvasAccentInstance,
@@ -47,12 +47,12 @@ import {
 import {
   initSpwHeroKineticStage,
   SPW_HERO_KINETIC_STAGE_CONTRACT,
-} from "../../public/js/runtime/spw-hero-kinetic-stage.js";
+} from "../../public/js/runtime/labs/spw-hero-kinetic-stage.js";
 
 import {
   ATTENTION_ARCHITECTURE_CONTRACT,
   describeAttentionArchitecture,
-} from "../../public/js/runtime/attention-architecture.js";
+} from "../../public/js/runtime/attention/attention-architecture.js";
 
 test("physical model snapshot returns cohesive physics slices", () => {
   const snapshot = snapshotPhysicalModel(document);

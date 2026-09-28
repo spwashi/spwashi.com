@@ -12,12 +12,12 @@ A visitor (or Spwashi on camera) can *write* a spell, not merely accumulate one:
 
 - Public goal: a first-time reader can save a navigation trail, clear the current one, and still restore or reopen the save in the cauldron.
 - Operation `align`, fixity `tending`; focus is the return loop. Evidence is in `index.spw#return_loop_audit_2026_09_16`.
-- Owners: `runtime/spells.js`, the spell block in `handles/operators/spell-breadcrumbs.css`, and the existing Settings spell-board introduction.
+- Owners: `runtime/memory/spells.js`, the spell block in `handles/operators/spell-breadcrumbs.css`, and the existing Settings spell-board introduction.
 - Keep useful actions ahead of optional notation; use canonical chips and existing reading tokens. Preserve controls on unchanged refreshes; batch event bursts and react only to dock breakpoint crossings.
 - Boundaries: no new operators, storage schema, runtime dependencies, or autonomous spell execution.
 - Verify save → clear → restore → reopen, unchanged control identity, event batching/cleanup, pocket containment, `audit:module-selectors`, `visual:checks`, and `check:local`.
 
-- `runtime/spells.js` (864 lines): spells are serialized navigation paths over grounded tokens; actions cast/checkpoint/reset; no edit, no selection verb, no styling verb.
+- `runtime/memory/spells.js` (864 lines): spells are serialized navigation paths over grounded tokens; actions cast/checkpoint/reset; no edit, no selection verb, no styling verb.
 - `interface/cauldron/` (contract.js, storage.js, trace.js, resonance.js, undo.js, chrome.js, helpers.js): real bones - `CAULDRON_CONTRACT` centralizes phases (`empty -> primed -> mixing -> spell-ready`), ingredient lifecycle (`gathering -> resonant -> mature -> decayed`), eight actions, max six ingredients, garden pruning. Composes "extension drafts," not reopenable spells.
 - `components/cauldron.css` (332 lines) + `handles/operators/spell-breadcrumbs.css` (869-line chapter).
 - Attribute families: `data-spw-cauldron-*` 26 names (19 JS-written), `data-spw-spell-*` 9, `data-spw-ingredient-*` 4.
@@ -83,7 +83,7 @@ This plan supersedes as owner (each keeps its file with a merged-into note; idea
 
 ## Concept Intake - 2026-07-03 (Spwashi direction)
 
-Queued for integration, routed per ecology: **pulsing** (vessel heartbeat; microinteraction owner here), **local component state caching** (interaction-cache stratum per `runtime-bootstrap-performance/`), **measurement arcs** (extends `runtime/observation-beats.js` beats into named arcs), **gentle opportunities to interact with and manage state** (cauldron/panel affordances), **navigational constructs as tangible items** (spells as carryable objects - the item model from the RPG substrate), **recognized abilities as named esoteric effects** (casting/decomposing surfaces named effects via components, panels, popups, overlays - ties to discovery-reward credits already emitted on cast). The bulletin-board / publishing / paper-manufacturing lore lives in `literacy-precipitation-press/PLAN.md`.
+Queued for integration, routed per ecology: **pulsing** (vessel heartbeat; microinteraction owner here), **local component state caching** (interaction-cache stratum per `runtime-bootstrap-performance/`), **measurement arcs** (extends `runtime/diagnostics/observation-beats.js` beats into named arcs), **gentle opportunities to interact with and manage state** (cauldron/panel affordances), **navigational constructs as tangible items** (spells as carryable objects - the item model from the RPG substrate), **recognized abilities as named esoteric effects** (casting/decomposing surfaces named effects via components, panels, popups, overlays - ties to discovery-reward credits already emitted on cast). The bulletin-board / publishing / paper-manufacturing lore lives in `literacy-precipitation-press/PLAN.md`.
 
 ## QA Surface - 2026-07-03
 
@@ -134,7 +134,7 @@ Audit method is reproducible: alias-resolved sigil-vs-attribute comparison over 
 
 ## Implementation Note - 2026-07-03 Sigil Anatomy Hydration
 
-Per Spwashi: sigils should be wrapped in HTML distinct from their operand, with raw HTML allowed to differ from the hydrated expression. Landed as `runtime/sigil-anatomy.js` (module catalog, enhancement/immediate):
+Per Spwashi: sigils should be wrapped in HTML distinct from their operand, with raw HTML allowed to differ from the hydrated expression. Landed as `runtime/expression/sigil-anatomy.js` (module catalog, enhancement/immediate):
 
 - Raw authored HTML keeps the fused readable form (`$ now`); hydration wraps `.spw-sigil` + `.spw-operand` spans with spacing preserved byte-for-byte, so anatomization causes zero layout shift. No-JS reading IS the fused text - the degradation is the original.
 - Hosts with existing nested markup are marked `authored` and left alone (spell atoms keep their prefix/nucleus/postfix anatomy); sigil-less chips are marked `bare`. The pass is idempotent via `:not([data-spw-sigil-anatomy])`.

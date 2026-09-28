@@ -12,7 +12,7 @@ Extends the prior `spell-cauldron-lifecycle-memory-gardening` track with a focus
 
 ## Scope (smallest surfaces)
 - Homepage grammar-lens copy (index.html).
-- `public/js/runtime/brace-gestures.js`: emit `spell:capture` with `primedBy: 'brace-containment-charge'` on committed gestures that carry semantic expressions.
+- `public/js/runtime/interaction/brace-gestures.js`: emit `spell:capture` with `primedBy: 'brace-containment-charge'` on committed gestures that carry semantic expressions.
 - `public/js/interface/composition.js`: accept the payload in `onCapture`, normalize into ingredient metadata (`data-spw-ingredient-primed`, origin), surface in render for learning value.
 - CSS: minimal additive rules inside existing gesture and cauldron blocks for visual tether (armed brace → cauldron host highlight via :has() or host attrs).
 - `.spw/conventions/semantic-braces.spw` + `site-semantics.spw`: short additive notes documenting the bridge.

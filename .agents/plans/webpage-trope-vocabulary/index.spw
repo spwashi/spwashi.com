@@ -38,8 +38,8 @@ intent: .{
  ][reg=set]
  surfaces = #[
   `css/components/page-anatomy.css`,
-  `js/runtime/page-anatomy.js`,
-  `js/runtime/region-menu.js`,
+  `js/runtime/page/page-anatomy.js`,
+  `js/runtime/regions/region-menu.js`,
   `.spw/conventions/page-anatomy-vocabulary.spw`,
  ][reg=set]
  fixity_tier = `tending`
@@ -52,8 +52,8 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @public_css_components_page_anatomy_css: ~"../../../public/css/components/page-anatomy.css"
-@public_js_runtime_page_anatomy_js: ~"../../../public/js/runtime/page-anatomy.js"
-@region_menu: ~"../../../public/js/runtime/region-menu.js"
+@public_js_runtime_page_anatomy_js: ~"../../../public/js/runtime/page/page-anatomy.js"
+@region_menu: ~"../../../public/js/runtime/regions/region-menu.js"
 @page_anatomy_vocabulary: ~"../../../.spw/conventions/page-anatomy-vocabulary.spw"
 
 dispatch: .{

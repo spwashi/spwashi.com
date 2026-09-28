@@ -18,8 +18,8 @@
 @microstates: ~"../conventions/interaction-microstates.spw"
 @spend: ~"./electrostatic-spend-2026-09.spw"
 @convenience: ~"./semantic-convenience-arcs-2026-09.spw"
-@brace_js: ~"../../public/js/runtime/brace-gestures.js"
-@charge_js: ~"../../public/js/runtime/charge-field.js"
+@brace_js: ~"../../public/js/runtime/interaction/brace-gestures.js"
+@charge_js: ~"../../public/js/runtime/physics/charge-field.js"
 @affordances_css: ~"../../public/css/systems/electrostatic-affordances.css"
 @dist_home: ~"../../dist/index.html"
 
@@ -97,6 +97,6 @@ expression = brace[hysteresis]{crease.pool.residue}<touch>
 }[reg=facet]
 
 validation: #[
-  `rg 'committed' public/js/runtime/brace-gestures.js public/css/systems/electrostatic-affordances.css`,
+  `rg 'committed' public/js/runtime/interaction/brace-gestures.js public/css/systems/electrostatic-affordances.css`,
   `npm run visual:checks -- --ids=home-opening`
 ][reg=set]

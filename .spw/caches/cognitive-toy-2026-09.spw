@@ -31,14 +31,14 @@
 @promo_wonder_plan: ~"../../.agents/plans/promo-wonder-cycle/PLAN.md"
 @fidget_plan: ~"../../.agents/plans/expressive-layout-tropes-fidget-manuscript/PLAN.md"
 @promo_feed: ~"../../public/data/promo-wonder-cycle.json"
-@charge_field: ~"../../public/js/runtime/charge-field.js"
-@brace_gestures: ~"../../public/js/runtime/brace-gestures.js"
-@effect_ledger: ~"../../public/js/runtime/effect-ledger.js"
-@component_collection: ~"../../public/js/runtime/component-collection.js"
-@reward_ui: ~"../../public/js/runtime/reward-ui.js"
-@familiarity_gate: ~"../../public/js/runtime/familiarity-gate.js"
+@charge_field: ~"../../public/js/runtime/physics/charge-field.js"
+@brace_gestures: ~"../../public/js/runtime/interaction/brace-gestures.js"
+@effect_ledger: ~"../../public/js/runtime/memory/effect-ledger.js"
+@component_collection: ~"../../public/js/runtime/memory/component-collection.js"
+@reward_ui: ~"../../public/js/runtime/memory/reward-ui.js"
+@familiarity_gate: ~"../../public/js/runtime/memory/familiarity-gate.js"
 @state_inspector: ~"../../public/js/interface/state-inspector.js"
-@wonder_memory: ~"../../public/js/runtime/wonder-memory.js"
+@wonder_memory: ~"../../public/js/runtime/memory/wonder-memory.js"
 @play_route: ~"../../play/index.html"
 
 operation = "prime"
@@ -83,7 +83,7 @@ source = "chat 2026-09-16: improve interactive playfulness, cognitive loops rela
   ][reg=set]
   pattern_consideration = `@fidget_plan already frames tunable surfaces as fidget toys for senior engineers. This cache does not replace that framing; it narrows it to the five loops a reader with no console open can feel.`
   expansion_prime = `Each loop gets one felt-closure patch (ct-005). Do not open all five in one session.`
-  validation = `rg 'PHASE_INTENSITY|discharge' public/js/runtime/charge-field.js | head; node scripts/wonder.mjs --surface cognitive-toy`
+  validation = `rg 'PHASE_INTENSITY|discharge' public/js/runtime/physics/charge-field.js | head; node scripts/wonder.mjs --surface cognitive-toy`
 }[reg=facet]
 
 ^"ct-002_where_the_loops_are_open"{
@@ -138,7 +138,7 @@ source = "chat 2026-09-16: improve interactive playfulness, cognitive loops rela
   anti = `Collector V and Collector X are counts. Keep them, but do not add more count tiers; the next unlocks should be loop completions (spark, carry, ground, project, return) so the collection teaches the five loops by name.`
   pattern_consideration = `Palette treats and image-discovery rewards already run through the generic field guide. New loop unlocks belong in component-collection's achievement table, not in a new reward module.`
   expansion_prime = `Five achievements, one per loop, each testable from state the collection already sees or the ledger already records. Copy first; no new event.`
-  validation = `sed -n 50,70p public/js/runtime/component-collection.js; rg 'spw:achievement-unlocked' public/js`
+  validation = `sed -n 50,70p public/js/runtime/memory/component-collection.js; rg 'spw:achievement-unlocked' public/js`
 }[reg=facet]
 
 ^"ct-005_first_patches"{

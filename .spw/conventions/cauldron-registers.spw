@@ -19,7 +19,7 @@
 @arrival: ~"./arrival-electrostatics.spw"
 @semantic_expression: ~"./semantic-expression-consequence.spw"
 @implementation: ~"../../public/js/semantic/cauldron/registers.js"
-@probes: ~"../../public/js/runtime/dom-probes.js"
+@probes: ~"../../public/js/runtime/expression/dom-probes.js"
 @storage: ~"../../public/js/semantic/cauldron/storage.js"
 
 operation = "contract"

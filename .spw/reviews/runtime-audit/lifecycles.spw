@@ -29,7 +29,7 @@ thesis: .{
 declared_page_lifecycle: .{
  states = ?< booting, interactive, hydrated, region-enhanced, enhanced >[reg=stream]
  source = @runtime
- note = `These are declared in public/js/runtime/page-state.js, written onto html[data-spw-page-state], and exposed through the composition console for console/extension tuning.`
+ note = `These are declared in public/js/runtime/page/page-state.js, written onto html[data-spw-page-state], and exposed through the composition console for console/extension tuning.`
 }[reg=facet]
 
 declared_region_lifecycle: .{

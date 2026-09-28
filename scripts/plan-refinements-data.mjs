@@ -205,7 +205,7 @@ export const PLAN_REFINEMENTS = {
     conceptual: {
       thesis: 'Coarse/pocket hamburger; Routes chip only as inline-mode copy.',
       concepts: ['hamburger', 'disclosure', 'overlay', 'drawer-menu', 'inline-routes'],
-      surfaces: ['scripts/template.mjs', 'public/css/shell/chrome/navigation.css', 'public/js/runtime/shell-disclosure.js'],
+      surfaces: ['scripts/template.mjs', 'public/css/shell/chrome/navigation.css', 'public/js/runtime/shell/shell-disclosure.js'],
     },
     refinement: {
       tone: 'Pocket-first chrome — glyph when a finger is on the page.',
@@ -220,7 +220,7 @@ export const PLAN_REFINEMENTS = {
     conceptual: {
       thesis: 'Gesture hosts must not claim leaf controls. A prime names the next verb, not just a glow.',
       concepts: ['leaf-control', 'prime-telegraph', 'brace', 'region-menu', 'lens-mode'],
-      surfaces: ['public/js/kernel/dom-contracts.js', 'public/js/runtime/brace-gestures.js', 'public/js/runtime/region-menu.js', 'public/js/semantic/image-interaction.js'],
+      surfaces: ['public/js/kernel/dom-contracts.js', 'public/js/runtime/interaction/brace-gestures.js', 'public/js/runtime/regions/region-menu.js', 'public/js/semantic/image-interaction.js'],
     },
     refinement: {
       tone: 'Do this / expect this — not a fourth gesture ladder.',
@@ -234,7 +234,7 @@ export const PLAN_REFINEMENTS = {
     conceptual: {
       thesis: 'Spells are writable programs — select, style, cast, decompose — workshop bench not ledger.',
       concepts: ['cauldron', 'spellbook', 'decompose', 'op-disposition', 'checkpoint'],
-      surfaces: ['public/js/interface/cauldron/', 'public/js/runtime/spells.js', 'play/ spell routes'],
+      surfaces: ['public/js/interface/cauldron/', 'public/js/runtime/memory/spells.js', 'play/ spell routes'],
     },
     refinement: {
       tone: 'Workshop delight — legible verbs, camera-ready demos.',

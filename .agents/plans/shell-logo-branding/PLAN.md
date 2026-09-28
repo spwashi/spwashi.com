@@ -6,9 +6,9 @@
 - Keep the SVG mark geometry consistent across runtime, shared assets, and public presentation.
 
 ## Surfaces
-- `public/js/runtime/attention-architecture.js`
-- `public/js/runtime/shell-disclosure.js`
-- `public/js/runtime/experiential.js`
+- `public/js/runtime/attention/attention-architecture.js`
+- `public/js/runtime/shell/shell-disclosure.js`
+- `public/js/runtime/experiential/experiential.js`
 - `public/js/interface/logo-runtime.js`
 - `public/css/spw-chrome.css`
 - `public/css/spw-handles.css`

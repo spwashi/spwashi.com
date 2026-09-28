@@ -16,7 +16,7 @@ This is a good fit because Settings already asks readers to tune density, layout
 
 ## Implementation Shape
 
-- Add `public/js/runtime/composition-box-model.js`.
+- Add `public/js/runtime/regions/composition-box-model.js`.
 - Export its portable helpers from `public/js/compose.js`.
 - Mount it from `site.js` only when Settings or `data-spw-box-model` markup is present.
 - Write stable attributes such as `data-spw-box-model`, `data-spw-composition-flow`, `data-spw-box-overflow`, and `data-spw-box-measure`.

@@ -44,7 +44,7 @@ intent: .{
  surfaces = #[
   `public/js/kernel/dom-contracts.js`,
   `public/js/runtime/module-loader.js`,
-  `public/js/runtime/region-profiler.js`,
+  `public/js/runtime/regions/region-profiler.js`,
   `public/js/semantic/spw-expression-geometry.js`,
   `scripts/build.mjs`,
   `npm run check:local`,
@@ -78,13 +78,13 @@ intent: .{
 @site: ~"../../../public/js/site.js"
 @module_loader: ~"../../../public/js/runtime/orchestration/loader.js"
 @dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
-@dom_sync_hub: ~"../../../public/js/runtime/dom-sync-hub.js"
+@dom_sync_hub: ~"../../../public/js/runtime/orchestration/dom-sync-hub.js"
 @module_export_contract: ~"../../../public/js/runtime/catalog/export-contract.js"
-@region_profiler: ~"../../../public/js/runtime/region-profiler.js"
-@spatial_gravity: ~"../../../public/js/runtime/spatial-gravity.js"
+@region_profiler: ~"../../../public/js/runtime/regions/region-profiler.js"
+@spatial_gravity: ~"../../../public/js/runtime/physics/spatial-gravity.js"
 @expression_geometry: ~"../../../public/js/semantic/spw-expression-geometry.js"
-@shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"
-@experiential: ~"../../../public/js/runtime/experiential.js"
+@shell_disclosure: ~"../../../public/js/runtime/shell/shell-disclosure.js"
+@experiential: ~"../../../public/js/runtime/experiential/experiential.js"
 @shared: ~"../../../public/js/kernel/shared.js"
 @build: ~"../../../scripts/build.mjs"
 @route_manifest: ~"../../../.agents/state/runtime/route-runtime-manifest.json"

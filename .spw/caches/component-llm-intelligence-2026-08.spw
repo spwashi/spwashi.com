@@ -24,7 +24,7 @@ fixity = "tending"
   claim = `Same still, four readings: mosey (notice the size), search (findable words), agent (recapture contract), llm (prompt to restage). Keep lenses focused without combinatorial sprawl.`
   evidence = #[
     `scripts/lib/visual-capture-plan.mjs#INTELLIGENCE_BANDS`,
-    `public/js/runtime/site-search.js components facet`,
+    `public/js/runtime/navigation/site-search.js components facet`,
     `design/components/index.html#component-glances`,
   ][reg=set]
   pattern_consideration = `model-guided-refinement already names weaker models. Model tooling stays editor-side if teasers are rewritten — the public site remains completely static.`

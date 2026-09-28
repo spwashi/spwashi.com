@@ -11,8 +11,8 @@
 @semantic_chrome: ~"../../../public/js/interface/semantic-chrome.js"
 @contextual_ui: ~"../../../public/js/interface/contextual-ui.js"
 @settings: ~"../../../public/js/kernel/site-settings.js"
-@brace_pivots: ~"../../../public/js/runtime/brace-pivots.js"
-@wonder_memory: ~"../../../public/js/runtime/wonder-memory.js"
+@brace_pivots: ~"../../../public/js/runtime/interaction/brace-pivots.js"
+@wonder_memory: ~"../../../public/js/runtime/memory/wonder-memory.js"
 @accent_palette: ~"../../../public/js/semantic/accent-palette.js"
 
 thesis: .{

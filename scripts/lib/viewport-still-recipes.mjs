@@ -94,7 +94,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     captureValue: 'Pocket/fold menu: authored rooms stay reachable; overlay does not clip the toggle.',
     sourceFiles: Object.freeze([
       'index.html',
-      'public/js/runtime/shell-disclosure.js',
+      'public/js/runtime/shell/shell-disclosure.js',
       'public/css/shell/chrome/navigation.css',
     ]),
   }),
@@ -131,7 +131,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     captureValue: 'Site-search dialog from the header Search control.',
     sourceFiles: Object.freeze([
       'index.html',
-      'public/js/runtime/site-search.js',
+      'public/js/runtime/navigation/site-search.js',
       'public/css/shell/chrome/navigation.css',
     ]),
   }),
@@ -233,7 +233,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     captureValue: 'Region-menu popover from the home frame handle.',
     sourceFiles: Object.freeze([
       'index.html',
-      'public/js/runtime/region-menu.js',
+      'public/js/runtime/regions/region-menu.js',
     ]),
   }),
   Object.freeze({
@@ -784,7 +784,7 @@ export const VIEWPORT_STILL_CHECKS = Object.freeze([
     captureValue: 'Region-menu popover in dark color-mode.',
     sourceFiles: Object.freeze([
       'index.html',
-      'public/js/runtime/region-menu.js',
+      'public/js/runtime/regions/region-menu.js',
     ]),
   }),
   Object.freeze({
@@ -948,8 +948,8 @@ export const VIEWPORT_STILL_CHECKS = Object.freeze([
     captureValue: 'Teaching wrap-jobs rail: module behavior on the RPG Wednesday opening.',
     sourceFiles: Object.freeze([
       'play/rpg-wednesday/index.html',
-      'public/js/runtime/wrap-jobs.js',
-      'public/js/runtime/spw-key-events.js',
+      'public/js/runtime/interaction/wrap-jobs.js',
+      'public/js/runtime/interaction/spw-key-events.js',
     ]),
   }),
   Object.freeze({

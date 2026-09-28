@@ -22,7 +22,7 @@
 @flourish_pack: ~"../../public/css/effects/flourish-pack.css"
 @module_loader: ~"../../public/js/runtime/orchestration/loader.js"
 @catalog_constants: ~"../../public/js/runtime/catalog/constants.js"
-@page_state: ~"../../public/js/runtime/page-state.js"
+@page_state: ~"../../public/js/runtime/page/page-state.js"
 
 operation = "cache"
 fixity = "experimental"

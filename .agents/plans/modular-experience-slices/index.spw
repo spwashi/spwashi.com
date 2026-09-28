@@ -70,7 +70,7 @@ intent: .{
 @diagrams: ~"../../../public/js/modules/math/diagrams.js"
 @topics_math_vector_calculus_index_html: ~"../../../topics/math/vector-calculus/index.html"
 @topics_math_numerical_methods_index_html: ~"../../../topics/math/numerical-methods/index.html"
-@attention_architecture: ~"../../../public/js/runtime/attention-architecture.js"
+@attention_architecture: ~"../../../public/js/runtime/attention/attention-architecture.js"
 @wonder: ~"../../../public/css/effects/wonder.css"
 
 dispatch: .{

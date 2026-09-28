@@ -7,8 +7,8 @@
 #:fixity #!experimental
 #:layer #!public_semantics
 
-@feature_discovery: ~"../../public/js/runtime/feature-discovery.js"
-@attention_architecture: ~"../../public/js/runtime/attention-architecture.js"
+@feature_discovery: ~"../../public/js/runtime/discovery/feature-discovery.js"
+@attention_architecture: ~"../../public/js/runtime/attention/attention-architecture.js"
 
 claim: `Discovery improves when terms, regions, and route sequences become usable material rather than decorative labels.`
 

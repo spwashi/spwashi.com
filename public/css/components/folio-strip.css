@@ -9,7 +9,7 @@
    - Squares hold every scan whole, portrait or landscape, as the shelf does.
    - A narrow strip scrolls sideways with snap; wide enough, all five stand in
      a row without scrolling. The row answers to its own width.
-   - Each picture wears its * original mark (runtime/image-provenance.js).
+   - Each picture wears its * original mark (runtime/expression/image-provenance.js).
    ========================================================================== */
 
 .folio-strip {

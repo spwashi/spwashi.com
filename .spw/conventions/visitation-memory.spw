@@ -7,7 +7,7 @@
 #:layer #!pragmatics
 
 @storage: ~"../../public/js/kernel/visited-surfaces-storage.js"
-@visitation_runtime: ~"../../public/js/runtime/visitation.js"
+@visitation_runtime: ~"../../public/js/runtime/memory/visitation.js"
 @image_metaphysics: ~"../../public/js/media/image-metaphysics.js"
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @wonder_architecture: ~"./wonder-architecture.spw"

@@ -30,7 +30,7 @@ From exploration:
 - The satchel is implemented in `public/js/interface/state-inspector.js` (the "state satchel" launch + panel with toggles including "Inspect seams" which sets `data-spw-debug-mode="on"`).
 - Positioning lives in `public/css/components/floating-chrome.css` (`[data-spw-floating-chrome][data-spw-chrome-role="state-inspector"]` uses `position: fixed; inset: auto ... bottom/right`).
 - Debug/seams mode (activated by the button) adds many visual overlays and pseudo-elements (scattered in operators.css, runtime-states.css, effects/debug.css). These can cause reflows or visual jumps for fixed children.
-- Gestures use pointer events + timers in `public/js/runtime/brace-gestures.js` (hold threshold, `data-spw-gesture-contract` on living terms / cards) and related experiential/haptics code. Native text selection is not always suppressed on interactive regions during hold.
+- Gestures use pointer events + timers in `public/js/runtime/interaction/brace-gestures.js` (hold threshold, `data-spw-gesture-contract` on living terms / cards) and related experiential/haptics code. Native text selection is not always suppressed on interactive regions during hold.
 - Cards use the standard frame/card anatomy (components/cards.css + route surfaces + ornament). The reported surfaces appear to be in an "inspect" / brace / living-term context where slots or wrapping rules degrade.
 
 This is a **fix + refinement task** on existing runtime inspection and interaction surfaces (not adding new settings widgets). It touches floating chrome stability, debug mode side-effects, card resilience, and gesture vs. selection discrimination — all areas that affect "coincidental discovery" and daily craft feel.
@@ -81,7 +81,7 @@ Per AGENTS.md: surgical, preserve hand-authored structure, reuse existing contra
 
 **JS (interaction & stability)**:
 - `public/js/interface/state-inspector.js` — positioning stability on toggle, possible drag or position persistence logic, better handling when its own toggles (especially "Inspect seams") fire.
-- `public/js/runtime/brace-gestures.js` (and related experiential/haptics if needed) — long-press discrimination, `user-select` / `touch-action` management on gesture targets vs plain text.
+- `public/js/runtime/interaction/brace-gestures.js` (and related experiential/haptics if needed) — long-press discrimination, `user-select` / `touch-action` management on gesture targets vs plain text.
 
 **CSS (layout + floating)**:
 - `public/css/components/floating-chrome.css` — strengthen state-inspector floating rules for stability under debug mode / content changes; consider safe repositioning affordances.
@@ -186,7 +186,7 @@ All phases complete:
 - `public/js/interface/state-inspector.js` (drag, persistence, reset, stabilization)
 - `public/css/components/runtime-states.css` (drag affordance + broader card defensive rules)
 - `public/css/components/floating-chrome.css` (minor)
-- `public/js/runtime/brace-gestures.js` (hold-time user-select management)
+- `public/js/runtime/interaction/brace-gestures.js` (hold-time user-select management)
 
 All changes are low-risk, reuse existing contracts, and directly resolve the reported issues while improving coincidental discovery.
 

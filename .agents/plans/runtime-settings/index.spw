@@ -57,7 +57,7 @@ intent: .{
 @site_settings_profiles: ~"../../../public/js/kernel/site-settings-profiles.js"
 @site_settings_engine: ~"../../../public/js/kernel/site-settings-engine.js"
 @site_settings_ui: ~"../../../public/js/interface/site-settings-ui.js"
-@reward_ui: ~"../../../public/js/runtime/reward-ui.js"
+@reward_ui: ~"../../../public/js/runtime/memory/reward-ui.js"
 
 dispatch: .{
  plan = @plan

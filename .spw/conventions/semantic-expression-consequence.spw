@@ -17,7 +17,7 @@
 @attribute_governance: ~"./data-spw-attribute-governance.spw"
 @stylesheet_ecology: ~"./stylesheet-ecology.spw"
 @builder: ~"../../scripts/build-expression-manifest.mjs"
-@runtime: ~"../../public/js/runtime/expression-resonance.js"
+@runtime: ~"../../public/js/runtime/expression/expression-resonance.js"
 @css: ~"../../public/css/systems/expression-resonance.css"
 @manifest: ~"../../public/js/generated/spw-expressions.js"
 @integrity: ~"../../scripts/spw-integrity.mjs"

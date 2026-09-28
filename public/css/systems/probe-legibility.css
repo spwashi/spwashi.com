@@ -1,7 +1,7 @@
 /* ==========================================================================
    probe-legibility.css
    --------------------------------------------------------------------------
-   The visible half of runtime/dom-probes.js.
+   The visible half of runtime/expression/dom-probes.js.
 
    The routes carry 1,115 <code> blocks and 99 <pre> blocks, and every one of
    them is inert type — a shape that looks executable and is not. A probe is a

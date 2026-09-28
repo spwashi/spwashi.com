@@ -9,9 +9,9 @@ The site already has a sophisticated gesture model (brace-gestures, attention-ar
 
 ## Proposed Changes
 
-### 1. `public/js/runtime/brace-gestures.js` — Gesture ARIA lifecycle
+### 1. `public/js/runtime/interaction/brace-gestures.js` — Gesture ARIA lifecycle
 
-#### [MODIFY] [brace-gestures.js](public/js/runtime/brace-gestures.js)
+#### [MODIFY] [brace-gestures.js](public/js/runtime/interaction/brace-gestures.js)
 
 - When `setGesture()` writes `data-spw-gesture`, also write `aria-description` (or `aria-roledescription` as appropriate) on interactive non-link non-button elements to communicate current gesture state to screen readers. Use a lookup table: `{ charging: 'hover active', active: 'pressing', armed: 'hold ready', committed: 'activated' }`.
 - When `armed` state fires: if the element has affordance `swap`, write `aria-description="Hold: will swap operator. Release now to confirm."`. For `pin`: `aria-description="Hold: will pin this frame."`.
@@ -20,9 +20,9 @@ The site already has a sophisticated gesture model (brace-gestures, attention-ar
 
 **Why not aria-live for gestures?** The brace-gesture system already drives CSS. Adding `aria-description` on the target itself is lower-noise than a live region for transient gesture phases — the description only matters if a keyboard or assistive-tech user is focused on the element.
 
-### 2. `public/js/runtime/navigation-spells.js` — Enrich link semantics
+### 2. `public/js/runtime/navigation/navigation-spells.js` — Enrich link semantics
 
-#### [MODIFY] [navigation-spells.js](public/js/runtime/navigation-spells.js)
+#### [MODIFY] [navigation-spells.js](public/js/runtime/navigation/navigation-spells.js)
 
 `applyNavigationSpellRecord()` currently writes only `data-spw-*` attributes. It does not apply any ARIA enrichment. Gaps:
 
@@ -33,9 +33,9 @@ The site already has a sophisticated gesture model (brace-gestures, attention-ar
 > [!NOTE]
 > Navigation-spells runs on DOMContentLoaded and via MutationObserver. These additions must be idempotent (guard with `data-spw-nav-tokenized` which is already set).
 
-### 3. `public/js/runtime/attention-architecture.js` — Section handle ARIA hygiene
+### 3. `public/js/runtime/attention/attention-architecture.js` — Section handle ARIA hygiene
 
-#### [MODIFY] [attention-architecture.js](public/js/runtime/attention-architecture.js)
+#### [MODIFY] [attention-architecture.js](public/js/runtime/attention/attention-architecture.js)
 
 The handle shell (`nav.spw-section-handle-shell`) already has `aria-label="Page locomotion"`. Gaps:
 
@@ -43,9 +43,9 @@ The handle shell (`nav.spw-section-handle-shell`) already has `aria-label="Page 
 - **`aria-current` on progress counter**: The progress node (`spw-section-handle-progress`) has no semantics. Add `aria-label` to it: `aria-label="Section {n} of {total}"` via `writeAttributes`.
 - **Scroll cadence live region**: When a section changes via `dispatchEvent(PAGE_SECTION_EVENT)`, there's no AT announcement. Add a visually-hidden `[aria-live="polite"][aria-atomic="true"]` element inside the shell that briefly announces the current section name during programmatic travel (not scroll-driven updates, only handle button clicks).
 
-### 4. `public/js/runtime/frame-navigator.js` — Navigator ARIA completeness
+### 4. `public/js/runtime/navigation/frame-navigator.js` — Navigator ARIA completeness
 
-#### [MODIFY] [frame-navigator.js](public/js/runtime/frame-navigator.js)
+#### [MODIFY] [frame-navigator.js](public/js/runtime/navigation/frame-navigator.js)
 
 Current gaps:
 
@@ -79,10 +79,10 @@ Add CSS visual affordances for the new `aria-description`-populated gesture stat
 
 ### Automated Checks
 ```bash
-node --check public/js/runtime/brace-gestures.js
-node --check public/js/runtime/navigation-spells.js
-node --check public/js/runtime/attention-architecture.js
-node --check public/js/runtime/frame-navigator.js
+node --check public/js/runtime/interaction/brace-gestures.js
+node --check public/js/runtime/navigation/navigation-spells.js
+node --check public/js/runtime/attention/attention-architecture.js
+node --check public/js/runtime/navigation/frame-navigator.js
 git diff --check
 npm run check
 ```

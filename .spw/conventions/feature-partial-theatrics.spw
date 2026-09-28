@@ -9,11 +9,11 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
-@behavior_scopes_js: ~"../../public/js/runtime/behavior-scopes.js"
+@behavior_scopes_js: ~"../../public/js/runtime/orchestration/behavior-scopes.js"
 @css_manifest: ~"../../scripts/ts/css-manifest.mts"
 @module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @runtime_helpers: ~"../../public/js/kernel/browser-primitives.js"
-@feature_discovery: ~"../../public/js/runtime/feature-discovery.js"
+@feature_discovery: ~"../../public/js/runtime/discovery/feature-discovery.js"
 @site_settings_engine: ~"../../public/js/kernel/site-settings-engine.js"
 @settings_route: ~"../../settings/index.html"
 @query_disposition: ~"./query-disposition.spw"
@@ -157,8 +157,8 @@ fixity = "tending"
   s4 = `Design composition: one specimen with register + feature-discovery traits + posture coupling documented in frame-note — landed: /design/composition/#partial-theatrics-lab`
   s5 = `Optional query keys for enhancementLevel / runtimePosture already via settings engine — document in query-disposition examples; orchestration recipes use existing module-visuals|module-audit|module-delay|module-only`
   s6 = `Learnable orchestration ornaments under module-visuals: feature island rings, loading-ecology phase chip, module-effect pulse — landed: components/runtime-states.css (uses real site.js loader, not app.js)`
-  s7 = `Session feature lab + embeddable partial-theatrics panel: presence toggle via sessionStorage ops + reload; theatrics via enhancementLevel; orchestration via query recipes — landed: runtime/feature-lab.js + /settings/#partial-theatrics-lab`
-  s8 = `Query link composer near feature hubs + state satchel: build/copy/apply/cauldron-offer share URLs — landed: runtime/query-link-composer.js, components/query-composer.css, settings + design/composition hubs, state-inspector expand`
+  s7 = `Session feature lab + embeddable partial-theatrics panel: presence toggle via sessionStorage ops + reload; theatrics via enhancementLevel; orchestration via query recipes — landed: runtime/discovery/feature-lab.js + /settings/#partial-theatrics-lab`
+  s8 = `Query link composer near feature hubs + state satchel: build/copy/apply/cauldron-offer share URLs — landed: runtime/navigation/query-link-composer.js, components/query-composer.css, settings + design/composition hubs, state-inspector expand`
   s9 = `Catalog hygiene: cauldron/spells/guide-badge/haptics/experiential/navigation-spells → IDLE + timingArc; module-effects/loading-ecology stamped immediate-orchestration; query-link-composer module registered idle`
 }[reg=set]
 

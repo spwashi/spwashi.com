@@ -13,8 +13,8 @@
 @html_component_audit: ~"./html-component-audit-2026-07.spw"
 @feature_wiring_timing: ~"../caches/feature-wiring-timing-2026-07.spw"
 @module_catalog: ~"../../public/js/runtime/catalog/index.js"
-@effect_ledger: ~"../../public/js/runtime/effect-ledger.js"
-@module_effects: ~"../../public/js/runtime/module-effects.js"
+@effect_ledger: ~"../../public/js/runtime/memory/effect-ledger.js"
+@module_effects: ~"../../public/js/runtime/arrival/module-effects.js"
 
 audit_run: .{
   at = `2026-07-12`
@@ -135,7 +135,7 @@ audit_run: .{
 ^"validation"{
   probe = #[
     `node import public/js/runtime/module-catalog.js`,
-    `node --check public/js/runtime/effect-ledger.js public/js/runtime/module-effects.js public/js/runtime/loading-ecology.js`,
+    `node --check public/js/runtime/memory/effect-ledger.js public/js/runtime/arrival/module-effects.js public/js/runtime/arrival/loading-ecology.js`,
     `npm run check:runtime`,
   ][reg=set]
   related = #[@javascript_module_census, @feature_wiring_timing, @html_component_audit][reg=set]

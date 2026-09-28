@@ -27,14 +27,14 @@ The public contract is stable enough to document because it spans the generated 
 ## Implementation
 
 - `scripts/template.mjs` emits `.spw-header-actions` for Cauldron and the attention posture preview button.
-- `public/js/runtime/shell-disclosure.js` syncs the posture label from canonical settings/root datasets, creates the posture preview panel, and wraps the utility row in a `details` disclosure.
+- `public/js/runtime/shell/shell-disclosure.js` syncs the posture label from canonical settings/root datasets, creates the posture preview panel, and wraps the utility row in a `details` disclosure.
 - `public/css/shell/chrome/navigation.css` gives brand, routes, actions, toggle, and display controls stable grid areas across inline, compressed, and toggle modes. The hamburger is in `scripts/template.mjs`; coarse pointer forces toggle in `shell-disclosure.js`.
 - CSS and JS share `DRAWER_MENU_QUERY` (`(pointer: coarse), (max-width: 45rem)`) so the inline strip and the hamburger cannot dual-paint.
 - `data-spw-menu="open"` remains the disclosure source; `data-spw-menu-overlay="active"` is the visual drawer state.
 
 ## Validation
 
-- `node --check public/js/runtime/shell-disclosure.js`
+- `node --check public/js/runtime/shell/shell-disclosure.js`
 - `node --check scripts/template.mjs`
 - `git diff --check`
 - targeted `rg` checks for the new shell action and feature names

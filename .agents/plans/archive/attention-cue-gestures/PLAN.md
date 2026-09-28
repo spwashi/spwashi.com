@@ -7,8 +7,8 @@
 
 ## Shared surfaces
 - `public/js/kernel/site-settings.js` (+ `site-settings-engine.js`, `site-settings-profiles.js`)
-- `public/js/runtime/attention-architecture.js` (orchestrator; behavior lives under `public/js/runtime/attention/`: `reading-groove.js`, `pinch-scale.js`, `shared.js`)
-- `public/js/runtime/shell-disclosure.js`
+- `public/js/runtime/attention/attention-architecture.js` (orchestrator; behavior lives under `public/js/runtime/attention/`: `reading-groove.js`, `pinch-scale.js`, `shared.js`)
+- `public/js/runtime/shell/shell-disclosure.js`
 - `public/js/site.js`
 - `public/css/typography/typesetting.css`
 - `public/css/components/spw-components.css`

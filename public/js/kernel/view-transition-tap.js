@@ -9,7 +9,7 @@
  * finishes the transition at once, and when the pointer lifts, the click goes
  * to the control that is actually under it.
  *
- * Owners of view transitions (runtime/lens-modes.js, modules/design/folio-shelf.js)
+ * Owners of view transitions (runtime/page/lens-modes.js, modules/design/folio-shelf.js)
  * install it before they start one. It is idempotent and does nothing where
  * document.activeViewTransition is missing.
  * Contract: .spw/conventions/interaction-microstates.spw#discharge_motion.

@@ -37,10 +37,10 @@ intent: .{
   `ornament`,
  ][reg=set]
  surfaces = #[
-  `js/runtime/navigation-spells.js`,
-  `js/runtime/attention-architecture.js`,
+  `js/runtime/navigation/navigation-spells.js`,
+  `js/runtime/attention/attention-architecture.js`,
   `css/ornament/ornament.css`,
-  `js/runtime/spells.js`,
+  `js/runtime/memory/spells.js`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -50,13 +50,13 @@ intent: .{
 @plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
-@navigation_spells: ~"../../../../public/js/runtime/navigation-spells.js"
-@attention_architecture: ~"../../../../public/js/runtime/attention-architecture.js"
+@navigation_spells: ~"../../../../public/js/runtime/navigation/navigation-spells.js"
+@attention_architecture: ~"../../../../public/js/runtime/attention/attention-architecture.js"
 @ornament: ~"../../../../public/css/ornament/ornament.css"
-@spells: ~"../../../../public/js/runtime/spells.js"
-@experiential: ~"../../../../public/js/runtime/experiential.js"
+@spells: ~"../../../../public/js/runtime/memory/spells.js"
+@experiential: ~"../../../../public/js/runtime/experiential/experiential.js"
 @ornament_contract: ~"../../../../.spw/conventions/ornament-contract.spw"
-@frame_navigator: ~"../../../../public/js/runtime/frame-navigator.js"
+@frame_navigator: ~"../../../../public/js/runtime/navigation/frame-navigator.js"
 
 dispatch: .{
  plan = @plan
@@ -87,9 +87,9 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `Refine the site's primary navigation, footer, ornament application, linking surfaces, and spell-driven flow so the experience has clearer visual rhythm, better mobile ergonomics, consistent distribution of decorative and functional weight, and stronger "momentum" (the feeling that navigation, spells, and transitions carry the visitor forward naturally). This is a craft-quality / polish pass following the recent runtime load instrumentation and site-rhythm ornament work. It prioritizes shared surfaces over per-route changes.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../../public/js/runtime/navigation-spells.js"
+ impl_ref = ~"../../../../public/js/runtime/navigation/navigation-spells.js"
  probe_ref = `git diff --check`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/navigation-spells.js unchanged or untested.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/navigation/navigation-spells.js unchanged or untested.`
  status = "superseded"
 }[reg=facet]
 

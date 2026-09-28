@@ -260,7 +260,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"runtime_dom_sync_hub"[#runtime #contract #federation]{
- @self: ~"../../../public/js/runtime/dom-sync-hub.js"
+ @self: ~"../../../public/js/runtime/orchestration/dom-sync-hub.js"
 
  identity( id: $runtime.dom_sync_hub ; guild: #runtime ; layer: #shared ; mount: ~lazy )
 
@@ -513,8 +513,8 @@ fixity = "tending"
   .{ at: `kernel/shared.js:1380` ; fn: splitOperatorExpression ; consumers: [sigil-anatomy, interaction-vocabulary, guide-badge, cauldron/storage] }[reg=facet]
   .{ at: `semantic/link-copy.js:33` ; fn: parseSpwExpression ; consumers: [link-copy internal] }[reg=facet]
   .{ at: `site.js:714` ; fn: <inline regex> ; reads: <noun then optional frame, body, scope bounds> ; consumers: [snapshotProjectionEquations] }[reg=facet]
-  .{ at: `runtime/spells.js:151` ; fn: <inline regex> ; reads: <leading sigil from a 16-alternative alternation, defaulting to tilde> ; consumers: [spells internal] }[reg=facet]
-  .{ at: `runtime/experiential.js` ; fn: OPERATOR_INFO + inferOperatorInfoFromText ; note: `a third operator vocabulary` }[reg=facet]
+  .{ at: `runtime/memory/spells.js:151` ; fn: <inline regex> ; reads: <leading sigil from a 16-alternative alternation, defaulting to tilde> ; consumers: [spells internal] }[reg=facet]
+  .{ at: `runtime/experiential/experiential.js` ; fn: OPERATOR_INFO + inferOperatorInfoFromText ; note: `a third operator vocabulary` }[reg=facet]
  ]
 
  ~orphan_sibling{
@@ -957,7 +957,7 @@ fixity = "tending"
 # ===========================================================================
 
 ^"runtime_region_profiler"[#runtime #model #ungrounded]{
- @self: ~"../../../public/js/runtime/region-profiler.js"
+ @self: ~"../../../public/js/runtime/regions/region-profiler.js"
 
  identity( id: $runtime.region_profiler ; guild: #runtime ; layer: #shared ; mount: ~static )
 
@@ -1077,7 +1077,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"runtime_spatial_gravity"[#runtime #model #measured #unconsumed]{
- @self: ~"../../../public/js/runtime/spatial-gravity.js"
+ @self: ~"../../../public/js/runtime/physics/spatial-gravity.js"
 
  identity( id: $runtime.spatial_gravity ; guild: #runtime ; layer: #shared ; mount: ~lazy )
 
@@ -1137,7 +1137,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"runtime_composition_box_model"[#runtime #model #measured #eager]{
- @self: ~"../../../public/js/runtime/composition-box-model.js"
+ @self: ~"../../../public/js/runtime/regions/composition-box-model.js"
 
  identity( id: $runtime.composition_box_model ; guild: #runtime ; layer: #shared ; mount: ~static )
 
@@ -1173,7 +1173,7 @@ fixity = "tending"
 # ===========================================================================
 
 ^"runtime_shell_disclosure"[#runtime #overloaded #immediate]{
- @self: ~"../../../public/js/runtime/shell-disclosure.js"
+ @self: ~"../../../public/js/runtime/shell/shell-disclosure.js"
 
  identity( id: $runtime.shell_disclosure ; guild: #runtime ; layer: #core ; mount: ~immediate@every-page )
 
@@ -1293,7 +1293,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"runtime_experiential"[#runtime #overloaded #uncoupled]{
- @self: ~"../../../public/js/runtime/experiential.js"
+ @self: ~"../../../public/js/runtime/experiential/experiential.js"
 
  identity( id: $runtime.experiential ; guild: #runtime ; layer: #enhancement ; mount: ~immediate )
 

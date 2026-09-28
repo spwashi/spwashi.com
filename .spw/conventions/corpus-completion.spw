@@ -21,7 +21,7 @@
 @operator_semantics: ~"./operator-semantics.spw"
 @manifest: ~"../../public/js/generated/spw-expressions.js"
 @builder: ~"../../scripts/build-expression-manifest.mjs"
-@brace_pivots: ~"../../public/js/runtime/brace-pivots.js"
+@brace_pivots: ~"../../public/js/runtime/interaction/brace-pivots.js"
 
 operation = "prime"
 fixity = "experimental"

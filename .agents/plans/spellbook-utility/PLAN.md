@@ -23,9 +23,9 @@ The desired end state is a spell surface that earns its metaphor by doing useful
 
 [NEW] `.agents/plans/spellbook-utility/PLAN.md`
 [NEW] `.agents/plans/spellbook-utility/wip.spw`
-[MOD?] `public/js/runtime/spells.js` - pivot from passive serialization to executable spell catalog, recent spells, and outcome-focused board rendering
+[MOD?] `public/js/runtime/memory/spells.js` - pivot from passive serialization to executable spell catalog, recent spells, and outcome-focused board rendering
 [MOD?] `public/js/interface/haptics.js` - expose checkpoint enumeration and restore metadata in a stable helper the spell UI can call
-[MOD?] `public/js/runtime/experiential.js` - expose bookmark registry data in a way the spell runtime can reuse for working-set replay
+[MOD?] `public/js/runtime/experiential/experiential.js` - expose bookmark registry data in a way the spell runtime can reuse for working-set replay
 [MOD?] `settings/index.html` - restructure the spell board into useful sections: current trace, saved checkpoints, pinned working set
 [MOD?] `public/css/spw-handles.css` - spell-board interaction states, checkpoint rows, working-set controls
 [MOD?] `public/css/components/surfaces.css` - board-level layout for spell actions and utility-oriented summaries

@@ -27,7 +27,7 @@
 @module_catalog: ~"../../../public/js/runtime/catalog/index.js"
 @module_normalize: ~"../../../public/js/runtime/catalog/normalize.js"
 @module_loader: ~"../../../public/js/runtime/orchestration/loader.js"
-@page_state: ~"../../../public/js/runtime/page-state.js"
+@page_state: ~"../../../public/js/runtime/page/page-state.js"
 @runtime_module_medium: ~"../../surfaces/runtime-module-medium.spw"
 @feature_wiring_cache: ~"../../caches/feature-wiring-timing-2026-07.spw"
 @layout_qa_measurement: ~"../layout-qa-measurement-2026-07/index.spw"

@@ -58,16 +58,16 @@ import {
 import {
   clearPins,
   getPinStorageKey,
-} from '/public/js/runtime/pin-registry.js';
+} from '/public/js/runtime/memory/pin-registry.js';
 import {
   BEHAVIOR_SCOPE_BUNDLES,
   BEHAVIOR_SCOPE_KEYS,
-} from '/public/js/runtime/behavior-scopes.js';
+} from '/public/js/runtime/orchestration/behavior-scopes.js';
 import { parseFeatureList } from '/public/js/runtime/orchestration/features.js';
 import {
   bindFeatureLabControls,
   syncFeatureLabControls,
-} from '/public/js/runtime/feature-lab-ui.js';
+} from '/public/js/runtime/discovery/feature-lab-ui.js';
 
 /**
  * Inspect-only snapshot: body[data-spw-features] vs generated BEHAVIOR_SCOPE_KEYS.
@@ -1331,7 +1331,7 @@ export const initSiteSettingsBindings = (settingsManager = manager) => {
 
   let queryComposers = { cleanup() {}, refresh() {} };
   // Lazy: hubs may exist without the settings page shell.
-  import('/public/js/runtime/query-link-composer.js')
+  import('/public/js/runtime/navigation/query-link-composer.js')
     .then((mod) => {
       queryComposers = mod.bindQueryComposers?.(document) || queryComposers;
     })
@@ -1501,7 +1501,7 @@ export const initSiteSettingsPage = () => {
   document.addEventListener('spw:runtime-tokens-updated', onRuntimeTokens);
 
   let queryComposers = { cleanup() {}, refresh() {} };
-  import('/public/js/runtime/query-link-composer.js')
+  import('/public/js/runtime/navigation/query-link-composer.js')
     .then((mod) => {
       queryComposers = mod.bindQueryComposers?.(document) || queryComposers;
     })

@@ -38,7 +38,7 @@
 @runtime_lifecycles: ~"../reviews/runtime-audit/lifecycles.spw"
 @naming_structured: ~"../conventions/naming-and-structured-values.spw"
 @attr_governance: ~"../conventions/data-spw-attribute-governance.spw"
-@composition_js: ~"../../public/js/runtime/composition-box-model.js"
+@composition_js: ~"../../public/js/runtime/regions/composition-box-model.js"
 @registers_css: ~"../../public/css/systems/registers.css"
 @packing_css: ~"../../public/css/systems/component-packing.css"
 @js_architecture_cognition: ~"../conventions/js-architecture-cognition.spw"
@@ -46,7 +46,7 @@
 @build_runtime_performance_audit: ~"./build-runtime-performance-2026-07/index.spw"
 @expression_consequence: ~"../conventions/semantic-expression-consequence.spw"
 @electrostatic_affordances: ~"../conventions/electrostatic-affordances.spw"
-@expression_runtime: ~"../../public/js/runtime/expression-resonance.js"
+@expression_runtime: ~"../../public/js/runtime/expression/expression-resonance.js"
 @target_runtime: ~"../../public/js/runtime/attention/resonance-probe.js"
 
 ^"stills_local_resonance_review_2026_09_05"{
@@ -537,7 +537,7 @@ audit_run: .{
     layer = "pragmatic"
     hypothesis = "Pack-local promotion stays within a performance budget when layout is CSS-only and JS mirrors only pack-local hosts (not every .site-frame) with host-level ResizeObserver."
     spec_ref = "this audit#performance_audit + component-packing.spw performance_defaults"
-    impl_ref = "public/js/runtime/composition-box-model.js DEFAULT_SELECTOR + RO scope"
+    impl_ref = "public/js/runtime/regions/composition-box-model.js DEFAULT_SELECTOR + RO scope"
     probe_ref = "On a production pack-local grid, resize a split-layout column without window resize; pack-layout updates; Performance panel shows no full-document annotate storm."
     falsification = "DEFAULT_SELECTOR expands to all site-frames solely to support packing mirrors, or container resize never updates pack-layout."
     status = "active"
@@ -559,8 +559,8 @@ audit_run: .{
     `rg -c 'data-spw-slot=' --glob '**/index.html' | sort -t: -k2 -nr | head`,
     `rg 'component_philosophy_harmony|component-philosophy-harmony|performance_audit|lifecycle_development|naming_considerations' .spw`,
     `rg 'data-spw-register|data-spw-express' design public --glob '!**/node_modules/**' | head`,
-    `rg 'DEFAULT_SELECTOR|scheduleCompositionRefresh|ResizeObserver' public/js/runtime/composition-box-model.js`,
-    `rg 'data-spw-content-density|data-spw-content-tone' public/js/runtime/composition-box-model.js`
+    `rg 'DEFAULT_SELECTOR|scheduleCompositionRefresh|ResizeObserver' public/js/runtime/regions/composition-box-model.js`,
+    `rg 'data-spw-content-density|data-spw-content-tone' public/js/runtime/regions/composition-box-model.js`
   ][reg=set]
 }[reg=facet]
 

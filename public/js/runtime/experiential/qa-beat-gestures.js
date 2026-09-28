@@ -25,7 +25,7 @@ export function initQABeatGestures() {
     if (key === 's' && !isTextInput) {
       e.preventDefault();
       try {
-        const mod = await import('/public/js/runtime/observation-beats.js');
+        const mod = await import('/public/js/runtime/diagnostics/observation-beats.js');
         const art = mod.captureCurrentBeatArtifact({ trigger: 'keyboard-s' });
         const cauldronMod = await import('/public/js/interface/composition.js');
         if (cauldronMod.captureBeatAsIngredient) {
@@ -37,14 +37,14 @@ export function initQABeatGestures() {
 
     if (key === '?') {
       e.preventDefault();
-      import('/public/js/runtime/observation-beats.js').then(m => {
+      import('/public/js/runtime/diagnostics/observation-beats.js').then(m => {
         console.info('[QA Beats status]', m.getActiveBeats ? m.getActiveBeats() : 'no beats module');
       });
     }
 
     if (key === 'b') {
       e.preventDefault();
-      import('/public/js/runtime/observation-beats.js').then(m => {
+      import('/public/js/runtime/diagnostics/observation-beats.js').then(m => {
         if (m.startQABeat) m.startQABeat({ reasonDetail: 'keyboard-b' });
       });
     }
@@ -60,7 +60,7 @@ export function initQABeatGestures() {
     clearTimeout(lpTimer);
     lpTimer = setTimeout(async () => {
       try {
-        const mod = await import('/public/js/runtime/observation-beats.js');
+        const mod = await import('/public/js/runtime/diagnostics/observation-beats.js');
         if (mod.startQABeat) {
           const beat = mod.startQABeat({ reasonDetail: 'touch-longpress-frame' });
           frame.dataset.spwActiveBeat = beat.id || 'active';

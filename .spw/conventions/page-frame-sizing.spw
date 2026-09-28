@@ -22,7 +22,7 @@
 @anatomy_device: ~"../audits/component-anatomy-device-packing-2026-07.spw"
 @home_css: ~"../../public/css/routes/surfaces/home.css"
 @astra_design: ~"../caches/astra-design-direction-2026-09.spw"
-@shell_disclosure: ~"../../public/js/runtime/shell-disclosure.js"
+@shell_disclosure: ~"../../public/js/runtime/shell/shell-disclosure.js"
 
 ^"unit_ladders"{
   rhythm: .{

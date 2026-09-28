@@ -1,7 +1,7 @@
 /* ==========================================================================
  * spatial-gravity.css
  * --------------------------------------------------------------------------
- * The visible + functional half of runtime/spatial-gravity.js. Opt-in via
+ * The visible + functional half of runtime/physics/spatial-gravity.js. Opt-in via
  * [data-spw-gravity]; the runtime writes edge/vertical gravity, extent, and a
  * proximity custom property, and these rules turn that into behavior you can
  * feel: expansions open toward room, and the nearest viewport edge announces
@@ -163,7 +163,7 @@
 
 /* ─── Boundary overlap: the yielded layer demotes visibly ───────────────── */
 /*
- * When runtime/spatial-gravity.js marks a lower-salience element as yielded in
+ * When runtime/physics/spatial-gravity.js marks a lower-salience element as yielded in
  * a boundary contest, it recedes — quieter, desaturated, non-interactive on the
  * contested frame — rather than clipping silently. The winner is untouched.
  */

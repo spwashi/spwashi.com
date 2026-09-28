@@ -20,7 +20,7 @@ Each rung is a real deliverable; each inherits the one below:
 
 - **Pulsing** - vessel/effect heartbeat cues; owner `spellcraft-authoring/` microinteractions.
 - **Local component state caching** - components remember their local state per the interaction-cache stratum; owner `runtime-bootstrap-performance/`.
-- **Measurement arcs** - `runtime/observation-beats.js` beats extended into named arcs whose completion can itself precipitate an artifact ("you watched this settle; here is its trace").
+- **Measurement arcs** - `runtime/diagnostics/observation-beats.js` beats extended into named arcs whose completion can itself precipitate an artifact ("you watched this settle; here is its trace").
 - **Gentle state management** - opportunities to touch state that invite rather than demand; cauldron panel affordances are the pattern.
 - **Tangible navigation** - spells as carryable items (the RPG item model); a route you have mastered is a thing in your bag.
 

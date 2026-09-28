@@ -43,9 +43,9 @@ const OBSERVING_MODULES = Object.freeze([
   'public/js/semantic/cauldron/registers.js',
   'public/js/semantic/cauldron/fluency.js',
   'public/js/semantic/cauldron/storage.js',
-  'public/js/runtime/cauldron-fluency.js',
-  'public/js/runtime/expression-resonance.js',
-  'public/js/runtime/dom-probes.js',
+  'public/js/runtime/memory/cauldron-fluency.js',
+  'public/js/runtime/expression/expression-resonance.js',
+  'public/js/runtime/expression/dom-probes.js',
 ]);
 
 /** Anything that can move bytes off the machine. */

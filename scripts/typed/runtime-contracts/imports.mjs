@@ -6,6 +6,17 @@ export const ALLOWED_JS_OWNER_DIRECTORIES = new Set([
     'generated', 'interface', 'kernel', 'media', 'modules', 'runtime', 'semantic', 'typed',
 ]);
 const ROOT_ENTRYPOINTS = new Set(['compose.js', 'site.js']);
+/**
+ * Runtime families (public/js/runtime/<family>/). A family names the organ a
+ * reader would look for; the runtime root holds folders only, so a new file
+ * picks its family instead of joining a flat pile. Adding a family is a
+ * contract change here and a row in public/js/README.md.
+ */
+export const ALLOWED_RUNTIME_FAMILIES = new Set([
+    'arrival', 'attention', 'catalog', 'diagnostics', 'discovery', 'experiential',
+    'expression', 'interaction', 'labs', 'memory', 'navigation', 'orchestration',
+    'page', 'physics', 'regions', 'shell',
+]);
 const CATALOG_FAMILIES = new Set([
     'runtime/catalog/core.js', 'runtime/catalog/feature.js',
     'runtime/catalog/region.js', 'runtime/catalog/enhancement.js',
@@ -109,6 +120,10 @@ export async function collectRuntimeImportReport(rootDir) {
     const ownerDirectories = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
     const rootEntrypoints = files.filter((file) => !file.includes('/'));
     const topLevelModuleFiles = files.filter((file) => /^modules\/[^/]+$/.test(file)).map((file) => `public/js/${file}`);
+    const looseRuntimeFiles = files.filter((file) => /^runtime\/[^/]+$/.test(file)).map((file) => `public/js/${file}`);
+    const runtimeFamilies = [...new Set(files
+            .map((file) => file.match(/^runtime\/([^/]+)\//)?.[1])
+            .filter((family) => Boolean(family)))].sort();
     const typedFiles = files.filter((file) => file.startsWith('typed/'));
     for (const file of rootEntrypoints) {
         if (!ROOT_ENTRYPOINTS.has(file))
@@ -121,6 +136,14 @@ export async function collectRuntimeImportReport(rootDir) {
     }
     for (const file of topLevelModuleFiles)
         errors.push(`${file} should move into a public/js/modules/<family>/ subdirectory.`);
+    for (const file of looseRuntimeFiles) {
+        errors.push(`${file} is loose in public/js/runtime/; move it into the family that owns it (${[...ALLOWED_RUNTIME_FAMILIES].join(', ')}).`);
+    }
+    for (const family of runtimeFamilies) {
+        if (!ALLOWED_RUNTIME_FAMILIES.has(family)) {
+            errors.push(`public/js/runtime/${family}/ is not a recognized runtime family; add it to ALLOWED_RUNTIME_FAMILIES and the README folder roles first.`);
+        }
+    }
     for (const file of typedFiles) {
         const source = file.slice('typed/'.length).replace(/\.js$/, '.ts');
         if (!sourceSet.has(source))

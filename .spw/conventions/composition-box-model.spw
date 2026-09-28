@@ -29,7 +29,7 @@ attributes: .{
 }[reg=facet]
 
 runtime: .{
- module = `public/js/runtime/composition-box-model.js`
+ module = `public/js/runtime/regions/composition-box-model.js`
  portable_entrypoint = `public/js/compose.js`
  console = `window.spwCompose.controls.composition.inspect(target)`
  site_hook = `window.__SPW_SITE__.composition.inspect(target)`

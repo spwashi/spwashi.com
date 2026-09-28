@@ -10,7 +10,7 @@
 #:layer #!pragmatics
 
 @css_manifest: ~"../../scripts/ts/css-manifest.mts"
-@behavior_scopes: ~"../../public/js/runtime/behavior-scopes.js"
+@behavior_scopes: ~"../../public/js/runtime/orchestration/behavior-scopes.js"
 @module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @feature_partial_theatrics: ~"./feature-partial-theatrics.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"

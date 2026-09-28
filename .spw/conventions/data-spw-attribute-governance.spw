@@ -10,7 +10,7 @@
 @site_semantics: ~"./site-semantics.spw"
 @interaction_microstates: ~"./interaction-microstates.spw"
 @dimension_vocabulary: ~"./dimension-vocabulary.spw"
-@page_state: ~"../../public/js/runtime/page-state.js"
+@page_state: ~"../../public/js/runtime/page/page-state.js"
 @dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
 @dom_probes: ~"../../.agents/debugging/dom-probes.md"
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
@@ -71,7 +71,7 @@ region_menu: .{
     gravity_overlap = .{
       scope = `[data-spw-gravity] opt-in hosts only`,
       values = #[`background`, `ambient`, `primary`, `focal`][reg=set],
-      consumer = `runtime/spatial-gravity.js — pairwise yield + data-spw-salience-rank`,
+      consumer = `runtime/physics/spatial-gravity.js — pairwise yield + data-spw-salience-rank`,
       convention = `@spatial_gravity`
     }[reg=facet]
     module_field = .{

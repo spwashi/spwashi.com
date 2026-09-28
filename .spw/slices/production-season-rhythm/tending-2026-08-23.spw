@@ -24,7 +24,7 @@ observation: .{
     `public/js/interface/haptics.js`,
     `public/js/semantic/cauldron/storage.js`,
     `public/js/interface/composition.js`,
-    `public/js/runtime/lens-modes.js`
+    `public/js/runtime/page/lens-modes.js`
   ][reg=set]
 }[reg=facet]
 
@@ -38,7 +38,7 @@ claim_chain: .{
   claim_id = `production-season-progressive-still`
   hypothesis = `Initial lens hydration should apply its DOM state without opening overlapping document view transitions; user-triggered lens changes may animate and must absorb cancellation.`
   spec_ref = `../../../.agents/plans/archive/production-season-rhythm/PLAN.md`
-  impl_ref = `../../../public/js/runtime/lens-modes.js`
+  impl_ref = `../../../public/js/runtime/page/lens-modes.js`
   probe_ref = `fresh in-app-browser load of /recipes/#production-season followed by settled screenshot and error-log inspection`
   falsification = `An initial load emits InvalidStateError, leaves the lens state unapplied, or produces an obscured still after runtime settlement.`
   status = `confirmed`

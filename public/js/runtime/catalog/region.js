@@ -26,6 +26,6 @@ export const REGION_DEFS = [
     evaluates: 'region lifecycle harmony density motion defaults',
     timingArc: 'region-hydration',
     effectScope: 'region-state css-vars bus',
-    load: () => import('../region-enhancer.js'),
+    load: () => import('../regions/region-enhancer.js'),
   },
 ];

@@ -836,7 +836,7 @@ function ensureSatchelQueryComposer(root) {
   const host = root.querySelector?.('[data-spw-query-composer]');
   if (!(host instanceof HTMLElement) || host.dataset.spwQueryComposerBound === 'true') return;
 
-  import('/public/js/runtime/query-link-composer.js')
+  import('/public/js/runtime/navigation/query-link-composer.js')
     .then((mod) => {
       mod.hydrateQueryComposer?.(host);
       mod.bindQueryComposers?.(root);

@@ -39,7 +39,7 @@ intent: .{
  surfaces = #[
   `.spw/conventions/site-semantics.spw`,
   `js/interface/composition.js`,
-  `js/runtime/spells.js`,
+  `js/runtime/memory/spells.js`,
   `css/ornament/ornament.css`,
  ][reg=set]
  fixity_tier = `tending`
@@ -54,7 +54,7 @@ intent: .{
 @plan_spellcraft_authoring: ~"../spellcraft-authoring/index.spw"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
 @composition: ~"../../../public/js/interface/composition.js"
-@spells: ~"../../../public/js/runtime/spells.js"
+@spells: ~"../../../public/js/runtime/memory/spells.js"
 @ornament: ~"../../../public/css/ornament/ornament.css"
 @design_runtime_index_html: ~"../../../design/runtime/index.html"
 @design_composition_index_html: ~"../../../design/composition/index.html"

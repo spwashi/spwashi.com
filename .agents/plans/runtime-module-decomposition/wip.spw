@@ -97,8 +97,8 @@ source = "top-line module census, impact/coupling review, decomposition plan, an
 }[reg=facet]
 
 ^"targeted_probes"{
-  shell = #['rg writeDataset|\.dataset public/js/runtime/shell-disclosure.js', 'trace shell disclosure bus events and root datasets', 'mobile + desktop nav disclosure smoke'][reg=set]
-  experiential = #['rg bus\.emit|CustomEvent|localStorage public/js/runtime/experiential.js', 'replay spell/memo/returning-reader paths', 'verify no duplicate lifecycle listeners'][reg=set]
+  shell = #['rg writeDataset|\.dataset public/js/runtime/shell/shell-disclosure.js', 'trace shell disclosure bus events and root datasets', 'mobile + desktop nav disclosure smoke'][reg=set]
+  experiential = #['rg bus\.emit|CustomEvent|localStorage public/js/runtime/experiential/experiential.js', 'replay spell/memo/returning-reader paths', 'verify no duplicate lifecycle listeners'][reg=set]
   haptics = #['trace storage keys and checkpoint restore', 'test reduced motion and no vibration support', 'verify gesture state remains unchanged'][reg=set]
   image = #['two distinct image hosts', 'clear and restore local memory', 'verify effect controls do not own persistence'][reg=set]
   shared = #['build importer list before extraction', 'operator registry parity test', 'npm run test:modules + compose import smoke'][reg=set]

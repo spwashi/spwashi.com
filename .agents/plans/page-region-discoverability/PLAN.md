@@ -10,7 +10,7 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 
 ## Files
 
-- `public/js/runtime/page-region-rail.js` enriches generated region links with role/feature/component summaries.
+- `public/js/runtime/regions/page-region-rail.js` enriches generated region links with role/feature/component summaries.
 - `public/css/handles/page-region-rail.css` supports the richer rail label anatomy.
 - Key route `index.html` files opt into `route-discovery`.
 - `index.html` gets the first visual component-discovery atlas using tracked Midjourney renders.
@@ -45,12 +45,12 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 
 ## Validation
 
-- `node --check public/js/runtime/page-region-rail.js`
-- `node --check public/js/runtime/region-profiler.js`
-- `node --check public/js/runtime/component-collection.js`
-- `node --check public/js/runtime/reward-ui.js`
+- `node --check public/js/runtime/regions/page-region-rail.js`
+- `node --check public/js/runtime/regions/region-profiler.js`
+- `node --check public/js/runtime/memory/component-collection.js`
+- `node --check public/js/runtime/memory/reward-ui.js`
 - `node --check public/js/runtime/module-catalog.js`
-- `node --check public/js/runtime/charge-field.js`
+- `node --check public/js/runtime/physics/charge-field.js`
 - `node --check public/js/runtime/attention/section-handle.js`
 - `node --check public/js/kernel/dom-contracts.js`
 - `node --check scripts/image-resource-manifest.mjs`

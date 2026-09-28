@@ -14,7 +14,7 @@ Merge only what is proven.
 
 ## 2026-08 inspect primitives
 - Runtime organs report through frozen `SPW_*_CONTRACT` + `describe*` helpers. That is the inspect primitive, not a new folder.
-- `runtime/physical-model.js` gathers gravity / charge / beat / wonder / climate. It is pollinator (`compose.js`) and console (`spwCompose.controls.physics`), not a catalog-mounted writer.
+- `runtime/physics/physical-model.js` gathers gravity / charge / beat / wonder / climate. It is pollinator (`compose.js`) and console (`spwCompose.controls.physics`), not a catalog-mounted writer.
 - Interface press uses `--spw-control-press-depth` / `--spw-micro-press-scale` on handles and card anchors. Do not invent a second :active scale.
 
 ## Proposed topology
@@ -104,3 +104,6 @@ Two kernel modules now own timing and geometry reads that runtime and interface 
 
 ## Per-file value — 2026-09-18
 `npm run audit:js-tree` now measures what the 2026-05 wrapper pass left implicit: reach, wiring, and layer direction per file. Ledger: `.spw/audits/js-tree-value-2026-09.spw`. Landed: `browser-primitives.js` moved into `kernel/` (it was kernel by role and five semantic files reached up for it), the unreachable duplicate `runtime/state-inspector.js` deleted, and `kernel/route-utils.js` freed of its semantic import. Open: 17 orphans (3,867 lines nothing loads, four of them tool modules whose routes are live), 32 upward imports led by `interface/site-settings-ui.js` and the interface hubs (haptics, accent-palette, wonder-memory, cauldron) that lower layers consume.
+
+## Runtime families — 2026-09-27
+Operation: `align`. Fixity: `stable`. The 88 loose files under `public/js/runtime/` moved into sixteen families (arrival, attention, catalog, diagnostics, discovery, experiential, expression, interaction, labs, memory, navigation, orchestration, page, physics, regions, shell). Basenames did not change, so an id or a file name still greps; facades joined the folders their children already lived in (`attention/attention-architecture.js`, `experiential/experiential.js`, `shell/shell-disclosure.js`). The move ran as `runtime-families.mjs` here: relative specifiers recomputed from each file's new seat, then every `runtime/<file>.js` address in tracked text rewritten, workbench excluded. `check:runtime` now fails on a loose runtime file or an unnamed family (`ALLOWED_RUNTIME_FAMILIES`); the family table lives in `public/js/README.md`. The move landed before texture.website and lore.land import anything from `/public/js/`, because after that a path is a public address.

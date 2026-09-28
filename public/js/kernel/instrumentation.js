@@ -1329,11 +1329,11 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
     beats: {
       create: (duration, opts) => {
         // Lazy import to keep surface small when not in QA mode
-        return import('/public/js/runtime/observation-beats.js').then(m => m.createBeatWindow(duration, opts));
+        return import('/public/js/runtime/diagnostics/observation-beats.js').then(m => m.createBeatWindow(duration, opts));
       },
-      startQA: (opts) => import('/public/js/runtime/observation-beats.js').then(m => m.startQABeat(opts)),
-      captureArtifact: (extra) => import('/public/js/runtime/observation-beats.js').then(m => m.captureCurrentBeatArtifact(extra)),
-      getActive: () => import('/public/js/runtime/observation-beats.js').then(m => m.getActiveBeats()),
+      startQA: (opts) => import('/public/js/runtime/diagnostics/observation-beats.js').then(m => m.startQABeat(opts)),
+      captureArtifact: (extra) => import('/public/js/runtime/diagnostics/observation-beats.js').then(m => m.captureCurrentBeatArtifact(extra)),
+      getActive: () => import('/public/js/runtime/diagnostics/observation-beats.js').then(m => m.getActiveBeats()),
     },
     qa: {
       enterScreenshotMode: () => applySpwQueryDisposition(globalObject.document?.documentElement, { search: '?qa=screenshot-qa' }),
@@ -1343,16 +1343,16 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
       enterAgentMode: () => applySpwQueryDisposition(globalObject.document?.documentElement, {
         search: debugPresets.agentQa,
       }),
-      capture: (extra) => import('/public/js/runtime/observation-beats.js').then(m => m.captureCurrentBeatArtifact(extra)),
+      capture: (extra) => import('/public/js/runtime/diagnostics/observation-beats.js').then(m => m.captureCurrentBeatArtifact(extra)),
       /** Packing + reflow + page sizing + look-feel checklist (lazy). */
-      layout: (options = {}) => import('/public/js/runtime/layout-qa.js').then((m) => m.snapshotLayoutQa(options)),
-      layoutSummary: (options = {}) => import('/public/js/runtime/layout-qa.js').then(async (m) => {
+      layout: (options = {}) => import('/public/js/runtime/diagnostics/layout-qa.js').then((m) => m.snapshotLayoutQa(options)),
+      layoutSummary: (options = {}) => import('/public/js/runtime/diagnostics/layout-qa.js').then(async (m) => {
         const report = await m.snapshotLayoutQa(options);
         return m.summarizeLayoutQa(report);
       }),
-      layoutRecipes: () => import('/public/js/runtime/layout-qa.js').then((m) => m.layoutQaRecipes()),
-      posture: () => import('/public/js/runtime/debug-qa-posture.js').then((m) => m.describeDebugQaPosture()),
-      applyPosture: () => import('/public/js/runtime/debug-qa-posture.js').then((m) => {
+      layoutRecipes: () => import('/public/js/runtime/diagnostics/layout-qa.js').then((m) => m.layoutQaRecipes()),
+      posture: () => import('/public/js/runtime/diagnostics/debug-qa-posture.js').then((m) => m.describeDebugQaPosture()),
+      applyPosture: () => import('/public/js/runtime/diagnostics/debug-qa-posture.js').then((m) => {
         const posture = m.applyDebugQaPostureToRoot();
         return m.describeDebugQaPosture(posture);
       }),

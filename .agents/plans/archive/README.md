@@ -42,10 +42,10 @@ Archived plan folders (moved here in ref-safe passes):
 - `public-entrance-runtime-payload/` - Archived 2026-09-17: landed 2026-08-18 by its own Status; delivery continues in `core-css-spend-cut` and `runtime-bootstrap-performance`.
 - `semantic-classname-layers/` - Archived 2026-09-17: landed 2026-08-18; `spw-frame` / `spw-chip` are the public nouns (AGENTS.md).
 - `resume-record/` - Archived 2026-09-17: `data-spw-feature="resume-record"` is live on About and the budgeting tool.
-- `wrap-job-utility/` - Archived 2026-09-17: wrap jobs live in `runtime/spw-key-events.js` and the enhancement catalog.
+- `wrap-job-utility/` - Archived 2026-09-17: wrap jobs live in `runtime/interaction/spw-key-events.js` and the enhancement catalog.
 - `team-orientation/` - Archived 2026-09-17: a reading-session plan whose compiled dump was already archived as `team-orientation-reading.md`.
 - `plan-wip-index-conventions/` - Archived 2026-09-17: written for a feature-branch worktree flow and a `.agents/state/plans-index.json` that was never committed; the maintain script and `planning-ecology.spw` carry the convention.
-- `runtime-load-instrumentation/` - Archived 2026-09-17: 0 of 11 items touched since July; `runtime/load-trace.js`, the harness marks, and `language-ladder-runtime-instrumentation` carry the instrument.
+- `runtime-load-instrumentation/` - Archived 2026-09-17: 0 of 11 items touched since July; `runtime/arrival/load-trace.js`, the harness marks, and `language-ladder-runtime-instrumentation` carry the instrument.
 
 Census (not a folder move): `.spw/audits/plan-spw-tree-2026-09.spw` — 2026-09-07 root-index bucket truth. Physical archive still requires a citation-safe pass.
 

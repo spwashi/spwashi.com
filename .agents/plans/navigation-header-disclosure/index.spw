@@ -38,7 +38,7 @@ intent: .{
  ][reg=set]
  surfaces = #[
   `scripts/template.mjs`,
-  `js/runtime/shell-disclosure.js`,
+  `js/runtime/shell/shell-disclosure.js`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -50,7 +50,7 @@ intent: .{
 @plan: ~"./PLAN.md"
 @fix: ~"./FIX.md"
 @template: ~"../../../scripts/template.mjs"
-@shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"
+@shell_disclosure: ~"../../../public/js/runtime/shell/shell-disclosure.js"
 
 dispatch: .{
  plan = @plan
@@ -77,13 +77,13 @@ dispatch: .{
  hypothesis = `Coarse/pocket hamburger is the primary disclosure; labeled Routes is inline-mode copy. Overlay contract stays explicit.`
  spec_ref = ~"./PLAN.md"
  impl_ref = ~"../../../scripts/template.mjs"
- probe_ref = `grep -n "pointer: coarse" public/js/runtime/shell-disclosure.js public/css/shell/chrome/navigation.css`
+ probe_ref = `grep -n "pointer: coarse" public/js/runtime/shell/shell-disclosure.js public/css/shell/chrome/navigation.css`
  falsification = `CSS and JS advertise different drawer queries, or a coarse fold shows both the Routes chip and the hamburger.`
  status = "active"
 }[reg=facet]
 
 validation: #[
- `node --check public/js/runtime/shell-disclosure.js`,
+ `node --check public/js/runtime/shell/shell-disclosure.js`,
  `node --check scripts/template.mjs`,
  `git diff --check`,
  `targeted rg checks for the new shell action and feature names`,

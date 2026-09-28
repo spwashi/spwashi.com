@@ -16,12 +16,12 @@ Make page and component anatomy explorable sitewide: embedded route workshops fo
 - `public/css/components/embedded-workshop.css`
 - `public/css/components/frame-controls.css`
 - `public/css/handles/page-region-rail.css`
-- `public/js/runtime/page-region-rail.js`
+- `public/js/runtime/regions/page-region-rail.js`
 - `public/js/kernel/site-settings-profiles.js`
 - `public/js/kernel/site-settings-engine.js`
-- `public/js/runtime/shell-disclosure.js`
+- `public/js/runtime/shell/shell-disclosure.js`
 - `public/js/runtime/module-catalog.js`
-- `public/js/runtime/tuning-discovery.js`
+- `public/js/runtime/discovery/tuning-discovery.js`
 - `topics/index.html`, `about/index.html`, `services/index.html`
 - `public/css/style-core.css`
 

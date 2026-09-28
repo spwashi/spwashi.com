@@ -11,7 +11,7 @@ Extend that surface so a generated seed can also become a lightweight canon incr
 - `index.html`: homepage reason strip names attention as relational infrastructure.
 - `settings/index.html`: browser-local attention posture controls and Contemplative Hearth preset.
 - `public/js/kernel/site-settings.js`: persisted attention dimension settings, labels, datasets, and preset.
-- `public/js/runtime/prepaint-state.js`: early dataset projection for saved attention posture.
+- `public/js/runtime/arrival/prepaint-state.js`: early dataset projection for saved attention posture.
 - `_partials/media-cauldron.html`: reusable local media production surface.
 - `public/js/modules/media/cauldron.js`: client-only seed generation and copy behavior.
 - `play/index.html`: first route host for the Media Cauldron partial.
@@ -29,7 +29,7 @@ Extend that surface so a generated seed can also become a lightweight canon incr
 ## Validation
 
 - Run `git diff --check`.
-- Run `node --check public/js/kernel/site-settings.js public/js/runtime/prepaint-state.js public/js/site.js public/js/modules/media/cauldron.js`.
+- Run `node --check public/js/kernel/site-settings.js public/js/runtime/arrival/prepaint-state.js public/js/site.js public/js/modules/media/cauldron.js`.
 - Use targeted `rg` checks for `attentionSelfRelation`, `media-cauldron`, `worldBuildingMode`, `copy-proof-card`, `living-concepts`, and `contemplative-hearth`.
 
 ## Out Of Scope

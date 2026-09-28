@@ -153,7 +153,7 @@ const ROUTE_BUNDLE_SLUGS = Object.freeze(Object.fromEntries(Object.entries(ROUTE
 const BEHAVIOR_BUNDLE_SLUGS = Object.freeze(Object.fromEntries(Object.keys(BEHAVIOR_SCOPES).map((feature) => [feature, feature.replace(/[^a-z0-9]+/gi, '-')])));
 export const CORE_BUNDLE_HREF = '/public/css/bundles/core.css';
 export const FULL_STYLESHEET_HREF = '/public/css/style.css';
-export const BEHAVIOR_SCOPE_MODULE_HREF = '/public/js/runtime/behavior-scopes.js';
+export const BEHAVIOR_SCOPE_MODULE_HREF = '/public/js/runtime/orchestration/behavior-scopes.js';
 export function routeBundleHref(surface) {
     const canonical = resolveCanonicalRouteSurface(surface);
     const files = ROUTE_SCOPES[canonical];

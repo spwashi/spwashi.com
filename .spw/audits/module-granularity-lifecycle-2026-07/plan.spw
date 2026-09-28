@@ -106,7 +106,7 @@
       title = `attention L3 catalog children`
       surfaces = #[
         `public/js/runtime/catalog/enhancement.js`,
-        `public/js/runtime/attention-architecture.js`,
+        `public/js/runtime/attention/attention-architecture.js`,
         `public/js/runtime/attention/*`
       ][reg=set]
       work = `Add catalog ids per @granularity proposed_attention_L3; orchestrator becomes optional thin CORE/IMMEDIATE or dissolves; preserve ATTENTION_ARCHITECTURE_CONTRACT`
@@ -311,7 +311,7 @@
   validation = #[
     `npm run check:runtime`,
     `rg module_granularity_lifecycle .spw`,
-    `git log --oneline -- public/js/runtime/shell-disclosure.js | head` # touch rate should fall after P2,
+    `git log --oneline -- public/js/runtime/shell/shell-disclosure.js | head` # touch rate should fall after P2,
     `update this audit grades when phases land`
   ][reg=set]
 }[reg=facet]

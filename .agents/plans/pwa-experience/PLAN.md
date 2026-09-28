@@ -18,7 +18,7 @@ The desired end state is a static site that behaves like a credible lightweight 
 [NEW] sw.js
 [NEW] offline/index.html
 [MOD] manifest.webmanifest
-[MOD] public/js/runtime/pwa-update-handler.js
+[MOD] public/js/runtime/shell/pwa-update-handler.js
 [MOD] public/js/site.js
 [MOD] public/js/runtime/module-catalog-normalize.js
 [MOD] public/ts/runtime-environment.ts
@@ -36,7 +36,7 @@ The desired end state is a static site that behaves like a credible lightweight 
 [NEW] public/images/icon-maskable-512.png
 
 Craft guard:
-- `sw.js` and `public/js/runtime/pwa-update-handler.js` should stay single-purpose and well under 600 lines.
+- `sw.js` and `public/js/runtime/shell/pwa-update-handler.js` should stay single-purpose and well under 600 lines.
 - No import growth risk is expected; the client script remains a small PWA shell helper.
 
 ## QA Reconciliation — 2026-07-13

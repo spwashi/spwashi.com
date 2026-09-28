@@ -14,7 +14,7 @@
 @style_development: ~"./style-development.spw"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
 @wonder_architecture: ~"./wonder-architecture.spw"
-@wonder_memory_runtime: ~"../../public/js/runtime/wonder-memory.js"
+@wonder_memory_runtime: ~"../../public/js/runtime/memory/wonder-memory.js"
 @accent_palette_runtime: ~"../../public/js/semantic/accent-palette.js"
 @settings_runtime: ~"../../public/js/kernel/site-settings.js"
 @runtime_audit_seams: ~"../reviews/runtime-audit/seams.spw"

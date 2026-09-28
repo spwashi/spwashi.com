@@ -62,8 +62,8 @@ const DYNAMIC_STYLE_WRITE_FILES = new Map<string, string>([
   ['public/js/kernel/shared.js', 'operator token assignment helper'],
   ['public/js/kernel/site-settings-engine.js', 'settings token projection'],
   ['public/js/modules/design/experiments.js', 'design experiment token controls'],
-  ['public/js/runtime/region-menu.js', 'region menu variable tuner'],
-  ['public/js/runtime/image-provenance.js', 'per-picture anchor names for provenance marks'],
+  ['public/js/runtime/regions/region-menu.js', 'region menu variable tuner'],
+  ['public/js/runtime/expression/image-provenance.js', 'per-picture anchor names for provenance marks'],
 ]);
 
 function relativeRepoPath(absolutePath: string): string {

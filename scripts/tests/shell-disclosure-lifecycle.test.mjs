@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { initSpwShellDisclosure } from '../../public/js/runtime/shell-disclosure.js';
+import { initSpwShellDisclosure } from '../../public/js/runtime/shell/shell-disclosure.js';
 
 // Dispatch synchronously so an exception inside a browser listener fails the
 // regression instead of being swallowed by the shared DOM fallback.

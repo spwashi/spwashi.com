@@ -6,9 +6,9 @@
 - Remove dead vertical space above closing braces when a frame footer only carries the brace marker.
 
 ## Shared layers
-- `public/js/runtime/experiential.js`
-- `public/js/runtime/region-menu.js`
-- `public/js/runtime/shell-disclosure.js`
+- `public/js/runtime/experiential/experiential.js`
+- `public/js/runtime/regions/region-menu.js`
+- `public/js/runtime/shell/shell-disclosure.js`
 - `public/css/components/frames.css`
 - `settings/index.html`
 

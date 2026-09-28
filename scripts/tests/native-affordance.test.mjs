@@ -7,7 +7,7 @@ import {
   isNativeControl,
   isOwnAffordanceTarget,
 } from '../../public/js/kernel/dom-contracts.js';
-import { initBraceGestures } from '../../public/js/runtime/brace-gestures.js';
+import { initBraceGestures } from '../../public/js/runtime/interaction/brace-gestures.js';
 
 function mockNode(label, parent = null) {
   const node = {

@@ -31,7 +31,7 @@
 @home: ~"../../index.html"
 @about: ~"../../about/index.html"
 @learnability: ~"../conventions/learnability-ledger.spw"
-@feature_discovery: ~"../../public/js/runtime/feature-discovery.js"
+@feature_discovery: ~"../../public/js/runtime/discovery/feature-discovery.js"
 @product_lines: ~"../surfaces/product-lines.spw"
 @marketing: ~"../conventions/model-guided-refinement.spw"
 @registers: ~"../conventions/expressive-registers.spw"

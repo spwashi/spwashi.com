@@ -46,7 +46,7 @@
   presence = `684 sigil-led controls author their operator, 674 of them frame sigils across 106 routes`
   stylesheet = `114 rules keyed on one spelling of an operator closed; three color tables (cinematic, effect-interpretation, demos) are one rule per operator; pragma resolves to action; the commit value nothing authors is gone`
   labeling = `22 operator clusters that read as bare paragraphs are named groups`
-  serialization = `page anatomy serializes frames and the operator controls they hold, nested as the page nests them (runtime/page-anatomy.js frames = #[ .{ frame expression operators=#[ … ] frames=#[ … ] } ])`
+  serialization = `page anatomy serializes frames and the operator controls they hold, nested as the page nests them (runtime/page/page-anatomy.js frames = #[ .{ frame expression operators=#[ … ] frames=#[ … ] } ])`
   material = `the operators-on-material theory (material-physics.spw#operators_on_material) with a bench on /design/materials/: six materials, one operator row each, intents set on the route and consumed by the chip`
 }
 

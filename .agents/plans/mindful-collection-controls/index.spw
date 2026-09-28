@@ -39,8 +39,8 @@ intent: .{
  surfaces = #[
   `settings/index.html`,
   `.spw/conventions/ornament-contract.spw`,
-  `js/runtime/component-collection.js`,
-  `js/runtime/reward-ui.js`,
+  `js/runtime/memory/component-collection.js`,
+  `js/runtime/memory/reward-ui.js`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -52,8 +52,8 @@ intent: .{
 @plan: ~"./PLAN.md"
 @index: ~"../../../settings/index.html"
 @ornament_contract: ~"../../../.spw/conventions/ornament-contract.spw"
-@component_collection: ~"../../../public/js/runtime/component-collection.js"
-@reward_ui: ~"../../../public/js/runtime/reward-ui.js"
+@component_collection: ~"../../../public/js/runtime/memory/component-collection.js"
+@reward_ui: ~"../../../public/js/runtime/memory/reward-ui.js"
 @floating_chrome: ~"../../../public/css/components/floating-chrome.css"
 
 dispatch: .{
@@ -93,8 +93,8 @@ validation: #[
  `git diff --check`,
  `node --check public/js/spw-guide-badge.js`,
  `node --check public/js/spw-spells.js`,
- `node --check public/js/runtime/component-collection.js`,
- `node --check public/js/runtime/reward-ui.js`,
+ `node --check public/js/runtime/memory/component-collection.js`,
+ `node --check public/js/runtime/memory/reward-ui.js`,
  `node --check public/js/kernel/site-settings-engine.js`,
 ][reg=set]
 

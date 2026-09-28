@@ -55,7 +55,7 @@ async function collectFeatureTokens() {
 }
 
 async function readBehaviorScopeKeys() {
-  const scopePath = path.join(ROOT, 'public/js/runtime/behavior-scopes.js');
+  const scopePath = path.join(ROOT, 'public/js/runtime/orchestration/behavior-scopes.js');
   try {
     const text = await fs.readFile(scopePath, 'utf8');
     const block = text.match(/BEHAVIOR_SCOPE_KEYS\s*=\s*Object\.freeze\(\[([\s\S]*?)\]\)/);

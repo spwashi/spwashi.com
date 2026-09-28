@@ -53,7 +53,7 @@
   gap: var(--spw-image-distribution-gap);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 15rem)), 1fr));
 }
-/* Image provenance (runtime/image-provenance.js). Every picture whose source
+/* Image provenance (runtime/expression/image-provenance.js). Every picture whose source
    says where it came from wears one mark at its corner: * for original work,
    ~ for a generated render, in that operator's ink. Settings → Image
    provenance picks the tone: mark (the sigil), named (sigil and word), or

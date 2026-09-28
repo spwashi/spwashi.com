@@ -1,0 +1,107 @@
+/**
+ * attention-architecture.js
+ * --------------------------------------------------------------------------
+ * Orchestrator for attention-field enhancements. Submodules live under
+ * ./attention/ for section locomotion, resonance probe, reading groove,
+ * pinch scaling, and scroll cadence.
+ *
+ * Catalog mounts each child on its own when=. This facade is the
+ * compose/all-at-once path and uses the same SPW_MODULE_EXPORT.mount(ctx, root)
+ * contract the loader uses.
+ * --------------------------------------------------------------------------
+ */
+
+import { guardCall } from '/public/js/kernel/dom-render.js';
+import {
+  ATTENTION_ARCHITECTURE_CONTRACT,
+  describeAttentionArchitecture,
+} from './shared.js';
+import {
+  initSectionHandle,
+  SPW_MODULE_EXPORT as sectionHandleExport,
+} from './section-handle.js';
+import {
+  initResonanceProbe,
+  SPW_MODULE_EXPORT as resonanceProbeExport,
+} from './resonance-probe.js';
+import {
+  initReadingGroove,
+  SPW_MODULE_EXPORT as readingGrooveExport,
+} from './reading-groove.js';
+import {
+  initPinchTextScale,
+  SPW_MODULE_EXPORT as pinchScaleExport,
+} from './pinch-scale.js';
+import {
+  initScrollCadenceState,
+  SPW_MODULE_EXPORT as scrollCadenceExport,
+} from './scroll-cadence.js';
+
+export const SPW_ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
+  id: 'attention-architecture',
+  organs: Object.freeze([
+    'scroll-cadence',
+    'section-handle',
+    'resonance-probe',
+    'reading-groove',
+    'pinch-scale',
+  ]),
+  mount: 'initSpwAttentionArchitecture',
+  ...ATTENTION_ARCHITECTURE_CONTRACT,
+});
+
+export {
+  ATTENTION_ARCHITECTURE_CONTRACT,
+  describeAttentionArchitecture,
+  initSectionHandle,
+  initResonanceProbe,
+  initReadingGroove,
+  initPinchTextScale,
+  initScrollCadenceState,
+};
+
+const CHILD_MOUNT = Object.freeze({
+  'scroll-cadence': scrollCadenceExport.mount,
+  'section-handle': sectionHandleExport.mount,
+  'resonance-probe': resonanceProbeExport.mount,
+  'reading-groove': readingGrooveExport.mount,
+  'pinch-scale': pinchScaleExport.mount,
+});
+
+function asCleanup(result) {
+  if (typeof result === 'function') return result;
+  if (typeof result?.cleanup === 'function') return result.cleanup;
+  return null;
+}
+
+export function initSpwAttentionArchitecture(ctx = {}) {
+  const root = ctx.root || (typeof document !== 'undefined' ? document : null);
+  const wanted = ctx.children
+    || Object.keys(ATTENTION_ARCHITECTURE_CONTRACT.children);
+  const cleanups = [];
+
+  wanted.forEach((name) => {
+    const mount = CHILD_MOUNT[name];
+    if (!mount) return;
+    const result = guardCall(() => mount(ctx, root), `attention:${name}`, { silent: true })();
+    const cleanup = asCleanup(result);
+    if (cleanup) cleanups.push(cleanup);
+  });
+
+  return () => {
+    for (const cleanup of cleanups) {
+      try { cleanup(); } catch (_) {}
+    }
+  };
+}
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'attention-architecture',
+  contract: SPW_ATTENTION_ARCHITECTURE_CONTRACT,
+  mount(ctx, root) {
+    return initSpwAttentionArchitecture({ ...ctx, root });
+  },
+  describe(root) {
+    return describeAttentionArchitecture(root);
+  },
+});

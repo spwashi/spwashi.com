@@ -39,7 +39,7 @@ Craft guard:
 
 - Rebase target: `main@346e9446d284eaa78f6eed9aaa4a9a1da1ef0aa1`
 - Rebase cadence: before commit 1, before merge
-- Hygiene split: none; preserve unrelated existing edits in `public/css/spw-chrome.css`, `public/js/interface/contextual-ui.js`, and `public/js/runtime/shell-disclosure.js`
+- Hygiene split: none; preserve unrelated existing edits in `public/css/spw-chrome.css`, `public/js/interface/contextual-ui.js`, and `public/js/runtime/shell/shell-disclosure.js`
 
 ## Dependencies
 

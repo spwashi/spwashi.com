@@ -38,9 +38,9 @@ Read first:
 | **`pointer-rich`** | Wide/atlas viewport + fine pointer | Full scene lane mechanics, expanded tooltips, deep resonance |
 
 ### Dedicated Module Owners:
-* **Lanes & Local Memory:** `public/js/runtime/scene-interaction.js`
-* **Key Events & Potentiation:** `public/js/runtime/spw-key-events.js`
-* **Device & Register Tokens:** `public/js/runtime/interactive-medium.js`
+* **Lanes & Local Memory:** `public/js/runtime/interaction/scene-interaction.js`
+* **Key Events & Potentiation:** `public/js/runtime/interaction/spw-key-events.js`
+* **Device & Register Tokens:** `public/js/runtime/shell/interactive-medium.js`
 
 ---
 
@@ -48,7 +48,7 @@ Read first:
 
 1. **Verify Module Syntax:**
    ```bash
-   node --check public/js/runtime/interactive-medium.js
+   node --check public/js/runtime/shell/interactive-medium.js
    ```
 2. **Catalog & Behavior Scope Gate:**
    ```bash

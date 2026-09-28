@@ -40,7 +40,7 @@
 @promo_plan: ~"../../.agents/plans/promo-wonder-cycle/PLAN.md"
 @theme_packs_plan: ~"../../.agents/plans/settings-theme-packs/PLAN.md"
 @palette_plan: ~"../../.agents/plans/palette-theme-composability-instrumentability/PLAN.md"
-@composition_js: ~"../../public/js/runtime/composition-box-model.js"
+@composition_js: ~"../../public/js/runtime/regions/composition-box-model.js"
 @composition_test: ~"../../scripts/tests/composition-flow-authored.test.mjs"
 @content_css: ~"../../public/css/components/content.css"
 @region_seats_css: ~"../../public/css/systems/region-seats.css"
@@ -49,7 +49,7 @@
 @floating_chrome_css: ~"../../public/css/components/floating-chrome.css"
 @sigils_css: ~"../../public/css/handles/operators/sigils-and-chips.css"
 @core_tokens: ~"../../public/css/tokens/core.css"
-@pulse_tuner: ~"../../public/js/runtime/pulse-beat-tuner.js"
+@pulse_tuner: ~"../../public/js/runtime/physics/pulse-beat-tuner.js"
 @settings_route: ~"../../settings/index.html"
 @enhancement_catalog: ~"../../public/js/runtime/catalog/enhancement.js"
 

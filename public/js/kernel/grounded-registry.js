@@ -170,5 +170,5 @@ export const SPW_GROUNDED_REGISTRY_CONTRACT = Object.freeze({
   describes: 'memory[grounded|coupling|sigil]{storage} what the reader has grounded, read from below the hand that grounds it',
   keys: [GROUNDED_REGISTRY_KEY, GLOBAL_COUPLING_KEY, SIGIL_COLLECTION_KEY, 'spw-coupling:<path>', `${CHECKPOINT_PREFIX}<name>`],
   writer: 'interface/haptics.js',
-  readers: ['semantic/lattice.js', 'semantic/cognitive-surface.js', 'interface/smart-console.js', 'interface/guide.js', 'runtime/spells.js'],
+  readers: ['semantic/lattice.js', 'semantic/cognitive-surface.js', 'interface/smart-console.js', 'interface/guide.js', 'runtime/memory/spells.js'],
 });

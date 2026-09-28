@@ -14,7 +14,7 @@
 @serialize: ~"../conventions/spw-serialization-hydration.spw"
 @bus: ~"../../public/js/typed/bus.js"
 @idle: ~"../../public/js/runtime/orchestration/loader.js"
-@salience: ~"../../public/js/runtime/expression-resonance.js"
+@salience: ~"../../public/js/runtime/expression/expression-resonance.js"
 @capture: ~"../conventions/component-capture-pipeline.spw"
 @assets: ~"../assets.spw"
 

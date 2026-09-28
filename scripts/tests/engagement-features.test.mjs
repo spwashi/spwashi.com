@@ -33,14 +33,14 @@ import {
   SPW_FEATURE_DISCOVERY_CONTRACT,
   initFeatureDiscovery,
   normalizeFeatureTrigger,
-} from '../../public/js/runtime/feature-discovery.js';
+} from '../../public/js/runtime/discovery/feature-discovery.js';
 import { createRegistry } from '../../public/js/kernel/module-registry.js';
 import { readRuntimePolicy } from '../../public/js/runtime/orchestration/policy.js';
 import {
   resolvePackFillFromCount,
   resolvePackLayoutForWidth,
   resolvePackRegionItemCount,
-} from '../../public/js/runtime/composition-box-model.js';
+} from '../../public/js/runtime/regions/composition-box-model.js';
 import {
   buildVariantEdge,
   resolveVariantChoice,
@@ -50,12 +50,12 @@ import {
   VARIANT_EVENT,
   SPW_MODULE_EXPORT as variantSelectionExport,
   spwModule as variantSelectionModule,
-} from '../../public/js/runtime/variant-selection.js';
+} from '../../public/js/runtime/regions/variant-selection.js';
 import {
   SPW_MODULE_EXPORT as compositionBoxModelExport,
   spwModule as compositionBoxModelModule,
   initSpwCompositionBoxModel,
-} from '../../public/js/runtime/composition-box-model.js';
+} from '../../public/js/runtime/regions/composition-box-model.js';
 
 test('component packing resolves width and fill on independent axes', () => {
   assert.equal(resolvePackLayoutForWidth(415), 'stack');

@@ -176,8 +176,8 @@ expression = component[fit]{lens.charge.journey}<ordinal>
     `the footer's settings rewrote data-spw-tuning-surface and -dimensions to the same values about every half second (tuning-discovery's DOM sync task)`
   ][reg=set]
   landed = #[
-    `runtime/frame-size-memory.js (catalog: enhancement, immediate, residue): frames take this route's last measured heights at this width as their placeholder on boot; once the page settles, never-seen frames render once, one per idle slice, nearest first; heights save per route and 40 px width bucket for seven days`,
-    `runtime/tuning-discovery.js writes through writeDatasetValues, so an unchanged surface is not rewritten`
+    `runtime/arrival/frame-size-memory.js (catalog: enhancement, immediate, residue): frames take this route's last measured heights at this width as their placeholder on boot; once the page settles, never-seen frames render once, one per idle slice, nearest first; heights save per route and 40 px width bucket for seven days`,
+    `runtime/discovery/tuning-discovery.js writes through writeDatasetValues, so an unchanged surface is not rewritten`
   ][reg=set]
   measured = `CLS across a full scroll 0.762 → 0.076; the page knows its 27,836 px height before the reader descends; the footer arrives and stays at y=141 on a first visit (idle warm-up) and a return visit (memory)`
   open = `The promo appends a 448 px weekly grid inside its static fallback on hydration; anchoring keeps the footer still, but a reader looking at the promo sees it grow. That belongs to the promo's redesign (intent-across-pages s3), not to a static copy of a weekly block.`

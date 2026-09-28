@@ -1154,7 +1154,7 @@
 /* ==========================================================================
    Preflight + runtime load timing contract (page load architecture)
    --------------------------------------------------------------------------
-   public/js/runtime/prepaint-state.js (inlined via template into <head> before
+   public/js/runtime/arrival/prepaint-state.js (inlined via template into <head> before
    the stylesheet <link>) writes critical data-* and style props synchronously
    on script parse. This guarantees first paint sees stable:
      colorMode, themePack, componentDensity, semanticDensity, enhancementLevel,

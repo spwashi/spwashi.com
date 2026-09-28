@@ -15,7 +15,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"selection_probes"{
- probes = #[ `rg 'gesture-inspectability-metaphysics' public/js/runtime/brace-gestures.js`, `git diff --check`, `test -f public/js/runtime/brace-gestures.js`, ][reg=set]
+ probes = #[ `rg 'gesture-inspectability-metaphysics' public/js/runtime/interaction/brace-gestures.js`, `git diff --check`, `test -f public/js/runtime/interaction/brace-gestures.js`, ][reg=set]
  rule = "Run probes before trusting cached plan_context."
 }[reg=facet]
 
@@ -25,7 +25,7 @@ fixity = "tending"
  operation = "prime"
  bucket = "active_backlog"
  validation = #[ `git diff --check`, `node --check for every edited JS runtime module`, `targeted rg checks for data-spw-* state families and duplicated ownership`, `browser verification on the canonical specimen routes at:`, `mobile narrow touch`, `desktop pointer`, ][reg=set]
- hot_files = #[ `public/js/runtime/brace-gestures.js`, `public/js/runtime/attention-architecture.js`, `public/js/runtime/spells.js`, `public/js/runtime/experiential.js`, `public/js/media/image-metaphysics.js`, `public/js/interface/discovery-notices.js`, ][reg=set]
+ hot_files = #[ `public/js/runtime/interaction/brace-gestures.js`, `public/js/runtime/attention/attention-architecture.js`, `public/js/runtime/memory/spells.js`, `public/js/runtime/experiential/experiential.js`, `public/js/media/image-metaphysics.js`, `public/js/interface/discovery-notices.js`, ][reg=set]
 }[reg=facet]
 #>gesture_inspectability_metaphysics
 #:plan #!runtime

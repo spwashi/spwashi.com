@@ -4,8 +4,8 @@
  * One table for the inline and block bands that runtime modules project onto
  * the DOM as data-spw-measure-band and data-spw-extent.
  *
- * Why this file exists. Two modules — runtime/spatial-gravity.js and
- * runtime/positioning-orchestration.js — write the same four attributes
+ * Why this file exists. Two modules — runtime/physics/spatial-gravity.js and
+ * runtime/regions/positioning-orchestration.js — write the same four attributes
  * (spwMeasureBand, spwExtent, spwVerticalGravity, spwSpaceVariant) to the same
  * [data-spw-gravity] elements, each from its own private copy of the
  * thresholds. The inline bands happened to agree. The block bands did not:
@@ -110,7 +110,7 @@ export const resolveVerticalGravity = (bias) => {
 
 export const SPATIAL_BANDS_CONTRACT = Object.freeze({
   owns: 'data-spw-measure-band, data-spw-extent, data-spw-vertical-gravity, data-spw-space-variant',
-  writers: Object.freeze(['runtime/spatial-gravity.js', 'runtime/positioning-orchestration.js']),
+  writers: Object.freeze(['runtime/physics/spatial-gravity.js', 'runtime/regions/positioning-orchestration.js']),
   rule: 'One definition per vocabulary. A writer imports these; it does not restate them.',
   anchor: 'contained = at most one viewport height. Everything else is a multiple of that.',
   deadband: 'A band that drives a squeeze is held until the geometry clears its edge by BAND_HYSTERESIS. Pass the element\'s current value to engage it.',

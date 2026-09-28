@@ -5,15 +5,15 @@
 #:layer #!pragmatics
 
 @plan: ~"../../../.agents/plans/page-region-discoverability/PLAN.md"
-@page_region_rail_js: ~"../../../public/js/runtime/page-region-rail.js"
+@page_region_rail_js: ~"../../../public/js/runtime/regions/page-region-rail.js"
 @attention_section_handle_js: ~"../../../public/js/runtime/attention/section-handle.js"
 @page_region_rail_css: ~"../../../public/css/handles/page-region-rail.css"
 @contextual_ui_js: ~"../../../public/js/interface/contextual-ui.js"
 @module_catalog: ~"../../../public/js/runtime/catalog/index.js"
-@dom_sync_hub: ~"../../../public/js/runtime/dom-sync-hub.js"
-@region_profiler: ~"../../../public/js/runtime/region-profiler.js"
-@component_collection: ~"../../../public/js/runtime/component-collection.js"
-@reward_ui: ~"../../../public/js/runtime/reward-ui.js"
+@dom_sync_hub: ~"../../../public/js/runtime/orchestration/dom-sync-hub.js"
+@region_profiler: ~"../../../public/js/runtime/regions/region-profiler.js"
+@component_collection: ~"../../../public/js/runtime/memory/component-collection.js"
+@reward_ui: ~"../../../public/js/runtime/memory/reward-ui.js"
 @image_resource_manifest_script: ~"../../../scripts/image-resource-manifest.mjs"
 @image_resource_manifest_json: ~"../../../public/data/image-resources.json"
 @attention_field: ~"../../conventions/attention-field.spw"
@@ -67,7 +67,7 @@ color_reward_contract: .{
  curiosity = `Probe, wonder, action, visual-cue, and accent-concept affordances should brighten toward a curiosity channel when explored.`
  relationship = `Ref, route, stream, related-route, and feature-flow affordances should reveal neighboring concept architecture through a distinct relationship channel.`
  architecture = `Frame, address, object, component-kind, and region-role affordances should use a structural accent that makes page architecture feel discoverable.`
- runtime = `public/js/runtime/charge-field.js writes data-spw-concept-relation and data-spw-interaction-wonder plus --spw-*-reward variables, then clears them during teardown.`
+ runtime = `public/js/runtime/physics/charge-field.js writes data-spw-concept-relation and data-spw-interaction-wonder plus --spw-*-reward variables, then clears them during teardown.`
  copy = `Copy should give visual models concrete cues that map to these channels: question, connection, structure, material, motion, and figure-ground pressure.`
 }[reg=facet]
 
@@ -87,7 +87,7 @@ image_resource_contract: .{
 }[reg=facet]
 
 validation: #[
- `node --check public/js/runtime/page-region-rail.js`,
+ `node --check public/js/runtime/regions/page-region-rail.js`,
  `node --check public/js/runtime/catalog/index.js`,
  `node --check public/js/runtime/attention/section-handle.js`,
  `node --check public/js/kernel/dom-contracts.js`,

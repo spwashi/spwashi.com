@@ -1813,7 +1813,7 @@ html[data-spw-reduce-motion="on"] *::after {
 /* ==========================================================================
    Preflight + runtime load timing contract (page load architecture)
    --------------------------------------------------------------------------
-   public/js/runtime/prepaint-state.js (inlined via template into <head> before
+   public/js/runtime/arrival/prepaint-state.js (inlined via template into <head> before
    the stylesheet <link>) writes critical data-* and style props synchronously
    on script parse. This guarantees first paint sees stable:
      colorMode, themePack, componentDensity, semanticDensity, enhancementLevel,
@@ -3189,7 +3189,7 @@ html[data-spw-reduce-motion="on"] {
    See also
    - .spw/conventions/dimension-vocabulary.spw
    - public/css/components/typography-packing.css
-   - public/js/runtime/loading-ecology.js (DIMENSION_VOCABULARY)
+   - public/js/runtime/arrival/loading-ecology.js (DIMENSION_VOCABULARY)
    ========================================================================== */
 
 :root {
@@ -19657,7 +19657,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
    - Squares hold every scan whole, portrait or landscape, as the shelf does.
    - A narrow strip scrolls sideways with snap; wide enough, all five stand in
      a row without scrolling. The row answers to its own width.
-   - Each picture wears its * original mark (runtime/image-provenance.js).
+   - Each picture wears its * original mark (runtime/expression/image-provenance.js).
    ========================================================================== */
 
 .folio-strip {
@@ -25173,7 +25173,7 @@ html[data-spw-theme-biome="glasshouse"] {
 /* The bare-attribute half is a courtesy for anchors that forgot the class; the
    tag guard let region hosts (div, nav) take chip layout and overrun the frame.
    Every host carries [data-spw-feature]; no anchor does. JS reads the same line:
-   isCompactAnatomyTarget in runtime/page-anatomy.js. */
+   isCompactAnatomyTarget in runtime/page/page-anatomy.js. */
 .spw-anatomy-anchor,
 :where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   --spw-anatomy-color-local: var(--spw-anatomy-color, var(--active-op-color, var(--teal, #008080)));
@@ -26451,7 +26451,7 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
    site-search.css — route probe dialog + page host
    --------------------------------------------------------------------------
    Sitewide search over public/data/site-search-index.json.
-   Pairs with public/js/runtime/site-search.js.
+   Pairs with public/js/runtime/navigation/site-search.js.
    ========================================================================== */
 
 :root {
@@ -29297,7 +29297,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
   gap: var(--spw-image-distribution-gap);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 15rem)), 1fr));
 }
-/* Image provenance (runtime/image-provenance.js). Every picture whose source
+/* Image provenance (runtime/expression/image-provenance.js). Every picture whose source
    says where it came from wears one mark at its corner: * for original work,
    ~ for a generated render, in that operator's ink. Settings → Image
    provenance picks the tone: mark (the sigil), named (sigil and word), or
@@ -33361,7 +33361,7 @@ html[data-spw-microinteraction-pulse] :where(
 /* ==========================================================================
    arrival-electrostatics.css
    --------------------------------------------------------------------------
-   The visible half of runtime/arrival-shells.js.
+   The visible half of runtime/arrival/arrival-shells.js.
 
    The bar this has to clear is stated in
    .spw/caches/arrival-perceptibility-2026-08.spw: "as subtle as necessary to
@@ -33583,7 +33583,7 @@ html[data-spw-page-section-phase="idle"] {
 /* ==========================================================================
    expression-resonance.css
    --------------------------------------------------------------------------
-   The visible half of runtime/expression-resonance.js.
+   The visible half of runtime/expression/expression-resonance.js.
 
    Authored Spw expressions have been decorative for their whole life: 441
    data-spw-semantic-expression values that no runtime read. This is what it
@@ -33910,7 +33910,7 @@ html[data-spw-page-section-phase="idle"] {
 /* ==========================================================================
    probe-legibility.css
    --------------------------------------------------------------------------
-   The visible half of runtime/dom-probes.js.
+   The visible half of runtime/expression/dom-probes.js.
 
    The routes carry 1,115 <code> blocks and 99 <pre> blocks, and every one of
    them is inert type — a shape that looks executable and is not. A probe is a
@@ -42512,7 +42512,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   .mode-switch[data-spw-lens-chrome~="operator"]:has(> [aria-pressed="true"]:is([data-spw-operator="value"], [data-spw-operator="stream"])) { --spw-lens-seat-color: var(--op-value-color, var(--op-stream-color, #208259)); }
 }
 
-/* Carried intent (runtime/lens-intent.js). Holding a seat carries its
+/* Carried intent (runtime/page/lens-intent.js). Holding a seat carries its
    operator across pages; every seat that shares it wears a ring in its own
    ink. The ring fills while the hold charges, lands with a small spring, and
    reads dashed where the intent is carried but not sat on this page: an

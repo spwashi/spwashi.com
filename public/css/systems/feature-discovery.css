@@ -1,7 +1,7 @@
 /* ==========================================================================
    feature-discovery.css
    --------------------------------------------------------------------------
-   The visible half of runtime/feature-discovery.js. A [data-spw-feature]
+   The visible half of runtime/discovery/feature-discovery.js. A [data-spw-feature]
    cluster that has opted into the field guide gets quiet, naturalist feedback
    as a visitor meets it:
 

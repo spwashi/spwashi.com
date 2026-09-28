@@ -466,7 +466,7 @@ export function wireProbeSigils(root = document) {
         if (target.dataset.modeGroup && target.dataset.modePanel) {
           // The lens owner lives a layer up; a probe asks it at click time.
           const request = { group: target.dataset.modeGroup, mode: target.dataset.modePanel, source: 'probe' };
-          import('/public/js/runtime/lens-modes.js')
+          import('/public/js/runtime/page/lens-modes.js')
             .then((mod) => mod.requestLensMode(bus, request))
             .catch(() => {
               target.hidden = false;

@@ -55,7 +55,7 @@ history_bond = `component[taxonomy]{frame.card.panel.chip.prose} ^ biome[exchang
   present: theme[pack]{brightness.contrast.saturation.tint} ~ substrate[motif]{opacity.blend}
   ~#symptom: "a card in a dense cluster and a card alone read identically"
   ~#now(landed in @css): density ^ shade ^ occlusion
-  ~#now(landed 2026-09-03): public/js/runtime/region-profiler.js counts card-like children and grandchildren of a profiled region and writes data-spw-canopy (clearing/dappled/closed) — canopy is measured, not only guessed from a `-grid` class. The dead data-spw-canopy="clearing" per-card escape this file once half-wired is gone; canopy still carries no per-card override.
+  ~#now(landed 2026-09-03): public/js/runtime/regions/region-profiler.js counts card-like children and grandchildren of a profiled region and writes data-spw-canopy (clearing/dappled/closed) — canopy is measured, not only guessed from a `-grid` class. The dead data-spw-canopy="clearing" per-card escape this file once half-wired is gone; canopy still carries no per-card override.
   ~#fixed(same day): the first landing counted with an unscoped querySelectorAll. REGION_SELECTORS matches [data-spw-role], which <main> itself carries on ~120 routes, so <main> was getting profiled as one region spanning the whole page — its canopy count was every card on the route, almost always "closed", inherited by any lone card anywhere that had no closer override. Rescoped to :scope children/grandchildren only.
   refuse: `no light token per component — canopy is position, not a setting a card carries`
 }
@@ -95,7 +95,7 @@ history_bond = `component[taxonomy]{frame.card.panel.chip.prose} ^ biome[exchang
 }
 
 ^"orchestration_join"{
-  ~#with: ~"../../public/js/runtime/positioning-orchestration.js"
+  ~#with: ~"../../public/js/runtime/regions/positioning-orchestration.js"
   affirm: `batched MEASURE / PROJECT / AUDIT is right and fixes real thrash`
   supplies: canopy[measured]{occlusion} ^ canopy[structural]{child-count}
   wired: `--spw-edge-proximity and data-spw-extent already read with inert fallbacks`

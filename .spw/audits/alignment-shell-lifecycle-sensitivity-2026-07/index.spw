@@ -12,17 +12,17 @@
 #:operation #!audit
 #:layer #!pragmatics
 
-@layout_assumptions: ~"../../../public/js/runtime/layout-assumptions.js"
-@layout_shift_audit: ~"../../../public/js/runtime/layout-shift-audit.js"
-@loading_ecology: ~"../../../public/js/runtime/loading-ecology.js"
-@shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"
+@layout_assumptions: ~"../../../public/js/runtime/regions/layout-assumptions.js"
+@layout_shift_audit: ~"../../../public/js/runtime/diagnostics/layout-shift-audit.js"
+@loading_ecology: ~"../../../public/js/runtime/arrival/loading-ecology.js"
+@shell_disclosure: ~"../../../public/js/runtime/shell/shell-disclosure.js"
 @floating_chrome: ~"../../../public/css/components/floating-chrome.css"
 @dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
-@page_state: ~"../../../public/js/runtime/page-state.js"
+@page_state: ~"../../../public/js/runtime/page/page-state.js"
 @module_catalog: ~"../../../public/js/runtime/catalog/index.js"
 @module_loader: ~"../../../public/js/runtime/orchestration/loader.js"
-@hydration_passes: ~"../../../public/js/runtime/hydration-passes.js"
-@composition_box: ~"../../../public/js/runtime/composition-box-model.js"
+@hydration_passes: ~"../../../public/js/runtime/arrival/hydration-passes.js"
+@composition_box: ~"../../../public/js/runtime/regions/composition-box-model.js"
 @dimensions_css: ~"../../../public/css/tokens/dimensions.css"
 @dimension_vocabulary: ~"../../conventions/dimension-vocabulary.spw"
 @device_packing_audit: ~"../component-anatomy-device-packing-2026-07.spw"
@@ -276,7 +276,7 @@ audit_run: .{
 
 validation: #[
   `rg 'REFLOW_CLASS|incidentalReflow|layout-assumptions' public/js`
-  `rg 'PRESSURES|TOPOLOGIES|syncFloatingChromeState' public/js/runtime/shell-disclosure.js public/js/kernel/dom-contracts.js`
+  `rg 'PRESSURES|TOPOLOGIES|syncFloatingChromeState' public/js/runtime/shell/shell-disclosure.js public/js/kernel/dom-contracts.js`
   `rg 'PAGE_ARRIVAL|timingArc|ECOLOGY_PHASES' public/js`
   `rg 'pointer: coarse|container|touch-target' public/css public/js`
   `rg 'DIMENSION_VOCABULARY|--spw-pack-tier|TUNING_LEXICON' public`

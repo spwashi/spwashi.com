@@ -47,8 +47,8 @@ intent: .{
  surfaces = #[
   `js/semantic/pretext-measurement-bus.js`,
   `js/modules/design/typography-measurement-preview.js`,
-  `js/runtime/frame-metrics.js`,
-  `js/runtime/composition-box-model.js`,
+  `js/runtime/page/frame-metrics.js`,
+  `js/runtime/regions/composition-box-model.js`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -60,8 +60,8 @@ intent: .{
 @plan: ~"./PLAN.md"
 @pretext_measurement_bus: ~"../../../public/js/semantic/pretext-measurement-bus.js"
 @typography_measurement_preview: ~"../../../public/js/modules/design/typography-measurement-preview.js"
-@frame_metrics: ~"../../../public/js/runtime/frame-metrics.js"
-@composition_box_model: ~"../../../public/js/runtime/composition-box-model.js"
+@frame_metrics: ~"../../../public/js/runtime/page/frame-metrics.js"
+@composition_box_model: ~"../../../public/js/runtime/regions/composition-box-model.js"
 @settings_index_html: ~"../../../settings/index.html"
 @design_index_html: ~"../../../design/index.html"
 @designer_conversation_canvas: ~"../../../.spw/conventions/designer-conversation-canvas.spw"

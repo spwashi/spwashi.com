@@ -66,7 +66,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-debug',
     timingChunk: 'idle-lab',
     effectScope: 'root-state performance-observer cleanup',
-    load: () => import('../layout-shift-audit.js'),
+    load: () => import('../diagnostics/layout-shift-audit.js'),
   },
   {
     id: 'frame-size-memory',
@@ -82,7 +82,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'layout-stability footer-arrival content-visibility residue',
     timingArc: 'immediate-layout',
     effectScope: 'local-dom storage',
-    load: () => import('../frame-size-memory.js'),
+    load: () => import('../arrival/frame-size-memory.js'),
   },
   {
     id: 'lens-intent',
@@ -99,7 +99,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'intent carried-lens operator session-residue hold-gesture',
     timingArc: 'immediate-lens',
     effectScope: 'local-dom storage',
-    load: () => import('../lens-intent.js'),
+    load: () => import('../page/lens-intent.js'),
   },
   {
     id: 'image-provenance',
@@ -117,7 +117,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'provenance honesty original-art generated-render acknowledgement-tone',
     timingArc: 'idle-image',
     effectScope: 'local-dom',
-    load: () => import('../image-provenance.js'),
+    load: () => import('../expression/image-provenance.js'),
   },
   {
     id: 'tuning-discovery',
@@ -141,7 +141,7 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-lab',
     effectScope: 'root-state local-dom',
     evaluates: 'embedded tuning surfaces discoverability hypermedia extension',
-    load: () => import('../tuning-discovery.js'),
+    load: () => import('../discovery/tuning-discovery.js'),
   },
   {
     id: 'page-region-rail',
@@ -165,7 +165,7 @@ export const ENHANCEMENT_DEFS = [
     visual: 'inspect',
     timingArc: 'visible-navigation',
     effectScope: 'floating-chrome root-state',
-    load: () => import('../page-region-rail.js'),
+    load: () => import('../regions/page-region-rail.js'),
   },
   {
     id: 'charge-field',
@@ -194,7 +194,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-gesture',
     effectScope: 'root-state frame-state timers bus',
     evaluates: 'charge discharge field intensity consequence-live gesture',
-    load: () => import('../charge-field.js'),
+    load: () => import('../physics/charge-field.js'),
   },
   {
     id: 'gesture-anatomy',
@@ -215,7 +215,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-gesture',
     evaluates: 'gesture hint slot anatomy contract rails theme-synergy semantics-resolved',
     effectScope: 'element-state local-dom root-state settings',
-    load: () => import('../gesture-anatomy.js'),
+    load: () => import('../interaction/gesture-anatomy.js'),
   },
   {
     id: 'learnability-ledger',
@@ -234,7 +234,7 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-lab',
     effectScope: 'root-state element-state',
     evaluates: 'learnability posture layout-contract feature resonance tiers',
-    load: () => import('../learnability-ledger.js'),
+    load: () => import('../memory/learnability-ledger.js'),
   },
   {
     id: 'component-collection',
@@ -254,7 +254,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-collection',
     timingChunk: 'idle-collectible',
     effectScope: 'root-state storage bus',
-    load: () => import('../component-collection.js'),
+    load: () => import('../memory/component-collection.js'),
   },
   {
     id: 'feature-discovery',
@@ -277,7 +277,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-collection',
     timingChunk: 'idle-collectible',
     effectScope: 'element-state storage observer section-event bus global-api',
-    load: () => import('../feature-discovery.js'),
+    load: () => import('../discovery/feature-discovery.js'),
   },
   {
     id: 'reward-ui',
@@ -297,7 +297,7 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-collectible',
     effectScope: 'root-state floating-chrome toast bus',
     visual: 'inspect',
-    load: () => import('../reward-ui.js'),
+    load: () => import('../memory/reward-ui.js'),
   },
   {
     id: 'frame-navigator',
@@ -316,7 +316,7 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-chrome',
     effectScope: 'floating-chrome listeners bus root-state',
     visual: 'inspect',
-    load: () => import('../frame-navigator.js'),
+    load: () => import('../navigation/frame-navigator.js'),
     // Presence gate: body[data-spw-features~="navigator"] via catalog features
     // (PRESENCE_FEATURE_KEYS in runtime-contracts — not a CSS behavior scope).
     // Module also self-gates on navigatorDisplay at runtime.
@@ -338,7 +338,7 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'floating-chrome listeners fetch root-state',
     visual: 'layout',
     costClass: COST_CLASS.DEMAND_COUPLED,
-    load: () => import('../site-search.js'),
+    load: () => import('../navigation/site-search.js'),
   },
   {
     id: 'observation-beats',
@@ -356,7 +356,7 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-lab',
     effectScope: 'root-state bus',
     evaluates: 'qa observation beats lifecycle consequence trace debug',
-    load: () => import('../observation-beats.js'),
+    load: () => import('../diagnostics/observation-beats.js'),
   },
   {
     id: 'svg-filters',
@@ -479,7 +479,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'visitation memory surface-count on-page ornament',
     timingArc: 'visible-memory',
     effectScope: 'root-state storage bus',
-    load: () => import('../visitation.js'),
+    load: () => import('../memory/visitation.js'),
   },
   {
     id: 'texture-slice',
@@ -599,7 +599,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'layout semantics spacing-semantics state storytelling',
     timingArc: 'visible-layout',
     effectScope: 'element-state css-vars',
-    load: () => import('../composition-box-model.js'),
+    load: () => import('../regions/composition-box-model.js'),
   },
   {
     id: 'fit-report',
@@ -620,7 +620,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'idle-inspection',
     timingChunk: 'idle-lab',
     effectScope: 'element-state resize-observer',
-    load: () => import('../fit-report.js'),
+    load: () => import('../diagnostics/fit-report.js'),
   },
   {
     id: 'spatial-gravity',
@@ -662,7 +662,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'viewport geometry room measurement two-axis gravity salience overlap variant selection',
     timingArc: 'visible-geometry',
     effectScope: 'element-state css-vars observers document-scroll resize field-guide',
-    load: () => import('../spatial-gravity.js'),
+    load: () => import('../physics/spatial-gravity.js'),
   },
   {
     id: 'semantic-crossrefs',
@@ -701,7 +701,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-anatomy',
     effectScope: 'local-dom element-state',
     visual: 'inspect',
-    load: () => import('../page-anatomy.js'),
+    load: () => import('../page/page-anatomy.js'),
   },
   {
     id: 'ingredient-lab',
@@ -718,7 +718,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'ingredient lab learning mode controls',
     timingArc: 'visible-lab',
     effectScope: 'local-dom element-state',
-    load: () => import('../ingredient-lab.js'),
+    load: () => import('../labs/ingredient-lab.js'),
   },
   {
     id: 'guide-badge',
@@ -754,7 +754,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-lab',
     timingChunk: 'idle-lab',
     effectScope: 'local-dom bus clipboard navigation',
-    load: () => import('../query-link-composer.js'),
+    load: () => import('../navigation/query-link-composer.js'),
   },
   {
     id: 'discovery-notices',
@@ -822,7 +822,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'idle-inspection',
     timingChunk: 'idle-lab',
     effectScope: 'root-state bus',
-    load: () => import('../cauldron-fluency.js'),
+    load: () => import('../memory/cauldron-fluency.js'),
   },
   {
     // A code block that answers about the page it is printed on. No parser is
@@ -844,7 +844,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'idle-inspection',
     timingChunk: 'idle-lab',
     effectScope: 'local-dom bus',
-    load: () => import('../dom-probes.js'),
+    load: () => import('../expression/dom-probes.js'),
   },
   {
     // Authored Spw expressions become inductive: sharing a subject, mode, or
@@ -870,7 +870,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'idle-semantic-reinforcement',
     timingChunk: 'idle-residue',
     effectScope: 'local-dom flourish residue storage',
-    load: () => import('../expression-resonance.js'),
+    load: () => import('../expression/expression-resonance.js'),
   },
   {
     id: 'image-discovery-rewards',
@@ -1154,7 +1154,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'annotation region matching section locomotion',
     timingArc: 'visible-annotation',
     effectScope: 'local-dom listeners',
-    load: () => import('../annotation-layer.js'),
+    load: () => import('../regions/annotation-layer.js'),
   },
   {
     id: 'module-effects',
@@ -1175,7 +1175,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'runtime module side effects ornament pulse',
     timingArc: 'enhance-effects',
     timingChunk: 'idle-lab',
-    load: () => import('../module-effects.js'),
+    load: () => import('../arrival/module-effects.js'),
   },
   {
     id: 'loading-ecology',
@@ -1199,7 +1199,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'loading measurement settling ecology salience rhythm trope genre packing dimensions',
     timingArc: 'enhance-ecology',
     timingChunk: 'idle-lab',
-    load: () => import('../loading-ecology.js'),
+    load: () => import('../arrival/loading-ecology.js'),
   },
   {
     id: 'hydration-passes',
@@ -1218,7 +1218,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'multi-pass hydration workbench runtime phase narration',
     timingArc: 'enhance-hydration',
     timingChunk: 'idle-lab',
-    load: () => import('../hydration-passes.js'),
+    load: () => import('../arrival/hydration-passes.js'),
   },
   {
     id: 'positioning-orchestration',
@@ -1239,7 +1239,7 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'root-state css-vars observers measurement',
     evaluates: 'batched spatial metrics containment measure bands extent vertical gravity orchestration',
     timingArc: 'visible-geometry',
-    load: () => import('../positioning-orchestration.js'),
+    load: () => import('../regions/positioning-orchestration.js'),
   },
   {
     id: 'settings-momentum',
@@ -1258,7 +1258,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'settings tuning spell momentum pulse',
     timingArc: 'idle-settings-momentum',
     timingChunk: 'idle-chrome',
-    load: () => import('../settings-momentum.js'),
+    load: () => import('../physics/settings-momentum.js'),
   },
   {
     id: 'image-utilization',
@@ -1336,7 +1336,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'interaction-tuner beat-interval freshness-weight microinteraction-pulse-duration',
     timingArc: 'enhance-rhythm',
     timingChunk: 'idle-lab',
-    load: () => import('../pulse-beat-tuner.js'),
+    load: () => import('../physics/pulse-beat-tuner.js'),
   },
   {
     id: 'spw-key-events',
@@ -1362,7 +1362,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'keyboard scene-enter scene-exit reveal-framing wonder-block-staging LM-interpretable context stack',
     timingArc: 'visible-keyboard',
     effectScope: 'root-state listeners bus',
-    load: () => import('../spw-key-events.js'),
+    load: () => import('../interaction/spw-key-events.js'),
   },
   {
     id: 'wrap-jobs',
@@ -1379,7 +1379,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-keyboard',
     effectScope: 'local-dom listeners',
     visual: 'behavior',
-    load: () => import('../wrap-jobs.js'),
+    load: () => import('../interaction/wrap-jobs.js'),
   },
   {
     id: 'scene-interaction',
@@ -1398,7 +1398,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'scene lanes radiogroup image lens localStorage scene-memory strip',
     timingArc: 'visible-scene',
     effectScope: 'local-dom element-state storage',
-    load: () => import('../scene-interaction.js'),
+    load: () => import('../interaction/scene-interaction.js'),
   },
   {
     id: 'topical-payload',
@@ -1415,7 +1415,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-payload',
     timingChunk: 'idle-lab',
     effectScope: 'root-state',
-    load: () => import('../topical-payload.js'),
+    load: () => import('../expression/topical-payload.js'),
   },
   {
     id: 'palette-treat-discovery',
@@ -1438,7 +1438,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'freshness-pulse discovery-reward discover-phase palette-resonance arrow-reward probe keyboard-rail',
     timingArc: 'enhance-discovery',
     timingChunk: 'idle-lab',
-    load: () => import('../palette-treat-discovery.js'),
+    load: () => import('../physics/palette-treat-discovery.js'),
   },
   {
     id: 'interaction-progression',
@@ -1496,7 +1496,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-print',
     timingChunk: 'idle-lab',
     effectScope: 'root-state',
-    load: () => import('../precipitation-request.js'),
+    load: () => import('../expression/precipitation-request.js'),
   },
   {
     id: 'variant-selection',
@@ -1518,7 +1518,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'mode-switch variant selection query priming semantic weight transition edge',
     timingArc: 'visible-variant',
     effectScope: 'local-dom element-state',
-    load: () => import('../variant-selection.js'),
+    load: () => import('../regions/variant-selection.js'),
   },
   {
     id: 'navigation-locomotion',
@@ -1545,7 +1545,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'navigation transitions spells floating-chrome section-locomotion',
     timingArc: 'enhance-navigation',
     effectScope: 'root-state listeners bus floating-chrome',
-    load: () => import('../navigation-locomotion.js'),
+    load: () => import('../navigation/navigation-locomotion.js'),
   },
   {
     id: 'navigation-spells',
@@ -1567,7 +1567,7 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-residue',
     effectScope: 'target-dom gesture-memory listeners',
     visual: 'annotate',
-    load: () => import('../navigation-spells.js'),
+    load: () => import('../navigation/navigation-spells.js'),
   },
   {
     id: 'bare-spw-markup',
@@ -1699,7 +1699,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-spell',
     effectScope: 'listeners root-state bus',
     timingChunk: 'idle-residue',
-    load: () => import('../experiential.js'),
+    load: () => import('../experiential/experiential.js'),
   },
   {
     id: 'spells',
@@ -1717,7 +1717,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-spell',
     effectScope: 'storage bus root-state',
     timingChunk: 'idle-residue',
-    load: () => import('../spells.js'),
+    load: () => import('../memory/spells.js'),
   },
   {
     id: 'guide',
@@ -1758,7 +1758,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'layout alignment floating-chrome bottom-lane clearance module-settle',
     timingArc: 'settled-layout-assumptions',
     effectScope: 'root-state layout-correction observers floating-chrome',
-    load: () => import('../layout-assumptions.js'),
+    load: () => import('../regions/layout-assumptions.js'),
   },
   {
     id: 'brace-actions',
@@ -1780,7 +1780,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'brace interaction projection edges activation',
     timingArc: 'visible-gesture',
     effectScope: 'element-state listeners bus',
-    load: () => import('../brace-actions.js'),
+    load: () => import('../interaction/brace-actions.js'),
   },
   {
     id: 'pwa-update-handler',
@@ -1798,7 +1798,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'idle-feedback',
     timingChunk: 'idle-chrome',
     effectScope: 'service-worker root-state toast',
-    load: () => import('../pwa-update-handler.js'),
+    load: () => import('../shell/pwa-update-handler.js'),
   },
   {
     id: 'reactive-spine',
@@ -1815,7 +1815,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'svg operator cognitive-spine bus reactivity',
     timingArc: 'visible-flow',
     effectScope: 'element-state bus',
-    load: () => import('../reactive-spine.js'),
+    load: () => import('../expression/reactive-spine.js'),
   },
   {
     id: 'toolmaker-submissions',
@@ -1837,7 +1837,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'specimen drafting AST compilation feature-lab synergy',
     timingArc: 'visible-workshop',
     effectScope: 'element-state local-dom clipboard session-lab',
-    load: () => import('../toolmaker-submissions.js'),
+    load: () => import('../labs/toolmaker-submissions.js'),
   },
   {
     id: 'interactive-expression-lab',
@@ -1859,7 +1859,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'expression geometry delimiter morphing cauldron ingestion screenshot retention',
     timingArc: 'visible-expression-lab',
     effectScope: 'element-state local-dom hud storage bus',
-    load: () => import('../interactive-expression-lab.js'),
+    load: () => import('../labs/interactive-expression-lab.js'),
   },
   {
     id: 'spw-hero-kinetic-stage',
@@ -1880,7 +1880,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'hero stage kinetic slides boundary physics cauldron dropping',
     timingArc: 'visible-hero-stage',
     effectScope: 'element-state local-dom bus cauldron',
-    load: () => import('../spw-hero-kinetic-stage.js'),
+    load: () => import('../labs/spw-hero-kinetic-stage.js'),
   },
   {
     // Idle inspect path for authored Spw blocks. Cheap slots come from
@@ -1925,7 +1925,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-collectible',
     timingChunk: 'idle-collectible',
     effectScope: 'body-state storage window bus',
-    load: () => import('../gate.js'),
+    load: () => import('../expression/gate.js'),
   },
   {
     id: 'page-universe',
@@ -1951,6 +1951,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-metacognition',
     timingChunk: 'idle-lab',
     effectScope: 'local-dom floating-chrome storage window bus',
-    load: () => import('../cognitive-core.js'),
+    load: () => import('../memory/cognitive-core.js'),
   },
 ];

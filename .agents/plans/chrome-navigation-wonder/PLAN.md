@@ -26,7 +26,7 @@ public/js/runtime/attention/section-handle.js`:
   `interaction-hops.js` (landed earlier, `724caa1b`).
 
 **Open**: shell disclosure (the drawer/menu once it's *open*) has zero swipe
-handling — `grep -c swipe public/js/runtime/shell-disclosure.js` is 0. The
+handling — `grep -c swipe public/js/runtime/shell/shell-disclosure.js` is 0. The
 header commit's own note: "An open drawer keeps tap-to-choose." That's the
 one remaining edge from the four named in this goal, and the natural next
 bounded slice: extend swipe-to-cycle to the open drawer's room list,
@@ -163,7 +163,7 @@ This is not a new feature request — it is naming and deepening the existing co
 - AGENTS.md (layer order, token balance principles, semantic accent guidance)
 - public/css/tokens/core.css (semantic-accent family + documentation)
 - public/css/shell/chrome.css + components/foundation.css (current chrome + component token contracts)
-- public/js/runtime/attention-architecture.js + experiential.js (locomotion + gesture semantics)
+- public/js/runtime/attention/attention-architecture.js + experiential.js (locomotion + gesture semantics)
 - _partials/site-footer.html + spw-site-header/footer usage across routes
 - .spw/conventions/ (attention-field, ornament-contract, site-semantics — primary places for the taxonomy extension)
 - design/ hub and spokes (the living demonstration surface)

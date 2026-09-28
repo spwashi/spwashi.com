@@ -329,7 +329,7 @@ html[data-spw-theme-biome="glasshouse"] {
 /* The bare-attribute half is a courtesy for anchors that forgot the class; the
    tag guard let region hosts (div, nav) take chip layout and overrun the frame.
    Every host carries [data-spw-feature]; no anchor does. JS reads the same line:
-   isCompactAnatomyTarget in runtime/page-anatomy.js. */
+   isCompactAnatomyTarget in runtime/page/page-anatomy.js. */
 .spw-anatomy-anchor,
 :where([data-spw-anatomy][data-spw-vocabulary]:not(:is(section, article, main, body, [data-spw-feature]))) {
   --spw-anatomy-color-local: var(--spw-anatomy-color, var(--active-op-color, var(--teal, #008080)));

@@ -7,7 +7,7 @@ import {
   resolveLensRovingIndex,
   resolveLensSeatSubject,
   shouldUseLensViewTransition,
-} from '../../public/js/runtime/lens-modes.js';
+} from '../../public/js/runtime/page/lens-modes.js';
 
 test('lens transitions stay off the initial and query hydration paths', () => {
   const supported = { supportsTransition: true, reduceMotion: false };

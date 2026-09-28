@@ -7,7 +7,7 @@
 @plan: ~"../../../.agents/plans/dimensional-expression-navigation/PLAN.md"
 @dimensional_ascent: ~"../../conventions/dimensional-ascent-script-patterns.spw"
 @expression_geometry: ~"../../../public/js/semantic/spw-expression-geometry.js"
-@expression_runtime: ~"../../../public/js/runtime/interactive-expression-lab.js"
+@expression_runtime: ~"../../../public/js/runtime/labs/interactive-expression-lab.js"
 @expression_css: ~"../../../public/css/components/interactive-expression.css"
 @navigator_css: ~"../../../public/css/routes/surfaces/topics.css"
 @software_route: ~"../../../topics/software/index.html"

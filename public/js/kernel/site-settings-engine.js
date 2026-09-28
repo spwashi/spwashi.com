@@ -379,7 +379,7 @@ const clearVisitedImageState = () => {
 let pinRegistryApi = null;
 const loadPinRegistry = () => {
   if (!pinRegistryApi) {
-    pinRegistryApi = import('/public/js/runtime/pin-registry.js');
+    pinRegistryApi = import('/public/js/runtime/memory/pin-registry.js');
   }
   return pinRegistryApi;
 };

@@ -113,7 +113,7 @@
       `--spw-module-style-modulator`
     ][reg=set]
     css = ~"../../public/css/systems/interactive-medium.css"
-    js = ~"../../public/js/runtime/interactive-medium.js"
+    js = ~"../../public/js/runtime/shell/interactive-medium.js"
     note = "Imported last in systems layer so module-added scene/key-event styles spend shared device tokens."
   }
 

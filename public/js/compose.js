@@ -131,7 +131,7 @@ export {
   setPageAttentionState,
   setPageState,
   snapshotPageState,
-} from './runtime/page-state.js';
+} from './runtime/page/page-state.js';
 
 export {
   INTERACTION_LOOP_CONTRACT,
@@ -155,7 +155,7 @@ export {
   initSpwCompositionBoxModel,
   snapshotCompositionBox,
   snapshotCompositionBoxes,
-} from './runtime/composition-box-model.js';
+} from './runtime/regions/composition-box-model.js';
 
 export {
   SPW_LAYOUT_QA_CONTRACT,
@@ -166,12 +166,12 @@ export {
   snapshotPacking,
   snapshotPageSizing,
   summarizeLayoutQa,
-} from './runtime/layout-qa.js';
+} from './runtime/diagnostics/layout-qa.js';
 
 export {
   snapshotLayoutAssumptions,
   SPW_LAYOUT_ASSUMPTIONS_CONTRACT,
-} from './runtime/layout-assumptions.js';
+} from './runtime/regions/layout-assumptions.js';
 
 export {
   SPW_DEBUG_QA_CONTRACT,
@@ -182,7 +182,7 @@ export {
   hasDebugOrQAMode,
   hasLayoutDebug,
   readDebugQaPosture,
-} from './runtime/debug-qa-posture.js';
+} from './runtime/diagnostics/debug-qa-posture.js';
 
 export {
   ATTENTION_ARCHITECTURE_CONTRACT,
@@ -195,7 +195,7 @@ export {
   initScrollCadenceState,
   initSectionHandle,
   initSpwAttentionArchitecture,
-} from './runtime/attention-architecture.js';
+} from './runtime/attention/attention-architecture.js';
 
 export {
   PAGE_HOOK_SELECTOR,
@@ -209,7 +209,7 @@ export {
   resolvePageHook,
   setPageHookState,
   snapshotPageHooks,
-} from './runtime/page-hooks.js';
+} from './runtime/page/page-hooks.js';
 
 export {
   SPW_NARRATIVE_INSTRUMENTATION_CONTRACT,
@@ -329,7 +329,7 @@ export {
   BEHAVIOR_SCOPE_BUNDLES,
   BEHAVIOR_SCOPE_KEYS,
   SPW_BEHAVIOR_SCOPES_CONTRACT,
-} from './runtime/behavior-scopes.js';
+} from './runtime/orchestration/behavior-scopes.js';
 
 export {
   QUERY_COMPOSER_INSTRUMENTS,
@@ -342,7 +342,7 @@ export {
   hydrateQueryComposer,
   initQueryLinkComposer,
   syncQueryComposer,
-} from './runtime/query-link-composer.js';
+} from './runtime/navigation/query-link-composer.js';
 
 export {
   GESTURE_SPELL_SEEDS,
@@ -357,7 +357,7 @@ export {
   isTouchFloorHost,
   snapshotFeatureClusters,
   snapshotGestureTargets,
-} from './runtime/gesture-contract.js';
+} from './runtime/interaction/gesture-contract.js';
 
 export {
   REGION_STATES,
@@ -366,7 +366,7 @@ export {
   primeRegions,
   refreshRegionProfiles,
   setRegionState,
-} from './runtime/region-profiler.js';
+} from './runtime/regions/region-profiler.js';
 
 export {
   SEAT_COMPLEMENT,
@@ -379,31 +379,31 @@ export {
   pickKinLabel,
   pickRegionKin,
   nextKinRelation,
-} from './runtime/region-kin.js';
+} from './runtime/regions/region-kin.js';
 
 export {
   SPW_PHYSICAL_MODEL_CONTRACT,
   describePhysicalModelSummary,
   snapshotPhysicalModel,
-} from './runtime/physical-model.js';
+} from './runtime/physics/physical-model.js';
 
 export {
   SPW_CHARGE_FIELD_CONTRACT,
   describeChargeFieldState,
   initChargeField,
   unmountChargeField,
-} from './runtime/charge-field.js';
+} from './runtime/physics/charge-field.js';
 
 export {
   SPW_PULSE_BEAT_TUNER_CONTRACT,
   describePulseBeatTunerState,
   readMicrointeractionPulseMs,
-} from './runtime/pulse-beat-tuner.js';
+} from './runtime/physics/pulse-beat-tuner.js';
 
 export {
   SPW_WONDER_MEMORY_CONTRACT,
   describeWonderMemorySnapshot,
-} from '/public/js/runtime/wonder-memory.js';
+} from '/public/js/runtime/memory/wonder-memory.js';
 
 export {
   DEVELOPMENTAL_CLIMATES,
@@ -411,7 +411,7 @@ export {
   applyDevelopmentalClimate,
   describeDevelopmentalClimate,
   normalizeDevelopmentalClimate,
-} from '/public/js/runtime/developmental-climate.js';
+} from '/public/js/runtime/physics/developmental-climate.js';
 
 export {
   SPW_CANVAS_ACCENTS_CONTRACT,
@@ -420,7 +420,7 @@ export {
 
 export {
   SPW_HERO_KINETIC_STAGE_CONTRACT,
-} from './runtime/spw-hero-kinetic-stage.js';
+} from './runtime/labs/spw-hero-kinetic-stage.js';
 
 export {
   SPW_ROLE_INFERENCE_CONTRACT,

@@ -6,7 +6,7 @@ import {
   clearPins,
   getPinStorageKey,
   readPins,
-} from '/public/js/runtime/pin-registry.js';
+} from '/public/js/runtime/memory/pin-registry.js';
 import { escapeAttr as escapeAttribute, escapeHtml } from '/public/js/kernel/dom-render.js';
 
 function safeDate(timestamp) {

@@ -40,7 +40,7 @@ describe('css layer blocks', () => {
 
   it('the ?spw-layer-order=declared rail states the manifest order', async () => {
     const { EXPECTED_LAYER_ORDER } = await import('../typed/css-manifest.mjs');
-    const prepaint = await readFile(new URL('../../public/js/runtime/prepaint-state.js', import.meta.url), 'utf8');
+    const prepaint = await readFile(new URL('../../public/js/runtime/arrival/prepaint-state.js', import.meta.url), 'utf8');
     assert.ok(prepaint.includes(`'@layer ${EXPECTED_LAYER_ORDER};'`));
   });
 

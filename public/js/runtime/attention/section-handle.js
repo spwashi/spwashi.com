@@ -5,10 +5,10 @@ import {
 } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
-import { computeLocomotionFieldBalance } from '/public/js/runtime/wonder-memory.js';
+import { computeLocomotionFieldBalance } from '/public/js/runtime/memory/wonder-memory.js';
 import { describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 import { describeWrapScan } from '/public/js/semantic/spw-compose.js';
-import { kinIds, nextKinRelation, pickRegionKin, prevKinRelation } from '/public/js/runtime/region-kin.js';
+import { kinIds, nextKinRelation, pickRegionKin, prevKinRelation } from '/public/js/runtime/regions/region-kin.js';
 import {
   AUTO_HANDLE_MIN_SECTIONS,
   APPROACH_ATTR,

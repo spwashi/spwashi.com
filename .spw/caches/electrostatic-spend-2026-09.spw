@@ -18,8 +18,8 @@
 @chip_grammar: ~"../conventions/operator-chip-grammar.spw"
 @interaction_microstates: ~"../conventions/interaction-microstates.spw"
 @still_alignment: ~"./still-alignment-ladder-2026-09.spw"
-@charge_field: ~"../../public/js/runtime/charge-field.js"
-@spells: ~"../../public/js/runtime/spells.js"
+@charge_field: ~"../../public/js/runtime/physics/charge-field.js"
+@spells: ~"../../public/js/runtime/memory/spells.js"
 @registers: ~"../../public/js/semantic/cauldron/registers.js"
 @storage: ~"../../public/js/semantic/cauldron/storage.js"
 @affordances_css: ~"../../public/css/systems/electrostatic-affordances.css"
@@ -191,7 +191,7 @@ source = "review 2026-09-10: interactive design of spells, cauldron, chips, brac
 
 ^"next_session"{
   claim = `Open this file. The measurements are reproducible and the two non-sensation items are small.`
-  open = #[`this file`, `public/js/runtime/charge-field.js`, `public/css/systems/electrostatic-affordances.css`][reg=set]
+  open = #[`this file`, `public/js/runtime/physics/charge-field.js`, `public/css/systems/electrostatic-affordances.css`][reg=set]
   reproduce = `For each token, count declarations (--token:) against readers (var(--token)) across public/css excluding bundles, and JS touches across public/js excluding generated. The imbalance is the finding.`
   validation = `npm run check:local ; npm run spw:integrity`
   concurrent = `Multiple sessions commit to main in this tree. Never git stash here.`

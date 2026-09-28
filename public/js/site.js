@@ -35,7 +35,7 @@ import {
   setPageState,
   setPageAttentionState,
   snapshotPageState,
-} from './runtime/page-state.js';
+} from './runtime/page/page-state.js';
 import {
   annotatePageHooks,
   describePageHook,
@@ -46,7 +46,7 @@ import {
   snapshotPageHooks,
   PAGE_HOOK_STATES,
   SPW_PAGE_HOOK_CONTRACT,
-} from './runtime/page-hooks.js';
+} from './runtime/page/page-hooks.js';
 import {
   applyDebugQaPostureToRoot,
   describeDebugQaPosture,
@@ -55,7 +55,7 @@ import {
   readDebugQaPosture,
   SPW_DEBUG_QA_CONTRACT,
   SPW_DEBUG_QA_PRESETS,
-} from './runtime/debug-qa-posture.js';
+} from './runtime/diagnostics/debug-qa-posture.js';
 import {
   cancelIdle,
   isFn,
@@ -72,7 +72,7 @@ import {
   ensureFlourishStyles,
   ensureInspectStyles,
 } from './kernel/deferred-styles.js';
-import { applyFeatureLabToBody } from './runtime/feature-lab.js';
+import { applyFeatureLabToBody } from './runtime/discovery/feature-lab.js';
 import {
   DISPLAY_LAYERS,
   HYDRATION_STATES,
@@ -91,18 +91,18 @@ import {
   clearPageCascadeTiming,
   primeRegions,
   refreshRegionProfiles,
-} from './runtime/region-profiler.js';
+} from './runtime/regions/region-profiler.js';
 import { createModuleLoader } from './runtime/orchestration/loader.js';
-import { describePageCategory, readPageCategory } from './runtime/page-category.js';
+import { describePageCategory, readPageCategory } from './runtime/page/page-category.js';
 import * as expressionGeometry from './semantic/spw-expression-geometry.js';
 import * as moduleTimingContract from './kernel/module-timing-contract.js';
 
 function loadCompositionBox() {
-  return import('./runtime/composition-box-model.js');
+  return import('./runtime/regions/composition-box-model.js');
 }
 
 function loadGestureContract() {
-  return import('./runtime/gesture-contract.js');
+  return import('./runtime/interaction/gesture-contract.js');
 }
 
 function loadExpressionGeometry() {
@@ -855,7 +855,7 @@ async function bootSite() {
     scope: 'document',
   });
   if (/(?:^|[?&])(?:condense|precipitate|screenshot)=/.test(window.location.search)) {
-    const { applyPrecipitationRequest } = await import('./runtime/precipitation-request.js');
+    const { applyPrecipitationRequest } = await import('./runtime/expression/precipitation-request.js');
     applyPrecipitationRequest(document);
   }
 
@@ -864,14 +864,14 @@ async function bootSite() {
   // Subscribe before any module mounts, or the trace misses the arrivals it
   // exists to record. The module itself is a bus handler and an array; the
   // costly parts of the instrument are opt-in calls on __SPW_SITE__.loadTrace.
-  import('./runtime/load-trace.js')
+  import('./runtime/arrival/load-trace.js')
     .then((m) => m.initLoadTrace(runtimeCtx))
     .catch(() => {});
   // Same reason, same seat: arrival-shells decides whether a landing is
   // perceptible, so it must be listening before the first module lands. On the
   // 124 flat routes it surveys the page, finds no wall, and does nothing
   // further — the cost of being wired everywhere is one querySelectorAll pass.
-  import('./runtime/arrival-shells.js')
+  import('./runtime/arrival/arrival-shells.js')
     .then((m) => runtimeCtx.addCleanup(m.initArrivalShells(runtimeCtx)))
     .catch(() => {});
   // Project debug/qa posture after query disposition so dataset + URL agree.
@@ -889,7 +889,7 @@ async function bootSite() {
 
   // Settings/shell first; compose console and frame bindings overlap with that
   // parse instead of blocking dataset apply.
-  const orchestratorReady = import('./runtime/state-orchestrator.js');
+  const orchestratorReady = import('./runtime/page/state-orchestrator.js');
   await mountImmediateLayer(CORE_DEFS, runtimeCtx, { label: 'core' });
   const { orchestrator: frameState, bindGlobalInteractions } = await orchestratorReady;
 
@@ -984,17 +984,17 @@ async function bootSite() {
         snapshot: (root = document, options = {}) => loadCompositionBox().then((m) => m.snapshotCompositionBoxes(root, options)),
       },
       physics: {
-        snapshot: (root = document) => import('./runtime/physical-model.js').then((m) => m.snapshotPhysicalModel(root)),
-        describe: (value) => import('./runtime/physical-model.js').then((m) => (
+        snapshot: (root = document) => import('./runtime/physics/physical-model.js').then((m) => m.snapshotPhysicalModel(root)),
+        describe: (value) => import('./runtime/physics/physical-model.js').then((m) => (
           value && value.spatial
             ? m.describePhysicalModelSummary(value)
             : m.describePhysicalModelSummary()
         )),
-        contract: () => import('./runtime/physical-model.js').then((m) => m.SPW_PHYSICAL_MODEL_CONTRACT),
+        contract: () => import('./runtime/physics/physical-model.js').then((m) => m.SPW_PHYSICAL_MODEL_CONTRACT),
       },
       attention: {
-        snapshot: (root = document) => import('./runtime/attention-architecture.js').then((m) => m.describeAttentionArchitecture(root)),
-        contract: () => import('./runtime/attention-architecture.js').then((m) => m.SPW_ATTENTION_ARCHITECTURE_CONTRACT || m.ATTENTION_ARCHITECTURE_CONTRACT),
+        snapshot: (root = document) => import('./runtime/attention/attention-architecture.js').then((m) => m.describeAttentionArchitecture(root)),
+        contract: () => import('./runtime/attention/attention-architecture.js').then((m) => m.SPW_ATTENTION_ARCHITECTURE_CONTRACT || m.ATTENTION_ARCHITECTURE_CONTRACT),
       },
       featureClusters: {
         inspect: (target) => describeFeatureClusterElement(target),
@@ -1100,7 +1100,7 @@ async function bootSite() {
 
   // When layout/agent debug is active, warm layout-qa and log a one-line summary.
   if (runtimeCtx.debugQa?.layoutDebug || runtimeCtx.debugQa?.agentQa) {
-    void import('./runtime/layout-qa.js').then(async (m) => {
+    void import('./runtime/diagnostics/layout-qa.js').then(async (m) => {
       try {
         const report = m.snapshotLayoutQa({ ctx: runtimeCtx });
         const summary = m.summarizeLayoutQa(report);
@@ -1191,11 +1191,11 @@ window.__SPW_SITE__ = {
    * Recording is ambient and trivial; everything here is opt-in.
    */
   loadTrace: {
-    steps: () => import('./runtime/load-trace.js').then((m) => m.getLoadSteps()),
-    summary: () => import('./runtime/load-trace.js').then((m) => m.summarizeLoadTrace()),
-    highlight: (index, options) => import('./runtime/load-trace.js').then((m) => m.highlightStep(index, options)),
-    clear: () => import('./runtime/load-trace.js').then((m) => m.clearLoadTraceHighlight()),
-    stepTo: (count) => import('./runtime/load-trace.js').then((m) => m.stepTo(count, window.__SPW_SITE__)),
+    steps: () => import('./runtime/arrival/load-trace.js').then((m) => m.getLoadSteps()),
+    summary: () => import('./runtime/arrival/load-trace.js').then((m) => m.summarizeLoadTrace()),
+    highlight: (index, options) => import('./runtime/arrival/load-trace.js').then((m) => m.highlightStep(index, options)),
+    clear: () => import('./runtime/arrival/load-trace.js').then((m) => m.clearLoadTraceHighlight()),
+    stepTo: (count) => import('./runtime/arrival/load-trace.js').then((m) => m.stepTo(count, window.__SPW_SITE__)),
   },
   /**
    * Why this page's arrivals were or were not perceptible.
@@ -1204,24 +1204,24 @@ window.__SPW_SITE__ = {
    * again on the next load. Pairs with `npm run reasons` for the static half.
    */
   arrivalField: {
-    field: () => import('./runtime/arrival-shells.js').then((m) => m.describeArrivalField()),
-    survey: () => import('./runtime/arrival-shells.js').then((m) => m.surveyArrivalField()),
-    reset: (surface) => import('./runtime/arrival-shells.js').then((m) => m.resetArrivalGrounding(surface)),
+    field: () => import('./runtime/arrival/arrival-shells.js').then((m) => m.describeArrivalField()),
+    survey: () => import('./runtime/arrival/arrival-shells.js').then((m) => m.surveyArrivalField()),
+    reset: (surface) => import('./runtime/arrival/arrival-shells.js').then((m) => m.resetArrivalGrounding(surface)),
   },
   layoutQa: {
-    snapshot: (options = {}) => import('./runtime/layout-qa.js').then((m) => m.snapshotLayoutQa({
+    snapshot: (options = {}) => import('./runtime/diagnostics/layout-qa.js').then((m) => m.snapshotLayoutQa({
       ...options,
       ctx: runtimeCtx,
     })),
-    summary: (options = {}) => import('./runtime/layout-qa.js').then(async (m) => {
+    summary: (options = {}) => import('./runtime/diagnostics/layout-qa.js').then(async (m) => {
       const report = await m.snapshotLayoutQa({ ...options, ctx: runtimeCtx });
       return m.summarizeLayoutQa(report);
     }),
-    page: () => import('./runtime/layout-qa.js').then((m) => m.snapshotPageSizing()),
-    packing: (root = document, options = {}) => import('./runtime/layout-qa.js').then((m) => m.snapshotPacking(root, options)),
-    inspect: (target, options = {}) => import('./runtime/layout-qa.js').then((m) => m.inspectLayoutTarget(target, options)),
-    recipes: () => import('./runtime/layout-qa.js').then((m) => m.layoutQaRecipes()),
-    contract: () => import('./runtime/layout-qa.js').then((m) => m.SPW_LAYOUT_QA_CONTRACT),
+    page: () => import('./runtime/diagnostics/layout-qa.js').then((m) => m.snapshotPageSizing()),
+    packing: (root = document, options = {}) => import('./runtime/diagnostics/layout-qa.js').then((m) => m.snapshotPacking(root, options)),
+    inspect: (target, options = {}) => import('./runtime/diagnostics/layout-qa.js').then((m) => m.inspectLayoutTarget(target, options)),
+    recipes: () => import('./runtime/diagnostics/layout-qa.js').then((m) => m.layoutQaRecipes()),
+    contract: () => import('./runtime/diagnostics/layout-qa.js').then((m) => m.SPW_LAYOUT_QA_CONTRACT),
   },
   /** Shared ?debug / ?qa / ?log posture (layout-shift, debugOnly modules, agents). */
   debugQa: {
@@ -1255,7 +1255,7 @@ window.__SPW_SITE__ = {
     snapshot: () => {
       try {
         // Lazy to keep surface small when not debug-gated
-        return import('./runtime/observation-beats.js').then(m => m.snapshotObservationBeats?.() || { active: [], contract: null });
+        return import('./runtime/diagnostics/observation-beats.js').then(m => m.snapshotObservationBeats?.() || { active: [], contract: null });
       } catch {
         return { active: [], contract: null };
       }

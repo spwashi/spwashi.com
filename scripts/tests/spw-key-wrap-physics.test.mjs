@@ -10,8 +10,8 @@ import {
   formatWrapJobChip,
 } from '../../public/js/semantic/spw-compose.js';
 
-const keyEvents = await readFile(new URL('../../public/js/runtime/spw-key-events.js', import.meta.url), 'utf8');
-const navigator = await readFile(new URL('../../public/js/runtime/frame-navigator.js', import.meta.url), 'utf8');
+const keyEvents = await readFile(new URL('../../public/js/runtime/interaction/spw-key-events.js', import.meta.url), 'utf8');
+const navigator = await readFile(new URL('../../public/js/runtime/navigation/frame-navigator.js', import.meta.url), 'utf8');
 
 test('mode wrap opens a seat instead of cycling like arrows', () => {
   const mode = getOperatorDefinition('mode');

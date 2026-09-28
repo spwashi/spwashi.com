@@ -38,7 +38,7 @@ intent: .{
  ][reg=set]
  surfaces = #[
   `js/compose.js`,
-  `js/runtime/composition-box-model.js`,
+  `js/runtime/regions/composition-box-model.js`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -49,7 +49,7 @@ intent: .{
 @wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @compose: ~"../../../../public/js/compose.js"
-@composition_box_model: ~"../../../../public/js/runtime/composition-box-model.js"
+@composition_box_model: ~"../../../../public/js/runtime/regions/composition-box-model.js"
 
 dispatch: .{
  plan = @plan

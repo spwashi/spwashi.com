@@ -6,16 +6,16 @@ Refine the site's primary navigation, footer, ornament application, linking surf
 This is a craft-quality / polish pass following the recent runtime load instrumentation and site-rhythm ornament work. It prioritizes shared surfaces over per-route changes.
 
 ## Scope (smallest honest surfaces)
-- **Nav menu layout + mobile responsiveness**: `public/css/shell/chrome.css` (`.site-header`, nav rules), `public/js/runtime/navigation-spells.js`, `public/js/runtime/attention-architecture.js` (section handle integration), possible tiny data-attr or class enhancements. Avoid rewriting header HTML structure.
+- **Nav menu layout + mobile responsiveness**: `public/css/shell/chrome.css` (`.site-header`, nav rules), `public/js/runtime/navigation/navigation-spells.js`, `public/js/runtime/attention/attention-architecture.js` (section handle integration), possible tiny data-attr or class enhancements. Avoid rewriting header HTML structure.
 - **Footer layout + mobile responsiveness**: `public/css/shell/chrome.css` (`.site-footer` grid and stacking), ensure semantic `<footer>` / `.site-footer` patterns remain consistent. Use existing safe-area and clamp tokens.
 - **Ornament distribution**: `public/css/ornament/ornament.css` (and related relational-state, whimsy), integrate the new `.spw-site-rhythm` where it adds value on chrome elements without new visual noise. Prefer existing primitives (rails, meters, nodes, sequences).
 - **Linking surface distribution**: Consistent visual weight and operator/ornament treatment on navigation links, page-index, frame-operators, card links, etc. (operators.css + chrome + ornament). Improve how links participate in rhythm/momentum.
-- **Momentum through spells**: `public/js/runtime/spells.js`, `public/js/runtime/navigation-spells.js`, `public/js/runtime/experiential.js`, related haptics/bus feedback. Enhance perceived flow (better state transitions, visual grounding during navigation, spell affordance distribution) using CSS + existing progressive JS patterns. No new heavy modules.
+- **Momentum through spells**: `public/js/runtime/memory/spells.js`, `public/js/runtime/navigation/navigation-spells.js`, `public/js/runtime/experiential/experiential.js`, related haptics/bus feedback. Enhance perceived flow (better state transitions, visual grounding during navigation, spell affordance distribution) using CSS + existing progressive JS patterns. No new heavy modules.
 
 Related files that may receive light touches only if they are the smallest carrier:
 - `public/css/handles/operators.css`
 - `.spw/conventions/ornament-contract.spw`, `cognitive-navigation.spw`, `interaction-grammar.spw`
-- `public/js/runtime/frame-navigator.js` (only if nav momentum requires it)
+- `public/js/runtime/navigation/frame-navigator.js` (only if nav momentum requires it)
 
 **Explicitly out of scope for this pass** (to keep smallest):
 - New routes or large content changes

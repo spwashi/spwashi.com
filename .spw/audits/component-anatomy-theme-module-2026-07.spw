@@ -10,11 +10,11 @@
 
 @html_component_audit: ~"./html-component-audit-2026-07.spw"
 @module_impact_audit: ~"./module-impact-audit-2026-07.spw"
-@gesture_anatomy_js: ~"../../public/js/runtime/gesture-anatomy.js"
+@gesture_anatomy_js: ~"../../public/js/runtime/interaction/gesture-anatomy.js"
 @gesture_anatomy_css: ~"../../public/css/components/gesture-anatomy.css"
 @page_anatomy_css: ~"../../public/css/components/page-anatomy.css"
 @component_semantics: ~"../../public/js/semantic/component-semantics.js"
-@dom_sync_hub: ~"../../public/js/runtime/dom-sync-hub.js"
+@dom_sync_hub: ~"../../public/js/runtime/orchestration/dom-sync-hub.js"
 
 audit_run: .{
   at = `2026-07-12`
@@ -76,7 +76,7 @@ audit_run: .{
 
 ^"validation"{
   probe = #[
-    `node --check public/js/runtime/gesture-anatomy.js public/js/runtime/dom-sync-hub.js`,
+    `node --check public/js/runtime/interaction/gesture-anatomy.js public/js/runtime/orchestration/dom-sync-hub.js`,
     `npm run build:css`,
     `rg 'spwGestureContractResolved|spwAnatomyThemeLink|gesture-anatomy-accent' public/js public/css`,
   ][reg=set]

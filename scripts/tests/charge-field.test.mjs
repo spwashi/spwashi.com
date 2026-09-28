@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { initChargeField, unmountChargeField } from '/public/js/runtime/charge-field.js';
+import { initChargeField, unmountChargeField } from '/public/js/runtime/physics/charge-field.js';
 import { PHASE_INTENSITY, decayCharge } from '/public/js/kernel/charge-field-contract.js';
 
 test('every charge phase reaches quiet in a bounded number of steps', () => {

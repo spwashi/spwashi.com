@@ -17,9 +17,9 @@ Taste note: **inspectable wonder with operational discipline**.
 
 Several strong local systems already exist:
 
-- brace gesture state in `public/js/runtime/brace-gestures.js`
-- section locomotion and resonance probe in `public/js/runtime/attention-architecture.js`
-- spell / breadcrumb cognition in `public/js/runtime/spells.js` and `public/js/runtime/experiential.js`
+- brace gesture state in `public/js/runtime/interaction/brace-gestures.js`
+- section locomotion and resonance probe in `public/js/runtime/attention/attention-architecture.js`
+- spell / breadcrumb cognition in `public/js/runtime/memory/spells.js` and `public/js/runtime/experiential/experiential.js`
 - image metaphysics in `public/js/media/image-metaphysics.js`
 - discovery overlays and shell chrome state in `public/js/interface/discovery-notices.js` and shell runtime modules
 - semantic / philosophical contracts in `.spw/conventions/site-semantics.spw`, `.spw/conventions/attention-field.spw`, `.spw/conventions/ornament-contract.spw`, and `.spw/philosophy/cognitive-surface.spw`
@@ -137,8 +137,8 @@ Deliverable:
 
 Focus files:
 
-- `public/js/runtime/brace-gestures.js`
-- `public/js/runtime/attention-architecture.js`
+- `public/js/runtime/interaction/brace-gestures.js`
+- `public/js/runtime/attention/attention-architecture.js`
 - `public/js/media/image-metaphysics.js`
 - shell / region interaction modules
 
@@ -157,8 +157,8 @@ Deliverable:
 Focus files:
 
 - `public/js/site.js`
-- `public/js/runtime/experiential.js`
-- `public/js/runtime/spells.js`
+- `public/js/runtime/experiential/experiential.js`
+- `public/js/runtime/memory/spells.js`
 - `settings/index.html`
 - related inspect CSS and shell surfaces
 
@@ -213,15 +213,15 @@ Deliverable:
 
 - [NEW] `.agents/plans/archive/gesture-inspectability-metaphysics/PLAN.md`
 - [NEW] `.agents/plans/archive/gesture-inspectability-metaphysics/wip.spw`
-- [MOD] `public/js/runtime/brace-gestures.js`
-- [MOD] `public/js/runtime/attention-architecture.js`
-- [MOD] `public/js/runtime/spells.js`
-- [MOD] `public/js/runtime/experiential.js`
+- [MOD] `public/js/runtime/interaction/brace-gestures.js`
+- [MOD] `public/js/runtime/attention/attention-architecture.js`
+- [MOD] `public/js/runtime/memory/spells.js`
+- [MOD] `public/js/runtime/experiential/experiential.js`
 - [MOD] `public/js/media/image-metaphysics.js`
 - [MOD] `public/js/site.js`
 - [MOD] `public/js/interface/composition.js`
 - [MOD] `public/js/interface/discovery-notices.js`
-- [MOD] `public/js/runtime/shell-disclosure.js`
+- [MOD] `public/js/runtime/shell/shell-disclosure.js`
 - [MOD] `public/css/effects/wonder.css`
 - [MOD] `public/css/ornament/ornament.css`
 - [MOD] `public/css/shell/chrome.css`

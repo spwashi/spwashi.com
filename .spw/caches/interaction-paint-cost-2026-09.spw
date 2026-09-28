@@ -42,7 +42,7 @@
 @interaction_progression_css: ~"../../public/css/systems/interaction-progression.css"
 @interaction_progression_js: ~"../../public/js/runtime/interaction/progression.js"
 @affordances_css: ~"../../public/css/systems/electrostatic-affordances.css"
-@dom_sync_hub: ~"../../public/js/runtime/dom-sync-hub.js"
+@dom_sync_hub: ~"../../public/js/runtime/orchestration/dom-sync-hub.js"
 @grain_texture: ~"../../public/css/effects/grain-texture.css"
 @module_effect_arcs: ~"./module-effect-arc-options-2026-09.spw"
 
@@ -198,7 +198,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     @haptics_js / charge-field; stop when nothing reads the residue —
     @electrostatic_spend already names dead field outputs.`
   tree = `keep interface/haptics.js for ground/collect/inspect (IDLE). Move
-    focus/pointer arming coalesce into runtime/charge-field.js (VISIBLE, 393 lines). Do
+    focus/pointer arming coalesce into runtime/physics/charge-field.js (VISIBLE, 393 lines). Do
     not mint interface/haptics/ or charge-arm.js until charge-field would mix
     room-field with per-element arming.`
   arc = `Focus is enter-arc arming. ipc-014 found the spend is not that arc — it is
@@ -502,7 +502,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   ux = `Ready is armed, not grounded. Mixing them in one benchmark treats a charged
     page as a quiet one. Performance: keep early interactivity. Module: the harness
     observes extra timestamps; @charge_cycle's public phase machine stays unchanged.`
-  tree = `keep runtime/page-state.js as the public phase writer. Extra timestamps
+  tree = `keep runtime/page/page-state.js as the public phase writer. Extra timestamps
     belong in scripts/headless-nav.mjs, not a new runtime/ready-settled.js.`
   claim = `The benchmark currently mixes runtime ready with ecological settle. A route
     can report ready or site-ready while visible/region work is still loading, which
@@ -604,11 +604,11 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     `public/js/interface/haptics.js` = `
       keep IDLE ground/collect/inspect/checkpoint; drop capture focusin arming
     `
-    `public/js/runtime/charge-field.js` = `
+    `public/js/runtime/physics/charge-field.js` = `
       take coalesced arming writes (393 today). Mint charge-arm.js only if room-field
       and per-element arming cannot share the file
     `
-    `public/js/runtime/shell-disclosure.js` = `keep CORE orchestrator and catalog id`
+    `public/js/runtime/shell/shell-disclosure.js` = `keep CORE orchestrator and catalog id`
     `public/js/runtime/shell/measurement.js` = `
       next mint, and only if a profile names viewport/nav-fit as the 1.7-5.8s immediate
       slice
@@ -616,7 +616,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     `public/js/kernel/dom-contracts.js` = `
       keep syncFloatingChromeState as the single geometry writer
     `
-    `public/js/runtime/layout-assumptions.js` = `
+    `public/js/runtime/regions/layout-assumptions.js` = `
       stay SETTLED beside shell, not inside it
     `
     `public/js/kernel/site-settings-engine.js` = `
@@ -625,7 +625,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
     `public/js/runtime/module-loader.js` = `
       do not split; schedule honesty is catalog when=
     `
-    `public/js/runtime/page-state.js` = `
+    `public/js/runtime/page/page-state.js` = `
       keep public phase; timestamps go to scripts/headless-nav.mjs
     `
     `public/css/effects/material.css` = `
@@ -711,7 +711,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
 
     [q5_shell_measurement] {
       state = "blocked"
-      owner = `public/js/runtime/shell-disclosure.js`
+      owner = `public/js/runtime/shell/shell-disclosure.js`
       why = `ipc-005 would mint shell/measurement.js. The C gate found imports of 13
         to 40ms, children already split, and cleanup complete, so no dominant
         sub-owner is named.`
@@ -741,7 +741,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
 
     [q7_charge_field_relocation] {
       state = "closed"
-      owner = `public/js/interface/haptics.js and runtime/charge-field.js`
+      owner = `public/js/interface/haptics.js and runtime/physics/charge-field.js`
       why = `ipc-001 proposed coalescing and same-element skip. The B gate found the
         existing previewCharge guard already pays reentry at 0.1ms and zero writes,
         and ipc-014 reattributes the focus writes to annotation.`
@@ -1356,9 +1356,9 @@ expression = surface[cost]{focus.paint.attributes}<reading>
       public/js, including dataset writers. Inspect callbacks for dependence on
       repeated equal-value mutation as a refresh signal; record callback/path and
       dependency, not just observer counts.`
-    known_consumers = `Begin at runtime/dom-sync-hub.js, runtime/page-anatomy.js,
+    known_consumers = `Begin at runtime/orchestration/dom-sync-hub.js, runtime/page/page-anatomy.js,
       interface/discovery-notices.js, interface/state-inspector.js and
-      runtime/pulse-beat-tuner.js. This is a starting set, not an exhaustive inventory.
+      runtime/physics/pulse-beat-tuner.js. This is a starting set, not an exhaustive inventory.
       Keep apply()/set() event emission paths unchanged.`
     stop = `If a consumer requires an equal-value mutation to repair derived state,
       leave A unlanded and name that consumer as the next separate repair. Do not
@@ -1536,7 +1536,7 @@ expression = surface[cost]{focus.paint.attributes}<reading>
   [C_shell_lifetime] {
     gate = `ipc_wonder_lifecycle_cut names a dominant sub-owner and conflicting
       geometry snapshot or deferred import closure.`
-    files = `runtime/shell-disclosure.js and its existing runtime/shell/ owners; keep
+    files = `runtime/shell/shell-disclosure.js and its existing runtime/shell/ owners; keep
       dom-contracts.js as geometry writer.`
     algorithm = owner[local]{setup.read.commit.dispose}<isolate>
     correction = transition[generation]{current.commit.stale.skip}<cancel>

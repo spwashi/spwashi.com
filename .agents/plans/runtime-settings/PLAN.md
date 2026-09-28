@@ -19,7 +19,7 @@ Create a discoverable `/settings/` page where visitors can quiet or hide the sur
 [NEW] `public/js/kernel/site-settings.js` - owns settings defaults, persistence, document attributes, and settings-form hydration.
 [NEW] `settings/index.html` - static configuration page.
 [MOD] `public/js/site.js` - applies settings before runtime feature mounting and gates viewport activation.
-[MOD] `public/js/runtime/frame-navigator.js` - respects hidden mode and links to settings.
+[MOD] `public/js/runtime/navigation/frame-navigator.js` - respects hidden mode and links to settings.
 [MOD] `public/js/interface/console.js` - respects hidden/collapsed modes and links to settings.
 [MOD] `public/css/style.css` - adds settings page layout and quiet/hidden runtime states.
 [MOD] `sw.js` - caches settings route and settings module.
@@ -27,7 +27,7 @@ Create a discoverable `/settings/` page where visitors can quiet or hide the sur
 [MOD] `public/js/kernel/site-settings-profiles.js` - declares `rewardDisplay` and shared storage keys for persistence registers.
 [MOD] `public/js/kernel/site-settings-engine.js` - writes `data-spw-reward-display` and exposes `component-collection` in the resettable persistence registry.
 [MOD] `public/js/interface/site-settings-ui.js` - refreshes persistence readouts when component collection storage or events change.
-[MOD] `public/js/runtime/reward-ui.js` - reads `rewardDisplay` to separate docked, toasts-only, and hidden reward modes.
+[MOD] `public/js/runtime/memory/reward-ui.js` - reads `rewardDisplay` to separate docked, toasts-only, and hidden reward modes.
 
 ## Active Extension - 2026-06-30 Reward Display and Component Persistence
 
@@ -50,7 +50,7 @@ Fuzz strategy:
 - Explore: manually inspect current navigator/console/viewport activation boundaries.
 - Stabilize: syntax-check changed JS and manifest JSON.
 - Ship gate: `git diff --check` plus commit-review poll.
-- Targeted checks: `node --check public/js/kernel/site-settings-profiles.js`, `node --check public/js/kernel/site-settings-engine.js`, `node --check public/js/interface/site-settings-ui.js`, and `node --check public/js/runtime/reward-ui.js`.
+- Targeted checks: `node --check public/js/kernel/site-settings-profiles.js`, `node --check public/js/kernel/site-settings-engine.js`, `node --check public/js/interface/site-settings-ui.js`, and `node --check public/js/runtime/memory/reward-ui.js`.
 
 ## Agentic Hygiene
 

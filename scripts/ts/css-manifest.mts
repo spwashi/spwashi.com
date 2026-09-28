@@ -183,7 +183,7 @@ const BEHAVIOR_BUNDLE_SLUGS = Object.freeze(
 
 export const CORE_BUNDLE_HREF = '/public/css/bundles/core.css';
 export const FULL_STYLESHEET_HREF = '/public/css/style.css';
-export const BEHAVIOR_SCOPE_MODULE_HREF = '/public/js/runtime/behavior-scopes.js';
+export const BEHAVIOR_SCOPE_MODULE_HREF = '/public/js/runtime/orchestration/behavior-scopes.js';
 
 export function routeBundleHref(surface: string): string | null {
   const canonical = resolveCanonicalRouteSurface(surface);

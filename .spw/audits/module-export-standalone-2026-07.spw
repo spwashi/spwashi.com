@@ -45,7 +45,7 @@ audit_run: .{
       `kernel/runtime-environment.js`
       `kernel/settings-query-parity.js`
       `modules/profile/builder.js`
-      `runtime/behavior-scopes.js`
+      `runtime/orchestration/behavior-scopes.js`
       `runtime/interaction/vocabulary.js`
       `semantic/pretext-utils.js`
       `semantic/semantic-utils.js`
@@ -72,7 +72,7 @@ audit_run: .{
     files = #[
       `modules/math/diagrams.js`
       `modules/tools/budgeting.js`
-      `runtime/prepaint-state.js`
+      `runtime/arrival/prepaint-state.js`
     ][reg=set]
   }[reg=facet]
 }
@@ -86,11 +86,11 @@ audit_run: .{
 
   spw_module_files: #[
     `interface/state-inspector.js`
-    `runtime/interactive-medium.js`
-    `runtime/page-anatomy.js`
-    `runtime/scene-interaction.js`
-    `runtime/spw-key-events.js`
-    `runtime/topical-payload.js`
+    `runtime/shell/interactive-medium.js`
+    `runtime/page/page-anatomy.js`
+    `runtime/interaction/scene-interaction.js`
+    `runtime/interaction/spw-key-events.js`
+    `runtime/expression/topical-payload.js`
   ][reg=set]
 
   mount_resolver_today: `shared.js accepts module.spwModule.mount; module-catalog mount callbacks call init* directly — dual path`
@@ -106,12 +106,12 @@ audit_run: .{
 ^"orchestrator_watch"{
   note = `Largest browser modules: poor standalone decomposition candidates; growth should flow through guild splits and export contract first.`
   files: #[
-    .{ path = `runtime/shell-disclosure.js`, lines = 2283 }[reg=facet]
-    .{ path = `runtime/experiential.js`, lines = 2184 }[reg=facet]
+    .{ path = `runtime/shell/shell-disclosure.js`, lines = 2283 }[reg=facet]
+    .{ path = `runtime/experiential/experiential.js`, lines = 2184 }[reg=facet]
     .{ path = `kernel/shared.js`, lines = 1991 }[reg=facet]
     .{ path = `interface/haptics.js`, lines = 1168 }[reg=facet]
     .{ path = `interface/state-inspector.js`, lines = 1104 }[reg=facet]
-    .{ path = `runtime/page-anatomy.js`, lines = 1139 }[reg=facet]
+    .{ path = `runtime/page/page-anatomy.js`, lines = 1139 }[reg=facet]
   ][reg=set]
 }
 

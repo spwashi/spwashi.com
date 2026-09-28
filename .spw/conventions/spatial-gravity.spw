@@ -10,7 +10,7 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
-@runtime: ~"../../public/js/runtime/spatial-gravity.js"
+@runtime: ~"../../public/js/runtime/physics/spatial-gravity.js"
 @css: ~"../../public/css/systems/spatial-gravity.css"
 @component_packing: ~"./component-packing.spw"
 @region_ecology: ~"./region-component-ecology.spw"
@@ -104,7 +104,7 @@ fixity = "tending"
   dated = `2026-08-17`
   hosts = #[
     `@bench — authored data-spw-gravity specimens`,
-    `public/js/runtime/reward-ui.js — measureSpatialGravity for dock position; not a full opt-in`,
+    `public/js/runtime/memory/reward-ui.js — measureSpatialGravity for dock position; not a full opt-in`,
     `region-menu popover — data-spw-gravity=open + salience=focal + seating=flush-host`
   ][reg=set]
   mount = `module-catalog schedules spatial-gravity at VISIBLE when [data-spw-gravity] exists in authored HTML. A route with no authored opt-in cannot schedule gravity for a later dynamic popover.`
@@ -118,8 +118,8 @@ fixity = "tending"
 }[reg=facet]
 
 validation: #[
-  `rg 'MEASURE_BANDS|resolveMeasureBand' public/js/runtime/spatial-gravity.js`,
+  `rg 'MEASURE_BANDS|resolveMeasureBand' public/js/runtime/physics/spatial-gravity.js`,
   `rg 'data-spw-gravity' --glob '*.html'`,
-  `node --check public/js/runtime/spatial-gravity.js`,
+  `node --check public/js/runtime/physics/spatial-gravity.js`,
   `Open /design/composition/ and scroll a specimen — readout must name compact|balanced|wide|maximal, not narrow|comfortable`
 ][reg=set]

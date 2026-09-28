@@ -12,7 +12,7 @@ fixity = "stable"
 @arrival_electrostatics: ~"./arrival-electrostatics.spw"
 @attention_field: ~"./attention-field.spw"
 @site_semantics: ~"./site-semantics.spw"
-@experiential: ~"../../public/js/runtime/experiential.js"
+@experiential: ~"../../public/js/runtime/experiential/experiential.js"
 
 ^"thesis"{
   claim: "Spw serialization is the lossless two-way bridge between plain-text grammar, static HTML DOM structure, CSS physical fields, and interactive runtime state."

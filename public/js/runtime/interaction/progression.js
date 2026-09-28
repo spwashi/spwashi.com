@@ -19,7 +19,7 @@ import {
   phaseFromLoopState,
   strongestPhase,
 } from './vocabulary.js';
-import { readMicrointeractionPulseMs } from '../pulse-beat-tuner.js';
+import { readMicrointeractionPulseMs } from '../physics/pulse-beat-tuner.js';
 import { ensureInteractionProgressionStyles } from '../../kernel/deferred-styles.js';
 
 import { INTERACTION_HYSTERESIS } from './hysteresis.js';
