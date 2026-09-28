@@ -335,10 +335,9 @@ const measureElement = (el, rect = readElement(el)?.rect, viewport = readViewpor
    [data-spw-gravity] elements currently on screen — so pairwise is fine. */
 const resolveOverlaps = () => {
   const items = [...elementState.values()].filter((s) => s?.rect && s.el.isConnected);
-  items.forEach(({ el }) => {
-    if (el.dataset.spwYielded) removeDatasetValues(el, ['spwYielded', 'spwYieldReason']);
-  });
-
+  // Decide every yield first, then write only what changed. Clearing all and
+  // re-adding each frame rebuilt the same state and dirtied style every pass.
+  const yields = new Map();
   for (let i = 0; i < items.length; i += 1) {
     for (let j = i + 1; j < items.length; j += 1) {
       const a = items[i];
@@ -349,12 +348,14 @@ const resolveOverlaps = () => {
       if (rankA === rankB) continue; // equal salience: neither is forced to yield
       const loser = rankA < rankB ? a : b;
       const winner = rankA < rankB ? b : a;
-      writeDatasetValues(loser.el, {
-        spwYielded: 'true',
-        spwYieldReason: `held-by-${winner.salience}`,
-      });
+      yields.set(loser.el, `held-by-${winner.salience}`);
     }
   }
+  items.forEach(({ el }) => {
+    const reason = yields.get(el);
+    if (reason) writeDatasetValues(el, { spwYielded: 'true', spwYieldReason: reason });
+    else if (el.dataset.spwYielded) removeDatasetValues(el, ['spwYielded', 'spwYieldReason']);
+  });
 };
 
 /* One pass per frame, after the frame's style pass (kernel/measured-frame.js):
