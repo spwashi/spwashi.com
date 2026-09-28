@@ -42,7 +42,7 @@
     "bench:build:full": "node scripts/build-performance.mjs",
     "bench:build:parallel": "node scripts/build-performance.mjs --skip-site --parallel-check --template-micro",
     "smoke:nav": "node scripts/headless-nav.mjs",
-    "smoke:nav:ci": "node scripts/headless-nav.mjs --warm --require-browser --require-settled --fail-on-console-error --fail-on-overflow-x --json",
+    "smoke:nav:ci": "node scripts/headless-nav.mjs --require-browser --require-settled --fail-on-console-error --fail-on-overflow-x",
     "smoke:nav:qa": "node scripts/headless-nav.mjs --debug-qa --warm",
     "bench:nav": "node scripts/perf-matrix.mjs",
     "bench:nav:quick": "node scripts/perf-matrix.mjs --quick --warm",

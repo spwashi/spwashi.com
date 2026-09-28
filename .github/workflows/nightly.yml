@@ -28,7 +28,8 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - run: npm run smoke:nav -- --routes /,/settings/,/topics/software/,/tools/spw-parser/,/about/ --settle-ms 4000
+      - name: Require settled browser smoke with clean console and layout
+        run: npm run smoke:nav:ci -- --routes /,/settings/,/topics/software/,/tools/spw-parser/,/about/
 
   citations:
     name: Plan index and .spw citations

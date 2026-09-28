@@ -68,11 +68,21 @@
   check_full = `Includes npm audit — network; use before dep landings only`
   plans_index = `plans:index:check mechanical; cheap vs typecheck`
   ci_2026_09_22 = `deploy and validate run Node 22 and restore .tmp/tsc (stamps + tsbuildinfo; a stale entry misses its hash and runs). nightly.yml: smoke:nav on five routes plus plans:index:check and spw:integrity with the submodule, never blocking a deploy`
+  ci_2026_09_28 = `validate and nightly browser jobs now call smoke:nav:ci: Chrome, runtime settlement, console, and horizontal overflow are required. Failed cells print named reasons; CI uses the compact route table instead of the full probe JSON. CI checks a cold first route and uses the normal settle budget.`
   direction = #[
     `CI: cache tsc incremental / node_modules; shard typecheck if wall grows — tsc cache landed 2026-09-22`,
     `Local: prefer npm run build:runtime or build:css alone when scope is known`,
     `Do not require full build:site for pure .spw contract caches`
   ][reg=set]
+}[reg=facet]
+
+^"testing_smells_2026_09_28"{
+  sample = `One local check:local: check-site 26.83s, runtime bindings 24.07s, module suite 19.43s (474 passing tests). Compile passes were cached except public-sources at 3.30s. The gate failed check-generated because another session had an uncommitted core CSS bundle; its source patch was outside this slice.`
+  weak_gate = `PR and nightly jobs invoked the permissive smoke:nav command. Without Chrome it could pass an HTTP shell probe; without strict flags it could pass before runtime ready or with console errors and horizontal overflow.`
+  output_smell = `smoke:nav:ci used --json, which emitted a large nested browser probe into CI logs even for one passing route. The compact route table and named failure reasons carry the actionable result.`
+  timing_smell = `The workflow forced --settle-ms 4000 and the CI script warmed the first route. Strict local PR smoke then failed /topics/software/ as runtime-unsettled at 10.8s. CI now tests the cold route without a spare navigation and allows the normal settle budget.`
+  brittle_contract = `The composite build test in infrastructure-contracts.test.mjs asserts exact package script strings and source substrings. It protects wiring but does not prove that a changed source causes the right rebuild; prefer a behavioral invalidation probe if this area changes again.`
+  named_patch = `Strict browser smoke CI and failure reasons; no new package, plan index, or runtime dependency.`
 }[reg=facet]
 
 ^"check_site_infrastructure_2026_07"{

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 import {
@@ -8,6 +9,7 @@ import {
   isChromeSessionError,
   evaluateHardOk,
   formatBrowserDiagnostic,
+  hardFailureReasons,
   inspectHtmlShell,
   isBootPartial,
   isRuntimeSettled,
@@ -246,4 +248,36 @@ test('cellFromProbe surfaces console diagnostics and evaluateHardOk gates', () =
   assert.equal(evaluateHardOk(cell, { failOnOverflowX: true }), false);
   assert.equal(evaluateHardOk({ ...cell, settled: false }, { requireSettled: true }), false);
   assert.equal(evaluateHardOk({ ...cell, ok: false }, {}), false);
+});
+
+test('strict browser smoke names each failed condition for CI diagnosis', () => {
+  const cell = {
+    ok: false,
+    settled: false,
+    hasConsoleError: true,
+    bodyOverflowX: false,
+    overflowXFrames: 2,
+  };
+  const strict = { requireSettled: true, failOnConsoleError: true, failOnOverflowX: true };
+  assert.deepEqual(hardFailureReasons(cell, strict), [
+    'navigation',
+    'runtime-unsettled',
+    'console-error',
+    'horizontal-overflow',
+  ]);
+  assert.deepEqual(hardFailureReasons({ ok: true, settled: true }, strict), []);
+  assert.equal(evaluateHardOk(cell, strict), false);
+});
+
+test('PR and nightly browser jobs use the strict smoke command', async () => {
+  const packageJson = JSON.parse(await readFile(new URL('../../package.json', import.meta.url), 'utf8'));
+  for (const flag of ['--require-browser', '--require-settled', '--fail-on-console-error', '--fail-on-overflow-x']) {
+    assert.ok(packageJson.scripts['smoke:nav:ci'].includes(flag), `smoke:nav:ci needs ${flag}`);
+  }
+  assert.doesNotMatch(packageJson.scripts['smoke:nav:ci'], /--json|--warm/, 'CI should show compact results and test a cold first route');
+  for (const name of ['validate', 'nightly']) {
+    const workflow = await readFile(new URL(`../../.github/workflows/${name}.yml`, import.meta.url), 'utf8');
+    assert.match(workflow, /run: npm run smoke:nav:ci -- --routes /, `${name} browser smoke must use strict CI gates`);
+    assert.doesNotMatch(workflow, /--settle-ms 4000/, `${name} should allow the normal runtime settle budget`);
+  }
 });
