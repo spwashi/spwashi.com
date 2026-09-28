@@ -104,6 +104,80 @@ export async function listManifestStampInputs(): Promise<string[]> {
   return [...new Set([...routes, ...EXTRA_INPUTS])].sort();
 }
 
+export const EXPRESSION_MANIFEST_RELATIVE = 'public/js/generated/spw-expressions.js';
+
+/** Directories the expression harvest never reads (scripts/build-expression-manifest.mjs SKIP). */
+const EXPRESSION_ROUTE_SKIP = new Set([
+  'node_modules', 'dist', 'dist-vite', '.git', '.spw', '.agents', '.references', '.tmp',
+  'coverage', 'tmp', 'scripts', 'src',
+]);
+/** .spw folders the harvest never reads: the workbench, and the gitignored corpus cache. */
+const EXPRESSION_SPW_SKIP = new Set(['_workbench', 'node_modules', 'gen']);
+const EXPRESSION_EXTRA_INPUTS = Object.freeze([
+  'scripts/build-expression-manifest.mjs',
+  'public/js/semantic/expression-query.js',
+  'scripts/ts/manifest-stamp.mts',
+]);
+
+/** Whether a repo path feeds the expression manifest: a route, a .spw canon file, or its harvester. */
+export function isExpressionStampInput(relativePath: string): boolean {
+  if ((EXPRESSION_EXTRA_INPUTS as readonly string[]).includes(relativePath)) return true;
+  const parts = relativePath.split('/');
+  if (parts[0] === '.spw') {
+    return relativePath.endsWith('.spw') && !parts.slice(1).some((part) => part.startsWith('.') || EXPRESSION_SPW_SKIP.has(part));
+  }
+  return parts[parts.length - 1] === 'index.html' && !parts.some((part) => part.startsWith('.') || EXPRESSION_ROUTE_SKIP.has(part));
+}
+
+async function walkFiles(directory: string, results: string[] = []): Promise<string[]> {
+  let entries;
+  try {
+    entries = await fs.readdir(directory, { withFileTypes: true });
+  } catch (error) {
+    if (isEnoent(error)) return results;
+    throw error;
+  }
+  for (const entry of entries) {
+    const absolute = path.join(directory, entry.name);
+    const relative = toPosixPath(path.relative(ROOT, absolute));
+    if (entry.isDirectory()) {
+      if (entry.name === '.git' || entry.name === 'node_modules' || entry.name === '_workbench' || relative === '.spw/gen') continue;
+      if (entry.name.startsWith('.') && entry.name !== '.spw') continue;
+      await walkFiles(absolute, results);
+    } else if (entry.isFile()) {
+      results.push(relative);
+    }
+  }
+  return results;
+}
+
+/** Working-tree stamp of everything the expression harvest reads. */
+export async function computeExpressionSourceStamp(): Promise<string> {
+  const inputs = (await walkFiles(ROOT)).filter(isExpressionStampInput);
+  for (const extra of EXPRESSION_EXTRA_INPUTS) if (!inputs.includes(extra)) inputs.push(extra);
+  const entries: StampEntry[] = [];
+  for (const relativePath of [...new Set(inputs)].sort()) {
+    try {
+      entries.push({ path: relativePath, content: await readWorktree(relativePath) });
+    } catch (error) {
+      if (!isEnoent(error)) throw error;
+    }
+  }
+  return stampFromEntries(entries);
+}
+
+/** The same stamp, read from the git index. */
+export function computeStagedExpressionSourceStamp(): string {
+  const inputs = listIndexPaths().filter(isExpressionStampInput).sort();
+  const blobs = readStagedBlobs(inputs);
+  return stampFromEntries(inputs.filter((relativePath) => blobs.has(relativePath))
+    .map((relativePath) => ({ path: relativePath, content: blobs.get(relativePath) as Buffer })));
+}
+
+export function expressionStampFromText(text: string | null | undefined): string | null {
+  return text?.match(/sourceStamp:\s*'([a-f0-9]{64})'/)?.[1] || null;
+}
+
 /** Inputs as the git index holds them: tracked routes plus the extra inputs that are staged. */
 export function listStagedManifestStampInputs(indexPaths: readonly string[]): string[] {
   const extras = new Set<string>(EXTRA_INPUTS);
@@ -305,14 +379,33 @@ function stagedNames(): string[] {
 
 export async function checkStagedManifestStamp(): Promise<{ ok: boolean; reason: string }> {
   const staged = new Set(stagedNames());
-  const inputs = listStagedManifestStampInputs(listIndexPaths());
+  const indexPaths = listIndexPaths();
+  const inputs = listStagedManifestStampInputs(indexPaths);
   const touchesInputs = inputs.some((relativePath) => staged.has(relativePath));
   const touchesIndex = staged.has(SEARCH_INDEX_RELATIVE);
-  if (!touchesInputs && !touchesIndex) return evaluateStagedManifest({ touchesInputs, touchesIndex, stagedStamp: '', indexStamp: null });
+  let search: { ok: boolean; reason: string };
+  if (!touchesInputs && !touchesIndex) {
+    search = evaluateStagedManifest({ touchesInputs, touchesIndex, stagedStamp: '', indexStamp: null });
+  } else {
+    const stagedText = gitShow(`:${SEARCH_INDEX_RELATIVE}`);
+    const stagedHead = stagedText ? stagedText.subarray(0, 512).toString('utf8') : '';
+    const stagedMatch = stagedHead.match(/"sourceStamp":"([a-f0-9]{64})"/);
+    const indexStamp = stagedMatch ? stagedMatch[1] : sourceStampFromIndexText(stagedText ? stagedText.toString('utf8') : '');
+    search = evaluateStagedManifest({ touchesInputs, touchesIndex, stagedStamp: computeStagedManifestSourceStamp(), indexStamp });
+  }
+  if (!search.ok) return search;
 
-  const stagedText = gitShow(`:${SEARCH_INDEX_RELATIVE}`);
-  const stagedHead = stagedText ? stagedText.subarray(0, 512).toString('utf8') : '';
-  const stagedMatch = stagedHead.match(/"sourceStamp":"([a-f0-9]{64})"/);
-  const indexStamp = stagedMatch ? stagedMatch[1] : sourceStampFromIndexText(stagedText ? stagedText.toString('utf8') : '');
-  return evaluateStagedManifest({ touchesInputs, touchesIndex, stagedStamp: computeStagedManifestSourceStamp(), indexStamp });
+  // The expression manifest answers to the same rule, over routes, the .spw canon, and its harvester.
+  const touchesExpressionInputs = [...staged].some(isExpressionStampInput);
+  const touchesExpressions = staged.has(EXPRESSION_MANIFEST_RELATIVE);
+  if (!touchesExpressionInputs && !touchesExpressions) return search;
+  const recorded = expressionStampFromText(gitShow(`:${EXPRESSION_MANIFEST_RELATIVE}`)?.toString('utf8'));
+  if (!recorded) return search; // unstamped until its first staged build; the index still answers.
+  if (recorded === computeStagedExpressionSourceStamp()) {
+    return { ok: true, reason: `${search.reason}; so does the expression manifest` };
+  }
+  return {
+    ok: false,
+    reason: 'the expression manifest this commit records was not built from the routes and .spw files it records; run npm run manifest:staged',
+  };
 }
