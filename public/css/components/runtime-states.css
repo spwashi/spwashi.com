@@ -524,6 +524,21 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     pointer-events: none;
   }
 
+  /* Open, the satchel is as wide as its insets allow. The closed pill keeps
+     min-inline-size: max-content so it cannot shrink to a sliver; open, that
+     floor followed the launcher's one-line state mirror to 1,200px and pushed
+     every control's label off the right edge. */
+  .spw-state-inspector[data-spw-state-inspector="open"] {
+    min-inline-size: 0;
+  }
+
+  .spw-state-inspector[data-spw-state-inspector="open"] .spw-state-inspector__launch {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .spw-state-inspector[data-spw-state-inspector="open"] > *,
   .spw-state-inspector[data-spw-state-inspector="open"][data-spw-satchel-anchor="chrome-rail"] > * {
     pointer-events: auto;
