@@ -56,8 +56,10 @@ Other commands worth knowing:
 
 | Command | Use |
 |---|---|
-| `npm run build` | Typecheck, CSS bundles, static deploy into `dist/` |
+| `npm run build` | Compile typed output, verify CSS bundles, build static deploy into `dist/` |
 | `npm run build:local` | Same builder with local flags (`npm run build -- --local`) |
+| `npm run build:css` | Regenerate tracked CSS outputs after source edits |
+| `npm run check:css` | Inspect CSS output freshness and contracts without rewriting CSS |
 | `npm run catalog` | Regenerates the in-tree design catalog (`design/catalog/`, gitignored) |
 | `npm run visual:checks` | Pocket stills that fail when ink/light ignore attention |
 | `npm run audit:copy:accessor` | Copy-unit census (dotted keys vs Spw handles) |

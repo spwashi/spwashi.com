@@ -220,6 +220,29 @@ test('compile fingerprints are stable and skip generated copies', async () => {
   assert.equal(first.files.some((file) => file.startsWith('public/css/bundles/')), false);
 });
 
+test('CSS inspection checks existing bundles once per request without rebuilding them', async () => {
+  const { runCssBuild, selectCompilePasses } = await import('../build-compile.mjs');
+  const scripts = JSON.parse(await readFile(path.join(ROOT, 'package.json'), 'utf8')).scripts;
+  assert.deepEqual(selectCompilePasses(['build:tools']).map((pass) => pass.name), ['build:tools']);
+  assert.throws(() => selectCompilePasses(['missing']), /unknown pass: missing/);
+  assert.match(scripts['build:css:check'], /--only=build:tools --with-css/);
+  assert.match(scripts['check:css'], /npm run build:css:check/);
+  assert.doesNotMatch(scripts['check:css'], /node scripts\/css-build\.mjs/, 'inspection must not rebuild CSS before checking it');
+  assert.doesNotMatch(scripts['check:css'], /check-generated/, 'CSS inspection must not fail on unrelated generated outputs');
+
+  const calls = [];
+  const run = async (_command, args) => {
+    calls.push(args);
+    return { status: 0 };
+  };
+  await runCssBuild(run);
+  await runCssBuild(run);
+  assert.deepEqual(calls, [
+    ['scripts/css-build.mjs', '--check', '--strict-budget'],
+    ['scripts/css-build.mjs', '--check', '--strict-budget'],
+  ]);
+});
+
 test('check:local module tests match the test:modules script', async () => {
   const packageJson = JSON.parse(await readFile(path.join(ROOT, 'package.json'), 'utf8'));
   const checkLocalSource = await readFile(path.join(ROOT, 'scripts/check-local.mjs'), 'utf8');

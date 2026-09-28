@@ -85,6 +85,14 @@
   named_patch = `Strict browser smoke CI and failure reasons; no new package, plan index, or runtime dependency.`
 }[reg=facet]
 
+^"css_inspection_context_2026_09_28"{
+  baseline = `check:css took 10.89s in one local sample. It built 3 stylesheet sources and 33 bundles, then checked those same 3 and 33 outputs; the build could hide stale generated CSS before inspection saw it.`
+  align = `build:css remains the explicit output writer. build:css:check selects only the cached build:tools pass and checks CSS outputs once with strict budgets; check:css composes that check with CSS contracts and the custom-property audit. Sitewide generated-output hygiene remains in check:local.`
+  local_gate = `check:local now checks CSS outputs on every run. A source-input stamp plus core.css sentinel could miss a stale or absent route bundle; the full check costs about 0.7s on the sampled warm tree.`
+  deploy = `Deploy keeps source validation before build:site:run; the latter writes dist/ and checks the rendered PWA contract. CSS output freshness belongs to inspection, while the publish builder copies verified artifacts.`
+  timing_limit = `Post-change check:css samples took 13.06s and 20.43s while other sessions used the shared tree. The structural change removes one CSS pass and a warm tools compilation; these wall samples do not establish a speedup.`
+}[reg=facet]
+
 ^"check_site_infrastructure_2026_07"{
   landed_at = `2026-07-12`
   syntax = `runSyntaxChecks uses a bounded worker pool (default min(8, availableParallelism)) and preserves deterministic failure order; check-site prints phase boundaries before long work`
