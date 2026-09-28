@@ -1,0 +1,91 @@
+# Spw Assembly (2026-09)
+#
+# operation: prime
+# Spw read as an assembly: parts, wraps, and thresholds, in the terms of
+# assembly code and functional programming. Wrapping changes identity, the
+# wrap chain is the index key, and thresholds are authored with an inference
+# path beside them. Judgments and one probe live here; no runtime reads this.
+
+#>spw_assembly_2026_09
+#:cache #!language #!indexing #!runtime #!wonder
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+@lore_alignment: ~"../language/lore-alignment.spw"
+@operator_alignment: ~"../language/operator-namespace-alignment.spw"
+@cauldron_registers: ~"../conventions/cauldron-registers.spw"
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@engagement_clusters: ~"../../.agents/plans/engagement-clusters/PLAN.md"
+@language_plan: ~"../../.agents/plans/spw-metaphysical-language/PLAN.md"
+@expression_manifest: ~"../../public/js/generated/spw-expressions.js"
+
+operation = "prime"
+fixity = "experimental"
+
+^"creator_decisions_2026_09_28"{
+  wrap_key = `Wrapping changes the key. A wrapped expression is a different thing from what it wraps, as Maybe a is not a; the chain of wraps is its identity.`
+  thresholds = `Authorship first, with an inference feature path: an author declares a threshold; the runtime may propose one, and a proposal becomes a threshold only when an author confirms it.`
+  reading = `Read the marks as assembly code and functional programming rather than as a factory.`
+}[reg=facet]
+
+^"content_addressed_identity"{
+  rule = `key(wrap(W, x)) = hash(W, key(x)). A part (one sigil expression, the smallest claim that survives projection) hashes its own text; every wrap hashes its wrapper with what it wraps. Names, handles, and titles are metadata on a key, never the key.`
+  traveler = `The wrap chain read inside out ({artifact} → [table] → doodle → <show>) is the traveler: the record of how an expression was made, and the key a search or cauldron can index by.`
+  prior_art = #[
+    `Unison: definitions are identified by the hash of their syntax tree; names are metadata`,
+    `git: a tree's id is the hash of its entries' ids, so shared subtrees share ids`
+  ][reg=set]
+  kin = `Two expressions are kin at the depth where their keys first agree: same block under different modes, same moded block under different subjects. Kinship is structural, and survives a rename.`
+}[reg=facet]
+
+^"probe_2026_09_28"{
+  method = `Inside-out hashing of the 880 parsed route expressions in the expression manifest: { } block (join and parts), [mode], subject, (scene), <projection>. Compared with word overlap (Jaccard over subject, mode, parts, scene, projection).`
+  ~#measured: "871 distinct whole keys, 748 distinct blocks; 66 blocks recur under another wrap, 23 of them with two or more parts"
+  ~#measured(structure over words): "387 pairs share a multi-part block; 336 of them (87%) have word overlap under 0.5"
+  ~#measured(words over structure): "of 222 pairs with word overlap of 0.5 or more, 113 share no block"
+  example = `{open.sit} recurs under about[reading], composition[read], topic[systems], dimensional[surface], play[play], rpg[orientation], recipe[cook]`
+  ~#reading: "Structure finds kin that words under-rate, and words find kin that structure never shares; neither is the index alone. A recurring block is either a real kinship or a copied template, and the key cannot tell which; authorship can."
+}[reg=facet]
+
+^"thresholds"{
+  authored = `A threshold is a claim about what a reader crosses (arrival-electrostatics); in these terms it is a guard, the ? probe as a declared condition on a path. data-spw-liminality (entry, threshold, deep, projected, settled) already carries 659 authored claims.`
+  inference_path = `Like type inference beside annotations: where a path is unannotated, the runtime proposes. kernel/engagement.js already sees approach resolve into engagement on a host; a crossing that recurs is a candidate threshold.`
+  boundary = `Inference stays on the device that saw it and surfaces in the author's own tools (the runtime atlas, the inspector); nothing is collected from visitors (compositional-css-electrostatics boundaries). A proposal carries its evidence and becomes authored only when confirmed.`
+}[reg=facet]
+
+^"assembly_reading"{
+  ~#note: "A first reading against the canon in kernel/operator-detection.js, offered as questions; the operator mapping is the creator's decision (module-contract-overhaul human decisions). + | ` are not operators."
+  rows = #[
+    `#> frame: a label, the address a jump can target; <_foo labels a concept edge the way _start labels code`,
+    `#: layer: a section or segment`,
+    `# vibration: a directive, a pragma`,
+    `$ substrate: registers and memory, the store values live in`,
+    `& subject: address-of, a reference to the thing (C's &)`,
+    `* value: the value at an address (C's *)`,
+    `= binding: let, a bind`,
+    `! action: an instruction with an effect`,
+    `? probe: a test, a guard, a pattern match; where authored thresholds live`,
+    `~ potential: a thunk, a value not yet forced; primed modules are thunks`,
+    `^ integration: a fold, or the return to the caller`,
+    `% normalize: reduction to a canonical form`,
+    `@ perspective: an evaluation context; viewer@subject evaluates from outside, viewer@{subject} from within`,
+    `{ } direction: a block, a closure over what it holds`,
+    `[ ] mode: a type or mode parameter the block is read under`,
+    `( ) scene: application, a call site`,
+    `< > concept: a type, the housing a value is read as`,
+    `> projection: the return, the arrow in a signature`
+  ][reg=set]
+}[reg=facet]
+
+^"wonder"{
+  claim = `A small catalog of parts, wrapped combinatorially, yields more than anyone authored; thresholds give wonder its timing, since the change of state happens at the crossing. Played straight: keys, travelers, guards, and thunks, named as sincerely as the site names its folios.`
+}[reg=facet]
+
+^"next"{
+  key_function = `a pure kernel function computing keys for parsed expressions, and the manifest carrying them, before any surface reads them`
+  folio_travelers = `the folio and panel sidecars written as travelers; test whether wrap-key kin finds pieces their handles miss`
+  template_or_kin = `an authoring mark that says a recurring block is kin, not a copied template, so the index can weight it`
+  threshold_proposals = `an inspector view of candidate thresholds from local engagement, with evidence and a confirm action`
+  operator_rows = `the creator confirms or rewrites the assembly_reading rows`
+}[reg=facet]
