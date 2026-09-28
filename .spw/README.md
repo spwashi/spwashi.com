@@ -119,6 +119,17 @@ Still open:
   as a hub/degree signal only until its anchor extractor learns quoted
   frames and absolute URLs.
 
+- **`spw census` and `spw graph` do not share a scan.** Both write a corpus
+  memo under `.spw/gen/session/corpus-memo/`, but the memo fingerprint includes
+  the product option `hubTop` (24 for census, 12 for graph), so the second
+  command rescans everything the first just parsed. Measured 2026-09-27 at pin
+  `3eaab6377672` with a load average above 160 from concurrent sessions: census
+  339 s, then graph 436 s, two memos, zero reuse; 28 memo products and 87 MB sit
+  in that directory. The ratios are the finding, not the seconds. A scan should
+  be keyed on corpus content (roots plus file hashes) and the hub count applied
+  when the product is projected. Until then, run one of the two per session.
+  Evidence: `.spw/workbench-report.spw#memo_key`.
+
 This site is the use case meant to discover gaps like these; each is recorded
 here with the measurement that found it rather than worked around in silence.
 
