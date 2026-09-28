@@ -1,6 +1,9 @@
-# Review 2026-07-12 — planning reference; its proposed migration is not active until path consumers and rollback are fully mapped.
+# Review 2026-09-27 — refreshed tending memory; concept refined from "move routes into site/" to "one-hop source-to-URL mapping plus four bins". No file moves are active. M0/M2 decisions shared with typescript-integration; M3 answered.
 # wip — site-source-layout
 #
+# Hot planning memory. The April stream is preserved at the bottom as history;
+# the facets above it supersede its phase register.
+
 #>plan_site_source_layout_wip
 #:operation #!cache
 #:fixity #!tending
@@ -10,153 +13,163 @@
 @index: ~"./index.spw"
 @plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@build_topology: ~"../../../scripts/ts/shared/build-topology.mts"
+@vite_config: ~"../../../vite.config.ts"
+@template: ~"../../../scripts/template.mjs"
+@site_model: ~"../../../.spw/site.spw"
+@plan_homonym_renaming: ~"../homonym-renaming/PLAN.md"
+@plan_deploy_module_graph: ~"../deploy-module-graph/PLAN.md"
+@plan_runtime_plane_consolidation: ~"../runtime-plane-consolidation/PLAN.md"
+@plan_core_css_spend_cut: ~"../core-css-spend-cut/PLAN.md"
+@plan_css_architecture_readability: ~"../css-architecture-readability/PLAN.md"
+@plan_agent_optimization: ~"../agent-optimization/PLAN.md"
+@plan_pwa_experience: ~"../pwa-experience/PLAN.md"
+@plan_portable_css: ~"../portable-css/PLAN.md"
+@plan_theming_public_versioning: ~"../theming-icon-packs-public-versioning/PLAN.md"
+@plan_history_reflow: ~"../history-reflow/PLAN.md"
+@plan_typescript_integration: ~"../typescript-integration/PLAN.md"
+@wip_typescript_integration: ~"../typescript-integration/wip.spw"
+@skill_typescript: ~"../../skills/spw-typescript-affordances/SKILL.md"
 
 operation = "cache"
 fixity = "tending"
+source = "2026-09-27 legibility conversation (which trees reduce legibility; src/public/dist proposal) plus tree probes"
 
 ^"selection_probes"{
- probes = #[ `rg 'site-source-layout' scripts/`, `git diff --check`, `test -f scripts/`, ][reg=set]
- rule = "Run probes before trusting cached plan_context."
+ probes = #[
+  `git ls-files public/js/typed public/js/generated public/css/bundles | wc -l`,
+  `git grep -l build-topology -- scripts/ts`,
+  `git grep -l _partials -- scripts vite.config.ts`,
+  `git check-ignore -v 00.unsorted dist-vite 'midjourney_session (3).zip'`,
+  `ls src/styles/entries public/ts`
+ ][reg=set]
+ rule = "Re-run probes before trusting any count below; concurrent sessions move this tree."
 }[reg=facet]
 
-^"plan_context"{
- goal = `The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated deploy output continues to live in dist/ - build/dev/check scripts continue to work without changing public URLs - non-site concerns such as .agents/, .spw/, .github/, and tooling no longer visually compete with route folders at the repo root - templates and partials stay inside the site source tree as non-routable authoring surfaces This is a repository-clarity change, not a framework migration. The public site should still behave like a hand-authored static site with root-relative asset paths and directory routing.`
- owner = `site-source-layout`
- operation = "prime"
- bucket = "runtime_js_validation"
- validation = #[ `git diff --check`, `node --check for each edited script module`, `npm run build`, `npm run check`, `targeted route checks in local dev on:`, `/`, ][reg=set]
- hot_files = #[ `scripts/`, `.spw/`, `scripts/build.mjs`, `scripts/dev-server.mjs`, `scripts/template.mjs`, `scripts/generate-sitemap.mjs`, ][reg=set]
+^"current_reading"{
+ evidence = #[
+  `repo root: ~27 route directories beside configs, model adapters, tooling, and three gitignored midjourney zips`,
+  `scripts/: 101 top-level entries; typed sources already split into scripts/ts -> scripts/typed`,
+  `public/: 1409 tracked files, 47 of them generated (public/js/typed, public/js/generated, public/css/bundles)`,
+  `src/: only src/styles/entries (3 CSS entries) — a src/ that means "compiled input" already exists, unannounced`,
+  `public/ts is excluded from the deploy copy, so it is src-shaped while living under public/`,
+  `build-topology.mts is a deny-list (BUILD_EXCLUDED_TOP_LEVEL); vite.config.ts keeps its own drifting ignoredSegments copy`,
+  `two sw.js files: repo root and public/sw.js`,
+  `00.unsorted, dist, dist-vite, zips are gitignored: noise for the IDE and humans, not for git`
+ ][reg=set]
+ reading = `The April plan assumed root-as-source was the whole problem. The sharper problem is that the repo has no positive statement of what ships: the deploy set is "everything minus a list", and that list lives in two places.`
 }[reg=facet]
-^["roots"]{
- @plan: ~".agents/plans/site-source-layout/PLAN.md"
- @site_model: ~".spw/site.spw"
- @surface_registry: ~".spw/surfaces.spw"
- @agents_md: ~"AGENTS.md"
- @build: ~"scripts/build.mjs"
- @dev_server: ~"scripts/dev-server.mjs"
- @template: ~"scripts/template.mjs"
- @sitemap: ~"scripts/generate-sitemap.mjs"
- @catalog: ~"scripts/generate-design-catalog.mjs"
- @contracts: ~"scripts/site-contracts.mjs"
- @pkg: ~"package.json"
- @partials: ~"_partials"
- @home: ~"index.html"
- @public: ~"public"
+
+^"refined_concept"{
+ thesis = `Legibility comes from one rule a reader can apply without opening a script: a served file's URL is its path relative to one root. Every other file is visibly not served.`
+ invariant_one_hop = `URL == path relative to site root. /public/css/style.css stays /public/css/style.css; only the prefix site/ is dropped. No rename maps, no aliasing.`
+ four_bins = .{
+  served_as_authored = `site/ — route HTML, _partials, public/ (css, js, images, data, fonts), manifest, sw.js, CNAME, favicon`
+  compiled_input = `src/ — files that never ship verbatim: src/styles/entries, public/ts -> src/ts; nothing route-shaped`
+  generated = `dist/ (deploy) and dist-vite/ (smoke); committed precipitate stays in site/public until the dev loop can regenerate it`
+  project_control = `scripts/, .spw/, .agents/, .github/, types/, workers/, design capture archive, configs, adapters`
+ }[reg=facet]
+ site_vs_src = `Keep site/ for the served tree (the April decision holds). src/ is not rejected — it is the correct name for bin two, which already exists. The user-facing src/public/dist framing maps onto site/public + src + dist.`
+ homonym = `"public" currently means three things: the /public/ URL prefix, Vite's verbatim publicDir, and "publishable". Freeze the URL meaning; never configure Vite publicDir to point at site/public, or the homonym becomes a bug.`
+}[reg=facet]
+
+^"near_term_moves"{
+ rule = `Each move is one patch, independently revertable, ordered by legibility gained per file touched. None requires moving a route.`
+ M0_allow_list = .{
+  move = `Add a positive SITE_ENTRIES / isServedPath to build-topology.mts and make vite.config.ts import it instead of its own ignoredSegments.`
+  value = `one owner for "what ships"; removes a drift pair; is the real phase 1 (path abstraction) of PLAN.md`
+  shared_with = @wip_typescript_integration
+  decision_there = `how vite.config.ts imports the list: cast the compiled scripts/typed .mjs (root tsconfig is strict and includes only vite.config.ts; typed .mjs have no declarations) or import the .mts source with allowImportingTsExtensions. Undecided; decide before building M0.`
+  validation = #[`npm run build:tools`, `npm run typecheck`, `npm run check:local`, `diff of dist/ file list before and after npm run build:site:run`][reg=set]
+ }[reg=facet]
+ M1_ide_excludes = .{
+  move = `Mark 00.unsorted, dist, dist-vite, .tmp, design/components/captures, and generated public dirs as excluded in the JetBrains module (.idea/spwashi.com.iml).`
+  value = `immediate editor legibility and faster search with zero runtime or git risk`
+  validation = #[`git diff --check`, `search no longer returns capture or dist hits`][reg=set]
+ }[reg=facet]
+ M2_ts_home = .{
+  move = `Move public/ts -> src/ts. Output stays public/js/typed; the /public/js/* paths alias and every URL stay. One commit, skill matrix included.`
+  value = `public/ stops containing non-served source; src/ gets its second honest tenant; build-topology loses one exclusion`
+  shared_with = @wip_typescript_integration
+  decision_there = `rootDir and include in tsconfig.runtime.json, tsconfig.public-sources.json, tsconfig.public.json`
+  touch = #[
+   `tsconfig.runtime.json rootDir + include; tsconfig.public-sources.json and tsconfig.public.json include`,
+   `scripts/build-compile.mjs input lists; scripts/check-runtime-bindings.mjs; scripts/check-watch.mjs; scripts/fix-typed-imports.mjs comment`,
+   `scripts/ts/runtime-contracts/imports.mts scan root and messages; scripts/ts/style-property-contract.mts PUBLIC_TS_DIR; scripts/ts/shared/build-topology.mts drop the prefix`,
+   `scripts/tests/module-lifecycle-contract.test.mjs and runtime-import-contracts.test.mjs fixture paths`,
+   `.spw tilde paths: conventions/component-capture-pipeline, module-export-contract, site-starter-component-kit, model-guided-refinement; caches/intent-across-pages-2026-09; philosophy/timing-data-localization`,
+   `prose: AGENTS.md build:runtime row, public/js/README.md, types/module-catalog.d.ts comment, skill matrix, skills/README and _shared/site-workflow, runtime-plane-consolidation and other plan refs`
+  ][reg=set]
+  validation = #[`npm run typecheck`, `npm run build:runtime`, `npm run check:runtime`, `npm run check:generated`, `npm run spw:integrity`, `git diff --stat public/js/typed shows nothing`][reg=set]
+ }[reg=facet]
+ M3_sw_owner = .{
+  move = `Decide which sw.js is authored and which is legacy or generated; record the answer here before any site/ move.`
+  answer = `Root sw.js is the authored worker (its header says so; pwa-contracts.mts reads it; build/index.mts stamps it into dist). public/sw.js is a six-line compat shim, importScripts('/sw.js'), kept for registrations that still point at /public/sw.js. site-contracts checks both. Both are bin one, served as authored; neither is generated. Under L1 both move into site/ unchanged.`
+  status = "answered 2026-09-27"
+  validation = #[`npm run check:pwa`][reg=set]
+ }[reg=facet]
+}[reg=facet]
+
+^"long_term"{
+ L1_site_move = `Only after M0 lands: git mv routes, _partials, public, manifest, sw.js, CNAME, favicon into site/ in one isolated commit on a clean tree, then a separate commit for script/doc retargets. Rename-only commits keep git log --follow and blame honest.`
+ L2_route_manifest_as_source = `Enumerate routes from the route runtime manifest (npm run manifest) rather than crawling the root. Sitemap, search index, vite inputs, and site-contracts then read one list; directory discovery becomes a check, not the source.`
+ L3_precipitate_out_of_tree = `Move committed generated outputs (public/js/typed, public/js/generated, css bundles, search index) behind the dev orchestrator so they can become gitignored. Resolves the AGENTS.md gotcha that check:local can be green with stale committed bundles.`
+ L4_scripts_by_lifecycle = `Group scripts/ into build/, check/, audit/, gen/, visual/ only after package.json is the sole caller surface; update package.json in the same patch. Separate plan if taken up.`
+ L5_publishable_boundary = `site/public becomes the natural unit for versioned public assets and portable CSS packaging.`
+}[reg=facet]
+
+^"resonance"{
+ homonym_renaming = .{ see = @plan_homonym_renaming ; bond = `"public" triple meaning; source vs served vs publishable` }[reg=facet]
+ deploy_module_graph = .{ see = @plan_deploy_module_graph ; bond = `allow-list topology is the file-level twin of the module graph; L2 route manifest` }[reg=facet]
+ runtime_plane_consolidation = .{ see = @plan_runtime_plane_consolidation ; bond = `M2 public/ts -> src/ts and the typed output plane; L2 route manifest is the one file it found read only by site-contracts` }[reg=facet]
+ typescript_integration = .{ see = @plan_typescript_integration ; bond = `M0 is its typed build-topology record; M2 is its tsconfig rootDir; L3 is its committed-output question. Decisions live there, mirrored here.` }[reg=facet]
+ core_css_spend_cut = .{ see = @plan_core_css_spend_cut ; bond = `bundle outputs vs src/styles/entries; L3 stale-bundle risk` }[reg=facet]
+ css_architecture_readability = .{ see = @plan_css_architecture_readability ; bond = `literate CSS reads better when source layers and bundles are visibly different bins` }[reg=facet]
+ agent_optimization = .{ see = @plan_agent_optimization ; bond = `root legibility is agent I/O spend; success is a smaller next census, fewer excluded-path special cases` }[reg=facet]
+ pwa_experience = .{ see = @plan_pwa_experience ; bond = `M3 sw.js ownership; precache URLs depend on the one-hop invariant` }[reg=facet]
+ portable_css = .{ see = @plan_portable_css ; bond = `L5 publishable boundary` }[reg=facet]
+ theming_public_versioning = .{ see = @plan_theming_public_versioning ; bond = `L5 versioned /public/ assets` }[reg=facet]
+ history_reflow = .{ see = @plan_history_reflow ; bond = `L1 rename-only commits need the symbol[scope] subject and closing episode` }[reg=facet]
+ site_model = .{ see = @site_model ; bond = `.spw route refs use ../index.html paths; retarget only after L1` }[reg=facet]
+}[reg=facet]
+
+^"open"{
+ ~[1]: "Does anything outside build-topology still crawl the root with its own ignore list (sitemap topology, audit-route-links, operator audits)?"
+ ~[2]: "answered — root sw.js is canonical; public/sw.js is a compat shim (see M3_sw_owner)"
+ ~[6]: "How does vite.config.ts import the M0 ship list: cast compiled .mjs or import .mts source? (decided in typescript-integration)"
+ ~[3]: "Where does design/ belong: served hub routes in site/design, capture archive as project_control?"
+ ~[4]: "Can the dev orchestrator regenerate the precipitate fast enough to stop committing it (L3)?"
+ ~[5]: "Should split-css.js at root be archived or moved under scripts/?"
 }
 
-^["intent"]{
- ~#goal: "Reshape the repo around site/ as the authored website source tree, keep dist/ as generated deploy output, and keep scripts/.spw/.agents at the repo root so public source stops competing with project-control surfaces."
- ~#taste: "clear boundaries, site-first naming, no fake framework ceremony"
-}
+^"guardrails"{
+ do_not = #[
+  `move routes before M0 lands and the dist/ file list is proven identical`,
+  `change any public URL or root-relative link`,
+  `point Vite publicDir at site/public`,
+  `mix git mv with content edits in one commit`,
+  `git stash or run a broad move while other sessions have a dirty tree`,
+  `create docs/ as a catch-all`,
+  `introduce npm dependencies`,
+  `decide the vite import method, tsconfig rootDir, or committed-output question from this plan alone; those are typescript-integration decisions`
+ ][reg=set]
+ promotion_rule = `Promote the four bins into PLAN.md only after M0 and M2 land and the bins survive contact with real consumers.`
+}[reg=facet]
 
-^["development"]{
- lane: #repo_clarity
- ladder: #infrastructure
- develops: [#site_source_root, #dist_boundary, #non_routable_authoring, #path_contracts]
- review_surfaces: [@plan, @site_model, @surface_registry, @agents_md, @build, @dev_server, @template, @sitemap, @catalog, @contracts]
-}
+validation = #[`git diff --check`, `npm run check:local`, `npm run build:site:run`, `npm run check:pwa`, `dist/ file-list diff`][reg=set]
 
-^["concept_index"]{
- primary: [#site_over_src, #public_source_tree, #generated_output_boundary, #templates_inside_site, #phased_migration]
- surfaces: [#routes, #shared_assets, #partials, #service_worker, #manifest, #build_pipeline, #dev_server, #catalog, #route_contracts, #spw_references]
- tensions: [#clarity_vs_churn, #move_first_vs_path_first, #site_vs_repo_root, #docs_vs_public_content, #source_root_vs_public_url]
- transfers: [#source_root, #path_resolution, #non_routable_directory, #deployment_parity, #inspection_surface]
-}
-
-^["recursive_improvement"]{
- loop: [
-  "? name the public boundary before moving files",
-  "< abstract site-root path logic in scripts before broad renames",
-  "$ move only publishable source into site/",
-  "^ restore build/dev/check parity before cleanup flourishes",
-  "% update .spw and agent-facing references after the new boundary is real",
-  "& add docs/ only if maintainer docs truly need their own home"
- ]
- gates: [#build_parity, #route_parity, #catalog_parity, #inspection_parity]
-}
-
-^["parallel_work"]{
- critical_path: [#path_abstraction, #public_source_move, #build_dev_validation, #inspectable_reference_update]
- parallelizable: [#template_home_decision, #docs_surface_decision, #path_helper_extraction]
- shared_hot_files: ["scripts/build.mjs", "scripts/dev-server.mjs", "scripts/template.mjs", "scripts/generate-sitemap.mjs", "scripts/generate-design-catalog.mjs", "scripts/site-contracts.mjs", "AGENTS.md", ".spw/site.spw", ".spw/surfaces.spw"]
- merge_risks: [#dirty_worktree, #broad_rename_patch, #mixed_root_assumptions]
-}
-
-^["supporting_documents"]{
- must_ship: [@plan]
- helpful: [@site_model, @surface_registry, @agents_md]
- carries: [#migration_map, #path_inventory, #risk_register, #validation_loop]
-}
-
-^["phase_register"]{
- path_abstraction: {
-  order: "1"
-  goal: "Teach the scripts that repo root and public site source root are different concepts before any broad move lands."
-  files: [@build, @dev_server, @template, @sitemap, @catalog, @contracts]
-  success: "The pipeline can resolve a dedicated site source directory without changing public URLs."
- }
- source_move: {
-  order: "2"
-  goal: "Move routes, partials, public assets, manifest, service worker, and other authored site files into site/."
-  files: [@partials, @home, @public]
-  success: "The public website lives under one source root."
- }
- parity_restore: {
-  order: "3"
-  goal: "Reconfirm build, dev, sitemap, catalog, and contract validation after the move."
-  files: [@build, @dev_server, @sitemap, @catalog, @contracts, @pkg]
-  success: "dist output and local serving preserve current route and asset behavior."
- }
- reference_update: {
-  order: "4"
-  goal: "Retarget inspectable and agent-facing references so future edits follow the new source root."
-  files: [@site_model, @surface_registry, @agents_md]
-  success: "Humans and tools both point at site/... rather than stale repo-root routes."
- }
-}
-
-^["validation"]{
- hypotheses: [
-  "site/ will make the repo easier to read without changing the public site model.",
-  "Path abstraction before moves will produce a cleaner migration than a pure rename-first patch.",
-  "Keeping templates and partials inside site/ will make the source boundary more legible than leaving them in scripts/ or repo root."
- ]
- negative_controls: [
-  "Public URLs remain unchanged.",
-  "dist/ remains the only generated deploy surface.",
-  "scripts/ stays at repo root.",
-  ".spw/ and .agents/ remain non-public repo surfaces."
- ]
- demo_path: ["npm run dev", "npm run build", "npm run check", "/", "/about/", "/blog/", "/topics/software/spw/operators/frame/", "/public/css/style.css", "/public/js/site.js", "/manifest.webmanifest", "/sw.js"]
-}
+status = "ready_for_M0 once the vite import method is decided in typescript-integration"
 
 ^["stream"]{
- >>[2026-04-18 09:40] observe — the repo root currently mixes public routes, shared assets, build tooling, agent notes, and editor-facing .spw surfaces, which makes the authored site boundary visually weak.
- >>[2026-04-18 09:44] observe — build.mjs, dev-server.mjs, template.mjs, generate-sitemap.mjs, generate-design-catalog.mjs, and site-contracts.mjs all currently assume the repo root is also the public site source root.
- >>[2026-04-18 09:47] decide — prefer site/ over src/ because the authored files are still website-shaped rather than compile-first application input.
- >>[2026-04-18 09:50] decide — templates and partials belong inside the site source tree as non-routable authoring surfaces, starting with site/_partials/ and only adding site/_templates/ if full-page shells become a real seam.
- >>[2026-04-18 09:53] decide — docs/ is optional and should stay reserved for maintainer documentation rather than public routes or template fragments.
- >>[2026-04-18 09:57] risk — the current worktree already carries uncommitted edits in scripts/build.mjs and scripts/generate-sitemap.mjs, so migration work needs integration discipline rather than clean-slate rewrites.
- >>[2026-04-18 10:00] decide — migrate in phases: path abstraction first, then source move, then parity validation, then .spw and AGENTS reference updates.
-}
-
-^["open"]{
- ~[1]: "Should generate-design-catalog.mjs treat site/ as the primary public scan root while still reading .spw philosophy files from the repo root?"
- ~[2]: "Does site/_templates/ provide immediate value, or should the repo stay with site/_partials/ until a real page-shell seam appears?"
- ~[3]: "Should the scripts share a small path helper module once site-root logic exists in more than two places?"
-}
-
-^["cache"]{
- ~#status: "planning"
- ~#base_ref: "main"
- ~#rebased_at: ""
- ~#hygiene_split: "existing uncommitted edits in scripts/build.mjs and scripts/generate-sitemap.mjs must be preserved during implementation"
- ~#files_hot: "scripts/build.mjs, scripts/dev-server.mjs, scripts/template.mjs, scripts/generate-sitemap.mjs, scripts/generate-design-catalog.mjs, scripts/site-contracts.mjs, AGENTS.md, .spw/site.spw, .spw/surfaces.spw"
- ~#next_commit: "1"
- ~#open_count: "3"
- ~#last_stream: "2026-04-18 10:00"
- ~#taste_debt: "current repo root still overexposes public routes relative to project-control surfaces"
-}
-
-^["done"]{
+ >>[2026-04-18 09:40] observe — the repo root mixes public routes, shared assets, build tooling, agent notes, and editor-facing .spw surfaces.
+ >>[2026-04-18 09:47] decide — prefer site/ over src/ because the authored files are website-shaped.
+ >>[2026-04-18 09:50] decide — partials stay inside the site tree as non-routable authoring surfaces.
+ >>[2026-04-18 10:00] decide — phases: path abstraction, source move, parity, reference update.
+ >>[2026-09-27 20:20] observe — build-topology.mts is a deny-list; vite.config.ts duplicates it; public/ts is already excluded from deploy; src/styles/entries already gives src/ a compiled-input meaning.
+ >>[2026-09-27 20:24] decide — refine to one-hop URL invariant plus four bins; site/ and src/ coexist with distinct meanings.
+ >>[2026-09-27 20:26] decide — near-term moves (M0-M3) need no route move; L1 site move waits on M0.
+ >>[2026-09-27 21:05] observe — PLAN.md's out-of-scope line rejected src/ts by name while M2 proposes it; reworded: served files never live in src/, compiled input may.
+ >>[2026-09-27 21:08] observe — root sw.js is the authored worker and public/sw.js is a compat shim that importScripts('/sw.js'); M3 answered without a patch.
+ >>[2026-09-27 21:12] observe — the M2 touch list is longer than the tsconfigs: six .spw tilde paths, two test fixtures, AGENTS.md, and the JS README name public/ts; spw:integrity joins M2 validation.
+ >>[2026-09-27 21:18] decide — M0, M2, and L3 are shared with typescript-integration; that plan owns the decisions, this plan owns the order.
 }
