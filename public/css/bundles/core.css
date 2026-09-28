@@ -19728,6 +19728,50 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 }
 }
 
+/* /public/css/components/hook-visual.css */
+@layer components {
+/* ==========================================================================
+   hook-visual.css
+   --------------------------------------------------------------------------
+   Compact artwork preview beside a route's opening copy. Play and Design
+   share this first-screen figure; each route owns its image and caption.
+   ========================================================================== */
+
+.spw-hook-visual {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.7rem;
+  max-inline-size: 36rem;
+  margin: 0.6rem 0;
+  padding: 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
+  border-radius: var(--shape-component, 8px);
+  background: var(--component-surface-strong);
+  color: var(--ink);
+}
+
+.spw-hook-visual img {
+  inline-size: 5.5rem;
+  block-size: 5.5rem;
+  border-radius: calc(var(--shape-component, 8px) - 2px);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  object-fit: contain;
+}
+
+.spw-hook-visual figcaption {
+  display: grid;
+  gap: 0.15rem;
+  min-inline-size: 0;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.spw-hook-visual figcaption span {
+  color: color-mix(in srgb, var(--ink) 82%, transparent);
+}
+}
+
 /* /public/css/components/semantic-learning.css */
 @layer components {
 /* ==========================================================================

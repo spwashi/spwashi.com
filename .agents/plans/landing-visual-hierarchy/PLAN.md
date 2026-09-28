@@ -51,3 +51,9 @@ Named in `session-2026-08-21.spw`. One packet per agent. Do not run two packets 
 4. Canonical-nav checks also cover 320, 390, 768, and 1280px at 100% and 125% text scale.
 5. `git diff --check`, `node scripts/check-site.mjs`, and the companion validation commands after any HTML/CSS patch.
 6. A claimed desk (`data-spw-cluster`) lights a six-seat trope; no new `data-spw-*` families.
+
+## Early visual pass · 2026-09-27
+
+Operation: `align`; fixity: tending. Browser inspection showed About already pairs its first claim with a visible figure, while Play and Design defer their first artwork past the opening controls and copy. Home now places a folio preview beneath the creator sentence. Play and Design reuse existing small derivatives in their entry hooks through one shared, static figure style. Play also needs a dark route palette whenever the site's color mode resolves dark; its former fixed pale surface sat under light inherited heading ink.
+
+Validation: pocket and desktop browser views show the Home card and the Play and Design previews in the opening screen; the Play auto-dark view now keeps heading ink legible against its route surface. The copy accessor and module selector audits passed. Keep the full figures and route links where they are; these small previews make the subject visible at entry.
