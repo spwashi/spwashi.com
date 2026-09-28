@@ -622,6 +622,62 @@ test('runtime resource hints stop at the requested limit in catalog order', asyn
   assert.equal(ctx.resourceReadiness.size, 2);
 });
 
+test('a wave probes the selector only of a def that passed its cheap gates', async () => {
+  const definitions = [
+    { id: 'visible-hit', when: MOUNT_WHEN.VISIBLE, selector: '.hit' },
+    { id: 'visible-miss', when: MOUNT_WHEN.VISIBLE, selector: '.miss' },
+    { id: 'idle-hit', when: MOUNT_WHEN.IDLE, selector: '.hit' },
+    { id: 'visible-skipped', when: MOUNT_WHEN.VISIBLE, selector: '.hit' },
+  ].map((def) => ({ ...def, layer: MODULE_LAYERS.ENHANCEMENT, specifier: `/public/js/${def.id}.js` }));
+  const probed = [];
+  const loader = createModuleLoader({
+    moduleDefs: definitions,
+    html: document.documentElement,
+    body: document.body,
+    matchesRoute: () => true,
+    matchesFeatures: () => true,
+    hasSelector: (def) => {
+      probed.push(def.id);
+      return def.selector === '.hit';
+    },
+    getRoots: () => [],
+    hasDebugOrQAMode: () => false,
+    readConnectionPosture: () => 'fast',
+    shouldPrefetchRuntimeResources: () => false,
+    extractDynamicImportSpecifier: (definition) => definition.specifier,
+    moduleSpecifierToUrl: (specifier) => specifier,
+    ensureResourceHint: () => false,
+    isRuntimeResourceCached: async () => false,
+    requestServiceWorkerPrefetch: () => false,
+    requestServiceWorkerCacheSummary: () => false,
+    refreshRegionProfiles: () => {},
+    setPageState: () => {},
+  });
+  const makeCtx = (audit) => ({
+    route: '/',
+    features: new Set(),
+    runtimePolicy: {
+      timing: 'normal',
+      timingByModule: new Map(),
+      only: new Set(),
+      skip: new Set(['visible-skipped']),
+      audit,
+    },
+    moduleAudit: [],
+    moduleSkipAuditKeys: new Set(),
+    resourceReadiness: new Map(),
+    bus: { emit() {} },
+  });
+
+  const resources = await loader.prefetchRuntimeResources(makeCtx(false), definitions, MOUNT_WHEN.VISIBLE, 'modulepreload');
+  assert.deepEqual(resources.map((entry) => entry.id), ['visible-hit']);
+  assert.deepEqual(probed, ['visible-hit', 'visible-miss']);
+
+  probed.length = 0;
+  await loader.prefetchRuntimeResources(makeCtx(true), definitions, MOUNT_WHEN.VISIBLE, 'modulepreload');
+  assert.deepEqual(probed, definitions.map((def) => def.id), 'the audit still asks every def why it was skipped');
+});
+
 test('discovery notice selection stays deterministic', () => {
   const keys = getDateKeys(date);
   const selected = selectScheduleItems(noticeFeed, date);

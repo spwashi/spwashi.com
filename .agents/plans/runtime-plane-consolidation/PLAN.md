@@ -153,6 +153,7 @@ Validation: `npm run check:runtime`, `npm run test:engagement:run`, local `node 
 - Consume `.agents/state/runtime/route-runtime-manifest.json` at build time to emit a per-surface module set into the page (or into a small generated module), instead of leaving it a check-only artifact.
 - Make `shouldScheduleDefinition` honor `ctx.routeFamily`, which is already parsed and currently dead.
 - Cache selector probe results per boot so the ~8 filter passes share one `querySelector` per definition.
+  - Half landed 2026-09-28: `shouldScheduleDefinition` asks the selector last, only of a def whose cheap gates (when, route, features, category, only/skip, debug) passed; `?spw-module-audit` still asks every def so skip reasons stay whole. A wave no longer queries hosts for modules that belong to another wave. Pocket boot, HEAD vs working tree through CDP Fetch, two interleaved runs a side: loader selector probes 950/1076 → 190/192 on `/about/` and 1076/1076 → 189/189 on `/topics/software/`; all `document.querySelector` calls at boot 1189/1412 → 409/485 and 1430/1422 → 545/539. A per-boot cache is still open and must not cache a miss blind: a host can arrive after the wave that first asked.
 - Target: 83 always-considered modules become route-scoped; ~650 boot `querySelector` calls collapse toward ~90.
 
 Gate: measured boot delta on a cold content-rich route before/after, demoed in browser.
