@@ -101,3 +101,10 @@ fixity = "tending"
   ][reg=set]
   validation: `Topic filter on a long route: popover opens toward room, narrates yield if satchel overlaps, inspectable in state inspector.`
 }
+
+^"chrome_is_somewhere_to_go_2026_09_28"{
+  late_sheets = "A late sheet may dress chrome, never move it. effects/wonder.css gave every charged host position: relative, and in the effects layer it beat the rail's position: fixed; floating chrome is now excluded (c348c0f7)."
+  not_reading_material = "kernel/navigation-chrome.js names header navigation and floating chrome as places to go: sigil priming, brace capture, and the inspect field pass them by, and the arc lifecycle keeps their press-and-land feedback (e4d87502)."
+  rail_summary = "The travel rail shows a Spw position at a layer the reader cycles: #> region, . path, & component (around the reading groove's lead), ! recent activation (7018898c)."
+  summoned_satchel = "Behind ?spw-satchel=rail the satchel leaves the screen until the rail's $ or a swipe up on the rail summons it (state-inspector:summon); open on a phone, it takes its insets instead of its launcher's one-line width (d0244132)."
+}

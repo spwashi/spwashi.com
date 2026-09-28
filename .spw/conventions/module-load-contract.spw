@@ -159,3 +159,11 @@ fixity = "settled"
   lifecycle_rule = "Mounted records and lifecycle events carry the derived affordance story, so an orchestrator can answer what woke, what became possible, what changed, and what cleanup owns."
   probe = `npm run check:runtime && node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/infrastructure-contracts.test.mjs`
 }
+
+^"engagement_arming_2026_09_28"{
+  field = "engages: a closed ENGAGE_KIND (press, hover, focus, key, menu), a schedule field the scheduler reads when runtime policy arming=engage (?spw-arming=engage; 0a974b23). Default arming is unchanged."
+  resolution = "kernel/engagement.js decides whether a reader engaged a host: focus, keys, a context menu, a press (mouse at once; a touch that lifts or holds, never one taken for a scroll or one that slides), a hover after a dwell. Focus already inside a host at arming counts; focus in a field engages the field, not the region around it. It hears the approach first so an import can be primed, and it interprets no verbs."
+  handoff = "The engagement that woke a def waits in ctx.engagements, so a module finishes the gesture it was not present for: region-menu opens on a waking hold. This is what keeps arming honest after touch-gesture-contracts f5, which took first-gesture modules off INTERACTION because the first hold only started the import."
+  gate_lesson = "The selector gate asks whether a host exists, and on a site where every page shares the shell and grammar that is always yes: 56 modules mounted on all six sampled routes. A contract that can say what wakes a module is the gate that can say no."
+  probe = `node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/engagement.test.mjs`
+}

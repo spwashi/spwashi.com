@@ -156,7 +156,7 @@
 ^"late_restyle"{
   claim: "A late stylesheet may only add atmosphere to a surface that already held."
   hook: "First paint must already be worth staying for: a named person, a next action, readable structure, fast enough to trust."
-  angry: "Hiding, moving, or resizing something the visitor already read — navigation restyle, measure change, type jump, content vanishing."
+  angry: "Hiding, moving, or resizing something the visitor already read — navigation restyle, measure change, type jump, content vanishing. 2026-09-28: a flourish rule giving charged hosts position: relative unpinned the fixed travel rail."
   prettier: "Deferred spend may only make an existing element more aesthetically pleasing. It may not invent a new layout."
   rough_then_flourish: "The interesting load is: core already chose packing and measure; idle flourish dresses that choice. Keep that sequence perceptible. Do not precompute a second layout in JS to hide it."
 }
