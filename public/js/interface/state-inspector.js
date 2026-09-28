@@ -1248,7 +1248,12 @@ export function initStateInspector() {
   const mo = new MutationObserver(reapply);
   mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-spw-base-metamaterial','data-spw-metamaterial','data-spw-attention','data-spw-wonder-state','data-spw-physics-reason','data-spw-high-contrast'] });
 
+  // Summoned from elsewhere (the travel rail's $, a swipe up on the rail): open
+  // where it is, so its launcher need not stay on screen to be reachable.
+  const offSummon = bus?.on?.('state-inspector:summon', () => setOpen(root, true)) || null;
+
   return () => {
+    offSummon?.();
     cleanupBindings();
     cleanupDrag?.();
     document.removeEventListener('spw:page-attention-state', handlePageStateAwareness);

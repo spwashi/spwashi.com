@@ -621,6 +621,13 @@
   touch-action: manipulation;
 }
 
+/* The summoned-satchel demo (?spw-satchel=rail) keeps vertical swipes on the
+   travel rail, so a swipe up on it can summon the satchel; the rule above
+   would otherwise hand them back to page scrolling once this pack arrives. */
+html[data-spw-satchel-summon="rail"] :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) {
+  touch-action: none;
+}
+
 :where(
   p, li, pre, code, blockquote, [data-copyable], [data-readable],
   :is(.spw-panel, .frame-panel) p, .frame-card span, .inline-note, [data-spw-textual-role="note"]

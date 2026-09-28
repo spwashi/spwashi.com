@@ -25704,6 +25704,30 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
   }
 }
 
+/* Summoned satchel (?spw-satchel=rail, a demo): until it is open, the satchel
+   leaves the screen to the rail's $, and the rail keeps vertical swipes so a
+   swipe up on it can summon the satchel. */
+html[data-spw-satchel-summon="rail"] :where([data-spw-chrome-role="state-inspector"]:not([data-spw-state-inspector="open"])) {
+  display: none;
+}
+
+html[data-spw-satchel-summon="rail"] :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) {
+  /* Also restated in effects/cinematic.css, whose touch rule would win once the flourish pack loads. */
+  touch-action: none;
+}
+
+/* The $ takes the rail's room; the cauldron count stays in the expanded rail. */
+html[data-spw-satchel-summon="rail"] :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"][data-spw-handle-shell-state="collapsed"]) :where(.spw-section-handle-cauldron) {
+  display: none;
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]) :where(.spw-section-handle-satchel) {
+  min-inline-size: var(--touch-target-compact, 2.15rem);
+  color: color-mix(in srgb, var(--op-substrate-color, var(--active-op-color, #008080)) 78%, var(--ink));
+  font-family: var(--grammar-mono-font, var(--site-mono-font, monospace));
+  font-weight: 700;
+}
+
 /* Later layers restyle operator buttons as flex; collapsed advanced travel
    must stay out of the pocket row so the current-room sentence can yield. */
 :where(
@@ -27449,6 +27473,21 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     gap: 0.45rem;
     z-index: var(--z-drawer, calc(var(--z-priority, 2000) + 20));
     pointer-events: none;
+  }
+
+  /* Open, the satchel is as wide as its insets allow. The closed pill keeps
+     min-inline-size: max-content so it cannot shrink to a sliver; open, that
+     floor followed the launcher's one-line state mirror to 1,200px and pushed
+     every control's label off the right edge. */
+  .spw-state-inspector[data-spw-state-inspector="open"] {
+    min-inline-size: 0;
+  }
+
+  .spw-state-inspector[data-spw-state-inspector="open"] .spw-state-inspector__launch {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .spw-state-inspector[data-spw-state-inspector="open"] > *,

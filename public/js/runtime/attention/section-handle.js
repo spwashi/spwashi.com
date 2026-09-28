@@ -519,6 +519,9 @@ function createHandleShell(origin, doc = document) {
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="next" aria-label="Jump to next section">
       <span aria-hidden="true">›</span>
     </button>
+    <button type="button" class="spw-section-handle-step spw-section-handle-satchel" data-spw-handle-target="satchel" aria-label="Open the state satchel" title="State satchel (or swipe up on the rail)" hidden>
+      <span aria-hidden="true">$</span>
+    </button>
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="bottom" data-spw-handle-advanced="true" aria-label="Jump to bottom of page">
       <span aria-hidden="true">↓</span>
     </button>
@@ -570,6 +573,7 @@ function getSectionHandleRefs(handle, shell) {
     progressNode: shell.querySelector('.spw-section-handle-progress'),
     toggleButton: shell.querySelector('[data-spw-handle-target="toggle"]'),
     layerButton: shell.querySelector('[data-spw-handle-target="layer"]'),
+    satchelButton: shell.querySelector('[data-spw-handle-target="satchel"]'),
     topButton: shell.querySelector('[data-spw-handle-target="top"]'),
     prevButton: shell.querySelector('[data-spw-handle-target="prev"]'),
     nextButton: shell.querySelector('[data-spw-handle-target="next"]'),
@@ -920,6 +924,30 @@ function noteActivation(target) {
   return true;
 }
 
+/* Summoned satchel, a demo behind ?spw-satchel=rail: the rail carries a small
+   $ (substrate, where the page's state is kept) and a swipe up on the rail asks
+   for the satchel, so the satchel's own launcher can leave the screen. */
+function readSatchelSummon() {
+  try {
+    return new URLSearchParams(globalThis.location?.search || '').get('spw-satchel') === 'rail'
+      || document.documentElement.dataset.spwSatchelSummon === 'rail';
+  } catch {
+    return false;
+  }
+}
+
+async function summonSatchel(source) {
+  const site = globalThis.__SPW_SITE__;
+  if (!document.querySelector('[data-spw-state-inspector-root]')) {
+    try {
+      await site?.mountModule?.('state-inspector');
+    } catch {
+      return;
+    }
+  }
+  (site?.bus || globalThis.bus)?.emit?.('state-inspector:summon', { source });
+}
+
 const PASSIVE_UPDATE_SOURCES = new Set(['scroll', 'resize']);
 
 function measureSectionHandleState(sections, state) {
@@ -1197,6 +1225,9 @@ function createSectionHandleController({
     if (!(button instanceof HTMLButtonElement)) return;
     const target = button.dataset.spwHandleTarget || '';
     switch (target) {
+      case 'satchel':
+        void summonSatchel('rail');
+        return;
       case 'layer': {
         const index = RAIL_LAYERS.findIndex((layer) => layer.id === railLayer);
         writeRailLayer(RAIL_LAYERS[(index + 1) % RAIL_LAYERS.length].id);
@@ -1335,6 +1366,12 @@ function createSectionHandleController({
   };
 
   let swipeStartX = 0;
+  let swipeStartY = 0;
+  const satchelSummon = readSatchelSummon();
+  if (satchelSummon) {
+    if (refs.satchelButton instanceof HTMLButtonElement) refs.satchelButton.hidden = false;
+    if (document.documentElement.dataset.spwSatchelSummon !== 'rail') document.documentElement.dataset.spwSatchelSummon = 'rail';
+  }
   let swipeArmed = false;
   let suppressClick = false;
   const armClickSuppress = () => {
@@ -1346,12 +1383,20 @@ function createSectionHandleController({
   const handleShellPointerDown = (event) => {
     if (event.pointerType === 'mouse' && event.button !== 0) return;
     swipeStartX = event.clientX || 0;
+    swipeStartY = event.clientY || 0;
     swipeArmed = true;
   };
   const handleShellPointerUp = (event) => {
     if (!swipeArmed) return;
     swipeArmed = false;
     const dx = (event.clientX || 0) - swipeStartX;
+    const dy = (event.clientY || 0) - swipeStartY;
+    if (satchelSummon && dy < -SECTION_HANDLE_SWIPE_DELTA_PX && Math.abs(dy) > Math.abs(dx)) {
+      armClickSuppress();
+      event.preventDefault();
+      void summonSatchel('swipe');
+      return;
+    }
     const intent = resolveSectionHandleSwipe({
       compact: state.compact,
       dx,
