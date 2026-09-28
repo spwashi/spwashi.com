@@ -120,8 +120,35 @@ expression = recalc[cost]{selector.element.state}<phone>
     html_inline_custom = 220
     html_data_attributes = 258
     elements = 2137
-    ~#reading: "every element carries ~1,700 inherited custom properties; a root register or inline token that moves one re-resolves that map everywhere, which is why a pass costs the same whoever triggers it and why removing any one writer shaves only its slice"
+    ~#correction(2026-09-28, same day): "the count is real, the reading was not: 1,000 unused :root tokens added to the live page moved a pass 279 → 294ms (+5%), and removing tokens/core.css saved ~12ms of ~333. Map size is not the per-pass cost. See pass_anatomy_2026_09_28."
   }[reg=facet]
+}
+
+^"pass_anatomy_2026_09_28"{
+  ~#note: "What one full pass is made of, on /topics/software/ at phone. Bench: the live page settled 25s, serialized with every runtime node, root register, and inline token kept and scripts stripped (2,192 elements), then served with bundles/core.css replaced per variant through CDP Fetch; renderer thread time (tdur) of nine forced passes, each variant paired with the baselines either side of it. Load average 13–18: read ratios, not ms."
+  sheets = .{
+    no_css = `11ms`
+    core_only = `0.80 of the full pass`
+    flourish_pack = `0.86 without it: ~14%, the one non-core sheet that registers`
+    topics_route = `0.95`
+    behaviors_and_runtime_owned = `0.98 each`
+  }[reg=facet]
+  features = .{
+    containment = `3.37 and 2.94 with container-type / contain / content-visibility removed: the frames' content-visibility:auto is what keeps a pass at ~1,190 styled elements of 2,192`
+    pseudo_elements = `0.77 and 0.82 with every ::before/::after rule removed; the universal reset *::before, *::after alone measured 1.11 (no effect), so the cost is pseudo-elements that draw`
+    none_of_these = `transitions, animations, :has() rules, @container blocks: within 0.93–1.18, not levers`
+  }[reg=facet]
+  files = `no single core file moves a pass beyond noise when removed alone (tokens/core.css ~0–4%, grammar/syntax.css ~0%); the cost is spread across the structure that matches everywhere`
+  delivery = `66 KiB of core source rules cannot match before a late module writes their attribute (in-tag authored attributes and the prepaint seed excluded, camelCase dataset writers included), but most gating modules mount on every route (gesture-anatomy, reward-ui, loading-ecology, spw-key-events, palette-treat: 165 of 165); only expression-resonance (86), tuning-discovery (50), and annotation-layer (0, orphan) are narrow. Reclustering by arrival is a byte and portability change, not a pass-cost change.`
+  refused = #[
+    `the universal *::before, *::after box-sizing reset as a pass cost (1.11)`,
+    `root custom-property count as a pass cost (+5% per 1,000)`
+  ][reg=set]
+  levers = #[
+    `containment coverage: the entry-spine frame is excluded from content-visibility and holds 352 always-styled elements here; the footer is never skipped. A layout-feel change, so it ends at a browser demo`,
+    `flourish-pack's per-element rules (~14% of each pass once idle)`,
+    `pass count: root writers (runtime), recorded above`
+  ][reg=set]
 }
 
 ^"next"{
