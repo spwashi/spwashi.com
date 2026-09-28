@@ -17,6 +17,7 @@ export {
   computeStagedManifestSourceStamp,
   evaluateManifestFreshness,
   evaluateStagedManifest,
+  explainManifestDrift,
   inspectManifestStamp,
   listManifestStampInputs,
   listStagedManifestStampInputs,
