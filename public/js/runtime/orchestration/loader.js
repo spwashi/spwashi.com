@@ -564,7 +564,6 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
   const id = normalizeRuntimeToken(def.id);
   const effectiveWhen = getEffectiveMountWhen(def, ctx);
   const routeMatch = matchesRoute(def);
-  const selectorMatch = hasSelector(def);
   const featureMatch = resolveFeatureMatch(def, ctx);
   const categoryMatch = matchesPageCategory(def, resolvePageCategory(ctx));
   const onlyMatch = !ctx.runtimePolicy.only.size || ctx.runtimePolicy.only.has(id);
@@ -576,7 +575,12 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
   const debugActive = hasDebugOrQAMode(ctx);
   const debugMatch = !debugOnly || debugActive;
 
-  const allowed = routeMatch && selectorMatch && featureMatch && categoryMatch && onlyMatch && !skipMatch && whenMatch && debugMatch;
+  // Every wave filters the whole catalog, so the selector probe (a document
+  // query) is asked last: only of a def that passed its cheap gates, or when
+  // the audit wants every reason a def was skipped.
+  const gatesMatch = routeMatch && featureMatch && categoryMatch && onlyMatch && !skipMatch && whenMatch && debugMatch;
+  const selectorMatch = gatesMatch || ctx.runtimePolicy.audit ? hasSelector(def) : false;
+  const allowed = gatesMatch && selectorMatch;
 
   if (!allowed && ctx.runtimePolicy.audit) {
     const reason = [
