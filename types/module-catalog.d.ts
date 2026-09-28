@@ -74,6 +74,71 @@ export type SpwModuleCost = {
   copy?: SpwModuleCostCopy | null;
 };
 
+/**
+ * Where a module's effects land. Closed: cost inference and host tiers read
+ * the tokens exactly (catalog/constants.js EFFECT_SCOPE satisfies this).
+ */
+export type SpwModuleEffectScope =
+  | 'local-dom'
+  | 'element-state'
+  | 'css-vars'
+  | 'geometry'
+  | 'listeners'
+  | 'observers'
+  | 'timers'
+  | 'root-state'
+  | 'window'
+  | 'navigation'
+  | 'chrome'
+  | 'floating-chrome'
+  | 'storage'
+  | 'bus'
+  | 'network'
+  | 'service-worker'
+  | 'clipboard';
+
+/** What a page must provide for an effect scope token (EFFECT_SCOPE_TIER). */
+export type SpwModuleHostTier = 'host' | 'document' | 'shell' | 'memory' | 'channel' | 'platform';
+
+/** Rail dimensions stamped as data-spw-module-evaluates (MODULE_DIMENSION). */
+export type SpwModuleDimension =
+  | 'routing'
+  | 'semantics'
+  | 'semantic-density'
+  | 'visual'
+  | 'visual-model'
+  | 'spacing-semantics'
+  | 'state'
+  | 'interaction'
+  | 'surface'
+  | 'lifecycle'
+  | 'qa-observation';
+
+export type SpwModuleUpdateScope = 'html' | 'root' | 'body' | 'document' | 'frame';
+
+export type SpwModuleUpdateRole =
+  | 'structural'
+  | 'flourish'
+  | 'inspect'
+  | 'residue'
+  | 'measure'
+  | 'diagnostic'
+  | 'temporal';
+
+/**
+ * One `updates` entry: `[scope:]role:name`. The role is required so every
+ * module's offer (the strongest role it writes) is computable.
+ */
+export type SpwModuleUpdate =
+  | `${SpwModuleUpdateRole}:${string}`
+  | `${SpwModuleUpdateScope}:${SpwModuleUpdateRole}:${string}`;
+
+/** `<stem>-<noun>`; the stem is checked, the noun names the arc. */
+export type SpwModuleTimingArc = `${SpwTimingArcStem}-${string}`;
+
+/** Field kinds from catalog/constants.js CATALOG_DEF_FIELDS. */
+export type SpwCatalogFieldKind = 'gate' | 'schedule' | 'effect' | 'capability' | 'voice' | 'lifecycle';
+
 /** First-paint geometry permission. `express` is authored ornament, not layout. */
 export type SpwModuleVisualEffect = 'authored' | 'annotate' | 'inspect' | 'layout' | 'express' | 'behavior';
 
@@ -129,12 +194,16 @@ export type SpwModuleDef = {
   selector?: string;
   rootMode?: SpwModuleRootMode;
   debugOnly?: boolean;
+  /** voice: subject[mode]{direction}<capsule> clauses, optional trailing gloss. */
   describes?: string;
-  updates?: string | readonly string[];
-  evaluates?: string | readonly string[];
-  timingArc?: string;
-  timingChunk?: string;
-  effectScope?: string | readonly string[];
+  /** effect: every entry carries a role. */
+  updates?: readonly SpwModuleUpdate[];
+  /** effect: rail dimensions. */
+  evaluates?: readonly SpwModuleDimension[];
+  timingArc?: SpwModuleTimingArc;
+  timingChunk?: SpwIdleChunkId;
+  /** effect: where writes and holds land; tiers say what a host must provide. */
+  effectScope?: readonly SpwModuleEffectScope[];
   visual?: SpwModuleVisualEffect;
   subfeatures?: readonly string[];
   triggers?: readonly string[];
@@ -176,10 +245,10 @@ export type SpwModuleExport = {
   updates?: string | readonly string[];
   describes?: string;
   guild?: string;
-  evaluates?: string | readonly string[];
+  evaluates?: readonly SpwModuleDimension[];
   timingArc?: string;
   timingChunk?: string;
-  effectScope?: string | readonly string[];
+  effectScope?: readonly SpwModuleEffectScope[];
 };
 
 export type SpwModuleExportOrchestration = {

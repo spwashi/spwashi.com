@@ -458,7 +458,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initInteractiveExpressionLab(root instanceof Node ? root : document),
   describes: 'interactive[expression]{edit|autocomplete|compare|navigate-0d-4d} boundary geometry and dimensional HUD',
   timingArc: 'visible-expression-lab',
-  effectScope: 'element-state local-dom hud storage bus',
+  effectScope: ['local-dom', 'element-state', 'floating-chrome', 'storage', 'bus'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

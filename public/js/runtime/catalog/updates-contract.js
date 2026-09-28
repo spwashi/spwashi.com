@@ -28,7 +28,10 @@ export const MODULE_UPDATE_SCOPES = Object.freeze([
 /**
  * Topology roles — why a module writes a surface, not only what kind it is.
  * Flourishes are ornamental residue (pulses, ledger halos, reward chrome);
- * structural is identity/layout grammar; residue is precipitated memory.
+ * structural is identity/layout grammar; residue is precipitated memory;
+ * temporal is a clock stamp other readers compare against (pulse times).
+ * The scheduler's offer rank (orchestration/scheduler.js OFFER_RANK) orders
+ * these same roles.
  */
 export const MODULE_UPDATE_ROLES = Object.freeze([
   'structural',
@@ -37,6 +40,7 @@ export const MODULE_UPDATE_ROLES = Object.freeze([
   'residue',
   'measure',
   'diagnostic',
+  'temporal',
 ]);
 
 export const MODULE_UPDATE_KIND_LABELS = Object.freeze({
@@ -56,6 +60,7 @@ export const MODULE_UPDATE_ROLE_LABELS = Object.freeze({
   residue: 'residue',
   measure: 'measure',
   diagnostic: 'diagnostics',
+  temporal: 'clocks',
 });
 
 const KIND_ALIASES = Object.freeze({
@@ -89,6 +94,8 @@ const ROLE_ALIASES = Object.freeze({
   diagnostic: 'diagnostic',
   diagnostics: 'diagnostic',
   debug: 'diagnostic',
+  temporal: 'temporal',
+  clock: 'temporal',
 });
 
 const DATASET_SEPARATOR = '|';

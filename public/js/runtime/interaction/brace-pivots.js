@@ -178,7 +178,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     mount: () => initBracePivots(),
     describes: 'brace-pivot[setting-cycle] inline defaults control',
     timingArc: 'visible-settings',
-    effectScope: 'local-dom root-state',
+    effectScope: ['local-dom', 'root-state'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

@@ -15,6 +15,7 @@ import {
   COST_COPY_VALUES,
   COST_SPEND,
   COST_SPEND_VALUES,
+  EFFECT_SCOPE,
   MODULE_LAYERS,
   MOUNT_WHEN,
   costClassFromModel,
@@ -30,11 +31,9 @@ const SPEND_SET = new Set(COST_SPEND_VALUES);
 const COPY_SET = new Set(COST_COPY_VALUES);
 
 const BROAD_SELECTOR_RE = /^(html|body)$/i;
-const PAINT_SCOPE_RE = /ornament|css-vars|paint|composite|flourish|express|backdrop|media-query/;
-const MEMORY_SCOPE_RE = /observer|document-wide|document-scroll|resize|performance-observer|queryall|measure|metacognition|inspect/;
-const INTERFERENCE_SCOPE_RE = /pack-local|layout-correction|dual|mirror/;
-const RESIDUE_SCOPE_RE = /storage|settings|pins|checkpoint|collection|visitation|cauldron|haptics/;
-const LISTEN_SCOPE_RE = /listeners|observer|viewport|document-scroll|resize/;
+/* effectScope is a closed vocabulary (EFFECT_SCOPE), so inference tests tokens,
+   not substrings. The id and updates words below are the only fuzzy reads left. */
+const RESIDUE_WORD_RE = /storage|settings|pins|checkpoint|collection|visitation|cauldron|haptics/;
 const PIN_ID_RE = /spell|checkpoint|pin-registry|haptics/;
 const KEEP_ID_RE = /site-settings|visitation|collection|local-notes|local-memory/;
 const MODULE_CATALOG_URL_PATH = '/public/js/runtime/catalog/core.js';
@@ -49,6 +48,10 @@ function asList(value, { tokens = false } = {}) {
   return values
     .map((entry) => (tokens ? asToken(entry) : String(entry || '').trim()))
     .filter(Boolean);
+}
+
+function scopeTokens(def = {}) {
+  return new Set(asList(def.effectScope, { tokens: true }));
 }
 
 function asUpdatesList(value) {
@@ -228,21 +231,27 @@ export function listModuleCatalogIndex(defs = []) {
 }
 
 function inferCommitment(def = {}) {
-  const scope = asToken(def.effectScope);
+  const scope = scopeTokens(def);
   const id = asToken(def.id);
   const updates = asToken(updatesText(def));
   const when = asToken(def.when);
+  const stores = scope.has(EFFECT_SCOPE.STORAGE);
+  const writesRoot = scope.has(EFFECT_SCOPE.ROOT_STATE);
 
-  if (when === MOUNT_WHEN.SETTLED && !RESIDUE_SCOPE_RE.test(`${scope} ${updates}`)) {
+  if (when === MOUNT_WHEN.SETTLED && !stores && !RESIDUE_WORD_RE.test(updates)) {
     return COST_COMMITMENT.AUTHORED;
   }
-  if (RESIDUE_SCOPE_RE.test(`${scope} ${id}`) || /\bresidue:/.test(updates)) {
+  if (stores || RESIDUE_WORD_RE.test(id) || /\bresidue:/.test(updates)) {
     return COST_COMMITMENT.RESIDUE;
   }
-  if (LISTEN_SCOPE_RE.test(scope) && !/root-state|css-vars/.test(scope)) {
+  if (
+    (scope.has(EFFECT_SCOPE.LISTENERS) || scope.has(EFFECT_SCOPE.OBSERVERS))
+    && !writesRoot
+    && !scope.has(EFFECT_SCOPE.CSS_VARS)
+  ) {
     return COST_COMMITMENT.LISTEN;
   }
-  if (MEMORY_SCOPE_RE.test(scope) && !/root-state/.test(scope)) {
+  if ((scope.has(EFFECT_SCOPE.OBSERVERS) || scope.has(EFFECT_SCOPE.GEOMETRY)) && !writesRoot) {
     return COST_COMMITMENT.LISTEN;
   }
   return COST_COMMITMENT.PROJECT;
@@ -251,7 +260,7 @@ function inferCommitment(def = {}) {
 function inferSpend(def = {}, commitment) {
   const when = asToken(def.when);
   const layer = asToken(def.layer);
-  const scope = asToken(def.effectScope);
+  const scope = scopeTokens(def);
   const arc = asToken(def.timingArc);
   const id = asToken(def.id);
   const selector = String(def.selector || '').trim();
@@ -259,11 +268,11 @@ function inferSpend(def = {}, commitment) {
   const hasRoute = Boolean(def.route);
   const debugOnly = Boolean(def.debugOnly);
 
-  if (INTERFERENCE_SCOPE_RE.test(scope) || /layout-assumptions|spatial-gravity/.test(id)) {
+  if (/layout-assumptions|spatial-gravity/.test(id)) {
     return COST_SPEND.FIGHT;
   }
   if (
-    (PAINT_SCOPE_RE.test(scope) || /canvas-accents|module-effects|pulse-beat/.test(id))
+    (scope.has(EFFECT_SCOPE.CSS_VARS) || /canvas-accents|module-effects|pulse-beat/.test(id))
     && when === MOUNT_WHEN.IMMEDIATE
     && layer === MODULE_LAYERS.ENHANCEMENT
     && !hasFeatures
@@ -271,7 +280,8 @@ function inferSpend(def = {}, commitment) {
     return COST_SPEND.PAINT;
   }
   if (
-    (MEMORY_SCOPE_RE.test(scope)
+    (scope.has(EFFECT_SCOPE.OBSERVERS)
+      || scope.has(EFFECT_SCOPE.GEOMETRY)
       || /composition-box|state-inspector|layout-shift|component-semantics|semantic-crossrefs|content-tone/.test(id)
       || /metacognition|inspection|diagnostics|layout/.test(arc))
     && (when === MOUNT_WHEN.IMMEDIATE || when === MOUNT_WHEN.SETTLED)
@@ -302,9 +312,8 @@ function inferSpend(def = {}, commitment) {
 function inferCopy(def = {}, commitment) {
   if (commitment !== COST_COMMITMENT.RESIDUE) return null;
   const id = asToken(def.id);
-  const scope = asToken(def.effectScope);
-  if (PIN_ID_RE.test(`${id} ${scope}`)) return COST_COPY.PIN;
-  if (KEEP_ID_RE.test(`${id} ${scope}`)) return COST_COPY.KEEP;
+  if (PIN_ID_RE.test(id)) return COST_COPY.PIN;
+  if (KEEP_ID_RE.test(id)) return COST_COPY.KEEP;
   return COST_COPY.FOLLOW;
 }
 
@@ -489,7 +498,6 @@ export function summarizeModuleCatalogOptimization(defs = []) {
 function suggestReclass(def) {
   const cost = def.cost || inferModuleCost(def);
   const id = asToken(def.id);
-  const scope = asToken(def.effectScope);
   const arc = asToken(def.timingArc);
 
   if (def.debugOnly || /layout-shift|observation-beats|debug/.test(id)) {
@@ -501,7 +509,7 @@ function suggestReclass(def) {
     }
     return { toward: MOUNT_WHEN.IDLE, timingChunk: 'idle-lab', reason: 'metacognition after interactive' };
   }
-  if (cost.spend === COST_SPEND.PAINT || /accent|ornament|visual/.test(`${id} ${scope}`)) {
+  if (cost.spend === COST_SPEND.PAINT || /accent|ornament|visual/.test(id)) {
     return { toward: MOUNT_WHEN.VISIBLE, reason: 'paint polish when in view' };
   }
   if (/feedback|notice|discovery|tuning/.test(id)) {

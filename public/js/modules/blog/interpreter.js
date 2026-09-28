@@ -359,7 +359,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     mount: (ctx, root) => initBlogInterpreter({ ...ctx, root }),
     describes: 'blog[input.interpret] summary[tone|lens|questions]',
     timingArc: 'visible-feature',
-    effectScope: 'local-dom element-state',
+    effectScope: ['local-dom', 'element-state'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

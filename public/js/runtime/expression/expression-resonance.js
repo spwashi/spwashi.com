@@ -966,5 +966,5 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     'measure:--spw-expression-resonance',
   ],
   timingArc: 'idle-semantic-reinforcement',
-  effectScope: 'local-dom flourish residue storage',
+  effectScope: ['local-dom', 'storage'],
 });

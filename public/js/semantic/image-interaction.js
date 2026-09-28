@@ -359,7 +359,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initImageInteraction(resolveOwnerDocument(ctx, root)),
   describes: 'image[interaction]{prime|inspect|discover|lens} gesture-contract',
   timingArc: 'visible-media',
-  effectScope: 'media listeners element-state',
+  effectScope: ['local-dom', 'element-state', 'listeners'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

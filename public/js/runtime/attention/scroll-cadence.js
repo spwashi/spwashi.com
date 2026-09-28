@@ -31,7 +31,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initScrollCadenceState(resolveAttentionDocument(ctx, root)),
   describes: 'attention[scroll-cadence] section-state ornament preference projection',
   timingArc: 'idle-attention',
-  effectScope: 'root-state preference-projection',
+  effectScope: ['root-state'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

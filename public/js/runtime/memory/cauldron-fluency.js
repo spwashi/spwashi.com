@@ -124,7 +124,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     'measure:data-spw-rehearsal-due',
   ],
   timingArc: 'idle-inspection',
-  effectScope: 'root-state bus',
+  effectScope: ['root-state', 'bus'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

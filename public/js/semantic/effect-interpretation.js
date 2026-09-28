@@ -364,7 +364,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initEffectInterpretation(resolveOwnerDocument(ctx, root)),
   describes: 'effect[interpretation]{lens|cues|state} visual legend',
   timingArc: 'visible-media',
-  effectScope: 'local-dom element-state',
+  effectScope: ['local-dom', 'element-state'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

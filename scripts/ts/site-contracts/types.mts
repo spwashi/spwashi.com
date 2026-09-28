@@ -5,6 +5,8 @@ import type {
   SpwModuleCostCopy,
   SpwModuleCostSpend,
   SpwModuleDef,
+  SpwModuleDimension,
+  SpwModuleEffectScope,
   SpwModuleExport,
   SpwModuleExportMirrorField,
   SpwModuleExportOrchestration,
@@ -286,6 +288,46 @@ export const VALID_VISUAL_EFFECTS = Object.freeze([
 
 const _visualEqual: SpwSameKeys<SpwModuleVisualEffect, (typeof VALID_VISUAL_EFFECTS)[number]> = true;
 void _visualEqual;
+
+export const VALID_EFFECT_SCOPES = Object.freeze([
+  'local-dom',
+  'element-state',
+  'css-vars',
+  'geometry',
+  'listeners',
+  'observers',
+  'timers',
+  'root-state',
+  'window',
+  'navigation',
+  'chrome',
+  'floating-chrome',
+  'storage',
+  'bus',
+  'network',
+  'service-worker',
+  'clipboard',
+] as const satisfies readonly SpwModuleEffectScope[]);
+
+const _effectScopeEqual: SpwSameKeys<SpwModuleEffectScope, (typeof VALID_EFFECT_SCOPES)[number]> = true;
+void _effectScopeEqual;
+
+export const VALID_MODULE_DIMENSIONS = Object.freeze([
+  'routing',
+  'semantics',
+  'semantic-density',
+  'visual',
+  'visual-model',
+  'spacing-semantics',
+  'state',
+  'interaction',
+  'surface',
+  'lifecycle',
+  'qa-observation',
+] as const satisfies readonly SpwModuleDimension[]);
+
+const _dimensionEqual: SpwSameKeys<SpwModuleDimension, (typeof VALID_MODULE_DIMENSIONS)[number]> = true;
+void _dimensionEqual;
 
 export const SPW_MODULE_EXPORT_REQUIRED_FIELDS = Object.freeze([
   'mount',

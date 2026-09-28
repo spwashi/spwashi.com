@@ -772,7 +772,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     },
     describes: 'console[frame|mode|bus|layout] diagnostics[screenshot]',
     timingArc: 'idle-diagnostics',
-    effectScope: 'floating-chrome bus root-state',
+    effectScope: ['root-state', 'floating-chrome', 'bus'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

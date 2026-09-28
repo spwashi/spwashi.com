@@ -672,7 +672,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: () => initFrameNavigator(),
   describes: 'surface-map[frames|routes] keyboard-spells[g|traverse|filter] navigator chrome',
   timingArc: 'enhance-navigator',
-  effectScope: 'floating-chrome listeners bus root-state',
+  effectScope: ['listeners', 'root-state', 'floating-chrome', 'bus'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

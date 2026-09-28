@@ -17,6 +17,19 @@ const BINDING_CODES = new Set([
     2835, // extension required, with a suggestion
     2882, // unresolved side-effect import
 ]);
+/**
+ * Catalog families are data typed by types/module-catalog.d.ts (closed effect
+ * vocabularies, role-tagged updates, arc stems). Every semantic diagnostic in
+ * them is a contract error, so they are held to the full checker rather than
+ * the binding subset.
+ */
+const CONTRACT_TYPED_FILE_RE = /(?:^|\/)public\/js\/runtime\/catalog\/(?:core|feature|region|enhancement)\.js$/;
+function isGatedDiagnostic(item) {
+    if (BINDING_CODES.has(item.code))
+        return true;
+    const fileName = item.file?.fileName.split(path.sep).join('/') || '';
+    return CONTRACT_TYPED_FILE_RE.test(fileName);
+}
 /** Configuration and syntax must succeed before semantic filtering is meaningful. */
 export function collectRuntimeBindingFindings(project, reuse) {
     const configPath = path.resolve(project);
@@ -40,7 +53,7 @@ export function collectRuntimeBindingFindings(project, reuse) {
             ...program.getOptionsDiagnostics(),
             ...program.getGlobalDiagnostics(),
             ...program.getSyntacticDiagnostics(),
-            ...program.getSemanticDiagnostics().filter((item) => BINDING_CODES.has(item.code)),
+            ...program.getSemanticDiagnostics().filter(isGatedDiagnostic),
         ];
         if (options.incremental && !reuse) {
             const builder = ts.createIncrementalProgram({

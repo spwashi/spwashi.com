@@ -246,5 +246,5 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount,
   describes: 'care[situation|support|setting|readiness]{profile.card} intake[chips|note|charge] exits[copy|download|screenshot]',
   timingArc: 'visible-feature',
-  effectScope: 'local-dom storage',
+  effectScope: ['local-dom', 'storage'],
 });

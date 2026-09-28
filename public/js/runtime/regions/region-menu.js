@@ -176,7 +176,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initSpwRegionMenu(ctx, root),
   describes: 'region-menu[inspect|mark|focus] semantic popover',
   timingArc: 'enhance-inspect',
-  effectScope: 'popover listeners',
+  effectScope: ['listeners', 'floating-chrome'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

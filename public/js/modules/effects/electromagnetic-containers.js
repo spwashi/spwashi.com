@@ -100,7 +100,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (_ctx, root) => initElectromagneticContainers(root),
   describes: 'container[charge]{conception.potential.kinetic.manifest}',
   timingArc: 'visible-visual',
-  effectScope: 'local-dom css-vars',
+  effectScope: ['local-dom', 'css-vars'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

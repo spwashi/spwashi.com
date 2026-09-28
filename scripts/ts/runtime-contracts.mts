@@ -21,6 +21,8 @@ import {
   VALID_COST_COMMITMENTS,
   VALID_COST_COPIES,
   VALID_COST_SPENDS,
+  VALID_EFFECT_SCOPES,
+  VALID_MODULE_DIMENSIONS,
   VALID_MODULE_LAYERS,
   VALID_MOUNT_WHEN,
   VALID_VISUAL_EFFECTS,
@@ -81,6 +83,17 @@ const MODULE_CATALOG_FAMILY_FILES = Object.freeze({
   ENHANCEMENT_DEFS: 'catalog/enhancement.js',
 } as const);
 const MODULE_UPDATES_CONTRACT_PATH = path.join(PUBLIC_JS_DIR, 'runtime/catalog/updates-contract.js');
+const MODULE_CATALOG_CONSTANTS_PATH = path.join(PUBLIC_JS_DIR, 'runtime/catalog/constants.js');
+
+/** Keys of CATALOG_DEF_FIELDS in catalog/constants.js: the closed field registry. */
+function readCatalogFieldKeys(): Set<string> {
+  const source = readFileSync(MODULE_CATALOG_CONSTANTS_PATH, 'utf8');
+  const block = source.match(/export const CATALOG_DEF_FIELDS = Object\.freeze\(\{([\s\S]*?)\n\}\);/);
+  if (!block) return new Set();
+  return new Set([...block[1].matchAll(/^\s{2}([A-Za-z_$][\w$]*):\s*\{\s*kind:/gm)].map((item) => item[1]));
+}
+
+const CATALOG_FIELD_KEYS = readCatalogFieldKeys();
 const SITE_RUNTIME_PATH = path.join(PUBLIC_JS_DIR, 'site.js');
 
 const RUNTIME_FAMILIES = ['CORE_DEFS', 'FEATURE_DEFS', 'REGION_DEFS', 'ENHANCEMENT_DEFS'] as const;
@@ -96,6 +109,8 @@ const VALID_COST_COMMITMENT_TOKENS = new Set<string>(VALID_COST_COMMITMENTS);
 const VALID_COST_SPEND_TOKENS = new Set<string>(VALID_COST_SPENDS);
 const VALID_COST_COPY_TOKENS = new Set<string>(VALID_COST_COPIES);
 const VALID_VISUAL_TOKENS = new Set<string>(VALID_VISUAL_EFFECTS);
+const VALID_EFFECT_SCOPE_TOKENS = new Set<string>(VALID_EFFECT_SCOPES);
+const VALID_DIMENSION_TOKENS = new Set<string>(VALID_MODULE_DIMENSIONS);
 
 /** timingArc stems from types/module-catalog (scripts + public/ts must match). */
 const TIMING_ARC_STEM_RE = new RegExp(
@@ -167,6 +182,51 @@ function parseQuotedProperty(source: string, name: string): string | null {
   return match?.[2] || null;
 }
 
+/** A closed token field authored as ['a', 'b'] (or a legacy 'a b' string); space-joined. */
+function parseTokenListProperty(source: string, name: string): string | null {
+  const arrayMatch = source.match(new RegExp(`\\b${name}:\\s*\\[([^\\]]*)\\]`));
+  if (arrayMatch) {
+    return [...arrayMatch[1].matchAll(/(['"`])([^'"`]+)\1/g)].map((item) => item[2]).join(' ');
+  }
+  return parseQuotedProperty(source, name);
+}
+
+/** Top-level keys of one catalog object literal, for the closed field registry. */
+function parseTopLevelKeys(objectLiteral: string): string[] {
+  const keys: string[] = [];
+  let depth = 0;
+  let quote = '';
+  for (let index = 0; index < objectLiteral.length; index += 1) {
+    const char = objectLiteral[index];
+    if (quote) {
+      if (char === '\\') index += 1;
+      else if (char === quote) quote = '';
+      continue;
+    }
+    if (char === "'" || char === '"' || char === '`') { quote = char; continue; }
+    if (char === '/' && objectLiteral[index + 1] === '/') {
+      index = objectLiteral.indexOf('\n', index);
+      if (index < 0) break;
+      continue;
+    }
+    if (char === '/' && objectLiteral[index + 1] === '*') {
+      index = objectLiteral.indexOf('*/', index + 2) + 1;
+      if (index <= 0) break;
+      continue;
+    }
+    if (char === '{' || char === '[' || char === '(') depth += 1;
+    else if (char === '}' || char === ']' || char === ')') depth -= 1;
+    else if (depth === 1) {
+      const match = objectLiteral.slice(index).match(/^([A-Za-z_$][\w$]*)\s*:/);
+      if (match && /[{,\s]/.test(objectLiteral[index - 1] || '')) {
+        keys.push(match[1]);
+        index += match[0].length - 1;
+      }
+    }
+  }
+  return keys;
+}
+
 function parseConstantProperty(source: string, name: string, namespace: string): string | null {
   const match = source.match(new RegExp(`${name}:\\s*${namespace}\\.([A-Z_]+)`));
   return match?.[1]?.toLowerCase().replace(/_/g, '-') || null;
@@ -180,7 +240,7 @@ function parseUpdates(source: string): string[] {
 
 const MODULE_UPDATE_SCOPES = new Set(['html', 'root', 'body', 'document', 'frame']);
 const MODULE_UPDATE_KINDS = new Set(['attr', 'css-var', 'aria', 'class', 'event', 'selector', 'property']);
-const MODULE_UPDATE_ROLES = new Set(['structural', 'flourish', 'inspect', 'residue', 'measure', 'diagnostic']);
+const MODULE_UPDATE_ROLES = new Set(['structural', 'flourish', 'inspect', 'residue', 'measure', 'diagnostic', 'temporal']);
 const MODULE_UPDATE_KIND_ALIASES = new Map([
   ['attribute', 'attr'],
   ['attributes', 'attr'],
@@ -436,8 +496,8 @@ function parseRuntimeModule(objectLiteral: string, family: RuntimeFamily, index:
     costClass: parseCostClassProperty(objectLiteral),
     debugOnly: /\bdebugOnly:\s*true\b/.test(objectLiteral),
     describes: parseQuotedProperty(objectLiteral, 'describes'),
-    effectScope: parseQuotedProperty(objectLiteral, 'effectScope'),
-    evaluates: parseQuotedProperty(objectLiteral, 'evaluates'),
+    effectScope: parseTokenListProperty(objectLiteral, 'effectScope'),
+    evaluates: parseTokenListProperty(objectLiteral, 'evaluates'),
     family,
     features: parseFeatures(objectLiteral),
     id: parseQuotedProperty(objectLiteral, 'id') || '',
@@ -813,8 +873,25 @@ function validateModule(
   }
 
   for (const token of splitContractTokens(module.effectScope)) {
-    if (!CONTRACT_TOKEN_RE.test(token)) {
-      errors.push(`${label} effectScope token "${token}" must be lowercase kebab-case.`);
+    if (!VALID_EFFECT_SCOPE_TOKENS.has(token)) {
+      errors.push(`${label} effectScope token "${token}" is not in EFFECT_SCOPE; use ${VALID_EFFECT_SCOPES.join('|')}.`);
+    }
+  }
+  for (const token of splitContractTokens(module.evaluates)) {
+    if (!VALID_DIMENSION_TOKENS.has(token)) {
+      errors.push(`${label} evaluates token "${token}" is not a MODULE_DIMENSION; prose belongs in the describes gloss.`);
+    }
+  }
+  for (const token of module.updates) {
+    const [first, second] = token.split(':');
+    const role = MODULE_UPDATE_SCOPES.has(first) ? second : first;
+    if (!MODULE_UPDATE_ROLES.has(role)) {
+      errors.push(`${label} update "${token}" has no role; write [scope:]role:name with role ${[...MODULE_UPDATE_ROLES].join('|')}.`);
+    }
+  }
+  for (const key of parseTopLevelKeys(module.objectLiteral)) {
+    if (!CATALOG_FIELD_KEYS.has(key)) {
+      errors.push(`${label} authors "${key}", which is not in CATALOG_DEF_FIELDS; name its kind and reader there first.`);
     }
   }
 
@@ -921,7 +998,7 @@ function validateModule(
     );
   }
 
-  if (module.layer !== 'core' && module.describes && !module.updates.length && !module.evaluates) {
+  if (module.layer !== 'core' && module.describes && !module.updates.length && !/\bevaluates:/.test(module.objectLiteral)) {
     recommendations.push(`${label} describes behavior but names neither updates nor evaluates.`);
   }
 
@@ -1014,8 +1091,8 @@ function validateModule(
     recommendations.push(`${label} has no updates[]; declare surface writes (or explicit empty intent) for inspect/flourish topology.`);
   }
 
-  if (module.layer !== 'core' && !module.evaluates) {
-    recommendations.push(`${label} is missing evaluates; name dimensions or outcomes the module changes.`);
+  if (module.layer !== 'core' && !/\bevaluates:/.test(module.objectLiteral)) {
+    recommendations.push(`${label} is missing evaluates; name its MODULE_DIMENSION tokens, or [] when it has none.`);
   }
 
   if (

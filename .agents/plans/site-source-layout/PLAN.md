@@ -75,7 +75,7 @@ AGENTS.md
   - bundler adoption
   - changing route URLs
   - changing root-relative public asset conventions
-  - converting the site into `src/html`, `src/css`, `src/js`, `src/ts`
+  - sorting the served site by file type into `src/html`, `src/css`, `src/js`. Route-shaped or served files never live in `src/`. Compiled input that never ships verbatim may: `src/styles/entries` already does, and `wip.spw` step M2 moves `public/ts` to `src/ts` on the same rule.
   - broad `.spw` ontology redesign unless the site/source boundary itself needs explicit inspection notes
 
 ## Current Seams
@@ -196,6 +196,15 @@ Choose `site/` if the primary goal is to make the authored website feel like one
 Choose `src/` only if the repo is intentionally becoming a compile-first application where most authoring files are not directly site-shaped anymore.
 
 Choose `docs/` only for maintainer documentation, not as a second home for public site content.
+
+## Shared Steps - 2026-09-27
+
+`wip.spw` now holds the refined concept (one-hop URL invariant, four bins) and the near-term moves M0 through M3. Two of those moves change TypeScript configs, so their decisions belong to `typescript-integration/PLAN.md` and are recorded in both plans' `wip.spw`:
+
+- M0, the positive ship list in `build-topology.mts` imported by `vite.config.ts`: the import method is that plan's call.
+- M2, `public/ts` to `src/ts`: the `rootDir` and `include` changes are that plan's call. Output, path alias, and URLs do not move.
+
+Order: refresh of the TypeScript plan (done 2026-09-27), then the M0 import decision, then M0, then M2 as one commit. The four bins are promoted into this file only after M0 and M2 land.
 
 ## Active Refinement - 2026-06-19 Conversation Audit
 

@@ -149,7 +149,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initConceptSalience(resolveOwnerDocument(ctx, root)),
   describes: 'concept[salience|vocabulary|collectible] learnable-dimension',
   timingArc: 'visible-semantics',
-  effectScope: 'local-dom element-state',
+  effectScope: ['local-dom', 'element-state'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

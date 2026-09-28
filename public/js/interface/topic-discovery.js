@@ -455,7 +455,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     mount: () => initTopicDiscovery(),
     describes: 'topic[context|popover|navigation] discovery',
     timingArc: 'enhance-topic',
-    effectScope: 'popover listeners bus',
+    effectScope: ['listeners', 'floating-chrome', 'bus'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

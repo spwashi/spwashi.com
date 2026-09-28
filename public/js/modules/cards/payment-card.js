@@ -345,7 +345,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     },
     describes: 'payment-card[method|amount|enabled] support routing',
     timingArc: 'visible-feature',
-    effectScope: 'local-dom storage',
+    effectScope: ['local-dom', 'storage'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

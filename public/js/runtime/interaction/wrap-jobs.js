@@ -32,7 +32,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   ]),
   evaluates: 'wrap-jobs sit-travel-enter teaching-rail',
   timingArc: 'visible-keyboard',
-  effectScope: 'local-dom listeners',
+  effectScope: ['local-dom', 'listeners'],
   mount: (_ctx, root) => initWrapJobs(root),
 });
 

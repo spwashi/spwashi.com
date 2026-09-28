@@ -23,9 +23,9 @@ export const REGION_DEFS = [
       'structural:data-spw-density',
       'inspect:data-spw-region-genome',
     ],
-    evaluates: 'region lifecycle harmony density motion defaults',
+    evaluates: ['routing', 'semantic-density', 'visual', 'spacing-semantics', 'lifecycle'],
     timingArc: 'region-hydration',
-    effectScope: 'region-state css-vars bus',
+    effectScope: ['element-state', 'css-vars', 'bus'],
     load: () => import('../regions/region-enhancer.js'),
   },
 ];

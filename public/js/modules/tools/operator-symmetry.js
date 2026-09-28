@@ -59,5 +59,5 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (_ctx, root) => mountOperatorSymmetry(root),
   describes: 'operator[square]{rotate.reflect.compare} invariant[labels|links]',
   timingArc: 'visible-feature',
-  effectScope: 'local-dom listeners',
+  effectScope: ['local-dom', 'listeners'],
 });
