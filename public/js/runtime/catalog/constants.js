@@ -4,7 +4,7 @@
  *
  * Preferred definition field order (normalize / review scan):
  *   id, layer, when, cost?, costClass?, features?, route?, selector?, rootMode?,
- *   debugOnly?, describes, updates, evaluates, timingArc, timingChunk?,
+ *   debugOnly?, describes, updates, evaluates, timingArc, timingChunk?, engages?,
  *   effectScope, visual?, load, mount
  *
  * Typing convention (CATALOG_DEF_FIELDS below): every field is a gate,
@@ -191,6 +191,21 @@ export const MODULE_DIMENSION = Object.freeze({
 export const MODULE_DIMENSION_VALUES = Object.freeze(Object.values(MODULE_DIMENSION));
 
 /**
+ * Reader intents a module can be armed on (kernel/engagement.js resolves them).
+ * A def that names them may arrive when a reader engages one of its hosts
+ * instead of on every page load; the engagement is handed to its mount.
+ */
+export const ENGAGE_KIND = Object.freeze({
+  PRESS: 'press',
+  HOVER: 'hover',
+  FOCUS: 'focus',
+  KEY: 'key',
+  MENU: 'menu',
+});
+
+export const ENGAGE_KIND_VALUES = Object.freeze(Object.values(ENGAGE_KIND));
+
+/**
  * Single-token projection of { commitment, spend, copy? }.
  * Spend tokens win so authored+paint still reads as paint. None-spend remainder
  * keeps commitment (listen / residue / authored / project) instead of one dump
@@ -333,6 +348,7 @@ export const CATALOG_DEF_FIELD_ORDER = Object.freeze([
   'evaluates',
   'timingArc',
   'timingChunk',
+  'engages',
   'effectScope',
   'visual',
   'load',
@@ -357,6 +373,7 @@ export const CATALOG_DEF_FIELDS = Object.freeze({
   layer: { kind: 'schedule', readers: 'loader stage, category mount-when' },
   when: { kind: 'schedule', readers: 'getEffectiveMountWhen, scheduler strategies, build pack' },
   timingChunk: { kind: 'schedule', readers: 'scheduler idle chunk, build semantic pack' },
+  engages: { kind: 'schedule', readers: 'scheduler engagement arming (kernel/engagement.js) when runtime policy arming=engage' },
   timingArc: { kind: 'schedule', readers: 'timing stem check, idle chunk fallback, load-trace grouping' },
   familiarity: { kind: 'schedule', readers: 'memory/familiarity-gate demotion' },
   features: { kind: 'gate', readers: 'orchestration/features against body[data-spw-features]' },

@@ -7,10 +7,12 @@ import {
   EFFECT_SCOPE_TIER,
   EFFECT_SCOPE_TIERS,
   EFFECT_SCOPE_VALUES,
+  ENGAGE_KIND_VALUES,
   MODULE_DEFS,
   MODULE_DIMENSION_VALUES,
 } from '../../public/js/runtime/catalog/index.js';
 import { MODULE_UPDATE_ROLES, MODULE_UPDATE_SCOPES } from '../../public/js/runtime/catalog/updates-contract.js';
+import { ENGAGE_KINDS } from '../../public/js/kernel/engagement.js';
 
 const DERIVED_FIELDS = new Set(['cost', 'costClass', 'costLabel', 'orchestration']);
 
@@ -31,6 +33,15 @@ test('catalog effect fields are token arrays the runtime can act on', () => {
     for (const token of def.evaluates) {
       assert.ok(MODULE_DIMENSION_VALUES.includes(token), `${def.id} evaluates ${token}`);
     }
+  }
+});
+
+test('engages names only intents the kernel resolves', () => {
+  assert.deepEqual([...ENGAGE_KIND_VALUES].sort(), [...ENGAGE_KINDS].sort());
+  for (const def of MODULE_DEFS) {
+    if (def.engages == null) continue;
+    assert.ok(Array.isArray(def.engages) && def.engages.length, `${def.id} engages is a non-empty array`);
+    for (const kind of def.engages) assert.ok(ENGAGE_KIND_VALUES.includes(kind), `${def.id} engages ${kind}`);
   }
 });
 

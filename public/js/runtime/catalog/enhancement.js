@@ -7,6 +7,7 @@
 
 import {
   COST_CLASS,
+  ENGAGE_KIND,
   MODULE_LAYERS,
   MOUNT_WHEN,
   REGION_SELECTOR,
@@ -37,12 +38,16 @@ export const ENHANCEMENT_DEFS = [
     id: 'field-composition',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.VISIBLE,
-    selector: 'main',
+    // The fields it writes into, not the page that might hold one: a page with
+    // no text field never builds the writing tools (TEXT_FIELD_SELECTOR).
+    selector: 'textarea, input:not([type]), input[type="text"]',
     rootMode: 'single',
     describes: 'field[write]{cauldron.preview.insert.undo} deliberate local fragment handoff',
     updates: [],
     evaluates: [],
     timingArc: 'visible-enhancement',
+    // Mounting attaches to the focused field, so a first focus loses nothing.
+    engages: [ENGAGE_KIND.FOCUS],
     effectScope: ['local-dom'],
     load: () => import('../../interface/field-composition.js'),
   },

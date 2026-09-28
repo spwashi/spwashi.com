@@ -4,6 +4,7 @@ import { setRegionState } from '../regions/region-profiler.js';
 import { annotateModuleDescribesTarget } from '../catalog/describes-contract.js';
 import { normalizeRuntimeToken } from './policy.js';
 import { onIdle, once } from '/public/js/kernel/browser-primitives.js';
+import { armEngagement } from '../../kernel/engagement.js';
 
 export function createModuleScheduler({ mountWhen, regionStates, html, setPageState, pageStates, getRoots, shouldScheduleDefinition, mountDefinition, beginMountBatch, endMountBatch, annotateModuleTrigger }) {
   async function mountImmediateLayer(defs, ctx, options = {}) {
@@ -158,14 +159,76 @@ export function createModuleScheduler({ mountWhen, regionStates, html, setPageSt
     }
   }
 
+  const isEngagedDef = (def) => Array.isArray(def.engages) && def.engages.length > 0;
+
+  /* A def that names the reader intents it answers is armed per host: it
+     arrives when a reader focuses, keys, presses (a touch that lifts or holds,
+     never one that scrolls), or dwells on one of its hosts, and the engagement
+     that woke it waits in ctx.engagements so its mount can finish the gesture
+     instead of losing it. Nothing is written to the waiting hosts; the one
+     engaged host carries data-spw-module-trigger-status="engaged" while the
+     module arrives, when it carried no status of its own. */
+  function armEngagedDefinitions(defs, ctx) {
+    if (!defs.length || typeof document === 'undefined') return;
+    ctx.engagements ||= new Map();
+    const byId = new Map(defs.map((def) => [def.id, def]));
+    const mountedRoots = new Map(defs.map((def) => [def.id, new Set()]));
+    const primed = new Set();
+    const handle = armEngagement({
+      entries: defs.map((def) => ({ key: def.id, selector: def.selector || 'body', kinds: def.engages })),
+      // Approach primes: the import starts while a hold is still resolving or a
+      // pointer is still dwelling, so engagement pays only the mount.
+      onApproach: (entry) => {
+        if (primed.has(entry.key)) return;
+        primed.add(entry.key);
+        performance.mark(`spw:prime:${entry.key}`);
+        Promise.resolve().then(() => byId.get(entry.key)?.load?.()).catch(() => {});
+      },
+      onEngage: (entry, detail) => {
+        const def = byId.get(entry.key);
+        const single = def.rootMode === 'single' || !def.selector;
+        void mountEngaged(def, ctx, detail, single);
+        if (single) return 'done';
+        mountedRoots.get(def.id).add(detail.host);
+        return getRoots(def).every((root) => mountedRoots.get(def.id).has(root)) ? 'done' : undefined;
+      },
+    });
+    ctx.addCleanup(() => handle.disarm());
+  }
+
+  async function mountEngaged(def, ctx, detail, single) {
+    ctx.engagements.set(def.id, detail);
+    const host = detail.host;
+    const marked = !host?.dataset?.spwModuleTriggerStatus;
+    if (marked) writeDatasetValue(host, 'spwModuleTriggerStatus', 'engaged');
+    const root = single ? null : host;
+    const index = single ? 0 : Math.max(0, getRoots(def).indexOf(host));
+    beginMountBatch();
+    try {
+      await mountDefinition(def, ctx, root, index);
+    } finally {
+      endMountBatch(ctx);
+      if (marked && host.dataset?.spwModuleTriggerStatus === 'engaged') writeDatasetValue(host, 'spwModuleTriggerStatus', null);
+      try {
+        performance.measure(`spw:engage:${def.id}`, { start: detail.at, end: performance.now(), detail: { kind: detail.kind, resolution: detail.resolution } });
+      } catch {
+        // User Timing L3 unsupported; the module's own load/mount measures remain.
+      }
+    }
+  }
+
   async function mountInteractionFeatures(defs, ctx) {
     const interactionDefs = defs.filter((def) => shouldScheduleDefinition(def, ctx, mountWhen.INTERACTION));
     if (!interactionDefs.length) return;
 
+    armEngagedDefinitions(interactionDefs.filter(isEngagedDef), ctx);
+    const pageWideDefs = interactionDefs.filter((def) => !isEngagedDef(def));
+    if (!pageWideDefs.length) return;
+
     const activate = once(async () => {
       beginMountBatch();
       try {
-        await Promise.all(interactionDefs.map(async (def) => {
+        await Promise.all(pageWideDefs.map(async (def) => {
           const roots = getRoots(def);
           if (!roots.length || def.rootMode === 'single') {
             return mountDefinition(def, ctx, null, 0);
@@ -192,7 +255,7 @@ export function createModuleScheduler({ mountWhen, regionStates, html, setPageSt
     };
 
     const options = { once: true, passive: true };
-    for (const def of interactionDefs) {
+    for (const def of pageWideDefs) {
       getRoots(def).forEach((root) => annotateModuleTrigger(root, def, ctx, mountWhen.INTERACTION, 'waiting'));
     }
     window.addEventListener('pointerdown', handler, options);
