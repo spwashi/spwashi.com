@@ -121,3 +121,13 @@ none
 ## Spw Artifact
 
 `.agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw`
+
+## 2026-09-28 alignment: menu and touch clarity
+
+Keep the header route label stable while its disclosure state changes; the
+glyph and expanded state already show the transition without taking more space.
+Name route discovery from its actual scope (`Related routes` or `More routes`).
+For coarse pointers, readable text inside a component keeps native selection;
+gesture holds still arm on the component's own affordance. Any temporary
+selection override ends on release or cancel, so charge feedback never traps
+the next reading gesture.

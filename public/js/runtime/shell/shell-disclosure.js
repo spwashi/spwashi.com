@@ -555,9 +555,7 @@ function syncToggleCopy(toggle, snapshot) {
   const metaNode = toggle.querySelector('.spw-nav-toggle-meta');
 
   if (labelNode) {
-    labelNode.textContent = snapshot.mode !== MODES.INLINE && snapshot.state === 'open'
-      ? 'Map'
-      : 'Routes';
+    labelNode.textContent = 'Routes';
   }
 
   if (stateNode) {

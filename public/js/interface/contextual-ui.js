@@ -448,10 +448,10 @@ function createRouteMenu(hostHeader, navList) {
   const summary = document.createElement('summary');
   summary.className = 'spw-route-menu-trigger';
   summary.id = 'spw-route-menu-trigger';
-  summary.setAttribute('aria-label', 'Open nearby routes');
+  summary.setAttribute('aria-label', 'More routes');
   summary.setAttribute('aria-expanded', 'false');
-  summary.dataset.spwMeaning = 'open-nearby-routes';
-  summary.dataset.spwGestureContract = 'tap opens related-route popover; Escape closes';
+  summary.dataset.spwMeaning = 'open-more-routes';
+  summary.dataset.spwGestureContract = 'tap opens route popover; Escape closes';
 
   const label = document.createElement('span');
   label.className = 'spw-route-menu-label';
@@ -463,8 +463,7 @@ function createRouteMenu(hostHeader, navList) {
 
   const panel = document.createElement('div');
   panel.className = 'spw-route-menu-panel';
-  panel.setAttribute('aria-label', 'Additional top-level routes');
-  panel.setAttribute('aria-labelledby', summary.id);
+  panel.setAttribute('aria-label', 'More site routes');
 
   details.append(summary, panel);
   host.append(details);
@@ -600,7 +599,8 @@ function updateRouteMenu() {
     ? `${discoveryRoutes.length} nearby ${discoveryRoutes.length === 1 ? 'path' : 'paths'}`
     : `${discoveryRoutes.length} additional ${discoveryRoutes.length === 1 ? 'route' : 'routes'}`;
 
-  label.textContent = 'Nearby';
+  const menuLabel = scope === 'related' ? 'Related routes' : 'More routes';
+  label.textContent = menuLabel;
   count.textContent = `+${discoveryRoutes.length}`;
   details.dataset.spwRouteMenuCount = String(discoveryRoutes.length);
   details.dataset.spwRouteMenuLabel = routeCountLabel;
@@ -612,7 +612,10 @@ function updateRouteMenu() {
   header.dataset.spwRouteDiscoveryCount = String(discoveryRoutes.length);
   header.dataset.spwRouteDiscoveryLayout = compact ? 'expanded' : 'compact';
   header.dataset.spwRouteDiscoveryScope = scope;
-  details.querySelector(':scope > summary')?.setAttribute('aria-label', `Open nearby routes: ${routeCountLabel}`);
+  const summary = details.querySelector(':scope > summary');
+  summary?.setAttribute('aria-label', `${menuLabel}: ${routeCountLabel}`);
+  if (summary) summary.dataset.spwMeaning = scope === 'related' ? 'open-related-routes' : 'open-more-routes';
+  panel.setAttribute('aria-label', menuLabel);
 
   panel.replaceChildren(
     ...discoveryRoutes.map((route) => buildRouteMenuLink(route)),
