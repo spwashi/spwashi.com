@@ -222,7 +222,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initPinchTextScale(resolveAttentionMain(ctx, root) || root),
   describes: 'attention[pinch-scale] optional coarse-pointer text scale preview',
   timingArc: 'interaction-attention',
-  effectScope: 'conditional-touch-listeners root-css-vars settings-api',
+  effectScope: ['css-vars', 'listeners', 'root-state', 'window'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

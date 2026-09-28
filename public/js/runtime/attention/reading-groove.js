@@ -204,7 +204,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   ),
   describes: 'attention[reading-groove|beat-state] optional long-form reading locus',
   timingArc: 'idle-attention',
-  effectScope: 'root-state element-state intersection-observer preference-observer',
+  effectScope: ['element-state', 'observers', 'root-state'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

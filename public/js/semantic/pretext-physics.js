@@ -1492,7 +1492,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   },
   describes: 'lab[copy-flow.projection] live-host[wrap.width-class] not-sitewide-physics',
   timingArc: 'visible-lab',
-  effectScope: 'local-dom css-vars measure',
+  effectScope: ['local-dom', 'css-vars', 'geometry'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

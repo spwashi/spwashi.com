@@ -80,7 +80,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initImageUtilization(resolveOwnerDocument(ctx, root)),
   describes: 'image[distribution|utilization] performance lazy-priority',
   timingArc: 'visible-media',
-  effectScope: 'media element-state',
+  effectScope: ['local-dom', 'element-state'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

@@ -572,7 +572,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   }),
   describes: 'query[share-setup] composer[instruments] cauldron[offer] feature-hub[embed]',
   timingArc: 'enhance-lab',
-  effectScope: 'local-dom bus clipboard navigation',
+  effectScope: ['local-dom', 'navigation', 'bus', 'clipboard'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

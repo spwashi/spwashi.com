@@ -247,5 +247,5 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     'structural:data-spw-fit-demand',
   ],
   timingArc: 'idle-inspection',
-  effectScope: 'local-dom',
+  effectScope: ['element-state', 'geometry', 'observers'],
 });

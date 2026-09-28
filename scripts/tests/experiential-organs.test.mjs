@@ -155,7 +155,8 @@ test('breadcrumb string and path utilities normalize predictably', () => {
 test('attention resonance probe exposes relation and block-echo capabilities', () => {
   assert.equal(RESONANCE_PROBE_EXPORT.id, 'attention-resonance-probe');
   assert.match(RESONANCE_PROBE_EXPORT.describes, /relation/);
-  assert.match(RESONANCE_PROBE_EXPORT.effectScope, /block-echo/);
+  // The block echo lands on element state; effectScope is a closed token list.
+  assert.ok(RESONANCE_PROBE_EXPORT.effectScope.includes('element-state'));
   assert.equal(typeof initResonanceProbe, 'function');
 });
 

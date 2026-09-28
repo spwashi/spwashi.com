@@ -190,7 +190,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     mount: (ctx, root) => initSpwBraceActions(root?.querySelectorAll ? root : document),
     describes: 'brace[actions|entry|projection] interactive entry and projection edge controls',
     timingArc: 'visible-gesture',
-    effectScope: 'element-state listeners bus',
+    effectScope: ['element-state', 'listeners', 'bus'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

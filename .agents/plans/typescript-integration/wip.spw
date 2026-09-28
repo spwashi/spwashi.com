@@ -1,4 +1,4 @@
-# Review 2026-07-12 — planning evidence; promote landed build/runtime contracts and archive speculative conversion scope.
+# Review 2026-09-27 — landed scope recorded in PLAN.md (scripts/ts -> scripts/typed, public/ts -> public/js/typed); April conversion list archived in place. Shared M0/M2/L3 decisions with site-source-layout named below.
 # wip — typescript-integration
 #
 #>plan_typescript_integration_wip
@@ -15,8 +15,13 @@ operation = "cache"
 fixity = "tending"
 
 ^"selection_probes"{
- probes = #[ `rg 'typescript-integration' scripts/build.mjs`, `Preserve existing checks:`, `test -f scripts/build.mjs`, ][reg=set]
- rule = "Run probes before trusting cached plan_context."
+ probes = #[
+  `ls scripts/ts scripts/typed public/ts public/js/typed`,
+  `head -5 scripts/build.mjs scripts/site-contracts.mjs scripts/generate-sitemap.mjs`,
+  `git grep -n "public/ts" -- tsconfig*.json scripts/ts scripts/*.mjs .spw/conventions`,
+  `grep -n "ignoredSegments" vite.config.ts`
+ ][reg=set]
+ rule = "Run probes before trusting cached plan_context; concurrent sessions move this tree."
 }[reg=facet]
 
 ^"plan_context"{
@@ -25,22 +30,44 @@ fixity = "tending"
  operation = "prime"
  bucket = "runtime_js_validation"
  validation = #[ `Preserve existing checks:`, `npm run build`, `npm run catalog`, `npm run sitemap`, `npm run check`, `git diff --check`, ][reg=set]
- hot_files = #[ `scripts/build.mjs`, `scripts/generate-design-catalog.mjs`, `scripts/generate-sitemap.mjs`, `scripts/site-contracts.mjs`, `scripts/ts/css-manifest.mts`, `scripts/ts/css-bundle.mts`, ][reg=set]
+ hot_files = #[ `scripts/ts/shared/build-topology.mts`, `vite.config.ts`, `tsconfig.json`, `tsconfig.runtime.json`, `tsconfig.public-sources.json`, `tsconfig.public.json`, `scripts/generate-design-catalog.mjs`, `scripts/dev-server.mjs`, ][reg=set]
+}[reg=facet]
+
+^"shared_with_site_source_layout"{
+ see = ~"../site-source-layout/wip.spw"
+ rule = `Three layout moves touch this plan's configs. The layout plan sequences them; the decision in each line is made here and recorded in both wip files so the step is not built twice.`
+ M0_ship_list = .{
+  step = `positive SITE_ENTRIES / isServedPath in build-topology.mts; vite.config.ts imports it and drops its own ignoredSegments`
+  decision_here = `how vite.config.ts imports it: cast the compiled scripts/typed .mjs (as template.mjs is cast today) or import the .mts source with allowImportingTsExtensions in the root tsconfig.json`
+  status = "undecided"
+ }[reg=facet]
+ M2_ts_home = .{
+  step = `public/ts -> src/ts; output stays public/js/typed; the /public/js/* paths alias and every URL stay`
+  decision_here = `rootDir and include in tsconfig.runtime.json, tsconfig.public-sources.json, tsconfig.public.json; skill matrix in spw-typescript-affordances updated in the same commit`
+  status = "agreed; waits on M0"
+ }[reg=facet]
+ L3_uncommitted_output = .{
+  step = `stop committing public/js/typed and scripts/typed`
+  decision_here = `whether "the browser runs what the repo shows" survives a gitignored output plane; check:runtime compares source to output today`
+  status = "open; do not act from the layout plan alone"
+ }[reg=facet]
+ validation = #[`npm run typecheck`, `npm run build:runtime`, `npm run check:runtime`, `npm run check:generated`, `git diff --stat public/js/typed scripts/typed`][reg=set]
 }[reg=facet]
 ^["roots"]{
- @plan: ~".agents/plans/typescript-integration/PLAN.md"
- @site: ~".spw/site.spw"
- @semantics: ~".spw/conventions/site-semantics.spw"
- @style_development: ~".spw/conventions/style-development.spw"
- @build: ~"scripts/build.mjs"
- @catalog: ~"scripts/generate-design-catalog.mjs"
- @contracts: ~"scripts/site-contracts.mjs"
- @dev_server: ~"scripts/dev-server.mjs"
- @runtime: ~"public/js/site.js"
- @settings: ~"public/js/site-settings.js"
- @metadata: ~"public/js/spw-page-metadata.js"
- @shared: ~"public/js/spw-shared.js"
- @pkg: ~"package.json"
+ @plan: ~"./PLAN.md"
+ @site: ~"../../../.spw/site.spw"
+ @semantics: ~"../../../.spw/conventions/site-semantics.spw"
+ @style_development: ~"../../../.spw/conventions/style-development.spw"
+ @build: ~"../../../scripts/ts/build/index.mts"
+ @catalog: ~"../../../scripts/generate-design-catalog.mjs"
+ @contracts: ~"../../../scripts/ts/site-contracts/index.mts"
+ @dev_server: ~"../../../scripts/dev-server.mjs"
+ @build_topology: ~"../../../scripts/ts/shared/build-topology.mts"
+ @runtime: ~"../../../public/js/site.js"
+ @settings: ~"../../../public/js/kernel/site-settings.js"
+ @metadata: ~"../../../public/js/semantic/page-metadata.js"
+ @shared: ~"../../../public/js/kernel/shared.js"
+ @pkg: ~"../../../package.json"
 }
 
 ^["intent"]{
@@ -78,7 +105,7 @@ fixity = "tending"
 ^["parallel_work"]{
  critical_path: [#script_project_scope, #catalog_schema_extraction, #manifest_schema_extraction, #execution_strategy, #runtime_contract_targets, #chunk_layer_schema, #release_identity_schema]
  parallelizable: [#settings_shape_inventory, #runtime_registry_inventory, #validation_contract_design, #whitelabel_variant_inventory]
- shared_hot_files: ["scripts/build.mjs", "scripts/generate-design-catalog.mjs", "scripts/site-contracts.mjs", "scripts/dev-server.mjs", "public/js/site.js", "public/js/site-settings.js", "public/js/spw-page-metadata.js", "public/js/spw-shared.js", "package.json"]
+ shared_hot_files: ["scripts/ts/shared/build-topology.mts", "vite.config.ts", "tsconfig.json", "tsconfig.runtime.json", "scripts/generate-design-catalog.mjs", "scripts/dev-server.mjs", "public/js/site.js", "public/js/kernel/site-settings.js", "public/js/semantic/page-metadata.js", "public/js/kernel/shared.js", "package.json"]
  merge_risks: [#tooling_churn, #config_scope_bleed, #premature_browser_compile, #unstable_chunk_ids, #brand_fork_drift]
 }
 
@@ -242,10 +269,15 @@ fixity = "tending"
  >>[2026-04-19 00:46] observe — site.js already mounts behavior through route/selector-gated dynamic imports, so JS chunk preparation should start by manifesting those seams rather than replacing them.
  >>[2026-04-19 00:48] decide — generated asset identity and route-asset manifests should land before any serious CSS or TS compile pipeline.
  >>[2026-06-14 01:03] implement — scoped CSS delivery now has a typed behavior-scope bridge: scripts/ts/css-manifest.mts owns BEHAVIOR_SCOPES, scripts/ts/css-bundle.mts emits public/js/runtime/orchestration/behavior-scopes.js, check-generated tracks that runtime module, and runtime-contracts verifies module def.features against the same CSS behavior-scope set.
+ >>[2026-09-27 21:10] observe — build.mjs, site-contracts.mjs, and generate-sitemap.mjs are now wrappers over scripts/typed; the April convert-early list was three-fifths done without this file saying so. The catalog (3000 lines) and dev-server are the two still in plain JS.
+ >>[2026-09-27 21:12] observe — the old browser paths public/js/site-settings.js, spw-page-metadata.js, spw-shared.js are gone; hardening targets are kernel/site-settings.js, semantic/page-metadata.js, kernel/shared.js.
+ >>[2026-09-27 21:15] decide — execution_strategy is answered by what landed: compiled, committed output with thin .mjs wrappers at the old script paths. Closed below.
+ >>[2026-09-27 21:18] decide — site-source-layout M0 and M2 are shared steps; the vite import method (M0), the tsconfig rootDir/include (M2), and the committed-output question (L3) are decided here and mirrored in that plan's wip.spw.
 }
 
 ^["open"]{
- ?[execution_strategy]: "Should script-side TypeScript run through compiled output, a thin TS execution path for Node, or a hybrid that keeps deploy-time dependencies minimal?"
+ ?[vite_import_method]: "For M0, does vite.config.ts import the ship list from the compiled scripts/typed .mjs with a cast, or from the .mts source with allowImportingTsExtensions in the root tsconfig.json?"
+ ?[committed_output]: "For L3, can public/js/typed and scripts/typed stop being committed while the skill's rule that the browser runs what the repo shows still holds?"
  ?[schema_home]: "Where should shared catalog/manifest/build types live so they are reusable across scripts without becoming a fake application layer?"
  ?[catalog_contract]: "Which design-catalog record types are stable enough to become explicit exported contracts first — attribute entries, token entries, CSS file entries, or all three together?"
  ?[manifest_contract]: "How much of the route/runtime manifest should be typed at once — route entry only, runtime definitions only, or the entire generated document shape?"
@@ -273,15 +305,19 @@ fixity = "tending"
 }
 
 ^["cache"]{
- ~#status: "planning"
- ~#base_ref: "main@869d97af68d67278e2bbd1181bd00defff24b30c"
+ ~#status: "tending; foundation and most documentation phases landed; M0/M2 shared with site-source-layout"
+ ~#base_ref: "main@b1dfbda4"
  ~#hygiene_split: "none"
- ~#files_hot: "scripts/build.mjs, scripts/generate-design-catalog.mjs, scripts/site-contracts.mjs, scripts/dev-server.mjs, public/js/site.js, public/js/site-settings.js, public/js/spw-page-metadata.js, public/js/spw-shared.js, package.json"
- ~#next_commit: "1"
- ~#open_count: "12"
- ~#last_stream: "implement"
+ ~#files_hot: "scripts/ts/shared/build-topology.mts, vite.config.ts, tsconfig.json, tsconfig.runtime.json, tsconfig.public-sources.json, tsconfig.public.json, scripts/generate-design-catalog.mjs, scripts/dev-server.mjs, public/js/site.js, public/js/kernel/site-settings.js, public/js/semantic/page-metadata.js, public/js/kernel/shared.js"
+ ~#next_commit: "M0 decision, then M0"
+ ~#open_count: "16"
+ ~#last_stream: "decide"
  ~#taste_debt: "Do not let TypeScript adoption turn the site into a generic toolchain project. The density gain should come from sharper contracts, layered output identity, and better documentation seams, not from copying an app-stack ritual."
 }
 
 ^["done"]{
+ ~[execution_strategy]: "compiled, committed output: scripts/ts/**/*.mts -> scripts/typed via tsconfig.scripts.json; thin .mjs wrappers keep the old script paths (build.mjs, site-contracts.mjs, generate-sitemap.mjs)"
+ ~[phase_foundation]: "tsconfig.scripts.json, tsconfig.runtime.json, tsconfig.public-sources.json, tsconfig.public.json; npm run typecheck runs all four"
+ ~[typed_manifest]: "scripts/typed/site-contracts, scripts/typed/sitemap, generate-route-runtime-manifest.mts, css-manifest.mts, css-bundle.mts, runtime-contracts.mts, pwa-contracts.mts, json-contracts.mts"
+ ~[browser_typed_edges]: "thirteen public/ts modules compile to public/js/typed; source/output parity checked by runtime-contracts/imports.mts"
 }

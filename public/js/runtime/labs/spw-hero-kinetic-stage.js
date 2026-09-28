@@ -125,7 +125,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initSpwHeroKineticStage(root instanceof Node ? root : document),
   describes: 'hero[kinetic-stage]{boundaries|electrostatics|cauldron} interactive motion and payload lab',
   timingArc: 'visible-hero-stage',
-  effectScope: 'element-state local-dom bus cauldron',
+  effectScope: ['local-dom', 'element-state', 'bus'],
   updates: [
     'structural:data-spw-hero-stage-bound',
     'flourish:data-spw-charge',

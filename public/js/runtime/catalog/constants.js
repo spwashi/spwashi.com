@@ -7,6 +7,12 @@
  *   debugOnly?, describes, updates, evaluates, timingArc, timingChunk?,
  *   effectScope, visual?, load, mount
  *
+ * Typing convention (CATALOG_DEF_FIELDS below): every field is a gate,
+ * schedule, effect, capability, voice, or lifecycle field. Effect fields are
+ * closed token arrays — effectScope from EFFECT_SCOPE, evaluates from
+ * MODULE_DIMENSION, updates as [scope:]role:name — so the runtime and build
+ * can act on them. describes is the one voice: prose lives there or nowhere.
+ *
  * A module is one reversible process:
  *   enter (when) → act (spend) → leave (cleanup) → remain (commitment)
  *
@@ -93,6 +99,96 @@ export const VISUAL_EFFECT = Object.freeze({
 });
 
 export const VISUAL_EFFECT_VALUES = Object.freeze(Object.values(VISUAL_EFFECT));
+
+/**
+ * effectScope — where a module's effects land (its reach), as closed tokens.
+ * Cost inference, the host tiers below, module-effects, and inspectors read
+ * these exactly; a token nobody can act on does not belong here. How an act
+ * spends (paint, measure, fight) is the job of `updates` roles and `cost`.
+ */
+export const EFFECT_SCOPE = Object.freeze({
+  /** builds or rewrites content inside the matched host */
+  LOCAL_DOM: 'local-dom',
+  /** attributes or classes on nodes that already exist */
+  ELEMENT_STATE: 'element-state',
+  /** custom properties written from JS (on the host unless root-state says root) */
+  CSS_VARS: 'css-vars',
+  /** reads layout geometry: measure passes, resize observation */
+  GEOMETRY: 'geometry',
+  LISTENERS: 'listeners',
+  OBSERVERS: 'observers',
+  TIMERS: 'timers',
+  /** html/body datasets the whole page reads */
+  ROOT_STATE: 'root-state',
+  /** globals on window: console APIs, window.spw* */
+  WINDOW: 'window',
+  /** hash, history, or route changes */
+  NAVIGATION: 'navigation',
+  /** the site header and nav */
+  CHROME: 'chrome',
+  /** overlays, popovers, toasts, and HUDs in the shared bottom lanes */
+  FLOATING_CHROME: 'floating-chrome',
+  /** localStorage, sessionStorage, IndexedDB */
+  STORAGE: 'storage',
+  /** the site bus (kernel/bus.js) */
+  BUS: 'bus',
+  NETWORK: 'network',
+  SERVICE_WORKER: 'service-worker',
+  CLIPBOARD: 'clipboard',
+});
+
+export const EFFECT_SCOPE_VALUES = Object.freeze(Object.values(EFFECT_SCOPE));
+
+/**
+ * What a page has to provide before a module may act there — read by the
+ * portable-host view (normalize.js describeModuleHost) and the build manifest.
+ * host: the module's own markup · document: the page's html/body/window ·
+ * shell: this site's chrome · memory: origin storage · channel: the site bus ·
+ * platform: network, service worker, clipboard.
+ */
+export const EFFECT_SCOPE_TIER = Object.freeze({
+  'local-dom': 'host',
+  'element-state': 'host',
+  'css-vars': 'host',
+  geometry: 'host',
+  listeners: 'host',
+  observers: 'host',
+  timers: 'host',
+  'root-state': 'document',
+  window: 'document',
+  navigation: 'document',
+  chrome: 'shell',
+  'floating-chrome': 'shell',
+  storage: 'memory',
+  bus: 'channel',
+  network: 'platform',
+  'service-worker': 'platform',
+  clipboard: 'platform',
+});
+
+export const EFFECT_SCOPE_TIERS = Object.freeze(['host', 'document', 'shell', 'memory', 'channel', 'platform']);
+
+/**
+ * evaluates — the dimensions a module is read along, as closed tokens. The
+ * loader stamps them (plus the layer) on hosts as data-spw-module-evaluates;
+ * components/foundation.css tints module rails by them. Prose about what a
+ * module considers belongs in the describes gloss.
+ */
+export const MODULE_DIMENSION = Object.freeze({
+  ROUTING: 'routing',
+  SEMANTICS: 'semantics',
+  SEMANTIC_DENSITY: 'semantic-density',
+  VISUAL: 'visual',
+  VISUAL_MODEL: 'visual-model',
+  SPACING_SEMANTICS: 'spacing-semantics',
+  STATE: 'state',
+  INTERACTION: 'interaction',
+  SURFACE: 'surface',
+  LIFECYCLE: 'lifecycle',
+  QA_OBSERVATION: 'qa-observation',
+});
+
+export const MODULE_DIMENSION_VALUES = Object.freeze(Object.values(MODULE_DIMENSION));
 
 /**
  * Single-token projection of { commitment, spend, copy? }.
@@ -231,6 +327,7 @@ export const CATALOG_DEF_FIELD_ORDER = Object.freeze([
   'selector',
   'rootMode',
   'debugOnly',
+  'familiarity',
   'describes',
   'updates',
   'evaluates',
@@ -240,7 +337,55 @@ export const CATALOG_DEF_FIELD_ORDER = Object.freeze([
   'visual',
   'load',
   'mount',
+  'unmount',
 ]);
+
+/**
+ * What kind of data each catalog field is, and who acts on it. The kinds are
+ * the typing convention for definitions:
+ *   gate       — the loader decides eligibility with it
+ *   schedule   — the loader or build decides when / in which pack
+ *   effect     — closed tokens the runtime, build, and audits act on
+ *   capability — inspector coverage only; closed where a vocabulary exists
+ *   voice      — the one prose slot: a Spw expression with optional gloss
+ *   lifecycle  — functions the loader calls
+ * A field with no reader is decoration; check:runtime rejects an authored
+ * field that is not listed here.
+ */
+export const CATALOG_DEF_FIELDS = Object.freeze({
+  id: { kind: 'gate', readers: 'registry, spw-module-only/skip, owner lookup' },
+  layer: { kind: 'schedule', readers: 'loader stage, category mount-when' },
+  when: { kind: 'schedule', readers: 'getEffectiveMountWhen, scheduler strategies, build pack' },
+  timingChunk: { kind: 'schedule', readers: 'scheduler idle chunk, build semantic pack' },
+  timingArc: { kind: 'schedule', readers: 'timing stem check, idle chunk fallback, load-trace grouping' },
+  familiarity: { kind: 'schedule', readers: 'memory/familiarity-gate demotion' },
+  features: { kind: 'gate', readers: 'orchestration/features against body[data-spw-features]' },
+  route: { kind: 'gate', readers: 'loader matchesRoute' },
+  selector: { kind: 'gate', readers: 'loader hasSelector, scheduler roots, audit:module-selectors' },
+  rootMode: { kind: 'gate', readers: 'scheduler single|each mounting' },
+  debugOnly: { kind: 'gate', readers: 'loader debug/QA posture' },
+  pageFamily: { kind: 'gate', readers: 'page/page-category match' },
+  pageRole: { kind: 'gate', readers: 'page/page-category match' },
+  pageModes: { kind: 'gate', readers: 'page/page-category match' },
+  pageContext: { kind: 'gate', readers: 'page/page-category match' },
+  pageSurface: { kind: 'gate', readers: 'page/page-category match' },
+  updates: { kind: 'effect', readers: 'offer rank for invited mounts, host annotation, audit:module-writers, build manifest' },
+  effectScope: { kind: 'effect', readers: 'cost inference, host tiers, module-effects, inspectors' },
+  evaluates: { kind: 'effect', readers: 'data-spw-module-evaluates rail tint (components/foundation.css)' },
+  visual: { kind: 'effect', readers: 'load reasons, still coverage' },
+  cost: { kind: 'effect', readers: 'budget rollups, reclass hints' },
+  costClass: { kind: 'effect', readers: 'legacy single-token cost audits' },
+  subfeatures: { kind: 'capability', readers: 'orchestration capability coverage' },
+  triggers: { kind: 'capability', readers: 'orchestration capability coverage' },
+  affordances: { kind: 'capability', readers: 'orchestration capability coverage' },
+  electrostatics: { kind: 'capability', readers: 'orchestration capability coverage' },
+  describes: { kind: 'voice', readers: 'describes parser, host annotation, build manifest' },
+  load: { kind: 'lifecycle', readers: 'loader import' },
+  mount: { kind: 'lifecycle', readers: 'loader catalog adapter' },
+  unmount: { kind: 'lifecycle', readers: 'loader teardown owner' },
+});
+
+export const CATALOG_DEF_FIELD_KINDS = Object.freeze(['gate', 'schedule', 'effect', 'capability', 'voice', 'lifecycle']);
 
 /** Lab-only live copy-flow hosts. Static specimens and sitewide audits do not mount physics. */
 export const PRETEXT_LIVE_SELECTOR =

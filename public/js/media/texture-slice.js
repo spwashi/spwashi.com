@@ -304,7 +304,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     'flourish:--spw-slice-py',
   ],
   timingArc: 'visible-media',
-  effectScope: 'local-dom css-vars pointer',
+  effectScope: ['local-dom', 'css-vars', 'listeners'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

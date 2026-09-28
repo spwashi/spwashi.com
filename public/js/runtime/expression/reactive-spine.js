@@ -132,7 +132,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     mount: (ctx, root) => initReactiveSpine(root?.querySelector ? root : document),
     describes: 'reactive-spine[operator|event|svg] cognitive instrument flow diagram',
     timingArc: 'visible-flow',
-    effectScope: 'element-state bus',
+    effectScope: ['element-state', 'bus'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

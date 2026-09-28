@@ -354,5 +354,5 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     'measure:--spw-arrival-potential',
   ],
   timingArc: 'compose-arrival',
-  effectScope: 'root-state local-dom storage bus',
+  effectScope: ['local-dom', 'root-state', 'storage', 'bus'],
 });

@@ -1018,7 +1018,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
         'residue:data-spw-image-key',
     ],
     timingArc: 'visible-media',
-    effectScope: 'target-dom gesture-memory listeners',
+    effectScope: ['local-dom', 'listeners', 'storage'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

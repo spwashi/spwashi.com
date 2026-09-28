@@ -1539,7 +1539,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   describes: 'cauldron[gather|mix|garden] force[operator] emergence[composition]',
   timingArc: 'enhance-collectible',
   timingChunk: 'idle-collectible',
-  effectScope: 'storage bus floating-chrome root-state',
+  effectScope: ['root-state', 'floating-chrome', 'storage', 'bus'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

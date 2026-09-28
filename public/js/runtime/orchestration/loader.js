@@ -546,31 +546,15 @@ function describeMountReason(def, ctx, root = null, effectiveWhen = getEffective
   return def.reason || `${effectiveWhen} ${def.layer} ${routeReason} ${selectorReason} ${rootReason}`;
 }
 
+/**
+ * Rail dimensions for data-spw-module-evaluates: the layer plus the authored
+ * `evaluates` tokens (catalog MODULE_DIMENSION). The catalog is the one source;
+ * components/foundation.css tints module rails by these tokens.
+ */
 function inferModuleDimensions(def) {
-  const text = `${def.id || ''} ${def.selector || ''} ${def.layer || ''}`.toLowerCase();
-  const dimensions = new Set([def.layer]);
-
-  if (/nav|route|link|hash|frame/.test(text)) dimensions.add('routing');
-  if (/semantic|operator|topic|guide|annotation|brace/.test(text)) dimensions.add('semantics');
-  if (/semantic|component|genome|kind|role|slot|density/.test(text)) dimensions.add('semantic-density');
-  if (/layout|shift|region|canvas|svg|image|logo|promo|wonder/.test(text)) dimensions.add('visual');
-  if (/canvas|svg|image|logo|promo|wonder|visual|motif/.test(text)) dimensions.add('visual-model');
-  if (/layout|space|region|surface|grid|frame|fold/.test(text)) dimensions.add('spacing-semantics');
-  if (/settings|tune|local|memory|storage|pwa/.test(text)) dimensions.add('state');
-  if (/spell|haptic|gesture|experiential|interaction|pointer|mode/.test(text)) dimensions.add('interaction');
-  if (/payment|service|rpg|blog|media|design/.test(text)) dimensions.add('surface');
-  if (/lifecycle|phase|state|beat|observation|cauldron|region|page-state/.test(text)) dimensions.add('lifecycle');
-  if (/qa|agent|debug|inspect|beat|observation/.test(text)) dimensions.add('qa-observation');
-
-  if (def.evaluates) {
-    String(def.evaluates)
-      .split(/[\s,]+/)
-      .map(normalizeRuntimeToken)
-      .filter(Boolean)
-      .forEach((token) => dimensions.add(token));
-  }
-
-  return [...dimensions].filter(Boolean).join(' ');
+  return [def.layer, ...normalizeModuleIntentValue(def.evaluates)]
+    .filter((token, index, list) => token && list.indexOf(token) === index)
+    .join(' ');
 }
 
 function shouldScheduleDefinition(def, ctx, expectedWhen = null) {

@@ -288,5 +288,5 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     'residue:data-spw-semantic-expression',
   ],
   timingArc: 'idle-inspection',
-  effectScope: 'local-dom bus',
+  effectScope: ['local-dom', 'bus'],
 });

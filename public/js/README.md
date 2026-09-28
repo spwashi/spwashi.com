@@ -99,6 +99,25 @@ The gate rejects static catalog imports of orchestration, browser primitive
 dependencies on runtime policy, and registry dependencies on browser modules.
 Catalog dynamic imports still schedule feature implementations in their owning folders.
 
+## Contract Fields
+
+Each catalog definition field has a kind, recorded with its readers in
+`CATALOG_DEF_FIELDS` (`runtime/catalog/constants.js`):
+
+| Kind | Fields | Data type |
+|---|---|---|
+| gate | `id`, `features`, `route`, `selector`, `rootMode`, `debugOnly`, `page*` | tokens or a selector the loader matches |
+| schedule | `layer`, `when`, `timingChunk`, `timingArc`, `familiarity` | closed tokens; `timingArc` is `<stem>-<noun>` |
+| effect | `updates`, `effectScope`, `evaluates`, `visual`, `cost` | closed token arrays: `updates` entries are `[scope:]role:name`, `effectScope` draws from `EFFECT_SCOPE` (each token has a host tier), `evaluates` from `MODULE_DIMENSION` |
+| capability | `subfeatures`, `triggers`, `affordances`, `electrostatics` | inspector coverage |
+| voice | `describes` | the one prose slot: `subject[mode]{direction}<capsule>` plus optional gloss |
+| lifecycle | `load`, `mount`, `unmount` | functions |
+
+`types/module-catalog.d.ts` types each vocabulary, and `check:runtime` holds
+the four family files to the full type checker, so a misspelled token fails
+with a suggestion. An authored field missing from `CATALOG_DEF_FIELDS` fails
+too: a field earns its place by naming who reads it.
+
 ## Lifecycle Contracts
 
 Portable exports mount with `(ctx, root)`. Catalog adapters mount with

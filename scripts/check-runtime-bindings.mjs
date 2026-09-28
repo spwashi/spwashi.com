@@ -23,6 +23,8 @@ const INPUTS = [
   'public/js',
   'public/ts',
   'types',
+  // The gate's own rules: a changed filter must not be answered by an old stamp.
+  'scripts/typed/runtime-contracts/bindings.mjs',
 ];
 
 async function main() {

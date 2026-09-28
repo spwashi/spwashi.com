@@ -448,7 +448,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     },
     describes: 'pretext[layout|sandbox|projection] lab[observe|resize|inspect]',
     timingArc: 'visible-lab',
-    effectScope: 'local-dom css-vars measure',
+    effectScope: ['local-dom', 'css-vars', 'geometry'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

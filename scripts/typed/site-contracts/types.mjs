@@ -103,6 +103,42 @@ export const VALID_VISUAL_EFFECTS = Object.freeze([
 ]);
 const _visualEqual = true;
 void _visualEqual;
+export const VALID_EFFECT_SCOPES = Object.freeze([
+    'local-dom',
+    'element-state',
+    'css-vars',
+    'geometry',
+    'listeners',
+    'observers',
+    'timers',
+    'root-state',
+    'window',
+    'navigation',
+    'chrome',
+    'floating-chrome',
+    'storage',
+    'bus',
+    'network',
+    'service-worker',
+    'clipboard',
+]);
+const _effectScopeEqual = true;
+void _effectScopeEqual;
+export const VALID_MODULE_DIMENSIONS = Object.freeze([
+    'routing',
+    'semantics',
+    'semantic-density',
+    'visual',
+    'visual-model',
+    'spacing-semantics',
+    'state',
+    'interaction',
+    'surface',
+    'lifecycle',
+    'qa-observation',
+]);
+const _dimensionEqual = true;
+void _dimensionEqual;
 export const SPW_MODULE_EXPORT_REQUIRED_FIELDS = Object.freeze([
     'mount',
 ]);

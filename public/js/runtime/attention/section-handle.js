@@ -1677,7 +1677,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initSectionHandle(resolveAttentionDocument(ctx, root), ctx),
   describes: 'attention[section-handle|section-state|region-kin|cauldron-nudge] locomotion',
   timingArc: 'idle-attention',
-  effectScope: 'root-state section-state scroll-listener bus css-vars',
+  effectScope: ['element-state', 'css-vars', 'listeners', 'root-state', 'bus'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

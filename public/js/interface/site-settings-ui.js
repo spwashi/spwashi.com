@@ -1551,7 +1551,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: () => initSiteSettingsPage(),
   describes: 'settings[form|preset|deviation-register] local defaults UI',
   timingArc: 'visible-settings',
-  effectScope: 'form storage root-state',
+  effectScope: ['local-dom', 'root-state', 'storage'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

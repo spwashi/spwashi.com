@@ -47,7 +47,7 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
   - `public/js/site.js`
   - `public/js/kernel/site-settings.js`
   - `public/js/semantic/page-metadata.js`
-  - `public/js/spw-shared.js`
+  - `public/js/kernel/shared.js`
 - The workbench has its own TS world, but the site should not inherit that build model by default.
 
 ## Recommendation
@@ -103,11 +103,11 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
 ### 2. Typed Documentation Surfaces
 
 - Convert or harden these first:
-  - `scripts/generate-design-catalog.mjs`
-  - `scripts/site-contracts.mjs`
-  - `scripts/build.mjs`
-  - `scripts/dev-server.mjs`
-  - `scripts/generate-sitemap.mjs`
+  - `scripts/generate-design-catalog.mjs` (still plain JS, 3000 lines)
+  - `scripts/site-contracts.mjs` (landed: wrapper over `scripts/typed/site-contracts/`)
+  - `scripts/build.mjs` (landed: wrapper over `scripts/typed/build/`)
+  - `scripts/dev-server.mjs` (still plain JS)
+  - `scripts/generate-sitemap.mjs` (landed: wrapper over `scripts/typed/sitemap/`)
 - Extract stable shapes for:
   - attribute records
   - CSS token definitions and consumer maps
@@ -170,7 +170,7 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
   - `public/js/site.js`
   - `public/js/kernel/site-settings.js`
   - `public/js/semantic/page-metadata.js`
-  - `public/js/spw-shared.js`
+  - `public/js/kernel/shared.js`
 - Prefer extracting contract modules before converting full behavior-heavy files.
 
 ### 4. Optional Later Browser TS Path
@@ -192,11 +192,12 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
 
 ## File Triage
 
-- Convert early:
-  - `scripts/build.mjs`
+- Convert early (remaining):
   - `scripts/generate-design-catalog.mjs`
-  - `scripts/site-contracts.mjs`
   - `scripts/dev-server.mjs`
+- Converted (2026-06 through 2026-09; see the 2026-09-27 section):
+  - `scripts/build.mjs`
+  - `scripts/site-contracts.mjs`
   - `scripts/generate-sitemap.mjs`
 - Extract early:
   - chunk/layer manifest types
@@ -208,7 +209,7 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
   - `public/js/site.js`
   - `public/js/kernel/site-settings.js`
   - `public/js/semantic/page-metadata.js`
-  - `public/js/spw-shared.js`
+  - `public/js/kernel/shared.js`
 - Avoid for now:
   - route HTML
   - most small DOM-first modules
@@ -263,3 +264,20 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
 - `types/spw.d.ts` gained the G1 bundle dataset keys (`spwCauldronState`, `spwOp`, `spwEffects`) with template-literal grammar hints, plus exported mirror shapes `SpwIngredient`, `SpwEffectEntry`, `SpwOperatorSplit` - typechecked via the existing `types/**/*.d.ts` include.
 - Runtime JS stays un-typechecked by policy (`checkJs: false`), so the JS side documents through plain JSDoc referencing the mirror shapes by name: `cauldron/contract.js` (CauldronStateParts typedef + helper signatures), `cauldron/storage.js` (normalizeIngredient), `kernel/shared.js` (splitOperatorExpression, composeOpBundle), `runtime/memory/effect-ledger.js` (record). IDE hover carries the contract on camera; the d.ts carries it through tsc.
 - Pattern for future passes: shapes live once in `types/spw.d.ts`; JS declares "Mirror shape: X in types/spw.d.ts" rather than duplicating structure.
+
+## Landed Scope And Shared Layout Steps - 2026-09-27
+
+What this plan proposed in April has mostly landed, in a shape the earlier sections do not describe:
+
+- Workstream 1 is done. `tsconfig.scripts.json` compiles `scripts/ts/**/*.mts` to `scripts/typed/`; the `?[execution_strategy]` question resolved as compiled, committed output with thin `.mjs` wrappers at the old script paths.
+- Workstream 2 is largely done: `scripts/typed/build/`, `scripts/typed/site-contracts/`, `scripts/typed/sitemap/`, `css-manifest.mts`, `css-bundle.mts`, `runtime-contracts.mts`, `pwa-contracts.mts`, `json-contracts.mts`, and `scripts/ts/shared/build-topology.mts`. The catalog and dev server are the two convert-early files still in plain JS.
+- Workstream 4 arrived early and small: thirteen typed browser modules in `public/ts/*.ts` compile to `public/js/typed/` under `tsconfig.runtime.json`, strict-checked by `tsconfig.public-sources.json`. The skill `spw-typescript-affordances` carries the source/output matrix.
+- Workstream 2.75 has not landed: `sw.js` precache lists are still hand-maintained, and `?v=` bumps are still editorial.
+
+Three steps in `site-source-layout/wip.spw` touch this plan's files. Each is one patch; the decision named in bold belongs here, not to the layout plan:
+
+- **M0, one list of what ships.** A positive `SITE_ENTRIES` / `isServedPath` in `build-topology.mts`, imported by `vite.config.ts` in place of its own `ignoredSegments`. This is the typed build-topology record Workstream 2 asked for. **Decision:** how `vite.config.ts` imports it. The root `tsconfig.json` is strict and includes only `vite.config.ts`; the compiled `scripts/typed/*.mjs` have no declarations, so importing them means a cast (as `template.mjs` is cast today), while importing the `.mts` source needs `allowImportingTsExtensions` in the root tsconfig. Record the choice in `wip.spw` before M0 is built.
+- **M2, typed browser source out of `public/`.** `public/ts` moves to `src/ts`. Output stays at `public/js/typed/`, the `/public/js/*` path alias stays, and no URL changes. **Decision:** `rootDir` and `include` in `tsconfig.runtime.json`, `tsconfig.public-sources.json`, and `tsconfig.public.json`. The touch list is in the layout plan's `wip.spw`; update the skill matrix in the same commit.
+- **L3, stop committing typed output.** Today `public/js/typed/` and `scripts/typed/` are committed so the repo can be read without a build and so `check:runtime` compares source against output. `npm run dev` and `test:modules` already rebuild them. **Decision:** whether the skill's rule that the browser runs what the repo shows survives a gitignored output plane. Not decided; do not act on L3 from the layout plan alone.
+
+Validation for M0 and M2 from this plan's side: `npm run typecheck`, `npm run build:runtime`, `npm run check:runtime`, `npm run check:generated`, and `git diff --stat public/js/typed scripts/typed` showing no output change.

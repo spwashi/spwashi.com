@@ -294,7 +294,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   mount: (ctx, root) => initToolmakerSubmissions(root instanceof Node ? root : document),
   describes: 'toolmaker[specimen|operator|dispatch|lab] submission drafting and live compilation bench',
   timingArc: 'visible-workshop',
-  effectScope: 'element-state local-dom clipboard session-lab',
+  effectScope: ['local-dom', 'element-state', 'storage', 'clipboard'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

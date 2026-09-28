@@ -264,7 +264,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   ),
   describes: 'attention[operator|family|concept|ingredient|nav-target|relation] resonance probe',
   timingArc: 'visible-attention',
-  effectScope: 'root-state focus-listener conditional-hover-listener block-echo',
+  effectScope: ['element-state', 'listeners', 'root-state'],
 });
 
 export const spwModule = SPW_MODULE_EXPORT;
