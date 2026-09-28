@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-28T02:24:06.155Z",
+  "generatedAt": "2026-09-28T23:22:00.557Z",
   "sourceRoot": "/public/images/",
-  "count": 1462,
+  "count": 1468,
   "concepts": [
     "about",
     "algorithm",
@@ -32,12 +32,23 @@
   ],
   "images": [
     {
+      "id": "app",
+      "title": "App",
+      "path": "/public/images/app-icon.svg",
+      "directory": "public/images",
+      "format": "svg",
+      "bytes": 490,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/app-icon.svg when a thumbnail visual needs a stable tracked asset."
+    },
+    {
       "id": "apple-touch",
       "title": "Apple Touch",
       "path": "/public/images/apple-touch-icon.png",
       "directory": "public/images",
       "format": "png",
-      "bytes": 17526,
+      "bytes": 3969,
       "role": "thumbnail",
       "concepts": [],
       "swapHint": "Use /public/images/apple-touch-icon.png when a thumbnail visual needs a stable tracked asset."
@@ -9424,7 +9435,7 @@
       "path": "/public/images/icon-192.png",
       "directory": "public/images",
       "format": "png",
-      "bytes": 15912,
+      "bytes": 3947,
       "role": "thumbnail",
       "concepts": [],
       "swapHint": "Use /public/images/icon-192.png when a thumbnail visual needs a stable tracked asset."
@@ -9435,10 +9446,43 @@
       "path": "/public/images/icon-512.png",
       "directory": "public/images",
       "format": "png",
-      "bytes": 72206,
+      "bytes": 13780,
       "role": "thumbnail",
       "concepts": [],
       "swapHint": "Use /public/images/icon-512.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "pwa-cosmic-creature-2026",
+      "title": "Pwa Cosmic Creature 2026",
+      "path": "/public/images/icon-history/pwa-cosmic-creature-2026.png",
+      "directory": "public/images/icon-history",
+      "format": "png",
+      "bytes": 412011,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/icon-history/pwa-cosmic-creature-2026.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "pwa-spw-mark-rounded-2026",
+      "title": "Pwa Spw Mark Rounded 2026",
+      "path": "/public/images/icon-history/pwa-spw-mark-rounded-2026.png",
+      "directory": "public/images/icon-history",
+      "format": "png",
+      "bytes": 72206,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/icon-history/pwa-spw-mark-rounded-2026.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "pwa-teal-operator-2026",
+      "title": "Pwa Teal Operator 2026",
+      "path": "/public/images/icon-history/pwa-teal-operator-2026.png",
+      "directory": "public/images/icon-history",
+      "format": "png",
+      "bytes": 18769,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/icon-history/pwa-teal-operator-2026.png when a thumbnail visual needs a stable tracked asset."
     },
     {
       "id": "icon-maskable-512",
@@ -9446,10 +9490,35 @@
       "path": "/public/images/icon-maskable-512.png",
       "directory": "public/images",
       "format": "png",
-      "bytes": 85233,
+      "bytes": 13780,
       "role": "thumbnail",
       "concepts": [],
       "swapHint": "Use /public/images/icon-maskable-512.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "pwa-frame-flow",
+      "title": "Pwa Frame Flow",
+      "path": "/public/images/icon-studies/pwa-frame-flow.svg",
+      "directory": "public/images/icon-studies",
+      "format": "svg",
+      "bytes": 570,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/icon-studies/pwa-frame-flow.svg when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "pwa-threshold-opening",
+      "title": "Pwa Threshold Opening",
+      "path": "/public/images/icon-studies/pwa-threshold-opening.svg",
+      "directory": "public/images/icon-studies",
+      "format": "svg",
+      "bytes": 532,
+      "role": "thumbnail",
+      "concepts": [
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/icon-studies/pwa-threshold-opening.svg when a site-design / route-architecture visual needs a stable tracked asset."
     },
     {
       "id": "spw-brand-plate",

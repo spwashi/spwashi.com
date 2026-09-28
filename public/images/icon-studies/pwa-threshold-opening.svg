@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Threshold opening icon study</title>
+  <rect width="512" height="512" fill="#eee1c1"/>
+  <path d="M132 365V204c0-43 35-78 78-78h92c43 0 78 35 78 78v161" fill="none" stroke="#203b36" stroke-width="28" stroke-linecap="round"/>
+  <path d="M198 365V240c0-32 26-58 58-58s58 26 58 58v125" fill="none" stroke="#2c665b" stroke-width="24" stroke-linecap="round"/>
+  <circle cx="256" cy="276" r="29" fill="#d39a3b"/>
+</svg>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<spw-page title="Spwashi • Theme Color Studio" description="Configure a local color study and inspect contrast before carrying a palette into the site." canonical="https://spwashi.com/design/theme/colors/" og_title="Spwashi • Theme Color Studio" og_description="A small worktable for field, paper, ink, and signal colors."></spw-page>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+    <link rel="stylesheet" href="/public/css/routes/surfaces/design-studio.css">
+</head>
+<body data-spw-surface="website" data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator" data-spw-page-family="spec" data-spw-page-role="design-reference" data-spw-page-seed="page_design_theme_colors" data-spw-route-family="editorial design systems" data-spw-related-routes="/design/|/design/theme/|/design/logos/|/design/cards/render/|/design/palettes/">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <spw-site-header current="Theme color studio" current_href="/design/theme/colors/" indicator="design" nav_items="Design:/design/|Theme:/design/theme/|Logos:/design/logos/|Cards:/design/cards/"></spw-site-header>
+    <main id="main-content" tabindex="-1" aria-labelledby="theme-color-title">
+        <article>
+            <section class="spw-frame" id="theme-color-studio" data-spw-kind="frame" data-spw-role="orientation" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+                <p class="spec-kicker">Design / Theme colors</p>
+                <h1 id="theme-color-title">Give each color a job</h1>
+                <p>Try field, paper, ink, and signal as a small family. This preview stays on this page. Copy the values only when the pairing holds up beside real content and readable contrast.</p>
+                <nav class="frame-operators" aria-label="Design studio pages"><a class="spw-chip" href="/design/theme/">Theme hub</a><a class="spw-chip" href="/design/logos/">Logo studio</a><a class="spw-chip" href="/design/cards/render/">Image cards</a><a class="spw-chip" href="/design/palettes/">Palette reference</a></nav>
+            </section>
+            <section class="spw-frame" id="theme-color-controls" data-spw-kind="frame" data-spw-role="reference" aria-labelledby="theme-color-controls-title" data-design-studio="colors">
+                <h2 id="theme-color-controls-title">Color study</h2>
+                <div class="design-studio-layout">
+                    <form class="design-studio-controls" aria-label="Theme color controls">
+                        <label>Field <input type="color" value="#203b36" data-color-role="field"></label>
+                        <label>Paper <input type="color" value="#f4e8c9" data-color-role="paper"></label>
+                        <label>Ink <input type="color" value="#203b36" data-color-role="ink"></label>
+                        <label>Signal <input type="color" value="#dba84f" data-color-role="signal"></label>
+                        <div class="design-studio-preset" role="group" aria-label="Color presets"><button type="button" data-color-preset="current">Current</button><button type="button" data-color-preset="oxide">Oxide</button><button type="button" data-color-preset="electric">Electric</button></div>
+                    </form>
+                    <div class="design-studio-color-preview">
+                        <div class="design-studio-color-paper">
+                            <p class="spec-kicker">A sample reading card</p>
+                            <h3>I'm Spwashi. I build software and make art.</h3>
+                            <p>A field gives the work a place to sit. Paper carries the reading. Ink keeps it clear. Signal asks for attention.</p>
+                            <span class="design-studio-signal">Open a direction →</span>
+                        </div>
+                    </div>
+                </div>
+                <p>Ink on paper: <output data-contrast="ink-paper">—</output>. Paper against field: <output data-contrast="paper-field">—</output>. Field on signal: <output data-contrast="field-signal">—</output>. The two text pairings need at least 4.5:1 at normal size; these numbers are a first check, not a substitute for trying the palette on a real route.</p>
+                <label for="theme-color-values">Values to carry into a review</label>
+                <textarea id="theme-color-values" class="design-studio-values" readonly rows="4" data-color-values></textarea>
+            </section>
+        </article>
+    </main>
+    <spw-site-footer></spw-site-footer>
+    <script type="module" src="/public/js/modules/design/studio-preview.js"></script>
+</body>
+</html>

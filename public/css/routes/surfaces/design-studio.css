@@ -1,0 +1,152 @@
+/* design-studio.css: local logo, image-card, and theme-color review surfaces. */
+@layer routes {
+  :where(.design-studio-grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 1rem;
+  }
+
+  :where(.design-studio-grid .image-study) {
+    align-content: start;
+  }
+
+  :where(.design-studio-grid .image-study img) {
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+
+  :where(.design-studio-size-test) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-block: 0.5rem;
+  }
+
+  .design-studio-size-test img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.25rem;
+  }
+
+  :where(.design-studio-grid .image-study:target) {
+    outline: 3px solid var(--semantic-accent, #c58b2a);
+    outline-offset: 0.25rem;
+  }
+
+  :where(.design-studio-linked-mark) {
+    display: block;
+    width: min(100%, 20rem);
+    height: auto;
+    border-radius: 1rem;
+  }
+
+  :where(.design-studio-linked-mark a:is(:hover, :focus-visible)) {
+    filter: drop-shadow(0 0 0.45rem #f4e8c9);
+    outline: 2px solid #f4e8c9;
+  }
+
+  :where(.design-studio-layout) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: clamp(1rem, 3vw, 2rem);
+    align-items: start;
+  }
+
+  :where(.design-studio-controls) {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  :where(.design-studio-controls label) {
+    display: grid;
+    gap: 0.35rem;
+    font-weight: 600;
+  }
+
+  :where(.design-studio-controls :is(input:not([type="color"]), select), .design-studio-values) {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.5rem;
+    font: inherit;
+  }
+
+  :where(.design-studio-controls input[type="color"]) {
+    width: 100%;
+    height: 3rem;
+  }
+
+  :where(.design-studio-preview) {
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    background: #d7d1c4;
+    border-radius: 0.75rem;
+  }
+
+  :where(.design-studio-card) {
+    box-sizing: border-box;
+    width: min(100%, 28rem);
+    margin: 0;
+    padding: 0.85rem;
+    background: #f4e8c9;
+    color: #203b36;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.6rem 2rem #203b3633;
+  }
+
+  :where(.design-studio-card img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+
+  :where([data-design-studio="cards"][data-crop="square"] .design-studio-card img) { aspect-ratio: 1; }
+  :where([data-design-studio="cards"][data-crop="landscape"] .design-studio-card img) { aspect-ratio: 3 / 2; }
+  :where([data-design-studio="cards"][data-frame="rule"] .design-studio-card) {
+    background: #fffefa;
+    border: 0.25rem double #977a54;
+  }
+  :where([data-design-studio="cards"][data-frame="dark"] .design-studio-card) {
+    background: #203b36;
+    color: #f4e8c9;
+  }
+
+  :where(.design-studio-card figcaption) {
+    padding-block-start: 0.65rem;
+    color: inherit;
+  }
+
+  :where(.design-studio-color-preview) {
+    --studio-field: #203b36;
+    --studio-paper: #f4e8c9;
+    --studio-ink: #203b36;
+    --studio-signal: #dba84f;
+    padding: clamp(1rem, 4vw, 2rem);
+    background: var(--studio-field);
+    border-radius: 0.75rem;
+  }
+
+  :where(.design-studio-color-paper) {
+    padding: clamp(1rem, 3vw, 2rem);
+    background: var(--studio-paper);
+    color: var(--studio-ink);
+    border-radius: 0.5rem;
+  }
+
+  :where(.design-studio-color-paper :is(h3, p)) { color: inherit; }
+
+  :where(.design-studio-signal) {
+    display: inline-block;
+    padding: 0.45rem 0.7rem;
+    background: var(--studio-signal);
+    color: var(--studio-field);
+    border-radius: 0.25rem;
+    font-weight: 700;
+  }
+
+  :where(.design-studio-preset) { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  :where(.design-studio-preset button) { min-height: 2.75rem; padding-inline: 0.75rem; }
+  :where(.design-studio-values) { margin-block-start: 0.35rem; }
+}
