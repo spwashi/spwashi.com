@@ -4,6 +4,11 @@
  * The gitignored agent cache is a shared local shortcut. The committed
  * public/data/site-search-index.json sourceStamp is what fails a clean
  * checkout. A matching stamp younger than one hour reuses that cache.
+ *
+ * Two readings of the same inputs: the working tree (check-site, the
+ * generators, the local cache) and the git index (the pre-commit check).
+ * Several sessions share this working tree, so a commit is checked against
+ * what it stages, never against pages another session has not committed.
  */
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -97,6 +102,90 @@ async function walkIndexHtml(directory: string, results: string[] = []): Promise
 export async function listManifestStampInputs(): Promise<string[]> {
   const routes = await walkIndexHtml(ROOT);
   return [...new Set([...routes, ...EXTRA_INPUTS])].sort();
+}
+
+/** Inputs as the git index holds them: tracked routes plus the extra inputs that are staged. */
+export function listStagedManifestStampInputs(indexPaths: readonly string[]): string[] {
+  const extras = new Set<string>(EXTRA_INPUTS);
+  return [...new Set(indexPaths.filter((relativePath) => {
+    if (extras.has(relativePath)) return true;
+    if (shouldIgnoreValidationPath(relativePath)) return false;
+    return relativePath === 'index.html' || relativePath.endsWith('/index.html');
+  }))].sort();
+}
+
+/** path → staged blob, read in one `git cat-file --batch` pass. */
+function readStagedBlobs(relativePaths: readonly string[]): Map<string, Buffer> {
+  const wanted = new Set(relativePaths);
+  const listing = spawnSync('git', ['ls-files', '-s', '-z'], { cwd: ROOT, encoding: 'buffer', maxBuffer: 64 * 1024 * 1024 });
+  if (listing.status !== 0) return new Map();
+  const shaByPath = new Map<string, string>();
+  for (const record of listing.stdout.toString('utf8').split('\0')) {
+    const tab = record.indexOf('\t');
+    if (tab < 0) continue;
+    const [, sha, stage] = record.slice(0, tab).split(' ');
+    const relativePath = record.slice(tab + 1);
+    if (stage === '0' && wanted.has(relativePath)) shaByPath.set(relativePath, sha);
+  }
+  const order = [...shaByPath.keys()];
+  const batch = spawnSync('git', ['cat-file', '--batch'], {
+    cwd: ROOT,
+    input: order.map((relativePath) => shaByPath.get(relativePath)).join('\n') + '\n',
+    maxBuffer: 256 * 1024 * 1024,
+  });
+  const blobs = new Map<string, Buffer>();
+  if (batch.status !== 0 || !batch.stdout) return blobs;
+  let cursor = 0;
+  for (const relativePath of order) {
+    const headerEnd = batch.stdout.indexOf(0x0a, cursor);
+    if (headerEnd < 0) break;
+    const size = Number(batch.stdout.subarray(cursor, headerEnd).toString('utf8').split(' ')[2]);
+    if (!Number.isFinite(size)) break;
+    blobs.set(relativePath, batch.stdout.subarray(headerEnd + 1, headerEnd + 1 + size));
+    cursor = headerEnd + 1 + size + 1;
+  }
+  return blobs;
+}
+
+function listIndexPaths(): string[] {
+  const result = spawnSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  if (result.status !== 0) return [];
+  return result.stdout.split('\0').filter(Boolean);
+}
+
+/** The stamp of the routes a commit would record, read from the git index. */
+export function computeStagedManifestSourceStamp(): string {
+  const inputs = listStagedManifestStampInputs(listIndexPaths());
+  const blobs = readStagedBlobs(inputs);
+  return stampFromEntries(inputs.filter((relativePath) => blobs.has(relativePath))
+    .map((relativePath) => ({ path: relativePath, content: blobs.get(relativePath) as Buffer })));
+}
+
+/**
+ * The pre-commit decision, pure. A commit passes when the search index it
+ * records was built from the routes it records, whether or not this commit is
+ * the one that stages the index: an index an earlier commit already made
+ * correct needs no restaging.
+ */
+export function evaluateStagedManifest({
+  touchesInputs,
+  touchesIndex,
+  stagedStamp,
+  indexStamp,
+}: {
+  touchesInputs: boolean;
+  touchesIndex: boolean;
+  stagedStamp: string;
+  indexStamp: string | null;
+}): { ok: boolean; reason: string } {
+  if (!touchesInputs && !touchesIndex) return { ok: true, reason: 'no manifest inputs staged' };
+  if (indexStamp && indexStamp === stagedStamp) {
+    return { ok: true, reason: 'the search index this commit records matches the routes it records' };
+  }
+  return {
+    ok: false,
+    reason: 'the search index this commit records was not built from the routes it records; run npm run manifest:staged, which builds from what is staged and leaves other sessions\' unstaged pages out',
+  };
 }
 
 async function readWorktree(relativePath: string): Promise<Buffer> {
@@ -197,34 +286,14 @@ function stagedNames(): string[] {
 
 export async function checkStagedManifestStamp(): Promise<{ ok: boolean; reason: string }> {
   const staged = new Set(stagedNames());
-  const inputs = await listManifestStampInputs();
+  const inputs = listStagedManifestStampInputs(listIndexPaths());
   const touchesInputs = inputs.some((relativePath) => staged.has(relativePath));
   const touchesIndex = staged.has(SEARCH_INDEX_RELATIVE);
-  if (!touchesInputs && !touchesIndex) {
-    return { ok: true, reason: 'no manifest inputs staged' };
-  }
-
-  const liveStamp = await computeManifestSourceStamp();
-  const worktreeStamp = await readCommittedSourceStamp();
-  if (worktreeStamp !== liveStamp) {
-    return {
-      ok: false,
-      reason: 'working tree search index stamp does not match the routes; run npm run manifest',
-    };
-  }
-  if (!touchesIndex) {
-    return { ok: false, reason: `stage ${SEARCH_INDEX_RELATIVE} with the route change` };
-  }
+  if (!touchesInputs && !touchesIndex) return evaluateStagedManifest({ touchesInputs, touchesIndex, stagedStamp: '', indexStamp: null });
 
   const stagedText = gitShow(`:${SEARCH_INDEX_RELATIVE}`);
   const stagedHead = stagedText ? stagedText.subarray(0, 512).toString('utf8') : '';
   const stagedMatch = stagedHead.match(/"sourceStamp":"([a-f0-9]{64})"/);
-  const stagedStamp = stagedMatch ? stagedMatch[1] : sourceStampFromIndexText(stagedText ? stagedText.toString('utf8') : '');
-  if (stagedStamp !== liveStamp) {
-    return {
-      ok: false,
-      reason: 'staged search index does not match the working tree; stage the regenerated index',
-    };
-  }
-  return { ok: true, reason: 'staged search index matches the routes' };
+  const indexStamp = stagedMatch ? stagedMatch[1] : sourceStampFromIndexText(stagedText ? stagedText.toString('utf8') : '');
+  return evaluateStagedManifest({ touchesInputs, touchesIndex, stagedStamp: computeStagedManifestSourceStamp(), indexStamp });
 }
