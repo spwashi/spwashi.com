@@ -1846,7 +1846,7 @@ async function main() {
     await writeFile(path.join(options.out, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
     await writeFile(
       path.join(options.out, 'attention-receipt.json'),
-      `${JSON.stringify(attentionReceipt({ errorArtifacts }), null, 2)}\n`,
+      `${JSON.stringify(attentionReceipt({ errorArtifacts, captures }), null, 2)}\n`,
     );
     await writeFile(path.join(options.out, 'index.json'), `${JSON.stringify(captureIndex, null, 2)}\n`);
     await writeFile(path.join(options.out, 'index.html'), galleryHtml(manifest));

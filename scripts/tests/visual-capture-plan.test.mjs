@@ -68,6 +68,9 @@ import {
   classifyCaptureFailure,
   attentionMissError,
   attentionReceipt,
+  measuredAttention,
+  nightlyClimateId,
+  NIGHTLY_CLIMATE_IDS,
   recaptureJobIds,
   buildCaptureIndex,
   capturePriorityScore,
@@ -692,6 +695,8 @@ test('still attention receipts fail when ink stays at rest while charge is live'
 
   const skip = assessStillAttention({ still: true }, { attention: { attentionOpacity: '0.86' } });
   assert.equal(skip.verdict, 'skip');
+  assert.equal(skip.opacity, 0.86);
+  assert.equal(skip.reason, 'no-attention-assert');
 
   const unmeasured = assessStillAttention({ assertAttention: 'spend' }, {});
   assert.equal(unmeasured.ok, false);
@@ -1037,6 +1042,7 @@ test('failure kinds distinguish miss from gone, and index names the recapture co
   assert.equal(receipt.failures[0].reason, 'ink-ignores-attention');
   assert.equal(receipt.failures[0].detail, 'opacity 0.42');
   assert.equal(receipt.failures[1].reason, 'cdp-timeout');
+  assert.deepEqual(receipt.passes, []);
   const index = buildCaptureIndex({
     captures: [{ id: 'home-opening', file: 'captures/pocket/01-home-opening.jpg', flow: 'page', still: true }],
     errorArtifacts: [
@@ -1055,6 +1061,93 @@ test('failure kinds distinguish miss from gone, and index names the recapture co
     ]),
     ['home-opening', 'math-opening', 'home-reasons'],
   );
+});
+
+test('attention receipts keep measured passes and rotate one climate still', () => {
+  assert.equal(measuredAttention({}), null);
+  assert.equal(measuredAttention({ attention: { attentionOpacity: '', attentionCharge: '', attentionResonance: '' } }), null);
+  const resonanceOnly = measuredAttention({ attention: { attentionResonance: '0.4' } });
+  assert.equal(resonanceOnly.opacity, null);
+  assert.equal(resonanceOnly.charge, null);
+  assert.equal(resonanceOnly.resonance, 0.4);
+
+  const bare = assessStillAttention({ still: true }, {});
+  assert.equal(bare.verdict, 'skip');
+  assert.equal('opacity' in bare, false);
+
+  const measuredSkip = assessStillAttention(
+    { still: true },
+    { attention: { attentionOpacity: '0.92', attentionCharge: '0.2' } },
+  );
+  assert.equal(measuredSkip.verdict, 'skip');
+  assert.equal(measuredSkip.opacity, 0.92);
+  assert.equal(measuredSkip.charge, 0.2);
+  assert.equal(measuredSkip.resonance, null);
+
+  const passes = [
+    { id: 'about-opening', fixtureId: 'about-hook', attention: { verdict: 'skip', opacity: 0.86, charge: null, resonance: null } },
+    { id: 'about-opening-dark', fixtureId: 'about-hook', attention: { verdict: 'pass', opacity: 0.91, charge: 0.1, resonance: 0 } },
+    { id: 'unmeasured', attention: { verdict: 'pass' } },
+    ...Array.from({ length: 8 }, (_, index) => ({
+      id: `extra-${index}`,
+      attention: { verdict: 'pass', opacity: 0.9 },
+    })),
+  ];
+  const kept = attentionReceipt({ errorArtifacts: [], captures: passes });
+  assert.equal(kept.ok, true);
+  assert.equal(kept.passes.length, 8);
+  assert.equal(kept.truncated, true);
+  assert.equal(kept.passes[0].where, 'about-opening');
+  assert.equal(kept.passes[0].reason, 'skip');
+  assert.equal(kept.passes[0].opacity, 0.86);
+  assert.equal(kept.passes[1].where, 'about-opening-dark');
+  assert.equal(kept.passes[1].charge, 0.1);
+  assert.equal(kept.passes.some((row) => row.where === 'unmeasured'), false);
+
+  assert.deepEqual([...NIGHTLY_CLIMATE_IDS], [
+    'about-opening-dark',
+    'curriculum-hero-focus',
+    'software-frame-probe',
+    'folio-fold-open-reduced',
+  ]);
+  assert.equal(nightlyClimateId(0), 'about-opening-dark');
+  assert.equal(nightlyClimateId(1), 'curriculum-hero-focus');
+  assert.equal(nightlyClimateId(2), 'software-frame-probe');
+  assert.equal(nightlyClimateId(3), 'folio-fold-open-reduced');
+  assert.equal(nightlyClimateId(4), 'about-opening-dark');
+  assert.equal(nightlyClimateId(-1), 'folio-fold-open-reduced');
+  assert.equal(nightlyClimateId(Number.NaN), 'about-opening-dark');
+  assert.equal(nightlyClimateId('nope'), 'about-opening-dark');
+
+  for (const id of NIGHTLY_CLIMATE_IDS) {
+    const { jobs } = buildCapturePlan({
+      componentFixtures: COMPONENT_FIXTURES,
+      includeStills: true,
+      includeChecks: true,
+      viewports: [VIEWPORTS.pocket],
+      ids: ['about-opening', id],
+    });
+    const ids = jobs.map((job) => job.id);
+    assert.deepEqual(
+      ids.filter((jobId) => jobId === 'about-opening' || (jobId.startsWith('about-opening-') && jobId !== id)).sort(),
+      ['about-opening', 'about-opening-hover', 'about-opening-keys', 'about-opening-press'],
+    );
+    assert.equal(jobs.filter((job) => job.id === id).length, 1);
+    assert.equal(jobs.length, 5);
+    assert.equal(jobs.some((job) => job.specimenRoute === '/' || String(job.id).startsWith('home')), false);
+  }
+
+  const byId = (id) => buildCapturePlan({
+    includeComponents: false,
+    includeStills: true,
+    includeChecks: true,
+    viewports: [VIEWPORTS.pocket],
+    ids: [id],
+  }).jobs.find((job) => job.id === id);
+  assert.equal(byId('about-opening-dark').conditions.colorMode, 'dark');
+  assert.equal(byId('curriculum-hero-focus').assertAttention, 'spend');
+  assert.equal(byId('software-frame-probe').attention.probe, 'frame');
+  assert.equal(byId('folio-fold-open-reduced').conditions.reducedMotion, 'reduce');
 });
 
 test('starved clips are misses, and recapture ids skip generic page blanks', () => {

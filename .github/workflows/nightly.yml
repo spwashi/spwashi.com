@@ -4,7 +4,10 @@ name: Drift notice
 # is the notice for everything that check does not cover and that should not
 # stop Pages. Each job writes a short receipt. The last job assembles
 # notice.json: smoke reasons, the plan index, citation verdicts, high
-# advisories, the day's subjects, and the pocket attention misses.
+# advisories, the day's subjects, and the pocket attention receipt.
+# The receipt is about-opening plus one climate still, rotating by UTC day:
+# dark, curriculum focus, the software frame probe, folio with motion reduced.
+# Passes keep opacity, charge, and resonance.
 # A light model reads that file. It follows the commit Deploy just judged,
 # and runs again each morning so a day with no push still gets a look.
 on:
@@ -69,8 +72,16 @@ jobs:
       - run: npm ci
       - name: Commit under test
         run: git rev-parse HEAD && git log -1 --oneline
-      - name: About opening, pocket, attention receipt
-        run: node scripts/component-snapshots.mjs --stills --checks --viewports pocket --ids about-opening --out drift-attention
+      - name: About opening plus one climate still
+        run: |
+          climate=$(node --input-type=module -e "
+            import { nightlyClimateId } from './scripts/lib/visual-capture-plan.mjs';
+            const start = Date.UTC(new Date().getUTCFullYear(), 0, 0);
+            const day = Math.floor((Date.now() - start) / 86400000);
+            process.stdout.write(nightlyClimateId(day));
+          ")
+          echo "climate=${climate}"
+          node scripts/component-snapshots.mjs --stills --checks --viewports pocket --ids "about-opening,${climate}" --out drift-attention
       - uses: actions/upload-artifact@v4
         if: always()
         with:

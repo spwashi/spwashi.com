@@ -240,8 +240,22 @@ export function attentionMissError(job, stillAttention) {
   return error;
 }
 
-/** Misses and timeouts only. A passing still stays in the pack, not here. */
-export function attentionReceipt({ errorArtifacts = [] } = {}) {
+function attentionPassRow(capture) {
+  const attention = capture?.attention;
+  if (!attention) return null;
+  const numbers = ['opacity', 'charge', 'resonance'].filter((key) => typeof attention[key] === 'number');
+  if (!numbers.length) return null;
+  return {
+    where: capture.id || capture.fixtureId,
+    reason: attention.verdict || 'pass',
+    opacity: typeof attention.opacity === 'number' ? attention.opacity : null,
+    charge: typeof attention.charge === 'number' ? attention.charge : null,
+    resonance: typeof attention.resonance === 'number' ? attention.resonance : null,
+  };
+}
+
+/** Failures first. Passes keep the measured ink so a later palette can be compared. */
+export function attentionReceipt({ errorArtifacts = [], captures = [] } = {}) {
   const failures = errorArtifacts.slice(0, 8).map((artifact) => {
     if (artifact.attention) {
       const opacity = artifact.attention.opacity;
@@ -257,11 +271,13 @@ export function attentionReceipt({ errorArtifacts = [] } = {}) {
       detail: String(artifact.message || '').replace(/\s+/g, ' ').trim().slice(0, 180),
     };
   });
+  const passRows = captures.map(attentionPassRow).filter(Boolean);
   return {
     schema: 'attention-receipt.v0',
     ok: errorArtifacts.length === 0,
     failures,
-    truncated: errorArtifacts.length > 8,
+    passes: passRows.slice(0, 8),
+    truncated: errorArtifacts.length > 8 || passRows.length > 8,
   };
 }
 
@@ -576,13 +592,51 @@ export function attentionAssertKind(job = {}) {
   return null;
 }
 
+/** Numbers a still actually measured. Absent fields stay absent, so a skip does not invent the rest floor. */
+export function measuredAttention(snapshot = {}) {
+  const attention = snapshot.attention;
+  if (!attention || typeof attention !== 'object') return null;
+  const opacityRaw = attention.attentionOpacity ?? attention.opacity;
+  const chargeRaw = attention.attentionCharge ?? attention.charge;
+  const resonanceRaw = attention.attentionResonance ?? attention.resonance;
+  if (opacityRaw == null || opacityRaw === '') {
+    if ((chargeRaw == null || chargeRaw === '') && (resonanceRaw == null || resonanceRaw === '')) return null;
+  }
+  return {
+    opacity: opacityRaw == null || opacityRaw === '' ? null : parseCssNumber(opacityRaw, STILL_REST_OPACITY),
+    charge: chargeRaw == null || chargeRaw === '' ? null : parseCssNumber(chargeRaw, 0),
+    resonance: resonanceRaw == null || resonanceRaw === '' ? null : parseCssNumber(resonanceRaw, 0),
+  };
+}
+
+export const NIGHTLY_CLIMATE_IDS = Object.freeze([
+  'about-opening-dark',
+  'curriculum-hero-focus',
+  'software-frame-probe',
+  'folio-fold-open-reduced',
+]);
+
+/** One climate still per UTC day. `dayOfYear` matches `date -u +%j` (1 on 1 January). */
+export function nightlyClimateId(dayOfYear) {
+  const day = Number(dayOfYear);
+  const index = Number.isFinite(day)
+    ? ((Math.trunc(day) % NIGHTLY_CLIMATE_IDS.length) + NIGHTLY_CLIMATE_IDS.length) % NIGHTLY_CLIMATE_IDS.length
+    : 0;
+  return NIGHTLY_CLIMATE_IDS[index];
+}
+
 /**
  * Judge a still's attention receipt. Pixel goldens stay out of git; this is
  * the test stills can fail. Skip when the job did not ask.
  */
 export function assessStillAttention(job = {}, snapshot = {}) {
   const expect = attentionAssertKind(job);
-  if (!expect) return { ok: true, verdict: 'skip', reason: 'no-attention-assert' };
+  if (!expect) {
+    const measured = measuredAttention(snapshot);
+    return measured
+      ? { ok: true, verdict: 'skip', reason: 'no-attention-assert', ...measured }
+      : { ok: true, verdict: 'skip', reason: 'no-attention-assert' };
+  }
 
   const attention = snapshot.attention;
   if (!attention || typeof attention !== 'object') {
