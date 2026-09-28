@@ -552,6 +552,8 @@ export async function main() {
         startGenerator('regenerating design catalog', 'scripts/generate-design-catalog.mjs', ['--out', path.join(options.outDir, 'design', 'catalog')]);
         // The committed atlas is the version history; the deployed one is always current.
         startGenerator('regenerating runtime atlas', 'scripts/generate-runtime-atlas.mjs', [`--out=${path.join(options.outDir, 'public', 'data', 'runtime-atlas.json')}`]);
+        // What another origin may mount with runtime/orchestration/host.js, and which stylesheets travel with it.
+        startGenerator('writing portable module manifest', 'scripts/portable-audit.mjs', [`--out=${path.join(options.outDir, 'public', 'data', 'portable-modules.json')}`]);
     }
     else {
         logger.info('[build] skipping design catalog generation');

@@ -79,6 +79,7 @@
     "atlas": "node scripts/generate-runtime-atlas.mjs",
     "atlas:check": "node scripts/generate-runtime-atlas.mjs --check",
     "audit:js-tree": "node scripts/js-tree-value.mjs",
+    "audit:portable": "node scripts/portable-audit.mjs",
     "audit:js-tree:json": "node scripts/js-tree-value.mjs --json",
     "audit:module-writers": "node --import ./scripts/lib/register-public-imports.mjs scripts/module-writer-audit.mjs",
     "audit:css-custom-properties": "node scripts/css-custom-property-audit.mjs",

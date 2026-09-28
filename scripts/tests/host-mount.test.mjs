@@ -44,3 +44,15 @@ test('a namespace without a mount fails loudly instead of appearing mounted', as
   await assert.rejects(() => mountPortableModule({ value: 1 }, null, { id: 'empty' }), /no resolvable mount export/);
   assert.match(SPW_HOST_CONTRACT.mount, /mountPortableModule/);
 });
+
+test('the host context disconnects observers and clears timers it was handed', async () => {
+  const ctx = createHostContext();
+  let disconnected = 0;
+  ctx.addObserver({ disconnect: () => { disconnected += 1; } });
+  ctx.addTimer(setTimeout(() => { throw new Error('timer outlived its host'); }, 50));
+  await ctx.cleanup();
+  await new Promise((resolve) => setTimeout(resolve, 80));
+  assert.equal(disconnected, 1);
+  assert.equal(ctx.observers.size, 0);
+  assert.equal(ctx.timers.size, 0);
+});

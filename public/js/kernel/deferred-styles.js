@@ -43,7 +43,10 @@ export function ensureDeferredStyles(id, href) {
   const link = document.createElement('link');
   link.id = id;
   link.rel = 'stylesheet';
-  link.href = href;
+  // Resolve against this module's own URL, not the page's: on this site the
+  // two agree, and on another origin that imports the runtime the sheet still
+  // comes from here instead of 404ing on the host.
+  link.href = new URL(href, import.meta.url).href;
   // These restyle opt-in surfaces; they must never hold up first paint.
   link.fetchPriority = 'low';
   // A deferred sheet lands after callers may already have resolved and cached
