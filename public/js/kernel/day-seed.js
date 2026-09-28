@@ -27,14 +27,23 @@ export function dayNumber(date = new Date()) {
   return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / DAY_MS);
 }
 
-/** FNV-1a over the key: small, deterministic, and well spread for list indexes. */
+/**
+ * FNV-1a over the key, then murmur3's finalizer. FNV alone leaves keys that
+ * differ only in their last digits close together, so neighbors in a list
+ * would clump in the rotation; the finalizer spreads every bit.
+ */
 function hash(text) {
   let value = 0x811c9dc5;
   for (let index = 0; index < text.length; index += 1) {
     value ^= text.charCodeAt(index);
     value = Math.imul(value, 0x01000193) >>> 0;
   }
-  return value;
+  value ^= value >>> 16;
+  value = Math.imul(value, 0x85ebca6b);
+  value ^= value >>> 13;
+  value = Math.imul(value, 0xc2b2ae35);
+  value ^= value >>> 16;
+  return value >>> 0;
 }
 
 /**
