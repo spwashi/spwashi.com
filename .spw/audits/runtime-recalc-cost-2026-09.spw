@@ -98,9 +98,36 @@ expression = recalc[cost]{selector.element.state}<phone>
   ][reg=set]
 }
 
+^"scroll_long_tasks_2026_09_28"{
+  ~#note: "/topics/software/ at phone (390×844, dsf 3, touch), built deploys served statically, 32s settle, three touch gestures (-2400, -2400, +1800); after side built from a clean worktree of 4577cbff plus the patch. Load average 5–26 during the session: counts and paired rows are the readings, ms are medians."
+  method = `timeline with stacks for forced passes; disabled-by-default-devtools.timeline.invalidationTracking, joining StyleInvalidator invalidationList ids to ScheduleStyleInvalidation invalidationSet for trigger and writer; an idle mode with no gestures; ablations as edited copies of the built bundles/core.css on a second port and ?spw-module-skip for modules. Trace stack line and column are 1-based.`
+  ~#measured(before, 4 runs): "46.0s to finish the gestures; long-task time 45.5s, 57 long tasks; style 26.2s, layout 18.0s, script ~1.2s"
+  landed = #[
+    `composition-box-model read, wrote, read the next: 44 forced style+layout passes (~7s) in one refresh as its VISIBLE gate opened mid-scroll, 19 more on an attention change; a refresh now snapshots every box, then writes (forced 7.4s → 1.1s)`,
+    `frame-metrics published spw:pretext-measurement and listened for it, so each pass scheduled the next, every frame, with unconditional text and attribute writes; its own publications no longer schedule a pass (forced 2.9s → 0.4s, childList 832 → 272)`
+  ][reg=set]
+  ~#measured(after, 6 runs): "35.5s to finish; long-task time 34.8s, 63 long tasks; style 23.6s, layout 9.3s"
+  ~#reading: "tasks got shorter, not fewer: a full pass still costs ~300ms, so any task that holds one is long"
+  falsified = #[
+    `root-anchored :has(): 92 selectors on html/body/:root/main mark those as :has anchors, and the trace shows :has schedules on html before 24 of 40 full passes; removing all 92 from the bundle gave 53 and 48 full passes against 51 and 48`,
+    `the hero-split :not(:has(> figure)) rules in systems/region-seats.css: the join names them on html/body/main, removing them moved frame style ~12.3s → ~10.2s in two runs, inside noise`,
+    `skipping pulse-beat-tuner, palette-treat-discovery, interaction-progression: 49 and 35 full passes against 51 and 48; a share, not the lever, during scroll`
+  ][reg=set]
+  idle = `20s at rest: 12–15 long tasks, each a bare style pass over the whole document (~1,189 elements, 330–650ms) with no script. pulse-beat-tuner sets data-spw-freshness-pulse on prime beats (--spw-beat-interval-ms, default 1300) and clears it; palette-treat-discovery answers with four root registers; five of the seven root pulse attributes switch on custom-property declarations on html. Two full passes per prime beat, reader or not. A sensation call: scope, cadence, or declarations.`
+  per_element = .{
+    html_custom = 1635
+    p_custom = 1748
+    html_inline_custom = 220
+    html_data_attributes = 258
+    elements = 2137
+    ~#reading: "every element carries ~1,700 inherited custom properties; a root register or inline token that moves one re-resolves that map everywhere, which is why a pass costs the same whoever triggers it and why removing any one writer shaves only its slice"
+  }[reg=facet]
+}
+
 ^"next"{
   ~#note: "In the order the evidence supports."
-  per_element = `measure the custom-property hypothesis: count declaring elements per route and time a pass with component-local tokens registered inherits:false on a bench page before touching any sheet`
+  per_element = `measure the custom-property hypothesis: count declaring elements per route and time a pass with component-local tokens registered inherits:false on a bench page before touching any sheet (2026-09-28: ~1,700 inherited per element on /topics/software/, 220 of them inline on html)`
+  root_pulses = `a proposal and a browser demo for the idle pulse: the same beat felt with its register on a smaller host, or with declarations that do not redefine inherited tokens; ends at the human's eye`
   root_registers = `census which html[data-spw-*] registers switch on the most declarations per element (SelectorStats matches × declarations); a register that costs every element on every pass should earn it`
   wave_count = `count root writes per boot wave; fewer waves is fewer passes, and that is pacing, so it ends at a browser demo`
   mount_reads = `the six single-read mount sites above are lane candidates one at a time, each measured by its own row in the forced-pass table`
