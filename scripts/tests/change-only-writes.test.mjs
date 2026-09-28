@@ -94,3 +94,37 @@ test('crossref focus writes its difference, and a repeated pointerover writes no
     cleanup?.();
   }
 });
+
+test('touch lights kin only through an open note, which holds them until it closes', async () => {
+  const a = new WriteCountingElement({ spwVocab: 'river' });
+  const b = new WriteCountingElement({ spwVocab: 'river' });
+  const c = new WriteCountingElement({ spwVocab: 'stone' });
+  const cleanup = initSpwSemanticCrossrefs({ root: { querySelectorAll: () => [a, b, c] } });
+  const html = document.documentElement.dataset;
+  const touch = (type, target) => document.dispatchEvent({ type, target, pointerType: 'touch' });
+  const mouse = (type, target) => document.dispatchEvent({ type, target, pointerType: 'mouse' });
+  const note = (type, target) => document.dispatchEvent({ type: `spw:concept:${type}`, target });
+  try {
+    touch('pointerover', a);
+    touch('pointerout', a);
+    touch('pointerup', a);
+    assert.equal(a.writes + b.writes, 0, 'a touch alone, a scroll or a tap, writes nothing');
+
+    note('inspected', a);
+    assert.equal(html.spwSemanticCrossref, 'river');
+    assert.equal(b.dataset.spwCrossref, 'peer');
+    mouse('pointerover', c);
+    mouse('pointerout', a);
+    document.dispatchEvent({ type: 'focusout', target: a });
+    await new Promise((resolve) => setTimeout(resolve, 120));
+    assert.equal(html.spwSemanticCrossref, 'river', 'while the note is open, hover and focus leave its kin lit');
+    assert.equal(c.dataset.spwCrossref, undefined);
+
+    note('released', a);
+    assert.equal(html.spwSemanticCrossref, undefined, 'closing the note lets go');
+    mouse('pointerover', c);
+    assert.equal(html.spwSemanticCrossref, 'stone', 'hover previews again once the note is closed');
+  } finally {
+    cleanup?.();
+  }
+});

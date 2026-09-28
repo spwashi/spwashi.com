@@ -949,6 +949,7 @@ export function closeConceptInspect({ restoreFocus = false } = {}) {
     term.setAttribute('aria-expanded', 'false');
     term.removeAttribute('aria-describedby');
     if (restoreFocus) term.focus();
+    bus.emit('concept:released', { concept: term.dataset.spwConcept || '' }, { target: term });
   }
 
   if (!current) return;
