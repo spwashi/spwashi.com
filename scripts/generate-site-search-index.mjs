@@ -474,8 +474,9 @@ export async function generateSiteSearchIndex() {
   }
 
   const sourceStamp = await computeManifestSourceStamp();
+  // No clock in the committed file: the same routes give the same bytes, so
+  // sessions that regenerate from the same pages cannot disagree about it.
   const payload = {
-    generatedAt: new Date().toISOString(),
     sourceStamp,
     version: 2,
     routeCount: routes.length,
@@ -495,7 +496,7 @@ export async function generateSiteSearchIndex() {
 
   await fs.mkdir(path.dirname(OUTPUT), { recursive: true });
   await fs.writeFile(OUTPUT, `${JSON.stringify(payload)}\n`, 'utf8');
-  await writeManifestCacheStamp(sourceStamp, payload.generatedAt);
+  await writeManifestCacheStamp(sourceStamp);
   return payload;
 }
 

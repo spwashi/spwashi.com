@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { evaluateManifestFreshness, stampFromEntries } from '../lib/manifest-stamp.mjs';
+import {
+  evaluateManifestFreshness,
+  evaluateStagedManifest,
+  listStagedManifestStampInputs,
+  stampFromEntries,
+} from '../lib/manifest-stamp.mjs';
 
 const HOUR = 60 * 60 * 1000;
 
@@ -58,4 +63,36 @@ test('a matching stamp older than the hour rebuilds and a drifted index fails', 
 
   const unstamped = evaluateManifestFreshness({ liveStamp: 'live', now, windowMs: HOUR });
   assert.equal(unstamped.indexStatus, 'unstamped');
+});
+
+test('a commit is checked against the routes it stages, not the pages on disk', () => {
+  assert.equal(evaluateStagedManifest({ touchesInputs: false, touchesIndex: false, stagedStamp: '', indexStamp: null }).ok, true);
+  // Another session's unstaged page changes nothing here: only staged content enters the stamp.
+  assert.equal(evaluateStagedManifest({ touchesInputs: true, touchesIndex: true, stagedStamp: 'abc', indexStamp: 'abc' }).ok, true);
+  // An index an earlier commit already made correct needs no restaging.
+  assert.equal(evaluateStagedManifest({ touchesInputs: true, touchesIndex: false, stagedStamp: 'abc', indexStamp: 'abc' }).ok, true);
+  const stale = evaluateStagedManifest({ touchesInputs: true, touchesIndex: false, stagedStamp: 'new', indexStamp: 'old' });
+  assert.equal(stale.ok, false);
+  assert.match(stale.reason, /manifest:staged/);
+  assert.equal(evaluateStagedManifest({ touchesInputs: false, touchesIndex: true, stagedStamp: 'new', indexStamp: null }).ok, false);
+});
+
+test('staged inputs are tracked routes plus the named scripts, never ignored trees', () => {
+  const inputs = listStagedManifestStampInputs([
+    'index.html',
+    'about/index.html',
+    'about/notes.html',
+    'dist/index.html',
+    '.agents/plans/x/index.html',
+    'design/catalog/index.html',
+    'scripts/generate-site-search-index.mjs',
+    'public/js/runtime/catalog/feature.js',
+    'public/js/site.js',
+  ]);
+  assert.deepEqual(inputs, [
+    'about/index.html',
+    'index.html',
+    'public/js/runtime/catalog/feature.js',
+    'scripts/generate-site-search-index.mjs',
+  ]);
 });

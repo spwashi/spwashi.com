@@ -161,6 +161,7 @@
     "typecheck:root": "node node_modules/typescript/bin/tsc --noEmit",
     "audit": "npm audit --audit-level=moderate",
     "manifest:expressions": "node --import ./.spw/_workbench/node_modules/tsx/dist/loader.mjs scripts/build-expression-manifest.mjs",
+    "manifest:staged": "node scripts/manifest-staged.mjs",
     "spw:dimensions": "node scripts/spw-dimensional-index.mjs",
     "spw:precipitate": "node scripts/spw-precipitate.mjs",
     "spw:snippets": "node scripts/spw-snippets.mjs",
