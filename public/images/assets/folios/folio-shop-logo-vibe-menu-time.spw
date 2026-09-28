@@ -1,0 +1,59 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-shop-logo-vibe-menu-time"
+  title: "Shop, logo, vibe, menu, time"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-26"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_39.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-26-scan.png"
+  master_tracked: false
+  scan: { width: 3436, height: 2688, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.0 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  highres: "folio-shop-logo-vibe-menu-time-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
+  alt_text: "Ink on white: shop, logo, vibe, menu, time, with notes reading direct value communication, broadcast identity communication, and consensual engagement into wonder"
+  tiers: {
+    thumb: { width: 256, height: 200, avif_kib: 7, webp_kib: 10 }
+    display: { width: 512, height: 401, avif_kib: 40, webp_kib: 39 }
+    hero: { width: 1024, height: 801, avif_kib: 111, webp_kib: 112 }
+    full: { width: 2400, height: 1878, webp_kib: 625, opened: "2026-W40" }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero stepped to quality 55 to sit under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "shop", "logo", "vibe", "menu", "time", "consensual-engagement-into-wonder"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `site[shop|logo|vibe|menu|time]{value.identity.engagement}<wonder>`
+  b: `*folio-shop-logo-vibe-menu-time &shop &logo &vibe &menu @time ?consensual_engagement_into_wonder`
+  handles: ["&shop", "&logo", "&vibe", "&menu", "@time", "?consensual_engagement_into_wonder"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what does consensual engagement into wonder look like here?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "worktable-grocery-squash-crown"
+  title: "Grocery, squash crown"
+  description: "Part of Thanks for groceries, September 27, 2026: the groceries themselves, scanned flat."
+  series: "thanks-for-groceries"
+}
+
+^"source"{
+  id: "grocery-2026-09-27-01"
+  station_file: "scans-2026_09_27-B/SimpleScanStation20260927185745_1.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/grocery-2026-09-27-01-scan.png"
+  master_tracked: false
+  scan: { width: 1359, height: 1307, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 4.5 x 4.4 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "worktable"
+  role: "grocery-thanks"
+  formats_available: ["avif", "webp"]
+  alt_text: "A striped squash seen from its stem end"
+  tiers: {
+    thumb: { width: 256, height: 246, avif_kib: 4, webp_kib: 4 }
+    display: { width: 512, height: 492, avif_kib: 20, webp_kib: 15 }
+    hero: { width: 1024, height: 985, avif_kib: 76, webp_kib: 52 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["grocery", "release-2026-09-27", "thanks-for-groceries", "squash"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `grocery[squash]{crown}`
+  b: `*worktable-grocery-squash-crown *thanks_for_groceries &squash`
+  handles: ["*thanks_for_groceries", "&squash"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what will the squash become?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

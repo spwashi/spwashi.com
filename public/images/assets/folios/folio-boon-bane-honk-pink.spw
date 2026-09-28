@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-boon-bane-honk-pink"
+  title: "Boon, bane, honk, pink"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-13"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_26.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-13-scan.png"
+  master_tracked: false
+  scan: { width: 2690, height: 3458, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.5 in at 300 dpi; the laminate edge, not a measured size"
+  orientation_note: "lettering reads upside down; kept as scanned"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pink paint over white, with a list from A to E beginning boon and bane and ending honk, lettered upside down"
+  tiers: {
+    thumb: { width: 199, height: 256, avif_kib: 5, webp_kib: 6 }
+    display: { width: 398, height: 512, avif_kib: 29, webp_kib: 26 }
+    hero: { width: 797, height: 1024, avif_kib: 110, webp_kib: 95 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero stepped to quality 65 to sit under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "boon", "bane", "honk"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `mnemonic[boon|bane|bonk|honk]<pink>`
+  b: `*folio-boon-bane-honk-pink &boon &bane &honk`
+  handles: ["&boon", "&bane", "&honk"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which letter of the mnemonic do you need today?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

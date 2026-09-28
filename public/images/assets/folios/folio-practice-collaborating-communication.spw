@@ -1,0 +1,59 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-practice-collaborating-communication"
+  title: "Practice, collaborating, communication"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-17"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_30.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-17-scan.png"
+  master_tracked: false
+  scan: { width: 2679, height: 3456, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.9 x 11.5 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  highres: "folio-practice-collaborating-communication-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
+  alt_text: "Pencil on white: January 2024 to April 2024, figures under clouds, and banners reading practice, collaborating, communication, consistent, with teal, stripes, vibes in a key"
+  tiers: {
+    thumb: { width: 199, height: 256, avif_kib: 3, webp_kib: 3 }
+    display: { width: 397, height: 512, avif_kib: 16, webp_kib: 14 }
+    hero: { width: 794, height: 1024, avif_kib: 70, webp_kib: 49 }
+    full: { width: 1860, height: 2400, webp_kib: 271, opened: "2026-W40" }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "2024-01", "2024-04", "practice", "communication", "teal-stripes-vibes"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `practice[collaborating|communication|consistent]{2024.january.april}<teal.stripes.vibes>`
+  b: `*folio-practice-collaborating-communication @2024-01 @2024-04 !practice &communication <teal_stripes_vibes`
+  handles: ["@2024-01", "@2024-04", "!practice", "&communication", "<teal_stripes_vibes"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what happened between January and April 2024?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

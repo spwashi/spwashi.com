@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-book-i-hold-you-location-inn"
+  title: "Book, I hold you"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-02"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_15.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-02-scan.png"
+  master_tracked: false
+  scan: { width: 2704, height: 3442, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.5 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Torn pink strips on teal read: book, I hold you, you come with me, location, the location inn, our relationship is shared with a postcard I use, book"
+  tiers: {
+    thumb: { width: 201, height: 256, avif_kib: 3, webp_kib: 4 }
+    display: { width: 402, height: 512, avif_kib: 22, webp_kib: 20 }
+    hero: { width: 805, height: 1024, avif_kib: 107, webp_kib: 82 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "book", "location-inn", "postcard"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `book[hold|come]{location.inn}<relationship.shared>`
+  b: `*folio-book-i-hold-you-location-inn &book <location_inn ~postcard`
+  handles: ["&book", "<location_inn", "~postcard"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?who is the book holding, and where is the location inn?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

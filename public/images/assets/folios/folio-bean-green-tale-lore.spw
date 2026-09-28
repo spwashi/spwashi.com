@@ -1,0 +1,59 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-bean-green-tale-lore"
+  title: "Bean, green tale, lore"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-07"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_20.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-07-scan.png"
+  master_tracked: false
+  scan: { width: 2692, height: 3448, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.5 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  highres: "folio-bean-green-tale-lore-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
+  alt_text: "Yellow cards on violet hold a poem: I was a bean, boonhonk at the seams, seems it was just yesterday I was tucked in the earth's embrace; from sprout to stalk I rose, each day a new chapter in my green tale. Below, lore moves from oration to print to film"
+  tiers: {
+    thumb: { width: 200, height: 256, avif_kib: 5, webp_kib: 6 }
+    display: { width: 400, height: 512, avif_kib: 28, webp_kib: 26 }
+    hero: { width: 800, height: 1024, avif_kib: 116, webp_kib: 98 }
+    full: { width: 1874, height: 2400, webp_kib: 553, opened: "2026-W40" }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero stepped to quality 70 to sit under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "bean", "boonhonk", "to-boon-land", "lore"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `poem[bean|sprout|stalk]{green.tale} lore[oration|print|film]`
+  b: `*folio-bean-green-tale-lore &bean &boonhonk <to.boon.land <lore`
+  handles: ["&bean", "&boonhonk", "<to.boon.land", "<lore"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what chapter of the green tale is today?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,63 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "panel-ochre-map-gold-hashes"
+  title: "Ochre map, gold hashes"
+  description: "Laminated panel canvas, back face, scanned September 27, 2026."
+}
+
+^"source"{
+  id: "panel-2026-09-27-back-02"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_42.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/panel-2026-09-27-back-02-scan.png"
+  master_tracked: false
+  scan: { width: 2372, height: 2993, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 7.9 x 10.0 in at 300 dpi; the laminate edge, not a measured size"
+  orientation_note: "scanned upright; the other faces run landscape; kept as scanned"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"face"{
+  side: "back"
+  panel: "unresolved — fronts and backs were scanned in separate passes, not in pairing order; any front/back combination shown is a demo"
+}
+
+^"usage"{
+  surface: "panels"
+  role: "panel-face"
+  formats_available: ["avif", "webp"]
+  alt_text: "An ochre map shape drawn over in gold hashes beside a grey figure with a pink head, on violet"
+  tiers: {
+    thumb: { width: 203, height: 256, avif_kib: 2, webp_kib: 3 }
+    display: { width: 406, height: 512, avif_kib: 13, webp_kib: 11 }
+    hero: { width: 812, height: 1024, avif_kib: 69, webp_kib: 47 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["panel", "release-2026-09-27", "map", "hash"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `map[ochre]{hashes.figure}<violet>`
+  b: `*panel-ochre-map-gold-hashes ~map ~hash`
+  handles: ["~map", "~hash"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what place is the ochre map of?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-movies-are-emotions-art-carries-healing"
+  title: "Movies are emotions, art carries healing"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-12"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_25.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-12-scan.png"
+  master_tracked: false
+  scan: { width: 3456, height: 2698, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.0 in at 300 dpi; the laminate edge, not a measured size"
+  orientation_note: "some labels read upside down; kept as scanned"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pencil under teal: movies are emotions, art carries healing, honk, development, developer, and a portrait with swirling hair"
+  tiers: {
+    thumb: { width: 256, height: 200, avif_kib: 3, webp_kib: 3 }
+    display: { width: 512, height: 400, avif_kib: 19, webp_kib: 16 }
+    hero: { width: 1024, height: 800, avif_kib: 97, webp_kib: 69 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "honk", "developer", "art-carries-healing", "movies"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `claim[movies.emotions|art.healing]{developer}<honk>`
+  b: `*folio-movies-are-emotions-art-carries-healing &honk &developer !art_carries_healing <movies`
+  handles: ["&honk", "&developer", "!art_carries_healing", "<movies"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what does art carry for you?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

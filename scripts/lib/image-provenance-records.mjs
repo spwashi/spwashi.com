@@ -19,7 +19,13 @@ import path from 'node:path';
 export const PROVENANCE_MODULE = 'public/js/generated/image-provenance.js';
 
 const IMAGE_ROOT = 'public/images';
-const PATH_RULED = Object.freeze(['public/images/renders', 'public/images/assets/folios']);
+// Kept in step with the path rules in public/js/runtime/expression/image-provenance.js.
+const PATH_RULED = Object.freeze([
+  'public/images/renders',
+  'public/images/assets/folios',
+  'public/images/assets/panels',
+  'public/images/assets/worktable',
+]);
 const UUID_RE = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
 const TOOL_RE = /\b(?:generator|model)\s*[:=]\s*"([^"]+)"/;
 const SOURCE_RE = /\bsource(?:_masters?|_render|_file)?\s*[:=]\s*(?:~?"([^"]+)"|#\[([\s\S]*?)\])/g;

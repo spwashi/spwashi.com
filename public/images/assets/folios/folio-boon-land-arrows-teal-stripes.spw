@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-boon-land-arrows-teal-stripes"
+  title: "Boon.land arrows, teal stripes"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-03"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_16.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-03-scan.png"
+  master_tracked: false
+  scan: { width: 3436, height: 2686, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.0 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Ink on violet: tags reading in boon.land, to boon.land, and from bane.land above an arrow through coiled rings, with Teal Stripes Vibes lettered on a torn corner"
+  tiers: {
+    thumb: { width: 256, height: 200, avif_kib: 7, webp_kib: 8 }
+    display: { width: 512, height: 400, avif_kib: 36, webp_kib: 36 }
+    hero: { width: 1024, height: 801, avif_kib: 109, webp_kib: 109 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero stepped to quality 55 to sit under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "boon-land", "bane-land", "teal-stripes-vibes"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `land[in|to|from]{boon.bane}<teal.stripes.vibes>`
+  b: `*folio-boon-land-arrows-teal-stripes <boon.land <bane.land <teal_stripes_vibes`
+  handles: ["<boon.land", "<bane.land", "<teal_stripes_vibes"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?is the arrow leaving boon.land or arriving?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
