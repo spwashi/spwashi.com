@@ -24,6 +24,8 @@ The site should expose more of its live state through its own notation instead o
 [MOD] topics/software/pretext/index.html — mark the hero lens as inspectable and swappable  
 [MOD] settings/index.html — mark runtime preferences (and possibly curriculum control) as inspectable state surfaces
 
+Current owners (2026-09-27): `public/js/interface/state-inspector.js` (was `spw-state-inspector.js`), `public/js/media/image-metaphysics.js`, `public/css/components/*.css`; the lens bench below is the live slice.
+
 Craft guard:
 - `public/js/spw-state-inspector.js` should stay single-purpose: derive, render, and mutate state-blocks only.
 - `public/css/spw-components.css` is already large; keep the additions grouped and avoid bleeding inspector concerns into unrelated component rules.

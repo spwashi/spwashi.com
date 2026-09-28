@@ -69,6 +69,7 @@ fixity = "tending"
   astra_rule = `Astra planning/creativity/implementation follows the same XOR. Local mutation of a site v04 pillar (lsp-editor-lenses) is the web-experiment path. Consuming workbench LSP docs is the other path. Not both in one patch.`
   copy_verification = `Copy-unit-as-place is the web-experiment path. Do not bump the workbench pin for it. See ../caches/copy-hypermedia-key-2026-09.spw#hk-007.`
   see = ~"../caches/creative-capacity-2026-09.spw#cc-002_linguistic_dual_path"
+  landed_2026_09_27 = `Workbench-consumer path realized under v0.3.0: generated spw-workbench-parser.js, on-demand spw-runtime-parser.js, build-time expression manifest (912 parses), expression-query.js for search and cauldron. Owner: .agents/plans/spw-language-v04/PLAN.md Phase 4. Not on the critical path; the page is complete without it.`
   probe_ref = `npm run ecology:language && npm run spw:doctor`
 }[reg=facet]
 

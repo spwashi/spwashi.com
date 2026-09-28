@@ -162,7 +162,7 @@ The best outcome is not more logging. The best outcome is a clearer answer to:
 ## Related Tracks
 
 - `runtime-module-fluency/PLAN.md`
-- `runtime-load-instrumentation/PLAN.md`
+- `archive/runtime-load-instrumentation/PLAN.md` (archived 2026-09-17)
 - `typescript-integration/PLAN.md`
 - `agent-optimization/PLAN.md`
 
@@ -172,3 +172,6 @@ The best outcome is not more logging. The best outcome is a clearer answer to:
 - Which module cascade is the first exemplar: page boot, settings, composition, or another route family?
 - Which TypeScript boundary is the first useful one for the ladder: settings state, runtime manifest, or module registry shape?
 
+## Reading — 2026-09-27
+
+The instrumentation half landed under other names: `public/js/runtime/arrival/load-trace.js` records the cascade, `public/ts/module-timing-contract.ts` types the `timingArc` every catalog entry now carries (`&[contract]` 41f3311e closed the last open effect field), and `?spw-module-audit=1` prints the mount lines. The curriculum half, a teachable JS-to-TS ladder for a developer, has no other owner and stays here. The 2026-07-12 review asked for the split; this note is the split. Do not grow the instrumentation contract in this file again.

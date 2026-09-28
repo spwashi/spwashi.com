@@ -190,6 +190,22 @@ audit_run: .{
   never = `move folders without a citation-safe pass; author eleven index.spw in batch; rewrite the legend's split citations`
 }[reg=facet]
 
+^"deeper_pass_2026_09_27"{
+  operation = "align"
+  fixity = "tending"
+  clusters = `CSS architecture and the tokens the JS runtime writes; Spw interpreter integration and progressive enhancement`
+  archived = `seven folders (see archive_sweep_2026_09_27 in the root index); live PLAN.md 163 -> 156`
+  ownership_closed = #[
+    `JS custom-property writes: css-sensitive-attribute-writes names style-property-contract.mts (allowance families, dynamic-write files) and the measurement (40 files, 115 properties); data-attribute-css-token-refinement points at it`,
+    `interpreter in the site: spw-language-v04 Phase 4 owns the generated v0.3.0 parser, the on-demand runtime parser, the build-time expression manifest, and expression-query; feature-utilization#dual_path records the path as realized`,
+    `JS-off parity: semantic-html-normalization owns the HTML side of progressive enhancement and names the missing probe`
+  ][reg=set]
+  accuracy = `stale paths and stale scope fixed in operator-semantics-refinement, spw-operator-pages, mobile-runtime-foundation (parser no longer out of scope), language-ladder (instrumentation half landed elsewhere), state-block-projections, css-state-legibility (landed; archive after cascade Phase 1), css-architecture-readability tracking query (chapter globs), spw-language-v04 (Phase 2 never opened upstream; worktree gone)`
+  priority_css = `css-cascade-stratification Phase 1 browser decision on layer order; then core-css-spend-cut delivery; then data-attribute bedrock. Sensors: check:css, audit:css-custom-properties, check:runtime for property writes.`
+  priority_spw = `spw-as-handle cache as v04 Phase 4's next slice (search, cauldron, satchel one grammar); JS-off parity probe as semantic-html-normalization's next slice; operator plans cool, not grow.`
+  not_done = `build-expression-manifest.mjs header still says 441 expressions (912 today): code comment, next code touch. Phase 2 upstream v04 spec is human-gated.`
+}[reg=facet]
+
 ^"next_slices"{
   done_here = `audit + root-index bucket truth; 2026-09-07 archive of seven citation-safe folders`
   landed_2026_09_08 = `owner-registry wave B; ecology hubs; July caches cold`

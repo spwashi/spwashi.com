@@ -96,3 +96,11 @@ Validation additions:
 - `rg -n "href=\"#main-content\"|id=\"main-content\"|aria-controls|data-set-mode" **/index.html`
 - Targeted duplicate-id checks on edited routes.
 - Spot-check that normalized HTML still renders without JavaScript before relying on runtime inference.
+
+## JS-off parity — 2026-09-27
+
+Progressive enhancement is doctrine in five places and owned by none: `AGENTS.md` (JS only when HTML and CSS cannot carry the behavior), `.spw/conventions/stylesheet-ecology.spw#progressive_enhancement` (the CSS delivery side), `.spw/caches/living-terms-2026-09.spw` with `npm run audit:living-terms` (a highlighted word must keep its promise with scripts off), `dimensional-expression-navigation` (the dimensional path is ordinary links), and `spw-operator-pages` craft guard 3. This plan owns the HTML side of that rule from today, because the static skeleton is what remains when scripts are off.
+
+Facts: three routes carry a `<noscript>` block, one on home. The module catalog mounts 136 ids, eight immediate. The runtime writes 115 custom properties and many `data-spw-*` states, and no sensor compares a JS-off render against a JS-on one. `audit:living-terms` is the only parity probe, and it covers one mechanic.
+
+Next slice, when named: a headless probe that loads a route with JavaScript disabled and again enabled, then compares landmarks, headings, link and form counts, and, for every control the markup advertises (`data-set-mode`, `aria-controls`, `data-site-setting-set`, living terms), whether a native fallback exists. Report per route; do not gate `check:local` on it until the counts are read once in a browser. Sense first: the probe is a plan item here, not a patch.

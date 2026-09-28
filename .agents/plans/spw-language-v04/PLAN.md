@@ -64,7 +64,19 @@ All pillars live under `.spw/language/v04/pillars/` and dispatch from `.spw/lang
 - Manual read: `.spw/language/v04/index.spw` dispatch resolves all pillar paths
 - Future: `node .spw/_workbench/.../validate-spw` on pillar files after submodule pin
 
-## Worktree
+## Status — 2026-09-27
 
-- Branch: `feature/spw-language-v04`
-- Worktree: `../wt-spw-language-v04`
+- Phase 1 landed: the twelve pillars exist under `.spw/language/v04/pillars/`, the atlas carries `#language-evolution-v04`, and `npm run ecology:language` reports the claim and probe counts.
+- Phase 2 has not started upstream. The pinned workbench (`3eaab6377672`, 2026-09-22) has no `docs/specs/spw/v04/` and no `feature/spw-language-v04` branch in the checkout; `submodule-bridge.spw` still describes the target layout. The worktree this plan named (`../wt-spw-language-v04`) is gone; work lands on `main`.
+- Phase 3 is partly realized by other means: `npm run spw:integrity` parses every authored expression (912 today), the expression manifest below precipitates the parse into the runtime, and `ecology:language` is the probe. Claim probes are not yet in `npm run check`.
+
+## Phase 4 — Interpreter in the site (landed under v0.3.0)
+
+No plan owned the parser's arrival in the site, so this plan does, as the workbench-consumer path of `.spw/language/feature-utilization.spw#dual_path`. What exists:
+
+- `public/js/semantic/spw-workbench-parser.js`: generated from spw-workbench v0.3.0 at `f2e5b61b9e3d` by `npm run build:spw-parser`; never hand-edited.
+- `public/js/semantic/spw-runtime-parser.js`: the on-demand entry (`parse()`, not `parseExpression()`). Boot never imports it; console, the literal-parser tool at `/tools/spw-parser/`, and join specimens load it.
+- `scripts/build-expression-manifest.mjs` to `public/js/generated/spw-expressions.js`: the kinship parse of every `data-spw-semantic-expression` happens at build time (subject, mode, parts, projection, scope, charge) so the page works with no parser loaded. The `rank` dimension was measured and dropped; the script's header still says 441 expressions where the tree now has 912.
+- `public/js/semantic/expression-query.js` reads brace slots for search and the cauldron; `.spw/caches/spw-as-handle-2026-09.spw` (2026-09-27) is the prime for one grammar across search, cauldron, satchel, and texture.website, with a typed example. That cache is this phase's next slice; it lands as web-experiment patches, never bundled with a pillar change.
+
+Invariants: build-time parse first, runtime parse on demand, the page complete without either; the site consumes the pinned grammar and forks nothing. A grammar bump is a workbench pin plus `build:spw-parser` plus `manifest:expressions` in one commit, verified by `spw:integrity`, `ecology:language`, and `check:local`.

@@ -11,7 +11,7 @@ A stylesheet shared with other hosts still owes coarse-pointer targets and safe-
 ## Scope
 
 - **In scope**: define a page-region model, portable interaction semantics, complete operator interaction semantics, shared register/runtime boundaries, inspectability rules, UX constraints for an effective cognitive machine, prefix/postfix and reflection symmetry rules, HTML accessibility structures as semantic mirrors, recursive/fractal surface geometry as a structural model, brace-physics, charge/bias projection semantics, pivot semantics, no-dead-end exploration rules, and future-facing block/script host contracts; predict the runtime files and markup surfaces likely to change when implementation begins.
-- **Out of scope**: shipping the full spell system now, running the Spw parser in the browser, redesigning page aesthetics, or implementing block/script execution in this pass.
+- **Out of scope**: shipping the full spell system now, redesigning page aesthetics, or implementing block/script execution in this pass. (2026-09-27: "running the Spw parser in the browser" left this list by fact; it runs on demand and never at boot. See `spw-language-v04` Phase 4. The rule here becomes: never on the critical path.)
 
 ## Files
 

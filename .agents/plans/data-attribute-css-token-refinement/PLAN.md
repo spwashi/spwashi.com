@@ -25,6 +25,7 @@ Tokens that travel to other hosts are specified in `.spw/caches/portable-css-202
 - **The attribute is the number.** Thermodynamics project with typed `attr()`, not a catalog of float selectors.
 - **Aliases do not invent bounce.** New easing names must map to the motion ladder the site already chose.
 - Owner rail: `css-architecture-readability`. Do not grow a parallel token ontology.
+- JS writes into these tokens are governed by `css-sensitive-attribute-writes` (custom-property section, 2026-09-27) and enforced by `scripts/ts/style-property-contract.mts`.
 
 ## Runtime and Cascade Rules
 
