@@ -251,6 +251,9 @@ function piecesToEntries(feed) {
     handles: piece.handles || [],
     wonder: piece.opens ? `?${piece.opens}` : '',
     surface: 'original',
+    thumb: piece.thumb,
+    thumbWidth: piece.width,
+    thumbHeight: piece.height,
     haystack: [piece.title, piece.alt, piece.opens, ...(piece.handles || [])].filter(Boolean).join(' '),
   }));
 }
@@ -437,7 +440,8 @@ function appendResult(container, entry, index, matchedExpression = '') {
   link.dataset.index = String(index);
   if (entry.motion) link.dataset.spwMotion = entry.motion;
   if (entry.geometry) link.dataset.spwGeometry = entry.geometry;
-  if (entry.operator) link.dataset.spwOperator = entry.operator;
+  // A piece row lays out around its thumb; the operator attribute would dress it as an inline chip.
+  if (entry.operator && entry.kind !== 'piece') link.dataset.spwOperator = entry.operator;
   if (index === activeIndex) {
     link.setAttribute('aria-selected', 'true');
     item.dataset.active = 'true';
@@ -469,6 +473,19 @@ function appendResult(container, entry, index, matchedExpression = '') {
     entry.kind === 'frame' ? (entry.expressions && entry.expressions[0]) : entry.wonder,
   ].filter(Boolean).join(' · ');
 
+  if (entry.kind === 'piece' && entry.thumb) {
+    // A scanned piece shows itself beside its title; the title still names it, so the thumb is decorative.
+    link.classList.add('spw-site-search__result--piece');
+    const thumb = document.createElement('img');
+    thumb.className = 'spw-site-search__thumb';
+    thumb.src = entry.thumb;
+    if (entry.thumbWidth) thumb.width = entry.thumbWidth;
+    if (entry.thumbHeight) thumb.height = entry.thumbHeight;
+    thumb.alt = '';
+    thumb.loading = 'lazy';
+    thumb.decoding = 'async';
+    link.appendChild(thumb);
+  }
   link.append(titleRow, meta);
   item.appendChild(link);
 

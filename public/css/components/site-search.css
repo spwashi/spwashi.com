@@ -208,6 +208,23 @@
   min-width: 0;
 }
 
+/* A scanned piece shows itself beside its title and question. */
+.spw-site-search__result--piece {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  column-gap: 0.6rem;
+  align-items: center;
+}
+
+.spw-site-search__result--piece .spw-site-search__thumb {
+  grid-row: span 2;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  object-fit: contain;
+  border-radius: 0.25rem;
+  background: color-mix(in oklab, var(--ink, #111) 6%, transparent);
+}
+
 .spw-site-search__sigil {
   flex: 0 0 auto;
   color: var(--op-probe-color, #4a2180);
