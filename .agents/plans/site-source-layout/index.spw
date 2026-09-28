@@ -1,4 +1,4 @@
-# Review 2026-07-12 — retain as a long-horizon migration prime; do not move the authored tree without ref-safe evidence and human review.
+# Review 2026-09-27 — long-horizon site/ move still waits on ref-safe evidence; near-term work is wip.spw M0 (ship list) then M2 (public/ts to src/ts), decisions owned by typescript-integration.
 # Plan Index — site-source-layout
 #
 # The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated deploy output continues to live in dist/ - build/dev/check…

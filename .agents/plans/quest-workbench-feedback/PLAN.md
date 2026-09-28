@@ -14,7 +14,7 @@ allows HTTP routing for identity clustering, and favors low-friction surfaces fi
 
 ## This patch
 
-- `workers/feedback-quest/src/quest.js`: one pinned recipe for browser and agents.
+- `workers/spw-quest/src/quest.js`: one pinned recipe for browser and agents.
 - `src/index.js`: quest routes bypass climate; feedback references use hostnames,
   preserve context links, and expose no catalog. Draft-only state is explicit.
 - Worker route tests, cluster check, and deployment notes.
